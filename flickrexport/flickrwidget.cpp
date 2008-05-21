@@ -37,10 +37,10 @@
 #include <qtooltip.h>
 #include <qsplitter.h>
 #include <qwhatsthis.h>
-#include <qlineedit.h>
 
 // KDE includes.
 
+#include <klineedit.h>
 #include <kdialog.h>
 #include <kactivelabel.h>
 #include <klocale.h>
@@ -95,7 +95,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     QGridLayout* tagsLayout  = new QGridLayout(1, 1);
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), leftPannelBox);
-    m_tagsLineEdit           = new QLineEdit(leftPannelBox);
+    m_tagsLineEdit           = new KLineEdit(leftPannelBox);
     m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 

@@ -48,8 +48,8 @@ class QPushButton;
 class QSpinBox;
 class QCheckBox;
 class QProgressDialog;
-class QLineEdit;
 
+class KLineEdit;
 class KHTMLPart;
 class KURL;
 
@@ -134,8 +134,6 @@ private:
     QSpinBox                                *m_dimensionSpinBox;
     QSpinBox                                *m_imageQualitySpinBox;
 
-    QLineEdit                               *m_tagsLineEdit;
-
     QIntDict<GAlbumViewItem>                 m_albumDict;
 
     QString                                  m_token;
@@ -154,6 +152,8 @@ private:
 //  KWallet::Wallet                         *m_wallet;
     KHTMLPart                               *m_photoView;
     KURL::List                              *m_urls;
+
+    KLineEdit                               *m_tagsLineEdit;
 
     FlickrWidget                            *m_widget;
     FlickrTalker                            *m_talker;

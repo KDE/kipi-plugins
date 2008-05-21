@@ -32,9 +32,9 @@ class QListView;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
-class QLineEdit;
 class QRadioButton;
 
+class KLineEdit;
 class KHTMLPart;
 
 namespace KIPIFlickrExportPlugin
@@ -76,9 +76,9 @@ private:
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;
 
-    QLineEdit*    m_tagsLineEdit;
-
     QLabel*       m_userNameDisplayLabel;
+
+    KLineEdit*    m_tagsLineEdit;
 
     KHTMLPart*    m_photoView;
 

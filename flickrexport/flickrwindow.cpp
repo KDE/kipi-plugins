@@ -28,7 +28,6 @@
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
-#include <qlineedit.h>
 #include <qprogressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
@@ -37,6 +36,7 @@
 
 // KDE includes.
 
+#include <klineedit.h>
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
 #include <klocale.h>
@@ -456,15 +456,14 @@ void FlickrWindow::slotUser1()
         kdDebug() << " Adding images to the list" << endl;
         FPhotoInfo temp;
 
-        temp.title       = info.title();
-        temp.description = info.description();
-        temp.is_public   = m_publicCheckBox->isChecked();
-        temp.is_family   = m_familyCheckBox->isChecked();
-        temp.is_friend   = m_friendsCheckBox->isChecked();
-
-        QStringList allTags;
-
+        temp.title                 = info.title();
+        temp.description           = info.description();
+        temp.is_public             = m_publicCheckBox->isChecked();
+        temp.is_family             = m_familyCheckBox->isChecked();
+        temp.is_friend             = m_friendsCheckBox->isChecked();
         QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false);
+
+        QStringList           allTags;
         QStringList::Iterator itTags;
 
         // Tags from the dialog
