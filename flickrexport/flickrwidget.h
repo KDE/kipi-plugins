@@ -40,16 +40,18 @@ class KHTMLPart;
 namespace KIPIFlickrExportPlugin
 {
 
+class ImagesList;
+
 class FlickrWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    enum FlickerTab
+    enum SettingsTab
     {
-        UPLOAD=0,
-        FILELIST
+        FILELIST=0,
+        UPLOAD
     };
 
 public:
@@ -89,6 +91,8 @@ private:
     KTabWidget*   m_tab;
 
     KHTMLPart*    m_photoView;
+
+    ImagesList*   m_imglst;
 
     friend class FlickrWindow;
 };

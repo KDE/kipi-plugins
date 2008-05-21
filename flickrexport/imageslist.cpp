@@ -159,9 +159,9 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     d->addButton    = new QPushButton(this);
     d->removeButton = new QPushButton(this);
     d->addButton->setText(i18n("&Add"));
-    d->addButton->setIcon(SmallIcon("add"));
+    d->addButton->setIconSet(SmallIcon("add"));
     d->removeButton->setText(i18n("&Remove"));
-    d->removeButton->setIcon(SmallIcon("remove"));
+    d->removeButton->setIconSet(SmallIcon("remove"));
 
     // --------------------------------------------------------
 

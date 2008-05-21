@@ -187,14 +187,14 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_addPhotoButton->setText(i18n("&Add Photos"));
     m_addPhotoButton->setIconSet(SmallIcon("add"));
 
-    ImagesList *imglst = new ImagesList(m_fileSrcButtonGroup, 0);
+    m_imglst = new ImagesList(m_fileSrcButtonGroup, 0);
 
     QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
     m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
     m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
     m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
     m_fileSrcButtonGroupLayout->addWidget(m_addPhotoButton);
-    m_fileSrcButtonGroupLayout->addWidget(imglst);
+    m_fileSrcButtonGroupLayout->addWidget(m_imglst);
 
     // ------------------------------------------------------------------------
 
@@ -210,8 +210,8 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(leftPannelBox,        i18n("Upload Options"), UPLOAD);
     m_tab->insertTab(m_fileSrcButtonGroup, i18n("Files List"),     FILELIST);
+    m_tab->insertTab(leftPannelBox,        i18n("Upload Options"), UPLOAD);
 
     // ------------------------------------------------------------------------
 
