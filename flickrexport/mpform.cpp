@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +49,7 @@ namespace KIPIFlickrExportPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KApplication::randomString( 42 + 13 ).ascii();
+    m_boundary += KApplication::randomString(42 + 13).ascii();
 }
 
 MPForm::~MPForm()
@@ -109,8 +110,9 @@ bool MPForm::addFile(const QString& name,const QString& path)
     }
 
     QFile imageFile(path);
-    if ( !imageFile.open( IO_ReadOnly ) )
+    if (!imageFile.open(IO_ReadOnly))
         return false;
+
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
 
@@ -136,7 +138,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data()+oldSize, imageData.data(), imageData.size());
+    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
 
