@@ -42,11 +42,13 @@
 // KDE includes.
 
 #include <kdialog.h>
+#include <kactivelabel.h>
 #include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kseparator.h>
 #include <kiconloader.h>
+#include <kapplication.h>
 
 // Local includes.
 
@@ -59,16 +61,18 @@ namespace KIPIFlickrExportPlugin
 FlickrWidget::FlickrWidget(QWidget* parent)
             : QWidget(parent)
 {
-    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5, "FlickrWidgetLayout");
+    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5);
 
-    m_photoView         = 0; //new KHTMLPart( splitter, "m_photoView" );
-    KSeparator *line    = new KSeparator(Horizontal, this);
-    QSplitter* splitter = new QSplitter(this);
-    m_tagView           = new QListView(splitter, "m_tagView");
-    QLabel *headerLabel = new QLabel(this, "headerLabel");
-    headerLabel->setText(i18n("<qt><b><h2>"
+    m_photoView               = 0; //new KHTMLPart( splitter, "m_photoView" );
+    KSeparator *line          = new KSeparator(Horizontal, this);
+    QSplitter* splitter       = new QSplitter(this);
+    m_tagView                 = new QListView(splitter);
+    KActiveLabel *headerLabel = new KActiveLabel(this);
+    headerLabel->setFocusPolicy(NoFocus);
+    headerLabel->setLinkUnderline(false);
+    headerLabel->setText(i18n("<qt><b><h2><a href='http://www.flickr.com'>"
                               "<font color=\"#0065DE\">flick</font>"
-                              "<font color=\"#FF0084\">r</font>"
+                              "<font color=\"#FF0084\">r</font></a>"
                               " Export"
                               "</h2></b></qt>"));
 
@@ -217,6 +221,9 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
+    connect(headerLabel, SIGNAL(leftClickedURL(const QString&)),
+            this, SLOT(slotOpenUrl(const QString&)));
+
     // ------------------------------------------------------------------------
 
     setName("FlickrWidget");
@@ -226,6 +233,11 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
 FlickrWidget::~FlickrWidget()
 {
+}
+
+void FlickrWidget::slotOpenUrl(const QString& url)
+{
+    KApplication::kApplication()->invokeBrowser(url);
 }
 
 void FlickrWidget::slotSelectionChecked()
