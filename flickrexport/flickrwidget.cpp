@@ -221,9 +221,6 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
-    connect(headerLabel, SIGNAL(leftClickedURL(const QString&)),
-            this, SLOT(slotOpenUrl(const QString&)));
-
     // ------------------------------------------------------------------------
 
     setName("FlickrWidget");
@@ -233,11 +230,6 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
 FlickrWidget::~FlickrWidget()
 {
-}
-
-void FlickrWidget::slotOpenUrl(const QString& url)
-{
-    KApplication::kApplication()->invokeBrowser(url);
 }
 
 void FlickrWidget::slotSelectionChecked()

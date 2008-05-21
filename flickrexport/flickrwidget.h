@@ -53,7 +53,6 @@ private slots:
 
     void slotResizeChecked();
     void slotSelectionChecked();
-    void slotOpenUrl(const QString&);
 
 private:
 
