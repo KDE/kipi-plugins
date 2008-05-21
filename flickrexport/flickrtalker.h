@@ -33,6 +33,7 @@
 
 // KDE includes.
 
+#include <kurl.h>
 #include <kio/job.h>
 
 class QProgressDialog;
@@ -118,6 +119,8 @@ private:
     void parseResponseGetToken(const QByteArray& data);
     void parseResponseCheckToken(const QByteArray& data);
     void parseResponsePhotoProperty(const QByteArray& data);
+
+    QString getApiSig(const QString& secret, const KURL& url);
 
 private slots:
 

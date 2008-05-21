@@ -38,6 +38,7 @@
 #include <qlineedit.h>
 #include <qmessagebox.h>
 #include <qdom.h>
+#include <qmap.h>
 #include <qfileinfo.h>
 #include <qprogressdialog.h>
 
@@ -89,9 +90,29 @@ FlickrTalker::~FlickrTalker()
         m_job->kill();
 }
 
+/** Compute MD5 signature using url queries key and values following Flickr notice:
+    http://www.flickr.com/services/api/auth.spec.html
+*/
+QString FlickrTalker::getApiSig(const QString& secret, const KURL& url)
+{
+    QMap<QString, QString> queries = url.queryItems();
+    QString compressed(secret);
+
+    // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
+    for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
+
+    {
+        compressed.append(it.key());
+        compressed.append(it.data());
+    }
+
+    KMD5 context(compressed.utf8());
+    return context.hexDigest().data();
+}
+
 QString FlickrTalker::getApiSig(const QString& secret, const QStringList& headers)
 {
-    QStringList compressed ; //= new List<string>(headers.Length);
+    QStringList compressed;
 
     for (QStringList::const_iterator it = headers.begin(); it != headers.end(); ++it)
     {
@@ -122,7 +143,7 @@ void FlickrTalker::getFrob()
     QStringList headers;
     headers.append("method=flickr.auth.getFrob");
     headers.append("api_key=" + m_apikey);
-    QString md5 = getApiSig(m_secret,headers);
+    QString md5 = getApiSig(m_secret, headers);
     headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
@@ -195,7 +216,7 @@ void FlickrTalker::slotAuthenticate()
     headers.append("api_key=" + m_apikey);
     headers.append("frob=" + m_frob);
     headers.append("perms=write");
-    QString md5 = getApiSig(m_secret,headers);
+    QString md5 = getApiSig(m_secret, headers);
     headers.append("api_sig=" + md5);
 
     QString queryStr          = headers.join("&");
@@ -233,7 +254,7 @@ void FlickrTalker::getToken()
     headers.append("api_key=" + m_apikey);
     headers.append("method=flickr.auth.getToken");
     headers.append("frob=" + m_frob);
-    QString md5 = getApiSig(m_secret,headers);
+    QString md5 = getApiSig(m_secret, headers);
     headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl  = url+queryStr;
@@ -297,7 +318,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QString& argLis
     headers.append("method=" + method);
     headers.append("frob=" + m_frob);
     headers.append(argList);
-    QString md5 = getApiSig(m_secret,headers);
+    QString md5 = getApiSig(m_secret, headers);
     headers.append("api_sig=" + md5);
     QString queryStr = headers.join("&");
     QString postUrl = url+queryStr;
@@ -340,53 +361,50 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    QString url  = "http://www.flickr.com/services/upload/?";
+    KURL    url("http://www.flickr.com/services/upload/");
     QString path = photoPath;
-    QStringList headers;
-    MPForm      form;
+    MPForm  form;
+
     form.addPair("auth_token", m_token);
-    headers.append("auth_token=" + m_token);
+    url.addQueryItem("auth_token", m_token);
 
     form.addPair("api_key", m_apikey);
-    headers.append("api_key=" + m_apikey);
+    url.addQueryItem("api_key", m_apikey);
 
     QString ispublic = (info.is_public==1) ? "1" : "0";
     form.addPair("is_public", ispublic);
-    headers.append("is_public=" + ispublic);
+    url.addQueryItem("is_public", ispublic);
 
     QString isfamily = (info.is_family==1) ? "1" : "0";
     form.addPair("is_family", isfamily);
-    headers.append("is_family=" + isfamily);
+    url.addQueryItem("is_family", isfamily);
 
     QString isfriend = (info.is_friend==1) ? "1" : "0";
     form.addPair("is_friend", isfriend);
-    headers.append("is_friend=" + isfriend);
+    url.addQueryItem("is_friend", isfriend);
 
     QString tags = info.tags.join(" ");
     if(tags.length() > 0)
     {
         form.addPair("tags", tags);
-        headers.append("tags=" + tags);
+        url.addQueryItem("tags", tags);
     }
 
     if (!info.title.isEmpty())
     {
         form.addPair("title", info.title);
-        headers.append("title=" + info.title);
+        url.addQueryItem("title", info.title);
     }
 
     if (!info.description.isEmpty())
     {
         form.addPair("description", info.description);
-        headers.append("description=" + info.description);
+        url.addQueryItem("description", info.description);
     }
 
-    QString md5 = getApiSig(m_secret, headers);
+    QString md5 = getApiSig(m_secret, url);
     form.addPair("api_sig", md5);
-    headers.append("api_sig=" + md5);
-    QString queryStr = headers.join("&");
-    QString postUrl  = url + queryStr;
-
+    url.addQueryItem("api_sig", md5);
     QImage image;
 
     // Check if RAW file.
@@ -397,7 +415,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     else
         image.load(photoPath);
 
-    kdDebug() << "Add photo query: " << postUrl << endl;
+    kdDebug() << "Add photo query: " << url << endl;
 
     if (!image.isNull())
     {
@@ -431,7 +449,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(postUrl, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(url, form.formData(), false);
     job->addMetaData("content-type", form.contentType());
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
