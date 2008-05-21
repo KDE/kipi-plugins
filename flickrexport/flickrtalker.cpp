@@ -144,6 +144,7 @@ void FlickrTalker::getFrob()
     url.addQueryItem("api_key", m_apikey);
     QString md5 = getApiSig(m_secret, url);
     url.addQueryItem("api_sig", md5);
+    kdDebug() << "Get frob url: " << url << endl;
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(url, tmp, false);
 
@@ -171,20 +172,17 @@ void FlickrTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    QString url="http://www.flickr.com/services/rest/?";
-    QStringList headers ;
-    headers.append("method=flickr.auth.checkToken");
-    headers.append("api_key=" + m_apikey);
-    headers.append("auth_token=" + token);
-    QString md5 = getApiSig(m_secret, headers);
-    headers.append("api_sig=" + md5);
-    QString queryStr = headers.join("&");
-    QString postUrl  = url+queryStr;
-    kdDebug() << "Check token url: " << postUrl << endl;
+    KURL url("http://www.flickr.com/services/rest/");
+    url.addQueryItem("method", "flickr.auth.checkToken");
+    url.addQueryItem("api_key", m_apikey);
+    url.addQueryItem("auth_token", token);
+    QString md5 = getApiSig(m_secret, url);
+    url.addQueryItem("api_sig", md5);
+    kdDebug() << "Check token url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
+    KIO::TransferJob* job = KIO::http_post(url, tmp, false);
 
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
