@@ -74,7 +74,7 @@ public:
     void    getFrob();
     void    getToken();
     void    checkToken(const QString& token);
-    void    getPhotoProperty(const QString& method, const QString& argList);
+    void    getPhotoProperty(const QString& method, const QStringList& argList);
 
     void listPhotoSets();
     void listPhotos(const QString& albumName);
