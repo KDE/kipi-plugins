@@ -206,25 +206,23 @@ void FlickrTalker::slotAuthenticate()
         m_job = 0;
     }
 
-    QString url = "http://www.flickr.com/services/auth/?";
-    QStringList headers ;
-    headers.append("api_key=" + m_apikey);
-    headers.append("frob=" + m_frob);
-    headers.append("perms=write");
-    QString md5 = getApiSig(m_secret, headers);
-    headers.append("api_sig=" + md5);
+    KURL url("http://www.flickr.com/services/auth/");
+    url.addQueryItem("api_key", m_apikey);
+    url.addQueryItem("frob", m_frob);
+    url.addQueryItem("perms", "write");
+    QString md5 = getApiSig(m_secret, url);
+    url.addQueryItem("api_sig", md5);
+    kdDebug() << "Authenticate url: " << url << endl;
 
-    QString queryStr          = headers.join("&");
-    const QString completeUrl = url + queryStr;
-    KApplication::kApplication()->invokeBrowser(completeUrl);
-    int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(), 
+    KApplication::kApplication()->invokeBrowser(url.url());
+    int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                   i18n("Please Follow through the instructions in the browser window and "
-                       "return back to press ok if you are authenticated or press No"), 
-                  i18n("Flickr::Kipi Plugin:Web Authorization")); 
+                       "return back to press ok if you are authenticated or press No"),
+                  i18n("Flickr Service Web Authorization"));
 
     if( valueOk == KMessageBox::Yes)
     {
-        getToken(); 
+        getToken();
         m_authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
         m_authProgressDlg->setProgress(2, 4);
         emit signalBusy(false);
