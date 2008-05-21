@@ -43,7 +43,6 @@
 
 #include "kpaboutdata.h"
 
-class QListView;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
@@ -118,8 +117,6 @@ private:
 
     unsigned int                             m_uploadCount;
     unsigned int                             m_uploadTotal;
-
-    QListView                               *m_tagView;
 
 //  QPushButton                             *m_newAlbumBtn;
     QPushButton                             *m_addPhotoButton;

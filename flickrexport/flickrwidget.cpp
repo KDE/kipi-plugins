@@ -27,7 +27,6 @@
 #include <qlabel.h>
 #include <qframe.h>
 #include <qheader.h>
-#include <qlistview.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 #include <qgroupbox.h>
@@ -35,11 +34,11 @@
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qsplitter.h>
 #include <qwhatsthis.h>
 
 // KDE includes.
 
+#include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
 #include <kactivelabel.h>
@@ -61,12 +60,13 @@ namespace KIPIFlickrExportPlugin
 FlickrWidget::FlickrWidget(QWidget* parent)
             : QWidget(parent)
 {
+    setName("FlickrWidget");
+
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5);
 
     m_photoView               = 0; //new KHTMLPart(splitter);
     KSeparator *line          = new KSeparator(Horizontal, this);
-    QSplitter* splitter       = new QSplitter(this);
-    m_tagView                 = new QListView(splitter);
+    m_tab                     = new KTabWidget(this);
     KActiveLabel *headerLabel = new KActiveLabel(this);
     headerLabel->setFocusPolicy(NoFocus);
     headerLabel->setLinkUnderline(false);
@@ -76,18 +76,10 @@ FlickrWidget::FlickrWidget(QWidget* parent)
                               " Export"
                               "</h2></b></qt>"));
 
-    m_tagView->hide();
-    //m_tagView->addColumn(i18n("Albums"));
-    //m_tagView->setResizeMode(QListView::AllColumns);
-    //m_tagView->header()->setLabel(0, i18n( "Albums"));
-
     // -------------------------------------------------------------------
 
-    QGroupBox* leftPannelBox         = new QGroupBox(i18n("Upload Options"), splitter);
-    leftPannelBox->setColumnLayout(0, Qt::Vertical);
-    leftPannelBox->layout()->setSpacing(KDialog::spacingHint());
-    leftPannelBox->layout()->setMargin(0);
-    QVBoxLayout* leftPannelBoxLayout = new QVBoxLayout(leftPannelBox->layout());
+    QWidget* leftPannelBox           = new QWidget(m_tab);
+    QVBoxLayout* leftPannelBoxLayout = new QVBoxLayout(leftPannelBox);
 
     //m_newAlbumBtn = new QPushButton(leftPannelBox, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -99,8 +91,8 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
-    tagsLayout->addWidget(tagsLabel,               0, 0);
-    tagsLayout->addWidget(m_tagsLineEdit,          0, 1);
+    tagsLayout->addWidget(tagsLabel,                0, 0);
+    tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
     tagsLayout->addWidget(m_exportHostTagsCheckBox, 1, 1);
 
     // ------------------------------------------------------------------------
@@ -174,7 +166,8 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------
 
-    m_fileSrcButtonGroup = new QButtonGroup(i18n("Files List"), splitter);
+    m_fileSrcButtonGroup = new QButtonGroup(m_tab);
+    m_fileSrcButtonGroup->setFrameShape(QButtonGroup::NoFrame);
     m_fileSrcButtonGroup->setRadioButtonExclusive(true);
     m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
     m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
@@ -209,9 +202,12 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
-    flickrWidgetLayout->addWidget(splitter, 5);
+    flickrWidgetLayout->addWidget(m_tab, 5);
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
+
+    m_tab->insertTab(leftPannelBox,        i18n("Upload Options"), UPLOAD);
+    m_tab->insertTab(m_fileSrcButtonGroup, i18n("Files List"),     FILELIST);
 
     // ------------------------------------------------------------------------
 
@@ -220,12 +216,6 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
-
-    // ------------------------------------------------------------------------
-
-    setName("FlickrWidget");
-    resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
-    clearWState(WState_Polished);
 }
 
 FlickrWidget::~FlickrWidget()

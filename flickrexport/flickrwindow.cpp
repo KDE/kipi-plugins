@@ -23,7 +23,6 @@
 
 // Qt includes.
 
-#include <qlistview.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
 #include <qpixmap.h>
@@ -85,7 +84,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
 //  m_wallet                 = 0;
     m_urls                   = 0;
     m_widget                 = new FlickrWidget(this);
-    m_tagView                = m_widget->m_tagView;
     m_photoView              = m_widget->m_photoView;
 //  m_newAlbumBtn            = widget->m_newAlbumBtn;
     m_addPhotoButton         = m_widget->m_addPhotoButton;
@@ -197,7 +195,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
             this, SLOT( slotAuthCancel() ));
 
     m_talker->m_authProgressDlg = m_authProgressDlg; 
-    m_widget->setEnabled(false); 
+    m_widget->setEnabled(false);
 
     kdDebug() << "Calling auth methods" << endl; 
 
@@ -249,6 +247,8 @@ void FlickrWindow::readSettings()
     m_publicCheckBox->setChecked(config.readBoolEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(config.readBoolEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(config.readBoolEntry("Friends Sharing", false));
+
+    resize(configDialogSize(config, QString("FlickrExport Dialog")));
 }
 
 void FlickrWindow::writeSettings()
@@ -263,6 +263,7 @@ void FlickrWindow::writeSettings()
     config.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
     config.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
     config.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
+    saveDialogSize(config, QString("FlickrExport Dialog"));
     config.sync();
 }
 

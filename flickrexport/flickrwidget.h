@@ -28,12 +28,12 @@
 
 #include <qwidget.h>
 
-class QListView;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
 
+class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
 
@@ -46,6 +46,14 @@ class FlickrWidget : public QWidget
 
 public:
 
+    enum FlickerTab
+    {
+        UPLOAD=0,
+        FILELIST
+    };
+
+public:
+
     FlickrWidget(QWidget* parent=0);
     ~FlickrWidget();
 
@@ -55,8 +63,6 @@ private slots:
     void slotSelectionChecked();
 
 private:
-
-    QListView*    m_tagView;
 
     //QPushButton*  m_newAlbumBtn;
     QPushButton*  m_addPhotoButton;
@@ -79,6 +85,8 @@ private:
     QLabel*       m_userNameDisplayLabel;
 
     KLineEdit*    m_tagsLineEdit;
+
+    KTabWidget*   m_tab;
 
     KHTMLPart*    m_photoView;
 
