@@ -242,17 +242,15 @@ void FlickrTalker::getToken()
         m_job = 0;
     }
 
-    QString url = "http://www.flickr.com/services/rest/?";
-    QStringList headers;
-    headers.append("api_key=" + m_apikey);
-    headers.append("method=flickr.auth.getToken");
-    headers.append("frob=" + m_frob);
-    QString md5 = getApiSig(m_secret, headers);
-    headers.append("api_sig=" + md5);
-    QString queryStr = headers.join("&");
-    QString postUrl  = url+queryStr;
+    KURL url("http://www.flickr.com/services/rest/");
+    url.addQueryItem("api_key", m_apikey);
+    url.addQueryItem("method", "flickr.auth.getToken");
+    url.addQueryItem("frob", m_frob);
+    QString md5 = getApiSig(m_secret, url);
+    url.addQueryItem("api_sig", md5);
+    kdDebug() << "Get token url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
+    KIO::TransferJob* job = KIO::http_post(url, tmp, false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -265,23 +263,21 @@ void FlickrTalker::getToken()
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
-    kdDebug() << "Url invoked in the browser: " << queryStr << endl;
     m_authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
     m_authProgressDlg->setProgress(3, 4);
 }
 
 void FlickrTalker::listPhotoSets()
 {
-    QString url    = "http://www.flickr.com/services/rest/?";
-    QString method = "flickr.photosets.getList";
-    QStringList headers ;
-    headers.append("api_key=" + m_apikey);
-    headers.append("method=" + method);
-    headers.append("user_id=" + m_userId);
-    QString queryStr = headers.join("&");
-    QString postUrl  = url+queryStr;
+    KURL url("http://www.flickr.com/services/rest/");
+    url.addQueryItem("api_key", m_apikey);
+    url.addQueryItem("method", "flickr.photosets.getList");
+    url.addQueryItem("user_id", m_userId);
+    QString md5 = getApiSig(m_secret, url);
+    url.addQueryItem("api_sig", md5);
+    kdDebug() << "List photo sets url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(postUrl, tmp, false);
+    KIO::TransferJob* job = KIO::http_post(url, tmp, false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -293,8 +289,7 @@ void FlickrTalker::listPhotoSets()
     m_state = FE_LISTPHOTOSETS;
     m_job   = job;
     m_buffer.resize(0);
-    emit signalBusy( true );
-    kdDebug() << "Getting Photo Set List:\n" << queryStr << endl;
+    emit signalBusy(true);
 }
 
 void FlickrTalker::getPhotoProperty(const QString& method, const QString& argList)
