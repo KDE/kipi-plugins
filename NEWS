@@ -13,6 +13,9 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 154273 : RAWConverter       : Quality setting for jpegs saved by raw converter is insanely high.
 003 ==> 157190 : GPSSync            : Misleading description for geotagging images.
 004 ==> 154289 : FlickrExport       : Cannot upload RAW images.
+005 ==> 153758 : FlickrExport       : FlickrUploader fails to upload photos whose caption contains 
+                                      accented characters or a trailing space
+006 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
