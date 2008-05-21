@@ -33,6 +33,8 @@
 
 #include <kurl.h>
 
+class KFileItem;
+
 namespace KIPI
 {
     class Interface;
@@ -65,7 +67,6 @@ private:
 
 class ImagesListView : public QListView
 {
-
     Q_OBJECT
 
 public:
@@ -102,10 +103,9 @@ public slots:
 
 private slots:
 
-
     void slotAddItems();
     void slotRemoveItems();
-    void slotThumbnail(const KURL& url, const QPixmap& pix);
+    void slotGotThumbnail(const KFileItem *item, const QPixmap& pix);
 
 private:
 

@@ -38,11 +38,13 @@
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+#include <kio/previewjob.h>
 
-// LibKIPI includes.
+// Libkipi includes.
 
-#include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <libkipi/imagedialog.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes.
 
@@ -55,7 +57,7 @@ namespace KIPIFlickrExportPlugin
 ImagesListViewItem::ImagesListViewItem(QListView *view, const KURL& url)
                   : QListViewItem(view)
 {
-    setThumb(SmallIcon("image-x-generic", ICONSIZE, KIcon::DisabledState));
+    setThumb(SmallIcon("file_broken", ICONSIZE, KIcon::DisabledState));
     setUrl(url);
 }
 
@@ -130,9 +132,9 @@ public:
     ImagesPagePriv()
     {
         listView     = 0;
-        iface        = 0;
         addButton    = 0;
         removeButton = 0;
+        iface        = 0;
     }
 
     QPushButton     *addButton;
@@ -153,6 +155,13 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     QGridLayout* grid = new QGridLayout(this, 2, 3);
     d->listView       = new ImagesListView(this);
+    d->listView->addColumn(i18n("Thumbnail"));
+    d->listView->addColumn(i18n("File Name"));
+    d->listView->setResizeMode(QListView::AllColumns);
+    d->listView->setAllColumnsShowFocus(true);
+    d->listView->setSorting(-1);
+    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->listView->setSelectionMode(QListView::Extended);
 
     // --------------------------------------------------------
 
@@ -170,7 +179,7 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     grid->addMultiCellWidget(d->removeButton, 1, 1, 3, 3);
     grid->setColStretch(0, 10);
     grid->setRowStretch(2, 10);
-    grid->setMargin(0);
+    grid->setMargin(KDialog::spacingHint());
     grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
@@ -184,8 +193,12 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));
 
-/*    connect(d->iface, SIGNAL(gotThumbnail( const KURL&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KURL&, const QPixmap&)));*/
+    // --------------------------------------------------------
+
+    KIPI::ImageCollection images = d->iface->currentSelection();
+
+    if (images.isValid())
+        slotAddImages(images.images());
 }
 
 ImagesList::~ImagesList()
@@ -195,7 +208,7 @@ ImagesList::~ImagesList()
 
 void ImagesList::slotAddImages(const KURL::List& list)
 {
-    if ( list.count() == 0 ) return;
+    if (list.count() == 0) return;
 
     KURL::List urls;
 
@@ -225,23 +238,22 @@ void ImagesList::slotAddImages(const KURL::List& list)
         }
     }
 
-//    d->iface->thumbnails(urls, ICONSIZE);
+    KIO::PreviewJob *thumbnailJob = KIO::filePreview(urls, ICONSIZE);
+
+    connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+            this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
 }
 
-void ImagesList::slotThumbnail(const KURL& url, const QPixmap& pix)
+void ImagesList::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
 {
     QListViewItemIterator it(d->listView);
+
     while (it.current())
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        if (item->url() == url)
+        ImagesListViewItem *selItem = dynamic_cast<ImagesListViewItem*>(*it);
+        if (selItem->url() == item->url())
         {
-            if (pix.isNull())
-                item->setThumb(SmallIcon("image-x-generic", ICONSIZE, KIcon::DisabledState));
-            else
-                item->setThumb(pix.convertToImage().smoothScale(ICONSIZE, ICONSIZE, QImage::ScaleMin));
-
-            return;
+            selItem->setPixmap(0, pix);
         }
         ++it;
     }
@@ -249,10 +261,9 @@ void ImagesList::slotThumbnail(const KURL& url, const QPixmap& pix)
 
 void ImagesList::slotAddItems()
 {
-/*    KIPIPlugins::ImageDialog dlg(this, d->iface, false);
-    KURL::List urls = dlg.urls();
+    KURL::List urls = KIPI::ImageDialog::getImageURLs(this, d->iface);
     if (!urls.isEmpty())
-        slotAddImages(urls);*/
+        slotAddImages(urls);
 }
 
 void ImagesList::slotRemoveItems()

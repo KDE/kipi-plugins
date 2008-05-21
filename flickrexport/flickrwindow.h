@@ -72,6 +72,7 @@ class FPhotoSet;
 class GPhoto;
 class GAlbum;
 class GAlbumViewItem;
+class ImagesList;
 
 class FlickrWindow : public KDialogBase
 {
@@ -98,7 +99,6 @@ private slots:
     void slotNewPhotoSet();
     void slotUserChangeRequest();
     void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
-    void slotAddPhotos();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
@@ -119,7 +119,6 @@ private:
     unsigned int                             m_uploadTotal;
 
 //  QPushButton                             *m_newAlbumBtn;
-    QPushButton                             *m_addPhotoButton;
     QPushButton                             *m_changeUserButton;
 
     QCheckBox                               *m_resizeCheckBox;
@@ -148,12 +147,14 @@ private:
 
 //  KWallet::Wallet                         *m_wallet;
     KHTMLPart                               *m_photoView;
-    KURL::List                              *m_urls;
+    KURL::List                               m_urls;
 
     KLineEdit                               *m_tagsLineEdit;
 
     FlickrWidget                            *m_widget;
     FlickrTalker                            *m_talker;
+
+    ImagesList                              *m_imglst;
 
     KIPI::Interface                         *m_interface;
 

@@ -49,6 +49,10 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 
+// Libkipi includes.
+
+#include <libkipi/interface.h>
+
 // Local includes.
 
 #include "imageslist.h"
@@ -58,7 +62,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent)
+FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
             : QWidget(parent)
 {
     setName("FlickrWidget");
@@ -167,34 +171,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     // ------------------------------------------------------------------
 
-    m_fileSrcButtonGroup = new QButtonGroup(m_tab);
-    m_fileSrcButtonGroup->setFrameShape(QButtonGroup::NoFrame);
-    m_fileSrcButtonGroup->setRadioButtonExclusive(true);
-    m_fileSrcButtonGroup->setColumnLayout(0, Qt::Vertical);
-    m_fileSrcButtonGroup->layout()->setSpacing(KDialog::spacingHint());
-    m_fileSrcButtonGroup->layout()->setMargin(KDialog::spacingHint());
-
-    m_currentSelectionButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_currentSelectionButton->setText(i18n("Use Current Selection"));
-    m_currentSelectionButton->setChecked(true);
-
-    m_selectImagesButton = new QRadioButton(m_fileSrcButtonGroup);
-    m_selectImagesButton->setText(i18n("Custom Selection"));
-    m_selectImagesButton->setEnabled(true);
-
-    m_addPhotoButton = new QPushButton(m_fileSrcButtonGroup);
-    m_addPhotoButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_addPhotoButton->setText(i18n("&Add Photos"));
-    m_addPhotoButton->setIconSet(SmallIcon("add"));
-
-    m_imglst = new ImagesList(m_fileSrcButtonGroup, 0);
-
-    QVBoxLayout* m_fileSrcButtonGroupLayout = new QVBoxLayout(m_fileSrcButtonGroup->layout());
-    m_fileSrcButtonGroupLayout->setAlignment(Qt::AlignTop);
-    m_fileSrcButtonGroupLayout->addWidget(m_currentSelectionButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_selectImagesButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_addPhotoButton);
-    m_fileSrcButtonGroupLayout->addWidget(m_imglst);
+    m_imglst = new ImagesList(m_tab, iface);
 
     // ------------------------------------------------------------------------
 
@@ -210,13 +187,10 @@ FlickrWidget::FlickrWidget(QWidget* parent)
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(m_fileSrcButtonGroup, i18n("Files List"),     FILELIST);
-    m_tab->insertTab(leftPannelBox,        i18n("Upload Options"), UPLOAD);
+    m_tab->insertTab(m_imglst,      i18n("Files List"),     FILELIST);
+    m_tab->insertTab(leftPannelBox, i18n("Upload Options"), UPLOAD);
 
     // ------------------------------------------------------------------------
-
-    connect(m_selectImagesButton, SIGNAL(clicked()),
-            this, SLOT(slotSelectionChecked()));
 
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
@@ -224,12 +198,6 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
 FlickrWidget::~FlickrWidget()
 {
-}
-
-void FlickrWidget::slotSelectionChecked()
-{
-    kdDebug() << "Slot Selection Checked" << endl;
-    m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
 void FlickrWidget::slotResizeChecked()

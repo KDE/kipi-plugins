@@ -37,6 +37,11 @@ class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIFlickrExportPlugin
 {
 
@@ -56,18 +61,16 @@ public:
 
 public:
 
-    FlickrWidget(QWidget* parent=0);
+    FlickrWidget(QWidget* parent, KIPI::Interface *iface);
     ~FlickrWidget();
 
 private slots:
 
     void slotResizeChecked();
-    void slotSelectionChecked();
 
 private:
 
     //QPushButton*  m_newAlbumBtn;
-    QPushButton*  m_addPhotoButton;
     QPushButton*  m_changeUserButton;
 
     QCheckBox*    m_resizeCheckBox;
@@ -77,9 +80,6 @@ private:
     QCheckBox*    m_exportHostTagsCheckBox;
 
     QButtonGroup* m_fileSrcButtonGroup;
-
-    QRadioButton* m_currentSelectionButton;
-    QRadioButton* m_selectImagesButton;
 
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;

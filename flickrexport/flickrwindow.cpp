@@ -62,6 +62,7 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "login.h"
+#include "imageslist.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrviewitem.h"
@@ -73,7 +74,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget */*parent*/)
+FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget */*parent*/)
             : KDialogBase(0, 0, false, i18n("Export to Flickr Web Service"),
                           Help|User1|Close, Close, false)
 { 
@@ -82,11 +83,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_uploadCount            = 0;
     m_uploadTotal            = 0;
 //  m_wallet                 = 0;
-    m_urls                   = 0;
-    m_widget                 = new FlickrWidget(this);
+    m_widget                 = new FlickrWidget(this, interface);
     m_photoView              = m_widget->m_photoView;
-//  m_newAlbumBtn            = widget->m_newAlbumBtn;
-    m_addPhotoButton         = m_widget->m_addPhotoButton;
+//  m_newAlbumBtn            = m_widget->m_newAlbumBtn;
     m_resizeCheckBox         = m_widget->m_resizeCheckBox;
     m_publicCheckBox         = m_widget->m_publicCheckBox;
     m_familyCheckBox         = m_widget->m_familyCheckBox;
@@ -97,6 +96,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     m_exportHostTagsCheckBox = m_widget->m_exportHostTagsCheckBox;
     m_changeUserButton       = m_widget->m_changeUserButton;
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
+    m_imglst                 = m_widget->m_imglst;
 
     setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), SmallIcon("network")));
     setMainWidget(m_widget);
@@ -105,9 +105,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     //m_startUploadButton->setEnabled(false);
     //m_albumView->setRootIsDecorated(true);
     //m_newAlbumBtn->setEnabled(false);
-    m_addPhotoButton->setEnabled(false);
-    //if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    //    m_exportHostTagsCheckBox->setEnabled(false);
 
     // --------------------------------------------------------------------------
     // About data and help button.
@@ -180,9 +177,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface,const QString &tmpFolder, 
     //connect( m_newAlbumBtn, SIGNAL( clicked() ),
     //         SLOT( slotNewAlbum() ) );
 
-    connect(m_addPhotoButton, SIGNAL( clicked() ),
-            this, SLOT( slotAddPhotos() ));
-
     // --------------------------------------------------------------------------
 
     readSettings();
@@ -213,9 +207,6 @@ FlickrWindow::~FlickrWindow()
 //   if (m_wallet)
 //      delete m_wallet;
 #endif
-
-    if (m_urls)
-        delete m_urls;
 
     delete m_progressDlg;
     delete m_authProgressDlg;
@@ -421,37 +412,22 @@ void FlickrWindow::slotNewPhotoSet()
     // TODO
 }
 
-void FlickrWindow::slotAddPhotos()
-{
-    kdDebug() << "Slot Add Photos called geting the list of url" << endl;
-    //m_talker->listPhotoSets();
-    m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs(this, m_interface));
-}
-
 /** This slot is call when 'Start Uploading' button is pressed.
 */
 void FlickrWindow::slotUser1()
 {
     kdDebug() << "SlotUploadImages invoked" << endl;
 
-    if(m_widget->m_currentSelectionButton->isChecked())
-    {
-        kdDebug() << "Using Selection" << endl;
+    m_urls = m_imglst->imageUrls();
 
-        if (m_urls)
-            delete m_urls;
-
-        m_urls = new KURL::List(m_interface->currentSelection().images());
-    }
-
-    if (!m_urls || m_urls->isEmpty())
+    if (m_urls.isEmpty())
         return;
 
     typedef QPair<QString,FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
-    for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
+    for (KURL::List::iterator it = m_urls.begin(); it != m_urls.end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
         kdDebug() << " Adding images to the list" << endl;
