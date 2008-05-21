@@ -38,7 +38,7 @@ namespace KIPI
     class Interface;
 }
 
-namespace KIPISendimagesPlugin
+namespace KIPIFlickrExportPlugin
 {
 
 class ImagesPagePriv;
@@ -112,6 +112,6 @@ private:
     ImagesPagePriv *d;
 };
 
-}  // namespace KIPISendimagesPlugin
+}  // namespace KIPIFlickrExportPlugin
 
 #endif // IMAGES_LIST_H

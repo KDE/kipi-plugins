@@ -49,7 +49,7 @@
 #include "imageslist.h"
 #include "imageslist.moc"
 
-namespace KIPISendimagesPlugin
+namespace KIPIFlickrExportPlugin
 {
 
 ImagesListViewItem::ImagesListViewItem(QListView *view, const KURL& url)
@@ -290,4 +290,4 @@ KURL::List ImagesList::imageUrls() const
     return list;
 }
 
-}  // namespace KIPISendimagesPlugin
+}  // namespace KIPIFlickrExportPlugin
