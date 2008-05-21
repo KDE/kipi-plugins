@@ -87,7 +87,7 @@ public:
                      const QString& albumTitle,
                      const QString& albumCaption);
 
-    bool addPhoto(const QString& photoPath, FPhotoInfo& info,
+    bool addPhoto(const QString& photoPath, const FPhotoInfo& info,
                   bool rescale=false, int maxDim=600, int imageQuality=85);
 
     QString getUserName();
@@ -114,21 +114,21 @@ signals:
 
 private:
 
-//  void parseResponseLogin(const QByteArray &data);
-    void parseResponseListPhotoSets(const QByteArray &data);
-    void parseResponseListPhotos(const QByteArray &data);
-    void parseResponseCreateAlbum(const QByteArray &data);
-    void parseResponseAddPhoto(const QByteArray &data);
-    void parseResponseGetFrob(const QByteArray &data);
-    void parseResponseGetToken(const QByteArray &data);
-    void parseResponseCheckToken(const QByteArray &data);
-    void parseResponsePhotoProperty(const QByteArray &data);
+//  void parseResponseLogin(const QByteArray& data);
+    void parseResponseListPhotoSets(const QByteArray& data);
+    void parseResponseListPhotos(const QByteArray& data);
+    void parseResponseCreateAlbum(const QByteArray& data);
+    void parseResponseAddPhoto(const QByteArray& data);
+    void parseResponseGetFrob(const QByteArray& data);
+    void parseResponseGetToken(const QByteArray& data);
+    void parseResponseCheckToken(const QByteArray& data);
+    void parseResponsePhotoProperty(const QByteArray& data);
 
 private slots:
 
     void slotError(const QString& msg);
     void slotAuthenticate();
-    void data(KIO::Job *job, const QByteArray &data);
+    void data(KIO::Job *job, const QByteArray& data);
     void slotResult(KIO::Job *job);
 
 private:

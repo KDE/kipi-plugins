@@ -332,7 +332,7 @@ void FlickrTalker::createAlbum(const QString& /*parentAlbumName*/, const QString
     //TODO: The equivalent for Album is sets.
 }
 
-bool FlickrTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
+bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
                             bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
