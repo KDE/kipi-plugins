@@ -453,7 +453,7 @@ void FlickrWindow::slotUser1()
     for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
-        kdDebug() <<" Adding images to the list" << endl;
+        kdDebug() << " Adding images to the list" << endl;
         FPhotoInfo temp;
 
         temp.title       = info.title();
@@ -464,18 +464,18 @@ void FlickrWindow::slotUser1()
 
         QStringList allTags;
 
-        QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false); 
+        QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false);
         QStringList::Iterator itTags;
 
-        //Tags from the interface	
+        // Tags from the dialog
         itTags = tagsFromDialog.begin();
-        while( itTags != tagsFromDialog.end() ) 
+        while(itTags != tagsFromDialog.end())
         {
-            allTags.append( *itTags );
+            allTags.append(*itTags);
             ++itTags;
         }
 
-        //Tags from the database
+        // Tags from the database
         QMap <QString, QVariant> attribs = info.attributes();
         QStringList tagsFromDatabase;
 
@@ -495,14 +495,14 @@ void FlickrWindow::slotUser1()
 
         itTags = allTags.begin();
 
-        while(itTags != allTags.end()) 
+        while(itTags != allTags.end())
         {
             kdDebug() << "TAGS: " << (*itTags) << endl;
             ++itTags;
         }
 
         temp.tags = allTags; 
-        m_uploadQueue.append(Pair( (*it).path(), temp));
+        m_uploadQueue.append(Pair((*it).path(), temp));
     }
 
     m_uploadTotal = m_uploadQueue.count();
