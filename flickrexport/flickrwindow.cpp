@@ -497,7 +497,7 @@ void FlickrWindow::slotUser1()
 
         while(itTags != allTags.end()) 
         {
-            kdDebug() << "TAGS" << (*itTags) << endl;
+            kdDebug() << "TAGS: " << (*itTags) << endl;
             ++itTags;
         }
 
