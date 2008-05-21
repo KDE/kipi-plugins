@@ -63,7 +63,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 {
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5);
 
-    m_photoView               = 0; //new KHTMLPart( splitter, "m_photoView" );
+    m_photoView               = 0; //new KHTMLPart(splitter);
     KSeparator *line          = new KSeparator(Horizontal, this);
     QSplitter* splitter       = new QSplitter(this);
     m_tagView                 = new QListView(splitter);
@@ -95,7 +95,7 @@ FlickrWidget::FlickrWidget(QWidget* parent)
 
     QGridLayout* tagsLayout  = new QGridLayout(1, 1);
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), leftPannelBox);
-    m_tagsLineEdit           = new QLineEdit(leftPannelBox, "m_tagsLineEdit");
+    m_tagsLineEdit           = new QLineEdit(leftPannelBox);
     m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
