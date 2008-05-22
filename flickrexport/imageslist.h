@@ -97,6 +97,10 @@ public:
 
     KURL::List imageUrls() const;
 
+signals:
+
+    void signalImageListChanged(bool);
+
 public slots:
 
     void slotAddImages(const KURL::List& list);

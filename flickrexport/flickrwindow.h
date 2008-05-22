@@ -107,6 +107,7 @@ private slots:
     void slotHelp();
     void slotClose();
     void slotUser1();
+    void slotImageListChanged(bool);
 
 private:
 

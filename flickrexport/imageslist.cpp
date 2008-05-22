@@ -264,6 +264,8 @@ void ImagesList::slotAddItems()
     KURL::List urls = KIPI::ImageDialog::getImageURLs(this, d->iface);
     if (!urls.isEmpty())
         slotAddImages(urls);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::slotRemoveItems()
@@ -286,6 +288,8 @@ void ImagesList::slotRemoveItems()
         }
     }
     while(find);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 KURL::List ImagesList::imageUrls() const

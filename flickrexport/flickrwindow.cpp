@@ -102,6 +102,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
+    connect(m_imglst, SIGNAL(signalImageListChanged(bool)),
+            this, SLOT(slotImageListChanged(bool)));
+
     //m_startUploadButton->setEnabled(false);
     //m_albumView->setRootIsDecorated(true);
     //m_newAlbumBtn->setEnabled(false);
@@ -138,12 +141,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalBusy( bool ) ),
             this, SLOT( slotBusy( bool ) ));
 
-    //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
-    //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
-
-    //connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
-    //         SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
-
     connect(m_talker, SIGNAL( signalAddPhotoSucceeded() ),
             this, SLOT( slotAddPhotoSucceeded() ));
 
@@ -152,6 +149,12 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
             this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ));
+
+    //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
+    //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
+
+    //connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
+    //         SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
 
     // --------------------------------------------------------------------------
 
@@ -165,11 +168,11 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_changeUserButton, SIGNAL( clicked() ),
             this, SLOT( slotUserChangeRequest() ));
 
-    //connect( m_tagView, SIGNAL( selectionChanged() ),
-    //         SLOT( slotTagSelected() ) );
-
     connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
             this, SLOT( slotTokenObtained(const QString&) ));
+
+    //connect( m_tagView, SIGNAL( selectionChanged() ),
+    //         SLOT( slotTagSelected() ) );
 
     //connect( m_photoView->browserExtension(), SIGNAL( openURLRequest( const KURL&, const KParts::URLArgs& ) ),
     //         SLOT( slotOpenPhoto( const KURL& ) ) );
@@ -556,6 +559,11 @@ void FlickrWindow::slotAddPhotoCancel()
 
     // refresh the thumbnails
     //slotTagSelected();
+}
+
+void FlickrWindow::slotImageListChanged(bool state)
+{
+    enableButton(User1, !state);
 }
 
 } // namespace KIPIFlickrExportPlugin
