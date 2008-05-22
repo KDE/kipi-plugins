@@ -16,7 +16,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 005 ==> 153758 : FlickrExport       : FlickrUploader fails to upload photos whose caption contains 
                                       accented characters or a trailing space
 006 ==> 128211 : FlickrExport       : "Ok" Button in "Add Photos" shouldn't fire upload directly.
-007 ==> 
+007 ==> 159081 : FlickrExport       : Upload to Flickr not working.
+008 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
