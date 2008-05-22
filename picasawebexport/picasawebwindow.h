@@ -97,7 +97,6 @@ private:
 
     QPushButton                             *m_newAlbumButton;
     QPushButton                             *m_addPhotoButton;
-    QPushButton                             *m_helpButton;
     QPushButton                             *m_startUploadButton;
     QPushButton                             *m_reloadAlbumsListButton;
     QPushButton                             *m_changeUserButton;
@@ -134,7 +133,7 @@ private:
     QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
     KIPI::Interface                         *m_interface;
-    KIPIPlugins::KPAboutData    *m_about; 
+    KIPIPlugins::KPAboutData                *m_about; 
 
 private slots:
 

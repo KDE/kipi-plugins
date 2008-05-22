@@ -81,40 +81,15 @@ namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
-               : KDialogBase(0, 0, false, i18n( "PicasawebUploadr" ), Help|Close, Close, false), 
+               : KDialogBase(0, 0, false, i18n("Export to Picasa Web Service"), Help|Close, Close, false), 
                  m_tmp(tmpFolder)
 {
-    m_interface   = interface;
-    m_uploadCount = 0;
-    m_uploadTotal = 0;
-    //m_wallet      = 0;
-
-    // About data and help button.
-
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Picasaweb Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to export image collection to "
-                                                     "Picasaweb web service."),
-                                           "(c) 2007-2008, Vardhman Jain\n"
-                                           "(c) 2008, Gilles Caulier");
-
-    m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
-                       "Vardhman at gmail dot com");
-
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
-                       "caulier dot gilles at gmail dot com");
-
-    m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
-    m_widget = new PicasawebWidget(this);//new PicasawebWidget( this );
-    setMainWidget( m_widget );
-    m_widget->setMinimumSize( 600, 400 );
-
-    m_urls                   = NULL;
+    m_interface              = interface;
+    m_uploadCount            = 0;
+    m_uploadTotal            = 0;
+//  m_wallet                 = 0;
+    m_urls                   = 0;
+    m_widget                 = new PicasawebWidget(this);
     m_tagView                = m_widget->m_tagView;
     m_photoView              = m_widget->m_photoView;
     m_newAlbumButton         = m_widget->m_newAlbumButton;
@@ -130,12 +105,37 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
     m_reloadAlbumsListButton = m_widget->m_reloadAlbumsListButton;
 
+    setMainWidget(m_widget);
+    m_widget->setMinimumSize(600, 400);
     m_widget->m_currentSelectionButton->setChecked(true);
 
     if(!m_interface->hasFeature(KIPI::HostSupportsTags))
         m_exportApplicationTags->setEnabled(false);
 
-    m_talker = new PicasawebTalker( this );
+    // ------------------------------------------------------------
+
+    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Picasaweb Export"),
+                                           0,
+                                           KAboutData::License_GPL,
+                                           I18N_NOOP("A Kipi plugin to export image collection to "
+                                                     "Picasaweb web service."),
+                                           "(c) 2007-2008, Vardhman Jain\n"
+                                           "(c) 2008, Gilles Caulier");
+
+    m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
+                       "Vardhman at gmail dot com");
+
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
+                       "caulier dot gilles at gmail dot com");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
+    actionButton(Help)->setPopup(helpMenu->menu());
+
+    // ------------------------------------------------------------
+
+    m_talker = new PicasawebTalker(this);
 
     connect(m_talker, SIGNAL( signalBusy( bool ) ),
             this, SLOT( slotBusy( bool ) ) );
@@ -155,26 +155,39 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
 //    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
 //            this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ) );
 
+    // ------------------------------------------------------------
+
     m_progressDlg = new QProgressDialog( this, 0, true );
     m_progressDlg->setAutoReset( true );
     m_progressDlg->setAutoClose( true );
 
-    connect( m_progressDlg, SIGNAL( canceled() ),
-             SLOT( slotAddPhotoCancel() ) );
-    connect( m_changeUserButton, SIGNAL( clicked() ),
-             SLOT( slotUserChangeRequest() ) );
-    connect( m_reloadAlbumsListButton, SIGNAL( clicked() ),
-             SLOT(slotUpdateAlbumsList()));
-    connect( m_newAlbumButton, SIGNAL( clicked() ),
-             SLOT( slotCreateNewAlbum() ) );
-    connect( m_talker, SIGNAL( signalTokenObtained(const QString&) ),this,
-             SLOT( slotTokenObtained(const QString&) ) );
-    connect( m_addPhotoButton, SIGNAL( clicked() ),
-             SLOT( slotAddPhotos() ) );
-    connect( m_startUploadButton, SIGNAL( clicked() ),
-             SLOT( slotUploadImages() ) );
-    connect( m_resizeCheckBox, SIGNAL(toggled(bool )), SLOT(slotRefreshSizeButtons(bool)));
+    connect(m_progressDlg, SIGNAL( canceled() ),
+            this, SLOT( slotAddPhotoCancel() ) );
+
+    connect(m_changeUserButton, SIGNAL( clicked() ),
+            this, SLOT( slotUserChangeRequest() ) );
+
+    connect(m_reloadAlbumsListButton, SIGNAL( clicked() ),
+            this, SLOT(slotUpdateAlbumsList()));
+
+    connect(m_newAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( slotCreateNewAlbum() ) );
+
+    connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
+            this, SLOT( slotTokenObtained(const QString&) ) );
+
+    connect(m_addPhotoButton, SIGNAL( clicked() ),
+            this, SLOT( slotAddPhotos() ) );
+
+    connect(m_startUploadButton, SIGNAL( clicked() ),
+            this, SLOT( slotUploadImages() ) );
+
+    connect(m_resizeCheckBox, SIGNAL(toggled(bool )), 
+            this, SLOT(slotRefreshSizeButtons(bool)));
+
+    // ------------------------------------------------------------
     // read config
+
     KSimpleConfig config("kipirc");
     config.setGroup("PicasawebExport Settings");
     m_token = config.readEntry("token");
@@ -184,22 +197,27 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     if (config.readBoolEntry("Resize", false))
         m_resizeCheckBox->setChecked(true);
 
-   m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
-   m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
-   m_authProgressDlg = new QProgressDialog( this, 0, true );
-   m_authProgressDlg->setAutoReset( true );
-   m_authProgressDlg->setAutoClose( true );
-   connect( m_authProgressDlg, SIGNAL( canceled() ),
-             SLOT( slotAuthCancel() ) );
-   m_talker->authProgressDlg=m_authProgressDlg; 
-   m_widget->setEnabled(false); 
+    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
+    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
+    
+    // ------------------------------------------------------------
 
-  // All these three values can be null too.
-  // If m_token is ot null, username would be not null too.
-  // if (!(!m_token || m_token.length() < 1))
-      //getToken(username, password);
+    m_authProgressDlg = new QProgressDialog( this, 0, true );
+    m_authProgressDlg->setAutoReset( true );
+    m_authProgressDlg->setAutoClose( true );
+    
+    connect(m_authProgressDlg, SIGNAL(canceled()),
+            this, SLOT(slotAuthCancel()));
+    
+    m_talker->authProgressDlg = m_authProgressDlg; 
+    m_widget->setEnabled(false); 
 
-  m_talker->authenticate(m_token, username, password);
+    // All these three values can be null too.
+    // If m_token is ot null, username would be not null too.
+    // if (!(!m_token || m_token.length() < 1))
+        //getToken(username, password);
+    
+    m_talker->authenticate(m_token, username, password);
 }
 
 void PicasawebWindow::slotRefreshSizeButtons(bool st)
@@ -381,22 +399,22 @@ void PicasawebWindow::slotCreateNewAlbum()
 /*
 void PicasawebWindow::slotPhotos( const QValueList<GPhoto>& photoList)
 {
-	//To be implemented
+	// TODO
 }
 
 void PicasawebWindow::slotTagSelected()
 {
-	//To be implemented
+	// TODO
 }
+
 void PicasawebWindow::slotOpenPhoto( const KURL& url )
 {
     new KRun(url);
 }
 */
 
-void PicasawebWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList)
+void PicasawebWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& /*photoSetList*/)
 {
-  photoSetList; 
 }
 
 void PicasawebWindow::slotAddPhotos()
@@ -515,7 +533,7 @@ void PicasawebWindow::slotAddPhotoSucceeded()
     slotAddPhotoNext();
 }
 
-void PicasawebWindow::slotAddPhotoFailed( const QString& msg )
+void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
 {
     if ( KMessageBox::warningContinueCancel( this,
            i18n( "Failed to upload photo into Picasaweb. %1\nDo you want to continue?" )
@@ -535,7 +553,8 @@ void PicasawebWindow::slotAddPhotoFailed( const QString& msg )
     }
 }
 
-void PicasawebWindow::slotGetAlbumsListFailed( const QString& msg ){
+void PicasawebWindow::slotGetAlbumsListFailed(const QString& /*msg*/)
+{
     // Raise some errors
 }
 
