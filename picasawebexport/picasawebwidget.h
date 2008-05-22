@@ -40,10 +40,10 @@ class QRadioButton;
 
 class KHTMLPart;
 
-class UploadWidget;
-
 namespace KIPIPicasawebExportPlugin
 {
+
+class UploadWidget;
 
 class PicasawebWidget : public UploadWidget
 {

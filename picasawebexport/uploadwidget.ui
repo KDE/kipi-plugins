@@ -1,5 +1,5 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>UploadWidget</class>
+<class>KIPIPicasawebExportPlugin::UploadWidget</class>
 <widget class="QWidget">
     <property name="name">
         <cstring>UploadWidget</cstring>
