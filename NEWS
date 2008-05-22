@@ -14,11 +14,13 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 157190 : GPSSync            : Misleading description for geotagging images.
 004 ==> 154289 : FlickrExport       : Cannot upload RAW images.
 005 ==> 153758 : FlickrExport       : FlickrUploader fails to upload photos whose caption contains 
-                                      accented characters or a trailing space
+                                      accented characters or a trailing space.
 006 ==> 128211 : FlickrExport       : "Ok" Button in "Add Photos" shouldn't fire upload directly.
 007 ==> 159081 : FlickrExport       : Upload to Flickr not working.
 008 ==> 162096 : FlickrExport       : When selecting all photos reverses the order.
-009 ==> 
+009 ==> 158483 : PicasaWebExport    : Plugin cause Digikam crash.
+010 ==> 160453 : PicasaWebExport    : Crashes when exporting to Picasaweb.
+011 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
