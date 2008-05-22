@@ -83,6 +83,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // -------------------------------------------------------------------
 
+    m_imglst                       = new ImagesList(m_tab, iface);
     QWidget* settingsBox           = new QWidget(m_tab);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
@@ -95,7 +96,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_tagsLineEdit           = new KLineEdit(settingsBox);
     m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
-    QToolTip::add(m_tagsLineEdit, i18n("Enter here new tags separated by space..."));
+    QToolTip::add(m_tagsLineEdit, i18n("Enter here new tags separated by space."));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
@@ -170,18 +171,14 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(0);
 
-    // ------------------------------------------------------------------
-
-    m_imglst = new ImagesList(m_tab, iface);
-
-    // ------------------------------------------------------------------------
-
     settingsBoxLayout->addLayout(tagsLayout);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addStretch(10);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
+
+    // ------------------------------------------------------------------------
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
