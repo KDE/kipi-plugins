@@ -96,11 +96,14 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_tagsLineEdit           = new KLineEdit(settingsBox);
     m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
+    m_stripSpaceTagsCheckBox = new QCheckBox(settingsBox);
+    m_stripSpaceTagsCheckBox->setText(i18n("Strip Space From Host Application Tags"));
     QToolTip::add(m_tagsLineEdit, i18n("Enter here new tags separated by space."));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
     tagsLayout->addWidget(m_exportHostTagsCheckBox, 1, 1);
+    tagsLayout->addWidget(m_stripSpaceTagsCheckBox, 2, 1);
 
     // ------------------------------------------------------------------------
 
@@ -193,6 +196,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
+
+    connect(m_exportHostTagsCheckBox, SIGNAL(clicked()),
+            this, SLOT(slotExportHostTagsChecked()));
 }
 
 FlickrWidget::~FlickrWidget()
@@ -202,6 +208,11 @@ FlickrWidget::~FlickrWidget()
 void FlickrWidget::slotResizeChecked()
 {
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
+}
+
+void FlickrWidget::slotExportHostTagsChecked()
+{
+    m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 }
 
 } // namespace KIPIFlickrExportPlugin

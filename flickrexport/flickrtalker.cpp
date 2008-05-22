@@ -342,15 +342,15 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     form.addPair("api_key", m_apikey);
     url.addQueryItem("api_key", m_apikey);
 
-    QString ispublic = (info.is_public==1) ? "1" : "0";
+    QString ispublic = (info.is_public == 1) ? "1" : "0";
     form.addPair("is_public", ispublic);
     url.addQueryItem("is_public", ispublic);
 
-    QString isfamily = (info.is_family==1) ? "1" : "0";
+    QString isfamily = (info.is_family == 1) ? "1" : "0";
     form.addPair("is_family", isfamily);
     url.addQueryItem("is_family", isfamily);
 
-    QString isfriend = (info.is_friend==1) ? "1" : "0";
+    QString isfriend = (info.is_friend == 1) ? "1" : "0";
     form.addPair("is_friend", isfriend);
     url.addQueryItem("is_friend", isfriend);
 
@@ -913,7 +913,7 @@ void FlickrTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     QDomElement docElem = doc.documentElement();
     QDomNode node       = docElem.firstChild();
-    //QDomElement e;
+
     //TODO
 }
 

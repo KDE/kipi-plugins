@@ -67,6 +67,7 @@ public:
 private slots:
 
     void slotResizeChecked();
+    void slotExportHostTagsChecked();
 
 private:
 
@@ -78,6 +79,7 @@ private:
     QCheckBox*    m_friendsCheckBox;
     QCheckBox*    m_publicCheckBox;
     QCheckBox*    m_exportHostTagsCheckBox;
+    QCheckBox*    m_stripSpaceTagsCheckBox;
 
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;

@@ -127,6 +127,7 @@ private:
     QCheckBox                             *m_familyCheckBox;
     QCheckBox                             *m_friendsCheckBox;
     QCheckBox                             *m_exportHostTagsCheckBox;
+    QCheckBox                             *m_stripSpaceTagsCheckBox;
 
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;

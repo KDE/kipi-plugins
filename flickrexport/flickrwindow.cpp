@@ -95,6 +95,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_imageQualitySpinBox    = m_widget->m_imageQualitySpinBox;
     m_tagsLineEdit           = m_widget->m_tagsLineEdit;
     m_exportHostTagsCheckBox = m_widget->m_exportHostTagsCheckBox;
+    m_stripSpaceTagsCheckBox = m_widget->m_stripSpaceTagsCheckBox;
     m_changeUserButton       = m_widget->m_changeUserButton;
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
     m_imglst                 = m_widget->m_imglst;
@@ -239,6 +240,7 @@ void FlickrWindow::readSettings()
     m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
     m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
     m_exportHostTagsCheckBox->setChecked(config.readBoolEntry("Export Host Tags", false));
+    m_stripSpaceTagsCheckBox->setChecked(config.readBoolEntry("Strip Space Host Tags", false));
     m_publicCheckBox->setChecked(config.readBoolEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(config.readBoolEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(config.readBoolEntry("Friends Sharing", false));
@@ -255,6 +257,7 @@ void FlickrWindow::writeSettings()
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
     config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
     config.writeEntry("Export Host Tags", m_exportHostTagsCheckBox->isChecked());
+    config.writeEntry("Strip Space Host Tags", m_stripSpaceTagsCheckBox->isChecked());
     config.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
     config.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
     config.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
@@ -463,6 +466,11 @@ void FlickrWindow::slotUser1()
         if(m_exportHostTagsCheckBox->isChecked())
         {
             tagsFromDatabase = attribs["tags"].asStringList();
+            if (m_stripSpaceTagsCheckBox->isChecked())
+            {
+                for (QStringList::iterator it = tagsFromDatabase.begin(); it != tagsFromDatabase.end() ; ++it)
+                    *it = (*it).stripWhiteSpace().remove(" ");
+            }
         }
 
         itTags = tagsFromDatabase.begin();
