@@ -83,17 +83,17 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // -------------------------------------------------------------------
 
-    QWidget* leftPannelBox           = new QWidget(m_tab);
-    QVBoxLayout* leftPannelBoxLayout = new QVBoxLayout(leftPannelBox);
+    QWidget* settingsBox           = new QWidget(m_tab);
+    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    //m_newAlbumBtn = new QPushButton(leftPannelBox, "m_newAlbumBtn");
+    //m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
     QGridLayout* tagsLayout  = new QGridLayout(1, 1);
-    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), leftPannelBox);
-    m_tagsLineEdit           = new KLineEdit(leftPannelBox);
-    m_exportHostTagsCheckBox = new QCheckBox(leftPannelBox);
+    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), settingsBox);
+    m_tagsLineEdit           = new KLineEdit(settingsBox);
+    m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
@@ -102,7 +102,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), leftPannelBox);
+    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), settingsBox);
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
@@ -150,24 +150,24 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* loginDetailsBox = new QGroupBox(i18n("Login"), leftPannelBox);
-    loginDetailsBox->setColumnLayout(0, Qt::Vertical);
-    loginDetailsBox->layout()->setSpacing(KDialog::spacingHint());
-    loginDetailsBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* loginDetailsBoxLayout = new QGridLayout(loginDetailsBox->layout(), 1, 2);
+    QGroupBox* accountBox = new QGroupBox(i18n("Account"), settingsBox);
+    accountBox->setColumnLayout(0, Qt::Vertical);
+    accountBox->layout()->setSpacing(KDialog::spacingHint());
+    accountBox->layout()->setMargin(KDialog::spacingHint());
+    QGridLayout* accountBoxLayout = new QGridLayout(accountBox->layout(), 1, 3);
 
-    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), loginDetailsBox);
-    m_userNameDisplayLabel = new QLabel(loginDetailsBox);
-    m_changeUserButton     = new QPushButton(loginDetailsBox);
+    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), accountBox);
+    m_userNameDisplayLabel = new QLabel(accountBox);
+    m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIconSet(SmallIcon("switchuser"));
 
-    loginDetailsBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
-    loginDetailsBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 2);
-    loginDetailsBoxLayout->addMultiCellWidget(m_changeUserButton,     1, 1, 0, 2);
-    loginDetailsBoxLayout->setColStretch(2, 10);
-    loginDetailsBoxLayout->setSpacing(KDialog::spacingHint());
-    loginDetailsBoxLayout->setMargin(0);
+    accountBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
+    accountBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 1);
+    accountBoxLayout->addMultiCellWidget(m_changeUserButton,     0, 0, 3, 3);
+    accountBoxLayout->setColStretch(2, 10);
+    accountBoxLayout->setSpacing(KDialog::spacingHint());
+    accountBoxLayout->setMargin(0);
 
     // ------------------------------------------------------------------
 
@@ -175,11 +175,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    leftPannelBoxLayout->addLayout(tagsLayout);
-    leftPannelBoxLayout->addWidget(optionsBox);
-    leftPannelBoxLayout->addWidget(loginDetailsBox);
-    leftPannelBoxLayout->setSpacing(KDialog::spacingHint());
-    leftPannelBoxLayout->setMargin(KDialog::spacingHint());
+    settingsBoxLayout->addLayout(tagsLayout);
+    settingsBoxLayout->addWidget(optionsBox);
+    settingsBoxLayout->addWidget(accountBox);
+    settingsBoxLayout->addStretch(10);
+    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
@@ -188,7 +189,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     flickrWidgetLayout->setMargin(0);
 
     m_tab->insertTab(m_imglst,      i18n("Files List"),     FILELIST);
-    m_tab->insertTab(leftPannelBox, i18n("Upload Options"), UPLOAD);
+    m_tab->insertTab(settingsBox, i18n("Upload Options"), UPLOAD);
 
     // ------------------------------------------------------------------------
 
