@@ -9,7 +9,7 @@ kipiplugin_picasawebexport_la_DEPENDENCIES = $(LIBKIPI_LIBS_DEP) $(LIBKEXIV2_LIB
 
 kipiplugin_picasawebexport_la_SOURCES = plugin_picasawebexport.cpp \
 		                     picasawebwindow.cpp picasaweblogin.cpp picasawebtalker.cpp \
-		                     picasawebwidget.cpp mpform.cpp picasawebviewitem.cpp exifrestorer.cpp \
+		                     picasawebwidget.cpp mpform.cpp picasawebviewitem.cpp \
 		                     PicasawebNewAlbumDialog.ui uploadwidget.ui
 
 kipiplugin_picasawebexport_la_LIBADD = $(LIBKEXIV2_LIBS) $(LIBKDCRAW_LIBS) $(LIBKIPI_LIBS) $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
