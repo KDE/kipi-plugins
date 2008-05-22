@@ -1,23 +1,26 @@
 /* ============================================================
- * File  : picasaweblogin.cpp
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2007-16-07
- * Description :
  *
- * Copyright 2007 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-16-07
+ * Description : a kipi plugin to export images to Picasa web service
+ *
+ * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
- * Public License as published bythe Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+// Qt includes.
 
 #include <qlabel.h>
 #include <qframe.h>
@@ -25,20 +28,24 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 
-#include<kdebug.h>
+// KDE includes.
+
+#include <kdebug.h>
 #include <klocale.h>
 
+// Local includes.
+
 #include "picasaweblogin.h"
+#include "picasaweblogin.moc"
 
 namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
-                           const QString& _name,
-                           const QString& _passwd)
-    : QDialog(parent)
+                               const QString& _name, const QString& _passwd)
+              : QDialog(parent)
 {
-    setSizeGripEnabled( false );
+    setSizeGripEnabled(false);
 
     QVBoxLayout* vbox = new QVBoxLayout( this, 5, 5, "vbox");
 
@@ -96,13 +103,16 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     m_passwdEdit->setText(_passwd);
 
     // signals and slots connections
-    connect( okBtn, SIGNAL( clicked() ), this, SLOT( accept() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( reject() ) );
+
+    connect(okBtn, SIGNAL( clicked() ),
+            this, SLOT( accept() ) );
+
+    connect(cancelBtn, SIGNAL( clicked() ),
+            this, SLOT( reject() ) );
 }
 
 PicasawebLogin::~PicasawebLogin()
 {
-
 }
 
 QString PicasawebLogin::name() const
@@ -132,4 +142,4 @@ void PicasawebLogin::setPassword(const QString& password)
     m_passwdEdit->setText(password);
 }
 
-}
+} // namespace KIPIPicasawebExportPlugin
