@@ -95,6 +95,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_tagsLineEdit           = new KLineEdit(settingsBox);
     m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
+    QToolTip::add(m_tagsLineEdit, i18n("Enter here new tags separated by space..."));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
