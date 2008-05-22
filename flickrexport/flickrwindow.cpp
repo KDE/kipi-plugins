@@ -44,6 +44,7 @@
 #include <kiconloader.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
+#include <ktabwidget.h>
 #include <krun.h>
 #include <kdebug.h>
 #include <kconfig.h>
@@ -421,6 +422,7 @@ void FlickrWindow::slotUser1()
 {
     kdDebug() << "SlotUploadImages invoked" << endl;
 
+    m_widget->m_tab->setCurrentPage(FlickrWidget::FILELIST);
     KURL::List urls = m_imglst->imageUrls();
 
     if (urls.isEmpty())
