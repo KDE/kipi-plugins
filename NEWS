@@ -5,7 +5,10 @@ v 0.1.6
 
 Kipi-plugins NEW FEATURES
 
-FlickrExport   : dialog layout re-written to be bore suitable.
+FlickrExport   : dialog layout re-written to be more suitable.
+FlickrExport   : list of item to upload is now display in dialog.
+FlickrExport   : Support RAW files format to upload as JPEG preview.
+PicasaWebExport: Support RAW files format to upload as JPEG preview.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
