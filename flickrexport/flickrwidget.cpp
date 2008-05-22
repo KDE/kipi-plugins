@@ -188,7 +188,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(m_imglst,      i18n("Files List"),     FILELIST);
+    m_tab->insertTab(m_imglst,    i18n("Files List"),     FILELIST);
     m_tab->insertTab(settingsBox, i18n("Upload Options"), UPLOAD);
 
     // ------------------------------------------------------------------------

@@ -70,7 +70,7 @@ private slots:
 
 private:
 
-    //QPushButton*  m_newAlbumBtn;
+//  QPushButton*  m_newAlbumBtn;
     QPushButton*  m_changeUserButton;
 
     QCheckBox*    m_resizeCheckBox;
@@ -78,8 +78,6 @@ private:
     QCheckBox*    m_friendsCheckBox;
     QCheckBox*    m_publicCheckBox;
     QCheckBox*    m_exportHostTagsCheckBox;
-
-    QButtonGroup* m_fileSrcButtonGroup;
 
     QSpinBox*     m_dimensionSpinBox;
     QSpinBox*     m_imageQualitySpinBox;
