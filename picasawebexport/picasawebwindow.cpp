@@ -106,7 +106,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_reloadAlbumsListButton = m_widget->m_reloadAlbumsListButton;
 
     setMainWidget(m_widget);
-    m_widget->setMinimumSize(600, 400);
+    m_widget->setMinimumSize(620, 300);
     m_widget->m_currentSelectionButton->setChecked(true);
 
     if(!m_interface->hasFeature(KIPI::HostSupportsTags))

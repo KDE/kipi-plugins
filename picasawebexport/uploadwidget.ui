@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>623</width>
-            <height>416</height>
+            <width>618</width>
+            <height>299</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -23,29 +23,13 @@
     <property name="caption">
         <string>PicasaWeb Exporter Upload</string>
     </property>
-    <widget class="QPushButton">
-        <property name="name">
-            <cstring>m_startUploadButton</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>260</x>
-                <y>370</y>
-                <width>120</width>
-                <height>31</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>Start Uploading</string>
-        </property>
-    </widget>
     <widget class="QFrame">
         <property name="name">
             <cstring>m_selectionFrame</cstring>
         </property>
         <property name="geometry">
             <rect>
-                <x>380</x>
+                <x>390</x>
                 <y>50</y>
                 <width>220</width>
                 <height>140</height>
@@ -57,22 +41,6 @@
         <property name="frameShadow">
             <enum>Raised</enum>
         </property>
-        <widget class="QPushButton">
-            <property name="name">
-                <cstring>m_selectPhotosButton</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>60</x>
-                    <y>90</y>
-                    <width>101</width>
-                    <height>30</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Select Photos</string>
-            </property>
-        </widget>
         <widget class="QButtonGroup">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
@@ -117,10 +85,133 @@
                     </rect>
                 </property>
                 <property name="text">
-                    <string>Currently Selected Images</string>
+                    <string>Currentl&amp;y Selected Images</string>
                 </property>
             </widget>
         </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>m_selectPhotosButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>60</x>
+                    <y>100</y>
+                    <width>101</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Select Photos</string>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QGroupBox">
+        <property name="name">
+            <cstring>groupBox2</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>390</x>
+                <y>200</y>
+                <width>220</width>
+                <height>90</height>
+            </rect>
+        </property>
+        <property name="title">
+            <string>Account Details</string>
+        </property>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>m_changeUserButton</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>90</x>
+                    <y>50</y>
+                    <width>110</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Change User</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel4</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>70</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Username:</string>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>m_userNameDisplayLabel</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>90</x>
+                    <y>20</y>
+                    <width>120</width>
+                    <height>17</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="alignment">
+                <set>WordBreak|AlignVCenter</set>
+            </property>
+        </widget>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>m_WidgetLabel</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>240</width>
+                <height>30</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <pointsize>18</pointsize>
+            </font>
+        </property>
+        <property name="text">
+            <string>PicasaWeb Uploader</string>
+        </property>
+        <property name="alignment">
+            <set>AlignCenter</set>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>m_startUploadButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>490</x>
+                <y>10</y>
+                <width>120</width>
+                <height>31</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>Start Uploading</string>
+        </property>
     </widget>
     <widget class="QGroupBox">
         <property name="name">
@@ -139,22 +230,6 @@
         </property>
         <widget class="QLabel">
             <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>10</x>
-                    <y>20</y>
-                    <width>50</width>
-                    <height>25</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Album</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
                 <cstring>tagsTxtLabel</cstring>
             </property>
             <property name="geometry">
@@ -167,144 +242,6 @@
             </property>
             <property name="text">
                 <string>Tags:&lt;p align="center"&gt;&lt;/p&gt;</string>
-            </property>
-        </widget>
-        <widget class="QLineEdit">
-            <property name="name">
-                <cstring>m_tagsLineEdit</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>70</x>
-                    <y>80</y>
-                    <width>240</width>
-                    <height>22</height>
-                </rect>
-            </property>
-        </widget>
-        <widget class="QRadioButton">
-            <property name="name">
-                <cstring>m_exportApplicationTags</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>140</x>
-                    <y>100</y>
-                    <width>180</width>
-                    <height>21</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Export Application Tags</string>
-            </property>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>m_resizeGroupBox</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>10</x>
-                    <y>150</y>
-                    <width>340</width>
-                    <height>60</height>
-                </rect>
-            </property>
-            <property name="title">
-                <string></string>
-            </property>
-            <widget class="QLabel">
-                <property name="name">
-                    <cstring>textLabel3</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>20</y>
-                        <width>32</width>
-                        <height>20</height>
-                    </rect>
-                </property>
-                <property name="text">
-                    <string>&lt;p align="center"&gt;Size&lt;/p&gt;</string>
-                </property>
-            </widget>
-            <widget class="QSpinBox">
-                <property name="name">
-                    <cstring>m_imageQualitySpinBox</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>280</x>
-                        <y>20</y>
-                        <width>41</width>
-                        <height>20</height>
-                    </rect>
-                </property>
-            </widget>
-            <widget class="QLabel">
-                <property name="name">
-                    <cstring>textLabel1_2</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>130</x>
-                        <y>20</y>
-                        <width>129</width>
-                        <height>21</height>
-                    </rect>
-                </property>
-                <property name="text">
-                    <string>Compression Quality</string>
-                </property>
-            </widget>
-            <widget class="QSpinBox">
-                <property name="name">
-                    <cstring>m_dimensionSpinBox</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>50</x>
-                        <y>20</y>
-                        <width>71</width>
-                        <height>21</height>
-                    </rect>
-                </property>
-                <property name="maxValue">
-                    <number>3200</number>
-                </property>
-            </widget>
-        </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>m_resizeCheckBox</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>20</x>
-                    <y>140</y>
-                    <width>151</width>
-                    <height>21</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Resize Check Box</string>
-            </property>
-        </widget>
-        <widget class="QComboBox">
-            <property name="name">
-                <cstring>m_albumsListComboBox</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>60</x>
-                    <y>20</y>
-                    <width>140</width>
-                    <height>21</height>
-                </rect>
-            </property>
-            <property name="editable">
-                <bool>false</bool>
             </property>
         </widget>
         <widget class="QPushButton">
@@ -320,7 +257,7 @@
                 </rect>
             </property>
             <property name="text">
-                <string>New Album</string>
+                <string>New &amp;Album</string>
             </property>
         </widget>
         <widget class="QPushButton">
@@ -339,96 +276,165 @@
                 <string>Reload</string>
             </property>
         </widget>
-    </widget>
-    <widget class="QLabel">
-        <property name="name">
-            <cstring>m_WidgetLabel</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>80</x>
-                <y>10</y>
-                <width>441</width>
-                <height>30</height>
-            </rect>
-        </property>
-        <property name="font">
-            <font>
-                <pointsize>18</pointsize>
-            </font>
-        </property>
-        <property name="text">
-            <string>PicasaWeb Uploader</string>
-        </property>
-        <property name="alignment">
-            <set>AlignCenter</set>
-        </property>
-    </widget>
-    <widget class="QGroupBox">
-        <property name="name">
-            <cstring>groupBox2</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>380</x>
-                <y>200</y>
-                <width>230</width>
-                <height>90</height>
-            </rect>
-        </property>
-        <property name="title">
-            <string>Account Details</string>
-        </property>
         <widget class="QLabel">
             <property name="name">
-                <cstring>textLabel4</cstring>
+                <cstring>textLabel1</cstring>
             </property>
             <property name="geometry">
                 <rect>
                     <x>10</x>
                     <y>20</y>
-                    <width>70</width>
+                    <width>50</width>
+                    <height>25</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Album:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit">
+            <property name="name">
+                <cstring>m_tagsLineEdit</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>60</x>
+                    <y>80</y>
+                    <width>300</width>
+                    <height>23</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QRadioButton">
+            <property name="name">
+                <cstring>m_exportApplicationTags</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>60</x>
+                    <y>110</y>
+                    <width>180</width>
                     <height>21</height>
                 </rect>
             </property>
             <property name="text">
-                <string>Username:</string>
+                <string>E&amp;xport Application Tags</string>
+            </property>
+            <property name="accel">
+                <string>Alt+X</string>
             </property>
         </widget>
-        <widget class="QPushButton">
+        <widget class="QComboBox">
             <property name="name">
-                <cstring>m_changeUserButton</cstring>
+                <cstring>m_albumsListComboBox</cstring>
             </property>
             <property name="geometry">
                 <rect>
-                    <x>100</x>
-                    <y>50</y>
-                    <width>110</width>
-                    <height>30</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Change User</string>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
-                <cstring>m_userNameDisplayLabel</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>90</x>
+                    <x>60</x>
                     <y>20</y>
-                    <width>260</width>
+                    <width>140</width>
                     <height>21</height>
                 </rect>
             </property>
-            <property name="text">
+            <property name="editable">
+                <bool>false</bool>
+            </property>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>m_resizeGroupBox</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>150</y>
+                    <width>350</width>
+                    <height>70</height>
+                </rect>
+            </property>
+            <property name="title">
                 <string></string>
             </property>
-            <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
-            </property>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>m_resizeCheckBox</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>10</y>
+                        <width>151</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Resi&amp;ze</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+Z</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel3</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>40</y>
+                        <width>90</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Size (pixels):</string>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_2</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>180</x>
+                        <y>40</y>
+                        <width>91</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Compression:</string>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>m_dimensionSpinBox</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>100</x>
+                        <y>40</y>
+                        <width>71</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="maxValue">
+                    <number>3200</number>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>m_imageQualitySpinBox</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>280</x>
+                        <y>40</y>
+                        <width>60</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+            </widget>
         </widget>
     </widget>
 </widget>
