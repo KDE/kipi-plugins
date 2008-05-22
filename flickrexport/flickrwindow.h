@@ -116,50 +116,49 @@ private:
 
 private:
 
-    unsigned int                             m_uploadCount;
-    unsigned int                             m_uploadTotal;
+    unsigned int                           m_uploadCount;
+    unsigned int                           m_uploadTotal;
 
-//  QPushButton                             *m_newAlbumBtn;
-    QPushButton                             *m_changeUserButton;
+//  QPushButton                           *m_newAlbumBtn;
+    QPushButton                           *m_changeUserButton;
 
-    QCheckBox                               *m_resizeCheckBox;
-    QCheckBox                               *m_publicCheckBox;
-    QCheckBox                               *m_familyCheckBox;
-    QCheckBox                               *m_friendsCheckBox;
-    QCheckBox                               *m_exportHostTagsCheckBox;
+    QCheckBox                             *m_resizeCheckBox;
+    QCheckBox                             *m_publicCheckBox;
+    QCheckBox                             *m_familyCheckBox;
+    QCheckBox                             *m_friendsCheckBox;
+    QCheckBox                             *m_exportHostTagsCheckBox;
 
-    QSpinBox                                *m_dimensionSpinBox;
-    QSpinBox                                *m_imageQualitySpinBox;
+    QSpinBox                              *m_dimensionSpinBox;
+    QSpinBox                              *m_imageQualitySpinBox;
 
-    QIntDict<GAlbumViewItem>                 m_albumDict;
+    QIntDict<GAlbumViewItem>               m_albumDict;
 
-    QString                                  m_token;
-    QString                                  m_username;
-    QString                                  m_userId;
-    QString                                  m_lastSelectedAlbum;
-    QString                                  m_tmp;
+    QString                                m_token;
+    QString                                m_username;
+    QString                                m_userId;
+    QString                                m_lastSelectedAlbum;
+    QString                                m_tmp;
 
-    QLabel                                  *m_userNameDisplayLabel;
+    QLabel                                *m_userNameDisplayLabel;
 
-    QProgressDialog                         *m_progressDlg;
-    QProgressDialog                         *m_authProgressDlg;
+    QProgressDialog                       *m_progressDlg;
+    QProgressDialog                       *m_authProgressDlg;
 
-    QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
+    QValueList< QPair<KURL, FPhotoInfo> >  m_uploadQueue;
 
-//  KWallet::Wallet                         *m_wallet;
-    KHTMLPart                               *m_photoView;
-    KURL::List                               m_urls;
+//  KWallet::Wallet                       *m_wallet;
+    KHTMLPart                             *m_photoView;
 
-    KLineEdit                               *m_tagsLineEdit;
+    KLineEdit                             *m_tagsLineEdit;
 
-    FlickrWidget                            *m_widget;
-    FlickrTalker                            *m_talker;
+    FlickrWidget                          *m_widget;
+    FlickrTalker                          *m_talker;
 
-    ImagesList                              *m_imglst;
+    ImagesList                            *m_imglst;
 
-    KIPI::Interface                         *m_interface;
+    KIPI::Interface                       *m_interface;
 
-    KIPIPlugins::KPAboutData                *m_about;
+    KIPIPlugins::KPAboutData              *m_about;
 };
 
 } // namespace KIPIFlickrExportPlugin

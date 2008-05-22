@@ -96,6 +96,7 @@ public:
     ~ImagesList();
 
     KURL::List imageUrls() const;
+    void removeItemByUrl(const KURL& url);
 
 signals:
 

@@ -929,9 +929,9 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "photoid")
         {
-            e = node.toElement();           // try to convert the node to an element.
+            e                = node.toElement();           // try to convert the node to an element.
             QDomNode details = e.firstChild();
-            kdDebug() << "Photoid=" << e.text() << endl; 
+            kdDebug() << "Photoid= " << e.text() << endl; 
             success = true;
         }
 

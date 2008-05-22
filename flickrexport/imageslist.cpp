@@ -292,6 +292,30 @@ void ImagesList::slotRemoveItems()
     emit signalImageListChanged(imageUrls().isEmpty());
 }
 
+void ImagesList::removeItemByUrl(const KURL& url)
+{
+    bool find;
+    do
+    {
+        find = false;
+        QListViewItemIterator it(d->listView);
+        while (it.current())
+        {
+            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+            if (item->url() == url)
+            {
+                delete item;
+                find = true;
+                break;
+            }
+            ++it;
+        }
+    }
+    while(find);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
+}
+
 KURL::List ImagesList::imageUrls() const
 {
     KURL::List list;

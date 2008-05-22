@@ -421,19 +421,19 @@ void FlickrWindow::slotUser1()
 {
     kdDebug() << "SlotUploadImages invoked" << endl;
 
-    m_urls = m_imglst->imageUrls();
+    KURL::List urls = m_imglst->imageUrls();
 
-    if (m_urls.isEmpty())
+    if (urls.isEmpty())
         return;
 
-    typedef QPair<QString,FPhotoInfo> Pair;
+    typedef QPair<KURL, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
-    for (KURL::List::iterator it = m_urls.begin(); it != m_urls.end(); ++it)
+    for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
-        kdDebug() << " Adding images to the list" << endl;
+        kdDebug() << "Adding images to the list" << endl;
         FPhotoInfo temp;
 
         temp.title                 = info.title();
@@ -458,8 +458,7 @@ void FlickrWindow::slotUser1()
         QMap <QString, QVariant> attribs = info.attributes();
         QStringList tagsFromDatabase;
 
-        if(/*m_interface->hasFeature(KIPI::HostSupportsTags) && */
-             m_exportHostTagsCheckBox->isChecked())
+        if(m_exportHostTagsCheckBox->isChecked())
         {
             tagsFromDatabase = attribs["tags"].asStringList();
         }
@@ -476,12 +475,12 @@ void FlickrWindow::slotUser1()
 
         while(itTags != allTags.end())
         {
-            kdDebug() << "TAGS: " << (*itTags) << endl;
+            kdDebug() << "Tags list: " << (*itTags) << endl;
             ++itTags;
         }
 
         temp.tags = allTags; 
-        m_uploadQueue.append(Pair((*it).path(), temp));
+        m_uploadQueue.append(Pair(*it, temp));
     }
 
     m_uploadTotal = m_uploadQueue.count();
@@ -501,22 +500,21 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    typedef QPair<QString,FPhotoInfo> Pair;
+    typedef QPair<KURL, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
-    m_uploadQueue.pop_front();
-    bool res = m_talker->addPhoto(pathComments.first, //the file path
-                                  info,
-                                  m_resizeCheckBox->isChecked(),
-                                  m_dimensionSpinBox->value(),m_imageQualitySpinBox->value());
+    bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path
+                                           info,
+                                           m_resizeCheckBox->isChecked(),
+                                           m_dimensionSpinBox->value(), 
+                                           m_imageQualitySpinBox->value());
     if (!res)
     {
         slotAddPhotoFailed("");
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1 ")
-                                .arg(KURL(pathComments.first).filename()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1").arg(pathComments.first.filename()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
@@ -524,6 +522,9 @@ void FlickrWindow::slotAddPhotoNext()
 
 void FlickrWindow::slotAddPhotoSucceeded()
 {
+    // Remove photo uploaded from the list
+    m_imglst->removeItemByUrl(m_uploadQueue.first().first);
+    m_uploadQueue.pop_front();
     m_uploadCount++;
     m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
     slotAddPhotoNext();
@@ -543,6 +544,7 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     }
     else
     {
+        m_uploadQueue.pop_front();
         m_uploadTotal--;
         m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
         slotAddPhotoNext();
