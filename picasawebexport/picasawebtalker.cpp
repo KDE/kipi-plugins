@@ -48,7 +48,7 @@
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <kmdcodec.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <kmessagebox.h>
 #include <kio/jobclasses.h>
 
@@ -114,7 +114,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     QString url = "https://www.google.com/accounts/ClientLogin";
     
-    PicasawebLogin *loginDialog = new PicasawebLogin(0, QString("LoginWindow"), username, password);
+    PicasawebLogin *loginDialog = new PicasawebLogin(kapp->activeWindow(), QString("LoginWindow"), username, password);
     /*if (username!=NULL && username.length() > 0){
         //  kdDebug()<<"Showing stored username"<< username << endl;
         loginDialog->setUsername(username);
@@ -526,7 +526,7 @@ void PicasawebTalker::slotError(const QString & error)
             transError=i18n("Unknown error");
     };
 
-    KMessageBox::error( 0, i18n("Error Occured: %1\n We can not proceed further").arg(transError));
+    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further").arg(transError));
     //kdDebug()<<"Not handling the error now will see it later"<<endl;
 }
 
