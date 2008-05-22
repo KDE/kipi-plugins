@@ -25,7 +25,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 010 ==> 160453 : PicasaWebExport    : Crashes when exporting to Picasaweb.
 011 ==> 155270 : FlickrExport       : Tags with non-Latin characters dropped during image export.
 012 ==> 153207 : FlickrExport       : Without using application tags: Flickr still reads embedded metadata into tags.
-013 ==> 
+013 ==> 153206 : FlickrExport       : Provide option to remove spaces in tags during export.
+014 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
