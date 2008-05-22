@@ -76,7 +76,10 @@ PicasawebTalker::PicasawebTalker( QWidget* parent )
     {
         m_apikey="49d585bafa0758cb5c58ab67198bf632";
         m_secret="34b39925e6273ffd";
-        connect(this,SIGNAL(signalError(const QString& str)),SLOT(slotError(const QString& str)));
+
+        connect(this, SIGNAL(signalError(const QString&)),
+                this, SLOT(slotError(const QString&)));
+
         authProgressDlg=new QProgressDialog();
     }
 

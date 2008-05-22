@@ -1,25 +1,27 @@
 /* ============================================================
- * File  : picasawebwindow.cpp
- * Author: Vardhman Jain <Vardhman @ gmail.com>
- * Date  : 2007-16-07
- * Description :
  *
- * Copyright 2007 by Vardhman Jain <vardhman @ gmail.com>
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-16-07
+ * Description : a kipi plugin to export images to Picasa web service
+ *
+ * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes.
  
 #include <qlistview.h>
 #include <qpushbutton.h>
@@ -36,7 +38,8 @@
 #include <qdatetimeedit.h>
 #include <qdatetime.h>
 #include <qtextedit.h>
-// Include files for KDE
+
+// KDE includes.
 
 #include <khelpmenu.h>
 #include <kpopupmenu.h>
@@ -54,7 +57,7 @@
 #include <kwallet.h>
 #endif
 
-// KIPI include files
+// Libkipi includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
@@ -69,15 +72,17 @@
 #include "picasawebviewitem.h"
 #include "picasaweblogin.h"
 #include "picasawebwidget.h"
-#include "picasawebwindow.h"
 #include "PicasawebNewAlbumDialog.h"
 #include "picasaweblogin.h"
+#include "picasawebwindow.h"
+#include "picasawebwindow.moc"
 
 namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFolder, QWidget *parent)
-    : KDialogBase(0, 0, false, i18n( "PicasawebUploadr" ), Help|Close, Close, false),m_tmp(tmpFolder)
+               : KDialogBase(0, 0, false, i18n( "PicasawebUploadr" ), Help|Close, Close, false), 
+                 m_tmp(tmpFolder)
 {
     m_interface   = interface;
     m_uploadCount = 0;
@@ -89,11 +94,16 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Picasaweb Export"),
                                            0,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to export image collection to Picasaweb web service."),
-                                           "(c) 2007, Vardhman Jain");
+                                           I18N_NOOP("A Kipi plugin to export image collection to "
+                                                     "Picasaweb web service."),
+                                           "(c) 2007-2008, Vardhman Jain\n"
+                                           "(c) 2008, Gilles Caulier");
 
     m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
                        "Vardhman at gmail dot com");
+
+    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
+                       "caulier dot gilles at gmail dot com");
 
     m_helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
@@ -104,40 +114,45 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
     
-    m_urls                  = NULL;
-    m_tagView               = m_widget->m_tagView;
-    m_photoView             = m_widget->m_photoView;
-    m_newAlbumButton           = m_widget->m_newAlbumButton;
-    m_addPhotoButton           = m_widget->m_selectPhotosButton;
+    m_urls                   = NULL;
+    m_tagView                = m_widget->m_tagView;
+    m_photoView              = m_widget->m_photoView;
+    m_newAlbumButton         = m_widget->m_newAlbumButton;
+    m_addPhotoButton         = m_widget->m_selectPhotosButton;
     m_albumsListComboBox     = m_widget->m_albumsListComboBox;
-    m_dimensionSpinBox      = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox   = m_widget->m_imageQualitySpinBox;
-    m_resizeCheckBox        = m_widget->m_resizeCheckBox;
-    m_tagsLineEdit          = m_widget->m_tagsLineEdit;
-    m_exportApplicationTags = m_widget->m_exportApplicationTags;
-    m_startUploadButton     = m_widget->m_startUploadButton;
-    m_changeUserButton      = m_widget->m_changeUserButton;
-    m_userNameDisplayLabel  = m_widget->m_userNameDisplayLabel;
+    m_dimensionSpinBox       = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox    = m_widget->m_imageQualitySpinBox;
+    m_resizeCheckBox         = m_widget->m_resizeCheckBox;
+    m_tagsLineEdit           = m_widget->m_tagsLineEdit;
+    m_exportApplicationTags  = m_widget->m_exportApplicationTags;
+    m_startUploadButton      = m_widget->m_startUploadButton;
+    m_changeUserButton       = m_widget->m_changeUserButton;
+    m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
     m_reloadAlbumsListButton = m_widget->m_reloadAlbumsListButton;
+
     m_widget->m_currentSelectionButton->setChecked(true);
     if(!m_interface->hasFeature(KIPI::HostSupportsTags))
     		m_exportApplicationTags->setEnabled(false);
     
     m_talker = new PicasawebTalker( this );
-    connect( m_talker, SIGNAL( signalError( const QString& ) ),m_talker,
-             SLOT( slotError( const QString& ) ) );
-    connect( m_talker, SIGNAL( signalBusy( bool ) ),
-             SLOT( slotBusy( bool ) ) );
-    connect( m_talker, SIGNAL( signalAddPhotoSucceeded() ),
-             SLOT( slotAddPhotoSucceeded() ) );
-    connect( m_talker, SIGNAL( signalGetAlbumsListSucceeded() ),
-             SLOT( slotGetAlbumsListSucceeded() ) );
-    connect( m_talker, SIGNAL( signalGetAlbumsListFailed(const QString& msg) ),
-             SLOT( slotGetAlbumsListFailed(const QString& msg) ) );
-    connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
-             SLOT( slotAddPhotoFailed( const QString& ) ) );
-    connect( m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
-            SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ) );
+
+    connect(m_talker, SIGNAL( signalBusy( bool ) ),
+            this, SLOT( slotBusy( bool ) ) );
+
+    connect(m_talker, SIGNAL( signalAddPhotoSucceeded() ),
+            this, SLOT( slotAddPhotoSucceeded() ) );
+
+    connect(m_talker, SIGNAL( signalGetAlbumsListSucceeded() ),
+            this, SLOT( slotGetAlbumsListSucceeded() ) );
+
+    connect(m_talker, SIGNAL( signalGetAlbumsListFailed(const QString&) ),
+            this, SLOT( slotGetAlbumsListFailed(const QString&) ) );
+
+    connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
+            this, SLOT( slotAddPhotoFailed( const QString& ) ) );
+
+//    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
+//            this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ) );
 
     m_progressDlg = new QProgressDialog( this, 0, true );
     m_progressDlg->setAutoReset( true );
@@ -498,5 +513,3 @@ void PicasawebWindow::slotAddPhotoCancel()
 }
 
 }
-#include "picasawebwindow.moc"
-

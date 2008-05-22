@@ -1,28 +1,40 @@
 /* ============================================================
- * File  : picasawebwindow.h
- * Author: Vardhman Jain <vardhman @ gmail.com>
- * Date  : 2007-16-07
- * Copyright 2007 by Vardhman Jain <vardhman @ gmail.com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-16-07
+ * Description : a kipi plugin to export images to Picasa web service
+ *
+ * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
+ *
  * ============================================================ */
 
 #ifndef PICASAWEBWINDOW_H
 #define PICASAWEBWINDOW_H
 
-#include <kdialogbase.h>
+// Qt includes.
+
 #include <qvaluelist.h>
 #include <qpair.h>
 #include <qintdict.h>
+
+// KDE includes.
+
+#include <kdialogbase.h>
+
+// Libkipi includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
@@ -30,7 +42,6 @@
 // Local includes
 
 #include "kpaboutdata.h"
-
 
 class QListView;
 class QPushButton;
@@ -69,57 +80,59 @@ class PicasawebWindow : public KDialogBase
 public:
 
     PicasawebWindow(KIPI::Interface *interface, const QString &tmpFolder,QWidget *parent);
-    void getToken(QString& username, QString& password);
     ~PicasawebWindow();
+
+    void getToken(QString& username, QString& password);
 
 private:
 
-    QListView                *m_tagView;
-    KHTMLPart                *m_photoView;
+    QListView                               *m_tagView;
+    KHTMLPart                               *m_photoView;
   
-    QPushButton              *m_newAlbumButton;
-    QSpinBox                 *m_dimensionSpinBox;
-    QSpinBox                 *m_imageQualitySpinBox;
-    QPushButton              *m_addPhotoButton;
-    QPushButton              *m_helpButton;
+    QPushButton                             *m_newAlbumButton;
+    QSpinBox                                *m_dimensionSpinBox;
+    QSpinBox                                *m_imageQualitySpinBox;
+    QPushButton                             *m_addPhotoButton;
+    QPushButton                             *m_helpButton;
     
-    QCheckBox                *m_resizeCheckBox;
-    QLineEdit                *m_tagsLineEdit;
-	QCheckBox			     *m_exportApplicationTags;
-	QPushButton              *m_startUploadButton;
-    QPushButton              *m_reloadAlbumsListButton;
-    PicasawebWidget	         *m_widget;
-    PicasawebTalker          *m_talker;
-    QIntDict<GAlbumViewItem>  m_albumDict;
-    QComboBox                  *m_albumsListComboBox;
-    QString                   m_token;
-	QString					  m_username;
-	QString 				  m_userId;
-    QString                   m_lastSelectedAlbum;
-    KIPI::Interface          *m_interface;
-	QString 				  m_tmp;
-	QLabel 					  *m_userNameDisplayLabel;
-    //KWallet::Wallet          *m_wallet;
-	QPushButton				 *m_changeUserButton;
-    KURL::List               *m_urls;
-    QProgressDialog                      *m_progressDlg;
-    QProgressDialog                      *m_authProgressDlg;
-    unsigned int                          m_uploadCount;
-    unsigned int                          m_uploadTotal;
+    QCheckBox                               *m_resizeCheckBox;
+    QLineEdit                               *m_tagsLineEdit;
+	QCheckBox			                    *m_exportApplicationTags;
+	QPushButton                             *m_startUploadButton;
+    QPushButton                             *m_reloadAlbumsListButton;
+    PicasawebWidget	                        *m_widget;
+    PicasawebTalker                         *m_talker;
+    QIntDict<GAlbumViewItem>                 m_albumDict;
+    QComboBox                               *m_albumsListComboBox;
+    QString                                  m_token;
+	QString					                 m_username;
+	QString 				                 m_userId;
+    QString                                  m_lastSelectedAlbum;
+    KIPI::Interface                         *m_interface;
+	QString 			                     m_tmp;
+	QLabel 				               	    *m_userNameDisplayLabel;
+//  KWallet::Wallet                         *m_wallet;
+	QPushButton			               	    *m_changeUserButton;
+    KURL::List                              *m_urls;
+    QProgressDialog                         *m_progressDlg;
+    QProgressDialog                         *m_authProgressDlg;
+    unsigned int                             m_uploadCount;
+    unsigned int                             m_uploadTotal;
     QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
     KIPIPlugins::KPAboutData    *m_about; 
 
 private slots:
+
     void slotTokenObtained(const QString& token);
     void slotDoLogin();
-    //void slotLoginFailed( const QString& msg );
+//  void slotLoginFailed( const QString& msg );
     void slotBusy( bool val );
     void slotError( const QString& msg );
-  //  void slotAlbums( const QValueList<GAlbum>& albumList );
-  //  void slotPhotos( const QValueList<GPhoto>& photoList );
-  //  void slotTagSelected();
-    //void slotOpenPhoto( const KURL& url );
+//  void slotAlbums( const QValueList<GAlbum>& albumList );
+//  void slotPhotos( const QValueList<GPhoto>& photoList );
+//  void slotTagSelected();
+//  void slotOpenPhoto( const KURL& url );
     void slotUpdateAlbumsList();
     void slotUserChangeRequest();
     void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
@@ -135,11 +148,13 @@ private slots:
     void slotGetAlbumsListSucceeded();
     void slotGetAlbumsListFailed(const QString& msg);
     void slotRefreshSizeButtons(bool);
-    //void slotHandleLogin();
+//  void slotHandleLogin();
+
 protected:
+
     void slotClose();
 };
 
-}
+} // namespace KIPIPicasawebExportPlugin
 
 #endif /* PICASAWEBWINDOW_H */
