@@ -45,6 +45,7 @@
 
 class QListView;
 class QPushButton;
+class QRadioButton;
 class QSpinBox;
 class QCheckBox;
 class QProgressDialog;
@@ -97,7 +98,7 @@ private:
     
     QCheckBox                               *m_resizeCheckBox;
     QLineEdit                               *m_tagsLineEdit;
-	QCheckBox			                    *m_exportApplicationTags;
+	QRadioButton			                    *m_exportApplicationTags;
 	QPushButton                             *m_startUploadButton;
     QPushButton                             *m_reloadAlbumsListButton;
     PicasawebWidget	                        *m_widget;

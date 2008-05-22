@@ -409,8 +409,9 @@ void PicasawebWindow::slotUploadImages(){
 		QMap <QString, QVariant> attribs = info.attributes();
 		QStringList tagsFromDatabase;
 		
-		if(m_interface->hasFeature(KIPI::HostSupportsTags) &&  m_exportApplicationTags->isChecked()){
-		//	tagsFromDatabase=attribs["tags"].asStringList();	
+		if(m_exportApplicationTags->isChecked())
+        {
+		  // tagsFromDatabase=attribs["tags"].asStringList();	
 		}
 		
 		itTags = tagsFromDatabase.begin();

@@ -54,7 +54,7 @@ private:
     KHTMLPart*    m_photoView;
     //QCheckBox*    m_resizeCheckBox;
 	QButtonGroup* m_fileSrcButtonGroup;
-	QCheckBox*    m_exportApplicationTags;
+//	QCheckBox*    m_exportApplicationTags;
 	friend class PicasawebWindow;
 };
 
