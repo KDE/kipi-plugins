@@ -22,7 +22,7 @@
  * ============================================================ */
 
 // Qt includes.
- 
+
 #include <qlistview.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
@@ -113,7 +113,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     m_widget = new PicasawebWidget(this);//new PicasawebWidget( this );
     setMainWidget( m_widget );
     m_widget->setMinimumSize( 600, 400 );
-    
+
     m_urls                   = NULL;
     m_tagView                = m_widget->m_tagView;
     m_photoView              = m_widget->m_photoView;
@@ -131,9 +131,10 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     m_reloadAlbumsListButton = m_widget->m_reloadAlbumsListButton;
 
     m_widget->m_currentSelectionButton->setChecked(true);
+
     if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    		m_exportApplicationTags->setEnabled(false);
-    
+        m_exportApplicationTags->setEnabled(false);
+
     m_talker = new PicasawebTalker( this );
 
     connect(m_talker, SIGNAL( signalBusy( bool ) ),
@@ -182,7 +183,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
     //no saving password rt now
     if (config.readBoolEntry("Resize", false))
         m_resizeCheckBox->setChecked(true);
-   
+
    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
    m_authProgressDlg = new QProgressDialog( this, 0, true );
@@ -192,30 +193,36 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface,const QString &tmpFo
              SLOT( slotAuthCancel() ) );
    m_talker->authProgressDlg=m_authProgressDlg; 
    m_widget->setEnabled(false); 
+
   // All these three values can be null too.
   // If m_token is ot null, username would be not null too.
   // if (!(!m_token || m_token.length() < 1))
       //getToken(username, password);
+
   m_talker->authenticate(m_token, username, password);
 }
 
-void PicasawebWindow::slotRefreshSizeButtons(bool st){
-    if(m_resizeCheckBox->isChecked()){
+void PicasawebWindow::slotRefreshSizeButtons(bool st)
+{
+    if(m_resizeCheckBox->isChecked())
+    {
         m_dimensionSpinBox->setEnabled(true);
         m_imageQualitySpinBox->setEnabled(true);
     }
-    else {
+    else 
+    {
         m_dimensionSpinBox->setEnabled(false);
         m_imageQualitySpinBox->setEnabled(false);
     }
 }
 
-void PicasawebWindow::slotUpdateAlbumsList(){
+void PicasawebWindow::slotUpdateAlbumsList()
+{
     m_talker->listAlbums();
 }
 
-
-void PicasawebWindow::slotClose(){
+void PicasawebWindow::slotClose()
+{
     //handle the close of the window that is calling the destructor.
     delete this;
 }
@@ -235,9 +242,11 @@ PicasawebWindow::~PicasawebWindow()
     config.writeEntry("Resize", m_resizeCheckBox->isChecked());
     config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
     config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
+
     if(m_urls!=NULL)
-		delete m_urls;
-	delete m_progressDlg;
+        delete m_urls;
+
+    delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;
@@ -245,30 +254,36 @@ PicasawebWindow::~PicasawebWindow()
     delete m_about;
 }
 
-void PicasawebWindow::getToken(QString& username, QString& password){
-		PicasawebLogin *loginDialog = new PicasawebLogin(this, QString("LoginWindow"), username, password);
-        if (!loginDialog){
-            return;
+void PicasawebWindow::getToken(QString& username, QString& password)
+{
+    PicasawebLogin *loginDialog = new PicasawebLogin(this, QString("LoginWindow"), username, password);
+    if (!loginDialog)
+    {
+        return;
+    }
+
+    /*if (username!=NULL && username.length() > 0){
+        kdDebug()<<"Showing stored username"<< username << endl;
+        loginDialog->setUsername(username);
+        if (password != NULL && password.length() > 0){
+            kdDebug()<<"Showing stored password"<< password << endl;
+            loginDialog->setPassword(password);
+            kdDebug()<<"Showing stored password"<< password << endl;
         }
-        /*if (username!=NULL && username.length() > 0){
-            kdDebug()<<"Showing stored username"<< username << endl;
-            loginDialog->setUsername(username);
-            if (password != NULL && password.length() > 0){
-                kdDebug()<<"Showing stored password"<< password << endl;
-                loginDialog->setPassword(password);
-                kdDebug()<<"Showing stored password"<< password << endl;
-            }
-        }*/
-            
-		QString username_edit, password_edit;
-		if (loginDialog->exec() == QDialog::Accepted){
-			username_edit = loginDialog->username();
-			password_edit = loginDialog->password();
-		}
-		else {
-			//Return something which say authentication needed.
-			return ;
-		}
+    }*/
+
+    QString username_edit, password_edit;
+
+    if (loginDialog->exec() == QDialog::Accepted)
+    {
+        username_edit = loginDialog->username();
+        password_edit = loginDialog->password();
+    }
+    else 
+    {
+        //Return something which say authentication needed.
+        return ;
+    }
 }
 
 void PicasawebWindow::slotHelp()
@@ -276,12 +291,16 @@ void PicasawebWindow::slotHelp()
     KApplication::kApplication()->invokeHelp("picasawebexport", "kipi-plugins");
 }
 
-void PicasawebWindow::slotGetAlbumsListSucceeded(){
-    if (m_talker && m_talker->m_albumsList){
+void PicasawebWindow::slotGetAlbumsListSucceeded()
+{
+    if (m_talker && m_talker->m_albumsList)
+    {
         QValueList <PicasaWebAlbum> *list = m_talker->m_albumsList;
         m_albumsListComboBox->clear();
         QValueList<PicasaWebAlbum>::iterator it = list->begin();
-        while(it != list->end()){
+
+        while(it != list->end())
+        {
             PicasaWebAlbum pwa=*it;
             QString name = pwa.title;
             m_albumsListComboBox->insertItem(name);
@@ -293,14 +312,17 @@ void PicasawebWindow::slotGetAlbumsListSucceeded(){
 void PicasawebWindow::slotDoLogin()
 {
 }
-void PicasawebWindow::slotTokenObtained( const QString& token ){
-	m_token=token;
-	m_username=m_talker->getUserName();
-	m_userId=m_talker->getUserId();
-	m_userNameDisplayLabel->setText(m_username);
-	m_widget->setEnabled(true);
+
+void PicasawebWindow::slotTokenObtained( const QString& token )
+{
+    m_token=token;
+    m_username=m_talker->getUserName();
+    m_userId=m_talker->getUserId();
+    m_userNameDisplayLabel->setText(m_username);
+    m_widget->setEnabled(true);
     m_talker->listAlbums();
 }
+
 void PicasawebWindow::slotBusy( bool val )
 {
     if ( val )
@@ -315,34 +337,43 @@ void PicasawebWindow::slotBusy( bool val )
 
 void PicasawebWindow::slotError( const QString& msg )
 {
-    KMessageBox::error( this, msg );
+    KMessageBox::error(this, msg);
 }
-void PicasawebWindow::slotUserChangeRequest(){
-	kdDebug()<<"Slot Change User Request "<<endl;
-	m_talker->authenticate();
+
+void PicasawebWindow::slotUserChangeRequest()
+{
+    kdDebug()<<"Slot Change User Request "<<endl;
+    m_talker->authenticate();
 }
 
 void PicasawebWindow::slotAuthCancel()
 {	
-	m_talker->cancel();
-	m_authProgressDlg->hide();
+    m_talker->cancel();
+    m_authProgressDlg->hide();
 }
 
 void PicasawebWindow::slotCreateNewAlbum()
 {
-    NewAlbumDialog *dlg=new NewAlbumDialog();
+    NewAlbumDialog *dlg = new NewAlbumDialog(kapp->activeWindow());
     dlg->m_dateAndTimeEdit->setDateTime(QDateTime::currentDateTime());
-    int t = dlg->exec();
     QString test;
-    if( t == QDialog::Accepted){
+    int t = dlg->exec();
+
+    if(t == QDialog::Accepted)
+    {
         if (dlg->m_isPublicRadioButton->isChecked())
             test = QString("public");
-       else
+        else
             test = QString("unlisted");
-        m_talker->createAlbum(dlg->m_titleLineEdit->text(), dlg->m_descriptionTextBox->text(), dlg->m_locationLineEdit->text(),  dlg->m_dateAndTimeEdit->dateTime().toTime_t(), test, QString(""), true);
+
+        m_talker->createAlbum(dlg->m_titleLineEdit->text(), dlg->m_descriptionTextBox->text(),
+                              dlg->m_locationLineEdit->text(), dlg->m_dateAndTimeEdit->dateTime().toTime_t(), 
+                              test, QString(), true);
     }
-    else {
-        if (t== QDialog::Rejected){
+    else 
+    {
+        if (t == QDialog::Rejected)
+        {
             kdDebug()<<"Album Creation cancelled" <<endl;
         }
     }
@@ -370,63 +401,71 @@ void PicasawebWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& ph
 
 void PicasawebWindow::slotAddPhotos()
 {
-	//m_talker->listPhotoSets();
-    m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs( this,
-				m_interface ));
-} 
-void PicasawebWindow::slotUploadImages(){
-   if(m_widget->m_currentSelectionButton->isChecked()){
-	   	 if (m_urls!=NULL)
-			 delete m_urls;
-   	    m_urls=new KURL::List(m_interface->currentSelection().images());
+    //m_talker->listPhotoSets();
+    m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
+}
+
+void PicasawebWindow::slotUploadImages()
+{
+   if(m_widget->m_currentSelectionButton->isChecked())
+   {
+        if (m_urls!=NULL)
+            delete m_urls;
+
+        m_urls=new KURL::List(m_interface->currentSelection().images());
    }
+
    if (m_urls == NULL || m_urls->isEmpty())
         return;
+
     typedef QPair<QString,FPhotoInfo> Pair;
-    
+
     m_uploadQueue.clear();
     for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
         FPhotoInfo temp;
-        
-		temp.title=info.title();
+
+        temp.title=info.title();
         temp.description=info.description();
-		
-		QStringList allTags;
-    	
-		QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false); 
-		QStringList::Iterator itTags;
 
-		//Tags from the interface	
-		itTags= tagsFromDialog.begin();
-		while( itTags != tagsFromDialog.end() ) {
-			allTags.append( *itTags );
-			++itTags;
-		}
+        QStringList allTags;
 
-		//Tags from the database
-		QMap <QString, QVariant> attribs = info.attributes();
-		QStringList tagsFromDatabase;
-		
-		if(m_exportApplicationTags->isChecked())
+        QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false); 
+        QStringList::Iterator itTags;
+
+        //Tags from the interface	
+        itTags= tagsFromDialog.begin();
+        while( itTags != tagsFromDialog.end() ) 
         {
-		  // tagsFromDatabase=attribs["tags"].asStringList();	
-		}
-		
-		itTags = tagsFromDatabase.begin();
-		while( itTags != tagsFromDatabase.end() ) {
-			allTags.append( *itTags );
-			++itTags;
-		}
-	
-		
-		itTags = allTags.begin();
-		
-		while( itTags != allTags.end() ) {
-			++itTags;
-		}
-		temp.tags=allTags; 
+            allTags.append( *itTags );
+            ++itTags;
+        }
+
+        //Tags from the database
+        QMap <QString, QVariant> attribs = info.attributes();
+        QStringList tagsFromDatabase;
+
+        if(m_exportApplicationTags->isChecked())
+        {
+            // tagsFromDatabase=attribs["tags"].asStringList();	
+        }
+
+        itTags = tagsFromDatabase.begin();
+        while( itTags != tagsFromDatabase.end() ) 
+        {
+            allTags.append( *itTags );
+            ++itTags;
+        }
+
+        itTags = allTags.begin();
+
+        while( itTags != allTags.end() ) 
+        {
+            ++itTags;
+        }
+
+        temp.tags=allTags; 
         m_uploadQueue.append( Pair( (*it).path(), temp) );
     }
 
@@ -445,16 +484,17 @@ void PicasawebWindow::slotAddPhotoNext()
         //slotAlbumSelected();
         return;
     }
+
     typedef QPair<QString,FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info=pathComments.second;
     m_uploadQueue.pop_front();
     int upload_image_size;
     int upload_image_quality;
-    
+
     bool res = m_talker->addPhoto( pathComments.first, //the file path
                                    info, m_albumsListComboBox->currentText(),
-				                   m_resizeCheckBox->isChecked(),
+                                   m_resizeCheckBox->isChecked(),
                                    m_dimensionSpinBox->value(), m_imageQualitySpinBox->value() );
     if (!res)
     {
@@ -474,7 +514,6 @@ void PicasawebWindow::slotAddPhotoSucceeded()
     m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
     slotAddPhotoNext();
 }
-
 
 void PicasawebWindow::slotAddPhotoFailed( const QString& msg )
 {
@@ -500,7 +539,6 @@ void PicasawebWindow::slotGetAlbumsListFailed( const QString& msg ){
     // Raise some errors
 }
 
-
 void PicasawebWindow::slotAddPhotoCancel()
 {
     m_uploadQueue.clear();
@@ -508,9 +546,9 @@ void PicasawebWindow::slotAddPhotoCancel()
     m_progressDlg->hide();
 
     m_talker->cancel();
-    
+
     // refresh the thumbnails
     //slotTagSelected();
 }
 
-}
+} // namespace KIPIPicasawebExportPlugin

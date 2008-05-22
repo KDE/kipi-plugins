@@ -87,40 +87,53 @@ public:
 
 private:
 
-    QListView                               *m_tagView;
-    KHTMLPart                               *m_photoView;
-  
-    QPushButton                             *m_newAlbumButton;
-    QSpinBox                                *m_dimensionSpinBox;
-    QSpinBox                                *m_imageQualitySpinBox;
-    QPushButton                             *m_addPhotoButton;
-    QPushButton                             *m_helpButton;
-    
-    QCheckBox                               *m_resizeCheckBox;
-    QLineEdit                               *m_tagsLineEdit;
-	QRadioButton			                    *m_exportApplicationTags;
-	QPushButton                             *m_startUploadButton;
-    QPushButton                             *m_reloadAlbumsListButton;
-    PicasawebWidget	                        *m_widget;
-    PicasawebTalker                         *m_talker;
-    QIntDict<GAlbumViewItem>                 m_albumDict;
-    QComboBox                               *m_albumsListComboBox;
-    QString                                  m_token;
-	QString					                 m_username;
-	QString 				                 m_userId;
-    QString                                  m_lastSelectedAlbum;
-    KIPI::Interface                         *m_interface;
-	QString 			                     m_tmp;
-	QLabel 				               	    *m_userNameDisplayLabel;
-//  KWallet::Wallet                         *m_wallet;
-	QPushButton			               	    *m_changeUserButton;
-    KURL::List                              *m_urls;
-    QProgressDialog                         *m_progressDlg;
-    QProgressDialog                         *m_authProgressDlg;
     unsigned int                             m_uploadCount;
     unsigned int                             m_uploadTotal;
+
+    QListView                               *m_tagView;
+
+    QSpinBox                                *m_dimensionSpinBox;
+    QSpinBox                                *m_imageQualitySpinBox;
+
+    QPushButton                             *m_newAlbumButton;
+    QPushButton                             *m_addPhotoButton;
+    QPushButton                             *m_helpButton;
+    QPushButton                             *m_startUploadButton;
+    QPushButton                             *m_reloadAlbumsListButton;
+    QPushButton                             *m_changeUserButton;
+
+    QString                                  m_tmp;
+    QString                                  m_token;
+    QString                                  m_username;
+    QString                                  m_userId;
+    QString                                  m_lastSelectedAlbum;
+
+    QCheckBox                               *m_resizeCheckBox;
+
+    QLineEdit                               *m_tagsLineEdit;
+
+    QRadioButton                            *m_exportApplicationTags;
+
+    QProgressDialog                         *m_progressDlg;
+    QProgressDialog                         *m_authProgressDlg;
+
+    QComboBox                               *m_albumsListComboBox;
+
+    QLabel                                  *m_userNameDisplayLabel;
+
+//  KWallet::Wallet                         *m_wallet;
+
+    KHTMLPart                               *m_photoView;
+    KURL::List                              *m_urls;
+
+    PicasawebWidget                         *m_widget;
+    PicasawebTalker                         *m_talker;
+
+    QIntDict<GAlbumViewItem>                 m_albumDict;
+
     QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
+    KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData    *m_about; 
 
 private slots:
@@ -138,7 +151,7 @@ private slots:
     void slotUserChangeRequest();
     void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
-	void slotUploadImages();
+    void slotUploadImages();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed( const QString& msg );
