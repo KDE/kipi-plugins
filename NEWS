@@ -17,7 +17,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
                                       accented characters or a trailing space
 006 ==> 128211 : FlickrExport       : "Ok" Button in "Add Photos" shouldn't fire upload directly.
 007 ==> 159081 : FlickrExport       : Upload to Flickr not working.
-008 ==> 
+008 ==> 162096 : FlickrExport       : When selecting all photos reverses the order.
+009 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
