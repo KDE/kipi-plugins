@@ -100,7 +100,6 @@ QString FlickrTalker::getApiSig(const QString& secret, const KURL& url)
 
     // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
     for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
-
     {
         compressed.append(it.key());
         compressed.append(it.data());

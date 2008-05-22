@@ -84,7 +84,7 @@ bool MPForm::addPair(const QString& name, const QString& value)
     str += name.ascii();
     str += "\"";
     str += "\r\n\r\n";
-    str += value.ascii();
+    str += value.utf8();
     str += "\r\n";
 
     //uint oldSize = m_buffer.size();
@@ -93,7 +93,7 @@ bool MPForm::addPair(const QString& name, const QString& value)
 
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << str;
+    ts << QString::fromUtf8(str);
 
     return true;
 }
