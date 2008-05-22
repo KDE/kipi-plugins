@@ -403,13 +403,18 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
         if (exiv2Iface.load(photoPath))
         {
-            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(image.size());
+
+            // NOTE: see B.K.O #153207: Flickr use IPTC keywords to create Tags in web interface
+            //       As IPTC do not support UTF-8, we need to remove it.
+            exiv2Iface.removeIptcTag("Iptc.Application2.Keywords", false);
+
+            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             exiv2Iface.save(path);
         }
         else
         {
-            kdWarning(51000) << "(flickrExport::Image doesn't have exif data)" << endl;
+            kdWarning(51000) << "(flickrExport::Image doesn't have metdata)" << endl;
         }
 
         kdDebug() << "Resizing and saving to temp file: " << path << endl;
