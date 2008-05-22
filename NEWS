@@ -23,7 +23,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 008 ==> 162096 : FlickrExport       : When selecting all photos reverses the order.
 009 ==> 158483 : PicasaWebExport    : Plugin cause Digikam crash.
 010 ==> 160453 : PicasaWebExport    : Crashes when exporting to Picasaweb.
-011 ==> 
+011 ==> 155270 : FlickrExport       : Tags with non-Latin characters dropped during image export.
+012 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
