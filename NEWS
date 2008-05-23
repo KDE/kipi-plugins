@@ -26,7 +26,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 011 ==> 155270 : FlickrExport       : Tags with non-Latin characters dropped during image export.
 012 ==> 153207 : FlickrExport       : Without using application tags: Flickr still reads embedded metadata into tags.
 013 ==> 153206 : FlickrExport       : Provide option to remove spaces in tags during export.
-014 ==> 
+014 ==> 145149 : FlickrExport       : Flickr uploading from DigiKam does not cache auth data.
+015 ==> 
 
 v 0.1.5
 ---------------------------------------------------------------------------
