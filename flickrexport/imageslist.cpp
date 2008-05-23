@@ -29,6 +29,7 @@
 #include <qfileinfo.h>
 #include <qlayout.h>
 #include <qwhatsthis.h>
+#include <qdragobject.h>
 #include <qimage.h>
 
 // KDE includes.
@@ -101,26 +102,34 @@ ImagesListView::~ImagesListView()
 
 void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
 {
-/*     if (e->mimeData()->hasUrls())
-         e->acceptProposedAction();*/
+    e->accept(QUriDrag::canDecode(e));
 }
 
 void ImagesListView::dropEvent(QDropEvent *e)
 {
-/*    QList<QUrl> list = e->mimeData()->urls();
-    KURL::List  urls;
+    QStrList   strList;
+    KURL::List urls;
 
-    foreach (QUrl url, list)
+    if (!QUriDrag::decode(e, strList)) 
+        return;
+
+    QStrList stringList;
+    QStrListIterator it(strList);
+    char *str;
+
+    while ((str = it.current()) != 0)
     {
-        QFileInfo fi(url.path());
-        if (fi.isFile() && fi.exists())
-            urls.append(KURL(url));
+        QString filePath = QUriDrag::uriToLocalFile(str);
+        QFileInfo fileInfo(filePath);
+
+        if (fileInfo.isFile() && fileInfo.exists())
+            urls.append(fileInfo.filePath());
+
+        ++it;
     }
 
-    e->acceptProposedAction();
-
     if (!urls.isEmpty())
-       emit addedDropedItems(urls);*/
+       emit signalDropedItems(urls);
 }
 
 // ---------------------------------------------------------------------------
@@ -192,6 +201,9 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));
+
+    connect(d->listView, SIGNAL(signalDropedItems(const KURL::List&)),
+            this, SLOT(slotAddImages(const KURL::List&)));
 
     // --------------------------------------------------------
 

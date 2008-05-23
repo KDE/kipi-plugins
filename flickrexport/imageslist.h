@@ -58,7 +58,7 @@ public:
 
     void setThumb(const QPixmap& pix);
 
-private: 
+private:
 
     KURL m_url;
 };
@@ -76,7 +76,7 @@ public:
 
 signals:
 
-    void addedDropedItems(const KURL::List& urls);
+    void signalDropedItems(const KURL::List&);
 
 private:
 

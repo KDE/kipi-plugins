@@ -75,8 +75,8 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget */*parent*/)
-            : KDialogBase(0, 0, false, i18n("Export to Flickr Web Service"),
+FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
+            : KDialogBase(parent, 0, false, i18n("Export to Flickr Web Service"),
                           Help|User1|Close, Close, false)
 { 
     m_tmp                    = tmpFolder;
