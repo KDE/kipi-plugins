@@ -1,3 +1,811 @@
+V 0.1.6-beta1 - 2008-05-25
+----------------------------------------------------------------------------
+
+2008-05-25 09:06  cgilles
+
+	* [r812276] kipi-plugins/picasawebexport/picasaweblogin.cpp,
+	  kipi-plugins/picasawebexport/picasawebtalker.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp:
+	  polish
+
+2008-05-23 19:14  cgilles
+
+	* [r811829] kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  add Drag & Drop support
+
+2008-05-23 17:41  cgilles
+
+	* [r811797]
+	  kipi-plugins/picasawebexport/PicasawebNewAlbumDialog.ui.h:
+	  auto build file. no need to store it to svn
+
+2008-05-23 05:00  cgilles
+
+	* [r811458] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 20:41  cgilles
+
+	* [r811388] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  disable host tags support if necessary
+
+2008-05-22 20:38  cgilles
+
+	* [r811385] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 20:37  cgilles
+
+	* [r811384] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  added new option to strip white space from host applications
+	  tags.
+	  BUGS: 153206
+
+2008-05-22 20:16  cgilles
+
+	* [r811371] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 20:15  cgilles
+
+	* [r811370] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  remove IPTC keywords from file to upload to prevent dupplicate
+	  Tags entries in Flickr web interface
+	  BUGS: 153207
+
+2008-05-22 20:00  cgilles
+
+	* [r811364] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 19:53  cgilles
+
+	* [r811360] kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/uploadwidget.ui:
+	  fix layout
+
+2008-05-22 19:31  cgilles
+
+	* [r811352]
+	  kipi-plugins/picasawebexport/PicasawebNewAlbumDialog.ui:
+	  use namespace
+
+2008-05-22 19:23  cgilles
+
+	* [r811351] kipi-plugins/picasawebexport/picasawebwidget.h,
+	  kipi-plugins/picasawebexport/uploadwidget.ui:
+	  use name space
+
+2008-05-22 19:10  cgilles
+
+	* [r811347] kipi-plugins/picasawebexport/newAlbumWindow.cpp,
+	  kipi-plugins/picasawebexport/newAlbumWindow.h:
+	  unused files
+
+2008-05-22 19:08  cgilles
+
+	* [r811345] kipi-plugins/picasawebexport/picasawebitem.cpp:
+	  this file is never used
+
+2008-05-22 19:07  cgilles
+
+	* [r811344] kipi-plugins/picasawebexport/picasawebitem.cpp,
+	  kipi-plugins/picasawebexport/picasawebitem.h:
+	  polish
+
+2008-05-22 19:02  cgilles
+
+	* [r811343] kipi-plugins/picasawebexport/picasaweblogin.cpp,
+	  kipi-plugins/picasawebexport/picasaweblogin.h:
+	  polish
+
+2008-05-22 18:57  cgilles
+
+	* [r811342] kipi-plugins/picasawebexport/picasawebviewitem.cpp,
+	  kipi-plugins/picasawebexport/picasawebviewitem.h:
+	  polish
+
+2008-05-22 18:53  cgilles
+
+	* [r811340] kipi-plugins/picasawebexport/picasawebwidget.cpp,
+	  kipi-plugins/picasawebexport/picasawebwidget.h,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp:
+	  polish, fox header, fix coding style
+
+2008-05-22 18:45  cgilles
+
+	* [r811336] kipi-plugins/picasawebexport/mpform.cpp,
+	  kipi-plugins/picasawebexport/mpform.h:
+	  polish
+
+2008-05-22 18:23  cgilles
+
+	* [r811301] kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.h:
+	  polish
+
+2008-05-22 14:40  cgilles
+
+	* [r811190] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 14:37  cgilles
+
+	* [r811187] kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.h:
+	  use active window
+
+2008-05-22 14:15  cgilles
+
+	* [r811176] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 13:56  cgilles
+
+	* [r811168] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 13:38  cgilles
+
+	* [r811162] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 12:30  cgilles
+
+	* [r811145] kipi-plugins/picasawebexport/picasawebtalker.cpp:
+	  support RAW file preview.
+
+2008-05-22 10:45  cgilles
+
+	* [r811120] kipi-plugins/NEWS:
+	  update
+
+2008-05-22 10:36  cgilles
+
+	* [r811118] kipi-plugins/picasawebexport/picasawebwidget.h,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.h:
+	  fix crash
+
+2008-05-22 10:25  cgilles
+
+	* [r811112] kipi-plugins/picasawebexport/picasawebtalker.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.cpp,
+	  kipi-plugins/picasawebexport/picasawebwindow.h:
+	  fix broken signals
+
+2008-05-22 10:13  cgilles
+
+	* [r811106] kipi-plugins/picasawebexport/picasawebtalker.cpp:
+	  use active window
+
+2008-05-22 10:09  cgilles
+
+	* [r811104] kipi-plugins/picasawebexport/Makefile.am,
+	  kipi-plugins/picasawebexport/exifrestorer.cpp,
+	  kipi-plugins/picasawebexport/exifrestorer.h,
+	  kipi-plugins/picasawebexport/jpegsection.h,
+	  kipi-plugins/picasawebexport/picasawebtalker.cpp,
+	  kipi-plugins/picasawebexport/picasawebtalker.h:
+	  use libkexiv2 instead ExifRestorer
+
+2008-05-22 09:55  cgilles
+
+	* [r811098] kipi-plugins/picasawebexport/Makefile.am:
+	  link with libkdcraw and libkexiv2
+
+2008-05-22 09:11  cgilles
+
+	* [r811092] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  polish
+
+2008-05-22 09:09  cgilles
+
+	* [r811091] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  added tooltip
+
+2008-05-22 09:01  cgilles
+
+	* [r811090] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/mpform.cpp:
+	  apply MPForm class utf-8 support patch from HJ D Lee.
+	  
+	  Work for me. indeep tests are require especially with
+	  asian/greek/arab/etc... charsets.
+	  
+	  CCBUGS: 155270
+
+2008-05-22 08:51  cgilles
+
+	* [r811089] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h:
+	  polish
+
+2008-05-22 08:47  cgilles
+
+	* [r811088] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  fix layout. Polish again and again and again
+
+2008-05-22 08:38  cgilles
+
+	* [r811087] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  toogle to list of items during dowload
+
+2008-05-22 08:29  cgilles
+
+	* [r811085] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h,
+	  kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  when an image is uploaded to Flickr, remove item from the list
+
+2008-05-22 07:54  cgilles
+
+	* [r811074] kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h,
+	  kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  enable/disable upload button is list is empty or not
+
+2008-05-21 20:12  cgilles
+
+	* [r810906] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h,
+	  kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  enable image list in dialog. fully suitable now
+
+2008-05-21 17:55  cgilles
+
+	* [r810839] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/imageslist.cpp:
+	  polish
+
+2008-05-21 17:47  cgilles
+
+	* [r810837] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/imageslist.cpp:
+	  polish
+
+2008-05-21 14:44  cgilles
+
+	* [r810758] kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  fix namespace
+
+2008-05-21 14:42  cgilles
+
+	* [r810757] kipi-plugins/flickrexport/Makefile.am,
+	  kipi-plugins/flickrexport/imageslist.cpp,
+	  kipi-plugins/flickrexport/imageslist.h:
+	  new image list widget. not yet suitable.
+
+2008-05-21 13:41  cgilles
+
+	* [r810741] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  use KTabWidget to separate uploading options and files list
+
+2008-05-21 13:02  cgilles
+
+	* [r810730] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  polish
+
+2008-05-21 12:57  cgilles
+
+	* [r810727] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  polish
+
+2008-05-21 12:35  cgilles
+
+	* [r810724] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-21 12:22  cgilles
+
+	* [r810720] kipi-plugins/flickrexport/mpform.cpp:
+	  polish
+
+2008-05-21 12:12  cgilles
+
+	* [r810718] kipi-plugins/flickrexport/mpform.cpp,
+	  kipi-plugins/flickrexport/mpform.h:
+	  polish
+
+2008-05-21 12:00  cgilles
+
+	* [r810715] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  getPhotoProperty method use getApiSig method based on KURL
+
+2008-05-21 11:25  cgilles
+
+	* [r810706] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  listPhotoSets method use getApiSig method based on KURL
+
+2008-05-21 11:15  cgilles
+
+	* [r810703] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  slotAuthenticate method use getApiSig method based on KURL
+
+2008-05-21 11:10  cgilles
+
+	* [r810700] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  checkToken method use getApiSig method based on KURL
+
+2008-05-21 11:06  cgilles
+
+	* [r810696] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h:
+	  getFrob method use getApiSig method based on KURL
+
+2008-05-21 10:40  cgilles
+
+	* [r810688] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  polish
+
+2008-05-21 10:39  cgilles
+
+	* [r810686] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h:
+	  add link to flickr
+
+2008-05-21 10:01  cgilles
+
+	* [r810683] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-21 09:07  cgilles
+
+	* [r810652] kipi-plugins/NEWS:
+	  update
+
+2008-05-21 09:05  cgilles
+
+	* [r810651] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  kipi-plugins from KDE3 branch : FlickrExport tool : UTF-8 support
+	  - Use KURL to host addPhoto url
+	  - new method to compute MD5 signature based on KURL.
+	  
+	  I have tested to upload photo using accentuate char from Tags or
+	  comments. Now all work fine.
+	  
+	  BUGS: 153758
+	  CCBUGS: 155270
+
+2008-05-21 04:39  cgilles
+
+	* [r810603] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  polish
+
+2008-05-21 04:32  cgilles
+
+	* [r810600] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  polish
+
+2008-05-20 20:11  cgilles
+
+	* [r810472] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp:
+	  add button icons
+
+2008-05-20 19:58  cgilles
+
+	* [r810467] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  set icon on button
+
+2008-05-20 17:34  cgilles
+
+	* [r810414] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp:
+	  fix memory leak. there is 2 instance of authorization dialog
+	  created at the same time
+
+2008-05-20 17:14  cgilles
+
+	* [r810408] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  use active window to open message box
+
+2008-05-20 17:02  cgilles
+
+	* [r810405] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  save and restore all dialog settings
+
+2008-05-20 16:39  cgilles
+
+	* [r810396] kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  polish
+
+2008-05-20 14:56  cgilles
+
+	* [r810368] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  polish
+
+2008-05-20 13:56  cgilles
+
+	* [r810343] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  polish
+
+2008-05-20 13:49  cgilles
+
+	* [r810336] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  polish
+
+2008-05-20 13:46  cgilles
+
+	* [r810334] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 13:44  cgilles
+
+	* [r810332] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 13:15  cgilles
+
+	* [r810311] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 13:05  cgilles
+
+	* [r810304] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  fix layout
+
+2008-05-20 12:58  cgilles
+
+	* [r810302] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  polish
+
+2008-05-20 12:57  cgilles
+
+	* [r810301] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  fix API
+
+2008-05-20 12:48  cgilles
+
+	* [r810298] kipi-plugins/NEWS:
+	  update
+
+2008-05-20 12:45  cgilles
+
+	* [r810297] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.cpp:
+	  kipi-plugins from KDE3 branch : severals improvements into
+	  FlickrExport tool:
+	  
+	  - added support RAW files: embeded JPEG preview is used to export
+	  RAW image to Flickr
+	  - all others image formats supported by Qt are properlly drived
+	  now. The uploaded image is always converted to JPEG.
+	  Uploading work with previous implementation _only_ if image been
+	  resized.
+	  - plugin dialog layout rewritten. more suitable.
+	  
+	  BUGS: 154289
+
+2008-05-20 11:41  cgilles
+
+	* [r810283] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 09:56  cgilles
+
+	* [r810247] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h:
+	  polish
+
+2008-05-20 09:53  cgilles
+
+	* [r810243] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  fix layout
+
+2008-05-20 09:48  cgilles
+
+	* [r810238] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  optimize layout
+
+2008-05-20 09:31  cgilles
+
+	* [r810231] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  fix layout
+
+2008-05-20 09:23  cgilles
+
+	* [r810225] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  fix spacing
+
+2008-05-20 09:05  cgilles
+
+	* [r810212] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  polish
+
+2008-05-20 08:57  cgilles
+
+	* [r810198] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  polish
+
+2008-05-20 08:52  cgilles
+
+	* [r810194] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 08:25  cgilles
+
+	* [r810185] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  polish
+
+2008-05-20 08:23  cgilles
+
+	* [r810184] kipi-plugins/flickrexport/flickrwindow.cpp:
+	  NULL => 0
+
+2008-05-20 08:13  cgilles
+
+	* [r810181] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  start to polish plugin GUI : move "Satrt Uploading" button to
+	  dialog footer
+
+2008-05-20 08:04  cgilles
+
+	* [r810178] kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  fix i18n. polish
+
+2008-05-20 07:57  cgilles
+
+	* [r810175]
+	  kipi-plugins/picasawebexport/plugin_picasawebexport.cpp,
+	  kipi-plugins/picasawebexport/plugin_picasawebexport.h:
+	  use icon
+
+2008-05-20 07:56  cgilles
+
+	* [r810174] kipi-plugins/flickrexport/plugin_flickrexport.cpp,
+	  kipi-plugins/flickrexport/plugin_flickrexport.h:
+	  polish
+
+2008-05-20 07:29  cgilles
+
+	* [r810169] kipi-plugins/flickrexport/plugin_flickrexport.cpp:
+	  polish
+
+2008-05-20 07:24  cgilles
+
+	* [r810168] kipi-plugins/flickrexport/plugin_flickrexport.cpp:
+	  use icon
+
+2008-05-20 07:21  cgilles
+
+	* [r810167] kipi-plugins/flickrexport/flickrwidget.cpp:
+	  polish
+
+2008-05-20 06:44  cgilles
+
+	* [r810155] kipi-plugins/flickrexport/flickrviewitem.cpp,
+	  kipi-plugins/flickrexport/flickrviewitem.h:
+	  polish
+
+2008-05-20 06:38  cgilles
+
+	* [r810154] kipi-plugins/flickrexport/flickrviewitem.cpp,
+	  kipi-plugins/flickrexport/flickrviewitem.h:
+	  fix coding style
+
+2008-05-20 06:34  cgilles
+
+	* [r810153] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  polish
+
+2008-05-20 06:19  cgilles
+
+	* [r810150] kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h:
+	  polish
+
+2008-05-20 06:08  cgilles
+
+	* [r810149] kipi-plugins/flickrexport/mpform.cpp,
+	  kipi-plugins/flickrexport/mpform.h,
+	  kipi-plugins/flickrexport/plugin_flickrexport.cpp,
+	  kipi-plugins/flickrexport/plugin_flickrexport.h:
+	  polish
+
+2008-05-20 06:06  cgilles
+
+	* [r810148] kipi-plugins/flickrexport/login.cpp,
+	  kipi-plugins/flickrexport/login.h:
+	  polish
+
+2008-05-20 06:02  cgilles
+
+	* [r810147] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  polish
+
+2008-05-20 05:54  cgilles
+
+	* [r810146] kipi-plugins/flickrexport/flickritem.h:
+	  fix coding style
+
+2008-05-19 21:27  cgilles
+
+	* [r810018] kipi-plugins/flickrexport/flickrtalker.cpp:
+	  fix coding style
+
+2008-05-19 21:09  cgilles
+
+	* [r810000] kipi-plugins/flickrexport/ChangeLog,
+	  kipi-plugins/flickrexport/Makefile.am,
+	  kipi-plugins/flickrexport/exifrestorer.cpp,
+	  kipi-plugins/flickrexport/exifrestorer.h,
+	  kipi-plugins/flickrexport/flickrtalker.cpp,
+	  kipi-plugins/flickrexport/flickrtalker.h,
+	  kipi-plugins/flickrexport/jpegsection.h:
+	  do not use ExifRestorer. use Kexiv2 instead
+
+2008-05-19 20:44  cgilles
+
+	* [r809992] kipi-plugins/flickrexport/flickrwidget.cpp,
+	  kipi-plugins/flickrexport/flickrwidget.h,
+	  kipi-plugins/flickrexport/flickrwindow.cpp,
+	  kipi-plugins/flickrexport/flickrwindow.h:
+	  fix header
+	  fix coding style
+	  fix moc includes
+
+2008-05-19 20:13  cgilles
+
+	* [r809975] kipi-plugins/flickrexport/login.cpp,
+	  kipi-plugins/flickrexport/login.h,
+	  kipi-plugins/flickrexport/mpform.cpp,
+	  kipi-plugins/flickrexport/mpform.h,
+	  kipi-plugins/flickrexport/plugin_flickrexport.cpp,
+	  kipi-plugins/flickrexport/plugin_flickrexport.h:
+	  fix header
+	  fix coding style
+	  fix moc includes
+
+2008-05-15 13:53  cgilles
+
+	* [r808044] kipi-plugins/jpeglossless/utils.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.cpp:
+	  set IPTC preview size to 1280x1024 instead 800x600
+
+2008-05-07 12:10  cgilles
+
+	* [r805033] kipi-plugins/jpeglossless/transupp.cpp:
+	  polish
+
+2008-05-07 11:55  cgilles
+
+	* [r805027] kipi-plugins/jpeglossless/transupp.cpp:
+	  polish
+
+2008-05-06 21:28  mueller
+
+	* [r804757] kipi-plugins/picasawebexport/picasaweblogin.cpp,
+	  kipi-plugins/picasawebexport/picasaweblogin.h:
+	  those are setters, and not returning anything
+
+2008-05-06 21:27  mueller
+
+	* [r804756] kipi-plugins/slideshow/screenproperties.cpp:
+	  always return at least something
+
+2008-05-02 06:56  cgilles
+
+	* [r803158] kipi-plugins/README:
+	  update
+
+2008-03-18 20:46  cgilles
+
+	* [r787235] kipi-plugins/mpegencoder/plugin_mpegencoder.cpp:
+	  fix action type from host
+
+2008-03-18 20:44  cgilles
+
+	* [r787234] kipi-plugins/ipodexport/plugin_ipodexport.cpp:
+	  fix icon and action type from host
+
+2008-03-18 18:34  cgilles
+
+	* [r787182] kipi-plugins/kipi-plugins.lsm:
+	  update
+
+2008-03-18 18:33  cgilles
+
+	* [r787181] kipi-plugins/common/include/pluginsversion.h:
+	  update
+
+2008-03-18 12:02  cgilles
+
+	* [r786982] kipi-plugins/NEWS:
+	  update
+
+2008-03-17 11:13  cgilles
+
+	* [r786550] kipi-plugins/NEWS:
+	  update
+
+2008-03-17 11:12  cgilles
+
+	* [r786549] kipi-plugins/rawconverter/rawdecodingiface.cpp,
+	  kipi-plugins/rawconverter/rawdecodingiface.h:
+	  kipi-plugins from KD3 branch : RAWConverter : use 99 compression
+	  level instead 100 with output JPEG images
+
+2008-03-17 10:55  cgilles
+
+	* [r786533] kipi-plugins/imagesgallery:
+	  remove obsolete plugin
+
+2008-03-16 21:19  cgilles
+
+	* [r786367] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  polish
+
+2008-03-16 21:14  cgilles
+
+	* [r786365] kipi-plugins/NEWS:
+	  update
+
+2008-03-16 21:12  cgilles
+
+	* [r786363] kipi-plugins/timeadjust/timeadjustdialog.cpp,
+	  kipi-plugins/timeadjust/timeadjustdialog.h:
+	  kipi-plugins from KDE3 branch : TimeAdjust : set all Exif Date
+	  tags as excepted
+	  BUG: 149890
+
+2008-03-16 20:56  cgilles
+
+	* [r786355] kipi-plugins/timeadjust/timeadjustdialog.cpp:
+	  kipi-plugins from KDE3 branch : TimeAdjust : set file date time
+	  after than Exiv2 play with metadata
+	  CCBUGS: 149890
+
+2008-03-12 21:24  anaselli
+
+	* [r784955] kipi-plugins/configure.in.bot,
+	  kipi-plugins/configure.in.in:
+	  Added libkdcraw 0.1.3 dependency as needed. (Achim Bohnet)
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+----------------------------------------------------------------------------
 V 0.1.5 - 2008-03-09
 ----------------------------------------------------------------------------
 
