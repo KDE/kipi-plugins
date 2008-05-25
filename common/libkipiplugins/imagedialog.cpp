@@ -230,18 +230,12 @@ void ImageDialogPreview::showPreview(const KUrl& url)
             }
         }
 
-        if (make.isEmpty())     make     = unavailable;
-        if (model.isEmpty())    model    = unavailable;
-        if (dateTime.isEmpty()) dateTime = unavailable;
-
-        if (aperture.isEmpty()) aperture = unavailable; 
-        else aperture = i18n("f/%1", aperture);
-
-        if (focalLength.isEmpty()) focalLength = unavailable; 
-        else focalLength = i18n("%1 mm", focalLength);
-
+        if (make.isEmpty())         make         = unavailable;
+        if (model.isEmpty())        model        = unavailable;
+        if (dateTime.isEmpty())     dateTime     = unavailable;
+        if (aperture.isEmpty())     aperture     = unavailable; 
+        if (focalLength.isEmpty())  focalLength  = unavailable; 
         if (exposureTime.isEmpty()) exposureTime = unavailable; 
-        else exposureTime = i18n("1/%1 s", exposureTime);
 
         if (sensitivity.isEmpty()) sensitivity = unavailable; 
         else sensitivity = i18n("%1 ISO", sensitivity);
