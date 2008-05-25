@@ -104,11 +104,11 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 
     // signals and slots connections
 
-    connect(okBtn, SIGNAL( clicked() ),
-            this, SLOT( accept() ) );
+    connect(okBtn, SIGNAL(clicked()),
+            this, SLOT(accept()));
 
-    connect(cancelBtn, SIGNAL( clicked() ),
-            this, SLOT( reject() ) );
+    connect(cancelBtn, SIGNAL(clicked()),
+            this, SLOT(reject()));
 }
 
 PicasawebLogin::~PicasawebLogin()

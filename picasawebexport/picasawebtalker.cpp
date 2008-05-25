@@ -133,24 +133,33 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
             //  kdDebug()<<"Showing stored password"<< password << endl;
         }
     }
-    */    
+    */
+
     QString username_edit, password_edit;
+
     if (!loginDialog)
+    {
         kdDebug()<<" Out of memory error "<< endl;
-    if (loginDialog->exec() == QDialog::Accepted){
+    }
+
+    if (loginDialog->exec() == QDialog::Accepted)
+    {
         username_edit = loginDialog->username();
         password_edit = loginDialog->password();
     }
-    else {
+    else 
+    {
         //Return something which say authentication needed.
         return ;
     }
-    m_username = username_edit;
 
+    m_username    = username_edit;
     username_edit = username;
     QString accountType = "GOOGLE";
+
     if (!(username_edit.endsWith("@gmail.com")))
         username_edit += "@gmail.com";
+
     QByteArray buffer;
     QStringList qsl;
     qsl.append("Email="+username_edit);
@@ -168,10 +177,13 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
     m_state = FE_GETTOKEN;
     authProgressDlg->setLabelText(i18n("Getting the token"));
+
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
     connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+            this, SLOT(slotResult(KIO::Job *)));
+
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -187,7 +199,9 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
                                 //we would need to reauthenticate using auth
     }
     else 
+    {
         getToken(username, password);
+    }
 }
 
 void PicasawebTalker::checkToken(const QString& /*token*/) 
@@ -572,7 +586,6 @@ void PicasawebTalker::slotError(const QString & error)
 
 void PicasawebTalker::slotResult(KIO::Job *job)
 {
-
     m_job = 0;
     emit signalBusy(false);
 
@@ -673,7 +686,7 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
         emit signalError(errorString);
     }
 
-    emit signalBusy( false );
+    emit signalBusy(false);
 }
 
 void PicasawebTalker::getHTMLResponseCode(const QString& /*str*/)
@@ -709,6 +722,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
             QDomNode details=e.firstChild();
             PicasaWebAlbum fps;
             QDomNode detailsNode = details;
+
             while(!detailsNode.isNull())
             {
                 if(detailsNode.isElement())
@@ -836,6 +850,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
     QString title, photo_id, album_id, photoURI; 
     QDomNode node = docElem.firstChild(); //this should mean <entry>
     QDomElement e;
+
     while( !node.isNull() ) 
     {
         if ( node.isElement()) 
@@ -857,6 +872,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
 
         node = node.nextSibling();
     }
+
     if (!success)
     {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));

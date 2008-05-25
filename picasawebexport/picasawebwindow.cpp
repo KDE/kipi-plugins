@@ -137,52 +137,52 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     m_talker = new PicasawebTalker(this);
 
-    connect(m_talker, SIGNAL( signalBusy( bool ) ),
-            this, SLOT( slotBusy( bool ) ) );
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy( bool)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoSucceeded() ),
-            this, SLOT( slotAddPhotoSucceeded() ) );
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+            this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL( signalGetAlbumsListSucceeded() ),
-            this, SLOT( slotGetAlbumsListSucceeded() ) );
+    connect(m_talker, SIGNAL(signalGetAlbumsListSucceeded()),
+            this, SLOT(slotGetAlbumsListSucceeded()));
 
-    connect(m_talker, SIGNAL( signalGetAlbumsListFailed(const QString&) ),
-            this, SLOT( slotGetAlbumsListFailed(const QString&) ) );
+    connect(m_talker, SIGNAL(signalGetAlbumsListFailed(const QString&)),
+            this, SLOT(slotGetAlbumsListFailed(const QString&)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
-            this, SLOT( slotAddPhotoFailed( const QString& ) ) );
+    connect(m_talker, SIGNAL( signalAddPhotoFailed(const QString&)),
+            this, SLOT(slotAddPhotoFailed(const QString&)));
 
 //    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
 //            this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ) );
 
     // ------------------------------------------------------------
 
-    m_progressDlg = new QProgressDialog( this, 0, true );
-    m_progressDlg->setAutoReset( true );
-    m_progressDlg->setAutoClose( true );
+    m_progressDlg = new QProgressDialog(this, 0, true);
+    m_progressDlg->setAutoReset(true);
+    m_progressDlg->setAutoClose(true);
 
-    connect(m_progressDlg, SIGNAL( canceled() ),
-            this, SLOT( slotAddPhotoCancel() ) );
+    connect(m_progressDlg, SIGNAL(canceled()),
+            this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_changeUserButton, SIGNAL( clicked() ),
-            this, SLOT( slotUserChangeRequest() ) );
+    connect(m_changeUserButton, SIGNAL(clicked()),
+            this, SLOT(slotUserChangeRequest()));
 
-    connect(m_reloadAlbumsListButton, SIGNAL( clicked() ),
+    connect(m_reloadAlbumsListButton, SIGNAL(clicked()),
             this, SLOT(slotUpdateAlbumsList()));
 
-    connect(m_newAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( slotCreateNewAlbum() ) );
+    connect(m_newAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotCreateNewAlbum()));
 
-    connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
-            this, SLOT( slotTokenObtained(const QString&) ) );
+    connect(m_talker, SIGNAL(signalTokenObtained(const QString&)),
+            this, SLOT(slotTokenObtained(const QString&)));
 
-    connect(m_addPhotoButton, SIGNAL( clicked() ),
-            this, SLOT( slotAddPhotos() ) );
+    connect(m_addPhotoButton, SIGNAL(clicked()),
+            this, SLOT(slotAddPhotos()));
 
-    connect(m_startUploadButton, SIGNAL( clicked() ),
-            this, SLOT( slotUploadImages() ) );
+    connect(m_startUploadButton, SIGNAL(clicked()),
+            this, SLOT(slotUploadImages()));
 
-    connect(m_resizeCheckBox, SIGNAL(toggled(bool )), 
+    connect(m_resizeCheckBox, SIGNAL(toggled(bool )),
             this, SLOT(slotRefreshSizeButtons(bool)));
 
     // ------------------------------------------------------------
