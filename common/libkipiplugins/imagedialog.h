@@ -82,16 +82,16 @@ public:
     KUrl       url() const;
     KUrl::List urls() const;
 
-    bool    onlyRaw() const;
-    bool    singleSelect() const;
-    QString fileformats() const;
+    bool       onlyRaw() const;
+    bool       singleSelect() const;
+    QString    fileFormats() const;
 
     static KUrl getImageURL(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
     static KUrl::List getImageURLs(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
 
 private:
 
-    ImageDialogPrivate* d;
+    ImageDialogPrivate *d;
 };
 
 } // namespace KIPIPlugins

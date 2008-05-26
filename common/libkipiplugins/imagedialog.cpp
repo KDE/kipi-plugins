@@ -299,7 +299,7 @@ public:
     bool             onlyRaw;
     bool             singleSelect;
 
-    QString          fileformats;
+    QString          fileFormats;
 
     KUrl             url;
     KUrl::List       urls;
@@ -345,11 +345,11 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete 
     // or unavailable(see file #121242 in B.K.O).
     if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
-        patternList.append(i18n("\n%1|Camera RAW files",QString(KDcrawIface::DcrawBinary::instance()->rawFiles())));
+        patternList.append(i18n("\n%1|Camera RAW files", QString(KDcrawIface::DcrawBinary::instance()->rawFiles())));
 
-    d->fileformats = patternList.join("\n");
+    d->fileFormats = patternList.join("\n");
 
-    KFileDialog dlg(d->iface->currentAlbum().path(), d->fileformats, parent);
+    KFileDialog dlg(d->iface->currentAlbum().path(), d->fileFormats, parent);
     ImageDialogPreview *preview = new ImageDialogPreview(d->iface, &dlg);
     dlg.setPreviewWidget(preview);
     dlg.setOperationMode(KFileDialog::Opening);
@@ -386,9 +386,9 @@ bool ImageDialog::singleSelect() const
     return d->singleSelect;
 }
 
-QString ImageDialog::fileformats() const 
+QString ImageDialog::fileFormats() const 
 {
-    return d->fileformats;
+    return d->fileFormats;
 }
 
 KUrl ImageDialog::url() const 
