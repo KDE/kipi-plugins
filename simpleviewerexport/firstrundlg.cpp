@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT include files
@@ -93,11 +93,11 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
                          "(c) 2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Joern Ahrens"), 
+    d->about->addAuthor(ki18n("Joern Ahrens"),
                         ki18n("Author"),
                               "joern dot ahrens at kdemail dot net");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
                               "caulier dot gilles at gmail dot com");
 
@@ -120,6 +120,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
+    connect( this, SIGNAL( helpClicked() ), this, SLOT( slotHelp() ) );
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     helpButton->setDelayedMenu( helpMenu->menu() );
 
@@ -142,7 +143,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     KUrlLabel *link = new KUrlLabel(page);
     link->setText("http://www.airtightinteractive.com/simpleviewer");
     link->setUrl("http://www.airtightinteractive.com/simpleviewer");
-    
+
     connect(link, SIGNAL(leftClickedUrl(const QString&)),
             this, SLOT(slotDownload(const QString&)));
 
