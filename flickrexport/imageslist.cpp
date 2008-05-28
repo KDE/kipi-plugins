@@ -193,9 +193,6 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
-    connect(d->listView, SIGNAL(addedDropedItems(const KURL::List&)),
-            this, SLOT(slotAddImages(const KURL::List&)));
-
     connect(d->addButton, SIGNAL(clicked()),
             this, SLOT(slotAddItems()));
 
