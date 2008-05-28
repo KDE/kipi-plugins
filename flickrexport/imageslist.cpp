@@ -247,6 +247,8 @@ void ImagesList::slotAddImages(const KURL::List& list)
         }
     }
 
+    emit signalImageListChanged(imageUrls().isEmpty());
+
     KIO::PreviewJob *thumbnailJob = KIO::filePreview(urls, ICONSIZE);
 
     connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
