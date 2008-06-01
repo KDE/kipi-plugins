@@ -1,0 +1,3 @@
+- slideshow (in progress)
+- rotation according EXIF tags (since I don't need that, I won't implement it as long as I'm not asked for)
+- make plugin configurable

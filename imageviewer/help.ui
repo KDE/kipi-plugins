@@ -1,0 +1,129 @@
+<ui version="4.0" >
+ <class>HelpDialog</class>
+ <widget class="QDialog" name="HelpDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>712</width>
+    <height>539</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Usage Image Viewer</string>
+  </property>
+  <property name="modal" >
+   <bool>false</bool>
+  </property>
+  <widget class="QPushButton" name="pushButton1" >
+   <property name="geometry" >
+    <rect>
+     <x>260</x>
+     <y>500</y>
+     <width>230</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>O&amp;K</string>
+   </property>
+   <property name="shortcut" >
+    <string>Alt+K</string>
+   </property>
+  </widget>
+  <widget class="Q3TextBrowser" name="textBrowser2" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>690</width>
+     <height>480</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>&lt;b>&lt;font color="#5500ff">&lt;font size="+2">Image Access&lt;/font>&lt;/font>&lt;/b>&lt;br>
+&lt;TABLE> 
+ &lt;TR> 
+ &lt;TD>next image&lt;/TD> 
+ &lt;TD>scrollwheel down/down arrow/right arrow/PgDown/Space/n&lt;/TD>
+ &lt;/TR> 
+ &lt;TR> 
+ &lt;TD>previous image &lt;/TD> 
+ &lt;TD>scrollwheel up/up arrow/left arrow/PgUp/p &lt;/TD> 
+ &lt;/TR>
+&lt;TR> 
+ &lt;TD>quit&lt;/TD> 
+ &lt;TD>Esc&lt;/TD> 
+ &lt;/TR> 
+ &lt;/TABLE>
+&lt;br>
+ &lt;TH>&lt;b>&lt;font color="#5500ff">&lt;font size="+2">Display&lt;/font>&lt;/font>&lt;/b>&lt;/TH> &lt;/br>
+&lt;TABLE> 
+ &lt;TR> 
+ &lt;TD>toggle fullscreen/normal &lt;/TD> 
+ &lt;TD>f&lt;/TD> 
+ &lt;/TR> 
+ &lt;TR> 
+ &lt;TD>toggle scrollwheel action&lt;/TD> 
+ &lt;TD>c (either zoom or change image)&lt;/TD> 
+ &lt;/TR>
+ &lt;TR> 
+ &lt;TD>rotation &lt;/TD> 
+ &lt;TD>r&lt;/TD> 
+ &lt;/TR> 
+ &lt;TR> 
+ &lt;TD>reset view &lt;/TD> 
+ &lt;TD>double click&lt;/TD> 
+ &lt;/TR> 
+ &lt;TR> 
+ &lt;TD>original size&lt;/TD> 
+ &lt;TD>o&lt;/TD> 
+ &lt;/TR>
+ &lt;/TABLE>
+&lt;br>
+
+
+&lt;b>&lt;font color="#5500ff" size="+2">Zooming&lt;/font>&lt;/b>&lt;br> 
+&lt;UL>
+&lt;LI>move mouse in up/down-direction while pressing the right mouse button
+&lt;LI>alternatively, press c and use the scrollwheel&lt;br>
+&lt;LI>plus/minus
+&lt;LI>ctrl + scrollwheel
+&lt;/UL>
+
+&lt;b>&lt;font color="#5500ff" size="+2">Panning&lt;/font>&lt;/b>&lt;br>
+&lt;UL> 
+&lt;LI>move mouse while pressing the left button
+&lt;/UL></string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3TextBrowser</class>
+   <extends>Q3TextEdit</extends>
+   <header>Qt3Support/Q3TextBrowser</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton1</sender>
+   <signal>clicked()</signal>
+   <receiver>HelpDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
