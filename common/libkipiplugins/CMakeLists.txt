@@ -9,7 +9,8 @@ KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 TARGET_LINK_LIBRARIES(kipiplugins
                       ${QT_QTGUI_LIBRARY}
                       ${KDE4_KDECORE_LIBS} 
-                      ${KDE4_KDEUI_LIBS} 
+                      ${KDE4_KDEUI_LIBS}
+                      ${KDE4_KIO_LIBRARY}
                       ${JPEG_LIBRARIES}
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
