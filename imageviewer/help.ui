@@ -27,9 +27,6 @@
    <property name="text" >
     <string>O&amp;K</string>
    </property>
-   <property name="shortcut" >
-    <string>Alt+K</string>
-   </property>
   </widget>
   <widget class="Q3TextBrowser" name="textBrowser2" >
    <property name="geometry" >
