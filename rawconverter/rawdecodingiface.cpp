@@ -38,6 +38,7 @@
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <kstandarddirs.h>
 
 // LibKDcraw includes.

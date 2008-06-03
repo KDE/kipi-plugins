@@ -25,6 +25,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -39,6 +40,7 @@
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -99,8 +101,8 @@ void Plugin_AcquireImages::slotActivate()
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
 {
     if ( action == m_action_scanimages )
-       return KIPI::IMPORTPLUGIN;
+       return KIPI::ImportPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::IMPORTPLUGIN; // no warning from compiler, please
+    return KIPI::ImportPlugin; // no warning from compiler, please
 }

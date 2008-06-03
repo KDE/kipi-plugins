@@ -21,6 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <QVariant>
+
 #include <libkipi/plugin.h>
 
 class KAction;

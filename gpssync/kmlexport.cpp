@@ -31,6 +31,7 @@ extern "C"
 #include <QPainter>
 #include <QRegExp>
 #include <QImageReader>
+#include <QTextStream>
 
 // KDE includes.
 
@@ -49,6 +50,7 @@ extern "C"
 
 #include <libkipi/plugin.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/interface.h>
 
 // Local includes.
 

@@ -43,6 +43,7 @@ extern "C"
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -53,6 +54,10 @@ extern "C"
 // LibKDcraw includes.
 
 #include <libkdcraw/dcrawbinary.h>
+
+// LibKipi includes.
+
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -192,10 +197,10 @@ void Plugin_RawConverter::slotActivateBatch()
 KIPI::Category Plugin_RawConverter::category( KAction* action ) const
 {
     if ( action == m_singleAction )
-       return KIPI::TOOLSPLUGIN;
+       return KIPI::ToolsPlugin;
     else if ( action == m_batchAction )
-       return KIPI::BATCHPLUGIN;
+       return KIPI::BatchPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::TOOLSPLUGIN; // no warning from compiler, please
+    return KIPI::ToolsPlugin; // no warning from compiler, please
 }

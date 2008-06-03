@@ -47,6 +47,7 @@ extern "C"
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <k3process.h>
 #include <klocale.h>
 

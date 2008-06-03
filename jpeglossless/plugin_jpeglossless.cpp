@@ -35,6 +35,7 @@
 #include <kshortcut.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -466,16 +467,16 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
 {
     if (action == d->action_AutoExif)
-        return KIPI::IMAGESPLUGIN;
+        return KIPI::ImagesPlugin;
     else if ( action == d->action_RotateImage )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
     else if ( action == d->action_FlipImage )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
     else if ( action == d->action_Convert2GrayScale )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }
 
 KUrl::List Plugin_JPEGLossless::images()

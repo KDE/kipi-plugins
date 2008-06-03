@@ -45,6 +45,8 @@
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/imageinfo.h>
+#include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
 // LibKExiv2 includes. 

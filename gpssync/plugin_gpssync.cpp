@@ -30,6 +30,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -429,10 +430,10 @@ void Plugin_GPSSync::slotKMLGenerate()
 KIPI::Category Plugin_GPSSync::category( KAction* action ) const
 {
     if ( action == m_action_geolocation )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
     if ( action == m_actionKMLExport )
-       return KIPI::EXPORTPLUGIN;
+       return KIPI::ExportPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }

@@ -24,6 +24,7 @@
 
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
@@ -38,6 +39,7 @@
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 // LibKExiv2 includes. 
 
@@ -748,8 +750,8 @@ void Plugin_MetadataEdit::slotRemoveComments()
 KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const
 {
     if ( action == m_actionMetadataEdit )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }

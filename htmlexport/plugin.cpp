@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // KDE
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -31,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // KIPIPlugins
 #include <batchprogressdialog.h>
+#include <libkipi/interface.h>
 
 // Local
 #include "galleryinfo.h"
@@ -103,11 +105,11 @@ void Plugin::slotActivate() {
 
 KIPI::Category Plugin::category(KAction* action) const {
 	if (action == d->mAction) {
-		return KIPI::EXPORTPLUGIN;
+		return KIPI::ExportPlugin;
 	}
 	
 	kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-	return KIPI::EXPORTPLUGIN; // no warning from compiler, please
+	return KIPI::ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace

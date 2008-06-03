@@ -26,10 +26,15 @@
 #include <kapplication.h>
 #include <kglobal.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+
+// LibKipi includes.
+
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -118,8 +123,8 @@ void Plugin_SendImages::slotActivate()
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {
     if ( action == d->action_sendimages )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }

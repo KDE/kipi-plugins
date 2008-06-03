@@ -25,6 +25,7 @@
   
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kconfig.h>
@@ -72,10 +73,10 @@ void Plugin_SimpleViewer::setup(QWidget* widget)
 KIPI::Category Plugin_SimpleViewer::category( KAction* action ) const
 {
     if ( action == m_actionSimpleViewer )
-       return KIPI::EXPORTPLUGIN;
+       return KIPI::ExportPlugin;
     
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::EXPORTPLUGIN; // no warning from compiler, please
+    return KIPI::ExportPlugin; // no warning from compiler, please
 }
 
 void Plugin_SimpleViewer::slotActivate()

@@ -26,6 +26,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kaction.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
@@ -35,6 +36,7 @@
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -95,8 +97,8 @@ void Plugin_TimeAdjust::slotActivate()
 KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
 {
     if ( action == m_actionTimeAjust )
-       return KIPI::IMAGESPLUGIN;
+       return KIPI::ImagesPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }
