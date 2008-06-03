@@ -28,7 +28,6 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
-FIND_PACKAGE(Ksane)
 FIND_PACKAGE(Kipi REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
@@ -37,9 +36,9 @@ FIND_PACKAGE(TIFF REQUIRED)
 # Optional depencies detection require by any plugins
 
 MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
-#MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 
@@ -47,7 +46,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                     ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                     ${KEXIV2_INCLUDE_DIR} 
                     ${KDCRAW_INCLUDE_DIR} 
-                    ${KSANE_INCLUDE_DIR} 
                     ${KIPI_INCLUDE_DIR} 
                     ${KDE4_INCLUDES} 
                     ${QT4_INCLUDES}
@@ -63,12 +61,6 @@ ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
 #ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
 # TODO: others optional depencies to check when others plugins will be ported to KDE4
-#
-# Plugins witch depand of GPhoto2
-#IF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-#	macro_optional_add_subdirectory(kameraklient)
-#ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-#
 #
 # htmlexport need Xslt library
 # slideshow need Imlib2 library
@@ -93,12 +85,15 @@ ADD_SUBDIRECTORY(metadataedit)
 ADD_SUBDIRECTORY(sendimages)
 ADD_SUBDIRECTORY(gpssync)
 ADD_SUBDIRECTORY(simpleviewerexport)
-if(KSANE_FOUND)
+
+if (KSANE_FOUND AND SANE_FOUND)
    ADD_SUBDIRECTORY(acquireimages)
-endif(KSANE_FOUND)
+endif(KSANE_FOUND AND SANE_FOUND)
+
 if (LIBXML2_FOUND AND LIBXSLT_FOUND)
    ADD_SUBDIRECTORY(htmlexport)
 endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
+
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
 ENDIF(NOT WIN32)
