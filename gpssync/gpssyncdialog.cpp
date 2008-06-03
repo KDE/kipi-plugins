@@ -136,6 +136,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->listView = new QTreeWidget(page);
     d->listView->setColumnCount(7);
+    d->listView->setColumnWidth(0, 70);
     d->listView->setIconSize(QSize(64, 64));
     d->listView->setSortingEnabled(false);
     d->listView->setRootIsDecorated(false);
@@ -148,7 +149,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     QStringList labels;
     labels.append( i18n("Thumbnail") );
     labels.append( i18n("File Name") );
-    labels.append( i18n("Camera time stamp") );
+    labels.append( i18n("Date") );
     labels.append( i18n("Latitude") );
     labels.append( i18n("Longitude") );
     labels.append( i18n("Altitude") );
