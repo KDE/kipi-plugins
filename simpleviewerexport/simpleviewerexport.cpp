@@ -614,7 +614,7 @@ bool SimpleViewerExport::copySimpleViewer()
         files.append(dir.absolutePath() + "/" + *it);
     }
     // TODO: catch errors
-    KIO::CopyJob *copyJob = KIO::copy(files, d->configDlg->settings().exportUrl, KIO::HideProgressInfo);
+    /*KIO::CopyJob *copyJob = */KIO::copy(files, d->configDlg->settings().exportUrl, KIO::HideProgressInfo);
 
     d->progressDlg->addedAction(i18n("Flash files copied..."), KIPIPlugins::SuccessMessage);
 
