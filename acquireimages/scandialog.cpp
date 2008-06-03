@@ -266,14 +266,13 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     kapp->setOverrideCursor( Qt::WaitCursor );
     saveSettings();
 
-    // FIXME : support 16 bits color depth image.
-    QImage img;
-    d->saneWidget->makeQImage(ksane_data, width, height, bytes_per_line,
-                              (KSaneIface::KSaneWidget::ImageFormat)ksaneformat, img);
-    QImage prev  = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-    QImage thumb = img.scaled(160, 120, Qt::KeepAspectRatio);
-    QByteArray data((const char*)img.bits(), img.numBytes());
+    KSaneIface::KSaneWidget::ImageFormat frmt = (KSaneIface::KSaneWidget::ImageFormat)ksaneformat;
+
+    QImage img      = d->saneWidget->toQImage(ksane_data, width, height, bytes_per_line, frmt);
+    QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio);
+    QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio);
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
+
     KExiv2Iface::KExiv2 meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(img.size());
@@ -289,7 +288,16 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
 
     KIPIPlugins::KPWriteImage wImageIface;
-    wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
+    if (frmt != KSaneIface::KSaneWidget::FormatRGB_16_C)
+    {
+        QByteArray data((const char*)img.bits(), img.numBytes());
+        wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
+    }
+    else
+    {
+        // 16 bits color depth image.
+        wImageIface.setImageData(ksane_data, width, height, true, false, prof, meta);
+    }
 
     if (format == QString("JPEG"))
     {
