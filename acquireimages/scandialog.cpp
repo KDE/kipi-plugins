@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -114,14 +114,13 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
                         ki18n("Developer"),
                         "kare dot sars at kolumbus dot fi");
 
-    KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setDelayedMenu( helpMenu->menu() );
+    button(Help)->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------------------
 
@@ -267,7 +266,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     kapp->setOverrideCursor( Qt::WaitCursor );
     saveSettings();
 
-    // TODO : support 16 bits color depth image.
+    // FIXME : support 16 bits color depth image.
     QImage img;
     d->saneWidget->makeQImage(ksane_data, width, height, bytes_per_line,
                               (KSaneIface::KSaneWidget::ImageFormat)ksaneformat, img);
