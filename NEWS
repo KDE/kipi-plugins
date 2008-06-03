@@ -23,6 +23,141 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 006 ==> 158792 : GPSsync            : Plugin do not working with Canon RAW CR2.
 007 ==> 
 
+v 0.1.6 - beta1
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+FlickrExport   : dialog layout re-written to be more suitable.
+FlickrExport   : list of item to upload is now display in dialog.
+FlickrExport   : Support RAW files format to upload as JPEG preview.
+PicasaWebExport: Support RAW files format to upload as JPEG preview.
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 149890 : TimeAdjust         : Adjust date and time from Exif does not work.
+002 ==> 154273 : RAWConverter       : Quality setting for jpegs saved by raw converter is insanely high.
+003 ==> 157190 : GPSSync            : Misleading description for geotagging images.
+004 ==> 154289 : FlickrExport       : Cannot upload RAW images.
+005 ==> 153758 : FlickrExport       : FlickrUploader fails to upload photos whose caption contains 
+                                      accented characters or a trailing space.
+006 ==> 128211 : FlickrExport       : "Ok" Button in "Add Photos" shouldn't fire upload directly.
+007 ==> 159081 : FlickrExport       : Upload to Flickr not working.
+008 ==> 162096 : FlickrExport       : When selecting all photos reverses the order.
+009 ==> 158483 : PicasaWebExport    : Plugin cause Digikam crash.
+010 ==> 160453 : PicasaWebExport    : Crashes when exporting to Picasaweb.
+011 ==> 155270 : FlickrExport       : Tags with non-Latin characters dropped during image export.
+012 ==> 153207 : FlickrExport       : Without using application tags: Flickr still reads embedded metadata into tags.
+013 ==> 153206 : FlickrExport       : Provide option to remove spaces in tags during export.
+014 ==> 145149 : FlickrExport       : Flickr uploading from DigiKam does not cache auth data.
+
+v 0.1.5
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+SimpleViewerExport : plugin is now compatible with SimpleViewer version 1.8.x.
+SimpleViewerExport : plugin now support RAW files format.
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 155231 : GPSSync            : Timezones are assumed to be only in hourly increments/decrements of GMT.
+002 ==> 154849 : GPSSync            : Updates first find only, does not match other than GMT camera time.
+003 ==> 144070 : GPSSync            : Typing coordinates doesn't update the map.
+004 ==> 152526 : GPSSync            : Remember last display options like zoom and map/sattelite/hybrid view.
+005 ==> 158176 : SlideShow          : Linking errors in slideshow plugin (missing -lXrandr).
+006 ==> 150393 : SimpleViewerExport : XML file is corrupted if exif comment contains a "<".
+007 ==> 134774 : SimpleViewerExport : Exported simpleviewer gallery fails to load images due to wrong xml file name.
+
+v 0.1.5 - RC2
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+PrintWizard    : caption can contain more exif info 
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
+                                from 'ImageMagick' package" but it seems fine. (really fixed)
+002 ==> 155084 : PrintWizard  : Printing comments and EXIF tags.
+003 ==> 155371 : GPSSync      : Add search feature to the embedded GPS Sync Google Maps based editor.
+004 ==> 102021 : SlideShow    : Pan and Zoom on Slideshow viewing (not a transition) a la iPhoto
+
+v 0.1.5 - RC1
+---------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+General        : Added the availability to disable plugins we don't want to build.
+               : This feature is very useful for source based distros (Matej Laitl)
+PrintWizard    : Added raw file management, now raw files can be printed.
+SlideShow      : Solved minor issue in filename printing (2D slideshow).
+SlideShow      : New caching mechanism
+SlideShow      : Added Ken Burns effect
+Calendar       : Fixed recurring events not showing (only first date was showed)
+                 Setting special events only once (before printing), instead of
+                 one for every page
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 149666 : General      : iPod Export kipi plugin cannot be disabled at compile 
+                                time when libgpod is present on system.
+002 ==> 151604 : PrintWizard  : Print Wizard does not recognize raw images.
+003 ==> 102021 : SlideShow    : Pan and Zoom on Slideshow viewing (not a transition) 
+                                a la iPhoto.
+004 ==> 151578 : BatchProcess : Popup window says "Cannot run properly 'convert' program 
+                                from 'ImageMagick' package" but it seems fine.
+005 ==> 152210 : BatchProcess : Metadata lost when converting from png to jpeg (IPTC 
+                                thumbnail too big).
+006 ==> 152215 : GPSSync      : GPS correlator starts too many kio_thumbnail processes.
+007 ==> 149491 : GPSSync      : GPS correlator GPSSYNC do_not admit GMT+5h30 (India).
+008 ==> 150114 : GPSSync      : Max time gap is limited to 999 or 2000 seconds.
+009 ==> 154244 : ImageViewer  : SHIFT triggers help dialog.
+
+v 0.1.5 - Beta1
+----------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+General        : Added configure options to allow disabling plugins (--disable-XXXX)
+                 provided by Matej Laitl (bug #149666)
+
+PrintWizard    : Wizard GUI review
+                 Added exif management.
+                 Prints exif date-time info.
+                 Font, color and size of captions.
+                 Added an option to to print without margins (full-bleed).
+                 Added 10x13.33cm into a4 (provided by Joerg Kuehne)
+                 Added full size A4 printing (one photo per A4 page)
+                 Added A6 size to get the old configuration for 10x15cm page
+                 Changed page size to real 10x15cm instead of A6 (need to set up right page size on kprinter)
+                 Added a new page size 13x18cm (need to set up right page size on kprinter)
+                 Each photo can be printed more than once
+PicasaWebExport: New plugin to export pictures to Picasa web service (by Vardhman Jain).
+SlideShow      : Dropped imlib2 dependency
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 133193 : PrintWizard  : Data on the photo.
+002 ==> 111454 : PrintWizard  : Print photo's date into one corner like print assistant.
+003 ==> 146457 : PrintWizard  : Rotation is not done correctly Exif.
+004 ==> 138838 : NewPlugin    : Digikam Picasaweb export plugin.
+005 ==> 103152 : PrintWizard  : Improvement suggestions for printing wizard.
+006 ==> 117085 : PrintWizard  : Have pictures fit a whole, single sheet.
+007 ==> 100471 : PrintWizard  : Can't print the same image more than once on the same page.
+008 ==> 148621 : JPEGLossLess : Image rotation not working properly.
+009 ==> 144388 : JPEGLOssLess : Cache is not updated after rotating pictures.
+010 ==> 144604 : JPEGLossLess : Rotation causes Exif data corruption.
+011 ==> 150063 : JPEGLossLess : Rotating JPEG produces error and truncates original file.
+
+v 0.1.4
+----------------------------------------------------------------------------
+
+Note on release: 
+Due to missing files on svn, docbook "pt" and "da" have been removed form this 
+final release, apologize for that.
+
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
 
