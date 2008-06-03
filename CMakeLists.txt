@@ -28,7 +28,6 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
-FIND_PACKAGE(Ksane)
 FIND_PACKAGE(Kipi REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
@@ -37,9 +36,9 @@ FIND_PACKAGE(TIFF REQUIRED)
 # Optional depencies detection require by any plugins
 
 MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
-#MACRO_OPTIONAL_FIND_PACKAGE(Gphoto2)
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 
@@ -52,7 +51,27 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                     ${QT4_INCLUDES}
 	           )
 
+# Plugins witch will be always compiled
+
+ADD_SUBDIRECTORY(common)
+ADD_SUBDIRECTORY(timeadjust)
+ADD_SUBDIRECTORY(jpeglossless)
+ADD_SUBDIRECTORY(rawconverter)
+ADD_SUBDIRECTORY(metadataedit)
+ADD_SUBDIRECTORY(sendimages)
+ADD_SUBDIRECTORY(gpssync)
+ADD_SUBDIRECTORY(simpleviewerexport)
+
+if(SANE_FOUND AND KSANE_FOUND)
+   ADD_SUBDIRECTORY(acquireimages)
+endif(SANE_FOUND AND KSANE_FOUND)
+
+if (LIBXML2_FOUND AND LIBXSLT_FOUND)
+   ADD_SUBDIRECTORY(htmlexport)
+endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
+
 # Plugins witch depand of OpenGL
+
 IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
    MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
 ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
@@ -61,16 +80,8 @@ ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
 #   MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
 #ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-# TODO: others optional depencies to check when others plugins will be ported to KDE4
+# TODO: add others optional depencies to check when others plugins will be ported to KDE4
 #
-# Plugins witch depand of GPhoto2
-#IF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-#	macro_optional_add_subdirectory(kameraklient)
-#ENDIF(KDE4_GPHOTO2 AND GPHOTO2_FOUND)
-#
-#
-# htmlexport need Xslt library
-# slideshow need Imlib2 library
 # ipodexport need Gpod library
 # calendar need Kcal library (KDEPIM)
 #      
@@ -83,21 +94,6 @@ ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
 #        MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
 #ENDIF(KDESKTOP_INTERFACE_FILE_FOUND)
 
-# Plugins witch will be always compiled
-ADD_SUBDIRECTORY(common)
-ADD_SUBDIRECTORY(timeadjust)
-ADD_SUBDIRECTORY(jpeglossless)
-ADD_SUBDIRECTORY(rawconverter)
-ADD_SUBDIRECTORY(metadataedit)
-ADD_SUBDIRECTORY(sendimages)
-ADD_SUBDIRECTORY(gpssync)
-ADD_SUBDIRECTORY(simpleviewerexport)
-if(KSANE_FOUND)
-   ADD_SUBDIRECTORY(acquireimages)
-endif(KSANE_FOUND)
-if (LIBXML2_FOUND AND LIBXSLT_FOUND)
-   ADD_SUBDIRECTORY(htmlexport)
-endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
 ENDIF(NOT WIN32)
