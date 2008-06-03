@@ -11,13 +11,7 @@
    current* methods.
  
 ----------------------------------------------------------------------------
-* RAWCONVERTER PLUGIN [Author: Renchi Raju]
-  (Raw files converter)
-
- - add 16 bit image (ppm/tiff) support
-
-----------------------------------------------------------------------------
-* SLIDESHOW PLUGIN [Author: Renchi Raju]
+* SLIDESHOW PLUGIN 
   (SlideShow with snazzy effects)
 
  - Add preview Slideshow effects in dialogbox similar Kcontrol
@@ -25,7 +19,7 @@
  - Auto-rotate according to EXIF orientation tag
 
 ----------------------------------------------------------------------------
-* MPEGENCODER PLUGIN [Author: Gilles Caulier]
+* MPEGENCODER PLUGIN
   (MPEG images encoder)
 
  - Add DIVX support using mencoder program.
@@ -34,22 +28,14 @@
  - Add file name or image comment in MPEG flux.
 
 ----------------------------------------------------------------------------
-* IMAGEGALLERY PLUGIN [Authors: Gilles Caulier and Gregory Kokanosky]
-  (Web page Albums creation)
 
- - Add XHTML capabilities.
- - Add annotation images for copyrights (like Photoshop).
- - Add images gallery targets : kmail, war, zip, tar.gz, tar.bz2 (request by
-   Achim Bohnet).
-
-----------------------------------------------------------------------------
-* PRINTWIZARD PLUGIN [Author: Todd Shoemaker]
+* PRINTWIZARD PLUGIN
   (Multiples images printing wizzard)
 
  - Check for existence of Gimp and disable option if not available.
 
 ----------------------------------------------------------------------------
-* CALENDAR PLUGIN [Author: Renchi Raju]
+* CALENDAR PLUGIN
   (Calendar creation wizzard)
 
  - Use QSimpleRichText to render the calendar text
@@ -57,38 +43,11 @@
  - Work on beautifying the calendar layout.
 
 ----------------------------------------------------------------------------
-* SENDIMAGES PLUGIN [Author: Gilles Caulier]
+* SENDIMAGES PLUGIN
   (E-mail images)
 
  - Add tarball, zip, bz2, gz generation.
  - Add support of 'Aethera' and 'Opera' mail agents.
-
------------------------------------------------------------------------------
-* BATCHPROCESSIMAGES PLUGINS GROUP
-
- ==> ANNOTATEIMAGES PLUGIN
-     (batch images annotation with ImageMagick)
-     -> TODO
-
- ==> STEGIMAGES PLUGIN
-     (Images Steganography plugin)
-     -> TODO
-
- ==> IMAGEINTERPOLATOR PLUGIN
-     (Interpolate bad pixels in images based on JpegPixi program)
-     -> TODO
-
-
-----------------------------------------------------------------------------
-* CDRESTORINGWIZZARD PLUGIN
-
-----------------------------------------------------------------------------
-* EXTERNALRUNNING PLUGIN
-    (allows to start programs with the current selection of images. This
-     would allow to define in the plugins config the users prefered
-     slideshow program, image editor, HTML Gallery generators etc.)
-    -> TODO
-
 
 
 
