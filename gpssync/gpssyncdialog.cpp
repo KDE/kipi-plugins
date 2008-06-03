@@ -136,15 +136,14 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->listView = new QTreeWidget(page);
     d->listView->setColumnCount(7);
-    d->listView->setColumnWidth(0, 70);
+    d->listView->setMinimumWidth(450);
     d->listView->setIconSize(QSize(64, 64));
+    d->listView->setColumnWidth(0, 70);
     d->listView->setSortingEnabled(false);
     d->listView->setRootIsDecorated(false);
     d->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     d->listView->setAllColumnsShowFocus(true);
-    d->listView->setMinimumWidth(450);
-    d->listView->header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
     labels.append( i18n("Thumbnail") );
