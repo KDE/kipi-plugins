@@ -247,7 +247,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     settingsBoxLayout->addWidget(d->maxTimeLabel, 8, 0, 1, 1);
     settingsBoxLayout->addWidget(d->maxTimeInput, 8, 1, 1, 1);
     settingsBoxLayout->setSpacing(spacingHint());
-    settingsBoxLayout->setMargin(0);
+    settingsBoxLayout->setMargin(spacingHint());
 
     // ---------------------------------------------------------------
 
@@ -274,14 +274,13 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
-    KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setDelayedMenu( helpMenu->menu() );
+    button(Help)->setDelayedMenu(helpMenu->menu());
 
     // ---------------------------------------------------------------
 
