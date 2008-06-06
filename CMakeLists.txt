@@ -24,8 +24,9 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 
 # =======================================================
 
+INCLUDE(FindPackageHandleStandardArgs)
+
 # Depencies detection require by all plugins
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
 FIND_PACKAGE(Kipi REQUIRED)
@@ -36,20 +37,23 @@ FIND_PACKAGE(TIFF REQUIRED)
 # Optional depencies detection require by any plugins
 
 MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
-MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins 
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
+
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                     ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
                     ${KEXIV2_INCLUDE_DIR} 
                     ${KDCRAW_INCLUDE_DIR} 
                     ${KIPI_INCLUDE_DIR} 
                     ${KDE4_INCLUDES} 
                     ${QT4_INCLUDES}
-	           )
+                   )
 
 # Plugins witch will be always compiled
 
