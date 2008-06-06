@@ -8,7 +8,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_acquireimages
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
-                      ${KSANE_LIBRARIES}
+                      ${KSANE_LIBRARY}
                       ${KEXIV2_LIBRARIES} 
                       kipiplugins
                      )
