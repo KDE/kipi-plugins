@@ -85,7 +85,7 @@ public:
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;	   
     void getPhotoProperty(const QString& method, const QString& argList) ;	   
     void getHTMLResponseCode(const QString& str);   
-    void listAlbums();
+    void listAllAlbums();
     void listPhotos( const QString& albumName );
     void createAlbum( const QString& albumTitle, const QString& albumDesc, const QString& location,
                       uint timestamp, const QString& access, const QString& media_keywords, bool isCommentEnabled=true);

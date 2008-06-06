@@ -236,10 +236,12 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
 
 /** PicasaWeb's Album listing request/response
   * First a request is sent to the url below and then we might(?) get a redirect URL
-  * WE then need to send the GET request to the Redirect url
-  */
-void PicasawebTalker::listAlbums()
-{
+  * WE then need to send the GET request to the Redirect url (this however gets taken care off by the 
+  * KIO libraries.
+  * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
+  * which is not returned for an unauthorised request as done without the Authorization header.
+*/
+void PicasawebTalker::listAllAlbums() {
     if (m_job)
     {
         m_job->kill();
@@ -248,8 +250,10 @@ void PicasawebTalker::listAlbums()
 
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
     QByteArray tmp;	
+    QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::get(url, tmp, false);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -261,6 +265,7 @@ void PicasawebTalker::listAlbums()
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
+
 }
 
 void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argList)
@@ -480,7 +485,6 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(postUrl, form.formData(), false);
-    KIO::Job *job_obj= job;
     job->addMetaData("content-type", form.contentType());	
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
@@ -673,8 +677,6 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
         m_token = strList[1];
         success = 1;
     }
-
-    //listAlbums();
 
     if(success)
     {

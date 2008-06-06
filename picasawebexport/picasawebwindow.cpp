@@ -237,7 +237,7 @@ void PicasawebWindow::slotRefreshSizeButtons(bool /*st*/)
 
 void PicasawebWindow::slotUpdateAlbumsList()
 {
-    m_talker->listAlbums();
+    m_talker->listAllAlbums();
 }
 
 void PicasawebWindow::slotClose()
@@ -339,7 +339,7 @@ void PicasawebWindow::slotTokenObtained( const QString& token )
     m_userId=m_talker->getUserId();
     m_userNameDisplayLabel->setText(m_username);
     m_widget->setEnabled(true);
-    m_talker->listAlbums();
+    m_talker->listAllAlbums();
 }
 
 void PicasawebWindow::slotBusy( bool val )
