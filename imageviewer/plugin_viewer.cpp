@@ -36,11 +36,6 @@
 #include "plugin_viewer.h"
 #include "viewerwidget.h"
 
-// typedef KGenericFactory<Plugin_viewer> Factory;
-
-
-// K_EXPORT_COMPONENT_FACTORY( kipiplugin_viewer,Factory("kipiplugin_viewer"))
-
 K_PLUGIN_FACTORY( viewerFactory, registerPlugin<Plugin_viewer>(); )
 K_EXPORT_PLUGIN ( viewerFactory("kipiplugin_imageviewer") )
 
@@ -62,14 +57,6 @@ void Plugin_viewer::setup( QWidget* widget )
 		return;
 	}
 	
-//TODO KAction seems to have completely changed in KDE4, check again
-// 	actionViewer = new KAction (i18n("Image Viewer"),
-// 	                                    "ViewerWidget",
-// 	                                    0, // do never set shortcuts from plugins.
-// 	                                    this,
-// 	                                    SLOT(slotActivate()),
-// 	                                    actionCollection(),
-// 	                                    "viewer");
 	actionViewer = new KAction(i18n("OpenGL Image Viewer"), actionCollection());
 	actionViewer->setObjectName("oglviewer");
 	connect(actionViewer, SIGNAL(triggered(bool)),
@@ -89,9 +76,6 @@ KIPI::Category Plugin_viewer::category( KAction* action ) const
 		return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 	}
 }
-
-
-
 
 
 /*!

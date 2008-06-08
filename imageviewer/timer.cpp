@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Markus Leuthold   *
+ *   Copyright (C) 2007-2008 by Markus Leuthold   *
  *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -35,7 +35,7 @@ void Timer::start()
 void Timer::at(QString s)
 {
 	meantime=timer.elapsed()-meantime;
-	kDebug(51000) << "stopwatch:"<< s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";
+	kDebug() << "stopwatch:"<< s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";
 }
 
 Timer::~Timer()

@@ -1,6 +1,9 @@
 <ui version="4.0" >
  <class>HelpDialog</class>
  <widget class="QDialog" name="HelpDialog" >
+  <property name="windowModality" >
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -13,7 +16,7 @@
    <string>Usage Image Viewer</string>
   </property>
   <property name="modal" >
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <widget class="QPushButton" name="pushButton1" >
    <property name="geometry" >
@@ -113,12 +116,12 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>374</x>
+     <y>512</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+     <x>355</x>
+     <y>269</y>
     </hint>
    </hints>
   </connection>

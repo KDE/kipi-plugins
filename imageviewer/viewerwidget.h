@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Markus Leuthold   *
+ *   Copyright (C) 2007-2008 by Markus Leuthold   *
  *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *

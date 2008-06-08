@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Markus Leuthold   *
+ *   Copyright (C) 2007-2008 by Markus Leuthold   *
  *   <kusi (+at) forum.titlis.org>   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,6 +20,9 @@
 
 #undef PERFORMANCE_ANALYSIS
 
+//qt extensions
+#include "viewerwidget.moc"
+
 // global includes
 #include <qgl.h>
 //Added by qt3to4:
@@ -31,7 +34,7 @@
 #include <klocale.h>
 
 //TODO
-#include <q3dragobject.h>
+//#include <q3dragobject.h>
 
 #include <qbitmap.h>
 #include <kdebug.h>
@@ -43,13 +46,14 @@
 #include "viewerwidget.h"
 #include "texture.h"
 
-//TODO
-//#include "ui_helpdialog.h"
+//designer
+#include "ui_helpdialog.h"
 
 #ifdef PERFORMANCE_ANALYSIS
 	#include "timer.h"
 #endif
-#include "viewerwidget.moc"
+
+
 
 // using namespace std;
 using namespace KIPIviewer;
@@ -179,7 +183,7 @@ void ViewerWidget::paintGL() {
 	
 	//preload the 2nd image
 	if (firstImage) {
-		if (file_idx<(files.count()-1)) {
+		if (file_idx < (unsigned int)(files.count()-1)) {
 			loadImage(file_idx+1);
 		}
 		firstImage=false;
@@ -281,7 +285,6 @@ void ViewerWidget::keyPressEvent(QKeyEvent *k)
 		// terminate image viewer
 		case Qt::Key_Escape:
 			// clean up: where does this have to be done?
-			// TODO close(true); also deletes the widget: where has this been gone in qt4?
 			close();
 			break;
 			
@@ -356,9 +359,10 @@ void ViewerWidget::keyPressEvent(QKeyEvent *k)
 
 		//key is not bound to any action, therefore show help dialog to enlighten the user
 		default:
-			//TODO
-// 			QDialog * h = new HelpDialog(0,0,Qt::WStyle_StaysOnTop);
-// 			h->show();
+			QDialog d(this);
+			Ui::HelpDialog hd;
+			hd.setupUi(&d);
+			d.exec();
 			break;
 	}
 }
@@ -575,7 +579,7 @@ void ViewerWidget::nextImage()
 #ifdef PERFORMANCE_ANALYSIS
 	Timer timer;
 #endif
-	if (file_idx<(files.count()-1))
+	if (file_idx < (unsigned int)(files.count()-1))
 		file_idx++;
 	else
 		return;
@@ -597,7 +601,7 @@ void ViewerWidget::nextImage()
 #endif	
 
 	//image preloading
-	if (file_idx<(files.count()-1)) {
+	if (file_idx < ((unsigned int)files.count()-1)) {
 		loadImage(file_idx+1);
 #ifdef PERFORMANCE_ANALYSIS
 		timer.at("preloading");
