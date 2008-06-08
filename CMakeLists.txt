@@ -26,7 +26,7 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 
 INCLUDE(FindPackageHandleStandardArgs)
 
-# Depencies detection require by all plugins
+# Depencies detection required by all plugins
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
 FIND_PACKAGE(Kipi REQUIRED)
@@ -34,7 +34,7 @@ FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
 
-# Optional depencies detection require by any plugins
+# Optional depencies detection required by some plugins
 
 MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
@@ -61,7 +61,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                     ${QT4_INCLUDES}
                    )
 
-# Plugins witch will be always compiled
+# Plugins which will be always compiled
 
 ADD_SUBDIRECTORY(common)
 ADD_SUBDIRECTORY(timeadjust)
@@ -80,7 +80,7 @@ if (LIBXML2_FOUND AND LIBXSLT_FOUND)
    ADD_SUBDIRECTORY(htmlexport)
 endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
 
-# Plugins witch depand of OpenGL
+# Plugins which depend on OpenGL
 
 IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND AND X11_Xrandr_FOUND)
    MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
