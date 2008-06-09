@@ -26,9 +26,9 @@
 
 // Qt includes.
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qobject.h>
-#include <qprogressdialog.h>
+#include <q3progressdialog.h>
 #include <qmap.h>
 
 // KDE includes.
@@ -41,7 +41,7 @@ namespace KIO
     class Job;
 }
 
-class KURL;
+class KUrl;
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -77,7 +77,7 @@ public:
     PicasawebTalker(QWidget* parent);
     ~PicasawebTalker();
 
-    QValueList <PicasaWebAlbum> * m_albumsList;
+    Q3ValueList <PicasaWebAlbum> * m_albumsList;
     QString getApiSig(QString,QStringList) ;
     void addPhotoTag(const QString& photoURI, const QString& tag);   
     void getToken(const QString& user, const QString& passwd) ;	   
@@ -98,15 +98,15 @@ public:
 
 public:
     
-    QProgressDialog *authProgressDlg;
+    Q3ProgressDialog *authProgressDlg;
 
 signals:
 
     void signalError( const QString& msg );
 //  void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
-    void signalAlbums( const QValueList<GAlbum>& albumList );
-    void signalPhotos( const QValueList<GPhoto>& photoList );
+    void signalAlbums( const Q3ValueList<GAlbum>& albumList );
+    void signalPhotos( const Q3ValueList<GPhoto>& photoList );
     void signalAddPhotoSucceeded( );
     void signalGetAlbumsListSucceeded();
     void signalGetAlbumsListFailed( const QString& msg );
@@ -153,7 +153,7 @@ private:
 
     QMap<QString, QStringList > tags_map;
 
-//  KURL       m_url;
+//  KUrl       m_url;
     KIO::Job*  m_job;
 
     State      m_state;

@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <qlistview.h>
+#include <q3listview.h>
 
 // Local includes.
 
@@ -35,16 +35,16 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-class GAlbumViewItem : public QListViewItem
+class GAlbumViewItem : public Q3ListViewItem
 {
 
 public:
 
-    GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& _album)
-        : QListViewItem(parent, name), album(_album) {};
+    GAlbumViewItem(Q3ListView* parent, const QString& name, const GAlbum& _album)
+        : Q3ListViewItem(parent, name), album(_album) {};
 
-    GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& _album)
-        : QListViewItem(parent, name), album(_album) {};
+    GAlbumViewItem(Q3ListViewItem* parent, const QString& name, const GAlbum& _album)
+        : Q3ListViewItem(parent, name), album(_album) {};
 
     ~GAlbumViewItem() {};
 

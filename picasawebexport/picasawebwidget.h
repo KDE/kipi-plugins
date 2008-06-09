@@ -31,7 +31,7 @@
 
 #include "uploadwidget.h"
 
-class QListView;
+class Q3ListView;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
@@ -51,7 +51,7 @@ class PicasawebWidget : public UploadWidget
 
 public:
 
-    PicasawebWidget(QWidget* parent=0, const char* name=0, WFlags fl= 0);
+    PicasawebWidget(QWidget* parent=0, const char* name=0, Qt::WFlags fl= 0);
     ~PicasawebWidget();
 
 private slots:
@@ -61,9 +61,9 @@ private slots:
 
 private:
 
-    QListView*    m_tagView;
+    Q3ListView*    m_tagView;
 
-    QButtonGroup* m_fileSrcButtonGroup;
+    Q3ButtonGroup* m_fileSrcButtonGroup;
 
 //  QCheckBox*    m_resizeCheckBox;
 //  QCheckBox*    m_exportApplicationTags;

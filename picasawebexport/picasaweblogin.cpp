@@ -23,10 +23,14 @@
 // Qt includes.
 
 #include <qlabel.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 // KDE includes.
 
@@ -47,7 +51,7 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout( this, 5, 5, "vbox");
+    Q3VBoxLayout* vbox = new Q3VBoxLayout( this, 5, 5, "vbox");
 
     m_headerLabel = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
@@ -55,13 +59,13 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     m_headerLabel->setText(header);
     vbox->addWidget( m_headerLabel );
 
-    QFrame* hline = new QFrame( this, "hline" );
-    hline->setFrameShape( QFrame::HLine );
-    hline->setFrameShadow( QFrame::Sunken );
-    hline->setFrameShape( QFrame::HLine );
+    Q3Frame* hline = new Q3Frame( this, "hline" );
+    hline->setFrameShape( Q3Frame::HLine );
+    hline->setFrameShadow( Q3Frame::Sunken );
+    hline->setFrameShape( Q3Frame::HLine );
     vbox->addWidget( hline );
 
-    QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
+    Q3GridLayout* centerLayout = new Q3GridLayout(0, 1, 1, 5, 5);
 
     m_nameEdit = new QLineEdit( this );
     centerLayout->addWidget(m_nameEdit, 0, 1);
@@ -80,7 +84,7 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 
     vbox->addLayout( centerLayout );
 
-    QHBoxLayout* btnLayout = new QHBoxLayout(0, 0, 5);
+    Q3HBoxLayout* btnLayout = new Q3HBoxLayout(0, 0, 5);
     btnLayout->addItem( new QSpacerItem( 20, 20, QSizePolicy::Expanding,
                                          QSizePolicy::Minimum ) );
 
@@ -132,9 +136,9 @@ QString PicasawebLogin::username() const
 
 void PicasawebLogin::setUsername(const QString& username)
 {
-    kdDebug()<<" The username passed to me is "<<username <<endl;
+    kDebug()<<" The username passed to me is "<<username <<endl;
     m_nameEdit->setText(username);
-    kdDebug()<<" The username passed to me is "<<username <<endl;
+    kDebug()<<" The username passed to me is "<<username <<endl;
 }
 
 void PicasawebLogin::setPassword(const QString& password)

@@ -30,7 +30,9 @@
 
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 // KDE includes.
 
@@ -38,6 +40,7 @@
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kurl.h>
+#include <krandom.h>
 
 // Local includes.
 
@@ -49,7 +52,7 @@ namespace KIPIPicasawebExportPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KApplication::randomString(42 + 13).ascii();
+    m_boundary += KRandom::randomString(42 + 13).ascii();
 }
 
 MPForm::~MPForm()
@@ -63,19 +66,19 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    QCString str;
+    Q3CString str;
     str += "--";
     str += m_boundary;
     str += "--";
 
-    QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
+    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(Q3TextStream::UnicodeUTF8);
     ts << str;
 }
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
-    QCString str;
+    Q3CString str;
     QString  content_length = QString("%1").arg(value.length());
     str += "--";
     str += m_boundary;
@@ -90,7 +93,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: "+ QCString(contentType.ascii());
+        str += "Content-Type: "+ Q3CString(contentType.ascii());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
@@ -106,8 +109,8 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     //m_buffer.resize(oldSize + str.size());
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
-    QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
+    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(Q3TextStream::UnicodeUTF8);
     ts << QString::fromUtf8(str);
 
     return true;
@@ -115,7 +118,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
 bool MPForm::addFile(const QString& name,const QString& path)
 {
-    KMimeType::Ptr ptr = KMimeType::findByURL(path);
+    KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
     if (mime.isEmpty())
     {
@@ -125,12 +128,12 @@ bool MPForm::addFile(const QString& name,const QString& path)
     }
 
     QFile imageFile(path);
-    if (!imageFile.open(IO_ReadOnly))
+    if (!imageFile.open(QIODevice::ReadOnly))
         return false;
 
     QByteArray imageData = imageFile.readAll();
 
-    QCString str;
+    Q3CString str;
     QString file_size = QString("%1").arg(imageFile.size());
 
     str += "--";
@@ -140,7 +143,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += name.ascii();
     str += "\"; ";
     str += "filename=\"";
-    str += QFile::encodeName(KURL(path).filename());
+    str += QFile::encodeName(KUrl(path).filename());
     str += "\"\r\n"; 
     str += "Content-Length: " ;
     str +=  file_size.ascii();
@@ -150,8 +153,8 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\r\n\r\n";
 
     imageFile.close();
-    QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
+    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(Q3TextStream::UnicodeUTF8);
     ts << str;
 
     int oldSize = m_buffer.size();

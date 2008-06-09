@@ -23,26 +23,28 @@
 
 // Qt includes.
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
 #include <qlineedit.h>
-#include <qprogressdialog.h>
+#include <q3progressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qradiobutton.h>
-#include <qdatetimeedit.h>
+#include <q3datetimeedit.h>
 #include <qdatetime.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 // KDE includes.
 
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
@@ -61,6 +63,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
@@ -157,7 +160,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_progressDlg = new QProgressDialog(this, 0, true);
+    m_progressDlg = new Q3ProgressDialog(this, 0, true);
     m_progressDlg->setAutoReset(true);
     m_progressDlg->setAutoClose(true);
 
@@ -203,7 +206,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_authProgressDlg = new QProgressDialog( this, 0, true );
+    m_authProgressDlg = new Q3ProgressDialog( this, 0, true );
     m_authProgressDlg->setAutoReset( true );
     m_authProgressDlg->setAutoClose( true );
 
@@ -282,12 +285,12 @@ void PicasawebWindow::getToken(QString& username, QString& password)
     }
 
     /*if (username!=NULL && username.length() > 0){
-        kdDebug()<<"Showing stored username"<< username << endl;
+        kDebug()<<"Showing stored username"<< username << endl;
         loginDialog->setUsername(username);
         if (password != NULL && password.length() > 0){
-            kdDebug()<<"Showing stored password"<< password << endl;
+            kDebug()<<"Showing stored password"<< password << endl;
             loginDialog->setPassword(password);
-            kdDebug()<<"Showing stored password"<< password << endl;
+            kDebug()<<"Showing stored password"<< password << endl;
         }
     }*/
 
@@ -307,16 +310,16 @@ void PicasawebWindow::getToken(QString& username, QString& password)
 
 void PicasawebWindow::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("picasawebexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("picasawebexport", "kipi-plugins");
 }
 
 void PicasawebWindow::slotGetAlbumsListSucceeded()
 {
     if (m_talker && m_talker->m_albumsList)
     {
-        QValueList <PicasaWebAlbum> *list = m_talker->m_albumsList;
+        Q3ValueList <PicasaWebAlbum> *list = m_talker->m_albumsList;
         m_albumsListComboBox->clear();
-        QValueList<PicasaWebAlbum>::iterator it = list->begin();
+        Q3ValueList<PicasaWebAlbum>::iterator it = list->begin();
 
         while(it != list->end())
         {
@@ -346,7 +349,7 @@ void PicasawebWindow::slotBusy( bool val )
 {
     if ( val )
     {
-        setCursor(QCursor::WaitCursor);
+        setCursor(Qt::waitCursor);
     }
     else
     {
@@ -361,7 +364,7 @@ void PicasawebWindow::slotError( const QString& msg )
 
 void PicasawebWindow::slotUserChangeRequest()
 {
-    kdDebug()<<"Slot Change User Request "<<endl;
+    kDebug()<<"Slot Change User Request "<<endl;
     m_talker->authenticate();
 }
 
@@ -393,7 +396,7 @@ void PicasawebWindow::slotCreateNewAlbum()
     {
         if (t == QDialog::Rejected)
         {
-            kdDebug()<<"Album Creation cancelled" <<endl;
+            kDebug()<<"Album Creation cancelled" <<endl;
         }
     }
 }
@@ -408,20 +411,20 @@ void PicasawebWindow::slotTagSelected()
     // TODO
 }
 
-void PicasawebWindow::slotOpenPhoto( const KURL& url )
+void PicasawebWindow::slotOpenPhoto( const KUrl& url )
 {
     new KRun(url);
 }
 */
 
-void PicasawebWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& /*photoSetList*/)
+void PicasawebWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /*photoSetList*/)
 {
 }
 
 void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
-    m_urls = new KURL::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
+    m_urls = new KUrl::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
 }
 
 void PicasawebWindow::slotUploadImages()
@@ -431,7 +434,7 @@ void PicasawebWindow::slotUploadImages()
         if (m_urls!=NULL)
             delete m_urls;
 
-        m_urls=new KURL::List(m_interface->currentSelection().images());
+        m_urls=new KUrl::List(m_interface->currentSelection().images());
    }
 
    if (m_urls == NULL || m_urls->isEmpty())
@@ -441,7 +444,7 @@ void PicasawebWindow::slotUploadImages()
 
     m_uploadQueue.clear();
 
-    for (KURL::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
+    for (KUrl::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
         FPhotoInfo temp;
@@ -525,7 +528,7 @@ void PicasawebWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1 ").arg( KURL(pathComments.first).filename()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1 ").arg( KUrl(pathComments.first).filename()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();

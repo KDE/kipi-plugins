@@ -38,7 +38,7 @@ void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, i
     if (!p)
         return;
 
-    QListView *lv = listView();
+    Q3ListView *lv = listView();
     if (!lv)
         return;
 
@@ -81,7 +81,7 @@ void GAlbumViewItem::setup()
 {
     int h      = listView()->fontMetrics().height();
     int margin = 4;
-    setHeight(QMAX(2*h + margin, 32));
+    setHeight(qMax(2*h + margin, 32));
 }
 
 } // namespace KIPIPicasawebExportPlugin

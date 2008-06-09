@@ -24,18 +24,18 @@
 
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qframe.h>
-#include <qheader.h>
-#include <qlistview.h>
-#include <qbuttongroup.h>
+#include <q3frame.h>
+#include <q3header.h>
+#include <q3listview.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qsplitter.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qlineedit.h>
 
 // KDE includes.
@@ -52,7 +52,7 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWidget::PicasawebWidget(QWidget* parent, const char* name, WFlags fl)
+PicasawebWidget::PicasawebWidget(QWidget* parent, const char* name, Qt::WFlags fl)
                : UploadWidget(parent, name, fl)
 {
     if ( !name )
@@ -68,7 +68,7 @@ PicasawebWidget::~PicasawebWidget()
 
 void PicasawebWidget::slotSelectionChecked()
 {
-//    kdDebug()<<"Slot Selection Checked "<<endl;
+//    kDebug()<<"Slot Selection Checked "<<endl;
 //    m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
 

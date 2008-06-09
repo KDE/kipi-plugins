@@ -169,7 +169,7 @@
                 <string></string>
             </property>
             <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
+                <set>WordBreak|Qt::AlignVCenter</set>
             </property>
         </widget>
     </widget>
@@ -194,7 +194,7 @@
             <string>PicasaWeb Uploader</string>
         </property>
         <property name="alignment">
-            <set>AlignCenter</set>
+            <set>Qt::AlignCenter</set>
         </property>
     </widget>
     <widget class="QPushButton">

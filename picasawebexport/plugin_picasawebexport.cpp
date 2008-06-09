@@ -56,7 +56,7 @@ K_EXPORT_COMPONENT_FACTORY(kipiplugin_picasawebexport, Factory("kipiplugin_picas
 Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const char*, const QStringList&)
                       : KIPI::Plugin(Factory::instance(), parent, "PicasawebExport")
 {
-    kdDebug(51001) << "Plugin_PicasawebExport plugin loaded" << endl;
+    kDebug(51001) << "Plugin_PicasawebExport plugin loaded" << endl;
 }
 
 void Plugin_PicasawebExport::setup(QWidget* widget)
@@ -75,7 +75,7 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
 
     if (!interface) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         m_action->setEnabled(false);
         return;
     }
@@ -93,7 +93,7 @@ void Plugin_PicasawebExport::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface) 
     {
-        kdError(51000) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -109,6 +109,6 @@ KIPI::Category Plugin_PicasawebExport::category( KAction* action ) const
     if (action == m_action)
         return KIPI::EXPORTPLUGIN;
 
-    kdWarning(51000) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN;
 }

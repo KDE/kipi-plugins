@@ -26,9 +26,11 @@
 
 // Qt includes.
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
-#include <qintdict.h>
+#include <q3intdict.h>
+//Added by qt3to4:
+#include <QLabel>
 
 // KDE includes.
 
@@ -43,14 +45,14 @@
 
 #include "kpaboutdata.h"
 
-class QListView;
+class Q3ListView;
 class QPushButton;
 class QRadioButton;
 class QSpinBox;
 class QCheckBox;
-class QProgressDialog;
+class Q3ProgressDialog;
 class KHTMLPart;
-class KURL;
+class KUrl;
 class QLineEdit;
 class QComboBox;
 
@@ -90,7 +92,7 @@ private:
     unsigned int                             m_uploadCount;
     unsigned int                             m_uploadTotal;
 
-    QListView                               *m_tagView;
+    Q3ListView                               *m_tagView;
 
     QSpinBox                                *m_dimensionSpinBox;
     QSpinBox                                *m_imageQualitySpinBox;
@@ -113,8 +115,8 @@ private:
 
     QRadioButton                            *m_exportApplicationTags;
 
-    QProgressDialog                         *m_progressDlg;
-    QProgressDialog                         *m_authProgressDlg;
+    Q3ProgressDialog                         *m_progressDlg;
+    Q3ProgressDialog                         *m_authProgressDlg;
 
     QComboBox                               *m_albumsListComboBox;
 
@@ -123,14 +125,14 @@ private:
 //  KWallet::Wallet                         *m_wallet;
 
     KHTMLPart                               *m_photoView;
-    KURL::List                              *m_urls;
+    KUrl::List                              *m_urls;
 
     PicasawebWidget                         *m_widget;
     PicasawebTalker                         *m_talker;
 
-    QIntDict<GAlbumViewItem>                 m_albumDict;
+    Q3IntDict<GAlbumViewItem>                 m_albumDict;
 
-    QValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
+    Q3ValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
     KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData                *m_about; 
@@ -145,10 +147,10 @@ private slots:
 //  void slotAlbums( const QValueList<GAlbum>& albumList );
 //  void slotPhotos( const QValueList<GPhoto>& photoList );
 //  void slotTagSelected();
-//  void slotOpenPhoto( const KURL& url );
+//  void slotOpenPhoto( const KUrl& url );
     void slotUpdateAlbumsList();
     void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
+    void slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
     void slotUploadImages();
     void slotAddPhotoNext();
