@@ -34,7 +34,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Libkipi includes.
 
@@ -76,7 +76,7 @@ class GAlbum;
 class GAlbumViewItem;
 class ImagesList;
 
-class FlickrWindow : public KDialogBase
+class FlickrWindow : public KDialog
 {
     Q_OBJECT
 

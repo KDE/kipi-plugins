@@ -51,9 +51,7 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kdeversion.h>
-#if KDE_IS_VERSION(3,2,0)
 #include <kwallet.h>
-#endif
 
 // Libkipi includes.
 
@@ -79,9 +77,14 @@ namespace KIPIFlickrExportPlugin
 {
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
-            : KDialogBase(parent, 0, false, i18n("Export to Flickr Web Service"),
-                          Help|User1|Close, Close, false)
-{ 
+            : KDialog(parent)
+{
+    setTitle(i18n("Export to Flickr Web Service"));
+    setButtons(Help|User1|Close);
+    setDefaultButton(Close);
+    setModal(false);
+    QWidget *widget = new QWidget(this);
+    setMainWidget(this); 
     m_tmp                    = tmpFolder;
     m_interface              = interface;
     m_uploadCount            = 0;
