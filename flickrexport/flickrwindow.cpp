@@ -536,7 +536,7 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1").arg(pathComments.first.filename()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1",pathComments.first.filename()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
@@ -555,7 +555,7 @@ void FlickrWindow::slotAddPhotoSucceeded()
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?").arg(msg))
+                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?",msg))
                      != KMessageBox::Continue)
     {
         m_uploadQueue.clear();

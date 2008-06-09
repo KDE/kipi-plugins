@@ -536,7 +536,7 @@ void FlickrTalker::slotError(const QString& error)
     };
 
     KMessageBox::error(kapp->activeWindow(),
-                 i18n("Error Occured: %1\n We can not proceed further").arg(transError));
+                 i18n("Error Occured: %1\n We can not proceed further",transError));
 
 //  kDebug() << "Not handling the error now will see it later" << endl;
 }
