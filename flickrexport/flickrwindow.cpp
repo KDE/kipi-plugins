@@ -106,12 +106,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
     m_imglst                 = m_widget->m_imglst;
 
-    if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    {
-        m_exportHostTagsCheckBox->setEnabled(false);
-        m_stripSpaceTagsCheckBox->setEnabled(false);
-    }
-
     setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), SmallIcon("network")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
@@ -254,6 +248,13 @@ void FlickrWindow::readSettings()
     m_exportHostTagsCheckBox->setChecked(config.readBoolEntry("Export Host Tags", false));
     m_stripSpaceTagsCheckBox->setChecked(config.readBoolEntry("Strip Space Host Tags", false));
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
+
+    if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+    {
+        m_exportHostTagsCheckBox->setEnabled(false);
+        m_stripSpaceTagsCheckBox->setEnabled(false);
+    }
+
     m_publicCheckBox->setChecked(config.readBoolEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(config.readBoolEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(config.readBoolEntry("Friends Sharing", false));
