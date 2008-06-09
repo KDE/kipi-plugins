@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -98,7 +99,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += "Content-Length: " ;
     str += content_length.ascii();
     str += "\r\n\r\n";
-    str += value.ascii();
+    str += value.utf8();
     str += "\r\n";
 
     //uint oldSize = m_buffer.size();
@@ -107,7 +108,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
     QTextStream ts(m_buffer, IO_Append|IO_WriteOnly);
     ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << str;
+    ts << QString::fromUtf8(str);
 
     return true;
 }
@@ -116,7 +117,6 @@ bool MPForm::addFile(const QString& name,const QString& path)
 {
     KMimeType::Ptr ptr = KMimeType::findByURL(path);
     QString mime       = ptr->name();
-
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -125,7 +125,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     }
 
     QFile imageFile(path);
-    if ( !imageFile.open( IO_ReadOnly ) )
+    if (!imageFile.open(IO_ReadOnly))
         return false;
 
     QByteArray imageData = imageFile.readAll();
@@ -138,7 +138,8 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
     str += name.ascii();
-    str += "\"; filename=\"";
+    str += "\"; ";
+    str += "filename=\"";
     str += QFile::encodeName(KURL(path).filename());
     str += "\"\r\n"; 
     str += "Content-Length: " ;
@@ -155,7 +156,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data()+oldSize, imageData.data(), imageData.size());
+    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
 
