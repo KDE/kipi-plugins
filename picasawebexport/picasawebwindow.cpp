@@ -55,9 +55,7 @@
 #include <kdebug.h>
 #include <ksimpleconfig.h>
 #include <kdeversion.h>
-#if KDE_IS_VERSION(3,2,0)
 #include <kwallet.h>
-#endif
 
 // Libkipi includes.
 
@@ -84,9 +82,13 @@ namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget* /*parent*/)
-               : KDialogBase(0, 0, false, i18n("Export to Picasa Web Service"), Help|Close, Close, false), 
+               : KDialog(0),
                  m_tmp(tmpFolder)
 {
+    setTitle(i18n("Export to Picasa Web Service"));
+    setModal(false);
+    setButtons(Help|Close);
+    setDefaultButton(Close);
     m_interface              = interface;
     m_uploadCount            = 0;
     m_uploadTotal            = 0;
@@ -251,10 +253,8 @@ void PicasawebWindow::slotClose()
 
 PicasawebWindow::~PicasawebWindow()
 {
-#if KDE_IS_VERSION(3,2,0)
  //   if (m_wallet)
    //     delete m_wallet;
-#endif
 
     // write config
     KSimpleConfig config("kipirc");

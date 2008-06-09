@@ -34,7 +34,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Libkipi includes.
 
@@ -76,7 +76,7 @@ class FPhotoInfo;
 class FPhotoSet;
 class GAlbumViewItem;
 
-class PicasawebWindow : public KDialogBase
+class PicasawebWindow : public KDialog
 {
     Q_OBJECT
 
