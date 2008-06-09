@@ -19,6 +19,8 @@
  ***************************************************************************/
 
 // KDE includes
+#include <kaction.h>
+#include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
@@ -69,11 +71,11 @@ void Plugin_viewer::setup( QWidget* widget )
 KIPI::Category Plugin_viewer::category( KAction* action ) const
 {
 	if ( action == actionViewer ) {
-		return KIPI::TOOLSPLUGIN;
+		return KIPI::ToolsPlugin;
 	}
 	else {
 		kWarning() << "Unrecognized action for plugin category identification" << endl;
-		return KIPI::TOOLSPLUGIN; // no warning from compiler, please
+		return KIPI::ToolsPlugin; // no warning from compiler, please
 	}
 }
 
