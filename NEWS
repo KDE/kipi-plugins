@@ -3,9 +3,10 @@ Note: for details and info about current version, see ChangeLog.
 v 0.1.6 - beta2
 ---------------------------------------------------------------------------
 
-001 ==> 162687 : FlickrExport        : Make Flickr Export screen non-modal.
-002 ==> 162683 : FlickrExport        : New: export to picassaweb doesn't works.
-003 ==> 
+001 ==> 162687 : FlickrExport       : Make Flickr Export screen non-modal.
+002 ==> 162683 : FlickrExport       : New: export to picassaweb doesn't works.
+003 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
+004 ==> 
 
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
