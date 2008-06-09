@@ -586,7 +586,7 @@ void PicasawebTalker::slotError(const QString & error)
             transError=i18n("Unknown error");
     };
 
-    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further").arg(transError));
+    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError));
     //kDebug()<<"Not handling the error now will see it later"<<endl;
 }
 

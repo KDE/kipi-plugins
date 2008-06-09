@@ -528,7 +528,7 @@ void PicasawebWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1 ").arg( KUrl(pathComments.first).filename()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1 ", KUrl(pathComments.first).filename()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
