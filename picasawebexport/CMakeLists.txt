@@ -1,20 +1,4 @@
 
-find_package(KDE4 REQUIRED)
-
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-
-include(KDE4Defaults)
-
-include(MacroLibrary)
-
-include(ConvenienceLibs.cmake)
-
-include(ManualStuff.cmake)
-
-include(ConfigureChecks.cmake)
-
-include_directories(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
-
 
 ########### next target ###############
 
@@ -27,11 +11,11 @@ set(kipiplugin_picasawebexport_PART_SRCS
     mpform.cpp
     picasawebviewitem.cpp)
 
-kde4_add_ui_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.ui uploadwidget.ui)
+kde4_add_ui3_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.ui uploadwidget.ui)
 
 kde4_add_plugin(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_picasawebexport ${KDE4_KDECORE_LIBS} kio kdeui kipiplugins)
+target_link_libraries(kipiplugin_picasawebexport ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} kipiplugins)
 
 install(TARGETS kipiplugin_picasawebexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
