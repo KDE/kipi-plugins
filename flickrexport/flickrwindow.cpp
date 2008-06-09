@@ -247,6 +247,7 @@ void FlickrWindow::readSettings()
     m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
     m_exportHostTagsCheckBox->setChecked(config.readBoolEntry("Export Host Tags", false));
     m_stripSpaceTagsCheckBox->setChecked(config.readBoolEntry("Strip Space Host Tags", false));
+    m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
     m_publicCheckBox->setChecked(config.readBoolEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(config.readBoolEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(config.readBoolEntry("Friends Sharing", false));
