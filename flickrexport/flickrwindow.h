@@ -26,9 +26,11 @@
 
 // Qt includes.
 
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qpair.h>
-#include <qintdict.h>
+#include <q3intdict.h>
+//Added by qt3to4:
+#include <QLabel>
 
 // KDE includes.
 
@@ -46,11 +48,11 @@
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
-class QProgressDialog;
+class Q3ProgressDialog;
 
 class KLineEdit;
 class KHTMLPart;
-class KURL;
+class KUrl;
 
 namespace KIPI
 {
@@ -94,11 +96,11 @@ private slots:
 //  void slotAlbums( const QValueList<GAlbum>& albumList );
 //  void slotPhotos( const QValueList<GPhoto>& photoList );
 //  void slotTagSelected();
-//  void slotOpenPhoto( const KURL& url );
+//  void slotOpenPhoto( const KUrl& url );
 
     void slotNewPhotoSet();
     void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QValueList <FPhotoSet>& photoSetList);
+    void slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& photoSetList);
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
@@ -132,7 +134,7 @@ private:
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
 
-    QIntDict<GAlbumViewItem>               m_albumDict;
+    Q3IntDict<GAlbumViewItem>               m_albumDict;
 
     QString                                m_token;
     QString                                m_username;
@@ -142,10 +144,10 @@ private:
 
     QLabel                                *m_userNameDisplayLabel;
 
-    QProgressDialog                       *m_progressDlg;
-    QProgressDialog                       *m_authProgressDlg;
+    Q3ProgressDialog                       *m_progressDlg;
+    Q3ProgressDialog                       *m_authProgressDlg;
 
-    QValueList< QPair<KURL, FPhotoInfo> >  m_uploadQueue;
+    Q3ValueList< QPair<KUrl, FPhotoInfo> >  m_uploadQueue;
 
 //  KWallet::Wallet                       *m_wallet;
     KHTMLPart                             *m_photoView;

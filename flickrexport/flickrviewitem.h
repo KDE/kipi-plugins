@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <qlistview.h>
+#include <q3listview.h>
 
 // Local includes.
 
@@ -35,13 +35,13 @@
 namespace KIPIFlickrExportPlugin
 {
 
-class GAlbumViewItem : public QListViewItem
+class GAlbumViewItem : public Q3ListViewItem
 {
 
 public:
 
-    GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& album);
-    GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& album);
+    GAlbumViewItem(Q3ListView* parent, const QString& name, const GAlbum& album);
+    GAlbumViewItem(Q3ListViewItem* parent, const QString& name, const GAlbum& album);
     ~GAlbumViewItem();
 
 protected:

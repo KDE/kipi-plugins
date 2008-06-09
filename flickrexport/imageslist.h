@@ -25,9 +25,12 @@
 
 // Qt includes.
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qwidget.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 // KDE includes.
 
@@ -45,27 +48,27 @@ namespace KIPIFlickrExportPlugin
 
 class ImagesPagePriv;
 
-class ImagesListViewItem : public QListViewItem
+class ImagesListViewItem : public Q3ListViewItem
 {
 
 public:
 
-    ImagesListViewItem(QListView *view, const KURL& url);
+    ImagesListViewItem(Q3ListView *view, const KUrl& url);
     ~ImagesListViewItem();
 
-    void setUrl(const KURL& url);
-    KURL url() const;
+    void setUrl(const KUrl& url);
+    KUrl url() const;
 
     void setThumb(const QPixmap& pix);
 
 private:
 
-    KURL m_url;
+    KUrl m_url;
 };
 
 // ---------------------------------------------------------
 
-class ImagesListView : public QListView
+class ImagesListView : public Q3ListView
 {
     Q_OBJECT
 
@@ -76,7 +79,7 @@ public:
 
 signals:
 
-    void signalDropedItems(const KURL::List&);
+    void signalDropedItems(const KUrl::List&);
 
 private:
 
@@ -95,8 +98,8 @@ public:
     ImagesList(QWidget* parent, KIPI::Interface *iface);
     ~ImagesList();
 
-    KURL::List imageUrls() const;
-    void removeItemByUrl(const KURL& url);
+    KUrl::List imageUrls() const;
+    void removeItemByUrl(const KUrl& url);
 
 signals:
 
@@ -104,7 +107,7 @@ signals:
 
 public slots:
 
-    void slotAddImages(const KURL::List& list);
+    void slotAddImages(const KUrl::List& list);
 
 private slots:
 

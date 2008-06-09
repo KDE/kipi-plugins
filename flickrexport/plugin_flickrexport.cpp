@@ -55,7 +55,7 @@ K_EXPORT_COMPONENT_FACTORY(kipiplugin_flickrexport, Factory("kipiplugin_flickrex
 Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const char*, const QStringList&)
                    : KIPI::Plugin(Factory::instance(), parent, "FlickrExport")
 {
-    kdDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
+    kDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
 }
 
 void Plugin_FlickrExport::setup(QWidget* widget)
@@ -74,7 +74,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     if (!interface) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         m_action->setEnabled(false);
         return;
     }
@@ -92,7 +92,7 @@ void Plugin_FlickrExport::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface) 
     {
-        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -109,6 +109,6 @@ KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
     if (action == m_action)
         return KIPI::EXPORTPLUGIN;
 
-    kdWarning(51000) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN;
 }

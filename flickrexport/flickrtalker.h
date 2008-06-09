@@ -27,16 +27,16 @@
 // Qt includes.
 
 #include <qstring.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qobject.h>
-#include <qprogressdialog.h>
+#include <q3progressdialog.h>
 
 // KDE includes.
 
 #include <kurl.h>
 #include <kio/job.h>
 
-class QProgressDialog;
+class Q3ProgressDialog;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -90,17 +90,17 @@ public:
 
 public:
 
-    QProgressDialog *m_authProgressDlg;
+    Q3ProgressDialog *m_authProgressDlg;
 
 signals:
 
     void signalError(const QString& msg);
 //  void signalLoginFailed( const QString& msg );
     void signalBusy(bool val);
-    void signalAlbums(const QValueList<GAlbum>& albumList);
-    void signalPhotos(const QValueList<GPhoto>& photoList);
+    void signalAlbums(const Q3ValueList<GAlbum>& albumList);
+    void signalPhotos(const Q3ValueList<GPhoto>& photoList);
     void signalAddPhotoSucceeded();
-    void signalListPhotoSetsSucceeded(const QValueList <FPhotoSet>& photoSetList);
+    void signalListPhotoSetsSucceeded(const Q3ValueList <FPhotoSet>& photoSetList);
     void signalAddPhotoFailed(const QString& msg);
     void signalListPhotoSetsFailed(const QString& msg);
     void signalAuthenticate();
@@ -118,7 +118,7 @@ private:
     void parseResponseCheckToken(const QByteArray& data);
     void parseResponsePhotoProperty(const QByteArray& data);
 
-    QString getApiSig(const QString& secret, const KURL& url);
+    QString getApiSig(const QString& secret, const KUrl& url);
 
 private slots:
 

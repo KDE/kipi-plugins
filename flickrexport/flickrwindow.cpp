@@ -27,17 +27,19 @@
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
-#include <qprogressdialog.h>
+#include <q3progressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qradiobutton.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 // KDE includes.
 
 #include <klineedit.h>
 #include <khelpmenu.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
@@ -57,6 +59,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagedialog.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
@@ -155,8 +158,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
             this, SLOT( slotAddPhotoFailed( const QString& ) ));
 
-    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QValueList<FPhotoSet>& ) ),
-            this, SLOT( slotListPhotoSetsResponse( const QValueList<FPhotoSet>& ) ));
+    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const Q3ValueList<FPhotoSet>& ) ),
+            this, SLOT( slotListPhotoSetsResponse( const Q3ValueList<FPhotoSet>& ) ));
 
     //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
     //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
@@ -166,7 +169,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     // --------------------------------------------------------------------------
 
-    m_progressDlg = new QProgressDialog(this, 0, true);
+    m_progressDlg = new Q3ProgressDialog(this, 0, true);
     m_progressDlg->setAutoReset(true);
     m_progressDlg->setAutoClose(true);
 
@@ -182,8 +185,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     //connect( m_tagView, SIGNAL( selectionChanged() ),
     //         SLOT( slotTagSelected() ) );
 
-    //connect( m_photoView->browserExtension(), SIGNAL( openURLRequest( const KURL&, const KParts::URLArgs& ) ),
-    //         SLOT( slotOpenPhoto( const KURL& ) ) );
+    //connect( m_photoView->browserExtension(), SIGNAL( openURLRequest( const KUrl&, const KParts::URLArgs& ) ),
+    //         SLOT( slotOpenPhoto( const KUrl& ) ) );
 
     //connect( m_newAlbumBtn, SIGNAL( clicked() ),
     //         SLOT( slotNewAlbum() ) );
@@ -192,7 +195,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     readSettings();
 
-    m_authProgressDlg = new QProgressDialog(this, 0, true);
+    m_authProgressDlg = new Q3ProgressDialog(this, 0, true);
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
 
@@ -202,7 +205,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_talker->m_authProgressDlg = m_authProgressDlg; 
     m_widget->setEnabled(false);
 
-    kdDebug() << "Calling auth methods" << endl; 
+    kDebug() << "Calling auth methods" << endl; 
 
     if(m_token.length()< 1)  
         m_talker->getFrob();
@@ -273,7 +276,7 @@ void FlickrWindow::writeSettings()
 
 void FlickrWindow::slotHelp()
 {
-    KApplication::kApplication()->invokeHelp("flickrexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("flickrexport", "kipi-plugins");
 }
 
 void FlickrWindow::slotDoLogin()
@@ -290,7 +293,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_token    = token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    kdDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
+    kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
     m_userNameDisplayLabel->setText(QString("<qt><b>%1</b></qt>").arg(m_username));
     m_widget->setEnabled(true);
 }
@@ -299,7 +302,7 @@ void FlickrWindow::slotBusy(bool val)
 {
     if (val)
     {
-        setCursor(QCursor::WaitCursor);
+        setCursor(Qt::waitCursor);
 //      m_newAlbumBtn->setEnabled( false );
 //      m_addPhotoButton->setEnabled( false );
     }
@@ -319,7 +322,7 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    kdDebug() << "Slot Change User Request " << endl;
+    kDebug() << "Slot Change User Request " << endl;
     m_talker->getFrob();
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -334,7 +337,7 @@ void FlickrWindow::slotAlbums( const QValueList<GAlbum>& albumList )
     //m_photoView->end();
 
     KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
-    QPixmap pix = iconLoader->loadIcon( "folder", KIcon::NoGroup, 32 );
+    QPixmap pix = iconLoader->loadIcon( "folder", KIconLoader::NoGroup, 32 );
 
     typedef QValueList<GAlbum> GAlbumList;
     GAlbumList::const_iterator iter;
@@ -361,7 +364,7 @@ void FlickrWindow::slotAlbums( const QValueList<GAlbum>& albumList )
             }
             else
             {
-                kdWarning() << "Failed to find parent for album "
+                kWarning() << "Failed to find parent for album "
                             << album.name
                             << "with id " << album.ref_num;
             }
@@ -408,15 +411,15 @@ void FlickrWindow::slotTagSelected()
 {
     // TODO
 }
-void FlickrWindow::slotOpenPhoto( const KURL& url )
+void FlickrWindow::slotOpenPhoto( const KUrl& url )
 {
     new KRun(url);
 }
 */
 
-void FlickrWindow::slotListPhotoSetsResponse(const QValueList <FPhotoSet>& /*photoSetList*/)
+void FlickrWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /*photoSetList*/)
 {
-    kdDebug() << "SlotListPhotoSetsResponse invoked" << endl;
+    kDebug() << "SlotListPhotoSetsResponse invoked" << endl;
     // TODO
 }
 
@@ -429,22 +432,22 @@ void FlickrWindow::slotNewPhotoSet()
 */
 void FlickrWindow::slotUser1()
 {
-    kdDebug() << "SlotUploadImages invoked" << endl;
+    kDebug() << "SlotUploadImages invoked" << endl;
 
     m_widget->m_tab->setCurrentPage(FlickrWidget::FILELIST);
-    KURL::List urls = m_imglst->imageUrls();
+    KUrl::List urls = m_imglst->imageUrls();
 
     if (urls.isEmpty())
         return;
 
-    typedef QPair<KURL, FPhotoInfo> Pair;
+    typedef QPair<KUrl, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
-    for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
-        kdDebug() << "Adding images to the list" << endl;
+        kDebug() << "Adding images to the list" << endl;
         FPhotoInfo temp;
 
         temp.title                 = info.title();
@@ -475,7 +478,7 @@ void FlickrWindow::slotUser1()
             if (m_stripSpaceTagsCheckBox->isChecked())
             {
                 for (QStringList::iterator it = tagsFromDatabase.begin(); it != tagsFromDatabase.end() ; ++it)
-                    *it = (*it).stripWhiteSpace().remove(" ");
+                    *it = (*it).trimmed().remove(" ");
             }
         }
 
@@ -491,7 +494,7 @@ void FlickrWindow::slotUser1()
 
         while(itTags != allTags.end())
         {
-            kdDebug() << "Tags list: " << (*itTags) << endl;
+            kDebug() << "Tags list: " << (*itTags) << endl;
             ++itTags;
         }
 
@@ -503,7 +506,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_progressDlg->reset();
     slotAddPhotoNext();
-    kdDebug() << "SlotUploadImages done" << endl;
+    kDebug() << "SlotUploadImages done" << endl;
 }
 
 void FlickrWindow::slotAddPhotoNext()
@@ -516,7 +519,7 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    typedef QPair<KURL, FPhotoInfo> Pair;
+    typedef QPair<KUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
     bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path

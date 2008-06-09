@@ -26,6 +26,8 @@
 // Qt includes.
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3StrList>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -47,7 +49,7 @@ public:
     int      ref_num;
 //  int      album_num;
 
-    QStrList tags;
+    Q3StrList tags;
     QString  title;
     QString  description;
 

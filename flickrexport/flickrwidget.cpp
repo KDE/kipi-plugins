@@ -25,23 +25,26 @@
 
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qframe.h>
-#include <qheader.h>
-#include <qbuttongroup.h>
+#include <q3frame.h>
+#include <q3header.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
 
 // KDE includes.
 
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
-#include <kactivelabel.h>
+#include <k3activelabel.h>
 #include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
@@ -67,12 +70,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 {
     setName("FlickrWidget");
 
-    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this, 5, 5);
+    Q3VBoxLayout* flickrWidgetLayout = new Q3VBoxLayout(this, 5, 5);
 
     m_photoView               = 0; //new KHTMLPart(splitter);
     KSeparator *line          = new KSeparator(Horizontal, this);
     m_tab                     = new KTabWidget(this);
-    KActiveLabel *headerLabel = new KActiveLabel(this);
+    K3ActiveLabel *headerLabel = new K3ActiveLabel(this);
     headerLabel->setFocusPolicy(NoFocus);
     headerLabel->setLinkUnderline(false);
     headerLabel->setText(i18n("<qt><b><h2><a href='http://www.flickr.com'>"
@@ -85,13 +88,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     m_imglst                       = new ImagesList(m_tab, iface);
     QWidget* settingsBox           = new QWidget(m_tab);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    Q3VBoxLayout* settingsBoxLayout = new Q3VBoxLayout(settingsBox);
 
     //m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
-    QGridLayout* tagsLayout  = new QGridLayout(1, 1);
+    Q3GridLayout* tagsLayout  = new Q3GridLayout(1, 1);
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), settingsBox);
     m_tagsLineEdit           = new KLineEdit(settingsBox);
     m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
@@ -107,11 +110,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), settingsBox);
+    Q3GroupBox* optionsBox         = new Q3GroupBox(i18n("Override Default Options"), settingsBox);
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout(), 5, 3);
+    Q3GridLayout* optionsBoxLayout = new Q3GridLayout(optionsBox->layout(), 5, 3);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18n("As in accessible for people", "Public (anyone can see them)"));
@@ -155,11 +158,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox = new QGroupBox(i18n("Account"), settingsBox);
+    Q3GroupBox* accountBox = new Q3GroupBox(i18n("Account"), settingsBox);
     accountBox->setColumnLayout(0, Qt::Vertical);
     accountBox->layout()->setSpacing(KDialog::spacingHint());
     accountBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox->layout(), 1, 3);
+    Q3GridLayout* accountBoxLayout = new Q3GridLayout(accountBox->layout(), 1, 3);
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);

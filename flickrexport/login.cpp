@@ -23,10 +23,14 @@
 // Qt includes.
 
 #include <qlabel.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 // KDE includes.
 
@@ -46,16 +50,16 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout(this, 5, 5, "vbox");
+    Q3VBoxLayout* vbox = new Q3VBoxLayout(this, 5, 5, "vbox");
     m_headerLabel     = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    QFrame* hline = new QFrame(this, "hline");
-    hline->setFrameShape(QFrame::HLine);
-    hline->setFrameShadow(QFrame::Sunken);
+    Q3Frame* hline = new Q3Frame(this, "hline");
+    hline->setFrameShape(Q3Frame::HLine);
+    hline->setFrameShadow(Q3Frame::Sunken);
 
-    QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
+    Q3GridLayout* centerLayout = new Q3GridLayout(0, 1, 1, 5, 5);
 
     m_nameEdit   = new QLineEdit(this);
     m_passwdEdit = new QLineEdit(this);
@@ -72,7 +76,7 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     centerLayout->addWidget(nameLabel,    0, 0);
     centerLayout->addWidget(passwdLabel,  1, 0);
 
-    QHBoxLayout* btnLayout = new QHBoxLayout(0, 0, 5);
+    Q3HBoxLayout* btnLayout = new Q3HBoxLayout(0, 0, 5);
     btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     QPushButton *okBtn = new QPushButton(this);

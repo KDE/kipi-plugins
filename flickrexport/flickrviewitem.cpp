@@ -33,14 +33,14 @@
 namespace KIPIFlickrExportPlugin
 {
 
-GAlbumViewItem::GAlbumViewItem(QListView* parent, const QString& name, const GAlbum& album)
-              : QListViewItem(parent, name)
+GAlbumViewItem::GAlbumViewItem(Q3ListView* parent, const QString& name, const GAlbum& album)
+              : Q3ListViewItem(parent, name)
 {
     m_album = album;
 }
 
-GAlbumViewItem::GAlbumViewItem(QListViewItem* parent, const QString& name, const GAlbum& album)
-              : QListViewItem(parent, name) 
+GAlbumViewItem::GAlbumViewItem(Q3ListViewItem* parent, const QString& name, const GAlbum& album)
+              : Q3ListViewItem(parent, name) 
 {
     m_album = album;
 }
@@ -54,7 +54,7 @@ void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, i
     if (!p)
         return;
 
-    QListView *lv = listView();
+    Q3ListView *lv = listView();
     if (!lv)
         return;
 
@@ -97,7 +97,7 @@ void GAlbumViewItem::setup()
 {
     int h      = listView()->fontMetrics().height();
     int margin = 4;
-    setHeight( QMAX(2*h + margin, 32) );
+    setHeight( qMax(2*h + margin, 32) );
 }
 
 void GAlbumViewItem::paintFocus(QPainter*, const QColorGroup&, const QRect&)
