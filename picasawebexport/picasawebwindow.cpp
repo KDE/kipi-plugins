@@ -398,6 +398,7 @@ void PicasawebWindow::slotCreateNewAlbum()
             kDebug()<<"Album Creation cancelled" <<endl;
         }
     }
+    delete dlg;
 }
 /*
 void PicasawebWindow::slotPhotos( const QValueList<GPhoto>& photoList)
