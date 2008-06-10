@@ -44,28 +44,28 @@ class BatchProgressDialog;
 
 class Plugin_CDArchiving : public KIPI::Plugin
 {
-   Q_OBJECT
+    Q_OBJECT
 
 public:
-   Plugin_CDArchiving(QObject *parent, const char* name, const QStringList &args);
-   virtual ~Plugin_CDArchiving();
-   virtual KIPI::Category category( KAction* action ) const;
-   virtual void setup( QWidget* widget );
+    Plugin_CDArchiving(QObject *parent, const char* name, const QStringList &args);
+    virtual ~Plugin_CDArchiving();
+    virtual KIPI::Category category( KAction* action ) const;
+    virtual void setup( QWidget* widget );
 
 public slots:
-   void slotActivate();
-   void slotCancel();
+    void slotActivate();
+    void slotCancel();
 
 private:
-   int                                         m_current;
-   int                                         m_total;
-   
-   KIPI::BatchProgressDialog                  *m_progressDlg;
+    int                                         m_current;
+    int                                         m_total;
 
-   KIPICDArchivingPlugin::CDArchiving         *m_cdarchiving;
-   KAction                                    *m_action_cdarchiving;
-   
-   void customEvent(QCustomEvent *event);
+    KIPI::BatchProgressDialog                  *m_progressDlg;
+
+    KIPICDArchivingPlugin::CDArchiving         *m_cdarchiving;
+    KAction                                    *m_action_cdarchiving;
+
+    void customEvent(QCustomEvent *event);
 };
 
 

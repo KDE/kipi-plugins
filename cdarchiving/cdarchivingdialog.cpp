@@ -4,9 +4,9 @@
  * Date  : 2003-10-01
  * Description : a kipi plugin to export image collections
  *               on CD/DVD.
- * 
+ *
  * Copyright 2003-2005 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright 2003-2004 by Gregory Kokanosky 
+ * Copyright 2003-2004 by Gregory Kokanosky
  *                        <gregory dot kokanosky at free.fr>
  *                        for HTML interface navigation mode
  * Copyright 2005      by Owen Hirst <n8rider at sbcglobal.net>
@@ -17,67 +17,67 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes
 
-#include <qlabel.h>
-#include <qvbox.h>
-#include <qgroupbox.h>
-#include <qlayout.h>
-#include <qcombobox.h>
-#include <qwhatsthis.h>
 #include <qcheckbox.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qlistview.h>
-#include <qheader.h>
+#include <qcombobox.h>
 #include <qfileinfo.h>
+#include <qgroupbox.h>
+#include <qheader.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qlineedit.h>
+#include <qlistview.h>
 #include <qprogressdialog.h>
 #include <qpushbutton.h>
+#include <qspinbox.h>
+#include <qvbox.h>
+#include <qwhatsthis.h>
 
-// Include files for KDE
+// KDE includes
 
-#include <klocale.h>
-#include <kconfig.h>
-#include <kfontdialog.h>
-#include <kiconloader.h>
-#include <kdebug.h>
-#include <kurlrequester.h>
-#include <kurl.h>
-#include <kdirsize.h>
-#include <klineedit.h>
-#include <knuminput.h>
-#include <kcolorbutton.h>
-#include <kglobalsettings.h>
-#include <kmessagebox.h>
-#include <kbuttonbox.h>
-#include <ksqueezedtextlabel.h>
-#include <klistview.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
+#include <kapplication.h>
+#include <kbuttonbox.h>
+#include <kcolorbutton.h>
+#include <kconfig.h>
+#include <kdebug.h>
+#include <kdirsize.h>
+#include <kfontdialog.h>
+#include <kglobalsettings.h>
 #include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klistview.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <knuminput.h>
 #include <kpopupmenu.h>
+#include <ksqueezedtextlabel.h>
 #include <kstandarddirs.h>
+#include <kurl.h>
+#include <kurlrequester.h>
 
-// Include files for KIPI
+// KIPI includes
 
 #include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 #include <libkipi/imagecollectionselector.h>
+#include <libkipi/imageinfo.h>
 
-// Local include files
+// Local includes
 
+#include "cdarchivingdialog.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "cdarchivingdialog.h"
-#include "cdarchivingdialog.moc"
+
 
 namespace KIPICDArchivingPlugin
 {
@@ -85,8 +85,8 @@ namespace KIPICDArchivingPlugin
 KIO::filesize_t TargetMediaSize;
 
 CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *parent)
-                 : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
-                                parent, "CDArchivingDialog", true, false ), m_interface( interface )
+        : KDialogBase( IconList, i18n("Configure Archive to CD"), Help|Ok|Cancel, Ok,
+                       parent, "CDArchivingDialog", true, false ), m_interface( interface )
 {
     setCaption(i18n("Create CD/DVD Archive"));
     setupSelection();
@@ -95,9 +95,9 @@ CDArchivingDialog::CDArchivingDialog( KIPI::Interface* interface, QWidget *paren
     setupBurning();
     page_setupSelection->setFocus();
     resize(650, 450);
-    
+
     // About data and help button.
-    
+
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("CD/DVD Archiving"),
                                            0,
                                            KAboutData::License_GPL,
@@ -143,10 +143,10 @@ void CDArchivingDialog::setupSelection(void)
     QVBoxLayout *layout = new QVBoxLayout(page_setupSelection, 0, spacingHint() );
     m_imageCollectionSelector = new KIPI::ImageCollectionSelector(page_setupSelection, m_interface);
     layout->addWidget(m_imageCollectionSelector);
-    
+
     //---------------------------------------------
 
-    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal, 
+    QGroupBox * groupBox3 = new QGroupBox( 2, Qt::Horizontal,
                                            i18n("Target Media Information"),
                                            page_setupSelection );
     groupBox3->layout()->setSpacing( 6 );
@@ -240,14 +240,14 @@ void CDArchivingDialog::setupLookPage(void)
     m_imageFormat->setCurrentText ("JPEG");
     whatsThis = i18n("<p>Select here the image file format for thumbnails.<p>");
     whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
-                "good Web file format but it uses lossy data compression.<p>"
-                "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
-                "the lossless, portable, well-compressed storage of raster images. PNG provides a "
-                "patent-free replacement for GIF and can also replace many common uses of TIFF. "
-                "PNG is designed to work well in online viewing applications, such as the World "
-                "Wide Web, so it is fully streamable with a progressive display option. Also, "
-                "PNG can store gamma and chromaticity data for improved color matching on "
-                "heterogeneous platforms.");
+                                 "good Web file format but it uses lossy data compression.<p>"
+                                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
+                                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
+                                 "patent-free replacement for GIF and can also replace many common uses of TIFF. "
+                                 "PNG is designed to work well in online viewing applications, such as the World "
+                                 "Wide Web, so it is fully streamable with a progressive display option. Also, "
+                                 "PNG can store gamma and chromaticity data for improved color matching on "
+                                 "heterogeneous platforms.");
     QWhatsThis::add( m_imageFormat, whatsThis );
 
     m_labelThumbsFileFormat = new QLabel( i18n("Thumbnail file format:"), page_setupLook);
@@ -318,7 +318,7 @@ void CDArchivingDialog::setupLookPage(void)
     m_labelBackgroundColor->setBuddy( m_backgroundColor );
     hlay2->addStretch( 1 );
     hlay2->addWidget(m_backgroundColor);
-   
+
     //---------------------------------------------
 
     QHBoxLayout *hlay13  = new QHBoxLayout( );
@@ -342,7 +342,7 @@ void CDArchivingDialog::setupLookPage(void)
     m_bordersImagesColor = new KColorButton(page_setupLook);
     m_bordersImagesColor->setColor(QColor("#d0ffd0"));
     QWhatsThis::add( m_bordersImagesColor, i18n("<p>Select here the color used "
-                                                "for the image borders.") );
+                     "for the image borders.") );
 
     m_labelImageBorderSizeColor = new QLabel( i18n("Image bo&rder color:"), page_setupLook);
     hlay4->addWidget( m_labelImageBorderSizeColor );
@@ -398,7 +398,7 @@ void CDArchivingDialog::setupLookPage(void)
 
     connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
             m_backgroundColor, SLOT(setEnabled(bool)));
-    
+
     connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
             m_bordersImagesSize, SLOT(setEnabled(bool)));
 
@@ -406,11 +406,11 @@ void CDArchivingDialog::setupLookPage(void)
             m_labelImageBorderSize, SLOT(setEnabled(bool)));
 
     connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
-            m_bordersImagesColor, SLOT(setEnabled(bool)));    
-            
+            m_bordersImagesColor, SLOT(setEnabled(bool)));
+
     connect(m_useHTMLInterface, SIGNAL(toggled(bool)),
-            m_labelImageBorderSizeColor, SLOT(setEnabled(bool)));    
-                   
+            m_labelImageBorderSizeColor, SLOT(setEnabled(bool)));
+
 }
 
 void CDArchivingDialog::setupCDInfos(void)
@@ -531,12 +531,12 @@ void CDArchivingDialog::setupBurning(void)
     m_K3bParameters->setMaxLength(128);
     QWhatsThis::add( m_K3bParameters,
                      i18n("<p>Enter parameters which will be used when starting the "
-                             "burning application. Newer versions of K3b might need "
-                             "--nofork, older versions might not need it. "
-                             "(128 characters max.).") );
+                          "burning application. Newer versions of K3b might need "
+                          "--nofork, older versions might not need it. "
+                          "(128 characters max.).") );
 
     //---------------------------------------------
-    
+
     QGroupBox * groupBoxAdvancedOptions = new QGroupBox( i18n("Advanced Burning Options"), page_burning );
     groupBoxAdvancedOptions->setColumnLayout(0, Qt::Vertical );
     groupBoxAdvancedOptions->layout()->setSpacing( 6 );
@@ -548,7 +548,7 @@ void CDArchivingDialog::setupBurning(void)
     m_burnOnTheFly = new QCheckBox( i18n("Media burning On-The-Fly"), groupBoxAdvancedOptions);
     m_burnOnTheFly->setChecked( false );
     QWhatsThis::add( m_burnOnTheFly, i18n("<p>This option uses the \"On-The-Fly\" "
-                     "media burning capability; this does not use a media image.") );
+                                          "media burning capability; this does not use a media image.") );
     groupBoxAOLayout->addWidget( m_burnOnTheFly );
 
     m_checkCDBurn = new QCheckBox( i18n("Check media"), groupBoxAdvancedOptions);
@@ -561,7 +561,7 @@ void CDArchivingDialog::setupBurning(void)
     m_startBurningProcess->setChecked( false );
     m_startBurningProcess->hide();
     QWhatsThis::add( m_startBurningProcess, i18n("<p>This option start automatically the burning process "
-                                         "when K3b is loaded.") );
+                     "when K3b is loaded.") );
     groupBoxAOLayout->addWidget( m_startBurningProcess );
 
     vlay->addWidget( groupBoxAdvancedOptions );
@@ -574,19 +574,19 @@ void CDArchivingDialog::slotAlbumSelected()
     QValueList<KIPI::ImageCollection> ListAlbums(m_imageCollectionSelector->selectedImageCollections());
     double size = 0;
 
-    for( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it ) 
-       {
-       KURL::List images = (*it).images();
-        
-       for( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; ++urlIt ) 
-            {
+    for ( QValueList<KIPI::ImageCollection>::Iterator it = ListAlbums.begin(); it != ListAlbums.end(); ++it )
+    {
+        KURL::List images = (*it).images();
+
+        for ( KURL::List::Iterator urlIt = images.begin() ; urlIt != images.end() ; ++urlIt )
+        {
             KIPI::ImageInfo info = m_interface->info( *urlIt );
             size += info.size();
-            }
-       } 
-    
+        }
+    }
+
     TargetMediaSize = (int)(size/1024.0);
-          
+
     ShowMediaCapacity();
 }
 
@@ -596,58 +596,58 @@ void CDArchivingDialog::mediaFormatActived (const QString & item )
     QString Color;
 
     if (item == i18n("CD (650Mb)"))
-       MaxMediaSize = 665600;
+        MaxMediaSize = 665600;
 
     if (item == i18n("CD (700Mb)"))
-       MaxMediaSize = 716800;
+        MaxMediaSize = 716800;
 
     if (item == i18n("CD (880Mb)"))
-       MaxMediaSize = 901120;
+        MaxMediaSize = 901120;
 
     if (item == i18n("DVD (4,7Gb)"))
-       MaxMediaSize = 4928307;
+        MaxMediaSize = 4928307;
 
     ShowMediaCapacity();
 }
 
 void CDArchivingDialog::ShowMediaCapacity(void)
 {
-   QString Color = "<font color=\"blue\">";;
+    QString Color = "<font color=\"blue\">";;
 
-   if (TargetMediaSize >= MaxMediaSize - (MaxMediaSize*0.1))
-       Color = "<font color=\"orange\">";
+    if (TargetMediaSize >= MaxMediaSize - (MaxMediaSize*0.1))
+        Color = "<font color=\"orange\">";
 
-   if (TargetMediaSize >= MaxMediaSize)
-       Color = "<font color=\"red\">";
+    if (TargetMediaSize >= MaxMediaSize)
+        Color = "<font color=\"red\">";
 
-   m_mediaSize->setText( i18n("Total size: ") + Color +
-                         i18n("<b>%1</b></font> / <b>%2</b>").arg(KIO::convertSizeFromKB(TargetMediaSize))
-                              .arg(KIO::convertSizeFromKB (MaxMediaSize)) );
+    m_mediaSize->setText( i18n("Total size: ") + Color +
+                          i18n("<b>%1</b></font> / <b>%2</b>").arg(KIO::convertSizeFromKB(TargetMediaSize))
+                          .arg(KIO::convertSizeFromKB (MaxMediaSize)) );
 }
 
 void CDArchivingDialog::slotOk()
 {
     m_selectedAlbums = m_imageCollectionSelector->selectedImageCollections();
-    
+
     if (m_selectedAlbums.size() == 0)
-       {
-       KMessageBox::sorry(this, i18n("You must selected at least one Album to archive."));
-       return;
-       }
+    {
+        KMessageBox::sorry(this, i18n("You must selected at least one Album to archive."));
+        return;
+    }
 
     QFile fileK3b(getK3bBinPathName());
 
     if ( !KStandardDirs::findExe( getK3bBinPathName() ))
-       {
-       KMessageBox::sorry(this, i18n("K3b binary path is not valid. Please check it."));
-       return;
-       }
+    {
+        KMessageBox::sorry(this, i18n("K3b binary path is not valid. Please check it."));
+        return;
+    }
 
     if (TargetMediaSize >= MaxMediaSize)
-       {
-       KMessageBox::sorry(this, i18n("Target media size is too big. Please change your album selection."));
-       return;
-       }
+    {
+        KMessageBox::sorry(this, i18n("Target media size is too big. Please change your album selection."));
+        return;
+    }
 
     accept();
 }
@@ -899,3 +899,4 @@ void CDArchivingDialog::setBordersImagesSize(int Value)
 
 }  // NameSpace KIPICDArchivingPlugin
 
+#include "cdarchivingdialog.moc"

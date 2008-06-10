@@ -38,26 +38,29 @@ enum Action
     BuildAutoRuniface,
     BuildK3bProject
 };
-    
+
 
 class EventData
 {
 public:
-    EventData() 
-       {
-       starting = false;
-       success  = false;
-       }
-    
-    QString fileName;
+    EventData()
+    {
+        starting = false;
+        success  = false;
+    }
+
+    Action  action;
+
     QString albumName;
+    QString fileName;
     QString message;
-    int     total;
+
     bool    starting;
     bool    success;
-    Action  action;
+
+    int     total;
 };
 
 }  // NameSpace KIPICDArchivingPlugin
 
-#endif  // ACTIONS_H 
+#endif  // ACTIONS_H

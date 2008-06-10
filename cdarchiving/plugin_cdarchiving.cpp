@@ -20,7 +20,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -32,11 +32,11 @@
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKipi includes.
+// LibKipi includes
 
 #include <libkipi/batchprogressdialog.h>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 #include "cdarchiving.h"
@@ -49,7 +49,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_cdarchiving,
 
 // -----------------------------------------------------------
 Plugin_CDArchiving::Plugin_CDArchiving(QObject *parent, const char*, const QStringList&)
-                  : KIPI::Plugin( Factory::instance(), parent, "CDArchiving")
+        : KIPI::Plugin( Factory::instance(), parent, "CDArchiving")
 {
     kdDebug( 51001 ) << "Plugin_CDArchiving plugin loaded" << endl;
 }
@@ -89,20 +89,20 @@ void Plugin_CDArchiving::slotActivate()
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
 
     if ( !interface )
-       {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
-       return;
-       }
+    {
+        kdError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
 
     m_cdarchiving = new KIPICDArchivingPlugin::CDArchiving(
-                        interface,
-                        this, m_action_cdarchiving);
+        interface,
+        this, m_action_cdarchiving);
 
     if ( m_cdarchiving->showDialog() )
-       {
-       m_cdarchiving->prepare();
-       m_cdarchiving->run();
-       }
+    {
+        m_cdarchiving->prepare();
+        m_cdarchiving->run();
+    }
 }
 
 
@@ -122,7 +122,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
     if (!event) return;
 
     if (!m_progressDlg)
-        {
+    {
         m_progressDlg = new KIPI::BatchProgressDialog(kapp->activeWindow(), i18n("Archive to CD/DVD"));
 
         connect(m_progressDlg, SIGNAL(cancelClicked()),
@@ -130,205 +130,205 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
         m_current = 0;
         m_progressDlg->show();
-        }
+    }
 
     KIPICDArchivingPlugin::EventData *d = (KIPICDArchivingPlugin::EventData*) event->data();
 
     if (!d) return;
 
     if (d->starting)
-        {
+    {
         QString text;
 
         switch (d->action)
-           {
-           case(KIPICDArchivingPlugin::Initialize):
-              {
-              text = i18n("Initialising...");
-              m_total = d->total;
-              break;
-              }
+        {
+        case(KIPICDArchivingPlugin::Initialize):
+        {
+            text = i18n("Initialising...");
+            m_total = d->total;
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::BuildHTMLiface):
-              {
-              text = i18n("Making main HTML interface...");
-              break;
-              }
+        case(KIPICDArchivingPlugin::BuildHTMLiface):
+        {
+            text = i18n("Making main HTML interface...");
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
-              {
-              text = i18n("Making HTML pages for Album '%1'...").arg(d->albumName);
-              break;
-              }
+        case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
+        {
+            text = i18n("Making HTML pages for Album '%1'...").arg(d->albumName);
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::BuildAutoRuniface):
-              {
-              text = i18n("Making AutoRun interface...");
-              break;
-              }
+        case(KIPICDArchivingPlugin::BuildAutoRuniface):
+        {
+            text = i18n("Making AutoRun interface...");
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::ResizeImages):
-              {
-              text = i18n("Creating thumbnail for '%1'...").arg(d->fileName);
-              break;
-              }
+        case(KIPICDArchivingPlugin::ResizeImages):
+        {
+            text = i18n("Creating thumbnail for '%1'...").arg(d->fileName);
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::BuildK3bProject):
-              {
-              text = i18n("Making K3b project...");
-              break;
-              }
+        case(KIPICDArchivingPlugin::BuildK3bProject):
+        {
+            text = i18n("Making K3b project...");
+            break;
+        }
 
-           case(KIPICDArchivingPlugin::Progress):
-              {
-              text = d->message;
-              break;
-              }
+        case(KIPICDArchivingPlugin::Progress):
+        {
+            text = d->message;
+            break;
+        }
 
-           default:
-              {
-              kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Starting' event: " << d->action << endl;
-              }
-           }
+        default:
+        {
+            kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Starting' event: " << d->action << endl;
+        }
+        }
 
         m_progressDlg->addedAction(text, KIPI::StartingMessage);
-        }
+    }
     else
-        {
+    {
         QString text;
 
         if (d->success)
-            {
+        {
             switch (d->action)
-               {
-               case(KIPICDArchivingPlugin::BuildHTMLiface):
-                  {
-                  ++m_current;
-                  text = i18n("Main HTML interface creation completed.");
-                  break;
-                  }
+            {
+            case(KIPICDArchivingPlugin::BuildHTMLiface):
+            {
+                ++m_current;
+                text = i18n("Main HTML interface creation completed.");
+                break;
+            }
 
-               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
-                  {
-                  ++m_current;
-                  text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
-                  break;
-                  }
+            case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
+            {
+                ++m_current;
+                text = i18n("HTML page creation for Album '%1' completed.").arg(d->albumName);
+                break;
+            }
 
-              case(KIPICDArchivingPlugin::ResizeImages):
-                  {
-                  ++m_current;
-                  text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
-                  break;
-                  }
+            case(KIPICDArchivingPlugin::ResizeImages):
+            {
+                ++m_current;
+                text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
+                break;
+            }
 
-               case(KIPICDArchivingPlugin::BuildAutoRuniface):
-                  {
-                  ++m_current;
-                  text = i18n("AutoRun interface creation completed.");
-                  break;
-                  }
+            case(KIPICDArchivingPlugin::BuildAutoRuniface):
+            {
+                ++m_current;
+                text = i18n("AutoRun interface creation completed.");
+                break;
+            }
 
-               case(KIPICDArchivingPlugin::BuildK3bProject):
-                  {
-                  ++m_current;
-                  text = i18n("K3b project creation completed.");
-                  break;
-                  }
+            case(KIPICDArchivingPlugin::BuildK3bProject):
+            {
+                ++m_current;
+                text = i18n("K3b project creation completed.");
+                break;
+            }
 
-               default:
-                  {
-                  kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
-                  }
-               }
+            default:
+            {
+                kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Success' event: " << d->action << endl;
+            }
+            }
 
             m_progressDlg->addedAction(text, KIPI::SuccessMessage);
-            }
+        }
         else
-            {
+        {
             switch (d->action)
-               {
-               case(KIPICDArchivingPlugin::ResizeImages):
-                  {
-                  text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
-                  m_progressDlg->addedAction(text, KIPI::WarningMessage);
-                  m_progressDlg->setProgress(m_current, m_total);
-                  break;
-                  }
-
-               case(KIPICDArchivingPlugin::BuildHTMLiface):
-                  {
-                  ++m_current;
-                  text = i18n("Failed to create HTML interface: %1")
-                              .arg(d->message);
-                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
-                  m_progressDlg->setProgress(m_current, m_total);
-                  slotCancel();
-                  return;
-                  break;
-                  }
-
-               case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
-                  {
-                  text = i18n("Failed to create HTML pages for Album '%1'")
-                              .arg(d->albumName);
-                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
-                  m_progressDlg->setProgress(m_current, m_total);
-                  slotCancel();
-                  return;
-                  break;
-                  }
-
-               case(KIPICDArchivingPlugin::BuildK3bProject):
-                  {
-                  ++m_current;
-                  text = i18n("Failed to create K3b project.");
-                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
-                  m_progressDlg->setProgress(m_current, m_total);
-                  slotCancel();
-                  return;
-                  break;
-                  }
-
-               case(KIPICDArchivingPlugin::Error):
-                  {
-                  text = d->message;
-                  m_progressDlg->addedAction(text, KIPI::ErrorMessage);
-                  m_progressDlg->setProgress(m_current, m_total);
-                  slotCancel();
-                  return;
-                  break;
-                  }
-
-               default:
-                  {
-                  kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Failed' event: " << d->action << endl;
-                  }
-               }
+            {
+            case(KIPICDArchivingPlugin::ResizeImages):
+            {
+                text = i18n("Failed to create thumbnail for '%1'").arg(d->fileName);
+                m_progressDlg->addedAction(text, KIPI::WarningMessage);
+                m_progressDlg->setProgress(m_current, m_total);
+                break;
             }
+
+            case(KIPICDArchivingPlugin::BuildHTMLiface):
+            {
+                ++m_current;
+                text = i18n("Failed to create HTML interface: %1")
+                       .arg(d->message);
+                m_progressDlg->addedAction(text, KIPI::ErrorMessage);
+                m_progressDlg->setProgress(m_current, m_total);
+                slotCancel();
+                return;
+                break;
+            }
+
+            case(KIPICDArchivingPlugin::BuildAlbumHTMLPage):
+            {
+                text = i18n("Failed to create HTML pages for Album '%1'")
+                       .arg(d->albumName);
+                m_progressDlg->addedAction(text, KIPI::ErrorMessage);
+                m_progressDlg->setProgress(m_current, m_total);
+                slotCancel();
+                return;
+                break;
+            }
+
+            case(KIPICDArchivingPlugin::BuildK3bProject):
+            {
+                ++m_current;
+                text = i18n("Failed to create K3b project.");
+                m_progressDlg->addedAction(text, KIPI::ErrorMessage);
+                m_progressDlg->setProgress(m_current, m_total);
+                slotCancel();
+                return;
+                break;
+            }
+
+            case(KIPICDArchivingPlugin::Error):
+            {
+                text = d->message;
+                m_progressDlg->addedAction(text, KIPI::ErrorMessage);
+                m_progressDlg->setProgress(m_current, m_total);
+                slotCancel();
+                return;
+                break;
+            }
+
+            default:
+            {
+                kdWarning( 51000 ) << "Plugin_CDArchiving: Unknown 'Failed' event: " << d->action << endl;
+            }
+            }
+        }
 
         m_progressDlg->setProgress(m_current, m_total);
 
-        if( d->action == KIPICDArchivingPlugin::BuildK3bProject )
-           {
-           m_current = 0;
+        if ( d->action == KIPICDArchivingPlugin::BuildK3bProject )
+        {
+            m_current = 0;
 
 #if KDE_VERSION >= 0x30200
-           m_progressDlg->setButtonCancel( KStdGuiItem::close() );
+            m_progressDlg->setButtonCancel( KStdGuiItem::close() );
 #else
-           m_progressDlg->setButtonCancelText( i18n("&Close") );
+            m_progressDlg->setButtonCancelText( i18n("&Close") );
 #endif
 
-           disconnect(m_progressDlg, SIGNAL(cancelClicked()),
-                      this, SLOT(slotCancel()));
+            disconnect(m_progressDlg, SIGNAL(cancelClicked()),
+                       this, SLOT(slotCancel()));
 
-           // Invoke K3b program.
+            // Invoke K3b program.
 
-           m_progressDlg->addedAction(i18n("Starting K3b program..."),
-                                      KIPI::StartingMessage);
-           m_cdarchiving->invokeK3b();
-           }
+            m_progressDlg->addedAction(i18n("Starting K3b program..."),
+                                       KIPI::StartingMessage);
+            m_cdarchiving->invokeK3b();
         }
+    }
 
     kapp->processEvents();
     delete d;
@@ -340,7 +340,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 KIPI::Category Plugin_CDArchiving::category( KAction* action ) const
 {
     if ( action == m_action_cdarchiving )
-       return KIPI::EXPORTPLUGIN;
+        return KIPI::EXPORTPLUGIN;
 
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::EXPORTPLUGIN; // no warning from compiler, please

@@ -70,19 +70,19 @@ namespace KIPICDArchivingPlugin
 {
 
 CDArchiving::CDArchiving( KIPI::Interface* interface, QObject *parent, KAction *action_cdarchiving )
-           : QObject(parent)
+        : QObject(parent)
 {
     KImageIO::registerFormats();
     const KAboutData *data = KApplication::kApplication()->aboutData();
     m_hostName = QString::QString( data->appName() );
-    
+
     m_hostURL = data->homepage();
-    
+
     if (m_hostURL.isEmpty())
-       {
-       m_hostName = "Kipi";
-       m_hostURL = "http://extragear.kde.org/apps/kipi";
-       }
+    {
+        m_hostName = "Kipi";
+        m_hostURL = "http://extragear.kde.org/apps/kipi";
+    }
 
     m_actionCDArchiving = action_cdarchiving;
     m_interface = interface;
@@ -119,7 +119,7 @@ void CDArchiving::writeSettings(void)
     config.writeEntry("FontSize", m_configDlg->getFontSize());
     config.writeEntry("FontColor", m_configDlg->getForegroundColor());
     config.writeEntry("BackgroundColor", m_configDlg->getBackgroundColor());
-    config.writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());  
+    config.writeEntry("ThumbnailsSize", m_configDlg->getThumbnailsSize());
     config.writeEntry("ThumbnailsFormat", m_configDlg->getImageFormat());
     config.writeEntry("BordersImagesSize", m_configDlg->getBordersImagesSize());
     config.writeEntry("BordersImagesColor", m_configDlg->getBordersImagesColor());
@@ -190,9 +190,9 @@ void CDArchiving::readSettings(void)
     m_configDlg->setUseUseOnTheFly( config.readBoolEntry("UseOnTheFly", "true") );
     m_configDlg->setUseCheckCD( config.readBoolEntry("UseCheckCD", "true") );
     m_configDlg->setUseStartBurningProcess( config.readBoolEntry("UseStartWrintingProcess", "false") );
-  
+
     // Get the image files filters from the hosts app.
-     
+
     m_imagesFileFilter = m_interface->fileExtensions();
 }
 
@@ -211,13 +211,13 @@ bool CDArchiving::showDialog()
 
     m_configDlg = new CDArchivingDialog( m_interface, kapp->activeWindow() );
     readSettings();
-    
+
     if ( m_configDlg->exec() == QDialog::Accepted )
-       {
-       writeSettings();
-       return true;
-       }
-       
+    {
+        writeSettings();
+        return true;
+    }
+
     return false;
 }
 
@@ -225,12 +225,12 @@ bool CDArchiving::showDialog()
 
 bool CDArchiving::prepare(void)
 {
-    QValueList<KIPI::ImageCollection> albumsList;  
+    QValueList<KIPI::ImageCollection> albumsList;
     KIPICDArchivingPlugin::EventData *d;
-    
+
     m_cancelled = false;
     m_StreamMainPageAlbumPreview = "";
-        
+
     // Get config from setup dialog.
     albumsList = m_configDlg->getSelectedAlbums();
     m_useHTMLInterface = m_configDlg->getUseHTMLInterface();
@@ -242,9 +242,9 @@ bool CDArchiving::prepare(void)
     m_imageFormat = m_configDlg->getImageFormat();
     m_mainTitle = m_configDlg->getMainTitle();
     m_backgroundColor = m_configDlg->getBackgroundColor();
-    m_foregroundColor = m_configDlg->getForegroundColor(); 
+    m_foregroundColor = m_configDlg->getForegroundColor();
     m_bordersImagesColor = m_configDlg->getBordersImagesColor();
-    m_fontName = m_configDlg->getFontName();    
+    m_fontName = m_configDlg->getFontName();
     m_fontSize = m_configDlg->getFontSize();
     m_bordersImagesSize = m_configDlg->getBordersImagesSize();
     m_thumbnailsSize = m_configDlg->getThumbnailsSize();
@@ -259,9 +259,9 @@ bool CDArchiving::prepare(void)
     m_preparer = m_configDlg->getPreparer();
     m_albumListSize = albumsList.count();
     m_albumsList = albumsList;
-    
-    // Estimate the number of actions for the KIPI progress dialog. 
-    
+
+    // Estimate the number of actions for the KIPI progress dialog.
+
     int nbActions = 1;
     int num_images = 0;
 
@@ -283,7 +283,7 @@ bool CDArchiving::prepare(void)
     d->action = KIPICDArchivingPlugin::Initialize;
     d->starting = true;
     d->success = false;
-    d->total = nbActions; 
+    d->total = nbActions;
     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
     usleep(1000);
 
@@ -305,9 +305,9 @@ void CDArchiving::stop()
 void CDArchiving::run()
 {
     KIPICDArchivingPlugin::EventData *d;
-    
+
     // Making HTML interface.
-        
+
     if ( m_useHTMLInterface == true )
     {
         d = new KIPICDArchivingPlugin::EventData;
@@ -316,7 +316,7 @@ void CDArchiving::run()
         d->success = false;
         QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
-       
+
         if ( buildHTMLInterface() == true )
         {
             m_HTMLInterfaceFolder = m_tmpFolder + "/HTMLInterface";
@@ -334,7 +334,7 @@ void CDArchiving::run()
             usleep(1000);
 
             // Making AutoRun options.
-          
+
             if ( m_useAutoRunWin32 == true )
             {
                 d = new KIPICDArchivingPlugin::EventData;
@@ -343,11 +343,11 @@ void CDArchiving::run()
                 d->success = false;
                 QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
                 usleep(1000);
-       
+
                 CreateAutoRunInfFile();
                 m_HTMLInterfaceAutoRunInf = m_tmpFolder + "/autorun.inf";
                 m_HTMLInterfaceAutoRunFolder = dir + "/autorun";
-             
+
                 d = new KIPICDArchivingPlugin::EventData;
                 d->action = KIPICDArchivingPlugin::BuildAutoRuniface;
                 d->starting = false;
@@ -359,14 +359,14 @@ void CDArchiving::run()
     }
 
     // Making K3b project file.
-       
+
     d = new KIPICDArchivingPlugin::EventData;
     d->action = KIPICDArchivingPlugin::BuildK3bProject;
     d->starting = true;
     d->success = false;
     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
     usleep(1000);
-           
+
     if ( BuildK3bXMLprojectfile(m_HTMLInterfaceFolder, m_HTMLInterfaceIndex,
                                 m_HTMLInterfaceAutoRunInf, m_HTMLInterfaceAutoRunFolder) == false )
     {
@@ -378,7 +378,7 @@ void CDArchiving::run()
         usleep(1000);
         return;
     }
-    else 
+    else
     {
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::BuildK3bProject;
@@ -410,25 +410,25 @@ void CDArchiving::invokeK3b()
             this, SLOT(slotK3bDone(KProcess*)));
 
     if ( !m_Proc->start(KProcess::NotifyOnExit, KProcess::All ) )
-       {
-       KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
-       d->action = KIPICDArchivingPlugin::Error;
-       d->starting = false;
-       d->success = false;
-       d->message = i18n("Cannot start K3b program : fork failed.");
-       QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
-       usleep(1000);
-       return;
-       }
+    {
+        KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
+        d->action = KIPICDArchivingPlugin::Error;
+        d->starting = false;
+        d->success = false;
+        d->message = i18n("Cannot start K3b program : fork failed.");
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+        usleep(1000);
+        return;
+    }
 
     m_actionCDArchiving->setEnabled(false);
 
     if ( m_useStartBurningProcess == true )
-       {
-       QTimer::singleShot(10000, 
-               this, SLOT(slotK3bStartBurningProcess()));
-       m_k3bPid = m_Proc->pid();
-       }
+    {
+        QTimer::singleShot(10000,
+                           this, SLOT(slotK3bStartBurningProcess()));
+        m_k3bPid = m_Proc->pid();
+    }
 }
 
 
@@ -457,9 +457,9 @@ void CDArchiving::slotK3bDone(KProcess*)
     d->message = i18n("K3b is done; removing temporary folder....");
     QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
     usleep(1000);
-    
+
     if (DeleteDir(m_tmpFolder) == false)
-        {
+    {
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::Error;
         d->starting = false;
@@ -467,7 +467,7 @@ void CDArchiving::slotK3bDone(KProcess*)
         d->message = i18n("Cannot remove temporary folder '%1'.").arg(m_tmpFolder);
         QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
-        }
+    }
 
     m_actionCDArchiving->setEnabled(true);
 }
@@ -500,7 +500,7 @@ bool CDArchiving::buildHTMLInterface (void)
             return false;
         }
     }
-    
+
     if (TargetDir.mkdir( MainTPath ) == false)
     {
         d = new KIPICDArchivingPlugin::EventData;
@@ -534,7 +534,7 @@ bool CDArchiving::buildHTMLInterface (void)
     //clear the temporary list for unique names
     m_collection_name_list.clear();
     for (QValueList<KIPI::ImageCollection>::iterator it = m_albumsList.begin();
-         it != m_albumsList.end(); ++it)
+            it != m_albumsList.end(); ++it)
     {
         KIPI::ImageCollection album = *it;
         kdDebug( 51000 ) << "HTML Interface for Album: " << album.name() << endl;
@@ -577,9 +577,9 @@ bool CDArchiving::buildHTMLInterface (void)
             d->starting = false;
             d->success = false;
             d->albumName = m_AlbumTitle;
-            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));        
-            usleep(1000);               
-               
+            QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
+            usleep(1000);
+
             if (DeleteDir (MainTPath) == false)
             {
                 d = new KIPICDArchivingPlugin::EventData;
@@ -594,13 +594,13 @@ bool CDArchiving::buildHTMLInterface (void)
 
             return false;
         }
-           
+
         d = new KIPICDArchivingPlugin::EventData;
         d->action = KIPICDArchivingPlugin::BuildAlbumHTMLPage;
         d->starting = false;
         d->success = true;
         d->albumName = m_AlbumTitle;
-        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));        
+        QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
     }
 
@@ -639,27 +639,27 @@ bool CDArchiving::createDirectory(QDir thumb_dir, QString imgGalleryDir, QString
 {
 
     if (!thumb_dir.exists())
-        {
+    {
         thumb_dir.setPath( imgGalleryDir );
 
         if (!(thumb_dir.mkdir(dirName, false)))
-            {
+        {
             KIPICDArchivingPlugin::EventData *d = new KIPICDArchivingPlugin::EventData;
             d->action = KIPICDArchivingPlugin::Error;
             d->starting = false;
             d->success = false;
             d->message = i18n("Could not create folder '%1' in '%2'.")
-                                .arg(dirName).arg(imgGalleryDir);
+                         .arg(dirName).arg(imgGalleryDir);
             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
             usleep(1000);
             return false;
-            }
+        }
         else
-            {
+        {
             thumb_dir.setPath( imgGalleryDir + "/" + dirName + "/" );
             return true;
-            }
         }
+    }
     else
         return true;
 }
@@ -672,14 +672,14 @@ void CDArchiving::createHead(QTextStream& stream)
     QString chsetName = QTextCodec::codecForLocale()->mimeName();
 
     stream << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">"
-           << endl;
+    << endl;
     stream << "<html>" << endl;
     stream << "<head>" << endl;
     stream << "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">" << endl;
     stream << "<meta name=\"Generator\" content=\"Albums HTML interface for CD archiving generated by "
-           << m_hostName << " [" << m_hostURL << "]\">"  << endl;
+    << m_hostName << " [" << m_hostURL << "]\">"  << endl;
     stream << "<meta name=\"date\" content=\"" + KGlobal::locale()->formatDate(QDate::currentDate())
-           + "\">" << endl;
+    + "\">" << endl;
     stream << "<title>" << m_mainTitle << "</title>" << endl;
     createCSSSection(stream);
     stream << "</head>" << endl;
@@ -705,7 +705,7 @@ void CDArchiving::createCSSSection(QTextStream& stream)
     stream << "TD       { color: " << foregroundColor << "; padding: 1em}" << endl;
     stream << "IMG      { border: 0px ; }" << endl;
     stream << "IMG.photo      { border: " << m_bordersImagesSize << "px solid "
-           << bordersImagesColor << "; }" << endl;
+    << bordersImagesColor << "; }" << endl;
     stream << "</style>" << endl;
 }
 
@@ -734,23 +734,23 @@ void CDArchiving::createBody(QTextStream& stream,
 {
     KURL::List images = album.images();
     int numOfImages   = images.count();
-    
+
     const QString imgGalleryDir = targetURL.directory();
     const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
     stream << "<body>\n" << endl;
 
     stream << "<p><a href=\"../index.htm\"><img src=\"../gohome.png\" border=\"0\"  title=\""
-           << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a></p>" << endl;
+    << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a></p>" << endl;
 
 
     // Page Top -------------------------------------------------------------------------
-    
+
     stream << "<h1>" << i18n("Album ") << "&quot;" << m_AlbumTitle << "&quot;"
-           << "</h1>" << endl;
+    << "</h1>" << endl;
 
     stream << "<table width=\"100%\" border=1 cellpadding=0 cellspacing=0 "
-              "style=\"page-break-before: always\">\n" << endl;
+    "style=\"page-break-before: always\">\n" << endl;
 
     stream << "<col width=\"20%\"><col width=\"80%\">" << endl;
     stream << "<tr valign=top><td align=left>\n" << endl;
@@ -758,7 +758,7 @@ void CDArchiving::createBody(QTextStream& stream,
     if (m_interface->hasFeature(KIPI::AlbumsHaveComments))
         stream << i18n("<i>Caption:</i>") << "<br>\n" << endl;
 
-    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))        
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))
         stream << i18n("<i>Collection:</i>") << "<br>\n" << endl;
 
     if (m_interface->hasFeature(KIPI::AlbumsHaveCreationDate))
@@ -771,9 +771,9 @@ void CDArchiving::createBody(QTextStream& stream,
     if (m_interface->hasFeature(KIPI::AlbumsHaveComments))
         stream << EscapeSgmlText(QTextCodec::codecForLocale(),
                                  m_AlbumComments, true, true)
-               << "<br>\n" << endl;
+        << "<br>\n" << endl;
 
-    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))        
+    if (m_interface->hasFeature(KIPI::AlbumsHaveCategory))
         stream << m_AlbumCollection << "<br>\n" << endl;
 
     if (m_interface->hasFeature(KIPI::AlbumsHaveCreationDate))
@@ -790,18 +790,18 @@ void CDArchiving::createBody(QTextStream& stream,
     int        imgIndex = 0;
     EventData* d = 0;
 
-    // preliminary unique name generation 
+    // preliminary unique name generation
     QStringList fileNameList;
-    for( KURL::List::iterator urlIt = images.begin() ; 
+    for ( KURL::List::iterator urlIt = images.begin() ;
             !m_cancelled && (urlIt != images.end());
             ++urlIt)
     {
-       QFileInfo imInfo( (*urlIt).fileName());
-       QString   imgName = makeFileNameUnique(fileNameList, webifyFileName(imInfo.baseName(TRUE)));
+        QFileInfo imInfo( (*urlIt).fileName());
+        QString   imgName = makeFileNameUnique(fileNameList, webifyFileName(imInfo.baseName(TRUE)));
     }
-    for( KURL::List::iterator urlIt = images.begin() ; 
-         !m_cancelled && (urlIt != images.end());
-         ++urlIt, ++imgIndex)
+    for ( KURL::List::iterator urlIt = images.begin() ;
+            !m_cancelled && (urlIt != images.end());
+            ++urlIt, ++imgIndex)
     {
         // Row Start
         if ((imgIndex % m_imagesPerRow) == 0)
@@ -809,13 +809,13 @@ void CDArchiving::createBody(QTextStream& stream,
             stream << "<tr>" << endl;
         }
 
-        QString   imgName = fileNameList[imgIndex]; 
+        QString   imgName = fileNameList[imgIndex];
         QString   imgPath = (*urlIt).path();
         QFileInfo imgInfo(imgPath);
         QImage    imgProp = QImage(imgPath);
 
-        stream << "<td align='center'>\n<a href=\"pages/"  
-               << webifyFileName(imgName) << ".htm\">";
+        stream << "<td align='center'>\n<a href=\"pages/"
+        << webifyFileName(imgName) << ".htm\">";
         kdDebug(51000) << "Creating thumbnail for " << imgName << endl;
 
         d = new KIPICDArchivingPlugin::EventData;
@@ -831,13 +831,13 @@ void CDArchiving::createBody(QTextStream& stream,
 
         if ( valRet != -1 )
         {
-            QString thumbPath("thumbs/" + webifyFileName(imgName) 
-                                        + extension(imageFormat));
+            QString thumbPath("thumbs/" + webifyFileName(imgName)
+                              + extension(imageFormat));
             stream << "<img class=\"photo\" src=\"" << thumbPath
-                   << "\" width=\"" << m_imgWidth
-                   << "\" "
-                   << "height=\"" << m_imgHeight
-                   << "\" alt=\"" << imgPath;
+            << "\" width=\"" << m_imgWidth
+            << "\" "
+            << "height=\"" << m_imgHeight
+            << "\" alt=\"" << imgPath;
 
             QString sep = "\" title=\"";
 
@@ -851,12 +851,12 @@ void CDArchiving::createBody(QTextStream& stream,
             sep = ", ";
 
             QString imgPageComment = m_interface->info(*urlIt).description();
- 
+
             if ( !imgPageComment.isEmpty() )
             {
                 stream << sep
-                       << EscapeSgmlText(QTextCodec::codecForLocale(),
-                                         imgPageComment, true, true);
+                << EscapeSgmlText(QTextCodec::codecForLocale(),
+                                  imgPageComment, true, true);
             }
 
             stream << "\">" << endl;
@@ -875,13 +875,13 @@ void CDArchiving::createBody(QTextStream& stream,
                        (imgIndex > 0) ? images[imgIndex-1] : KURL(),
                        (imgIndex > 0) ? fileNameList[imgIndex-1] : QString(""),
                        (imgIndex < (int)(images.count()-1)) ? images[imgIndex+1] : KURL(),
-                       (imgIndex < (int)(fileNameList.count()-1)) ? 
-                                         fileNameList[imgIndex+1] : QString(""),
+                       (imgIndex < (int)(fileNameList.count()-1)) ?
+                       fileNameList[imgIndex+1] : QString(""),
                        imgPageComment);
 
-            // For each first image of current Album we add a preview in main HTML page.      
+            // For each first image of current Album we add a preview in main HTML page.
 
-            if ( imgIndex == 0) 
+            if ( imgIndex == 0)
             {
                 QString Temp, Temp2;
                 Temp2 = "<a href=\"./" + m_AlbumTitle + "/" + "index.htm" + "\">";
@@ -900,12 +900,12 @@ void CDArchiving::createBody(QTextStream& stream,
                 m_StreamMainPageAlbumPreview.append ( Temp2 );
             }
         }
-            
+
         if ( valRet == -1 || valRet == 0 )
         {
             kdDebug(51000) << "Creating thumbnail for " << imgName
-                           <<  "failed !" << endl;
-                
+            <<  "failed !" << endl;
+
             d = new KIPICDArchivingPlugin::EventData;
             d->action = KIPICDArchivingPlugin::ResizeImages;
             d->starting = false;
@@ -924,11 +924,11 @@ void CDArchiving::createBody(QTextStream& stream,
             QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
             usleep(1000);
         }
-                
+
         stream << "</a>" << endl;
 
         stream << "<div>" << imgName << "</div>" << endl;
-        
+
         stream << "<div>" << imgProp.width() << " x " << imgProp.height() << "</div>" << endl;
         stream << "<div>(" << (imgInfo.size() / 1024) << " " <<  i18n("KB") << ") " << "</div>" << endl;
 
@@ -936,8 +936,8 @@ void CDArchiving::createBody(QTextStream& stream,
 
         // Row End
         if ( ((imgIndex+1) % m_imagesPerRow) == 0 ||
-             ((imgIndex+1) == (int)(images.count())) )
-        {            
+                ((imgIndex+1) == (int)(images.count())) )
+        {
             stream << "</tr>" << endl;
         }
     }
@@ -958,11 +958,11 @@ void CDArchiving::createBody(QTextStream& stream,
     stream << "<p>"  << endl;
     Temp = i18n("Valid HTML 4.01.");
     stream << "<img src=\"thumbs/valid-html401.png\" alt=\"" << Temp
-           << "\" height=\"31\" width=\"88\" title=\"" << Temp << "\" />" << endl;
-                
+    << "\" height=\"31\" width=\"88\" title=\"" << Temp << "\" />" << endl;
+
     Temp = i18n("Album archive created with "
                 "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
-                
+
     stream << Temp << endl;
     stream << "</p>" << endl;
     stream << "</body>\n</html>\n" << endl;
@@ -998,10 +998,10 @@ void CDArchiving::createBodyMainPage(QTextStream& stream, KURL& url)
     stream << "<p>"  << endl;
     Temp = i18n("Valid HTML 4.01.");
     stream << "<img src=\"valid-html401.png\" alt=\"" << Temp << "\" height=\"31\" width=\"88\" title=\""
-           << Temp <<  "\" />" << endl;
-           
+    << Temp <<  "\" />" << endl;
+
     Temp = i18n("Album archive created with "
-                "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);                
+                "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
     stream << Temp << endl;
     stream << "</p>" << endl;
     stream << "</body>\n</html>\n" << endl;
@@ -1016,7 +1016,7 @@ bool CDArchiving::createHtml( const KIPI::ImageCollection& album,
 {
     if (m_cancelled)
         return false;
-    
+
     // Sort the images files formats running with thumbnails construction.
 
     const QString imgGalleryDir = targetURL.directory();
@@ -1044,7 +1044,7 @@ bool CDArchiving::createHtml( const KIPI::ImageCollection& album,
         createHead(stream);
         createBody(stream, album, targetURL, imageFormat);
         file.close();
-        return true;        
+        return true;
     }
     else
     {
@@ -1077,10 +1077,10 @@ bool CDArchiving::createPage(const QString& imgGalleryDir,
     const QDir thumbsDir(imgGalleryDir + QString::fromLatin1("/thumbs/"));
     const QFileInfo fi (imgURL.fileName());
     const QString imgName = uniqueImgName + "." + fi.extension(FALSE);
-kdDebug( 51000 ) << "CreatePage: FileName: " << imgURL.fileName() << endl;
-kdDebug( 51000 ) << "CreatePage: uniqueFileName: " << imgName << endl;
-kdDebug( 51000 ) << "CreatePage: uniquePrevFileName: " << prevUniqueImgName << endl;
-kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << endl;
+    kdDebug( 51000 ) << "CreatePage: FileName: " << imgURL.fileName() << endl;
+    kdDebug( 51000 ) << "CreatePage: uniqueFileName: " << imgName << endl;
+    kdDebug( 51000 ) << "CreatePage: uniquePrevFileName: " << prevUniqueImgName << endl;
+    kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << endl;
 
 
     // Html pages filenames
@@ -1113,17 +1113,17 @@ kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << e
 
         QString chsetName = QTextCodec::codecForLocale()->mimeName();
         stream << "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\""
-            " \"http://www.w3.org/TR/html4/loose.dtd\">" << endl;
+        " \"http://www.w3.org/TR/html4/loose.dtd\">" << endl;
         stream << "<html>" << endl;
         stream << "<head>" << endl;
         stream << "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">" << endl;
-                 
+
         stream << "<meta name=\"Generator\" content=\"Albums Images gallery generated by "
-               << m_hostName << " [" << m_hostURL << "]\">"  << endl;
-                 
+        << m_hostName << " [" << m_hostURL << "]\">"  << endl;
+
         stream << "<meta name=\"date\" content=\""
-               << KGlobal::locale()->formatDate(QDate::currentDate())
-               << "\">" << endl;
+        << KGlobal::locale()->formatDate(QDate::currentDate())
+        << "\">" << endl;
         stream << "<title>" << m_mainTitle << " : "<< imgName/*imgURL.fileName()*/ <<"</title>" << endl;
 
         createCSSSection(stream);
@@ -1187,20 +1187,20 @@ kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << e
         if ( prevImgURL.isValid() )
         {
             stream << "<a href=\"" << prevPageFilename << "\"><img class=\"photo\" src=\""
-                   << prevThumb<<"\" alt=\"" << i18n("Previous") <<  "\" title=\"" << i18n("Previous")
-                   << "\" height=\"" << prevH << "\" width=\"" << prevW << "\"></a>&nbsp; | &nbsp;" << endl;
+            << prevThumb<<"\" alt=\"" << i18n("Previous") <<  "\" title=\"" << i18n("Previous")
+            << "\" height=\"" << prevH << "\" width=\"" << prevW << "\"></a>&nbsp; | &nbsp;" << endl;
         }
 
         stream << "<a href=\"../index.htm\"><img src=\"../../up.png\" border=\"0\" title=\""
-               << i18n("Album index") << "\" alt=\"" << i18n("Album index") << "\"></a>" << endl;
+        << i18n("Album index") << "\" alt=\"" << i18n("Album index") << "\"></a>" << endl;
         stream << "&nbsp; | &nbsp;<a href=\"../../index.htm\"><img src=\"../../gohome.png\" border=\"0\" title=\""
-               << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a>" << endl;
+        << i18n("Album list") << "\" alt=\"" << i18n("Album list") << "\"></a>" << endl;
 
         if ( nextImgURL.isValid() )
         {
             stream << "&nbsp; | &nbsp;<a href=\"" << nextPageFilename<<"\"><img class=\"photo\" src=\""
-                   << nextThumb << "\" alt=\"" << i18n("Next") << "\" title=\"" << i18n("Next")
-                   << "\" height=\"" << nextH << "\" width=\"" << nextW << "\"></a>" << endl;
+            << nextThumb << "\" alt=\"" << i18n("Next") << "\" title=\"" << i18n("Next")
+            << "\" height=\"" << nextH << "\" width=\"" << nextW << "\"></a>" << endl;
         }
 
         stream << "<br><hr><br>" << endl;
@@ -1210,14 +1210,14 @@ kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << e
         if ( !comment.isEmpty() )
         {
             stream << "<div align=\"center\">"
-                   << EscapeSgmlText(QTextCodec::codecForLocale(), comment, true, true)
-                   << "</div>" << endl;
+            << EscapeSgmlText(QTextCodec::codecForLocale(), comment, true, true)
+            << "</div>" << endl;
         }
 
         stream <<"<br>" << endl;
 
         stream << "<img class=\"photo\" src=\"../../../" << m_AlbumTitle << "/" << imgName
-               << "\" alt=\"" << imgName;
+        << "\" alt=\"" << imgName;
 
         // Add info about image if requested
 
@@ -1242,11 +1242,11 @@ kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << e
         const QString today(KGlobal::locale()->formatDate(QDate::currentDate()));
 
         stream << "<div align=\"center\"><hr><img src=\"../thumbs/valid-html401.png\" alt=\""
-               << valid << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
-                    
+        << valid << "\" height=\"31\" width=\"88\"  title=\"" << valid <<  "\" />" << endl;
+
         valid =  i18n("Image gallery created with "
                       "<a href=\"%1\">%2</a> on %3").arg(m_hostURL).arg(m_hostName).arg(today);
-                    
+
         stream << valid << "</div>" << endl;
 
         stream << "</body></html>" << endl;
@@ -1262,7 +1262,7 @@ kdDebug( 51000 ) << "CreatePage: uniqueNextFileName: " << nextUniqueImgName << e
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int CDArchiving::createThumb( const QString& imgName, const QString& sourceDirName,
-                              const QString& uniqueFileName, 
+                              const QString& uniqueFileName,
                               const QString& imgGalleryDir, const QString& imageFormat)
 {
     const QString pixPath = sourceDirName + "/" + imgName;
@@ -1295,93 +1295,93 @@ int CDArchiving::ResizeImage( const QString Path, const QString Directory, const
     ValRet = img.load(Path);
 
     if ( ValRet == false )        // Cannot load the src image.
-       {
-       KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
-       QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
-       dir = dir + "image_broken.png";
-       kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii() 
-                         << " instead..." << endl;
-       ValRet = img.load(dir);    // Try broken image icon...
-       usingBrokenImage = true;
-       }
+    {
+        KGlobal::dirs()->addResourceType("kipi_imagebroken", KGlobal::dirs()->kde_default("data") + "kipi/data");
+        QString dir = KGlobal::dirs()->findResourceDir("kipi_imagebroken", "image_broken.png");
+        dir = dir + "image_broken.png";
+        kdDebug ( 51000 ) << "Loading " << Path.ascii() << " failed ! Using " << dir.ascii()
+        << " instead..." << endl;
+        ValRet = img.load(dir);    // Try broken image icon...
+        usingBrokenImage = true;
+    }
 
     if ( ValRet == true )
-       {
-       int w = img.width();
-       int h = img.height();
+    {
+        int w = img.width();
+        int h = img.height();
 
-       if (SizeFactor != -1)      // Use original image size ?
-          {
-          // scale to pixie size
-          // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
-          // Resizing if to big
+        if (SizeFactor != -1)      // Use original image size ?
+        {
+            // scale to pixie size
+            // kdDebug( 51000 ) << "w: " << w << " h: " << h << endl;
+            // Resizing if to big
 
-          if( w > SizeFactor || h > SizeFactor )
-              {
-              if( w > h )
-                  {
-                  h = (int)( (double)( h * SizeFactor ) / w );
-  
-                  if ( h == 0 ) h = 1;
+            if ( w > SizeFactor || h > SizeFactor )
+            {
+                if ( w > h )
+                {
+                    h = (int)( (double)( h * SizeFactor ) / w );
 
-                  w = SizeFactor;
-                  Q_ASSERT( h <= SizeFactor );
-                  }
-              else
-                  {
-                  w = (int)( (double)( w * SizeFactor ) / h );
+                    if ( h == 0 ) h = 1;
 
-                  if ( w == 0 ) w = 1;
+                    w = SizeFactor;
+                    Q_ASSERT( h <= SizeFactor );
+                }
+                else
+                {
+                    w = (int)( (double)( w * SizeFactor ) / h );
 
-                  h = SizeFactor;
-                  Q_ASSERT( w <= SizeFactor );
-                  }
- 
-              const QImage scaleImg(img.smoothScale( w, h ));
+                    if ( w == 0 ) w = 1;
 
-              if ( scaleImg.width() != w || scaleImg.height() != h )
-                  {
-                  kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
-                  return -1;
-                  }
+                    h = SizeFactor;
+                    Q_ASSERT( w <= SizeFactor );
+                }
 
-              img = scaleImg;
-              }
+                const QImage scaleImg(img.smoothScale( w, h ));
 
-           if ( ColorDepthChange == true )
-               {
-               const QImage depthImg(img.convertDepth( ColorDepthValue ));
-               img = depthImg;
-               }
-           }
+                if ( scaleImg.width() != w || scaleImg.height() != h )
+                {
+                    kdDebug( 51000 ) << "Resizing failed. Aborting." << endl;
+                    return -1;
+                }
 
-       kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
+                img = scaleImg;
+            }
 
-       if ( CompressionSet == true )
-          {
-          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
-             {
-             kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
-             return -1;
-             }
-          }
-       else
-          {
-          if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
-             {
-             kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
-             return -1;
-             }
-          }
+            if ( ColorDepthChange == true )
+            {
+                const QImage depthImg(img.convertDepth( ColorDepthValue ));
+                img = depthImg;
+            }
+        }
 
-       *Width = w;
-       *Height = h;
-   
-       if ( usingBrokenImage == true )
-          return 0;
-       else 
-          return 1;
-       }
+        kdDebug( 51000 ) << "Saving resized image to: " << Directory + ImageFormat  << endl;
+
+        if ( CompressionSet == true )
+        {
+            if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), ImageCompression) )
+            {
+                kdDebug( 51000 ) << "Saving failed with specific compression value. Aborting." << endl;
+                return -1;
+            }
+        }
+        else
+        {
+            if ( !img.save(Directory + ImageNameFormat, ImageFormat.latin1(), -1) )
+            {
+                kdDebug( 51000 ) << "Saving failed with no compression value. Aborting." << endl;
+                return -1;
+            }
+        }
+
+        *Width = w;
+        *Height = h;
+
+        if ( usingBrokenImage == true )
+            return 0;
+        else
+            return 1;
+    }
 
     return -1;
 }
@@ -1390,7 +1390,7 @@ int CDArchiving::ResizeImage( const QString Path, const QString Directory, const
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString IndexHtm,
-                                          QString AutoRunInf, QString AutorunFolder)
+        QString AutoRunInf, QString AutorunFolder)
 {
     QString Temp;
     KIPICDArchivingPlugin::EventData *d;
@@ -1402,7 +1402,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
     if ( XMLK3bProjectFile.open ( IO_WriteOnly | IO_Truncate ) == false )
         return false;
-    
+
     d = new KIPICDArchivingPlugin::EventData;
     d->action = KIPICDArchivingPlugin::Progress;
     d->starting = true;
@@ -1440,9 +1440,9 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     stream << Temp;
 
     if (m_useOnTheFly == false)                          // Burning CD On The Fly ?
-       Temp = "<on_the_fly activated=\"no\" />\n";
+        Temp = "<on_the_fly activated=\"no\" />\n";
     else
-       Temp = "<on_the_fly activated=\"yes\" />\n";
+        Temp = "<on_the_fly activated=\"yes\" />\n";
 
     stream << Temp;
 
@@ -1494,9 +1494,9 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     stream << Temp;
 
     if (m_useCheckCD == false)                           // Checking CD after burning process ?
-       Temp = "<verify_data activated=\"no\" />\n";
+        Temp = "<verify_data activated=\"no\" />\n";
     else
-       Temp = "<verify_data activated=\"yes\" />\n";
+        Temp = "<verify_data activated=\"yes\" />\n";
 
     stream << Temp;
 
@@ -1538,42 +1538,42 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
     stream << Temp;
 
     if ( IndexHtm.isEmpty() == false )          // index.htm file in CD root.
-       {
-       Temp = "<file name=\"index.htm\" >\n"
-              "<url>"
-              + EscapeSgmlText(QTextCodec::codecForLocale(), IndexHtm, true, true)
-              + "</url>\n"
-              "</file>\n";
+    {
+        Temp = "<file name=\"index.htm\" >\n"
+               "<url>"
+               + EscapeSgmlText(QTextCodec::codecForLocale(), IndexHtm, true, true)
+               + "</url>\n"
+               "</file>\n";
 
-       stream << Temp;
-       }
+        stream << Temp;
+    }
 
     if ( AutoRunInf.isEmpty() == false )        // Autorun.inf file in CD root.
-       {
-       Temp = "<file name=\"autorun.inf\" >\n"
-              "<url>"
-              + EscapeSgmlText(QTextCodec::codecForLocale(), AutoRunInf, true, true)
-              + "</url>\n"
-              "</file>\n";
+    {
+        Temp = "<file name=\"autorun.inf\" >\n"
+               "<url>"
+               + EscapeSgmlText(QTextCodec::codecForLocale(), AutoRunInf, true, true)
+               + "</url>\n"
+               "</file>\n";
 
-       stream << Temp;
-       }
+        stream << Temp;
+    }
 
     // Add Autorun folder name and files.
 
     if ( AutorunFolder.isEmpty() == false )
-       AddFolderTreeToK3bXMLProjectFile(AutorunFolder, &stream);
+        AddFolderTreeToK3bXMLProjectFile(AutorunFolder, &stream);
 
     // Add HTMLInterface folders name and files.
 
     if ( HTMLinterfaceFolder.isEmpty() == false )
-       AddFolderTreeToK3bXMLProjectFile(HTMLinterfaceFolder, &stream);
+        AddFolderTreeToK3bXMLProjectFile(HTMLinterfaceFolder, &stream);
 
     //clear the temporary list for unique names
     m_collection_name_list.clear();
 
     for (QValueList<KIPI::ImageCollection>::iterator it = m_albumsList.begin();
-         !m_cancelled && (it != m_albumsList.end()); ++it)
+            !m_cancelled && (it != m_albumsList.end()); ++it)
 
     {
         d = new KIPICDArchivingPlugin::EventData;
@@ -1583,7 +1583,7 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
         d->message = i18n("Adding Album '%1' into project...").arg( (*it).name() );
         QApplication::sendEvent(m_parent, new QCustomEvent(QEvent::User, d));
         usleep(1000);
-        addCollectionToK3bXMLProjectFile( *it, &stream); 
+        addCollectionToK3bXMLProjectFile( *it, &stream);
     }
 
     Temp = "</files>\n";
@@ -1608,127 +1608,127 @@ bool CDArchiving::BuildK3bXMLprojectfile (QString HTMLinterfaceFolder, QString I
 
 bool CDArchiving::AddFolderTreeToK3bXMLProjectFile (QString dirname, QTextStream* stream)
 {
-   QString Temp;
+    QString Temp;
 
-   QDir dir(dirname);
-   dir.setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
+    QDir dir(dirname);
+    dir.setFilter ( QDir::Dirs | QDir::Files | QDir::NoSymLinks );
 
-      Temp = "<directory name=\""
-            + EscapeSgmlText(QTextCodec::codecForLocale(), dir.dirName(), true, true)
-            + "\" >\n";
-   *stream << Temp;
-   
-   kdDebug( 51000 ) << "Directory: " << dir.dirName().latin1 () << endl;
+    Temp = "<directory name=\""
+           + EscapeSgmlText(QTextCodec::codecForLocale(), dir.dirName(), true, true)
+           + "\" >\n";
+    *stream << Temp;
 
-   const QFileInfoList* fileinfolist = dir.entryInfoList();
-   QFileInfoListIterator it_files(*fileinfolist);
-   QFileInfoListIterator it_folders(*fileinfolist);
-   QFileInfo* fi_files;
-   QFileInfo* fi_folders;
+    kdDebug( 51000 ) << "Directory: " << dir.dirName().latin1 () << endl;
 
-   while( (fi_files = it_files.current()) && !m_cancelled )      // Check all files in folder.
-   {
-     if ( fi_files->fileName() == "." || fi_files->fileName() == ".." )
-     {
-       ++it_files;
-       continue;
-     }
+    const QFileInfoList* fileinfolist = dir.entryInfoList();
+    QFileInfoListIterator it_files(*fileinfolist);
+    QFileInfoListIterator it_folders(*fileinfolist);
+    QFileInfo* fi_files;
+    QFileInfo* fi_folders;
 
-     if( fi_files->isFile() )
-     {
-        kdDebug( 51000 ) << "   Filename: " << fi_files->fileName().latin1() << endl;
+    while ( (fi_files = it_files.current()) && !m_cancelled )     // Check all files in folder.
+    {
+        if ( fi_files->fileName() == "." || fi_files->fileName() == ".." )
+        {
+            ++it_files;
+            continue;
+        }
 
-        Temp = "<file name=\""
-              + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->fileName(), true, true)
-              + "\" >\n"
-              "<url>"
-              + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->absFilePath(), true, true)
-              + "</url>\n"
-              "</file>\n";
+        if ( fi_files->isFile() )
+        {
+            kdDebug( 51000 ) << "   Filename: " << fi_files->fileName().latin1() << endl;
 
-        *stream << Temp;
-     }
+            Temp = "<file name=\""
+                   + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->fileName(), true, true)
+                   + "\" >\n"
+                   "<url>"
+                   + EscapeSgmlText(QTextCodec::codecForLocale(), fi_files->absFilePath(), true, true)
+                   + "</url>\n"
+                   "</file>\n";
 
-     ++it_files;
-   }
+            *stream << Temp;
+        }
 
-   while( (fi_folders = it_folders.current()) && !m_cancelled )           // Check all sub-folders in folder.
-     {
-     if ( fi_folders->fileName() == "." || fi_folders->fileName() == ".." )
-          {
-          ++it_folders;
-          continue;
-          }
+        ++it_files;
+    }
 
-     if ( fi_folders->isDir() )
-          {
-          kdDebug( 51000 ) << "   folder: " << fi_folders->fileName().latin1() << endl;
-          
-          AddFolderTreeToK3bXMLProjectFile ( fi_folders->absFilePath(), stream );
-          }
+    while ( (fi_folders = it_folders.current()) && !m_cancelled )          // Check all sub-folders in folder.
+    {
+        if ( fi_folders->fileName() == "." || fi_folders->fileName() == ".." )
+        {
+            ++it_folders;
+            continue;
+        }
 
-     ++it_folders;
-     }
+        if ( fi_folders->isDir() )
+        {
+            kdDebug( 51000 ) << "   folder: " << fi_folders->fileName().latin1() << endl;
 
-   Temp = "</directory>\n";
-   *stream << Temp;
+            AddFolderTreeToK3bXMLProjectFile ( fi_folders->absFilePath(), stream );
+        }
 
-   return true;
+        ++it_folders;
+    }
+
+    Temp = "</directory>\n";
+    *stream << Temp;
+
+    return true;
 }
 
 bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& collection,
-                                                   QTextStream* stream)
+        QTextStream* stream)
 {
-   kdDebug( 51000 ) << "Adding Collection: " << collection.name() << endl;
+    kdDebug( 51000 ) << "Adding Collection: " << collection.name() << endl;
 
-   QString Temp;
-   QString collection_name;
-   if (m_useHTMLInterface)
-    collection_name = makeFileNameUnique(m_collection_name_list, webifyFileName(collection.name()));
-   else
-    collection_name = makeFileNameUnique(m_collection_name_list, collection.name());
-   kdDebug( 51000 ) << "num of unique collections: "<<  m_collection_name_list.size() << endl;
+    QString Temp;
+    QString collection_name;
+    if (m_useHTMLInterface)
+        collection_name = makeFileNameUnique(m_collection_name_list, webifyFileName(collection.name()));
+    else
+        collection_name = makeFileNameUnique(m_collection_name_list, collection.name());
+    kdDebug( 51000 ) << "num of unique collections: "<<  m_collection_name_list.size() << endl;
 
-   Temp = "<directory name=\""
-          + EscapeSgmlText(QTextCodec::codecForLocale(), collection_name, true, true)
-          + "\" >\n";
-   *stream << Temp;
+    Temp = "<directory name=\""
+           + EscapeSgmlText(QTextCodec::codecForLocale(), collection_name, true, true)
+           + "\" >\n";
+    *stream << Temp;
 
-   KURL::List images = collection.images();
-   kdDebug( 51000 ) << "   Files: " << images.size() << endl;
-   QStringList fileNameList;
-   QString fName;
-   for (KURL::List::iterator it = images.begin();
-        (it != images.end()) && !m_cancelled;
-        ++it)
-   {
+    KURL::List images = collection.images();
+    kdDebug( 51000 ) << "   Files: " << images.size() << endl;
+    QStringList fileNameList;
+    QString fName;
+    for (KURL::List::iterator it = images.begin();
+            (it != images.end()) && !m_cancelled;
+            ++it)
+    {
 
-       kdDebug( 51000 ) << "   Filename: " << (*it).fileName() << endl;
-       QFileInfo fInfo((*it).fileName());
-       if (m_useHTMLInterface)
-         fName = makeFileNameUnique(fileNameList, webifyFileName(fInfo.baseName(TRUE))) 
-              + "." + fInfo.extension( FALSE );
-       else
-         fName = makeFileNameUnique(fileNameList, fInfo.baseName(TRUE)) 
-              + "." + fInfo.extension( FALSE );
-       kdDebug( 51000 ) << "   Unique filename: " << fName  << endl;
-       kdDebug( 51000 ) << "num of unique files: "<< fileNameList.size() << endl;
+        kdDebug( 51000 ) << "   Filename: " << (*it).fileName() << endl;
+        QFileInfo fInfo((*it).fileName());
+        if (m_useHTMLInterface)
+            fName = makeFileNameUnique(fileNameList, webifyFileName(fInfo.baseName(TRUE)))
+                    + "." + fInfo.extension( FALSE );
+        else
+            fName = makeFileNameUnique(fileNameList, fInfo.baseName(TRUE))
+                    + "." + fInfo.extension( FALSE );
+        kdDebug( 51000 ) << "   Unique filename: " << fName  << endl;
+        kdDebug( 51000 ) << "num of unique files: "<< fileNameList.size() << endl;
 
-       Temp = "<file name=\""
-              + EscapeSgmlText(QTextCodec::codecForLocale(), fName, true, true)
-              + "\" >\n"
-              "<url>"
-              + EscapeSgmlText(QTextCodec::codecForLocale(), (*it).path(), true, true)
-              + "</url>\n"
-              "</file>\n";
+        Temp = "<file name=\""
+               + EscapeSgmlText(QTextCodec::codecForLocale(), fName, true, true)
+               + "\" >\n"
+               "<url>"
+               + EscapeSgmlText(QTextCodec::codecForLocale(), (*it).path(), true, true)
+               + "</url>\n"
+               "</file>\n";
 
-       *stream << Temp;
-   }
+        *stream << Temp;
+    }
 
-   Temp = "</directory>\n";
-   *stream << Temp;
+    Temp = "</directory>\n";
+    *stream << Temp;
 
-   return true;
+    return true;
 }
 
 
@@ -1736,27 +1736,27 @@ bool CDArchiving::addCollectionToK3bXMLProjectFile(const KIPI::ImageCollection& 
 
 bool CDArchiving::CreateAutoRunInfFile(void)
 {
-   QString Temp;
-   QFile AutoRunInf;
+    QString Temp;
+    QFile AutoRunInf;
 
-   AutoRunInf.setName ( m_tmpFolder + "/autorun.inf" );
+    AutoRunInf.setName ( m_tmpFolder + "/autorun.inf" );
 
-   if ( AutoRunInf.open ( IO_WriteOnly | IO_Truncate ) == false )
-       return false;
+    if ( AutoRunInf.open ( IO_WriteOnly | IO_Truncate ) == false )
+        return false;
 
-   QTextStream stream( &AutoRunInf );
+    QTextStream stream( &AutoRunInf );
 
-   Temp = "[autorun]\r\n"
-          "OPEN=autorun\\ShellExecute.bat HTMLInterface\\index.htm\r\n"
-          "ICON=autorun\\cdalbums.ico\r\n";
+    Temp = "[autorun]\r\n"
+           "OPEN=autorun\\ShellExecute.bat HTMLInterface\\index.htm\r\n"
+           "ICON=autorun\\cdalbums.ico\r\n";
 
-   stream << Temp;
+    stream << Temp;
 
-   Temp = "LABEL=" + m_volumeID + "\r\n";
-   stream << Temp;
+    Temp = "LABEL=" + m_volumeID + "\r\n";
+    stream << Temp;
 
-   AutoRunInf.close();
-   return true;
+    AutoRunInf.close();
+    return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1773,20 +1773,20 @@ void CDArchiving::removeTmpFiles(void)
 bool CDArchiving::DeleteDir(QString dirname)
 {
     if ( !dirname.isEmpty() )
-        {
+    {
         QDir dir;
 
         if (dir.exists ( dirname ) == true)
-           {
-           if (deldir(dirname) == false)
-               return false;
+        {
+            if (deldir(dirname) == false)
+                return false;
 
-           if (dir.rmdir( dirname ) == false )
-               return false;
-           }
-        else
-           return false;
+            if (dir.rmdir( dirname ) == false )
+                return false;
         }
+        else
+            return false;
+    }
     else
         return false;
 
@@ -1806,28 +1806,28 @@ bool CDArchiving::deldir(QString dirname)
     QFileInfoListIterator it(*fileinfolist);
     QFileInfo* fi;
 
-    while( (fi = it.current() ) )
-         {
-         if(fi->fileName() == "." || fi->fileName() == ".." )
-              {
-              ++it;
-              continue;
-              }
+    while ( (fi = it.current() ) )
+    {
+        if (fi->fileName() == "." || fi->fileName() == ".." )
+        {
+            ++it;
+            continue;
+        }
 
-         if( fi->isDir() )
-              {
-              if (deldir( fi->absFilePath() ) == false)
-                  return false;
-              if (dir.rmdir( fi->absFilePath() ) == false)
-                  return false;
-              }
-         else
-              if( fi->isFile() )
-                   if (dir.remove(fi->absFilePath() ) == false)
-                       return false;
-         
-         ++it;
-         }
+        if ( fi->isDir() )
+        {
+            if (deldir( fi->absFilePath() ) == false)
+                return false;
+            if (dir.rmdir( fi->absFilePath() ) == false)
+                return false;
+        }
+        else
+            if ( fi->isFile() )
+                if (dir.remove(fi->absFilePath() ) == false)
+                    return false;
+
+        ++it;
+    }
 
     return true;
 }
@@ -1837,9 +1837,9 @@ bool CDArchiving::deldir(QString dirname)
 // Source code from Koffice 1.3
 
 QString CDArchiving::EscapeSgmlText(const QTextCodec* codec,
-                      const QString& strIn,
-                      const bool quot /* = false */ ,
-                      const bool apos /* = false */ )
+                                    const QString& strIn,
+                                    const bool quot /* = false */ ,
+                                    const bool apos /* = false */ )
 {
     QString strReturn;
     QChar ch;
@@ -1850,52 +1850,52 @@ QString CDArchiving::EscapeSgmlText(const QTextCodec* codec,
         switch (ch.unicode())
         {
         case 38: // &
-            {
-                strReturn += "&amp;";
-                break;
-            }
+        {
+            strReturn += "&amp;";
+            break;
+        }
         case 60: // <
-            {
-                strReturn += "&lt;";
-                break;
-            }
+        {
+            strReturn += "&lt;";
+            break;
+        }
         case 62: // >
-            {
-                strReturn += "&gt;";
-                break;
-            }
+        {
+            strReturn += "&gt;";
+            break;
+        }
         case 34: // "
-            {
-                if (quot)
-                    strReturn += "&quot;";
-                else
-                    strReturn += ch;
-                break;
-            }
-        case 39: // '
-            {
-                // NOTE:  HTML does not define &apos; by default (only XML/XHTML does)
-                if (apos)
-                    strReturn += "&apos;";
-                else
-                    strReturn += ch;
-                break;
-            }
-        default:
-            {
-                // verify that the character ch can be expressed in the
-                // encoding in which we will write the HTML file.
-                if (codec)
-                {
-                    if (!codec->canEncode(ch))
-                    {
-                        strReturn += QString("&#%1;").arg(ch.unicode());
-                        break;
-                    }
-                }
+        {
+            if (quot)
+                strReturn += "&quot;";
+            else
                 strReturn += ch;
-                break;
+            break;
+        }
+        case 39: // '
+        {
+            // NOTE:  HTML does not define &apos; by default (only XML/XHTML does)
+            if (apos)
+                strReturn += "&apos;";
+            else
+                strReturn += ch;
+            break;
+        }
+        default:
+        {
+            // verify that the character ch can be expressed in the
+            // encoding in which we will write the HTML file.
+            if (codec)
+            {
+                if (!codec->canEncode(ch))
+                {
+                    strReturn += QString("&#%1;").arg(ch.unicode());
+                    break;
+                }
             }
+            strReturn += ch;
+            break;
+        }
         }
     }
 
@@ -1904,33 +1904,36 @@ QString CDArchiving::EscapeSgmlText(const QTextCodec* codec,
 
 
 /**
- * Produce a web-friendly file name 
+ * Produce a web-friendly file name
  */
 
-QString CDArchiving::webifyFileName(QString fileName) {
-  fileName=fileName.lower();
-  
-  // Remove potentially troublesome chars
-  fileName=fileName.replace(QRegExp("[^-0-9a-zA-Z]+"), "_");
+QString CDArchiving::webifyFileName(QString fileName)
+{
+    fileName=fileName.lower();
 
-  return fileName;
+    // Remove potentially troublesome chars
+    fileName=fileName.replace(QRegExp("[^-0-9a-zA-Z]+"), "_");
+
+    return fileName;
 }
 
 /**
  * Make sure a file name is unique in list
  */
-QString CDArchiving::makeFileNameUnique(QStringList& list, QString fileName) {
-  // Make sure the file name is unique
-  QString fileNameBase=fileName;
-  int count=1;
-  while (list.findIndex(fileName)!=-1) {
-    fileName=fileNameBase + "-" + QString::number(count);
-    ++count;
-  };
-  
-  list += fileName;
- 
-  return fileName;
+QString CDArchiving::makeFileNameUnique(QStringList& list, QString fileName)
+{
+    // Make sure the file name is unique
+    QString fileNameBase=fileName;
+    int count=1;
+    while (list.findIndex(fileName)!=-1)
+    {
+        fileName=fileNameBase + "-" + QString::number(count);
+        ++count;
+    };
+
+    list += fileName;
+
+    return fileName;
 }
 
 
