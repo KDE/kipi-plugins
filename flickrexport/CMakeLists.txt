@@ -18,7 +18,7 @@ kde4_add_ui3_files(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
 
 kde4_add_plugin(kipiplugin_flickrexport ${kipiplugin_flickrexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_flickrexport  ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} kipiplugins)
+target_link_libraries(kipiplugin_flickrexport ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} kipiplugins)
 
 install(TARGETS kipiplugin_flickrexport DESTINATION ${PLUGIN_INSTALL_DIR})
 

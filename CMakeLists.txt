@@ -71,7 +71,7 @@ ADD_SUBDIRECTORY(metadataedit)
 ADD_SUBDIRECTORY(sendimages)
 ADD_SUBDIRECTORY(gpssync)
 ADD_SUBDIRECTORY(simpleviewerexport)
-#ADD_SUBDIRECTORY(flickrexport)
+ADD_SUBDIRECTORY(flickrexport)
 #ADD_SUBDIRECTORY(picasawebexport)
 
 if(SANE_FOUND AND KSANE_FOUND)

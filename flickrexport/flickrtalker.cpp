@@ -53,7 +53,7 @@
 #include <kcodecs.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
-
+#include <KToolInvocation>
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
@@ -196,7 +196,7 @@ void FlickrTalker::slotAuthenticate()
     url.addQueryItem("api_sig", md5);
     kDebug() << "Authenticate url: " << url << endl;
 
-    KApplication::kApplication()->invokeBrowser(url.url());
+    KToolInvocation::invokeBrowser(url.url());
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                   i18n("Please Follow through the instructions in the browser window and "
                        "return back to press ok if you are authenticated or press No"),

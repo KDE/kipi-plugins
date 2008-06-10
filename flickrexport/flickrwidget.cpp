@@ -73,11 +73,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     Q3VBoxLayout* flickrWidgetLayout = new Q3VBoxLayout(this, 5, 5);
 
     m_photoView               = 0; //new KHTMLPart(splitter);
-    KSeparator *line          = new KSeparator(Horizontal, this);
+    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
     m_tab                     = new KTabWidget(this);
     K3ActiveLabel *headerLabel = new K3ActiveLabel(this);
-    headerLabel->setFocusPolicy(NoFocus);
-    headerLabel->setLinkUnderline(false);
+    headerLabel->setFocusPolicy(Qt::NoFocus);
+    //PORT to kde4
+    //headerLabel->setLinkUnderline(false);
     headerLabel->setText(i18n("<qt><b><h2><a href='http://www.flickr.com'>"
                               "<font color=\"#0065DE\">flick</font>"
                               "<font color=\"#FF0084\">r</font></a>"
@@ -117,7 +118,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     Q3GridLayout* optionsBoxLayout = new Q3GridLayout(optionsBox->layout(), 5, 3);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
-    m_publicCheckBox->setText(i18n("As in accessible for people", "Public (anyone can see them)"));
+    m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
 
     m_familyCheckBox = new QCheckBox(optionsBox);
     m_familyCheckBox->setText(i18n("Visible to Family"));
