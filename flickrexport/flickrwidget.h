@@ -33,7 +33,6 @@
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
-class QRadioButton;
 
 class KTabWidget;
 class KLineEdit;
