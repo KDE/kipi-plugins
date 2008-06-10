@@ -37,7 +37,7 @@ extern "C"
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
-
+#include <kactioncollection.h>
 // libkipi includes.
 
 #include <libkipi/interface.h>
@@ -48,12 +48,12 @@ extern "C"
 #include "plugin_flickrexport.h"
 #include "plugin_flickrexport.moc"
 
-typedef KGenericFactory<Plugin_FlickrExport> Factory;
 
-K_EXPORT_COMPONENT_FACTORY(kipiplugin_flickrexport, Factory("kipiplugin_flickrexport"))
+K_PLUGIN_FACTORY( FlickrExportFactory, registerPlugin<Plugin_FlickrExport>(); )
+K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )
 
-Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const char*, const QStringList&)
-                   : KIPI::Plugin(Factory::instance(), parent, "FlickrExport")
+Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &args)
+    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
     kDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
 }
@@ -62,17 +62,15 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(i18n("Export to Flickr..."),
-                           "www",
-                           0,
-                           this,
-                           SLOT(slotActivate()),
-                           actionCollection(),
-                           "flickrexport");
+
+    m_action = new KAction(KIcon("www"), i18n("Export to Flickr..."), actionCollection());
+    m_action->setObjectName("flickrexport");
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
-    if (!interface) 
+    if (!interface)
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         m_action->setEnabled(false);
@@ -90,7 +88,7 @@ Plugin_FlickrExport::~Plugin_FlickrExport()
 void Plugin_FlickrExport::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) 
+    if (!interface)
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -107,8 +105,8 @@ void Plugin_FlickrExport::slotActivate()
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
 {
     if (action == m_action)
-        return KIPI::EXPORTPLUGIN;
+        return KIPI::ExportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::EXPORTPLUGIN;
+    return KIPI::ExportPlugin;
 }

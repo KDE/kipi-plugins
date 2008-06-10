@@ -50,7 +50,6 @@
 // Libkipi includes.
 
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 #include <libkipi/imagecollection.h>
 
 // Local includes.
@@ -83,13 +82,13 @@ KUrl ImagesListViewItem::url() const
     return m_url;
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix) 
-{ 
+void ImagesListViewItem::setThumb(const QPixmap& pix)
+{
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
     pixmap.fill(Qt::color0);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    setPixmap(0, pixmap); 
+    setPixmap(0, pixmap);
 }
 
 // ---------------------------------------------------------------------------
@@ -116,7 +115,7 @@ void ImagesListView::dropEvent(QDropEvent *e)
     Q3StrList   strList;
     KUrl::List urls;
 
-    if (!Q3UriDrag::decode(e, strList)) 
+    if (!Q3UriDrag::decode(e, strList))
         return;
 
     Q3StrList stringList;

@@ -39,7 +39,6 @@
 // Libkipi includes.
 
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes
 
