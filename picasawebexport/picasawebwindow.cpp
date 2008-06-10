@@ -118,15 +118,15 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Picasaweb Export"),
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Picasaweb Export"),
                                            0,
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin to export image collection to "
+                                           ki18n("A Kipi plugin to export image collection to "
                                                      "Picasaweb web service."),
-                                           "(c) 2007-2008, Vardhman Jain\n"
-                                           "(c) 2008, Gilles Caulier");
+                                           ki18n( "(c) 2007-2008, Vardhman Jain\n"
+                                           "(c) 2008, Gilles Caulier" ));
 
-    m_about->addAuthor("Vardhman Jain", I18N_NOOP("Author and maintainer"),
+    m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");
 
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
