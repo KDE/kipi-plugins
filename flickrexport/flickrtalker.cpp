@@ -478,7 +478,7 @@ void FlickrTalker::data(KIO::Job*, const QByteArray& data)
 void FlickrTalker::slotError(const QString& error)
 {
     QString transError;
-    int errorNo = atoi(error.toLatin1());
+    int errorNo = error.toInt();
 
     switch (errorNo)
     {

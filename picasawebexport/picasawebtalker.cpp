@@ -548,7 +548,7 @@ void PicasawebTalker::slotError(const QString & error)
     int     errorNo = 0;
 
     if (!error.isEmpty())
-        errorNo = atoi(error.toLatin1());
+        errorNo = error.toInt();
 
     switch (errorNo)
     {
