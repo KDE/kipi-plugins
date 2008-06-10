@@ -63,7 +63,7 @@ namespace KIPIFlickrExportPlugin
 ImagesListViewItem::ImagesListViewItem(Q3ListView *view, const KUrl& url)
                   : Q3ListViewItem(view)
 {
-    setThumb(SmallIcon("file_broken", ICONSIZE, KIcon::DisabledState));
+    setThumb(SmallIcon("file_broken", ICONSIZE, KIcon::Disabled));
     setUrl(url);
 }
 
@@ -119,7 +119,7 @@ void ImagesListView::dropEvent(QDropEvent *e)
         return;
 
     Q3StrList stringList;
-    QStrListIterator it(strList);
+    Q3StrListIterator it(strList);
     char *str;
 
     while ((str = it.current()) != 0)
@@ -277,11 +277,14 @@ void ImagesList::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
 
 void ImagesList::slotAddItems()
 {
+    //Port to KDE4
+#if 0
     KUrl::List urls = KIPI::ImageDialog::getImageURLs(this, d->iface);
     if (!urls.isEmpty())
         slotAddImages(urls);
 
     emit signalImageListChanged(imageUrls().isEmpty());
+#endif
 }
 
 void ImagesList::slotRemoveItems()

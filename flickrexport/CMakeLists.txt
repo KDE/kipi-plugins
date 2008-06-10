@@ -2,6 +2,8 @@
 
 ########### next target ###############
 
+add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+
 set(kipiplugin_flickrexport_PART_SRCS
     plugin_flickrexport.cpp
     imageslist.cpp

@@ -96,7 +96,7 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     vbox->addLayout(btnLayout);
 
     resize( QSize(300, 150).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+    //clearWState( WState_Polished );
 
     m_nameEdit->setText(_name);
     m_passwdEdit->setText(_passwd);
