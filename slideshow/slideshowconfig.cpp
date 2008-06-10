@@ -61,7 +61,6 @@
 // libkipi includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 #include <ktoolinvocation.h>
 
 // Local includes.
@@ -78,22 +77,22 @@
 namespace KIPISlideShowPlugin
 {
 
-SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface, 
+SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface,
                                  QWidget *parent, const char* name, bool ImagesHasComments,
                                  KUrl::List *urlList)
-               : SlideShowConfigBase(parent, name) 
+               : SlideShowConfigBase(parent, name)
 {
     // About data and help button.
 
-    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(I18N_NOOP("Slide Show"),
+    KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(ki18n("Slide Show"),
                                         0,
                                         KAboutData::License_GPL,
-                                        I18N_NOOP("A Kipi plugin for image slideshow"),
-                                        "(c) 2003-2004, Renchi Raju\n(c) 2007, Valerio Fuoglio");
+                                        ki18n("A Kipi plugin for image slideshow"),
+                                        ki18n( "(c) 2003-2004, Renchi Raju\n(c) 2007, Valerio Fuoglio" ));
 
-    about->addAuthor("Renchi Raju", I18N_NOOP("Author"),
+    about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
                      "renchi@pooh.tam.uiuc.edu");
-    about->addAuthor("Valerio Fuoglio", I18N_NOOP("Author and maintainer"),
+    about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
                      "valerio.fuoglio@gmail.com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
@@ -108,13 +107,13 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     m_delayMsMaxValue = 100000;
     m_delayMsMinValue = 100;
     m_delayMsLineStep = 10;
-    
+
     m_delaySpinBox->setMinValue(m_delayMsMinValue);
     m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
-    m_delaySpinBox->setLineStep(m_delayMsLineStep); 
-    
+    m_delaySpinBox->setLineStep(m_delayMsLineStep);
+
     m_interface = interface;
-    
+
     // Signal to Slot connections
 
     connect(m_openglCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotOpenGLToggled()));
@@ -140,12 +139,12 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
              this, SLOT( slotImagesFilesButtonUp() ) );
     connect( m_ImagesFilesButtonDown, SIGNAL( clicked() ),
              this, SLOT( slotImagesFilesButtonDown() ) );
-    
+
     connect(m_cacheCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotCacheToggled()));
-    
+
     m_thumbJob = 0L;
-    
-    // Configuration file management 
+
+    // Configuration file management
 
     m_config = new KConfig("kipirc");
     m_config->setGroup("SlideShow Settings");
@@ -153,7 +152,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     readSettings();
 
     slotUseMillisecondsToggled();
-    
+
     // Comments tab management
 
     m_commentsFontChooser->setSampleText(
@@ -164,9 +163,9 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
         m_printCommentsCheckBox->setEnabled(FALSE);
         m_tabWidget->setTabEnabled(commentsTab, FALSE);
     }
-    
+
     m_urlList = urlList;
-    
+
     slotSelection();
     slotEffectChanged();
 }
@@ -205,7 +204,7 @@ void SlideShowConfig::loadEffectNamesGL()
     QStringList effects;
     QMap<QString,QString> effectNames;
     QMap<QString,QString>::Iterator it;
-    
+
     // Load slideshowgl effects
     effectNames = SlideShowGL::effectNamesI18N();
 
@@ -218,7 +217,7 @@ void SlideShowConfig::loadEffectNamesGL()
       effects.append(it.data());
 
     // Update GUI
-    
+
     effects.sort();
     m_effectsComboBox->insertStringList(effects);
 
@@ -243,7 +242,7 @@ void SlideShowConfig::readSettings()
     bool  showSelectedFilesOnly;
     bool  useMilliseconds;
     bool  enableMouseWheel;
-    
+
     opengl                = m_config->readBoolEntry("OpenGL", false);
     delay                 = m_config->readNumEntry("Delay", 1500);
     printFileName         = m_config->readBoolEntry("Print Filename", true);
@@ -254,16 +253,16 @@ void SlideShowConfig::readSettings()
     showSelectedFilesOnly = m_config->readBoolEntry("Show Selected Files Only", false);
     m_effectName           = m_config->readEntry("Effect Name", "Random");
     m_effectNameGL         = m_config->readEntry("Effect Name (OpenGL)", "Random");
-    
+
     useMilliseconds       = m_config->readBoolEntry("Use Milliseconds", false);
     enableMouseWheel      = m_config->readNumEntry("Enable Mouse Wheel", true);
-    
+
 
     // Comments tab settings
     uint  commentsFontColor;
     uint  commentsBgColor;
     int   commentsLinesLength;
-    
+
     QFont *savedFont = new QFont();
     savedFont->setFamily(m_config->readEntry("Comments Font Family"));
     savedFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
@@ -273,22 +272,22 @@ void SlideShowConfig::readSettings()
     savedFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
     savedFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
     savedFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
-    
+
     commentsFontColor     = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
     commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
-    
+
     commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
 
     // Advanced tab
     bool enableCache, kbDisableFadeInOut, kbDisableCrossFade;
-    
+
     kbDisableFadeInOut = m_config->readBoolEntry("KB Disable FadeInOut", false);
     kbDisableCrossFade = m_config->readBoolEntry("KB Disable Crossfade", false);
-    
+
     enableCache = m_config->readBoolEntry("Enable Cache", false);
     m_cacheSize  = m_config->readNumEntry("Cache Size", 5);
-    
-    
+
+
     // -- Apply Settings to widgets ------------------------------
 
     m_openglCheckBox->setChecked(opengl);
@@ -296,7 +295,7 @@ void SlideShowConfig::readSettings()
     m_delaySpinBox->setValue(delay);
 
     m_printNameCheckBox->setChecked(printFileName);
-    
+
     m_printProgressCheckBox->setChecked(printProgress);
 
     m_printCommentsCheckBox->setChecked(printFileComments);
@@ -304,7 +303,7 @@ void SlideShowConfig::readSettings()
     m_loopCheckBox->setChecked(loop);
 
     m_shuffleCheckBox->setChecked(shuffle);
-    
+
     m_enableMouseWheelCheckBox->setChecked(enableMouseWheel);
     m_useMillisecondsCheckBox->setChecked(useMilliseconds);
 
@@ -321,9 +320,9 @@ void SlideShowConfig::readSettings()
 
     m_kbDisableFadeCheckBox->setChecked(kbDisableFadeInOut);
     m_kbDisableCrossfadeCheckBox->setChecked(kbDisableCrossFade);
-    
+
     m_cacheCheckBox->setChecked(enableCache);
-    
+
     slotOpenGLToggled();
     slotCacheToggled();
 }
@@ -335,10 +334,10 @@ void SlideShowConfig::saveSettings()
     m_config->writeEntry("OpenGL", m_openglCheckBox->isChecked());
 
     // Delay will be always saved as millisecond value, to keep compatibility
-    if ( m_useMillisecondsCheckBox->isChecked() ) 
+    if ( m_useMillisecondsCheckBox->isChecked() )
         m_config->writeEntry("Delay", m_delaySpinBox->value());
-    else 
-        m_config->writeEntry("Delay", m_delaySpinBox->value()*1000); 
+    else
+        m_config->writeEntry("Delay", m_delaySpinBox->value()*1000);
 
     m_config->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
     m_config->writeEntry("Print Progress Indicator", m_printProgressCheckBox->isChecked());
@@ -347,7 +346,7 @@ void SlideShowConfig::saveSettings()
     m_config->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
     m_config->writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
 
-    m_config->writeEntry("Use Milliseconds", m_useMillisecondsCheckBox->isChecked()); 
+    m_config->writeEntry("Use Milliseconds", m_useMillisecondsCheckBox->isChecked());
     m_config->writeEntry("Enable Mouse Wheel", m_enableMouseWheelCheckBox->isChecked());
 
     // Comments tab settings
@@ -361,9 +360,9 @@ void SlideShowConfig::saveSettings()
     m_config->writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
     m_config->writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
     delete commentsFont;
-    
+
     QColor* fontColor = new QColor(m_commentsFontColor->color());
-    uint commentsFontColorRGB = fontColor->rgb(); 
+    uint commentsFontColorRGB = fontColor->rgb();
     delete fontColor;
     m_config->writeEntry("Comments Font Color", commentsFontColorRGB);
 
@@ -373,7 +372,7 @@ void SlideShowConfig::saveSettings()
     m_config->writeEntry("Comments Bg Color", commentsBgColorRGB);
 
     m_config->writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
-    
+
     if (!m_openglCheckBox->isChecked()) {
 
         QString effect;
@@ -390,12 +389,12 @@ void SlideShowConfig::saveSettings()
         m_config->writeEntry("Effect Name", effect);
 
     }
-    else 
+    else
     {
       QStringList effects;
       QMap<QString,QString> effectNames;
       QMap<QString,QString>::Iterator it;
-    
+
     // Load slideshowgl effects
       effectNames = SlideShowGL::effectNamesI18N();
 
@@ -423,10 +422,10 @@ void SlideShowConfig::saveSettings()
     // Advanced settings
     m_config->writeEntry("KB Disable FadeInOut", m_kbDisableFadeCheckBox->isChecked());
     m_config->writeEntry("KB Disable Crossfade", m_kbDisableCrossfadeCheckBox->isChecked());
-    
+
     m_config->writeEntry("Enable Cache", m_cacheCheckBox->isChecked());
     m_config->writeEntry("Cache Size", m_cacheSizeSpinBox->value());
-    
+
     m_config->sync();
 }
 
@@ -481,25 +480,25 @@ void SlideShowConfig::slotUseMillisecondsToggled()
 {
 
     int delayValue = m_delaySpinBox->value();
-    
+
     m_delaySpinBox->setValue(0);
-    
+
     if ( m_useMillisecondsCheckBox -> isChecked() ) {
         m_delayLabel->setText(QString("Delay between images (ms):"));
 
         m_delaySpinBox->setMinValue(m_delayMsMinValue);
         m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
-        m_delaySpinBox->setLineStep(m_delayMsLineStep); 
-        
+        m_delaySpinBox->setLineStep(m_delayMsLineStep);
+
         m_delaySpinBox->setValue(delayValue*1000);
     }
-    else { 
+    else {
         m_delayLabel->setText(QString("Delay between images  (s):"));
-        
+
         m_delaySpinBox->setMinValue(m_delayMsMinValue/1000);
         m_delaySpinBox->setMaxValue(m_delayMsMaxValue/100);
-        m_delaySpinBox->setLineStep(m_delayMsLineStep/10); 
-        
+        m_delaySpinBox->setLineStep(m_delayMsLineStep/10);
+
         m_delaySpinBox->setValue(delayValue/1000);
     }
 }
@@ -507,18 +506,18 @@ void SlideShowConfig::slotUseMillisecondsToggled()
 void SlideShowConfig::slotEffectChanged()
 {
   bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
-  
+
   m_printNameCheckBox->setEnabled(!isKB);
   m_printProgressCheckBox->setEnabled(!isKB);
   m_printCommentsCheckBox->setEnabled(!isKB);
-  
+
   m_cacheButtonGroup->setEnabled(!isKB);
 }
 
 void SlideShowConfig::slotCacheToggled()
 {
   bool isEnabled = m_cacheCheckBox->isChecked();
-  
+
   m_cacheSizeLabel1->setEnabled(isEnabled);
   m_cacheSizeLabel2->setEnabled(isEnabled);
   m_cacheSizeSpinBox->setEnabled(isEnabled);
@@ -532,9 +531,9 @@ void SlideShowConfig::slotOpenGLToggled()
     else {
         loadEffectNames();
     }
-    
+
     ShowNumberImages( m_ImagesFilesListBox->count() );
-    
+
     slotEffectChanged();
 }
 
@@ -549,12 +548,12 @@ void SlideShowConfig::slotSelection()
     if (m_selectedFilesButton->isChecked())
     {
         urlList = m_interface->currentSelection().images();
-        
+
         m_ImagesFilesButtonAdd->setEnabled(FALSE);
         m_ImagesFilesButtonDelete->setEnabled(FALSE);
         m_ImagesFilesButtonUp->setEnabled(FALSE);
         m_ImagesFilesButtonDown->setEnabled(FALSE);
-    }   
+    }
     else
         if (m_allFilesButton->isChecked())
         {
@@ -562,18 +561,18 @@ void SlideShowConfig::slotSelection()
             Q3ValueList<KIPI::ImageCollection> albumList;
             albumList = m_interface->allAlbums();
             Q3ValueList<KIPI::ImageCollection>::iterator it;
-    
+
             urlList = m_interface->currentAlbum().images();
             for ( it = albumList.begin(); it != albumList.end(); ++it )
                 if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
                     urlList += (*it).images();
-            
+
             m_ImagesFilesButtonAdd->setEnabled(FALSE);
             m_ImagesFilesButtonDelete->setEnabled(FALSE);
             m_ImagesFilesButtonUp->setEnabled(FALSE);
             m_ImagesFilesButtonDown->setEnabled(FALSE);
         }
-     
+
     if ( m_customButton->isChecked() )    // Custom selected
     {
         m_ImagesFilesButtonAdd->setEnabled(TRUE);
@@ -583,7 +582,7 @@ void SlideShowConfig::slotSelection()
     }
     else
     {
-        if (!urlList.isEmpty()) 
+        if (!urlList.isEmpty())
         {
             m_ImagesFilesListBox->clear();
             addItems(urlList);
@@ -593,7 +592,7 @@ void SlideShowConfig::slotSelection()
 
 void SlideShowConfig::slotImagesFilesSelected( Q3ListBoxItem *item )
 {
-    
+
     if ( !item || m_ImagesFilesListBox->count() == 0 )
     {
         m_label7->setText("");
@@ -726,17 +725,17 @@ void SlideShowConfig::slotImagesFilesButtonDown( void )
 void SlideShowConfig::ShowNumberImages( int Number )
 {
     QTime TotalDuration (0, 0, 0);
-    
+
     int TransitionDuration = 2000;
-    
+
     if ( m_openglCheckBox->isChecked() )
         TransitionDuration += 500;
-    
+
     if ( m_useMillisecondsCheckBox->isChecked() )
         TotalDuration = TotalDuration.addMSecs(Number * m_delaySpinBox->text().toInt());
     else
         TotalDuration = TotalDuration.addSecs(Number * m_delaySpinBox->text().toInt());
-    
+
     TotalDuration = TotalDuration.addMSecs((Number-1)*TransitionDuration);
 
     if ( Number < 2)
@@ -776,7 +775,7 @@ void SlideShowConfig::slotStartClicked()
         }
         m_urlList->append(pitem->path());                              // Input images files.
     }
-    
+
     emit buttonStartClicked();
 }
 

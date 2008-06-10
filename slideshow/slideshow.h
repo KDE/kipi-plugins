@@ -61,18 +61,18 @@ typedef Q3ValueList<FileAnglePair > FileList;
 
 namespace KIPISlideShowPlugin
 {
-  
+
 class ToolBar;
 
 class SlideShow;
 
 typedef int (SlideShow::*EffectMethod)(bool);
-  
+
 class SlideShow : public QWidget
 {
 
     Q_OBJECT
-    
+
 public:
 
     SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments);
@@ -89,7 +89,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
     void keyPressEvent(QKeyEvent *event);
-    
+
     int effectNone(bool);
     int effectChessboard(bool doInit);
     int effectMeltdown(bool doInit);
@@ -103,9 +103,9 @@ protected:
     int effectSpiralIn(bool doInit);
     int effectCircleOut(bool doInit);
     int effectBlobs(bool doInit);
-    
-    void startPainter(Qt::PenStyle penStyle=NoPen);
-    
+
+    void startPainter(Qt::PenStyle penStyle=Qt::NoPen);
+
 private slots:
 
     void slotTimeOut();
@@ -116,7 +116,7 @@ private slots:
     void slotPrev();
     void slotNext();
     void slotClose();
-    
+
 private:
 
     void         loadNextImage();
@@ -127,15 +127,15 @@ private:
     void         printProgress();
     EffectMethod getRandomEffect();
     void         showEndOfShow();
-    
+
     void         readSettings();
-    
+
 private:
 
     // config ------------------
-    
+
     KConfig*    m_config;
-    
+
     int         m_delay;
     bool        m_printName;
     bool        m_printComments;
@@ -149,17 +149,17 @@ private:
     uint        m_commentsFontColor;
     uint        m_commentsBgColor;
     int         m_commentsLinesLength;
-    
+
     bool        m_enableMouseWheel;
-    
+
     uint        m_cacheSize;
     // -------------------------
-    
+
     QMap<QString, EffectMethod> Effects;
 
     SlideShowLoader*            m_imageLoader;
     QPixmap*                    m_currImage;
-    
+
     FileList                    m_fileList;
     QStringList                 m_commentsList;
     QTimer*                     m_timer;
@@ -169,7 +169,7 @@ private:
     bool                        m_effectRunning;
 
     int                         m_commentsLinesLenght;
-    
+
     // values for state of various effects:
     int                         m_x, m_y, m_w, m_h, m_dx, m_dy, m_ix, m_iy, m_i, m_j, m_subType;
     int                         m_x0, m_y0, m_x1, m_y1, m_wait;
@@ -180,7 +180,7 @@ private:
     ToolBar*                    m_toolBar;
     QTimer*                     m_mouseMoveTimer;
     bool                        m_endOfShow;
-    
+
     int                         m_deskX;
     int                         m_deskY;
     int                         m_deskWidth;

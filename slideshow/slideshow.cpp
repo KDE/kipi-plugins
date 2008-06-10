@@ -54,7 +54,7 @@
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kurl.h>
-
+#include <KConfigGroup>
 // Local includes.
 
 #include "toolbar.h"
@@ -62,28 +62,20 @@
 #include "slideshow.moc"
 
 namespace KIPISlideShowPlugin
-{ 
-  
-SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
-         : QWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | WX11BypassWM | WDestructiveClose)
 {
-#if KDE_IS_VERSION(3,2,0)
+
+SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
+    : QWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose)
+{
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
     m_deskWidth  = deskRect.width();
     m_deskHeight = deskRect.height();
-#else
-    QRect deskRect = QApplication::desktop()->screenGeometry(this);
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
-#endif    
-    
+
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
-    setPaletteBackgroundColor(black);
+    setPaletteBackgroundColor(Qt::black);
 
     m_toolBar = new ToolBar(this);
     m_toolBar->hide();
@@ -107,7 +99,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
             this, SLOT(slotClose()));
 
     // ---------------------------------------------------------------
-    
+
     m_currImage     = 0;
     m_fileIndex     = -1; // start with -1
     m_effect        = 0;
@@ -116,22 +108,22 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_endOfShow     = false;
 
     m_timer = new QTimer();
-    connect(m_timer, SIGNAL(timeout()), 
+    connect(m_timer, SIGNAL(timeout()),
             this, SLOT(slotTimeOut()));
 
     // --------------------------------------------------
 
     m_fileList          = fileList;
     m_commentsList      = commentsList;
-    m_ImagesHasComments = ImagesHasComments; 
+    m_ImagesHasComments = ImagesHasComments;
 
     m_config = new KConfig("kipirc");
-    m_config->setGroup("SlideShow Settings");
+    KConfigGroup grp = m_config->group("SlideShow Settings");
 
     readSettings();
-    
+
     m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height(), m_fileIndex);
-    
+
     // --------------------------------------------------
 
     registerEffects();
@@ -154,7 +146,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_mouseMoveTimer = new QTimer;
     connect(m_mouseMoveTimer, SIGNAL(timeout()),
             SLOT(slotMouseMoveTimeOut()));
-    
+
     setMouseTracking(true);
     slotMouseMoveTimeOut();
 
@@ -175,47 +167,47 @@ SlideShow::~SlideShow()
 
     if (m_currImage)
         delete m_currImage;
-    
+
     if (m_imageLoader)
         delete m_imageLoader;
-    
-    if (m_config)
-        delete m_config;
+
+    delete m_config;
 }
 
 void SlideShow::readSettings()
 {
-    m_delay            = m_config->readNumEntry("Delay", 1500);
-    m_printName        = m_config->readBoolEntry("Print Filename", true);
-    m_printProgress    = m_config->readBoolEntry("Print Progress Indicator", true);
-    m_printComments    = m_config->readBoolEntry("Print Comments", false);
-    m_loop             = m_config->readBoolEntry("Loop", false);
-    
-    m_effectName       = m_config->readEntry("Effect Name", "Random");
+    KConfigGroup grp = m_config->group("SlideShow Settings");
+    m_delay            = grp.readEntry("Delay", 1500);
+    m_printName        = grp.readEntry("Print Filename", true);
+    m_printProgress    = grp.readEntry("Print Progress Indicator", true);
+    m_printComments    = grp.readEntry("Print Comments", false);
+    m_loop             = grp.readEntry("Loop", false);
 
-    m_enableMouseWheel = m_config->readBoolEntry("Enable Mouse Wheel", true);
+    m_effectName       = grp.readEntry("Effect Name", "Random");
+
+    m_enableMouseWheel = grp.readEntry("Enable Mouse Wheel", true);
 
     // Comments tab settings
-    
+
     m_commentsFont = new QFont();
-    m_commentsFont->setFamily(m_config->readEntry("Comments Font Family"));
-    m_commentsFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
-    m_commentsFont->setBold(m_config->readBoolEntry("Comments Font Bold", false));
-    m_commentsFont->setItalic(m_config->readBoolEntry("Comments Font Italic", false));
-    m_commentsFont->setUnderline(m_config->readBoolEntry("Comments Font Underline", false));
-    m_commentsFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
-    m_commentsFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
-    m_commentsFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
-    
-    m_commentsFontColor   = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
-    m_commentsBgColor     = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
-    
-    m_commentsLinesLength = m_config->readNumEntry("Comments Lines Length", 72);
+    m_commentsFont->setFamily(grp.readEntry("Comments Font Family"));
+    m_commentsFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
+    m_commentsFont->setBold(grp.readEntry("Comments Font Bold", false));
+    m_commentsFont->setItalic(grp.readEntry("Comments Font Italic", false));
+    m_commentsFont->setUnderline(grp.readEntry("Comments Font Underline", false));
+    m_commentsFont->setOverline(grp.readEntry("Comments Font Overline", false));
+    m_commentsFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
+    m_commentsFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
+
+    m_commentsFontColor   = grp.readEntry("Comments Font Color", 0xffffff);
+    m_commentsBgColor     = grp.readEntry("Comments Bg Color", 0x000000);
+
+    m_commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
     // Advanced settings
-    bool enableCache = m_config->readBoolEntry("Enable Cache", false);
+    bool enableCache = grp.readEntry("Enable Cache", false);
     if (enableCache)
-        m_cacheSize  = m_config->readNumEntry("Cache Size", 1);
+        m_cacheSize  = grp.readEntry("Cache Size", 1);
     else
         m_cacheSize = 1;
 }
@@ -322,8 +314,7 @@ void SlideShow::slotTimeOut()
 
 void SlideShow::loadNextImage()
 {
-    if (m_currImage)
-        delete m_currImage;
+    delete m_currImage;
     m_currImage = 0;
 
     m_fileIndex++;
@@ -350,25 +341,25 @@ void SlideShow::loadNextImage()
 
     QPixmap* oldPixmap = m_currImage;
     QPixmap* newPixmap = new QPixmap(m_imageLoader->getCurrent());
-    
+
     QPixmap pixmap(width(),height());
     pixmap.fill(Qt::black);
-    
+
     QPainter p(&pixmap);
     p.drawPixmap((width()-newPixmap->width())/2,
                     (height()-newPixmap->height())/2, *newPixmap,
                     0, 0, newPixmap->width(), newPixmap->height());
-    
+
     delete newPixmap;
     m_currImage = new QPixmap(pixmap);
     delete oldPixmap;
-    
+
     if (m_printName)
         printFilename();
-    
+
     if (m_printProgress)
         printProgress();
-    
+
     if (m_printComments && m_ImagesHasComments)
         printComments();
 }
@@ -400,28 +391,28 @@ void SlideShow::loadPrevImage()
         m_toolBar->setEnabledPrev(m_fileIndex > 0);
         m_toolBar->setEnabledNext(m_fileIndex < num-1);
     }
-    
+
     QPixmap* oldPixmap = m_currImage;
     QPixmap* newPixmap = new QPixmap(m_imageLoader->getCurrent());
-    
+
     QPixmap pixmap(width(),height());
     pixmap.fill(Qt::black);
-    
+
     QPainter p(&pixmap);
     p.drawPixmap((width()-newPixmap->width())/2,
                     (height()-newPixmap->height())/2, *newPixmap,
                     0, 0, newPixmap->width(), newPixmap->height());
-    
+
     delete newPixmap;
     m_currImage = new QPixmap(pixmap);
     delete oldPixmap;
-    
+
     if (m_printName)
         printFilename();
-    
+
     if (m_printProgress)
         printProgress();
-    
+
     if (m_printComments)
         printComments();
 }
@@ -430,10 +421,12 @@ void SlideShow::showCurrentImage()
 {
     if (!m_currImage)
         return;
-    
+    //Port it
+#if 0
     bitBlt(this, 0, 0, m_currImage,
             0, 0, m_currImage->width(),
             m_currImage->height(), Qt::CopyROP, true);
+#endif
 }
 
 void SlideShow::printFilename()
@@ -443,12 +436,12 @@ void SlideShow::printFilename()
     QPainter p;
     p.begin(m_currImage);
 
-    p.setPen(QColor("black"));
+    p.setPen(Qt::black);
     for (int x=9; x<=11; x++)
         for (int y=31; y>=29; y--)
         p.drawText(x, height()-y, m_imageLoader->currFileName());
 
-    p.setPen(QColor("white"));
+    p.setPen(QColor(Qt::white));
     p.drawText(10, height()-30, m_imageLoader->currFileName());
 }
 
@@ -467,7 +460,7 @@ void SlideShow::printComments()
 
     while (commentsIndex < comments.length())
     {
-        QString newLine; 
+        QString newLine;
         bool breakLine = FALSE; // End Of Line found
         uint currIndex; //  Comments QString current index
 
@@ -478,13 +471,13 @@ void SlideShow::printComments()
         for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
 
-        if (commentsLinesLengthLocal <= (currIndex - commentsIndex)) 
+        if (commentsLinesLengthLocal <= (currIndex - commentsIndex))
             commentsLinesLengthLocal = (currIndex - commentsIndex);
 
         breakLine = FALSE;
 
-        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal && 
-                                        currIndex < comments.length() &&  
+        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
+                                        currIndex < comments.length() &&
                                         !breakLine; currIndex++ )
             {
                 breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
@@ -518,7 +511,7 @@ void SlideShow::printComments()
         // coefficient 1.5 is used to maintain distance between different lines
 
         for (int x=9; x<=11; x++)
-            for (int y = (int)(yPos + lineNumber * 1.5 * m_commentsFont->pointSize()  + 1); 
+            for (int y = (int)(yPos + lineNumber * 1.5 * m_commentsFont->pointSize()  + 1);
                         y >= (int)(yPos + lineNumber* 1.5 * m_commentsFont->pointSize()  - 1); y--)
                 p.drawText(x, height()-y, commentsByLines[lineNumber]);
 
@@ -538,13 +531,13 @@ void SlideShow::printProgress()
     QString progress(QString::number(m_fileIndex+1) + "/" + QString::number(m_fileList.count()));
 
     int stringLenght = p.fontMetrics().width(progress) * progress.length();
-    
-    p.setPen(QColor("black"));
+
+    p.setPen(QColor(Qt::black));
     for (int x=9; x<=11; x++)
         for (int y=21; y>=19; y--)
             p.drawText(x, height()-y, progress);
 
-    p.setPen(QColor("white"));
+    p.setPen(QColor(Qt::white));
     p.drawText(width() - stringLenght - 10, 20, progress);
 }
 
@@ -617,9 +610,9 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
 
     if (!m_toolBar->canHide())
         return;
-    
+
     QPoint pos(e->pos());
-    
+
     if ((pos.y() > (m_deskY+20)) &&
         (pos.y() < (m_deskY+m_deskHeight-20-1)))
     {
@@ -632,7 +625,7 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
 
     int w = m_toolBar->width();
     int h = m_toolBar->height();
-    
+
     if (pos.y() < (m_deskY+20))
     {
         if (pos.x() <= (m_deskX+m_deskWidth/2))
@@ -657,12 +650,12 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
 void SlideShow::wheelEvent(QWheelEvent *e)
 {
     if (!m_enableMouseWheel) return;
-    
+
     if (m_endOfShow)
         slotClose();
 
     int delta = e->delta();
-    
+
     if (delta < 0)
     {
         m_timer->stop();
@@ -674,7 +667,7 @@ void SlideShow::wheelEvent(QWheelEvent *e)
         m_timer->stop();
         m_toolBar->setPaused(true);
         slotPrev();
-    } 
+    }
 }
 
 void SlideShow::slotMouseMoveTimeOut()
@@ -683,7 +676,7 @@ void SlideShow::slotMouseMoveTimeOut()
     if ((pos.y() < (m_deskY+20)) ||
         (pos.y() > (m_deskY+m_deskHeight-20-1)))
         return;
-    
+
     setCursor(QCursor(Qt::BlankCursor));
 }
 
@@ -725,10 +718,13 @@ int SlideShow::effectChessboard(bool aInit)
 
     for (y=0; y<m_w; y+=(m_dy<<1))
     {
+        //PORT to kde4
+#if 0
         bitBlt(this, m_ix, y+m_iy, m_currImage, m_ix, y+m_iy,
                 m_dx, m_dy, CopyROP, true);
         bitBlt(this, m_x, y+m_y, m_currImage, m_x, y+m_y,
                 m_dx, m_dy, CopyROP, true);
+#endif
     }
 
     return m_wait;
@@ -759,8 +755,11 @@ int SlideShow::effectMeltdown(bool aInit)
         if (y >= m_h) continue;
         done = false;
         if ((rand()&15) < 6) continue;
+        //PORT to kde4
+#if 0
         bitBlt(this, x, y+m_dy, this, x, y, m_dx, m_h-y-m_dy, CopyROP, true);
         bitBlt(this, x, y, m_currImage, x, y, m_dx, m_dy, CopyROP, true);
+#endif
         m_intArray[i] += m_dy;
     }
 
@@ -801,7 +800,10 @@ int SlideShow::effectSweep(bool aInit)
         }
         for (w=2,i=4,x=m_x; i>0; i--, w<<=1, x-=m_dx)
         {
+            //PORT to kde4
+#if 0
             bitBlt(this, x, 0, m_currImage, x, 0, w, m_h, CopyROP, true);
+#endif
         }
         m_x += m_dx;
     }
@@ -815,7 +817,10 @@ int SlideShow::effectSweep(bool aInit)
         }
         for (h=2,i=4,y=m_y; i>0; i--, h<<=1, y-=m_dy)
         {
+            //PORT to kde4
+#if 0
             bitBlt(this, 0, y, m_currImage, 0, y, m_w, h, CopyROP, true);
+#endif
         }
         m_y += m_dy;
     }
@@ -837,7 +842,10 @@ int SlideShow::effectRandom(bool /*aInit*/)
     {
         x = (rand() % w) << fact;
         y = (rand() % h) << fact;
+        //PORT to kde4
+#if 0
         bitBlt(this, x, y, m_currImage, x, y, sz, sz, CopyROP, true);
+#endif
     }
 
     showCurrentImage();
@@ -867,10 +875,11 @@ int SlideShow::effectGrowing(bool aInit)
         showCurrentImage();
         return -1;
     }
-
+    //PORT to kde4
+#if 0
     bitBlt(this, m_x, m_y, m_currImage, m_x, m_y,
             m_w - (m_x<<1), m_h - (m_y<<1), CopyROP, true);
-
+#endif
     return 20;
 }
 
@@ -905,19 +914,25 @@ int SlideShow::effectIncom_ingEdges(bool aInit)
 
     if (m_subType)
     {
+        //PORT to kde4
+#if 0
         // moving image edges
         bitBlt(this,  0,  0, m_currImage, m_ix-m_x, m_iy-m_y, m_x, m_y, CopyROP, true);
         bitBlt(this, x1,  0, m_currImage, m_ix, m_iy-m_y, m_x, m_y, CopyROP, true);
         bitBlt(this,  0, y1, m_currImage, m_ix-m_x, m_iy, m_x, m_y, CopyROP, true);
         bitBlt(this, x1, y1, m_currImage, m_ix, m_iy, m_x, m_y, CopyROP, true);
+#endif
     }
     else
     {
+        //PORT to kde4
+#if 0
         // fixed image edges
         bitBlt(this,  0,  0, m_currImage,  0,  0, m_x, m_y, CopyROP, true);
         bitBlt(this, x1,  0, m_currImage, x1,  0, m_x, m_y, CopyROP, true);
         bitBlt(this,  0, y1, m_currImage,  0, y1, m_x, m_y, CopyROP, true);
         bitBlt(this, x1, y1, m_currImage, x1, y1, m_x, m_y, CopyROP, true);
+#endif
     }
     return 20;
 }
@@ -938,7 +953,10 @@ int SlideShow::effectHorizLines(bool aInit)
 
     for (y=iyPos[m_i]; y<m_h; y+=8)
     {
+        //PORT to kde4
+#if 0
         bitBlt(this, 0, y, m_currImage, 0, y, m_w, 1, CopyROP, true);
+#endif
     }
 
     m_i++;
@@ -962,7 +980,10 @@ int SlideShow::effectVertLines(bool aInit)
 
     for (x=ixPos[m_i]; x<m_w; x+=8)
     {
+        //PORT to kde4
+#if 0
         bitBlt(this, x, 0, m_currImage, x, 0, 1, m_h, CopyROP, true);
+#endif
     }
 
     m_i++;
@@ -1075,9 +1096,10 @@ int SlideShow::effectSpiralIn(bool aInit)
         m_dy = 0;
         m_y0 += m_iy;
     }
-
+    //PORT to kde4
+#if 0
     bitBlt(this, m_x, m_y, m_currImage, m_x, m_y, m_ix, m_iy, CopyROP, true);
-
+#endif
     m_x += m_dx;
     m_y += m_dy;
     m_j--;
@@ -1190,7 +1212,7 @@ void SlideShow::slotPlay()
 void SlideShow::slotPrev()
 {
     loadPrevImage();
-    if (!m_currImage || m_fileList.isEmpty())   
+    if (!m_currImage || m_fileList.isEmpty())
     {
         showEndOfShow();
         return;
@@ -1202,7 +1224,7 @@ void SlideShow::slotPrev()
 void SlideShow::slotNext()
 {
     loadNextImage();
-    if (!m_currImage || m_fileList.isEmpty())   
+    if (!m_currImage || m_fileList.isEmpty())
     {
         showEndOfShow();
         return;
@@ -1213,7 +1235,7 @@ void SlideShow::slotNext()
 
 void SlideShow::slotClose()
 {
-    close();    
+    close();
 }
 
 }  // NameSpace KIPISlideShowPlugin
