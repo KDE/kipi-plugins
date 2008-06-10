@@ -60,7 +60,6 @@
 // Libkipi includes.
 
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 #include <ktoolinvocation.h>
 
 // Local includes.
@@ -215,8 +214,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     connect(m_authProgressDlg, SIGNAL(canceled()),
             this, SLOT(slotAuthCancel()));
 
-    m_talker->authProgressDlg = m_authProgressDlg; 
-    m_widget->setEnabled(false); 
+    m_talker->authProgressDlg = m_authProgressDlg;
+    m_widget->setEnabled(false);
 
     // All these three values can be null too.
     // If m_token is ot null, username would be not null too.
@@ -233,7 +232,7 @@ void PicasawebWindow::slotRefreshSizeButtons(bool /*st*/)
         m_dimensionSpinBox->setEnabled(true);
         m_imageQualitySpinBox->setEnabled(true);
     }
-    else 
+    else
     {
         m_dimensionSpinBox->setEnabled(false);
         m_imageQualitySpinBox->setEnabled(false);
@@ -301,7 +300,7 @@ void PicasawebWindow::getToken(QString& username, QString& password)
         username_edit = loginDialog->username();
         password_edit = loginDialog->password();
     }
-    else 
+    else
     {
         //Return something which say authentication needed.
         return ;
@@ -349,11 +348,11 @@ void PicasawebWindow::slotBusy( bool val )
 {
     if ( val )
     {
-        setCursor(Qt::waitCursor);
+        setCursor(Qt::WaitCursor);
     }
     else
     {
-        setCursor(QCursor::ArrowCursor);
+        setCursor(Qt::ArrowCursor);
     }
 }
 
@@ -389,10 +388,10 @@ void PicasawebWindow::slotCreateNewAlbum()
             test = QString("unlisted");
 
         m_talker->createAlbum(dlg->m_titleLineEdit->text(), dlg->m_descriptionTextBox->text(),
-                              dlg->m_locationLineEdit->text(), dlg->m_dateAndTimeEdit->dateTime().toTime_t(), 
+                              dlg->m_locationLineEdit->text(), dlg->m_dateAndTimeEdit->dateTime().toTime_t(),
                               test, QString(), true);
     }
-    else 
+    else
     {
         if (t == QDialog::Rejected)
         {
@@ -457,10 +456,10 @@ void PicasawebWindow::slotUploadImages()
         QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false);
         QStringList::Iterator itTags;
 
-        //Tags from the interface	
+        //Tags from the interface
         itTags= tagsFromDialog.begin();
 
-        while( itTags != tagsFromDialog.end() ) 
+        while( itTags != tagsFromDialog.end() )
         {
             allTags.append( *itTags );
             ++itTags;
@@ -472,12 +471,12 @@ void PicasawebWindow::slotUploadImages()
 
         if(m_exportApplicationTags->isChecked())
         {
-            // tagsFromDatabase=attribs["tags"].asStringList();	
+            // tagsFromDatabase=attribs["tags"].asStringList();
         }
 
         itTags = tagsFromDatabase.begin();
 
-        while( itTags != tagsFromDatabase.end() ) 
+        while( itTags != tagsFromDatabase.end() )
         {
             allTags.append( *itTags );
             ++itTags;
@@ -485,12 +484,12 @@ void PicasawebWindow::slotUploadImages()
 
         itTags = allTags.begin();
 
-        while( itTags != allTags.end() ) 
+        while( itTags != allTags.end() )
         {
             ++itTags;
         }
 
-        temp.tags=allTags; 
+        temp.tags=allTags;
         m_uploadQueue.append( Pair( (*it).path(), temp) );
     }
 

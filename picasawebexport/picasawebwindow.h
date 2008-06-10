@@ -39,7 +39,6 @@
 // Libkipi includes.
 
 #include <libkipi/interface.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes
 
@@ -135,7 +134,7 @@ private:
     Q3ValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
 
     KIPI::Interface                         *m_interface;
-    KIPIPlugins::KPAboutData                *m_about; 
+    KIPIPlugins::KPAboutData                *m_about;
 
 private slots:
 

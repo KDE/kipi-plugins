@@ -37,7 +37,7 @@ extern "C"
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
-
+#include <kactioncollection.h>
 // libkipi includes.
 
 #include <libkipi/interface.h>
@@ -48,13 +48,14 @@ extern "C"
 #include "plugin_picasawebexport.h"
 #include "plugin_picasawebexport.moc"
 
-typedef KGenericFactory<Plugin_PicasawebExport> Factory;
 
-K_EXPORT_COMPONENT_FACTORY(kipiplugin_picasawebexport, Factory("kipiplugin_picasawebexport"))
+K_PLUGIN_FACTORY( PicasawebExportFactory, registerPlugin<Plugin_PicasawebExport>(); )
+K_EXPORT_PLUGIN ( PicasawebExportFactory("kipiplugin_picasawebexport") )
 
 
-Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const char*, const QStringList&)
-                      : KIPI::Plugin(Factory::instance(), parent, "PicasawebExport")
+
+Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const QVariantList &)
+    : KIPI::Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
 {
     kDebug(51001) << "Plugin_PicasawebExport plugin loaded" << endl;
 }
@@ -63,17 +64,16 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(i18n("Export to Picasaweb..."),
-                           "www",
-                           0,
-                           this,
-                           SLOT(slotActivate()),
-                           actionCollection(),
-                           "picasawebexport");
+
+    m_action = new KAction(KIcon("www"), i18n("Export to Picasaweb..."), actionCollection());
+    m_action->setObjectName("picasawebexport");
+    connect(m_action, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
+
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
-    if (!interface) 
+    if (!interface)
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         m_action->setEnabled(false);
@@ -91,7 +91,7 @@ Plugin_PicasawebExport::~Plugin_PicasawebExport()
 void Plugin_PicasawebExport::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) 
+    if (!interface)
     {
         kError(51000) << "Kipi interface is null!" << endl;
         return;
@@ -107,8 +107,8 @@ void Plugin_PicasawebExport::slotActivate()
 KIPI::Category Plugin_PicasawebExport::category( KAction* action ) const
 {
     if (action == m_action)
-        return KIPI::EXPORTPLUGIN;
+        return KIPI::ExportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
-    return KIPI::EXPORTPLUGIN;
+    return KIPI::ExportPlugin;
 }

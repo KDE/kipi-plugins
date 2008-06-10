@@ -41,7 +41,7 @@ class Plugin_PicasawebExport : public KIPI::Plugin
 
 public:
 
-    Plugin_PicasawebExport(QObject *parent, const char* name, const QStringList &args);
+    Plugin_PicasawebExport(QObject *parent, const QVariantList &args);
     ~Plugin_PicasawebExport();
 
     virtual KIPI::Category category(KAction* action) const;
