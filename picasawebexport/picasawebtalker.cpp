@@ -451,7 +451,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     // Check if RAW file.
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.upper().contains(fileInfo.extension(false).upper()))
+    if (rawFilesExt.toUpper().contains(fileInfo.extension(false).toUpper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
@@ -461,7 +461,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.smoothScale(maxDim, maxDim, Qt::ScaleMin);
+            image = image.smoothScale(maxDim, maxDim, Qt::KeepAspectRatio);
 
         image.save(path, "JPEG", imageQuality);
 
@@ -548,7 +548,7 @@ void PicasawebTalker::slotError(const QString & error)
     int     errorNo = 0;
 
     if (!error.isEmpty())
-        errorNo = atoi(error.latin1());
+        errorNo = atoi(error.toLatin1());
 
     switch (errorNo)
     {

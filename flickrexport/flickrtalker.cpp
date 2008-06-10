@@ -383,7 +383,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     // Check if RAW file.
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.upper().contains(fileInfo.extension(false).upper()))
+    if (rawFilesExt.toUpper().contains(fileInfo.extension(false).toUpper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
@@ -395,7 +395,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.smoothScale(maxDim, maxDim, Qt::ScaleMin);
+            image = image.smoothScale(maxDim, maxDim, Qt::KeepAspectRatio);
 
         image.save(path, "JPEG", imageQuality);
 
@@ -478,7 +478,7 @@ void FlickrTalker::data(KIO::Job*, const QByteArray& data)
 void FlickrTalker::slotError(const QString& error)
 {
     QString transError;
-    int errorNo = atoi(error.latin1());
+    int errorNo = atoi(error.toLatin1());
 
     switch (errorNo)
     {
