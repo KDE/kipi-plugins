@@ -544,8 +544,8 @@ void PicasawebWindow::slotAddPhotoSucceeded()
 void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
 {
     if ( KMessageBox::warningContinueCancel(this,
-           i18n("Failed to upload photo into Picasaweb. %1\nDo you want to continue?")
-                .arg( msg )) != KMessageBox::Continue)
+           i18n("Failed to upload photo into Picasaweb. %1\nDo you want to continue?"
+                , msg )) != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
         m_progressDlg->reset();
