@@ -76,8 +76,8 @@ Currently implemented plugins are:
 
 -- DEPENDENCIES -------------------------------------------------------
 
-CMake       >= 2.4.x                        http://www.cmake.org
-libqt       >= 4.2.x                        http://www.trolltech.com
+CMake       >= 2.4.5                        http://www.cmake.org
+libqt       >= 4.3.x                        http://www.trolltech.com
 libkde      >= 4.0.x                        http://www.kde.org
 libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
