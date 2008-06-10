@@ -192,18 +192,18 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     // ------------------------------------------------------------
     // read config
 
-    KSimpleConfig config("kipirc");
-    config.setGroup("PicasawebExport Settings");
-    m_token = config.readEntry("token");
-    QString username = config.readEntry("username");
-    QString password = config.readEntry("password");
+    KConfig config("kipirc");
+    KConfigGroup grp = config.group( "PicasawebExport Settings");
+    m_token = grp.readEntry("token");
+    QString username = grp.readEntry("username");
+    QString password = grp.readEntry("password");
 
     //no saving password rt now
-    if (config.readBoolEntry("Resize", false))
+    if (grp.readEntry("Resize", false))
         m_resizeCheckBox->setChecked(true);
 
-    m_dimensionSpinBox->setValue(config.readNumEntry("Maximum Width", 1600));
-    m_imageQualitySpinBox->setValue(config.readNumEntry("Image Quality", 85));
+    m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width", 1600));
+    m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality", 85));
 
     // ------------------------------------------------------------
 
@@ -256,13 +256,13 @@ PicasawebWindow::~PicasawebWindow()
    //     delete m_wallet;
 
     // write config
-    KSimpleConfig config("kipirc");
-    config.setGroup("PicasawebExport Settings");
-    config.writeEntry("token", m_token);
-    config.writeEntry("username", m_username);
-    config.writeEntry("Resize", m_resizeCheckBox->isChecked());
-    config.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
-    config.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
+    KConfig config("kipirc");
+    KConfigGroup grp = config.setGroup("PicasawebExport Settings");
+    grp.writeEntry("token", m_token);
+    grp.writeEntry("username", m_username);
+    grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
+    grp.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
+    grp.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
 
     if(m_urls!=NULL)
         delete m_urls;
@@ -527,7 +527,7 @@ void PicasawebWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1 ", KUrl(pathComments.first).filename()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1 ", KUrl(pathComments.first).fileName()));
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
