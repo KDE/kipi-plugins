@@ -79,7 +79,6 @@ Currently implemented plugins are:
 CMake       >= 2.4.5                        http://www.cmake.org
 libqt       >= 4.3.x                        http://www.trolltech.com
 libkde      >= 4.0.x                        http://www.kde.org
-libgphoto2  >= 2.x   (>=2.2.x recommended)  http://www.gphoto.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libkexiv2   >= 0.2                          http://www.kipi-plugins.org
 libkdcraw   >= 0.2                          http://www.kipi-plugins.org
@@ -97,7 +96,6 @@ jpeglossless       : imagemagick (runtime dependency)
 slideshow          : OpenGL support for libqt
 batchprocessimages : imagemagick (runtime dependency)
 cdarchiving        : k3b (runtime dependency)
-kameraklient       : libgphoto2
 mpegenconder       : mjpegtools (runtime dependency)
                    : mpg123 (runtime dependency)
                    : vorbis-tools (runtime dependency)
