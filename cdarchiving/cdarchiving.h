@@ -34,12 +34,12 @@ extern "C"
 
 // Include files for Qt
 
+#include <qcolor.h>
+#include <qdatetime.h>
+#include <qdir.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <qstringlist.h>
-#include <qdir.h>
-#include <qcolor.h>
-#include <qdatetime.h>
 
 // Include files for KDE
 
@@ -48,8 +48,8 @@ extern "C"
 
 // KIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 class KProcess;
 

@@ -31,33 +31,33 @@ extern "C"
 
 // Include files for Qt
 
-#include <qtextstream.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qfont.h>
 #include <qimage.h>
-#include <qtextcodec.h>
-#include <qtimer.h>
 #include <qregexp.h>
+#include <qtextcodec.h>
+#include <qtextstream.h>
+#include <qtimer.h>
 
 // Include files for KDE
 
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kio/global.h>
-#include <kinstance.h>
-#include <kconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kcharsets.h>
+#include <kaboutdata.h>
 #include <kapplication.h>
-#include <kimageio.h>
+#include <kcharsets.h>
+#include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
-#include <kstandarddirs.h>
+#include <kglobal.h>
+#include <kimageio.h>
+#include <kinstance.h>
+#include <kio/global.h>
+#include <kio/job.h>
+#include <kio/jobclasses.h>
+#include <klocale.h>
 #include <kprocess.h>
 #include <krun.h>
-#include <kaboutdata.h>
+#include <kstandarddirs.h>
 
 // Local includes
 
@@ -263,12 +263,19 @@ bool CDArchiving::prepare(void)
     // Estimate the number of actions for the KIPI progress dialog. 
     
     int nbActions = 1;
-    
-    if ( m_useHTMLInterface == true )    
+    int num_images = 0;
+
+    if ( m_useHTMLInterface == true )
     {
-        nbActions = nbActions + m_albumListSize + 1;
-    
-        if ( m_useAutoRunWin32 == true ) 
+        QValueList<KIPI::ImageCollection>::Iterator it;
+        for (it = albumsList.begin(); it != albumsList.end(); ++it)
+        {
+            KIPI::ImageCollection col = (KIPI::ImageCollection)(*it);
+            num_images += col.images().count();
+        }
+        nbActions = nbActions + m_albumListSize + num_images + 1;
+
+        if ( m_useAutoRunWin32 == true )
             ++nbActions;
     }
 

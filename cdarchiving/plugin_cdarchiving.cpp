@@ -22,15 +22,15 @@
 
 // KDE includes.
 
-#include <kapplication.h>
-#include <kinstance.h>
-#include <klocale.h>
 #include <kaction.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kdeversion.h>
+#include <kgenericfactory.h>
+#include <kinstance.h>
+#include <klibloader.h>
+#include <klocale.h>
 
 // LibKipi includes.
 
@@ -217,6 +217,7 @@ void Plugin_CDArchiving::customEvent(QCustomEvent *event)
 
               case(KIPICDArchivingPlugin::ResizeImages):
                   {
+                  ++m_current;
                   text = i18n("Creating thumbnail for '%1' done.").arg(d->fileName);
                   break;
                   }
