@@ -1,6 +1,8 @@
 
 
 ########### next target ###############
+add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+
 
 set(kipiplugin_picasawebexport_PART_SRCS
     plugin_picasawebexport.cpp
@@ -15,7 +17,7 @@ kde4_add_ui3_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.
 
 kde4_add_plugin(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_picasawebexport ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} kipiplugins)
+target_link_libraries(kipiplugin_picasawebexport ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} kipiplugins)
 
 install(TARGETS kipiplugin_picasawebexport DESTINATION ${PLUGIN_INSTALL_DIR})
 

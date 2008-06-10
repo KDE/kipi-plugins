@@ -149,7 +149,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
         username_edit = loginDialog->username();
         password_edit = loginDialog->password();
     }
-    else 
+    else
     {
         //Return something which say authentication needed.
         return ;
@@ -176,7 +176,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     ts << dataParameters;
 
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_state = FE_GETTOKEN;
     authProgressDlg->setLabelText(i18n("Getting the token"));
 
@@ -193,20 +193,20 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
 void PicasawebTalker::authenticate(const QString& token, const QString& username, const QString& password)
 {
-    if (!token || token.length() < 1)
+    if (!token.isNull() || token.length() < 1)
     {
         checkToken(token);
         m_username = username;
         m_password = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
     }
-    else 
+    else
     {
         getToken(username, password);
     }
 }
 
-void PicasawebTalker::checkToken(const QString& /*token*/) 
+void PicasawebTalker::checkToken(const QString& /*token*/)
 {
     if (m_job)
     {
@@ -238,12 +238,14 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
 
 /** PicasaWeb's Album listing request/response
   * First a request is sent to the url below and then we might(?) get a redirect URL
-  * WE then need to send the GET request to the Redirect url (this however gets taken care off by the 
+  * WE then need to send the GET request to the Redirect url (this however gets taken care off by the
   * KIO libraries.
   * This uses the authenticated album list fetching to get all the albums included the unlisted-albums
   * which is not returned for an unauthorised request as done without the Authorization header.
 */
 void PicasawebTalker::listAllAlbums() {
+    //PORT TO KDE4
+#if 0
     if (m_job)
     {
         m_job->kill();
@@ -251,23 +253,23 @@ void PicasawebTalker::listAllAlbums() {
     }
 
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
-    QByteArray tmp;	
+    QByteArray tmp;
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::get(url, tmp, false);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)), 
+    connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_LISTALBUMS;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
-
+#endif
 }
 
 void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argList)
@@ -288,14 +290,14 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
     headers.append("api_sig="+ md5);
     QString queryStr=headers.join("&");
     QString postUrl=url+queryStr;
-    QByteArray tmp;	
+    QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );	
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)), 
+    connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotResult(KIO::Job *)));
 
     m_state = FE_GETPHOTOPROPERTY;
@@ -307,7 +309,7 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
 }
 
 void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
-{ 
+{
     //if (m_job && m_state != FE_ADDTAG){ //we shouldn't kill the old tag request
     //	m_job->kill();
     //	m_job = 0;
@@ -408,7 +410,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
                                const QString& albumName, bool rescale,
                                int maxDim, int imageQuality)
 {
-    // Disabling this totally may be checking the m_state and doing selecting 
+    // Disabling this totally may be checking the m_state and doing selecting
     // disabling is a better idea
     /*if (m_job)
     {
@@ -443,7 +445,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     form.addPair("test", body, "application/atom+xml");
 
     // save the tags for this photo in to the tags hashmap
-    tags_map.insert(info.title, info.tags); 
+    tags_map.insert(info.title, info.tags);
     QImage image;
 
     // Check if RAW file.
@@ -487,7 +489,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(postUrl, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());	
+    job->addMetaData("content-type", form.contentType());
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -521,7 +523,7 @@ void PicasawebTalker::cancel()
         m_job = 0;
     }
 
-    if (authProgressDlg && !authProgressDlg->isHidden()) 
+    if (authProgressDlg && !authProgressDlg->isHidden())
         authProgressDlg->hide();
 }
 
@@ -550,13 +552,13 @@ void PicasawebTalker::slotError(const QString & error)
 
     switch (errorNo)
     {
-        case 2: 
+        case 2:
             transError=i18n("No photo specified");break;
-        case 3: 
+        case 3:
             transError=i18n("General upload failure");break;
-        case 4: 
+        case 4:
             transError=i18n("Filesize was zero");break;
-        case 5: 
+        case 5:
             transError=i18n("Filetype was not recognised");break;
         case 6:
             transError=i18n("User exceeded upload limit");break;
@@ -566,21 +568,21 @@ void PicasawebTalker::slotError(const QString & error)
             transError=i18n("Missing signature"); break;
         case 98:
             transError=i18n("Login Failed / Invalid auth token"); break;
-        case 100: 
+        case 100:
             transError=i18n("Invalid API Key"); break;
         case 105:
             transError=i18n("Service currently unavailable");break;
         case 108:
             transError=i18n("Invalid Frob");break;
-        case 111: 
+        case 111:
             transError=i18n("Format \"xxx\" not found"); break;
-        case 112: 
+        case 112:
             transError=i18n("Method \"xxx\" not found"); break;
-        case 114: 
+        case 114:
             transError=i18n("Invalid SOAP envelope");break;
-        case 115: 
+        case 115:
             transError=i18n("Invalid XML-RPC Method Call");break;
-        case 116: 
+        case 116:
             transError=i18n("The POST method is now required for all setters"); break;
         default:
             transError=i18n("Unknown error");
@@ -601,7 +603,7 @@ void PicasawebTalker::slotResult(KIO::Job *job)
         {
             emit signalAddPhotoFailed(job->errorString());
         }
-        else 
+        else
         {
             job->showErrorDialog(m_parent);
         }
@@ -702,7 +704,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
     bool success = false;
     QString str(data);
     QDomDocument doc( "feed" );
-    if ( !doc.setContent( data ) ) 
+    if ( !doc.setContent( data ) )
     {
         return;
     }
@@ -722,7 +724,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
         if (node.isElement() && node.nodeName() == "entry")
         {
             success = true;
-            e = node.toElement(); 
+            e = node.toElement();
             QDomNode details=e.firstChild();
             PicasaWebAlbum fps;
             QDomNode detailsNode = details;
@@ -778,7 +780,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
 void PicasawebTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QDomDocument doc( "getPhotosList" );
-    if ( !doc.setContent( data ) ) 
+    if ( !doc.setContent( data ) )
     {
         return;
     }
@@ -797,13 +799,13 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray &data)
     QDomDocument doc( "AddPhoto Response" );
     // parse the new album name
     QDomElement docElem = doc.documentElement();
-    QString title, photo_id, album_id, photoURI; 
+    QString title, photo_id, album_id, photoURI;
     QDomNode node = docElem.firstChild(); //this should mean <entry>
     QDomElement e;
 
-    while( !node.isNull() ) 
+    while( !node.isNull() )
     {
-        if ( node.isElement()) 
+        if ( node.isElement())
         {
             QString node_name = node.nodeName();
             QString node_value = node.toElement().text();
@@ -845,19 +847,19 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
     success = 1;
     QDomDocument doc( "AddPhoto Response" );
 
-    if ( !doc.setContent( data ) ) 
+    if ( !doc.setContent( data ) )
     {
         return;
     }
 
     QDomElement docElem = doc.documentElement();
-    QString title, photo_id, album_id, photoURI; 
+    QString title, photo_id, album_id, photoURI;
     QDomNode node = docElem.firstChild(); //this should mean <entry>
     QDomElement e;
 
-    while( !node.isNull() ) 
+    while( !node.isNull() )
     {
-        if ( node.isElement()) 
+        if ( node.isElement())
         {
             QString node_name = node.nodeName();
             QString node_value = node.toElement().text();
@@ -890,7 +892,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
         if (tags.count() == 0)
             emit signalAddPhotoSucceeded();
 
-        for ( QStringList::Iterator it = tags.begin(); it != tags.end(); ++it ) 
+        for ( QStringList::Iterator it = tags.begin(); it != tags.end(); ++it )
         {
             QString photoURI= QString("http://picasaweb.google.com/data/feed/api/user/"
                     "%1/albumid/%2/photoid/%3").arg(m_username).arg(album_id).arg(photo_id);
@@ -905,7 +907,7 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
     QString     line;
     QDomDocument doc( "Photos Properties" );
 
-    if ( !doc.setContent( data ) ) 
+    if ( !doc.setContent( data ) )
     {
         return;
     }
@@ -914,21 +916,21 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
     QDomNode node = docElem.firstChild();
     QDomElement e;
 
-    while( !node.isNull() ) 
+    while( !node.isNull() )
     {
-        if ( node.isElement() && node.nodeName() == "photoid" ) 
+        if ( node.isElement() && node.nodeName() == "photoid" )
         {
             e = node.toElement(); // try to convert the node to an element.
             QDomNode details=e.firstChild();
             success=true;
         }
 
-        if ( node.isElement() && node.nodeName() == "err" ) 
+        if ( node.isElement() && node.nodeName() == "err" )
         {
             kDebug()<<"Checking Error in response"<<endl;
             QString code=node.toElement().attribute("code");
             kDebug()<<"Error code="<<code<<endl;
-            kDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;	
+            kDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;
             emit signalError(code);
         }
         node = node.nextSibling();

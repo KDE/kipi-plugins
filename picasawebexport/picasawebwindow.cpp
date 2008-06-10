@@ -84,7 +84,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
                : KDialog(0),
                  m_tmp(tmpFolder)
 {
-    setTitle(i18n("Export to Picasa Web Service"));
+    setWindowTitle(i18n("Export to Picasa Web Service"));
     setModal(false);
     setButtons(Help|Close);
     setDefaultButton(Close);
@@ -129,13 +129,14 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");
 
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Developer"),
+    m_about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    actionButton(Help)->setPopup(helpMenu->menu());
+    //PORT To kde4
+    //actionButton(Help)->setPopup(helpMenu->menu());
 
     // ------------------------------------------------------------
 
@@ -257,7 +258,7 @@ PicasawebWindow::~PicasawebWindow()
 
     // write config
     KConfig config("kipirc");
-    KConfigGroup grp = config.setGroup("PicasawebExport Settings");
+    KConfigGroup grp = config.group("PicasawebExport Settings");
     grp.writeEntry("token", m_token);
     grp.writeEntry("username", m_username);
     grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
@@ -424,7 +425,8 @@ void PicasawebWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /
 void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
-    m_urls = new KUrl::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
+    //PORT TO KDE4
+    //m_urls = new KUrl::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
 }
 
 void PicasawebWindow::slotUploadImages()
