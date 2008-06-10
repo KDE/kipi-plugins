@@ -66,7 +66,7 @@ void ListImageItems::dropEvent(QDropEvent *e)
     if ( !Q3UriDrag::decode(e, strList) ) return;
 
     Q3StrList stringList;
-    QStrListIterator it(strList);
+    Q3StrListIterator it(strList);
     char *str;
 
     while ( (str = it.current()) != 0 )
