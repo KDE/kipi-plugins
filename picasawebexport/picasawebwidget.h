@@ -32,11 +32,7 @@
 #include "uploadwidget.h"
 
 class Q3ListView;
-class QPushButton;
-class QSpinBox;
 class QCheckBox;
-class QLineEdit;
-class QRadioButton;
 
 class KHTMLPart;
 
