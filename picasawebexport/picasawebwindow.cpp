@@ -63,6 +63,7 @@
 #include <ktoolinvocation.h>
 
 // Local includes.
+#include "imagedialog.h"
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
@@ -425,8 +426,8 @@ void PicasawebWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /
 void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
-    //PORT TO KDE4
-    //m_urls = new KUrl::List(KIPI::ImageDialog::getImageURLs( this, m_interface ));
+    KIPIPlugins::ImageDialog dlg(this, m_interface, false, true);
+    m_urls = new KUrl::List( dlg.urls() );
 }
 
 void PicasawebWindow::slotUploadImages()
