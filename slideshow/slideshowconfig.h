@@ -38,7 +38,6 @@
 
 // libkipi includes
 
-#include <libkipi/imagedialog.h>
 #include <libkipi/interface.h>
 
 // Local includes
@@ -47,7 +46,7 @@
 
 namespace KIPISlideShowPlugin
 {
-    
+
 class SlideShowConfig : public SlideShowConfigBase
 {
     Q_OBJECT
@@ -58,7 +57,7 @@ public:
                     QWidget *parent, const char* name, bool ImagesHasComments,
                     KUrl::List* urlList);
     ~SlideShowConfig();
-    
+
 private slots:
 
     void slotStartClicked();
@@ -70,10 +69,10 @@ private slots:
     void slotPrintCommentsToggled();
     void slotCommentsFontColorChanged();
     void slotCommentsBgColorChanged();
-    
+
     void slotSelection();
     void slotCacheToggled();
-   
+
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( Q3ListBoxItem *item );
     void slotAddDropItems(KUrl::List filesUrl);
@@ -94,7 +93,7 @@ private:
     void loadEffectNamesGL();
     void readSettings();
     void saveSettings();
-    
+
     void ShowNumberImages( int Number );
     void addItems(const KUrl::List& fileList);
 
@@ -103,17 +102,17 @@ private:
     int              m_delayMsMaxValue;
     int              m_delayMsMinValue;
     int              m_delayMsLineStep;
-    
+
     uint             m_cacheSize;
-    
+
     KConfig*         m_config;
-    
+
     QString          m_effectName;
     QString          m_effectNameGL;
-    
+
     KIO::PreviewJob* m_thumbJob;
     KUrl::List*      m_urlList;
-    
+
     KIPI::Interface* m_interface;
 };
 

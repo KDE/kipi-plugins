@@ -23,7 +23,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <sys/time.h>
 }
@@ -40,18 +40,19 @@ extern "C"
 #include <qstringlist.h>
 
  // KDE includes.
- 
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
+#include <kactioncollection.h>
 #include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 
 // Lib KIPI includes.
- 
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
@@ -64,13 +65,12 @@ extern "C"
 #include "plugin_slideshow.h"
 #include "plugin_slideshow.moc"
 
-typedef KGenericFactory<Plugin_SlideShow> Factory;
 
-K_EXPORT_COMPONENT_FACTORY(kipiplugin_slideshow, Factory("kipiplugin_slideshow"));
+K_PLUGIN_FACTORY( SlideShowFactory, registerPlugin<Plugin_SlideShow>(); )
+K_EXPORT_PLUGIN ( SlideShowFactory("kipiplugin_slideshow") )
 
-Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const char*,
-                                   const QStringList&)
-    : KIPI::Plugin( Factory::instance(), parent, "SlideShow")
+Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
+    : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
 {
     kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
                      << endl;
@@ -79,27 +79,24 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const char*,
 void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
-    m_actionSlideShow = new KAction (i18n("Advanced SlideShow..."),
-                                     "slideshow",
-                                     0,
-                                     this,
-                                     SLOT(slotActivate()),
-                                     actionCollection(),
-                                     "slideshow");
+
+    m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced SlideShow..."), actionCollection());
+    m_actionSlideShow->setObjectName("slideshow");
+    connect(m_actionSlideShow, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate()));
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    
+
     m_urlList = new KUrl::List();
 
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
        kError( 51000 ) << "Kipi m_interface is null!" << endl;
        return;
     }
 
     m_actionSlideShow->setEnabled( false );
-    
+
     connect( m_interface, SIGNAL( currentAlbumChanged( bool ) ),
              SLOT( slotAlbumChanged( bool ) ) );
 
@@ -114,7 +111,7 @@ Plugin_SlideShow::~Plugin_SlideShow()
 
 void Plugin_SlideShow::slotActivate()
 {
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
         kError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
@@ -129,9 +126,9 @@ void Plugin_SlideShow::slotActivate()
     }
 
     m_imagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-    
+
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(), 
+            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(),
                                                         i18n("Slide Show").ascii(), m_imagesHasComments,
                                                         m_urlList);
 
@@ -150,7 +147,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     }
 
     KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
         kError( 51000 ) << "Kipi m_interface is null!" << endl;
         m_actionSlideShow->setEnabled( false );
@@ -170,23 +167,22 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
 
 void Plugin_SlideShow::slotSlideShow()
 {
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
            kError( 51000 ) << "Kipi m_interface is null!" << endl;
            return;
     }
 
     KConfig config("kipirc");
-     
+
     bool    opengl;
     bool    shuffle;
     bool    wantKB;
-    
-    config.setGroup("SlideShow Settings");
-    opengl                = config.readBoolEntry("OpenGL");
-    shuffle               = config.readBoolEntry("Shuffle");
-    wantKB                = config.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
-    
+    KConfigGroup grp = config.group("SlideShow Settings");
+    opengl                = grp.readEntry("OpenGL", false);
+    shuffle               = grp.readEntry("Shuffle", false);
+    wantKB                = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+
     if ( m_urlList->isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
@@ -206,7 +202,7 @@ void Plugin_SlideShow::slotSlideShow()
     }
 
     m_urlList->clear();
-    
+
     if (shuffle)
     {
         struct timeval tv;
@@ -244,12 +240,12 @@ void Plugin_SlideShow::slotSlideShow()
                                i18n("Sorry. OpenGL support not available on your system"));
         else {
           if (wantKB) {
-            KIPISlideShowPlugin::SlideShowKB* slideShow = 
+            KIPISlideShowPlugin::SlideShowKB* slideShow =
                 new KIPISlideShowPlugin::SlideShowKB(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
           }
           else {
-            KIPISlideShowPlugin::SlideShowGL * slideShow = 
+            KIPISlideShowPlugin::SlideShowGL * slideShow =
                 new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
           }
@@ -260,8 +256,8 @@ void Plugin_SlideShow::slotSlideShow()
 KIPI::Category Plugin_SlideShow::category( KAction* action ) const
 {
     if ( action == m_actionSlideShow )
-       return KIPI::TOOLSPLUGIN;
-    
+       return KIPI::ToolsPlugin;
+
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-    return KIPI::TOOLSPLUGIN; // no warning from compiler, please
+    return KIPI::ToolsPlugin; // no warning from compiler, please
 }

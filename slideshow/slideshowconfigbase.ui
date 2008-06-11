@@ -1482,12 +1482,12 @@ Ken Burns effect doesn't use this cache mechanism.</string>
     <include location="global" impldecl="in declaration">libkipi/interface.h</include>
     <include location="global" impldecl="in declaration">kprocess.h</include>
     <include location="global" impldecl="in declaration">kio/previewjob.h</include>
-    <include location="global" impldecl="in declaration">klistbox.h</include>
+    <include location="global" impldecl="in declaration">k3listbox.h</include>
     <include location="global" impldecl="in implementation">klineedit.h</include>
     <include location="global" impldecl="in implementation">libkipi/interface.h</include>
     <include location="global" impldecl="in implementation">kprocess.h</include>
     <include location="global" impldecl="in implementation">kio/previewjob.h</include>
-    <include location="global" impldecl="in implementation">klistbox.h</include>
+    <include location="global" impldecl="in implementation">k3listbox.h</include>
 </includes>
 <slots>
     <slot access="protected">slotOpenGLToggled()</slot>
@@ -1500,9 +1500,9 @@ Ken Burns effect doesn't use this cache mechanism.</string>
     <slot specifier="non virtual">slotImagesFilesButtonDown()</slot>
     <slot specifier="non virtual">slotImagesFilesButtonDelete( void )</slot>
     <slot specifier="non virtual">slotImagesFilesSelected( QListBoxItem * item )</slot>
-    <slot specifier="non virtual">slotGotPreview( const KFileItem *, const QPixmap &amp; pixmap )</slot>
+    <slot specifier="non virtual">slotGotPreview( const KFileItem& , const QPixmap &amp; pixmap )</slot>
     <slot specifier="non virtual">slotFailedPreview( const KFileItem * )</slot>
-    <slot specifier="non virtual">slotAddDropItems( KURL::List filesUrl )</slot>
+    <slot specifier="non virtual">slotAddDropItems( KUrl::List filesUrl )</slot>
     <slot access="protected">slotCacheToggled()</slot>
 </slots>
 <functions>

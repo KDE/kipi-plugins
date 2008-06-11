@@ -41,10 +41,9 @@ class Plugin_SlideShow : public KIPI::Plugin
 
 public:
 
-    Plugin_SlideShow(QObject *parent, const char* name,
-                     const QStringList &args);
+    Plugin_SlideShow(QObject *parent, const QVariantList &args);
     ~Plugin_SlideShow();
-    
+
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 

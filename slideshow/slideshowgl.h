@@ -2,8 +2,8 @@
  * File  : slideshowgl.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-01-19
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  *
@@ -12,18 +12,18 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef SLIDESHOWGL_H
 #define SLIDESHOWGL_H
 
-// QT includes 
+// QT includes
 
 #include <Q3ValueList>
 #include <QStringList>
@@ -33,6 +33,7 @@
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QGLWidget>
 
 // KDE includes
 
@@ -46,13 +47,11 @@ class QTimer;
 
 namespace KIPISlideShowPlugin
 {
-class SlideShowGL;
-class ToolBar;
-
+    class SlideShowGL;
 class SlideShowGL : public QGLWidget
 {
     Q_OBJECT
-    
+
 public:
 
     SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
@@ -63,18 +62,18 @@ public:
 
     static QStringList effectNames();
     static QMap<QString,QString> effectNamesI18N();
-    
+
 protected:
 
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
-    
+
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *e);
     void keyPressEvent(QKeyEvent *event);
-    
+
 private:
 
     void          paintTexture();
@@ -87,9 +86,9 @@ private:
     void          printFilename(QImage& layer);
     void          printProgress(QImage& layer);
     void          printComments(QImage& layer);
-    
+
     void          readSettings();
-    
+
     void          effectNone();
     void          effectBlend();
     void          effectFade();
@@ -99,8 +98,8 @@ private:
     void          effectSlide();
     void          effectFlutter();
     void          effectCube();
-    
-    
+
+
 private slots:
 
     void slotTimeOut();
@@ -117,28 +116,28 @@ private:
     // config ------------------
 
     KConfig* m_config;
-    
+
     int      m_delay;
     QString  m_effectName;
     bool     m_loop;
     bool     m_printName;
     bool     m_printProgress;
     bool     m_printComments;
-    
+
     bool     m_imagesHasComments;
-    
+
     QFont*   m_commentsFont;
     uint     m_commentsFontColor;
     uint     m_commentsBgColor;
     int      m_commentsLinesLength;
-    
+
     bool     m_enableMouseWheel;
 
     uint     m_cacheSize;
 
     // -------------------------
 
-    typedef void (SlideShowGL::*EffectMethod)();        
+    typedef void (SlideShowGL::*EffectMethod)();
 
     QMap<QString, EffectMethod>       m_effects;
 
@@ -151,7 +150,7 @@ private:
     GLuint                            m_texture[2];
     bool                              m_tex1First;
     int                               m_curr;
-    
+
     int                               m_width;
     int                               m_height;
 
