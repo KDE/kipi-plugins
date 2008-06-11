@@ -47,7 +47,8 @@
 #include <cstdlib>
 
 #include "slideshowgl.h"
-#include "toolbar.h"
+#include <KConfigGroup>
+#include <QDesktopWidget>
 
 namespace KIPISlideShowPlugin
 {

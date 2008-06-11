@@ -34,7 +34,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QGLWidget>
-
+#include "toolbar.h"
 // KDE includes
 
 #include <kconfig.h>
