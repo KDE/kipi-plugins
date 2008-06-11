@@ -65,6 +65,7 @@
 
 // Local includes.
 
+#include "imagedialog.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "listimageitems.h"
@@ -73,6 +74,8 @@
 #include "slideshowkb.h"
 #include "slideshowconfig.h"
 #include "slideshowconfig.moc"
+
+
 
 namespace KIPISlideShowPlugin
 {
@@ -147,7 +150,6 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     // Configuration file management
 
     m_config = new KConfig("kipirc");
-    m_config->setGroup("SlideShow Settings");
 
     readSettings();
 
@@ -242,20 +244,21 @@ void SlideShowConfig::readSettings()
     bool  showSelectedFilesOnly;
     bool  useMilliseconds;
     bool  enableMouseWheel;
+    KConfigGroup grp = m_config->group("SlideShow Settings");
 
-    opengl                = m_config->readBoolEntry("OpenGL", false);
-    delay                 = m_config->readNumEntry("Delay", 1500);
-    printFileName         = m_config->readBoolEntry("Print Filename", true);
-    printProgress         = m_config->readBoolEntry("Print Progress Inticator", true);
-    printFileComments     = m_config->readBoolEntry("Print Comments", false);
-    loop                  = m_config->readBoolEntry("Loop", false);
-    shuffle               = m_config->readBoolEntry("Shuffle", false);
-    showSelectedFilesOnly = m_config->readBoolEntry("Show Selected Files Only", false);
-    m_effectName           = m_config->readEntry("Effect Name", "Random");
-    m_effectNameGL         = m_config->readEntry("Effect Name (OpenGL)", "Random");
+    opengl                = grp.readEntry("OpenGL", false);
+    delay                 = grp.readEntry("Delay", 1500);
+    printFileName         = grp.readEntry("Print Filename", true);
+    printProgress         = grp.readEntry("Print Progress Inticator", true);
+    printFileComments     = grp.readEntry("Print Comments", false);
+    loop                  = grp.readEntry("Loop", false);
+    shuffle               = grp.readEntry("Shuffle", false);
+    showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
+    m_effectName           = grp.readEntry("Effect Name", "Random");
+    m_effectNameGL         = grp.readEntry("Effect Name (OpenGL)", "Random");
 
-    useMilliseconds       = m_config->readBoolEntry("Use Milliseconds", false);
-    enableMouseWheel      = m_config->readNumEntry("Enable Mouse Wheel", true);
+    useMilliseconds       = grp.readEntry("Use Milliseconds", false);
+    enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
 
 
     // Comments tab settings
@@ -264,28 +267,28 @@ void SlideShowConfig::readSettings()
     int   commentsLinesLength;
 
     QFont *savedFont = new QFont();
-    savedFont->setFamily(m_config->readEntry("Comments Font Family"));
-    savedFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
-    savedFont->setBold(m_config->readBoolEntry("Comments Font Bold", false));
-    savedFont->setItalic(m_config->readBoolEntry("Comments Font Italic", false));
-    savedFont->setUnderline(m_config->readBoolEntry("Comments Font Underline", false));
-    savedFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
-    savedFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
-    savedFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
+    savedFont->setFamily(grp.readEntry("Comments Font Family"));
+    savedFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
+    savedFont->setBold(grp.readEntry("Comments Font Bold", false));
+    savedFont->setItalic(grp.readEntry("Comments Font Italic", false));
+    savedFont->setUnderline(grp.readEntry("Comments Font Underline", false));
+    savedFont->setOverline(grp.readEntry("Comments Font Overline", false));
+    savedFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
+    savedFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
 
-    commentsFontColor     = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
-    commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
+    commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
+    commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
 
-    commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
+    commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
 
     // Advanced tab
     bool enableCache, kbDisableFadeInOut, kbDisableCrossFade;
 
-    kbDisableFadeInOut = m_config->readBoolEntry("KB Disable FadeInOut", false);
-    kbDisableCrossFade = m_config->readBoolEntry("KB Disable Crossfade", false);
+    kbDisableFadeInOut = grp.readEntry("KB Disable FadeInOut", false);
+    kbDisableCrossFade = grp.readEntry("KB Disable Crossfade", false);
 
-    enableCache = m_config->readBoolEntry("Enable Cache", false);
-    m_cacheSize  = m_config->readNumEntry("Cache Size", 5);
+    enableCache = grp.readEntry("Enable Cache", false);
+    m_cacheSize  = grp.readEntry("Cache Size", 5);
 
 
     // -- Apply Settings to widgets ------------------------------
@@ -330,48 +333,49 @@ void SlideShowConfig::readSettings()
 void SlideShowConfig::saveSettings()
 {
     if (!m_config) return;
+    KConfigGroup grp= m_config->group("SlideShow Settings");
 
-    m_config->writeEntry("OpenGL", m_openglCheckBox->isChecked());
+    grp.writeEntry("OpenGL", m_openglCheckBox->isChecked());
 
     // Delay will be always saved as millisecond value, to keep compatibility
     if ( m_useMillisecondsCheckBox->isChecked() )
-        m_config->writeEntry("Delay", m_delaySpinBox->value());
+        grp.writeEntry("Delay", m_delaySpinBox->value());
     else
-        m_config->writeEntry("Delay", m_delaySpinBox->value()*1000);
+        grp.writeEntry("Delay", m_delaySpinBox->value()*1000);
 
-    m_config->writeEntry("Print Filename", m_printNameCheckBox->isChecked());
-    m_config->writeEntry("Print Progress Indicator", m_printProgressCheckBox->isChecked());
-    m_config->writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
-    m_config->writeEntry("Loop", m_loopCheckBox->isChecked());
-    m_config->writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
-    m_config->writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
+    grp.writeEntry("Print Filename", m_printNameCheckBox->isChecked());
+    grp.writeEntry("Print Progress Indicator", m_printProgressCheckBox->isChecked());
+    grp.writeEntry("Print Comments", m_printCommentsCheckBox->isChecked());
+    grp.writeEntry("Loop", m_loopCheckBox->isChecked());
+    grp.writeEntry("Shuffle", m_shuffleCheckBox->isChecked());
+    grp.writeEntry("Show Selected Files Only", m_selectedFilesButton->isChecked());
 
-    m_config->writeEntry("Use Milliseconds", m_useMillisecondsCheckBox->isChecked());
-    m_config->writeEntry("Enable Mouse Wheel", m_enableMouseWheelCheckBox->isChecked());
+    grp.writeEntry("Use Milliseconds", m_useMillisecondsCheckBox->isChecked());
+    grp.writeEntry("Enable Mouse Wheel", m_enableMouseWheelCheckBox->isChecked());
 
     // Comments tab settings
     QFont* commentsFont = new QFont(m_commentsFontChooser->font());
-    m_config->writeEntry("Comments Font Family", commentsFont->family());
-    m_config->writeEntry("Comments Font Size", commentsFont->pointSize());
-    m_config->writeEntry("Comments Font Bold", commentsFont->bold());
-    m_config->writeEntry("Comments Font Italic", commentsFont->italic());
-    m_config->writeEntry("Comments Font Underline", commentsFont->underline());
-    m_config->writeEntry("Comments Font Overline", commentsFont->overline());
-    m_config->writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
-    m_config->writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
+    grp.writeEntry("Comments Font Family", commentsFont->family());
+    grp.writeEntry("Comments Font Size", commentsFont->pointSize());
+    grp.writeEntry("Comments Font Bold", commentsFont->bold());
+    grp.writeEntry("Comments Font Italic", commentsFont->italic());
+    grp.writeEntry("Comments Font Underline", commentsFont->underline());
+    grp.writeEntry("Comments Font Overline", commentsFont->overline());
+    grp.writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
+    grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
     delete commentsFont;
 
     QColor* fontColor = new QColor(m_commentsFontColor->color());
     uint commentsFontColorRGB = fontColor->rgb();
     delete fontColor;
-    m_config->writeEntry("Comments Font Color", commentsFontColorRGB);
+    grp.writeEntry("Comments Font Color", commentsFontColorRGB);
 
     QColor* bgColor = new QColor(m_commentsBgColor->color());
     uint commentsBgColorRGB = bgColor->rgb();
     delete bgColor;
-    m_config->writeEntry("Comments Bg Color", commentsBgColorRGB);
+    grp.writeEntry("Comments Bg Color", commentsBgColorRGB);
 
-    m_config->writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
+    grp.writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
 
     if (!m_openglCheckBox->isChecked()) {
 
@@ -386,7 +390,7 @@ void SlideShowConfig::saveSettings()
             }
         }
 
-        m_config->writeEntry("Effect Name", effect);
+        grp.writeEntry("Effect Name", effect);
 
     }
     else
@@ -416,15 +420,15 @@ void SlideShowConfig::saveSettings()
             }
         }
 
-        m_config->writeEntry("Effect Name (OpenGL)", effect);
+        grp.writeEntry("Effect Name (OpenGL)", effect);
     }
 
     // Advanced settings
-    m_config->writeEntry("KB Disable FadeInOut", m_kbDisableFadeCheckBox->isChecked());
-    m_config->writeEntry("KB Disable Crossfade", m_kbDisableCrossfadeCheckBox->isChecked());
+    grp.writeEntry("KB Disable FadeInOut", m_kbDisableFadeCheckBox->isChecked());
+    grp.writeEntry("KB Disable Crossfade", m_kbDisableCrossfadeCheckBox->isChecked());
 
-    m_config->writeEntry("Enable Cache", m_cacheCheckBox->isChecked());
-    m_config->writeEntry("Cache Size", m_cacheSizeSpinBox->value());
+    grp.writeEntry("Enable Cache", m_cacheCheckBox->isChecked());
+    grp.writeEntry("Cache Size", m_cacheSizeSpinBox->value());
 
     m_config->sync();
 }
@@ -484,7 +488,7 @@ void SlideShowConfig::slotUseMillisecondsToggled()
     m_delaySpinBox->setValue(0);
 
     if ( m_useMillisecondsCheckBox -> isChecked() ) {
-        m_delayLabel->setText(QString("Delay between images (ms):"));
+        m_delayLabel->setText(i18n("Delay between images (ms):"));
 
         m_delaySpinBox->setMinValue(m_delayMsMinValue);
         m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
@@ -493,7 +497,7 @@ void SlideShowConfig::slotUseMillisecondsToggled()
         m_delaySpinBox->setValue(delayValue*1000);
     }
     else {
-        m_delayLabel->setText(QString("Delay between images  (s):"));
+        m_delayLabel->setText(i18n("Delay between images  (s):"));
 
         m_delaySpinBox->setMinValue(m_delayMsMinValue/1000);
         m_delaySpinBox->setMaxValue(m_delayMsMaxValue/100);
@@ -629,10 +633,13 @@ void SlideShowConfig::slotAddDropItems(KUrl::List filesUrl)
 
 void SlideShowConfig::slotImagesFilesButtonAdd( void )
 {
-    KUrl::List ImageFilesList =
-            KIPI::ImageDialog::getImageURLs( this, m_interface );
-    if ( !ImageFilesList.isEmpty() )
-        addItems( ImageFilesList );
+    KIPIPlugins::ImageDialog dlg(this, m_interface, false, true);
+    KUrl::List urls = dlg.urls();
+    if (!urls.isEmpty())
+    {
+        addItems(urls);
+    }
+
 }
 
 void SlideShowConfig::slotImagesFilesButtonDelete( void )
@@ -739,9 +746,9 @@ void SlideShowConfig::ShowNumberImages( int Number )
     TotalDuration = TotalDuration.addMSecs((Number-1)*TransitionDuration);
 
     if ( Number < 2)
-        m_label6->setText(i18n("%1 image [%2]").arg(Number).arg(TotalDuration.toString()));
+        m_label6->setText(i18n("%1 image [%2]", Number, TotalDuration.toString()));
     else
-        m_label6->setText(i18n("%1 images [%2]").arg(Number).arg(TotalDuration.toString()));
+        m_label6->setText(i18n("%1 images [%2]", Number, TotalDuration.toString()));
 }
 
 void SlideShowConfig::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
@@ -770,7 +777,7 @@ void SlideShowConfig::slotStartClicked()
         if (!QFile::exists(pitem->path()))
         {
             KMessageBox::error(this,
-                               i18n("Cannot access to file %1, please check the path is right.").arg(pitem->path()));
+                               i18n("Cannot access to file %1, please check the path is right.", pitem->path()));
             return;
         }
         m_urlList->append(pitem->path());                              // Input images files.

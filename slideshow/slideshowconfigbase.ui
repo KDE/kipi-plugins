@@ -1500,7 +1500,7 @@ Ken Burns effect doesn't use this cache mechanism.</string>
     <slot specifier="non virtual">slotImagesFilesButtonDown()</slot>
     <slot specifier="non virtual">slotImagesFilesButtonDelete( void )</slot>
     <slot specifier="non virtual">slotImagesFilesSelected( QListBoxItem * item )</slot>
-    <slot specifier="non virtual">slotGotPreview( const KFileItem& , const QPixmap &amp; pixmap )</slot>
+    <slot specifier="non virtual">slotGotPreview( const KFileItem&amp; , const QPixmap &amp; pixmap )</slot>
     <slot specifier="non virtual">slotFailedPreview( const KFileItem * )</slot>
     <slot specifier="non virtual">slotAddDropItems( KUrl::List filesUrl )</slot>
     <slot access="protected">slotCacheToggled()</slot>
