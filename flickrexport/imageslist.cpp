@@ -24,18 +24,17 @@
 
 // QT includes.
 
-#include <qpushbutton.h>
-#include <qpainter.h>
-#include <qfileinfo.h>
-#include <qlayout.h>
-#include <q3whatsthis.h>
-#include <q3dragobject.h>
-#include <qimage.h>
-//Added by qt3to4:
-#include <QDropEvent>
+#include <Q3WhatsThis>
+#include <Q3dragObject>
 #include <Q3GridLayout>
-#include <QPixmap>
 #include <Q3StrList>
+#include <QPushButton>
+#include <QPainter>
+#include <QFileInfo>
+#include <QLayout>
+#include <QImage>
+#include <QDropEvent>
+#include <QPixmap>
 #include <QDragEnterEvent>
 
 // KDE includes.
@@ -97,9 +96,15 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
 ImagesListView::ImagesListView(QWidget *parent)
               : Q3ListView(parent)
 {
-    setSelectionMode(Q3ListView::Multi);
+    addColumn(i18n("Thumbnail"));
+    addColumn(i18n("File Name"));
     Q3WhatsThis::add(this, i18n("<p>This is the list of images to upload on your Flickr account."));
     setAcceptDrops(true);
+    setResizeMode(Q3ListView::AllColumns);
+    setAllColumnsShowFocus(true);
+    setSorting(-1);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setSelectionMode(Q3ListView::Extended);
 }
 
 ImagesListView::~ImagesListView()
@@ -169,14 +174,7 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     // --------------------------------------------------------
 
     Q3GridLayout* grid = new Q3GridLayout(this, 2, 3);
-    d->listView       = new ImagesListView(this);
-    d->listView->addColumn(i18n("Thumbnail"));
-    d->listView->addColumn(i18n("File Name"));
-    d->listView->setResizeMode(Q3ListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(Q3ListView::Extended);
+    d->listView        = new ImagesListView(this);
 
     // --------------------------------------------------------
 
