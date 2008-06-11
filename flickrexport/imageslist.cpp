@@ -25,7 +25,7 @@
 // QT includes.
 
 #include <Q3WhatsThis>
-#include <Q3dragObject>
+#include <Q3DragObject>
 #include <Q3GridLayout>
 #include <Q3StrList>
 #include <QPushButton>
