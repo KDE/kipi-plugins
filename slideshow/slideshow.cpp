@@ -118,7 +118,6 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_ImagesHasComments = ImagesHasComments;
 
     m_config = new KConfig("kipirc");
-    KConfigGroup grp = m_config->group("SlideShow Settings");
 
     readSettings();
 

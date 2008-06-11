@@ -55,22 +55,14 @@ namespace KIPISlideShowPlugin
 SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, bool ImagesHasComments)
     : QGLWidget(0, 0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
-                WX11BypassWM | WDestructiveClose)
+                Qt::WX11BypassWM | Qt::WDestructiveClose)
 {
-#if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
     m_deskWidth  = deskRect.width();
     m_deskHeight = deskRect.height();
-#else
-    QRect deskRect = QApplication::desktop()->screenGeometry(this);
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
-#endif    
-    
+
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
 
@@ -90,9 +82,9 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
             SLOT(slotPrev()));
     connect(m_toolBar, SIGNAL(signalClose()),
             SLOT(slotClose()));
-    
+
     // -- Minimal texture size (opengl specs) --------------
-    
+
     m_width  = 64;
     m_height = 64;
 
@@ -104,7 +96,6 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_imagesHasComments   = ImagesHasComments;
 
     m_config = new KConfig("kipirc");
-    m_config->setGroup("SlideShow Settings");
 
     readSettings();
 
@@ -149,7 +140,7 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_mouseMoveTimer = new QTimer;
     connect(m_mouseMoveTimer, SIGNAL(timeout()),
             SLOT(slotMouseMoveTimeOut()));
-    
+
     setMouseTracking(true);
     slotMouseMoveTimeOut();
 }
@@ -158,7 +149,7 @@ SlideShowGL::~SlideShowGL()
 {
     delete m_timer;
     delete m_mouseMoveTimer;
-  
+
     if (m_texture[0])
         glDeleteTextures(1, &m_texture[0]);
     if (m_texture[1])
@@ -173,37 +164,39 @@ SlideShowGL::~SlideShowGL()
 
 void SlideShowGL::readSettings()
 {
-    m_delay                 = m_config->readNumEntry("Delay", 1500);
-    m_printName         = m_config->readBoolEntry("Print Filename", true);
-    m_printProgress     = m_config->readBoolEntry("Print Progress Indicator", true);
-    m_printComments     = m_config->readBoolEntry("Print Comments", false);
-    m_loop                  = m_config->readBoolEntry("Loop", false);
-    
-    m_effectName         = m_config->readEntry("Effect Name (OpenGL)", "Random");
+    KConfigGroup grp = m_config->group("SlideShow Settings");
 
-    m_enableMouseWheel      = m_config->readBoolEntry("Enable Mouse Wheel", true);
- 
+    m_delay                 = grp.readEntry("Delay", 1500);
+    m_printName         = grp.readEntry("Print Filename", true);
+    m_printProgress     = grp.readEntry("Print Progress Indicator", true);
+    m_printComments     = grp.readEntry("Print Comments", false);
+    m_loop                  = grp.readEntry("Loop", false);
+
+    m_effectName         = grp.readEntry("Effect Name (OpenGL)", "Random");
+
+    m_enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
+
     // Comments tab settings
-    
+
     m_commentsFont = new QFont();
-    m_commentsFont->setFamily(m_config->readEntry("Comments Font Family"));
-    m_commentsFont->setPointSize(m_config->readNumEntry("Comments Font Size", 10 ));
-    m_commentsFont->setBold(m_config->readBoolEntry("Comments Font Bold", false));
-    m_commentsFont->setItalic(m_config->readBoolEntry("Comments Font Italic", false));
-    m_commentsFont->setUnderline(m_config->readBoolEntry("Comments Font Underline", false));
-    m_commentsFont->setOverline(m_config->readBoolEntry("Comments Font Overline", false));
-    m_commentsFont->setStrikeOut(m_config->readBoolEntry("Comments Font StrikeOut", false));
-    m_commentsFont->setFixedPitch(m_config->readBoolEntry("Comments Font FixedPitch", false));
-    
-    m_commentsFontColor     = m_config->readUnsignedNumEntry("Comments Font Color", 0xffffff);
-    m_commentsBgColor       = m_config->readUnsignedNumEntry("Comments Bg Color", 0x000000);
-    
-    m_commentsLinesLength   = m_config->readNumEntry("Comments Lines Length", 72);
-    
+    m_commentsFont->setFamily(grp.readEntry("Comments Font Family"));
+    m_commentsFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
+    m_commentsFont->setBold(grp.readEntry("Comments Font Bold", false));
+    m_commentsFont->setItalic(grp.readEntry("Comments Font Italic", false));
+    m_commentsFont->setUnderline(grp.readEntry("Comments Font Underline", false));
+    m_commentsFont->setOverline(grp.readEntry("Comments Font Overline", false));
+    m_commentsFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
+    m_commentsFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
+
+    m_commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
+    m_commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
+
+    m_commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
+
     // Advanced settings
-    bool enableCache = m_config->readBoolEntry("Enable Cache", false);
+    bool enableCache = grp.readEntry("Enable Cache", false);
     if (enableCache)
-      m_cacheSize  = m_config->readNumEntry("Cache Size", 1);
+      m_cacheSize  = grp.readEntry("Cache Size", 1);
     else
       m_cacheSize = 1;
 }
@@ -235,7 +228,7 @@ void SlideShowGL::initializeGL()
 
     m_width  = 1 << (int)ceil(log((float)m_width)/log((float)2)) ;
     m_height = 1 << (int)ceil(log((float)m_height)/log((float)2));
-    
+
     m_width  = qMin( maxTexVal, m_width );
     m_height = qMin( maxTexVal, m_height );
 
@@ -310,9 +303,9 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 
     if (!m_toolBar->canHide())
         return;
-    
+
     QPoint pos(e->pos());
-    
+
     if ((pos.y() > (m_deskY+20)) &&
         (pos.y() < (m_deskY+m_deskHeight-20-1)))
     {
@@ -325,7 +318,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 
     int w = m_toolBar->width();
     int h = m_toolBar->height();
-    
+
     if (pos.y() < (m_deskY+20))
     {
         if (pos.x() <= (m_deskX+m_deskWidth/2))
@@ -348,14 +341,14 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 }
 
 void SlideShowGL::wheelEvent(QWheelEvent *e)
-{    
+{
     if (!m_enableMouseWheel) return;
-    
+
     if (m_endOfShow)
         slotClose();
 
     int delta = e->delta();
-    
+
     if (delta < 0)
     {
         m_timer->stop();
@@ -367,7 +360,7 @@ void SlideShowGL::wheelEvent(QWheelEvent *e)
         m_timer->stop();
         m_toolBar->setPaused(true);
         slotPrev();
-    } 
+    }
 }
 
 void SlideShowGL::registerEffects()
@@ -498,7 +491,7 @@ void SlideShowGL::loadImage()
 {
 
     QImage image = m_imageLoader->getCurrent();
-  
+
     if (!image.isNull()) {
 
         int a  = m_tex1First ? 0 : 1;
@@ -509,22 +502,22 @@ void SlideShowGL::loadImage()
 
         QImage black(width(), height(), 32);
         black.fill(Qt::black.rgb());
-	    
+
 /*        image = image.smoothScale(width(), height(),
                                   Qt::ScaleMin);*/
         montage(image, black);
 
         black = black.smoothScale(m_width, m_height);
-        
+
 	if (m_printName)
 	    printFilename(black);
-	
+
     if (m_printProgress)
         printProgress(black);
-    
+
     if (m_printComments && m_imagesHasComments)
         printComments(black);
-        
+
 	QImage t = convertToGLFormat(black);
 
         /* create the texture */
@@ -537,10 +530,10 @@ void SlideShowGL::loadImage()
         /* enable linear filtering  */
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-        
-	
+
+
     }
-    
+
 }
 
 void SlideShowGL::montage(QImage& top, QImage& bot)
@@ -572,62 +565,62 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 }
 
 void SlideShowGL::printFilename(QImage& layer)
-{ 
+{
     QFileInfo fileinfo(m_fileList[m_fileIndex].first);
     QString filename = fileinfo.fileName();
-       
+
     QFont fn(font());
     fn.setPointSize(fn.pointSize());
     fn.setBold(true);
-   
+
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(filename);
     rect.addCoords( 0, 0, 2, 2 );
-    
+
     QPixmap pix(rect.width(),rect.height());
-    pix.fill(Qt::black);    
+    pix.fill(Qt::black);
 
     QPainter p(&pix);
     p.setPen(Qt::white);
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , filename);
     p.end();
-   
+
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(0,m_height-rect.height(),textimage,layer);
 }
 
 void SlideShowGL::printProgress(QImage& layer)
-{ 
+{
     QString progress(QString::number(m_fileIndex + 1) + "/" + QString::number(m_fileList.count()));
-       
+
     QFont fn(font());
     fn.setPointSize(fn.pointSize());
     fn.setBold(true);
-   
+
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(progress);
     rect.addCoords( 0, 0, 2, 2 );
-    
+
     QPixmap pix(rect.width(),rect.height());
-    pix.fill(Qt::black);    
+    pix.fill(Qt::black);
 
     QPainter p(&pix);
-    
+
     int stringLenght = p.fontMetrics().width(progress) * progress.length();
-    
+
     p.setPen(Qt::white);
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , progress);
     p.end();
-   
+
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(m_width - stringLenght - 10,
                                20,textimage,layer);
 }
 
 void SlideShowGL::printComments(QImage& layer)
-{ 
+{
     QString comments = m_commentsList[m_fileIndex];
 
     int yPos = 5; // Text Y coordinate
@@ -639,7 +632,7 @@ void SlideShowGL::printComments(QImage& layer)
 
     while (commentsIndex < comments.length())
     {
-        QString newLine; 
+        QString newLine;
         bool breakLine = FALSE; // End Of Line found
         uint currIndex; //  Comments QString current index
 
@@ -655,8 +648,8 @@ void SlideShowGL::printComments(QImage& layer)
 
         breakLine = FALSE;
 
-        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal && 
-              currIndex < comments.length() &&  
+        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
+              currIndex < comments.length() &&
                       !breakLine; currIndex++ )
         {
             breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
@@ -689,7 +682,7 @@ void SlideShowGL::printComments(QImage& layer)
         rect.addCoords( 0, 0, 2, 2 );
 
         QPixmap pix(rect.width(),rect.height());
-        pix.fill(QColor(m_commentsBgColor)); 
+        pix.fill(QColor(m_commentsBgColor));
 
         QPainter p(&pix);
         p.setPen(QColor(m_commentsFontColor));
@@ -1505,7 +1498,7 @@ void SlideShowGL::slotNext()
 
 void SlideShowGL::slotClose()
 {
-    close();    
+    close();
 }
 
 }  // NameSpace KIPISlideShowPlugin
