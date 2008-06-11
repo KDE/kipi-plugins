@@ -91,9 +91,15 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
 ImagesListView::ImagesListView(QWidget *parent)
               : QListView(parent)
 {
-    setSelectionMode(QListView::Multi);
+    addColumn(i18n("Thumbnail"));
+    addColumn(i18n("File Name"));
     QWhatsThis::add(this, i18n("<p>This is the list of images to upload on your Flickr account."));
     setAcceptDrops(true);
+    setResizeMode(QListView::AllColumns);
+    setAllColumnsShowFocus(true);
+    setSorting(-1);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setSelectionMode(QListView::Extended);
 }
 
 ImagesListView::~ImagesListView()
@@ -164,13 +170,6 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     QGridLayout* grid = new QGridLayout(this, 2, 3);
     d->listView       = new ImagesListView(this);
-    d->listView->addColumn(i18n("Thumbnail"));
-    d->listView->addColumn(i18n("File Name"));
-    d->listView->setResizeMode(QListView::AllColumns);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setSorting(-1);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setSelectionMode(QListView::Extended);
 
     // --------------------------------------------------------
 
