@@ -52,6 +52,7 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
+#include "imagedialog.h"
 // Local includes.
 
 #include "imageslist.h"
@@ -277,14 +278,14 @@ void ImagesList::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
 
 void ImagesList::slotAddItems()
 {
-    //Port to KDE4
-#if 0
-    KUrl::List urls = KIPI::ImageDialog::getImageURLs(this, d->iface);
+    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
+    KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
+    {
         slotAddImages(urls);
+    }
 
     emit signalImageListChanged(imageUrls().isEmpty());
-#endif
 }
 
 void ImagesList::slotRemoveItems()
