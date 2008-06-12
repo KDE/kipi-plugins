@@ -28,6 +28,7 @@
 #include <Q3DragObject>
 #include <Q3GridLayout>
 #include <Q3StrList>
+
 #include <QPushButton>
 #include <QPainter>
 #include <QFileInfo>
@@ -51,9 +52,9 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-#include "imagedialog.h"
 // Local includes.
 
+#include "imagedialog.h"
 #include "imageslist.h"
 #include "imageslist.moc"
 

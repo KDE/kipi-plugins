@@ -30,8 +30,10 @@
 
 // Qt includes.
 
+#include <q3progressdialog.h>
 #include <q3cstring.h>
 #include <q3textstream.h>
+#include <Q3ValueList>
 #include <qfile.h>
 #include <qimage.h>
 #include <qstringlist.h>
@@ -40,9 +42,6 @@
 #include <qdom.h>
 #include <qmap.h>
 #include <qfileinfo.h>
-#include <q3progressdialog.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 // KDE includes.
 
@@ -54,6 +53,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <KToolInvocation>
+
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
@@ -314,6 +314,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 //  m_authProgressDlg->setLabelText("Getting the Token from the server");
 //  m_authProgressDlg->setProgress(3,4);
 }
+
 void FlickrTalker::listPhotos(const QString& /*albumName*/)
 {
     // TODO
@@ -836,7 +837,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
                     if(detailsNode.nodeName() == "photoset")
                     {
                         kDebug() << "id=" << e.attribute("id") << endl;
-                        photoSet_id              = e.attribute("id");           //this is what is obtained from data.
+                        photoSet_id              = e.attribute("id");     // this is what is obtained from data.
                         fps.id                   = photoSet_id;
                         QDomNode photoSetDetails = detailsNode.firstChild();
                         QDomElement e_detail;
