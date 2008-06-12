@@ -25,8 +25,12 @@
 
 // Qt includes.
 
-#include <QDialog>
 #include <QLabel>
+#include <QString>
+
+// KDE includes.
+
+#include <kdialog.h>
 
 class QLabel;
 class QLineEdit;
@@ -34,7 +38,7 @@ class QLineEdit;
 namespace KIPIFlickrExportPlugin
 {
 
-class FlickrLogin : public QDialog
+class FlickrLogin : public KDialog
 {
     Q_OBJECT
 
