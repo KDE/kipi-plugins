@@ -95,10 +95,10 @@ void Plugin_FlickrExport::slotActivate()
     }
 
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
+    QString tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
 
     // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, Tmp, kapp->activeWindow());
+    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow());
     m_dlg->show();
 }
 

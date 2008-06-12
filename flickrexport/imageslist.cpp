@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-05-21
- * Description : a kipi plugin to export images to Flickr web service
+ * Date        : 2006-10-18
+ * Description : images list settings page.
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,19 +24,13 @@
 
 // QT includes.
 
-#include <Q3WhatsThis>
-#include <Q3DragObject>
-#include <Q3GridLayout>
-#include <Q3StrList>
-
 #include <QPushButton>
 #include <QPainter>
-#include <QFileInfo>
-#include <QLayout>
-#include <QImage>
-#include <QDropEvent>
-#include <QPixmap>
 #include <QDragEnterEvent>
+#include <QUrl>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QHeaderView>
 
 // KDE includes.
 
@@ -45,12 +39,11 @@
 #include <knuminput.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <kio/previewjob.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
-#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 // Local includes.
 
@@ -61,10 +54,10 @@
 namespace KIPIFlickrExportPlugin
 {
 
-ImagesListViewItem::ImagesListViewItem(Q3ListView *view, const KUrl& url)
-                  : Q3ListViewItem(view)
+ImagesListViewItem::ImagesListViewItem(QTreeWidget *view, const KUrl& url)
+                  : QTreeWidgetItem(view)
 {
-    setThumb(SmallIcon("file_broken", ICONSIZE, KIcon::Disabled));
+    setThumb(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
     setUrl(url);
 }
 
@@ -83,29 +76,29 @@ KUrl ImagesListViewItem::url() const
     return m_url;
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix)
+void ImagesListViewItem::setThumb(const QPixmap& pix) 
 {
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
     pixmap.fill(Qt::color0);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    setPixmap(0, pixmap);
+    setIcon(0, QIcon(pixmap));
 }
 
 // ---------------------------------------------------------------------------
 
 ImagesListView::ImagesListView(QWidget *parent)
-              : Q3ListView(parent)
+              : QTreeWidget(parent)
 {
-    addColumn(i18n("Thumbnail"));
-    addColumn(i18n("File Name"));
-    Q3WhatsThis::add(this, i18n("<p>This is the list of images to upload on your Flickr account."));
+    setIconSize(QSize(ICONSIZE, ICONSIZE));
+    setSelectionMode(QAbstractItemView::MultiSelection);
+    setWhatsThis(i18n("<p>This is the list of images to upload on your Flickr account."));
     setAcceptDrops(true);
-    setResizeMode(Q3ListView::AllColumns);
+    setSortingEnabled(false);
     setAllColumnsShowFocus(true);
-    setSorting(-1);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setSelectionMode(Q3ListView::Extended);
+    setHeaderLabels(QStringList() << i18n("Thumbnail") << i18n("File Name"));
+    header()->setResizeMode(QHeaderView::Stretch);
 }
 
 ImagesListView::~ImagesListView()
@@ -114,48 +107,40 @@ ImagesListView::~ImagesListView()
 
 void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
 {
-    e->accept(Q3UriDrag::canDecode(e));
+     if (e->mimeData()->hasUrls())
+         e->acceptProposedAction();
 }
 
 void ImagesListView::dropEvent(QDropEvent *e)
 {
-    Q3StrList   strList;
-    KUrl::List urls;
+    QList<QUrl> list = e->mimeData()->urls();
+    KUrl::List  urls;
 
-    if (!Q3UriDrag::decode(e, strList))
-        return;
-
-    Q3StrList stringList;
-    Q3StrListIterator it(strList);
-    char *str;
-
-    while ((str = it.current()) != 0)
+    foreach (QUrl url, list)
     {
-        QString filePath = Q3UriDrag::uriToLocalFile(str);
-        QFileInfo fileInfo(filePath);
-
-        if (fileInfo.isFile() && fileInfo.exists())
-            urls.append(fileInfo.filePath());
-
-        ++it;
+        QFileInfo fi(url.path());
+        if (fi.isFile() && fi.exists())
+            urls.append(KUrl(url));
     }
 
+    e->acceptProposedAction();
+
     if (!urls.isEmpty())
-       emit signalDropedItems(urls);
+       emit addedDropedItems(urls);
 }
 
 // ---------------------------------------------------------------------------
 
-class ImagesPagePriv
+class ImagesListPriv
 {
 public:
 
-    ImagesPagePriv()
+    ImagesListPriv()
     {
         listView     = 0;
+        iface        = 0;
         addButton    = 0;
         removeButton = 0;
-        iface        = 0;
     }
 
     QPushButton     *addButton;
@@ -169,34 +154,37 @@ public:
 ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
           : QWidget(parent)
 {
-    d = new ImagesPagePriv;
+    d = new ImagesListPriv;
     d->iface = iface;
 
     // --------------------------------------------------------
 
-    Q3GridLayout* grid = new Q3GridLayout(this, 2, 3);
-    d->listView        = new ImagesListView(this);
+    QGridLayout* grid = new QGridLayout(this);
+    d->listView       = new ImagesListView(this);
 
     // --------------------------------------------------------
 
     d->addButton    = new QPushButton(this);
     d->removeButton = new QPushButton(this);
-    d->addButton->setText(i18n("&Add"));
-    d->addButton->setIconSet(SmallIcon("list-add"));
-    d->removeButton->setText(i18n("&Remove"));
-    d->removeButton->setIconSet(SmallIcon("list-remove"));
+    d->addButton->setText( i18n( "&Add" ) );
+    d->addButton->setIcon(SmallIcon("list-add"));
+    d->removeButton->setText( i18n( "&Remove" ) );
+    d->removeButton->setIcon(SmallIcon("list-remove"));
 
     // --------------------------------------------------------
 
-    grid->addMultiCellWidget(d->listView,     0, 2, 0, 2);
-    grid->addMultiCellWidget(d->addButton,    0, 0, 3, 3);
-    grid->addMultiCellWidget(d->removeButton, 1, 1, 3, 3);
-    grid->setColStretch(0, 10);
+    grid->addWidget(d->listView,     0, 0, 3, 1);
+    grid->addWidget(d->addButton,    0, 1, 1, 1);
+    grid->addWidget(d->removeButton, 1, 1, 1, 1);
+    grid->setColumnStretch(0, 10);
     grid->setRowStretch(2, 10);
-    grid->setMargin(KDialog::spacingHint());
+    grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
+
+    connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
+            this, SLOT(slotAddImages(const KUrl::List&)));
 
     connect(d->addButton, SIGNAL(clicked()),
             this, SLOT(slotAddItems()));
@@ -204,8 +192,8 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));
 
-    connect(d->listView, SIGNAL(signalDropedItems(const KUrl::List&)),
-            this, SLOT(slotAddImages(const KUrl::List&)));
+    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
     // --------------------------------------------------------
 
@@ -222,11 +210,11 @@ ImagesList::~ImagesList()
 
 void ImagesList::slotAddImages(const KUrl::List& list)
 {
-    if (list.count() == 0) return;
+    if ( list.count() == 0 ) return;
 
     KUrl::List urls;
 
-    for(KUrl::List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         KUrl imageUrl = *it;
 
@@ -234,8 +222,8 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
         bool find = false;
 
-        Q3ListViewItemIterator it(d->listView);
-        while (it.current())
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
 
@@ -252,24 +240,23 @@ void ImagesList::slotAddImages(const KUrl::List& list)
         }
     }
 
-    emit signalImageListChanged(imageUrls().isEmpty());
-
-    KIO::PreviewJob *thumbnailJob = KIO::filePreview(urls, ICONSIZE);
-
-    connect(thumbnailJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            this, SLOT(slotGotThumbnail(const KFileItem*, const QPixmap&)));
+    d->iface->thumbnails(urls, ICONSIZE);
 }
 
-void ImagesList::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
+void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    Q3ListViewItemIterator it(d->listView);
-
-    while (it.current())
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
-        ImagesListViewItem *selItem = dynamic_cast<ImagesListViewItem*>(*it);
-        if (selItem->url() == item->url())
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        if (item->url() == url)
         {
-            selItem->setPixmap(0, pix);
+            if (pix.isNull())
+                item->setThumb(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
+            else
+                item->setThumb(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
+
+            return;
         }
         ++it;
     }
@@ -277,14 +264,10 @@ void ImagesList::slotGotThumbnail(const KFileItem *item, const QPixmap& pix)
 
 void ImagesList::slotAddItems()
 {
-    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
+    KIPIPlugins::ImageDialog dlg(this, d->iface, false);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
-    {
         slotAddImages(urls);
-    }
-
-    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::slotRemoveItems()
@@ -293,8 +276,8 @@ void ImagesList::slotRemoveItems()
     do
     {
         find = false;
-        Q3ListViewItemIterator it(d->listView);
-        while (it.current())
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
             if (item->isSelected())
@@ -307,8 +290,6 @@ void ImagesList::slotRemoveItems()
         }
     }
     while(find);
-
-    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
@@ -317,8 +298,8 @@ void ImagesList::removeItemByUrl(const KUrl& url)
     do
     {
         find = false;
-        Q3ListViewItemIterator it(d->listView);
-        while (it.current())
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
             if (item->url() == url)
@@ -338,8 +319,8 @@ void ImagesList::removeItemByUrl(const KUrl& url)
 KUrl::List ImagesList::imageUrls() const
 {
     KUrl::List list;
-    Q3ListViewItemIterator it(d->listView);
-    while (it.current())
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
         list.append(item->url());

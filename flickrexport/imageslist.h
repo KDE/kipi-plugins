@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-05-21
- * Description : a kipi plugin to export images to Flickr web service
+ * Date        : 2006-10-18
+ * Description : images list settings page.
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,18 +25,13 @@
 
 // Qt includes.
 
-#include <q3listview.h>
-
-#include <qwidget.h>
-#include <qpixmap.h>
-#include <QDropEvent>
-#include <QDragEnterEvent>
+#include <QTreeWidget>
+#include <QWidget>
+#include <QPixmap>
 
 // KDE includes.
 
 #include <kurl.h>
-
-class KFileItem;
 
 namespace KIPI
 {
@@ -46,14 +41,14 @@ namespace KIPI
 namespace KIPIFlickrExportPlugin
 {
 
-class ImagesPagePriv;
+class ImagesListPriv;
 
-class ImagesListViewItem : public Q3ListViewItem
+class ImagesListViewItem : public QTreeWidgetItem
 {
 
 public:
 
-    ImagesListViewItem(Q3ListView *view, const KUrl& url);
+    ImagesListViewItem(QTreeWidget *view, const KUrl& url);
     ~ImagesListViewItem();
 
     void setUrl(const KUrl& url);
@@ -66,10 +61,11 @@ private:
     KUrl m_url;
 };
 
-// ---------------------------------------------------------
+// -------------------------------------------------------------------------
 
-class ImagesListView : public Q3ListView
+class ImagesListView : public QTreeWidget
 {
+
     Q_OBJECT
 
 public:
@@ -79,7 +75,7 @@ public:
 
 signals:
 
-    void signalDropedItems(const KUrl::List&);
+    void addedDropedItems(const KUrl::List& urls);
 
 private:
 
@@ -87,7 +83,7 @@ private:
     void dropEvent(QDropEvent *e);
 };
 
-// ---------------------------------------------------------
+// -------------------------------------------------------------------------
 
 class ImagesList : public QWidget
 {
@@ -111,15 +107,16 @@ public slots:
 
 private slots:
 
+
     void slotAddItems();
     void slotRemoveItems();
-    void slotGotThumbnail(const KFileItem *item, const QPixmap& pix);
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
 
-    ImagesPagePriv *d;
+    ImagesListPriv* d;
 };
 
 }  // namespace KIPIFlickrExportPlugin
 
-#endif // IMAGES_LIST_H
+#endif // IMAGES_LIST_H 
