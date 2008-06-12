@@ -28,10 +28,9 @@
 
 // Qt includes.
 
-#include <q3textstream.h>
-#include <Q3CString>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
 
 // KDE includes.
 
@@ -65,19 +64,19 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    Q3CString str;
+    QByteArray str;
     str += "--";
     str += m_boundary;
     str += "--";
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
     ts << str;
 }
 
 bool MPForm::addPair(const QString& name, const QString& value)
 {
-    Q3CString str;
+    QByteArray str;
 
     str += "--";
     str += m_boundary;
@@ -93,8 +92,8 @@ bool MPForm::addPair(const QString& name, const QString& value)
     //m_buffer.resize(oldSize + str.size());
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
     ts << QString::fromUtf8(str);
 
     return true;
@@ -118,7 +117,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
 
-    Q3CString str;
+    QByteArray str;
 
     str += "--";
     str += m_boundary;
@@ -134,8 +133,8 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
     ts << str;
 
     int oldSize = m_buffer.size();

@@ -26,8 +26,8 @@
 
 // Qt includes.
 
-#include <q3cstring.h>
-#include <qstring.h>
+#include <QByteArray>
+#include <QString>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -53,7 +53,7 @@ public:
 private:
 
     QByteArray m_buffer;
-    Q3CString   m_boundary;
+    QByteArray m_boundary;
 };
 
 } // namespace KIPIFlickrExportPlugin
