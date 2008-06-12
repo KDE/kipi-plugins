@@ -51,7 +51,7 @@ namespace KIPIFlickrExportPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).ascii();
+    m_boundary += KRandom::randomString(42 + 13).toAscii();
 }
 
 MPForm::~MPForm()
@@ -83,10 +83,10 @@ bool MPForm::addPair(const QString& name, const QString& value)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.ascii();
+    str += name.toAscii();
     str += "\"";
     str += "\r\n\r\n";
-    str += value.utf8();
+    str += value.toUtf8();
     str += "\r\n";
 
     //uint oldSize = m_buffer.size();
@@ -124,14 +124,14 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.ascii();
+    str += name.toAscii();
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KUrl(path).fileName());
     str += "\"";
     str += "\r\n";
     str += "Content-Type: ";
-    str +=  mime.ascii();
+    str +=  mime.toAscii();
     str += "\r\n\r\n";
 
     Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
