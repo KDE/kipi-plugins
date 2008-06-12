@@ -23,16 +23,16 @@
 
 // Qt includes.
 
-#include <q3progressdialog.h>
+#include <Q3ProgressDialog>
 #include <Q3ValueList>
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qstringlist.h>
-#include <qradiobutton.h>
+#include <QPushButton>
+#include <QTimer>
+#include <QPixmap>
+#include <QCursor>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QStringList>
+#include <QRadioButton>
 
 // KDE includes.
 
@@ -104,7 +104,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
     m_imglst                 = m_widget->m_imglst;
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), KIcon("network")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), KIcon("network-workgroup")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
