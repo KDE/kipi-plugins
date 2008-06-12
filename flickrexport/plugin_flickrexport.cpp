@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,6 +39,7 @@ extern "C"
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
+
 // libkipi includes.
 
 #include <libkipi/interface.h>
@@ -48,12 +50,11 @@ extern "C"
 #include "plugin_flickrexport.h"
 #include "plugin_flickrexport.moc"
 
-
 K_PLUGIN_FACTORY( FlickrExportFactory, registerPlugin<Plugin_FlickrExport>(); )
 K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )
 
-Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &args)
-    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
+Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &/*args*/)
+                   : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
     kDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
 }
@@ -63,7 +64,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
 
-    m_action = new KAction(KIcon("www"), i18n("Export to Flickr..."), actionCollection());
+    m_action = new KAction(KIcon("applications-internet"), i18n("Export to Flickr..."), actionCollection());
     m_action->setObjectName("flickrexport");
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
