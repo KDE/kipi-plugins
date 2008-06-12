@@ -70,10 +70,10 @@ K_PLUGIN_FACTORY( SlideShowFactory, registerPlugin<Plugin_SlideShow>(); )
 K_EXPORT_PLUGIN ( SlideShowFactory("kipiplugin_slideshow") )
 
 Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
-    : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
+                : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
 {
     kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
-                     << endl;
+                    << endl;
 }
 
 void Plugin_SlideShow::setup( QWidget* widget )
@@ -86,8 +86,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
             this, SLOT(slotActivate()));
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-
-    m_urlList = new KUrl::List();
+    m_urlList   = new KUrl::List();
 
     if ( !m_interface )
     {
@@ -97,8 +96,8 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
     m_actionSlideShow->setEnabled( false );
 
-    connect( m_interface, SIGNAL( currentAlbumChanged( bool ) ),
-             SLOT( slotAlbumChanged( bool ) ) );
+    connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
+            this, SLOT( slotAlbumChanged( bool )));
 
     addAction( m_actionSlideShow );
 }
@@ -133,7 +132,7 @@ void Plugin_SlideShow::slotActivate()
                                                         m_urlList);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
-             this, SLOT(slotSlideShow()));
+            this, SLOT(slotSlideShow()));
 
      slideShowConfig->show();
 }
@@ -179,14 +178,14 @@ void Plugin_SlideShow::slotSlideShow()
     bool    shuffle;
     bool    wantKB;
     KConfigGroup grp = config.group("SlideShow Settings");
-    opengl                = grp.readEntry("OpenGL", false);
-    shuffle               = grp.readEntry("Shuffle", false);
-    wantKB                = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+    opengl           = grp.readEntry("OpenGL", false);
+    shuffle          = grp.readEntry("Shuffle", false);
+    wantKB           = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
     if ( m_urlList->isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
-	return;
+        return;
     }
 
     typedef QPair<QString, int> FileAnglePair;
@@ -230,25 +229,31 @@ void Plugin_SlideShow::slotSlideShow()
         }
     }
 
-    if (!opengl) {
-      KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList, commentsList, m_imagesHasComments);
+    if (!opengl) 
+    {
+        KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList,
+                                                      commentsList, m_imagesHasComments);
         slideShow->show();
     }
-    else {
+    else 
+    {
         if (!QGLFormat::hasOpenGL())
             KMessageBox::error(kapp->activeWindow(),
                                i18n("Sorry. OpenGL support not available on your system"));
-        else {
-          if (wantKB) {
-            KIPISlideShowPlugin::SlideShowKB* slideShow =
-                new KIPISlideShowPlugin::SlideShowKB(fileList, commentsList, m_imagesHasComments);
-            slideShow->show();
-          }
-          else {
-            KIPISlideShowPlugin::SlideShowGL * slideShow =
-                new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
-            slideShow->show();
-          }
+        else 
+        {
+            if (wantKB) 
+            {
+                KIPISlideShowPlugin::SlideShowKB* slideShow = new KIPISlideShowPlugin::SlideShowKB(fileList, 
+                                                                  commentsList, m_imagesHasComments);
+                slideShow->show();
+            }
+            else 
+            {
+                KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList, 
+                                                                  commentsList, m_imagesHasComments);
+                slideShow->show();
+            }
         }
     }
 }

@@ -1,7 +1,8 @@
 ADD_DEFINITIONS(-DQT3_SUPPORT 
                 -DQT3_SUPPORT_WARNINGS
                )
-SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp                                   
+
+SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    kbeffect.cpp 
                                    screenproperties.cpp
                                    slideshowkb.cpp 
@@ -13,7 +14,8 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    #slideshowloader.cpp
                                    #plugin_slideshow.cpp 
    )
-#kde4_add_ui3_files(kipiplugin_slideshow_PART_SRCS slideshowconfigbase.ui)
+
+#KDE4_ADD_UI3_FILES(kipiplugin_slideshow_PART_SRCS slideshowconfigbase.ui)
 
 KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
 
