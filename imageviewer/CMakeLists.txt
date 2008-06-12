@@ -3,10 +3,10 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                )
 
 SET(kipiplugin_imageviewer_PART_SRCS 
-  viewerwidget.cpp                                   
-  texture.cpp
-  timer.cpp
-  plugin_viewer.cpp
+    viewerwidget.cpp
+    texture.cpp
+    timer.cpp
+    plugin_viewer.cpp
    )
 
 #KDE4_ADD_UI_FILES has to be BEFORE KDE4_ADD_PLUGIN
@@ -32,9 +32,7 @@ KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
 
 INSTALL(TARGETS kipiplugin_imageviewer DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_imageviewer.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES 
-  cursors/hand.png
-  cursors/nullImage.png
-  cursors/zoom.png
-DESTINATION 
-  ${DATA_INSTALL_DIR}/kipiplugin_imageviewer/pics)
+INSTALL(FILES cursors/hand.png
+              cursors/nullImage.png
+              cursors/zoom.png
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_imageviewer/pics)
