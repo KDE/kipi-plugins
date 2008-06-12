@@ -25,7 +25,7 @@
 
 // Qt includes.
 
-#include <Q3StrList>
+#include <QStringList>
 #include <QString>
 
 namespace KIPIFlickrExportPlugin
@@ -41,20 +41,20 @@ public:
 //      ref_num = -1;
     }
 
-    bool     is_public;
-    bool     is_private;
-    bool     is_family;
+    bool        is_public;
+    bool        is_private;
+    bool        is_family;
 
-    int      ref_num;
-//  int      album_num;
+    int         ref_num;
+//  int         album_num;
 
-    Q3StrList tags;
-    QString  title;
-    QString  description;
+    QStringList tags;
+    QString     title;
+    QString     description;
 
-//  QString  caption;
-//  QString  thumbName;
-//  QString  albumURL;
+//  QString     caption;
+//  QString     thumbName;
+//  QString     albumURL;
 };
 
 // -------------------------------------------------------------
