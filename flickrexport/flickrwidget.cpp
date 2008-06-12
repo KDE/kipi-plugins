@@ -27,24 +27,20 @@
 #include <q3header.h>
 #include <q3buttongroup.h>
 #include <q3groupbox.h>
-#include <q3whatsthis.h>
-#include <Q3GridLayout>
-#include <Q3VBoxLayout>
-
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qradiobutton.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QRadioButton>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QLayout>
 
 // KDE includes.
 
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
-#include <k3activelabel.h>
 #include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
@@ -68,17 +64,16 @@ namespace KIPIFlickrExportPlugin
 FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
             : QWidget(parent)
 {
-    setName("FlickrWidget");
+    setObjectName("FlickrWidget");
 
-    Q3VBoxLayout* flickrWidgetLayout = new Q3VBoxLayout(this, 5, 5);
+    QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this);
 
-    m_photoView               = 0; //new KHTMLPart(splitter);
-    KSeparator *line          = new KSeparator(Qt::Horizontal, this);
-    m_tab                     = new KTabWidget(this);
-    K3ActiveLabel *headerLabel = new K3ActiveLabel(this);
+    m_photoView         = 0; //new KHTMLPart(splitter);
+    KSeparator *line    = new KSeparator(Qt::Horizontal, this);
+    m_tab               = new KTabWidget(this);
+    QLabel *headerLabel = new QLabel(this);
+    headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
-    //PORT to kde4
-    //headerLabel->setLinkUnderline(false);
     headerLabel->setText(i18n("<qt><b><h2><a href='http://www.flickr.com'>"
                               "<font color=\"#0065DE\">flick</font>"
                               "<font color=\"#FF0084\">r</font></a>"
@@ -89,20 +84,20 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     m_imglst                       = new ImagesList(m_tab, iface);
     QWidget* settingsBox           = new QWidget(m_tab);
-    Q3VBoxLayout* settingsBoxLayout = new Q3VBoxLayout(settingsBox);
+    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     //m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
     //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     //m_newAlbumBtn->setText(i18n("&New Album"));
 
-    Q3GridLayout* tagsLayout  = new Q3GridLayout(1, 1);
+    QGridLayout* tagsLayout  = new QGridLayout();
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), settingsBox);
     m_tagsLineEdit           = new KLineEdit(settingsBox);
     m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
     m_stripSpaceTagsCheckBox = new QCheckBox(settingsBox);
     m_stripSpaceTagsCheckBox->setText(i18n("Strip Space From Host Application Tags"));
-    QToolTip::add(m_tagsLineEdit, i18n("Enter here new tags separated by space."));
+    m_tagsLineEdit->setToolTip(i18n("Enter here new tags separated by space."));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
@@ -111,11 +106,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    Q3GroupBox* optionsBox         = new Q3GroupBox(i18n("Override Default Options"), settingsBox);
+    Q3GroupBox* optionsBox        = new Q3GroupBox(i18n("Override Default Options"), settingsBox);
     optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(KDialog::spacingHint());
     optionsBox->layout()->setMargin(KDialog::spacingHint());
-    Q3GridLayout* optionsBoxLayout = new Q3GridLayout(optionsBox->layout(), 5, 3);
+    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout());
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
@@ -152,8 +147,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox,      4, 4, 0, 3);
     optionsBoxLayout->addMultiCellWidget(resizeLabel,           5, 5, 1, 2);
     optionsBoxLayout->addMultiCellWidget(m_dimensionSpinBox,    5, 5, 3, 3);
-    optionsBoxLayout->setColSpacing(0, KDialog::spacingHint());
-    optionsBoxLayout->setColStretch(1, 10);
+    optionsBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
+    optionsBoxLayout->setColumnStretch(1, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(0);
 
@@ -163,18 +158,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     accountBox->setColumnLayout(0, Qt::Vertical);
     accountBox->layout()->setSpacing(KDialog::spacingHint());
     accountBox->layout()->setMargin(KDialog::spacingHint());
-    Q3GridLayout* accountBoxLayout = new Q3GridLayout(accountBox->layout(), 1, 3);
+    QGridLayout* accountBoxLayout = new QGridLayout(accountBox->layout());
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);
     m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIconSet(SmallIcon("switchuser"));
+    m_changeUserButton->setIcon(SmallIcon("switchuser"));
 
     accountBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
     accountBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 1);
     accountBoxLayout->addMultiCellWidget(m_changeUserButton,     0, 0, 3, 3);
-    accountBoxLayout->setColStretch(2, 10);
+    accountBoxLayout->setColumnStretch(2, 10);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(0);
 
@@ -193,8 +188,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(m_imglst,    i18n("Files List"),     FILELIST);
-    m_tab->insertTab(settingsBox, i18n("Upload Options"), UPLOAD);
+    m_tab->insertTab(FILELIST, m_imglst,    i18n("Files List"));
+    m_tab->insertTab(UPLOAD,   settingsBox, i18n("Upload Options"));
 
     // ------------------------------------------------------------------------
 
