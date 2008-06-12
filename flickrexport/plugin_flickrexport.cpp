@@ -63,7 +63,6 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-
     m_action = new KAction(KIcon("applications-internet"), i18n("Export to Flickr..."), actionCollection());
     m_action->setObjectName("flickrexport");
     connect(m_action, SIGNAL(triggered(bool)),
