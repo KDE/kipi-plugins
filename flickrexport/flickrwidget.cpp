@@ -23,10 +23,7 @@
 
 // Qt includes.
 
-#include <q3frame.h>
-#include <q3header.h>
-#include <q3buttongroup.h>
-#include <q3groupbox.h>
+#include <Q3GroupBox>
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -139,14 +136,14 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     // NOTE: The term Compression factor may be to technical to write in the label
     QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsBox);
 
-    optionsBoxLayout->addMultiCellWidget(m_publicCheckBox,      0, 0, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(m_familyCheckBox,      1, 1, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(m_friendsCheckBox,     2, 2, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(imageQualityLabel,     3, 3, 0, 2);
-    optionsBoxLayout->addMultiCellWidget(m_imageQualitySpinBox, 3, 3, 3, 3);
-    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox,      4, 4, 0, 3);
-    optionsBoxLayout->addMultiCellWidget(resizeLabel,           5, 5, 1, 2);
-    optionsBoxLayout->addMultiCellWidget(m_dimensionSpinBox,    5, 5, 3, 3);
+    optionsBoxLayout->addWidget(m_publicCheckBox,      0, 0, 1, 4);
+    optionsBoxLayout->addWidget(m_familyCheckBox,      1, 0, 1, 4);
+    optionsBoxLayout->addWidget(m_friendsCheckBox,     2, 0, 1, 4);
+    optionsBoxLayout->addWidget(imageQualityLabel,     3, 0, 1, 3);
+    optionsBoxLayout->addWidget(m_imageQualitySpinBox, 3, 3, 1, 1);
+    optionsBoxLayout->addWidget(m_resizeCheckBox,      4, 0, 1, 4);
+    optionsBoxLayout->addWidget(resizeLabel,           5, 1, 1, 2);
+    optionsBoxLayout->addWidget(m_dimensionSpinBox,    5, 3, 1, 1);
     optionsBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
     optionsBoxLayout->setColumnStretch(1, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -166,9 +163,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIcon(SmallIcon("switchuser"));
 
-    accountBoxLayout->addMultiCellWidget(userNameLabel,          0, 0, 0, 0);
-    accountBoxLayout->addMultiCellWidget(m_userNameDisplayLabel, 0, 0, 1, 1);
-    accountBoxLayout->addMultiCellWidget(m_changeUserButton,     0, 0, 3, 3);
+    accountBoxLayout->addWidget(userNameLabel,          0, 0, 1, 1);
+    accountBoxLayout->addWidget(m_userNameDisplayLabel, 0, 1, 1, 1);
+    accountBoxLayout->addWidget(m_changeUserButton,     0, 3, 1, 1);
     accountBoxLayout->setColumnStretch(2, 10);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(0);
