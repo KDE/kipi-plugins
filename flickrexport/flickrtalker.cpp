@@ -34,14 +34,16 @@
 #include <q3cstring.h>
 #include <q3textstream.h>
 #include <Q3ValueList>
-#include <qfile.h>
-#include <qimage.h>
-#include <qstringlist.h>
-#include <qlineedit.h>
-#include <qmessagebox.h>
-#include <qdom.h>
-#include <qmap.h>
-#include <qfileinfo.h>
+
+#include <QFile>
+#include <QImage>
+#include <QStringList>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QMap>
+#include <QFileInfo>
 
 // KDE includes.
 
@@ -52,7 +54,8 @@
 #include <kcodecs.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
-#include <KToolInvocation>
+#include <ktoolinvocation.h>
+#include <kio/jobuidelegate.h>
 
 // LibKExiv2 includes.
 
@@ -104,10 +107,10 @@ QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
     for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
     {
         compressed.append(it.key());
-        compressed.append(it.data());
+        compressed.append(it.value());
     }
 
-    KMD5 context(compressed.utf8());
+    KMD5 context(compressed.toUtf8());
     return context.hexDigest().data();
 }
 
@@ -135,8 +138,8 @@ void FlickrTalker::getFrob()
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_GETFROB;
     m_authProgressDlg->setLabelText(i18n("Getting the Frob"));
@@ -169,8 +172,8 @@ void FlickrTalker::checkToken(const QString& token)
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_CHECKTOKEN;
     m_authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
@@ -238,8 +241,8 @@ void FlickrTalker::getToken()
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_GETTOKEN;
     m_job   = job;
@@ -265,8 +268,8 @@ void FlickrTalker::listPhotoSets()
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_LISTPHOTOSETS;
     m_job   = job;
@@ -303,8 +306,8 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_GETPHOTOPROPERTY;
     m_job   = job;
@@ -434,8 +437,8 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_ADDPHOTO;
     m_job   = job;
@@ -542,17 +545,23 @@ void FlickrTalker::slotError(const QString& error)
 //  kDebug() << "Not handling the error now will see it later" << endl;
 }
 
-void FlickrTalker::slotResult(KIO::Job *job)
+void FlickrTalker::slotResult(KJob *kjob)
 {
     m_job = 0;
     emit signalBusy(false);
+    KIO::Job *job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
         if (m_state == FE_ADDPHOTO)
-            emit signalAddPhotoFailed( job->errorString());
+        {
+            emit signalAddPhotoFailed(job->errorString());
+        }
         else
-            job->showErrorDialog(m_parent);
+        {
+            job->ui()->setWindow(m_parent);
+            job->ui()->showErrorMessage();
+        }
         return;
     }
 

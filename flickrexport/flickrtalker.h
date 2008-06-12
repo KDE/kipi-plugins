@@ -124,7 +124,7 @@ private slots:
     void slotError(const QString& msg);
     void slotAuthenticate();
     void data(KIO::Job *job, const QByteArray& data);
-    void slotResult(KIO::Job *job);
+    void slotResult(KJob *job);
 
 private:
 
