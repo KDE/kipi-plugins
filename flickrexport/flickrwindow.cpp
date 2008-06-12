@@ -445,7 +445,7 @@ void FlickrWindow::slotUser1()
 {
     kDebug() << "SlotUploadImages invoked" << endl;
 
-    m_widget->m_tab->setCurrentPage(FlickrWidget::FILELIST);
+    m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
     KUrl::List urls = m_imglst->imageUrls();
 
     if (urls.isEmpty())
@@ -466,7 +466,7 @@ void FlickrWindow::slotUser1()
         temp.is_public             = m_publicCheckBox->isChecked();
         temp.is_family             = m_familyCheckBox->isChecked();
         temp.is_friend             = m_friendsCheckBox->isChecked();
-        QStringList tagsFromDialog = QStringList::split(" ", m_tagsLineEdit->text(), false);
+        QStringList tagsFromDialog = m_tagsLineEdit->text().split(" ", QString::SkipEmptyParts);
 
         QStringList           allTags;
         QStringList::Iterator itTags;
@@ -485,7 +485,7 @@ void FlickrWindow::slotUser1()
 
         if(m_exportHostTagsCheckBox->isChecked())
         {
-            tagsFromDatabase = attribs["tags"].asStringList();
+            tagsFromDatabase = attribs["tags"].toStringList();
             if (m_stripSpaceTagsCheckBox->isChecked())
             {
                 for (QStringList::iterator it = tagsFromDatabase.begin(); it != tagsFromDatabase.end() ; ++it)
