@@ -292,7 +292,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 
     for (QStringList::const_iterator it = argList.begin(); it != argList.end(); ++it)
     {
-        QStringList str = QStringList::split("=", (*it));
+        QStringList str = (*it).split("=", QString::SkipEmptyParts);
         url.addQueryItem(str[0], str[1]);
     }
 
@@ -387,7 +387,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     // Check if RAW file.
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.toUpper().contains(fileInfo.extension(false).toUpper()))
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
@@ -399,7 +399,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.smoothScale(maxDim, maxDim, Qt::KeepAspectRatio);
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio);
 
         image.save(path, "JPEG", imageQuality);
 
