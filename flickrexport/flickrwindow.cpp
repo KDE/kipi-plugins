@@ -23,17 +23,16 @@
 
 // Qt includes.
 
+#include <q3progressdialog.h>
+#include <Q3ValueList>
 #include <qpushbutton.h>
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
-#include <q3progressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qradiobutton.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 // KDE includes.
 
@@ -52,6 +51,7 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kwallet.h>
+#include <kpushbutton.h>
 
 // Libkipi includes.
 
@@ -82,8 +82,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
-    QWidget *widget = new QWidget(this);
-    setMainWidget(this);
+
     m_tmp                    = tmpFolder;
     m_interface              = interface;
     m_uploadCount            = 0;
@@ -133,11 +132,17 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    //PORT to kde4
-    //actionButton(Help)->setPopup(helpMenu->menu());
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
     // --------------------------------------------------------------------------
 
@@ -259,8 +264,7 @@ void FlickrWindow::readSettings()
     m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
     KConfigGroup dialogGroup = config.group( "FlickrExport Dialog");
-    //PORT to kde4
-    // resize(configDialogSize(dialogGroup));
+    restoreDialogSize(dialogGroup);
 }
 
 void FlickrWindow::writeSettings()

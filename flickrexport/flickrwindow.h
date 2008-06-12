@@ -27,9 +27,9 @@
 // Qt includes.
 
 #include <q3valuelist.h>
-#include <qpair.h>
 #include <q3intdict.h>
-//Added by qt3to4:
+
+#include <QPair>
 #include <QLabel>
 
 // KDE includes.
@@ -44,10 +44,10 @@
 
 #include "kpaboutdata.h"
 
+class Q3ProgressDialog;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
-class Q3ProgressDialog;
 
 class KLineEdit;
 class KHTMLPart;
@@ -143,10 +143,10 @@ private:
 
     QLabel                                *m_userNameDisplayLabel;
 
-    Q3ProgressDialog                       *m_progressDlg;
-    Q3ProgressDialog                       *m_authProgressDlg;
+    Q3ProgressDialog                      *m_progressDlg;
+    Q3ProgressDialog                      *m_authProgressDlg;
 
-    Q3ValueList< QPair<KUrl, FPhotoInfo> >  m_uploadQueue;
+    Q3ValueList< QPair<KUrl, FPhotoInfo> > m_uploadQueue;
 
 //  KWallet::Wallet                       *m_wallet;
     KHTMLPart                             *m_photoView;
