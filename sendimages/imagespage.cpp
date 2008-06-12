@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : images list settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -67,14 +67,14 @@ ImagesListViewItem::ImagesListViewItem(QListWidget *view, KIPI::Interface *iface
     if (iface->hasFeature(KIPI::HostSupportsTags))
     {
         QMap<QString, QVariant> attribs = imageInfo.attributes();
-        setTags(attribs["tags"].toStringList());    
+        setTags(attribs["tags"].toStringList());
     }
 
     setRating(-1);
     if (iface->hasFeature(KIPI::HostSupportsRating))
     {
         QMap<QString, QVariant> attribs = imageInfo.attributes();
-        setRating(attribs["rating"].toInt());    
+        setRating(attribs["rating"].toInt());
     }
 }
 
@@ -167,7 +167,7 @@ void ImagesListView::dropEvent(QDropEvent *e)
     {
         QFileInfo fi(url.path());
         if (fi.isFile() && fi.exists())
-            urls.append(KUrl(url));    
+            urls.append(KUrl(url));
     }
 
     e->acceptProposedAction();
@@ -220,13 +220,13 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->listView, 0, 0, 3, 1);
-    grid->addWidget(d->addButton, 0, 1, 1, 1);
+    grid->addWidget(d->listView,     0, 0, 3, 1);
+    grid->addWidget(d->addButton,    0, 1, 1, 1);
     grid->addWidget(d->removeButton, 1, 1, 1, 1);
-    grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(2, 10);    
+    grid->setColumnStretch(0, 10);
+    grid->setRowStretch(2, 10); 
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());        
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -237,7 +237,7 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
             this, SLOT(slotAddItems()));
 
     connect(d->removeButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveItems()));         
+            this, SLOT(slotRemoveItems()));
 
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
@@ -257,19 +257,19 @@ void ImagesPage::slotAddImages(const KUrl::List& list)
     for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         KUrl imageUrl = *it;
-    
+
         // Check if the new item already exist in the list.
-    
+
         bool find = false;
 
         for (int i = 0 ; i < d->listView->count(); i++)
         {
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(d->listView->item(i));
-    
+
             if (item->url() == imageUrl)
                 find = true;
         }
-    
+
         if (!find)
         {
             new ImagesListViewItem(d->listView, d->iface, imageUrl);
