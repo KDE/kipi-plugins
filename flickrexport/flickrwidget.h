@@ -27,11 +27,11 @@
 // Qt includes.
 
 #include <QWidget>
-#include <QLabel>
 
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
+class QLabel;
 
 class KTabWidget;
 class KLineEdit;

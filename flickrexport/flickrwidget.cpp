@@ -23,7 +23,7 @@
 
 // Qt includes.
 
-#include <Q3GroupBox>
+#include <QGroupBox>
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -103,11 +103,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    Q3GroupBox* optionsBox        = new Q3GroupBox(i18n("Override Default Options"), settingsBox);
-    optionsBox->setColumnLayout(0, Qt::Vertical);
-    optionsBox->layout()->setSpacing(KDialog::spacingHint());
-    optionsBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout());
+    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), settingsBox);
+    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_publicCheckBox = new QCheckBox(optionsBox);
     m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
@@ -122,14 +119,20 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
     m_resizeCheckBox->setChecked(false);
 
-    m_dimensionSpinBox = new QSpinBox(0, 5000, 10, optionsBox);
+    m_dimensionSpinBox = new QSpinBox(optionsBox);
+    m_dimensionSpinBox->setMinimum(0);
+    m_dimensionSpinBox->setMaximum(5000);
+    m_dimensionSpinBox->setSingleStep(10);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"), optionsBox);
+    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), optionsBox);
 
-    m_imageQualitySpinBox = new QSpinBox(0, 100, 1, optionsBox);
+    m_imageQualitySpinBox = new QSpinBox(optionsBox);
+    m_imageQualitySpinBox->setMinimum(0);
+    m_imageQualitySpinBox->setMaximum(100);
+    m_imageQualitySpinBox->setSingleStep(1);
     m_imageQualitySpinBox->setValue(85);
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
@@ -151,11 +154,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
-    Q3GroupBox* accountBox = new Q3GroupBox(i18n("Account"), settingsBox);
-    accountBox->setColumnLayout(0, Qt::Vertical);
-    accountBox->layout()->setSpacing(KDialog::spacingHint());
-    accountBox->layout()->setMargin(KDialog::spacingHint());
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox->layout());
+    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
+    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel *userNameLabel  = new QLabel(i18n("User Name: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);
