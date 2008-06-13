@@ -212,6 +212,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
         m_talker->getFrob();
     else
         m_talker->checkToken(m_token);
+
+    // --------------------------------------------------------------------------
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
 }
 
 FlickrWindow::~FlickrWindow()
