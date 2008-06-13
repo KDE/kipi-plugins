@@ -96,7 +96,9 @@ ImagesListView::ImagesListView(QWidget *parent)
     setAcceptDrops(true);
     setSortingEnabled(false);
     setAllColumnsShowFocus(true);
+    setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setColumnCount(2);
     setHeaderLabels(QStringList() << i18n("Thumbnail") << i18n("File Name"));
     header()->setResizeMode(QHeaderView::Stretch);
 }
