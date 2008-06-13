@@ -226,8 +226,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
 FlickrWindow::~FlickrWindow()
 {
-    writeSettings();
-
 #if KDE_IS_VERSION(3,2,0)
 //   if (m_wallet)
 //      delete m_wallet;
@@ -305,7 +303,8 @@ void FlickrWindow::slotDoLogin()
 
 void FlickrWindow::slotClose()
 {
-    delete this;
+    writeSettings();
+    done(Close);
 }
 
 void FlickrWindow::slotTokenObtained(const QString& token)
