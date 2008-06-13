@@ -13,7 +13,9 @@ set(kipiplugin_picasawebexport_PART_SRCS
     mpform.cpp
     picasawebviewitem.cpp)
 
-kde4_add_ui3_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.ui uploadwidget.ui)
+kde4_add_ui_files(kipiplugin_picasawebexport_PART_SRCS uploadwidget.ui)
+
+kde4_add_ui3_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.ui )
 
 kde4_add_plugin(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
 

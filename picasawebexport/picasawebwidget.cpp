@@ -52,11 +52,10 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWidget::PicasawebWidget(QWidget* parent, const char* name, Qt::WFlags fl)
-               : UploadWidget(parent, name, fl)
+PicasawebWidget::PicasawebWidget(QWidget* parent)
+               : UploadWidget(parent)
 {
-    if ( !name )
-        setName("PicasawebWidget");
+    setName("PicasawebWidget");
 
     //resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
     //clearWState( WState_Polished );

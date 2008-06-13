@@ -29,7 +29,7 @@
 
 // Local includes.
 
-#include "uploadwidget.h"
+#include "ui_uploadwidget.h"
 
 class Q3ListView;
 class QCheckBox;
@@ -39,7 +39,14 @@ class KHTMLPart;
 namespace KIPIPicasawebExportPlugin
 {
 
-class UploadWidget;
+
+class UploadWidget : public QWidget, public Ui::UploadWidget
+{
+public:
+  UploadWidget( QWidget *parent ) : QWidget( parent ) {
+    setupUi( this );
+  }
+};
 
 class PicasawebWidget : public UploadWidget
 {
@@ -47,7 +54,7 @@ class PicasawebWidget : public UploadWidget
 
 public:
 
-    PicasawebWidget(QWidget* parent=0, const char* name=0, Qt::WFlags fl= 0);
+    PicasawebWidget(QWidget* parent=0);
     ~PicasawebWidget();
 
 private slots:

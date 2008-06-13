@@ -67,7 +67,6 @@
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "uploadwidget.h"
 #include "picasawebtalker.h"
 #include "picasawebitem.h"
 #include "picasawebviewitem.h"
