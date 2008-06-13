@@ -150,7 +150,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     optionsBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
     optionsBoxLayout->setColumnStretch(1, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(0);
+    optionsBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
@@ -168,7 +168,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     accountBoxLayout->addWidget(m_changeUserButton,     0, 3, 1, 1);
     accountBoxLayout->setColumnStretch(2, 10);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(0);
+    accountBoxLayout->setMargin(KDialog::spacingHint());
 
     settingsBoxLayout->addLayout(tagsLayout);
     settingsBoxLayout->addWidget(optionsBox);
