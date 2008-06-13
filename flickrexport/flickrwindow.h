@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <Q3IntDict>
+#include <QHash>
 #include <QList>
 #include <QPair>
 #include <QLabel>
@@ -132,7 +132,7 @@ private:
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
 
-    Q3IntDict<GAlbumViewItem>              m_albumDict;
+    QHash<int, GAlbumViewItem>             m_albumDict;
 
     QString                                m_token;
     QString                                m_username;
