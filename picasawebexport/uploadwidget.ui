@@ -284,9 +284,6 @@
         <property name="text" >
           <string>E&amp;xport Application Tags</string>
         </property>
-        <property name="shortcut" >
-          <string>Alt+X</string>
-        </property>
       </widget>
       <widget class="QComboBox" name="m_albumsListComboBox" >
         <property name="geometry" >
@@ -324,9 +321,6 @@
           </property>
           <property name="text" >
             <string>Resi&amp;ze</string>
-          </property>
-          <property name="shortcut" >
-            <string>Alt+Z</string>
           </property>
         </widget>
         <widget class="QLabel" name="textLabel3" >
