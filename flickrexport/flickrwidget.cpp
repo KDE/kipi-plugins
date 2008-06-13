@@ -161,7 +161,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     m_userNameDisplayLabel = new QLabel(accountBox);
     m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIcon(SmallIcon("switchuser"));
+    m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
 
     accountBoxLayout->addWidget(userNameLabel,          0, 0, 1, 1);
     accountBoxLayout->addWidget(m_userNameDisplayLabel, 0, 1, 1, 1);
