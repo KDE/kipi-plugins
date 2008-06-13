@@ -226,9 +226,6 @@
         <slot>reject()</slot>
     </connection>
 </connections>
-<includes>
-    <include location="local" impldecl="in implementation">PicasawebNewAlbumDialog.ui.h</include>
-</includes>
 <slots>
     <slot access="protected" specifier="non virtual">creatAlbumSlot()</slot>
     <slot access="protected" specifier="non virtual">cancelWindowSlot()</slot>
