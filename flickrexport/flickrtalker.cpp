@@ -30,7 +30,7 @@
 
 // Qt includes.
 
-#include <Q3ProgressDialog>
+#include <QProgressDialog>
 
 #include <QByteArray>
 #include <QFile>
@@ -141,7 +141,8 @@ void FlickrTalker::getFrob()
 
     m_state = FE_GETFROB;
     m_authProgressDlg->setLabelText(i18n("Getting the Frob"));
-    m_authProgressDlg->setProgress(1, 4);
+    m_authProgressDlg->setMaximum(4);
+    m_authProgressDlg->setValue(1);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
@@ -175,7 +176,8 @@ void FlickrTalker::checkToken(const QString& token)
 
     m_state = FE_CHECKTOKEN;
     m_authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
-    m_authProgressDlg->setProgress(1, 4);
+    m_authProgressDlg->setMaximum(4);
+    m_authProgressDlg->setValue(1);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -207,7 +209,8 @@ void FlickrTalker::slotAuthenticate()
     {
         getToken();
         m_authProgressDlg->setLabelText(i18n("Authenticating the User on web"));
-        m_authProgressDlg->setProgress(2, 4);
+        m_authProgressDlg->setMaximum(4);
+        m_authProgressDlg->setValue(2);
         emit signalBusy(false);
     }
     else
@@ -247,7 +250,8 @@ void FlickrTalker::getToken()
     m_buffer.resize(0);
     emit signalBusy(true);
     m_authProgressDlg->setLabelText(i18n("Getting the Token from the server"));
-    m_authProgressDlg->setProgress(3, 4);
+    m_authProgressDlg->setMaximum(4);
+    m_authProgressDlg->setValue(3);
 }
 
 void FlickrTalker::listPhotoSets()
@@ -635,7 +639,8 @@ void FlickrTalker::parseResponseGetFrob(const QByteArray& data)
     }
 
     kDebug() << "GetFrob finished" << endl;
-    m_authProgressDlg->setProgress(2, 4);
+    m_authProgressDlg->setMaximum(4);
+    m_authProgressDlg->setValue(2);
     m_state = FE_GETAUTHORIZED;
     if(success)
         emit signalAuthenticate();

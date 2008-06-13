@@ -35,7 +35,7 @@
 #include <kurl.h>
 #include <kio/job.h>
 
-class Q3ProgressDialog;
+class QProgressDialog;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -89,7 +89,7 @@ public:
 
 public:
 
-    Q3ProgressDialog *m_authProgressDlg;
+    QProgressDialog *m_authProgressDlg;
 
 signals:
 

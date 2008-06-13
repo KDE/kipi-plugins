@@ -43,7 +43,7 @@
 
 #include "kpaboutdata.h"
 
-class Q3ProgressDialog;
+class QProgressDialog;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
@@ -142,8 +142,8 @@ private:
 
     QLabel                                *m_userNameDisplayLabel;
 
-    Q3ProgressDialog                      *m_progressDlg;
-    Q3ProgressDialog                      *m_authProgressDlg;
+    QProgressDialog                       *m_progressDlg;
+    QProgressDialog                       *m_authProgressDlg;
 
     QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
 

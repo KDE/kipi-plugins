@@ -23,7 +23,7 @@
 
 // Qt includes.
 
-#include <Q3ProgressDialog>
+#include <QProgressDialog>
 #include <QPushButton>
 #include <QTimer>
 #include <QPixmap>
@@ -170,7 +170,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     // --------------------------------------------------------------------------
 
-    m_progressDlg = new Q3ProgressDialog(this, 0, true);
+    m_progressDlg = new QProgressDialog(this);
+    m_progressDlg->setModal(true);
     m_progressDlg->setAutoReset(true);
     m_progressDlg->setAutoClose(true);
 
@@ -196,7 +197,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     readSettings();
 
-    m_authProgressDlg = new Q3ProgressDialog(this, 0, true);
+    m_authProgressDlg = new QProgressDialog(this);
+    m_authProgressDlg->setModal(true);
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
 
@@ -563,14 +565,15 @@ void FlickrWindow::slotAddPhotoSucceeded()
     m_imglst->removeItemByUrl(m_uploadQueue.first().first);
     m_uploadQueue.pop_front();
     m_uploadCount++;
-    m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
+    m_progressDlg->setMaximum(m_uploadTotal);
+    m_progressDlg->setValue(m_uploadCount);
     slotAddPhotoNext();
 }
 
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?",msg))
+                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?", msg))
                      != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
@@ -583,7 +586,8 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     {
         m_uploadQueue.pop_front();
         m_uploadTotal--;
-        m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
+        m_progressDlg->setMaximum(m_uploadTotal);
+        m_progressDlg->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
 }
