@@ -26,9 +26,8 @@
 
 // Qt includes.
 
-#include <q3valuelist.h>
-#include <q3intdict.h>
-
+#include <Q3IntDict>
+#include <QList>
 #include <QPair>
 #include <QLabel>
 
@@ -99,7 +98,7 @@ private slots:
 
     void slotNewPhotoSet();
     void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& photoSetList);
+    void slotListPhotoSetsResponse(const QList <FPhotoSet>& photoSetList);
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
@@ -133,7 +132,7 @@ private:
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
 
-    Q3IntDict<GAlbumViewItem>               m_albumDict;
+    Q3IntDict<GAlbumViewItem>              m_albumDict;
 
     QString                                m_token;
     QString                                m_username;
@@ -146,7 +145,7 @@ private:
     Q3ProgressDialog                      *m_progressDlg;
     Q3ProgressDialog                      *m_authProgressDlg;
 
-    Q3ValueList< QPair<KUrl, FPhotoInfo> > m_uploadQueue;
+    QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
 
 //  KWallet::Wallet                       *m_wallet;
     KHTMLPart                             *m_photoView;

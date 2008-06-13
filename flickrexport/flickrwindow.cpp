@@ -24,7 +24,6 @@
 // Qt includes.
 
 #include <Q3ProgressDialog>
-#include <Q3ValueList>
 #include <QPushButton>
 #include <QTimer>
 #include <QPixmap>
@@ -160,8 +159,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
             this, SLOT( slotAddPhotoFailed( const QString& ) ));
 
-    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const Q3ValueList<FPhotoSet>& ) ),
-            this, SLOT( slotListPhotoSetsResponse( const Q3ValueList<FPhotoSet>& ) ));
+    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QList<FPhotoSet>& ) ),
+            this, SLOT( slotListPhotoSetsResponse( const QList<FPhotoSet>& ) ));
 
     //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
     //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
@@ -428,7 +427,7 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 }
 */
 
-void FlickrWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /*photoSetList*/)
+void FlickrWindow::slotListPhotoSetsResponse(const QList <FPhotoSet>& /*photoSetList*/)
 {
     kDebug() << "SlotListPhotoSetsResponse invoked" << endl;
     // TODO

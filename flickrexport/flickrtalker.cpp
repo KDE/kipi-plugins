@@ -30,11 +30,9 @@
 
 // Qt includes.
 
-#include <q3progressdialog.h>
-#include <q3cstring.h>
-#include <q3textstream.h>
-#include <Q3ValueList>
+#include <Q3ProgressDialog>
 
+#include <QByteArray>
 #include <QFile>
 #include <QImage>
 #include <QStringList>
@@ -827,7 +825,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
     QDomNode node       = docElem.firstChild();
     QDomElement e;
     QString photoSet_id, photoSet_title, photoSet_description;
-    Q3ValueList <FPhotoSet> photoSetList;
+    QList <FPhotoSet> photoSetList;
 
     while(!node.isNull())
     {
