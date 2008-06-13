@@ -180,7 +180,7 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
     grid->addWidget(d->removeButton, 1, 1, 1, 1);
     grid->setColumnStretch(0, 10);
     grid->setRowStretch(2, 10);
-    grid->setMargin(0);
+    grid->setMargin(KDialog::spacingHint());
     grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
