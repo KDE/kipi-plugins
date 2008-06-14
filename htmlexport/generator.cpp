@@ -461,11 +461,9 @@ struct Generator::Private {
 	
 
 	bool createDir(const QString& dirName) {
-		QStringList parts = dirName.split('/');
-		QStringList::ConstIterator it = parts.begin(), end = parts.end();
+		QStringList parts = dirName.split('/', QString::SkipEmptyParts);
 		QDir dir = QDir::root();
-		for( ;it!=end; ++it) {
-			QString part = *it;
+		Q_FOREACH(const QString& part, parts) {
 			if (!dir.exists(part)) {
 				if (!dir.mkdir(part)) {
 					logError(i18n("Could not create folder '%1' in '%2'", part, dir.absolutePath()));
