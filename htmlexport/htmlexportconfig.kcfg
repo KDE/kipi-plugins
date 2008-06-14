@@ -52,7 +52,7 @@
 			<default>80</default>
 		</entry>
 
-		<entry name="destURL" type="String">
+		<entry name="destUrl" type="Url">
 		</entry>
 
 		<entry name="openInBrowser" type="Bool">

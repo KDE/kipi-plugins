@@ -182,7 +182,7 @@ struct Generator::Private {
 		
 		KUrl srcURL=KUrl(mTheme->directory());
 
-		KUrl destURL=mInfo->destKUrl();
+		KUrl destURL=mInfo->destUrl();
 		destURL.addPath(srcURL.fileName());
 		
 		if (QFile::exists(destURL.path())) {
@@ -319,7 +319,7 @@ struct Generator::Private {
 
 
 	bool generateImagesAndXML() {
-		QString baseDestDir=mInfo->destKUrl().path();
+		QString baseDestDir=mInfo->destUrl().path();
 		if (!createDir(baseDestDir)) return false;
 		
 		mXMLFileName=baseDestDir + "/gallery.xml";
@@ -435,7 +435,7 @@ struct Generator::Private {
 		// Move to the destination dir, so that external documents get correctly
 		// produced
 		QString oldCD=QDir::currentPath();
-		QDir::setCurrent(mInfo->destKUrl().path());
+		QDir::setCurrent(mInfo->destUrl().path());
 		
 		CWrapper<xmlDocPtr, xmlFreeDoc> xmlOutput= xsltApplyStylesheet(xslt, xmlGallery, params);
 		
@@ -447,7 +447,7 @@ struct Generator::Private {
 			return false;
 		}
 
-		QString destFileName=mInfo->destKUrl().path() + "/index.html";
+		QString destFileName=mInfo->destUrl().path() + "/index.html";
 		FILE* file=fopen(destFileName.toLocal8Bit().data(), "w");
 		if (!file) {
 			logError(i18n("Could not open '%1' for writing", destFileName));
@@ -508,7 +508,8 @@ Generator::~Generator() {
 bool Generator::run() {
 	if (!d->init()) return false;
 
-	QString destDir=d->mInfo->destKUrl().path();
+	QString destDir=d->mInfo->destUrl().path();
+	kDebug() << destDir;
 	if (!d->createDir(destDir)) return false;
 
 	if (!d->copyTheme()) return false;

@@ -216,9 +216,9 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	d->mImageSettingsPage=new ImageSettingsPage(this, i18n("Image Settings"));
 	
 	d->mOutputPage=new OutputPage(this, i18n("Output"));
-	d->mOutputPage->kcfg_destURL->setMode(KFile::Directory);
+	d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
-	connect(d->mOutputPage->kcfg_destURL, SIGNAL(textChanged(const QString&)),
+	connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(const QString&)),
 		this, SLOT(updateFinishButton()) );
 
 	d->mConfigManager=new KConfigDialogManager(this, d->mInfo);
@@ -238,7 +238,7 @@ Wizard::~Wizard() {
 
 
 void Wizard::updateFinishButton() {
-	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destURL->url().isEmpty());
+	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
 }
 
 

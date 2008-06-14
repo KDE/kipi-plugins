@@ -42,13 +42,6 @@ namespace KIPIHTMLExport {
  */
 class GalleryInfo : public Config {
 public:
-	/**
-	 * Convenience method to get destURL as a KUrl rather than a QString
-	 */
-	KUrl destKUrl() const {
-		return KUrl(destURL());
-	}
-
 	QString fullFormatString() const {
 		return getEnumString("fullFormat");
 	}

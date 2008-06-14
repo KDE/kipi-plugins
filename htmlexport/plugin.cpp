@@ -96,7 +96,7 @@ void Plugin::slotActivate() {
 	}
 
 	if (info.openInBrowser()) {
-		KUrl url=info.destKUrl();
+		KUrl url=info.destUrl();
 		url.addPath("index.html");
 		KRun::runUrl(url, "text/html", parent);
 	}
