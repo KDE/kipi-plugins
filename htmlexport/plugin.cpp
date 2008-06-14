@@ -91,7 +91,10 @@ void Plugin::slotActivate() {
 	progressDialog->show();
 	if (!generator.run()) return;
 
-	if (!generator.warnings()) {
+	if (generator.warnings()) {
+		progressDialog->addedAction(i18n("Finished, but some warnings have occured"), KIPIPlugins::WarningMessage);
+		progressDialog->setButtons(KDialog::Close);
+	} else {
 		progressDialog->close();
 	}
 
