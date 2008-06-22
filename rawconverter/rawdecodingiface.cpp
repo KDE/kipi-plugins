@@ -17,12 +17,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -31,7 +31,6 @@
 #include <cstring>
 #include <iostream>
 #include <cstdio>
-#include <cstdlib>
 
 // C Ansi includes.
 
@@ -84,7 +83,7 @@ RawDecodingIface::~RawDecodingIface()
 }
 
 QByteArray RawDecodingIface::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace)
-{    
+{
     QString filePath;
     KGlobal::dirs()->addResourceType("profiles", KGlobal::dirs()->kde_default("data") + 
                                      "kipiplugin_rawconverter/profiles");
@@ -125,7 +124,7 @@ QByteArray RawDecodingIface::getICCProfilFromFile(KDcrawIface::RawDecodingSettin
     QFile file(filePath);
     if ( !file.open(IO_ReadOnly) ) 
         return QByteArray();
-    
+
     QByteArray data(file.size());
     QDataStream stream( &file );
     stream.readRawBytes(data.data(), data.size());
@@ -210,20 +209,20 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         {
             FILE* f = 0;
             f = fopen(QFile::encodeName(destPath), "wb");
-    
+
             if (!f) 
             {
                 qDebug("Failed to open JPEG file for writing");
                 return false;
             }
-    
+
             struct jpeg_compress_struct cinfo;
             struct jpeg_error_mgr       jerr;
-    
+
             int      row_stride;
             JSAMPROW row_pointer[1];
 
-            // Init JPEG compressor.    
+            // Init JPEG compressor.
             cinfo.err = jpeg_std_error(&jerr);
             jpeg_create_compress(&cinfo);
             jpeg_stdio_dest(&cinfo, f);
@@ -258,7 +257,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                 row_pointer[0] = (uchar*)imageData.data() + (cinfo.next_scanline * row_stride);
                 jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
-            
+
             jpeg_finish_compress(&cinfo);
             jpeg_destroy_compress(&cinfo);
             fclose(f);
@@ -271,13 +270,13 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         {
             FILE* f = 0;
             f = fopen(QFile::encodeName(destPath), "wb");
-    
+
             if (!f) 
             {
                 qDebug("Failed to open PNG file for writing");
                 return false;
             }
-    
+
             png_color_8 sig_bit;
             png_bytep   row_ptr;
             png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -298,7 +297,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             {
                 png_set_iCCP(png_ptr, info_ptr, "icc", PNG_COMPRESSION_TYPE_BASE, 
                              ICCColorProfile.data(), ICCColorProfile.size());
-            }    
+            }
 
             QString libpngver(PNG_HEADER_VERSION_STRING);
             libpngver.replace('\n', ' ');
@@ -325,14 +324,14 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             png_set_shift(png_ptr, &sig_bit);
             png_set_packing(png_ptr);
             unsigned char* ptr = (unsigned char*)imageData.data();
-    
+
             for (int y = 0; !m_cancel && (y < height); y++)
             {
                 row_ptr = (png_bytep) ptr;
                 png_write_rows(png_ptr, &row_ptr, 1);
                 ptr += (width * 3);
             }
-    
+
             png_write_end(png_ptr, info_ptr);
             png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
             png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
@@ -346,15 +345,15 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             unsigned char *data=0;
             int            y;
             int            w;
-            
+
             tif = TIFFOpen(QFile::encodeName(destPath), "wb");
-    
+
             if (!tif) 
             {
                 qDebug("Failed to open TIFF file for writing");
                 return false;
             }
-    
+
             TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      width);
             TIFFSetField(tif, TIFFTAG_IMAGELENGTH,     height);
             TIFFSetField(tif, TIFFTAG_ORIENTATION,     ORIENTATION_TOPLEFT);
@@ -392,11 +391,11 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             // Write ICC profil.
             if (!ICCColorProfile.isEmpty())
             {
-#if defined(TIFFTAG_ICCPROFILE)    
+#if defined(TIFFTAG_ICCPROFILE)
                 TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)ICCColorProfile.size(), 
                              (uchar *)ICCColorProfile.data());
-#endif      
-            }    
+#endif
+            }
 
             // Write image data
             for (y = 0; !m_cancel && (y < height); y++)
@@ -404,8 +403,12 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                 data = (unsigned char*)imageData.data() + (y * width * 3);
                 TIFFWriteScanline(tif, data, y, 0);
             }
-    
+
             TIFFClose(tif);
+
+            // Store metadata (Exiv2 0.18 support tiff writting mode)
+            exiv2Iface.save(destPath);
+
             break;
         }
 
@@ -417,7 +420,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                 qDebug("Failed to open ppm file for writing");
                 return false;
             }
-    
+
             fprintf(f, "P6\n%d %d\n255\n", width, height);
             fwrite(imageData.data(), 1, width*height*3, f);
             fclose(f);
@@ -429,7 +432,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             return false;
         }
     }
-    
+
     if (m_cancel)
     {
         ::remove(QFile::encodeName(destPath));
@@ -445,43 +448,43 @@ void RawDecodingIface::writeRawProfile(png_struct *ping, png_info *ping_info, ch
                                  char *profile_data, png_uint_32 length)
 {
     png_textp      text;
-    
+
     register long  i;
-    
+
     uchar         *sp;
-    
+
     png_charp      dp;
-    
+
     png_uint_32    allocated_length, description_length;
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-    
+
     qDebug("Writing Raw profile: type=%s, length=%i", profile_type, (int)length);
-    
+
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
     allocated_length   = (png_uint_32) (length*2 + (length >> 5) + 20 + description_length);
-    
+
     text[0].text   = (png_charp) png_malloc(ping, allocated_length);
     text[0].key    = (png_charp) png_malloc(ping, (png_uint_32) 80);
     text[0].key[0] = '\0';
-    
+
     concatenateString(text[0].key, "Raw profile type ", 4096);
     concatenateString(text[0].key, (const char *) profile_type, 62);
-    
+
     sp = (uchar*)profile_data;
     dp = text[0].text;
     *dp++='\n';
-    
+
     copyString(dp, (const char *) profile_type, allocated_length);
-    
+
     dp += description_length;
     *dp++='\n';
-    
+
     formatString(dp, allocated_length-strlen(text[0].text), "%8lu ", length);
-    
+
     dp += 8;
-    
+
     for (i=0; i < (long) length; i++)
     {
         if (i%36 == 0)
@@ -507,13 +510,13 @@ void RawDecodingIface::writeRawProfile(png_struct *ping, png_info *ping_info, ch
 size_t RawDecodingIface::concatenateString(char *destination, const char *source, const size_t length)
 {
     register char       *q;
-    
+
     register const char *p;
-    
+
     register size_t      i;
-    
+
     size_t               count;
-  
+
     if ( !destination || !source || length == 0 )
         return 0;
 
@@ -541,18 +544,18 @@ size_t RawDecodingIface::concatenateString(char *destination, const char *source
     }
 
     *q='\0';
-    
+
     return(count+(p-source));
 }
 
 size_t RawDecodingIface::copyString(char *destination, const char *source, const size_t length)
 {
     register char       *q;
-    
+
     register const char *p;
-    
+
     register size_t      i;
-        
+
     if ( !destination || !source || length == 0 )
         return 0;
 
@@ -566,7 +569,7 @@ size_t RawDecodingIface::copyString(char *destination, const char *source, const
         {
             if ((*q++=(*p++)) == '\0')
                 break;
-        } 
+        }
         while (--i != 0);
     }
 
@@ -574,21 +577,22 @@ size_t RawDecodingIface::copyString(char *destination, const char *source, const
     {
         if (length != 0)
             *q='\0';
-  
-        while (*p++ != '\0') {
+
+        while (*p++ != '\0')
+        {
             ;
         }
     }
-    
+
     return((size_t) (p-source-1));
 }
 
 long RawDecodingIface::formatString(char *string, const size_t length, const char *format,...)
 {
     long n;
-    
+
     va_list operands;
-    
+
     va_start(operands,format);
     n = (long) formatStringList(string, length, format, operands);
     va_end(operands);
@@ -598,10 +602,10 @@ long RawDecodingIface::formatString(char *string, const size_t length, const cha
 long RawDecodingIface::formatStringList(char *string, const size_t length, const char *format, va_list operands)
 {
     int n = vsnprintf(string, length, format, operands);
-    
+
     if (n < 0)
         string[length-1] = '\0';
-    
+
     return((long) n);
 }
 
