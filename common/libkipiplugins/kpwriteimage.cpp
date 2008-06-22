@@ -6,7 +6,7 @@
  * Date        : 2007-19-09
  * Description : Kipi-Plugins shared library.
  *               Interface to write image data to common picture format.
- * 
+ *
  * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
@@ -17,12 +17,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 //#define ENABLE_DEBUG_MESSAGES 1
@@ -50,7 +50,7 @@ extern "C"
 #include <kstandarddirs.h>
 
 // Local includes.
- 
+
 #include "pluginsversion.h"
 #include "kpwriteimage.h"
 
@@ -90,7 +90,7 @@ public:
 
 KPWriteImage::KPWriteImage()
 {
-    d = new KPWriteImagePriv;    
+    d = new KPWriteImagePriv;
 }
 
 KPWriteImage::~KPWriteImage()
@@ -107,7 +107,7 @@ int KPWriteImage::bytesDepth() const
         else
             return 6;
     }
-    
+
     if (d->hasAlpha)
         return 4;
 
@@ -200,7 +200,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             }
 
             dstPtr = line;
-            
+
             for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
@@ -229,7 +229,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             }
 
             dstPtr = line;
-            
+
             for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
@@ -239,7 +239,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
                 d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
                 dstPtr += 3;
             }
-    
+
             jpeg_write_scanlines(&cinfo, &line, 1);
         }
     }
@@ -284,7 +284,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
             }
 
             dstPtr = line;
-            
+
             for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
@@ -312,7 +312,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
             }
 
             dstPtr = line;
-            
+
             for (uint i = 0; i < d->width; i++)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
@@ -322,7 +322,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
                 d->hasAlpha ? srcPtr += 4 : srcPtr += 3;
                 dstPtr += 3;
             }
-    
+
             fwrite(line, 1, d->width*3, file);
         }
     }
@@ -390,7 +390,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     {
         png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE, 
                      d->iccProfile.data(), d->iccProfile.size());
-    }    
+    }
 
     // Write Software info.
     QString libpngver(PNG_HEADER_VERSION_STRING);
@@ -451,7 +451,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
                     data[j++] = ptr[x+6];
                 }
                 else
-                {    
+                {
                     data[j++] = ptr[x+1];  // Blue
                     data[j++] = ptr[ x ];
                     data[j++] = ptr[x+3];  // Green
@@ -470,7 +470,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
                     data[j++] = ptr[x+3];  // Alpha
                 }
                 else
-                {    
+                {
                     data[j++] = ptr[ x ];  // Blue
                     data[j++] = ptr[x+1];  // Green
                     data[j++] = ptr[x+2];  // Red
@@ -558,7 +558,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFSetField(tif, TIFFTAG_XMLPACKET, (uint32)ba3.size(), (uchar *)ba3.data());
 #endif
 
-    // Standard Exif Ascii tags (available with libtiff 3.6.1)    
+    // Standard Exif Ascii tags (available with libtiff 3.6.1)
 
     tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->metadata, "Exif.Image.DocumentName");
     tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->metadata, "Exif.Image.ImageDescription");
@@ -577,11 +577,11 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     // Write ICC profil.
     if (!d->iccProfile.isEmpty())
     {
-#if defined(TIFFTAG_ICCPROFILE)    
+#if defined(TIFFTAG_ICCPROFILE)
         TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)d->iccProfile.size(), 
                      (uchar *)d->iccProfile.data());
-#endif      
-    }    
+#endif
+    }
 
     // Write full image data in tiff directory IFD0
 
@@ -702,32 +702,32 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
         TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
         TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
-    
+
         uchar *pixelThumb;
         uchar *dataThumb = thumb.bits();
         uint8 *bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
-    
+
         if (!bufThumb)
         {
             qDebug("Cannot allocate memory buffer for TIFF thumbnail.");
             TIFFClose(tif);
             return false;
         }
-    
+
         for (y = 0 ; y < uint32(thumb.height()) ; y++)
         {
             i = 0;
-    
+
             for (x = 0 ; x < uint32(thumb.width()) ; x++)
             {
                 pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
-    
+
                 // This might be endian dependent 
                 bufThumb[i++] = (uint8)pixelThumb[2];
                 bufThumb[i++] = (uint8)pixelThumb[1];
                 bufThumb[i++] = (uint8)pixelThumb[0];
             }
-    
+
             if (!TIFFWriteScanline(tif, bufThumb, y, 0))
             {
                 qDebug("Cannot write TIFF thumbnail to target file.");
@@ -736,17 +736,20 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
                 return false;
             }
         }
-    
+
         _TIFFfree(bufThumb);
     }
 
     TIFFClose(tif);
 
+    // Store metadata (Exiv2 0.18 support tiff writting mode)
+    d->metadata.save(destPath);
+
     return true;
 }
 
 QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace)
-{    
+{
     QString filePath = KStandardDirs::installPath("data") + QString("libkdcraw/profiles/");
 
     switch(colorSpace)
@@ -781,7 +784,7 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
     QFile file(filePath);
     if ( !file.open(QIODevice::ReadOnly) ) 
         return false;
-    
+
     QByteArray data;
     data.resize(file.size());
     QDataStream stream( &file );
@@ -795,43 +798,43 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
                                    char *profile_data, png_uint_32 length)
 {
     png_textp      text;
-    
+
     register long  i;
-    
+
     uchar         *sp;
-    
+
     png_charp      dp;
-    
+
     png_uint_32    allocated_length, description_length;
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-    
+
     qDebug("Writing Raw profile: type=%s, length=%i", profile_type, (int)length);
-    
+
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
     allocated_length   = (png_uint_32) (length*2 + (length >> 5) + 20 + description_length);
-    
+
     text[0].text   = (png_charp) png_malloc(ping, allocated_length);
     text[0].key    = (png_charp) png_malloc(ping, (png_uint_32) 80);
     text[0].key[0] = '\0';
-    
+
     concatenateString(text[0].key, "Raw profile type ", 4096);
     concatenateString(text[0].key, (const char *) profile_type, 62);
-    
+
     sp = (uchar*)profile_data;
     dp = text[0].text;
     *dp++='\n';
-    
+
     copyString(dp, (const char *) profile_type, allocated_length);
-    
+
     dp += description_length;
     *dp++='\n';
-    
+
     formatString(dp, allocated_length-strlen(text[0].text), "%8lu ", length);
-    
+
     dp += 8;
-    
+
     for (i=0; i < (long) length; i++)
     {
         if (i%36 == 0)
@@ -857,13 +860,13 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
 size_t KPWriteImage::concatenateString(char *destination, const char *source, const size_t length)
 {
     register char       *q;
-    
+
     register const char *p;
-    
+
     register size_t      i;
-    
+
     size_t               count;
-  
+
     if ( !destination || !source || length == 0 )
         return 0;
 
@@ -891,18 +894,18 @@ size_t KPWriteImage::concatenateString(char *destination, const char *source, co
     }
 
     *q='\0';
-    
+
     return(count+(p-source));
 }
 
 size_t KPWriteImage::copyString(char *destination, const char *source, const size_t length)
 {
     register char       *q;
-    
+
     register const char *p;
-    
+
     register size_t      i;
-        
+
     if ( !destination || !source || length == 0 )
         return 0;
 
@@ -916,7 +919,7 @@ size_t KPWriteImage::copyString(char *destination, const char *source, const siz
         {
             if ((*q++=(*p++)) == '\0')
                 break;
-        } 
+        }
         while (--i != 0);
     }
 
@@ -924,20 +927,20 @@ size_t KPWriteImage::copyString(char *destination, const char *source, const siz
     {
         if (length != 0)
             *q='\0';
-  
+
         while (*p++ != '\0')
             ;
     }
-    
+
     return((size_t) (p-source-1));
 }
 
 long KPWriteImage::formatString(char *string, const size_t length, const char *format,...)
 {
     long n;
-    
+
     va_list operands;
-    
+
     va_start(operands,format);
     n = (long) formatStringList(string, length, format, operands);
     va_end(operands);
@@ -947,10 +950,10 @@ long KPWriteImage::formatString(char *string, const size_t length, const char *f
 long KPWriteImage::formatStringList(char *string, const size_t length, const char *format, va_list operands)
 {
     int n = vsnprintf(string, length, format, operands);
-    
+
     if (n < 0)
         string[length-1] = '\0';
-    
+
     return((long) n);
 }
 
@@ -981,7 +984,7 @@ void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
 
 void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_list warnings)
 {
-#ifdef ENABLE_DEBUG_MESSAGES    
+#ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, warnings);
     qDebug("%s::%s", module, message);
@@ -994,7 +997,7 @@ void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_
 
 void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_list errors)
 {
-#ifdef ENABLE_DEBUG_MESSAGES    
+#ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, errors);
     qDebug("%s::%s", module, message);
