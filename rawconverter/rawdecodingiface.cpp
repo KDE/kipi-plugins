@@ -373,10 +373,6 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             w = TIFFScanlineSize(tif);
             TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
 
-
-            // Store Exif data.
-            // TODO
-
             // Store Iptc data.
             QByteArray ba2 = exiv2Iface.getIptc(true);
 #if defined(TIFFTAG_PHOTOSHOP)
