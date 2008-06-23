@@ -393,13 +393,70 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 #endif
             }
 
-            // Write image data
+            // Write full image data in tiff directory IFD0
+
             for (y = 0; !m_cancel && (y < height); y++)
             {
                 data = (unsigned char*)imageData.data() + (y * width * 3);
                 TIFFWriteScanline(tif, data, y, 0);
             }
 
+            TIFFWriteDirectory(tif);
+
+            // Write thumbnail in tiff directory IFD1
+
+            QImage thumb = exiv2Iface.getExifThumbnail(false);
+            if (!thumb.isNull())
+            {
+                TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      (uint32)thumb.width());
+                TIFFSetField(tif, TIFFTAG_IMAGELENGTH,     (uint32)thumb.height());
+                TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,     PHOTOMETRIC_RGB);
+                TIFFSetField(tif, TIFFTAG_PLANARCONFIG,    PLANARCONFIG_CONTIG);
+                TIFFSetField(tif, TIFFTAG_ORIENTATION,     ORIENTATION_TOPLEFT);
+                TIFFSetField(tif, TIFFTAG_RESOLUTIONUNIT,  RESUNIT_NONE);
+                TIFFSetField(tif, TIFFTAG_COMPRESSION,     COMPRESSION_NONE);
+                TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+                TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
+                TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
+
+                int    i=0;
+                uint32 x, y;
+                uchar *pixelThumb;
+                uchar *dataThumb = thumb.bits();
+                uint8 *bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+
+                if (!bufThumb)
+                {
+                    qDebug("Cannot allocate memory buffer for TIFF thumbnail.");
+                    TIFFClose(tif);
+                    return false;
+                }
+
+                for (y = 0 ; y < uint32(thumb.height()) ; y++)
+                {
+                    i = 0;
+
+                    for (x = 0 ; x < uint32(thumb.width()) ; x++)
+                    {
+                        pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
+
+                        // This might be endian dependent 
+                        bufThumb[i++] = (uint8)pixelThumb[2];
+                        bufThumb[i++] = (uint8)pixelThumb[1];
+                        bufThumb[i++] = (uint8)pixelThumb[0];
+                    }
+
+                    if (!TIFFWriteScanline(tif, bufThumb, y, 0))
+                    {
+                        qDebug("Cannot write TIFF thumbnail to target file.");
+                        _TIFFfree(bufThumb);
+                        TIFFClose(tif);
+                        return false;
+                    }
+                }
+
+                _TIFFfree(bufThumb);
+            }
             TIFFClose(tif);
 
             // Store metadata (Exiv2 0.18 support tiff writting mode)
