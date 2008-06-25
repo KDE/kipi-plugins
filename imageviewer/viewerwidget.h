@@ -148,6 +148,6 @@ private slots:
     void timeoutMouseMove();
 };
 
-}; //namespace KIPIviewer
+} //namespace KIPIviewer
 
 #endif // _VIEWERWIDGET_H_

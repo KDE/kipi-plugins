@@ -80,6 +80,6 @@ protected:
     int rotate_list[4], rotate_idx;
 };
 
-}; //namespace KIPIviewer
+} //namespace KIPIviewer
 
 #endif // TEXTURE_H

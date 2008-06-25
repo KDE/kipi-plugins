@@ -53,6 +53,6 @@ protected:
     int meantime;
 };
 
-}; //namespace KIPIviewer
+} //namespace KIPIviewer
 
 #endif // TIMER_H
