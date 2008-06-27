@@ -21,7 +21,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 004 ==> 145746 : GPSSync            : Do not recreate thumbs when geolocalizing images.
 005 ==> 134299 : SimpleViewerExport : Read orientation of image from EXIF.
 006 ==> 158792 : GPSsync            : Plugin do not working with Canon RAW CR2.
-007 ==> 
+007 ==> 165078 : GPSSync            : GPS correlator does not show thumbnails.
+008 ==> 
 
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
