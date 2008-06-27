@@ -347,7 +347,7 @@ void XMPEditDialog::slotItemChanged()
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
-    d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Iface::KExiv2::canWriteXmp((*d->currItem).path()); 
 
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);

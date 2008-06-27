@@ -356,7 +356,7 @@ void IPTCEditDialog::slotItemChanged()
     d->propertiesPage->readMetadata(d->iptcData);
     d->envelopePage->readMetadata(d->iptcData);
 
-    d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Iface::KExiv2::canWriteIptc((*d->currItem).path()); 
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);

@@ -313,7 +313,7 @@ void EXIFEditDialog::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = KExiv2Iface::KExiv2::isReadOnly((*d->currItem).path()); 
+    d->isReadOnly = KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_lens->setEnabled(!d->isReadOnly);
@@ -321,7 +321,7 @@ void EXIFEditDialog::slotItemChanged()
     d->page_light->setEnabled(!d->isReadOnly);
     d->page_adjust->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
-    
+
     setCaption(QString("%1 (%2/%3) - %4")
                .arg((*d->currItem).fileName())
                .arg(d->urls.indexOf(*(d->currItem))+1)

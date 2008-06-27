@@ -202,7 +202,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteExif(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -281,7 +281,7 @@ void Plugin_MetadataEdit::slotImportExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteExif(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -347,7 +347,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -426,7 +426,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -492,7 +492,7 @@ void Plugin_MetadataEdit::slotRemoveXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -571,7 +571,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -626,7 +626,7 @@ void Plugin_MetadataEdit::slotEditComments()
         KIPI::ImageInfo info = m_interface->info(url);
         info.setDescription(dlg.getComments());
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteComment(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -702,7 +702,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
             info.setDescription(QString::null);
         }
 
-        if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+        if (!KExiv2Iface::KExiv2::canWriteComment(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
