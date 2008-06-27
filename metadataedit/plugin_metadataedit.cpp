@@ -6,18 +6,18 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // KDE includes.
@@ -41,7 +41,7 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -202,7 +202,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteExif(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteExif(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -210,7 +210,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
             ret &= exiv2Iface.clearExif();
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -219,7 +219,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -228,7 +228,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
                     kapp->activeWindow(),
                     i18n("Unable to remove EXIF metadata from:"),
                     errorFiles,
-                    i18n("Remove EXIF Metadata"));  
+                    i18n("Remove EXIF Metadata"));
     }
 }
 
@@ -244,24 +244,24 @@ void Plugin_MetadataEdit::slotImportExif()
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
-    
+
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
                            i18n("Cannot load metadata from \"%1\"", importEXIFFile.fileName()), 
-                           i18n("Import EXIF Metadata"));    
+                           i18n("Import EXIF Metadata"));
         return;
     }
-    
+
     QByteArray exifData = exiv2Iface.getExif();
     if (exifData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
                            i18n("\"%1\" do not have EXIF metadata", importEXIFFile.fileName()), 
-                           i18n("Import EXIF Metadata"));    
+                           i18n("Import EXIF Metadata"));
         return;
-    }        
+    }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
@@ -281,7 +281,7 @@ void Plugin_MetadataEdit::slotImportExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteExif(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteExif(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -289,7 +289,7 @@ void Plugin_MetadataEdit::slotImportExif()
             ret &= exiv2Iface.setExif(exifData);
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -298,7 +298,7 @@ void Plugin_MetadataEdit::slotImportExif()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -347,7 +347,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteIptc(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -355,7 +355,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
             ret &= exiv2Iface.clearIptc();
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -364,7 +364,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -389,7 +389,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
-    
+
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
@@ -398,7 +398,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                            i18n("Import IPTC Metadata"));    
         return;
     }
-    
+
     QByteArray iptcData = exiv2Iface.getIptc();
     if (iptcData.isEmpty())
     {
@@ -406,7 +406,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                            i18n("\"%1\" do not have IPTC metadata", importIPTCFile.fileName()), 
                            i18n("Import IPTC Metadata"));    
         return;
-    }        
+    }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
@@ -426,7 +426,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteIptc(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -434,7 +434,7 @@ void Plugin_MetadataEdit::slotImportIptc()
             ret &= exiv2Iface.setIptc(iptcData);
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -443,7 +443,7 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -492,7 +492,7 @@ void Plugin_MetadataEdit::slotRemoveXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteXmp(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -500,7 +500,7 @@ void Plugin_MetadataEdit::slotRemoveXmp()
             ret &= exiv2Iface.clearXmp();
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -509,7 +509,7 @@ void Plugin_MetadataEdit::slotRemoveXmp()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -534,24 +534,24 @@ void Plugin_MetadataEdit::slotImportXmp()
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
-    
+
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importXMPFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(), 
-                           i18n("Cannot load metadata from \"%1\"", importXMPFile.fileName()), 
-                           i18n("Import XMP Metadata"));    
+                           i18n("Cannot load metadata from \"%1\"", importXMPFile.fileName()),
+                           i18n("Import XMP Metadata"));
         return;
     }
-    
+
     QByteArray xmpData = exiv2Iface.getXmp();
     if (xmpData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(), 
                            i18n("\"%1\" do not have XMP metadata", importXMPFile.fileName()), 
-                           i18n("Import XMP Metadata"));    
+                           i18n("Import XMP Metadata"));
         return;
-    }        
+    }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
@@ -571,7 +571,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (!KExiv2Iface::KExiv2::canWriteXmp(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -579,7 +579,7 @@ void Plugin_MetadataEdit::slotImportXmp()
             ret &= exiv2Iface.setXmp(xmpData);
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -588,7 +588,7 @@ void Plugin_MetadataEdit::slotImportXmp()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -626,7 +626,7 @@ void Plugin_MetadataEdit::slotEditComments()
         KIPI::ImageInfo info = m_interface->info(url);
         info.setDescription(dlg.getComments());
 
-        if (!KExiv2Iface::KExiv2::canWriteComment(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteComment(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -634,7 +634,7 @@ void Plugin_MetadataEdit::slotEditComments()
 
             if (dlg.syncEXIFCommentIsChecked())
                 ret &= exiv2Iface.setExifComment(dlg.getComments());
-        
+
             if (dlg.syncJFIFCommentIsChecked())
                 ret &= exiv2Iface.setComments(dlg.getComments().toUtf8());
 
@@ -642,17 +642,17 @@ void Plugin_MetadataEdit::slotEditComments()
             {
                 ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg.getComments(), 
                                                          QString(), false);
-            
+
                 ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(), 
                                                          QString(), false);
             }
-        
+
             if (dlg.syncIPTCCaptionIsChecked())
                 ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());
 
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -661,7 +661,7 @@ void Plugin_MetadataEdit::slotEditComments()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
@@ -702,7 +702,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
             info.setDescription(QString::null);
         }
 
-        if (!KExiv2Iface::KExiv2::canWriteComment(url.path()))
+        if (KExiv2Iface::KExiv2::canWriteComment(url.path()))
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
@@ -713,7 +713,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
 
             if (dlg.removeJFIFCommentIsChecked())
                 ret &= exiv2Iface.setComments(QByteArray());
-        
+
             if (exiv2Iface.supportXmp() && dlg.removeXMPCaptionIsChecked())
             {
                 ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
@@ -725,7 +725,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
 
             ret &= exiv2Iface.save(url.path());
         }
-        
+
         if (!ret)
             errorFiles.append(url.fileName());
         else 
@@ -734,7 +734,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
 
     // We use kipi interface refreshImages() method to tell to host than 
     // metadata from pictures have changed and need to be re-read.
-    
+
     m_interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())

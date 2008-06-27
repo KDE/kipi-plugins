@@ -313,7 +313,7 @@ void EXIFEditDialog::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path()); 
+    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path()); 
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_lens->setEnabled(!d->isReadOnly);
