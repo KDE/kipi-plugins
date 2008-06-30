@@ -256,7 +256,7 @@ void Wizard::slotThemeSelectionChanged() {
 		
 		QString txt=
 			QString("<b>%1</b><br><br>%2<br><br>").arg(theme->name(), theme->comment())
-			+ i18n("Author: %1").arg(author);
+			+ i18n("Author: %1", author);
 		browser->setText(txt);
 		setValid(d->mThemePage->page(), true);
 
