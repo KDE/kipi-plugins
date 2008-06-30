@@ -1,5 +1,3 @@
-subdirs(themes)
-
 set(kipiplugin_htmlexport_SRCS
 	abstractthemeparameter.cpp
 	colorthemeparameter.cpp
@@ -49,3 +47,7 @@ install(TARGETS kipiplugin_htmlexport
 
 install(FILES kipiplugin_htmlexport.desktop
 	DESTINATION ${SERVICES_INSTALL_DIR})
+
+install(DIRECTORY themes
+	DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport
+	PATTERN ".svn" EXCLUDE)
