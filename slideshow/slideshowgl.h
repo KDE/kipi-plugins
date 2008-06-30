@@ -137,7 +137,7 @@ private:
 
     // -------------------------
 
-    //typedef void (SlideShowGL::*EffectMethod)();
+    typedef void (SlideShowGL::*EffectMethod)();
 
     QMap<QString, EffectMethod>       m_effects;
 

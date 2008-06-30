@@ -28,7 +28,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY} 
+                      ${KDE4_KDE3SUPPORT_LIBS} 
                       ${X11_Xrandr_LIB}
                       kipiplugins
                      )

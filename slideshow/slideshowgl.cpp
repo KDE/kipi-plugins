@@ -54,7 +54,7 @@ namespace KIPISlideShowPlugin
 
 SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, bool ImagesHasComments)
-    : QGLWidget(0, 0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
+    : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
                 Qt::WX11BypassWM | Qt::WDestructiveClose)
 {
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
@@ -585,9 +585,10 @@ void SlideShowGL::printFilename(QImage& layer)
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , filename);
     p.end();
-
+#if 0
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(0,m_height-rect.height(),textimage,layer);
+#endif
 }
 
 void SlideShowGL::printProgress(QImage& layer)
@@ -613,10 +614,11 @@ void SlideShowGL::printProgress(QImage& layer)
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , progress);
     p.end();
-
+#if 0
     QImage textimage(pix.convertToImage());
     KImageEffect::blendOnLower(m_width - stringLenght - 10,
                                20,textimage,layer);
+#endif
 }
 
 void SlideShowGL::printComments(QImage& layer)
@@ -689,9 +691,10 @@ void SlideShowGL::printComments(QImage& layer)
         p.setFont(*m_commentsFont);
         p.drawText(1,m_commentsFont->pointSize()+0 , commentsByLines[lineNumber]);
         p.end();
-
+#if 0
         QImage textimage(pix.convertToImage());
         KImageEffect::blendOnLower(0,m_height-rect.height()-yPos,textimage,layer);
+#endif
     }
 }
 
