@@ -25,7 +25,6 @@
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
-#include <kimageeffect.h>
 
 #include <qtimer.h>
 #include <qpixmap.h>
