@@ -623,7 +623,7 @@ void SlideShowConfig::slotImagesFilesSelected( Q3ListBoxItem *item )
             SLOT(slotFailedPreview(const KFileItem*)));
 
     int index = m_ImagesFilesListBox->index ( item );
-    m_label7->setText(i18n("Image no. %1").arg(index + 1));
+    m_label7->setText(i18n("Image no. %1",QString::number(index + 1));
 }
 
 void SlideShowConfig::slotAddDropItems(KUrl::List filesUrl)
