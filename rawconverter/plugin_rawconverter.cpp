@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-01-31
- * Description : a kipi plugin to convert Raw file in single 
+ * Description : a kipi plugin to convert Raw file in single
  *               or batch mode.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
@@ -14,12 +14,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C ANSI includes.
@@ -82,14 +82,14 @@ void Plugin_RawConverter::setup( QWidget* widget )
     m_singleAction = new KAction(KIcon("rawconvertersingle"), i18n("Raw Image Converter..."),
                                  actionCollection());
     m_singleAction->setObjectName("raw_converter_single");
-    connect(m_singleAction, SIGNAL(triggered(bool)), 
+    connect(m_singleAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateSingle()));
     addAction(m_singleAction);
 
     m_batchAction = new KAction(KIcon("rawconverterbatch"), i18n("Batch Raw Converter..."),
                                  actionCollection());
     m_batchAction->setObjectName("raw_converter_batch");
-    connect(m_batchAction, SIGNAL(triggered(bool)), 
+    connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
     addAction(m_batchAction);
 
@@ -144,18 +144,20 @@ void Plugin_RawConverter::slotActivateSingle()
     if (!images.isValid())
         return;
 
-    if (!checkBinaries()) 
+    if (!checkBinaries())
+        return;
+    if ( images.images().isEmpty() )
         return;
 
     if (!isRAWFile(images.images()[0].path()))
     {
-        KMessageBox::error(kapp->activeWindow(), 
+        KMessageBox::error(kapp->activeWindow(),
                            i18n("\"%1\" is not a Raw file.", images.images()[0].fileName()));
         return;
     }
 
-    KIPIRawConverterPlugin::SingleDialog *converter = 
-        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface); 
+    KIPIRawConverterPlugin::SingleDialog *converter =
+        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface);
 
     converter->show();
 }
@@ -175,16 +177,16 @@ void Plugin_RawConverter::slotActivateBatch()
     if (!images.isValid())
         return;
 
-    if (!checkBinaries()) 
+    if (!checkBinaries())
         return;
 
-    KIPIRawConverterPlugin::BatchDialog *converter = 
+    KIPIRawConverterPlugin::BatchDialog *converter =
         new KIPIRawConverterPlugin::BatchDialog(interface);
 
     KUrl::List urls = images.images();
     KUrl::List items;
 
-    for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it ) 
+    for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it )
     {
         if (isRAWFile((*it).path()))
             items.append((*it));
