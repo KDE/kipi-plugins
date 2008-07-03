@@ -168,8 +168,8 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         KIPI::ImageInfo info = d->interface->info( *it );
         int angle = (info.angle() + 360) % 360;
 
-        if ( (90-45 <= angle && angle < 90+45) ||
-             (270-45) < angle && angle < (270+45) ) 
+        if ( ((90-45) <= angle && angle < (90+45)) ||
+             ((270-45) < angle && angle < (270+45)) ) 
         {
             // The image is rotated 90 or 270 degrees, which means that the flip operations 
             // must be switched to gain the effect the user expects.
