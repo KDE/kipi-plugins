@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using 
  *               an OpenGL interface.
  *
- * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -93,19 +93,15 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
     // check if its a RAW file.
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
     QFileInfo fileInfo(fn);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) 
-    {
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) {
         // it's a RAW file, use the libkdcraw loader
         KDcrawIface::KDcraw::loadDcrawPreview(qimage, fn);
-    }
-    else 
-    {
+    } else {
         // use the standard loader
         qimage=QImage(fn);
     }
 
-    if (qimage.isNull()) 
-    {
+    if (qimage.isNull()) {
         return false;
     }
 
@@ -145,24 +141,20 @@ bool Texture::_load()
     int w=initial_size.width();
     int h=initial_size.height();
 
-    if (w==0 || w>qimage.width() || h>qimage.height()) 
-    {
+    if (w==0 || w>qimage.width() || h>qimage.height()) {
         glimage=QGLWidget::convertToGLFormat(qimage);
     }
-    else 
-    {
+    else {
         glimage=QGLWidget::convertToGLFormat(qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
     }
 
     w=glimage.width();
     h=glimage.height();
-    if (h < w) 
-    {
+    if (h < w) {
         rtx = 1;
         rty = float(h)/float(w);
     }
-    else 
-    {
+    else {
         rtx = float(w)/float(h);
         rty = 1;
     }
@@ -234,7 +226,7 @@ void Texture::calcVertex()
 // the tex coord-sys goes from [-rtx..rtx] ([-1..1] for square texture)    
 {
     // x part
-       float lx=2*rtx/z;  //length of tex
+    float lx=2*rtx/z;  //length of tex
     float tsx=lx/(float)glimage.width(); //texelsize in glFrustum coordinates
     float halftexel_x = tsx/2.0;
     float wx=lx*(1-ux-z);
@@ -290,13 +282,10 @@ GLfloat Texture::vertex_right()
  */
 void Texture::setViewport(int w, int h)
 {
-    if (h>w) 
-    {
+    if (h>w) {
         rdx=1.0;
         rdy=h/float(w);
-    }
-    else 
-    {
+    } else {
         rdx=w/float(h);
         rdy=1.0;
     }
@@ -325,23 +314,22 @@ void Texture::reset()
     z=1.0;
     float zoomdelta=0;
 
-    if ((rtx<rty) && (rdx<rdy) && (rtx/rty < rdx/rdy)) 
-    {
+    if ((rtx<rty) && (rdx<rdy) && (rtx/rty < rdx/rdy)) {
         zoomdelta=z-rdx/rdy;
     }
-    if ((rtx<rty) && (rtx/rty > rdx/rdy)) 
-    {
+
+    if ((rtx<rty) && (rtx/rty > rdx/rdy)) {
         zoomdelta=z-rtx;
     }
 
-    if ((rtx>=rty) && (rdy<rdx) && (rty/rtx < rdy/rdx)) 
-    {
+    if ((rtx>=rty) && (rdy<rdx) && (rty/rtx < rdy/rdx)) {
         zoomdelta=z-rdy/rdx;
     }
-    if ((rtx>=rty) && (rty/rtx > rdy/rdx)) 
-    {
+
+    if ((rtx>=rty) && (rty/rtx > rdy/rdx)) {
         zoomdelta=z-rty;
     }
+
     QPoint p =  QPoint(display_x/2,display_y/2);
     zoom(1.0-zoomdelta,p);
 
@@ -360,20 +348,17 @@ bool Texture::setSize(QSize size)
     //OpenGL if necessary and not by QImage::scale
     size=size.boundedTo(qimage.size());
 
-    if (glimage.width()==size.width()) 
-    {
+    if (glimage.width()==size.width()) {
         return false;
     }
 
     int w=size.width();
     int h=size.height();
 
-    if (w==0) 
-    {
+    if (w==0) {
         glimage=QGLWidget::convertToGLFormat(qimage);
     } 
-    else 
-    {
+    else {
         glimage=QGLWidget::convertToGLFormat(qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
     }
 
@@ -409,13 +394,10 @@ void Texture::zoomToOriginal()
     float zoomfactorToOriginal;
     reset();
 
-    if (qimage.width()/qimage.height() > float(display_x)/float(display_y)) 
-    {
+    if (qimage.width()/qimage.height() > float(display_x)/float(display_y)) {
         //image touches right and left edge of window
         zoomfactorToOriginal=float(display_x)/qimage.width();
-    } 
-    else 
-    {
+    } else {
         //image touches upper and lower edge of window
         zoomfactorToOriginal=float(display_y)/qimage.height();
     }

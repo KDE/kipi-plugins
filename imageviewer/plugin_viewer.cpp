@@ -7,7 +7,7 @@
  * Description : a kipi plugin to show image using 
  *               an OpenGL interface.
  *
- * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,8 +61,7 @@ void Plugin_viewer::setup( QWidget* widget )
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
-    {
+    if ( !interface ) {
         kError() << "Kipi interface is null!" << endl;
         return;
     }
@@ -79,12 +78,10 @@ void Plugin_viewer::setup( QWidget* widget )
 
 KIPI::Category Plugin_viewer::category( KAction* action ) const
 {
-    if ( action == actionViewer ) 
-    {
+    if ( action == actionViewer ) {
         return KIPI::ToolsPlugin;
     }
-    else 
-    {
+    else {
         kWarning() << "Unrecognized action for plugin category identification" << endl;
         return KIPI::ToolsPlugin; // no warning from compiler, please
     }
@@ -98,16 +95,14 @@ void  Plugin_viewer::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
-    {
+    if ( !interface ) {
         kError() << "Kipi interface is null!" << endl;
         return;
     }
 
     widget = new KIPIviewer::ViewerWidget(interface);
 
-    switch(widget->getOGLstate()) 
-    {
+    switch(widget->getOGLstate()) {
         case KIPIviewer::oglOK:
             widget->show();
             break;
