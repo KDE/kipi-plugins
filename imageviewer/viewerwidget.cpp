@@ -63,10 +63,12 @@
 // using namespace std;
 using namespace KIPIviewer;
 
-ViewerWidget::ViewerWidget(KIPI::Interface* interface) {
+ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 
-		KIPI::ImageCollection selection = interface->currentSelection();
-		KIPI::ImageCollection album = interface->currentAlbum();
+		kipiInterface = i;
+
+		KIPI::ImageCollection selection = kipiInterface->currentSelection();
+		KIPI::ImageCollection album = kipiInterface->currentAlbum();
 
 		KUrl::List myfiles; //pics which are displayed in imageviewer
 		QString selectedImage; //selected pic in hostapp
@@ -121,7 +123,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* interface) {
 		// initialize cache
 		for(int i=0;i<CACHESIZE;i++) {
 			cache[i].file_index=EMPTY;
-			cache[i].texture=new Texture();
+			cache[i].texture=new Texture(kipiInterface);
 		}
 
 		// define zoomfactors for one zoom step
