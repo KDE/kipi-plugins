@@ -553,6 +553,7 @@ void ViewerWidget::mousePressEvent ( QMouseEvent * e )
  */
 void ViewerWidget::mouseMoveEvent ( QMouseEvent * e ) 
 {
+	int mdelta;
 	if ( e->buttons() == Qt::LeftButton ) {
 		//panning
 		QPoint diff=e->pos()-startdrag;
@@ -561,7 +562,23 @@ void ViewerWidget::mouseMoveEvent ( QMouseEvent * e )
 		startdrag=e->pos();
 	} else if ( e->buttons() == Qt::RightButton ) {
 		//zooming
-		zoom(previous_pos.y()-e->y(), startdrag, zoomfactor_mousemove );
+		//
+		//if mouse pointer reached upper or lower boder, special treatment in order
+		//to keep zooming enabled in that special case
+		if ( previous_pos.y() == e->y() ) {
+			if ( e->y() == 0 ) {
+				// mouse pointer is at upper edge, therefore assume zoom in
+				mdelta = 1;
+			} else {
+				// mouse pointer is as lower edge, therefore assume zoom out
+				mdelta = -1;
+			}
+		} else {
+			// mouse pointer is in the middle of the screen, normal operation
+			mdelta = previous_pos.y()-e->y();
+		} 
+		
+		zoom(mdelta, startdrag, zoomfactor_mousemove );
 		previous_pos=e->pos();
 	} else {
 		//no key is pressed while moving mouse
