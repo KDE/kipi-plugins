@@ -44,6 +44,7 @@
 // KDE includes.
 
 #include <khelpmenu.h>
+#include <kpushbutton.h>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -132,12 +133,11 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
 
+    KPushButton *helpButton = button( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeItemAt(0);
     helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    //PORT To kde4
-    //actionButton(Help)->setPopup(helpMenu->menu());
-
+    helpButton->setDelayedMenu( helpMenu->menu() );
     // ------------------------------------------------------------
 
     m_talker = new PicasawebTalker(this);
