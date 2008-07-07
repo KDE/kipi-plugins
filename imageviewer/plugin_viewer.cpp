@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -101,7 +101,11 @@ void  Plugin_viewer::slotActivate()
     }
 
     widget = new KIPIviewer::ViewerWidget(interface);
-
+    if ( widget->listOfFilesIsEmpty() )
+    {
+        delete widget;
+        return;
+    }
     switch(widget->getOGLstate()) {
         case KIPIviewer::oglOK:
             widget->show();

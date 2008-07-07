@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -84,12 +84,12 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 		if ( selection.images().count()==0 ) {
 			kDebug() << "no image selected, load entire album" << endl;
 			myfiles = album.images();
-		} 
+		}
 		else if ( selection.images().count()==1 ) {
 			kDebug() << "one image selected, load entire album and start with selected image" << endl;
 			selectedImage = selection.images().first().path();
 			myfiles = album.images();
-		} 
+		}
 		else if ( selection.images().count()>1 ) {
 			kDebug() << "load " << selection.images().count() << " selected images" << endl;
 			myfiles = selection.images();
@@ -97,7 +97,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 
 		// populate QStringList::files
 		for(KUrl::List::Iterator it = myfiles.begin(); it != myfiles.end();it++) {
-			
+
 			// find selected image in album in order to determine the first displayed image
 			// in case one image was selected and the entire album was loaded
 			QString s = (*it).path();
@@ -105,64 +105,65 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 				kDebug() << "selected img  " << selectedImage << " has idx=" << foundNumber << endl;
 				file_idx=foundNumber;
 			}
-			
+
 			// only add images to files
 			KMimeType::Ptr type = KMimeType::findByUrl(s);
 			bool isImage=type->name().contains("image",Qt::CaseInsensitive);
-			
+
 			if ( isImage ) {
 				files.append(s);
 				foundNumber++;  //counter for searching the start image in case one image is selected
 				kDebug() << s << " type=" << type->name() << endl;
 			}
 		}
-		
+
 		firstImage=true;
 		kDebug() << files.count() << "images loaded" << endl;
-		
 		// initialize cache
 		for(int i=0;i<CACHESIZE;i++) {
 			cache[i].file_index=EMPTY;
 			cache[i].texture=new Texture(kipiInterface);
 		}
+                if ( files.isEmpty() )
+                    return;
 
 		// define zoomfactors for one zoom step
 		zoomfactor_scrollwheel = 1.1;
 		zoomfactor_mousemove = 1.03;
 		zoomfactor_keyboard = 1.05;
-		
+
 		// load cursors for zooming and panning
 		QString file;
 		file = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/zoom.png" );
 		zoomCursor=QCursor(file);
 		file = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/hand.png" );
 		moveCursor=QCursor(file);
-		
+
 		// get path of nullImage in case QImage can't load the image
 		nullImage = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/nullImage.png" );
-		
-		showFullScreen(); 
+
+		showFullScreen();
 
 		// let the cursor dissapear after 2sec of inactivity
 		connect( &timerMouseMove, SIGNAL(timeout()),this, SLOT( timeoutMouseMove()) );
 		timerMouseMove.start(2000);
 		setMouseTracking(true);
 
-		// while zooming is performed, the image is downsampled to zoomsize. This seems to 
+		// while zooming is performed, the image is downsampled to zoomsize. This seems to
 		// be the optimal way for a PentiumM 1.4G, Nvidia FX5200. For a faster setup, this might
 		// not be necessary anymore
 		zoomsize=QSize(1024,768);
 
 		// other initialisations
 		wheelAction = changeImage;
-}		 
-		 
+}
+
 
 /*!
 	\fn ViewerWidget::initializeGL()
 	\todo blending
  */
-void ViewerWidget::initializeGL() {	
+void ViewerWidget::initializeGL() {
 	glEnable(GL_TEXTURE_RECTANGLE_ARB);
 	// Clear The Background Color
 	glClearColor(0.0, 0.0, 0.0, 1.0f);
@@ -172,33 +173,38 @@ void ViewerWidget::initializeGL() {
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	// Enable perspective vision
 	glClearDepth(1.0f);
-	// Generate texture	
+	// Generate texture
 	glGenTextures(1, tex);
 	//kDebug() << "width=" << width();
+}
+
+
+bool ViewerWidget::listOfFilesIsEmpty() const
+{
+    return files.isEmpty();
 }
 
 
 /*!
 	\fn ViewerWidget::paintGL()
  */
-void ViewerWidget::paintGL() {	
-	
+void ViewerWidget::paintGL() {
+
 	//this test has to be performed here since QWidget::width() is only updated now
 	//kDebug() << "enter paintGL: isReallyFullscreen=" << isReallyFullScreen();
-
 	//prepare 1st image
 	if (firstImage && isReallyFullScreen()) {
 		//kDebug() << "first image";
 		texture=loadImage(file_idx);
 		texture->reset();
 		downloadTex(texture);
-	
-		//kDebug() << "width=" << width();	
+
+		//kDebug() << "width=" << width();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		glTranslatef(0.0f,0.0f,-5.0f);
 		drawImage(texture);
-		
+
 		//trigger a redraw NOW. the user wants to see a picture as soon as possible
 		// only load the second image after the first is displayed
 		glFlush();
@@ -212,9 +218,9 @@ void ViewerWidget::paintGL() {
 			firstImage=false;
 		}
 	}
-	
+
 	if (!firstImage) {
-		//kDebug() << "width=" << width();	
+		//kDebug() << "width=" << width();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		glTranslatef(0.0f,0.0f,-5.0f);
@@ -233,23 +239,23 @@ void ViewerWidget::resizeGL(int w, int h)
 	glViewport(0, 0, (GLint)w, (GLint)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
+
 	if (h>w) {
 		ratio_view_x=1.0;
 		ratio_view_y=h/float(w);
 	}
 	else {
 		ratio_view_x=w/float(h);
-		ratio_view_y=1.0;	
+		ratio_view_y=1.0;
 	}
-	
+
 	glFrustum( -ratio_view_x, ratio_view_x, -ratio_view_y, ratio_view_y,5, 5000.0 );
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 
 	if (texture == 0)
 	    return;
-	
+
 	if (firstImage) {
 		texture->setViewport(w,h);
 	}
@@ -265,27 +271,27 @@ void ViewerWidget::resizeGL(int w, int h)
  */
 void ViewerWidget::drawImage(Texture * texture)
 {
-// 	cout << "enter drawImage: target=" << texture->texnr() << " dim=" << texture->height() << " " << texture->width() << endl;	
+// 	cout << "enter drawImage: target=" << texture->texnr() << " dim=" << texture->height() << " " << texture->width() << endl;
 	glBindTexture(GL_TEXTURE_RECTANGLE_NV, texture->texnr());
-	glBegin(GL_QUADS); 
+	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
 		glVertex3f(texture->vertex_left(), texture->vertex_bottom(), 0);
-		
+
 		glTexCoord2f(texture->width(), 0);
 		glVertex3f(texture->vertex_right(), texture->vertex_bottom(), 0);
-	
+
 		glTexCoord2f(texture->width(), texture->height());
 		glVertex3f(texture->vertex_right(), texture->vertex_top(), 0);
-	
+
 		glTexCoord2f(0, texture->height());
 		glVertex3f(texture->vertex_left(), texture->vertex_top(), 0);
-	glEnd(); 
+	glEnd();
 }
 
 
 /*!
 	\fn ViewerWidget::keyPressEvent(QKeyEvent *k)
-	Handle all keyboard events. All events which are not handled trigger 
+	Handle all keyboard events. All events which are not handled trigger
 	a help window.
  */
 void ViewerWidget::keyPressEvent(QKeyEvent *k)
@@ -301,31 +307,31 @@ void ViewerWidget::keyPressEvent(QKeyEvent *k)
 		case Qt::Key_Space:
 			nextImage();
 			break;
-		
+
 		// previous image
         case Qt::Key_P:
 		case Qt::Key_Left:
 		case Qt::Key_Up:
 		case Qt::Key_PageUp:
 			prevImage();
-			break;	
-				
+			break;
+
 		// rotate image
 		case Qt::Key_R:
 			texture->rotate();
 			downloadTex(texture);
 			updateGL();
-			break;		
-			
+			break;
+
 		// terminate image viewer
 		case Qt::Key_Escape:
 			// clean up: where does this have to be done?
 			close();
 			break;
-			
+
 		// full screen
 		case Qt::Key_F:
-			// according to QT documentation, showFullScreen() has some 
+			// according to QT documentation, showFullScreen() has some
 			// serious issues on window managers that do not follow modern
 			// post-ICCCM specifications
 			if (isFullScreen()) {
@@ -336,44 +342,44 @@ void ViewerWidget::keyPressEvent(QKeyEvent *k)
 				showFullScreen();
 			}
 			break;
-			
-		// reset size and redraw		
+
+		// reset size and redraw
 		case Qt::Key_Z:
 			texture->reset();
 			updateGL();
 			break;
-			
-		// toggle permanent between "show next image" and "zoom" on mousewheel change		
+
+		// toggle permanent between "show next image" and "zoom" on mousewheel change
 		case Qt::Key_C:
 			if (wheelAction==zoomImage)
 				wheelAction=changeImage;
 			else
 				wheelAction=zoomImage;
 			break;
-		
+
 		// zoom	in
 		case Qt::Key_Plus:
 			middlepoint =  QPoint(width()/2,height()/2);
 			if (texture->setSize( zoomsize )) {
 				downloadTex(texture); //load full resolution image
 			};
-			zoom(-1, middlepoint, zoomfactor_keyboard);	
+			zoom(-1, middlepoint, zoomfactor_keyboard);
 			break;
-			
+
 		// zoom out
 		case Qt::Key_Minus:
 			middlepoint =  QPoint(width()/2,height()/2);
-			if (texture->setSize( zoomsize )) 
+			if (texture->setSize( zoomsize ))
 				downloadTex(texture); //load full resolution image
-			zoom(1, middlepoint, zoomfactor_keyboard);	
+			zoom(1, middlepoint, zoomfactor_keyboard);
 			break;
-			
+
 		// zoom to original size
 		case Qt::Key_O:
 			texture->zoomToOriginal();
 			updateGL();
 			break;
-		
+
 		// toggle temorarily between "show next image" and "zoom" on mousewheel change
 		case Qt::Key_Control:
 			if (wheelAction==zoomImage)
@@ -384,9 +390,9 @@ void ViewerWidget::keyPressEvent(QKeyEvent *k)
 				wheelAction=zoomImage;
 				setCursor (zoomCursor);
 				timerMouseMove.stop();
-			}		
+			}
 			break;
-			
+
 
 		//do noting, don't trigger the help dialog
 		case Qt::Key_Shift:
@@ -419,7 +425,7 @@ void ViewerWidget::keyReleaseEvent ( QKeyEvent * e )
 			} else
 				e->ignore();
 			break;
-			
+
 		case Qt::Key_Control:
 			if (wheelAction==zoomImage)
 				wheelAction=changeImage;
@@ -428,12 +434,12 @@ void ViewerWidget::keyReleaseEvent ( QKeyEvent * e )
 				unsetCursor();
 				timerMouseMove.start(2000);
 			break;
-			
+
 		default:
 			e->ignore();
 			break;
 	}
-	
+
 }
 
 
@@ -449,8 +455,8 @@ void ViewerWidget::downloadTex(Texture * tex)
 
 //	uncomment the following line to enable flat shading of texels -> debugging
 //	glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-	
-	glTexImage2D( GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA, tex->width(), tex->height(), 0,GL_RGBA, GL_UNSIGNED_BYTE, tex->data());			
+
+	glTexImage2D( GL_TEXTURE_RECTANGLE_NV, 0, GL_RGBA, tex->width(), tex->height(), 0,GL_RGBA, GL_UNSIGNED_BYTE, tex->data());
 }
 
 
@@ -463,9 +469,8 @@ void ViewerWidget::downloadTex(Texture * tex)
 Texture * ViewerWidget::loadImage(int file_index)
 {
 	int imod=file_index%CACHESIZE; //index for cache
-
-	if (cache[imod].file_index==file_index){ 
-		//image is already cached	
+	if (cache[imod].file_index==file_index){
+		//image is already cached
 		kDebug() << "image " << file_index << " is already in cache@" << imod << endl;
 		return cache[imod].texture;
 
@@ -518,7 +523,7 @@ void ViewerWidget::wheelEvent ( QWheelEvent * e )
 			else
 				prevImage();
 			break;
-	} 
+	}
 }
 
 
@@ -526,32 +531,32 @@ void ViewerWidget::wheelEvent ( QWheelEvent * e )
 	\fn ViewerWidget::mousePressEvent ( QMouseEvent * e )
  */
 void ViewerWidget::mousePressEvent ( QMouseEvent * e )
-{	
+{
 	// begin zoom
 	// scale down texture  for fast zooming
 	// texture	 will be set to original size on mouse up
 	if (texture->setSize( zoomsize )) { //load downsampled image
 		downloadTex(texture);
 	}
-	
+
 	timerMouseMove.stop(); //user is something up to, therefore keep the cursor
 	if ( e->button() == Qt::LeftButton ) {
 		setCursor (moveCursor); //defined in constructor
 	}
-	
+
 	if ( e->button() == Qt::RightButton ) {
 		setCursor (zoomCursor);
 	}
-	
+
 	startdrag=e->pos();
 	previous_pos=e->pos();
 }
 
 
 /*!
-	\fn ViewerWidget::mouseMoveEvent ( QMouseEvent * e ) 
+	\fn ViewerWidget::mouseMoveEvent ( QMouseEvent * e )
  */
-void ViewerWidget::mouseMoveEvent ( QMouseEvent * e ) 
+void ViewerWidget::mouseMoveEvent ( QMouseEvent * e )
 {
 	int mdelta;
 	if ( e->buttons() == Qt::LeftButton ) {
@@ -576,8 +581,8 @@ void ViewerWidget::mouseMoveEvent ( QMouseEvent * e )
 		} else {
 			// mouse pointer is in the middle of the screen, normal operation
 			mdelta = previous_pos.y()-e->y();
-		} 
-		
+		}
+
 		zoom(mdelta, startdrag, zoomfactor_mousemove );
 		previous_pos=e->pos();
 	} else {
@@ -663,7 +668,7 @@ void ViewerWidget::nextImage()
 	updateGL();
 #ifdef PERFORMANCE_ANALYSIS
 	timer.at("updateGL");
-#endif	
+#endif
 
 	//image preloading
 	if (file_idx < ((unsigned int)files.count()-1)) {
@@ -677,7 +682,7 @@ void ViewerWidget::nextImage()
 
 /*!
 	\fn ViewerWidget::zoom(int mdelta, QPos pos)
-	\param mdelta delta of mouse movement: 
+	\param mdelta delta of mouse movement:
 	                            mdelta>0: zoom in
 	                            mdelta<0: zoom out
 	                            mdelta=0: do nothing
@@ -690,16 +695,16 @@ void ViewerWidget::zoom(int mdelta, QPoint pos, float factor)
 		//do nothing
 		return;
 	}
-	
+
 	if (mdelta > 0) {
 		//multiplicator for zooming in
-		delta=factor; 
+		delta=factor;
 	}
-	
+
 	if (mdelta < 0) {
 		//multiplicator for zooming out
 		delta=2.0-factor;
-	} 
+	}
 
 	texture->zoom(delta,pos);
 	updateGL();
@@ -756,13 +761,13 @@ OGLstate ViewerWidget::getOGLstate()
 	if ( !isValid() ) {
 		return oglNoContext;
 	}
-	
+
 	//GL_ARB_texture_rectangle is not supported
 	QString s = QString ( ( char* ) glGetString ( GL_EXTENSIONS ) );
 	if ( !s.contains ( "GL_ARB_texture_rectangle",Qt::CaseInsensitive ) )	{
 		return oglNoRectangularTexture;
 	}
-	
+
 	//everything is ok!
 	return oglOK;
 }

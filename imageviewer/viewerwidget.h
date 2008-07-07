@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -49,11 +49,11 @@
 #include "texture.h"
 
 /**
- * @short OpenGL widget for image viewer 
+ * @short OpenGL widget for image viewer
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.2
  */
- 
+
 
 //keep in mind that one cache entry takes 20MB for a 5mpix pic
 #define CACHESIZE 4
@@ -64,12 +64,12 @@ using namespace std;
 
 enum OGLstate {
         oglOK, oglNoRectangularTexture, oglNoContext
-};	
+};
 
 class ViewerWidget : public QGLWidget
 {
     Q_OBJECT
-			
+
 public:
 	ViewerWidget(KIPI::Interface*);
 	~ViewerWidget() {
@@ -79,7 +79,7 @@ public:
 			delete cache[i].texture;
 		}
 	}
-	
+
     virtual void initializeGL();
     virtual void resizeGL(int w, int h);
     virtual void paintGL();
@@ -88,6 +88,7 @@ public:
     Texture * loadImage(int file_index);
     void prevImage();
     void nextImage();
+    bool listOfFilesIsEmpty() const;
     void zoom(int mdelta, QPoint pos, float factor);
     virtual void mouseReleaseEvent(QMouseEvent * e);
     virtual void keyReleaseEvent ( QKeyEvent * e );
@@ -97,9 +98,9 @@ protected:
 	struct Cache {
 		int file_index;
 		Texture * texture;
-		
+
 	};
-	
+
 	enum WheelAction {
 		zoomImage, changeImage
 	};
