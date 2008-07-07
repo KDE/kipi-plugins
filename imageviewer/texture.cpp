@@ -31,6 +31,11 @@
 #include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
+// libkipi includes
+
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
 // Local includes
 #ifdef PERFORMANCE_ANALYSIS
 	#include "timer.h"
@@ -39,8 +44,9 @@
 
 using namespace KIPIviewer;
 
-Texture::Texture()
+Texture::Texture(KIPI::Interface *i)
 {
+	kipiInterface = i;
 	rotate_list[0]=90;
 	rotate_list[1]=180;
 	rotate_list[2]=270;
@@ -97,6 +103,15 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
 	}	else {
 		// use the standard loader
 		qimage=QImage(fn);
+	}
+	
+	//handle rotation
+	KIPI::ImageInfo info = kipiInterface->info(filename);
+	if (info.angle() != 0) {
+		QWMatrix r;
+		r.rotate(info.angle());
+		qimage=qimage.xForm(r);
+		kdDebug(51000) << "image rotated by " << info.angle() << " degree" << endl;
 	}
 	
 	if (qimage.isNull()) {
@@ -384,6 +399,11 @@ void Texture::rotate()
 	r.rotate(rotate_list[rotate_idx%4]);		
 	qimage=qimage.xForm(r);
 	_load();
+	
+	//save new rotation in exif header
+	KIPI::ImageInfo info = kipiInterface->info(filename);
+	info.setAngle(rotate_list[rotate_idx%4]);
+	
 	reset();
 	rotate_idx++;
 }

@@ -27,6 +27,11 @@
 #include <qdatetime.h>
 #include <qimage.h>
 
+// libkipi includes
+
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
 /**
  * @short Texture class
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
@@ -36,7 +41,7 @@
 namespace KIPIviewer {
 class Texture{
 public:
-	Texture();
+	Texture(KIPI::Interface *);
 	~Texture();
 	int height();
 	int width();
@@ -68,6 +73,7 @@ protected:
 	float rdx,rdy,z,ux,uy,rtx,rty;
 	float vtop, vbottom, vleft, vright;
 	int rotate_list[4], rotate_idx;
+	KIPI::Interface * kipiInterface;
 };
 }; //namespace KIPIviewer
 

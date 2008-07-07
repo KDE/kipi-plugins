@@ -64,7 +64,7 @@ class ViewerWidget : public QGLWidget
     Q_OBJECT
 			
 public:
-	ViewerWidget(KIPI::Interface* interface);
+	ViewerWidget(KIPI::Interface*);
 	~ViewerWidget() {
 		glDeleteTextures(1,tex);
 		for(int i=0;i<CACHESIZE;i++) {
@@ -114,7 +114,8 @@ protected:
     QCursor moveCursor, zoomCursor;
 	float zoomfactor_scrollwheel,  zoomfactor_mousemove,  zoomfactor_keyboard;
 	QString nullImage;
-	
+	KIPI::Interface * kipiInterface;
+
 protected:
     virtual void keyPressEvent(QKeyEvent *k);
     virtual void wheelEvent ( QWheelEvent * e );
