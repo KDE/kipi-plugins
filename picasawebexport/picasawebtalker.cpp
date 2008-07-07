@@ -47,6 +47,7 @@
 
 #include <klocale.h>
 #include <kio/job.h>
+#include <kio/jobuidelegate.h>
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
@@ -183,8 +184,8 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_job   = job;
     m_buffer.resize(0);
@@ -225,8 +226,8 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_CHECKTOKEN;
     authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
@@ -262,8 +263,8 @@ void PicasawebTalker::listAllAlbums() {
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_LISTALBUMS;
     m_job   = job;
@@ -297,8 +298,8 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_GETPHOTOPROPERTY;
     m_job   = job;
@@ -335,8 +336,8 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
     //connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
     //        this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_ADDTAG;
     m_job   = job;
@@ -397,8 +398,8 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_CREATEALBUM;
     m_job   = job;
@@ -495,8 +496,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     m_state = FE_ADDPHOTO;
     m_job   = job;
@@ -592,7 +593,7 @@ void PicasawebTalker::slotError(const QString & error)
     //kDebug()<<"Not handling the error now will see it later"<<endl;
 }
 
-void PicasawebTalker::slotResult(KIO::Job *job)
+void PicasawebTalker::slotResult(KJob *job)
 {
     m_job = 0;
     emit signalBusy(false);
@@ -605,7 +606,7 @@ void PicasawebTalker::slotResult(KIO::Job *job)
         }
         else
         {
-            job->showErrorDialog(m_parent);
+            static_cast<KIO::Job*>(job)->showErrorDialog(m_parent);
         }
 
         return;

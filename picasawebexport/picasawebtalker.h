@@ -57,7 +57,7 @@ class PicasawebTalker : public QObject
 
 public:
 
-    enum State 
+    enum State
     {
         FE_LOGIN = 0,
         FE_LISTALBUMS,
@@ -79,12 +79,12 @@ public:
 
     Q3ValueList <PicasaWebAlbum> * m_albumsList;
     QString getApiSig(QString,QStringList) ;
-    void addPhotoTag(const QString& photoURI, const QString& tag);   
-    void getToken(const QString& user, const QString& passwd) ;	   
-    void checkToken(const QString& token) ;	   
-    void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;	   
-    void getPhotoProperty(const QString& method, const QString& argList) ;	   
-    void getHTMLResponseCode(const QString& str);   
+    void addPhotoTag(const QString& photoURI, const QString& tag);
+    void getToken(const QString& user, const QString& passwd) ;
+    void checkToken(const QString& token) ;
+    void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
+    void getPhotoProperty(const QString& method, const QString& argList) ;
+    void getHTMLResponseCode(const QString& str);
     void listAllAlbums();
     void listPhotos( const QString& albumName );
     void createAlbum( const QString& albumTitle, const QString& albumDesc, const QString& location,
@@ -97,7 +97,7 @@ public:
     void cancel();
 
 public:
-    
+
     Q3ProgressDialog *authProgressDlg;
 
 signals:
@@ -111,7 +111,7 @@ signals:
     void signalGetAlbumsListSucceeded();
     void signalGetAlbumsListFailed( const QString& msg );
     void signalAddPhotoFailed( const QString& msg );
-    void signalAuthenticate() ;     
+    void signalAuthenticate() ;
     void signalTokenObtained(const QString& token);
 
 private:
@@ -125,14 +125,14 @@ private:
     void parseResponseGetToken(const QByteArray &data);
     void parseResponseCheckToken(const QByteArray &data);
     void parseResponsePhotoProperty(const QByteArray &data);
-   	
+
 private slots:
 
     void slotError( const QString& msg );
-//  void slotAuthenticate() ;	    
+//  void slotAuthenticate() ;
     void data(KIO::Job *job, const QByteArray &data);
     void info(KIO::Job *job, const QString& str);
-    void slotResult (KIO::Job *job);
+    void slotResult (KJob *job);
 
 private:
 
