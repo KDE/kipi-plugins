@@ -676,11 +676,14 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
     //if it is 403 handle the error mesg
     //figure out the auth string from this response
 
-    if (str.find("Auth="))
+    if (str.contains("Auth="))
     {
         QStringList strList = QStringList::split("Auth=", str);
-        m_token = strList[1];
-        success = 1;
+        if ( strList.count() > 0 )
+        {
+            m_token = strList[1];
+            success = true;
+        }
     }
 
     if(success)
