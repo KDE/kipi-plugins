@@ -57,7 +57,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent)
 {
     setName("PicasawebWidget");
 
-    //resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
+    resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
     //clearWState( WState_Polished );
 }
 
