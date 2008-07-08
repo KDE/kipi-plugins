@@ -928,8 +928,10 @@ size_t KPWriteImage::copyString(char *destination, const char *source, const siz
         if (length != 0)
             *q='\0';
 
-        while (*p++ != '\0')
-            ;
+        do
+        {
+        }
+        while (*p++ != '\0');
     }
 
     return((size_t) (p-source-1));
