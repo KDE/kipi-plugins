@@ -631,10 +631,10 @@ size_t RawDecodingIface::copyString(char *destination, const char *source, const
         if (length != 0)
             *q='\0';
 
-        while (*p++ != '\0')
+        do
         {
-            ;
         }
+        while (*p++ != '\0');
     }
 
     return((size_t) (p-source-1));
