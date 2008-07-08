@@ -100,6 +100,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 
 			// find selected image in album in order to determine the first displayed image
 			// in case one image was selected and the entire album was loaded
+			it->cleanPath();
 			QString s = (*it).path();
 			if ( s==selectedImage ) {
 				kDebug() << "selected img  " << selectedImage << " has idx=" << foundNumber << endl;
