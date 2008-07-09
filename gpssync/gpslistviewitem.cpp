@@ -51,14 +51,12 @@ public:
         dirty      = false;
         erase      = false;
         hasGPSInfo = false;
-        readOnly   = false;
     }
 
     bool             enabled;
     bool             dirty;
     bool             erase;
     bool             hasGPSInfo;
-    bool             readOnly;
 
     QDateTime        date;
 
@@ -76,17 +74,6 @@ GPSListViewItem::GPSListViewItem(KListView *view, QListViewItem *after, const KU
     setEnabled(false);
     setPixmap(0, SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
     setText(1, d->url.fileName());
-
-    // We only add all JPEG files as R/W because Exiv2 can't yet 
-    // update metadata on others file formats.
-
-    QFileInfo fi(d->url.path());
-    QString ext = fi.extension(false).upper();
-    if (ext != QString("JPG") && ext != QString("JPEG") && ext != QString("JPE"))
-    {
-        setText(6, i18n("Read only"));
-        d->readOnly = true;
-    }
 
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load(d->url.path());
@@ -140,13 +127,10 @@ GPSDataContainer GPSListViewItem::GPSInfo() const
 
 void GPSListViewItem::eraseGPSInfo()
 {
-    if (!isReadOnly())
-    {
-        d->erase = true;
-        d->dirty = true;
-        setText(6, i18n("Deleted!"));
-        repaint();
-    }
+    d->erase = true;
+    d->dirty = true;
+    setText(6, i18n("Deleted!"));
+    repaint();
 }
 
 void GPSListViewItem::setDateTime(const QDateTime& date)
@@ -184,7 +168,7 @@ bool GPSListViewItem::isInterpolated()
 
 void GPSListViewItem::writeGPSInfoToFile()
 {
-    if (isEnabled() && isDirty() && !isReadOnly())
+    if (isEnabled() && isDirty())
     {
         setPixmap(1, SmallIcon("run"));
         KExiv2Iface::KExiv2 exiv2Iface;
@@ -210,30 +194,25 @@ void GPSListViewItem::writeGPSInfoToFile()
     }
 }
 
-void GPSListViewItem::setEnabled(bool e)    
+void GPSListViewItem::setEnabled(bool e)
 {
     d->enabled = e;
     repaint();
 }
 
-bool GPSListViewItem::isEnabled()    
+bool GPSListViewItem::isEnabled()
 {
     return d->enabled;
 }
 
-bool GPSListViewItem::isDirty()    
+bool GPSListViewItem::isDirty()
 {
     return d->dirty;
 }
 
-bool GPSListViewItem::isReadOnly()    
-{
-    return d->readOnly;
-}
-
 void GPSListViewItem::paintCell(QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
-    if (isEnabled() && !isReadOnly())
+    if (isEnabled())
     {
         if ( isDirty() && !d->erase && column >= 3  && column <= 5 )
         {

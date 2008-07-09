@@ -216,28 +216,19 @@ void Plugin_GPSSync::slotGPSEdit()
         KURL::List  updatedURLs;
         QStringList errorFiles;
 
-        for( KURL::List::iterator it = imageURLs.begin() ; 
+        for( KURL::List::iterator it = imageURLs.begin() ;
             it != imageURLs.end(); ++it)
         {
             KURL url = *it;
 
-            // We only add all JPEG files as R/W because Exiv2 can't yet 
-            // update metadata on others file formats.
-
-            QFileInfo fi(url.path());
-            QString ext = fi.extension(false).upper();
-            bool ret = false;
-            if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
+            bool ret = true;
+            ret &= exiv2Iface.load(url.path());
+            if (ret)
             {
-                ret = true;
-                ret &= exiv2Iface.load(url.path());
-                if (ret)
-                {
-                    ret &= exiv2Iface.setGPSInfo(gpsData.altitude(), 
-                                                 gpsData.latitude(), 
-                                                 gpsData.longitude());
-                    ret &= exiv2Iface.save(url.path());
-                }
+                ret &= exiv2Iface.setGPSInfo(gpsData.altitude(),
+                                             gpsData.latitude(),
+                                             gpsData.longitude());
+                ret &= exiv2Iface.save(url.path());
             }
 
             if (!ret)
@@ -285,20 +276,11 @@ void Plugin_GPSSync::slotGPSRemove()
     {
         KURL url = *it;
 
-        // We only add all JPEG files as R/W because Exiv2 can't yet 
-        // update metadata on others file formats.
-
-        QFileInfo fi(url.path());
-        QString ext = fi.extension(false).upper();
-        bool ret = false;
-        if (ext == QString("JPG") || ext == QString("JPEG") || ext == QString("JPE"))
-        {
-            ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.removeGPSInfo();
-            ret &= exiv2Iface.save(url.path());
-        }
+        bool ret = true;
+        KExiv2Iface::KExiv2 exiv2Iface;
+        ret &= exiv2Iface.load(url.path());
+        ret &= exiv2Iface.removeGPSInfo();
+        ret &= exiv2Iface.save(url.path());
 
         if (!ret)
             errorFiles.append(url.fileName());
