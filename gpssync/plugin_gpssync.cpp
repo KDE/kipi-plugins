@@ -395,7 +395,7 @@ void Plugin_GPSSync::slotGPSRemove()
 
         // Remove kipi host GPS location 
         QStringList list;
-        list << "latitude" << "longitude" << "altitude";
+        list << "gpslocation";
         KIPI::ImageInfo info = m_interface->info(url);
         info.delAttributes(list);
     }
