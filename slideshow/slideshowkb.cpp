@@ -8,9 +8,9 @@
  *
  * Copyright (C) 2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
- * <carsten dot weinhold at gmx dot de> and slideshowgl.{cpp|h} by Renchi Raju     
- * <renchi@pooh.tam.uiuc.edu>                                           
+ * Parts of this code are based on 
+ * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
+ * and slideshowgl by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -65,12 +65,15 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     // randomly select sizes of start end end viewport
     double s[2];
     i = 0;
-    do {
+    do 
+    {
         s[0]  = 0.3 * rnd() + 1.0;
-        s[1]  = 0.3 * rnd() + 1.0;        
-    } while (fabs(s[0] - s[1]) < 0.15 && ++i < 10);
+        s[1]  = 0.3 * rnd() + 1.0;
+    }
+    while (fabs(s[0] - s[1]) < 0.15 && ++i < 10);
 
-    if (zoomIn xor s[0] > s[1]) {
+    if (zoomIn xor s[0] > s[1]) 
+    {
         double tmp = s[0];
         s[0]       = s[1];
         s[1]       = tmp;
@@ -82,10 +85,13 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     // additional scale factors to ensure proper m_aspect of the displayed image
     double x[2], y[2], xMargin[2], yMargin[2], bestDist;
     double sx, sy;
-    if (relAspect > 1.0) {
+    if (relAspect > 1.0) 
+    {
         sx = 1.0;
         sy = relAspect;
-    } else {
+    }
+    else
+    {
         sx = 1.0 / relAspect;
         sy = 1.0;
     }
@@ -100,14 +106,16 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 
     i = 0;
     bestDist = 0.0;
-    do {
+    do
+    {
         double sign = rndSign();
         x[0] = xMargin[0] * (0.2 * rnd() + 0.8) *  sign;
         y[0] = yMargin[0] * (0.2 * rnd() + 0.8) * -sign;
         x[1] = xMargin[1] * (0.2 * rnd() + 0.8) * -sign;
         y[1] = yMargin[1] * (0.2 * rnd() + 0.8) *  sign;
 
-        if (fabs(x[1] - x[0]) + fabs(y[1] - y[0]) > bestDist) {
+        if (fabs(x[1] - x[0]) + fabs(y[1] - y[0]) > bestDist)
+        {
             m_baseX  = x[0];
             m_baseY  = y[0];
             m_deltaX = x[1] - x[0];
@@ -115,7 +123,8 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
             bestDist = fabs(m_deltaX) + fabs(m_deltaY);
         }
 
-    } while (bestDist < 0.3 && ++i < 10);
+    }
+    while (bestDist < 0.3 && ++i < 10);
 }
 
 // -------------------------------------------------------------------------
@@ -144,7 +153,7 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
            : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setWindowFlags(Qt::X11BypassWindowManagerHint | 
+    setWindowFlags(Qt::X11BypassWindowManagerHint |
                    Qt::WindowStaysOnTopHint | Qt::Popup);
 
 #if KDE_IS_VERSION(3,2,0)
@@ -199,14 +208,18 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     m_endOfShow = false;
     m_showingEnd = false;
 
-    connect(m_timer, SIGNAL(timeout(void)), this, SLOT(moveSlot()));
-    connect(m_imageLoadThread, SIGNAL(endOfShow(void)), this, SLOT(slotEndOfShow()));
+    connect(m_timer, SIGNAL(timeout(void)), 
+            this, SLOT(moveSlot()));
+
+    connect(m_imageLoadThread, SIGNAL(endOfShow(void)), 
+            this, SLOT(slotEndOfShow()));
 
     // -- hide cursor when not moved --------------------
 
     m_mouseMoveTimer = new QTimer;
+
     connect(m_mouseMoveTimer, SIGNAL(timeout()),
-            SLOT(slotMouseMoveTimeOut()));
+            this, SLOT(slotMouseMoveTimeOut()));
 
     setMouseTracking(true);
     slotMouseMoveTimeOut();
@@ -224,7 +237,8 @@ SlideShowKB::~SlideShowKB()
     m_imageLoadThread->quit();
     bool terminated = m_imageLoadThread->wait(10000);
 
-    if ( !terminated) {
+    if ( !terminated) 
+    {
         m_imageLoadThread->terminate();
         terminated = m_imageLoadThread->wait(3000);
     }
@@ -251,7 +265,8 @@ void SlideShowKB::setNewKBEffect()
         type = KBEffect::chooseKBEffect((m_effect) ? m_effect->type() : KBEffect::Fade);
 
     delete m_effect;
-    switch (type) {
+    switch (type)
+    {
         case KBEffect::Fade:
             m_effect = new FadeKBEffect(this, needFadeIn);
             break;
@@ -266,9 +281,10 @@ void SlideShowKB::setNewKBEffect()
 
 void SlideShowKB::moveSlot() 
 {
-    if (m_initialized) {
-
-        if (m_effect->done()) {
+    if (m_initialized) 
+    {
+        if (m_effect->done()) 
+        {
             setNewKBEffect();
             m_imageLoadThread->requestNewImage();
         }
@@ -288,8 +304,8 @@ bool SlideShowKB::setupNewImage(int idx)
     bool ok = false;
     m_zoomIn  = !m_zoomIn;
 
-    if (m_imageLoadThread->grabImage()) {
-
+    if (m_imageLoadThread->grabImage())
+    {
         delete m_image[idx];
 
         // we have the image lock and there is an image
@@ -300,8 +316,9 @@ bool SlideShowKB::setupNewImage(int idx)
         applyTexture(m_image[idx], m_imageLoadThread->image());
         ok = true;
 
-    } 
-    else {
+    }
+    else 
+    {
         m_haveImages = false;
     }
 
@@ -316,8 +333,8 @@ void SlideShowKB::startSlideShowOnce()
 {
     // when the image loader thread is ready, it will already have loaded
     // the first image
-    if (m_initialized == false && m_imageLoadThread->ready()) {
-
+    if (m_initialized == false && m_imageLoadThread->ready()) 
+    {
         setupNewImage(0);                   // setup the first image and
         m_imageLoadThread->requestNewImage(); // load the next one in background
         setNewKBEffect();                     // set the initial effect
@@ -375,19 +392,18 @@ void SlideShowKB::paintGL()
 
     if (m_endOfShow && m_image[0]->m_paint && m_image[1]->m_paint)
     {
-    endOfShow();
-    m_timer->stop();
+        endOfShow();
+        m_timer->stop();
     }
     else
     {
-    if (m_image[1]->m_paint)
-        paintTexture(m_image[1]);
-    if (m_image[0]->m_paint)
-        paintTexture(m_image[0]);
+        if (m_image[1]->m_paint)
+            paintTexture(m_image[1]);
+        if (m_image[0]->m_paint)
+            paintTexture(m_image[0]);
     }
     glFlush();
 }
-
 
 void SlideShowKB::resizeGL(int w, int h) 
 {
@@ -416,12 +432,12 @@ void SlideShowKB::paintTexture(Image *img)
 
     float sx = img->m_viewTrans->m_xScaleCorrect();
     float sy = img->m_viewTrans->m_yScaleCorrect();
-    
+
     glTranslatef(img->m_viewTrans->transX(img->m_pos) * 2.0,
                 img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
     glScalef(img->m_viewTrans->scale(img->m_pos),
             img->m_viewTrans->scale(img->m_pos), 0.0);
-    
+
     GLuint& tex = img->m_texture;
 
     glBindTexture(GL_TEXTURE_2D, tex);
@@ -485,7 +501,7 @@ void SlideShowKB::endOfShow()
 
     /* actually generate the texture */
     glTexImage2D( GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0,
-                GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
+                  GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
     /* enable linear filtering  */
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
@@ -498,18 +514,18 @@ void SlideShowKB::endOfShow()
     glBindTexture(GL_TEXTURE_2D, tex);
     glBegin(GL_QUADS);
     {
-    glColor4f(1.0, 1.0, 1.0, 1.0);
-    glTexCoord2f(0, 0);
-    glVertex3f(-1.0, -1.0, 0);
+        glColor4f(1.0, 1.0, 1.0, 1.0);
+        glTexCoord2f(0, 0);
+        glVertex3f(-1.0, -1.0, 0);
 
-    glTexCoord2f(1, 0);
-    glVertex3f(1.0, -1.0, 0);
+        glTexCoord2f(1, 0);
+        glVertex3f(1.0, -1.0, 0);
 
-    glTexCoord2f(1, 1);
-    glVertex3f(1.0, 1.0, 0);
+        glTexCoord2f(1, 1);
+        glVertex3f(1.0, 1.0, 0);
 
-    glTexCoord2f(0, 1);
-    glVertex3f(-1.0, 1.0, 0);
+        glTexCoord2f(0, 1);
+        glVertex3f(-1.0, 1.0, 0);
     }
     glEnd();
 
@@ -529,7 +545,7 @@ QMap<QString,QString> SlideShowKB::effectNamesI18N()
     QMap<QString,QString> effects;
 
     effects["Ken Burns"]    = i18n("Ken Burns");
-    
+
     return effects;
 }
 
@@ -540,9 +556,9 @@ void SlideShowKB::mousePressEvent(QMouseEvent *e)
     // This parameter could be useful for future implementations
     if ( !e ){ /* TODO */ }
     // =======================================================
-    
+
     if (m_endOfShow && m_showingEnd)
-    slotClose();
+        slotClose();
 }
 
 void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
@@ -550,13 +566,13 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
     setCursor(QCursor(Qt::ArrowCursor));
     m_mouseMoveTimer->start(1000);
     m_mouseMoveTimer->setSingleShot(true);
-    
+
     QPoint pos(e->pos());
 }
 
 void SlideShowKB::slotEndOfShow()
 {
-    m_endOfShow = true;    
+    m_endOfShow = true;
 }
 
 void SlideShowKB::slotMouseMoveTimeOut()
@@ -564,14 +580,14 @@ void SlideShowKB::slotMouseMoveTimeOut()
     QPoint pos(QCursor::pos());
     if ((pos.y() < (m_deskY+20)) ||
         (pos.y() > (m_deskY+m_deskHeight-20-1)))
-    return;
+        return;
 
     setCursor(QCursor(Qt::BlankCursor));
 }
 
 void SlideShowKB::slotClose()
 {
-    close();    
+    close();
 }
 
 }  // NameSpace KIPISlideShowPlugin

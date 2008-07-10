@@ -8,9 +8,9 @@
  *
  * Copyright (C) 2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
- * <carsten dot weinhold at gmx dot de> and slideshowgl.{cpp|h} by Renchi Raju     
- * <renchi@pooh.tam.uiuc.edu>                                           
+ * Parts of this code are based on 
+ * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
+ * and slideshowgl by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
