@@ -72,7 +72,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     }
     while (fabs(s[0] - s[1]) < 0.15 && ++i < 10);
 
-    if (zoomIn xor s[0] > s[1]) 
+    if (zoomIn xor (s[0] > s[1]))
     {
         double tmp = s[0];
         s[0]       = s[1];
@@ -85,7 +85,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     // additional scale factors to ensure proper m_aspect of the displayed image
     double x[2], y[2], xMargin[2], yMargin[2], bestDist;
     double sx, sy;
-    if (relAspect > 1.0) 
+    if (relAspect > 1.0)
     {
         sx = 1.0;
         sy = relAspect;
@@ -135,7 +135,7 @@ Image::Image(ViewTrans *viewTrans, float aspect)
     this->m_aspect    = aspect;
     this->m_pos       = 0.0;
     this->m_opacity   = 0.0;
-    this->m_paint     = (m_viewTrans) ? true : false;    
+    this->m_paint     = (m_viewTrans) ? true : false;
     this->m_texture   = 0;
 }
 
@@ -208,10 +208,10 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     m_endOfShow = false;
     m_showingEnd = false;
 
-    connect(m_timer, SIGNAL(timeout(void)), 
+    connect(m_timer, SIGNAL(timeout(void)),
             this, SLOT(moveSlot()));
 
-    connect(m_imageLoadThread, SIGNAL(endOfShow(void)), 
+    connect(m_imageLoadThread, SIGNAL(endOfShow(void)),
             this, SLOT(slotEndOfShow()));
 
     // -- hide cursor when not moved --------------------
@@ -279,11 +279,11 @@ void SlideShowKB::setNewKBEffect()
     }
 }
 
-void SlideShowKB::moveSlot() 
+void SlideShowKB::moveSlot()
 {
-    if (m_initialized) 
+    if (m_initialized)
     {
-        if (m_effect->done()) 
+        if (m_effect->done())
         {
             setNewKBEffect();
             m_imageLoadThread->requestNewImage();
@@ -333,7 +333,7 @@ void SlideShowKB::startSlideShowOnce()
 {
     // when the image loader thread is ready, it will already have loaded
     // the first image
-    if (m_initialized == false && m_imageLoadThread->ready()) 
+    if (m_initialized == false && m_imageLoadThread->ready())
     {
         setupNewImage(0);                   // setup the first image and
         m_imageLoadThread->requestNewImage(); // load the next one in background
@@ -405,7 +405,7 @@ void SlideShowKB::paintGL()
     glFlush();
 }
 
-void SlideShowKB::resizeGL(int w, int h) 
+void SlideShowKB::resizeGL(int w, int h)
 {
     glViewport(0, 0, (GLint) w, (GLint) h);
 }
@@ -424,8 +424,7 @@ void SlideShowKB::applyTexture(Image *img, const QImage &texture)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 }
 
-
-void SlideShowKB::paintTexture(Image *img) 
+void SlideShowKB::paintTexture(Image *img)
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -434,9 +433,9 @@ void SlideShowKB::paintTexture(Image *img)
     float sy = img->m_viewTrans->m_yScaleCorrect();
 
     glTranslatef(img->m_viewTrans->transX(img->m_pos) * 2.0,
-                img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
+                 img->m_viewTrans->transY(img->m_pos) * 2.0, 0.0);
     glScalef(img->m_viewTrans->scale(img->m_pos),
-            img->m_viewTrans->scale(img->m_pos), 0.0);
+             img->m_viewTrans->scale(img->m_pos), 0.0);
 
     GLuint& tex = img->m_texture;
 
@@ -544,7 +543,7 @@ QMap<QString,QString> SlideShowKB::effectNamesI18N()
 {
     QMap<QString,QString> effects;
 
-    effects["Ken Burns"]    = i18n("Ken Burns");
+    effects["Ken Burns"] = i18n("Ken Burns");
 
     return effects;
 }
