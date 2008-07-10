@@ -693,7 +693,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
          it != imageURLs.end(); ++it)
     {
         KUrl url = *it;
-        bool ret = false;
+        bool ret = true;
 
         if (dlg.removeHOSTCommentIsChecked())
         {
@@ -701,25 +701,23 @@ void Plugin_MetadataEdit::slotRemoveComments()
             info.setDescription(QString::null);
         }
 
-        if (KExiv2Iface::KExiv2::canWriteComment(url.path()))
+        KExiv2Iface::KExiv2 exiv2Iface;
+        ret &= exiv2Iface.load(url.path());
+        if (ret)
         {
-            ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
-            ret &= exiv2Iface.load(url.path());
-
-            if (dlg.removeEXIFCommentIsChecked())
-                ret &= exiv2Iface.removeExifTag("Exif.Photo.UserComment");
-
-            if (dlg.removeJFIFCommentIsChecked())
+            if (dlg.removeJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
                 ret &= exiv2Iface.setComments(QByteArray());
 
-            if (exiv2Iface.supportXmp() && dlg.removeXMPCaptionIsChecked())
+            if (dlg.removeEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
+                ret &= exiv2Iface.removeExifTag("Exif.Photo.UserComment");
+
+            if (exiv2Iface.supportXmp() && dlg.removeXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
             {
                 ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
                 ret &= exiv2Iface.removeXmpTag("Xmp.exif.UserComment");
             }
 
-            if (dlg.removeIPTCCaptionIsChecked())
+            if (dlg.removeIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
                 ret &= exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
 
             ret &= exiv2Iface.save(url.path());
