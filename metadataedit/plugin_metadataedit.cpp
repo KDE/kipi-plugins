@@ -621,33 +621,32 @@ void Plugin_MetadataEdit::slotEditComments()
          it != imageURLs.end(); ++it)
     {
         KUrl url = *it;
-        bool ret = false;
+        bool ret = true;
 
         KIPI::ImageInfo info = m_interface->info(url);
         info.setDescription(dlg.getComments());
 
-        if (KExiv2Iface::KExiv2::canWriteComment(url.path()))
+        KExiv2Iface::KExiv2 exiv2Iface;
+        ret &= exiv2Iface.load(url.path());
+
+        if (ret)
         {
-            ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
-            ret &= exiv2Iface.load(url.path());
-
-            if (dlg.syncEXIFCommentIsChecked())
-                ret &= exiv2Iface.setExifComment(dlg.getComments());
-
-            if (dlg.syncJFIFCommentIsChecked())
+            if (dlg.syncJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
                 ret &= exiv2Iface.setComments(dlg.getComments().toUtf8());
 
-            if (exiv2Iface.supportXmp() && dlg.syncXMPCaptionIsChecked())
+            if (dlg.syncEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
+                ret &= exiv2Iface.setExifComment(dlg.getComments());
+
+            if (exiv2Iface.supportXmp() && dlg.syncXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
             {
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg.getComments(), 
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg.getComments(),
                                                          QString(), false);
 
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(), 
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(),
                                                          QString(), false);
             }
 
-            if (dlg.syncIPTCCaptionIsChecked())
+            if (dlg.syncIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
                 ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());
 
             ret &= exiv2Iface.save(url.path());
@@ -670,7 +669,7 @@ void Plugin_MetadataEdit::slotEditComments()
                      kapp->activeWindow(),
                      i18n("Unable to set captions as image metadata from:"),
                      errorFiles,
-                     i18n("Edit Image Caption"));  
+                     i18n("Edit Image Caption"));
     }
 }
 
