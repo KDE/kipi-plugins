@@ -245,8 +245,6 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
   * which is not returned for an unauthorised request as done without the Authorization header.
 */
 void PicasawebTalker::listAllAlbums() {
-    //PORT TO KDE4
-#if 0
     if (m_job)
     {
         m_job->kill();
@@ -254,9 +252,8 @@ void PicasawebTalker::listAllAlbums() {
     }
 
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
-    QByteArray tmp;
     QString auth_string = "GoogleLogin auth=" + m_token;
-    KIO::TransferJob* job = KIO::get(url, tmp, false);
+    KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
@@ -270,7 +267,6 @@ void PicasawebTalker::listAllAlbums() {
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
-#endif
 }
 
 void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argList)
