@@ -186,6 +186,12 @@ FrmPrintWizard::FrmPrintWizard(QWidget *parent, const char *name )
           this, SLOT(BtnPreviewPageUp_clicked(void)));
   connect(BtnPreviewPageDown, SIGNAL(clicked(void)),
           this, SLOT(BtnPreviewPageDown_clicked(void)));
+
+  connect(BtnCropPrev, SIGNAL(clicked()),
+          this, SLOT(BtnCropPrev_clicked()));
+  connect(BtnCropNext, SIGNAL(clicked()),
+          this, SLOT(BtnCropNext_clicked()));
+
   loadSettings();
 
   m_Proc = new KProcess;
