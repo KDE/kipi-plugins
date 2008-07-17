@@ -43,7 +43,7 @@ class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
                   const QByteArray& pluginVersion=QByteArray(),
                   enum LicenseKey licenseType=License_Unknown,
                   const KLocalizedString& pluginDescription=KLocalizedString(),
-                  const KLocalizedString& copyrightStatement=ki18n("Copyright 2003-2007, kipi-plugins team"));
+                  const KLocalizedString& copyrightStatement=ki18n("Copyright 2003-2008, kipi-plugins team"));
 };
 
 } // namespace KIPIPlugins
