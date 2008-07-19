@@ -75,7 +75,7 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
       mpGallery(pGallery)
 {
 // TODO: system this
-//  setButtonGuiItem( Ok, KStdGuiItem::save() );
+//  setButtonGuiItem( Ok, KStandardGuiItem::save() );
 
   Q3Frame *page = new Q3Frame (this);
   QHBoxLayout *tll = new QHBoxLayout(page);

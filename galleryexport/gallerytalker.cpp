@@ -83,7 +83,7 @@ void GalleryTalker::login( const KUrl& url, const QString& name,
     form.addPair("password",         passwd);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType() );
     job->addMetaData("cookies", "manual");
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -109,7 +109,7 @@ void GalleryTalker::listAlbums()
     form.addPair("protocol_version", "2.11");
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType() );
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
@@ -139,7 +139,7 @@ void GalleryTalker::listPhotos( const QString& albumName )
     form.addPair("set_albumName",    albumName);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType() );
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
@@ -178,7 +178,7 @@ void GalleryTalker::createAlbum( const QString& parentAlbumName,
         form.addPair("newAlbumDesc", albumCaption);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType() );
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
@@ -229,7 +229,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
         {
             image = image.scaled(maxDim, maxDim);
-            path = KUrl(photoPath).fileName(); // FIXME path = locateLocal("tmp", KUrl(photoPath).fileName());
+            path = KUrl(photoPath).fileName(); // FIXME path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
             image.save(path);
 
             if ("JPEG" == QString(photoPath) )// FIXME QString(QImageIO::imageFormat(photoPath)).toUpper())
@@ -253,7 +253,7 @@ bool GalleryTalker::addPhoto( const QString& albumName,
 
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), false);
+    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);

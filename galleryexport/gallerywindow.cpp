@@ -43,7 +43,7 @@
 
 #include <KAboutData>
 #include <KHelpMenu>
-//#include <kpopupmenu.h>
+//#include <kmenu.h>
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
@@ -58,6 +58,7 @@
 
 #include <libkipi/interface.h>
 // #include <libkipi/imagedialog.h> included below
+#include <ktoolinvocation.h>
 
 // Local includes.
 
@@ -206,7 +207,7 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::slotHelp()
 {
-    // FIXME KApplication::kApplication()->invokeHelp("galleryexport", "kipi-plugins");
+    // FIXME KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
     return;
 }
 
@@ -299,7 +300,7 @@ void GalleryWindow::slotAlbums( const Q3ValueList<GAlbum>& albumList )
 
     // FIXME
     // KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
-    QPixmap pix = QPixmap();// QPixmap pix = iconLoader->loadIcon( "folder", KIcon::NoGroup, 32 );
+    QPixmap pix = QPixmap();// QPixmap pix = iconLoader->loadIcon( "folder", KIconLoader::NoGroup, 32 );
 
     typedef Q3ValueList<GAlbum> GAlbumList;
     GAlbumList::const_iterator iter;

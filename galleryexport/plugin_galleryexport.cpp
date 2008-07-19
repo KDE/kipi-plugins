@@ -78,7 +78,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
     // Add our directory in to the icon loader dirs.
     // DEPRECATED: how to substitute??
-    // KGlobal::iconLoader()->addAppDir("kipiplugin_galleryexport");   
+    // KIconLoader::global()->addAppDir("kipiplugin_galleryexport");   
 
 // DEPRECATED
 //     m_action_sync = new KAction(i18n("Remote Gallery Sync..."),

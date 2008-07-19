@@ -36,6 +36,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <krandom.h>
 
 #include "gallerympform.h"
 #include "gallerytalker.h"
@@ -46,7 +47,7 @@ namespace KIPIGalleryExportPlugin
 GalleryMPForm::GalleryMPForm()
 {
     m_boundary  = "----------";
-// FIXME     m_boundary += KApplication::randomString( 42 + 13 ).ascii();
+// FIXME     m_boundary += KRandom::randomString( 42 + 13 ).ascii();
 
     if (GalleryTalker::isGallery2())
     {

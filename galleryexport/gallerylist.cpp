@@ -67,11 +67,11 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
 //  if (!blnShowOpen)
 //    showButtonOK(false);
 
-//   setButtonGuiItem(User3, KStdGuiItem::add());
-//   setButtonGuiItem(User2, KStdGuiItem::configure());
-//   setButtonGuiItem(User1, KStdGuiItem::remove());
-//   setButtonGuiItem(Close, KStdGuiItem::close());
-//   setButtonGuiItem(Ok,    KStdGuiItem::open());
+//   setButtonGuiItem(User3, KStandardGuiItem::add());
+//   setButtonGuiItem(User2, KStandardGuiItem::configure());
+//   setButtonGuiItem(User1, KStandardGuiItem::remove());
+//   setButtonGuiItem(Close, KStandardGuiItem::close());
+//   setButtonGuiItem(Ok,    KStandardGuiItem::open());
 
   enableButton(Ok,    false);
   enableButton(User1, false);
@@ -203,7 +203,7 @@ void GalleryList::slotUser1(void)
 //                  "All synchronisaton settings will be lost. "
 //                  "You cannot undo this action."), 
 //             i18n("Remove Remote Gallery"), 
-//             KStdGuiItem::yes(), KStdGuiItem::no(),
+//             KStandardGuiItem::yes(), KStandardGuiItem::no(),
 //             QString::null, KMessageBox::Dangerous))
 //     {
 //       GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
