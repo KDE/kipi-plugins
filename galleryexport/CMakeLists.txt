@@ -1,4 +1,3 @@
-INCLUDE_DIRECTORIES( ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
 SET( kipiplugin_galleryexport_PART_SRCS
     plugin_galleryexport.cpp
