@@ -91,7 +91,7 @@ void GAlbumViewItem::setup()
 {
     int h = listView()->fontMetrics().height();
     int margin = 4;
-    setHeight( QMAX(2*h + margin, 32) );
+    setHeight( qMax(2*h + margin, 32) );
 }
 
 }
