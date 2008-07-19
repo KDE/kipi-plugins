@@ -32,7 +32,6 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QCursor>
-#include <QLineEdit>
 #include <q3progressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>

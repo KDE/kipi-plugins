@@ -27,7 +27,6 @@
 #include <q3cstring.h>
 #include <QString>
 
-class KUrl;
 
 namespace KIPIGalleryExportPlugin
 {

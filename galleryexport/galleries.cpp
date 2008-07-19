@@ -25,16 +25,12 @@
 #include <QString>
 #include <QWidget>
 //Added by qt3to4:
-#include <Q3ValueList>
-#include <KApplication>
 #include <KDebug>
 #include <KConfig>
 #include <KConfigGroup>
 #include <KLocale>
-#include <kdeversion.h>
-#if KDE_IS_VERSION(3,2,0)
+#include <KApplication>
 #include <kwallet.h>
-#endif
 
 // local includes
 #include "galleries.h"
@@ -126,7 +122,6 @@ void Galleries::Load()
   bln_loaded = true;
 
   bool bln_use_wallet = false;
-#if KDE_IS_VERSION(3,2,0)
   mpWallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
                                          kapp->activeWindow()->winId(),
                                          KWallet::Wallet::Synchronous);
@@ -147,7 +142,6 @@ void Galleries::Load()
     else
       bln_use_wallet = true;
   }
-#endif
 
     // TODO: system this. I really don't know if this should be good..
 

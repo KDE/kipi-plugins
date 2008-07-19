@@ -23,13 +23,11 @@
  *
  * ============================================================ */
 
-#include <KApplication>
 #include <KDebug>
 #include <KMimeType>
 #include <KUrl>
 
 #include <QFile>
-#include <QFileInfo>
 #include <q3textstream.h>
 //Added by qt3to4:
 #include <Q3CString>

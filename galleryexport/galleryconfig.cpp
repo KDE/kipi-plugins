@@ -29,13 +29,8 @@
 #include <Q3Frame>
 
 #include <QPushButton>
-#include <QTimer>
-#include <QPixmap>
-#include <QCursor>
 #include <QLineEdit>
-#include <QSpinBox>
 #include <QCheckBox>
-#include <QLayout>
 //Added by qt3to4:
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -45,14 +40,9 @@
 // Include files for KDE
 
 #include <KLocale>
-#include <KMessageBox>
-#include <KApplication>
-#include <KIconLoader>
 #include <khtml_part.h>
 #include <khtmlview.h>
-#include <KRun>
 #include <KDebug>
-#include <KConfig>
 
 // KIPI include files
 

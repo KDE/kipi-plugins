@@ -25,15 +25,9 @@
 // Include files for Qt
 
 #include <q3listview.h>
-#include <QLayout>
 #include <q3progressdialog.h>
 
 #include <QPushButton>
-#include <QTimer>
-#include <QPixmap>
-#include <QCursor>
-#include <QLineEdit>
-#include <QSpinBox>
 #include <QCheckBox>
 
 //Added by qt3to4:
@@ -47,7 +41,6 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
-#include <KIconLoader>
 
 // Local includes.
 

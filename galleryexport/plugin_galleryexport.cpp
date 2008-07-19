@@ -29,13 +29,11 @@
 // KDE includes.
 #include <KLocale>
 #include <KAction>
-#include <KGenericFactory>
-#include <KLibLoader>
-#include <KConfig>
 #include <KDebug>
-#include <KApplication>
 #include <KMessageBox>
 #include <KIconLoader>
+#include <KApplication>
+#include <KGenericFactory>
 
 // libkipi includes.
 #include <libkipi/interface.h>

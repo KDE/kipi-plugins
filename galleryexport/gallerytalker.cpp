@@ -34,7 +34,6 @@
 #include <KLocale>
 #include <kio/job.h>
 #include <KDebug>
-#include <KMimeType>
 #include <KStandardDirs>
 
 #include <cstring>
