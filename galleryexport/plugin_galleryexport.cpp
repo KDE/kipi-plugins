@@ -79,32 +79,30 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     // KIconLoader::global()->addAppDir("kipiplugin_galleryexport");   
 
 
-    m_action_sync = new KAction(i18n("Remote Gallery Sync"), actionCollection() );
+    m_action_sync = new KAction(i18n("Remote Gallery Sync"), this );
     m_action_sync->setObjectName("Remote Gallery Sync");
     connect( m_action_sync, SIGNAL(triggered(bool)), this, SLOT(slotSync()) );
     m_action_sync->setEnabled(true);
     addAction(m_action_sync);
 
 
-    m_action_configure = new KAction(i18n("Remote Galleries Setting"), actionCollection() );
+    m_action_configure = new KAction(i18n("Remote Galleries Setting"), this );
     m_action_configure->setObjectName("Remote Gallery Setting");
     connect( m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()) );
     m_action_configure->setEnabled(true);
     addAction(m_action_configure);
 
 
-    m_action_collection_settings = new KAction( i18n("Remote Gallery Collection Settings"), 
-                                                actionCollection() );
+    m_action_collection_settings = new KAction( i18n("Remote Gallery Collection Settings"), this );
     m_action_collection_settings->setObjectName("Remote Gallery Collection Settings");
-    connect( m_action_collection_settings, SIGNAL(triggered(bool)), 
-            this, SLOT(slotCollectionSettings()) );
+    connect( m_action_collection_settings, SIGNAL(triggered(bool)), this, SLOT(slotCollectionSettings()) );
     m_action_collection_settings->setEnabled(true);
     addAction(m_action_collection_settings);
 
 
-    m_action_image_setting = new KAction(i18n("Remote Gallery Image Settings"), actionCollection() );
+    m_action_image_setting = new KAction(i18n("Remote Gallery Image Settings"), this );
     m_action_image_setting->setObjectName("Remote Gallery Image Settings");
-    connect( m_action_image_settings, SIGNAL(triggered(bool)), this, SLOT(slotImageSettings()) );
+    connect( m_action_image_setting, SIGNAL(triggered(bool)), this, SLOT(slotImageSettings()) );
     m_action_image_setting->setEnabled(true);
     addAction(m_action_image_setting);
 
