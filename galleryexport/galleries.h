@@ -24,7 +24,7 @@
 #define GALLERIES_H
 
 #include <QList>
-#include <q3listview.h>
+#include <QListWidget>
 
 namespace KWallet
 {
@@ -60,7 +60,7 @@ public:
     void setVersion(unsigned int version);
     void setGalleryId(unsigned int galleryId);
 
-    Q3ListViewItem* asQListViewItem(Q3ListView* pParent);
+    QListWidgetItem* asQListWidgetItem(QListWidget* pParent);
 
 private:
 
@@ -75,10 +75,10 @@ private:
 
 
 /* Simple Stub Class to allow easy access to Galleries from GUI elements */
-class GalleryQListViewItem : public Q3ListViewItem
+class GalleryQListWidgetItem : public QListWidgetItem
 {
 public:
-  GalleryQListViewItem(Gallery* pGallery, Q3ListView* pParent);
+  GalleryQListWidgetItem(Gallery* pGallery, QListWidget* pParent);
 
   Gallery* GetGallery();
   void Refresh();
@@ -99,7 +99,7 @@ public:
   void Add(Gallery& rGallery);
   void Remove(Gallery& rGallery);
   void Save();
-  Q3ListView* asQListView(QWidget* pParent);
+  QListWidget* asQListWidget(QWidget* pParent);
 
 private:
   void Load();

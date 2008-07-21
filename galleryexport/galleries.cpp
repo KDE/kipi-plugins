@@ -24,7 +24,6 @@
 // KDE includes
 #include <QString>
 #include <QWidget>
-//Added by qt3to4:
 #include <KDebug>
 #include <KConfig>
 #include <KConfigGroup>
@@ -73,30 +72,32 @@ void Gallery::setVersion(unsigned int version) { mVersion = version; }
 void Gallery::setGalleryId(unsigned int galleryId) { mGalleryId = galleryId; }
 
 
-Q3ListViewItem* Gallery::asQListViewItem(Q3ListView* pParent)
+QListWidgetItem* Gallery::asQListWidgetItem(QListWidget* pParent)
 {
-  Q3ListViewItem* p_lvi = (Q3ListViewItem*) new GalleryQListViewItem(this, pParent);
+  QListWidgetItem* p_lvi = (QListWidgetItem*) new GalleryQListWidgetItem(this, pParent);
   return p_lvi;
 }
 
 
 
-GalleryQListViewItem::GalleryQListViewItem(Gallery* pGallery, Q3ListView* pParent)
-  : Q3ListViewItem(pParent, pGallery->name(), pGallery->url(), pGallery->username()),
+GalleryQListWidgetItem::GalleryQListWidgetItem(Gallery* pGallery, QListWidget* pParent)
+  : QListWidgetItem(pGallery->name(), pParent), 
+//FIXME : label to readd somewhere..  pGallery->{name(),url(),username()}
     mpGallery(pGallery)
 {
 }
 
-Gallery* GalleryQListViewItem::GetGallery()
+Gallery* GalleryQListWidgetItem::GetGallery()
 {
   return mpGallery;
 }
 
-void GalleryQListViewItem::Refresh()
+void GalleryQListWidgetItem::Refresh()
 {
-  setText(0, mpGallery->name());
-  setText(1, mpGallery->url());
-  setText(2, mpGallery->username());
+  setText( mpGallery->name() );
+// FIXME: perhaps we need 3 QWidgetItem??
+//  setText(1, mpGallery->url());
+//  setText(2, mpGallery->username());
 }
 
 
@@ -222,28 +223,25 @@ void Galleries::Save()
     }
 }
 
-Q3ListView* Galleries::asQListView(QWidget* pParent)
+QListWidget* Galleries::asQListWidget(QWidget* pParent)
 {
   Load();
 
-// TODO: system this..
+  QListWidget* p_lv = new QListWidget (pParent);
+  p_lv->addItem(i18n("Gallery Name"));
+  p_lv->addItem(i18n("URL"));
+  p_lv->addItem(i18n("User"));
 
-//   Q3ListView* p_lv = new Q3ListView (pParent);
-//   p_lv->addColumn(i18n("Gallery Name"));
-//   p_lv->addColumn(i18n("URL"));
-//   p_lv->addColumn(i18n("User"));
-//   p_lv->setAllColumnsShowFocus(true);
-// 
+//  FIXME p_lv->setAllColumnsShowFocus(true);
+
+// FIXME : full QListWidget
 //   for (GalleryPtrList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
 //   {
-//     (*it)->asQListViewItem(p_lv);
+//     (*it)->asQListWidgetItem(p_lv);
 //   }
-// 
-//   return p_lv;
 
-// workaround
-    Q3ListView *nude = new Q3ListView;
-    return nude;
+  return p_lv;
+
 }
 
 }
