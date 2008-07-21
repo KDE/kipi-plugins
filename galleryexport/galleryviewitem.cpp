@@ -38,7 +38,7 @@ void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
     if (!p)
         return;
 
-    Q3ListView *lv = listView();
+    QListWidget *lv = listView();
     if (!lv)
         return;
     QFontMetrics fm(p->fontMetrics());

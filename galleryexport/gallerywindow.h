@@ -26,15 +26,16 @@
 
 #include <KDialog>
 
-#include <q3valuelist.h>
-#include <qpair.h>
-#include <q3intdict.h>
+#include <QList>
+#include <QPair>
+#include <QHash>
+//#include <q3intdict.h>
 
-class Q3ListView;
+class QListWidget;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
-class Q3ProgressDialog;
+class QProgressDialog;
 class KHTMLPart;
 class KUrl;
 
@@ -67,7 +68,7 @@ public:
 
 private:
 
-    Q3ListView                *m_albumView;
+    QListWidget              *m_albumView;
     KHTMLPart                *m_photoView;
     QPushButton              *m_newAlbumBtn;
     QPushButton              *m_addPhotoBtn;
@@ -77,15 +78,15 @@ private:
     QCheckBox                *m_resizeCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;
-    Q3IntDict<GAlbumViewItem>  m_albumDict;
+//    Q3IntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
     KIPIPlugins::KPAboutData *m_about;
 
-    Q3ProgressDialog                      *m_progressDlg;
+    QProgressDialog                      *m_progressDlg;
     unsigned int                          m_uploadCount;
     unsigned int                          m_uploadTotal;
-    Q3ValueList< QPair<QString,QString> >  m_uploadQueue;
+    QList< QPair<QString,QString> >  m_uploadQueue;
 
     Galleries* mpGalleries;
     Gallery*   mpGallery;
@@ -96,8 +97,8 @@ private slots:
     void slotLoginFailed( const QString& msg );
     void slotBusy( bool val );
     void slotError( const QString& msg );
-    void slotAlbums( const Q3ValueList<GAlbum>& albumList );
-    void slotPhotos( const Q3ValueList<GPhoto>& photoList );
+    void slotAlbums( const QList<GAlbum>& albumList );
+    void slotPhotos( const QList<GPhoto>& photoList );
     void slotAlbumSelected();
     void slotOpenPhoto( const KUrl& url );
     void slotNewAlbum();

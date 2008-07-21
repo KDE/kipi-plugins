@@ -27,16 +27,14 @@
 
 #include <Qt>
 
-#include <q3listview.h>
 #include <QPushButton>
 #include <QTimer>
 #include <QPixmap>
 #include <QCursor>
-#include <q3progressdialog.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QProgressDialog>
+#include <QListWidgetItem>
 
 // Include files for KDE
 
@@ -122,12 +120,12 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_resizeCheckBox   = widget->m_resizeCheckBox;
     m_dimensionSpinBox = widget->m_dimensionSpinBox;
 
-    m_albumView->setRootIsDecorated( true );
+        // FIXME m_albumView->setRootIsDecorated( true );
 
     m_newAlbumBtn->setEnabled( false );
     m_addPhotoBtn->setEnabled( false );
 
-    m_progressDlg = new Q3ProgressDialog( this, 0, true );
+    m_progressDlg = new QProgressDialog("ciao", "ciao", 0, 0, this); // FIXME ( this, 0, true );
     m_progressDlg->setAutoReset( true );
     m_progressDlg->setAutoClose( true );
 
@@ -153,10 +151,10 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
              SLOT( slotBusy( bool ) ) );
     connect( m_talker,  SIGNAL( signalLoginFailed( const QString& ) ),
              SLOT( slotLoginFailed( const QString& ) ) );
-    connect( m_talker, SIGNAL( signalAlbums( const Q3ValueList<GAlbum>& ) ),
-             SLOT( slotAlbums( const Q3ValueList<GAlbum>& ) ) );
-    connect( m_talker, SIGNAL( signalPhotos( const Q3ValueList<GPhoto>& ) ),
-             SLOT( slotPhotos( const Q3ValueList<GPhoto>& ) ) );
+    connect( m_talker, SIGNAL( signalAlbums( const QList<GAlbum>& ) ),
+             SLOT( slotAlbums( const QList<GAlbum>& ) ) );
+    connect( m_talker, SIGNAL( signalPhotos( const QList<GPhoto>& ) ),
+             SLOT( slotPhotos( const QList<GPhoto>& ) ) );
     connect( m_talker, SIGNAL( signalAddPhotoSucceeded() ),
              SLOT( slotAddPhotoSucceeded() ) );
     connect( m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
@@ -280,7 +278,7 @@ void GalleryWindow::slotBusy( bool val )
         QCursor(0); // FIXME Qt::ArrowCursor);
         bool loggedIn = m_talker->loggedIn();
         m_newAlbumBtn->setEnabled( loggedIn );
-        m_addPhotoBtn->setEnabled( loggedIn && m_albumView->selectedItem() );
+        m_addPhotoBtn->setEnabled( loggedIn && m_albumView->currentItem() );
     }
 }
 
@@ -289,7 +287,7 @@ void GalleryWindow::slotError( const QString& msg )
     KMessageBox::error( this, msg );
 }
 
-void GalleryWindow::slotAlbums( const Q3ValueList<GAlbum>& albumList )
+void GalleryWindow::slotAlbums( const QList<GAlbum>& albumList )
 {
     m_albumDict.clear();
     m_albumView->clear();
@@ -301,7 +299,7 @@ void GalleryWindow::slotAlbums( const Q3ValueList<GAlbum>& albumList )
     // KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
     QPixmap pix = QPixmap();// QPixmap pix = iconLoader->loadIcon( "folder", KIconLoader::NoGroup, 32 );
 
-    typedef Q3ValueList<GAlbum> GAlbumList;
+    typedef QList<GAlbum> GAlbumList;
     GAlbumList::const_iterator iter;
     for ( iter = albumList.begin(); iter != albumList.end(); ++iter )
     {
@@ -311,17 +309,17 @@ void GalleryWindow::slotAlbums( const Q3ValueList<GAlbum>& albumList )
         {
             GAlbumViewItem* item = new GAlbumViewItem( m_albumView, album.title,
                                                        album );
-            item->setPixmap( 0, pix );
+            //FIXME item->setPixmap( 0, pix );
             m_albumDict.insert( album.ref_num, item );
         }
         else
         {
-            Q3ListViewItem* parent = m_albumDict.find( album.parent_ref_num );
+            QListWidgetItem* parent = m_albumDict.find( album.parent_ref_num );
             if ( parent )
             {
                 GAlbumViewItem* item = new GAlbumViewItem( parent, album.title,
                                                            album);
-                item->setPixmap( 0, pix );
+                // FIXME item->setPixmap( 0, pix );
                 m_albumDict.insert( album.ref_num, item );
             }
             else
@@ -350,13 +348,13 @@ void GalleryWindow::slotAlbums( const Q3ValueList<GAlbum>& albumList )
         GAlbumViewItem* lastSelectedItem = m_albumDict.find( lastSelectedID );
         if (lastSelectedItem)
         {
-            m_albumView->setSelected( lastSelectedItem, true );
-            m_albumView->ensureItemVisible( lastSelectedItem );
+            m_albumView->setCurrentItem( lastSelectedItem );  // true
+// FIXME perhaps to be removed           m_albumView->ensureItemVisible( lastSelectedItem );
         }
     }
 }
 
-void GalleryWindow::slotPhotos( const Q3ValueList<GPhoto>& photoList)
+void GalleryWindow::slotPhotos( const QList<GPhoto>& photoList)
 {
     int pxSize = fontMetrics().height() - 2;
     QString styleSheet =
@@ -384,7 +382,7 @@ void GalleryWindow::slotPhotos( const Q3ValueList<GPhoto>& photoList)
                        "border='0' cellspacing='1' cellpadding='1'>" );
 
 
-    typedef Q3ValueList<GPhoto> GPhotoList;
+    typedef QList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iter;
     for ( iter = photoList.begin(); iter != photoList.end(); ++iter )
     {
@@ -412,7 +410,7 @@ void GalleryWindow::slotPhotos( const Q3ValueList<GPhoto>& photoList)
 
 void GalleryWindow::slotAlbumSelected()
 {
-    Q3ListViewItem* item = m_albumView->selectedItem();
+    QListWidgetItem* item = m_albumView->currentItem();
     if ( !item )
     {
         m_addPhotoBtn->setEnabled( false );
@@ -555,7 +553,7 @@ void GalleryWindow::slotNewAlbum()
 
     QString parentAlbumName;
 
-    Q3ListViewItem* item = m_albumView->selectedItem();
+    QListWidgetItem* item = m_albumView->currentItem();
     if (item)
     {
         GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
@@ -571,7 +569,7 @@ void GalleryWindow::slotNewAlbum()
 
 void GalleryWindow::slotAddPhotos()
 {
-    Q3ListViewItem* item = m_albumView->selectedItem();
+    QListWidgetItem* item = m_albumView->currentItem();
     if (!item)
         return;
 
@@ -630,7 +628,7 @@ void GalleryWindow::slotAddPhotoNext()
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     m_uploadCount++;
-    m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+    m_progressDlg->setValue( m_uploadCount ); //, m_uploadTotal );
     slotAddPhotoNext();
 }
 
@@ -653,7 +651,7 @@ void GalleryWindow::slotAddPhotoFailed( const QString& msg )
     else
     {
         m_uploadTotal--;
-        m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+        m_progressDlg->setValue( m_uploadCount ); //, m_uploadTotal );
         slotAddPhotoNext();
     }
 }

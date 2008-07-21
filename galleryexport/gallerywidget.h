@@ -26,7 +26,7 @@
 
 #include <QWidget>
 
-class Q3ListView;
+class QListWidget;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
@@ -50,7 +50,7 @@ private slots:
 
 private:
 
-    Q3ListView*    m_albumView;
+    QListWidget*    m_albumView;
     KHTMLPart*    m_photoView;
     QPushButton*  m_newAlbumBtn;
     QPushButton*  m_addPhotoBtn;

@@ -24,23 +24,23 @@
 #ifndef GALLERYVIEWITEM_H
 #define GALLERYVIEWITEM_H
 
-#include <q3listview.h>
+#include <QListWidget>
 
 #include "galleryitem.h"
 
 namespace KIPIGalleryExportPlugin
 {
 
-class GAlbumViewItem : public Q3ListViewItem
+class GAlbumViewItem : public QListWidgetItem
 {
 public:
 
-    GAlbumViewItem(Q3ListView* parent, const QString& name,
+    GAlbumViewItem(QListWidget* parent, const QString& name,
                    const GAlbum& _album)
-        : Q3ListViewItem(parent, name), album(_album) {}
-    GAlbumViewItem(Q3ListViewItem* parent, const QString& name,
+        : QListWidgetItem(parent, name), album(_album) {}
+    GAlbumViewItem(QListWidgetItem* parent, const QString& name,
                    const GAlbum& _album)
-        : Q3ListViewItem(parent, name), album(_album) {}
+        : QListWidgetItem(parent, name), album(_album) {}
 
     GAlbum album;
 

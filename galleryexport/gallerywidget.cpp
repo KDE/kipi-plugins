@@ -31,16 +31,18 @@
 // Qt includes
 #include <QPushButton>
 #include <QLabel>
-#include <q3frame.h>
+#include <QFrame>
+
+#include <QListWidget>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QLayout>
+#include <QToolTip>
+#include <QSplitter>
+
 #include <q3header.h>
-#include <q3listview.h>
 #include <q3buttongroup.h>
 #include <q3groupbox.h>
-#include <qspinbox.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qsplitter.h>
 #include <q3whatsthis.h>
 
 #include <QGridLayout>
@@ -62,13 +64,13 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     // ------------------------------------------------------------------------
 
     QLabel*       headerLabel;
-    Q3Frame*       headerLine;
+    QFrame*       headerLine;
 
     headerLabel = new QLabel( this, "headerLabel" );
     galleryWidgetLayout->addWidget( headerLabel, 0 );
-    headerLine = new Q3Frame( this, "headerLine" );
-    headerLine->setFrameShape( Q3Frame::HLine );
-    headerLine->setFrameShadow( Q3Frame::Sunken );
+    headerLine = new QFrame( this, "headerLine" );
+    headerLine->setFrameShape( QFrame::HLine );
+    headerLine->setFrameShadow( QFrame::Sunken );
     galleryWidgetLayout->addWidget( headerLine, 0 );
 
     // ------------------------------------------------------------------------
@@ -76,7 +78,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     QSplitter* splitter = new QSplitter(this);
     galleryWidgetLayout->addWidget( splitter, 5 );
 
-    m_albumView = new Q3ListView( splitter, "m_albumView" );
+    m_albumView = new QListWidget( splitter, "m_albumView" );
     m_albumView->addColumn( i18n( "Albums" ) );
     m_albumView->setResizeMode( Q3ListView::AllColumns );
 
