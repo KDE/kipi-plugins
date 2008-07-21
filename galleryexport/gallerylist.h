@@ -26,7 +26,7 @@
 
 #include <KDialog>
 
-#include <q3listview.h>
+#include <QListWidget>
 
 namespace KIPIGalleryExportPlugin
 {
@@ -49,12 +49,12 @@ private:
 
   Galleries* mpGalleries;
   Gallery* mpCurrentGallery;
-  Q3ListView* mpGalleryList;
+  QListWidget* mpGalleryList;
 
 private slots:
 
   void selectionChanged();
-  void doubleClicked(Q3ListViewItem*, const QPoint&, int);
+  void doubleClicked(QListWidgetItem*, const QPoint&, int);
 
   void slotUser1();
   void slotUser2();

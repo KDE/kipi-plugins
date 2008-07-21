@@ -24,7 +24,7 @@
 
 // Include files for Qt
 
-#include <q3listview.h>
+#include <QListWidget>
 #include <q3progressdialog.h>
 
 #include <QPushButton>
@@ -88,11 +88,11 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   vb->setSpacing (KDialog::spacingHint());
   tll->addItem(vb);
 
-  mpGalleryList = mpGalleries->asQListView(page);
+  mpGalleryList = mpGalleries->asQListWidget(page);
   vb->addWidget(mpGalleryList);
   connect(mpGalleryList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
-  connect(mpGalleryList, SIGNAL(doubleClicked(Q3ListViewItem*, const QPoint&, int)),
-          this, SLOT(doubleClicked(Q3ListViewItem*, const QPoint&, int)));
+  connect(mpGalleryList, SIGNAL(doubleClicked(QListWidgetItem*, const QPoint&, int)),
+          this, SLOT(doubleClicked(QListWidgetItem*, const QPoint&, int)));
 }
 
 GalleryList::~GalleryList()
@@ -107,7 +107,7 @@ Gallery* GalleryList::GetGallery()
 
 void GalleryList::selectionChanged()
 {
-  Q3ListViewItem* p_lvi = mpGalleryList->selectedItem();
+  QListWidgetItem* p_lvi = mpGalleryList->currentItem();
   bool bln_selected = (p_lvi ? true : false);
   enableButton(User1, bln_selected);
   enableButton(User2, bln_selected);
@@ -115,7 +115,7 @@ void GalleryList::selectionChanged()
 
   if (bln_selected)
   {
-    GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
+    GalleryQListWidgetItem* p_glvi = dynamic_cast<GalleryQListWidgetItem*>(p_lvi);
     mpCurrentGallery = p_glvi->GetGallery();
   }
   else
@@ -124,7 +124,7 @@ void GalleryList::selectionChanged()
   }
 }
 
-void GalleryList::doubleClicked(Q3ListViewItem* pCurrent, const QPoint&, int)
+void GalleryList::doubleClicked(QListWidgetItem* pCurrent, const QPoint&, int)
 {
   if (!pCurrent)
     return;
@@ -148,7 +148,7 @@ void GalleryList::slotUser3(void)
     {
         mpGalleries->Add(*p_gallery);
         mpGalleries->Save();
-        p_gallery->asQListViewItem(mpGalleryList);
+        p_gallery->asQListWidgetItem(mpGalleryList);
     }
     else
     {
@@ -160,14 +160,14 @@ void GalleryList::slotUser3(void)
 //==================   Edit  ======
 void GalleryList::slotUser2(void)
 {
-    Q3ListViewItem* p_lvi = mpGalleryList->selectedItem();
+    QListWidgetItem* p_lvi = mpGalleryList->currentItem();
     if (!p_lvi)
     {
         KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
     }
     else
     {
-        GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
+        GalleryQListWidgetItem* p_glvi = dynamic_cast<GalleryQListWidgetItem*>(p_lvi);
         GalleryEdit dlg(this, p_glvi->GetGallery(), i18n("Edit Remote Gallery"));
 
         if (QDialog::Accepted == dlg.exec())
