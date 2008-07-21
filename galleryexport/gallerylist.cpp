@@ -25,7 +25,7 @@
 // Include files for Qt
 
 #include <QListWidget>
-#include <q3progressdialog.h>
+#include <QProgressDialog>      // FIXME sure we need it?
 
 #include <QPushButton>
 #include <QCheckBox>
@@ -34,7 +34,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <Q3Frame>
+#include <QFrame>
 
 // Include files for KDE
 
@@ -70,7 +70,7 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   enableButton(User1, false);
   enableButton(User2, false);
 
-  Q3Frame *page = new Q3Frame(this);
+  QFrame *page = new QFrame(this);
   QHBoxLayout *tll = new QHBoxLayout(page);
   page->setMinimumSize(400, 200);
   setMainWidget(page);
@@ -82,7 +82,7 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   QLabel *label = new QLabel(page);
   hb->addWidget(label);
   label->setPixmap(UserIcon("gallery"));
-  label->setFrameStyle (Q3Frame::Panel | Q3Frame::Sunken);
+  label->setFrameStyle (QFrame::Panel | QFrame::Sunken);
   label->setAlignment(Qt::AlignTop);
   QVBoxLayout *vb = new QVBoxLayout();
   vb->setSpacing (KDialog::spacingHint());
