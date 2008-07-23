@@ -30,7 +30,6 @@
 #include <QPushButton>
 #include <QCheckBox>
 
-//Added by qt3to4:
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>

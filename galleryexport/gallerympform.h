@@ -24,7 +24,7 @@
 #ifndef GALLERYMPFORM_H
 #define GALLERYMPFORM_H
 
-#include <q3cstring.h>
+#include <QByteArray>
 #include <QString>
 
 
@@ -53,7 +53,7 @@ private:
     bool addPairRaw(const QString& name, const QString& value);
 
     QByteArray m_buffer;
-    Q3CString   m_boundary;
+    QByteArray m_boundary;
 };
 
 }

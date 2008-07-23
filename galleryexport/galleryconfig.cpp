@@ -24,14 +24,14 @@
 
 // Include files for Qt
 
-#include <q3listview.h>
-#include <q3progressdialog.h>
-#include <Q3Frame>
+#include <QListWidget>
+#include <QProgressDialog>
+#include <QFrame>
 
 #include <QPushButton>
 #include <QLineEdit>
 #include <QCheckBox>
-//Added by qt3to4:
+
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -67,7 +67,7 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
 // TODO: system this
 //  setButtonGuiItem( Ok, KStandardGuiItem::save() );
 
-  Q3Frame *page = new Q3Frame (this);
+  QFrame *page = new QFrame (this);
   QHBoxLayout *tll = new QHBoxLayout(page);
   page->setMinimumSize (500, 200);
   setMainWidget(page);
@@ -82,13 +82,13 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
   mpHeaderLabel->setText(title);
   vbox->addWidget(mpHeaderLabel);
 
-  Q3Frame* hline = new Q3Frame(page, "hline");
-  hline->setFrameShape(Q3Frame::HLine);
-  hline->setFrameShadow(Q3Frame::Sunken);
-  hline->setFrameShape(Q3Frame::HLine);
+  QFrame* hline = new QFrame(page);//, "hline");
+  hline->setFrameShape(QFrame::HLine);
+  hline->setFrameShadow(QFrame::Sunken);
+  hline->setFrameShape(QFrame::HLine);
   vbox->addWidget(hline);
 
-  QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
+  QGridLayout* centerLayout = new QGridLayout(); //0, 1, 1, 5, 5);
 
   mpNameEdit = new QLineEdit( this );
   centerLayout->addWidget(mpNameEdit, 0, 1);

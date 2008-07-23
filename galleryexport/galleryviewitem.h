@@ -25,6 +25,7 @@
 #define GALLERYVIEWITEM_H
 
 #include <QListWidget>
+#include <QPalette>
 
 #include "galleryitem.h"
 
@@ -35,19 +36,17 @@ class GAlbumViewItem : public QListWidgetItem
 {
 public:
 
-    GAlbumViewItem(QListWidget* parent, const QString& name,
-                   const GAlbum& _album)
-        : QListWidgetItem(parent, name), album(_album) {}
-    GAlbumViewItem(QListWidgetItem* parent, const QString& name,
-                   const GAlbum& _album)
-        : QListWidgetItem(parent, name), album(_album) {}
+    GAlbumViewItem();
+
+    GAlbumViewItem(QListWidget* parent, const QString& name, const GAlbum& _album);
+
+    GAlbumViewItem(QListWidgetItem* parent, const QString& name, const GAlbum& _album);
 
     GAlbum album;
 
-    void paintCell(QPainter * p, const QColorGroup & cg,
-                   int column, int width, int );
-    void paintFocus (QPainter*, const QColorGroup&,
-                     const QRect&) {}
+    void paintCell(QPainter* p, const QPalette& cg, int column, int width );
+
+    void paintFocus(QPainter* p, const QPalette& cg, const QRect& rc);
 
 protected:
 

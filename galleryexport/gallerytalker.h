@@ -25,8 +25,7 @@
 #define GALLERYTALKER_H
 
 #include <QObject>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <KUrl>
 
 namespace KIO
@@ -35,7 +34,7 @@ namespace KIO
 }
 
 class KUrl;
-template <class T> class Q3ValueList;
+template <class T> class QList;
 
 namespace KIPIGalleryExportPlugin
 {
@@ -109,8 +108,8 @@ signals:
     void signalError( const QString& msg );
     void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
-    void signalAlbums( const Q3ValueList<GAlbum>& albumList );
-    void signalPhotos( const Q3ValueList<GPhoto>& photoList );
+    void signalAlbums( const QList<GAlbum>& albumList );
+    void signalPhotos( const QList<GPhoto>& photoList );
     void signalAddPhotoSucceeded( );
     void signalAddPhotoFailed( const QString& msg );
 

@@ -40,10 +40,10 @@
 #include <QToolTip>
 #include <QSplitter>
 
-#include <q3header.h>
-#include <q3buttongroup.h>
-#include <q3groupbox.h>
-#include <q3whatsthis.h>
+//#include <QHeader>
+#include <QButtonGroup>
+#include <QGroupBox>
+#include <QWhatsThis>
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -54,21 +54,21 @@ namespace KIPIGalleryExportPlugin
 {
 
 GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
-    : QWidget( parent, name, fl )
+    : QWidget( parent, fl )
 {
-    if ( !name )
-	      setName( "GalleryWidget" );
+// FIXME     if ( !name )
+//         setName( "GalleryWidget" );
     QVBoxLayout*  galleryWidgetLayout
-        = new QVBoxLayout( this, 5, 5, "GalleryWidgetLayout");
+        = new QVBoxLayout( this ); //, 5, 5, "GalleryWidgetLayout");
 
     // ------------------------------------------------------------------------
 
     QLabel*       headerLabel;
     QFrame*       headerLine;
 
-    headerLabel = new QLabel( this, "headerLabel" );
+    headerLabel = new QLabel( "headerLabel" , this );
     galleryWidgetLayout->addWidget( headerLabel, 0 );
-    headerLine = new QFrame( this, "headerLine" );
+    headerLine = new QFrame( this );
     headerLine->setFrameShape( QFrame::HLine );
     headerLine->setFrameShadow( QFrame::Sunken );
     galleryWidgetLayout->addWidget( headerLine, 0 );
@@ -78,9 +78,9 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     QSplitter* splitter = new QSplitter(this);
     galleryWidgetLayout->addWidget( splitter, 5 );
 
-    m_albumView = new QListWidget( splitter, "m_albumView" );
-    m_albumView->addColumn( i18n( "Albums" ) );
-    m_albumView->setResizeMode( Q3ListView::AllColumns );
+    m_albumView = new QListWidget( splitter ); // FIXME , "m_albumView" );
+    m_albumView->addItem( i18n( "Albums" ) );
+    // m_albumView->setResizeMode( QListWidget::AllColumns );
 
     // ------------------------------------------------------------------------
 
@@ -90,44 +90,43 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
 
     QVBoxLayout*  rightButtonGroupLayout;
     QSpacerItem*  spacer;
-    Q3ButtonGroup* rightButtonGroup;
+    QButtonGroup* rightButtonGroup;
 
-    rightButtonGroup = new Q3ButtonGroup( splitter, "rightButtonGroup" );
-    rightButtonGroupLayout = new QVBoxLayout( rightButtonGroup );
+    rightButtonGroup = new QButtonGroup( splitter ); //, "rightButtonGroup" );
+    rightButtonGroupLayout = new QVBoxLayout(); // rightButtonGroup );
     rightButtonGroupLayout->setSpacing( 5 );
     rightButtonGroupLayout->setMargin( 5 );
 
-    m_newAlbumBtn = new QPushButton( rightButtonGroup, "m_newAlbumBtn" );
+    m_newAlbumBtn = new QPushButton( "m_newAlbumBtn" );
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     rightButtonGroupLayout->addWidget( m_newAlbumBtn, 0, Qt::AlignHCenter );
 
-    m_addPhotoBtn = new QPushButton( rightButtonGroup, "m_addPhotoBtn" );
+    m_addPhotoBtn = new QPushButton( "m_addPhotoBtn" );
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     rightButtonGroupLayout->addWidget( m_addPhotoBtn, 0, Qt::AlignHCenter );
 
     // ------------------------------------------------------------------------
 
-    Q3GroupBox* optionsBox = new Q3GroupBox(i18n("Override Default Options"),
-                                          rightButtonGroup);
-    optionsBox->setColumnLayout(0, Qt::Vertical);
+    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options")); //   rightButtonGroup);
+    //optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(5);
     optionsBox->layout()->setMargin(5);
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox->layout());
+    QGridLayout* optionsBoxLayout = new QGridLayout( this ); //optionsBox->layout());
 
     // ------------------------------------------------------------------------
     m_captTitleCheckBox = new QCheckBox(optionsBox);
     m_captTitleCheckBox->setText(i18n("Comment sets Title"));
-    optionsBoxLayout->addMultiCellWidget(m_captTitleCheckBox, 0, 0, 0, 1);
+    optionsBoxLayout->addWidget(m_captTitleCheckBox, 0, 0, 0, 1);
 
     m_captDescrCheckBox = new QCheckBox(optionsBox);
     m_captDescrCheckBox->setText(i18n("Comment sets Description"));
-    optionsBoxLayout->addMultiCellWidget(m_captDescrCheckBox, 1, 1, 0, 1);
+    optionsBoxLayout->addWidget(m_captDescrCheckBox, 1, 1, 0, 1);
 
     m_resizeCheckBox = new QCheckBox(optionsBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    optionsBoxLayout->addMultiCellWidget(m_resizeCheckBox, 2, 2, 0, 1);
+    optionsBoxLayout->addWidget(m_resizeCheckBox, 2, 2, 0, 1);
 
-    m_dimensionSpinBox  = new QSpinBox(0, 5000, 10, optionsBox);
+    m_dimensionSpinBox  = new QSpinBox( this ); //0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     optionsBoxLayout->addWidget(m_dimensionSpinBox, 3, 1);
@@ -154,7 +153,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     // ------------------------------------------------------------------------
 
     headerLabel->setText( i18n( "<h2>Gallery Export</h2>" ) );
-    m_albumView->header()->setLabel( 0, i18n( "Albums" ) );
+    // FIXME m_albumView->header()->setLabel( 0, i18n( "Albums" ) );
     m_newAlbumBtn->setText( i18n( "&New Album" ) );
     m_addPhotoBtn->setText( i18n( "&Add Photos" ) );
 

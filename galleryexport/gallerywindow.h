@@ -78,7 +78,7 @@ private:
     QCheckBox                *m_resizeCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;
-//    Q3IntDict<GAlbumViewItem>  m_albumDict;
+    QHash<int,GAlbumViewItem>       m_albumDict;//    Q3IntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
     KIPIPlugins::KPAboutData *m_about;

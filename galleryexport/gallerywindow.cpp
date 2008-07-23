@@ -307,18 +307,16 @@ void GalleryWindow::slotAlbums( const QList<GAlbum>& albumList )
 
         if ( album.parent_ref_num == 0 )
         {
-            GAlbumViewItem* item = new GAlbumViewItem( m_albumView, album.title,
-                                                       album );
+            GAlbumViewItem item = GAlbumViewItem( m_albumView, album.title, album );
             //FIXME item->setPixmap( 0, pix );
             m_albumDict.insert( album.ref_num, item );
         }
         else
         {
-            QListWidgetItem* parent = m_albumDict.find( album.parent_ref_num );
+            QListWidgetItem *parent = new QListWidgetItem( m_albumDict.take( album.parent_ref_num ) ); // s, find, take
             if ( parent )
             {
-                GAlbumViewItem* item = new GAlbumViewItem( parent, album.title,
-                                                           album);
+                GAlbumViewItem item = GAlbumViewItem( parent, album.title, album);
                 // FIXME item->setPixmap( 0, pix );
                 m_albumDict.insert( album.ref_num, item );
             }
@@ -345,8 +343,8 @@ void GalleryWindow::slotAlbums( const QList<GAlbum>& albumList )
 
     if (lastSelectedID > 0)
     {
-        GAlbumViewItem* lastSelectedItem = m_albumDict.find( lastSelectedID );
-        if (lastSelectedItem)
+        QListWidgetItem *lastSelectedItem = new QListWidgetItem ( m_albumDict.take( lastSelectedID ) ); // s, find, take
+        if ( lastSelectedItem )
         {
             m_albumView->setCurrentItem( lastSelectedItem );  // true
 // FIXME perhaps to be removed           m_albumView->ensureItemVisible( lastSelectedItem );
@@ -360,14 +358,15 @@ void GalleryWindow::slotPhotos( const QList<GPhoto>& photoList)
     QString styleSheet =
         QString( "body { margin: 8px; font-size: %1px; "
                  " color: %2; background-color: %3;}" )
-        .arg( pxSize )
-        .arg( colorGroup().text().name() )
-        .arg( colorGroup().base().name() );
+        .arg( pxSize );
+// FIXME
+//        .arg( colorGroup().text().name() )
+//        .arg( colorGroup().base().name() );
 
     styleSheet += QString( "a { font-size: %1px; color: %2; "
                            "text-decoration: none;}" )
-                  .arg( pxSize )
-                  .arg( colorGroup().text().name() );
+                  .arg( pxSize );
+// FIXME                  .arg( colorGroup().text().name() );
     styleSheet += QString( "i { font-size: %1px; color: %2; "
                            "text-decoration: none;}" )
                   .arg( pxSize-2 )

@@ -23,13 +23,13 @@
  *
  * ============================================================ */
 
-#include <q3cstring.h>
-#include <q3textstream.h>
+#include <QByteArray>
+#include <QTextStream>
 #include <QFile>
 #include <QImage>
 #include <QRegExp>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 #include <KLocale>
 #include <kio/job.h>
@@ -325,12 +325,13 @@ void GalleryTalker::slotResult(KIO::Job *job)
 
     if (m_state == GE_LOGIN && m_loggedIn)
     {
-        QStringList cookielist = QStringList::split("\n", job->queryMetaData("setcookies"));
+        QStringList cookielist = (job->queryMetaData("setcookies")).split("\n");
+                            //QStringList::split("\n", job->queryMetaData("setcookies"));
         m_cookie = "Cookie:";
         for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it)
         {
             QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
-            if (rx.search(*it) > -1)
+            if ( rx.exactMatch(*it) ) //rx.search(*it) > -1)
                 m_cookie += " " + rx.cap(1) + ";";
         }
         listAlbums();
@@ -340,8 +341,8 @@ void GalleryTalker::slotResult(KIO::Job *job)
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
     QString *str = new QString(data);
-    Q3TextStream ts( str, QIODevice::ReadOnly );
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts( str, QIODevice::ReadOnly );
+    ts.setCodec("UTF-8");
     QString     line;
     bool foundResponse = false;
 
@@ -357,7 +358,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
         }
         else
         {
-            QStringList strlist = QStringList::split("=", line);
+            QStringList strlist = line.split("=");
             if (strlist.count() == 2)
             {
                 if (("status" == strlist[0]) && ("0" == strlist[1]))
@@ -387,13 +388,13 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
     QString *str = new QString(data);
-    Q3TextStream ts(str, QIODevice::ReadOnly );
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(str, QIODevice::ReadOnly );
+    ts.setCodec("UTF-8");
     QString     line;
     bool foundResponse = false;
     bool success       = false;
 
-    typedef Q3ValueList<GAlbum> GAlbumList;
+    typedef QList<GAlbum> GAlbumList;
     GAlbumList albumList;
     GAlbumList::iterator iter = albumList.begin();
 
@@ -406,7 +407,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
         }
         else
         {
-            QStringList strlist = QStringList::split("=", line);
+            QStringList strlist = line.split("=");
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];
@@ -424,7 +425,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                         album.ref_num = value.toInt();
                     else
                         album.ref_num = key.section(".", 2, 2).toInt();
-                    iter = albumList.append(album);
+                    albumList.append(album);
                 }
                 else if (key.startsWith("album.title"))
                 {
@@ -495,13 +496,13 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QString *str = new QString(data);
-    Q3TextStream ts(str, QIODevice::ReadOnly );
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(str, QIODevice::ReadOnly );
+    ts.setCodec("UTF-8");
     QString     line;
     bool foundResponse = false;
     bool success       = false;
 
-    typedef Q3ValueList<GPhoto> GPhotoList;
+    typedef QList<GPhoto> GPhotoList;
     GPhotoList photoList;
     GPhotoList::iterator iter = photoList.begin();
 
@@ -517,9 +518,10 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         }
         else
         {
-        	// Boris the Gallery default URL contains "=" char. So we will split the string only from the first "=" char
+// Boris the Gallery default URL contains "=" char. So we will split the string only from the first "=" char
             QStringList strlist = QStringList();
-            strlist << line.left(line.find('=')) << line.mid(line.find('=')+1);
+            // FIXME strlist << line.left(line.find('=')) << line.mid(line.find('=')+1);
+            strlist = line.split("=");
             if (strlist.count() >= 2)
             {
                 QString key   = strlist[0];
@@ -534,7 +536,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                     GPhoto photo;
                     photo.name    = value;
                     photo.ref_num = key.section(".", 2, 2).toInt();
-                    iter = photoList.append(photo);
+                    photoList.append(photo);
                 }
                 else if (key.startsWith("image.caption"))
                 {
@@ -577,8 +579,8 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 {
     QString * str = new QString(data);
-    Q3TextStream ts(str, QIODevice::ReadOnly );
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(str, QIODevice::ReadOnly );
+    ts.setCodec("UTF-8");
     QString     line;
     bool foundResponse = false;
     bool success       = false;
@@ -593,7 +595,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
         }
         else
         {
-            QStringList strlist = QStringList::split("=", line);
+            QStringList strlist = line.split("=");
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];
@@ -630,8 +632,8 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 {
     QString *str = new QString(data);
-    Q3TextStream ts(str, QIODevice::ReadOnly );
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(str, QIODevice::ReadOnly );
+    ts.setCodec("UTF-8");
     QString     line;
     bool foundResponse = false;
     bool success       = false;
@@ -650,7 +652,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
         }
         else
         {
-            QStringList strlist = QStringList::split("=", line);
+            QStringList strlist = line.split("=");
             if (strlist.count() == 2)
             {
                 QString key   = strlist[0];

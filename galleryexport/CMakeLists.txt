@@ -14,7 +14,7 @@ SET( kipiplugin_galleryexport_PART_SRCS
 KDE4_ADD_UI_FILES( kipiplugin_galleryexport_PART_SRCS galleryalbumdialog.ui )
 
 # run adjam, remove it!!
-ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+#ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 KDE4_ADD_PLUGIN( kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS} )
 

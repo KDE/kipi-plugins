@@ -28,9 +28,8 @@
 #include <KUrl>
 
 #include <QFile>
-#include <q3textstream.h>
-//Added by qt3to4:
-#include <Q3CString>
+#include <QTextStream>
+#include <QByteArray>
 
 #include <cstring>
 #include <cstdio>
@@ -67,14 +66,14 @@ void GalleryMPForm::reset()
 
 void GalleryMPForm::finish()
 {
-    Q3CString str;
+    QByteArray str;
     str += "--";
     str += m_boundary;
     str += "--";
     str += "\r\n";
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec("UTF-8");
     ts << str << '\0';
 }
 
@@ -88,24 +87,24 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
 
 bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 {
-    Q3CString str;
+    QByteArray str;
 
     str += "--";
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.ascii();
+    str += name.toAscii();
     str += "\"";
     str += "\r\n\r\n";
-    str += value.ascii();
+    str += value.toAscii();
     str += "\r\n";
 
     //uint oldSize = m_buffer.size();
     //m_buffer.resize(oldSize + str.size());
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec("UTF-8");
     ts << str;
 
     return true;
@@ -137,7 +136,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
 
-    Q3CString str;
+    QByteArray str;
 
     str += "--";
     str += m_boundary;
@@ -153,11 +152,11 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str += "\"";
     str += "\r\n";
     str += "Content-Type: ";
-    str +=  mime.ascii();
+    str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setCodec("UTF-8");
     ts << str;
 
     int oldSize = m_buffer.size();

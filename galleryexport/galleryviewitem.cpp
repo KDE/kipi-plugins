@@ -32,39 +32,51 @@
 namespace KIPIGalleryExportPlugin
 {
 
-void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
-                               int column, int width, int )
+GAlbumViewItem::GAlbumViewItem() : QListWidgetItem(0,1000) 
+{};
+
+GAlbumViewItem::GAlbumViewItem(QListWidget* parent, const QString& name, const GAlbum& _album)
+    : QListWidgetItem(parent/*, name*/) , 
+    album(_album) 
+{};
+
+GAlbumViewItem::GAlbumViewItem(QListWidgetItem* parent, const QString& name, const GAlbum& _album)
+    : QListWidgetItem(/*parent,*/name) , album(_album)
+{};
+
+
+void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int width)
 {
     if (!p)
         return;
 
-    QListWidget *lv = listView();
+    QListWidget *lv = new QListWidget();
     if (!lv)
         return;
     QFontMetrics fm(p->fontMetrics());
 
     if (isSelected())
-        p->fillRect(0, 0, width, height(), cg.highlight());
+        p->fillRect(0, 0, width, 10 /*height()*/, cg.highlight());
     else
-        p->fillRect(0, 0, width, height(), cg.base());
+        p->fillRect(0, 0, width, 10 /*height()*/, cg.base());
 
-    const QPixmap * icon = pixmap( column );
+    const QPixmap * icon = new QPixmap(); //pixmap( column );
 
     int iconWidth = 0;
     if (icon)
     {
-        iconWidth = icon->width() + lv->itemMargin();
-        int xo    = lv->itemMargin();
-        int yo    = (height() - icon->height())/2;
+        iconWidth = icon->width() ;//+ lv->itemMargin();
+        int xo    = 10 ;//lv->itemMargin();
+        int yo    = (10/*height() - icon->height()*/)/2;
         p->drawPixmap( xo, yo, *icon );
     }
 
     if (isSelected())
-        p->setPen( cg.highlightedText() );
+        p->setPen( cg.highlight().color() );
     else
-        p->setPen( cg.text() );
+        p->setPen( cg.color(QPalette::Text) );
 
-    int r = lv->itemMargin() + iconWidth;
+    int r = 10/*lv->itemMargin()*/ + iconWidth;
     int h = lv->fontMetrics().height() + 2;
 
     // Gallery2 does not return the "name" of the album, instead it
@@ -82,16 +94,23 @@ void GAlbumViewItem::paintCell(QPainter * p, const QColorGroup & cg,
         fn.setPointSize(fn.pointSize()-2);
         fn.setItalic(true);
         p->setFont(fn);
-        p->setPen(isSelected() ? cg.highlightedText() : Qt::gray);
+        p->setPen(isSelected() ? cg.highlight().color() : Qt::gray);
         p->drawText(r, h, width-r, h, Qt::AlignVCenter, album.name);
     }
 }
 
+// FIXME, CODE ME!!
+void GAlbumViewItem::paintFocus(QPainter* p, const QPalette& cg, const QRect& rc)
+{
+    return;
+};
+
 void GAlbumViewItem::setup()
 {
-    int h = listView()->fontMetrics().height();
+// FIXME
+//    int h = listView()->fontMetrics().height();
     int margin = 4;
-    setHeight( qMax(2*h + margin, 32) );
+//    setHeight( qMax(2*h + margin, 32) );
 }
 
 }

@@ -26,11 +26,7 @@
 
 #include <KDialog>
 
-//Added by qt3to4:
 #include <QLabel>
-
-#include <q3valuelist.h>
-#include <q3intdict.h>
 
 
 namespace KIPIGalleryExportPlugin
