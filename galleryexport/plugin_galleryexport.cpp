@@ -74,34 +74,30 @@ void Plugin_GalleryExport::setup(QWidget* widget)
         return;
     }
 
-    // Add our directory in to the icon loader dirs.
-    // DEPRECATED: how to substitute??
-    // KIconLoader::global()->addAppDir("kipiplugin_galleryexport");   
-
-
-    m_action_sync = new KAction(i18n("Remote Gallery Sync"), this );
-    m_action_sync->setObjectName("Remote Gallery Sync");
+    m_action_sync = new KAction(i18n("remote-gallery-sync"), this );
+    m_action_sync->setText(i18n("Gallery Export..."));
+    m_action_sync->setIcon(KIcon("applications-internet"));
     connect( m_action_sync, SIGNAL(triggered(bool)), this, SLOT(slotSync()) );
     m_action_sync->setEnabled(true);
     addAction(m_action_sync);
 
 
-    m_action_configure = new KAction(i18n("Remote Galleries Setting"), this );
-    m_action_configure->setObjectName("Remote Gallery Setting");
+    m_action_configure = new KAction(i18n("remote-galleries-setting"), this );
+    m_action_configure->setText("Remote Gallery Setting...");
     connect( m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()) );
     m_action_configure->setEnabled(true);
     addAction(m_action_configure);
 
 
-    m_action_collection_settings = new KAction( i18n("Remote Gallery Collection Settings"), this );
-    m_action_collection_settings->setObjectName("Remote Gallery Collection Settings");
+    m_action_collection_settings = new KAction( i18n("remote-gallery-collection-settings"), this );
+    m_action_collection_settings->setText("Remote Gallery Collection Settings...");
     connect( m_action_collection_settings, SIGNAL(triggered(bool)), this, SLOT(slotCollectionSettings()) );
     m_action_collection_settings->setEnabled(true);
     addAction(m_action_collection_settings);
 
 
-    m_action_image_setting = new KAction(i18n("Remote Gallery Image Settings"), this );
-    m_action_image_setting->setObjectName("Remote Gallery Image Settings");
+    m_action_image_setting = new KAction(i18n("remote-gallery-image-settings"), this );
+    m_action_image_setting->setText("Remote Gallery Image Settings...");
     connect( m_action_image_setting, SIGNAL(triggered(bool)), this, SLOT(slotImageSettings()) );
     m_action_image_setting->setEnabled(true);
     addAction(m_action_image_setting);
