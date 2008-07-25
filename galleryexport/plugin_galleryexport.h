@@ -3,12 +3,13 @@
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-11-06
  * Description :
- *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ *
  *
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
+ *
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,15 +55,15 @@ public slots:
 
     void slotSync();
     void slotConfigure();
-    void slotCollectionSettings();
-    void slotImageSettings();
+//     void slotCollectionSettings();
+//     void slotImageSettings();
 
 private:
 
     KAction *m_action_sync;
     KAction *m_action_configure;
-    KAction *m_action_collection_settings;
-    KAction *m_action_image_setting;
+//     KAction *m_action_collection_settings;
+//     KAction *m_action_image_setting;
     
     KIPIGalleryExportPlugin::Galleries* mpGalleries;
 };

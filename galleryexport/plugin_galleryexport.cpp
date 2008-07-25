@@ -84,23 +84,24 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
     m_action_configure = new KAction(i18n("remote-galleries-setting"), this );
     m_action_configure->setText("Remote Gallery Setting...");
+    m_action_sync->setIcon(KIcon("applications-other"));
     connect( m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()) );
     m_action_configure->setEnabled(true);
     addAction(m_action_configure);
 
 
-    m_action_collection_settings = new KAction( i18n("remote-gallery-collection-settings"), this );
-    m_action_collection_settings->setText("Remote Gallery Collection Settings...");
-    connect( m_action_collection_settings, SIGNAL(triggered(bool)), this, SLOT(slotCollectionSettings()) );
-    m_action_collection_settings->setEnabled(true);
-    addAction(m_action_collection_settings);
+//     m_action_collection_settings = new KAction( i18n("remote-gallery-collection-settings"), this );
+//     m_action_collection_settings->setText("Remote Gallery Collection Settings...");
+//     connect( m_action_collection_settings, SIGNAL(triggered(bool)), this, SLOT(slotCollectionSettings()) );
+//     m_action_collection_settings->setEnabled(true);
+//     addAction(m_action_collection_settings);
 
 
-    m_action_image_setting = new KAction(i18n("remote-gallery-image-settings"), this );
-    m_action_image_setting->setText("Remote Gallery Image Settings...");
-    connect( m_action_image_setting, SIGNAL(triggered(bool)), this, SLOT(slotImageSettings()) );
-    m_action_image_setting->setEnabled(true);
-    addAction(m_action_image_setting);
+//     m_action_image_setting = new KAction(i18n("remote-gallery-image-settings"), this );
+//     m_action_image_setting->setText("Remote Gallery Image Settings...");
+//     connect( m_action_image_setting, SIGNAL(triggered(bool)), this, SLOT(slotImageSettings()) );
+//     m_action_image_setting->setEnabled(true);
+//     addAction(m_action_image_setting);
 
 }
 
@@ -111,7 +112,7 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
     delete mpGalleries;
 }
 
-
+// this slot uses GalleryWindow Class
 void Plugin_GalleryExport::slotSync()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
@@ -125,6 +126,7 @@ void Plugin_GalleryExport::slotSync()
     dlg.exec();
 }
 
+// this slot uses GalleryList Class
 void Plugin_GalleryExport::slotConfigure()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
@@ -138,29 +140,30 @@ void Plugin_GalleryExport::slotConfigure()
     dlg.exec();
 }
 
-void Plugin_GalleryExport::slotCollectionSettings()
-{
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) 
-    {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
-        return;
-    }
 
-    KMessageBox::error(kapp->activeWindow(), "Not Implemented Yet!");
-}
+// void Plugin_GalleryExport::slotCollectionSettings()
+// {
+//     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+//     if (!interface) 
+//     {
+//         kError( 51000 ) << "Kipi interface is null!" << endl;
+//         return;
+//     }
+// 
+//     KMessageBox::error(kapp->activeWindow(), "Not Implemented Yet!");
+// }
 
-void Plugin_GalleryExport::slotImageSettings()
-{
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) 
-    {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
-        return;
-    }
-
-    KMessageBox::error(kapp->activeWindow(), "Not Implemented Yet!");
-}
+// void Plugin_GalleryExport::slotImageSettings()
+// {
+//     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+//     if (!interface) 
+//     {
+//         kError( 51000 ) << "Kipi interface is null!" << endl;
+//         return;
+//     }
+// 
+//     KMessageBox::error(kapp->activeWindow(), "Not Implemented Yet!");
+// }
 
 KIPI::Category Plugin_GalleryExport::category( KAction* action ) const
 {
@@ -168,10 +171,10 @@ KIPI::Category Plugin_GalleryExport::category( KAction* action ) const
         return KIPI::ExportPlugin;
     if (action == m_action_configure)
         return KIPI::ToolsPlugin;
-    if (action == m_action_collection_settings)
-        return KIPI::CollectionsPlugin;
-    if (action == m_action_image_setting)
-        return KIPI::ImagesPlugin;
+//     if (action == m_action_collection_settings)
+//         return KIPI::CollectionsPlugin;
+//     if (action == m_action_image_setting)
+//         return KIPI::ImagesPlugin;
      
     kWarning(51000) << "Unrecognized action for plugin category identification"
                      << endl;
