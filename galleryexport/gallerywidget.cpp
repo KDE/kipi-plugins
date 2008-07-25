@@ -36,8 +36,6 @@
 #include <QListWidget>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QLayout>
-#include <QToolTip>
 #include <QSplitter>
 
 //#include <QHeader>

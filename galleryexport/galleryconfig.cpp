@@ -24,8 +24,6 @@
 
 // Include files for Qt
 
-#include <QListWidget>
-#include <QProgressDialog>
 #include <QFrame>
 
 #include <QPushButton>

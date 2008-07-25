@@ -31,10 +31,10 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QCursor>
-#include <QSpinBox>
 #include <QCheckBox>
 #include <QProgressDialog>
 #include <QListWidgetItem>
+#include <QSpinBox>
 
 // Include files for KDE
 
