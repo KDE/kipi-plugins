@@ -4,9 +4,11 @@
  * Date  : 2006-09-04
  * Copyright 2006 by Colin Guthrie <kde@colin.guthr.ie>
  *
+ *
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
+ *
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,7 +26,7 @@
 #define GALLERIES_H
 
 #include <QList>
-#include <QListWidget>
+#include <QTreeWidget>
 
 namespace KWallet
 {
@@ -60,7 +62,7 @@ public:
     void setVersion(unsigned int version);
     void setGalleryId(unsigned int galleryId);
 
-    QListWidgetItem* asQListWidgetItem(QListWidget* pParent);
+    QTreeWidgetItem* asQTreeWidgetItem(QTreeWidget* pParent);
 
 private:
 
@@ -75,10 +77,10 @@ private:
 
 
 /* Simple Stub Class to allow easy access to Galleries from GUI elements */
-class GalleryQListWidgetItem : public QListWidgetItem
+class GalleryQTreeWidgetItem : public QTreeWidgetItem
 {
 public:
-  GalleryQListWidgetItem(Gallery* pGallery, QListWidget* pParent);
+  GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent);
 
   Gallery* GetGallery();
   void Refresh();
@@ -99,7 +101,7 @@ public:
   void Add(Gallery& rGallery);
   void Remove(Gallery& rGallery);
   void Save();
-  QListWidget* asQListWidget(QWidget* pParent);
+  QTreeWidget* asQTreeWidget(QWidget* pParent);
 
 private:
   void Load();

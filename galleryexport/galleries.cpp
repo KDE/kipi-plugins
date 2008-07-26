@@ -72,32 +72,31 @@ void Gallery::setVersion(unsigned int version) { mVersion = version; }
 void Gallery::setGalleryId(unsigned int galleryId) { mGalleryId = galleryId; }
 
 
-QListWidgetItem* Gallery::asQListWidgetItem(QListWidget* pParent)
+QTreeWidgetItem* Gallery::asQTreeWidgetItem(QTreeWidget* pParent)
 {
-  QListWidgetItem* p_lvi = (QListWidgetItem*) new GalleryQListWidgetItem(this, pParent);
+  QTreeWidgetItem* p_lvi = (QTreeWidgetItem*) new GalleryQTreeWidgetItem(this, pParent);
   return p_lvi;
 }
 
 
 
-GalleryQListWidgetItem::GalleryQListWidgetItem(Gallery* pGallery, QListWidget* pParent)
-  : QListWidgetItem(pGallery->name(), pParent), 
+GalleryQTreeWidgetItem::GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent)
+  : QTreeWidgetItem(pParent), // 
 //FIXME : label to readd somewhere..  pGallery->{name(),url(),username()}
     mpGallery(pGallery)
 {
 }
 
-Gallery* GalleryQListWidgetItem::GetGallery()
+Gallery* GalleryQTreeWidgetItem::GetGallery()
 {
   return mpGallery;
 }
 
-void GalleryQListWidgetItem::Refresh()
+void GalleryQTreeWidgetItem::Refresh()
 {
-  setText( mpGallery->name() );
-// FIXME: perhaps we need 3 QWidgetItem??
-//  setText(1, mpGallery->url());
-//  setText(2, mpGallery->username());
+  setText(0, mpGallery->name() );
+  setText(1, mpGallery->url());   
+  setText(2, mpGallery->username());
 }
 
 
@@ -223,22 +222,31 @@ void Galleries::Save()
     }
 }
 
-QListWidget* Galleries::asQListWidget(QWidget* pParent)
+QTreeWidget* Galleries::asQTreeWidget(QWidget* pParent)
 {
   Load();
 
-  QListWidget* p_lv = new QListWidget (pParent);
-  p_lv->addItem(i18n("Gallery Name"));
-  p_lv->addItem(i18n("URL"));
-  p_lv->addItem(i18n("User"));
+  QTreeWidget* p_lv = new QTreeWidget (pParent);
+QStringList header;
+header << i18n("Gallery Name") << i18n("URL") << i18n("User") ;
+p_lv->setHeaderLabels(header);
+//   p_lv->addItem(i18n("Gallery Name"));
+//   p_lv->addItem(i18n("URL"));
+//   p_lv->addItem(i18n("User"));
 
 //  FIXME p_lv->setAllColumnsShowFocus(true);
 
-// FIXME : full QListWidget
-//   for (GalleryPtrList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
-//   {
-//     (*it)->asQListWidgetItem(p_lv);
-//   }
+// FIXME : full QTreeWidget
+    for( int i = 0; i < mGalleries.size() ; ++i)
+    {
+        Gallery item = mGalleries.at(i);
+        item.asQTreeWidgetItem(p_lv);
+    }
+
+//    for (GalleryPtrList::iterator it = mGalleries.begin(); it != mGalleries.end(); ++it)
+//    {
+//      it.asQTreeWidgetItem(p_lv);
+//    }
 
   return p_lv;
 

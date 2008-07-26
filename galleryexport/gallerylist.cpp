@@ -25,7 +25,7 @@
 
 // Include files for Qt
 
-#include <QListWidget>
+#include <QTreeWidget>
 #include <QProgressDialog>      // FIXME sure we need it?
 
 #include <QPushButton>
@@ -52,10 +52,17 @@ namespace KIPIGalleryExportPlugin
 {
 
 GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOpen)
-    : KDialog(pParent, Qt::Dialog),//Ok|Close|User1|User2|User3),
+    : KDialog(pParent), //Qt::Dialog),//Ok|Close|User1|User2|User3),
       mpGalleries(pGalleries),
       mpCurrentGallery(0)
 {
+    setCaption("Remote Gallery Settings");
+    setButtons( KDialog::Ok | KDialog::Close |  KDialog::User1 |  KDialog::User2 |  KDialog::User3 ) ; 
+    showButton( KDialog::Ok , blnShowOpen);
+
+    connect( this, SIGNAL(user1Clicked), this, SLOT( slotUser1() ) );
+    connect( this, SIGNAL(user2Clicked), this, SLOT( slotUser2() ) );
+    connect( this, SIGNAL(user3Clicked), this, SLOT( slotUser3() ) );
 // TODO: system this
 //  if (!blnShowOpen)
 //    showButtonOK(false);
@@ -65,6 +72,10 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
 //   setButtonGuiItem(User1, KStandardGuiItem::remove());
 //   setButtonGuiItem(Close, KStandardGuiItem::close());
 //   setButtonGuiItem(Ok,    KStandardGuiItem::open());
+
+  setButtonText( KDialog::User1 , i18n("Remove") );
+  setButtonText( KDialog::User2 , i18n("Edit") );
+  setButtonText( KDialog::User3 , i18n("Add") );
 
   enableButton(Ok,    false);
   enableButton(User1, false);
@@ -88,7 +99,7 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   vb->setSpacing (KDialog::spacingHint());
   tll->addItem(vb);
 
-  mpGalleryList = mpGalleries->asQListWidget(page);
+  mpGalleryList = mpGalleries->asQTreeWidget(page); 
   vb->addWidget(mpGalleryList);
   connect(mpGalleryList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
   connect(mpGalleryList, SIGNAL(doubleClicked(QListWidgetItem*, const QPoint&, int)),
@@ -107,7 +118,7 @@ Gallery* GalleryList::GetGallery()
 
 void GalleryList::selectionChanged()
 {
-  QListWidgetItem* p_lvi = mpGalleryList->currentItem();
+  QTreeWidgetItem* p_lvi = mpGalleryList->currentItem();
   bool bln_selected = (p_lvi ? true : false);
   enableButton(User1, bln_selected);
   enableButton(User2, bln_selected);
@@ -115,7 +126,7 @@ void GalleryList::selectionChanged()
 
   if (bln_selected)
   {
-    GalleryQListWidgetItem* p_glvi = dynamic_cast<GalleryQListWidgetItem*>(p_lvi);
+    GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
     mpCurrentGallery = p_glvi->GetGallery();
   }
   else
@@ -124,7 +135,7 @@ void GalleryList::selectionChanged()
   }
 }
 
-void GalleryList::doubleClicked(QListWidgetItem* pCurrent, const QPoint&, int)
+void GalleryList::doubleClicked(QTreeWidgetItem* pCurrent, const QPoint&, int)
 {
   if (!pCurrent)
     return;
@@ -148,7 +159,7 @@ void GalleryList::slotUser3(void)
     {
         mpGalleries->Add(*p_gallery);
         mpGalleries->Save();
-        p_gallery->asQListWidgetItem(mpGalleryList);
+        p_gallery->asQTreeWidgetItem(mpGalleryList);
     }
     else
     {
@@ -160,14 +171,14 @@ void GalleryList::slotUser3(void)
 //==================   Edit  ======
 void GalleryList::slotUser2(void)
 {
-    QListWidgetItem* p_lvi = mpGalleryList->currentItem();
+    QTreeWidgetItem* p_lvi = mpGalleryList->currentItem();
     if (!p_lvi)
     {
         KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
     }
     else
     {
-        GalleryQListWidgetItem* p_glvi = dynamic_cast<GalleryQListWidgetItem*>(p_lvi);
+        GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
         GalleryEdit dlg(this, p_glvi->GetGallery(), i18n("Edit Remote Gallery"));
 
         if (QDialog::Accepted == dlg.exec())

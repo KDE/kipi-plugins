@@ -9,6 +9,7 @@
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
  *
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -26,7 +27,7 @@
 
 #include <KDialog>
 
-#include <QListWidget>
+#include <QTreeWidget>
 
 namespace KIPIGalleryExportPlugin
 {
@@ -49,12 +50,12 @@ private:
 
   Galleries* mpGalleries;
   Gallery* mpCurrentGallery;
-  QListWidget* mpGalleryList;
+  QTreeWidget* mpGalleryList;
 
 private slots:
 
   void selectionChanged();
-  void doubleClicked(QListWidgetItem*, const QPoint&, int);
+  void doubleClicked(QTreeWidgetItem*, const QPoint&, int);
 
   void slotUser1();
   void slotUser2();
