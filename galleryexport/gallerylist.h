@@ -55,7 +55,7 @@ private:
 private slots:
 
   void selectionChanged();
-  void doubleClicked(QTreeWidgetItem*, const QPoint&, int);
+  void doubleClicked(QTreeWidgetItem*, int);
 
   void slotUser1();
   void slotUser2();

@@ -34,6 +34,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+
 #include <QFrame>
 
 // Include files for KDE
@@ -41,6 +42,7 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
+#include <KStandardDirs>
 
 // Local includes.
 
@@ -52,7 +54,7 @@ namespace KIPIGalleryExportPlugin
 {
 
 GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOpen)
-    : KDialog(pParent), //Qt::Dialog),//Ok|Close|User1|User2|User3),
+    : KDialog(pParent),
       mpGalleries(pGalleries),
       mpCurrentGallery(0)
 {
@@ -60,18 +62,9 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
     setButtons( KDialog::Ok | KDialog::Close |  KDialog::User1 |  KDialog::User2 |  KDialog::User3 ) ; 
     showButton( KDialog::Ok , blnShowOpen);
 
-    connect( this, SIGNAL(user1Clicked), this, SLOT( slotUser1() ) );
-    connect( this, SIGNAL(user2Clicked), this, SLOT( slotUser2() ) );
-    connect( this, SIGNAL(user3Clicked), this, SLOT( slotUser3() ) );
-// TODO: system this
-//  if (!blnShowOpen)
-//    showButtonOK(false);
-
-//   setButtonGuiItem(User3, KStandardGuiItem::add());
-//   setButtonGuiItem(User2, KStandardGuiItem::configure());
-//   setButtonGuiItem(User1, KStandardGuiItem::remove());
-//   setButtonGuiItem(Close, KStandardGuiItem::close());
-//   setButtonGuiItem(Ok,    KStandardGuiItem::open());
+    connect( this, SIGNAL(user1Clicked() ), this, SLOT( slotUser1() ) );
+    connect( this, SIGNAL(user2Clicked() ), this, SLOT( slotUser2() ) );
+    connect( this, SIGNAL(user3Clicked() ), this, SLOT( slotUser3() ) );
 
   setButtonText( KDialog::User1 , i18n("Remove") );
   setButtonText( KDialog::User2 , i18n("Edit") );
@@ -82,28 +75,29 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
   enableButton(User2, false);
 
   QFrame *page = new QFrame(this);
-  QHBoxLayout *tll = new QHBoxLayout(page);
+  QHBoxLayout *hl = new QHBoxLayout(page);
   page->setMinimumSize(400, 200);
   setMainWidget(page);
 
-  QHBoxLayout *hb = new QHBoxLayout();
-  hb->setSpacing(KDialog::spacingHint());
-  tll->addItem(hb);
 
   QLabel *label = new QLabel(page);
-  hb->addWidget(label);
-  label->setPixmap(UserIcon("gallery"));
+    hl->addWidget(label);
+//FIXME cannot see image gallery.png!!
+  QString galleryImagePath = KStandardDirs::locate( "data" , "plugin_galleryexport/pics/gallery.png");    
+   label->setPixmap(galleryImagePath);
   label->setFrameStyle (QFrame::Panel | QFrame::Sunken);
-  label->setAlignment(Qt::AlignTop);
-  QVBoxLayout *vb = new QVBoxLayout();
-  vb->setSpacing (KDialog::spacingHint());
-  tll->addItem(vb);
+   label->setAlignment( Qt::AlignTop | Qt::AlignLeft );
+   label->resize( 100, 250 );
 
   mpGalleryList = mpGalleries->asQTreeWidget(page); 
-  vb->addWidget(mpGalleryList);
-  connect(mpGalleryList, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
-  connect(mpGalleryList, SIGNAL(doubleClicked(QListWidgetItem*, const QPoint&, int)),
-          this, SLOT(doubleClicked(QListWidgetItem*, const QPoint&, int)));
+    hl->addWidget(mpGalleryList);
+
+   hl->setSpacing( KDialog::spacingHint() );
+
+  connect(mpGalleryList, SIGNAL( currentItemChanged ( QTreeWidgetItem* , QTreeWidgetItem* ) ), 
+            this, SLOT(selectionChanged()));
+  connect(mpGalleryList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+          this, SLOT(doubleClicked(QTreeWidgetItem*, int)));
 }
 
 GalleryList::~GalleryList()
@@ -135,7 +129,7 @@ void GalleryList::selectionChanged()
   }
 }
 
-void GalleryList::doubleClicked(QTreeWidgetItem* pCurrent, const QPoint&, int)
+void GalleryList::doubleClicked(QTreeWidgetItem* pCurrent, int column)
 {
   if (!pCurrent)
     return;
@@ -155,6 +149,7 @@ void GalleryList::slotUser3(void)
 {
     Gallery* p_gallery = new Gallery();
     GalleryEdit dlg(this, p_gallery, i18n("New Remote Gallery"));
+    dlg.show();
     if (QDialog::Accepted == dlg.exec())
     {
         mpGalleries->Add(*p_gallery);
@@ -194,31 +189,29 @@ void GalleryList::slotUser2(void)
 void GalleryList::slotUser1(void)
 {
 
-//   Q3ListViewItem* p_lvi = mpGalleryList->selectedItem();
-//   if (!p_lvi)
-//   {
-//     KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
-//   }
-//   else
-//   {
-//     if (KMessageBox::Yes == 
-//           KMessageBox::warningYesNo(kapp->activeWindow(),
-//             i18n("Are you sure you want to remove this gallery? "
-//                  "All synchronisaton settings will be lost. "
-//                  "You cannot undo this action."), 
-//             i18n("Remove Remote Gallery"), 
-//             KStandardGuiItem::yes(), KStandardGuiItem::no(),
-//             QString::null, KMessageBox::Dangerous))
-//     {
-//       GalleryQListViewItem* p_glvi = dynamic_cast<GalleryQListViewItem*>(p_lvi);
-//       Gallery* p_gallery = p_glvi->GetGallery();
-//       delete p_glvi;
-//       mpGalleries->Remove(p_gallery);
-//       mpGalleries->Save();
-//     }
-//   }
-// }
-    return;
+  QTreeWidgetItem* p_lvi = mpGalleryList->currentItem();
+  if (!p_lvi)
+  {
+    KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
+  }
+  else
+  {
+    if (KMessageBox::Yes == 
+          KMessageBox::warningYesNo(kapp->activeWindow(),
+            i18n("Are you sure you want to remove this gallery? "
+                 "All synchronisaton settings will be lost. "
+                 "You cannot undo this action."), 
+            i18n("Remove Remote Gallery"), 
+            KStandardGuiItem::yes(), KStandardGuiItem::no(),
+            QString::null, KMessageBox::Dangerous))
+    {
+      GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
+      Gallery* p_gallery = p_glvi->GetGallery();
+      delete p_glvi;
+      mpGalleries->Remove(*p_gallery);
+      mpGalleries->Save();
+    }
+  }
 };
 
 }

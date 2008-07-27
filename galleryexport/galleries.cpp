@@ -4,6 +4,7 @@
  * Date  : 2006-09-04
  * Copyright 2006 by Colin Guthrie <kde@colin.guthr.ie>
  *
+ *
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
@@ -81,8 +82,7 @@ QTreeWidgetItem* Gallery::asQTreeWidgetItem(QTreeWidget* pParent)
 
 
 GalleryQTreeWidgetItem::GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent)
-  : QTreeWidgetItem(pParent), // 
-//FIXME : label to readd somewhere..  pGallery->{name(),url(),username()}
+  : QTreeWidgetItem(pParent), 
     mpGallery(pGallery)
 {
 }
@@ -143,12 +143,9 @@ void Galleries::Load()
       bln_use_wallet = true;
   }
 
-    // TODO: system this. I really don't know if this should be good..
-
     // read config
     KConfig config("kipirc");
-    KConfigGroup group = config.group("GallerySync Settings");
-//    showPage(group.readEntry("GallerySync Galleries", 0));
+    KConfigGroup group = config.group("Gallery Settings");
 
     for (int i = 0; i < mGalleries.size(); i++)
     {
@@ -175,10 +172,10 @@ void Galleries::Add(Gallery& rGallery)
   mGalleries.append(rGallery);
 }
 
+// FIXME remove gallery NOT index!!
 void Galleries::Remove(Gallery& rGallery)
 {
-// TODO: system this
-//  mGalleries.removeOne(rGallery);
+  mGalleries.removeAt(0);
 
   // Slight cosmetic thing for gallery numbering.
   if (mGalleries.isEmpty())
@@ -189,7 +186,7 @@ void Galleries::Remove(Gallery& rGallery)
 void Galleries::Save()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group("GallerySync Galleries");
+    KConfigGroup group = config.group("Gallery Settings");
 
     bool bln_use_wallet = false;
     if (mpWallet)
@@ -210,15 +207,15 @@ void Galleries::Save()
 
     for (int i = 0; i < mGalleries.size(); i++)
     {
-        group.writeEntry(QString("Name%1").arg(i), config.groupList() );
-        group.writeEntry(QString("URL%1").arg(i), config.groupList() );
-        group.writeEntry(QString("Username%1").arg(i), config.groupList() );
-        group.writeEntry(QString("Version%1").arg(i), config.groupList() );
+        group.writeEntry(QString("Name"), mGalleries.at(i).name() );
+        group.writeEntry(QString("URL"), mGalleries.at(i).url() );
+        group.writeEntry(QString("Username"), mGalleries.at(i).username() );
+        group.writeEntry(QString("Version"), mGalleries.at(i).version() );
         
         if (bln_use_wallet)
-            mpWallet->writePassword(QString("Password%1").arg(i), config.groupList().at(i) );
+            mpWallet->writePassword(QString("Password") , mGalleries.at(i).password() );
     
-        group.writeEntry("Galleries", i);
+        config.sync();
     }
 }
 

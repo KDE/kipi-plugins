@@ -1,4 +1,3 @@
-
 SET( kipiplugin_galleryexport_PART_SRCS
     plugin_galleryexport.cpp
     galleries.cpp
@@ -27,10 +26,10 @@ TARGET_LINK_LIBRARIES ( kipiplugin_galleryexport
                         kipiplugins
 )
 
-KDE4_INSTALL_ICONS( ${ICON_INSTALL_DIR} )
+#KDE4_INSTALL_ICONS( ${ICON_INSTALL_DIR} )
 
 INSTALL(TARGETS kipiplugin_galleryexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_galleryexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-INSTALL(FILES  gallery.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics)
+INSTALL(FILES gallery.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics )

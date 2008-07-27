@@ -59,34 +59,36 @@ namespace KIPIGalleryExportPlugin
 GalleryEdit::GalleryEdit(QWidget* pParent,
                          Gallery* pGallery,
                          QString title)
-    : KDialog(pParent, Qt::Dialog), //KDialog(pParent, 0, true, title, Ok|Cancel, Ok, false),
+    : KDialog(pParent, Qt::Dialog),
       mpGallery(pGallery)
 {
 // TODO: system this
 //  setButtonGuiItem( Ok, KStandardGuiItem::save() );
 
-  QFrame *page = new QFrame (this);
-  QHBoxLayout *tll = new QHBoxLayout(page);
+    setCaption(title);
+
+  QFrame *page = new QFrame(this);
+  QHBoxLayout *hl = new QHBoxLayout(page);
   page->setMinimumSize (500, 200);
   setMainWidget(page);
 
   QVBoxLayout* vbox = new QVBoxLayout();
   vbox->setSpacing (KDialog::spacingHint());
-  tll->addItem(vbox);
+  hl->addItem(vbox);
 
-  mpHeaderLabel = new QLabel(page);
-  mpHeaderLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
-                                            QSizePolicy::Fixed));
-  mpHeaderLabel->setText(title);
-  vbox->addWidget(mpHeaderLabel);
+//   mpHeaderLabel = new QLabel(page);
+//   mpHeaderLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
+//                                             QSizePolicy::Fixed));
+//   mpHeaderLabel->setText(title);
+//   vbox->addWidget(mpHeaderLabel);
 
-  QFrame* hline = new QFrame(page);//, "hline");
+  QFrame* hline = new QFrame(page);
   hline->setFrameShape(QFrame::HLine);
   hline->setFrameShadow(QFrame::Sunken);
   hline->setFrameShape(QFrame::HLine);
   vbox->addWidget(hline);
 
-  QGridLayout* centerLayout = new QGridLayout(); //0, 1, 1, 5, 5);
+  QGridLayout* centerLayout = new QGridLayout();
 
   mpNameEdit = new QLineEdit( this );
   centerLayout->addWidget(mpNameEdit, 0, 1);
@@ -101,17 +103,17 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
   mpPasswordEdit->setEchoMode(QLineEdit::Password);
   centerLayout->addWidget(mpPasswordEdit, 3, 1);
 
-  QLabel* name_label = new QLabel(this);
-  name_label->setText(i18n( "Name:" ));
-  centerLayout->addWidget(name_label, 0, 0);
+  QLabel* namelabel = new QLabel(this);
+  namelabel->setText(i18n( "Name:" ));
+  centerLayout->addWidget(namelabel, 0, 0);
 
   QLabel* urlLabel = new QLabel(this);
   urlLabel->setText(i18n( "URL:" ));
   centerLayout->addWidget(urlLabel, 1, 0);
 
-  QLabel* nameLabel = new QLabel(this);
-  nameLabel->setText(i18n( "Username:" ));
-  centerLayout->addWidget(nameLabel, 2, 0);
+  QLabel* usernameLabel = new QLabel(this);
+  usernameLabel->setText(i18n( "Username:" ));
+  centerLayout->addWidget(usernameLabel, 2, 0);
 
   QLabel* passwdLabel = new QLabel(this);
   passwdLabel->setText(i18n( "Password:" ));
