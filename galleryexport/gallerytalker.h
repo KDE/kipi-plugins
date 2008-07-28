@@ -24,9 +24,13 @@
 #ifndef GALLERYTALKER_H
 #define GALLERYTALKER_H
 
+// KDE includes
+#include <KUrl>
+
+// Qt includes
 #include <QObject>
 #include <QList>
-#include <KUrl>
+
 
 namespace KIO
 {

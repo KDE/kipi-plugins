@@ -27,9 +27,10 @@
 #ifndef PLUGIN_GALLERYEXPORT_H
 #define PLUGIN_GALLERYEXPORT_H
 
-// libKIPI includes.
 
+// libKIPI includes.
 #include <libkipi/plugin.h>
+
 
 class KAction;
 
@@ -37,6 +38,8 @@ namespace KIPIGalleryExportPlugin
 {
 class Galleries;
 }
+
+
 
 class Plugin_GalleryExport : public KIPI::Plugin
 {

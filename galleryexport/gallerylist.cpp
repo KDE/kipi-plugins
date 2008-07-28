@@ -23,32 +23,27 @@
  *
  * ============================================================ */
 
-// Include files for Qt
-
+// Qt includes
 #include <QTreeWidget>
 #include <QProgressDialog>      // FIXME sure we need it?
-
 #include <QPushButton>
 #include <QCheckBox>
-
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
-
 #include <QFrame>
 
-// Include files for KDE
-
+// KDE includes
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
 #include <KStandardDirs>
 
 // Local includes.
-
 #include "galleries.h"
 #include "gallerylist.h"
 #include "galleryconfig.h"
+
 
 namespace KIPIGalleryExportPlugin
 {

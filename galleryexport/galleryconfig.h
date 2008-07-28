@@ -24,9 +24,11 @@
 #ifndef GALLERYCONFIG_H
 #define GALLERYCONFIG_H
 
-#include <KDialog>
-
+// Qt includes
 #include <QLabel>
+
+//KDE includes
+#include <KDialog>
 
 
 namespace KIPIGalleryExportPlugin

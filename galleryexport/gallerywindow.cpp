@@ -23,10 +23,9 @@
  *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes
 
 #include <Qt>
-
 #include <QPushButton>
 #include <QTimer>
 #include <QPixmap>
@@ -37,10 +36,8 @@
 #include <QSpinBox>
 
 // Include files for KDE
-
 #include <KAboutData>
 #include <KHelpMenu>
-//#include <kmenu.h>
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
@@ -50,19 +47,16 @@
 #include <KRun>
 #include <KDebug>
 #include <KConfig>
-
-// KIPI include files
-
-#include <libkipi/interface.h>
-// #include <libkipi/imagedialog.h> included below
 #include <ktoolinvocation.h>
 
-// Local includes.
+// KIPI include files
+#include <libkipi/interface.h>
 
+// Local includes.
 #include "imagedialog.h"
 #include "kpaboutdata.h"
-//#include "pluginsversion.h"
 
+// local includes
 #include "galleries.h"
 #include "gallerylist.h"
 #include "gallerytalker.h"
@@ -71,7 +65,9 @@
 #include "gallerywidget.h"
 #include "gallerywindow.h"
 
+// UI includes
 #include "ui_galleryalbumdialog.h"
+
 
 namespace KIPIGalleryExportPlugin
 {

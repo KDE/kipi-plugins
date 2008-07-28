@@ -9,6 +9,7 @@
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
  *
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -24,12 +25,13 @@
 #ifndef GALLERYWINDOW_H
 #define GALLERYWINDOW_H
 
+// KDE includes
 #include <KDialog>
 
+// Qt includes
 #include <QList>
 #include <QPair>
 #include <QHash>
-//#include <q3intdict.h>
 
 class QListWidget;
 class QPushButton;
@@ -39,10 +41,12 @@ class QProgressDialog;
 class KHTMLPart;
 class KUrl;
 
+
 namespace KIPI
 {
 class Interface;
 }
+
 namespace KIPIPlugins
 {
 class KPAboutData;

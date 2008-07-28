@@ -32,21 +32,19 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QFrame>
-
 #include <QListWidget>
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QSplitter>
-
-//#include <QHeader>
 #include <QButtonGroup>
 #include <QGroupBox>
 #include <QWhatsThis>
-
 #include <QGridLayout>
 #include <QVBoxLayout>
 
+// local includes
 #include "gallerywidget.h"
+
 
 namespace KIPIGalleryExportPlugin
 {

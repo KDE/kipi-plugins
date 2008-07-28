@@ -25,15 +25,19 @@
 #ifndef GALLERYLIST_H
 #define GALLERYLIST_H
 
+// KDE includes
 #include <KDialog>
 
+// Qt includes
 #include <QTreeWidget>
+
 
 namespace KIPIGalleryExportPlugin
 {
 
 class Gallery;
 class Galleries;
+
 
 class GalleryList : public KDialog
 {

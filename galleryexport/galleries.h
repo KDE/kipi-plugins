@@ -25,6 +25,7 @@
 #ifndef GALLERIES_H
 #define GALLERIES_H
 
+// Qt includes
 #include <QList>
 #include <QTreeWidget>
 

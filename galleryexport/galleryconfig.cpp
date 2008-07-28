@@ -22,34 +22,28 @@
  *
  * ============================================================ */
 
+
 // Include files for Qt
-
 #include <QFrame>
-
 #include <QPushButton>
 #include <QLineEdit>
 #include <QCheckBox>
-
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
 
 // Include files for KDE
-
 #include <KLocale>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <KDebug>
 
 // KIPI include files
-
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
-//#include <libkipi/imagedialog.h>
 
 // Local includes.
-
 #include "galleryconfig.h"
 #include "galleries.h"
 
@@ -62,33 +56,15 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
         : KDialog(pParent, Qt::Dialog),
         mpGallery(pGallery)
 {
-// TODO: system this
+// FIXME: system this
 //  setButtonGuiItem( Ok, KStandardGuiItem::save() );
 
     setCaption(title);
 
     QFrame *page = new QFrame(this);
-    QHBoxLayout *hl = new QHBoxLayout(page);
+    QGridLayout* centerLayout = new QGridLayout();
     page->setMinimumSize(500, 200);
     setMainWidget(page);
-
-    QVBoxLayout* vbox = new QVBoxLayout();
-    vbox->setSpacing(KDialog::spacingHint());
-    hl->addItem(vbox);
-
-//   mpHeaderLabel = new QLabel(page);
-//   mpHeaderLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
-//                                             QSizePolicy::Fixed));
-//   mpHeaderLabel->setText(title);
-//   vbox->addWidget(mpHeaderLabel);
-
-    QFrame* hline = new QFrame(page);
-    hline->setFrameShape(QFrame::HLine);
-    hline->setFrameShadow(QFrame::Sunken);
-    hline->setFrameShape(QFrame::HLine);
-    vbox->addWidget(hline);
-
-    QGridLayout* centerLayout = new QGridLayout();
 
     mpNameEdit = new QLineEdit(this);
     centerLayout->addWidget(mpNameEdit, 0, 1);
@@ -125,13 +101,11 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     centerLayout->addWidget(mpGalleryVersion, 4, 1);
     //---------------------------------------------
 
-    vbox->addLayout(centerLayout);
+    page->setLayout(centerLayout);
 
     resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 
-    // TODO: system this
-    // clearWState( WState_Polished );
-
+    // setting initial data
     mpNameEdit->setText(pGallery->name());
     mpUrlEdit->setText(pGallery->url());
     mpUsernameEdit->setText(pGallery->username());
@@ -163,4 +137,3 @@ void GalleryEdit::slotOk(void)
 }
 
 #include "galleryconfig.moc"
-

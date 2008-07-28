@@ -24,6 +24,7 @@
 #ifndef GALLERYWIDGET_H
 #define GALLERYWIDGET_H
 
+// Qt includes
 #include <QWidget>
 
 class QListWidget;

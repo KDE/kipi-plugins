@@ -6,9 +6,11 @@
  *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
+ *
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
+ *
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,20 +25,25 @@
  *
  * ============================================================ */
 
+// KDE includes
 #include <KDebug>
 #include <KMimeType>
 #include <KUrl>
+#include <KRandom>
 
+// Qt includes
 #include <QFile>
 #include <QTextStream>
 #include <QByteArray>
 
+// standard includes
 #include <cstring>
 #include <cstdio>
-#include <krandom.h>
 
+// local includes
 #include "gallerympform.h"
 #include "gallerytalker.h"
+
 
 namespace KIPIGalleryExportPlugin
 {

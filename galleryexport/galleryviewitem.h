@@ -9,6 +9,7 @@
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
  *
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -21,13 +22,17 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
+
 #ifndef GALLERYVIEWITEM_H
 #define GALLERYVIEWITEM_H
 
+// Qt includes
 #include <QListWidget>
 #include <QPalette>
 
+// local includes
 #include "galleryitem.h"
+
 
 namespace KIPIGalleryExportPlugin
 {

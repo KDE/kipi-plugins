@@ -22,9 +22,11 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-// KDE includes
+// Qt includes
 #include <QString>
 #include <QWidget>
+
+// KDE includes
 #include <KDebug>
 #include <KConfig>
 #include <KConfigGroup>

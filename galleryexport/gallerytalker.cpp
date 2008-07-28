@@ -23,29 +23,32 @@
  *
  * ============================================================ */
 
+// Qt includes
 #include <QByteArray>
 #include <QTextStream>
 #include <QFile>
 #include <QImage>
 #include <QRegExp>
-//Added by qt3to4:
 #include <QList>
 
+// KDE includes
 #include <KLocale>
 #include <kio/job.h>
 #include <KDebug>
 #include <KStandardDirs>
 
+// standard includes
 #include <cstring>
 #include <cstdio>
 
 // LibKExiv2 includes.
-
 #include <libkexiv2/kexiv2.h>
 
+// local includes
 #include "galleryitem.h"
 #include "gallerympform.h"
 #include "gallerytalker.h"
+
 
 namespace KIPIGalleryExportPlugin
 {
