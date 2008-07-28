@@ -32,16 +32,16 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GAlbumViewItem::GAlbumViewItem() : QListWidgetItem(0,1000) 
+GAlbumViewItem::GAlbumViewItem() : QListWidgetItem(0, 1000)
 {};
 
 GAlbumViewItem::GAlbumViewItem(QListWidget* parent, const QString& name, const GAlbum& _album)
-    : QListWidgetItem(parent/*, name*/) , 
-    album(_album) 
+        : QListWidgetItem(parent/*, name*/) ,
+        album(_album)
 {};
 
 GAlbumViewItem::GAlbumViewItem(QListWidgetItem* parent, const QString& name, const GAlbum& _album)
-    : QListWidgetItem(/*parent,*/name) , album(_album)
+        : QListWidgetItem(/*parent,*/name) , album(_album)
 {};
 
 
@@ -63,18 +63,17 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
     const QPixmap * icon = new QPixmap(); //pixmap( column );
 
     int iconWidth = 0;
-    if (icon)
-    {
+    if (icon) {
         iconWidth = icon->width() ;//+ lv->itemMargin();
         int xo    = 10 ;//lv->itemMargin();
-        int yo    = (10/*height() - icon->height()*/)/2;
-        p->drawPixmap( xo, yo, *icon );
+        int yo    = (10/*height() - icon->height()*/) / 2;
+        p->drawPixmap(xo, yo, *icon);
     }
 
     if (isSelected())
-        p->setPen( cg.highlight().color() );
+        p->setPen(cg.highlight().color());
     else
-        p->setPen( cg.color(QPalette::Text) );
+        p->setPen(cg.color(QPalette::Text));
 
     int r = 10/*lv->itemMargin()*/ + iconWidth;
     int h = lv->fontMetrics().height() + 2;
@@ -82,20 +81,17 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
     // Gallery2 does not return the "name" of the album, instead it
     // returns a reference number than means nothing to the user.
     // We display things slightly differently depending on version.
-    if (GalleryTalker::isGallery2())
-    {
-        p->drawText(r, h/2, width-r, h, Qt::AlignVCenter, album.title);
-    }
-    else
-    {
-        p->drawText(r, 0, width-r, h, Qt::AlignVCenter, album.title);
+    if (GalleryTalker::isGallery2()) {
+        p->drawText(r, h / 2, width - r, h, Qt::AlignVCenter, album.title);
+    } else {
+        p->drawText(r, 0, width - r, h, Qt::AlignVCenter, album.title);
 
         QFont fn(lv->font());
-        fn.setPointSize(fn.pointSize()-2);
+        fn.setPointSize(fn.pointSize() - 2);
         fn.setItalic(true);
         p->setFont(fn);
         p->setPen(isSelected() ? cg.highlight().color() : Qt::gray);
-        p->drawText(r, h, width-r, h, Qt::AlignVCenter, album.name);
+        p->drawText(r, h, width - r, h, Qt::AlignVCenter, album.name);
     }
 }
 

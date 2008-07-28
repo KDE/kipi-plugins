@@ -66,13 +66,13 @@ public:
 
 private:
 
-  QString mName;
-  QString mUrl;
-  QString mUsername;
-  QString mPassword;
-  unsigned int mVersion;
+    QString mName;
+    QString mUrl;
+    QString mUsername;
+    QString mPassword;
+    unsigned int mVersion;
 
-  unsigned int mGalleryId;
+    unsigned int mGalleryId;
 };
 
 
@@ -80,12 +80,12 @@ private:
 class GalleryQTreeWidgetItem : public QTreeWidgetItem
 {
 public:
-  GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent);
+    GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent);
 
-  Gallery* GetGallery();
-  void Refresh();
+    Gallery* GetGallery();
+    void Refresh();
 private:
-  Gallery* mpGallery;
+    Gallery* mpGallery;
 };
 
 
@@ -95,21 +95,21 @@ typedef QList<Gallery> GalleryPtrList;
 class Galleries
 {
 public:
-  Galleries();
-  ~Galleries();
+    Galleries();
+    ~Galleries();
 
-  void Add(Gallery& rGallery);
-  void Remove(Gallery& rGallery);
-  void Save();
-  QTreeWidget* asQTreeWidget(QWidget* pParent);
+    void Add(Gallery& rGallery);
+    void Remove(Gallery& rGallery);
+    void Save();
+    QTreeWidget* asQTreeWidget(QWidget* pParent);
 
 private:
-  void Load();
+    void Load();
 
-  KWallet::Wallet* mpWallet;
+    KWallet::Wallet* mpWallet;
 
-  GalleryPtrList mGalleries;
-  unsigned int mMaxGalleryId;
+    GalleryPtrList mGalleries;
+    unsigned int mMaxGalleryId;
 };
 
 

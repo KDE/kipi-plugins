@@ -47,9 +47,9 @@ public:
     Plugin_GalleryExport(QObject *parent,
                          const QVariantList &args);
     ~Plugin_GalleryExport();
-    
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 public slots:
 
@@ -64,7 +64,7 @@ private:
     KAction *m_action_configure;
 //     KAction *m_action_collection_settings;
 //     KAction *m_action_image_setting;
-    
+
     KIPIGalleryExportPlugin::Galleries* mpGalleries;
 };
 

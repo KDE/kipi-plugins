@@ -37,29 +37,29 @@ class Galleries;
 
 class GalleryList : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
 
-  GalleryList(QWidget *parent, Galleries* pGalleries, bool blnShowOpen = true);
-  ~GalleryList();
+    GalleryList(QWidget *parent, Galleries* pGalleries, bool blnShowOpen = true);
+    ~GalleryList();
 
-  Gallery* GetGallery(void);
+    Gallery* GetGallery(void);
 
 private:
 
-  Galleries* mpGalleries;
-  Gallery* mpCurrentGallery;
-  QTreeWidget* mpGalleryList;
+    Galleries* mpGalleries;
+    Gallery* mpCurrentGallery;
+    QTreeWidget* mpGalleryList;
 
 private slots:
 
-  void selectionChanged();
-  void doubleClicked(QTreeWidgetItem*, int);
+    void selectionChanged();
+    void doubleClicked(QTreeWidgetItem*, int);
 
-  void slotUser1();
-  void slotUser2();
-  void slotUser3();
+    void slotUser1();
+    void slotUser2();
+    void slotUser3();
 };
 
 }

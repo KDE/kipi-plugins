@@ -78,7 +78,7 @@ private:
     QCheckBox                *m_resizeCheckBox;
     QSpinBox                 *m_dimensionSpinBox;
     GalleryTalker            *m_talker;
-    QHash<int,GAlbumViewItem>       m_albumDict;//    Q3IntDict<GAlbumViewItem>  m_albumDict;
+    QHash<int, GAlbumViewItem>       m_albumDict;//    Q3IntDict<GAlbumViewItem>  m_albumDict;
     QString                   m_lastSelectedAlbum;
     KIPI::Interface          *m_interface;
     KIPIPlugins::KPAboutData *m_about;
@@ -86,7 +86,7 @@ private:
     QProgressDialog                      *m_progressDlg;
     unsigned int                          m_uploadCount;
     unsigned int                          m_uploadTotal;
-    QList< QPair<QString,QString> >  m_uploadQueue;
+    QList< QPair<QString, QString> >  m_uploadQueue;
 
     Galleries* mpGalleries;
     Gallery*   mpGallery;
@@ -94,18 +94,18 @@ private:
 private slots:
 
     void slotDoLogin();
-    void slotLoginFailed( const QString& msg );
-    void slotBusy( bool val );
-    void slotError( const QString& msg );
-    void slotAlbums( const QList<GAlbum>& albumList );
-    void slotPhotos( const QList<GPhoto>& photoList );
+    void slotLoginFailed(const QString& msg);
+    void slotBusy(bool val);
+    void slotError(const QString& msg);
+    void slotAlbums(const QList<GAlbum>& albumList);
+    void slotPhotos(const QList<GPhoto>& photoList);
     void slotAlbumSelected();
-    void slotOpenPhoto( const KUrl& url );
+    void slotOpenPhoto(const KUrl& url);
     void slotNewAlbum();
     void slotAddPhotos();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
-    void slotAddPhotoFailed( const QString& msg );
+    void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotHelp();
 };

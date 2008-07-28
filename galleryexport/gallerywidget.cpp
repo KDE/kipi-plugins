@@ -51,33 +51,33 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
-    : QWidget( parent, fl )
+GalleryWidget::GalleryWidget(QWidget* parent, const char* name, Qt::WFlags fl)
+        : QWidget(parent, fl)
 {
 // FIXME     if ( !name )
 //         setName( "GalleryWidget" );
     QVBoxLayout*  galleryWidgetLayout
-        = new QVBoxLayout( this ); //, 5, 5, "GalleryWidgetLayout");
+    = new QVBoxLayout(this);   //, 5, 5, "GalleryWidgetLayout");
 
     // ------------------------------------------------------------------------
 
     QLabel*       headerLabel;
     QFrame*       headerLine;
 
-    headerLabel = new QLabel( "headerLabel" , this );
-    galleryWidgetLayout->addWidget( headerLabel, 0 );
-    headerLine = new QFrame( this );
-    headerLine->setFrameShape( QFrame::HLine );
-    headerLine->setFrameShadow( QFrame::Sunken );
-    galleryWidgetLayout->addWidget( headerLine, 0 );
+    headerLabel = new QLabel("headerLabel" , this);
+    galleryWidgetLayout->addWidget(headerLabel, 0);
+    headerLine = new QFrame(this);
+    headerLine->setFrameShape(QFrame::HLine);
+    headerLine->setFrameShadow(QFrame::Sunken);
+    galleryWidgetLayout->addWidget(headerLine, 0);
 
     // ------------------------------------------------------------------------
 
     QSplitter* splitter = new QSplitter(this);
-    galleryWidgetLayout->addWidget( splitter, 5 );
+    galleryWidgetLayout->addWidget(splitter, 5);
 
-    m_albumView = new QListWidget( splitter ); // FIXME , "m_albumView" );
-    m_albumView->addItem( i18n( "Albums" ) );
+    m_albumView = new QListWidget(splitter);   // FIXME , "m_albumView" );
+    m_albumView->addItem(i18n("Albums"));
     // m_albumView->setResizeMode( QListWidget::AllColumns );
 
     // ------------------------------------------------------------------------
@@ -90,18 +90,18 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     QSpacerItem*  spacer;
     QButtonGroup* rightButtonGroup;
 
-    rightButtonGroup = new QButtonGroup( splitter ); //, "rightButtonGroup" );
+    rightButtonGroup = new QButtonGroup(splitter);   //, "rightButtonGroup" );
     rightButtonGroupLayout = new QVBoxLayout(); // rightButtonGroup );
-    rightButtonGroupLayout->setSpacing( 5 );
-    rightButtonGroupLayout->setMargin( 5 );
+    rightButtonGroupLayout->setSpacing(5);
+    rightButtonGroupLayout->setMargin(5);
 
-    m_newAlbumBtn = new QPushButton( "m_newAlbumBtn" );
+    m_newAlbumBtn = new QPushButton("m_newAlbumBtn");
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    rightButtonGroupLayout->addWidget( m_newAlbumBtn, 0, Qt::AlignHCenter );
+    rightButtonGroupLayout->addWidget(m_newAlbumBtn, 0, Qt::AlignHCenter);
 
-    m_addPhotoBtn = new QPushButton( "m_addPhotoBtn" );
+    m_addPhotoBtn = new QPushButton("m_addPhotoBtn");
     m_addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    rightButtonGroupLayout->addWidget( m_addPhotoBtn, 0, Qt::AlignHCenter );
+    rightButtonGroupLayout->addWidget(m_addPhotoBtn, 0, Qt::AlignHCenter);
 
     // ------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     //optionsBox->setColumnLayout(0, Qt::Vertical);
     optionsBox->layout()->setSpacing(5);
     optionsBox->layout()->setMargin(5);
-    QGridLayout* optionsBoxLayout = new QGridLayout( this ); //optionsBox->layout());
+    QGridLayout* optionsBoxLayout = new QGridLayout(this);   //optionsBox->layout());
 
     // ------------------------------------------------------------------------
     m_captTitleCheckBox = new QCheckBox(optionsBox);
@@ -124,7 +124,7 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
     optionsBoxLayout->addWidget(m_resizeCheckBox, 2, 2, 0, 1);
 
-    m_dimensionSpinBox  = new QSpinBox( this ); //0, 5000, 10, optionsBox);
+    m_dimensionSpinBox  = new QSpinBox(this);   //0, 5000, 10, optionsBox);
     m_dimensionSpinBox->setValue(600);
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     optionsBoxLayout->addWidget(m_dimensionSpinBox, 3, 1);
@@ -145,19 +145,19 @@ GalleryWidget::GalleryWidget( QWidget* parent, const char* name, Qt::WFlags fl )
 
     // ------------------------------------------------------------------------
 
-    spacer = new QSpacerItem( 20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    rightButtonGroupLayout->addItem( spacer );
+    spacer = new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    rightButtonGroupLayout->addItem(spacer);
 
     // ------------------------------------------------------------------------
 
-    headerLabel->setText( i18n( "<h2>Gallery Export</h2>" ) );
+    headerLabel->setText(i18n("<h2>Gallery Export</h2>"));
     // FIXME m_albumView->header()->setLabel( 0, i18n( "Albums" ) );
-    m_newAlbumBtn->setText( i18n( "&New Album" ) );
-    m_addPhotoBtn->setText( i18n( "&Add Photos" ) );
+    m_newAlbumBtn->setText(i18n("&New Album"));
+    m_addPhotoBtn->setText(i18n("&Add Photos"));
 
     // ------------------------------------------------------------------------
 
-    resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
+    resize(QSize(600, 400).expandedTo(minimumSizeHint()));
     // FIXME clearWState( WState_Polished );
 }
 

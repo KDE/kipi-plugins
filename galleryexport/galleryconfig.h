@@ -36,27 +36,27 @@ class Gallery;
 
 class GalleryEdit : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
 
-  GalleryEdit(QWidget* pParent,
-              Gallery* pGallery,
-              QString title);
-  ~GalleryEdit();
+    GalleryEdit(QWidget* pParent,
+                Gallery* pGallery,
+                QString title);
+    ~GalleryEdit();
 
 private:
 
-  Gallery*         mpGallery;
-  QLabel*          mpHeaderLabel;
-  QLineEdit*       mpNameEdit;
-  QLineEdit*       mpUrlEdit;
-  QLineEdit*       mpUsernameEdit;
-  QLineEdit*       mpPasswordEdit;
-  QCheckBox*       mpGalleryVersion;
+    Gallery*         mpGallery;
+    QLabel*          mpHeaderLabel;
+    QLineEdit*       mpNameEdit;
+    QLineEdit*       mpUrlEdit;
+    QLineEdit*       mpUsernameEdit;
+    QLineEdit*       mpPasswordEdit;
+    QCheckBox*       mpGalleryVersion;
 
 private slots:
-  void slotOk(void);
+    void slotOk(void);
 };
 
 }

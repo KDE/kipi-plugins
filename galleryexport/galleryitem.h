@@ -2,8 +2,8 @@
  * File  : galleryitem.h
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2004-11-04
- * Description : 
- * 
+ * Description :
+ *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
@@ -15,12 +15,12 @@
  * Public License as published bythe Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef GALLERYITEM_H
@@ -35,25 +35,23 @@ class GPhoto
 {
 public:
 
-    GPhoto()
-    {
+    GPhoto() {
         ref_num = -1;
     }
-    
+
     int           ref_num;
     int           album_num;
     QString       name;
     QString       caption;
     QString       thumbName;
     QString       albumURL;
-};    
+};
 
 class GAlbum
 {
 public:
 
-    GAlbum()
-    {
+    GAlbum() {
         ref_num        = -1;
         parent_ref_num = -1;
 
@@ -64,8 +62,7 @@ public:
         create_sub     = false;
     }
 
-    bool operator<(const GAlbum& rhs) const
-    {
+    bool operator<(const GAlbum& rhs) const {
         if (parent_ref_num == rhs.parent_ref_num)
             return ref_num < rhs.ref_num;
 
@@ -79,7 +76,7 @@ public:
     QString            title;
     QString            summary;
     QString            baseurl;
-                       
+
     bool               add;
     bool               write;
     bool               del_item;

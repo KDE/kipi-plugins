@@ -8,7 +8,7 @@
  * Modified by : Andrea Diamantini <adjam7@gmail.com>
  * Date        : 2008-07-11
  * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
- * 
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -30,7 +30,7 @@
 
 namespace KIO
 {
-    class Job;
+class Job;
 }
 
 class KUrl;
@@ -59,26 +59,32 @@ public:
     GalleryTalker(QWidget* parent);
     ~GalleryTalker();
 
-    static void setGallery2(bool usegallery2) {s_using_gallery2 = usegallery2;};
-    static bool isGallery2() {return s_using_gallery2;};
-    
-    static QString getAuthToken() {return s_authToken;};
+    static void setGallery2(bool usegallery2) {
+        s_using_gallery2 = usegallery2;
+    };
+    static bool isGallery2() {
+        return s_using_gallery2;
+    };
+
+    static QString getAuthToken() {
+        return s_authToken;
+    };
 
     bool loggedIn() const;
 
-    void login( const KUrl& url, const QString& name,
-                const QString& passwd );
+    void login(const KUrl& url, const QString& name,
+               const QString& passwd);
     void listAlbums();
-    void listPhotos( const QString& albumName );
-    void createAlbum( const QString& parentAlbumName,
-                      const QString& albumName,
-                      const QString& albumTitle,
-                      const QString& albumCaption );
-    bool addPhoto( const QString& albumName,
-                   const QString& photoPath,
-                   const QString& caption=QString(),
-                   bool  captionIsTitle=true, bool captionIsDescription=false,
-                   bool rescale=false, int maxDim=600);
+    void listPhotos(const QString& albumName);
+    void createAlbum(const QString& parentAlbumName,
+                     const QString& albumName,
+                     const QString& albumTitle,
+                     const QString& albumCaption);
+    bool addPhoto(const QString& albumName,
+                  const QString& photoPath,
+                  const QString& caption = QString(),
+                  bool  captionIsTitle = true, bool captionIsDescription = false,
+                  bool rescale = false, int maxDim = 600);
 
     void cancel();
 
@@ -105,18 +111,18 @@ private:
 
 signals:
 
-    void signalError( const QString& msg );
-    void signalLoginFailed( const QString& msg );
-    void signalBusy( bool val );
-    void signalAlbums( const QList<GAlbum>& albumList );
-    void signalPhotos( const QList<GPhoto>& photoList );
-    void signalAddPhotoSucceeded( );
-    void signalAddPhotoFailed( const QString& msg );
+    void signalError(const QString& msg);
+    void signalLoginFailed(const QString& msg);
+    void signalBusy(bool val);
+    void signalAlbums(const QList<GAlbum>& albumList);
+    void signalPhotos(const QList<GPhoto>& photoList);
+    void signalAddPhotoSucceeded();
+    void signalAddPhotoFailed(const QString& msg);
 
 private slots:
 
     void data(KIO::Job *job, const QByteArray &data);
-    void slotResult (KIO::Job *job);
+    void slotResult(KIO::Job *job);
 };
 
 }

@@ -14,7 +14,7 @@
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,10 +38,10 @@ namespace KIPIGalleryExportPlugin
 class GalleryWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
-    GalleryWidget( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    GalleryWidget(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
     ~GalleryWidget();
 
 private slots:

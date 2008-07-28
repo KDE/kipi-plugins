@@ -46,12 +46,11 @@ GalleryMPForm::GalleryMPForm()
     m_boundary  = "----------";
 // FIXME     m_boundary += KRandom::randomString( 42 + 13 ).ascii();
 
-    if (GalleryTalker::isGallery2())
-    {
-      addPairRaw("g2_controller", "remote:GalleryRemote");
-      QString auth_token = GalleryTalker::getAuthToken();
-      if (!auth_token.isEmpty())
-        addPairRaw("g2_authToken", auth_token);
+    if (GalleryTalker::isGallery2()) {
+        addPairRaw("g2_controller", "remote:GalleryRemote");
+        QString auth_token = GalleryTalker::getAuthToken();
+        if (!auth_token.isEmpty())
+            addPairRaw("g2_authToken", auth_token);
     }
 }
 
@@ -72,7 +71,7 @@ void GalleryMPForm::finish()
     str += "--";
     str += "\r\n";
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
     ts << str << '\0';
 }
@@ -80,7 +79,7 @@ void GalleryMPForm::finish()
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
 {
     if (GalleryTalker::isGallery2())
-      return addPairRaw(QString("g2_form[%1]").arg(name), value);
+        return addPairRaw(QString("g2_form[%1]").arg(name), value);
 
     return addPairRaw(name, value);
 }
@@ -103,7 +102,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     //m_buffer.resize(oldSize + str.size());
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
     ts << str;
 
@@ -116,22 +115,20 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     if (GalleryTalker::isGallery2())
         filename = "g2_userfile_name";
 
-    if (!addPairRaw(filename, displayFilename))
-    {
+    if (!addPairRaw(filename, displayFilename)) {
         return false;
     }
 
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime = ptr->name();
-    if (mime.isEmpty())
-    {
+    if (mime.isEmpty()) {
         // if we ourselves can't determine the mime of the local file,
         // very unlikely the remote gallery will be able to identify it
         return false;
     }
 
     QFile imageFile(path);
-    if ( !imageFile.open( QIODevice::ReadOnly ) )
+    if (!imageFile.open(QIODevice::ReadOnly))
         return false;
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
@@ -143,9 +140,9 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
     if (GalleryTalker::isGallery2())
-      str += "g2_userfile";
+        str += "g2_userfile";
     else
-      str += "userfile";
+        str += "userfile";
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KUrl(path).fileName());
@@ -155,13 +152,13 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
     ts << str;
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data()+oldSize, imageData.data(), imageData.size());
+    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
 
