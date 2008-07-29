@@ -264,7 +264,7 @@ void Galleries::save()
 
 QTreeWidget* Galleries::asQTreeWidget(QWidget* pParent)
 {
-    Load();
+    load();
 
     QTreeWidget* p_lv = new QTreeWidget(pParent);
     QStringList header;
