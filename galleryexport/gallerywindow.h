@@ -87,9 +87,9 @@ private:
     KIPI::Interface          *m_interface;
     KIPIPlugins::KPAboutData *m_about;
 
-    QProgressDialog                      *m_progressDlg;
-    unsigned int                          m_uploadCount;
-    unsigned int                          m_uploadTotal;
+    QProgressDialog          *m_progressDlg;
+    unsigned int             m_uploadCount;
+    unsigned int             m_uploadTotal;
     QList< QPair<QString, QString> >  m_uploadQueue;
 
     Galleries* mpGalleries;

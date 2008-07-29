@@ -48,7 +48,7 @@ public:
     GalleryList(QWidget *parent, Galleries* pGalleries, bool blnShowOpen = true);
     ~GalleryList();
 
-    Gallery* GetGallery(void);
+    Gallery* getGallery(void);
 
 private:
 

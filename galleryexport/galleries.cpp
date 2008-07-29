@@ -130,6 +130,9 @@ QTreeWidgetItem* Gallery::asQTreeWidgetItem(QTreeWidget* pParent)
 }
 
 
+// ----------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------
+
 
 GalleryQTreeWidgetItem::GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent)
         : QTreeWidgetItem(pParent),
@@ -155,7 +158,7 @@ Galleries::Galleries()
         : mpWallet(0),
         mMaxGalleryId(0)
 {
-	load();		// se non ci metto questo, non funzioneràmai...
+	load();		// se non ci metto questo, non funzioner� mai...
 }
 
 Galleries::~Galleries()

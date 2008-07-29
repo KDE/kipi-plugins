@@ -210,7 +210,7 @@ void GalleryWindow::slotDoLogin()
         return;
     }
 
-    Gallery* p_gallery = dlg.GetGallery();
+    Gallery* p_gallery = dlg.getGallery();
     if (!p_gallery) {
         close();
         return;
@@ -232,7 +232,7 @@ void GalleryWindow::slotDoLogin()
     // If we've done something clever, save it back to the gallery.
     if (p_gallery->url() != url.url()) {
         p_gallery->setUrl(url.url());
-        mpGalleries->Save();
+        mpGalleries->save();
     }
 
     m_talker->login(url.url(), p_gallery->username(), p_gallery->password());
