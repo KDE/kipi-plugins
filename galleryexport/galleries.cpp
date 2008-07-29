@@ -137,12 +137,12 @@ GalleryQTreeWidgetItem::GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* p
 {
 }
 
-Gallery* GalleryQTreeWidgetItem::GetGallery()
+Gallery* GalleryQTreeWidgetItem::getGallery()
 {
     return mpGallery;
 }
 
-void GalleryQTreeWidgetItem::Refresh()
+void GalleryQTreeWidgetItem::refresh()
 {
     setText(0, mpGallery->name());
     setText(1, mpGallery->url());
@@ -155,6 +155,7 @@ Galleries::Galleries()
         : mpWallet(0),
         mMaxGalleryId(0)
 {
+	load();		// se non ci metto questo, non funzioneràmai...
 }
 
 Galleries::~Galleries()
@@ -165,7 +166,7 @@ Galleries::~Galleries()
     // Todo: clear up mGalleries
 }
 
-void Galleries::Load()
+void Galleries::load()
 {
     static bool bln_loaded = false;
     if (bln_loaded) return;
@@ -212,13 +213,13 @@ void Galleries::Load()
 }
 
 
-void Galleries::Add(Gallery& rGallery)
+void Galleries::add(Gallery& rGallery)
 {
     mGalleries.append(rGallery);
 }
 
 // FIXME remove gallery NOT index!!
-void Galleries::Remove(Gallery& rGallery)
+void Galleries::remove(Gallery& rGallery)
 {
     mGalleries.removeAt(0);
 
@@ -228,7 +229,7 @@ void Galleries::Remove(Gallery& rGallery)
 }
 
 
-void Galleries::Save()
+void Galleries::save()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");

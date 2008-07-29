@@ -83,8 +83,8 @@ class GalleryQTreeWidgetItem : public QTreeWidgetItem
 public:
     GalleryQTreeWidgetItem(Gallery* pGallery, QTreeWidget* pParent);
 
-    Gallery* GetGallery();
-    void Refresh();
+    Gallery* getGallery();
+    void refresh();
 private:
     Gallery* mpGallery;
 };
@@ -99,13 +99,13 @@ public:
     Galleries();
     ~Galleries();
 
-    void Add(Gallery& rGallery);
-    void Remove(Gallery& rGallery);
-    void Save();
+    void add(Gallery& rGallery);
+    void remove(Gallery& rGallery);
+    void save();
     QTreeWidget* asQTreeWidget(QWidget* pParent);
 
 private:
-    void Load();
+    void load();
 
     KWallet::Wallet* mpWallet;
 

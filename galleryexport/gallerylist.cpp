@@ -76,13 +76,13 @@ GalleryList::GalleryList(QWidget *pParent, Galleries* pGalleries, bool blnShowOp
 
 
     QLabel *label = new QLabel(page);
-    hl->addWidget(label);
 //FIXME cannot see image gallery.png!!
     QString galleryImagePath = KStandardDirs::locate("data" , "plugin_galleryexport/pics/gallery.png");
     label->setPixmap(galleryImagePath);
     label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
     label->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     label->resize(100, 250);
+    hl->addWidget(label);
 
     mpGalleryList = mpGalleries->asQTreeWidget(page);
     hl->addWidget(mpGalleryList);
