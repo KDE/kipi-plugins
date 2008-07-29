@@ -100,7 +100,7 @@ GalleryList::~GalleryList()
 
 }
 
-Gallery* GalleryList::GetGallery()
+Gallery* GalleryList::getGallery()
 {
     return mpCurrentGallery;
 }
@@ -115,7 +115,7 @@ void GalleryList::selectionChanged()
 
     if (bln_selected) {
         GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
-        mpCurrentGallery = p_glvi->GetGallery();
+        mpCurrentGallery = p_glvi->getGallery();
     } else {
         mpCurrentGallery = 0;
     }
@@ -143,8 +143,8 @@ void GalleryList::slotUser3(void)
     GalleryEdit dlg(this, p_gallery, i18n("New Remote Gallery"));
     dlg.show();
     if (QDialog::Accepted == dlg.exec()) {
-        mpGalleries->Add(*p_gallery);
-        mpGalleries->Save();
+        mpGalleries->add(*p_gallery);
+        mpGalleries->save();
         p_gallery->asQTreeWidgetItem(mpGalleryList);
     } else {
         delete p_gallery;
@@ -160,11 +160,11 @@ void GalleryList::slotUser2(void)
         KMessageBox::error(kapp->activeWindow(), i18n("No gallery selected!"));
     } else {
         GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
-        GalleryEdit dlg(this, p_glvi->GetGallery(), i18n("Edit Remote Gallery"));
+        GalleryEdit dlg(this, p_glvi->getGallery(), i18n("Edit Remote Gallery"));
 
         if (QDialog::Accepted == dlg.exec()) {
-            p_glvi->Refresh();
-            mpGalleries->Save();
+            p_glvi->refresh();
+            mpGalleries->save();
         }
     }
 };
@@ -187,10 +187,10 @@ void GalleryList::slotUser1(void)
                                           KStandardGuiItem::yes(), KStandardGuiItem::no(),
                                           QString::null, KMessageBox::Dangerous)) {
             GalleryQTreeWidgetItem* p_glvi = dynamic_cast<GalleryQTreeWidgetItem*>(p_lvi);
-            Gallery* p_gallery = p_glvi->GetGallery();
+            Gallery* p_gallery = p_glvi->getGallery();
             delete p_glvi;
-            mpGalleries->Remove(*p_gallery);
-            mpGalleries->Save();
+            mpGalleries->remove(*p_gallery);
+            mpGalleries->save();
         }
     }
 };
