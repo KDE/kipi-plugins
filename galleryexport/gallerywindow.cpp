@@ -212,7 +212,7 @@ void GalleryWindow::slotDoLogin()
         return;
     }
 
-    Gallery* p_gallery = dlg.getGallery();
+    Gallery* p_gallery = dlg.gallery();
     if (!p_gallery) {
         close();
         return;

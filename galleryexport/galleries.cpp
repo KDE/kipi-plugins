@@ -40,6 +40,9 @@
 namespace KIPIGalleryExportPlugin
 {
 
+// ----------------------------------------------------------------------------------------
+// ------------------------ Gallery implementation -------------------------------
+// ----------------------------------------------------------------------------------------
 
 Gallery::Gallery(const QString& name, const QString& url,
                  const QString& username, const QString& password,
@@ -131,6 +134,7 @@ QTreeWidgetItem* Gallery::asQTreeWidgetItem(QTreeWidget* pParent)
 
 
 // ----------------------------------------------------------------------------------------
+// -------------------- GalleryQTreeWidgetItem implementation -----------------------------
 // ----------------------------------------------------------------------------------------
 
 
@@ -153,12 +157,16 @@ void GalleryQTreeWidgetItem::refresh()
 }
 
 
+// ----------------------------------------------------------------------------------------
+// ------------------------ Galleries implementation -------------------------------
+// ----------------------------------------------------------------------------------------
+
 
 Galleries::Galleries()
         : mpWallet(0),
         mMaxGalleryId(0)
 {
-	load();		// se non ci metto questo, non funzioner� mai...
+	load();
 }
 
 Galleries::~Galleries()

@@ -38,6 +38,7 @@
 #include <KMessageBox>
 #include <KApplication>
 #include <KStandardDirs>
+#include <KPushButton>
 
 // Local includes.
 #include "galleries.h"
@@ -100,7 +101,7 @@ GalleryList::~GalleryList()
 
 }
 
-Gallery* GalleryList::getGallery()
+Gallery* GalleryList::gallery()
 {
     return mpCurrentGallery;
 }
@@ -126,14 +127,14 @@ void GalleryList::doubleClicked(QTreeWidgetItem* pCurrent, int column)
     if (!pCurrent)
         return;
 
-//   if (actionButton(Ok)->isVisible())
-//   {
-//     accept();
-//   }
-//   else
-//   {
-//     slotUser2();
-//   }
+    if (button(KDialog::Ok)->isVisible())
+    {
+        accept();
+    }
+    else
+    {
+        slotUser2();
+    }
 }
 
 //==================   Add   =====
