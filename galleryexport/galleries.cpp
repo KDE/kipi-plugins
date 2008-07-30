@@ -184,9 +184,10 @@ void Galleries::load()
     bln_loaded = true;
 
     bool bln_use_wallet = false;
+/*  FIXME: Andrea, this lines crash kipi host application at startup, when plugin is loaded.
     mpWallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(),
                                            kapp->activeWindow()->winId(),
-                                           KWallet::Wallet::Synchronous);
+                                           KWallet::Wallet::Synchronous);*/
     if (!mpWallet) {
         kWarning() << "Failed to open kwallet" << endl;
     } else {
