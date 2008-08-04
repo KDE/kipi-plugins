@@ -24,7 +24,12 @@ SET(KIPIPLUGINS_VERSION_STRING "${KIPIPLUGINS_MAJOR_VERSION}.${KIPIPLUGINS_MINOR
 
 # =======================================================
 
+FIND_PACKAGE(KDE4 REQUIRED)
+
+INCLUDE(MacroOptionalFindPackage)
 INCLUDE(FindPackageHandleStandardArgs)
+INCLUDE(KDE4Defaults)
+INCLUDE(MacroLibrary)
 
 # Depencies detection required by all plugins
 FIND_PACKAGE(Kexiv2 REQUIRED)
