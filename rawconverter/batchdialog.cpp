@@ -65,6 +65,7 @@ extern "C"
 
 // LibKDcraw includes.
 
+#include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
 // LibKipi includes.
@@ -323,6 +324,10 @@ void BatchDialog::readSettings()
     d->decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
     d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
     d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
+#if KDCRAW_VERSION >= 0x000300
+    m_decodingSettingsBox->setUseWhitePoint(group.readEntry("Use White Point", false));
+    m_decodingSettingsBox->setWhitePoint(group.readEntry("White Point", 0));
+#endif
     d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
     d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
     d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
@@ -366,6 +371,10 @@ void BatchDialog::saveSettings()
     group.writeEntry("Brightness Multiplier", d->decodingSettingsBox->brightness());
     group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
     group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
+#if KDCRAW_VERSION >= 0x000300
+    group.writeEntry("Use White Point", m_decodingSettingsBox->useWhitePoint());
+    group.writeEntry("White Point", m_decodingSettingsBox->whitePoint());
+#endif
     group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
     group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
     group.writeEntry("caRedMultiplier", d->decodingSettingsBox->caRedMultiplier());
@@ -426,6 +435,10 @@ void BatchDialog::slotStartStop()
         rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
         rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
         rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
+#if KDCRAW_VERSION >= 0x000300
+        rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
+        rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+#endif
         rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
         rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
         rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
