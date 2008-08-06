@@ -62,6 +62,7 @@ extern "C"
 
 // LibKDcraw includes.
 
+#include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
 // Local includes.
@@ -315,6 +316,10 @@ void SingleDialog::slotUser2()
     rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
+#if KDCRAW_VERSION >= 0x000105
+    rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
+    rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+#endif
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
     rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
