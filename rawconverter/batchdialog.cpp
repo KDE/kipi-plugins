@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C Ansi includes.
@@ -32,7 +32,7 @@ extern "C"
 
 // C++ includes.
 
-#include <cstdio> 
+#include <cstdio>
 
 // Qt includes.
 
@@ -66,6 +66,7 @@ extern "C"
 
 // LibKDcraw includes.
 
+#include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
 // Local includes.
@@ -117,9 +118,9 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
     m_progressBar->hide();
 
-    mainLayout->addMultiCellWidget(m_listView, 0, 2, 0, 0);
+    mainLayout->addMultiCellWidget(m_listView,            0, 2, 0, 0);
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
-    mainLayout->addMultiCellWidget(m_progressBar, 1, 1, 1, 1);
+    mainLayout->addMultiCellWidget(m_progressBar,         1, 1, 1, 1);
     mainLayout->setColStretch(0, 10);
     mainLayout->setRowStretch(2, 10);
 
@@ -215,6 +216,10 @@ void BatchDialog::readSettings()
     m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
     m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
     m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
+#if KDCRAW_VERSION >= 0x000105
+    m_decodingSettingsBox->setUseWhitePoint(config.readBoolEntry("Use White Point", false));
+    m_decodingSettingsBox->setWhitePoint(config.readNumEntry("White Point", 0));
+#endif
     m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
     m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
     m_decodingSettingsBox->setcaRedMultiplier(config.readDoubleNumEntry("caRedMultiplier", 1.0));
@@ -254,6 +259,10 @@ void BatchDialog::saveSettings()
     config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
     config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
     config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
+#if KDCRAW_VERSION >= 0x000105
+    config.writeEntry("Use White Point", m_decodingSettingsBox->useWhitePoint());
+    config.writeEntry("White Point", m_decodingSettingsBox->whitePoint());
+#endif
     config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
     config.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
     config.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
@@ -312,6 +321,10 @@ void BatchDialog::slotUser1()
     rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
+#if KDCRAW_VERSION >= 0x000105
+    rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
+    rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+#endif
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
     rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
@@ -365,7 +378,7 @@ void BatchDialog::addItems(const QStringList& itemList)
     KURL::List urlList;
 
     QPixmap pix(SmallIcon( "file_broken", KIcon::SizeLarge, KIcon::DisabledState ));
-    
+
     for (QStringList::const_iterator  it = itemList.begin();
          it != itemList.end(); ++it) 
     {
@@ -409,7 +422,7 @@ void BatchDialog::slotSaveFormatChanged()
             ext = "png";
             break;
     }
-    
+
     QListViewItemIterator it( m_listView );
     while ( it.current() ) 
     {
@@ -433,7 +446,7 @@ void BatchDialog::processOne()
         slotAborted();
         return;
     }
-    
+
     QString file(m_fileList.first());
     m_fileList.pop_front();
 
@@ -577,7 +590,7 @@ void BatchDialog::customEvent(QCustomEvent *event)
             }
         }
     }
-    else                 
+    else
     {
         if (!d->success)        // Something is failed...
         {
@@ -637,4 +650,3 @@ void BatchDialog::customEvent(QCustomEvent *event)
 }
 
 } // NameSpace KIPIRawConverterPlugin
-

@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C Ansi includes.
@@ -85,7 +85,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 {
     m_inputFile     = file;
     m_inputFileName = QFileInfo(file).fileName();
-    
+
     QWidget *page = new QWidget( this );
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page, 1, 1, 0, spacingHint());
@@ -134,7 +134,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
                               "This uses a high-quality adaptive algorithm."));
 
     setButtonTip( User3, i18n("<p>Abort the current Raw file conversion"));
-    
+
     setButtonTip( Close, i18n("<p>Exit Raw Converter"));
 
     m_blinkPreviewTimer = new QTimer(this);
@@ -145,7 +145,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     connect(m_blinkPreviewTimer, SIGNAL(timeout()),
             this, SLOT(slotPreviewBlinkTimerDone()));
-    
+
     connect(m_blinkConvertTimer, SIGNAL(timeout()),
             this, SLOT(slotConvertBlinkTimerDone()));
 
@@ -204,6 +204,10 @@ void SingleDialog::readSettings()
     m_decodingSettingsBox->setBrightness(config.readDoubleNumEntry("Brightness Multiplier", 1.0));
     m_decodingSettingsBox->setUseBlackPoint(config.readBoolEntry("Use Black Point", false));
     m_decodingSettingsBox->setBlackPoint(config.readNumEntry("Black Point", 0));
+#if KDCRAW_VERSION >= 0x000105
+    m_decodingSettingsBox->setUseWhitePoint(config.readBoolEntry("Use White Point", false));
+    m_decodingSettingsBox->setWhitePoint(config.readNumEntry("White Point", 0));
+#endif
     m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
     m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
     m_decodingSettingsBox->setcaRedMultiplier(config.readDoubleNumEntry("caRedMultiplier", 1.0));
@@ -243,6 +247,10 @@ void SingleDialog::saveSettings()
     config.writeEntry("Brightness Multiplier", m_decodingSettingsBox->brightness());
     config.writeEntry("Use Black Point", m_decodingSettingsBox->useBlackPoint());
     config.writeEntry("Black Point", m_decodingSettingsBox->blackPoint());
+#if KDCRAW_VERSION >= 0x000105
+    config.writeEntry("Use White Point", m_decodingSettingsBox->useWhitePoint());
+    config.writeEntry("White Point", m_decodingSettingsBox->whitePoint());
+#endif
     config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
     config.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
     config.writeEntry("caRedMultiplier", m_decodingSettingsBox->caRedMultiplier());
@@ -276,13 +284,17 @@ void SingleDialog::slotUser1()
     rawDecodingSettings.brightness                 = m_decodingSettingsBox->brightness();
     rawDecodingSettings.enableBlackPoint           = m_decodingSettingsBox->useBlackPoint();
     rawDecodingSettings.blackPoint                 = m_decodingSettingsBox->blackPoint();
+#if KDCRAW_VERSION >= 0x000105
+    rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
+    rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+#endif
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
     rawDecodingSettings.caMultiplier[0]            = m_decodingSettingsBox->caRedMultiplier();
     rawDecodingSettings.caMultiplier[1]            = m_decodingSettingsBox->caBlueMultiplier();
     rawDecodingSettings.RAWQuality                 = m_decodingSettingsBox->quality();
     rawDecodingSettings.outputColorSpace           = m_decodingSettingsBox->outputColorSpace();
-    
+
     m_thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PPM);
     m_thread->processHalfRawFile(KURL(m_inputFile));
     if (!m_thread->running())
@@ -330,7 +342,7 @@ void SingleDialog::slotIdentify()
 }
 
 void SingleDialog::busy(bool val)
-{   
+{
     m_decodingSettingsBox->setEnabled(!val);
     m_saveSettingsBox->setEnabled(!val);
     enableButton (User1, !val);
@@ -505,7 +517,7 @@ void SingleDialog::customEvent(QCustomEvent *event)
             }
         }
     }
-    else                 
+    else
     {
         if (!d->success)        // Something is failed...
         {
