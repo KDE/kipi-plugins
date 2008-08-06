@@ -325,8 +325,8 @@ void BatchDialog::readSettings()
     d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
     d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
 #if KDCRAW_VERSION >= 0x000300
-    m_decodingSettingsBox->setUseWhitePoint(group.readEntry("Use White Point", false));
-    m_decodingSettingsBox->setWhitePoint(group.readEntry("White Point", 0));
+    d->decodingSettingsBox->setUseWhitePoint(group.readEntry("Use White Point", false));
+    d->decodingSettingsBox->setWhitePoint(group.readEntry("White Point", 0));
 #endif
     d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
     d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
@@ -372,8 +372,8 @@ void BatchDialog::saveSettings()
     group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
     group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
 #if KDCRAW_VERSION >= 0x000300
-    group.writeEntry("Use White Point", m_decodingSettingsBox->useWhitePoint());
-    group.writeEntry("White Point", m_decodingSettingsBox->whitePoint());
+    group.writeEntry("Use White Point", d->decodingSettingsBox->useWhitePoint());
+    group.writeEntry("White Point", d->decodingSettingsBox->whitePoint());
 #endif
     group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
     group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
@@ -436,8 +436,8 @@ void BatchDialog::slotStartStop()
         rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
         rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
 #if KDCRAW_VERSION >= 0x000300
-        rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
-        rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+        rawDecodingSettings.enableWhitePoint           = d->decodingSettingsBox->useWhitePoint();
+        rawDecodingSettings.whitePoint                 = d->decodingSettingsBox->whitePoint();
 #endif
         rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
         rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
