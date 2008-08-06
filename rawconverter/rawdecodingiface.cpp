@@ -9,26 +9,26 @@
  * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
+ * NOTE: Do not use kdDebug() in this implementation because
+ *       it will be multithreaded. Use qDebug() instead.
  *       See B.K.O #133026 for details.
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
 
-#include <cstdio> 
-#include <cmath> 
+#include <cstdio>
+#include <cmath>
 
 // Qt Includes.
 
@@ -65,17 +65,17 @@ RawDecodingIface::~RawDecodingIface()
 {
 }
 
-bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath, 
+bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
                                           QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                           const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, 
+    if (!KDcrawIface::KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings,
                                                  imageData, width, height, rgbmax))
         return false;
 
-    return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
+    return (loadedFromDcraw(filePath, destPath, outputFileFormat,
                             imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
@@ -85,11 +85,11 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
 {
     int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeRAWImage(filePath, rawDecodingSettings, 
+    if (!KDcrawIface::KDcraw::decodeRAWImage(filePath, rawDecodingSettings,
                                              imageData, width, height, rgbmax))
         return false;
 
-    return (loadedFromDcraw(filePath, destPath, outputFileFormat, 
+    return (loadedFromDcraw(filePath, destPath, outputFileFormat,
                             imageData, width, height, rgbmax, rawDecodingSettings));
 }
 
@@ -132,7 +132,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
     }
 
-    // Special case: RAW decoded image is a linear-histogram image with 16 bits color depth. 
+    // Special case: RAW decoded image is a linear-histogram image with 16 bits color depth.
     // No auto white balance and no gamma adjustemnts are performed. Image is a black hole.
     // We need to reproduce all dcraw 8 bits color depth adjustements here.
 
@@ -168,6 +168,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
             if (white < val) white = (float)val;
         }
+
+        white *= 1.0 / rawDecodingSettings.brightness;
         qDebug() << "White Point: " << white << endl;
 
         // Compute the Gamma lut accordingly.

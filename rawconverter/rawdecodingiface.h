@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef RAW_DECODING_IFACE_H
@@ -45,27 +45,27 @@ public:
     RawDecodingIface();
     ~RawDecodingIface();
 
-public: 
+public:
 
     /** Extract a small size of decode RAW data in 8 bits/color/pixels 
         using sRGB color space.
     */
-    bool decodeHalfRAWImage(const QString& filePath, 
+    bool decodeHalfRAWImage(const QString& filePath,
                             QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                             const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
 
     /** Extract a full size of RAW data in 8 bits/color/pixels using 
         sRGB color space.
     */
-    bool decodeRAWImage(const QString& filePath, 
+    bool decodeRAWImage(const QString& filePath,
                         QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                         const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
 
 private:
 
-    bool loadedFromDcraw(const QString& filePath, 
+    bool loadedFromDcraw(const QString& filePath,
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                         const QByteArray& imageData, int width, int height, int rgbmax, 
+                         const QByteArray& imageData, int width, int height, int rgbmax,
                          const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
 };
 

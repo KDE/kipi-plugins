@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C Ansi includes.
@@ -187,9 +187,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
     d->progressBar->hide();
 
-    mainLayout->addWidget(d->listView, 0, 0, 3, 1);
+    mainLayout->addWidget(d->listView,            0, 0, 3, 1);
     mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
-    mainLayout->addWidget(d->progressBar, 1, 1, 1, 1);
+    mainLayout->addWidget(d->progressBar,         1, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(2, 10);
     mainLayout->setMargin(0);
@@ -241,6 +241,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
 
+    connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
+            this, SLOT(slotSixteenBitsImageToggled(bool)));
+
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
@@ -280,6 +283,15 @@ BatchDialog::~BatchDialog()
 void BatchDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("rawconverter", "kipi-plugins");
+}
+
+void BatchDialog::slotSixteenBitsImageToggled(bool)
+{
+#if KDCRAW_VERSION >= 0x000300
+    // Dcraw do not provide a way to set brigness of image in 16 bits color depth.
+    // We always set on this option. We drive brightness adjustment in digiKam Raw image loader.
+    d->decodingSettingsBox->setEnabledBrightnessSettings(true);
+#endif
 }
 
 void BatchDialog::closeEvent(QCloseEvent *e)

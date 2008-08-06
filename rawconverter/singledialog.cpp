@@ -218,6 +218,9 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
 
+    connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
+            this, SLOT(slotSixteenBitsImageToggled(bool)));
+
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
@@ -256,6 +259,15 @@ SingleDialog::~SingleDialog()
 void SingleDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("rawconverter", "kipi-plugins");
+}
+
+void SingleDialog::slotSixteenBitsImageToggled(bool)
+{
+#if KDCRAW_VERSION >= 0x000300
+    // Dcraw do not provide a way to set brigness of image in 16 bits color depth.
+    // We always set on this option. We drive brightness adjustment in digiKam Raw image loader.
+    d->decodingSettingsBox->setEnabledBrightnessSettings(true);
+#endif
 }
 
 void SingleDialog::closeEvent(QCloseEvent *e)
