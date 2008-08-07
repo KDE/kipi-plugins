@@ -1,0 +1,152 @@
+/* ============================================================
+ * File  : galleries.cpp
+ * Author: Colin Guthrie <kde@colin.guthr.ie>
+ * Date  : 2006-09-04
+ * Copyright 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ *
+ *
+ * Modified by : Andrea Diamantini <adjam7@gmail.com>
+ * Date        : 2008-07-11
+ * Copyright 2008 by Andrea Diamantini <adjam7@gmail.com>
+ *
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * ============================================================ */
+
+// Qt includes
+#include <QString>
+#include <QWidget>
+
+// KDE includes
+#include <KDebug>
+#include <KConfig>
+#include <KConfigGroup>
+#include <KLocale>
+#include <KApplication>
+
+// local includes
+#include "galleries.h"
+
+namespace KIPIGalleryExportPlugin
+{
+
+Gallery::Gallery()
+{
+        load();
+}
+
+Gallery::~Gallery()
+{
+}
+
+QString Gallery::name() const
+{
+    return mName;
+}
+
+QString Gallery::url() const
+{
+    return mUrl;
+}
+
+QString Gallery::username() const
+{
+    return mUsername;
+}
+
+QString Gallery::password() const
+{
+    return mPassword;
+}
+
+unsigned int Gallery::version() const
+{
+    return mVersion;
+}
+
+unsigned int Gallery::galleryId() const
+{
+    return mGalleryId;
+}
+
+// -------------------------------------
+
+void Gallery::setName(QString name)
+{
+    mName = name;
+}
+
+void Gallery::setUrl(QString url)
+{
+    mUrl = url;
+}
+
+void Gallery::setUsername(QString username)
+{
+    mUsername = username;
+}
+
+void Gallery::setPassword(QString password)
+{
+    mPassword = password;
+}
+
+void Gallery::setVersion(unsigned int version)
+{
+    mVersion = version;
+}
+
+void Gallery::setGalleryId(unsigned int galleryId)
+{
+    mGalleryId = galleryId;
+}
+
+void Gallery::load()
+{
+// FIXME: sure we need this??
+    static bool bln_loaded = false;
+    if (bln_loaded) return;
+    bln_loaded = true;
+
+    // read config
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("Gallery Settings");
+
+    kWarning() << "Reading data from kipirc file.." << endl;
+
+    mName = group.readEntry("Name", QString() );
+    mUrl = group.readEntry("URL", QString() );
+    mUsername = group.readEntry("Username", QString() );
+    mVersion = group.readEntry("Version", QString().toInt() );
+    mPassword = group.readEntry("Password", QString() );
+
+}
+
+
+void Gallery::save()
+{
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("Gallery Settings");
+
+    kWarning() << "Saving data to kipirc file.." << endl;
+
+    group.writeEntry(QString("Name"), name() );
+    group.writeEntry(QString("URL"), url() );
+    group.writeEntry(QString("Username"), username() );
+    group.writeEntry(QString("Version"), version() );
+    group.writeEntry(QString("Password"), password() );
+
+    kWarning() << "syncing.." << endl;
+    config.sync();
+}
+
+} // end NameSpace
