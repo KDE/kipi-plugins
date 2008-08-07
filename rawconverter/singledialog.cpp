@@ -97,7 +97,7 @@ SingleDialog::SingleDialog(const QString& file, QWidget */*parent*/)
 
     m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, false, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(m_decodingSettingsBox);
-    m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
+    m_decodingSettingsBox->addItem(m_saveSettingsBox, i18n("Save settings"));
 
     mainLayout->addMultiCellWidget(m_previewWidget, 0, 1, 0, 0);
     mainLayout->addMultiCellWidget(m_decodingSettingsBox, 0, 0, 1, 1);
