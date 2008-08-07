@@ -112,7 +112,12 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
     m_decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(m_page, false, true, true);
     m_saveSettingsBox     = new SaveSettingsWidget(m_page);
+
+#if KDCRAW_VERSION >= 0x000105
     m_decodingSettingsBox->addItem(m_saveSettingsBox, i18n("Save settings"));
+#else
+    m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
+#endif
 
     m_progressBar = new KProgress(m_page);
     m_progressBar->setMaximumHeight( fontMetrics().height()+2 );
