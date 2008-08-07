@@ -115,6 +115,7 @@ BatchDialog::BatchDialog(QWidget* /*parent*/)
 
 #if KDCRAW_VERSION >= 0x000105
     m_decodingSettingsBox->addItem(m_saveSettingsBox, i18n("Save settings"));
+    m_decodingSettingsBox->updateMinimumWidth();
 #else
     m_decodingSettingsBox->insertTab(m_saveSettingsBox, i18n("Save settings"));
 #endif
