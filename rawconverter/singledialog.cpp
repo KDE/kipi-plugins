@@ -214,6 +214,7 @@ void SingleDialog::readSettings()
 #if KDCRAW_VERSION >= 0x000105
     m_decodingSettingsBox->setUseWhitePoint(config.readBoolEntry("Use White Point", false));
     m_decodingSettingsBox->setWhitePoint(config.readNumEntry("White Point", 0));
+    m_decodingSettingsBox->setMedianFilterPasses(config.readNumEntry("Median Filter Passes", 0));
 #endif
     m_decodingSettingsBox->setNRThreshold(config.readNumEntry("NR Threshold", 100));
     m_decodingSettingsBox->setUseCACorrection(config.readBoolEntry("EnableCACorrection", false));
@@ -257,6 +258,7 @@ void SingleDialog::saveSettings()
 #if KDCRAW_VERSION >= 0x000105
     config.writeEntry("Use White Point", m_decodingSettingsBox->useWhitePoint());
     config.writeEntry("White Point", m_decodingSettingsBox->whitePoint());
+    config.writeEntry("Median Filter Passes", m_decodingSettingsBox->medianFilterPasses());
 #endif
     config.writeEntry("NR Threshold", m_decodingSettingsBox->NRThreshold());
     config.writeEntry("EnableCACorrection", m_decodingSettingsBox->useCACorrection());
@@ -294,6 +296,7 @@ void SingleDialog::slotUser1()
 #if KDCRAW_VERSION >= 0x000105
     rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
     rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+    rawDecodingSettings.medianFilterPasses         = m_decodingSettingsBox->medianFilterPasses();
 #endif
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
@@ -325,6 +328,7 @@ void SingleDialog::slotUser2()
 #if KDCRAW_VERSION >= 0x000105
     rawDecodingSettings.enableWhitePoint           = m_decodingSettingsBox->useWhitePoint();
     rawDecodingSettings.whitePoint                 = m_decodingSettingsBox->whitePoint();
+    rawDecodingSettings.medianFilterPasses         = m_decodingSettingsBox->medianFilterPasses();
 #endif
     rawDecodingSettings.NRThreshold                = m_decodingSettingsBox->NRThreshold();
     rawDecodingSettings.enableCACorrection         = m_decodingSettingsBox->useCACorrection();
