@@ -151,7 +151,13 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     d->decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(page, true, true, true);
     d->saveSettingsBox     = new SaveSettingsWidget(d->decodingSettingsBox);
+
+#if KDCRAW_VERSION >= 0x000300
+    d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
+    d->decodingSettingsBox->updateMinimumWidth();
+#else
     d->decodingSettingsBox->addTab(d->saveSettingsBox, i18n("Save settings"));
+#endif
 
     mainLayout->addWidget(d->previewWidget, 0, 0, 2, 1);
     mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
@@ -265,7 +271,7 @@ void SingleDialog::slotSixteenBitsImageToggled(bool)
 {
 #if KDCRAW_VERSION >= 0x000300
     // Dcraw do not provide a way to set brigness of image in 16 bits color depth.
-    // We always set on this option. We drive brightness adjustment in digiKam Raw image loader.
+    // We always set on this option. We drive brightness adjustment as post processing.
     d->decodingSettingsBox->setEnabledBrightnessSettings(true);
 #endif
 }
