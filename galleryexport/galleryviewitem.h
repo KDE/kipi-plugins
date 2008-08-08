@@ -27,7 +27,7 @@
 #define GALLERYVIEWITEM_H
 
 // Qt includes
-#include <QListWidget>
+#include <QTreeWidget>
 #include <QPalette>
 
 // local includes
@@ -37,15 +37,15 @@
 namespace KIPIGalleryExportPlugin
 {
 
-class GAlbumViewItem : public QListWidgetItem
+class GAlbumViewItem : public QTreeWidgetItem
 {
 public:
 
     GAlbumViewItem();
 
-    GAlbumViewItem(QListWidget* parent, const QString& name, const GAlbum& _album);
+    GAlbumViewItem(QTreeWidget* parent, const QString& name, const GAlbum& _album);
 
-    GAlbumViewItem(QListWidgetItem* parent, const QString& name, const GAlbum& _album);
+    GAlbumViewItem(QTreeWidgetItem* parent, const QString& name, const GAlbum& _album);
 
     GAlbum album;
 

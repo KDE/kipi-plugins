@@ -11,3 +11,11 @@ For the lazy times:
 
 * Polish the html code used to render the thumbnails, better
   fonts sizes and layout
+
++--------------------------------------------------
+adjam's list
+
+1. substitute QListWidget with QTreeWidget in galleryWindow ui  (DONE)
+2. let work gallerytalker
+3. let work galleryviewitem
+4. add widget to connect to gallery when launching galleryexport plugin

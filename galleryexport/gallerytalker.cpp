@@ -81,19 +81,18 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
 
     GalleryMPForm form;
 
-    form.addPair("cmd",              "login");
+    form.addPair("cmd", "login");
     form.addPair("protocol_version", "2.11");
-    form.addPair("uname",            name);
-    form.addPair("password",         passwd);
+    form.addPair("uname", name);
+    form.addPair("password", passwd);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_LOGIN;
     m_job   = job;
@@ -109,7 +108,7 @@ void GalleryTalker::listAlbums()
     if (s_using_gallery2)
         task = "fetch-albums-prune";
 
-    form.addPair("cmd",              task);
+    form.addPair("cmd", task);
     form.addPair("protocol_version", "2.11");
     form.finish();
 
@@ -117,10 +116,9 @@ void GalleryTalker::listAlbums()
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_LISTALBUMS;
     m_job   = job;
@@ -137,19 +135,18 @@ void GalleryTalker::listPhotos(const QString& albumName)
 
     GalleryMPForm form;
 
-    form.addPair("cmd",              "fetch-album-images");
+    form.addPair("cmd", "fetch-album-images");
     form.addPair("protocol_version", "2.11");
-    form.addPair("set_albumName",    albumName);
+    form.addPair("set_albumName", albumName);
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_LISTPHOTOS;
     m_job   = job;
@@ -184,10 +181,9 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_CREATEALBUM;
     m_job   = job;
@@ -253,10 +249,9 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotResult(KIO::Job *)));
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
 
     m_state = GE_ADDPHOTO;
     m_job   = job;
@@ -442,7 +437,6 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
     }
 
     // We need parent albums to come first for rest of the code to work
-    // FIXME 
     qSort(albumList);
 
     emit signalAlbums(albumList);
@@ -605,4 +599,5 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 
 }
 
+// self
 #include "gallerytalker.moc"

@@ -34,16 +34,16 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GAlbumViewItem::GAlbumViewItem() : QListWidgetItem(0, 1000)
+GAlbumViewItem::GAlbumViewItem() : QTreeWidgetItem(1000)
 {};
 
-GAlbumViewItem::GAlbumViewItem(QListWidget* parent, const QString& name, const GAlbum& _album)
-        : QListWidgetItem(parent/*, name*/) ,
+GAlbumViewItem::GAlbumViewItem(QTreeWidget* parent, const QString& name, const GAlbum& _album)
+        : QTreeWidgetItem(parent) ,
         album(_album)
 {};
 
-GAlbumViewItem::GAlbumViewItem(QListWidgetItem* parent, const QString& name, const GAlbum& _album)
-        : QListWidgetItem(/*parent,*/name) , album(_album)
+GAlbumViewItem::GAlbumViewItem(QTreeWidgetItem* parent, const QString& name, const GAlbum& _album)
+        : QTreeWidgetItem(parent) , album(_album)
 {};
 
 
@@ -52,7 +52,7 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
     if (!p)
         return;
 
-    QListWidget *lv = new QListWidget();
+    QTreeWidget *lv = new QTreeWidget();
     if (!lv)
         return;
     QFontMetrics fm(p->fontMetrics());
@@ -97,7 +97,7 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
     }
 }
 
-// FIXME, CODE ME!!
+// TODO, CODE ME!!
 void GAlbumViewItem::paintFocus(QPainter* p, const QPalette& cg, const QRect& rc)
 {
     return;

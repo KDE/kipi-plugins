@@ -44,7 +44,7 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
-#include <KIconLoader>
+//#include <KIconLoader>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <KRun>
@@ -78,22 +78,22 @@ class GalleryWindow::Private
 private:
     Private(GalleryWindow* parent);
 
-    QListWidget*    albumView;  //w
-    KHTMLPart*      photoView;  //w
-    QPushButton*    newAlbumBtn;  //w
-    QPushButton*    addPhotoBtn;  //w
+    QTreeWidget*    albumView;
+    KHTMLPart*      photoView;
+    QPushButton*    newAlbumBtn;
+    QPushButton*    addPhotoBtn;
     QPushButton*    helpButton;
-    QCheckBox*      captTitleCheckBox;  //w
-    QCheckBox*      captDescrCheckBox;  //w
-    QCheckBox*      resizeCheckBox;  //w
-    QSpinBox*       dimensionSpinBox;  //w
+    QCheckBox*      captTitleCheckBox;
+    QCheckBox*      captDescrCheckBox;
+    QCheckBox*      resizeCheckBox;
+    QSpinBox*       dimensionSpinBox;
 
 
-    QHash<int, GAlbumViewItem>       albumDict;
-    QString                   lastSelectedAlbum;
-    QProgressDialog          *progressDlg;
-    unsigned int             uploadCount;
-    unsigned int             uploadTotal;
+    QHash<int, GAlbumViewItem> albumDict;
+    QString lastSelectedAlbum;
+    QProgressDialog* progressDlg;
+    unsigned int uploadCount;
+    unsigned int uploadTotal;
     QList< QPair<QString, QString> >  uploadQueue;
 
     friend class GalleryWindow;
@@ -106,14 +106,13 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     QWidget *widget = new QWidget(parent);
     parent->setMainWidget(widget);
 
-    QFrame *page = new QFrame(widget);
     QHBoxLayout* galleryWidgetLayout = new QHBoxLayout(widget);
-    page->setMinimumSize(500, 200);
  
     // creating and setting objects
 
     // 1st. QListWidget albumView
-    albumView = new QListWidget;            // FIXME set Title: i18n("albums")
+    albumView = new QTreeWidget;
+    albumView->setHeaderLabel(i18n("albums"));
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. KHTMLPart photoView
@@ -170,20 +169,19 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     resizeCheckBox->setChecked(false);
     dimensionSpinBox->setEnabled(false);
 
-
     optionsBox->setLayout(optionsBoxLayout);
     frameLayout->addWidget(optionsBox);
 
     optionFrame->setLayout(frameLayout);
     galleryWidgetLayout->addWidget(optionFrame);
+
 // ----------------------------------------------
 
-    progressDlg = new QProgressDialog( QString("ciao"), QString("ohi ohi"), 0, 0, widget);
+    progressDlg = new QProgressDialog( QString("ciao"), QString("ohi ohi"), 0, 0, widget); // FIXME
     progressDlg->setAutoReset(true);
     progressDlg->setAutoClose(true);
 
-    page->setLayout(galleryWidgetLayout);
-
+    widget->setLayout(galleryWidgetLayout);
 }
 
 
@@ -216,7 +214,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     // TODO add /me
 
-// FIXME   connectSignals();
+    // FIXME let apps crash..
+    connectSignals();
 
     // read Config
     KConfig config("kipirc");
@@ -269,6 +268,7 @@ void GalleryWindow::connectSignals()
     connect(d->progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
     connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
     connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
+    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotDoLogin()));
     connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhotos()));
 
 // FIXME let app crashs..
@@ -276,20 +276,17 @@ void GalleryWindow::connectSignals()
 //             this, SLOT(slotOpenPhoto(const KUrl&)));
 
 
-    connect(m_talker, SIGNAL(signalError(const QString&)),
-             this, SLOT(slotError(const QString&)));
-    connect(m_talker, SIGNAL(signalBusy(bool)),
-             this, SLOT(slotBusy(bool)));
-    connect(m_talker,  SIGNAL(signalLoginFailed(const QString&)),
-            this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)),
-            this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)),
-            this, SLOT(slotPhotos(const QList<GPhoto>&)));
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
-            this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
-            this, SLOT(slotAddPhotoFailed(const QString&)));
+/*    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
+        this, SLOT(slotLoginFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+        this, SLOT(slotAlbums(const QList<GAlbum>&)));
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+        this, SLOT(slotPhotos(const QList<GPhoto>&)));
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+        this, SLOT(slotAddPhotoFailed(const QString&)));*/
 }
 
 
@@ -379,7 +376,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             //FIXME item->setPixmap( 0, pix );
             d->albumDict.insert(album.ref_num, item);
         } else {
-            QListWidgetItem *parent = new QListWidgetItem(d->albumDict.take(album.parent_ref_num)); 
+            QTreeWidgetItem *parent = new QTreeWidgetItem(d->albumDict.take(album.parent_ref_num)); 
             // FIXME s, find, take
             if (parent) {
                 GAlbumViewItem item = GAlbumViewItem(parent, album.title, album);
@@ -404,7 +401,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     }
 
     if (lastSelectedID > 0) {
-        QListWidgetItem *lastSelectedItem = new QListWidgetItem(d->albumDict.take(lastSelectedID));
+        QTreeWidgetItem *lastSelectedItem = new QTreeWidgetItem(d->albumDict.take(lastSelectedID));
         // FIXME s, find, take
         if (lastSelectedItem) {
             d->albumView->setCurrentItem(lastSelectedItem);    // true
@@ -419,19 +416,14 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
     QString styleSheet =
         QString("body { margin: 8px; font-size: %1px; "
                 " color: %2; background-color: %3;}")
-        .arg(pxSize);
-// FIXME
-//        .arg( colorGroup().text().name() )
-//        .arg( colorGroup().base().name() );
+        .arg(pxSize , Qt::black , Qt::white );
 
     styleSheet += QString("a { font-size: %1px; color: %2; "
                           "text-decoration: none;}")
-                  .arg(pxSize);
-// FIXME                  .arg( colorGroup().text().name() );
+                  .arg(pxSize , Qt::black );
     styleSheet += QString("i { font-size: %1px; color: %2; "
                           "text-decoration: none;}")
-                  .arg(pxSize - 2)
-                  .arg(QColor("steelblue").name());
+                  .arg(pxSize - 2 , Qt::blue );
 
     d->photoView->begin();
     d->photoView->setUserStyleSheet(styleSheet);
@@ -467,7 +459,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 
 void GalleryWindow::slotAlbumSelected()
 {
-    QListWidgetItem* item = d->albumView->currentItem();
+    QTreeWidgetItem* item = d->albumView->currentItem();
     if (!item) {
         d->addPhotoBtn->setEnabled(false);
     } else {
@@ -573,7 +565,7 @@ void GalleryWindow::slotNewAlbum()
 
     QString parentAlbumName;
 
-    QListWidgetItem* item = d->albumView->currentItem();
+    QTreeWidgetItem* item = d->albumView->currentItem();
     if (item) {
         GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
         parentAlbumName = viewItem->album.name;
@@ -586,7 +578,7 @@ void GalleryWindow::slotNewAlbum()
 
 void GalleryWindow::slotAddPhotos()
 {
-    QListWidgetItem* item = d->albumView->currentItem();
+    QTreeWidgetItem* item = d->albumView->currentItem();
     if (!item)
         return;
 
