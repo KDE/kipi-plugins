@@ -78,6 +78,7 @@ class GalleryWindow::Private
 private:
     Private(GalleryWindow* parent);
 
+    QWidget*        widget;
     QTreeWidget*    albumView;
     KHTMLPart*      photoView;
     QPushButton*    newAlbumBtn;
@@ -103,7 +104,7 @@ private:
 
 GalleryWindow::Private::Private(GalleryWindow* parent)
 {
-    QWidget *widget = new QWidget(parent);
+    widget = new QWidget(parent);
     parent->setMainWidget(widget);
 
     QHBoxLayout* galleryWidgetLayout = new QHBoxLayout(widget);
@@ -196,6 +197,9 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Ok | KDialog::Cancel );
 
+    // perhaps we need for m_talker to work..
+    m_talker = new GalleryTalker(d->widget);
+
     d->uploadCount = 0;
     d->uploadTotal = 0;
 
@@ -275,8 +279,7 @@ void GalleryWindow::connectSignals()
 //  connect(d->photoView->browserExtension(), SIGNAL(openURLRequest(const KUrl&, const KParts::URLArgs&)),
 //             this, SLOT(slotOpenPhoto(const KUrl&)));
 
-
-/*    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
     connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
     connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
         this, SLOT(slotLoginFailed(const QString&)));
@@ -286,7 +289,7 @@ void GalleryWindow::connectSignals()
         this, SLOT(slotPhotos(const QList<GPhoto>&)));
     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
-        this, SLOT(slotAddPhotoFailed(const QString&)));*/
+        this, SLOT(slotAddPhotoFailed(const QString&)));
 }
 
 
