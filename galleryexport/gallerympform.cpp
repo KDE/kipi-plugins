@@ -50,8 +50,8 @@ namespace KIPIGalleryExportPlugin
 
 GalleryMPForm::GalleryMPForm()
 {
-    m_boundary  = "----------";
-// FIXME     m_boundary += KRandom::randomString( 42 + 13 ).ascii();
+     m_boundary  = "----------";
+    m_boundary += KRandom::randomString( 42 + 13 ).toAscii();
 
     if (GalleryTalker::isGallery2()) {
         addPairRaw("g2_controller", "remote:GalleryRemote");
@@ -81,6 +81,7 @@ void GalleryMPForm::finish()
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
     ts << str << '\0';
+
 }
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)

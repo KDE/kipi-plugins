@@ -16,6 +16,6 @@ For the lazy times:
 adjam's list
 
 1. substitute QListWidget with QTreeWidget in galleryWindow ui  (DONE)
-2. let work gallerytalker
+2. let work gallerytalker (DONE)
 3. let work galleryviewitem
 4. add widget to connect to gallery when launching galleryexport plugin

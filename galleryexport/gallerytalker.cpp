@@ -24,7 +24,6 @@
  *
  * ============================================================ */
 
-
 // Qt includes
 #include <QByteArray>
 #include <QTextStream>
@@ -92,12 +91,13 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     job->addMetaData("cookies", "manual");
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_state = GE_LOGIN;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
+    kWarning() << "GalleryTalker::login().." << endl;
 }
 
 void GalleryTalker::listAlbums()
@@ -118,12 +118,14 @@ void GalleryTalker::listAlbums()
     job->addMetaData("setcookies", m_cookie);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_state = GE_LISTALBUMS;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
+
+    kWarning() << "GalleryTalker::listAlbums().." << endl;
 }
 
 void GalleryTalker::listPhotos(const QString& albumName)
@@ -146,12 +148,14 @@ void GalleryTalker::listPhotos(const QString& albumName)
     job->addMetaData("setcookies", m_cookie);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_state = GE_LISTPHOTOS;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
+
+    kWarning() << "GalleryTalker::listPhotos().." << endl;
 }
 
 void GalleryTalker::createAlbum(const QString& parentAlbumName,
@@ -183,12 +187,14 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     job->addMetaData("setcookies", m_cookie);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_state = GE_CREATEALBUM;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
+
+    kWarning() << "GalleryTalker::createAlbum().." << endl;
 }
 
 bool GalleryTalker::addPhoto(const QString& albumName,
@@ -251,13 +257,14 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     job->addMetaData("setcookies", m_cookie);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(slotResult(KIO::Job *)));
+    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_state = GE_ADDPHOTO;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
 
+    kWarning() << "GalleryTalker::addPhoto().." << endl;
     return true;
 }
 
@@ -267,6 +274,7 @@ void GalleryTalker::cancel()
         m_job->kill();
         m_job = 0;
     }
+    kWarning() << "GalleryTalker::cancel().." << endl;
 }
 
 void GalleryTalker::data(KIO::Job*, const QByteArray& data)
@@ -277,52 +285,62 @@ void GalleryTalker::data(KIO::Job*, const QByteArray& data)
     int oldSize = m_buffer.size();
     m_buffer.resize(m_buffer.size() + data.size());
     memcpy(m_buffer.data() + oldSize, data.data(), data.size());
+
+    kWarning() << "GalleryTalker::data().." << endl;
 }
 
-void GalleryTalker::slotResult(KIO::Job *job)
+void GalleryTalker::slotResult(KJob *job)
 {
     m_job = 0;
     emit signalBusy(false);
+    KIO::Job *tempjob = static_cast<KIO::Job*>(job);
 
-    if (job->error()) {
+    if (tempjob->error())
+    {
         if (m_state == GE_LOGIN)
-            emit signalLoginFailed(job->errorString());
-        else if (m_state == GE_ADDPHOTO)
-            emit signalAddPhotoFailed(job->errorString());
-        else
-            job->showErrorDialog(m_parent);
+            emit signalLoginFailed(tempjob->errorString());
+        else 
+            if (m_state == GE_ADDPHOTO)
+                emit signalAddPhotoFailed(tempjob->errorString());
+            else
+                tempjob->showErrorDialog(m_parent);
         return;
     }
 
-    switch (m_state) {
-    case(GE_LOGIN):
-        parseResponseLogin(m_buffer);
-        break;
-    case(GE_LISTALBUMS):
-        parseResponseListAlbums(m_buffer);
-        break;
-    case(GE_LISTPHOTOS):
-        parseResponseListPhotos(m_buffer);
-        break;
-    case(GE_CREATEALBUM):
-        parseResponseCreateAlbum(m_buffer);
-        break;
-    case(GE_ADDPHOTO):
-        parseResponseAddPhoto(m_buffer);
-        break;
+    switch (m_state)
+    {
+        case(GE_LOGIN):
+            parseResponseLogin(m_buffer);
+            break;
+        case(GE_LISTALBUMS):
+            parseResponseListAlbums(m_buffer);
+            break;
+        case(GE_LISTPHOTOS):
+            parseResponseListPhotos(m_buffer);
+            break;
+        case(GE_CREATEALBUM):
+            parseResponseCreateAlbum(m_buffer);
+            break;
+        case(GE_ADDPHOTO):
+            parseResponseAddPhoto(m_buffer);
+            break;
     }
 
-    if (m_state == GE_LOGIN && m_loggedIn) {
-        QStringList cookielist = (job->queryMetaData("setcookies")).split("\n");
+    if (m_state == GE_LOGIN && m_loggedIn)
+    {
+        QStringList cookielist = (tempjob->queryMetaData("setcookies")).split("\n");
         //QStringList::split("\n", job->queryMetaData("setcookies"));
         m_cookie = "Cookie:";
-        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it) {
+        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it) 
+        {
             QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
             if (rx.exactMatch(*it))   //rx.search(*it) > -1)
                 m_cookie += " " + rx.cap(1) + ";";
         }
         listAlbums();
     }
+
+    kWarning() << "GalleryTalker::slotResults().." << endl;
 }
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
@@ -335,31 +353,44 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 
     m_loggedIn = false;
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
 
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             foundResponse = line.startsWith("#__GR2PROTO__");
-        } else {
+        } 
+        else 
+        {
             QStringList strlist = line.split("=");
-            if (strlist.count() == 2) {
-                if (("status" == strlist[0]) && ("0" == strlist[1])) {
+            if (strlist.count() == 2)
+            {
+                if (("status" == strlist[0]) && ("0" == strlist[1]))
+                {
                     m_loggedIn = true;
-                } else if ("auth_token" == strlist[0]) {
-                    s_authToken = strlist[1];
-                }
+                } 
+                else 
+                    if ("auth_token" == strlist[0]) 
+                    {
+                        s_authToken = strlist[1];
+                    }
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalLoginFailed(i18n("Gallery URL probably incorrect"));
         return;
     }
 
-    if (!m_loggedIn) {
+    if (!m_loggedIn)
+    {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }
+
+    kWarning() << "GalleryTalker::parseSlotLogin().." << endl;
 }
 
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)

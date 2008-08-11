@@ -33,7 +33,7 @@
 #include <QPixmap>
 #include <QCursor>
 #include <QCheckBox>
-#include <QProgressDialog>
+
 #include <QListWidgetItem>
 #include <QSpinBox>
 #include <QGroupBox>
@@ -41,10 +41,11 @@
 // Include files for KDE
 #include <KAboutData>
 #include <KHelpMenu>
+#include <KMenu>
+#include <KPushButton>
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
-//#include <KIconLoader>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <KRun>
@@ -68,10 +69,10 @@
 
 // UI includes
 #include "ui_galleryalbumdialog.h"
+#include "galleryconfig.h"
 
 
 using namespace KIPIGalleryExportPlugin;
-
 
 class GalleryWindow::Private
 {
@@ -92,7 +93,6 @@ private:
 
     QHash<int, GAlbumViewItem> albumDict;
     QString lastSelectedAlbum;
-    QProgressDialog* progressDlg;
     unsigned int uploadCount;
     unsigned int uploadTotal;
     QList< QPair<QString, QString> >  uploadQueue;
@@ -106,6 +106,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 {
     widget = new QWidget(parent);
     parent->setMainWidget(widget);
+    parent->setModal(false);
 
     QHBoxLayout* galleryWidgetLayout = new QHBoxLayout(widget);
  
@@ -117,6 +118,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. KHTMLPart photoView
+    photoView = 0;
 //    photoView = new KHTMLPart;
 //    galleryWidgetLayout->addWidget(photoView);
     // ------------------------------------------------------------------------
@@ -176,12 +178,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     optionFrame->setLayout(frameLayout);
     galleryWidgetLayout->addWidget(optionFrame);
 
-// ----------------------------------------------
-
-    progressDlg = new QProgressDialog( QString("ciao"), QString("ohi ohi"), 0, 0, widget); // FIXME
-    progressDlg->setAutoReset(true);
-    progressDlg->setAutoClose(true);
-
     widget->setLayout(galleryWidgetLayout);
 }
 
@@ -195,15 +191,13 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
         d(new Private(this))
 {
     setWindowTitle( i18n("Gallery Export") );
-    setButtons( KDialog::Ok | KDialog::Cancel );
-
-    // perhaps we need for m_talker to work..
-    m_talker = new GalleryTalker(d->widget);
-
+    setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Help);
+    setModal(false);
+    
     d->uploadCount = 0;
     d->uploadTotal = 0;
 
-    // About data and help button.
+    // About data.
     m_about = new KIPIPlugins::KPAboutData(ki18n("Gallery Export"),
                                            0,
                                            KAboutData::License_GPL,
@@ -216,11 +210,85 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
                        "kde at colin dot guthr dot ie");
 
-    // TODO add /me
+    m_about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+                       "adjam7 at gmail dot com");
 
-    // FIXME let apps crash..
+    // help button
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
+
+    // we need to let m_talker work..
+    m_talker = new GalleryTalker(d->widget);
+
+    // connect functions
     connectSignals();
 
+    // read Settings
+    readSettings();
+
+    QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
+
+
+// ----------------------------------------------
+
+    m_progressDlg = new QProgressDialog(d->widget);
+    m_progressDlg->setModal(true);
+    m_progressDlg->setAutoReset(true);
+    m_progressDlg->setAutoClose(true);
+
+}
+
+GalleryWindow::~GalleryWindow()
+{
+    // write config
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("GallerySync Galleries");
+
+    group.writeEntry("Resize", d->resizeCheckBox->isChecked());
+    group.writeEntry("Set title", d->captTitleCheckBox->isChecked());
+    group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
+    group.writeEntry("Maximum Width",  d->dimensionSpinBox->value());
+
+    delete d;
+    delete m_about;
+}
+
+void GalleryWindow::connectSignals()
+{
+    connect(m_progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
+
+    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
+    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
+    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhotos()));
+
+// FIXME let app crashs..
+//    connect(d->photoView->browserExtension(), SIGNAL(openURLRequest(const KUrl&, const KParts::URLArgs&)),
+//        this, SLOT(slotOpenPhoto(const KUrl&)));
+
+    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
+        this, SLOT(slotLoginFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+        this, SLOT(slotAlbums(const QList<GAlbum>&)));
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+        this, SLOT(slotPhotos(const QList<GPhoto>&)));
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+        this, SLOT(slotAddPhotoFailed(const QString&)));
+}
+
+void GalleryWindow::readSettings()
+{
     // read Config
     KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
@@ -248,49 +316,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 1600));
 
-    //QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
-
-}
-
-GalleryWindow::~GalleryWindow()
-{
-    // write config
-    KConfig config("kipirc");
-    KConfigGroup group = config.group("GallerySync Galleries");
-
-    group.writeEntry("Resize", d->resizeCheckBox->isChecked());
-    group.writeEntry("Set title", d->captTitleCheckBox->isChecked());
-    group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
-    group.writeEntry("Maximum Width",  d->dimensionSpinBox->value());
-
-    delete d;
-    delete m_about;
-}
-
-void GalleryWindow::connectSignals()
-{
-    connect(d->progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
-    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
-    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotDoLogin()));
-    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhotos()));
-
-// FIXME let app crashs..
-//  connect(d->photoView->browserExtension(), SIGNAL(openURLRequest(const KUrl&, const KParts::URLArgs&)),
-//             this, SLOT(slotOpenPhoto(const KUrl&)));
-
-    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
-    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
-        this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
-        this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
-        this, SLOT(slotPhotos(const QList<GPhoto>&)));
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
-        this, SLOT(slotAddPhotoFailed(const QString&)));
-}
+};
 
 
 void GalleryWindow::slotHelp()
@@ -305,23 +331,27 @@ void GalleryWindow::slotDoLogin()
     GalleryTalker::setGallery2((2 == mpGallery->version()));
 
     KUrl url(mpGallery->url());
-    if (url.protocol().isEmpty()) {
+    if (url.protocol().isEmpty())
+    {
         url.setProtocol("http");
         url.setHost(mpGallery->url());
     }
-    if (!url.url().endsWith(".php")) {
+    if (!url.url().endsWith(".php"))
+    {
         if (GalleryTalker::isGallery2())
             url.addPath("main.php");
         else
             url.addPath("gallery_remote2.php");
     }
     // If we've done something clever, save it back to the gallery.
-    if (mpGallery->url() != url.url()) {
+    if (mpGallery->url() != url.url())
+    {
         mpGallery->setUrl(url.url());
         mpGallery->save();
     }
 
     m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
+    d->newAlbumBtn->setEnabled(true);
 }
 
 void GalleryWindow::slotLoginFailed(const QString& msg)
@@ -340,12 +370,15 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
 
 void GalleryWindow::slotBusy(bool val)
 {
-    if (val) {
-        QCursor(3); // FIXME Qt::WaitCursor);
+    if (val)
+    {
+        setCursor(Qt::WaitCursor);
         d->newAlbumBtn->setEnabled(false);
         d->addPhotoBtn->setEnabled(false);
-    } else {
-        QCursor(0); // FIXME Qt::ArrowCursor);
+    } 
+    else 
+    {
+        setCursor(Qt::ArrowCursor);
         bool loggedIn = m_talker->loggedIn();
         d->newAlbumBtn->setEnabled(loggedIn);
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
@@ -600,15 +633,15 @@ void GalleryWindow::slotAddPhotos()
 
     d->uploadTotal = d->uploadQueue.count();
     d->uploadCount = 0;
-    d->progressDlg->reset();
+    m_progressDlg->reset();
     slotAddPhotoNext();
 }
 
 void GalleryWindow::slotAddPhotoNext()
 {
     if (d->uploadQueue.isEmpty()) {
-        d->progressDlg->reset();
-        d->progressDlg->hide();
+        m_progressDlg->reset();
+        m_progressDlg->hide();
         slotAlbumSelected();
         return;
     }
@@ -628,17 +661,17 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    d->progressDlg->setLabelText(i18n("Uploading file %1 ")
+    m_progressDlg->setLabelText(i18n("Uploading file %1 ")
                                 .arg(KUrl(pathComments.first).fileName()));
 
-    if (d->progressDlg->isHidden())
-        d->progressDlg->show();
+    if (m_progressDlg->isHidden())
+        m_progressDlg->show();
 }
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     d->uploadCount++;
-    d->progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
+    m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
     slotAddPhotoNext();
 }
 
@@ -651,14 +684,14 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                            + i18n("\nDo you want to continue?"))
             != KMessageBox::Continue) {
         d->uploadQueue.clear();
-        d->progressDlg->reset();
-        d->progressDlg->hide();
+        m_progressDlg->reset();
+        m_progressDlg->hide();
 
         // refresh the thumbnails
         slotAlbumSelected();
     } else {
         d->uploadTotal--;
-        d->progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
+        m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
         slotAddPhotoNext();
     }
 }
@@ -666,8 +699,8 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 void GalleryWindow::slotAddPhotoCancel()
 {
     d->uploadQueue.clear();
-    d->progressDlg->reset();
-    d->progressDlg->hide();
+    m_progressDlg->reset();
+    m_progressDlg->hide();
 
     m_talker->cancel();
 

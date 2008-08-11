@@ -30,6 +30,7 @@
 
 // KDE includes
 #include <KUrl>
+#include <kio/job.h>
 
 // Qt includes
 #include <QObject>
@@ -130,7 +131,7 @@ signals:
 private slots:
 
     void data(KIO::Job *job, const QByteArray &data);
-    void slotResult(KIO::Job *job);
+    void slotResult(KJob *job);
 };
 
 }

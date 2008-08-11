@@ -34,7 +34,7 @@
 #include <QList>
 #include <QPair>
 #include <QHash>
-
+#include <QProgressDialog>
 
 namespace KIPI
 {
@@ -73,19 +73,21 @@ private:
     KIPIPlugins::KPAboutData *m_about;
     GalleryTalker* m_talker;
     Gallery* mpGallery;
+    QProgressDialog* m_progressDlg;
 
     void connectSignals();
+    void readSettings();
 
 private slots:
 
     void slotDoLogin();
     void slotLoginFailed(const QString& msg);
-    void slotBusy(bool val);
+    void slotBusy(bool val); // not in flickrexport
     void slotError(const QString& msg);
-    void slotAlbums(const QList<GAlbum>& albumList);
-    void slotPhotos(const QList<GPhoto>& photoList);
+    void slotAlbums(const QList<GAlbum>& albumList); //not in flickrexport
+    void slotPhotos(const QList<GPhoto>& photoList); //not in flickrexport
     void slotAlbumSelected();
-    void slotOpenPhoto(const KUrl& url);
+    void slotOpenPhoto(const KUrl& url); //not in flickrexport
     void slotNewAlbum();
     void slotAddPhotos();
     void slotAddPhotoNext();
