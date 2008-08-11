@@ -200,7 +200,15 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     exiv2Iface.setImageDimensions(QSize(width, height));
     exiv2Iface.setExifThumbnail(exifThumbnail);
-    exiv2Iface.setImagePreview(iptcPreview);
+    
+    // Update Iptc preview.
+    // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
+    // bigger than 64K duing of image preview tag size, the target JPEG image will be
+    // broken. Note that IPTC image preview tag is limited to 256K!!!
+    // There is no limitation with TIFF and PNG about IPTC byte array size.                        
+    if (outputFileFormat != SaveSettingsWidget::OUTPUT_JPEG)
+        exiv2Iface.setImagePreview(iptcPreview);
+        
     exiv2Iface.setExifTagString("Exif.Image.DocumentName", fi.fileName());
 
     switch(outputFileFormat)
