@@ -50,10 +50,11 @@ namespace KIPIGalleryExportPlugin
 
 GalleryMPForm::GalleryMPForm()
 {
-     m_boundary  = "----------";
+    m_boundary  = "--";
     m_boundary += KRandom::randomString( 42 + 13 ).toAscii();
 
-    if (GalleryTalker::isGallery2()) {
+    if (GalleryTalker::isGallery2())
+    {
         addPairRaw("g2_controller", "remote:GalleryRemote");
         QString auth_token = GalleryTalker::getAuthToken();
         if (!auth_token.isEmpty())

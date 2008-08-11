@@ -8,7 +8,7 @@ SET( kipiplugin_galleryexport_PART_SRCS
     galleryviewitem.cpp
 )
 
-KDE4_ADD_UI_FILES( kipiplugin_galleryexport_PART_SRCS galleryalbumdialog.ui )
+KDE4_ADD_UI_FILES( kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui )
 
 
 KDE4_ADD_PLUGIN( kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS} )

@@ -28,6 +28,7 @@
 // Qt includes
 
 #include <Qt>
+#include <QDialog>
 #include <QPushButton>
 #include <QTimer>
 #include <QPixmap>
@@ -68,7 +69,7 @@
 #include "gallerywindow.h"
 
 // UI includes
-#include "ui_galleryalbumdialog.h"
+#include "ui_galleryalbumwidget.h"  // FIXME CHECK
 #include "galleryconfig.h"
 
 
@@ -214,15 +215,13 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
                        "adjam7 at gmail dot com");
 
     // help button
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+    disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
 
     KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
+    QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     helpButton->setDelayedMenu( helpMenu->menu() );
 
@@ -321,7 +320,7 @@ void GalleryWindow::readSettings()
 
 void GalleryWindow::slotHelp()
 {
-    // FIXME KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
     return;
 }
 
@@ -360,7 +359,8 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
                                   i18n("Failed to login into remote gallery. ")
                                   + msg
                                   + i18n("\nDo you want to try again?"))
-            != KMessageBox::Yes) {
+            != KMessageBox::Yes) 
+    {
         close();
         return;
     }
@@ -426,22 +426,26 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         }
     }
 
-
     // find and select the last selected album
     int lastSelectedID = 0;
-    for (iter = albumList.begin(); iter != albumList.end(); ++iter) {
-        if ((*iter).name == d->lastSelectedAlbum) {
+    for (iter = albumList.begin(); iter != albumList.end(); ++iter)
+    {
+        if ((*iter).name == d->lastSelectedAlbum)
+        {
             lastSelectedID = (*iter).ref_num;
             break;
         }
     }
 
-    if (lastSelectedID > 0) {
+    if (lastSelectedID > 0)
+    {
         QTreeWidgetItem *lastSelectedItem = new QTreeWidgetItem(d->albumDict.take(lastSelectedID));
         // FIXME s, find, take
-        if (lastSelectedItem) {
+        if (lastSelectedItem)
+        {
             d->albumView->setCurrentItem(lastSelectedItem);    // true
-// FIXME perhaps to be removed           m_albumView->ensureItemVisible( lastSelectedItem );
+            // FIXME perhaps to be removed
+            // m_albumView->ensureItemVisible( lastSelectedItem );
         }
     }
 }
@@ -496,10 +500,14 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 void GalleryWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
-    if (!item) {
+    if (!item)
+    {
         d->addPhotoBtn->setEnabled(false);
-    } else {
-        if (m_talker->loggedIn()) {
+    }
+    else
+    {
+        if (m_talker->loggedIn())
+        {
             d->addPhotoBtn->setEnabled(true);
 
             d->photoView->begin();
@@ -520,20 +528,20 @@ void GalleryWindow::slotOpenPhoto(const KUrl& url)
 
 void GalleryWindow::slotNewAlbum()
 {
-    QDialog *dialog = new QDialog(this);
-    Ui::GalleryAlbumDialog dlg;
-    dlg.setupUi(dialog);
-    dlg.titleEdit->setFocus();
+    QWidget *dialog = new QWidget(this);
+    Ui::GalleryAlbumWidget widg;
+    widg.setupUi(dialog);
+    widg.titleEdit->setFocus();
 
 // FIXME
-//     if ( dlg.show() != QDialog::Accepted )
+//     if ( dialog->show() != QDialog::Accepted )
 //     {
 //         return;
 //     }
 
-    QString name    = dlg.nameEdit->text();
-    QString title   = dlg.titleEdit->text();
-    QString caption = dlg.captionEdit->text();
+    QString name    = widg.nameEdit->text();
+    QString title   = widg.titleEdit->text();
+    QString caption = widg.captionEdit->text();
 
     // check for prohibited chars in the album name
     // \ / * ? " ' & < > | . + # ( ) or spaces
