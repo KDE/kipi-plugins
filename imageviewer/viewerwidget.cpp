@@ -136,9 +136,9 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 		// load cursors for zooming and panning
 		QString file;
 		file = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/zoom.png" );
-		zoomCursor=QCursor(file);
+		zoomCursor=QCursor(QPixmap(file));
 		file = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/hand.png" );
-		moveCursor=QCursor(file);
+		moveCursor=QCursor(QPixmap(file));
 
 		// get path of nullImage in case QImage can't load the image
 		nullImage = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/nullImage.png" );
