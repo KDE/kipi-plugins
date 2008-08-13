@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2003-10-24
+ * Date        : 2003-
  * Description : 
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
@@ -21,7 +21,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * ============================================================ */
 
 
@@ -57,6 +56,7 @@ GalleryMPForm::GalleryMPForm()
     {
         addPairRaw("g2_controller", "remote:GalleryRemote");
         QString auth_token = GalleryTalker::getAuthToken();
+        kWarning() << "auth_token: " << auth_token << endl;
         if (!auth_token.isEmpty())
             addPairRaw("g2_authToken", auth_token);
     }
@@ -81,6 +81,7 @@ void GalleryMPForm::finish()
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
+    kWarning() << "str: " << str << endl;
     ts << str << '\0';
 
 }
@@ -93,6 +94,7 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
     return addPairRaw(name, value);
 }
 
+// FIXME check if it really works with Gallery2
 bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 {
     QByteArray str;
@@ -113,6 +115,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
+    kWarning() << "str: " << str << endl;
     ts << str;
 
     return true;
@@ -163,6 +166,7 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
+    kWarning() << "str: " << str << endl;
     ts << str;
 
     int oldSize = m_buffer.size();

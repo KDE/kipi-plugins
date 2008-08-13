@@ -38,8 +38,8 @@
 
 // Include files for KDE
 #include <KLocale>
-#include <khtml_part.h>
-#include <khtmlview.h>
+// #include <khtml_part.h>
+// #include <khtmlview.h>
 #include <KDebug>
 
 // KIPI include files

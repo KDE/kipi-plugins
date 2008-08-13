@@ -47,8 +47,8 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
-#include <khtml_part.h>
-#include <khtmlview.h>
+//#include <khtml_part.h>
+//#include <khtmlview.h>
 #include <KRun>
 #include <KDebug>
 #include <KConfig>
@@ -69,7 +69,7 @@
 #include "gallerywindow.h"
 
 // UI includes
-#include "ui_galleryalbumwidget.h"  // FIXME CHECK
+#include "ui_galleryalbumwidget.h"
 #include "galleryconfig.h"
 
 
@@ -82,7 +82,7 @@ private:
 
     QWidget*        widget;
     QTreeWidget*    albumView;
-    KHTMLPart*      photoView;
+//    KHTMLPart*      photoView;
     QPushButton*    newAlbumBtn;
     QPushButton*    addPhotoBtn;
     QPushButton*    helpButton;
@@ -119,7 +119,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. KHTMLPart photoView
-    photoView = 0;
 //    photoView = new KHTMLPart;
 //    galleryWidgetLayout->addWidget(photoView);
     // ------------------------------------------------------------------------
@@ -235,7 +234,6 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     readSettings();
 
     QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
-
 
 // ----------------------------------------------
 
@@ -394,9 +392,9 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
     d->albumDict.clear();
     d->albumView->clear();
-    d->photoView->begin();
-    d->photoView->write("<html></html>");
-    d->photoView->end();
+//     d->photoView->begin();
+//     d->photoView->write("<html></html>");
+//     d->photoView->end();
 
     // FIXME
     // KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
@@ -465,36 +463,36 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
                           "text-decoration: none;}")
                   .arg(pxSize - 2 , Qt::blue );
 
-    d->photoView->begin();
-    d->photoView->setUserStyleSheet(styleSheet);
-    d->photoView->write("<html>");
-
-    d->photoView->write("<table class='box-body' width='100%' "
-                       "border='0' cellspacing='1' cellpadding='1'>");
-
-    typedef QList<GPhoto> GPhotoList;
-    GPhotoList::const_iterator iter;
-    for (iter = photoList.begin(); iter != photoList.end(); ++iter)
-    {
-        const GPhoto& photo = *iter;
-        KUrl imageurl(photo.albumURL + photo.name);
-        KUrl thumburl(photo.albumURL + photo.thumbName);
-
-        d->photoView->write("<tr><td class='photo'>"
-                           + QString("<a href='%1'>")
-                           .arg(imageurl.url())
-                           + QString("<img border=1 src=\"%1\"><br>")
-                           .arg(thumburl.url())
-                           + photo.name
-                           + (photo.caption.isEmpty() ? QString() :
-                              QString("<br><i>%1</i>")
-                              .arg(photo.caption))
-                           + "</a></td></tr>");
-    }
-
-    d->photoView->write("</table>");
-    d->photoView->write("</html>");
-    d->photoView->end();
+//     d->photoView->begin();
+//     d->photoView->setUserStyleSheet(styleSheet);
+//     d->photoView->write("<html>");
+// 
+//     d->photoView->write("<table class='box-body' width='100%' "
+//                        "border='0' cellspacing='1' cellpadding='1'>");
+// 
+//     typedef QList<GPhoto> GPhotoList;
+//     GPhotoList::const_iterator iter;
+//     for (iter = photoList.begin(); iter != photoList.end(); ++iter)
+//     {
+//         const GPhoto& photo = *iter;
+//         KUrl imageurl(photo.albumURL + photo.name);
+//         KUrl thumburl(photo.albumURL + photo.thumbName);
+// 
+//         d->photoView->write("<tr><td class='photo'>"
+//                            + QString("<a href='%1'>")
+//                            .arg(imageurl.url())
+//                            + QString("<img border=1 src=\"%1\"><br>")
+//                            .arg(thumburl.url())
+//                            + photo.name
+//                            + (photo.caption.isEmpty() ? QString() :
+//                               QString("<br><i>%1</i>")
+//                               .arg(photo.caption))
+//                            + "</a></td></tr>");
+//     }
+// 
+//     d->photoView->write("</table>");
+//     d->photoView->write("</html>");
+//     d->photoView->end();
 }
 
 void GalleryWindow::slotAlbumSelected()
@@ -510,9 +508,9 @@ void GalleryWindow::slotAlbumSelected()
         {
             d->addPhotoBtn->setEnabled(true);
 
-            d->photoView->begin();
-            d->photoView->write("<html></html>");
-            d->photoView->end();
+//             d->photoView->begin();
+//             d->photoView->write("<html></html>");
+//             d->photoView->end();
 
             GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
             m_talker->listPhotos(viewItem->album.name);

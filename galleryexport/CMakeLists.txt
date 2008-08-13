@@ -15,7 +15,7 @@ KDE4_ADD_PLUGIN( kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS} 
 
 
 TARGET_LINK_LIBRARIES ( kipiplugin_galleryexport 
-                        ${KDE4_KHTML_LIBS} 
+#                        ${KDE4_KHTML_LIBS} 
                         ${KDE4_KIO_LIBS} 
                         ${KDE4_KDEUI_LIBS} 
                         kipiplugins
