@@ -49,7 +49,8 @@ namespace KIPIGalleryExportPlugin
 
 GalleryMPForm::GalleryMPForm()
 {
-    m_boundary  = "--";
+    m_boundary  = "----------";
+//    m_boundary  = "--";
     m_boundary += KRandom::randomString( 42 + 13 ).toAscii();
 
     if (GalleryTalker::isGallery2())
@@ -77,12 +78,12 @@ void GalleryMPForm::finish()
     str += "--";
     str += m_boundary;
     str += "--";
-    str += "\r\n";
+//    str += "\r\n";
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
     kWarning() << "str: " << str << endl;
-    ts << str << '\0';
+    ts << str /*<< '\0'*/;
 
 }
 
