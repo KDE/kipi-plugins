@@ -1,27 +1,18 @@
 <ui version="4.0" >
- <class>GalleryAlbumDialog</class>
- <widget class="QDialog" name="GalleryAlbumDialog" >
+ <class>GalleryAlbumWidget</class>
+ <widget class="QWidget" name="GalleryAlbumWidget" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>342</width>
-    <height>185</height>
+    <width>451</width>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>MyDialog</string>
+   <string>Form</string>
   </property>
-  <property name="sizeGripEnabled" >
-   <bool>false</bool>
-  </property>
-  <layout class="QVBoxLayout" >
-   <property name="spacing" >
-    <number>5</number>
-   </property>
-   <property name="margin" >
-    <number>10</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
     <widget class="QLabel" name="header" >
      <property name="text" >
@@ -96,7 +87,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout" name="_2" >
      <property name="spacing" >
       <number>6</number>
      </property>
@@ -152,41 +143,6 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonOk</sender>
-   <signal>clicked()</signal>
-   <receiver>GalleryAlbumDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonCancel</sender>
-   <signal>clicked()</signal>
-   <receiver>GalleryAlbumDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

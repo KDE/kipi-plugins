@@ -105,9 +105,9 @@ private:
     KUrl       m_url;
     KIO::Job*  m_job;
     bool       m_loggedIn;
-    QByteArray m_buffer;
+    QByteArray m_talker_buffer;
 
-    static bool    s_using_gallery2;
+    static bool s_using_gallery2;
     static QString s_authToken;
 
 private:

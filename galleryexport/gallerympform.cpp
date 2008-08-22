@@ -50,14 +50,12 @@ namespace KIPIGalleryExportPlugin
 GalleryMPForm::GalleryMPForm()
 {
     m_boundary  = "----------";
-//    m_boundary  = "--";
     m_boundary += KRandom::randomString( 42 + 13 ).toAscii();
 
     if (GalleryTalker::isGallery2())
     {
         addPairRaw("g2_controller", "remote:GalleryRemote");
         QString auth_token = GalleryTalker::getAuthToken();
-        kWarning() << "auth_token: " << auth_token << endl;
         if (!auth_token.isEmpty())
             addPairRaw("g2_authToken", auth_token);
     }
@@ -78,12 +76,11 @@ void GalleryMPForm::finish()
     str += "--";
     str += m_boundary;
     str += "--";
-//    str += "\r\n";
+    str += "\r\n";
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
-    kWarning() << "str: " << str << endl;
-    ts << str /*<< '\0'*/;
+    ts << str << '\0' ;
 
 }
 
@@ -116,7 +113,6 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
-    kWarning() << "str: " << str << endl;
     ts << str;
 
     return true;
@@ -167,7 +163,6 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec("UTF-8");
-    kWarning() << "str: " << str << endl;
     ts << str;
 
     int oldSize = m_buffer.size();

@@ -47,8 +47,6 @@
 #include <KLocale>
 #include <KMessageBox>
 #include <KApplication>
-//#include <khtml_part.h>
-//#include <khtmlview.h>
 #include <KRun>
 #include <KDebug>
 #include <KConfig>
@@ -82,7 +80,6 @@ private:
 
     QWidget*        widget;
     QTreeWidget*    albumView;
-//    KHTMLPart*      photoView;
     QPushButton*    newAlbumBtn;
     QPushButton*    addPhotoBtn;
     QPushButton*    helpButton;
@@ -118,12 +115,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     albumView->setHeaderLabel(i18n("albums"));
     galleryWidgetLayout->addWidget(albumView);
 
-    // 2nd. KHTMLPart photoView
-//    photoView = new KHTMLPart;
-//    galleryWidgetLayout->addWidget(photoView);
-    // ------------------------------------------------------------------------
-
-    // 3rd. GroupBox optionBox
+    // 2nd. GroupBox optionBox
     QFrame* optionFrame = new QFrame; 
 
     QVBoxLayout* frameLayout = new QVBoxLayout();
@@ -235,13 +227,6 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
 
-// ----------------------------------------------
-
-    m_progressDlg = new QProgressDialog(d->widget);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-
 }
 
 GalleryWindow::~GalleryWindow()
@@ -261,7 +246,7 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::connectSignals()
 {
-    connect(m_progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
+//    connect(m_progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
 
     connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
     connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
@@ -275,13 +260,13 @@ void GalleryWindow::connectSignals()
     connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
     connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
         this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
-        this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
-        this, SLOT(slotPhotos(const QList<GPhoto>&)));
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
-        this, SLOT(slotAddPhotoFailed(const QString&)));
+//     connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+//         this, SLOT(slotAlbums(const QList<GAlbum>&)));
+//     connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+//         this, SLOT(slotPhotos(const QList<GPhoto>&)));
+//     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
+//     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+//         this, SLOT(slotAddPhotoFailed(const QString&)));
 }
 
 void GalleryWindow::readSettings()
@@ -290,13 +275,10 @@ void GalleryWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
-    if (group.readEntry("Resize", false))
-    {
+    if (group.readEntry("Resize", false)) {
         d->resizeCheckBox->setChecked(true);
         d->dimensionSpinBox->setEnabled(true);
-    } 
-    else 
-    {
+    } else {
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
     }
@@ -328,28 +310,26 @@ void GalleryWindow::slotDoLogin()
     GalleryTalker::setGallery2((2 == mpGallery->version()));
 
     KUrl url(mpGallery->url());
-    if (url.protocol().isEmpty())
-    {
+    if (url.protocol().isEmpty()) {
         url.setProtocol("http");
         url.setHost(mpGallery->url());
     }
-    if (!url.url().endsWith(".php"))
-    {
+    if (!url.url().endsWith(".php")) {
         if (GalleryTalker::isGallery2())
             url.addPath("main.php");
         else
             url.addPath("gallery_remote2.php");
     }
     // If we've done something clever, save it back to the gallery.
-    if (mpGallery->url() != url.url())
-    {
+    if (mpGallery->url() != url.url()) {
         mpGallery->setUrl(url.url());
         mpGallery->save();
     }
 
     m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
-    d->newAlbumBtn->setEnabled(true);
 }
+
+
 
 void GalleryWindow::slotLoginFailed(const QString& msg)
 {
@@ -357,8 +337,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
                                   i18n("Failed to login into remote gallery. ")
                                   + msg
                                   + i18n("\nDo you want to try again?"))
-            != KMessageBox::Yes) 
-    {
+            != KMessageBox::Yes) {
         close();
         return;
     }
@@ -639,15 +618,15 @@ void GalleryWindow::slotAddPhotos()
 
     d->uploadTotal = d->uploadQueue.count();
     d->uploadCount = 0;
-    m_progressDlg->reset();
+//    m_progressDlg->reset();
     slotAddPhotoNext();
 }
 
 void GalleryWindow::slotAddPhotoNext()
 {
     if (d->uploadQueue.isEmpty()) {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+//        m_progressDlg->reset();
+//        m_progressDlg->hide();
         slotAlbumSelected();
         return;
     }
@@ -667,17 +646,17 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1 ")
-                                .arg(KUrl(pathComments.first).fileName()));
+//     m_progressDlg->setLabelText(i18n("Uploading file %1 ")
+//                                 .arg(KUrl(pathComments.first).fileName()));
 
-    if (m_progressDlg->isHidden())
-        m_progressDlg->show();
+//     if (m_progressDlg->isHidden())
+//         m_progressDlg->show();
 }
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     d->uploadCount++;
-    m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
+//    m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
     slotAddPhotoNext();
 }
 
@@ -690,14 +669,14 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                            + i18n("\nDo you want to continue?"))
             != KMessageBox::Continue) {
         d->uploadQueue.clear();
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+//         m_progressDlg->reset();
+//         m_progressDlg->hide();
 
         // refresh the thumbnails
         slotAlbumSelected();
     } else {
         d->uploadTotal--;
-        m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
+//        m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
         slotAddPhotoNext();
     }
 }
@@ -705,8 +684,8 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 void GalleryWindow::slotAddPhotoCancel()
 {
     d->uploadQueue.clear();
-    m_progressDlg->reset();
-    m_progressDlg->hide();
+//     m_progressDlg->reset();
+//     m_progressDlg->hide();
 
     m_talker->cancel();
 

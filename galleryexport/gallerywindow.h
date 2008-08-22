@@ -34,7 +34,7 @@
 #include <QList>
 #include <QPair>
 #include <QHash>
-#include <QProgressDialog>
+// #include <KProgressDialog>
 
 namespace KIPI
 {
@@ -73,7 +73,7 @@ private:
     KIPIPlugins::KPAboutData *m_about;
     GalleryTalker* m_talker;
     Gallery* mpGallery;
-    QProgressDialog* m_progressDlg;
+//     KProgressDialog* m_progressDlg;
 
     void connectSignals();
     void readSettings();
@@ -95,6 +95,9 @@ private slots:
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotHelp();
+
+//     void slotUploadFinished(int id, bool error);
+//     void slotUploadProgress(int done, int total);
 };
 
 }
