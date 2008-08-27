@@ -10,7 +10,8 @@ v 0.1.6 - beta2
 005 ==> 166712 : PrintWizard        : Choosing the part which is cut off for printing only works for the first photo.
 006 ==> 150912 : PicasaWebExport    : Uploader does not upload.
 007 ==> 164908 : PicasaWebExport    : Private albums are not listed (and then not usable).
-008 ==> 
+008 ==> 150979 : PicasaWebExport    : Picasa Export-Plugins does not work.
+009 ==> 
 
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
