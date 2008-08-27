@@ -25,6 +25,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
+                      ${KDCRAW_LIBRARIES}
                       ${JPEG_LIBRARY}
                       kipiplugins
                      )
