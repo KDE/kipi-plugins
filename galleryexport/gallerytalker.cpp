@@ -83,7 +83,7 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     GalleryMPForm form;
 
     form.addPair("cmd", "login");
-    form.addPair("protocol_version", "2.0");
+    form.addPair("protocol_version", "2.11");
     form.addPair("uname", name);
     form.addPair("password", passwd);
     form.finish();
