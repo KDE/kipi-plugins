@@ -19,7 +19,16 @@ kde4_add_ui3_files(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.
 
 kde4_add_plugin(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_picasawebexport ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} kipiplugins)
+target_link_libraries(
+    kipiplugin_picasawebexport
+    kipiplugins
+    ${KDCRAW_LIBRARIES}
+    ${KIPI_LIBRARIES}
+    ${KEXIV2_LIBRARIES}
+    ${KDE4_KDE3SUPPORT_LIBS}
+    ${KDE4_KDEUI_LIBS}
+    ${KDE4_KIO_LIBS}
+    )
 
 install(TARGETS kipiplugin_picasawebexport DESTINATION ${PLUGIN_INSTALL_DIR})
 

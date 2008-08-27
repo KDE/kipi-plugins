@@ -24,12 +24,17 @@ kde4_add_kcfg_files(kipiplugin_htmlexport_SRCS
 
 kde4_add_plugin(kipiplugin_htmlexport ${kipiplugin_htmlexport_SRCS})
 
-target_link_libraries(kipiplugin_htmlexport
+target_link_libraries(
+    kipiplugin_htmlexport
+	kipiplugins
+	exslt
 	${KIPI_LIBRARIES}
 	${LIBXSLT_LIBRARIES}
-	exslt
 	${LIBXML2_LIBRARIES}
-	kipiplugins
+    ${KDE4_KDECORE_LIBS}
+    ${KDE4_KIO_LIBS}
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTGUI_LIBRARY}
 	)
 
 include_directories(
