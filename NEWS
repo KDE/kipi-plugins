@@ -8,7 +8,8 @@ v 0.1.6 - beta2
 003 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
 004 ==> 164152 : FlickrExport       : Geotagging when exporting to Flickr.
 005 ==> 166712 : PrintWizard        : Choosing the part which is cut off for printing only works for the first photo.
-006 ==> 
+006 ==> 150912 : PicasaWebExport    : Uploader does not upload.
+007 ==> 
 
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
