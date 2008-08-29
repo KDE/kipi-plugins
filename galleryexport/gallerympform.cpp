@@ -32,8 +32,10 @@
 
 // Qt includes
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QByteArray>
+#include <QTextCodec>
 
 // standard includes
 #include <cstring>
@@ -79,8 +81,9 @@ void GalleryMPForm::finish()
     str += "\r\n";
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec("UTF-8");
-    ts << str << '\0' ;
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
+    //ts.setCodec("UTF-8");
+    ts << str; // << '\0' ;
 
 }
 
@@ -104,7 +107,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     str += name.toAscii();
     str += "\"";
     str += "\r\n\r\n";
-    str += value.toAscii();
+    str += value.toUtf8();
     str += "\r\n";
 
     //uint oldSize = m_buffer.size();
@@ -112,8 +115,9 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec("UTF-8");
-    ts << str;
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
+    //ts.setCodec("UTF-8");
+    ts << QString::fromUtf8(str); // was ts << str;
 
     return true;
 }
@@ -162,7 +166,8 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str += "\r\n\r\n";
 
     QTextStream ts(m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec("UTF-8");
+    ts.setCodec(QTextCodec::codecForName("UTF-8"));
+    //ts.setCodec("UTF-8");
     ts << str;
 
     int oldSize = m_buffer.size();
