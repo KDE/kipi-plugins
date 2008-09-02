@@ -38,6 +38,7 @@
 #include <q3datetimeedit.h>
 #include <qdatetime.h>
 #include <q3textedit.h>
+#include <qlinkedlist.h>
 //Added by qt3to4:
 #include <Q3ValueList>
 
@@ -502,6 +503,7 @@ void PicasawebWindow::slotUploadImages()
     slotAddPhotoNext();
 }
 
+
 void PicasawebWindow::slotAddPhotoNext()
 {
     if ( m_uploadQueue.isEmpty() )
@@ -520,8 +522,23 @@ void PicasawebWindow::slotAddPhotoNext()
 /*    int upload_image_size;
     int upload_image_quality;*/
 
+    // Get the albums' Id from the name.
+    QString albumId = "";
+    QString selectedAlbumName = m_albumsListComboBox->currentText();
+
+    QLinkedList<PicasaWebAlbum>::iterator it = m_talker->m_albumsList->begin();
+    while(it != m_talker->m_albumsList->end()) {
+       PicasaWebAlbum pwa=*it;
+       QString name = pwa.title;
+       if (name == selectedAlbumName) {
+           albumId = pwa.id;
+           break;
+       }
+       it++;
+    }
+	
     bool res = m_talker->addPhoto(pathComments.first,          //the file path
-                                  info, m_albumsListComboBox->currentText(),
+                                  info, albumId,
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(), m_imageQualitySpinBox->value());
     if (!res)

@@ -55,6 +55,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kio/jobclasses.h>
+#include <KUrl>
 
 // LibKExiv2 includes.
 
@@ -404,7 +405,7 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
 }
 
 bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
-                               const QString& albumName, bool rescale,
+                               const QString& albumId, bool rescale,
                                int maxDim, int imageQuality)
 {
     // Disabling this totally may be checking the m_state and doing selecting
@@ -415,13 +416,13 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         m_job = 0;
     }*/
 
-    QString album_name = albumName;
+    QString album_id = albumId;
 
-    if (album_name.length() == 0)
-        album_name = "test";
+    if (album_id.length() == 0)
+        album_id = "test";
 
-    QString     postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + m_username + "/album/" + album_name;
-    QString     path    = photoPath;
+    QString     postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + KUrl::encode_string(m_username) + "/albumid/" + album_id;
+    QString     path = postUrl;
     QStringList headers;
     MPForm      form;
     QString     auth_string = "GoogleLogin auth=" + m_token;
@@ -735,8 +736,12 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
                 {
                     if(detailsNode.nodeName() == "id")
                     {
-                        album_id = detailsNode.toElement().text();
-                        //this is what is obtained from data.
+			// The node data is a URL of which album id is the string following the last /
+			// like <id>http://www.picasaweb.google.com/.../AlbumID<id>
+			QString albumIdUrl = detailsNode.toElement().text();
+                        int index = albumIdUrl.findRev("/");
+                        int length = albumIdUrl.length();
+                        QString album_id = albumIdUrl.right(length - index - 1);
                         fps.id = album_id;
                     }
 
