@@ -72,11 +72,11 @@ informationQuery()
 
 fetchSource()
 
-fetchTranslations()
+# fetchTranslations()
 
 # fetchDocumentation()
 
-createTranslationStats()
+# createTranslationStats()
 
 # Do not work yet.
 #createTag()
