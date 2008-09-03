@@ -1,3 +1,4499 @@
+V 0.2.0-beta1 - 2008-09-03
+----------------------------------------------------------------------------
+
+2008-09-02 23:12  jaiva
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Backporting change 853437
+      from KDE3 to KDE4, fixing the upload to albums with spaces or
+      special characters in the name.
+      
+      Command used:
+      svn merge -c 853437
+      svn://anonsvn.kde.org/home/kde/branches/extragear/kde3/libs/kipi-plugins/picasawebexport
+
+2008-08-29 17:54  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/gallerympform.cpp:
+      Fix compile
+
+2008-08-27 20:31  adjam
+
+    * galleryexport/gallerytalker.cpp: Fix typo
+
+2008-08-27 14:59  mitchell
+
+    * flickrexport/CMakeLists.txt, htmlexport/CMakeLists.txt,
+      picasawebexport/CMakeLists.txt: Fix the rest of kipi-plugins
+      linking
+
+2008-08-27 14:48  mitchell
+
+    * jpeglossless/CMakeLists.txt: Fix linking
+
+2008-08-22 15:16  adjam
+
+    * galleryexport/galleryalbumdialog.ui,
+      galleryexport/galleryalbumwidget.ui,
+      galleryexport/gallerympform.cpp, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: Some fixes
+
+2008-08-13 12:13  adjam
+
+    * galleryexport/gallerympform.cpp: Some little adjustments on
+      mpform. Colin, I need you to let GalleryExport
+      connects..
+
+2008-08-13 09:15  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/galleryconfig.cpp,
+      galleryexport/gallerympform.cpp, galleryexport/gallerywindow.cpp:
+      A little optimisation. GalleryExport no more links with
+      KHTML_LIBS
+      as it will go back to use it ;)
+      Various little improvement in the code. Now plugin seems to work,
+      but
+      it cannot connect properly..
+
+2008-08-12 18:03  mitchell
+
+    * imageviewer/viewerwidget.cpp: Fix compile
+
+2008-08-11 19:17  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: backport commit #845471
+
+2008-08-11 15:47  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/gallerympform.cpp,
+      galleryexport/gallerywindow.cpp: Some bug fixing..
+
+2008-08-11 12:07  adjam
+
+    * galleryexport/TODO, galleryexport/gallerympform.cpp,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+      Updated GalleryTalker to better work with new GalleryWindow
+      class.
+      At this moment, we are near 80% to the goal..
+
+2008-08-09 14:56  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerympform.h, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h, galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: Adjusted *cpp/*.h headers
+      to follow Debian (C) issues.
+      But I really don't know.. why should we follow Debian's??
+
+2008-08-09 14:47  adjam
+
+    * galleryexport/gallerywindow.cpp: GalleryTalker crash SOLVED!!!
+      This means we are hopefully
+      near to a usable version of the plugin..
+
+2008-08-08 21:30  adjam
+
+    * galleryexport/TODO, galleryexport/gallerytalker.cpp,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywindow.cpp:
+      Updated TODO with my list of stuff. In this commit, substituted
+      QListWidget with QTreeWidget to better implement OLD ui.
+
+2008-08-07 14:15  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      support median filter passes settings
+
+2008-08-07 13:48  adjam
+
+    * galleryexport: Here is GalleryExport plugin!! While there are a
+      lot of stuffs NOT working, it seems to
+      NOT crash at all.. (and this is a good point, for now!!)
+      
+      Hope that during Akademy I can get all things work well.. See you
+      there!!
+      
+
+2008-08-07 13:41  adjam
+
+    * galleryexport: Move galleryexport out of here! This version of
+      the plugin has too much things
+      NOT working. Porting was been destructive, perhaps..
+      I have refactored a simpler version of galleryexport, without
+      1. managing more that one gallery
+      2. kwallet support
+      3. khtml_part (?)
+      I will readd these features when plugin restart to work well..
+
+2008-08-07 13:07  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile with last revision of libkdcraw
+
+2008-08-06 11:53  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+      rawconverter/rawdecodingiface.cpp,
+      rawconverter/rawdecodingiface.h, rawconverter/singledialog.cpp,
+      rawconverter/singledialog.h: Raw Converter can now use Brightness
+      settings with 16 bits color depth
+
+2008-08-06 09:00  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile
+
+2008-08-06 08:58  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      backport commit #842914 from KDE3 branch
+
+2008-08-04 18:10  osterfeld
+
+    * CMakeLists.txt: make it possible to configure kipi-plugins/
+      directly
+
+2008-07-30 19:26  adjam
+
+    * CMakeLists.txt: Commented out GalleryExport for now (as it's not
+      yet usable..)
+
+2008-07-30 09:33  cgilles
+
+    * galleryexport/galleries.cpp: fix crash at startup.
+      Andrea, please check what wrong with KWallet stuff. Thanks in
+      advance
+      CCMAIL: adjam7@gmail.com
+
+2008-07-29 22:38  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/gallerylist.cpp,
+      galleryexport/gallerylist.h, galleryexport/gallerywindow.cpp:
+      GalleryList API change (function renamed getGallery --> gallery)
+      Three different getGallery functions are too much for me...
+
+2008-07-29 21:08  adjam
+
+    * galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerympform.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/gallerywidget.cpp, galleryexport/gallerywidget.h,
+      galleryexport/gallerywindow.cpp: Fix some typo
+
+2008-07-29 19:57  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/gallerylist.h,
+      galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+      Fix compile. (Sorry.. ;)
+
+2008-07-29 18:20  gkulzer
+
+    * galleryexport/gallerylist.cpp: correct function call spelling
+      accoding to galleries.h
+
+2008-07-29 18:20  gkulzer
+
+    * galleryexport/galleries.cpp: correct function call spelling
+      accoding to galleries.h
+
+2008-07-29 14:30  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/gallerylist.cpp: loading initial data in conf
+
+2008-07-28 13:07  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerylist.cpp,
+      galleryexport/gallerylist.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerympform.h, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h, galleryexport/galleryviewitem.h,
+      galleryexport/gallerywidget.cpp, galleryexport/gallerywidget.h,
+      galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: Header styling
+
+2008-07-28 12:36  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerylist.cpp,
+      galleryexport/gallerylist.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywidget.cpp,
+      galleryexport/gallerywidget.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: Applied astyle-kdelibs.
+
+2008-07-27 23:51  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/galleries.cpp,
+      galleryexport/galleryconfig.cpp, galleryexport/gallerylist.cpp,
+      galleryexport/gallerylist.h,
+      galleryexport/plugin_galleryexport.cpp: Some other adjustments.
+      Plugin compiles, but has still no function.
+
+2008-07-26 22:53  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/gallerylist.cpp, galleryexport/gallerylist.h: Some
+      adjustments in "Remote Gallery Settings"
+
+2008-07-25 09:35  adjam
+
+    * galleryexport/gallerylist.cpp,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: Some adjustments, two slots
+      NOT implemented disabled.
+      And two left slots to restore: first is unusable, second lets
+      applications crash.. (which is best??)
+
+2008-07-25 07:18  mlaurent
+
+    * galleryexport/galleryconfig.cpp, galleryexport/gallerywidget.cpp,
+      galleryexport/gallerywindow.cpp: Fix includes
+
+2008-07-24 10:34  adjam
+
+    * galleryexport/plugin_galleryexport.cpp: Some little adjustments
+      on plugin..
+      Actually GalleryExport crashes on start due to widget creation
+      failure.
+      Hope I can get well this on evening..
+
+2008-07-23 09:23  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/galleryconfig.cpp,
+      galleryexport/galleryconfig.h, galleryexport/gallerylist.cpp,
+      galleryexport/gallerympform.cpp, galleryexport/gallerympform.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywidget.cpp,
+      galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+      Completely Removed Qt/KDE 3 dependencies!!
+      And GalleryExport plugin compiles and links! STEP 2 is done.
+      Step 3 is restoring its functionality..
+
+2008-07-21 23:06  adjam
+
+    * galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywidget.cpp,
+      galleryexport/gallerywidget.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: Other KDE4-only porting.
+
+2008-07-21 15:07  adjam
+
+    * galleryexport/gallerylist.cpp: Removed Kde3support dependencies
+      in gallerylist class
+
+2008-07-21 09:54  adjam
+
+    * galleryexport/gallerylist.cpp, galleryexport/gallerylist.h:
+      Adjusted gallerylist to make it compile..
+
+2008-07-21 09:47  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h: Removed
+      Qt3Support dependencies from Galleries Class.
+      
+
+2008-07-20 00:15  adjam
+
+    * galleryexport/plugin_galleryexport.cpp: Some fixing..
+
+2008-07-19 23:34  adjam
+
+    * galleryexport/plugin_galleryexport.cpp: Plugin_GalleryExport
+      class fully ported and ready (I hope).
+      In this commit, KAction restored.
+
+2008-07-19 16:11  mlaurent
+
+    * galleryexport/CMakeLists.txt: Not necessary
+
+2008-07-19 16:07  mlaurent
+
+    * galleryexport/galleries.cpp, galleryexport/galleryconfig.cpp,
+      galleryexport/galleryconfig.h, galleryexport/gallerylist.cpp,
+      galleryexport/gallerympform.cpp, galleryexport/gallerympform.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp: Fix include
+
+2008-07-19 07:34  mlaurent
+
+    * galleryexport/galleryconfig.cpp, galleryexport/gallerylist.cpp,
+      galleryexport/gallerympform.cpp, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp: For the future (if code
+      is reactivated)
+
+2008-07-19 07:20  mlaurent
+
+    * galleryexport/gallerytalker.cpp,
+      galleryexport/galleryviewitem.cpp: Minor port
+
+2008-07-19 07:15  mlaurent
+
+    * CMakeLists.txt: It compiles fine
+
+2008-07-18 16:34  adjam
+
+    * CMakeLists.txt: GalleryExport ADD_SUBDIRECTORY.
+      Commented out, for now.
+
+2008-07-18 16:29  adjam
+
+    * galleryexport, galleryexport/CMakeLists.txt,
+      galleryexport/gallerympform.cpp, galleryexport/gallerympform.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/gallerywidget.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: Added KDE4 galleryexport porting.
+      It actually compiles and links. No more.
+
+2008-07-17 06:41  mlaurent
+
+    * common/libkipiplugins/kpaboutdata.h: Update it
+
+2008-07-14 19:02  jaiva
+
+    * picasawebexport/picasawebtalker.cpp: Minor change to port the
+      listAllAlbums functionality to KDE4. Along with this change and
+      changes by others, I verified that uploading functionality works
+      completely on KDE 4. The plugin also looks great thanks to
+      everyone who helped in porting it.
+      
+      CCMAIL=kde-imaging@kde.org
+
+2008-07-10 17:40  cgilles
+
+    * metadataedit/plugin_metadataedit.cpp: support tiff writting mode
+      with remove caption
+
+2008-07-10 17:36  cgilles
+
+    * metadataedit/plugin_metadataedit.cpp: support properly tiff
+      writing mode with setCaption
+
+2008-07-10 15:57  cgilles
+
+    * slideshow/slideshowkb.cpp: fix gcc 4.3.1 warnings
+
+2008-07-10 15:55  cgilles
+
+    * slideshow/slideshowkb.cpp, slideshow/slideshowkb.h: polish
+
+2008-07-10 15:14  cgilles
+
+    * jpeglossless/CMakeLists.txt: polish
+
+2008-07-09 13:33  cgilles
+
+    * NEWS: update
+
+2008-07-09 09:22  cgilles
+
+    * gpssync/plugin_gpssync.cpp: adapt to new digiKam kipi interface
+
+2008-07-08 18:14  kusi
+
+    * imageviewer/TODO, imageviewer/viewerwidget.cpp: if one image is
+      selected, all images are loaded and the selected image image will
+      be displayed. this behavior was broken in kde4 due to non-clean
+      kurl adresses
+
+2008-07-08 12:44  cgilles
+
+    * common/libkipiplugins/kpwriteimage.cpp: fix broken compilation
+      with gcc 4.3.1
+
+2008-07-07 11:52  mlaurent
+
+    * htmlexport/imagesettingspage.ui: Fix layout
+
+2008-07-07 11:42  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp: Fix crash
+
+2008-07-07 11:34  mlaurent
+
+    * picasawebexport/picasawebwidget.cpp,
+      picasawebexport/uploadwidget.ui: Fix layout
+
+2008-07-07 11:28  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Port++
+
+2008-07-07 11:21  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h: Fix signal/slot
+
+2008-07-07 07:53  mlaurent
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/viewerwidget.cpp,
+      imageviewer/viewerwidget.h: Fix crash when we didn't have images
+      selected
+
+2008-07-06 18:04  kusi
+
+    * imageviewer/viewerwidget.cpp: if user zooms with mouse-rightclick
+      and mousepointer reach the border of the screen, continue zooming
+      on horizontal movements
+
+2008-07-06 17:02  kusi
+
+    * imageviewer/texture.cpp, imageviewer/texture.h,
+      imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: respect
+      exif orientation flag
+
+2008-07-05 21:20  kusi
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/plugin_viewer.h,
+      imageviewer/texture.cpp, imageviewer/texture.h,
+      imageviewer/timer.cpp, imageviewer/timer.h,
+      imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: bugfix:
+      first image was not loaded correctly due to changed behavior in
+      QT4 isFullscreen().
+      I had to revert some code polishing of Gilles due to merge
+      conflicts, will fix that later
+      changing back my email adress to something more spam-safe
+
+2008-07-03 13:32  cgilles
+
+    * jpeglossless/actionthread.cpp: fix gcc 4.3.1 warning
+
+2008-07-03 11:36  mlaurent
+
+    * rawconverter/plugin_rawconverter.cpp: Fix crash when list is
+      empty
+
+2008-07-01 07:06  mlaurent
+
+    * slideshow/slideshowconfig.cpp: Fix i18n
+
+2008-06-30 07:53  gateau
+
+    * htmlexport/CMakeLists.txt, htmlexport/themes/CMakeLists.txt,
+      htmlexport/themes/matrix/CMakeLists.txt: Install all themes.
+
+2008-06-30 07:53  gateau
+
+    * htmlexport/wizard.cpp: Fix call to i18n
+
+2008-06-30 06:56  mlaurent
+
+    * slideshow/CMakeLists.txt, slideshow/slideshowgl.cpp,
+      slideshow/slideshowgl.h: Try to make it compile
+
+2008-06-30 06:46  mlaurent
+
+    * slideshow/slideshowgl.cpp: Remove this include
+
+2008-06-27 10:53  cgilles
+
+    * metadataedit/exifeditdialog.cpp, metadataedit/iptceditdialog.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      metadataedit/plugin_metadataedit.h,
+      metadataedit/xmpeditdialog.cpp: polish
+
+2008-06-27 10:26  cgilles
+
+    * metadataedit/exifeditdialog.cpp, metadataedit/iptceditdialog.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      metadataedit/xmpeditdialog.cpp: use last KExiv2 methods to check
+      writting mode
+
+2008-06-27 04:15  cgilles
+
+    * NEWS: update
+
+2008-06-25 22:53  dfaure
+
+    * imageviewer/texture.h, imageviewer/timer.h,
+      imageviewer/viewerwidget.h: compilation fixes
+
+2008-06-22 21:33  cgilles
+
+    * common/libkipiplugins/kpwriteimage.cpp: save metadata with tiff
+      and Exiv2 0.18
+
+2008-06-15 11:50  thiago
+
+    * common/libkipiplugins/kpwriteimage.cpp: Make the semi-colon clear
+      in these loops (and avoid a gcc 4.3 warning)
+
+2008-06-14 14:19  gateau
+
+    * htmlexport/plugin.cpp: Show an additional message
+      When the progress dialog does not close because of warnings, show
+      an
+      additional message and change the dialog button to "Close".
+
+2008-06-14 13:40  gateau
+
+    * htmlexport/galleryinfo.h, htmlexport/generator.cpp,
+      htmlexport/htmlexportconfig.kcfg, htmlexport/outputpage.ui,
+      htmlexport/plugin.cpp, htmlexport/wizard.cpp: Adapt to new
+      KUrlRequester: it now returns KUrl, not QString.
+
+2008-06-14 13:39  gateau
+
+    * htmlexport/generator.cpp: Skip empty parts.
+
+2008-06-13 07:46  cgilles
+
+    * flickrexport/flickrwindow.cpp: fix crash when dialog is closed
+
+2008-06-13 07:36  cgilles
+
+    * flickrexport/flickrwidget.cpp: use Oxygen icon
+
+2008-06-13 07:35  cgilles
+
+    * flickrexport/imageslist.cpp: fix layout
+
+2008-06-13 07:31  cgilles
+
+    * flickrexport/flickrwidget.cpp: fix layout
+
+2008-06-13 07:28  cgilles
+
+    * flickrexport/flickrwindow.h: port ++
+
+2008-06-13 07:25  cgilles
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+      Q3ProgressDialog => QProgressDialog
+
+2008-06-13 07:10  mlaurent
+
+    * picasawebexport/uploadwidget.ui: Fix ui files
+
+2008-06-13 07:08  mlaurent
+
+    * picasawebexport/PicasawebNewAlbumDialog.ui: This header doesn't
+      exist
+
+2008-06-13 07:06  mlaurent
+
+    * picasawebexport/CMakeLists.txt,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/uploadwidget.ui: Port to uic4
+
+2008-06-13 06:59  mlaurent
+
+    * picasawebexport/uploadwidget.ui: Fix not supported attribute
+
+2008-06-13 06:17  cgilles
+
+    * flickrexport/flickrwindow.cpp: missing buttons connection
+
+2008-06-13 06:14  cgilles
+
+    * flickrexport/imageslist.cpp: polish
+
+2008-06-13 04:41  cgilles
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+      Q3ValueList => Qlist
+
+2008-06-12 20:22  cgilles
+
+    * flickrexport/login.cpp, flickrexport/login.h: pure Qt4
+      implementation
+
+2008-06-12 15:08  cgilles
+
+    * flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h: pure
+      Qt4 implementation
+
+2008-06-12 15:00  cgilles
+
+    * flickrexport/flickrwindow.cpp: use Oxygen icon
+
+2008-06-12 14:55  cgilles
+
+    * flickrexport/flickrwidget.cpp: port ++
+
+2008-06-12 14:32  cgilles
+
+    * flickrexport/flickrwidget.cpp: port ++
+
+2008-06-12 13:58  cgilles
+
+    * flickrexport/flickritem.h: port ++
+
+2008-06-12 13:41  cgilles
+
+    * flickrexport/mpform.cpp, flickrexport/mpform.h: pure Qt4
+      implementation
+
+2008-06-12 13:33  cgilles
+
+    * flickrexport/flickrtalker.cpp: fix warnings
+
+2008-06-12 13:28  cgilles
+
+    * flickrexport/mpform.cpp: fix warnings
+
+2008-06-12 13:26  cgilles
+
+    * flickrexport/CMakeLists.txt: polish
+
+2008-06-12 13:26  cgilles
+
+    * flickrexport/flickrwindow.cpp: fix warnings
+
+2008-06-12 13:12  cgilles
+
+    * flickrexport/imageslist.cpp, flickrexport/imageslist.h,
+      flickrexport/plugin_flickrexport.cpp: KDE4 port
+
+2008-06-12 12:59  cgilles
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h: KDE4
+      port
+
+2008-06-12 10:54  cgilles
+
+    * flickrexport/imageslist.cpp: fix icons
+
+2008-06-12 10:52  cgilles
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+      flickrexport/imageslist.cpp, flickrexport/imageslist.h,
+      flickrexport/login.cpp, flickrexport/login.h,
+      flickrexport/mpform.cpp: port ++
+
+2008-06-12 10:38  cgilles
+
+    * picasawebexport/plugin_picasawebexport.cpp,
+      picasawebexport/plugin_picasawebexport.h: port ++
+
+2008-06-12 10:34  cgilles
+
+    * flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h: port
+      ++
+
+2008-06-12 10:25  cgilles
+
+    * flickrexport/flickritem.h, flickrexport/plugin_flickrexport.cpp:
+      polish
+
+2008-06-12 10:21  cgilles
+
+    * flickrexport/plugin_flickrexport.cpp,
+      flickrexport/plugin_flickrexport.h: fix icon
+
+2008-06-12 10:16  cgilles
+
+    * imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: fix
+      header
+      remove tab
+      polish
+
+2008-06-12 10:06  cgilles
+
+    * imageviewer/timer.cpp, imageviewer/timer.h: fix header
+      remove tab
+      polish
+
+2008-06-12 10:03  cgilles
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/plugin_viewer.h,
+      imageviewer/texture.cpp, imageviewer/texture.h: fix header
+      remove tab
+      polish
+
+2008-06-12 09:58  cgilles
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/plugin_viewer.h: fix
+      header acordingly with Achim bohnet tip from Debian.
+      missing moc file
+      remove tabs in source code. always use spaces instead
+
+2008-06-12 09:57  cgilles
+
+    * imageviewer/CMakeLists.txt: polish
+
+2008-06-12 09:32  cgilles
+
+    * sendimages/imagespage.cpp, sendimages/imagespage.h: polish
+
+2008-06-12 09:28  cgilles
+
+    * slideshow/CMakeLists.txt, slideshow/plugin_slideshow.cpp: port ++
+
+2008-06-11 10:38  cgilles
+
+    * flickrexport/imageslist.cpp: compile
+
+2008-06-11 10:27  cgilles
+
+    * flickrexport/imageslist.cpp: polish
+
+2008-06-11 07:33  mlaurent
+
+    * slideshow/CMakeLists.txt: Comment this line
+
+2008-06-11 07:23  mlaurent
+
+    * slideshow/slideshowgl.cpp, slideshow/slideshowgl.h: Fix some
+      includes
+
+2008-06-11 07:19  mlaurent
+
+    * slideshow/slideshow.cpp, slideshow/slideshowgl.cpp,
+      slideshow/slideshowgl.h: Port some code
+
+2008-06-11 07:09  mlaurent
+
+    * slideshow/slideshowconfig.cpp, slideshow/slideshowconfigbase.ui:
+      Port++
+
+2008-06-11 06:53  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Port kipi::dialog
+
+2008-06-11 06:49  mlaurent
+
+    * flickrexport/imageslist.cpp: Port image dialog
+
+2008-06-11 06:40  mlaurent
+
+    * slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+      slideshow/slideshowconfig.h, slideshow/slideshowconfigbase.ui,
+      slideshow/slideshowgl.h: Some port
+
+2008-06-10 21:45  mlaurent
+
+    * slideshow/slideshow.cpp, slideshow/slideshow.h,
+      slideshow/slideshowconfig.cpp: Port++
+
+2008-06-10 21:31  mlaurent
+
+    * slideshow/listimageitems.cpp: Port++
+
+2008-06-10 11:48  mlaurent
+
+    * flickrexport/flickrtalker.cpp,
+      picasawebexport/picasawebtalker.cpp: Fix it
+      (thanks David)
+
+2008-06-10 11:32  mlaurent
+
+    * flickrexport/flickrtalker.cpp,
+      picasawebexport/picasawebtalker.cpp: Remove some qt3support
+
+2008-06-10 11:31  mlaurent
+
+    * picasawebexport/picasawebwidget.h: Fix forward declaration
+
+2008-06-10 11:30  mlaurent
+
+    * flickrexport/flickrwidget.h: Fix forward declaration
+
+2008-06-10 11:25  mlaurent
+
+    * CMakeLists.txt, picasawebexport/CMakeLists.txt,
+      picasawebexport/mpform.cpp, picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Port it
+
+2008-06-10 11:19  mlaurent
+
+    * CMakeLists.txt, flickrexport/CMakeLists.txt,
+      flickrexport/flickrtalker.cpp, flickrexport/flickrwidget.cpp,
+      flickrexport/mpform.cpp: Now it can be compiled
+      (need to fix some not ported code)
+
+2008-06-10 11:14  mlaurent
+
+    * flickrexport/CMakeLists.txt, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrwindow.cpp, flickrexport/imageslist.cpp,
+      flickrexport/login.cpp: Port++
+
+2008-06-10 07:46  cgilles
+
+    * README: this one will be never ported.
+
+2008-06-10 07:39  mlaurent
+
+    * README: Update readme
+
+2008-06-10 07:35  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Fix i18n apiu
+
+2008-06-10 07:34  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Fix mem leak.
+      Perhaps necessary to port to qt3 version
+
+2008-06-10 07:33  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Port KPAboutData
+
+2008-06-10 07:13  mlaurent
+
+    * flickrexport/CMakeLists.txt, picasawebexport/CMakeLists.txt:
+      Clean up
+
+2008-06-10 06:57  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Port++
+
+2008-06-10 06:50  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h,
+      picasawebexport/plugin_picasawebexport.cpp,
+      picasawebexport/plugin_picasawebexport.h: Port++
+
+2008-06-10 06:41  mlaurent
+
+    * flickrexport/flickrwindow.h, flickrexport/imageslist.cpp,
+      flickrexport/plugin_flickrexport.cpp,
+      flickrexport/plugin_flickrexport.h: Fix some error
+
+2008-06-09 22:18  mlaurent
+
+    * CMakeLists.txt: Activate them when ported
+
+2008-06-09 22:08  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h: Pört KDialogBase
+
+2008-06-09 22:04  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Fix i18n
+
+2008-06-09 22:03  mlaurent
+
+    * picasawebexport/CMakeLists.txt, picasawebexport/Messages.sh: Fix
+      CMakeLists.txt
+      Extract messages
+
+2008-06-09 22:02  mlaurent
+
+    * picasawebexport/CMakeLists.txt, picasawebexport/Makefile.am: Add
+      CMakeLists.txt
+
+2008-06-09 22:01  mlaurent
+
+    * picasawebexport/mpform.cpp, picasawebexport/mpform.h,
+      picasawebexport/picasawebitem.h,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasaweblogin.h,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebviewitem.cpp,
+      picasawebexport/picasawebviewitem.h,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h,
+      picasawebexport/plugin_picasawebexport.cpp,
+      picasawebexport/uploadwidget.ui: Use script to start to port it.
+      CCMAIL: vardhman@gmail.com
+
+2008-06-09 18:52  jaiva
+
+    * picasawebexport: Copying from trunk at revision: 818818
+      Command used:
+      svn copy
+      svn://anonsvn.kde.org/home/kde/branches/extragear/kde3/libs/kipi-plugins/picasawebexport
+      picasawebexport
+
+2008-06-09 18:33  aclemens
+
+    * flickrexport/flickrwindow.cpp: backport commit #818812 from KDE3
+      branch: check for HostSupportsTags moved to readSettings() to
+      make sure that everything is setup well
+
+2008-06-09 13:39  aclemens
+
+    * flickrexport/flickrwindow.cpp: backport commit #818745 from KDE3
+      branch: "Strip Space..." checkbox should only be enabled if "Use
+      Host Application Tags" is checked, too
+
+2008-06-09 11:36  mlaurent
+
+    * CMakeLists.txt, cmake: Remove empty directory
+
+2008-06-09 06:47  mlaurent
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrwindow.cpp:
+      Adapt i18n api
+
+2008-06-09 06:43  mlaurent
+
+    * flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+      Port++
+
+2008-06-09 06:40  mlaurent
+
+    * flickrexport/Messages.sh: Extract messages
+
+2008-06-09 06:36  mlaurent
+
+    * flickrexport/CMakeLists.txt, flickrexport/Makefile.am: Add
+      CMakeLists.txt
+
+2008-06-09 06:35  mlaurent
+
+    * flickrexport/flickritem.h, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrtalker.h, flickrexport/flickrviewitem.cpp,
+      flickrexport/flickrviewitem.h, flickrexport/flickrwidget.cpp,
+      flickrexport/flickrwidget.h, flickrexport/flickrwindow.cpp,
+      flickrexport/flickrwindow.h, flickrexport/imageslist.cpp,
+      flickrexport/imageslist.h, flickrexport/login.cpp,
+      flickrexport/login.h, flickrexport/mpform.cpp,
+      flickrexport/mpform.h, flickrexport/plugin_flickrexport.cpp:
+      Apply some script on this directory
+
+2008-06-09 06:29  cgilles
+
+    * flickrexport: kipi-plugins from trunk : start to port
+      FlickrExport to KDE4/Qt4
+      Laurent, can you apply your magic convert scripts to this code.
+      Thanks in advance...
+      CCMAIL: montel@kde.org
+      CCMAIL: vardhman@gmail.com
+
+2008-06-09 01:17  pino
+
+    * imageviewer/plugin_viewer.cpp: adapt to the recent changes in
+      libkipi:
+      - add needed includes
+      - adapt to the new values of the Category enum
+
+2008-06-08 22:01  kusi
+
+    * CMakeLists.txt: typos
+
+2008-06-08 21:53  kusi
+
+    * CMakeLists.txt, imageviewer/CMakeLists.txt, imageviewer/help.ui,
+      imageviewer/helpdialog.ui, imageviewer/plugin_viewer.cpp,
+      imageviewer/timer.cpp, imageviewer/viewerwidget.cpp,
+      imageviewer/viewerwidget.h: finalise port to KDE4
+      - fixed help dialog
+      - add pics
+      plugin is now built by default
+
+2008-06-06 09:14  pino
+
+    * CMakeLists.txt, acquireimages/CMakeLists.txt,
+      cmake/modules/FindKSane.cmake: remove all the FindKSane copies
+      all around, and optionally use the FindKSane installed by
+      kdegraphics >= 4.1
+      adapt to the syntax of that FindKSane
+
+2008-06-06 07:46  cgilles
+
+    * CMakeLists.txt: polish
+
+2008-06-03 19:27  cgilles
+
+    * acquireimages/scandialog.cpp: kipi-plugins from trunk :
+      AcquireImages tool : support 16 bits color depth image to save
+      into file (PNG or TIFF) : warning : untested (no 16 bits color
+      depth flat scanner here)
+      CCMAIL: kare.sars@kolumbus.fi
+
+2008-06-03 14:56  cgilles
+
+    * NEWS: update
+
+2008-06-03 14:54  cgilles
+
+    * TODO: update
+
+2008-06-03 14:44  cgilles
+
+    * acquireimages/scandialog.cpp, acquireimages/scandialog.h: polish
+
+2008-06-03 14:34  cgilles
+
+    * simpleviewerexport/simpleviewerexport.cpp: fix warning
+
+2008-06-03 14:31  cgilles
+
+    * cmake/modules/FindKSane.cmake, cmake/modules/FindKsane.cmake:
+      rename
+
+2008-06-03 14:20  cgilles
+
+    * CMakeLists.txt: update
+
+2008-06-03 13:14  cgilles
+
+    * CMakeLists.txt, common/libkipiplugins/CMakeLists.txt: compile
+
+2008-06-03 12:50  pino
+
+    * .: move the kipi-plugins from extragear/libs to
+      extragear/graphics
+
+2008-06-03 12:43  pino
+
+    * adapt the kipi plugins to the recent libkipi api changes:
+      - add more includes, as there are less silently pulled
+      - adapt to the new values of the KIPI::Category enum
+
+2008-06-03 12:31  pino
+
+    * you need kio, so link to it
+
+2008-06-03 11:27  mlaurent
+
+    * Fix ui files
+
+2008-06-03 06:05  cgilles
+
+    * polish
+
+2008-06-03 06:02  cgilles
+
+    * fix i18n
+
+2008-06-03 05:58  cgilles
+
+    * fix margin
+
+2008-06-02 07:15  mlaurent
+
+    * Extract message
+
+2008-06-01 22:49  kusi
+
+    * initial port of imageviewer KIPI plugin to KDE4. while the plugin
+      is functional, there are still issues to be fixed (plugin is
+      still disabled in CMakeLists.txt):
+      - no help dialog
+      - no cursors
+      - issues with recognizing of correct fullscreen size
+
+2008-05-28 07:44  mlaurent
+
+    * Fix active help button
+
+2008-05-26 12:54  cgilles
+
+    * polishapi
+
+2008-05-25 17:45  cgilles
+
+    * polish
+
+2008-05-24 15:29  mlaurent
+
+    * Use INSTALL_TARGETS_DEFAULT_ARGS
+
+2008-05-20 18:03  pino
+
+    * fix two SANE -> KSANE typos, and properly make the acquireimages
+      plugin optionally compiled only if ksane is found
+
+2008-05-17 19:25  cgilles
+
+    * fix icon
+
+2008-05-16 12:27  gateau
+
+    * Fix i18n .arg.
+
+2008-05-16 12:27  gateau
+
+    * Correctly disable ThemePage.
+
+2008-05-16 12:27  gateau
+
+    * Create ImageCollectionSelector using KIPI::Interface.
+
+2008-05-16 11:00  mlaurent
+
+    * Extract messages
+      Fixuifiles
+
+2008-05-15 13:50  cgilles
+
+    * set IPTC preview size to 1280x1024 instead 800x600
+
+2008-05-13 21:57  gateau
+
+    * Started porting htmlexport plugin.
+      CCMAIL: kde-imaging@kde.org
+
+2008-05-13 21:56  gateau
+
+    * Import binary files via svn, because git-svn does not mark them
+      as binary...
+      grr...
+
+2008-05-07 12:11  cgilles
+
+    * polish
+
+2008-05-07 11:54  cgilles
+
+    * polish
+
+2008-05-02 06:57  cgilles
+
+    * update
+
+2008-04-29 17:45  pletourn
+
+    * warning: passing ‘float’ for argument 1 to ‘QString&
+      QString::operator=(char)’
+
+2008-03-30 13:36  dimsuz
+
+    * Fix a couple of typos which made comilation broken
+
+2008-03-29 20:21  cgilles
+
+    * typo again
+
+2008-03-29 18:31  cgilles
+
+    * typo
+
+2008-03-25 11:29  cgilles
+
+    * polish
+
+2008-03-25 08:58  cgilles
+
+    * polish
+
+2008-03-25 07:53  mlaurent
+
+    * Fix export
+
+2008-03-25 07:21  cgilles
+
+    * backport from digiKam core
+
+2008-03-18 18:35  cgilles
+
+    * update
+
+2008-03-18 13:26  ilic
+
+    * i18n fixes: no more %n in plural messages.
+
+2008-03-17 11:17  cgilles
+
+    * backport commit #786549 from KDE3 branch
+
+2008-03-17 10:37  cgilles
+
+    * update
+
+2008-03-16 21:18  cgilles
+
+    * backport commit #786363 from KDE3 branch
+
+2008-03-16 20:59  cgilles
+
+    * backport commit #786355 from KDE3 branch
+      CCBUGS: 149890
+
+2008-03-13 16:56  cgilles
+
+    * polish
+
+2008-03-13 16:53  cgilles
+
+    * polish
+
+2008-03-13 10:16  cgilles
+
+    * polish
+
+2008-03-13 09:54  cgilles
+
+    * added photo info in preview area
+
+2008-03-13 09:22  cgilles
+
+    * polish
+
+2008-03-13 08:37  cgilles
+
+    * LibKipi and Kipi-plugins from trunk (KDE4) : Moving
+      KIPI::ImageDialog to KIPIPlugins::ImageDialog
+      This dialog is never used by kipi host, but only by kipi-plugins.
+      CCMAIL: kde-imaging@kde.org
+
+2008-03-13 08:13  cgilles
+
+    * missing files
+
+2008-03-13 08:13  cgilles
+
+    * LibKipi and Kipi-plugins from trunk (KDE4) : Moving
+      KIPI::BatchProcessDialog to KIPIPlugins::BatchProcessDialog
+      This dialog is never used by kipi host, but only by kipi-plugins.
+      CCMAIL: kde-imaging@kde.org
+
+2008-03-11 19:42  cgilles
+
+    * fix warnings
+
+2008-03-11 18:11  cgilles
+
+    * update
+
+2008-03-11 10:01  cgilles
+
+    * fix frame drawing
+
+2008-03-11 09:55  cgilles
+
+    * handle RAWCOlOR space properlly
+
+2008-03-11 08:49  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : Raw Converter : use auto-gamma
+      and auto-white balance in 16 bits color depth mode.
+      CCBUGS: 146393
+
+2008-03-11 07:27  cgilles
+
+    * use iterator
+
+2008-03-11 07:25  cgilles
+
+    * use iterator
+
+2008-03-02 14:04  schwarzer
+
+    * typo: missing single quote
+
+2008-03-02 08:26  cgilles
+
+    * fix i18n
+
+2008-02-29 12:47  mlaurent
+
+    * Fix signal/slot
+
+2008-02-29 12:36  mlaurent
+
+    * Add own export define symbol
+
+2008-02-29 10:44  mueller
+
+    * unneeded include
+
+2008-02-29 06:47  cgilles
+
+    * polish
+
+2008-02-28 20:17  mueller
+
+    * fix compile error without libkipi being installed beforehand
+
+2008-02-28 07:07  cgilles
+
+    * Kipi-plugins from trunk (KDE4): Flash Export tool : new option to
+      open Flash gallery in Konqueror
+
+2008-02-27 06:56  cgilles
+
+    * polish
+
+2008-02-27 06:55  cgilles
+
+    * polish
+
+2008-02-27 06:53  cgilles
+
+    * Use an index to rename target image instead original file names
+
+2008-02-26 13:05  cgilles
+
+    * update
+
+2008-02-26 13:04  cgilles
+
+    * kipi-plugins from KDE4 : Flast Export tool : add new option to
+      fix orientation of image accordingly with Exif information.
+      BUG: 134299
+
+2008-02-26 11:16  cgilles
+
+    * polish
+
+2008-02-26 11:11  cgilles
+
+    * backup metadata from original images to target JPEG images
+
+2008-02-26 10:13  cgilles
+
+    * link
+
+2008-02-26 09:11  cgilles
+
+    * kipi-plugins from trunk : new option to be able to open displayed
+      image in a separate window
+
+2008-02-26 05:07  cgilles
+
+    * polish
+
+2008-02-26 04:46  cgilles
+
+    * backport commit #779425 from KDE3 branch
+
+2008-02-25 19:39  cgilles
+
+    * use Qt4::xml classes to create SimpleViewer config file instead
+      to use hardcoded xml tag
+
+2008-02-25 13:42  cgilles
+
+    * update
+
+2008-02-25 13:34  cgilles
+
+    * Flash Gallery Export kipi-plugin from trunk (KDE4) : support
+      UTF-8 properlly in config XML file.
+      BUG: 150393
+
+2008-02-25 13:10  cgilles
+
+    * fix release number
+
+2008-02-25 11:39  cgilles
+
+    * fix i18n
+
+2008-02-24 21:39  cgilles
+
+    * update
+
+2008-02-24 20:05  cgilles
+
+    * polish
+
+2008-02-24 19:30  cgilles
+
+    * adapt to new api
+
+2008-02-24 19:22  cgilles
+
+    * simpleviewerExport plugin from trunk (KDE4) : this plugin is the
+      first one to use new image collection selector widget from
+      digiKam core
+      CCBUGS: 117073
+
+2008-02-23 15:01  mwiesweg
+
+    * Commit KDE4 port of the Simple Viewer Export Plugin on behalf of
+      Gilles Caulier.
+      
+      CCMAIL: caulier.gilles@gmail.com
+
+2008-02-16 19:35  gkulzer
+
+    * adding altitude service from topocoding to location editor
+
+2008-02-16 19:21  gkulzer
+
+    * adding altitude service from topocoding to location editor
+
+2008-02-16 16:33  gkulzer
+
+    * adding altitude service from topocoding to location editor
+
+2008-02-16 15:32  gkulzer
+
+    * fix time offset i18n: positive is eastwards
+
+2008-02-14 08:39  cgilles
+
+    * kipi-plugins from trunk : RAWConverter:
+      - pure Qt4 implementation.
+      - Use KUrl everywhere.
+      - RawItem class removed.
+      - Do not use Q3Dict to list file in Batch mode.
+
+2008-02-13 14:29  cgilles
+
+    * use Oxygen icons
+
+2008-02-13 14:22  cgilles
+
+    * K3ListView ==> QTreeWidget
+
+2008-02-13 14:22  cgilles
+
+    * polish
+
+2008-02-13 08:48  mlaurent
+
+    * Fix forward declaration
+
+2008-02-12 20:03  cgilles
+
+    * polish
+
+2008-02-11 21:48  cgilles
+
+    * KML Export : handle GPS position from digiKam database
+
+2008-02-11 21:37  cgilles
+
+    * update
+
+2008-02-11 21:35  cgilles
+
+    * kipi-plugins from trunk (KDE4) :
+      
+      - Handle non jpeg files to save GPS position. If you use digiKam
+      for KDE4, GPS position is now saved in database for all files,
+      including read-only file formats.
+      This is want mean than you can geo-tagging your RAW files for
+      example !
+      - Do not refresh thumbs from digiKam Album GUI interface when
+      something is change in metadata. KDE4 version is more robust and
+      detect automaticly wicth view must be updated in this case...
+      
+      BUG: 149497
+      BUG: 145746
+      
+      CCMAIL: digikam-devel@kde.org
+
+2008-02-11 18:21  cgilles
+
+    * GPS correlator : sync with digiKam DB
+
+2008-02-11 17:36  cgilles
+
+    * remove obsolete method
+
+2008-02-11 16:01  cgilles
+
+    * pure Qt4 port
+
+2008-02-11 15:58  cgilles
+
+    * Pure Qt4 port : K3ListView ==> QTreeWidget
+
+2008-02-11 08:46  cgilles
+
+    * polish
+
+2008-02-10 20:29  cgilles
+
+    * K3ListView ==> QTreeWidget
+      
+      Marcel, QTreeWidget is a good candidate to remplace
+      K3ListView/Q3ListView everywhere...
+      CCMAIL: marcel.wiesweg@gmx.de
+
+2008-02-10 12:00  cgilles
+
+    * GPS location editor now deal with digiKam DB to read/write GPS
+      locations to read only image format (as PNG for ex.)
+      It doesn't work yet. ther is a problem in digikam::kipiinterface
+      CCMAIL: marcel.wiesweg@gmx.de
+
+2008-02-09 18:18  cgilles
+
+    * follow marker mouvement over the map
+
+2008-02-09 14:27  cgilles
+
+    * set version
+
+2008-02-09 14:01  cgilles
+
+    * set plugins version to dialog
+
+2008-02-09 13:53  cgilles
+
+    * set plugin version on dialog about data
+
+2008-02-09 12:20  gkulzer
+
+    * change Dirty to Edited
+
+2008-02-09 12:10  cgilles
+
+    * polish
+
+2008-02-09 11:59  cgilles
+
+    * now track list follow mouvemant of markers in live around
+      googlemaps...
+
+2008-02-09 11:04  cgilles
+
+    * polish
+
+2008-02-09 09:47  cgilles
+
+    * update
+
+2008-02-09 09:45  cgilles
+
+    * kipi-plugins from trunk (KDE4) : digiKam has a new tool to edit a
+      GPS track list using googlemaps !
+      More than one point can be edited over the ma at the same time...
+      A fresh screenshot of the tool in action is available here :
+      http://digikam3rdparty.free.fr/Screenshots/gpstracklisteditor.png
+      
+      BUG: 135451
+      BUG: 135386
+      
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2008-02-08 22:16  cgilles
+
+    * kipi-plugins from trunk : GPS track list editor tool : enable
+      edition mode.
+      TODO : write new locations to target images.
+
+2008-02-08 19:59  cgilles
+
+    * polish
+
+2008-02-08 19:57  cgilles
+
+    * update GPS info in list item
+
+2008-02-08 19:50  cgilles
+
+    * compile
+
+2008-02-08 19:40  cgilles
+
+    * polish
+
+2008-02-08 18:55  cgilles
+
+    * polish
+
+2008-02-08 18:55  cgilles
+
+    * polish
+
+2008-02-08 18:54  cgilles
+
+    * fix signal/slots
+
+2008-02-08 18:51  cgilles
+
+    * handle point mouvemement over the map
+
+2008-02-08 16:30  cgilles
+
+    * fix i18n
+
+2008-02-08 16:28  cgilles
+
+    * polish
+
+2008-02-08 16:13  cgilles
+
+    * it's rock : gps track list tool work as a viewer (using
+      googlemaps). Editor mode coming soon...
+
+2008-02-08 13:35  cgilles
+
+    * polish
+
+2008-02-08 13:12  cgilles
+
+    * polish
+
+2008-02-08 09:45  cgilles
+
+    * polish
+
+2008-02-08 09:12  cgilles
+
+    * polish
+
+2008-02-08 07:51  mlaurent
+
+    * Remove not necessary cmake variable
+
+2008-02-08 07:49  mlaurent
+
+    * Fix i18n
+
+2008-02-07 22:07  cgilles
+
+    * missing files
+
+2008-02-07 22:04  cgilles
+
+    * polish
+
+2008-02-07 21:52  cgilles
+
+    * add new widget to play with GPS track list
+
+2008-02-07 18:53  cgilles
+
+    * set image list
+
+2008-02-07 18:02  cgilles
+
+    * GPS track list editor in progress
+
+2008-02-07 16:26  cgilles
+
+    * polish
+
+2008-02-07 16:17  cgilles
+
+    * polish
+
+2008-02-07 16:03  cgilles
+
+    * polish
+
+2008-02-07 14:56  cgilles
+
+    * start to implement a GPS track list editor. Not yet suitable...
+
+2008-02-07 13:48  cgilles
+
+    * polish
+
+2008-02-07 13:46  cgilles
+
+    * new container to handle GPS track list
+
+2008-02-07 10:30  cgilles
+
+    * sync with KDE3
+
+2008-02-07 10:01  cgilles
+
+    * polish
+
+2008-02-07 09:48  cgilles
+
+    * use drag and drop instead simple click to move marker over the
+      map
+
+2008-02-06 17:30  cgilles
+
+    * polish
+
+2008-02-06 14:40  cgilles
+
+    * kipi-plugins from trunk : GPSSync : GPS Googlemaps editor : added
+      capability to print current filename over marker
+
+2008-02-06 09:50  cgilles
+
+    * use Oxygen icon
+
+2008-02-06 09:39  cgilles
+
+    * compile GPSSync plugin
+
+2008-02-06 09:35  cgilles
+
+    * kipi-plugins from trunk : KDE4 port of GPSSync kipi-plugin is now
+      complete.
+      GPS Correlator and GPS position editor (using GoogleMaps work
+      fine.
+      Stéphane, please take a look in KML Export tool port if all is
+      fine for you. Indeep regresseve tests are require. Thanks in
+      advance.
+      CCMAIL: shadow.walker@free.fr
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2008-02-06 07:58  cgilles
+
+    * port in progress
+
+2008-02-06 07:37  mlaurent
+
+    * Fix to i18n api
+
+2008-02-05 19:37  cgilles
+
+    * port in progress
+
+2008-02-05 19:07  cgilles
+
+    * port in progress
+
+2008-02-05 18:51  cgilles
+
+    * port in progress
+
+2008-02-05 15:49  cgilles
+
+    * polish
+
+2008-02-05 15:35  cgilles
+
+    * polish
+
+2008-02-05 15:33  cgilles
+
+    * GPS correlator is now ported to QT4
+
+2008-02-05 15:10  cgilles
+
+    * port in progress
+
+2008-02-05 14:42  cgilles
+
+    * Remove GPS action done
+
+2008-02-05 14:35  cgilles
+
+    * polish
+
+2008-02-05 13:16  cgilles
+
+    * fix i18n
+
+2008-02-05 13:14  cgilles
+
+    * compile. GPS edit tool is done
+
+2008-02-05 13:11  cgilles
+
+    * port in progress
+
+2008-02-05 12:39  cgilles
+
+    * port in progress
+
+2008-02-05 12:12  cgilles
+
+    * Qt4 port
+
+2008-02-05 11:20  cgilles
+
+    * Qt4 port
+
+2008-02-05 11:12  cgilles
+
+    * fix depreciate
+
+2008-02-05 11:08  cgilles
+
+    * Qt4 port
+
+2008-02-05 09:41  cgilles
+
+    * Qt4 port
+
+2008-02-05 09:16  cgilles
+
+    * Qt4 port
+
+2008-02-04 21:28  cgilles
+
+    * port in progress
+
+2008-02-04 19:53  cgilles
+
+    * kde4 port
+
+2008-02-04 15:19  cgilles
+
+    * fix depreciate
+
+2008-02-04 15:15  cgilles
+
+    * KDE4 port
+
+2008-02-04 15:05  cgilles
+
+    * CMake port
+
+2008-02-04 14:58  cgilles
+
+    * i18n
+
+2008-02-04 14:51  cgilles
+
+    * start to port GPSSync kipi-plugin to KDE4
+
+2008-01-26 17:39  gkulzer
+
+    * replacing geolocalization with geolocation
+
+2008-01-03 23:44  jpetso
+
+    * Icon renaming (code changes - extragear):
+      bookmark -> bookmarks
+
+2008-01-03 22:38  jpetso
+
+    * Icon renaming (code changes - extragear):
+      rss-tag -> feed-subscribe
+
+2008-01-03 04:33  jpetso
+
+    * Icon renaming (code changes - extragear):
+      * color-fill -> format-fill-color
+      * color-line -> format-stroke-color
+      * and some others.
+
+2008-01-01 20:53  cgilles
+
+    * backport commits #755539 from KDE3 branch
+
+2008-01-01 13:29  gkulzer
+
+    * typo correction Developper->Developper CCMAIL:peremen@gmail.com
+
+2007-12-30 09:24  coolo
+
+    * syncing KDE3 with KDE4 plugin
+
+2007-12-29 13:47  jpetso
+
+    * Icon naming spec compliance (code changes - extragear):
+      network -> network-workgroup, or whatever fits best.
+
+2007-12-28 21:28  jpetso
+
+    * Icon naming spec compliance (code changes - extragear):
+      edit-add -> list-add
+
+2007-12-27 10:10  aacid
+
+    * Typo discovered by Park Shinjo
+      CCMAIL: kde-i18n-doc@kde.org
+
+2007-12-20 08:05  mlaurent
+
+    * Fix include
+
+2007-12-09 09:22  sars
+
+    * Adapt to the newer libksane api
+
+2007-12-08 20:03  jpetso
+
+    * Icon renaming (code changes - extragear):
+      mail -> mail-message
+      users -> system-users
+      
+      ...and a few others.
+
+2007-11-29 13:33  boiko
+
+    * Fix some include directories to make it compile.
+      CCMAIL: digikam-devel@kde.org
+
+2007-11-29 13:20  boiko
+
+    * Only use XRandR when under X11
+      CCMAIL: digikam-devel@kde.org
+
+2007-11-23 11:22  cgilles
+
+    * kipi-plugins from trunk (KDE4) : added 2 new buttons to
+      Add/Remove items to/from list of Raw files to convert
+
+2007-11-23 10:22  cgilles
+
+    * kipi-plugins from trunk (KDE4) : RAW Converter now support
+      thumbnails extraction from Kipi host
+      CCMAIL: kde-imaging@kde.org
+
+2007-11-23 09:30  cgilles
+
+    * separate Indentify and Thumbnail action thread.
+
+2007-11-23 08:37  cgilles
+
+    * kipi-plugins from trunk : Batch RAW converter: merger User1 and
+      User2 button to Apply button to Start or Abort conversion
+
+2007-11-22 08:53  cgilles
+
+    * kipi-plugins from trunk (KDE4) : No need to re-invent the wheel.
+      KIPI::ImageDialog no use KDE4 default KFileDialog to handle url
+      or list of urls.
+      
+      But the improvment here is to add RAW file formats type mime
+      support that KFileDialog do not support.
+      The ImageDialog implementation is more simplified and is a pure
+      Qt4/KDE4 now.
+      Api still unchanged for plugins maintener. You can port plugins
+      code as well.
+      Important change here : libkipi depend now of libkdcraw. Please
+      packager take a care for the future...
+      
+      Angelo, porting this code in KDE3 branch is trivial. I waiting
+      your viewpoint to do it. Of course this will require a new
+      libkipi release.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2007-11-22 08:35  cgilles
+
+    * fix dependency
+
+2007-11-21 11:18  cgilles
+
+    * rm frame
+
+2007-11-17 11:59  mlaurent
+
+    * Compile if we found xrandr
+
+2007-11-17 11:26  mlaurent
+
+    * Fix link
+
+2007-11-16 14:24  cgilles
+
+    * fix warning
+
+2007-11-16 14:21  cgilles
+
+    * SlideShow need X11 library to link
+
+2007-11-16 14:16  cgilles
+
+    * missing QTOpenGL
+
+2007-11-16 13:10  cgilles
+
+    * QT4 port
+
+2007-11-16 12:38  cgilles
+
+    * anothers ones ported
+
+2007-11-16 12:26  cgilles
+
+    * port in progress
+
+2007-11-16 12:23  cgilles
+
+    * file ported
+
+2007-11-16 12:12  cgilles
+
+    * revert script change. file is already ported
+
+2007-11-16 07:37  mlaurent
+
+    * Adapt to new kdebug api
+
+2007-11-16 07:36  mlaurent
+
+    * Adapt to new kdebug
+
+2007-11-16 07:29  mlaurent
+
+    * Replace "qt_xdisplay|qt_xrootwin"
+
+2007-11-16 07:21  mlaurent
+
+    * Apply script to port it
+      CCMAIL: caulier.gilles@gmail.com
+      CCMAIL: valerio.fuoglio@gmail.com
+
+2007-11-15 22:27  cgilles
+
+    * check kipi host features before to render properties file
+
+2007-11-15 21:11  cgilles
+
+    * enable i18n
+
+2007-11-15 21:10  cgilles
+
+    * this file is now obsolete
+
+2007-11-15 21:09  cgilles
+
+    * missing to link with opengl
+
+2007-11-15 21:04  cgilles
+
+    * let's go Valerio. CMakeList.txt is ready to use :
+      
+      - Port your code one by one. In CMakeList.txt, just uncomment
+      progressivly C++ source file to port.
+      - Start by all .h and after all .cpp (to fix depencies between
+      .cpp)
+      - ToolBar class already ported to QT4/KDE4. It's easy, i have
+      already ported this code in digiKam core (look
+      digikam/utilities/slideshow)
+      
+      CCMAIL: valerio.fuoglio@gmail.com
+
+2007-11-15 20:41  cgilles
+
+    * enable SlideShow
+
+2007-11-15 20:38  cgilles
+
+    * Slideshow kipi-plugins will be the next one to be ported on KDE4
+      by Valerio.
+      
+      Laurent, if you have few scripts to apply on this code to help
+      Valerio, fell free to do it...
+      
+      CCMAIL: montel@kde.org
+      CCMAIL: valerio.fuoglio@gmail.com
+
+2007-11-15 10:59  cgilles
+
+    * add warning message
+
+2007-11-15 10:56  cgilles
+
+    * add Drag & Drop support
+
+2007-11-14 20:30  cgilles
+
+    * k3listview ==> QListWidget : now SendImage is a pure Qt4/KDE4
+      plugins
+
+2007-11-13 09:52  cgilles
+
+    * cleanup temp files when emailer program have been started
+
+2007-11-13 09:29  cgilles
+
+    * handle SlotCancel properlly
+
+2007-11-13 08:55  cgilles
+
+    * - use the new thumbnails method from libkipi to handle a list of
+      thumbs
+      - progress bar work properlly now
+
+2007-11-12 21:03  cgilles
+
+    * kipi-plugins from trunk (KDE4) : SendImages is the first plugins
+      to handle thumbs from kipi host interface instead KDE thumbs kio
+      slave
+
+2007-11-12 17:26  cgilles
+
+    * fix thumb size
+
+2007-11-12 16:07  cgilles
+
+    * polish
+
+2007-11-12 16:04  cgilles
+
+    * polish
+
+2007-11-12 15:06  cgilles
+
+    * polish
+
+2007-11-12 14:31  cgilles
+
+    * update
+
+2007-11-12 14:26  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : SendImages plugin port:
+      
+      Huge improvement with mozilla/thunderbird emailer support about
+      attachement files given on command line.
+      No need to check if an instance of mailer already exist in memory
+      to use -remote option. If we use -compose
+      with the right options form. This way simplify the source code
+      considerably... Thanks to Mozilla.org wiki page
+      to describe all catch command line options syntax.
+      
+      I have tested with recent Thunderbird, Mozilla, and Netscape
+      mailers. Please give me feedback if you occurs special
+      errors with old versions. Thanks in advance...
+      
+      Note B.K.O files 148186 is closed because RAW attachement files
+      is fixed now.
+      
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+      
+      BUG: 148186
+      BUG: 150453
+
+2007-11-12 11:06  cgilles
+
+    * set image quality for only JPEG format
+
+2007-11-12 10:52  cgilles
+
+    * now resized image to PNG do not lost exif/makernotes/gps/iptc/xmp
+      metadata
+
+2007-11-12 09:57  cgilles
+
+    * polish
+
+2007-11-12 09:25  cgilles
+
+    * polish
+
+2007-11-12 09:17  cgilles
+
+    * polish
+
+2007-11-12 09:17  cgilles
+
+    * support of blasa, evolution, sylpheed, claws mailers
+
+2007-11-11 20:03  cgilles
+
+    * polish
+
+2007-11-11 19:58  cgilles
+
+    * kmail program is now supported
+
+2007-11-11 18:17  cgilles
+
+    * new method to invoke email. Not yet complete
+
+2007-11-11 12:03  cgilles
+
+    * fix api doc
+
+2007-11-11 12:00  cgilles
+
+    * new method to show all images wich are over the e-mail
+      attachement limit
+
+2007-11-11 11:50  cgilles
+
+    * new method to check e-mail attachements limit
+
+2007-11-11 10:27  cgilles
+
+    * add orginal file name is list of image properties
+
+2007-11-11 10:24  cgilles
+
+    * polish
+
+2007-11-11 10:24  cgilles
+
+    * remove obsolete code
+
+2007-11-11 10:23  cgilles
+
+    * new method to show up the list of failed resized images
+
+2007-11-11 08:31  cgilles
+
+    * polish
+
+2007-11-10 21:12  cgilles
+
+    * new method to set images properties files as e-mail attachement
+
+2007-11-10 18:17  cgilles
+
+    * polish
+
+2007-11-10 16:21  cgilles
+
+    * remove obsolete code
+
+2007-11-10 16:16  cgilles
+
+    * code factorization and simplification
+
+2007-11-09 15:34  cgilles
+
+    * polish
+
+2007-11-09 15:22  cgilles
+
+    * polish
+
+2007-11-09 14:46  cgilles
+
+    * port in progress: resizing image in separate thead work now
+
+2007-11-09 12:22  cgilles
+
+    * polish
+
+2007-11-09 12:21  cgilles
+
+    * port in progress
+
+2007-11-09 12:18  cgilles
+
+    * port in progress
+
+2007-11-09 12:00  cgilles
+
+    * port in progress
+
+2007-11-09 11:17  cgilles
+
+    * port in progress
+
+2007-11-09 11:06  cgilles
+
+    * port in progress
+
+2007-11-09 10:33  cgilles
+
+    * port in progress
+
+2007-11-09 06:51  cgilles
+
+    * fix icons
+
+2007-11-09 06:47  cgilles
+
+    * add method to get image list to send
+
+2007-11-09 06:40  cgilles
+
+    * polish
+
+2007-11-09 06:40  cgilles
+
+    * settings container include now the list of image to send
+
+2007-11-08 22:23  mueller
+
+    * fix FSF address
+
+2007-11-08 20:11  cgilles
+
+    * fix layout
+
+2007-11-08 20:09  cgilles
+
+    * port in progress
+
+2007-11-08 18:28  cgilles
+
+    * polish
+
+2007-11-08 18:01  cgilles
+
+    * rename
+
+2007-11-08 18:01  cgilles
+
+    * new container to host email settings
+
+2007-11-08 17:50  cgilles
+
+    * port in progress
+
+2007-11-08 15:25  cgilles
+
+    * port in progress
+
+2007-11-08 13:18  cgilles
+
+    * add email page
+
+2007-11-08 13:11  cgilles
+
+    * polish
+
+2007-11-07 15:43  cgilles
+
+    * polish
+
+2007-11-07 15:27  cgilles
+
+    * kipi-plugins from trunk (KDE4): progress about port SendImages
+      plugins. Not yet complete
+
+2007-11-07 13:27  cgilles
+
+    * fix i18n
+
+2007-11-07 08:58  cgilles
+
+    * polish
+
+2007-11-06 09:29  cgilles
+
+    * fix icon
+
+2007-11-06 09:14  cgilles
+
+    * fix icon
+
+2007-11-03 18:24  pino
+
+    * icon renamings:
+      - rotate -> transform-rotate
+
+2007-11-02 22:07  cgilles
+
+    * fix icon
+
+2007-11-02 21:51  cgilles
+
+    * fix icons
+
+2007-10-30 08:28  mlaurent
+
+    * Fix i18n
+
+2007-10-29 18:01  mlaurent
+
+    * Extract message
+
+2007-10-29 18:00  mlaurent
+
+    * Fix include
+
+2007-10-29 14:01  cgilles
+
+    * polish
+
+2007-10-29 13:59  cgilles
+
+    * fix icon
+
+2007-10-29 13:52  cgilles
+
+    * compile
+
+2007-10-29 13:38  cgilles
+
+    * polish
+
+2007-10-29 13:34  cgilles
+
+    * obsolete
+
+2007-10-29 13:34  cgilles
+
+    * preapre to compile
+
+2007-10-29 13:23  cgilles
+
+    * mv at teg rigth place
+
+2007-10-28 10:59  cgilles
+
+    * update
+
+2007-10-26 06:46  mlaurent
+
+    * Remove not necessary forward declaration
+
+2007-10-25 17:25  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : add
+      support of Xmp.iptc.IntellectualGenre tag.
+      XMP editor is now complete !!!
+      
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-25 15:59  cgilles
+
+    * add XMP Dublin Core Type tag support
+
+2007-10-25 14:27  cgilles
+
+    * add XMP Properties page to XMP editor dialog
+
+2007-10-25 14:21  cgilles
+
+    * compile XMP Properties panel
+
+2007-10-25 14:16  cgilles
+
+    * polish
+
+2007-10-25 14:14  cgilles
+
+    * polish
+
+2007-10-25 14:09  cgilles
+
+    * add support of XMP identifiers
+
+2007-10-25 13:30  cgilles
+
+    * support of XMp.xmp.Nickname tag
+
+2007-10-25 13:18  cgilles
+
+    * update
+
+2007-10-25 12:37  cgilles
+
+    * add XMP properties dialog page (not yet complete). Separate
+      Status workflow information between Status and Properties pages
+      like IPTC/IIM dialog
+
+2007-10-24 14:49  cgilles
+
+    * XMP Status page. Not yet complete
+
+2007-10-24 12:30  cgilles
+
+    * polish
+
+2007-10-24 12:16  cgilles
+
+    * update
+
+2007-10-24 12:14  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : add dialog
+      page to edit Credits informations.
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-24 12:11  cgilles
+
+    * update
+
+2007-10-24 11:34  cgilles
+
+    * update
+
+2007-10-24 09:12  cgilles
+
+    * update
+
+2007-10-24 08:51  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : support of
+      Origin informations
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-24 08:49  cgilles
+
+    * update
+
+2007-10-24 08:32  cgilles
+
+    * polish
+
+2007-10-23 20:38  cgilles
+
+    * update
+
+2007-10-23 19:16  cgilles
+
+    * group sync options
+
+2007-10-23 17:41  cgilles
+
+    * polish
+
+2007-10-23 17:41  cgilles
+
+    * polish
+
+2007-10-23 17:36  cgilles
+
+    * sync options use now default alternative language
+
+2007-10-23 17:34  cgilles
+
+    * new methods t handle Default Alternate Language
+
+2007-10-23 17:18  cgilles
+
+    * only sync XMP caption with x-default value
+
+2007-10-23 15:00  cgilles
+
+    * polish
+
+2007-10-23 13:41  cgilles
+
+    * kipi-plugins from trunk (KDE4): XMP metadata editor : fix
+      management of alternative language list.
+      Update content of language combobox accordinly with already
+      assigned languages
+      (only one language string entry is autorized).
+      
+      Now, XMP Contents dialog page from editor is fully implemented.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-23 12:37  cgilles
+
+    * polish
+
+2007-10-23 11:38  cgilles
+
+    * adapt to new API
+
+2007-10-23 10:46  cgilles
+
+    * kipi-plugins from trunk (KDE4) : RawConverter : clone hosts
+      attributes when converted RAW image is done.
+      
+      Marcel,
+      
+      There is certainly a race condition to call
+      KIPI::ImageInfo::cloneData() just after than new image is add to
+      collection.
+      In digiKam, the new image created do not have the attributes from
+      original RAW image.
+      
+      I'm not sure if it's depand of new DB interface... Can you take a
+      look ?
+      
+      CCMAIL: marcel.wiesweg@gmx.de
+
+2007-10-22 20:07  pino
+
+    * icon renamings:
+      - 1day -> view-calendar-day
+      - list -> view-calendar-list
+      - month -> view-calendar-month
+
+2007-10-22 12:29  cgilles
+
+    * work continue to support better Alternative Language XMP tag
+      editor
+
+2007-10-22 09:59  cgilles
+
+    * fix signal
+
+2007-10-21 23:36  pino
+
+    * icon renaming:
+      - calendar-today -> go-jump-today
+
+2007-10-21 20:53  cgilles
+
+    * polish
+
+2007-10-21 18:06  cgilles
+
+    * polish
+
+2007-10-21 18:02  cgilles
+
+    * backport commit #727763
+
+2007-10-21 15:16  cgilles
+
+    * polish
+
+2007-10-21 14:28  cgilles
+
+    * squezzed text on combobox must be troncated at end not at
+      begining. It's more natural
+
+2007-10-20 20:16  cgilles
+
+    * porgress on alternative language XMP Caption editing. Not yet
+      complete
+
+2007-10-20 11:00  mueller
+
+    * KDoubleSpinBox -> QDoubleSpinBox
+
+2007-10-19 14:39  cgilles
+
+    * add Xmp.photoshop.CaptionWriter support
+
+2007-10-19 13:15  cgilles
+
+    * more progress. not yet complete
+
+2007-10-19 11:51  cgilles
+
+    * XMP Content dialog page in progress. Not yet complete
+
+2007-10-18 21:19  sars
+
+    * change the imageReady() signal to contain image data to enable
+      16bit colors (not using QImage).
+      Don't use it yet :)
+
+2007-10-18 14:45  cgilles
+
+    * add XMP Content page. Not yet complete
+
+2007-10-18 13:26  cgilles
+
+    * fix layout
+
+2007-10-18 13:25  cgilles
+
+    * fix layout
+
+2007-10-18 10:12  cgilles
+
+    * fix icons
+
+2007-10-17 13:54  cgilles
+
+    * kipi-plugins from trunk (KDE4) : IPTC Metadata Editor : do not
+      use an harcoded IPTC Subject
+      Codes in source but an external standard XML database file
+      provide by IPTC/NAA.
+      To update Subject Codes list in plugin, we just need to download
+      this file from http://www.iptc.org/NewsCodes
+      web site and update it in plugin data.
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-17 13:44  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP Metadata Editor : do not use
+      an harcoded IPTC Subject
+      Codes in source but an external standard XML database file
+      provide by IPTC/NAA.
+      To update Subject Codes list in plugin, we just need to download
+      this file from http://www.iptc.org/NewsCodes
+      web site and update it in plugin data.
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-17 12:12  cgilles
+
+    * add XML file from IPTC/NAA with all IPTC SubjectCodes definition
+
+2007-10-17 09:16  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : add page
+      to edit IPTC Subjects (Xmp.iptc.SubjectCodes)
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-17 06:39  cgilles
+
+    * update Subject dialog page
+
+2007-10-17 06:35  cgilles
+
+    * fix i18n
+
+2007-10-17 06:23  cgilles
+
+    * polish
+
+2007-10-17 05:59  cgilles
+
+    * add comments
+
+2007-10-17 05:54  cgilles
+
+    * fix layout
+
+2007-10-16 21:04  cgilles
+
+    * update Subject dialog page
+
+2007-10-16 20:56  cgilles
+
+    * add IPTC Sbuject edition uing standard templates provided by IPTC
+      spec.
+
+2007-10-16 20:26  cgilles
+
+    * polish
+
+2007-10-16 11:05  cgilles
+
+    * add standard Subject code map defined in IPTC/IIM spec.
+
+2007-10-16 07:36  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : new option
+      to import XMP metadata from a picture to a selection
+      of pictures. This option work exactly like Import EXIF or Import
+      IPTC. XMP Template file can be used to batch set metadata on
+      pictures.
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-16 07:28  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : new option
+      to remove all XMP metadata from a selection
+      of pictures. This option work exactly like Remove EXIF or Remove
+      IPTC.
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-16 07:15  cgilles
+
+    * polish
+
+2007-10-16 07:05  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : add page
+      to edit Categories (Xmp.photoshop.Categories and
+      Xmp.photoshop.SupplementalCategories)
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-16 06:37  cgilles
+
+    * kipi-plugins from trunk (KDE4) : XMP metadata editor : add page
+      to edit Keywords (Xmp.dc.subject : Dublin Core Subjects)
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-15 19:20  cgilles
+
+    * update Status dialog page
+
+2007-10-15 19:16  cgilles
+
+    * Fix layout
+
+2007-10-15 18:48  cgilles
+
+    * IPTC Status Properties release date/time ==>
+      Xmp.xmpDM.releaseDate
+
+2007-10-15 13:35  cgilles
+
+    * update IPTC subject dialog page
+
+2007-10-15 13:35  cgilles
+
+    * fix layout
+
+2007-10-15 13:25  cgilles
+
+    * IPTC subject fields are now editable one by one.
+
+2007-10-15 09:06  cgilles
+
+    * update IPTC=>XMP schema following Mik tips
+
+2007-10-14 16:59  sars
+
+    * Rename sane_widget.h to ksane.h
+
+2007-10-12 13:04  cgilles
+
+    * update IPTC => XMP tags list
+
+2007-10-12 11:37  cgilles
+
+    * added support of Iptc.Envelope.FileFormat and
+      Iptc.Envelope.FileVersion dataset
+
+2007-10-12 08:43  cgilles
+
+    * added capabilities to assign custom meta-data to a combo item
+
+2007-10-12 07:48  cgilles
+
+    * added comments
+
+2007-10-12 07:33  cgilles
+
+    * add support of Iptc.Application2.Language dataset
+
+2007-10-12 06:49  mlaurent
+
+    * Fix i18n
+
+2007-10-11 16:51  cgilles
+
+    * start XMP edit dialog
+
+2007-10-11 16:47  cgilles
+
+    * prepare menu entries to support XMP editor
+
+2007-10-11 16:36  cgilles
+
+    * compile
+
+2007-10-11 15:56  cgilles
+
+    * kipi-plugins from trunk (KDE4) : start to implemented XMP
+      metadata editor
+
+2007-10-11 13:10  cgilles
+
+    * add iptc U.N.O dataset support
+
+2007-10-11 12:59  cgilles
+
+    * add IPTC Envelope Date/time sent dataset
+
+2007-10-11 12:33  cgilles
+
+    * add Envelope Priority iptc dataset
+
+2007-10-11 12:18  cgilles
+
+    * kipi-plugins from trunk (KDE4) : the last part of IPTC/IMM not
+      yet implemented been Envelope Record. A new panel have been added
+      to the dialog to support these informations
+
+2007-10-11 11:23  cgilles
+
+    * polish
+
+2007-10-11 11:16  cgilles
+
+    * fix layout
+
+2007-10-11 09:00  cgilles
+
+    * use decorative frame with instructions text
+
+2007-10-11 08:57  cgilles
+
+    * use decorative frame for instruction text
+
+2007-10-11 08:50  cgilles
+
+    * fix panel order in dialog
+
+2007-10-11 08:44  cgilles
+
+    * kipi-plugins from trunk (KDE4) : More IPTC editor compliant with
+      IPTC.org recommendations:
+      
+      - Remove Date/Time editor panel. Now date/time stamp are editable
+      on the respective panel : contents properties and workflow
+      properties
+      - Separate Workflow panel to 2 one : Workflow descriptions and
+      workflow properties.
+
+2007-10-11 07:42  cgilles
+
+    * move date/time Created/digitized stamp to Origin panel
+
+2007-10-11 06:18  cgilles
+
+    * fix layout
+
+2007-10-10 19:43  cgilles
+
+    * update
+
+2007-10-10 14:25  cgilles
+
+    * update
+
+2007-10-10 14:11  cgilles
+
+    * add list of supported iptc tags
+
+2007-10-10 14:09  cgilles
+
+    * update
+
+2007-10-10 13:44  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : IPTC editor : continue to add
+      the capability to set multiple values for a tag : Iptc
+      Application2 ObjectAttribute data set.
+
+2007-10-10 13:31  cgilles
+
+    * compile
+
+2007-10-10 13:24  cgilles
+
+    * compile
+
+2007-10-10 13:00  cgilles
+
+    * update
+
+2007-10-10 12:59  cgilles
+
+    * update
+
+2007-10-10 11:52  mlaurent
+
+    * common/libkipiplugins has some i18n
+
+2007-10-10 11:42  cgilles
+
+    * polish
+
+2007-10-10 11:23  cgilles
+
+    * IPTCCaption => IPTCContent
+
+2007-10-10 11:17  cgilles
+
+    * set more descriptions in Header of IPTC panels
+
+2007-10-10 10:38  cgilles
+
+    * update
+
+2007-10-10 10:37  cgilles
+
+    * IPTC editor dialog page are more compliant to IPTC.org
+      recommendation.
+
+2007-10-09 12:31  cgilles
+
+    * new widget to edit multi iptc tags including a value + a string
+      (QCombobox + KlineEdit)
+
+2007-10-09 12:15  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : IPTC editor : continue to add
+      the capability to set multiple values for a tag: Location
+      dataset.
+
+2007-10-09 10:16  cgilles
+
+    * polish
+
+2007-10-09 10:11  cgilles
+
+    * new method to get item from index
+
+2007-10-09 09:40  cgilles
+
+    * use new SQueezedComboBox widget
+
+2007-10-09 09:20  cgilles
+
+    * kipi-plugins from trunk : backport SqueezedComboBox widget from
+      digiKam core.
+      I will use it in MetadataEdit Plugin to prevent broken dialog
+      layout with large combo box content.
+      
+      Laurent, this is the 3rd code duplication in svn about this
+      widget : digiKam, kipi-plugins, and KOffice
+      Why not to include it on libkde4 ?
+      
+      http://websvn.kde.org/trunk/extragear/graphics/digikam/libs/widgets/common/squeezedcombobox.h?revision=711542&view=markup
+      http://websvn.kde.org/trunk/koffice/krita/ui/squeezedcombobox.h?view=log
+      
+      CCMAIL: montel@kde.org
+
+2007-10-09 08:09  cgilles
+
+    * fix layout
+
+2007-10-09 08:01  cgilles
+
+    * fix layout
+
+2007-10-09 07:36  cgilles
+
+    * polish
+
+2007-10-08 19:16  cgilles
+
+    * update
+
+2007-10-08 19:15  cgilles
+
+    * update
+
+2007-10-08 18:49  cgilles
+
+    * new widget to support multiple IPTC tags values based on a fixed
+      list of values given on a combo box.
+
+2007-10-08 17:31  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : IPTC editor : continue to add
+      the capability to set multiple values for a tag: By Line, By Line
+      Title, and Contact.
+
+2007-10-08 17:09  cgilles
+
+    * polish
+
+2007-10-08 14:45  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : IPTC editor : continue to add
+      the capability to set multiple values for a tag. Second one is
+      the Object Location.
+
+2007-10-08 14:34  cgilles
+
+    * remove duplicate slot connections
+
+2007-10-08 14:29  cgilles
+
+    * polish
+
+2007-10-08 14:26  cgilles
+
+    * add link to subject code list hosted by iptc.org
+
+2007-10-08 14:10  cgilles
+
+    * Kipi-plugins from trunk (KDE4) : IPTC editor : start to add the
+      capabilty to set multiple values for a tag. Fisrt one is the
+      Caption Writer.
+
+2007-10-08 14:09  cgilles
+
+    * polish
+
+2007-10-08 13:31  cgilles
+
+    * new widget to edit a tags witch can take multiple values
+
+2007-10-08 11:28  cgilles
+
+    * add new buttons to set date to today
+
+2007-10-08 11:07  cgilles
+
+    * add 3 new buttons to set date to today
+
+2007-10-08 10:43  cgilles
+
+    * add separator
+
+2007-10-08 10:36  cgilles
+
+    * enable KLineEdit clear button
+
+2007-10-08 10:34  cgilles
+
+    * enable KLineEdit clear button
+
+2007-10-08 10:32  cgilles
+
+    * enable KLineEdit clear button
+
+2007-10-08 10:31  cgilles
+
+    * enable KLineEdit clear button
+
+2007-10-08 10:30  cgilles
+
+    * enable KLineEdit clear button
+
+2007-10-07 16:19  mlaurent
+
+    * Fix i18n
+
+2007-10-07 16:17  mlaurent
+
+    * Extract message
+
+2007-10-05 19:29  cgilles
+
+    * polish
+
+2007-10-05 19:16  cgilles
+
+    * polish
+
+2007-10-05 19:14  cgilles
+
+    * polish
+
+2007-10-05 18:58  cgilles
+
+    * polish
+
+2007-10-05 14:52  cgilles
+
+    * fix signal. add button to keywords editor to replace current
+      selected item
+
+2007-10-05 11:38  cgilles
+
+    * kipi-plugins from trunk (KDE4) : EXIF editor support now XMP
+      Caption and Date Created tags
+
+2007-10-05 10:53  cgilles
+
+    * update
+
+2007-10-05 10:50  cgilles
+
+    * kipi-plugins from trunk (KDE4) : Comment Remove tool support now
+      XMP tags
+
+2007-10-05 10:35  cgilles
+
+    * kipi-plugins from trunk (KDE4) : MetadataEdit plugins : start to
+      support XMP metadata : Comment Edit tool can sync caption text to
+      XMP tags.
+
+2007-10-05 10:23  cgilles
+
+    * fix i18n
+
+2007-10-05 08:10  cgilles
+
+    * update
+
+2007-10-05 08:08  cgilles
+
+    * kipi-plugins from trunk (KDE4) : TimeAdjust plugin now support
+      XMP metadata
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-05 07:23  cgilles
+
+    * this plugin is full compliant with Qt4 KDE4
+
+2007-10-05 07:21  cgilles
+
+    * polish
+
+2007-10-05 07:17  cgilles
+
+    * this plugin is full compliant with Qt4 KDE4
+
+2007-10-05 07:15  cgilles
+
+    * kipi-plugins from trunk (KDE4) : MetadataEdit plugin is now fully
+      ported to KDE4.
+      Next Stage, add a new XMP metadata Editor...
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-05 07:10  cgilles
+
+    * Backport commits #721386 from KDE3 branch
+
+2007-10-05 06:40  cgilles
+
+    * KDE4 port
+
+2007-10-05 06:27  cgilles
+
+    * polish
+
+2007-10-04 19:27  cgilles
+
+    * use Oxygen icons
+
+2007-10-04 19:07  cgilles
+
+    * kipi-plugins from trunk (KDE4) : MetadataEdit plugin : Iptc
+      Editor is fully ported to KDE4 and can be used as well
+      Next Stage, port Comments Editor...
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-04 18:44  cgilles
+
+    * KDE4 port
+
+2007-10-04 18:16  cgilles
+
+    * KDE4 port
+
+2007-10-04 14:43  cgilles
+
+    * KDE4 port
+
+2007-10-04 14:31  cgilles
+
+    * polish
+
+2007-10-04 14:20  cgilles
+
+    * KDE4 port
+
+2007-10-04 14:15  cgilles
+
+    * KDE4 port
+
+2007-10-04 13:32  cgilles
+
+    * KDE4 port
+
+2007-10-04 13:11  cgilles
+
+    * KDE4 port
+
+2007-10-04 12:54  cgilles
+
+    * KDE4 port
+
+2007-10-04 12:53  cgilles
+
+    * KDE4 port
+
+2007-10-04 12:31  cgilles
+
+    * polish
+
+2007-10-04 12:26  cgilles
+
+    * metadaedit plugin can be compiled now.
+
+2007-10-04 12:26  cgilles
+
+    * kipi-plugins from trunk (KDE4) : MetadataEdit plugin : Exif
+      Editor is fully ported to KDE4 and can be used as well
+      Next Stage, port IPTC Editor...
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-10-04 12:12  cgilles
+
+    * polish
+
+2007-10-04 11:54  cgilles
+
+    * KDE4 port
+
+2007-10-04 11:29  cgilles
+
+    * KDE4 port
+
+2007-10-04 11:23  cgilles
+
+    * KDE4 port
+
+2007-10-04 09:02  cgilles
+
+    * KDE4 port
+
+2007-10-04 08:49  cgilles
+
+    * KDE4 port
+
+2007-10-04 08:30  cgilles
+
+    * KDE4 port
+
+2007-10-04 08:15  cgilles
+
+    * KDE4 port
+
+2007-10-04 08:06  cgilles
+
+    * KDE4 port
+
+2007-10-04 07:52  cgilles
+
+    * KDE4 port
+
+2007-10-04 07:36  cgilles
+
+    * KDE4 port
+
+2007-10-04 07:32  cgilles
+
+    * KDE4 port
+
+2007-10-03 16:21  cgilles
+
+    * fix i18n
+
+2007-10-03 13:22  cgilles
+
+    * CMake port
+
+2007-10-03 13:15  cgilles
+
+    * start to port MetadataEdit kipi-plugins to KDE4
+
+2007-10-01 15:08  ereslibre
+
+    * Code adaptation because of changes on libraries related to
+      revision 719630
+
+2007-09-28 15:29  gkulzer
+
+    * i18n polish
+
+2007-09-28 14:31  cgilles
+
+    * transfert EXif Make/Model to XMP
+
+2007-09-28 14:21  cgilles
+
+    * store Make/Model values in XMP
+
+2007-09-26 19:53  cgilles
+
+    * polish
+
+2007-09-26 11:19  cgilles
+
+    * no need to re-invent the wheel : use KTemporary file to process
+      transformations
+
+2007-09-26 08:39  cgilles
+
+    * using d private internal class
+
+2007-09-26 08:27  cgilles
+
+    * struct -> class
+
+2007-09-26 08:24  cgilles
+
+    * using d private internal class
+
+2007-09-26 08:11  cgilles
+
+    * use d private internal class
+
+2007-09-26 08:00  cgilles
+
+    * polish
+
+2007-09-26 08:00  cgilles
+
+    * kipi-plugins from trunk (KDE4) : RawConverter plugin : Port to
+      interthread signals and a normal mutex-protected QList.
+      Does not crash anymore now. No more memory leak. Full compliant
+      with Qt4 coding style.
+      
+      Marcel, Qt4 and multithreading is really a pleasure to code and
+      simple to understand. "Code Less - Create More" !
+      
+      CCMAIL: kde-imaging@kde.org
+      CCMAIL: marcel.wiesweg@gmx.de
+
+2007-09-26 06:54  cgilles
+
+    * polish
+
+2007-09-26 06:48  cgilles
+
+    * polish
+
+2007-09-26 06:42  cgilles
+
+    * polish
+
+2007-09-26 06:39  cgilles
+
+    * fix header
+
+2007-09-26 05:54  cgilles
+
+    * set action name
+
+2007-09-25 21:25  cgilles
+
+    * set actions name
+
+2007-09-25 21:15  cgilles
+
+    * set actions name
+
+2007-09-25 21:13  cgilles
+
+    * set action name
+
+2007-09-25 21:11  cgilles
+
+    * set action object name
+
+2007-09-25 20:11  cgilles
+
+    * polish
+
+2007-09-25 19:37  cgilles
+
+    * support XMP metadata with ImageMagick
+
+2007-09-25 19:29  cgilles
+
+    * backport commits #716889 from KDE3 branch
+      BUG: 144388
+
+2007-09-25 10:48  cgilles
+
+    * fix apps name
+
+2007-09-25 10:48  cgilles
+
+    * fix app name
+
+2007-09-25 09:14  cgilles
+
+    * more verbose
+
+2007-09-25 07:57  cgilles
+
+    * credits Marcel here too
+
+2007-09-25 07:55  cgilles
+
+    * give credit to Marcel who maintain this plugin with me
+
+2007-09-25 07:44  cgilles
+
+    * do not use kDebug here too
+
+2007-09-25 07:03  cgilles
+
+    * do not use kDebug here, it do not support multithreading. use
+      qDebug instead
+
+2007-09-24 20:31  cgilles
+
+    * polish
+
+2007-09-24 20:20  cgilles
+
+    * remove progressbar from dialog. it's hosted by sane widget
+
+2007-09-24 11:46  cgilles
+
+    * new icons
+
+2007-09-23 21:34  cgilles
+
+    * polish
+
+2007-09-23 21:00  cgilles
+
+    * using d private internal class
+
+2007-09-23 20:41  cgilles
+
+    * using d private internal class
+
+2007-09-23 20:31  cgilles
+
+    * polish
+
+2007-09-23 20:28  cgilles
+
+    * rewrite code compliant with Qt4. now widget is rendered properlly
+
+2007-09-23 17:21  cgilles
+
+    * better tests to cancel operations
+
+2007-09-23 17:08  cgilles
+
+    * hide progress if no conversion is in progress
+
+2007-09-23 17:03  cgilles
+
+    * enable i18n
+
+2007-09-23 17:01  cgilles
+
+    * fix i18n
+
+2007-09-23 16:59  cgilles
+
+    * use Oxygen icons
+
+2007-09-23 16:52  cgilles
+
+    * use Oxygen icons
+
+2007-09-23 16:34  cgilles
+
+    * fix dialog layout
+
+2007-09-23 16:13  cgilles
+
+    * Marcel, libtiff is very sensible to data type to store in tiff
+      tags. This is why 16 bits color depth is broken in kipi-plugin
+      tiff writer implementation.
+      I have found this difference with digiKam Dimg::TiffLoader
+      implementation: the width and height value need to be casted from
+      int to uint32 to have a fine tiff encoding.
+      This is really a weird side effect from libtiff...
+      
+      So now, kipi-plugins RawConverter is able to export RAW to TIFF
+      in 16 bits color depth.
+      
+      CCMAIL: marcel.wiesweg@gmx.de
+      CCBUGS: 146259
+
+2007-09-23 15:41  cgilles
+
+    * add tiff error handling
+
+2007-09-23 13:16  cgilles
+
+    * move PPM writing code to KPWriteImage class
+
+2007-09-23 10:35  cgilles
+
+    * update
+
+2007-09-23 10:30  cgilles
+
+    * kipi-plugins from trunk (KDE4) : RAWConverter plugin : support 16
+      bits color depth conversion.
+      BUG: 146259
+
+2007-09-23 09:54  cgilles
+
+    * wrong interpretation of bytedepth
+
+2007-09-23 09:01  cgilles
+
+    * swap RGB. RAW -> JPEG work fine
+
+2007-09-23 08:28  cgilles
+
+    * use const ref
+
+2007-09-23 08:25  cgilles
+
+    * use pointer instead ref
+
+2007-09-22 20:07  cgilles
+
+    * same way here to prevent crash
+
+2007-09-22 20:06  cgilles
+
+    * kipi-plugins from trunk : fix RAWConverter crash with Qt4::QEvent
+      destructor.
+      There is certainly a memory leak now, but the rest of
+      RawConverter implementation can be finalized.
+      
+      Marcel, This is a temporary fix. Rawconverter need to be patched
+      as JPEGLossLess plugin
+      about to port to interthread signals and a normal mutex-protected
+      QList,
+      dixit your commit #708858. Feel free to patch RawConverter when
+      you want...
+      
+      CCMAIL: kde-imaging@kde.org
+      CCMAIL: marcel.wiesweg@gmx.de
+
+2007-09-22 19:00  cgilles
+
+    * obsolete includes
+
+2007-09-22 15:05  mlaurent
+
+    * Add rawconverter
+
+2007-09-22 07:49  cgilles
+
+    * fix i18n form
+
+2007-09-22 07:44  cgilles
+
+    * fix layout
+
+2007-09-21 23:31  cgilles
+
+    * kipi-plugins from trunk : RawConverter is fully ported to
+      KDE4/QT4/CMake
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2007-09-21 23:10  cgilles
+
+    * KDE4 port
+
+2007-09-21 21:57  cgilles
+
+    * KDE4 port
+
+2007-09-21 21:34  cgilles
+
+    * polish
+
+2007-09-21 18:47  cgilles
+
+    * KDE4 port in progress
+
+2007-09-21 18:25  cgilles
+
+    * missing slotHelp
+
+2007-09-21 16:38  cgilles
+
+    * KDE4 port
+
+2007-09-21 14:18  cgilles
+
+    * KDE4 port
+
+2007-09-21 14:00  cgilles
+
+    * port in progress
+
+2007-09-21 13:46  cgilles
+
+    * KDE4 port
+
+2007-09-21 13:28  cgilles
+
+    * KDE4 port
+
+2007-09-21 13:18  cgilles
+
+    * KDE4 port
+
+2007-09-21 13:17  cgilles
+
+    * KDE4 port
+
+2007-09-21 13:16  cgilles
+
+    * KDE4 port
+
+2007-09-21 13:09  cgilles
+
+    * revert
+
+2007-09-21 13:09  cgilles
+
+    * compile
+
+2007-09-21 11:35  cgilles
+
+    * use icon
+
+2007-09-21 11:31  cgilles
+
+    * port in progress
+
+2007-09-21 11:31  cgilles
+
+    * polish
+
+2007-09-21 11:04  cgilles
+
+    * fix order
+
+2007-09-21 11:03  cgilles
+
+    * Cmake port
+
+2007-09-21 10:56  cgilles
+
+    * KDE4 port
+
+2007-09-21 10:55  cgilles
+
+    * start to port raw converter kipi-plugin to KDE4
+
+2007-09-21 07:39  cgilles
+
+    * make init of scanner device before to show dialog plugin
+
+2007-09-20 21:47  cgilles
+
+    * polsh
+
+2007-09-20 21:45  cgilles
+
+    * polish
+
+2007-09-20 21:45  cgilles
+
+    * polish
+
+2007-09-20 21:10  cgilles
+
+    * more info stored in metadata
+
+2007-09-20 20:18  cgilles
+
+    * fix swap of red and blue color components
+
+2007-09-20 14:22  cgilles
+
+    * now Acquire image support TIFF format to save image
+
+2007-09-20 14:22  cgilles
+
+    * TIFF writting fully tested in 8 bits color depth
+
+2007-09-20 14:09  cgilles
+
+    * With KDE4, KTemporaryFile need open() to work
+
+2007-09-20 12:27  cgilles
+
+    * PNG writting mode tested in 8 bits color depth
+
+2007-09-20 11:16  cgilles
+
+    * adapt to new KExiv2 api
+
+2007-09-20 10:55  cgilles
+
+    * polish
+
+2007-09-20 10:55  cgilles
+
+    * AcquireImage kipi-plugins use now KPWriteImage class to save
+      picture
+
+2007-09-20 10:54  cgilles
+
+    * JPEG writting mode fully implemented and tested
+
+2007-09-20 08:38  cgilles
+
+    * kipi-plugins write image tool : support JPEG, TIFF, PNG in 8 bits
+      color depth.
+
+2007-09-20 07:43  mlaurent
+
+    * search sane devel
+
+2007-09-19 14:31  cgilles
+
+    * new common class to perform file image writting. Not yet complete
+
+2007-09-19 07:49  cgilles
+
+    * polish
+
+2007-09-14 11:33  cgilles
+
+    * obsolete
+
+2007-09-14 11:32  cgilles
+
+    * kipi-plugins from trunk (KDE4) : re-written from scratch Acquire
+      Images plugin usin new libksane library.
+      A fresh screenshot from digiKam for KDE4:
+      
+      http://digikam3rdparty.free.fr/Screenshots/digikamKDE4_09.png
+      
+      TODO:
+      - added support of 16 bits color depth images (need to patch
+      libksane).
+      - added Exif info about image properties and scanner device used
+      to acquire image.
+      - added TIFF writting mode support.
+      - added remote path to save image.
+      
+      CCMAIL: kde-imaging@kde.org
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kare.sars@kolumbus.fi
+
+2007-09-14 10:49  cgilles
+
+    * update
+
+2007-09-06 18:12  mwiesweg
+
+    * Remove kDebug statements that I accidentally left there
+
+2007-09-06 18:11  mwiesweg
+
+    * Fix i18n calls with arguments
+
+2007-09-05 21:03  mwiesweg
+
+    * Port to interthread signals and a normal mutex-protected QList.
+      Does not crash anymore now.
+
+2007-09-02 13:28  mwiesweg
+
+    * Forward-port fix for 148621
+
+2007-09-01 14:18  mwiesweg
+
+    * Port to new plugin macros
+
+2007-08-26 14:29  mlaurent
+
+    * Fix include
+
+2007-08-24 11:02  cgilles
+
+    * add suffix to release strings
+
+2007-08-24 09:38  cgilles
+
+    * control API version info by Cmake to release kipi-plugins
+
+2007-08-20 21:42  thiago
+
+    * Remove use of k_funcinfo
+
+2007-08-03 07:46  mlaurent
+
+    * Adapt to new KWarning/kFatal/kDebug api
+
+2007-07-26 06:32  mlaurent
+
+    * Translate kipi plugins
+
+2007-07-23 17:55  cgilles
+
+    * fix memory leak
+
+2007-07-23 17:54  cgilles
+
+    * kipi-plugins from trunk (KDE4) : now KPAboutData class is
+      suitable as well. First plugin to use it : TimeAdjust
+
+2007-07-23 17:15  cgilles
+
+    * polish
+
+2007-07-23 17:14  cgilles
+
+    * missing file
+
+2007-07-23 14:30  cgilles
+
+    * compile
+
+2007-07-23 14:29  cgilles
+
+    * compile
+
+2007-07-23 13:44  cgilles
+
+    * update
+
+2007-07-23 13:43  cgilles
+
+    * polish
+
+2007-07-23 13:42  cgilles
+
+    * polish
+
+2007-07-23 13:16  cgilles
+
+    * factorize folders
+
+2007-07-23 07:24  mlaurent
+
+    * change XDG_APPS_DIR -> XDG_APPS_INSTALL_DIR,
+      XDG_DIRECTORY_DIR->XDG_DIRECTORY_INSTALL_DIR,
+      DBUS_INTERFACES_DIR->DBUS_INTERFACES_INSTALL_ DIR,
+      DBUS_SERVICES_DIR->DBUS_SERVICES_INSTALL_DIR to have same naming
+      convention as discussed with Alex.
+
+2007-07-23 07:08  cgilles
+
+    * kipi-plugins from trunk : TimeAdjust : fix plugin action icon
+
+2007-07-22 19:46  cgilles
+
+    * fix i18n
+
+2007-07-22 15:50  cgilles
+
+    * kipi-plugins from trunk (KDE4) : fix layout of TimeAdjust plugin.
+      Now it will suitable with digiKAm from KDE4
+      CCMAIL: kde-imaging@kde.org
+
+2007-07-22 12:58  cgilles
+
+    * update
+
+2007-07-22 12:12  mwiesweg
+
+    * Make plugin work:
+      Differentiating by object name does not work,
+      without setting the object name.
+      Using different slots is the most easy way.
+      Add the menu action to the action collection
+
+2007-07-18 09:16  cgilles
+
+    * update
+
+2007-07-18 09:12  cgilles
+
+    * backport from KDE3 branch
+
+2007-07-10 20:45  mlaurent
+
+    * Byebye kde4_automoc
+
+2007-07-10 20:15  mlaurent
+
+    * kdesktop is not compile now.
+      => disable it for the moment
+
+2007-07-10 20:09  mlaurent
+
+    * Remove not necessary cmake variable (already defined
+      into lib dependancy)
+
+2007-07-10 18:04  mlaurent
+
+    * Byebye kde4_automoc
+
+2007-07-02 14:50  mlaurent
+
+    * Not add not necessary variable
+
+2007-06-29 17:26  cgilles
+
+    * update
+
+2007-06-26 11:34  mlaurent
+
+    * This directory doesn't exist
+
+2007-06-19 18:25  cgilles
+
+    * polish
+
+2007-06-19 09:31  cgilles
+
+    * polish
+
+2007-06-18 11:20  cgilles
+
+    * update
+
+2007-06-18 06:33  mlaurent
+
+    * Needs by kipi-plugins and digikam
+
+2007-06-15 22:34  cgilles
+
+    * polish
+
+2007-06-14 10:40  mlaurent
+
+    * Readd it. I thought that it was FindExiv2 and not FindKexiv2
+
+2007-06-13 20:50  mlaurent
+
+    * Already into kdelibs
+
+2007-06-13 13:53  mlaurent
+
+    * Remove not necessary "class classname;"
+
+2007-06-13 06:43  mlaurent
+
+    * Dcop is dead.
+      Change it to use kdesktop interface
+
+2007-06-12 08:39  mlaurent
+
+    * Fix compile/install
+
+2007-06-11 15:44  mlaurent
+
+    * Typo
+
+2007-06-11 15:39  mlaurent
+
+    * Move to kdelibs
+
+2007-06-11 06:42  cgilles
+
+    * move png files to pics sub-folder
+
+2007-06-10 22:34  scripty
+
+    * SVN_SILENT made messages (.desktop file)
+
+2007-06-10 22:30  cgilles
+
+    * kipi-plugins from trunk (KDE4) : JPEGLossLess kipi-plugin is now
+      ported to QT4/KDE4
+      CCMAIL: kde-imaging@kde.org
+
+2007-06-10 22:26  cgilles
+
+    * compile
+
+2007-06-10 22:24  cgilles
+
+    * compile
+
+2007-06-10 22:13  cgilles
+
+    * polish
+
+2007-06-10 22:12  cgilles
+
+    * polish
+
+2007-06-10 21:56  cgilles
+
+    * polish
+
+2007-06-10 21:49  cgilles
+
+    * polish
+
+2007-06-10 21:46  cgilles
+
+    * polish
+
+2007-06-10 21:35  cgilles
+
+    * port in progress
+
+2007-06-10 21:33  cgilles
+
+    * port in progress
+
+2007-06-10 21:31  cgilles
+
+    * port in progress
+
+2007-06-10 21:28  cgilles
+
+    * port in progress
+
+2007-06-10 21:01  cgilles
+
+    * completeSuffix -> suffix
+
+2007-06-10 20:49  cgilles
+
+    * update
+
+2007-06-10 20:47  cgilles
+
+    * fix release id
+
+2007-06-10 20:46  cgilles
+
+    * port in progress
+
+2007-06-10 20:38  cgilles
+
+    * update
+
+2007-06-10 20:29  cgilles
+
+    * add common to trunk
+
+2007-06-10 20:21  cgilles
+
+    * transupp.cpp compile
+
+2007-06-10 19:48  cgilles
+
+    * port in progress
+
+2007-06-10 16:42  cgilles
+
+    * port in progress
+
+2007-06-10 16:35  cgilles
+
+    * polish
+
+2007-06-10 16:33  cgilles
+
+    * polish
+
+2007-06-10 16:31  cgilles
+
+    * port in progress
+
+2007-06-10 16:26  cgilles
+
+    * polish
+
+2007-06-10 14:01  cgilles
+
+    * jpegalossless not yet ported.temporally disable
+
+2007-06-10 14:00  cgilles
+
+    * obsolete
+
+2007-06-10 13:59  cgilles
+
+    * add/rm
+
+2007-06-10 13:50  cgilles
+
+    * update
+
+2007-06-10 13:49  cgilles
+
+    * next kipi-plugins to be ported under KDE4/Qt4/CMake will be
+      JpegLossLess
+
+2007-06-10 12:33  cgilles
+
+    * kipi-plugins from trunk (KDE4) : Time Adjust plugins is now
+      completly ported to QT4/KDE4
+      CCMAIL: kde-imaging@kde.org
+
+2007-06-10 09:54  mlaurent
+
+    * subdirs is when we add list of directory
+
+2007-06-10 09:52  mlaurent
+
+    * Link
+
+2007-06-10 09:50  mlaurent
+
+    * version.h is autogenerated
+      => fix detect when we build with srcdir!=builddir
+      (it should be default)
+
+2007-06-10 09:34  cgilles
+
+    * pomish
+
+2007-06-10 08:56  cgilles
+
+    * slotHelp do not exist anymore
+
+2007-06-10 08:54  cgilles
+
+    * port to KDE4 complete
+
+2007-06-10 08:51  cgilles
+
+    * polish
+
+2007-06-09 16:35  cgilles
+
+    * polish
+
+2007-06-09 15:54  cgilles
+
+    * polish
+
+2007-06-09 12:12  cgilles
+
+    * port to KDE4
+
+2007-06-09 11:34  cgilles
+
+    * update
+
+2007-06-09 11:25  cgilles
+
+    * obsolete
+
+2007-06-09 11:24  cgilles
+
+    * add
+
+2007-06-09 11:21  cgilles
+
+    * update
+
+2007-06-09 11:20  cgilles
+
+    * start Time Adjust kipi-plugin port to KDE4
+
+2007-06-09 06:36  scripty
+
+    * SVN_SILENT made messages (.desktop file)
+
+2007-06-08 19:36  cgilles
+
+    * polish
+
+2007-06-08 19:33  cgilles
+
+    * new rules to detect libkexiv2
+
+2007-06-08 19:32  cgilles
+
+    * new script to detect libkexiv2
+
+2007-06-08 14:07  cgilles
+
+    * add libkdcraw rules
+
+2007-06-08 14:07  cgilles
+
+    * typo
+
+2007-06-08 14:04  cgilles
+
+    * new script to detect libkdraw
+
+2007-06-08 14:02  cgilles
+
+    * kipi ==> libkipi with pkg-config
+
+2007-06-08 13:50  cgilles
+
+    * give an error message if libkipi is not detected by pkg-config
+
+2007-06-08 13:43  cgilles
+
+    * check libkipi not kipi with pkg-config
+
+2007-06-08 12:43  cgilles
+
+    * add "export VERBOSE=1" in INSTALL section
+
+2007-06-08 12:33  coolo
+
+    * looks more correct
+
+2007-06-08 12:29  cgilles
+
+    * update
+
+2007-06-08 12:21  cgilles
+
+    * update
+
+2007-06-08 12:13  cgilles
+
+    * fix email
+
+2007-06-08 12:11  cgilles
+
+    * update
+
+2007-06-08 12:10  cgilles
+
+    * cleanup
+
+2007-06-08 10:20  mlaurent
+
+    * Move include into top of dir.
+      All plugins will used them
+
+2007-06-08 10:16  mlaurent
+
+    * link:Fix search lib
+
+2007-06-08 09:47  cgilles
+
+    * update
+
+2007-06-08 09:42  mlaurent
+
+    * adapt to kdelibs api
+
+2007-06-08 09:38  cgilles
+
+    * polish
+
+2007-06-08 09:29  cgilles
+
+    * polish
+
+2007-06-08 09:22  coolo
+
+    * remove old build system
+
+2007-06-08 08:34  cgilles
+
+    * update
+
+2007-06-08 08:15  cgilles
+
+    * polish
+
+2007-06-08 08:04  cgilles
+
+    * polish
+
+2007-06-08 07:55  cgilles
+
+    * compile
+
+2007-06-08 07:47  cgilles
+
+    * compile
+
+2007-06-08 07:22  scripty
+
+    * SVN_SILENT made messages (.desktop file)
+
+2007-06-08 07:03  cgilles
+
+    * update
+
+2007-06-08 07:01  cgilles
+
+    * update
+
+2007-06-08 06:39  cgilles
+
+    * update
+
+2007-06-08 06:37  cgilles
+
+    * update
+
+2007-06-08 06:34  cgilles
+
+    * update
+
+2007-06-08 06:33  cgilles
+
+    * update
+
+2007-06-07 15:34  cgilles
+
+    * FindKipi rule. not yet complete
+
+2007-06-07 10:25  cgilles
+
+    * update
+
+2007-06-07 10:24  cgilles
+
+    * update
+
+2007-06-07 09:37  cgilles
+
+    * update
+
+2007-06-07 09:35  cgilles
+
+    * update
+
+2007-06-07 09:22  cgilles
+
+    * update
+
+2007-06-07 09:18  cgilles
+
+    * update
+
+2007-06-07 09:14  cgilles
+
+    * Gphoto2 detection backported from KDEGraphics
+      
+      Laurent, perhaps this one must be put in kdelibs like common one,
+      because i will use it also with digiKam QT4/KDE/Cmake port
+
+2007-06-07 09:07  cgilles
+
+    * add
+
+2007-06-07 09:04  cgilles
+
+    * add
+
+2007-06-06 22:54  cgilles
+
+    * update
+
+2007-06-06 22:53  cgilles
+
+    * rm
+
+2007-06-06 22:52  cgilles
+
+    * rm
+
+2007-06-06 22:51  cgilles
+
+    * rm
+
+2007-06-06 22:50  cgilles
+
+    * rm
+
+2007-06-06 22:49  cgilles
+
+    * rm
+
+2007-06-06 22:47  cgilles
+
+    * start kipi-plugins QT4/KDE4/CMake port
+
+2007-06-06 21:50  vfuoglio
+
+    * Updated my mail address
+      
+      SVN_SILENT:
+
+2007-06-06 21:07  gateau
+
+    * New version, featuring several color variants. Many thanks to
+      Beth Marmorstein!
+      CCMAIL: purplegamba@verizon.net
+
+2007-06-06 16:34  anaselli
+
+    * Rex Dieter reported a libgobject2-0 problem and a patch to fix
+      it.
+      
+      Please check if there are problems.
+      CCMAIL: kde-imaging@kde.org
+
+2007-06-06 06:49  cgilles
+
+    * update
+
+2007-06-06 00:56  hoechstetter
+
+    * If a description is available, it is used as name for the new
+      generated foto. This is the most simple and cleanest solution;
+      BUG: 140477;
+
+2007-06-04 22:42  gateau
+
+    * Added doc about original images.
+
+2007-06-04 22:35  gateau
+
+    * - Explained how to use i18n parameters in attributes.
+      - Simplified theme parameters example.
+
+2007-06-04 22:31  gateau
+
+    * Added port of the theme from the old plugin. Not finished, but
+      working.
+
+2007-06-03 22:08  anaselli
+
+    * Release 0.1.4 - beta1
+
+2007-06-03 22:05  anaselli
+
+    * SVN_SILENT: added bko 145771 fixed
+
+2007-06-03 21:58  anaselli
+
+    * SNV_SILENT: released part of Changelog with old script to skip
+      trunk path (svn2cl issue)
+
 V 0.1.4-beta1 - 2007-06-04
 ----------------------------------------------------------------------------
 
