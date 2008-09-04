@@ -260,8 +260,8 @@ void GalleryWindow::connectSignals()
     connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
     connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
         this, SLOT(slotLoginFailed(const QString&)));
-//     connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
-//         this, SLOT(slotAlbums(const QList<GAlbum>&)));
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+        this, SLOT(slotAlbums(const QList<GAlbum>&)));
 //     connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
 //         this, SLOT(slotPhotos(const QList<GPhoto>&)));
 //     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
@@ -374,10 +374,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 //     d->photoView->begin();
 //     d->photoView->write("<html></html>");
 //     d->photoView->end();
-
-    // FIXME
-    // KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
-    QPixmap pix = QPixmap();// QPixmap pix = iconLoader->loadIcon( "folder", KIconLoader::NoGroup, 32 );
+    kWarning() << "siamo su GalleryWindow::slotAlbums.." << "albumList.size() = " << albumList.size() << endl;
 
     typedef QList<GAlbum> GAlbumList;
     GAlbumList::const_iterator iter;
@@ -386,14 +383,12 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 
         if (album.parent_ref_num == 0) {
             GAlbumViewItem item = GAlbumViewItem(d->albumView, album.title, album);
-            //FIXME item->setPixmap( 0, pix );
             d->albumDict.insert(album.ref_num, item);
         } else {
             QTreeWidgetItem *parent = new QTreeWidgetItem(d->albumDict.take(album.parent_ref_num)); 
             // FIXME s, find, take
             if (parent) {
                 GAlbumViewItem item = GAlbumViewItem(parent, album.title, album);
-                // FIXME item->setPixmap( 0, pix );
                 d->albumDict.insert(album.ref_num, item);
             } else {
                 kWarning() << "Failed to find parent for album "

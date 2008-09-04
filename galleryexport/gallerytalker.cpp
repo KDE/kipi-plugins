@@ -116,7 +116,7 @@ void GalleryTalker::listAlbums()
     KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
-    job->addMetaData("setcookies", m_cookie);
+//    job->addMetaData("setcookies", m_cookie);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
@@ -302,7 +302,7 @@ void GalleryTalker::slotResult(KJob *job)
     }
 
     kWarning() << "GalleryTalker::results.." << endl;
-    kWarning() << "Talker Buffer: " << m_talker_buffer << endl;
+
     switch (m_state)
     {
         case(GE_LOGIN):
@@ -324,6 +324,7 @@ void GalleryTalker::slotResult(KJob *job)
 
     if (m_state == GE_LOGIN && m_loggedIn)
     {
+        kWarning() << "state GE_LOGIN and just logged in: retrieving album list.." << endl;
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split("\n");
         m_cookie = "Cookie:";
         for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it) 
@@ -377,12 +378,13 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
-    QString *str = new QString(data);
-    QTextStream ts(str, QIODevice::ReadOnly);
+    QString str(data);
+    kWarning() << " la stringa famosa è : " << str << endl;
+    QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
-    QString     line;
+    QString line;
     bool foundResponse = false;
-    bool success       = false;
+    bool success = false;
 
     typedef QList<GAlbum> GAlbumList;
     GAlbumList albumList;
@@ -392,6 +394,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
         line = ts.readLine();
         if (!foundResponse) {
             foundResponse = line.startsWith("#__GR2PROTO__");
+            kWarning() << "foundResponse #GR2PROTO = " << foundResponse << endl;
         } else {
             QStringList strlist = line.split("=");
             if (strlist.count() == 2) {
@@ -400,8 +403,10 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else 
-                    if (key.startsWith("album.name")) {
+                    kWarning() << "key = status" << endl;
+                } else
+                     if (key.startsWith("album.name")) {
+                        kWarning() << "key starts with album " << "name" << endl;
                         GAlbum album;
                         album.name    = value;
                         if (s_using_gallery2)
@@ -411,27 +416,35 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
                         albumList.append(album);
                     } else 
                         if (key.startsWith("album.title")) {
+                        kWarning() << "key starts with album " << "title" << endl;
                     if (iter != albumList.end())
                         (*iter).title = value;
                 } else if (key.startsWith("album.summary")) {
+                        kWarning() << "key starts with album " << "summary" << endl;
                     if (iter != albumList.end())
                         (*iter).summary = value;
                 } else if (key.startsWith("album.parent")) {
+                         kWarning() << "key starts with album " << "parent" << endl;
                     if (iter != albumList.end())
                         (*iter).parent_ref_num = value.toInt();
                 } else if (key.startsWith("album.perms.add")) {
+                        kWarning() << "key starts with album " << "perms add" << endl;
                     if (iter != albumList.end())
                         (*iter).add = (value == "true");
                 } else if (key.startsWith("album.perms.write")) {
+                        kWarning() << "key starts with album " << "perms write" << endl;
                     if (iter != albumList.end())
                         (*iter).write = (value == "true");
                 } else if (key.startsWith("album.perms.del_item")) {
+                        kWarning() << "key starts with album " << "perms del item" << endl;
                     if (iter != albumList.end())
                         (*iter).del_item = (value == "true");
                 } else if (key.startsWith("album.perms.del_alb")) {
+                        kWarning() << "key starts with album " << "perms del alb" << endl;
                     if (iter != albumList.end())
                         (*iter).del_alb = (value == "true");
                 } else if (key.startsWith("album.perms.create_sub")) {
+                        kWarning() << "key starts with album " << "perms create sub" << endl;
                     if (iter != albumList.end())
                         (*iter).create_sub = (value == "true");
                 } else if (key == "auth_token") {
