@@ -78,7 +78,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
 
     m_action_configure = new KAction(i18n("remote-galleries-setting"), this);
-    m_action_configure->setText("Remote Gallery Setting...");
+    m_action_configure->setText(i18n("Remote Gallery Setting..."));
     m_action_configure->setIcon(KIcon("applications-system"));
     connect(m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()));
     m_action_configure->setEnabled(true);
