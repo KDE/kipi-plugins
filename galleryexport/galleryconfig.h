@@ -30,12 +30,11 @@
 
 // Qt includes
 #include <QLabel>
-#include <QLineEdit>
 #include <QCheckBox>
 
 //KDE includes
 #include <KDialog>
-
+#include <KLineEdit>
 
 namespace KIPIGalleryExportPlugin
 {
@@ -57,10 +56,10 @@ private:
 
     Gallery*         mpGallery;
     QLabel*          mpHeaderLabel;
-    QLineEdit*       mpNameEdit;
-    QLineEdit*       mpUrlEdit;
-    QLineEdit*       mpUsernameEdit;
-    QLineEdit*       mpPasswordEdit;
+    KLineEdit*       mpNameEdit;
+    KLineEdit*       mpUrlEdit;
+    KLineEdit*       mpUsernameEdit;
+    KLineEdit*       mpPasswordEdit;
     QCheckBox*       mpGalleryVersion;
 
 private slots:

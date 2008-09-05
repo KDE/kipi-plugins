@@ -24,6 +24,16 @@
  *
  * ============================================================ */
 
+// Local includes.
+#include "plugin_galleryexport.h"
+#include "galleries.h"
+#include "gallerywindow.h"
+#include "galleryconfig.h"
+
+// libkipi includes.
+#include <libkipi/interface.h>
+#include <libkipi/plugin.h>
+
 // KDE includes.
 #include <KLocale>
 #include <KAction>
@@ -32,16 +42,6 @@
 #include <KIconLoader>
 #include <KApplication>
 #include <KGenericFactory>
-
-// libkipi includes.
-#include <libkipi/interface.h>
-#include <libkipi/plugin.h>
-
-// Local includes.
-#include "galleries.h"
-#include "gallerywindow.h"
-#include "galleryconfig.h"
-#include "plugin_galleryexport.h"
 
 
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)

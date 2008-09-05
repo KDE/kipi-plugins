@@ -29,12 +29,13 @@
 #ifndef GALLERYVIEWITEM_H
 #define GALLERYVIEWITEM_H
 
-// Qt includes
-#include <QTreeWidget>
-#include <QPalette>
 
 // local includes
 #include "galleryitem.h"
+
+// Qt includes
+#include <QTreeWidget>
+#include <QPalette>
 
 
 namespace KIPIGalleryExportPlugin

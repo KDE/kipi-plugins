@@ -25,30 +25,25 @@
  * ============================================================ */
 
 
-
-// Include files for Qt
-#include <QFrame>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-
-// Include files for KDE
-#include <KLocale>
-// #include <khtml_part.h>
-// #include <khtmlview.h>
-#include <KDebug>
+// Local includes.
+#include "galleryconfig.h"
+#include "galleries.h"
 
 // KIPI include files
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
 
-// Local includes.
-#include "galleryconfig.h"
-#include "galleries.h"
+// Qt includes
+#include <QFrame>
+#include <QPushButton>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+
+// KDE Includes
+#include <KLocale>
+#include <KDebug>
+
 
 namespace KIPIGalleryExportPlugin
 {
@@ -67,16 +62,16 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     page->setMinimumSize(500, 200);
     setMainWidget(page);
 
-    mpNameEdit = new QLineEdit(this);
+    mpNameEdit = new KLineEdit(this);
     centerLayout->addWidget(mpNameEdit, 0, 1);
 
-    mpUrlEdit = new QLineEdit(this);
+    mpUrlEdit = new KLineEdit(this);
     centerLayout->addWidget(mpUrlEdit, 1, 1);
 
-    mpUsernameEdit = new QLineEdit(this);
+    mpUsernameEdit = new KLineEdit(this);
     centerLayout->addWidget(mpUsernameEdit, 2, 1);
 
-    mpPasswordEdit = new QLineEdit(this);
+    mpPasswordEdit = new KLineEdit(this);
     mpPasswordEdit->setEchoMode(QLineEdit::Password);
     centerLayout->addWidget(mpPasswordEdit, 3, 1);
 

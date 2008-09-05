@@ -25,11 +25,14 @@
  * ============================================================ */
 
 
+// local includes
+#include "galleryviewitem.h"
+#include "gallerytalker.h"
+
+// Qt includes
 #include <QPainter>
 #include <QPixmap>
 
-#include "galleryviewitem.h"
-#include "gallerytalker.h"
 
 namespace KIPIGalleryExportPlugin
 {

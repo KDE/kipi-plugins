@@ -29,10 +29,11 @@
 #ifndef PLUGIN_GALLERYEXPORT_H
 #define PLUGIN_GALLERYEXPORT_H
 
-
 // libKIPI includes.
 #include <libkipi/plugin.h>
 
+// Qt includes
+#include <QVariantList>
 
 class KAction;
 
@@ -49,8 +50,7 @@ class Plugin_GalleryExport : public KIPI::Plugin
 
 public:
 
-    Plugin_GalleryExport(QObject *parent,
-                         const QVariantList &args);
+    Plugin_GalleryExport(QObject *parent, const QVariantList &args);
     ~Plugin_GalleryExport();
 
     virtual KIPI::Category category(KAction* action) const;

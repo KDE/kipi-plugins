@@ -25,8 +25,23 @@
  * ============================================================ */
 
 
-// Qt includes
+// local includes.
+#include "gallerywindow.h"
+#include "imagedialog.h"
+#include "kpaboutdata.h"
+#include "galleries.h"
+#include "gallerytalker.h"
+#include "galleryitem.h"
+#include "galleryviewitem.h"
+#include "galleryconfig.h"
 
+// KIPI include files
+#include <libkipi/interface.h>
+
+// UI includes
+#include "ui_galleryalbumwidget.h"
+
+// Qt includes
 #include <Qt>
 #include <QDialog>
 #include <QPushButton>
@@ -34,7 +49,6 @@
 #include <QPixmap>
 #include <QCursor>
 #include <QCheckBox>
-
 #include <QListWidgetItem>
 #include <QSpinBox>
 #include <QGroupBox>
@@ -52,23 +66,6 @@
 #include <KConfig>
 #include <ktoolinvocation.h>
 
-// KIPI include files
-#include <libkipi/interface.h>
-
-// Local includes.
-#include "imagedialog.h"
-#include "kpaboutdata.h"
-
-// local includes
-#include "galleries.h"
-#include "gallerytalker.h"
-#include "galleryitem.h"
-#include "galleryviewitem.h"
-#include "gallerywindow.h"
-
-// UI includes
-#include "ui_galleryalbumwidget.h"
-#include "galleryconfig.h"
 
 
 using namespace KIPIGalleryExportPlugin;
@@ -574,8 +571,7 @@ void GalleryWindow::slotNewAlbum()
     }
 
     if (!clean) {
-        KMessageBox::error(this, i18n("Sorry, these characters are not allowed in album name: %1")
-                           .arg("\\ / * ? \" \' & < > | . + # ( ) or spaces"));
+        KMessageBox::error(this, i18nc("Sorry, these characters are not allowed in album name: %1" , "\\ / * ? \" \' & < > | . + # ( ) or spaces"));
         return;
     }
 

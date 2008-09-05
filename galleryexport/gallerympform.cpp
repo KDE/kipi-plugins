@@ -24,6 +24,10 @@
  * ============================================================ */
 
 
+// local includes
+#include "gallerympform.h"
+#include "gallerytalker.h"
+
 // KDE includes
 #include <KDebug>
 #include <KMimeType>
@@ -34,16 +38,11 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QTextStream>
-#include <QByteArray>
 #include <QTextCodec>
 
 // standard includes
 #include <cstring>
 #include <cstdio>
-
-// local includes
-#include "gallerympform.h"
-#include "gallerytalker.h"
 
 
 namespace KIPIGalleryExportPlugin

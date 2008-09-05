@@ -25,6 +25,9 @@
  * ============================================================ */
 
 
+// local includes
+#include "galleries.h"
+
 // Qt includes
 #include <QString>
 #include <QWidget>
@@ -36,8 +39,6 @@
 #include <KLocale>
 #include <KApplication>
 
-// local includes
-#include "galleries.h"
 
 namespace KIPIGalleryExportPlugin
 {
