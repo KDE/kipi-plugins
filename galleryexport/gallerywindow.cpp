@@ -295,7 +295,7 @@ void GalleryWindow::readSettings()
 
     d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 1600));
 
-};
+}
 
 
 void GalleryWindow::slotHelp()

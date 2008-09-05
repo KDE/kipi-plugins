@@ -35,16 +35,16 @@ namespace KIPIGalleryExportPlugin
 {
 
 GAlbumViewItem::GAlbumViewItem() : QTreeWidgetItem(1000)
-{};
+{}
 
 GAlbumViewItem::GAlbumViewItem(QTreeWidget* parent, const QString& name, const GAlbum& _album)
         : QTreeWidgetItem(parent) ,
         album(_album)
-{};
+{}
 
 GAlbumViewItem::GAlbumViewItem(QTreeWidgetItem* parent, const QString& name, const GAlbum& _album)
         : QTreeWidgetItem(parent) , album(_album)
-{};
+{}
 
 
 void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int width)
@@ -101,7 +101,7 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
 void GAlbumViewItem::paintFocus(QPainter* p, const QPalette& cg, const QRect& rc)
 {
     return;
-};
+}
 
 void GAlbumViewItem::setup()
 {
