@@ -46,73 +46,87 @@ namespace KIPIGalleryExportPlugin
 Gallery::Gallery()
 {
         load();
-}
+};
+
 
 Gallery::~Gallery()
 {
-}
+};
+
 
 QString Gallery::name() const
 {
     return mName;
-}
+};
+
 
 QString Gallery::url() const
 {
     return mUrl;
-}
+};
+
 
 QString Gallery::username() const
 {
     return mUsername;
-}
+};
+
 
 QString Gallery::password() const
 {
     return mPassword;
-}
+};
+
 
 unsigned int Gallery::version() const
 {
     return mVersion;
-}
+};
+
 
 unsigned int Gallery::galleryId() const
 {
     return mGalleryId;
-}
+};
+
 
 // -------------------------------------
 
 void Gallery::setName(QString name)
 {
     mName = name;
-}
+};
+
 
 void Gallery::setUrl(QString url)
 {
     mUrl = url;
-}
+};
+
 
 void Gallery::setUsername(QString username)
 {
     mUsername = username;
-}
+};
+
 
 void Gallery::setPassword(QString password)
 {
     mPassword = password;
-}
+};
+
 
 void Gallery::setVersion(unsigned int version)
 {
     mVersion = version;
-}
+};
+
 
 void Gallery::setGalleryId(unsigned int galleryId)
 {
     mGalleryId = galleryId;
-}
+};
+
 
 void Gallery::load()
 {
@@ -133,7 +147,8 @@ void Gallery::load()
     mVersion = group.readEntry("Version", QString().toInt() );
     mPassword = group.readEntry("Password", QString() );
 
-}
+};
+
 
 
 void Gallery::save()
@@ -151,6 +166,7 @@ void Gallery::save()
 
     kWarning() << "syncing.." << endl;
     config.sync();
-}
+};
+
 
 } // end NameSpace

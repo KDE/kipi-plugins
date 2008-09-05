@@ -168,7 +168,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(optionFrame);
 
     widget->setLayout(galleryWidgetLayout);
-}
+};
 
 
 // --------------------------------------------
@@ -223,8 +223,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     readSettings();
 
     QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
+};
 
-}
 
 GalleryWindow::~GalleryWindow()
 {
@@ -239,7 +239,8 @@ GalleryWindow::~GalleryWindow()
 
     delete d;
     delete m_about;
-}
+};
+
 
 void GalleryWindow::connectSignals()
 {
@@ -264,7 +265,8 @@ void GalleryWindow::connectSignals()
 //     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
 //     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
 //         this, SLOT(slotAddPhotoFailed(const QString&)));
-}
+};
+
 
 void GalleryWindow::readSettings()
 {
@@ -291,15 +293,16 @@ void GalleryWindow::readSettings()
         d->captDescrCheckBox->setChecked(false);
 
     d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 1600));
+};
 
-}
 
 
 void GalleryWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
     return;
-}
+};
+
 
 void GalleryWindow::slotDoLogin()
 {
@@ -324,7 +327,7 @@ void GalleryWindow::slotDoLogin()
     }
 
     m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
-}
+};
 
 
 
@@ -340,7 +343,9 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
     }
 
     slotDoLogin();
-}
+};
+
+
 
 void GalleryWindow::slotBusy(bool val)
 {
@@ -357,12 +362,16 @@ void GalleryWindow::slotBusy(bool val)
         d->newAlbumBtn->setEnabled(loggedIn);
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
     }
-}
+};
+
+
 
 void GalleryWindow::slotError(const QString& msg)
 {
     KMessageBox::error(this, msg);
-}
+};
+
+
 
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
@@ -417,7 +426,9 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             // m_albumView->ensureItemVisible( lastSelectedItem );
         }
     }
-}
+};
+
+
 
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
@@ -464,7 +475,9 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 //     d->photoView->write("</table>");
 //     d->photoView->write("</html>");
 //     d->photoView->end();
-}
+};
+
+
 
 void GalleryWindow::slotAlbumSelected()
 {
@@ -488,12 +501,16 @@ void GalleryWindow::slotAlbumSelected()
             d->lastSelectedAlbum = viewItem->album.name;
         }
     }
-}
+};
+
+
 
 void GalleryWindow::slotOpenPhoto(const KUrl& url)
 {
     new KRun(url, this);
-}
+};
+
+
 
 void GalleryWindow::slotNewAlbum()
 {
@@ -586,7 +603,9 @@ void GalleryWindow::slotNewAlbum()
     }
 
     m_talker->createAlbum(parentAlbumName, name, title, caption);
-}
+};
+
+
 
 void GalleryWindow::slotAddPhotos()
 {
@@ -611,7 +630,9 @@ void GalleryWindow::slotAddPhotos()
     d->uploadCount = 0;
 //    m_progressDlg->reset();
     slotAddPhotoNext();
-}
+};
+
+
 
 void GalleryWindow::slotAddPhotoNext()
 {
@@ -642,14 +663,18 @@ void GalleryWindow::slotAddPhotoNext()
 
 //     if (m_progressDlg->isHidden())
 //         m_progressDlg->show();
-}
+};
+
+
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     d->uploadCount++;
 //    m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
     slotAddPhotoNext();
-}
+};
+
+
 
 void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 {
@@ -670,7 +695,9 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 //        m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
         slotAddPhotoNext();
     }
-}
+};
+
+
 
 void GalleryWindow::slotAddPhotoCancel()
 {
@@ -682,7 +709,7 @@ void GalleryWindow::slotAddPhotoCancel()
 
     // refresh the thumbnails
     slotAlbumSelected();
-}
+};
 
 
 #include "gallerywindow.moc"

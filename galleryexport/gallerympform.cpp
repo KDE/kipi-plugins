@@ -60,16 +60,19 @@ GalleryMPForm::GalleryMPForm()
         if (!auth_token.isEmpty())
             addPairRaw("g2_authToken", auth_token);
     }
-}
+};
+
 
 GalleryMPForm::~GalleryMPForm()
 {
-}
+};
+
 
 void GalleryMPForm::reset()
 {
     m_buffer.resize(0);
-}
+};
+
 
 void GalleryMPForm::finish()
 {
@@ -82,8 +85,8 @@ void GalleryMPForm::finish()
     QTextStream ts(&m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec(QTextCodec::codecForName("UTF-8"));
     ts << str << '\0' ;
+};
 
-}
 
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
 {
@@ -91,9 +94,9 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
         return addPairRaw(QString("g2_form[%1]").arg(name), value);
 
     return addPairRaw(name, value);
-}
+};
 
-// FIXME check if it really works with Gallery2
+
 bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 {
     QByteArray str;
@@ -108,17 +111,13 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     str += value.toAscii();
     str += "\r\n";
 
-    //uint oldSize = m_buffer.size();
-    //m_buffer.resize(oldSize + str.size());
-    //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
-
     QTextStream ts(&m_buffer, QIODevice::Append | QIODevice::WriteOnly);
     ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    //ts << QString::fromUtf8(str); // was 
     ts << str;
 
     return true;
-}
+};
+
 
 bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
@@ -174,21 +173,26 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     m_buffer[m_buffer.size()-1] = '\n';
 
     return true;
-}
+};
+
+
 
 QString GalleryMPForm::contentType() const
 {
     return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
-}
+};
+
 
 QString GalleryMPForm::boundary() const
 {
     return m_boundary;
-}
+};
+
 
 QByteArray GalleryMPForm::formData() const
 {
     return m_buffer;
-}
+};
+
 
 }

@@ -54,7 +54,8 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent,
 {
     kDebug(51001) << "Plugin_GalleryExport plugin loaded"
     << endl;
-}
+};
+
 
 void Plugin_GalleryExport::setup(QWidget* widget)
 {
@@ -83,15 +84,14 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     connect(m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()));
     m_action_configure->setEnabled(true);
     addAction(m_action_configure);
-
-}
+};
 
 
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
     if (mpGallery)
         delete mpGallery;
-}
+};
 
 // this slot uses GalleryWindow Class
 void Plugin_GalleryExport::slotSync()
@@ -105,7 +105,7 @@ void Plugin_GalleryExport::slotSync()
     kWarning() << "Creating GalleryWindow.." << endl;
     KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpGallery);
     dlg.exec();
-}
+};
 
 // this slot uses GalleryConfig Class
 void Plugin_GalleryExport::slotConfigure()
@@ -118,7 +118,7 @@ void Plugin_GalleryExport::slotConfigure()
 
     KIPIGalleryExportPlugin::GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
     dlg.exec();
-}
+};
 
 
 KIPI::Category Plugin_GalleryExport::category(KAction* action) const
@@ -131,7 +131,7 @@ KIPI::Category Plugin_GalleryExport::category(KAction* action) const
     kWarning(51000) << "Unrecognized action for plugin category identification"
     << endl;
     return KIPI::ExportPlugin;
-}
+};
 
 
 #include "plugin_galleryexport.moc"

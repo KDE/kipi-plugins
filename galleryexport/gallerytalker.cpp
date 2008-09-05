@@ -58,13 +58,15 @@ namespace KIPIGalleryExportPlugin
 GalleryTalker::GalleryTalker(QWidget* parent)
         : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
-}
+};
+
 
 GalleryTalker::~GalleryTalker()
 {
     if (m_job)
         m_job->kill();
-}
+};
+
 
 bool GalleryTalker::s_using_gallery2 = true;
 QString GalleryTalker::s_authToken = "";
@@ -72,7 +74,8 @@ QString GalleryTalker::s_authToken = "";
 bool GalleryTalker::loggedIn() const
 {
     return m_loggedIn;
-}
+};
+
 
 
 void GalleryTalker::login(const KUrl& url, const QString& name,
@@ -99,7 +102,8 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
 
     m_job   = job;
     emit signalBusy(true);
-}
+};
+
 
 
 void GalleryTalker::listAlbums()
@@ -122,7 +126,8 @@ void GalleryTalker::listAlbums()
 
     m_job  = job;
     emit signalBusy(true);
-}
+};
+
 
 
 void GalleryTalker::listPhotos(const QString& albumName)
@@ -151,7 +156,8 @@ void GalleryTalker::listPhotos(const QString& albumName)
 
     m_job   = job;
     emit signalBusy(true);
-}
+};
+
 
 
 void GalleryTalker::createAlbum(const QString& parentAlbumName,
@@ -189,7 +195,8 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 
     m_job   = job;
     emit signalBusy(true);
-}
+};
+
 
 bool GalleryTalker::addPhoto(const QString& albumName,
                              const QString& photoPath,
@@ -260,7 +267,9 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     emit signalBusy(true);
 
     return true;
-}
+};
+
+
 
 void GalleryTalker::cancel()
 {
@@ -268,9 +277,10 @@ void GalleryTalker::cancel()
         m_job->kill();
         m_job = 0;
     }
-}
+};
 
-// CHECK 
+
+
 void GalleryTalker::data(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
@@ -279,9 +289,8 @@ void GalleryTalker::data(KIO::Job*, const QByteArray& data)
     int oldSize = m_talker_buffer.size();
     m_talker_buffer.resize(oldSize + data.size());
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
+};
 
-    kWarning() << "GalleryTalker::data.." << endl;
-}
 
 void GalleryTalker::slotResult(KJob *job)
 {
@@ -299,8 +308,6 @@ void GalleryTalker::slotResult(KJob *job)
                 tempjob->showErrorDialog(m_parent);
         return;
     }
-
-    kWarning() << "GalleryTalker::results.." << endl;
 
     switch (m_state)
     {
@@ -334,7 +341,8 @@ void GalleryTalker::slotResult(KJob *job)
         }
         listAlbums();
     }
-}
+};
+
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
@@ -373,7 +381,8 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     if (!m_loggedIn) {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }
-}
+};
+
 
 // --------------------------------------------------------------------------------------------------------
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
@@ -468,7 +477,9 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
     qSort(albumList);
 
     emit signalAlbums(albumList);
-}
+};
+
+
 
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
@@ -534,7 +545,9 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     }
 
     emit signalPhotos(photoList);
-}
+};
+
+
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 {
@@ -577,7 +590,8 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     }
 
     listAlbums();
-}
+};
+
 
 void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 {
@@ -623,7 +637,8 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
     } else {
         emit signalAddPhotoSucceeded();
     }
-}
+};
+
 
 }
 

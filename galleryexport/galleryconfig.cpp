@@ -108,12 +108,12 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     mpPasswordEdit->setText(pGallery->password());
 
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
-}
+};
+
 
 GalleryEdit::~GalleryEdit()
-{
+{};
 
-}
 
 void GalleryEdit::slotOk(void)
 {
@@ -132,7 +132,8 @@ void GalleryEdit::slotOk(void)
 
     mpGallery->save();
     accept();
-}
+};
+
 
 }
 

@@ -38,16 +38,19 @@ namespace KIPIGalleryExportPlugin
 {
 
 GAlbumViewItem::GAlbumViewItem() : QTreeWidgetItem(1000)
-{}
+{};
+
 
 GAlbumViewItem::GAlbumViewItem(QTreeWidget* parent, const QString& name, const GAlbum& _album)
         : QTreeWidgetItem(parent) ,
         album(_album)
-{}
+{};
+
 
 GAlbumViewItem::GAlbumViewItem(QTreeWidgetItem* parent, const QString& name, const GAlbum& _album)
         : QTreeWidgetItem(parent) , album(_album)
-{}
+{};
+
 
 
 void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int width)
@@ -98,13 +101,15 @@ void GAlbumViewItem::paintCell(QPainter * p, const QPalette& cg, int column, int
         p->setPen(isSelected() ? cg.highlight().color() : Qt::gray);
         p->drawText(r, h, width - r, h, Qt::AlignVCenter, album.name);
     }
-}
+};
+
 
 // TODO, CODE ME!!
 void GAlbumViewItem::paintFocus(QPainter* p, const QPalette& cg, const QRect& rc)
 {
     return;
-}
+};
+
 
 void GAlbumViewItem::setup()
 {
@@ -112,6 +117,7 @@ void GAlbumViewItem::setup()
 //    int h = listView()->fontMetrics().height();
     int margin = 4;
 //    setHeight( qMax(2*h + margin, 32) );
-}
+};
+
 
 }
