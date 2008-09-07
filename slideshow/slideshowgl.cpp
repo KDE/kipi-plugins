@@ -88,6 +88,11 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_width  = 64;
     m_height = 64;
 
+    // -- Margin -------------------------------------------
+
+    m_xMargin = int (m_deskWidth/m_width);
+    m_yMargin = int (m_deskWidth/m_height);
+
     // --------------------------------------------------
 
     m_fileList       = fileList;
@@ -579,7 +584,6 @@ void SlideShowGL::printFilename(QImage& layer)
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(filename);
     rect.addCoords( 0, 0, 2, 2 );
-    //rect.setCoords( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
     pix.fill(Qt::transparent);
@@ -592,7 +596,7 @@ void SlideShowGL::printFilename(QImage& layer)
 
     QPainter painter;
     painter.begin(&layer); 
-    QRect target = QRect(0, m_height-rect.height(), rect.width(), rect.height());
+    QRect target = QRect(m_xMargin, m_height-rect.height()-m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
     painter.drawPixmap(target, pix, source);
     painter.end();
@@ -625,7 +629,7 @@ void SlideShowGL::printProgress(QImage& layer)
 
     QPainter painter;
     painter.begin(&layer); 
-    QRect target = QRect(m_width - rect.width(), 20, rect.width(), rect.height());
+    QRect target = QRect(m_width - rect.width()- m_xMargin, m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
     painter.drawPixmap(target, pix, source);
     painter.end();
@@ -707,7 +711,7 @@ void SlideShowGL::printComments(QImage& layer)
 
 	QPainter painter;
 	painter.begin(&layer); 
-	QRect target = QRect(0, m_height-rect.height()-yPos, rect.width(), rect.height());
+	QRect target = QRect(m_xMargin, m_height-rect.height()-yPos, rect.width(), rect.height());
 	QRect source = pix.rect();
 	painter.drawPixmap(target, pix, source);
 	painter.end();

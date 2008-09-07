@@ -155,6 +155,9 @@ private:
 
     int                               m_width;
     int                               m_height;
+    int                               m_xMargin;
+    int                               m_yMargin;
+
 
     EffectMethod                      m_effect;
     bool                              m_effectRunning;
