@@ -12,6 +12,8 @@ SendImages     : Complete re-write of emailing tool.
 GPSSync        : New tool to edit GPS track list using googlemaps.
 RAWConverter   : Raw files are decoded in 16 bits color depth using same auto-gamma and auto-white 
                  methods provided by dcraw with 8 bits color depth RAW image decoding. 
+SlideShow      : Now filenames, captions and progress indicators can have transparent
+                 backgrounds with OpenGL SlideShow as well.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 

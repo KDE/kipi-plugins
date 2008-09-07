@@ -129,6 +129,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
     connect(m_commentsFontColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsFontColorChanged()));
     connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
+    connect(m_transparentBgCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotTransparentBgToggled()));
     connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), SLOT(slotUseMillisecondsToggled()));
     connect(m_delaySpinBox, SIGNAL(valueChanged(int)), this, SLOT(slotDelayChanged()));
     connect(m_effectsComboBox, SIGNAL(activated(int)), this,  SLOT(slotEffectChanged()));
@@ -186,6 +187,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
 
     slotSelection();
     slotEffectChanged();
+    m_tabWidget->setCurrentIndex(0);
 }
 
 SlideShowConfig::~SlideShowConfig()
@@ -280,6 +282,7 @@ void SlideShowConfig::readSettings()
     // Comments tab settings
     uint  commentsFontColor;
     uint  commentsBgColor;
+    bool  transparentBg;
     int   commentsLinesLength;
 
     QFont *savedFont = new QFont();
@@ -294,6 +297,7 @@ void SlideShowConfig::readSettings()
 
     commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
     commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
+    transparentBg	  = grp.readEntry("Transparent Bg", true);
 
     commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
 
@@ -334,6 +338,8 @@ void SlideShowConfig::readSettings()
     m_commentsLinesLengthSpinBox->setValue(commentsLinesLength);
     m_commentsFontColor->setColor(QColor(commentsFontColor));
     m_commentsBgColor->setColor(QColor(commentsBgColor));
+    m_commentsBgColor->setEnabled(!transparentBg);
+    m_transparentBgCheckBox->setChecked(transparentBg);
     m_commentsFontChooser->setFont(*savedFont);
     delete savedFont;
 
@@ -390,7 +396,7 @@ void SlideShowConfig::saveSettings()
     uint commentsBgColorRGB = bgColor->rgb();
     delete bgColor;
     grp.writeEntry("Comments Bg Color", commentsBgColorRGB);
-
+    grp.writeEntry("Transparent Bg", m_transparentBgCheckBox->isChecked());
     grp.writeEntry("Comments Lines Length", m_commentsLinesLengthSpinBox->value());
 
     if (!m_openglCheckBox->isChecked()) {
@@ -553,6 +559,11 @@ void SlideShowConfig::slotOpenGLToggled()
     ShowNumberImages( m_ImagesFilesListBox->count() );
 
     slotEffectChanged();
+}
+
+void SlideShowConfig::slotTransparentBgToggled()
+{
+    m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
 }
 
 void SlideShowConfig::slotDelayChanged()

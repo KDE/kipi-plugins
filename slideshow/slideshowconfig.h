@@ -69,6 +69,7 @@ private slots:
     void slotPrintCommentsToggled();
     void slotCommentsFontColorChanged();
     void slotCommentsBgColorChanged();
+    void slotTransparentBgToggled();
 
     void slotSelection();
     void slotCacheToggled();

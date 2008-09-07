@@ -131,6 +131,7 @@ private:
     QFont*   m_commentsFont;
     uint     m_commentsFontColor;
     uint     m_commentsBgColor;
+    bool     m_transparentBg;
     int      m_commentsLinesLength;
 
     bool     m_enableMouseWheel;

@@ -191,6 +191,7 @@ void SlideShowGL::readSettings()
 
     m_commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
     m_commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
+    m_transparentBg         = grp.readEntry("Transparent Bg", true);
 
     m_commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
 
@@ -581,7 +582,7 @@ void SlideShowGL::printFilename(QImage& layer)
     //rect.setCoords( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
-    pix.fill(Qt::black);
+    pix.fill(Qt::transparent);
 
     QPainter p(&pix);
     p.setPen(Qt::white);
@@ -611,7 +612,7 @@ void SlideShowGL::printProgress(QImage& layer)
     rect.addCoords( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
-    pix.fill(Qt::black);
+    pix.fill(Qt::transparent);
 
     QPainter p(&pix);
 
@@ -694,7 +695,9 @@ void SlideShowGL::printComments(QImage& layer)
         rect.addCoords( 0, 0, 2, 2 );
 
         QPixmap pix(rect.width(),rect.height());
-        pix.fill(QColor(m_commentsBgColor));
+        
+        if ( m_transparentBg ) pix.fill(Qt::transparent);
+        else pix.fill(QColor(m_commentsBgColor));  
 
         QPainter p(&pix);
         p.setPen(QColor(m_commentsFontColor));

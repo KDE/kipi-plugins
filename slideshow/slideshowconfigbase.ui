@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>566</width>
+    <width>578</width>
     <height>660</height>
    </rect>
   </property>
@@ -22,14 +22,14 @@
       </sizepolicy>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mainTab" >
       <property name="geometry" >
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>550</width>
+        <width>562</width>
         <height>588</height>
        </rect>
       </property>
@@ -672,14 +672,14 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>550</width>
-        <height>524</height>
+        <width>562</width>
+        <height>588</height>
        </rect>
       </property>
       <attribute name="title" >
        <string>Comments</string>
       </attribute>
-      <layout class="QVBoxLayout" name="_14" >
+      <layout class="QVBoxLayout" name="verticalLayout_4" >
        <item>
         <widget class="KFontChooser" name="m_commentsFontChooser" >
          <property name="sizePolicy" >
@@ -691,16 +691,16 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="_15" >
+        <layout class="QHBoxLayout" name="horizontalLayout_2" >
          <item>
           <widget class="Q3GroupBox" name="groupBox7" >
            <property name="title" >
             <string>Colors</string>
            </property>
-           <layout class="QVBoxLayout" name="_16" >
+           <layout class="QVBoxLayout" name="verticalLayout_3" >
             <item>
-             <layout class="QHBoxLayout" name="_17" >
-              <item>
+             <layout class="QGridLayout" name="gridLayout" >
+              <item row="0" column="0" >
                <widget class="QLabel" name="textLabel1" >
                 <property name="text" >
                  <string>Font color :</string>
@@ -710,7 +710,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="0" column="1" colspan="2" >
                <spacer name="spacer62" >
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
@@ -726,7 +726,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                </spacer>
               </item>
-              <item>
+              <item row="0" column="3" >
                <widget class="KColorButton" name="m_commentsFontColor" >
                 <property name="text" >
                  <string/>
@@ -740,11 +740,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                </widget>
               </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="_18" >
-              <item>
+              <item row="1" column="0" colspan="2" >
                <widget class="QLabel" name="textLabel1_2" >
                 <property name="text" >
                  <string>Background color:</string>
@@ -754,7 +750,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="1" column="2" >
                <spacer name="spacer61" >
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
@@ -770,7 +766,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                </spacer>
               </item>
-              <item>
+              <item row="1" column="3" >
                <widget class="KColorButton" name="m_commentsBgColor" >
                 <property name="text" >
                  <string/>
@@ -780,6 +776,19 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
                 </property>
                 <property name="flat" >
                  <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="4" >
+               <widget class="QCheckBox" name="m_transparentBgCheckBox" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Minimum" hsizetype="MinimumExpanding" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text" >
+                 <string>Transparent background</string>
                 </property>
                </widget>
               </item>
@@ -875,8 +884,8 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>550</width>
-        <height>524</height>
+        <width>562</width>
+        <height>588</height>
        </rect>
       </property>
       <attribute name="title" >
