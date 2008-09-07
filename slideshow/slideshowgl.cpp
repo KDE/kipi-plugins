@@ -133,7 +133,8 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
-    m_timer->start(m_timeout, true);
+    m_timer->setSingleShot(true);
+    m_timer->start(m_timeout);
 
     // -- hide cursor when not moved --------------------
 
@@ -299,7 +300,8 @@ void SlideShowGL::mousePressEvent(QMouseEvent *e)
 void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    m_mouseMoveTimer->start(1000, true);
+    m_mouseMoveTimer->setSingleShot(true);
+    m_mouseMoveTimer->start(1000);
 
     if (!m_toolBar->canHide())
         return;
@@ -507,7 +509,7 @@ void SlideShowGL::loadImage()
                                   Qt::ScaleMin);*/
         montage(image, black);
 
-        black = black.smoothScale(m_width, m_height);
+        black = black.scaled(m_width, m_height);
 
 	if (m_printName)
 	    printFilename(black);
@@ -544,8 +546,8 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
     if (tw > bw || th > bh)
         qFatal("Top Image should be smaller or same size as Bottom Image");
 
-    if (top.depth() != 32) top = top.convertDepth(32);
-    if (bot.depth() != 32) bot = bot.convertDepth(32);
+    if (top.depth() != 32) top = top.convertToFormat(QImage::Format_RGB32);
+    if (bot.depth() != 32) bot = bot.convertToFormat(QImage::Format_RGB32);
 
     int sw = bw/2 - tw/2; //int ew = bw/2 + tw/2;
     int sh = bh/2 - th/2; int eh = bh/2 + th/2;
@@ -576,6 +578,7 @@ void SlideShowGL::printFilename(QImage& layer)
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(filename);
     rect.addCoords( 0, 0, 2, 2 );
+    //rect.setCoords( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
     pix.fill(Qt::black);
@@ -585,10 +588,14 @@ void SlideShowGL::printFilename(QImage& layer)
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , filename);
     p.end();
-#if 0
-    QImage textimage(pix.convertToImage());
-    KImageEffect::blendOnLower(0,m_height-rect.height(),textimage,layer);
-#endif
+
+    QPainter painter;
+    painter.begin(&layer); 
+    QRect target = QRect(0, m_height-rect.height(), rect.width(), rect.height());
+    QRect source = pix.rect();
+    painter.drawPixmap(target, pix, source);
+    painter.end();
+
 }
 
 void SlideShowGL::printProgress(QImage& layer)
@@ -614,11 +621,14 @@ void SlideShowGL::printProgress(QImage& layer)
     p.setFont(fn);
     p.drawText(1,fn.pointSize()+1 , progress);
     p.end();
-#if 0
-    QImage textimage(pix.convertToImage());
-    KImageEffect::blendOnLower(m_width - stringLenght - 10,
-                               20,textimage,layer);
-#endif
+
+    QPainter painter;
+    painter.begin(&layer); 
+    QRect target = QRect(m_width - rect.width(), 20, rect.width(), rect.height());
+    QRect source = pix.rect();
+    painter.drawPixmap(target, pix, source);
+    painter.end();
+
 }
 
 void SlideShowGL::printComments(QImage& layer)
@@ -675,10 +685,10 @@ void SlideShowGL::printComments(QImage& layer)
     }
 
     QFontMetrics fm(*m_commentsFont);
+  
+    yPos += int(2.0 * m_commentsFont->pointSize());
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
-
-        yPos += int(1.5 * m_commentsFont->pointSize());
 
         QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
         rect.addCoords( 0, 0, 2, 2 );
@@ -691,10 +701,16 @@ void SlideShowGL::printComments(QImage& layer)
         p.setFont(*m_commentsFont);
         p.drawText(1,m_commentsFont->pointSize()+0 , commentsByLines[lineNumber]);
         p.end();
-#if 0
-        QImage textimage(pix.convertToImage());
-        KImageEffect::blendOnLower(0,m_height-rect.height()-yPos,textimage,layer);
-#endif
+
+	QPainter painter;
+	painter.begin(&layer); 
+	QRect target = QRect(0, m_height-rect.height()-yPos, rect.width(), rect.height());
+	QRect source = pix.rect();
+	painter.drawPixmap(target, pix, source);
+	painter.end();
+
+        yPos += int(rect.height() + m_height/400);
+
     }
 }
 
@@ -796,7 +812,8 @@ void SlideShowGL::slotTimeOut()
 
     updateGL();
     if (m_timeout < 0) m_timeout = 0;
-    m_timer->start(m_timeout, true);
+    m_timer->setSingleShot(true);
+    m_timer->start(m_timeout);
 }
 
 void SlideShowGL::slotMouseMoveTimeOut()
