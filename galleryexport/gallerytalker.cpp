@@ -337,7 +337,7 @@ void GalleryTalker::slotResult(KJob *job)
         {
             QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
             if (rx.exactMatch(*it))   //rx.search(*it) > -1)
-                m_cookie += " " + rx.cap(1) + ";";
+                m_cookie += ' ' + rx.cap(1) + ';';
         }
         listAlbums();
     }
@@ -524,7 +524,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                     if (iter != photoList.end())
                         (*iter).thumbName = value;
                 } else if (key.startsWith("baseurl")) {
-                    albumURL = value.replace("\\", "");
+                    albumURL = value.replace("\\", '');
                 }
             }
         }
