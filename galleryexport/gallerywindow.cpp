@@ -375,7 +375,7 @@ void GalleryWindow::slotError(const QString& msg)
 
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
-    d->albumDict.clear();
+/*    d->albumDict.clear();
     d->albumView->clear();
 //     d->photoView->begin();
 //     d->photoView->write("<html></html>");
@@ -425,6 +425,16 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             // FIXME perhaps to be removed
             // m_albumView->ensureItemVisible( lastSelectedItem );
         }
+    }*/
+    d->albumView->clear();
+    kWarning() << "siamo su GalleryWindow::slotAlbums.." << "albumList.size() = " << albumList.size() << endl;
+
+    typedef QList<GAlbum> GAlbumList;
+    GAlbumList::const_iterator iter;
+    for (iter = albumList.begin(); iter != albumList.end(); ++iter) {
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText(0, (*iter).title );
+        d->albumView->addTopLevelItem(item);
     }
 };
 

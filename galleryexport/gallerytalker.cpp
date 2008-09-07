@@ -384,7 +384,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 };
 
 
-// --------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
     QString str(data);
@@ -403,7 +403,6 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
         line = ts.readLine();
         if (!foundResponse) {
             foundResponse = line.startsWith("#__GR2PROTO__");
-            kWarning() << "foundResponse #GR2PROTO = " << foundResponse << endl;
         } else {
             QStringList strlist = line.split('=');
             if (strlist.count() == 2) {
@@ -412,51 +411,38 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                    kWarning() << "key = status, value = " << value << endl;
-                } else
-                     if (key.startsWith("album.name")) {
-                        kWarning() << "key starts with album " << "name, value = " << value << endl;
+                } else 
+                    if (key.startsWith("album.name")) {
                         GAlbum album;
                         album.name    = value;
-//                         if (s_using_gallery2)
-//                             album.ref_num = value.toInt();
-//                         else
                         album.ref_num = key.section(".", 2, 2).toInt();
-                        albumList.append(album);
-                    } else 
-                        if (key.startsWith("album.title")) {
-                        kWarning() << "key starts with album " << "title, value = " << value << endl;
-                    if (iter != albumList.end())
-                        (*iter).title = value;      // FIXME
-                } else if (key.startsWith("album.summary")) {
-                        kWarning() << "key starts with album " << "summary, value = " << value << endl;
-                    if (iter != albumList.end())
+                        iter = albumList.insert(iter, album);
+                } else 
+                    if (key.startsWith("album.title")) {
+                        (*iter).title = value;
+                } else 
+                    if (key.startsWith("album.summary")) {
                         (*iter).summary = value;
-                } else if (key.startsWith("album.parent")) {
-                         kWarning() << "key starts with album " << "parent, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.parent")) {
                         (*iter).parent_ref_num = value.toInt();
-                } else if (key.startsWith("album.perms.add")) {
-                        kWarning() << "key starts with album " << "perms add, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.perms.add")) {
                         (*iter).add = (value == "true");
-                } else if (key.startsWith("album.perms.write")) {
-                        kWarning() << "key starts with album " << "perms write, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.perms.write")) {
                         (*iter).write = (value == "true");
-                } else if (key.startsWith("album.perms.del_item")) {
-                        kWarning() << "key starts with album " << "perms del item, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.perms.del_item")) {
                         (*iter).del_item = (value == "true");
-                } else if (key.startsWith("album.perms.del_alb")) {
-                        kWarning() << "key starts with album " << "perms del alb, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.perms.del_alb")) {
                         (*iter).del_alb = (value == "true");
-                } else if (key.startsWith("album.perms.create_sub")) {
-                        kWarning() << "key starts with album " << "perms create sub, value = " << value << endl;
-                    if (iter != albumList.end())
+                } else 
+                    if (key.startsWith("album.perms.create_sub")) {
                         (*iter).create_sub = (value == "true");
-                } else if (key == "auth_token") {
+                } else 
+                    if (key == "auth_token") {
                     s_authToken = value;
                 }
             }
