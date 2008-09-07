@@ -102,9 +102,12 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
                      "valerio.fuoglio@gmail.com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("SlideShow Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+
+    QAction *handbook   = new QAction(i18n("SlideShow Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    m_helpButton->setMenu( helpMenu->menu() );
 
     // Switch to selected files only (it depends on allowSelectedOnly)
 
@@ -114,9 +117,8 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     m_delayMsMinValue = 100;
     m_delayMsLineStep = 10;
 
-    m_delaySpinBox->setMinValue(m_delayMsMinValue);
-    m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
-    m_delaySpinBox->setLineStep(m_delayMsLineStep);
+    m_delaySpinBox->setRange(m_delayMsMinValue, m_delayMsMaxValue);
+    m_delaySpinBox->setSingleStep(m_delayMsLineStep);
 
     m_interface = interface;
 
@@ -201,13 +203,13 @@ void SlideShowConfig::loadEffectNames()
 
     QMap<QString,QString>::Iterator it;
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.append(it.value());
 
-    m_effectsComboBox->insertStringList(effects);
+    m_effectsComboBox->insertItems(0, effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
-        if (effectNames[m_effectName] == m_effectsComboBox->text(i)) {
-            m_effectsComboBox->setCurrentItem(i);
+        if (effectNames[m_effectName] == m_effectsComboBox->itemText(i)) {
+            m_effectsComboBox->setCurrentIndex(i);
             break;
         }
     }
@@ -225,21 +227,21 @@ void SlideShowConfig::loadEffectNamesGL()
     effectNames = SlideShowGL::effectNamesI18N();
 
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.append(it.value());
 
     // Load Ken Burns effect
     effectNames = SlideShowKB::effectNamesI18N();
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
-      effects.append(it.data());
+      effects.append(it.value());
 
     // Update GUI
 
     effects.sort();
-    m_effectsComboBox->insertStringList(effects);
+    m_effectsComboBox->insertItems(0,effects);
 
     for (int i=0; i<m_effectsComboBox->count(); i++) {
-      if (effectNames[m_effectNameGL] == m_effectsComboBox->text(i)) {
-        m_effectsComboBox->setCurrentItem(i);
+      if (effectNames[m_effectNameGL] == m_effectsComboBox->itemText(i)) {
+        m_effectsComboBox->setCurrentIndex(i);
         break;
       }
     }
@@ -398,7 +400,7 @@ void SlideShowConfig::saveSettings()
         QMap<QString,QString>::Iterator it;
 
         for (it = effectNames.begin(); it != effectNames.end(); ++it) {
-            if (it.data() == m_effectsComboBox->currentText()) {
+            if (it.value() == m_effectsComboBox->currentText()) {
                 effect = it.key();
                 break;
             }
@@ -417,12 +419,12 @@ void SlideShowConfig::saveSettings()
       effectNames = SlideShowGL::effectNamesI18N();
 
       for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.append(it.value());
 
     // Load Ken Burns effect
       effectNames = SlideShowKB::effectNamesI18N();
       for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.data());
+        effects.append(it.value());
 
         QString effect;
         QStringList::Iterator it1;
@@ -457,7 +459,7 @@ void SlideShowConfig::addItems(const KUrl::List& fileList)
         KUrl currentFile = *it;
 
         QFileInfo fi(currentFile.path());
-        QString Temp = fi.dirPath();
+        QString Temp = fi.path();
         QString albumName = Temp.section('/', -1);
 
         KIPI::ImageInfo info = m_interface->info(currentFile);
@@ -504,18 +506,16 @@ void SlideShowConfig::slotUseMillisecondsToggled()
     if ( m_useMillisecondsCheckBox -> isChecked() ) {
         m_delayLabel->setText(i18n("Delay between images (ms):"));
 
-        m_delaySpinBox->setMinValue(m_delayMsMinValue);
-        m_delaySpinBox->setMaxValue(m_delayMsMaxValue);
-        m_delaySpinBox->setLineStep(m_delayMsLineStep);
+        m_delaySpinBox->setRange(m_delayMsMinValue,m_delayMsMaxValue);
+        m_delaySpinBox->setSingleStep(m_delayMsLineStep);
 
         m_delaySpinBox->setValue(delayValue*1000);
     }
     else {
         m_delayLabel->setText(i18n("Delay between images  (s):"));
 
-        m_delaySpinBox->setMinValue(m_delayMsMinValue/1000);
-        m_delaySpinBox->setMaxValue(m_delayMsMaxValue/100);
-        m_delaySpinBox->setLineStep(m_delayMsLineStep/10);
+        m_delaySpinBox->setRange(m_delayMsMinValue/1000,m_delayMsMaxValue/100);
+        m_delaySpinBox->setSingleStep(m_delayMsLineStep/10);
 
         m_delaySpinBox->setValue(delayValue/1000);
     }

@@ -60,11 +60,11 @@ namespace KIPISlideShowPlugin
     {
       QMatrix matrix;
       matrix.rotate((double)m_angle);
-      newImage.xForm( matrix );
+      newImage = newImage.transformed( matrix );
     }
     
   
-    newImage = QImage(newImage.smoothScale(m_swidth, m_sheight, Qt::ScaleMin));
+    newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio);
     
     m_imageLock->lock();
     m_loadedImages->insert(m_path, newImage);
@@ -110,9 +110,9 @@ namespace KIPISlideShowPlugin
     m_threadLock->lock();
    LoadingThreads::Iterator it;
     for ( it = m_loadingThreads->begin(); it != m_loadingThreads->end(); ++it ) {
-      it.data()->wait();
-      delete it.data();
-      m_loadingThreads->remove(it);
+      it.value()->wait();
+      delete it.value();
+      m_loadingThreads->remove(it.key());
     }
     m_threadLock->unlock();
 
@@ -200,7 +200,7 @@ namespace KIPISlideShowPlugin
     m_threadLock->lock();
     if (m_loadingThreads->contains(m_pathList[index].first)) 
     {
-      if ( (*m_loadingThreads)[m_pathList[index].first]->running() )
+      if ( (*m_loadingThreads)[m_pathList[index].first]->isRunning() )
         (*m_loadingThreads)[m_pathList[index].first]->wait();
       m_threadLock->unlock();
     }

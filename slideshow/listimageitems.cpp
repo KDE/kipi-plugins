@@ -55,7 +55,7 @@ ListImageItems::ListImageItems(QWidget *parent, const char *name)
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
 {
-    e->accept(Q3UriDrag::canDecode(e));
+    e->setAccepted(Q3UriDrag::canDecode(e));
 }
 
 void ListImageItems::dropEvent(QDropEvent *e)
