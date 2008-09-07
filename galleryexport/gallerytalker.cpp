@@ -524,7 +524,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                     if (iter != photoList.end())
                         (*iter).thumbName = value;
                 } else if (key.startsWith("baseurl")) {
-                    albumURL = value.replace("\\", '');
+                    albumURL = value.replace("\\", "");
                 }
             }
         }
