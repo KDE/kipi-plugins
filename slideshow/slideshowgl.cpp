@@ -5,7 +5,7 @@
  * Description :
  *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * Copyright 2006-2008 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -501,7 +501,7 @@ void SlideShowGL::loadImage()
             glDeleteTextures(1, &tex);
 
         QImage black(width(), height(), 32);
-        black.fill(Qt::black.rgb());
+        black.fill(QColor(0,0,0).rgb());
 
 /*        image = image.smoothScale(width(), height(),
                                   Qt::ScaleMin);*/
@@ -795,6 +795,7 @@ void SlideShowGL::slotTimeOut()
     }
 
     updateGL();
+    if (m_timeout < 0) m_timeout = 0;
     m_timer->start(m_timeout, true);
 }
 

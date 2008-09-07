@@ -6,7 +6,7 @@
  * Date        : 2003-02-17
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2006-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
@@ -58,6 +58,8 @@
 #include <kio/previewjob.h>
 #include <kurl.h>
 
+#include <kdebug.h>
+
 // libkipi includes
 
 #include <libkipi/interface.h>
@@ -83,15 +85,16 @@ namespace KIPISlideShowPlugin
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface,
                                  QWidget *parent, const char* name, bool ImagesHasComments,
                                  KUrl::List *urlList)
-               : SlideShowConfigBase(parent, name)
+               : QDialog(parent, name)
 {
+   setupUi(this);
     // About data and help button.
 
     KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(ki18n("Slide Show"),
                                         0,
                                         KAboutData::License_GPL,
                                         ki18n("A Kipi plugin for image slideshow"),
-                                        ki18n( "(c) 2003-2004, Renchi Raju\n(c) 2007, Valerio Fuoglio" ));
+                                        ki18n( "(c) 2003-2004, Renchi Raju\n(c) 2006-2008, Valerio Fuoglio" ));
 
     about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
                      "renchi@pooh.tam.uiuc.edu");
@@ -152,6 +155,17 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     m_config = new KConfig("kipirc");
 
     readSettings();
+
+    // -----------------------
+    // Disable normal effects
+    // TODO: find a way to make them work again.
+
+    m_openglCheckBox->setChecked(true);
+    m_openglCheckBox->setEnabled(false);
+    m_openglCheckBox->setToolTip(i18n("In this version of kipi-plugins, normal SlideShow's effects " 
+			    	       "still under porting.<br>" 
+				       "<b>They will be available again in the future.</b>"));
+    //----------------------
 
     slotUseMillisecondsToggled();
 
@@ -617,13 +631,13 @@ void SlideShowConfig::slotImagesFilesSelected( Q3ListBoxItem *item )
 
     m_thumbJob = KIO::filePreview( url, m_ImageLabel->width() );
 
-    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
-    connect(m_thumbJob, SIGNAL(failed(const KFileItem*)),
-            SLOT(slotFailedPreview(const KFileItem*)));
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
+            SLOT(slotFailedPreview(const KFileItem&)));
 
     int index = m_ImagesFilesListBox->index ( item );
-    m_label7->setText(i18n("Image no. %1",QString::number(index + 1));
+    m_label7->setText(i18n("Image no. %1",QString::number(index + 1)));
 }
 
 void SlideShowConfig::slotAddDropItems(KUrl::List filesUrl)
@@ -633,8 +647,12 @@ void SlideShowConfig::slotAddDropItems(KUrl::List filesUrl)
 
 void SlideShowConfig::slotImagesFilesButtonAdd( void )
 {
-    KIPIPlugins::ImageDialog dlg(this, m_interface, false, true);
+    KIPIPlugins::ImageDialog dlg(this, m_interface, true, false);
     KUrl::List urls = dlg.urls();
+  
+    kDebug()<<dlg.urls().isEmpty()<<endl;
+    kDebug()<<urls.isEmpty()<<endl;
+  
     if (!urls.isEmpty())
     {
         addItems(urls);
@@ -751,13 +769,13 @@ void SlideShowConfig::ShowNumberImages( int Number )
         m_label6->setText(i18n("%1 images [%2]", Number, TotalDuration.toString()));
 }
 
-void SlideShowConfig::slotGotPreview(const KFileItem*, const QPixmap &pixmap)
+void SlideShowConfig::slotGotPreview(const KFileItem&, const QPixmap &pixmap)
 {
     m_ImageLabel->setPixmap(pixmap);
     m_thumbJob = 0L;
 }
 
-void SlideShowConfig::slotFailedPreview(const KFileItem*)
+void SlideShowConfig::slotFailedPreview(const KFileItem&)
 {
     m_thumbJob = 0L;
 }

@@ -6,7 +6,7 @@
  * Date        : 2003-02-16
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2006-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
@@ -63,15 +63,14 @@ namespace KIPISlideShowPlugin
 {
 
 class ToolBar;
-
 class SlideShow;
-
-typedef int (SlideShow::*EffectMethod)(bool);
 
 class SlideShow : public QWidget
 {
 
     Q_OBJECT
+
+typedef int (SlideShow::*EffectMethod)(bool);
 
 public:
 
@@ -82,6 +81,7 @@ public:
 
     static QStringList effectNames();
     static QMap<QString,QString> effectNamesI18N();
+
 
 protected:
 
@@ -104,7 +104,14 @@ protected:
     int effectCircleOut(bool doInit);
     int effectBlobs(bool doInit);
 
+    void paintEvent(QPaintEvent*);
     void startPainter(Qt::PenStyle penStyle=Qt::NoPen);
+
+    bool			m_simplyShow;
+    bool			m_startPainter;	
+    int				m_px, m_py, m_psx, m_psy, m_psw, m_psh;
+    QPainter*                   m_painter;
+    bool                        m_endOfShow;
 
 private slots:
 
@@ -175,16 +182,15 @@ private:
     int                         m_x0, m_y0, m_x1, m_y1, m_wait;
     double                      m_fx, m_fy, m_alpha, m_fd;
     int*                        m_intArray;
-    QPainter                    m_painter;
 
     ToolBar*                    m_toolBar;
     QTimer*                     m_mouseMoveTimer;
-    bool                        m_endOfShow;
 
     int                         m_deskX;
     int                         m_deskY;
     int                         m_deskWidth;
     int                         m_deskHeight;
+
 };
 
 }  // NameSpace KIPISlideShowPlugin

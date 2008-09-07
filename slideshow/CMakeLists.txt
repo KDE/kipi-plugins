@@ -7,15 +7,15 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    screenproperties.cpp
                                    slideshowkb.cpp 
                                    imageloadthread.cpp
-                                   #listimageitems.cpp 
-                                   #slideshow.cpp 
-                                   #slideshowconfig.cpp 
-                                   #slideshowgl.cpp 
-                                   #slideshowloader.cpp
-                                   #plugin_slideshow.cpp 
+                                   listimageitems.cpp 
+                                   slideshow.cpp 
+                                   slideshowconfig.cpp 
+                                   slideshowgl.cpp 
+                                   slideshowloader.cpp
+                                   plugin_slideshow.cpp 
    )
 
-#KDE4_ADD_UI3_FILES(kipiplugin_slideshow_PART_SRCS slideshowconfigbase.ui)
+KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS slideshowconfigbase.ui)
 
 KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
 

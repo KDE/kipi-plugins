@@ -5,7 +5,7 @@
  * Description :
  *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2007 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * Copyright 2006-2008 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -75,6 +75,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
+  
+    typedef void (SlideShowGL::*EffectMethod)();
 
     void          paintTexture();
     void          advanceFrame();
@@ -137,7 +139,6 @@ private:
 
     // -------------------------
 
-    typedef void (SlideShowGL::*EffectMethod)();
 
     QMap<QString, EffectMethod>       m_effects;
 

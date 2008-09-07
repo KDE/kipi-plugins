@@ -6,7 +6,7 @@
  * Date        : 2003-02-17
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2006-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
@@ -42,12 +42,12 @@
 
 // Local includes
 
-#include "slideshowconfigbase.h"
+#include "ui_slideshowconfigbase.h"
 
 namespace KIPISlideShowPlugin
 {
 
-class SlideShowConfig : public SlideShowConfigBase
+class SlideShowConfig : public QDialog, Ui::SlideShowConfigBase
 {
     Q_OBJECT
 
@@ -80,8 +80,8 @@ private slots:
     void slotImagesFilesButtonDelete( void );
     void slotImagesFilesButtonUp( void );
     void slotImagesFilesButtonDown( void );
-    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
-    void slotFailedPreview(const KFileItem*);
+    void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
+    void slotFailedPreview(const KFileItem&);
 
 signals:
 

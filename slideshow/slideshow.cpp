@@ -6,7 +6,7 @@
  * Date        : 2003-02-16
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2006-2007 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2006-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
  * This program is free software; you can redistribute it
@@ -67,6 +67,8 @@ namespace KIPISlideShowPlugin
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
     : QWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose)
 {
+//    setAttribute(Qt::WA_PaintOnScreen);
+
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
@@ -106,6 +108,10 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_effectRunning = false;
     m_intArray      = 0;
     m_endOfShow     = false;
+    m_simplyShow    = false;
+    m_startPainter  = false;
+
+    m_painter = new QPainter();
 
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()),
@@ -158,8 +164,8 @@ SlideShow::~SlideShow()
     m_mouseMoveTimer->stop();
     delete m_mouseMoveTimer;
 
-    if (m_painter.isActive())
-        m_painter.end();
+    if (m_painter->isActive())
+        m_painter->end();
 
     if (m_intArray)
         delete [] m_intArray;
@@ -171,6 +177,7 @@ SlideShow::~SlideShow()
         delete m_imageLoader;
 
     delete m_config;
+    delete m_painter;
 }
 
 void SlideShow::readSettings()
@@ -426,6 +433,9 @@ void SlideShow::showCurrentImage()
             0, 0, m_currImage->width(),
             m_currImage->height(), Qt::CopyROP, true);
 #endif
+  m_simplyShow = true;
+//  update();
+  repaint();
 }
 
 void SlideShow::printFilename()
@@ -540,7 +550,7 @@ void SlideShow::printProgress()
     p.drawText(width() - stringLenght - 10, 20, progress);
 }
 
-EffectMethod SlideShow::getRandomEffect()
+SlideShow::EffectMethod SlideShow::getRandomEffect()
 {
     QStringList effs = Effects.keys();
     effs.remove("None");
@@ -555,21 +565,22 @@ EffectMethod SlideShow::getRandomEffect()
 
 void SlideShow::showEndOfShow()
 {
-    QPainter p;
-    p.begin(this);
-    p.fillRect(0, 0, width(), height(), Qt::black);
-
-    QFont fn(font());
-    fn.setPointSize(fn.pointSize()+10);
-    fn.setBold(true);
-
-    p.setFont(fn);
-    p.setPen(Qt::white);
-    p.drawText(100, 100, i18n("SlideShow Completed."));
-    p.drawText(100, 150, i18n("Click To Exit..."));
-    p.end();
-
+/*    QPainter p;
+    p.begin(this); */
     m_endOfShow = true;
+
+//     p.fillRect(0, 0, width(), height(), Qt::black);
+// 
+//     QFont fn(font());
+//     fn.setPointSize(fn.pointSize()+10);
+//     fn.setBold(true);
+// 
+//     p.setFont(fn);
+//     p.setPen(Qt::white);
+//     p.drawText(100, 100, i18n("SlideShow Completed."));
+//     p.drawText(100, 150, i18n("Click To Exit..."));
+//     p.end();
+    update(); 
     m_toolBar->setEnabledPlay(false);
     m_toolBar->setEnabledNext(false);
     m_toolBar->setEnabledPrev(false);
@@ -724,6 +735,23 @@ int SlideShow::effectChessboard(bool aInit)
         bitBlt(this, m_x, y+m_y, m_currImage, m_x, y+m_y,
                 m_dx, m_dy, CopyROP, true);
 #endif
+    m_px = m_ix;
+    m_py = y+m_iy;
+    m_psx = m_ix;
+    m_psy = y+m_iy;
+    m_psw = m_dx;
+    m_psh = m_dy;
+    repaint();
+
+    m_px = m_x;
+    m_py = y+m_y;
+    m_psx = m_x;
+    m_psy = y+m_y;
+    m_psw = m_dx;
+    m_psh = m_dy;
+    repaint();
+
+
     }
 
     return m_wait;
@@ -999,6 +1027,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
     if (aInit)
     {
         startPainter();
+	//update();
         m_w = width();
         m_h = height();
         m_x = m_w;
@@ -1015,7 +1044,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
 
     if (m_alpha < 0)
     {
-        m_painter.end();
+        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1031,7 +1060,7 @@ int SlideShow::effectMultiCircleOut(bool aInit)
         pa.setPoint(1, x, y);
         pa.setPoint(2, m_x, m_y);
 
-        m_painter.drawPolygon(pa);
+        m_painter->drawPolygon(pa);
     }
 
     m_alpha -= m_fx;
@@ -1043,7 +1072,8 @@ int SlideShow::effectSpiralIn(bool aInit)
 {
     if (aInit)
     {
-        startPainter();
+   //    startPainter();
+	update();
         m_w = width();
         m_h = height();
         m_ix = m_w / 8;
@@ -1062,7 +1092,7 @@ int SlideShow::effectSpiralIn(bool aInit)
 
     if (m_i==0 && m_x0>=m_x1)
     {
-        m_painter.end();
+        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1113,8 +1143,9 @@ int SlideShow::effectCircleOut(bool aInit)
 
     if (aInit)
     {
-        startPainter();
-        m_w = width();
+   //     startPainter();
+	update();
+	m_w = width();
         m_h = height();
         m_x = m_w;
         m_y = m_h>>1;
@@ -1127,7 +1158,7 @@ int SlideShow::effectCircleOut(bool aInit)
 
     if (m_alpha < 0)
     {
-        m_painter.end();
+        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1141,7 +1172,7 @@ int SlideShow::effectCircleOut(bool aInit)
     pa.setPoint(1, x, y);
     pa.setPoint(2, m_x, m_y);
 
-    m_painter.drawPolygon(pa);
+    m_painter->drawPolygon(pa);
 
     return 20;
 }
@@ -1154,7 +1185,7 @@ int SlideShow::effectBlobs(bool aInit)
     if (aInit)
     {
         startPainter();
-        m_alpha = M_PI * 2;
+	m_alpha = M_PI * 2;
         m_w = width();
         m_h = height();
         m_i = 150;
@@ -1162,7 +1193,7 @@ int SlideShow::effectBlobs(bool aInit)
 
     if (m_i <= 0)
     {
-        m_painter.end();
+        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1171,23 +1202,101 @@ int SlideShow::effectBlobs(bool aInit)
     m_y = rand() % m_h;
     r = (rand() % 200) + 50;
 
-    m_painter.drawEllipse(m_x-r, m_y-r, r, r);
+    m_px = m_x-r;
+    m_py = m_y-r;
+    m_psx = r;
+    m_psy = r;
+
+   // update();
+    repaint();
     m_i--;
 
     return 10;
 }
 
+void SlideShow::paintEvent(QPaintEvent *)
+{ 
+    if ( m_startPainter == true ) {
+      QBrush brush;
+      Qt::PenStyle aPen = Qt::NoPen;
+      brush.setPixmap(*(m_currImage));
+
+      if (m_painter->isActive())
+	  m_painter->end();
+      
+      m_painter->begin(this);
+
+      m_painter->setBrush(brush);
+      m_painter->setPen(aPen);
+      m_startPainter = false;
+      return;
+    }
+
+    QPainter p(this);
+
+    //That's a call from ShowCurrentImage() 
+    if ( m_simplyShow == true ) {
+      p.drawPixmap(0, 0, *(m_currImage),
+		   0, 0, m_currImage->width(), m_currImage->height());
+      p.end();
+      m_simplyShow = false;
+    return;
+    }
+
+
+    if ( m_endOfShow == true ) {
+      p.fillRect(0, 0, width(), height(), Qt::black);
+
+      QFont fn(font());
+      fn.setPointSize(fn.pointSize()+10);
+      fn.setBold(true);
+
+      p.setFont(fn);
+      p.setPen(Qt::white);
+      p.drawText(100, 100, i18n("SlideShow Completed."));
+      p.drawText(100, 150, i18n("Click To Exit..."));
+      p.end();
+      m_endOfShow = false;
+      return;
+    }
+
+    //Different behaviour on different effect 
+    
+    if ( QString::compare(m_effectName, "Chess Board") == 0 ) {
+      	p.drawPixmap(m_px, m_py, *m_currImage, m_psx, m_psy, m_psw, m_psh);
+	p.end();
+    }
+    
+    if ( QString::compare(m_effectName, "Blobs") == 0 ) {
+        m_painter->drawEllipse(m_px, m_py, m_psx, m_psy);
+	return;
+    }
+
+/*
+    switch ( m_effectName ) {
+      case "Chess Board" :
+	break;*/
+      /*case "Melt Down" :
+      case "Sweep" :
+      case "Noise" :
+      case "Growing" :
+      case "Incom_ing Edges" :
+      case "Horizontal Lines" :
+      case "Vertical Lines" :
+      case "Circle Out" :
+      case "MultiCircle Out" :
+      case "Spiral In" :
+      case "Blobs" :
+    */
+//       default :
+//     }
+}
+
 void SlideShow::startPainter(Qt::PenStyle aPen)
 {
-    QBrush brush;
-    brush.setPixmap(*(m_currImage));
-
-    if (m_painter.isActive())
-        m_painter.end();
-
-    m_painter.begin(this);
-    m_painter.setBrush(brush);
-    m_painter.setPen(aPen);
+    m_startPainter = true;
+    //update();
+    repaint();
 }
 
 void SlideShow::slotPause()
