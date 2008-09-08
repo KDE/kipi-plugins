@@ -36,11 +36,6 @@
 #include <knuminput.h>
 #include <kiconloader.h>
 
-// LibKDcraw includes.
-
-#include <libkdcraw/rawfiles.h>
-#include <libkdcraw/dcrawbinary.h>
-
 // Local includes.
 
 #include "emailpage.h"
