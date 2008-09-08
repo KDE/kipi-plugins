@@ -508,7 +508,7 @@ void SlideShowGL::loadImage()
         if (tex)
             glDeleteTextures(1, &tex);
 
-        QImage black(width(), height(), 32);
+        QImage black(width(), height(), QImage::Format_RGB32);
         black.fill(QColor(0,0,0).rgb());
 
 /*        image = image.smoothScale(width(), height(),
@@ -583,7 +583,7 @@ void SlideShowGL::printFilename(QImage& layer)
 
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(filename);
-    rect.addCoords( 0, 0, 2, 2 );
+    rect.adjust( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
     pix.fill(Qt::transparent);
@@ -613,14 +613,12 @@ void SlideShowGL::printProgress(QImage& layer)
 
     QFontMetrics fm(fn);
     QRect rect=fm.boundingRect(progress);
-    rect.addCoords( 0, 0, 2, 2 );
+    rect.adjust( 0, 0, 2, 2 );
 
     QPixmap pix(rect.width(),rect.height());
     pix.fill(Qt::transparent);
 
     QPainter p(&pix);
-
-    int stringLenght = p.fontMetrics().width(progress) * progress.length();
 
     p.setPen(Qt::white);
     p.setFont(fn);
@@ -647,7 +645,7 @@ void SlideShowGL::printComments(QImage& layer)
 
     uint commentsIndex = 0; // Comments QString index
 
-    while (commentsIndex < comments.length())
+    while (commentsIndex < (uint) comments.length())
     {
         QString newLine;
         bool breakLine = FALSE; // End Of Line found
@@ -657,7 +655,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         int commentsLinesLengthLocal = m_commentsLinesLength;
 
-        for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
+        for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
 
         if (commentsLinesLengthLocal <= (int)((currIndex - commentsIndex)))
@@ -666,7 +664,7 @@ void SlideShowGL::printComments(QImage& layer)
         breakLine = FALSE;
 
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-              currIndex < comments.length() &&
+              currIndex < (uint) comments.length() &&
                       !breakLine; currIndex++ )
         {
             breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
@@ -679,7 +677,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         commentsIndex = currIndex; // The line is ended
 
-        if ( commentsIndex != comments.length() )
+        if ( commentsIndex != (uint) comments.length() )
             while ( !newLine.endsWith(" ") )
         {
             newLine.truncate(newLine.length() - 1);
@@ -696,7 +694,7 @@ void SlideShowGL::printComments(QImage& layer)
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
         QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
-        rect.addCoords( 0, 0, 2, 2 );
+        rect.adjust( 0, 0, 2, 2 );
 
         QPixmap pix(rect.width(),rect.height());
         
@@ -737,7 +735,7 @@ void SlideShowGL::showEndOfShow()
     p.drawText(20, 100, i18n("Click To Exit..."));
     p.end();
 
-    QImage image(pix.convertToImage());
+    QImage image(pix.toImage());
     QImage t = convertToGLFormat(image);
 
     GLuint tex;

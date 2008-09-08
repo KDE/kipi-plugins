@@ -72,6 +72,9 @@ K_EXPORT_PLUGIN ( SlideShowFactory("kipiplugin_slideshow") )
 Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
                 : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
 {
+    // Useless: to please the compiler
+    QVariantList argsList = args;
+
     kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
                     << endl;
 }
@@ -128,7 +131,7 @@ void Plugin_SlideShow::slotActivate()
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
             = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(),
-                                                        i18n("Slide Show").ascii(), m_imagesHasComments,
+                                                        i18n("SlideShow").toAscii(), m_imagesHasComments,
                                                         m_urlList);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
@@ -214,7 +217,7 @@ void Plugin_SlideShow::slotSlideShow()
         QStringList::iterator itcom = commentsList.begin();
         QStringList::iterator itcom1;
 
-        for (uint i=0; i<fileList.size(); i++)
+        for (uint i=0; i< (uint) fileList.size(); i++)
         {
             int inc = (int) (float(fileList.count())*rand()/(RAND_MAX+1.0));
 
