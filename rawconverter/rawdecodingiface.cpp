@@ -41,11 +41,6 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-// LibKDcraw includes.
-
-#include <libkdcraw/rawfiles.h>
-#include <libkdcraw/dcrawbinary.h>
-
 // Local includes.
 
 #include "pluginsversion.h"
