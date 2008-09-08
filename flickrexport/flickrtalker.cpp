@@ -61,8 +61,12 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
 
 // Local includes.
 
@@ -387,7 +391,11 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     QImage image;
 
     // Check if RAW file.
+#if KDCRAW_VERSION < 0x000400
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
     QFileInfo fileInfo(photoPath);
     if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
