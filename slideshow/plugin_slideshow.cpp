@@ -131,8 +131,7 @@ void Plugin_SlideShow::slotActivate()
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
             = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(),
-                                                        i18n("SlideShow").toAscii(), m_imagesHasComments,
-                                                        m_urlList);
+                                                        m_imagesHasComments, m_urlList);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));

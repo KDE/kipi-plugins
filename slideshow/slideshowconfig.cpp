@@ -83,11 +83,12 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * interface,
-                                 QWidget *parent, const char* name, bool ImagesHasComments,
-                                 KUrl::List *urlList)
-               : QDialog(parent, name)
+                                 QWidget *parent, bool ImagesHasComments, KUrl::List *urlList)
+               : QDialog(parent)
 {
    setupUi(this);
+   setWindowTitle(i18n("SlideShow"));
+
     // About data and help button.
 
     KIPIPlugins::KPAboutData * about = new KIPIPlugins::KPAboutData(ki18n("Slide Show"),
@@ -180,7 +181,7 @@ SlideShowConfig::SlideShowConfig(bool allowSelectedOnly, KIPI::Interface * inter
     // Host application images has comments
     if ( ! ImagesHasComments ) {
         m_printCommentsCheckBox->setEnabled(FALSE);
-        m_tabWidget->setTabEnabled(commentsTab, FALSE);
+        m_tabWidget->setTabEnabled(m_tabWidget->indexOf(commentsTab), FALSE);
     }
 
     m_urlList = urlList;
@@ -499,7 +500,7 @@ void SlideShowConfig::slotCommentsFontColorChanged()
 
 void SlideShowConfig::slotPrintCommentsToggled()
 {
-    m_tabWidget->setTabEnabled(commentsTab, m_printCommentsCheckBox->isChecked());
+    m_tabWidget->setTabEnabled(m_tabWidget->indexOf(commentsTab), m_printCommentsCheckBox->isChecked());
 }
 
 void SlideShowConfig::slotUseMillisecondsToggled()

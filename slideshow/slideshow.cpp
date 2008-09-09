@@ -65,9 +65,8 @@ namespace KIPISlideShowPlugin
 {
 
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments)
-    : QWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose)
+    : QWidget(0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose)
 {
-//    setAttribute(Qt::WA_PaintOnScreen);
 
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
@@ -77,7 +76,10 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
-    setPaletteBackgroundColor(Qt::black);
+
+    QPalette paletteSelection = palette();
+    paletteSelection.setColor(QPalette::Window, QColor(0,0,0));
+    setPalette(paletteSelection);
 
     m_toolBar = new ToolBar(this);
     m_toolBar->hide();
@@ -144,7 +146,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
         }
     }
 
-    m_timer->start(10, true);
+    m_timer->setSingleShot(true);
+    m_timer->start(10);
 
     // -- hide cursor when not moved --------------------
 
@@ -315,7 +318,8 @@ void SlideShow::slotTimeOut()
         m_effectRunning = false;
     }
 
-    m_timer->start(tmout, true);
+    m_timer->setSingleShot(true);
+    m_timer->start(tmout);
 }
 
 void SlideShow::loadNextImage()
@@ -346,7 +350,7 @@ void SlideShow::loadNextImage()
     }
 
     QPixmap* oldPixmap = m_currImage;
-    QPixmap* newPixmap = new QPixmap(m_imageLoader->getCurrent());
+    QPixmap* newPixmap = new QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
 
     QPixmap pixmap(width(),height());
     pixmap.fill(Qt::black);
@@ -399,7 +403,7 @@ void SlideShow::loadPrevImage()
     }
 
     QPixmap* oldPixmap = m_currImage;
-    QPixmap* newPixmap = new QPixmap(m_imageLoader->getCurrent());
+    QPixmap* newPixmap = new QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
 
     QPixmap pixmap(width(),height());
     pixmap.fill(Qt::black);
@@ -467,7 +471,7 @@ void SlideShow::printComments()
 
     uint commentsIndex = 0; // Comments QString index
 
-    while (commentsIndex < comments.length())
+    while (commentsIndex < (uint) comments.length())
     {
         QString newLine;
         bool breakLine = FALSE; // End Of Line found
@@ -477,7 +481,7 @@ void SlideShow::printComments()
 
         uint commentsLinesLengthLocal = m_commentsLinesLength;
 
-        for ( currIndex = commentsIndex; currIndex < comments.length() && !breakLine; currIndex++ )
+        for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
 
         if (commentsLinesLengthLocal <= (currIndex - commentsIndex))
@@ -486,7 +490,7 @@ void SlideShow::printComments()
         breakLine = FALSE;
 
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-                                        currIndex < comments.length() &&
+                                        currIndex < (uint) comments.length() &&
                                         !breakLine; currIndex++ )
             {
                 breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
@@ -499,7 +503,7 @@ void SlideShow::printComments()
 
             commentsIndex = currIndex; // The line is ended
 
-        if ( commentsIndex != comments.length() )
+        if ( commentsIndex != (uint) comments.length() )
             while ( !newLine.endsWith(" ") )
             {
                 newLine.truncate(newLine.length() - 1);
@@ -553,7 +557,7 @@ void SlideShow::printProgress()
 SlideShow::EffectMethod SlideShow::getRandomEffect()
 {
     QStringList effs = Effects.keys();
-    effs.remove("None");
+    effs.removeAt(effs.indexOf("None"));
 
     int count = effs.count();
 
@@ -616,7 +620,8 @@ void SlideShow::mousePressEvent(QMouseEvent *e)
 void SlideShow::mouseMoveEvent(QMouseEvent *e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
-    m_mouseMoveTimer->start(1000, true);
+    m_mouseMoveTimer->setSingleShot(true);
+    m_mouseMoveTimer->start(1000);
 
     if (!m_toolBar->canHide())
         return;
@@ -1219,7 +1224,7 @@ void SlideShow::paintEvent(QPaintEvent *)
     if ( m_startPainter == true ) {
       QBrush brush;
       Qt::PenStyle aPen = Qt::NoPen;
-      brush.setPixmap(*(m_currImage));
+      brush.setTexture(*(m_currImage));
 
       if (m_painter->isActive())
 	  m_painter->end();

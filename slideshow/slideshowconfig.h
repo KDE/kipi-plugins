@@ -54,7 +54,7 @@ class SlideShowConfig : public QDialog, Ui::SlideShowConfigBase
 public:
 
     SlideShowConfig(bool allowSelectedOnly, KIPI::Interface* interface,
-                    QWidget *parent, const char* name, bool ImagesHasComments,
+                    QWidget *parent, bool ImagesHasComments,
                     KUrl::List* urlList);
     ~SlideShowConfig();
 
