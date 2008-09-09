@@ -25,7 +25,7 @@
 // Qt includes.
 
 #include <QToolButton>
-#include <Q3HBoxLayout>
+#include <QHBoxLayout>
 #include <QKeyEvent>
 
 // KDE includes.
@@ -45,7 +45,7 @@ namespace KIPISlideShowPlugin
 ToolBar::ToolBar(QWidget* parent)
        : QWidget(parent)
 {
-    Q3HBoxLayout* lay = new Q3HBoxLayout();
+    QHBoxLayout* lay = new QHBoxLayout();
     setLayout(lay);
     m_playBtn = new QToolButton(this);
     m_prevBtn = new QToolButton(this);
