@@ -86,6 +86,8 @@ extern "C"
 #include "batchdialog.h"
 #include "batchdialog.moc"
 
+using namespace KDcrawIface;
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -109,30 +111,30 @@ public:
         iface               = 0;
     }
 
-    bool                              busy;
-    bool                              convertBlink;
+    bool                      busy;
+    bool                      convertBlink;
 
-    QTimer                           *blinkConvertTimer;
+    QTimer                   *blinkConvertTimer;
 
-    QWidget                          *page;
+    QWidget                  *page;
 
-    QStringList                       fileList;
+    QStringList               fileList;
 
-    QProgressBar                     *progressBar;
+    QProgressBar             *progressBar;
 
-    QTreeWidget                      *listView;
+    QTreeWidget              *listView;
 
-    CListViewItem                    *currentConvertItem;
+    CListViewItem            *currentConvertItem;
 
-    ActionThread                     *thread;
+    ActionThread             *thread;
 
-    SaveSettingsWidget               *saveSettingsBox;
+    SaveSettingsWidget       *saveSettingsBox;
 
-    KDcrawIface::DcrawSettingsWidget *decodingSettingsBox;
+    DcrawSettingsWidget      *decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData         *about;
+    KIPIPlugins::KPAboutData *about;
 
-    KIPI::Interface                  *iface;
+    KIPI::Interface          *iface;
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)
@@ -179,15 +181,14 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    d->decodingSettingsBox = new KDcrawIface::DcrawSettingsWidget(d->page, true, true, true);
+    d->decodingSettingsBox = new DcrawSettingsWidget(d->page, DcrawSettingsWidget::SIXTEENBITS |
+                                                              DcrawSettingsWidget::COLORSPACE |
+                                                              DcrawSettingsWidget::POSTPROCESSING |
+                                                              DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->saveSettingsBox     = new SaveSettingsWidget(d->page);
 
-#if KDCRAW_VERSION >= 0x000300
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
     d->decodingSettingsBox->updateMinimumWidth();
-#else
-    d->decodingSettingsBox->addTab(d->saveSettingsBox, i18n("Save settings"));
-#endif
 
     d->progressBar = new QProgressBar(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
@@ -293,11 +294,9 @@ void BatchDialog::slotHelp()
 
 void BatchDialog::slotSixteenBitsImageToggled(bool)
 {
-#if KDCRAW_VERSION >= 0x000300
     // Dcraw do not provide a way to set brigness of image in 16 bits color depth.
     // We always set on this option. We drive brightness adjustment as post processing.
     d->decodingSettingsBox->setEnabledBrightnessSettings(true);
-#endif
 }
 
 void BatchDialog::closeEvent(QCloseEvent *e)
@@ -342,11 +341,9 @@ void BatchDialog::readSettings()
     d->decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
     d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
     d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
-#if KDCRAW_VERSION >= 0x000300
     d->decodingSettingsBox->setUseWhitePoint(group.readEntry("Use White Point", false));
     d->decodingSettingsBox->setWhitePoint(group.readEntry("White Point", 0));
     d->decodingSettingsBox->setMedianFilterPasses(group.readEntry("Median Filter Passes", 0));
-#endif
     d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
     d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
     d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
@@ -390,11 +387,9 @@ void BatchDialog::saveSettings()
     group.writeEntry("Brightness Multiplier", d->decodingSettingsBox->brightness());
     group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
     group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
-#if KDCRAW_VERSION >= 0x000300
     group.writeEntry("Use White Point", d->decodingSettingsBox->useWhitePoint());
     group.writeEntry("White Point", d->decodingSettingsBox->whitePoint());
     group.writeEntry("Median Filter Passes", d->decodingSettingsBox->medianFilterPasses());
-#endif
     group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
     group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
     group.writeEntry("caRedMultiplier", d->decodingSettingsBox->caRedMultiplier());
@@ -455,11 +450,9 @@ void BatchDialog::slotStartStop()
         rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
         rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
         rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
-#if KDCRAW_VERSION >= 0x000300
         rawDecodingSettings.enableWhitePoint           = d->decodingSettingsBox->useWhitePoint();
         rawDecodingSettings.whitePoint                 = d->decodingSettingsBox->whitePoint();
         rawDecodingSettings.medianFilterPasses         = d->decodingSettingsBox->medianFilterPasses();
-#endif
         rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
         rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
         rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
