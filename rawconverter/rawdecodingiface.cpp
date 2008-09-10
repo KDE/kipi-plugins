@@ -127,6 +127,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
     }
 
+#if KDCRAW_VERSION < 0x000400
+
     // Special case: RAW decoded image is a linear-histogram image with 16 bits color depth.
     // No auto white balance and no gamma adjustemnts are performed. Image is a black hole.
     // We need to reproduce all dcraw 8 bits color depth adjustements here.
@@ -188,6 +190,8 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
             im += 3;
         }
     }
+
+#endif
 
     // Use a QImage instance to write IPTC preview and Exif thumbnail
     // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
