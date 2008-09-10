@@ -86,7 +86,6 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     m_talker_buffer.resize(0);
 
     GalleryMPForm form;
-
     form.addPair("cmd", "login");
     form.addPair("protocol_version", "2.11");
     form.addPair("uname", name);
@@ -97,7 +96,8 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+        this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_job   = job;
@@ -108,10 +108,10 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
 
 void GalleryTalker::listAlbums()
 {
-    GalleryMPForm form;
     m_state = GE_LISTALBUMS;
     m_talker_buffer.resize(0);
 
+    GalleryMPForm form;
     form.addPair("cmd", "fetch-albums");
     form.addPair("protocol_version", "2.11");
     form.finish();
@@ -121,10 +121,11 @@ void GalleryTalker::listAlbums()
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+        this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job  = job;
+    m_job = job;
     emit signalBusy(true);
 };
 
@@ -132,15 +133,10 @@ void GalleryTalker::listAlbums()
 
 void GalleryTalker::listPhotos(const QString& albumName)
 {
-    if (m_job) {
-        m_job->kill();
-        m_job = 0;
-    }
-
-    GalleryMPForm form;
     m_state = GE_LISTPHOTOS;
     m_talker_buffer.resize(0);
 
+    GalleryMPForm form;
     form.addPair("cmd", "fetch-album-images");
     form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", albumName);
@@ -151,10 +147,11 @@ void GalleryTalker::listPhotos(const QString& albumName)
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+        this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job   = job;
+    m_job  = job;
     emit signalBusy(true);
 };
 
@@ -469,12 +466,13 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
-    QString *str = new QString(data);
-    QTextStream ts(str, QIODevice::ReadOnly);
+    QString str(data);
+    kWarning() << " la stringa famosa e' : " << str << endl;
+    QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
-    QString     line;
+    QString line;
     bool foundResponse = false;
-    bool success       = false;
+    bool success = false;
 
     typedef QList<GPhoto> GPhotoList;
     GPhotoList photoList;
@@ -488,29 +486,28 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         if (!foundResponse) {
             foundResponse = line.startsWith("#__GR2PROTO__");
         } else {
-// Boris the Gallery default URL contains "=" char. So we will split the string only from the first "=" char
-            QStringList strlist = QStringList();
-            // FIXME strlist << line.left(line.find('=')) << line.mid(line.find('=')+1);
-            strlist = line.split('=');
-            if (strlist.count() >= 2) {
+            QStringList strlist = line.split('=');
+            if (strlist.count() == 2) {
                 QString key   = strlist[0];
                 QString value = strlist[1];
 
                 if (key == "status") {
                     success = (value == "0");
-                } else if (key.startsWith("image.name")) {
-                    GPhoto photo;
-                    photo.name    = value;
-                    photo.ref_num = key.section(".", 2, 2).toInt();
-                    photoList.append(photo);
-                } else if (key.startsWith("image.caption")) {
-                    if (iter != photoList.end())
+                } else 
+                    if (key.startsWith("image.name")) {
+                        GPhoto photo;
+                        photo.name    = value;
+                        photo.ref_num = key.section(".", 2, 2).toInt();
+                        iter = photoList.insert(iter, photo);
+                } else 
+                    if (key.startsWith("image.caption")) { 
                         (*iter).caption = value;
-                } else if (key.startsWith("image.thumbName")) {
-                    if (iter != photoList.end())
+                } else 
+                    if (key.startsWith("image.thumbName")) {
                         (*iter).thumbName = value;
-                } else if (key.startsWith("baseurl")) {
-                    albumURL = value.replace("\\", "");
+                } else 
+                    if (key.startsWith("baseurl")) {
+                        albumURL = value.replace("\\", "");
                 }
             }
         }
@@ -526,9 +523,9 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         return;
     }
 
-    for (iter = photoList.begin(); iter != photoList.end(); ++iter) {
-        (*iter).albumURL = albumURL;
-    }
+//     for (iter = photoList.begin(); iter != photoList.end(); ++iter) {
+//         (*iter).albumURL = albumURL;
+//     }
 
     emit signalPhotos(photoList);
 };

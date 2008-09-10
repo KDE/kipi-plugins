@@ -244,25 +244,22 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::connectSignals()
 {
-//    connect(m_progressDlg, SIGNAL(canceled()), this , SLOT(slotAddPhotoCancel()));
-
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
+    connect(d->albumView, SIGNAL(itemSelectionChanged()), 
+        this , SLOT(slotAlbumSelected()));
     connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
     connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhotos()));
 
-// FIXME let app crashs..
-//    connect(d->photoView->browserExtension(), SIGNAL(openURLRequest(const KUrl&, const KParts::URLArgs&)),
-//        this, SLOT(slotOpenPhoto(const KUrl&)));
-
-    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalError(const QString&)),
+        this, SLOT(slotError(const QString&)));
     connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
     connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
         this, SLOT(slotLoginFailed(const QString&)));
     connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
         this, SLOT(slotAlbums(const QList<GAlbum>&)));
-//     connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
-//         this, SLOT(slotPhotos(const QList<GPhoto>&)));
-//     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+        this, SLOT(slotPhotos(const QList<GPhoto>&)));
+//     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+//      this, SLOT(slotAddPhotoSucceeded()));
 //     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
 //         this, SLOT(slotAddPhotoFailed(const QString&)));
 };
@@ -375,59 +372,7 @@ void GalleryWindow::slotError(const QString& msg)
 
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
-/*    d->albumDict.clear();
     d->albumView->clear();
-//     d->photoView->begin();
-//     d->photoView->write("<html></html>");
-//     d->photoView->end();
-    kWarning() << "siamo su GalleryWindow::slotAlbums.." << "albumList.size() = " << albumList.size() << endl;
-
-    typedef QList<GAlbum> GAlbumList;
-    GAlbumList::const_iterator iter;
-    for (iter = albumList.begin(); iter != albumList.end(); ++iter) {
-        const GAlbum& album = *iter;
-
-        if (album.parent_ref_num == 0) {
-            GAlbumViewItem item = GAlbumViewItem(d->albumView, album.title, album);
-            d->albumDict.insert(album.ref_num, item);
-        } else {
-            QTreeWidgetItem *parent = new QTreeWidgetItem(d->albumDict.take(album.parent_ref_num)); 
-            // FIXME s, find, take
-            if (parent) {
-                GAlbumViewItem item = GAlbumViewItem(parent, album.title, album);
-                d->albumDict.insert(album.ref_num, item);
-            } else {
-                kWarning() << "Failed to find parent for album "
-                << album.name
-                << " with id " << album.ref_num << "\n";
-            }
-        }
-    }
-
-    // find and select the last selected album
-    int lastSelectedID = 0;
-    for (iter = albumList.begin(); iter != albumList.end(); ++iter)
-    {
-        if ((*iter).name == d->lastSelectedAlbum)
-        {
-            lastSelectedID = (*iter).ref_num;
-            break;
-        }
-    }
-
-    if (lastSelectedID > 0)
-    {
-        QTreeWidgetItem *lastSelectedItem = new QTreeWidgetItem(d->albumDict.take(lastSelectedID));
-        // FIXME s, find, take
-        if (lastSelectedItem)
-        {
-            d->albumView->setCurrentItem(lastSelectedItem);    // true
-            // FIXME perhaps to be removed
-            // m_albumView->ensureItemVisible( lastSelectedItem );
-        }
-    }*/
-    d->albumView->clear();
-    kWarning() << "siamo su GalleryWindow::slotAlbums.." << "albumList.size() = " << albumList.size() << endl;
 
     typedef QList<GAlbum> GAlbumList;
     GAlbumList::const_iterator iter;
@@ -442,6 +387,17 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
+    QTreeWidgetItem* parentItem = d->albumView->currentItem();
+
+    typedef QList<GPhoto> GPhotoList;
+    GPhotoList::const_iterator iter;
+    for (iter = photoList.begin(); iter != photoList.end(); ++iter) {
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText(0, (*iter).name );
+        parentItem->addChild(item);
+//        d->albumView->addTopLevelItem(item);
+    }
+
     int pxSize = fontMetrics().height() - 2;
     QString styleSheet =
         QString("body { margin: 8px; font-size: %1px; "
@@ -492,6 +448,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 void GalleryWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
+    int column = d->albumView->currentColumn();
     if (!item)
     {
         d->addPhotoBtn->setEnabled(false);
@@ -500,15 +457,13 @@ void GalleryWindow::slotAlbumSelected()
     {
         if (m_talker->loggedIn())
         {
-            d->addPhotoBtn->setEnabled(true);
-
-//             d->photoView->begin();
-//             d->photoView->write("<html></html>");
-//             d->photoView->end();
-
-            GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
-            m_talker->listPhotos(viewItem->album.name);
-            d->lastSelectedAlbum = viewItem->album.name;
+//             d->addPhotoBtn->setEnabled(true);
+//             GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
+//             m_talker->listPhotos(viewItem->album.name);
+//             d->lastSelectedAlbum = viewItem->album.name;
+                d->addPhotoBtn->setEnabled(true);
+                QString str = item->text(column);
+                m_talker->listPhotos(str);
         }
     }
 };
