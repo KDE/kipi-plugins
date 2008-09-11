@@ -463,6 +463,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 };
 
 
+// -------------------------------------------------------------------------------------------
 
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {

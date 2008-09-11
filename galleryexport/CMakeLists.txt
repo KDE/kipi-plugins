@@ -5,7 +5,7 @@ SET( kipiplugin_galleryexport_PART_SRCS
     gallerywindow.cpp
     gallerytalker.cpp
     gallerympform.cpp
-    galleryviewitem.cpp
+#     galleryviewitem.cpp
 )
 
 KDE4_ADD_UI_FILES( kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui )

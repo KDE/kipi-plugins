@@ -32,7 +32,7 @@
 #include "galleries.h"
 #include "gallerytalker.h"
 #include "galleryitem.h"
-#include "galleryviewitem.h"
+//#include "galleryviewitem.h"
 #include "galleryconfig.h"
 
 // KIPI include files
@@ -86,7 +86,7 @@ private:
     QSpinBox*       dimensionSpinBox;
 
 
-    QHash<int, GAlbumViewItem> albumDict;
+    QHash<QString, GAlbum> albumDict;
     QString lastSelectedAlbum;
     unsigned int uploadCount;
     unsigned int uploadTotal;
@@ -372,14 +372,20 @@ void GalleryWindow::slotError(const QString& msg)
 
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
+    d->albumDict.clear();
     d->albumView->clear();
 
     typedef QList<GAlbum> GAlbumList;
-    GAlbumList::const_iterator iter;
-    for (iter = albumList.begin(); iter != albumList.end(); ++iter) {
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, (*iter).title );
-        d->albumView->addTopLevelItem(item);
+    GAlbumList::const_iterator iterator;
+    for (iterator = albumList.begin(); iterator != albumList.end(); ++iterator) {
+        if ( (*iterator).parent_ref_num != 0 ) {
+            QTreeWidgetItem *item = new QTreeWidgetItem();
+            item->setText(0, (*iterator).title );
+            d->albumView->addTopLevelItem(item);
+
+            const GAlbum& album = *iterator;
+            d->albumDict.insert(album.title, album);
+        }
     }
 };
 
@@ -390,57 +396,11 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
     QTreeWidgetItem* parentItem = d->albumView->currentItem();
 
     typedef QList<GPhoto> GPhotoList;
-    GPhotoList::const_iterator iter;
-    for (iter = photoList.begin(); iter != photoList.end(); ++iter) {
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, (*iter).name );
-        parentItem->addChild(item);
-//        d->albumView->addTopLevelItem(item);
+    GPhotoList::const_iterator iterator;
+    for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator) {
+        QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+        item->setText(0, (*iterator).caption );
     }
-
-    int pxSize = fontMetrics().height() - 2;
-    QString styleSheet =
-        QString("body { margin: 8px; font-size: %1px; "
-                " color: %2; background-color: %3;}")
-        .arg(pxSize , Qt::black , Qt::white );
-
-    styleSheet += QString("a { font-size: %1px; color: %2; "
-                          "text-decoration: none;}")
-                  .arg(pxSize , Qt::black );
-    styleSheet += QString("i { font-size: %1px; color: %2; "
-                          "text-decoration: none;}")
-                  .arg(pxSize - 2 , Qt::blue );
-
-//     d->photoView->begin();
-//     d->photoView->setUserStyleSheet(styleSheet);
-//     d->photoView->write("<html>");
-// 
-//     d->photoView->write("<table class='box-body' width='100%' "
-//                        "border='0' cellspacing='1' cellpadding='1'>");
-// 
-//     typedef QList<GPhoto> GPhotoList;
-//     GPhotoList::const_iterator iter;
-//     for (iter = photoList.begin(); iter != photoList.end(); ++iter)
-//     {
-//         const GPhoto& photo = *iter;
-//         KUrl imageurl(photo.albumURL + photo.name);
-//         KUrl thumburl(photo.albumURL + photo.thumbName);
-// 
-//         d->photoView->write("<tr><td class='photo'>"
-//                            + QString("<a href='%1'>")
-//                            .arg(imageurl.url())
-//                            + QString("<img border=1 src=\"%1\"><br>")
-//                            .arg(thumburl.url())
-//                            + photo.name
-//                            + (photo.caption.isEmpty() ? QString() :
-//                               QString("<br><i>%1</i>")
-//                               .arg(photo.caption))
-//                            + "</a></td></tr>");
-//     }
-// 
-//     d->photoView->write("</table>");
-//     d->photoView->write("</html>");
-//     d->photoView->end();
 };
 
 
@@ -462,8 +422,9 @@ void GalleryWindow::slotAlbumSelected()
 //             m_talker->listPhotos(viewItem->album.name);
 //             d->lastSelectedAlbum = viewItem->album.name;
                 d->addPhotoBtn->setEnabled(true);
-                QString str = item->text(column);
-                m_talker->listPhotos(str);
+                QString title = item->text(column);
+                const GAlbum& album = d->albumDict.value(title); 
+                m_talker->listPhotos(album.name);
         }
     }
 };
@@ -559,15 +520,16 @@ void GalleryWindow::slotNewAlbum()
 
     QString parentAlbumName;
 
-    QTreeWidgetItem* item = d->albumView->currentItem();
-    if (item) {
-        GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
-        parentAlbumName = viewItem->album.name;
-    } else {
-        parentAlbumName = "0";
-    }
-
-    m_talker->createAlbum(parentAlbumName, name, title, caption);
+// FIXME remove GAlbumViewItem
+//     QTreeWidgetItem* item = d->albumView->currentItem();
+//     if (item) {
+//         GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
+//         parentAlbumName = viewItem->album.name;
+//     } else {
+//         parentAlbumName = "0";
+//     }
+// 
+//     m_talker->createAlbum(parentAlbumName, name, title, caption);
 };
 
 

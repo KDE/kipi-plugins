@@ -53,7 +53,7 @@ class Gallery;
 class GalleryTalker;
 class GAlbum;
 class GPhoto;
-class GAlbumViewItem;
+
 
 class GalleryWindow : public KDialog
 {
