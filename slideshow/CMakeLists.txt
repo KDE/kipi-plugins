@@ -7,7 +7,11 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    screenproperties.cpp
                                    slideshowkb.cpp 
                                    imageloadthread.cpp
-                                   listimageitems.cpp 
+                                   listimageitems.cpp
+				   imageviewer.cpp
+				   maindialog.cpp
+				   captiondialog.cpp
+				   advanceddialog.cpp 
                                    slideshow.cpp 
                                    slideshowconfig.cpp 
                                    slideshowgl.cpp 
@@ -15,7 +19,10 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
                                    plugin_slideshow.cpp 
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS slideshowconfigbase.ui)
+KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS maindialog.ui 
+						 captiondialog.ui 
+						 advanceddialog.ui
+		 )
 
 KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
 
@@ -34,6 +41,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
+install(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}//kipi/data)
 
 INSTALL(TARGETS kipiplugin_slideshow DESTINATION ${PLUGIN_INSTALL_DIR})
 
