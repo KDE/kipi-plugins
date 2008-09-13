@@ -1299,8 +1299,11 @@ void SlideShow::paintEvent(QPaintEvent *)
 
 void SlideShow::startPainter(Qt::PenStyle aPen)
 {
+    // To please complier
+    if ( aPen == aPen ) {}
+    // Will be removed on SlideShow fix
+
     m_startPainter = true;
-    //update();
     repaint();
 }
 
