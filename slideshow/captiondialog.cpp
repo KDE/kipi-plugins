@@ -29,6 +29,7 @@
 
 namespace KIPISlideShowPlugin
 {
+
 CaptionDialog::CaptionDialog( QWidget* parent, SharedData* sharedData)
               :QWidget(parent)
 { 
@@ -74,18 +75,17 @@ void CaptionDialog::saveSettings()
 
 void CaptionDialog::slotCommentsBgColorChanged()
 {
-    m_commentsFontChooser->setBackgroundColor(m_commentsBgColor->color());
+  m_commentsFontChooser->setBackgroundColor(m_commentsBgColor->color());
 }
 
 void CaptionDialog::slotCommentsFontColorChanged()
 {
-    m_commentsFontChooser->setColor(m_commentsFontColor->color());
+  m_commentsFontChooser->setColor(m_commentsFontColor->color());
 }
 
 void CaptionDialog::slotTransparentBgToggled( void )
 {
-    m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
+  m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
 }
-
 
 }  // NameSpace KIPISlideShowPlugin
