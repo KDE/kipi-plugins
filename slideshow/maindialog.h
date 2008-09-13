@@ -81,4 +81,4 @@ class MainDialog : public QWidget, Ui::MainDialog
 
 } // NameSpace KIPISlideShowPlugin
 
-#endif //MAINDIALOG_H
+#endif // MAINDIALOG_H

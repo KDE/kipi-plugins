@@ -31,6 +31,7 @@
 
 namespace KIPISlideShowPlugin
 {
+
 AdvancedDialog::AdvancedDialog( QWidget* parent, SharedData* sharedData)
             :QWidget(parent)
 { 

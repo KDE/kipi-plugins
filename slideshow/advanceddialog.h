@@ -32,7 +32,6 @@ namespace KIPISlideShowPlugin
 
 class SharedData;
 
-
 class AdvancedDialog : public QWidget, Ui::AdvancedDialog
 {
     Q_OBJECT

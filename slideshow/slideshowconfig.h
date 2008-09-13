@@ -72,8 +72,6 @@ class SharedData
       loop = false;
       shuffle = false;
       showSelectedFilesOnly = false;
-   // QString          effectName;
-   // QString          effectNameGL;
       commentsFontColor = 0;
       commentsBgColor = 0;
       transparentBg = false;
@@ -86,6 +84,13 @@ class SharedData
       kbDisableFadeInOut = false;
       kbDisableCrossFade = false;
       cacheSize = 0;
+    }
+
+  ~SharedData() {
+      delete page_main;
+      delete page_caption;  
+      delete page_advanced;
+      if (urlList) delete urlList;
     }
 
   public:

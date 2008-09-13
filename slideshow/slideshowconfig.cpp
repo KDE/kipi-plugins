@@ -138,6 +138,10 @@ SlideShowConfig::SlideShowConfig (bool allowSelectedOnly, KIPI::Interface* inter
 
 SlideShowConfig::~SlideShowConfig () 
 {
+  delete d->sharedData->mainPage;
+  delete d->sharedData->captionPage;
+  delete d->sharedData->advancedPage;
+  delete d;
 }
 
 void SlideShowConfig::readSettings() {
