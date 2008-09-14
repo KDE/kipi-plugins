@@ -24,7 +24,6 @@
 #define LISTIMAGEITEM_H
 
 // QT includes
-
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
@@ -34,32 +33,38 @@
 
 // KDE includes
 #include <kurl.h>
+#include "kio/previewjob.h"
 
 namespace KIPISlideShowPlugin
 {
 
-class ImageItem : public QListWidgetItem
+class ImageItem : public QObject, public QListWidgetItem
 {
+    Q_OBJECT
 
 public:
 
-    ImageItem(QListWidget* parent, QString const & name, QString const & comments, QString const & path,
-              QString const & album)
-    : QListWidgetItem(parent), _name(name), _comments(comments), _path(path), _album(album)
-    {}
+    ImageItem(QListWidget* parent, QString const & name, QString const & comments, 
+              QString const & path, QString const & album);
+    ~ImageItem();
 
-    QString comments()                   { return _comments; }
-    QString name()                       { return _name;     }
-    QString path()                       { return _path;     }
-    QString album()                      { return _album;    }
-    void setName(const QString &newName) { setText(newName); }
+    QString comments();
+    QString name();
+    QString path();
+    QString album();
+    void setName(const QString &newName);
+
+private slots:
+    void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
+    void slotFailedPreview(const KFileItem&);private:
 
 private:
+    QString m_name;
+    QString m_comments;
+    QString m_path;
+    QString m_album;
 
-    QString _name;
-    QString _comments;
-    QString _path;
-    QString _album;
+    KIO::PreviewJob* m_thumbJob;
 };
 
 class ListImageItems : public QListWidget 

@@ -30,9 +30,11 @@
 #include <q3listbox.h>
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QIcon>
 
 // KDE includes
 #include <kurl.h>
+#include <kiconloader.h>
 
 // Local includes
 #include "listimageitems.h"
@@ -41,12 +43,51 @@
 namespace KIPISlideShowPlugin
 {
 
+ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & comments, 
+                     QString const & path, QString const & album)
+    : QListWidgetItem(parent), m_name(name), m_comments(comments), m_path(path), m_album(album)
+{ 
+  m_thumbJob = KIO::filePreview( KUrl(m_path), 32);
+
+
+  connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+          SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
+  connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
+          SLOT(slotFailedPreview(const KFileItem&)));
+}
+
+ImageItem::~ImageItem()
+{
+  if (m_thumbJob) delete m_thumbJob;
+}
+
+QString ImageItem::comments()                    { return m_comments; }
+QString ImageItem::name()                        { return m_name;     }
+QString ImageItem::path()                        { return m_path;     }
+QString ImageItem::album()                       { return m_album;    }
+void  ImageItem::setName(const QString &newName) { setText(newName);  }
+
+void ImageItem::slotGotPreview(const KFileItem& , const QPixmap &pixmap)
+{
+    setIcon(QIcon(pixmap));
+    m_thumbJob = 0L;
+}
+
+void ImageItem::slotFailedPreview(const KFileItem&)
+{
+    setIcon(SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    m_thumbJob = 0L;
+}
+
+// ---------------------------------------------
+
 ListImageItems::ListImageItems(QWidget *parent)
               : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);
     setSortingEnabled(false);
+    setIconSize(QSize(32, 32));
 }
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
