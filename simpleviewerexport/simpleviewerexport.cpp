@@ -52,8 +52,12 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/dcrawbinary.h>
+#include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000106
+#include <libkdcraw/dcrawbinary.h>
+#endif
 
 // LibKExiv2 includes.
 
@@ -376,7 +380,11 @@ bool SimpleViewerExport::exportImages()
             m_progressDlg->addedAction(i18n("Processing %1").arg(url.filename()), KIPI::StartingMessage);
 
             // Check if RAW file.
+#if KDCRAW_VERSION < 0x000106
             QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+            QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
             if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
                 KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
             else
