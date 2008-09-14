@@ -53,7 +53,12 @@ extern "C"
 
 // LibKDcraw includes.
 
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000106
 #include <libkdcraw/dcrawbinary.h>
+#endif
 
 // Local includes.
 
@@ -116,7 +121,11 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 {
+#if KDCRAW_VERSION < 0x000106
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
 
     QFileInfo fileInfo(filePath);
     if (rawFilesExt.upper().contains( fileInfo.extension(false).upper() ))
@@ -127,9 +136,13 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 
 bool Plugin_RawConverter::checkBinaries()
 {
+#if KDCRAW_VERSION < 0x000106
     KDcrawIface::DcrawBinary::instance()->checkSystem();
     KDcrawIface::DcrawBinary::instance()->checkReport();
     return KDcrawIface::DcrawBinary::instance()->isAvailable();
+#else
+    return true;
+#endif
 }
 
 void Plugin_RawConverter::slotActivateSingle()
