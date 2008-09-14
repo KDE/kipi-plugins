@@ -41,7 +41,7 @@ namespace KIPISlideShowPlugin
 ImageViewer::ImageViewer(QWidget* parent)
             :QWidget(parent)
 {
-  m_svgRenderer = new QSvgRenderer( KStandardDirs::locate("data", "kipi/data/KIPIicon.svg") );
+  m_svgRenderer = new QSvgRenderer( KStandardDirs::locate("data", "kipiplugin_slideshow/KIPIicon.svg") );
   m_clear = true;
   clear();
 }

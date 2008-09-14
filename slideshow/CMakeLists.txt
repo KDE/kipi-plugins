@@ -41,7 +41,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-install(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}//kipi/data)
+install(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}//kipiplugin_slideshow/)
 
 INSTALL(TARGETS kipiplugin_slideshow DESTINATION ${PLUGIN_INSTALL_DIR})
 
