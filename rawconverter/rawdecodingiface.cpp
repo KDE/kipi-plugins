@@ -59,11 +59,6 @@ extern "C"
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
-
-#include <libkdcraw/rawfiles.h>
-#include <libkdcraw/dcrawbinary.h>
-
 // Local includes.
 
 #include "pluginsversion.h"
