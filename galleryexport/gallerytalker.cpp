@@ -100,7 +100,7 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
         this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job   = job;
+    m_job  = job;
     emit signalBusy(true);
 };
 
@@ -162,11 +162,6 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
                                 const QString& albumTitle,
                                 const QString& albumCaption)
 {
-    if (m_job) {
-        m_job->kill();
-        m_job = 0;
-    }
-
     GalleryMPForm form;
     m_state = GE_CREATEALBUM;
     m_talker_buffer.resize(0);
@@ -195,17 +190,13 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 };
 
 
+
 bool GalleryTalker::addPhoto(const QString& albumName,
                              const QString& photoPath,
                              const QString& caption,
                              bool  captionIsTitle, bool captionIsDescription,
                              bool  rescale, int maxDim)
 {
-    if (m_job) {
-        m_job->kill();
-        m_job = 0;
-    }
-
     QString path = photoPath;
     QString display_filename = QFile::encodeName(KUrl(path).fileName());
 
@@ -256,7 +247,6 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
 
-    kWarning() << "data : " << form.formData() << endl;
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
@@ -327,7 +317,6 @@ void GalleryTalker::slotResult(KJob *job)
 
     if (m_state == GE_LOGIN && m_loggedIn)
     {
-        kWarning() << "state GE_LOGIN and just logged in: retrieving album list.." << endl;
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
         for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it) 
@@ -343,7 +332,6 @@ void GalleryTalker::slotResult(KJob *job)
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
-    kWarning() << "GalleryTalker::parseResponseLogin().." << endl;
     QString *str = new QString(data);
     QTextStream ts(str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
@@ -368,7 +356,6 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             }
         }
     }
-    kWarning() << "authToken = " << s_authToken << endl;
 
     if (!foundResponse) {
         emit signalLoginFailed(i18n("Gallery URL probably incorrect"));
@@ -385,7 +372,6 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
     QString str(data);
-    kWarning() << " la stringa famosa e' : " << str << endl;
     QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
     QString line;
@@ -468,7 +454,6 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QString str(data);
-    kWarning() << " la stringa famosa e' : " << str << endl;
     QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
     QString line;
@@ -524,23 +509,19 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
         return;
     }
 
-//     for (iter = photoList.begin(); iter != photoList.end(); ++iter) {
-//         (*iter).albumURL = albumURL;
-//     }
-
     emit signalPhotos(photoList);
-};
+    };
 
 
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 {
-    QString * str = new QString(data);
-    QTextStream ts(str, QIODevice::ReadOnly);
+    QString str(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
-    QString     line;
+    QString line;
     bool foundResponse = false;
-    bool success       = false;
+    bool success = false;
 
     while (!ts.atEnd()) {
         line = ts.readLine();
@@ -555,6 +536,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
+                    kWarning() << "Create Album. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
                     kDebug() << "STATUS: Create Album: " << value << endl;
                 }
@@ -579,12 +561,12 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 
 void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 {
-    QString *str = new QString(data);
-    QTextStream ts(str, QIODevice::ReadOnly);
+    QString str(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
-    QString     line;
+    QString line;
     bool foundResponse = false;
-    bool success       = false;
+    bool success = false;
 
     while (!ts.atEnd()) {
         line = ts.readLine();
@@ -603,6 +585,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
+                    kWarning() << "Add photo. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
                     kDebug() << "STATUS: Add Photo: " << value << endl;
                 }

@@ -32,7 +32,6 @@
 #include "galleries.h"
 #include "gallerytalker.h"
 #include "galleryitem.h"
-//#include "galleryviewitem.h"
 #include "galleryconfig.h"
 
 // KIPI include files
@@ -52,10 +51,12 @@
 #include <QListWidgetItem>
 #include <QSpinBox>
 #include <QGroupBox>
+#include <QInputDialog>
 
-// Include files for KDE
+// KDE includes
 #include <KAboutData>
 #include <KHelpMenu>
+#include <KIcon>
 #include <KMenu>
 #include <KPushButton>
 #include <KLocale>
@@ -180,7 +181,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
         d(new Private(this))
 {
     setWindowTitle( i18n("Gallery Export") );
-    setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Help);
+    setButtons( KDialog::Close | KDialog::Help);
     setModal(false);
     
     d->uploadCount = 0;
@@ -258,10 +259,10 @@ void GalleryWindow::connectSignals()
         this, SLOT(slotAlbums(const QList<GAlbum>&)));
     connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
         this, SLOT(slotPhotos(const QList<GPhoto>&)));
-//     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
-//      this, SLOT(slotAddPhotoSucceeded()));
-//     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
-//         this, SLOT(slotAddPhotoFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+        this, SLOT(slotAddPhotoSucceeded()));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+        this, SLOT(slotAddPhotoFailed(const QString&)));
 };
 
 
@@ -381,6 +382,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         if ( (*iterator).parent_ref_num != 0 ) {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, (*iterator).title );
+            item->setIcon(0, KIcon("inode-directory") );
             d->albumView->addTopLevelItem(item);
 
             const GAlbum& album = *iterator;
@@ -400,6 +402,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
     for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator) {
         QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
         item->setText(0, (*iterator).caption );
+        item->setIcon(0, KIcon("image-x-generic") );
     }
 };
 
@@ -417,10 +420,6 @@ void GalleryWindow::slotAlbumSelected()
     {
         if (m_talker->loggedIn())
         {
-//             d->addPhotoBtn->setEnabled(true);
-//             GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
-//             m_talker->listPhotos(viewItem->album.name);
-//             d->lastSelectedAlbum = viewItem->album.name;
                 d->addPhotoBtn->setEnabled(true);
                 QString title = item->text(column);
                 const GAlbum& album = d->albumDict.value(title); 
@@ -440,20 +439,11 @@ void GalleryWindow::slotOpenPhoto(const KUrl& url)
 
 void GalleryWindow::slotNewAlbum()
 {
-    QWidget *dialog = new QWidget(this);
-    Ui::GalleryAlbumWidget widg;
-    widg.setupUi(dialog);
-    widg.titleEdit->setFocus();
+    QString text = QInputDialog::getText(this, i18n("Create New album"), i18n("Insert new album name") );
 
-// FIXME
-//     if ( dialog->show() != QDialog::Accepted )
-//     {
-//         return;
-//     }
-
-    QString name    = widg.nameEdit->text();
-    QString title   = widg.titleEdit->text();
-    QString caption = widg.captionEdit->text();
+    QString name    = text;
+    QString title   = text;
+    QString caption = text;
 
     // check for prohibited chars in the album name
     // \ / * ? " ' & < > | . + # ( ) or spaces
@@ -520,16 +510,16 @@ void GalleryWindow::slotNewAlbum()
 
     QString parentAlbumName;
 
-// FIXME remove GAlbumViewItem
-//     QTreeWidgetItem* item = d->albumView->currentItem();
-//     if (item) {
-//         GAlbumViewItem* viewItem = static_cast<GAlbumViewItem*>(item);
-//         parentAlbumName = viewItem->album.name;
-//     } else {
-//         parentAlbumName = "0";
-//     }
-// 
-//     m_talker->createAlbum(parentAlbumName, name, title, caption);
+    QTreeWidgetItem* item = d->albumView->currentItem();
+    int column = d->albumView->currentColumn();
+    if (item) {
+        const GAlbum& album = d->albumDict.value( item->text(column) );
+        parentAlbumName = album.name;
+    } else {
+        parentAlbumName = "0";
+    }
+
+    m_talker->createAlbum(parentAlbumName, name, title, caption);
 };
 
 
@@ -555,7 +545,6 @@ void GalleryWindow::slotAddPhotos()
 
     d->uploadTotal = d->uploadQueue.count();
     d->uploadCount = 0;
-//    m_progressDlg->reset();
     slotAddPhotoNext();
 };
 
@@ -563,12 +552,10 @@ void GalleryWindow::slotAddPhotos()
 
 void GalleryWindow::slotAddPhotoNext()
 {
-    if (d->uploadQueue.isEmpty()) {
-//        m_progressDlg->reset();
-//        m_progressDlg->hide();
-        slotAlbumSelected();
-        return;
-    }
+//     if (d->uploadQueue.isEmpty()) {
+//         slotAlbumSelected();
+//         return;
+//     }
 
     typedef QPair<QString, QString> Pair;
     Pair pathComments = d->uploadQueue.first();
@@ -584,12 +571,6 @@ void GalleryWindow::slotAddPhotoNext()
         slotAddPhotoFailed("");
         return;
     }
-
-//     m_progressDlg->setLabelText(i18n("Uploading file %1 ")
-//                                 .arg(KUrl(pathComments.first).fileName()));
-
-//     if (m_progressDlg->isHidden())
-//         m_progressDlg->show();
 };
 
 
@@ -597,7 +578,6 @@ void GalleryWindow::slotAddPhotoNext()
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     d->uploadCount++;
-//    m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
     slotAddPhotoNext();
 };
 
@@ -612,14 +592,11 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                            + i18n("\nDo you want to continue?"))
             != KMessageBox::Continue) {
         d->uploadQueue.clear();
-//         m_progressDlg->reset();
-//         m_progressDlg->hide();
 
         // refresh the thumbnails
         slotAlbumSelected();
     } else {
         d->uploadTotal--;
-//        m_progressDlg->setValue(d->uploadCount);   //, m_uploadTotal );
         slotAddPhotoNext();
     }
 };
@@ -629,9 +606,6 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 void GalleryWindow::slotAddPhotoCancel()
 {
     d->uploadQueue.clear();
-//     m_progressDlg->reset();
-//     m_progressDlg->hide();
-
     m_talker->cancel();
 
     // refresh the thumbnails

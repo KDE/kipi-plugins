@@ -73,7 +73,6 @@ private:
     KIPIPlugins::KPAboutData *m_about;
     GalleryTalker* m_talker;
     Gallery* mpGallery;
-//     KProgressDialog* m_progressDlg;
 
     void connectSignals();
     void readSettings();
@@ -82,12 +81,12 @@ private slots:
 
     void slotDoLogin();
     void slotLoginFailed(const QString& msg);
-    void slotBusy(bool val); // not in flickrexport
+    void slotBusy(bool val);
     void slotError(const QString& msg);
-    void slotAlbums(const QList<GAlbum>& albumList); //not in flickrexport
-    void slotPhotos(const QList<GPhoto>& photoList); //not in flickrexport
+    void slotAlbums(const QList<GAlbum>& albumList);
+    void slotPhotos(const QList<GPhoto>& photoList);
     void slotAlbumSelected();
-    void slotOpenPhoto(const KUrl& url); //not in flickrexport
+    void slotOpenPhoto(const KUrl& url);
     void slotNewAlbum();
     void slotAddPhotos();
     void slotAddPhotoNext();
@@ -95,9 +94,6 @@ private slots:
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotHelp();
-
-//     void slotUploadFinished(int id, bool error);
-//     void slotUploadProgress(int done, int total);
 };
 
 }
