@@ -83,8 +83,8 @@ void MainDialog::readSettings()
     connect(m_delaySpinBox, SIGNAL(valueChanged(int)), this, SLOT(slotDelayChanged()));
     connect(m_effectsComboBox, SIGNAL(activated(int)), this,  SLOT(slotEffectChanged()));
     
-    connect( m_ImagesFilesListBox, SIGNAL( currentChanged( Q3ListBoxItem * ) ),
-              this, SLOT( slotImagesFilesSelected(Q3ListBoxItem *) ) );
+    connect( m_ImagesFilesListBox, SIGNAL( currentRowChanged( int ) ),
+              this, SLOT( slotImagesFilesSelected( int ) ) );
     connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
             this, SLOT( slotAddDropItems(KUrl::List)));
     connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
@@ -244,7 +244,7 @@ void MainDialog::loadEffectNamesGL()
 
 bool MainDialog::updateUrlList()
 {
-  for (uint i=0 ; i < m_ImagesFilesListBox->count() ; ++i)
+  for (int i=0 ; i < m_ImagesFilesListBox->count() ; ++i)
   {
       ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
       if (!QFile::exists(pitem->path()))
@@ -261,8 +261,9 @@ bool MainDialog::updateUrlList()
 
 // --- Slots
 
-void MainDialog::slotImagesFilesSelected( Q3ListBoxItem *item )
+void MainDialog::slotImagesFilesSelected( int row )
 {
+    QListWidgetItem* item = m_ImagesFilesListBox->item(row);
 
     if ( !item || m_ImagesFilesListBox->count() == 0 )
     {
@@ -287,40 +288,42 @@ void MainDialog::slotImagesFilesSelected( Q3ListBoxItem *item )
     connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
             SLOT(slotFailedPreview(const KFileItem&)));
 
-    int index = m_ImagesFilesListBox->index ( item );
+    int index = m_ImagesFilesListBox->row ( item );
     m_label7->setText(i18n("Image no. %1",QString::number(index + 1)));
 }
 
 void MainDialog::addItems(const KUrl::List& fileList)
 {
-    if (fileList.isEmpty()) return;
-    KUrl::List Files = fileList;
+  if (fileList.isEmpty()) kDebug()<<"IS EMPTY!"<<endl;
+  if (fileList.isEmpty()) return;
+  KUrl::List Files = fileList;
 
-    for ( KUrl::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
-    {
-        KUrl currentFile = *it;
+  for ( KUrl::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
+  {
+      KUrl currentFile = *it;
 
-        QFileInfo fi(currentFile.path());
-        QString Temp = fi.path();
-        QString albumName = Temp.section('/', -1);
+      QFileInfo fi(currentFile.path());
+      QString Temp = fi.path();
+      QString albumName = Temp.section('/', -1);
 
-        KIPI::ImageInfo info = m_sharedData->interface->info(currentFile);
-        QString comments = info.description();
+      KIPI::ImageInfo info = m_sharedData->interface->info(currentFile);
+      QString comments = info.description();
 
-        ImageItem *item = new ImageItem( m_ImagesFilesListBox,
-                                         currentFile.path().section('/', -1 ),   // File name with extension.
-                                         comments,                               // Image comments.
-                                         currentFile.path().section('/', 0, -1), // Complete path with file name.
-                                         albumName                               // Album name.
-                                       );
+      ImageItem *item = new ImageItem( m_ImagesFilesListBox,
+                                        currentFile.path().section('/', -1 ),   // File name with extension.
+                                        comments,                               // Image comments.
+                                        currentFile.path().section('/', 0, -1), // Complete path with file name.
+                                        albumName                               // Album name.
+                                      );
 
-        item->setName( currentFile.path().section('/', -1) );
-    }
+      item->setName( currentFile.path().section('/', -1) );
+      m_ImagesFilesListBox->insertItem(m_ImagesFilesListBox->count()-1, item);
+  }
 
-    ShowNumberImages( m_ImagesFilesListBox->count() );
-    m_ImagesFilesListBox->setCurrentItem( m_ImagesFilesListBox->count()-1) ;
-    slotImagesFilesSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
-    m_ImagesFilesListBox->centerCurrentItem();
+  ShowNumberImages( m_ImagesFilesListBox->count() );
+  m_ImagesFilesListBox->setCurrentItem(m_ImagesFilesListBox->item(m_ImagesFilesListBox->count()-1)) ;
+  slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
+  m_ImagesFilesListBox->scrollToItem(m_ImagesFilesListBox->currentItem());
 }
 
 
@@ -331,11 +334,8 @@ void MainDialog::slotAddDropItems(KUrl::List filesUrl)
 
 void MainDialog::slotImagesFilesButtonAdd( void )
 {
-    KIPIPlugins::ImageDialog dlg(this, m_sharedData->interface, true, false);
+    KIPIPlugins::ImageDialog dlg(this, m_sharedData->interface,false);
     KUrl::List urls = dlg.urls();
-  
-    kDebug()<<dlg.urls().isEmpty()<<endl;
-    kDebug()<<urls.isEmpty()<<endl;
   
     if (!urls.isEmpty())
     {
@@ -346,114 +346,91 @@ void MainDialog::slotImagesFilesButtonAdd( void )
 
 void MainDialog::slotImagesFilesButtonDelete( void )
 {
-    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-    {
-        if (m_ImagesFilesListBox->isSelected(i))
-        {
-            m_ImagesFilesListBox->removeItem(i);
-            m_ImagesFilesListBox->setCurrentItem(i);
-            --i;
-        }
-    }
+  int Index = m_ImagesFilesListBox->currentRow();
+  ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
+  delete pitem;
 
-    m_ImagesFilesListBox->setSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()), true);
-    slotImagesFilesSelected(m_ImagesFilesListBox->item(m_ImagesFilesListBox->currentItem()));
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+  slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
+  ShowNumberImages( m_ImagesFilesListBox->count() );
 }
 
 void MainDialog::slotImagesFilesButtonUp( void )
 {
-    int Cpt = 0;
+  int Cpt = 0;
 
-    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-        if (m_ImagesFilesListBox->isSelected(i))
-            ++Cpt;
+  for (int i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+      if (m_ImagesFilesListBox->currentRow() == i)
+          ++Cpt;
 
-    if  (Cpt == 0)
-        return;
+  if  (Cpt == 0)
+      return;
 
-    if  (Cpt > 1)
-    {
-        KMessageBox::error(this, i18n("You can only move up one image file at once."));
-        return;
-    }
+  if  (Cpt > 1)
+  {
+      KMessageBox::error(this, i18n("You can only move up one image file at once."));
+      return;
+  }
 
-    unsigned int Index = m_ImagesFilesListBox->currentItem();
+  unsigned int Index = m_ImagesFilesListBox->currentRow();
 
-    if (Index == 0)
-        return;
+  if (Index == 0)
+      return;
 
-    ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(Index) );
-    QString path(pitem->path());
-    QString comment(pitem->comments());
-    QString name(pitem->name());
-    QString album(pitem->album());
-    m_ImagesFilesListBox->removeItem(Index);
-    ImageItem *item = new ImageItem( 0, name, comment, path, album );
-    item->setName( name );
-    m_ImagesFilesListBox->insertItem(item, Index-1);
-    m_ImagesFilesListBox->setSelected(Index-1, true);
-    m_ImagesFilesListBox->setCurrentItem(Index-1);
+  ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
+  m_ImagesFilesListBox->insertItem(Index-1, pitem);
+  m_ImagesFilesListBox->setCurrentItem(pitem);
 }
 
 void MainDialog::slotImagesFilesButtonDown( void )
 {
-    int Cpt = 0;
+  int Cpt = 0;
 
-    for (uint i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-        if (m_ImagesFilesListBox->isSelected(i))
-            ++Cpt;
+  for (int i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
+      if (m_ImagesFilesListBox->currentRow() == i)
+          ++Cpt;
 
-    if (Cpt == 0)
-        return;
+  if (Cpt == 0)
+      return;
 
-    if (Cpt > 1)
-    {
-        KMessageBox::error(this, i18n("You can only move down one image file at once."));
-        return;
-    }
+  if (Cpt > 1)
+  {
+      KMessageBox::error(this, i18n("You can only move down one image file at once."));
+      return;
+  }
 
-    unsigned int Index = m_ImagesFilesListBox->currentItem();
+  int Index = m_ImagesFilesListBox->currentRow();
 
-    if (Index == m_ImagesFilesListBox->count())
-        return;
+  if (Index == m_ImagesFilesListBox->count())
+      return;
 
-    ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(Index) );
-    QString path(pitem->path());
-    QString comment(pitem->comments());
-    QString name(pitem->name());
-    QString album(pitem->name());
-    m_ImagesFilesListBox->removeItem(Index);
-    ImageItem *item = new ImageItem( 0, name, comment, path, album );
-    item->setName( name );
-    m_ImagesFilesListBox->insertItem(item, Index+1);
-    m_ImagesFilesListBox->setSelected(Index+1, true);
-    m_ImagesFilesListBox->setCurrentItem(Index+1);
+  ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
+  m_ImagesFilesListBox->insertItem(Index+1, pitem);
+  m_ImagesFilesListBox->setCurrentItem(pitem);
 }
 
 void MainDialog::slotOpenGLToggled( void )
 {
-    if (m_openglCheckBox->isChecked()) {
-        loadEffectNamesGL();
-    }
-    else {
-        loadEffectNames();
-    }
+  if (m_openglCheckBox->isChecked()) {
+      loadEffectNamesGL();
+  }
+  else {
+      loadEffectNames();
+  }
 
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+  ShowNumberImages( m_ImagesFilesListBox->count() );
 
-    slotEffectChanged();
+  slotEffectChanged();
 }
 
 void MainDialog::slotEffectChanged( void )
 {
-  bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
+bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
 
-  m_printNameCheckBox->setEnabled(!isKB);
-  m_printProgressCheckBox->setEnabled(!isKB);
-  m_printCommentsCheckBox->setEnabled(!isKB);
-  m_sharedData->page_caption->setEnabled((!isKB) && 
-                                          m_printCommentsCheckBox->isChecked());
+m_printNameCheckBox->setEnabled(!isKB);
+m_printProgressCheckBox->setEnabled(!isKB);
+m_printCommentsCheckBox->setEnabled(!isKB);
+m_sharedData->page_caption->setEnabled((!isKB) && 
+                                        m_printCommentsCheckBox->isChecked());
 }
 
 void MainDialog::slotDelayChanged( void )

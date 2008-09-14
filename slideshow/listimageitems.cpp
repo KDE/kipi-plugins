@@ -21,7 +21,6 @@
  * ============================================================ */
 
 // QT includes
-
 #include <qstring.h>
 #include <qwidget.h>
 #include <qevent.h>
@@ -29,28 +28,25 @@
 #include <q3dragobject.h>
 #include <qfileinfo.h>
 #include <q3listbox.h>
-//Added by qt3to4:
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
 // KDE includes
-
-#include <k3listbox.h>
 #include <kurl.h>
 
 // Local includes
-
 #include "listimageitems.h"
 #include "listimageitems.moc"
 
 namespace KIPISlideShowPlugin
 {
 
-ListImageItems::ListImageItems(QWidget *parent, const char *name)
-              : K3ListBox(parent, name)
+ListImageItems::ListImageItems(QWidget *parent)
+              : QListWidget(parent)
 {
-    setSelectionMode (Q3ListBox::Extended);
+    setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);
+    setSortingEnabled(false);
 }
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)

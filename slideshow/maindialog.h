@@ -57,7 +57,7 @@ class MainDialog : public QWidget, Ui::MainDialog
     void slotUseMillisecondsToggled( void );
   
     void SlotPortfolioDurationChanged ( int );
-    void slotImagesFilesSelected( Q3ListBoxItem *item );
+    void slotImagesFilesSelected( int );
     void slotAddDropItems(KUrl::List filesUrl);
     void slotImagesFilesButtonAdd( void );
     void slotImagesFilesButtonDelete( void );

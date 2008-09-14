@@ -29,23 +29,23 @@
 #include <QString>
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 // KDE includes
-
-#include <k3listbox.h>
 #include <kurl.h>
 
 namespace KIPISlideShowPlugin
 {
 
-class ImageItem : public Q3ListBoxText
+class ImageItem : public QListWidgetItem
 {
 
 public:
 
-    ImageItem(Q3ListBox * parent, QString const & name, QString const & comments, QString const & path,
+    ImageItem(QListWidget* parent, QString const & name, QString const & comments, QString const & path,
               QString const & album)
-    : Q3ListBoxText(parent), _name(name), _comments(comments), _path(path), _album(album)
+    : QListWidgetItem(parent), _name(name), _comments(comments), _path(path), _album(album)
     {}
 
     QString comments()                   { return _comments; }
@@ -62,13 +62,13 @@ private:
     QString _album;
 };
 
-class ListImageItems : public K3ListBox 
+class ListImageItems : public QListWidget 
 {
     Q_OBJECT
 
 public:
 
-    ListImageItems(QWidget *parent=0, const char *name=0);
+    ListImageItems(QWidget *parent=0);
 
 signals:
 
