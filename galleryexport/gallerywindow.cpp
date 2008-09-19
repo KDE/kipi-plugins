@@ -86,9 +86,7 @@ private:
     QCheckBox*      resizeCheckBox;
     QSpinBox*       dimensionSpinBox;
 
-
     QHash<QString, GAlbum> albumDict;
-//    QString lastSelectedAlbum;
   
     friend class GalleryWindow;
 };
@@ -103,7 +101,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     QHBoxLayout* galleryWidgetLayout = new QHBoxLayout(widget);
  
-    // creating and setting objects
+    // --- creating and setting objects
 
     // 1st. QListWidget albumView
     albumView = new QTreeWidget;
@@ -112,7 +110,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     // 2nd. GroupBox optionBox
     QFrame* optionFrame = new QFrame; 
-
     QVBoxLayout* frameLayout = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
@@ -148,8 +145,8 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     dimLayout->addWidget(resizeLabel);
 
     dimensionSpinBox  = new QSpinBox;
+    dimensionSpinBox->setRange(1,1600);
     dimensionSpinBox->setValue(600);
-    dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     dimLayout->addWidget(dimensionSpinBox);
 
     optionsBoxLayout->addLayout(dimLayout);
@@ -241,12 +238,17 @@ void GalleryWindow::connectSignals()
 {
     connect(d->albumView, SIGNAL(itemSelectionChanged()), 
         this , SLOT(slotAlbumSelected()));
-    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
-    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhoto()));
+    connect(d->newAlbumBtn, SIGNAL(clicked()),
+        this, SLOT(slotNewAlbum()));
+    connect(d->addPhotoBtn, SIGNAL(clicked()),
+        this, SLOT(slotAddPhoto()));
+    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
+        this, SLOT(slotEnableSpinBox(int)));
 
     connect(m_talker, SIGNAL(signalError(const QString&)),
         this, SLOT(slotError(const QString&)));
-    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+        this, SLOT(slotBusy(bool)));
     connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
         this, SLOT(slotLoginFailed(const QString&)));
     connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
@@ -257,6 +259,8 @@ void GalleryWindow::connectSignals()
         this, SLOT(slotAddPhotoSucceeded()));
     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
         this, SLOT(slotAddPhotoFailed(const QString&)));
+
+    
 };
 
 
@@ -269,6 +273,7 @@ void GalleryWindow::readSettings()
     if (group.readEntry("Resize", false)) {
         d->resizeCheckBox->setChecked(true);
         d->dimensionSpinBox->setEnabled(true);
+        d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));  //FIXME: everytime returns 99
     } else {
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
@@ -284,7 +289,6 @@ void GalleryWindow::readSettings()
     else
         d->captDescrCheckBox->setChecked(false);
 
-    d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 1600));
 };
 
 
@@ -435,8 +439,8 @@ void GalleryWindow::slotNewAlbum()
 {
     QString text = QInputDialog::getText(this, i18n("Create New album"), i18n("Insert new album name") );
 
-    QString name    = text;
-    QString title   = text;
+    QString name  = text;
+    QString title  = text;
     QString caption = text;
 
     // check for prohibited chars in the album name
@@ -579,5 +583,20 @@ void GalleryWindow::slotAddPhotoCancel()
     m_talker->cancel();
 };
 
+void GalleryWindow::slotEnableSpinBox(int n)
+{
+    bool b;
+    switch(n) {
+    case 0:
+        b = false;
+        break;
+    case 1:
+        break;
+    case 2:
+        b = true;
+        break;
+    }
+    d->dimensionSpinBox->setEnabled(b);
+};
 
 #include "gallerywindow.moc"

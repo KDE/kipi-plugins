@@ -93,6 +93,7 @@ private slots:
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotHelp();
+    void slotEnableSpinBox(int n);
 };
 
 }

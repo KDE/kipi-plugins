@@ -221,7 +221,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         // image file - see if we need to rescale it
         if (rescale && (image.width() > maxDim || image.height() > maxDim)) {
             image = image.scaled(maxDim, maxDim);
-            path = KUrl(photoPath).fileName(); // FIXME path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
+            path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
             image.save(path);
 
             if ("JPEG" == QString(QImageReader::imageFormat(photoPath)).toUpper()) {
