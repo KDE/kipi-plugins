@@ -88,11 +88,8 @@ private:
 
 
     QHash<QString, GAlbum> albumDict;
-    QString lastSelectedAlbum;
-    unsigned int uploadCount;
-    unsigned int uploadTotal;
-    QList< QPair<QString, QString> >  uploadQueue;
-
+//    QString lastSelectedAlbum;
+  
     friend class GalleryWindow;
 };
 
@@ -184,9 +181,6 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     setButtons( KDialog::Close | KDialog::Help);
     setModal(false);
     
-    d->uploadCount = 0;
-    d->uploadTotal = 0;
-
     // About data.
     m_about = new KIPIPlugins::KPAboutData(ki18n("Gallery Export"),
                                            0,
@@ -248,7 +242,7 @@ void GalleryWindow::connectSignals()
     connect(d->albumView, SIGNAL(itemSelectionChanged()), 
         this , SLOT(slotAlbumSelected()));
     connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
-    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhotos()));
+    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhoto()));
 
     connect(m_talker, SIGNAL(signalError(const QString&)),
         this, SLOT(slotError(const QString&)));
@@ -429,11 +423,11 @@ void GalleryWindow::slotAlbumSelected()
 };
 
 
-
-void GalleryWindow::slotOpenPhoto(const KUrl& url)
-{
-    new KRun(url, this);
-};
+// FIXME reenable me! yeah..
+// void GalleryWindow::slotOpenPhoto(const KUrl& url)
+// {
+//     new KRun(url, this);
+// };
 
 
 
@@ -524,49 +518,32 @@ void GalleryWindow::slotNewAlbum()
 
 
 
-void GalleryWindow::slotAddPhotos()
+void GalleryWindow::slotAddPhoto()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
+    int column = d->albumView->currentColumn();
     if (!item)
-        return;
+        return;     // NO item selected FIXME: do something
 
+    // albumName
+    QString albumTitle = item->text(column);
+    if(!d->albumDict.contains(albumTitle))
+        return;     // NO album selected: FIXME: do something
+
+    const GAlbum& album = d->albumDict.value(albumTitle); 
+
+    // photoPath
     KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
     if (urls.isEmpty())
         return;
 
-    typedef QPair<QString, QString> Pair;
-
-    d->uploadQueue.clear();
-    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
-    {
-        KIPI::ImageInfo info = m_interface->info(*it);
-        d->uploadQueue.append(Pair((*it).path(), info.description()));
-    }
-
-    d->uploadTotal = d->uploadQueue.count();
-    d->uploadCount = 0;
-    slotAddPhotoNext();
-};
-
-
-
-void GalleryWindow::slotAddPhotoNext()
-{
-//     if (d->uploadQueue.isEmpty()) {
-//         slotAlbumSelected();
-//         return;
-//     }
-
-    typedef QPair<QString, QString> Pair;
-    Pair pathComments = d->uploadQueue.first();
-    d->uploadQueue.pop_front();
-
-    bool res = m_talker->addPhoto(d->lastSelectedAlbum, pathComments.first,
-                                  pathComments.second,
+    QString photoPath = urls.at(0).path();
+    bool res = m_talker->addPhoto(album.name, photoPath, QString(),
                                   d->captTitleCheckBox->isChecked(),
                                   d->captDescrCheckBox->isChecked(),
                                   d->resizeCheckBox->isChecked(),
                                   d->dimensionSpinBox->value());
+
     if (!res) {
         slotAddPhotoFailed("");
         return;
@@ -577,8 +554,7 @@ void GalleryWindow::slotAddPhotoNext()
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
-    d->uploadCount++;
-    slotAddPhotoNext();
+    slotAddPhoto();         // FIXME temporary solution
 };
 
 
@@ -591,13 +567,8 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                            + msg
                                            + i18n("\nDo you want to continue?"))
             != KMessageBox::Continue) {
-        d->uploadQueue.clear();
-
-        // refresh the thumbnails
-        slotAlbumSelected();
     } else {
-        d->uploadTotal--;
-        slotAddPhotoNext();
+        slotAddPhoto();
     }
 };
 
@@ -605,11 +576,7 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 
 void GalleryWindow::slotAddPhotoCancel()
 {
-    d->uploadQueue.clear();
     m_talker->cancel();
-
-    // refresh the thumbnails
-    slotAlbumSelected();
 };
 
 

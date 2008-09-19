@@ -86,10 +86,9 @@ private slots:
     void slotAlbums(const QList<GAlbum>& albumList);
     void slotPhotos(const QList<GPhoto>& photoList);
     void slotAlbumSelected();
-    void slotOpenPhoto(const KUrl& url);
+//    void slotOpenPhoto(const KUrl& url);      // DISABLED for NOW!
     void slotNewAlbum();
-    void slotAddPhotos();
-    void slotAddPhotoNext();
+    void slotAddPhoto();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();

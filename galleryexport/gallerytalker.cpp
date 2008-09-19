@@ -223,7 +223,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
             path = KUrl(photoPath).fileName(); // FIXME path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
             image.save(path);
 
-            if ("JPEG" == QString(photoPath)) { // FIXME QString(QImageIO::imageFormat(photoPath)).toUpper())
+            if ("JPEG" == QString(QImageReader::imageFormat(photoPath)).toUpper()) {
                 KExiv2Iface::KExiv2 exiv2;
                 if (exiv2.load(photoPath)) {
                     exiv2.save(path);
