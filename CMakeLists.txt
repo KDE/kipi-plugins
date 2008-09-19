@@ -78,7 +78,7 @@ ADD_SUBDIRECTORY(gpssync)
 ADD_SUBDIRECTORY(simpleviewerexport)
 ADD_SUBDIRECTORY(flickrexport)
 ADD_SUBDIRECTORY(picasawebexport)
-#ADD_SUBDIRECTORY(galleryexport)
+ADD_SUBDIRECTORY(galleryexport)
 
 if(SANE_FOUND AND KSANE_FOUND)
    ADD_SUBDIRECTORY(acquireimages)
