@@ -36,6 +36,7 @@
 #include <QFile>
 #include <QImage>
 #include <QRegExp>
+#include <QImageReader>
 
 // KDE includes
 #include <KLocale>
