@@ -1,5 +1,327 @@
-V 0.2.0-beta1 - 2008-09-03
+V 0.2.0-beta1 - 2008-09-20
 ----------------------------------------------------------------------------
+
+2008-09-20 12:08  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-09-19 23:05  adjam
+
+    * galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: syncronized spinbox with resize
+      checkbox
+
+2008-09-19 16:02  adjam
+
+    * galleryexport/gallerytalker.cpp: Missing header..
+
+2008-09-19 15:47  adjam
+
+    * CMakeLists.txt: GalleryExport Re-enabled!!
+
+2008-09-19 15:46  adjam
+
+    * galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: Working on adding photos to the
+      gallery.
+
+2008-09-14 18:08  vfuoglio
+
+    * NEWS, slideshow/listimageitems.cpp, slideshow/listimageitems.h:
+      Added thumbnails into image list.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-09-14 16:29  vfuoglio
+
+    * slideshow/listimageitems.cpp, slideshow/listimageitems.h,
+      slideshow/maindialog.cpp, slideshow/maindialog.h: Fixed bug :
+      "Add" button doesn't work.
+      Dropped some KDE3 includes
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-09-14 13:07  vfuoglio
+
+    * slideshow/CMakeLists.txt, slideshow/imageviewer.cpp: Move
+      KIPIicon.svg to kipiplugin_slideshow directory.
+
+2008-09-14 06:08  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+      Some other adjustments. Added icons to better identify
+      albums and photos. Identified some problems to work on.
+      Hopefully, in the evening..
+
+2008-09-13 22:45  vfuoglio
+
+    * slideshow/slideshow.cpp: Cleaning warnings
+
+2008-09-13 22:37  vfuoglio
+
+    * slideshow/advanceddialog.cpp, slideshow/advanceddialog.h,
+      slideshow/maindialog.h, slideshow/slideshowconfig.cpp,
+      slideshow/slideshowconfig.h: Fixing destructor
+
+2008-09-13 22:20  vfuoglio
+
+    * slideshow/captiondialog.cpp: polish
+
+2008-09-13 22:01  vfuoglio
+
+    * slideshow/imageviewer.cpp, slideshow/imageviewer.h,
+      slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h:
+      Fixing licenses
+
+2008-09-13 21:57  vfuoglio
+
+    * slideshow/CMakeLists.txt, slideshow/KIPIicon.svg,
+      slideshow/advanceddialog.cpp, slideshow/advanceddialog.h,
+      slideshow/advanceddialog.ui, slideshow/captiondialog.cpp,
+      slideshow/captiondialog.h, slideshow/captiondialog.ui,
+      slideshow/hi22-action-slideshow.png, slideshow/imageviewer.cpp,
+      slideshow/imageviewer.h, slideshow/maindialog.cpp,
+      slideshow/maindialog.h, slideshow/maindialog.ui,
+      slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+      slideshow/slideshowconfigbase.ui: SlideShow's kde4 restyle
+      
+      CCMAIL: kde-imaging@kde.org
+      GUI:
+
+2008-09-11 22:48  adjam
+
+    * galleryexport/CMakeLists.txt, galleryexport/gallerytalker.cpp,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h: Refactored list Photos and Albums
+      functions. Removed GalleryViewItem
+      class and adapted a QHash in GalleryWindow to better find album
+      and photos.
+      
+      About me, this is the right way..
+
+2008-09-10 21:23  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: polish
+
+2008-09-10 16:57  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: do set auto gamma to 16 bits
+      color depth image with libraw
+
+2008-09-10 16:12  adjam
+
+    * galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+      Added List photos task.
+      Now I need just to re-enable the "Add" functions..
+
+2008-09-09 09:55  vfuoglio
+
+    * slideshow/toolbar.cpp: Removing qt3 classes
+
+2008-09-09 09:48  vfuoglio
+
+    * slideshow/plugin_slideshow.cpp, slideshow/slideshow.cpp,
+      slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h:
+      Cleaning warnings
+
+2008-09-09 06:30  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile
+
+2008-09-08 11:06  cgilles
+
+    * imageviewer/texture.cpp: compile with libkdcraw 0.4.0
+
+2008-09-08 11:05  cgilles
+
+    * picasawebexport/picasawebtalker.cpp: compile with libkdcraw 0.4.0
+
+2008-09-08 11:04  cgilles
+
+    * flickrexport/flickrtalker.cpp: compile with libkdcraw 0.4.0
+
+2008-09-08 11:03  cgilles
+
+    * simpleviewerexport/simpleviewerexport.cpp: compile with libkdcraw
+      0.4.0
+
+2008-09-08 11:01  cgilles
+
+    * sendimages/emailpage.cpp, sendimages/imageresize.cpp: compile
+      with libkdcraw 0.4.0
+
+2008-09-08 10:58  cgilles
+
+    * rawconverter/plugin_rawconverter.cpp,
+      rawconverter/rawdecodingiface.cpp: compile with libkdcraw 0.4.0
+
+2008-09-08 10:55  cgilles
+
+    * jpeglossless/utils.cpp: compile with libkdcraw 0.4.0
+
+2008-09-08 10:52  cgilles
+
+    * common/libkipiplugins/imagedialog.cpp: compile with libkdcraw
+      0.4.0
+
+2008-09-08 09:43  vfuoglio
+
+    * slideshow/plugin_slideshow.cpp, slideshow/slideshowgl.cpp:
+      Cleaning warnings.
+
+2008-09-07 23:55  adjam
+
+    * galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+      Here we are!
+      GalleryExport can now connect and list albums.
+      Tomorrow we are going to list photos, then add files and albums.
+      And that's all for this first release!
+
+2008-09-07 23:23  vfuoglio
+
+    * slideshow/slideshowgl.cpp, slideshow/slideshowgl.h: Fixed
+      SlideShowGL margins.
+
+2008-09-07 23:05  vfuoglio
+
+    * NEWS, slideshow/slideshowconfig.cpp, slideshow/slideshowconfig.h,
+      slideshow/slideshowconfigbase.ui, slideshow/slideshowgl.cpp,
+      slideshow/slideshowgl.h: Now filenames, captions and progress
+      indicators can have transparent
+      background with OpenGL SlideShow as well.
+      
+      CCMAIL: kde-imaging@kde.org
+      GUI:
+
+2008-09-07 22:16  vfuoglio
+
+    * slideshow/slideshowgl.cpp: Fixed printFilename, printProgress,
+      printComments: used QPainter instead of KImageEffect.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-09-07 19:08  vfuoglio
+
+    * slideshow/listimageitems.cpp, slideshow/slideshowconfig.cpp,
+      slideshow/slideshowloader.cpp: Cleaning some warning.
+
+2008-09-07 17:41  vfuoglio
+
+    * slideshow/CMakeLists.txt, slideshow/imageloadthread.cpp,
+      slideshow/imageloadthread.h, slideshow/kbeffect.cpp,
+      slideshow/kbeffect.h, slideshow/plugin_slideshow.cpp,
+      slideshow/plugin_slideshow.h, slideshow/screenproperties.cpp,
+      slideshow/screenproperties.h, slideshow/slideshow.cpp,
+      slideshow/slideshow.h, slideshow/slideshowconfig.cpp,
+      slideshow/slideshowconfig.h, slideshow/slideshowconfigbase.ui,
+      slideshow/slideshowgl.cpp, slideshow/slideshowgl.h,
+      slideshow/slideshowkb.cpp, slideshow/slideshowkb.h,
+      slideshow/slideshowloader.cpp, slideshow/slideshowloader.h,
+      slideshow/toolbar.cpp, slideshow/toolbar.h: Partially ported.
+      
+      Knowed issue:
+      - Add images by "Add" button fail.
+      - Standard effects are disabled (still "unported")
+      - A lot of warnings at compile time (will be fixed with next
+      commits)
+      
+      CCMAIL: kde-imaging@kde.org
+      GUI:
+
+2008-09-07 14:10  adjam
+
+    * galleryexport/gallerytalker.cpp: Restored gallerytalker file
+
+2008-09-07 14:03  adjam
+
+    * galleryexport/galleryalbumwidget.ui,
+      galleryexport/gallerytalker.cpp: Last (hopefully) krazy issues..
+
+2008-09-06 12:02  mlaurent
+
+    * galleryexport/galleryalbumwidget.ui: Fix ui files
+
+2008-09-05 22:59  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleryconfig.cpp,
+      galleryexport/gallerympform.cpp, galleryexport/gallerytalker.cpp,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp: Really Pedantic..
+
+2008-09-05 22:49  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/galleryconfig.cpp,
+      galleryexport/galleryconfig.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerytalker.cpp,
+      galleryexport/galleryviewitem.cpp,
+      galleryexport/galleryviewitem.h, galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: Solved tons of krazy
+      issues..
+
+2008-09-05 11:49  mlaurent
+
+    * galleryexport/galleryviewitem.cpp,
+      galleryexport/gallerywindow.cpp: Pedantic
+
+2008-09-04 21:33  adjam
+
+    * galleryexport/gallerympform.cpp, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerywindow.cpp: Finally solved Connection
+      Problems!! Now plugin connects to Gallerys..
+      Its functionality are near to come back!
+
+2008-09-04 21:30  mlaurent
+
+    * galleryexport/plugin_galleryexport.cpp: Add missing i18n
+
+2008-09-03 17:38  cgilles
+
+    * project/release/release_kipiplugins.rb: script is not able yet to
+      extract i18n for kipi-plugins
+
+2008-09-03 17:23  cgilles
+
+    * project, project/bootstrap.mandriva.2008,
+      project/bootstrap.mandriva.2009, project/bootstrap.ubuntu.8.04,
+      project/release, project/release/icons,
+      project/release/icons/16.png, project/release/lib,
+      project/release/lib/libbase.rb,
+      project/release/lib/libkdialog.rb,
+      project/release/lib/libl10n.rb,
+      project/release/lib/librelease.rb, project/release/lib/libtag.rb,
+      project/release/release_kipiplugins.rb: add subfolder project to
+      host release and bootstrap script
+
+2008-09-03 17:20  cgilles
+
+    * ChangeLog: update
 
 2008-09-02 23:12  jaiva
 
