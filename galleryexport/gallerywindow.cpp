@@ -3,9 +3,6 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2003-10-24
- * Description : 
- *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -52,6 +49,7 @@
 #include <QSpinBox>
 #include <QGroupBox>
 #include <QInputDialog>
+#include <QProgressDialog>
 
 // KDE includes
 #include <KAboutData>
@@ -76,15 +74,17 @@ class GalleryWindow::Private
 private:
     Private(GalleryWindow* parent);
 
-    QWidget*        widget;
-    QTreeWidget*    albumView;
-    QPushButton*    newAlbumBtn;
-    QPushButton*    addPhotoBtn;
-    QPushButton*    helpButton;
-    QCheckBox*      captTitleCheckBox;
-    QCheckBox*      captDescrCheckBox;
-    QCheckBox*      resizeCheckBox;
-    QSpinBox*       dimensionSpinBox;
+    QWidget *widget;
+    QTreeWidget *albumView;
+    QPushButton *newAlbumBtn;
+    QPushButton *addPhotoBtn;
+    QPushButton *helpButton;
+    QCheckBox *captTitleCheckBox;
+    QCheckBox *captDescrCheckBox;
+    QCheckBox *resizeCheckBox;
+    QSpinBox *dimensionSpinBox;
+
+    QProgressDialog *progressDlg;
 
     QHash<QString, GAlbum> albumDict;
   
@@ -99,7 +99,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout* galleryWidgetLayout = new QHBoxLayout(widget);
+    QHBoxLayout *galleryWidgetLayout = new QHBoxLayout(widget);
  
     // --- creating and setting objects
 
@@ -109,8 +109,8 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. GroupBox optionBox
-    QFrame* optionFrame = new QFrame; 
-    QVBoxLayout* frameLayout = new QVBoxLayout();
+    QFrame *optionFrame = new QFrame; 
+    QVBoxLayout *frameLayout = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&New Album"));
@@ -124,8 +124,8 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     addPhotoBtn->setEnabled(false);
     frameLayout->addWidget(addPhotoBtn);
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Override Default Options"));
-    QVBoxLayout* optionsBoxLayout = new QVBoxLayout(); 
+    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
+    QVBoxLayout *optionsBoxLayout = new QVBoxLayout(); 
 
     captTitleCheckBox = new QCheckBox(optionsBox);
     captTitleCheckBox->setText(i18n("Comment sets Title"));
@@ -141,7 +141,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     QHBoxLayout *dimLayout = new QHBoxLayout;
     
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension:"));
+    QLabel *resizeLabel = new QLabel(i18n("Maximum dimension:"));
     dimLayout->addWidget(resizeLabel);
 
     dimensionSpinBox  = new QSpinBox;
@@ -163,6 +163,8 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(optionFrame);
 
     widget->setLayout(galleryWidgetLayout);
+
+    progressDlg = new QProgressDialog(widget);
 };
 
 
@@ -198,7 +200,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
 
     KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
