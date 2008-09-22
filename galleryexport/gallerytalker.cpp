@@ -21,13 +21,13 @@
  *
  * ============================================================ */
 
-// local includes
-#include "gallerytalker.h"
-#include "galleryitem.h"
-#include "gallerympform.h"
+// standard includes
 
+#include <cstring>
+#include <cstdio>
 
 // Qt includes
+
 #include <QByteArray>
 #include <QTextStream>
 #include <QFile>
@@ -36,19 +36,24 @@
 #include <QImageReader>
 
 // KDE includes
+
 #include <KLocale>
 #include <kio/job.h>
+#include <kio/jobuidelegate.h>
 #include <KDebug>
 #include <KStandardDirs>
 
-// standard includes
-#include <cstring>
-#include <cstdio>
 
 // LibKExiv2 includes.
+
 #include <libkexiv2/kexiv2.h>
 
+// local includes
 
+#include "gallerytalker.h"
+#include "galleryitem.h"
+#include "gallerympform.h"
+#include "gallerytalker.moc"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -285,12 +290,21 @@ void GalleryTalker::slotResult(KJob *job)
     if (tempjob->error())
     {
         if (m_state == GE_LOGIN)
+        {
             emit signalLoginFailed(tempjob->errorString());
-        else 
+        }
+        else
+        {
             if (m_state == GE_ADDPHOTO)
+            {
                 emit signalAddPhotoFailed(tempjob->errorString());
+            }
             else
-                tempjob->showErrorDialog(m_parent);
+            {
+                tempjob->ui()->setWindow(m_parent);
+                tempjob->ui()->showErrorMessage();
+            }
+        }
         return;
     }
 
@@ -608,4 +622,3 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 }
 
 // self
-#include "gallerytalker.moc"
