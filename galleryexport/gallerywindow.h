@@ -63,14 +63,6 @@ public:
 
 private:
 
-    class Private;
-    Private* const d;
-
-    KIPI::Interface* m_interface;
-    KIPIPlugins::KPAboutData *m_about;
-    GalleryTalker* m_talker;
-    Gallery* mpGallery;
-
     void connectSignals();
     void readSettings();
 
@@ -91,6 +83,16 @@ private slots:
     void slotAddPhotoCancel();
     void slotHelp();
     void slotEnableSpinBox(int n);
+
+private:
+
+    KIPI::Interface* m_interface;
+    KIPIPlugins::KPAboutData *m_about;
+    GalleryTalker* m_talker;
+    Gallery* mpGallery;
+
+    class Private;
+    Private* const d;
 };
 
 }
