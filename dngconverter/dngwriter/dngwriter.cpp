@@ -596,6 +596,7 @@ int DNGWriter::convert()
             AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
             stream.Get(block->Buffer(), block->LogicalSize());
             negative->SetMakerNote(block);
+            negative->SetMakerNoteSafety(true);
         }
 
         if (d->cancel) return -2;
