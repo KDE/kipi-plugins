@@ -128,7 +128,7 @@ void MainDialog::readSettings()
 
     // Switch to selected files only (it depends on showSelectedFilesOnly)
 
-    kdDebug()<<m_sharedData->showSelectedFilesOnly<<endl;
+    kDebug() << m_sharedData->showSelectedFilesOnly << endl;
     m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
 
 
