@@ -56,9 +56,9 @@
 
 // Local includes.
 
-/*#include "kpaboutdata.h"
+#include "kpaboutdata.h"
 #include "imagedialog.h"
-#include "pluginsversion.h"*/
+#include "pluginsversion.h"
 #include "actions.h"
 #include "dngwriter.h"
 #include "settingswidget.h"
@@ -68,6 +68,7 @@
 #include "batchdialog.moc"
 
 using namespace DNGIface;
+using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
@@ -88,7 +89,7 @@ public:
         thread              = 0;
         settingsBox         = 0;
         iface               = 0;
-//        about               = 0;
+        about               = 0;
     }
 
     bool             busy;
@@ -112,7 +113,7 @@ public:
 
     KIPI::Interface *iface;
 
-//    KIPIPlugins::KPAboutData *about;
+    KPAboutData     *about;
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)
@@ -173,22 +174,17 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
 
-/*
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("DNG Image Converter"),
+    d->about = new KPAboutData(ki18n("DNG Image Converter"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert RAW camera images to DNG"),
                    ki18n("(c) 2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Renchi Raju"), 
-                       ki18n("Author"),
-                             "renchi at pooh dot tam dot uiuc dot edu");
-
     d->about->addAuthor(ki18n("Gilles Caulier"), 
-                       ki18n("Developer and maintainer"),
+                       ki18n("Author"),
                              "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
@@ -202,7 +198,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     helpButton->setDelayedMenu( helpMenu->menu() );
-*/
+
     // ---------------------------------------------------------------
 
     d->blinkConvertTimer = new QTimer(this);
@@ -245,7 +241,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
 BatchDialog::~BatchDialog()
 {
-//    delete d->about;
+    delete d->about;
     delete d;
 }
 
@@ -357,12 +353,12 @@ void BatchDialog::slotStartStop()
 
 void BatchDialog::slotAddItems()
 {
-/*    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
+    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
     {
         addItems(urls);
-    }*/
+    }
 }
 
 void BatchDialog::slotRemoveItems()
