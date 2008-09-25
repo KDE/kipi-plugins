@@ -588,7 +588,7 @@ int DNGWriter::convert()
         QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
         if (!mkrnts.isEmpty())
         {
-            qDebug() << "DNGWriter: Backup Makernote";
+            qDebug() << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)";
 
             dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
             dng_memory_stream stream(memalloc);
