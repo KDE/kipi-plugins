@@ -1,27 +1,3 @@
-PROJECT(dngtools)
-
-FIND_PACKAGE(KDE4 REQUIRED)
-
-INCLUDE(MacroOptionalFindPackage)
-INCLUDE(FindPackageHandleStandardArgs)
-INCLUDE(KDE4Defaults)
-INCLUDE(MacroLibrary)
-INCLUDE(MacroOptionalAddSubdirectory)
-
-FIND_PACKAGE(Kipi REQUIRED)
-FIND_PACKAGE(Kexiv2 REQUIRED)
-FIND_PACKAGE(Kdcraw REQUIRED)
-
-MACRO_LOG_FEATURE(KIPI_FOUND "Kipi" "KDE image plugins interface" "http://www.kipi-plugins.org" FALSE "" "Required to build dngconverter kipi-plugin.")
-MACRO_LOG_FEATURE(KEXIV2_FOUND "KExiv2" "A C++ wrapper around LibExiv2 library" "http://www.kipi-plugins.org" FALSE "" "Required to build dng2raw program.")
-MACRO_LOG_FEATURE(KDCRAW_FOUND "KDcraw" "A C++ wrapper around LibRaw library" "http://www.kipi-plugins.org" FALSE "" "Required to build dng2raw program.")
-
-INCLUDE_DIRECTORIES( ${KDE4_INCLUDES} 
-                     ${QT4_INCLUDES} 
-                     ${KIPI_INCLUDE_DIR}
-                     ${KEXIV2_INCLUDE_DIR}
-                     ${KDCRAW_INCLUDE_DIR}
-                   )
 
 # =======================================================
 # DNG SDK and XMP SDK use C++ exceptions
@@ -29,10 +5,6 @@ ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 # =======================================================
 # XMP SDK source code.
-
-# XMP SDK need libExpat library to compile
-FIND_PACKAGE(EXPAT)
-MACRO_LOG_FEATURE(EXPAT_FOUND "Expat" "An XML parser library written in C" "http://expat.sourceforge.net" FALSE "" "Required to build XMP SDK.")
 
 INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5
@@ -208,5 +180,5 @@ SET(libdngwriter_SRCS
 
 # =======================================================
 
-ADD_SUBDIRECTORY(dngconverter)
+ADD_SUBDIRECTORY(plugin)
 ADD_SUBDIRECTORY(test)
