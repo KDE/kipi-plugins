@@ -594,7 +594,8 @@ int DNGWriter::convert()
             dng_memory_stream stream(memalloc);
             stream.Put(mkrnts.data(), mkrnts.size());
             AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
-            stream.Get(block->Buffer(), block->LogicalSize());
+            stream.SetReadPosition(0);
+            stream.Get(block->Buffer(), mkrnts.size());
             negative->SetMakerNote(block);
             negative->SetMakerNoteSafety(true);
         }
