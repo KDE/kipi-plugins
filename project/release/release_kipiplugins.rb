@@ -31,39 +31,7 @@ require 'lib/librelease.rb'
 require 'lib/libl10n.rb'
 require 'lib/libtag.rb'
 
-# kipiplugins-only changes
-def kipiplugins()
-    puts("Running kipiplugins-only changes")
-    srcDir()
-
-    # change version in CMakeLists.txt
-    version       = @version.split(".")
-    majorversion  = version[0]
-    minorversion  = version[1]
-    patchversion  = version[2].split("-")[0]
-    suffixversion = version[2].split("-")[1]
-
-    file = File.new( "CMakeLists.txt", File::RDWR )
-    str = file.read()
-    file.rewind()
-    file.truncate( 0 )
-    str.sub!( /SET\(DIGIKAM_MAJOR_VERSION \".*\"\)/, "SET\(KIPIPLUGINS_MAJOR_VERSION \"#{majorversion}\"\)" )
-    str.sub!( /SET\(DIGIKAM_MINOR_VERSION \".*\"\)/, "SET\(KIPIPLUGINS_MINOR_VERSION \"#{minorversion}\"\)" )
-    str.sub!( /SET\(DIGIKAM_PATCH_VERSION \".*\"\)/, "SET\(KIPIPLUGINS_PATCH_VERSION \"#{patchversion}\"\)" )
-    unless suffixversion.empty?()
-        str.sub!( /SET\(DIGIKAM_SUFFIX_VERSION \".*\"\)/, "SET\(KIPIPLUGINS_SUFFIX_VERSION \"-#{suffixversion}\"\)" )
-    end
-    file << str
-    file.close()
-
-    # remove unnecessary stuff from tarball
-    toberemoved = ["project"]
-    for object in toberemoved
-        FileUtils.rm_rf(object)
-    end
-
-    baseDir()
-end
+require 'lib/libreleasedigikamkipi.rb'
 
 informationQuery()
 
@@ -72,16 +40,16 @@ informationQuery()
 
 fetchSource()
 
-# fetchTranslations()
+fetchTranslations()
 
 # fetchDocumentation()
 
-# createTranslationStats()
+createTranslationStats()
 
-# Do not work yet.
-#createTag()
+# TODO: currently broken
+# createTag()
 
-kipiplugins()
+release() #libreleasedigikamkipi.rb
 
 createTar()
 
