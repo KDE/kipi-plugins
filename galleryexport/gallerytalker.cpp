@@ -154,9 +154,9 @@ void GalleryTalker::listPhotos(const QString& albumName)
         this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job  = job;
+    m_job = job;
     emit signalBusy(true);
-};
+}; 
 
 
 
@@ -188,7 +188,7 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job   = job;
+    m_job  = job;
     emit signalBusy(true);
 };
 
@@ -263,10 +263,10 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
 void GalleryTalker::cancel()
 {
-    if (m_job) {
-        m_job->kill();
+//     if (m_job) {     // FIXME killing jobs crash applications..
+//         m_job->kill();
         m_job = 0;
-    }
+//     }
 };
 
 

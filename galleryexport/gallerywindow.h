@@ -29,9 +29,7 @@
 
 // Qt includes
 #include <QList>
-#include <QPair>
-#include <QHash>
-// #include <KProgressDialog>
+#include <QProgressDialog>
 
 namespace KIPI
 {
@@ -78,6 +76,7 @@ private slots:
 //    void slotOpenPhoto(const KUrl& url);      // DISABLED for NOW!
     void slotNewAlbum();
     void slotAddPhoto();
+    void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
@@ -90,6 +89,11 @@ private:
     KIPIPlugins::KPAboutData *m_about;
     GalleryTalker* m_talker;
     Gallery* mpGallery;
+
+    QProgressDialog *m_progressDlg;
+    unsigned int m_uploadCount;
+    unsigned int m_uploadTotal;
+    QStringList *mpUploadList;
 
     class Private;
     Private* const d;

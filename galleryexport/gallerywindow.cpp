@@ -41,7 +41,6 @@
 #include <Qt>
 #include <QDialog>
 #include <QPushButton>
-#include <QTimer>
 #include <QPixmap>
 #include <QCursor>
 #include <QCheckBox>
@@ -49,7 +48,6 @@
 #include <QSpinBox>
 #include <QGroupBox>
 #include <QInputDialog>
-#include <QProgressDialog>
 
 // KDE includes
 #include <KAboutData>
@@ -83,8 +81,6 @@ private:
     QCheckBox *captDescrCheckBox;
     QCheckBox *resizeCheckBox;
     QSpinBox *dimensionSpinBox;
-
-    QProgressDialog *progressDlg;
 
     QHash<QString, GAlbum> albumDict;
   
@@ -163,8 +159,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(optionFrame);
 
     widget->setLayout(galleryWidgetLayout);
-
-    progressDlg = new QProgressDialog(widget);
 };
 
 
@@ -210,13 +204,22 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     // we need to let m_talker work..
     m_talker = new GalleryTalker(d->widget);
 
+    // setting progressDlg and its numeric hints
+    m_progressDlg = new QProgressDialog(this);
+    m_progressDlg->setModal(true);
+    m_progressDlg->setAutoReset(true);
+    m_progressDlg->setAutoClose(true);
+    m_uploadCount = 0;
+    m_uploadTotal = 0;
+    mpUploadList = new QStringList;
+
     // connect functions
     connectSignals();
 
     // read Settings
     readSettings();
 
-    QTimer::singleShot(0, this,  SLOT(slotDoLogin()));
+    slotDoLogin();    
 };
 
 
@@ -247,6 +250,8 @@ void GalleryWindow::connectSignals()
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
         this, SLOT(slotEnableSpinBox(int)));
 
+    connect(m_progressDlg, SIGNAL( canceled() ), this, SLOT( slotAddPhotoCancel() ));
+
     connect(m_talker, SIGNAL(signalError(const QString&)),
         this, SLOT(slotError(const QString&)));
     connect(m_talker, SIGNAL(signalBusy(bool)),
@@ -275,7 +280,7 @@ void GalleryWindow::readSettings()
     if (group.readEntry("Resize", false)) {
         d->resizeCheckBox->setChecked(true);
         d->dimensionSpinBox->setEnabled(true);
-        d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));  //FIXME: everytime returns 99
+        d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));
     } else {
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
@@ -304,7 +309,6 @@ void GalleryWindow::slotHelp()
 
 void GalleryWindow::slotDoLogin()
 {
-
     GalleryTalker::setGallery2((2 == mpGallery->version()));
 
     KUrl url(mpGallery->url());
@@ -362,10 +366,9 @@ void GalleryWindow::slotBusy(bool val)
     }
 };
 
-
-
 void GalleryWindow::slotError(const QString& msg)
 {
+    m_progressDlg->hide();
     KMessageBox::error(this, msg);
 };
 
@@ -536,37 +539,72 @@ void GalleryWindow::slotAddPhoto()
     if(!d->albumDict.contains(albumTitle))
         return;     // NO album selected: FIXME: do something
 
-    const GAlbum& album = d->albumDict.value(albumTitle); 
-
     // photoPath
     KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
     if (urls.isEmpty())
         return;
 
-    QString photoPath = urls.at(0).path();
+    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    {
+        mpUploadList->append( (*it).path() );
+    }
+
+    m_uploadTotal = mpUploadList->count();
+    m_progressDlg->reset();
+    m_progressDlg->setMaximum(m_uploadTotal);
+    m_uploadCount = 0;
+    slotAddPhotoNext();
+};
+
+
+void GalleryWindow::slotAddPhotoNext()
+{
+    if ( mpUploadList->isEmpty() )
+    {
+        m_progressDlg->reset();
+        m_progressDlg->hide();
+        slotAlbumSelected();        // ?
+        return;
+    }
+
+    QTreeWidgetItem* item = d->albumView->currentItem();
+    int column = d->albumView->currentColumn();
+    QString albumTitle = item->text(column);
+    const GAlbum& album = d->albumDict.value(albumTitle); 
+
+    QString photoPath = mpUploadList->takeFirst();
     bool res = m_talker->addPhoto(album.name, photoPath, QString(),
                                   d->captTitleCheckBox->isChecked(),
                                   d->captDescrCheckBox->isChecked(),
                                   d->resizeCheckBox->isChecked(),
-                                  d->dimensionSpinBox->value());
+                                  d->dimensionSpinBox->value() );
 
-    if (!res) {
-        slotAddPhotoFailed("");
+    if (!res)
+    {
+        slotAddPhotoFailed( "" );
         return;
     }
+
+    m_progressDlg->setLabelText( i18n("Uploading file %1 ")
+                                 .arg( KUrl(photoPath).fileName() ) );
+    if (m_progressDlg->isHidden())
+        m_progressDlg->show();
 };
-
-
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
-    slotAddPhoto();         // FIXME temporary solution
+    m_uploadCount++;
+    m_progressDlg->setValue(m_uploadCount);
+    slotAddPhotoNext();
 };
 
 
 
 void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 {
+    m_progressDlg->reset();
+    m_progressDlg->hide();
+
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo into "
                                                 "remote gallery. ")
@@ -574,7 +612,7 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                            + i18n("\nDo you want to continue?"))
             != KMessageBox::Continue) {
     } else {
-        slotAddPhoto();
+        slotAddPhotoNext();
     }
 };
 
@@ -582,6 +620,9 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 
 void GalleryWindow::slotAddPhotoCancel()
 {
+    m_progressDlg->reset();
+    m_progressDlg->hide();
+
     m_talker->cancel();
 };
 
@@ -593,9 +634,11 @@ void GalleryWindow::slotEnableSpinBox(int n)
         b = false;
         break;
     case 1:
-        break;
     case 2:
         b = true;
+        break;
+    default:
+        b = false;
         break;
     }
     d->dimensionSpinBox->setEnabled(b);
