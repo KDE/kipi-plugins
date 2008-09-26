@@ -39,11 +39,9 @@ FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
 
-MACRO_LOG_FEATURE(KIPI_FOUND "Kipi" "KDE image plugins interface" "http://www.kipi-plugins.org" FALSE "" "Required to build dngconverter kipi-plugin.")
 MACRO_LOG_FEATURE(KEXIV2_FOUND "KExiv2" "A C++ wrapper around LibExiv2 library" "http://www.kipi-plugins.org" FALSE "" "Required to build dng2raw program.")
 MACRO_LOG_FEATURE(KDCRAW_FOUND "KDcraw" "A C++ wrapper around LibRaw library" "http://www.kipi-plugins.org" FALSE "" "Required to build dng2raw program.")
-
-#MACRO_LOG_FEATURE(EXPAT_FOUND "Expat" "An XML parser library written in C" "http://expat.sourceforge.net" FALSE "" "Required to build XMP SDK.")
+MACRO_LOG_FEATURE(KIPI_FOUND "Kipi" "KDE image plugins interface" "http://www.kipi-plugins.org" FALSE "" "Required to build dngconverter kipi-plugin.")
 
 # Optional depencies detection required by some plugins
 
@@ -54,6 +52,12 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)   # For DNGConverter: XMP SDK need Expat library to compile.
 
+# TODO: add others optional depencies to check when others plugins will be ported to KDE4
+#
+# ipodexport need Gpod library
+# calendar need Kcal library (KDEPIM)
+
+MACRO_LOG_FEATURE(EXPAT_FOUND "Expat" "An XML parser library written in C" "http://expat.sourceforge.net" FALSE "" "Required to build XMP SDK.")
 
 #SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
@@ -111,11 +115,7 @@ IF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND)
    MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
 ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND AND X11_FOUND)
 
-# TODO: add others optional depencies to check when others plugins will be ported to KDE4
-#
-# ipodexport need Gpod library
-# calendar need Kcal library (KDEPIM)
-#      
+# Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2 
 #
 #find_file(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
 #
