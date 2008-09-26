@@ -384,6 +384,10 @@ int DNGWriter::convert()
         negative->SetBaselineNoise(1.0);
         negative->SetBaselineSharpness(1.0);
 
+        dng_orientation orientation;
+        orientation.SetTIFF((uint32)identify.orientation);
+        negative->SetBaseOrientation(orientation);
+
         negative->SetAntiAliasStrength(dng_urational(100, 100));
         negative->SetLinearResponseLimit(1.0);
         negative->SetShadowScale( dng_urational(1, 1) );
