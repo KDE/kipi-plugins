@@ -24,6 +24,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_dngconverter
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${EXPAT_LIBRARY}
+                      ${CMAKE_THREAD_LIBS_INIT}
                       kipiplugins
                      )
 

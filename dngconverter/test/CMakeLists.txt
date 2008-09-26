@@ -46,4 +46,5 @@ TARGET_LINK_LIBRARIES(raw2dng
                       ${QT_LIBRARIES} 
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
+                      ${CMAKE_THREAD_LIBS_INIT}
                      )
