@@ -168,6 +168,7 @@ int DNGWriter::convert()
         qDebug() << "--- Make:          " << identify.make;
         qDebug() << "--- Model:         " << identify.model;
         qDebug() << "--- Size:          " << width << "x" << height;
+        qDebug() << "--- Orientation:   " << identify.orientation;
         qDebug() << "--- Top margin:    " << identify.topMargin;
         qDebug() << "--- Left margin:   " << identify.leftMargin;
         qDebug() << "--- Filter:        " << identify.filterPattern;
@@ -287,7 +288,7 @@ int DNGWriter::convert()
         ifd.fCFALayout                 = 1;                 // Rectangular (or square) layout.
         ifd.fPhotometricInterpretation = piCFA;
         ifd.fFillOrder                 = 1;
-        ifd.fOrientation               = 0;
+        ifd.fOrientation               = identify.orientation;
         ifd.fSamplesPerPixel           = 1;
         ifd.fPlanarConfiguration       = 1;
         ifd.fXResolution               = 0.0;
