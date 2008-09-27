@@ -392,7 +392,24 @@ int DNGWriter::convert()
         negative->SetBaselineSharpness(1.0);
 
         dng_orientation orientation;
-        orientation.SetTIFF((uint32)identify.orientation);
+        switch (identify.orientation)
+        {
+            case DcrawInfoContainer::ORIENTATION_180:
+                orientation = dng_orientation::Rotate180();
+                break;
+
+            case DcrawInfoContainer::ORIENTATION_90CCW:
+                orientation = dng_orientation::Rotate90CCW();
+                break;
+
+            case DcrawInfoContainer::ORIENTATION_90CW:
+                orientation = dng_orientation::Rotate90CW();
+                break;
+
+            default:   // ORIENTATION_NONE
+                orientation = dng_orientation::Normal();
+                break;
+        }
         negative->SetBaseOrientation(orientation);
 
         negative->SetAntiAliasStrength(dng_urational(100, 100));
