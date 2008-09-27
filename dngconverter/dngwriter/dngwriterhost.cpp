@@ -20,9 +20,9 @@
  *
  * ============================================================ */
 
-// Qt includes.
+// KDE includes.
 
-#include <QDebug>
+#include <kdebug.h>
 
 // local includes.
 
@@ -45,7 +45,7 @@ void DNGWriterHost::SniffForAbort()
 {
     if (m_priv->cancel)
     {
-        qDebug() << "DNGWriter: Canceled by user...";
+        kDebug( 51001 ) << "DNGWriter: Canceled by user..." << endl;
         m_priv->cleanup();
         ThrowUserCanceled();
     }
