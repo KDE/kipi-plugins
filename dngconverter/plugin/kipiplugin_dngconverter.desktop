@@ -1,7 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DNGConverter
+Name[pt]=Conversão para DNG
+Name[pt_BR]=Conversão para DNG
 Comment=KIPI RAW to DNG Camera Image Converter
+Comment[pt]=Conversão de Imagens RAW para DNG do KIPI
+Comment[pt_BR]=Conversão de Imagens RAW para DNG do KIPI
+Comment[uk]=Додаток KIPI для перетворення зображень з фотоапаратів RAW у DNG
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_dngconverter
