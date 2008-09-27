@@ -25,8 +25,10 @@
     DNG SDK tutorial:    http://www.adobeforums.com/webx/.3bc2944e
                          http://www.adobeforums.com/webx/.3c054bde
     DNG review:          http://www.barrypearson.co.uk/articles/dng/index.htm
+    DNG intro:           http://www.adobe.com/digitalimag/pdfs/dng_primer.pdf
+                         http://www.adobe.com/products/dng/pdfs/DNG_primer_manufacturers.pdf
     DNG Specification:   http://www.adobe.com/products/dng/pdfs/dng_spec_1_2_0_0.pdf
-    TIFF/EP Spec.        http://www.map.tu.chiba-u.ac.jp/IEC/100/TA2/recdoc/N4378.pdf
+    TIFF/EP Spec.:       http://www.map.tu.chiba-u.ac.jp/IEC/100/TA2/recdoc/N4378.pdf
     DNG SDK reference:   http://www.thomasdideriksen.dk/misc/File%20Formats/dng_sdk_refman.pdf
     DNG SDK tarball:     ftp://ftp.adobe.com/pub/adobe/dng/dng_sdk_1_2.zip
 
