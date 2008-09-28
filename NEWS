@@ -1,5 +1,17 @@
+v 0.2.0 - beta2
+------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
+
+New plugin to convert RAW camera image to Digital NeGative (DNG)
+
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
 v 0.2.0 - beta1
 ------------------------------------------------------------------------
+
+Kipi-plugins NEW FEATURES
 
 General        : Port to CMake/KDE4/QT4. 
 JPEGLossLess   : XMP metadata support. 
