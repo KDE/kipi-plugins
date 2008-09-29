@@ -114,12 +114,12 @@ void  Plugin_viewer::slotActivate()
         case KIPIviewer::oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported" << endl;
             delete widget;
-            QMessageBox::critical(new QWidget(),"OpenGL error","GL_ARB_texture_rectangle not supported");
+            QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case KIPIviewer::oglNoContext:
             kError() << "no OpenGL context found" << endl;
             delete widget;
-            QMessageBox::critical(new QWidget(),"OpenGL error","no OpenGL context found");
+            QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("no OpenGL context found"));
     }
 }
