@@ -39,7 +39,7 @@ enum dng_priority
 	dng_priority_count,
 	
 	dng_priority_minimum = dng_priority_low,
-	dng_priority_maximum = dng_priority_high,
+	dng_priority_maximum = dng_priority_high
 	
 	};
 
