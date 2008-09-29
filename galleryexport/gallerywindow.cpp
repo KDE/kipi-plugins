@@ -1,25 +1,25 @@
 /* ============================================================
- *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
- *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- *
  *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ *
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 
 // local includes.
@@ -83,7 +83,7 @@ private:
     QSpinBox *dimensionSpinBox;
 
     QHash<QString, GAlbum> albumDict;
-  
+
     friend class GalleryWindow;
 };
 
@@ -96,7 +96,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     parent->setModal(false);
 
     QHBoxLayout *galleryWidgetLayout = new QHBoxLayout(widget);
- 
+
     // --- creating and setting objects
 
     // 1st. QListWidget albumView
@@ -105,7 +105,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. GroupBox optionBox
-    QFrame *optionFrame = new QFrame; 
+    QFrame *optionFrame = new QFrame;
     QVBoxLayout *frameLayout = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
@@ -121,7 +121,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     frameLayout->addWidget(addPhotoBtn);
 
     QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
-    QVBoxLayout *optionsBoxLayout = new QVBoxLayout(); 
+    QVBoxLayout *optionsBoxLayout = new QVBoxLayout();
 
     captTitleCheckBox = new QCheckBox(optionsBox);
     captTitleCheckBox->setText(i18n("Comment sets Title"));
@@ -136,7 +136,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     optionsBoxLayout->addWidget(resizeCheckBox);
 
     QHBoxLayout *dimLayout = new QHBoxLayout;
-    
+
     QLabel *resizeLabel = new QLabel(i18n("Maximum dimension:"));
     dimLayout->addWidget(resizeLabel);
 
@@ -159,7 +159,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(optionFrame);
 
     widget->setLayout(galleryWidgetLayout);
-};
+}
 
 
 // --------------------------------------------
@@ -173,7 +173,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::Help);
     setModal(false);
-    
+
     // About data.
     m_about = new KIPIPlugins::KPAboutData(ki18n("Gallery Export"),
                                            0,
@@ -219,8 +219,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     // read Settings
     readSettings();
 
-    slotDoLogin();    
-};
+    slotDoLogin();
+}
 
 
 GalleryWindow::~GalleryWindow()
@@ -236,12 +236,12 @@ GalleryWindow::~GalleryWindow()
 
     delete d;
     delete m_about;
-};
+}
 
 
 void GalleryWindow::connectSignals()
 {
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), 
+    connect(d->albumView, SIGNAL(itemSelectionChanged()),
         this , SLOT(slotAlbumSelected()));
     connect(d->newAlbumBtn, SIGNAL(clicked()),
         this, SLOT(slotNewAlbum()));
@@ -256,19 +256,19 @@ void GalleryWindow::connectSignals()
         this, SLOT(slotError(const QString&)));
     connect(m_talker, SIGNAL(signalBusy(bool)),
         this, SLOT(slotBusy(bool)));
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)),
         this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)),
         this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)),
         this, SLOT(slotPhotos(const QList<GPhoto>&)));
     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
         this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
         this, SLOT(slotAddPhotoFailed(const QString&)));
 
-    
-};
+
+}
 
 
 void GalleryWindow::readSettings()
@@ -296,7 +296,7 @@ void GalleryWindow::readSettings()
     else
         d->captDescrCheckBox->setChecked(false);
 
-};
+}
 
 
 
@@ -304,7 +304,7 @@ void GalleryWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
     return;
-};
+}
 
 
 void GalleryWindow::slotDoLogin()
@@ -329,7 +329,7 @@ void GalleryWindow::slotDoLogin()
     }
 
     m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
-};
+}
 
 
 
@@ -345,7 +345,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
     }
 
     slotDoLogin();
-};
+}
 
 
 
@@ -356,21 +356,21 @@ void GalleryWindow::slotBusy(bool val)
         setCursor(Qt::WaitCursor);
         d->newAlbumBtn->setEnabled(false);
         d->addPhotoBtn->setEnabled(false);
-    } 
-    else 
+    }
+    else
     {
         setCursor(Qt::ArrowCursor);
         bool loggedIn = m_talker->loggedIn();
         d->newAlbumBtn->setEnabled(loggedIn);
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
     }
-};
+}
 
 void GalleryWindow::slotError(const QString& msg)
 {
     m_progressDlg->hide();
     KMessageBox::error(this, msg);
-};
+}
 
 
 
@@ -392,7 +392,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             d->albumDict.insert(album.title, album);
         }
     }
-};
+}
 
 
 
@@ -407,7 +407,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
         item->setText(0, (*iterator).caption );
         item->setIcon(0, KIcon("image-x-generic") );
     }
-};
+}
 
 
 
@@ -425,18 +425,18 @@ void GalleryWindow::slotAlbumSelected()
         {
                 d->addPhotoBtn->setEnabled(true);
                 QString title = item->text(column);
-                const GAlbum& album = d->albumDict.value(title); 
+                const GAlbum& album = d->albumDict.value(title);
                 m_talker->listPhotos(album.name);
         }
     }
-};
+}
 
 
 // FIXME reenable me! yeah..
 // void GalleryWindow::slotOpenPhoto(const KUrl& url)
 // {
 //     new KRun(url, this);
-// };
+// }
 
 
 
@@ -523,7 +523,7 @@ void GalleryWindow::slotNewAlbum()
     }
 
     m_talker->createAlbum(parentAlbumName, name, title, caption);
-};
+}
 
 
 
@@ -554,7 +554,7 @@ void GalleryWindow::slotAddPhoto()
     m_progressDlg->setMaximum(m_uploadTotal);
     m_uploadCount = 0;
     slotAddPhotoNext();
-};
+}
 
 
 void GalleryWindow::slotAddPhotoNext()
@@ -570,7 +570,7 @@ void GalleryWindow::slotAddPhotoNext()
     QTreeWidgetItem* item = d->albumView->currentItem();
     int column = d->albumView->currentColumn();
     QString albumTitle = item->text(column);
-    const GAlbum& album = d->albumDict.value(albumTitle); 
+    const GAlbum& album = d->albumDict.value(albumTitle);
 
     QString photoPath = mpUploadList->takeFirst();
     bool res = m_talker->addPhoto(album.name, photoPath, QString(),
@@ -589,14 +589,14 @@ void GalleryWindow::slotAddPhotoNext()
                                  .arg( KUrl(photoPath).fileName() ) );
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
-};
+}
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     m_uploadCount++;
     m_progressDlg->setValue(m_uploadCount);
     slotAddPhotoNext();
-};
+}
 
 
 
@@ -614,7 +614,7 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
     } else {
         slotAddPhotoNext();
     }
-};
+}
 
 
 
@@ -624,7 +624,7 @@ void GalleryWindow::slotAddPhotoCancel()
     m_progressDlg->hide();
 
     m_talker->cancel();
-};
+}
 
 void GalleryWindow::slotEnableSpinBox(int n)
 {
@@ -642,6 +642,6 @@ void GalleryWindow::slotEnableSpinBox(int n)
         break;
     }
     d->dimensionSpinBox->setEnabled(b);
-};
+}
 
 #include "gallerywindow.moc"

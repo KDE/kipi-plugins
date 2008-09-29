@@ -1,25 +1,25 @@
 /* ============================================================
- *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
- *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- *
  *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ *
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 // standard includes
 
@@ -61,14 +61,14 @@ namespace KIPIGalleryExportPlugin
 GalleryTalker::GalleryTalker(QWidget* parent)
         : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
-};
+}
 
 
 GalleryTalker::~GalleryTalker()
 {
     if (m_job)
         m_job->kill();
-};
+}
 
 
 bool GalleryTalker::s_using_gallery2 = true;
@@ -77,7 +77,7 @@ QString GalleryTalker::s_authToken = "";
 bool GalleryTalker::loggedIn() const
 {
     return m_loggedIn;
-};
+}
 
 
 
@@ -99,13 +99,13 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("cookies", "manual");
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
         this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_job  = job;
     emit signalBusy(true);
-};
+}
 
 
 
@@ -124,13 +124,13 @@ void GalleryTalker::listAlbums()
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
         this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_job = job;
     emit signalBusy(true);
-};
+}
 
 
 
@@ -150,13 +150,13 @@ void GalleryTalker::listPhotos(const QString& albumName)
     job->addMetaData("cookies", "manual");
     job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
         this, SLOT(data(KIO::Job*, const QByteArray&)));
     connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     m_job = job;
     emit signalBusy(true);
-}; 
+}
 
 
 
@@ -190,7 +190,7 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 
     m_job  = job;
     emit signalBusy(true);
-};
+}
 
 
 
@@ -257,7 +257,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     emit signalBusy(true);
 
     return true;
-};
+}
 
 
 
@@ -267,7 +267,7 @@ void GalleryTalker::cancel()
 //         m_job->kill();
         m_job = 0;
 //     }
-};
+}
 
 
 
@@ -279,7 +279,7 @@ void GalleryTalker::data(KIO::Job*, const QByteArray& data)
     int oldSize = m_talker_buffer.size();
     m_talker_buffer.resize(oldSize + data.size());
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
-};
+}
 
 
 void GalleryTalker::slotResult(KJob *job)
@@ -331,7 +331,7 @@ void GalleryTalker::slotResult(KJob *job)
     {
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
-        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it) 
+        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it)
         {
             QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
             if (rx.exactMatch(*it))   //rx.search(*it) > -1)
@@ -339,7 +339,7 @@ void GalleryTalker::slotResult(KJob *job)
         }
         listAlbums();
     }
-};
+}
 
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
@@ -361,7 +361,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             if (strlist.count() == 2) {
                 if (("status" == strlist[0]) && ("0" == strlist[1])) {
                     m_loggedIn = true;
-                } else 
+                } else
                     if ("auth_token" == strlist[0]) {
                         s_authToken = strlist[1];
                     }
@@ -377,7 +377,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     if (!m_loggedIn) {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }
-};
+}
 
 
 // -------------------------------------------------------------------------------------
@@ -406,37 +406,37 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else 
+                } else
                     if (key.startsWith("album.name")) {
                         GAlbum album;
                         album.name    = value;
                         album.ref_num = key.section(".", 2, 2).toInt();
                         iter = albumList.insert(iter, album);
-                } else 
+                } else
                     if (key.startsWith("album.title")) {
                         (*iter).title = value;
-                } else 
+                } else
                     if (key.startsWith("album.summary")) {
                         (*iter).summary = value;
-                } else 
+                } else
                     if (key.startsWith("album.parent")) {
                         (*iter).parent_ref_num = value.toInt();
-                } else 
+                } else
                     if (key.startsWith("album.perms.add")) {
                         (*iter).add = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.write")) {
                         (*iter).write = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.del_item")) {
                         (*iter).del_item = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.del_alb")) {
                         (*iter).del_alb = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.create_sub")) {
                         (*iter).create_sub = (value == "true");
-                } else 
+                } else
                     if (key == "auth_token") {
                     s_authToken = value;
                 }
@@ -458,7 +458,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
     qSort(albumList);
 
     emit signalAlbums(albumList);
-};
+}
 
 
 // -------------------------------------------------------------------------------------------
@@ -491,19 +491,19 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else 
+                } else
                     if (key.startsWith("image.name")) {
                         GPhoto photo;
                         photo.name    = value;
                         photo.ref_num = key.section(".", 2, 2).toInt();
                         iter = photoList.insert(iter, photo);
-                } else 
-                    if (key.startsWith("image.caption")) { 
+                } else
+                    if (key.startsWith("image.caption")) {
                         (*iter).caption = value;
-                } else 
+                } else
                     if (key.startsWith("image.thumbName")) {
                         (*iter).thumbName = value;
-                } else 
+                } else
                     if (key.startsWith("baseurl")) {
                         albumURL = value.replace("\\", "");
                 }
@@ -522,7 +522,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     }
 
     emit signalPhotos(photoList);
-    };
+    }
 
 
 
@@ -568,7 +568,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     }
 
     listAlbums();
-};
+}
 
 
 void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
@@ -616,7 +616,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
     } else {
         emit signalAddPhotoSucceeded();
     }
-};
+}
 
 
 }
