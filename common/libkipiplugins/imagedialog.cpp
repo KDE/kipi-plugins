@@ -33,6 +33,7 @@
 #include <kfiledialog.h>
 #include <kimageio.h>
 #include <kglobalsettings.h>
+#include <kio/previewjob.h>
 
 // LibKExiv2 includes.
 
@@ -144,7 +145,16 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         clearPreview();
         d->currentURL = url;
         if (d->iface)
+        {
             d->iface->thumbnail(d->currentURL, 256);
+        }
+        else
+        {
+            KIO::PreviewJob *job = KIO::filePreview(d->currentURL, 256);
+
+            connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
+                    this, SLOT(slotKDEPreview(const KFileItem &, const QPixmap &)));
+        }
 
         // Try to use libkexiv2 to identify image.
 
@@ -268,6 +278,12 @@ void ImageDialogPreview::showPreview(const KUrl& url)
     }
 }
 
+// Used only if Kipi interface is null.
+void ImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap &pix)
+{
+    slotThumbnail(item.url(), pix);
+}
+
 void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
     if (url == d->currentURL)
@@ -319,9 +335,9 @@ public:
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect, bool onlyRaw)
 {
     d = new ImageDialogPrivate;
-    d->iface        = iface;
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;
+    d->iface        = iface;
 
     QStringList patternList;
     QString     allPictures;

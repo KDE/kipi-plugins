@@ -57,6 +57,7 @@ private slots:
 
     void showPreview();
     void showPreview(const KUrl &url);
+    void slotKDEPreview(const KFileItem& item, const QPixmap &pix);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void clearPreview();
 
