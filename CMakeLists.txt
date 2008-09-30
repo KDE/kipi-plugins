@@ -62,6 +62,18 @@ MACRO_LOG_FEATURE(LIBXSLT_FOUND "LibXslt" "API to apply XSL Transformations with
 MACRO_LOG_FEATURE(OPENGL_FOUND  "OpenGL"  "API for developing portable, interactive 2D and 3D graphics applications" "http://mesa3d.sourceforge.net" FALSE "" "Required to build Slideshow and ImageViewer plugins.")
 MACRO_LOG_FEATURE(X11_FOUND     "X11"     "An open source implementation of the X Window System"                     "http://www.x.org"              FALSE "" "Required to build Slideshow plugin.")
 
+# Check KDcraw version installed to compile fine DngConverter plugin.
+FIND_PACKAGE(PkgConfig)
+PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
+IF(Kdcraw_FOUND)
+  MESSAGE("--   DNGConverter plugin will be compiled.")
+  SET(COMPILE_DNGCONVERTER TRUE)
+ELSE(Kdcraw_FOUND)
+  MESSAGE("--   DNGConverter plugin disabled.")
+  SET(COMPILE_DNGCONVERTER FALSE)
+ENDIF(Kdcraw_FOUND)
+
+
 # TODO: add others optional depencies to check when others plugins will be ported to KDE4
 #
 # ipodexport need Gpod library
@@ -74,7 +86,7 @@ MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
 IF(DEPEND_PACKAGE_KSane)
     MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
 ELSE(DEPEND_PACKAGE_KSane)
-    set (KSANE_FOUND FALSE)
+    SET(KSANE_FOUND FALSE)
 ENDIF(DEPEND_PACKAGE_KSane)
 
 
@@ -109,9 +121,9 @@ if(LIBXML2_FOUND AND LIBXSLT_FOUND)
    ADD_SUBDIRECTORY(htmlexport)
 endif(LIBXML2_FOUND AND LIBXSLT_FOUND)
 
-if(EXPAT_FOUND)
+if(EXPAT_FOUND AND COMPILE_DNGCONVERTER)
    ADD_SUBDIRECTORY(dngconverter)
-endif(EXPAT_FOUND)
+endif(EXPAT_FOUND AND COMPILE_DNGCONVERTER)
 
 # Plugins which depend on OpenGL
 
