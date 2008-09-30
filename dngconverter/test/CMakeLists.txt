@@ -1,6 +1,5 @@
 
 # =======================================================
-
 # DNGVALIDATE tool from DNG SDK
 
 # Disable DNG SDK warnings: we will never touch this code.
@@ -30,7 +29,7 @@ TARGET_LINK_LIBRARIES(dngvalidate
                      )
 
 # =======================================================
-# RAW2DNG tool
+# RAW2DNG command line tool
 
 SET(raw2dng_SRCS raw2dng.cpp)
 
@@ -47,4 +46,22 @@ TARGET_LINK_LIBRARIES(raw2dng
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
+                     )
+
+# =======================================================
+# Stand alone version of dngconverter plugin
+
+SET(dngconverter_SRCS dngconverter.cpp ${kipiplugin_dngconverter_PART_SRCS})
+
+KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
+
+TARGET_LINK_LIBRARIES(dngconverter
+                      ${EXPAT_LIBRARY}
+                      ${KDE4_KDEUI_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${QT_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
+                      ${CMAKE_THREAD_LIBS_INIT}
+                      kipiplugins
                      )

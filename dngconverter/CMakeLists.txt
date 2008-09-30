@@ -180,5 +180,14 @@ SET(libdngwriter_SRCS
 
 # =======================================================
 
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/plugin )
+
+SET(kipiplugin_dngconverter_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_dngconverter.cpp
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/plugin/batchdialog.cpp
+                                      ${CMAKE_CURRENT_SOURCE_DIR}/plugin/settingswidget.cpp
+                                      ${libdngwriter_SRCS}
+   )
+
 ADD_SUBDIRECTORY(plugin)
 ADD_SUBDIRECTORY(test)

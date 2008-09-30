@@ -41,10 +41,11 @@ public:
     KIPI::Category category(KAction* action) const;
     void setup(QWidget* widget);
 
+    static bool isRAWFile(const QString& filePath);
+
 private:
 
     bool checkBinaries();
-    bool isRAWFile(const QString& filePath);
 
 private slots:
 

@@ -8,13 +8,6 @@ FOREACH(_curentfile ${libxmp_SRCS})
     SET_SOURCE_FILES_PROPERTIES(${_curentfile} PROPERTIES COMPILE_FLAGS -w)
 ENDFOREACH(_curentfile ${libxmp_SRCS})
 
-SET(kipiplugin_dngconverter_PART_SRCS plugin_dngconverter.cpp
-                                      actionthread.cpp
-                                      batchdialog.cpp
-                                      settingswidget.cpp
-                                      ${libdngwriter_SRCS}
-   )
-
 KDE4_ADD_PLUGIN(kipiplugin_dngconverter ${kipiplugin_dngconverter_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_dngconverter 

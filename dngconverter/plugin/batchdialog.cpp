@@ -180,12 +180,12 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->about = new KPAboutData(ki18n("DNG Image Converter"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to batch convert RAW camera images to DNG"),
+                   ki18n("A tool to batch convert RAW camera images to DNG"),
                    ki18n("(c) 2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), 
-                       ki18n("Author"),
-                             "caulier dot gilles at gmail dot com");
+                        ki18n("Author"),
+                              "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
@@ -230,8 +230,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(d->thread, SIGNAL(finished(const ActionData&)),
             this, SLOT(slotAction(const ActionData&)));
 
-    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    if (d->iface)
+    {
+        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    }
 
     // ---------------------------------------------------------------
 
@@ -410,7 +413,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 
     if (!urlList.empty()) 
     {
-        if (!d->iface->hasFeature(KIPI::HostSupportsThumbnails))
+        if (!d->iface || !d->iface->hasFeature(KIPI::HostSupportsThumbnails))
             d->thread->thumbRawFiles(urlList);
         else
             d->iface->thumbnails(urlList, 256);
@@ -555,11 +558,14 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             d->currentConvertItem->setDestFileName(QFileInfo(destFile).fileName());
             d->currentConvertItem->setProgressIcon(SmallIcon("dialog-ok"));
 
-            // Assign Kipi host attributes from original RAW image.
+            if (d->iface)
+            {
+                // Assign Kipi host attributes from original RAW image.
 
-            KIPI::ImageInfo orgInfo = d->iface->info(url);
-            KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
-            newInfo.cloneData(orgInfo);
+                KIPI::ImageInfo orgInfo = d->iface->info(url);
+                KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
+                newInfo.cloneData(orgInfo);
+            }
         }
     }
 
