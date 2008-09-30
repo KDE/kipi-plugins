@@ -629,6 +629,33 @@ int DNGWriter::convert()
             negative->SetMakerNoteSafety(true);
         }
 
+/* FIXME: embeding original RAW file data do not work yet
+        {
+            kDebug( 51001 ) << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)" << endl;
+
+            QFile file(inputFile());
+            if ( !file.open(QIODevice::ReadOnly) )
+            {
+                kDebug( 51001 ) << "DNGWriter: Loading RAW data failed. Aborted..." << endl;
+                return -1;
+            }
+            QByteArray orgRawFile;
+            orgRawFile.resize(inputInfo.size());
+            QDataStream dataStream(&file);
+            dataStream.readRawData(orgRawFile.data(), orgRawFile.size());
+            file.close();
+
+            QByteArray zCompressData = qCompress(orgRawFile, 9);
+            dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
+            dng_memory_stream stream(memalloc);
+            stream.Put(zCompressData.data(), zCompressData.size());
+            AutoPtr<dng_memory_block> block(host.Allocate(zCompressData.size()));
+            stream.SetReadPosition(0);
+            stream.Get(block->Buffer(), zCompressData.size());
+            negative->SetOriginalRawFileData(block);
+            negative->SetHasOriginalRawFileData(true);
+        }
+*/
         if (d->cancel) return -2;
 
         // -----------------------------------------------------------------------------------------
