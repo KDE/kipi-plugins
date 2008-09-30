@@ -32,6 +32,7 @@
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kimageio.h>
+#include <kglobalsettings.h>
 
 // LibKExiv2 includes.
 
@@ -99,8 +100,11 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
 
     setSupportedMimeTypes(KImageIO::mimeTypes());
 
-    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    if (d->iface)
+    {
+        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    }
 }
 
 ImageDialogPreview::~ImageDialogPreview() 
@@ -139,7 +143,8 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         QString unavailable(i18n("<i>unavailable</i>"));
         clearPreview();
         d->currentURL = url;
-        d->iface->thumbnail(d->currentURL, 256);
+        if (d->iface)
+            d->iface->thumbnail(d->currentURL, 256);
 
         // Try to use libkexiv2 to identify image.
 
@@ -371,7 +376,9 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
     d->fileFormats = patternList.join("\n");
 
-    KFileDialog dlg(d->iface->currentAlbum().path(), d->fileFormats, parent);
+    KFileDialog dlg(d->iface ? d->iface->currentAlbum().path().path()
+                             : KGlobalSettings::documentPath(),
+                    d->fileFormats, parent);
     ImageDialogPreview *preview = new ImageDialogPreview(d->iface, &dlg);
     dlg.setPreviewWidget(preview);
     dlg.setOperationMode(KFileDialog::Opening);
