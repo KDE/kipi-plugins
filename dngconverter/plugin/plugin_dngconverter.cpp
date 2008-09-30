@@ -66,7 +66,7 @@ void Plugin_DNGConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action = new KAction(KIcon("rawconverterbatch"), i18n("DNG Converter..."), actionCollection());
+    m_action = new KAction(KIcon("dngconverter"), i18n("DNG Converter..."), actionCollection());
     m_action->setObjectName("dng_converter");
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
