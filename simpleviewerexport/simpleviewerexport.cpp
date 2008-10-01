@@ -471,7 +471,7 @@ bool SimpleViewerExport::createThumbnail(const QImage &image, QImage &thumbnail)
     int w = image.width();
     int h = image.height();
 
-    int maxSize;
+    int maxSize = 0;
 
     if(w > d->maxThumbSize || h > d->maxThumbSize)
     {
@@ -558,7 +558,7 @@ bool SimpleViewerExport::createIndex()
     if(indexTemplateName.isEmpty())
     {
         //TODO: errormsg
-        kDebug() << "No indexTemplateName" << endl;
+        kDebug( 51000 ) << "No indexTemplateName" << endl;
         return false;
     }
 
@@ -662,7 +662,7 @@ bool SimpleViewerExport::installSimpleViewer()
         }
         else
         {
-            kDebug() << "Archive extraction failed\n";
+            kDebug( 51000 ) << "Archive extraction failed\n";
         }
     }
 
@@ -685,7 +685,7 @@ bool SimpleViewerExport::openArchive(KZip &zip)
 {
     if(!zip.open(QIODevice::ReadOnly))
     {
-        kDebug() << "Open archive failed\n";
+        kDebug( 51000 ) << "Open archive failed\n";
         return false;
     }
     return true;
@@ -697,8 +697,8 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
     QStringList names = zip.directory()->entries();
     if(names.count() != 1)
     {
-        kDebug() << "Wrong SimpleViewer Version or corrupted archive" << endl;
-        kDebug() << "Content of the archive root folder" << names << endl;
+        kDebug( 51000 ) << "Wrong SimpleViewer Version or corrupted archive" << endl;
+        kDebug( 51000 ) << "Content of the archive root folder" << names << endl;
         return false;
     }
 
@@ -706,7 +706,7 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
     const KArchiveEntry *root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
     {
-        kDebug() << "could not open " << names[0] << " of zipname" << endl;
+        kDebug( 51000 ) << "could not open " << names[0] << " of zipname" << endl;
         return false;
     }
 
@@ -720,7 +720,7 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
         if(!extractFile(entry))
         {
             //TODO error msg
-            kDebug() << "could not open " << *it << " of zipname" << endl;
+            kDebug( 51000 ) << "could not open " << *it << " of zipname" << endl;
             return false;
         }
     }
