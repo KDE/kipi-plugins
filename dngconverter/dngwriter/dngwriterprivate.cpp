@@ -26,8 +26,11 @@
 
 // Qt includes.
 
-#include <QDebug>
 #include <QFile>
+
+// KDE includes.
+
+#include <kdebug.h>
 
 // Local includes.
 

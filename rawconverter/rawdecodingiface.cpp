@@ -9,10 +9,6 @@
  * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
- * NOTE: Do not use kdDebug() in this implementation because
- *       it will be multithreaded. Use qDebug() instead.
- *       See B.K.O #133026 for details.
- *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -159,7 +155,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         unsigned short lut[65536];
 
         perc = (int)(width * height * 0.01);
-        qDebug() << "White Level: " << perc << endl;
+        kDebug( 51000 ) << "White Level: " << perc << endl;
         for (int c =0  ; c < 3 ; c++)
         {
             total = 0;
@@ -171,7 +167,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
 
         white *= 1.0 / rawDecodingSettings.brightness;
-        qDebug() << "White Point: " << white << endl;
+        kDebug( 51000 ) << "White Point: " << white << endl;
 
         // Compute the Gamma lut accordingly.
 
@@ -247,7 +243,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // There is no limitation with TIFF and PNG about IPTC byte array size.
     if (outputFileFormat != SaveSettingsWidget::OUTPUT_JPEG)
         meta.setImagePreview(iptcPreview);
-        
+
     meta.setExifTagString("Exif.Image.DocumentName", fi.fileName());
     meta.setXmpTagString("Xmp.tiff.Make", meta.getExifTagString("Exif.Image.Make"));
     meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
@@ -280,7 +276,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
         default:
         {
-            qDebug("Invalid output file format");
+            kDebug( 51000 ) << "Invalid output file format" << endl;
             return false;
         }
     }

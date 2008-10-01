@@ -5,25 +5,21 @@
  *
  * Date        : 2004-06-08
  * Description : Lossless JPEG files transformations.
- * 
- * Copyright (C) 2004 by  Ralf Hoelzer <kde at ralfhoelzer.com>
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
+ * Copyright (C) 2004 by  Ralf Hoelzer <kde at ralfhoelzer.com>
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -33,7 +29,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <sys/types.h>
 #include <unistd.h>
@@ -157,7 +153,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        qCritical() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -166,7 +162,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -199,7 +195,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    qDebug() << "Transforming with option " << flip << " " << rotate;
+    kDebug( 51000 ) << "Transforming with option " << flip << " " << rotate << endl;
     if (flip == JXFORM_NONE && rotate == JXFORM_NONE)
     {
         err = "nothing to do"; // magic string
@@ -223,7 +219,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
@@ -280,7 +276,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         input_file = fopen(QFile::encodeName(dest), "rb");
         if (!input_file)
         {
-            qCritical() << "ImageRotate/ImageFlip: Error in opening input file" << endl;
+            kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening input file" << endl;
             err = i18n("Error in opening input file");
             return false;
         }
@@ -289,7 +285,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         if (!output_file)
         {
             fclose(input_file);
-            qCritical() << "ImageRotate/ImageFlip: Error in opening output file" << endl;
+            kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file" << endl;
             err = i18n("Error in opening output file");
             return false;
         }

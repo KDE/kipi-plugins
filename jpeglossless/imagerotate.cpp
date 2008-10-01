@@ -7,23 +7,19 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #define XMD_H
@@ -34,7 +30,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <sys/types.h>
 #include <unistd.h>
@@ -48,8 +44,8 @@ extern "C"
 
 // KDE includes.
 
-#include <kdebug.h>
 #include <k3process.h>
+#include <kdebug.h>
 #include <klocale.h>
 
 // Local includes.
@@ -96,7 +92,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
     {
         err = i18n("Cannot rotate RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!rotateJPEG(src, tmp, angle, err)) {
@@ -155,7 +151,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
         default:
         {
-            qCritical() << "ImageRotate: Nonstandard rotation angle" << endl;
+            kError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -170,8 +166,8 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
     K3Process process;
     process.clearArguments();
     process << "convert";
-    process << "-verbose";    
-    process << "-rotate";    
+    process << "-verbose";
+    process << "-rotate";
 
     switch(angle)
     {
@@ -196,7 +192,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
         }
         default:
         {
-            qCritical() << "ImageRotate: Nonstandard rotation angle" << endl;
+            kError( 51000 ) << "ImageRotate: Nonstandard rotation angle" << endl;
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -204,7 +200,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 
     process << src + QString("[0]") << dest;
 
-    qDebug() << "ImageMagick Command line: " << process.args();    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;
 
     connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
             this, SLOT(slotReadStderr(K3Process*, char*, int)));

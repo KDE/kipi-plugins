@@ -6,23 +6,19 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #define XMD_H
@@ -44,13 +40,13 @@ extern "C"
 
 #include <QFile>
 #include <QFileInfo>
-#include <QtDebug>
 
 // KDE includes.
 
 #include <k3process.h>
 #include <klocale.h>
 #include <kurl.h>
+#include <kdebug.h>
 
 // Local includes.
 
@@ -95,7 +91,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
     {
         err = i18n("Cannot convert to gray scale RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!image2GrayScaleJPEG(src, tmp, err))
@@ -154,7 +150,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        qCritical() << "Image2GrayScale: Error in opening input file" << endl;
+        kError( 51000 ) << "Image2GrayScale: Error in opening input file" << endl;
         err = i18n("Error in opening input file");
         return false;
     }
@@ -163,11 +159,11 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file)
     {
         fclose(input_file);
-        qCritical() << "Image2GrayScale: Error in opening output file" << endl;
+        kError( 51000 ) << "Image2GrayScale: Error in opening output file" << endl;
         err = i18n("Error in opening output file");
         return false;
     }
-    
+
     // Open jpeglib stream
     jpeg_stdio_src(&srcinfo, input_file);
 
@@ -191,7 +187,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     // Specify data destination for compression
     jpeg_stdio_dest(&dstinfo, output_file);
-    
+
     // Do not write a JFIF header if previously the image did not contain it
     dstinfo.write_JFIF_header = false;
 
@@ -221,11 +217,11 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     K3Process process;
     process.clearArguments();
     process << "convert";
-    process << "-verbose";    
-    process << "-type" << "Grayscale";   
+    process << "-verbose";
+    process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    qDebug() << "ImageMagick Command line: " << process.args();    
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;
 
     connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
             this, SLOT(slotReadStderr(K3Process*, char*, int)));

@@ -8,23 +8,19 @@
  *               actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C Ansi includes.
@@ -37,9 +33,12 @@ extern "C"
 // Qt includes.
 
 #include <QMutexLocker>
-#include <QtDebug>
 #include <QMutex>
 #include <QWaitCondition>
+
+// KDE includes.
+
+#include <kdebug.h>
 
 // LibKipi includes.
 
@@ -129,7 +128,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
             // When the image has been rotated on the disk we can assume that it
             // does not need to be rotated before being displayed.
             info.setAngle( 0 );
-          
+
             if ( val == Rot90 )
                 angle += 90;
             else if ( val == Rot180 )
@@ -150,7 +149,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         */
 
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path(); 
+        t->filePath               = (*it).path();
         t->action                 = Rotate;
         t->rotAction              = val;
 
@@ -169,7 +168,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         int angle = (info.angle() + 360) % 360;
 
         if ( ((90-45) <= angle && angle < (90+45)) ||
-             ((270-45) < angle && angle < (270+45)) ) 
+             ((270-45) < angle && angle < (270+45)) )
         {
             // The image is rotated 90 or 270 degrees, which means that the flip operations 
             // must be switched to gain the effect the user expects.
@@ -273,9 +272,9 @@ void ActionThread::run()
                 }
                 default:
                 {
-                    qCritical() << "KIPIJPEGLossLessPlugin:ActionThread: "
-                                << "Unknown action specified"
-                                << endl;
+                    kError( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
+                                    << "Unknown action specified"
+                                    << endl;
                 }
             }
 
