@@ -31,6 +31,7 @@
     TIFF/EP Spec.:       http://www.map.tu.chiba-u.ac.jp/IEC/100/TA2/recdoc/N4378.pdf
     DNG SDK reference:   http://www.thomasdideriksen.dk/misc/File%20Formats/dng_sdk_refman.pdf
     DNG SDK tarball:     ftp://ftp.adobe.com/pub/adobe/dng/dng_sdk_1_2.zip
+    DNG users forum:     http://www.adobeforums.com/webx/.3bb5f0ec
 
     Applications using DNG SDK:
     DNG4PS2:             http://dng4ps2.chat.ru/index_en.html
