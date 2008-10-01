@@ -42,6 +42,7 @@
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kglobal.h>
@@ -274,7 +275,7 @@ void SlideShowKB::setNewKBEffect()
             m_effect = new BlendKBEffect(this, needFadeIn);
             break;
         default:
-            qDebug("Unknown transition effect, falling back to crossfade");
+            kDebug( 51000 ) << "Unknown transition effect, falling back to crossfade" << endl;
             m_effect = new BlendKBEffect(this, needFadeIn);
     }
 }

@@ -9,10 +9,6 @@
  *
  * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
- * NOTE: Do not use kdDebug() in this implementation because 
- *       it will be multithreaded. Use qDebug() instead. 
- *       See B.K.O #133026 for details.
- *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -47,6 +43,7 @@ extern "C"
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <kstandarddirs.h>
 
 // Local includes.
@@ -146,14 +143,14 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file) 
     {
-        qDebug("Failed to open JPEG file for writing");
+        kDebug( 51000 ) << "Failed to open JPEG file for writing" << endl;
         return false;
     }
 
     struct jpeg_compress_struct cinfo;
     struct jpeg_error_mgr       jerr;
 
-    // Init JPEG compressor.    
+    // Init JPEG compressor.
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
     jpeg_stdio_dest(&cinfo, file);
@@ -260,7 +257,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file) 
     {
-        qDebug("Failed to open ppm file for writing");
+        kDebug( 51000 ) << "Failed to open ppm file for writing" << endl;
         return false;
     }
 
@@ -338,7 +335,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file) 
     {
-        qDebug("Failed to open PNG file for writing");
+        kDebug( 51000 ) << "Failed to open PNG file for writing" << endl;
         return false;
     }
 
@@ -511,7 +508,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFF *tif = TIFFOpen(QFile::encodeName(destPath), "w");
     if (!tif) 
     {
-        qDebug("Failed to open TIFF file for writing");
+        kDebug( 51000 ) << "Failed to open TIFF file for writing" << endl;
         return false;
     }
 
@@ -595,7 +592,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     uint8 *buf = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
     if (!buf)
     {
-        qDebug("Cannot allocate memory buffer for main TIFF image.");
+        kDebug( 51000 ) << "Cannot allocate memory buffer for main TIFF image." << endl;
         TIFFClose(tif);
         return false;
     }
@@ -677,7 +674,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         if (!TIFFWriteScanline(tif, buf, y, 0))
         {
-            qDebug("Cannot write main TIFF image to target file.");
+            kDebug( 51000 ) << "Cannot write main TIFF image to target file." << endl;
             _TIFFfree(buf);
             TIFFClose(tif);
             return false;
@@ -730,7 +727,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
             if (!TIFFWriteScanline(tif, bufThumb, y, 0))
             {
-                qDebug("Cannot write TIFF thumbnail to target file.");
+                kDebug( 51000 ) << "Cannot write TIFF thumbnail to target file." << endl;
                 _TIFFfree(bufThumb);
                 TIFFClose(tif);
                 return false;
@@ -809,7 +806,7 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
-    qDebug("Writing Raw profile: type=%s, length=%i", profile_type, (int)length);
+    kDebug( 51000 ) << "Writing Raw profile: type= " << profile_type << ", length= " << length << endl;
 
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
@@ -989,7 +986,7 @@ void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, warnings);
-    qDebug("%s::%s", module, message);
+    kDebug( 51000 ) << module << "::" << message << endl;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);
@@ -1002,7 +999,7 @@ void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_li
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, errors);
-    qDebug("%s::%s", module, message);
+    kDebug( 51000 ) << module << "::" << message << endl;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);

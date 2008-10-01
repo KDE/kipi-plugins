@@ -9,7 +9,7 @@
  * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
- * <carsten dot weinhold at gmx dot de>                                           
+ * <carsten dot weinhold at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@ ScreenProperties::ScreenProperties(QWidget *mainWidget)
 {
     activeScreen = QApplication::desktop()->screenNumber(mainWidget);
 }
-    
+
 unsigned ScreenProperties::suggestFrameRate() 
 {
 // use XRandR only in X11
@@ -90,7 +90,7 @@ unsigned ScreenProperties::suggestFrameRate()
     do {
         int r     = candidateRate[i];
         int error = qMin(screenRate % r, (screenRate + r) % r);
-        
+
         if (error < smallestError) {
             smallestError = error;
             bestRate      = r;
