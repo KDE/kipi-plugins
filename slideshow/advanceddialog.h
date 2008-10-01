@@ -24,7 +24,7 @@
 #define ADVANCEDDIALOG_H
 
 // Local includes
-#include "slideshowconfig.h" 
+#include "common.h" 
 #include "ui_advanceddialog.h"
 
 namespace KIPISlideShowPlugin

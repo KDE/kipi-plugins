@@ -38,7 +38,7 @@ AdvancedDialog::AdvancedDialog( QWidget* parent, SharedData* sharedData)
   setupUi(this);
 
   m_sharedData = sharedData;  
-
+  
   connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), 
           this, SLOT(slotUseMillisecondsToggled(void)));
   connect(m_cacheCheckBox, SIGNAL(toggled(bool)),

@@ -20,12 +20,7 @@
  *
  * ============================================================ */
 
-#include <kconfig.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kdeversion.h>
-#include <kglobalsettings.h>
-
+// QT includes
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qapplication.h>
@@ -36,42 +31,53 @@
 #include <qfileinfo.h>
 #include <qfontmetrics.h>
 #include <qmatrix.h>
-//Added by qt3to4:
 #include <QKeyEvent>
 #include <Q3ValueList>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QDesktopWidget>
 
+// KDE includes
+#include <kconfig.h>
+#include <klocale.h>
+#include <kdebug.h>
+#include <kdeversion.h>
+#include <kglobalsettings.h>
+#include <KConfigGroup>
+
+// C includes
 #include <math.h>
 #include <cstdlib>
 
+// Local includes
 #include "slideshowgl.h"
-#include <KConfigGroup>
-#include <QDesktopWidget>
 
 namespace KIPISlideShowPlugin
 {
 
 SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, bool ImagesHasComments)
+                         const QStringList& commentsList, SharedData* sharedData)
     : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
                 Qt::WX11BypassWM | Qt::WDestructiveClose)
-{
+{	
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
     m_deskWidth  = deskRect.width();
     m_deskHeight = deskRect.height();
-
+    
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
 
+    m_sharedData = sharedData;
+    
     m_toolBar = new ToolBar(this);
     m_toolBar->hide();
-    if (!m_loop)
-    {
+    if (!m_sharedData->loop)
+    {		
         m_toolBar->setEnabledPrev(false);
     }
+	
     connect(m_toolBar, SIGNAL(signalPause()),
             SLOT(slotPause()));
     connect(m_toolBar, SIGNAL(signalPlay()),
@@ -82,7 +88,15 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
             SLOT(slotPrev()));
     connect(m_toolBar, SIGNAL(signalClose()),
             SLOT(slotClose()));
-
+    
+    m_playbackWidget = new PlaybackWidget(this,m_sharedData->soundtrackUrls,m_sharedData);
+    m_playbackWidget->hide();
+       
+    int w = m_toolBar->width();
+    
+    m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY);
+    m_playbackWidget->move(m_deskX, m_deskY);
+    
     // -- Minimal texture size (opengl specs) --------------
 
     m_width  = 64;
@@ -98,11 +112,7 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_fileList       = fileList;
     m_commentsList   = commentsList;
 
-    m_imagesHasComments   = ImagesHasComments;
-
-    m_config = new KConfig("kipirc");
-
-    readSettings();
+	m_cacheSize = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
 
     // ------------------------------------------------------------------
 
@@ -112,7 +122,7 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
     m_texture[1] = 0;
     m_curr       = 0;
     m_tex1First  = true;
-    m_timeout    = m_delay;
+    m_timeout    = m_sharedData->delay;
     m_effectRunning = false;
     m_endOfShow     = false;
 
@@ -122,12 +132,12 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
 
     registerEffects();
 
-    if (m_effectName == "Random") {
+    if (m_sharedData->effectNameGL == "Random") {
         m_effect = getRandomEffect();
         m_random = true;
     }
     else {
-        m_effect = m_effects[m_effectName];
+        m_effect = m_effects[m_sharedData->effectNameGL];
         if (!m_effect)
             m_effect = m_effects["None"];
         m_random = false;
@@ -155,7 +165,8 @@ SlideShowGL::~SlideShowGL()
 {
     delete m_timer;
     delete m_mouseMoveTimer;
-
+    delete m_playbackWidget;
+    
     if (m_texture[0])
         glDeleteTextures(1, &m_texture[0]);
     if (m_texture[1])
@@ -163,49 +174,6 @@ SlideShowGL::~SlideShowGL()
 
     if (m_imageLoader)
       delete m_imageLoader;
-
-    if (m_config)
-        delete m_config;
-}
-
-void SlideShowGL::readSettings()
-{
-    KConfigGroup grp = m_config->group("SlideShow Settings");
-
-    m_delay                 = grp.readEntry("Delay", 1500);
-    m_printName         = grp.readEntry("Print Filename", true);
-    m_printProgress     = grp.readEntry("Print Progress Indicator", true);
-    m_printComments     = grp.readEntry("Print Comments", false);
-    m_loop                  = grp.readEntry("Loop", false);
-
-    m_effectName         = grp.readEntry("Effect Name (OpenGL)", "Random");
-
-    m_enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
-
-    // Comments tab settings
-
-    m_commentsFont = new QFont();
-    m_commentsFont->setFamily(grp.readEntry("Comments Font Family"));
-    m_commentsFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
-    m_commentsFont->setBold(grp.readEntry("Comments Font Bold", false));
-    m_commentsFont->setItalic(grp.readEntry("Comments Font Italic", false));
-    m_commentsFont->setUnderline(grp.readEntry("Comments Font Underline", false));
-    m_commentsFont->setOverline(grp.readEntry("Comments Font Overline", false));
-    m_commentsFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
-    m_commentsFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
-
-    m_commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
-    m_commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
-    m_transparentBg         = grp.readEntry("Transparent Bg", true);
-
-    m_commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
-
-    // Advanced settings
-    bool enableCache = grp.readEntry("Enable Cache", false);
-    if (enableCache)
-      m_cacheSize  = grp.readEntry("Cache Size", 1);
-    else
-      m_cacheSize = 1;
 }
 
 void SlideShowGL::initializeGL()
@@ -282,6 +250,7 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
         return;
 
     m_toolBar->keyPressEvent(event);
+    m_playbackWidget->keyPressEvent(event);
 }
 
 void SlideShowGL::mousePressEvent(QMouseEvent *e)
@@ -309,7 +278,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
     m_mouseMoveTimer->setSingleShot(true);
     m_mouseMoveTimer->start(1000);
 
-    if (!m_toolBar->canHide())
+    if (!m_toolBar->canHide() || !m_playbackWidget->canHide())
         return;
 
     QPoint pos(e->pos());
@@ -317,40 +286,23 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
     if ((pos.y() > (m_deskY+20)) &&
         (pos.y() < (m_deskY+m_deskHeight-20-1)))
     {
-        if (m_toolBar->isHidden())
+        if (m_toolBar->isHidden() || m_playbackWidget->isHidden())
             return;
         else
+        {
             m_toolBar->hide();
+            m_playbackWidget->hide();
+        }
         return;
     }
 
-    int w = m_toolBar->width();
-    int h = m_toolBar->height();
-
-    if (pos.y() < (m_deskY+20))
-    {
-        if (pos.x() <= (m_deskX+m_deskWidth/2))
-            // position top left
-            m_toolBar->move(m_deskX, m_deskY);
-        else
-            // position top right
-            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY);
-    }
-    else
-    {
-        if (pos.x() <= (m_deskX+m_deskWidth/2))
-            // position bot left
-            m_toolBar->move(m_deskX, m_deskY+m_deskHeight-h-1);
-        else
-            // position bot right
-            m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY+m_deskHeight-h-1);
-    }
     m_toolBar->show();
+    m_playbackWidget->show();
 }
 
 void SlideShowGL::wheelEvent(QWheelEvent *e)
 {
-    if (!m_enableMouseWheel) return;
+    if (!m_sharedData->enableMouseWheel) return;
 
     if (m_endOfShow)
         slotClose();
@@ -441,7 +393,7 @@ void SlideShowGL::advanceFrame()
     m_imageLoader->next();
     int num = m_fileList.count();
     if (m_fileIndex >= num) {
-        if (m_loop)
+        if (m_sharedData->loop)
         {
             m_fileIndex = 0;
         }
@@ -455,7 +407,7 @@ void SlideShowGL::advanceFrame()
         }
     }
 
-    if (!m_loop && !m_endOfShow)
+    if (!m_sharedData->loop && !m_endOfShow)
     {
         m_toolBar->setEnabledPrev(m_fileIndex > 0);
         m_toolBar->setEnabledNext(m_fileIndex < num-1);
@@ -471,7 +423,7 @@ void SlideShowGL::previousFrame()
     m_imageLoader->prev();
     int num = m_fileList.count();
     if (m_fileIndex < 0) {
-        if (m_loop)
+        if (m_sharedData->loop)
         {
             m_fileIndex = num-1;
         }
@@ -485,7 +437,7 @@ void SlideShowGL::previousFrame()
         }
     }
 
-    if (!m_loop && !m_endOfShow)
+    if (!m_sharedData->loop && !m_endOfShow)
     {
         m_toolBar->setEnabledPrev(m_fileIndex > 0);
         m_toolBar->setEnabledNext(m_fileIndex < num-1);
@@ -517,13 +469,13 @@ void SlideShowGL::loadImage()
 
         black = black.scaled(m_width, m_height);
 
-	if (m_printName)
+	if (m_sharedData->printFileName)
 	    printFilename(black);
 
-    if (m_printProgress)
+    if (m_sharedData->printProgress)
         printProgress(black);
 
-    if (m_printComments && m_imagesHasComments)
+    if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments)
         printComments(black);
 
 	QImage t = convertToGLFormat(black);
@@ -639,7 +591,7 @@ void SlideShowGL::printComments(QImage& layer)
     QString comments = m_commentsList[m_fileIndex];
 
     int yPos = 5; // Text Y coordinate
-    if (m_printName) yPos += 20;
+    if (m_sharedData->printFileName) yPos += 20;
 
     QStringList commentsByLines;
 
@@ -653,7 +605,7 @@ void SlideShowGL::printComments(QImage& layer)
 
         // Check miminal lines dimension
 
-        int commentsLinesLengthLocal = m_commentsLinesLength;
+        int commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
         for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
             if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
@@ -687,9 +639,9 @@ void SlideShowGL::printComments(QImage& layer)
         commentsByLines.prepend(newLine.trimmed());
     }
 
-    QFontMetrics fm(*m_commentsFont);
+    QFontMetrics fm(*m_sharedData->captionFont);
   
-    yPos += int(2.0 * m_commentsFont->pointSize());
+    yPos += int(2.0 * m_sharedData->captionFont->pointSize());
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
 
@@ -698,13 +650,13 @@ void SlideShowGL::printComments(QImage& layer)
 
         QPixmap pix(rect.width(),rect.height());
         
-        if ( m_transparentBg ) pix.fill(Qt::transparent);
-        else pix.fill(QColor(m_commentsBgColor));  
+        if ( m_sharedData->transparentBg ) pix.fill(Qt::transparent);
+        else pix.fill(QColor(m_sharedData->commentsFontColor));  
 
         QPainter p(&pix);
-        p.setPen(QColor(m_commentsFontColor));
-        p.setFont(*m_commentsFont);
-        p.drawText(1,m_commentsFont->pointSize()+0 , commentsByLines[lineNumber]);
+        p.setPen(QColor(m_sharedData->commentsFontColor));
+        p.setFont(*m_sharedData->captionFont);
+        p.drawText(1,m_sharedData->captionFont->pointSize()+0 , commentsByLines[lineNumber]);
         p.end();
 
 	QPainter painter;
@@ -791,7 +743,7 @@ void SlideShowGL::slotTimeOut()
         if (m_timeout == -1) {
             // effect was running and is complete now
             // run timer while showing current image
-            m_timeout = m_delay;
+            m_timeout = m_sharedData->delay;
             m_i     = 0;
         }
         else {

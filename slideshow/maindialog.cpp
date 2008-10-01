@@ -28,7 +28,6 @@
 #include <QFile>
 
 // KDE includes
-#include <kdebug.h>
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kiconloader.h>
@@ -85,7 +84,7 @@ void MainDialog::readSettings()
     
     connect( m_ImagesFilesListBox, SIGNAL( currentRowChanged( int ) ),
               this, SLOT( slotImagesFilesSelected( int ) ) );
-    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
+    connect( m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
             this, SLOT( slotAddDropItems(KUrl::List)));
     connect( m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
               this, SLOT( slotImagesFilesButtonAdd() ) );
@@ -128,7 +127,6 @@ void MainDialog::readSettings()
 
     // Switch to selected files only (it depends on showSelectedFilesOnly)
 
-    kDebug( 51000 ) << m_sharedData->showSelectedFilesOnly << endl;
     m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
 
 
@@ -165,6 +163,49 @@ void MainDialog::saveSettings()
     m_sharedData->shuffle = m_shuffleCheckBox->isChecked();
     
     m_sharedData->showSelectedFilesOnly = m_selectedFilesButton->isChecked();
+    
+    if (!m_openglCheckBox->isChecked()) {
+
+        QString effect;
+        QMap<QString,QString> effectNames = SlideShow::effectNamesI18N();
+        QMap<QString,QString>::Iterator it;
+
+        for (it = effectNames.begin(); it != effectNames.end(); ++it) {
+            if (it.value() == m_effectsComboBox->currentText()) {
+                effect = it.key();
+                break;
+            }
+        }
+        m_sharedData->effectName = effect;
+    }
+    else 
+    {
+      QMap<QString,QString> effects;
+      QMap<QString,QString> effectNames;
+      QMap<QString,QString>::Iterator it;
+    
+      // Load slideshowgl effects
+      effectNames = SlideShowGL::effectNamesI18N();
+
+      for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        effects.insert(it.key(),it.value());
+
+      // Load Ken Burns effect
+      effectNames = SlideShowKB::effectNamesI18N();
+      for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        effects.insert(it.key(),it.value());
+
+        QString effect;
+
+        for (it = effects.begin(); it != effects.end(); ++it) {
+            if ( it.value() == m_effectsComboBox->currentText()) {
+                effect = it.key();
+                break;
+            }
+        }
+        m_sharedData->effectNameGL = effect;
+    }
+    
 }
 
 void MainDialog::ShowNumberImages( int Number )
@@ -182,8 +223,13 @@ void MainDialog::ShowNumberImages( int Number )
         TotalDuration = TotalDuration.addSecs(Number * m_delaySpinBox->text().toInt());
 
     TotalDuration = TotalDuration.addMSecs((Number-1)*TransitionDuration);
+  
+    m_totalTime = TotalDuration;
+    
+    // Notify total time is changed
+    emit totalTimeChanged(m_totalTime);
 
-    if ( Number < 2)
+    if ( Number == 1 )
         m_label6->setText(i18n("%1 image [%2]", Number, TotalDuration.toString()));
     else
         m_label6->setText(i18n("%1 images [%2]", Number, TotalDuration.toString()));
@@ -294,7 +340,6 @@ void MainDialog::slotImagesFilesSelected( int row )
 
 void MainDialog::addItems(const KUrl::List& fileList)
 {
-  if (fileList.isEmpty()) kDebug( 51000 )<<"IS EMPTY!"<<endl;
   if (fileList.isEmpty()) return;
   KUrl::List Files = fileList;
 
@@ -514,6 +559,7 @@ void MainDialog::slotSelection( void )
 void MainDialog::SlotPortfolioDurationChanged ( int )
 {
     ShowNumberImages( m_ImagesFilesListBox->count() );
+    emit totalTimeChanged( m_totalTime );
 }
 
 void MainDialog::slotGotPreview(const KFileItem&, const QPixmap &pixmap)

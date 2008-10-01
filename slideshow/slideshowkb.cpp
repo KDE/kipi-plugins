@@ -42,7 +42,6 @@
 
 // KDE includes.
 
-#include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kglobal.h>
@@ -150,7 +149,7 @@ Image::~Image()
 // -------------------------------------------------------------------------
 
 SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, bool ImagesHasComments)
+                         const QStringList& commentsList, SharedData* sharedData)
            : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -173,14 +172,15 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
+    
+    m_sharedData = sharedData;
 
     // =======================================================
     // Avoid boring compile time "unused parameter" warning :P
     // These parameters could be useful for future implementations
     m_commentsList = commentsList;
-    m_imagesHasComments = ImagesHasComments;
     // =======================================================
-
+    
     srand(QTime::currentTime().msec());
     readSettings();
 
@@ -225,6 +225,16 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     setMouseTracking(true);
     slotMouseMoveTimeOut();
 
+    // -- playback widget -------------------------------
+    
+    
+    m_playbackWidget = new PlaybackWidget(this,m_sharedData->soundtrackUrls,m_sharedData);
+    m_playbackWidget->hide();
+       
+    m_playbackWidget->move(m_deskX, m_deskY);    
+    
+    // -- load image and let's start
+    
     m_imageLoadThread->start();
     m_timer->start(1000 / frameRate);
 }
@@ -235,6 +245,8 @@ SlideShowKB::~SlideShowKB()
     delete m_image[0];
     delete m_image[1];
 
+    delete m_playbackWidget;
+    
     m_imageLoadThread->quit();
     bool terminated = m_imageLoadThread->wait(10000);
 
@@ -275,7 +287,7 @@ void SlideShowKB::setNewKBEffect()
             m_effect = new BlendKBEffect(this, needFadeIn);
             break;
         default:
-            kDebug( 51000 ) << "Unknown transition effect, falling back to crossfade" << endl;
+            qDebug("Unknown transition effect, falling back to crossfade");
             m_effect = new BlendKBEffect(this, needFadeIn);
     }
 }
@@ -549,13 +561,22 @@ QMap<QString,QString> SlideShowKB::effectNamesI18N()
     return effects;
 }
 
+void SlideShowKB::keyPressEvent(QKeyEvent *event)
+{
+    if(!event)
+        return;
+
+    m_playbackWidget->keyPressEvent(event);
+    
+    if (event->key() == Qt::Key_Escape)
+    	close();
+}
+
+
 void SlideShowKB::mousePressEvent(QMouseEvent *e)
 {
-    // =======================================================
-    // Avoid boring compile time "unused parameter" warning :P
-    // This parameter could be useful for future implementations
-    if ( !e ){ /* TODO */ }
-    // =======================================================
+    if ( !e )
+    	return;
 
     if (m_endOfShow && m_showingEnd)
         slotClose();
@@ -567,7 +588,22 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
     m_mouseMoveTimer->start(1000);
     m_mouseMoveTimer->setSingleShot(true);
 
+    if (!m_playbackWidget->canHide())
+        return;
+
     QPoint pos(e->pos());
+
+    if ((pos.y() > (m_deskY+20)) &&
+        (pos.y() < (m_deskY+m_deskHeight-20-1)))
+    {
+        if (m_playbackWidget->isHidden())
+            return;
+        else
+            m_playbackWidget->hide();
+        return;
+    }
+
+    m_playbackWidget->show();
 }
 
 void SlideShowKB::slotEndOfShow()

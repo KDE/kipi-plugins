@@ -3,10 +3,12 @@ v 0.2.0 - beta2
 
 Kipi-plugins NEW FEATURES
 
-New plugin to convert RAW camera image to Digital NeGative (DNG)
-
+DNGConverter   : New plugin to convert RAW camera image to Digital NeGative (DNG)
+SlideShow      : Now you can play your favourite music during slideshow.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 150076 : SlideShow          : Playing music during a slideshow  
 
 v 0.2.0 - beta1
 ------------------------------------------------------------------------

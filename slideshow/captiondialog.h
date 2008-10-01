@@ -24,7 +24,7 @@
 #define CAPTIONDIALOG_H
 
 // Local includes
-#include "slideshowconfig.h" 
+#include "common.h" 
 #include "ui_captiondialog.h"
 
 namespace KIPISlideShowPlugin

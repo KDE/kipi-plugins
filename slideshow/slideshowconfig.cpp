@@ -49,6 +49,10 @@ class SlideShowConfigPrivate
 public:
 
   SlideShowConfigPrivate() {}
+  ~SlideShowConfigPrivate()
+  {
+      if (config) delete config;
+  }
 
   KIPIPlugins::KPAboutData* about;
   SharedData*               sharedData;
@@ -57,23 +61,15 @@ public:
 };
 
 
-SlideShowConfig::SlideShowConfig (bool allowSelectedOnly, KIPI::Interface* interface,
-                                  QWidget *parent, bool ImagesHasComments, 
-                                  KUrl::List* urlList)
+SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
               : KPageDialog(parent)
 {
-//  setupUi(this);
   setWindowTitle(i18n("SlideShow"));
   
   d = new SlideShowConfigPrivate();
   d->config = new KConfig("kipirc");
  
-  d->sharedData = new SharedData();
-
-  d->sharedData->showSelectedFilesOnly = allowSelectedOnly; 
-  d->sharedData->interface = interface;
-  d->sharedData->ImagesHasComments = ImagesHasComments;
-  d->sharedData->urlList = urlList;
+  d->sharedData = sharedData;
   
   setButtons(Help|Close|User1);
   setDefaultButton(User1);
@@ -93,6 +89,11 @@ SlideShowConfig::SlideShowConfig (bool allowSelectedOnly, KIPI::Interface* inter
   d->sharedData->page_caption  = addPage(d->sharedData->captionPage, i18n("Caption"));
   d->sharedData->page_caption->setHeader(i18n("Caption"));
   d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
+
+  d->sharedData->soundtrackPage   = new SoundtrackDialog(this, d->sharedData);
+  d->sharedData->page_soundtrack  = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
+  d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
+  d->sharedData->page_soundtrack->setIcon(KIcon("speaker"));
 
   d->sharedData->advancedPage   = new AdvancedDialog(this, d->sharedData);
   d->sharedData->page_advanced  = addPage(d->sharedData->advancedPage, i18n("Advanced"));
@@ -138,9 +139,6 @@ SlideShowConfig::SlideShowConfig (bool allowSelectedOnly, KIPI::Interface* inter
 
 SlideShowConfig::~SlideShowConfig () 
 {
-  delete d->sharedData->mainPage;
-  delete d->sharedData->captionPage;
-  delete d->sharedData->advancedPage;
   delete d;
 }
 
@@ -154,7 +152,7 @@ void SlideShowConfig::readSettings() {
   d->sharedData->printFileComments     = grp.readEntry("Print Comments", false);
   d->sharedData->loop                  = grp.readEntry("Loop", false);
   d->sharedData->shuffle               = grp.readEntry("Shuffle", false);
-//  d->sharedData->showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
+  d->sharedData->showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
   d->sharedData->effectName            = grp.readEntry("Effect Name", "Random");
   d->sharedData->effectNameGL          = grp.readEntry("Effect Name (OpenGL)", "Random");
 
@@ -181,6 +179,10 @@ void SlideShowConfig::readSettings() {
 
   d->sharedData->commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
 
+  // Soundtrack tab
+  d->sharedData->soundtrackLoop        = grp.readEntry("Sountrack Loop", false);
+  d->sharedData->soundtrackPath        = KUrl(grp.readEntry("Sountrack Path", "" ));
+
   // Advanced tab
   d->sharedData->useMilliseconds       = grp.readEntry("Use Milliseconds", false);
   d->sharedData->enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
@@ -193,6 +195,7 @@ void SlideShowConfig::readSettings() {
 
   d->sharedData->mainPage->readSettings();
   d->sharedData->captionPage->readSettings();
+  d->sharedData->soundtrackPage->readSettings();
   d->sharedData->advancedPage->readSettings();
 }
 
@@ -202,6 +205,7 @@ void SlideShowConfig::saveSettings()
     
   d->sharedData->mainPage->saveSettings();
   d->sharedData->captionPage->saveSettings();
+  d->sharedData->soundtrackPage->saveSettings();
   d->sharedData->advancedPage->saveSettings();
     
   KConfigGroup grp= d->config->group("SlideShow Settings");
@@ -238,6 +242,10 @@ void SlideShowConfig::saveSettings()
   grp.writeEntry("Effect Name (OpenGL)", d->sharedData->effectNameGL);
   grp.writeEntry("Effect Name", d->sharedData->effectName);
   
+  // Sountrack tab
+  grp.writeEntry("Sountrack Loop", d->sharedData->soundtrackLoop);
+  grp.writeEntry("Sountrack Path", d->sharedData->soundtrackPath.path());
+
   // Advanced settings
   grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
   grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);

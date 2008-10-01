@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2003-10-21
+ * Date        : 2008-09-14
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2008 Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
- * Copyright (C) 2003-2007 Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,10 +20,11 @@
  *
  * ============================================================ */
 
-#ifndef LISTIMAGEITEM_H
-#define LISTIMAGEITEM_H
+#ifndef LISTSOUNDITEM_H
+#define LISTSOUNDITEM_H
 
 // QT includes
+#include <QTime>
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
@@ -32,49 +32,55 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
+// Phonon includes
+#include <Phonon/Global>
+#include <Phonon/MediaObject>
+
 // KDE includes
 #include <kurl.h>
-#include "kio/previewjob.h"
 
 namespace KIPISlideShowPlugin
 {
 
-class ImageItem : public QObject, public QListWidgetItem
+class SoundItem : public QObject, public QListWidgetItem
 {
-    Q_OBJECT
+
+  Q_OBJECT
 
 public:
 
-    ImageItem(QListWidget* parent, QString const & name, QString const & comments, 
-              QString const & path, QString const & album);
-    ~ImageItem();
+    SoundItem(QListWidget* parent, KUrl &url);
+    ~SoundItem();
 
-    QString comments();
-    QString name();
-    QString path();
-    QString album();
-    void setName(const QString &newName);
+    KUrl    url();
+    QString artist();
+    QString title();
+    QTime   totalTime();
+    void    setName(QString text);
 
+signals:
+    void totalTimeReady(KUrl,QTime);
+    
 private slots:
-    void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
-    void slotFailedPreview(const KFileItem&);private:
+
+    void slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate);
 
 private:
-    QString m_name;
-    QString m_comments;
-    QString m_path;
-    QString m_album;
 
-    KIO::PreviewJob* m_thumbJob;
+    KUrl                    m_url;
+    QString                 m_artist;
+    QString                 m_title;
+    QTime                   m_totalTime;
+    Phonon::MediaObject*    m_mediaObject;
 };
 
-class ListImageItems : public QListWidget 
+class ListSoundItems : public QListWidget 
 {
     Q_OBJECT
 
 public:
 
-    ListImageItems(QWidget *parent=0);
+    ListSoundItems(QWidget *parent=0);
 
 signals:
 
@@ -88,4 +94,4 @@ protected:
 
 }  // NameSpace KIPISlideShowPlugin
 
-#endif /* LISTIMAGEITEM_H */
+#endif /* LISTSOUNDITEM_H */

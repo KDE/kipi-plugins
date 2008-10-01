@@ -149,8 +149,8 @@ namespace KIPISlideShowPlugin
   }
   
   void SlideShowLoader::prev() {
-    int victim  = ( m_currIndex + (int)(m_currIndex/2) ) % m_pathList.count();
-    int newBorn = ( m_currIndex - ( ( (m_cacheSize & 2) == 0 ) ? (m_cacheSize/2) : (int)(m_cacheSize/2) + 1 ) ) % m_pathList.count();
+    int victim = (m_currIndex + int(m_currIndex/2)) % m_pathList.count();
+    int newBorn = (m_currIndex - ( m_cacheSize&2 == 0 ? (m_cacheSize/2) : int(m_cacheSize/2)+1)) % m_pathList.count();
     
     if ( victim == newBorn ) return;
     

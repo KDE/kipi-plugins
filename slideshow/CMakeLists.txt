@@ -2,7 +2,8 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                 -DQT3_SUPPORT_WARNINGS
                )
 
-SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
+SET(kipiplugin_slideshow_PART_SRCS common.cpp
+			           toolbar.cpp
                                    kbeffect.cpp 
                                    screenproperties.cpp
                                    slideshowkb.cpp 
@@ -11,17 +12,22 @@ SET(kipiplugin_slideshow_PART_SRCS toolbar.cpp
 				   imageviewer.cpp
 				   maindialog.cpp
 				   captiondialog.cpp
+				   soundtrackdialog.cpp
 				   advanceddialog.cpp 
+				   playbackwidget.cpp
                                    slideshow.cpp 
                                    slideshowconfig.cpp 
                                    slideshowgl.cpp 
                                    slideshowloader.cpp
+				   listsounditems.cpp
                                    plugin_slideshow.cpp 
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS maindialog.ui 
 						 captiondialog.ui 
 						 advanceddialog.ui
+						 soundtrackdialog.ui
+						 playbackwidget.ui
 		 )
 
 KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
@@ -35,7 +41,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${KDE4_KDE3SUPPORT_LIBS} 
+                      ${KDE4_KDE3SUPPORT_LIBS}
+		      ${KDE4_PHONON_LIBRARY}
                       ${X11_Xrandr_LIB}
                       kipiplugins
                      )

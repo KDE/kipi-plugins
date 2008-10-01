@@ -25,15 +25,17 @@
 #define PLUGIN_SLIDESHOW_H
 
 // KDE includes
-
 #include <kurl.h>
 
 // libKIPI includes.
-
 #include <libkipi/plugin.h>
 #include <libkipi/interface.h>
 
+// local includes
+#include "common.h"
+
 class KAction;
+class KIPISlideShowPlugin::SharedData;
 
 class Plugin_SlideShow : public KIPI::Plugin
 {
@@ -62,7 +64,7 @@ private:
     KIPI::Interface* m_interface;
     KUrl::List*      m_urlList;
 
-    bool             m_imagesHasComments;
+    KIPISlideShowPlugin::SharedData*      m_sharedData;
 };
 
 #endif  // PLUGIN_SLIDESHOW_H

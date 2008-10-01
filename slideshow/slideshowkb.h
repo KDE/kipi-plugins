@@ -41,11 +41,14 @@
 #include <QStringList>
 #include <QMap>
 #include <QMouseEvent>
+#include <QKeyEvent>
 
 // Local includes.
 
 #include "kbeffect.h"
 #include "screenproperties.h"
+#include "common.h"
+#include "playbackwidget.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -108,7 +111,7 @@ class SlideShowKB : public QGLWidget
 public:
 
     SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, bool ImagesHasComments);
+                const QStringList& commentsList, SharedData* sharedData);
 
     ~SlideShowKB();
 
@@ -137,6 +140,7 @@ protected:
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *);
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
 
@@ -152,7 +156,6 @@ private:
     int m_deskWidth;
     int m_deskHeight;
 
-    bool m_imagesHasComments;
     QStringList  m_commentsList;
 
     ScreenProperties* m_screen;
@@ -175,6 +178,10 @@ private:
     bool     m_disableFadeInOut;
     bool     m_disableCrossFade;
     unsigned m_forceFrameRate;
+    
+    SharedData* m_sharedData;
+    
+    PlaybackWidget* m_playbackWidget;
 
     friend class KBEffect;
 };

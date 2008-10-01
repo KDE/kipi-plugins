@@ -57,11 +57,10 @@ extern "C"
 #include <libkipi/imagecollection.h>
 
 // Local includes.
-
+#include "slideshowconfig.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "slideshowconfig.h"
 #include "plugin_slideshow.h"
 #include "plugin_slideshow.moc"
 
@@ -81,6 +80,7 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
 
 void Plugin_SlideShow::setup( QWidget* widget )
 {
+
     KIPI::Plugin::setup( widget );
 
     m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced SlideShow..."), actionCollection());
@@ -107,6 +107,14 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
 Plugin_SlideShow::~Plugin_SlideShow()
 {
+    if ( m_sharedData )
+    {
+        delete m_sharedData->mainPage;
+        delete m_sharedData->captionPage;
+        delete m_sharedData->advancedPage;
+        delete m_sharedData->soundtrackPage;
+    }
+
     if (m_urlList)
         delete m_urlList;
 }
@@ -119,19 +127,22 @@ void Plugin_SlideShow::slotActivate()
         return;
     }
 
-    bool allowSelectedOnly = true;
+
+    m_sharedData = new KIPISlideShowPlugin::SharedData();
+
+    m_sharedData->showSelectedFilesOnly = true; 
+    m_sharedData->interface = m_interface;
+    m_sharedData->ImagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
+    m_sharedData->urlList = m_urlList;
 
     KIPI::ImageCollection currSel = m_interface->currentSelection();
     if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
-        allowSelectedOnly = false;
+        m_sharedData->showSelectedFilesOnly = false;
     }
 
-    m_imagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(),
-                                                        m_imagesHasComments, m_urlList);
+            = new KIPISlideShowPlugin::SlideShowConfig( kapp->activeWindow(), m_sharedData );
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
@@ -234,7 +245,7 @@ void Plugin_SlideShow::slotSlideShow()
     if (!opengl) 
     {
         KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList,
-                                                      commentsList, m_imagesHasComments);
+                                                      commentsList, m_sharedData->ImagesHasComments);
         slideShow->show();
     }
     else 
@@ -247,13 +258,13 @@ void Plugin_SlideShow::slotSlideShow()
             if (wantKB) 
             {
                 KIPISlideShowPlugin::SlideShowKB* slideShow = new KIPISlideShowPlugin::SlideShowKB(fileList, 
-                                                                  commentsList, m_imagesHasComments);
+                                                                  commentsList, m_sharedData);
                 slideShow->show();
             }
             else 
             {
-                KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList, 
-                                                                  commentsList, m_imagesHasComments);
+            	KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList, 
+                                                                  commentsList, m_sharedData);
                 slideShow->show();
             }
         }

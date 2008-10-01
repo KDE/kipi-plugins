@@ -1,8 +1,10 @@
 /* ============================================================
- * File  : slideshowgl.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-01-19
- * Description :
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2004-01-19
+ * Description : a kipi plugin to slide images.
  *
  * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright 2006-2008 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
@@ -10,12 +12,11 @@
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -24,7 +25,6 @@
 #define SLIDESHOWGL_H
 
 // QT includes
-
 #include <Q3ValueList>
 #include <QStringList>
 #include <QPair>
@@ -34,20 +34,22 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QGLWidget>
-#include "toolbar.h"
-// KDE includes
 
+// KDE includes
 #include <kconfig.h>
 
 // Local includes
-
 #include "slideshowloader.h"
+#include "toolbar.h"
+#include "playbackwidget.h"
+#include "common.h"
 
 class QTimer;
 
 namespace KIPISlideShowPlugin
 {
-    class SlideShowGL;
+class SlideShowGL;   
+
 class SlideShowGL : public QGLWidget
 {
     Q_OBJECT
@@ -55,7 +57,7 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, bool ImagesHasComments);
+                const QStringList& commentsList, SharedData* sharedData);
     ~SlideShowGL();
 
     void registerEffects();
@@ -89,8 +91,6 @@ private:
     void          printProgress(QImage& layer);
     void          printComments(QImage& layer);
 
-    void          readSettings();
-
     void          effectNone();
     void          effectBlend();
     void          effectFade();
@@ -116,25 +116,6 @@ private slots:
 private:
 
     // config ------------------
-
-    KConfig* m_config;
-
-    int      m_delay;
-    QString  m_effectName;
-    bool     m_loop;
-    bool     m_printName;
-    bool     m_printProgress;
-    bool     m_printComments;
-
-    bool     m_imagesHasComments;
-
-    QFont*   m_commentsFont;
-    uint     m_commentsFontColor;
-    uint     m_commentsBgColor;
-    bool     m_transparentBg;
-    int      m_commentsLinesLength;
-
-    bool     m_enableMouseWheel;
 
     uint     m_cacheSize;
 
@@ -170,12 +151,15 @@ private:
     float                             m_points[40][40][3];
 
     ToolBar*                          m_toolBar;
+    PlaybackWidget*					  m_playbackWidget;
     QTimer*                           m_mouseMoveTimer;
 
     int                               m_deskX;
     int                               m_deskY;
     int                               m_deskWidth;
     int                               m_deskHeight;
+    
+    SharedData*						  m_sharedData;
 };
 
 }  // NameSpace KIPISlideShowPlugin
