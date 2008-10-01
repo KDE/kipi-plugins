@@ -509,7 +509,7 @@ bool Generator::run() {
 	if (!d->init()) return false;
 
 	QString destDir=d->mInfo->destUrl().path();
-	kDebug() << destDir;
+	kDebug( 51000 ) << destDir;
 	if (!d->createDir(destDir)) return false;
 
 	if (!d->copyTheme()) return false;

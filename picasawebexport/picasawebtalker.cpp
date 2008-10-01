@@ -117,7 +117,7 @@ QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
     QString final = secret + merged;
     const char *test=final.ascii();
     KMD5 context (test);
-    //kDebug()<< "Test Hex Digest output: " << context.hexDigest().data() << endl;
+    //kDebug( 51000 )<< "Test Hex Digest output: " << context.hexDigest().data() << endl;
     return context.hexDigest().data();
 }
 
@@ -133,12 +133,12 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     PicasawebLogin *loginDialog = new PicasawebLogin(kapp->activeWindow(), QString("LoginWindow"), username, password);
     /*if (username!=NULL && username.length() > 0){
-        //  kDebug()<<"Showing stored username"<< username << endl;
+        //  kDebug( 51000 )<<"Showing stored username"<< username << endl;
         loginDialog->setUsername(username);
         if (password != NULL && password.length() > 0){
-        //    kDebug()<<"Showing stored password"<< password << endl;
+        //    kDebug( 51000 )<<"Showing stored password"<< password << endl;
             loginDialog->setPassword(password);
-            //  kDebug()<<"Showing stored password"<< password << endl;
+            //  kDebug( 51000 )<<"Showing stored password"<< password << endl;
         }
     }
     */
@@ -147,7 +147,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     if (!loginDialog)
     {
-        kDebug()<<" Out of memory error "<< endl;
+        kDebug( 51000 )<<" Out of memory error "<< endl;
     }
 
     if (loginDialog->exec() == QDialog::Accepted)
@@ -486,7 +486,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
             kWarning(51000) << "(picasawebExport::Image doesn't have exif data)" << endl;
         }
 
-        kDebug() << "Resizing and saving to temp file: " << path << endl;
+        kDebug( 51000 ) << "Resizing and saving to temp file: " << path << endl;
     }
 
     if (!form.addFile("photo", path))
@@ -595,7 +595,7 @@ void PicasawebTalker::slotError(const QString & error)
     };
 
     KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError));
-    //kDebug()<<"Not handling the error now will see it later"<<endl;
+    //kDebug( 51000 )<<"Not handling the error now will see it later"<<endl;
 }
 
 void PicasawebTalker::slotResult(KJob *job)
@@ -940,16 +940,16 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
 
         if ( node.isElement() && node.nodeName() == "err" )
         {
-            kDebug()<<"Checking Error in response"<<endl;
+            kDebug( 51000 )<<"Checking Error in response"<<endl;
             QString code=node.toElement().attribute("code");
-            kDebug()<<"Error code="<<code<<endl;
-            kDebug()<<"Msg="<<node.toElement().attribute("msg")<<endl;
+            kDebug( 51000 )<<"Error code="<<code<<endl;
+            kDebug( 51000 )<<"Msg="<<node.toElement().attribute("msg")<<endl;
             emit signalError(code);
         }
         node = node.nextSibling();
     }
 
-    kDebug()<<"GetToken finished"<<endl;
+    kDebug( 51000 )<<"GetToken finished"<<endl;
     if (!success)
     {
         emit signalAddPhotoFailed(i18n("Failed to query photo information"));

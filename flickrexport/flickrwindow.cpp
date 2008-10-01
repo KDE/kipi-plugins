@@ -208,7 +208,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_talker->m_authProgressDlg = m_authProgressDlg;
     m_widget->setEnabled(false);
 
-    kDebug() << "Calling auth methods" << endl;
+    kDebug( 51000 ) << "Calling auth methods" << endl;
 
     if(m_token.length()< 1)
         m_talker->getFrob();
@@ -312,7 +312,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_token    = token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    kDebug() << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
+    kDebug( 51000 ) << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
     m_userNameDisplayLabel->setText(QString("<qt><b>%1</b></qt>").arg(m_username));
     m_widget->setEnabled(true);
 }
@@ -341,7 +341,7 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    kDebug() << "Slot Change User Request " << endl;
+    kDebug( 51000 ) << "Slot Change User Request " << endl;
     m_talker->getFrob();
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -383,7 +383,7 @@ void FlickrWindow::slotAlbums( const QValueList<GAlbum>& albumList )
             }
             else
             {
-                kWarning() << "Failed to find parent for album "
+                kWarning( 51000 ) << "Failed to find parent for album "
                             << album.name
                             << "with id " << album.ref_num;
             }
@@ -438,7 +438,7 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 
 void FlickrWindow::slotListPhotoSetsResponse(const QList <FPhotoSet>& /*photoSetList*/)
 {
-    kDebug() << "SlotListPhotoSetsResponse invoked" << endl;
+    kDebug( 51000 ) << "SlotListPhotoSetsResponse invoked" << endl;
     // TODO
 }
 
@@ -451,7 +451,7 @@ void FlickrWindow::slotNewPhotoSet()
 */
 void FlickrWindow::slotUser1()
 {
-    kDebug() << "SlotUploadImages invoked" << endl;
+    kDebug( 51000 ) << "SlotUploadImages invoked" << endl;
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
     KUrl::List urls = m_imglst->imageUrls();
@@ -466,7 +466,7 @@ void FlickrWindow::slotUser1()
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
-        kDebug() << "Adding images to the list" << endl;
+        kDebug( 51000 ) << "Adding images to the list" << endl;
         FPhotoInfo temp;
 
         temp.title                 = info.title();
@@ -513,7 +513,7 @@ void FlickrWindow::slotUser1()
 
         while(itTags != allTags.end())
         {
-            kDebug() << "Tags list: " << (*itTags) << endl;
+            kDebug( 51000 ) << "Tags list: " << (*itTags) << endl;
             ++itTags;
         }
 
@@ -525,7 +525,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_progressDlg->reset();
     slotAddPhotoNext();
-    kDebug() << "SlotUploadImages done" << endl;
+    kDebug( 51000 ) << "SlotUploadImages done" << endl;
 }
 
 void FlickrWindow::slotAddPhotoNext()

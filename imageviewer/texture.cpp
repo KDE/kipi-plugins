@@ -121,7 +121,7 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
         QMatrix r;
         r.rotate(info.angle());
         qimage=qimage.transformed(r);
-        kDebug() << "image rotated by " << info.angle() << " degree";
+        kDebug( 51000 ) << "image rotated by " << info.angle() << " degree";
     }
 
     if (qimage.isNull()) {

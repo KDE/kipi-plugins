@@ -27,6 +27,7 @@
 
 // KDE includes
 
+#include <kdebug.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -52,7 +53,7 @@ K_EXPORT_PLUGIN ( viewerFactory("kipiplugin_imageviewer") )
 Plugin_viewer::Plugin_viewer( QObject *parent, const QVariantList & )
              : KIPI::Plugin::Plugin( viewerFactory::componentData(), parent, "kipiplugin_imageviewer" )
 {
-    kDebug() << "OpenGL viewer plugin loaded";
+    kDebug( 51001 ) << "OpenGL viewer plugin loaded";
 }
 
 void Plugin_viewer::setup( QWidget* widget )
@@ -62,7 +63,7 @@ void Plugin_viewer::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface ) {
-        kError() << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -82,7 +83,7 @@ KIPI::Category Plugin_viewer::category( KAction* action ) const
         return KIPI::ToolsPlugin;
     }
     else {
-        kWarning() << "Unrecognized action for plugin category identification" << endl;
+        kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
         return KIPI::ToolsPlugin; // no warning from compiler, please
     }
 }
@@ -96,7 +97,7 @@ void  Plugin_viewer::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !interface ) {
-        kError() << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -112,13 +113,13 @@ void  Plugin_viewer::slotActivate()
             break;
 
         case KIPIviewer::oglNoRectangularTexture:
-            kError() << "GL_ARB_texture_rectangle not supported" << endl;
+            kError( 51000 ) << "GL_ARB_texture_rectangle not supported" << endl;
             delete widget;
             QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case KIPIviewer::oglNoContext:
-            kError() << "no OpenGL context found" << endl;
+            kError( 51000 ) << "no OpenGL context found" << endl;
             delete widget;
             QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("no OpenGL context found"));
     }

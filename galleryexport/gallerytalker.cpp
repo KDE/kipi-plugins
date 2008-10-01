@@ -232,7 +232,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
                     exiv2.save(path);
                 }
             }
-            kDebug() << "Resizing and saving to temp file: "
+            kDebug( 51000 ) << "Resizing and saving to temp file: "
             << path << endl;
         }
     }
@@ -548,9 +548,9 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                    kWarning() << "Create Album. success: " << success << endl;
+                    kWarning( 51000 ) << "Create Album. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
-                    kDebug() << "STATUS: Create Album: " << value << endl;
+                    kDebug( 51000 ) << "STATUS: Create Album: " << value << endl;
                 }
 
             }
@@ -597,9 +597,9 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                    kWarning() << "Add photo. success: " << success << endl;
+                    kWarning( 51000 ) << "Add photo. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
-                    kDebug() << "STATUS: Add Photo: " << value << endl;
+                    kDebug( 51000 ) << "STATUS: Add Photo: " << value << endl;
                 }
 
             }

@@ -562,12 +562,12 @@ void TimeAdjustDialog::slotOk()
 
                     if (!ret)
                     {
-                        kDebug() << "Failed to save metadata to file " << url.fileName();
+                        kDebug( 51000 ) << "Failed to save metadata to file " << url.fileName();
                     }
                 }
                 else
                 {
-                    kDebug() << "Failed to load metadata from file " << url.fileName();
+                    kDebug( 51000 ) << "Failed to load metadata from file " << url.fileName();
                 }
             }
     

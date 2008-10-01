@@ -286,12 +286,12 @@ void PicasawebWindow::getToken(QString& username, QString& password)
     }
 
     /*if (username!=NULL && username.length() > 0){
-        kDebug()<<"Showing stored username"<< username << endl;
+        kDebug( 51000 )<<"Showing stored username"<< username << endl;
         loginDialog->setUsername(username);
         if (password != NULL && password.length() > 0){
-            kDebug()<<"Showing stored password"<< password << endl;
+            kDebug( 51000 )<<"Showing stored password"<< password << endl;
             loginDialog->setPassword(password);
-            kDebug()<<"Showing stored password"<< password << endl;
+            kDebug( 51000 )<<"Showing stored password"<< password << endl;
         }
     }*/
 
@@ -365,7 +365,7 @@ void PicasawebWindow::slotError( const QString& msg )
 
 void PicasawebWindow::slotUserChangeRequest()
 {
-    kDebug()<<"Slot Change User Request "<<endl;
+    kDebug( 51000 )<<"Slot Change User Request "<<endl;
     m_talker->authenticate();
 }
 
@@ -397,7 +397,7 @@ void PicasawebWindow::slotCreateNewAlbum()
     {
         if (t == QDialog::Rejected)
         {
-            kDebug()<<"Album Creation cancelled" <<endl;
+            kDebug( 51000 )<<"Album Creation cancelled" <<endl;
         }
     }
     delete dlg;

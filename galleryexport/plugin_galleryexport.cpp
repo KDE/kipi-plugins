@@ -99,7 +99,7 @@ void Plugin_GalleryExport::slotSync()
         return;
     }
 
-    kWarning() << "Creating GalleryWindow.." << endl;
+    kWarning( 51000 ) << "Creating GalleryWindow.." << endl;
     KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpGallery);
     dlg.exec();
 }

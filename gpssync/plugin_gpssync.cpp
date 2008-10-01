@@ -246,7 +246,7 @@ void Plugin_GPSSync::slotGPSEdit()
             }
 
             if (!ret)
-                kDebug() << "Cannot set GPS location into file metadata from " 
+                kDebug( 51000 ) << "Cannot set GPS location into file metadata from " 
                          << url.fileName() << endl;
 
             // Set kipi host GPS location 
@@ -346,7 +346,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
                 ret &= exiv2Iface.save(url.path());
     
                 if (!ret)
-                    kDebug() << "Cannot set GPS location into file metadata from " 
+                    kDebug( 51000 ) << "Cannot set GPS location into file metadata from " 
                              << url.fileName() << endl;
 
                 // Set kipi host GPS location 
@@ -390,7 +390,7 @@ void Plugin_GPSSync::slotGPSRemove()
         ret &= exiv2Iface.save(url.path());
         
         if (!ret)
-            kDebug() << "Cannot remove GPS location into file metadata from " 
+            kDebug( 51000 ) << "Cannot remove GPS location into file metadata from " 
                      << url.fileName() << endl;
 
         // Remove kipi host GPS location 

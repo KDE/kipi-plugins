@@ -128,7 +128,7 @@ void MainDialog::readSettings()
 
     // Switch to selected files only (it depends on showSelectedFilesOnly)
 
-    kDebug() << m_sharedData->showSelectedFilesOnly << endl;
+    kDebug( 51000 ) << m_sharedData->showSelectedFilesOnly << endl;
     m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
 
 
@@ -294,7 +294,7 @@ void MainDialog::slotImagesFilesSelected( int row )
 
 void MainDialog::addItems(const KUrl::List& fileList)
 {
-  if (fileList.isEmpty()) kDebug()<<"IS EMPTY!"<<endl;
+  if (fileList.isEmpty()) kDebug( 51000 )<<"IS EMPTY!"<<endl;
   if (fileList.isEmpty()) return;
   KUrl::List Files = fileList;
 
