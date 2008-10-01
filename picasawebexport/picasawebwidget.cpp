@@ -22,20 +22,20 @@
 
 // Qt includes.
 
-#include <qpushbutton.h>
-#include <qlabel.h>
 #include <q3frame.h>
 #include <q3header.h>
 #include <q3listview.h>
 #include <q3buttongroup.h>
-#include <qradiobutton.h>
 #include <q3groupbox.h>
+#include <q3whatsthis.h>
+#include <qpushbutton.h>
+#include <qlabel.h>
+#include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qsplitter.h>
-#include <q3whatsthis.h>
 #include <qlineedit.h>
 
 // KDE includes.
@@ -55,7 +55,7 @@ namespace KIPIPicasawebExportPlugin
 PicasawebWidget::PicasawebWidget(QWidget* parent)
                : UploadWidget(parent)
 {
-    setName("PicasawebWidget");
+    setObjectName("PicasawebWidget");
 
     resize( QSize(600, 400).expandedTo(minimumSizeHint()) );
     //clearWState( WState_Polished );
