@@ -2,11 +2,13 @@
 Encoding=UTF-8
 Name=DNGConverter
 Name[it]=Convertitore DNG
+Name[nds]=DNG-Wanneln
 Name[pt]=Conversão para DNG
 Name[pt_BR]=Conversão para DNG
 Name[zh_CN]=DNG 转换器
 Comment=KIPI RAW to DNG Camera Image Converter
 Comment[it]=Convertitore di immagini grezze in DNG di KIPI
+Comment[nds]=KIPI-Wannelmoduul för Roh- na DNG-Biller
 Comment[pt]=Conversão de Imagens RAW para DNG do KIPI
 Comment[pt_BR]=Conversão de Imagens RAW para DNG do KIPI
 Comment[uk]=Додаток KIPI для перетворення зображень з фотоапаратів RAW у DNG
