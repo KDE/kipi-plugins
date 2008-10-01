@@ -30,6 +30,7 @@
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 
@@ -304,9 +305,9 @@ void ActionThread::run()
 
                 default: 
                 {
-                    qCritical() << "KIPIDNGConverterPlugin:ActionThread: "
-                                << "Unknown action specified"
-                                << endl;
+                    kError(51000) << "KIPIDNGConverterPlugin:ActionThread: "
+                                  << "Unknown action specified"
+                                  << endl;
                 }
             }
 

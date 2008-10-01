@@ -45,7 +45,7 @@ void DNGWriterHost::SniffForAbort()
 {
     if (m_priv->cancel)
     {
-        kDebug( 51001 ) << "DNGWriter: Canceled by user..." << endl;
+        kDebug( 51000 ) << "DNGWriter: Canceled by user..." << endl;
         m_priv->cleanup();
         ThrowUserCanceled();
     }
