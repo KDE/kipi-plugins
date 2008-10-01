@@ -8,73 +8,50 @@ See AUTHORS file for details.
 
 Libkipi and kipi-plugins allows image applications to use a plugin architecture for additional functionalities.
 
-Note: Most of the KipiPlugins have previously been Digikamplugins.
+Notes:
 
-      kipi-plugins is based in part on the work of the Independent
-      JPEG Group.
+Most of the KipiPlugins have previously been Digikamplugins.
+kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Currently implemented plugins are:
 
- 1) RawConverter       : A Raw Image Converter for digital cameras 
+RawConverter       : A Raw Image Converter for digital cameras.
 
- 2) SlideShow          : Slideshow with effects ripped out from kslideshow and 3D effect using OpenGL 
+SlideShow          : Slideshow with 2D and 3D effects using OpenGL.
 
- 3) MpegEncoder        : An images to MPEG flux encoder for build a video file with many images 
+ImageViewer        : Fast image viewer using OpenGL.
 
- 4) PrintWizard        : Print multiple images/index pages in one page
+JpegLossLess       : Batch images processing (rotation/flipping) without losing meta informations
+                     embedded in the image and without recompression of jpeg data.
 
- 5) JpegLossLess       : Batch images processing (rotation/flipping) without
- 			             losing meta information embedded in the image
-                         and without recompression of the jpeg data.
+AcquireImages      : Acquire images interface using flat scanner.
 
- 6) CdArchiving        : Albums CD archiving via K3b cd burning program 
+SendImages         : A plugin to send images by e-mail, allowing resizing and recompressing before sending.
 
- 7) AcquireImages      : Acquire images interface 
-                         This plugin include these parts:
-                            ScanImages (scanner management using Kooka).
-                            ScreenshotImages (Snap Screen based on KSnapshot and adapted to Digikam).
+TimeAdjust         : Adjust image file Time and Date.
 
- 8) Calendar           : A Calendar construction plugin using Album images 
+WallPaper          : Image to KDE Desktop.
 
- 9) SendImages         : A plugin to send images by e-mail, allowing resizing and recompressing 
-                         before sending.
+GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
+                     (http://gallery.sf.net).
 
-10) BatchProcessImages : A batch process images plugin.
-                         This plugin includes these parts:
-                            RenameImages (Image file names renaming).
-                            ConvertImages (Image files format converting).
-                            BorderImages (Add border to images).
-                            FilterImages (Image enhancements using digital filters).
-                            ColorImages (Image color enhancement).
-                            EffectImages (Image transformation effects).
-                            ResizeImages (Basic and Prepare to print images resizing).
-                            RecompressImages (Recompress JPEG, TIFF, PNG, and TGA images).
+FlickrExport       : Plugin to export images to a remote Flickr web service 
+                     (http://www.flickr.com).
 
-11) TimeAdjust         : Adjust image file Time and Date.
+HTMLExport         : Plugin to export images collections into XHTML page.
 
-12) WallPaper          : Image to KDE Desktop.
+SimpleViewerExport : Plugin to export images to SimpleViewer
+                     (http://www.airtightinteractive.com/simpleviewer).
 
-13) FindImages         : Find duplicate images in albums.
+GPSSync            : Plugin to geolocalize pictures.
 
-14) GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
-                         (http://gallery.sf.net).
+MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
 
-15) FlickrExport       : Plugin to export images to a remote Flickr web service (http://www.flickr.com)
+PicasaWebExport    : Plugin to export images to a remote Picasa web service 
+                     (http://www.picasaweb.com).
 
-16) HTMLExport         : Plugin to export images collections into XHTML page.
-
-17) SimpleViewerExport : Plugin to export images to SimpleViewer
-                         (http://www.airtightinteractive.com/simpleviewer).
-
-18) GPSSync            : Plugin to geolocalize pictures.
-
-19) IpodExport (beta)  : Plugin to export pictures with an Ipod device.
-
-20) MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
-
-21) PicasaWebExport    : Plugin to export images to a remote Picasa web service (http://www.picasaweb.com)
-
-22) DngConverter       : A Raw Image Converter for digital cameras to Digital NeGatives (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
+DngConverter       : A Raw Image Converter for digital cameras to Digital NeGative 
+                     (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
 
 
 -- DEPENDENCIES -------------------------------------------------------
@@ -85,31 +62,21 @@ libkde      >= 4.0.x                        http://www.kde.org
 libtiff     >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libexpat    >= 2.0.1                        http://expat.sourceforge.net
 libkexiv2   >= 0.2                          http://www.kipi-plugins.org
-libkdcraw   >= 0.2                          http://www.kipi-plugins.org
+libkdcraw   >= 0.2   (>=0.4.0 recommended)  http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
-libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
-libkcal     >= 3.4.x                        http://pim.kde.org
+libxml2     >= 2.7.x                        http://xmlsoft.org
 ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
-MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
-K3b         >= 0.11  (runtime dependency)   http://www.k3b.org
 
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-jpeglossless       : imagemagick (runtime dependency)
 slideshow          : OpenGL support for libqt
-batchprocessimages : imagemagick (runtime dependency)
-cdarchiving        : k3b (runtime dependency)
-mpegenconder       : mjpegtools (runtime dependency)
-                   : mpg123 (runtime dependency)
-                   : vorbis-tools (runtime dependency)
+imageviewer        : OpenGL support for libqt
+dngconverter       : libexpat and libkdcraw 0.4.0
+acquireimages      : libksane
+htmlexport         : libxslt and libxml2
+jpeglossless       : imagemagick (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
-rawconverter       : libtiff 
-dngconverter       : libexpat 
-acquireimages      : libtiff
-htmlexport         : libxslt
-ipodexport         : libgpod
-calendar           : libkcal
 
 -- CONTACT ------------------------------------------------------------
 
@@ -152,4 +119,3 @@ Compared to old KDE3 autoconf options:
 "cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
 
 More details can be found ata this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
-
