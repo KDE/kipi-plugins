@@ -20,14 +20,13 @@
  *
  * ============================================================ */
 
-
 // Local includes
-#include "advanceddialog.h"
-#include "advanceddialog.moc"
 #include "slideshow.h"
 #include "slideshowkb.h"
 #include "slideshowgl.h"
 #include "listimageitems.h"
+#include "advanceddialog.h"
+#include "advanceddialog.moc"
 
 namespace KIPISlideShowPlugin
 {
