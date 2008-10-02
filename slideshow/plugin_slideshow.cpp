@@ -80,7 +80,6 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
 
 void Plugin_SlideShow::setup( QWidget* widget )
 {
-
     KIPI::Plugin::setup( widget );
 
     m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced SlideShow..."), actionCollection());

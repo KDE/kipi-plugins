@@ -21,11 +21,11 @@
  * ============================================================ */
 
 // QT includes
+#include <q3strlist.h>
+#include <q3dragobject.h>
 #include <qstring.h>
 #include <qwidget.h>
 #include <qevent.h>
-#include <q3strlist.h>
-#include <q3dragobject.h>
 #include <qfileinfo.h>
 #include <QDropEvent>
 #include <QDragEnterEvent>
@@ -41,7 +41,6 @@
 // Local includes
 #include "listsounditems.h"
 #include "listsounditems.moc"
-
 
 namespace KIPISlideShowPlugin
 {

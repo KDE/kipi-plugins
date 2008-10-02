@@ -35,7 +35,11 @@
 #include "common.h"
 
 class KAction;
-class KIPISlideShowPlugin::SharedData;
+
+namespace KIPISlideShowPlugin
+{
+class SharedData;
+}
 
 class Plugin_SlideShow : public KIPI::Plugin
 {
@@ -60,11 +64,11 @@ private slots:
 
 private:
 
-    KAction*         m_actionSlideShow;
-    KIPI::Interface* m_interface;
-    KUrl::List*      m_urlList;
+    KAction*                         m_actionSlideShow;
+    KIPI::Interface*                 m_interface;
+    KUrl::List*      	             m_urlList;
 
-    KIPISlideShowPlugin::SharedData*      m_sharedData;
+    KIPISlideShowPlugin::SharedData* m_sharedData;
 };
 
 #endif  // PLUGIN_SLIDESHOW_H

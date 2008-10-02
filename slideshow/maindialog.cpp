@@ -35,14 +35,14 @@
 #include <kdebug.h>
 
 // Local includes
-#include "maindialog.h"
-#include "maindialog.moc"
 #include "slideshow.h"
 #include "slideshowkb.h"
 #include "slideshowgl.h"
 #include "listimageitems.h"
 #include "imagedialog.h"
 #include "imageviewer.h"
+#include "maindialog.h"
+#include "maindialog.moc"
 
 namespace KIPISlideShowPlugin
 {

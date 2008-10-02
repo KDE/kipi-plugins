@@ -22,13 +22,13 @@
  * ============================================================ */
 
 // QT includes
+#include <q3strlist.h>
+#include <q3dragobject.h>
+#include <q3listbox.h>
 #include <qstring.h>
 #include <qwidget.h>
 #include <qevent.h>
-#include <q3strlist.h>
-#include <q3dragobject.h>
 #include <qfileinfo.h>
-#include <q3listbox.h>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QIcon>

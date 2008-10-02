@@ -21,6 +21,7 @@
  * ============================================================ */
 
 // QT includes
+#include <Q3ValueList>
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qapplication.h>
@@ -32,7 +33,6 @@
 #include <qfontmetrics.h>
 #include <qmatrix.h>
 #include <QKeyEvent>
-#include <Q3ValueList>
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QDesktopWidget>
@@ -46,11 +46,12 @@
 #include <KConfigGroup>
 
 // C includes
-#include <math.h>
+#include <cmath>
 #include <cstdlib>
 
 // Local includes
 #include "slideshowgl.h"
+#include "slideshowgl.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -1480,5 +1481,3 @@ void SlideShowGL::slotClose()
 }
 
 }  // NameSpace KIPISlideShowPlugin
-
-#include "slideshowgl.moc"
