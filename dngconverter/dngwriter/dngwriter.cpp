@@ -52,6 +52,7 @@
 // KDE includes.
 
 #include <kdebug.h>
+#include <kzip.h>
 
 // Libkexiv2 includes.
 
@@ -96,6 +97,16 @@ void DNGWriter::setCompressLossLess(bool b)
 bool DNGWriter::compressLossLess() const
 {
     return d->jpegLossLessCompression;
+}
+
+void DNGWriter::setBackupOriginalRawFile(bool b)
+{
+    d->backupOriginalRawFile = b;
+}
+
+bool DNGWriter::backupOriginalRawFile() const
+{
+    return d->backupOriginalRawFile;
 }
 
 void DNGWriter::setPreviewMode(int mode)
@@ -630,33 +641,51 @@ int DNGWriter::convert()
             negative->SetMakerNoteSafety(true);
         }
 
-/* FIXME: embeding original RAW file data do not work yet
+        if (d->backupOriginalRawFile)
         {
             kDebug( 51000 ) << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)" << endl;
 
-            QFile file(inputFile());
-            if ( !file.open(QIODevice::ReadOnly) )
+            // Compress Raw file data to Zip archive.
+
+            QTemporaryFile zipFile;
+            if (!zipFile.open())
             {
-                kDebug( 51000 ) << "DNGWriter: Loading RAW data failed. Aborted..." << endl;
+                kDebug( 51000 ) << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted..." << endl;
                 return -1;
             }
-            QByteArray orgRawFile;
-            orgRawFile.resize(inputInfo.size());
-            QDataStream dataStream(&file);
-            dataStream.readRawData(orgRawFile.data(), orgRawFile.size());
-            file.close();
+            KZip zipArchive(zipFile.fileName());
+            zipArchive.open(QIODevice::WriteOnly);
+            zipArchive.setCompression(KZip::DeflateCompression);
+            zipArchive.addLocalFile(inputFile(), inputFile());
+            zipArchive.close();
 
-            QByteArray zCompressData = qCompress(orgRawFile, 9);
+            // Load Zip Archive in a byte array
+
+            QFileInfo zipFileInfo(zipFile.fileName());
+            QByteArray zipRawFileData;
+            zipRawFileData.resize(zipFileInfo.size());
+            QDataStream dataStream(&zipFile);
+            dataStream.readRawData(zipRawFileData.data(), zipRawFileData.size());
+            kDebug( 51000 ) << "DNGWriter: Zipped RAW file size " << zipRawFileData.size() << " bytes" << endl;
+
+            // Pass byte array to DNG sdk and compute MD5 fingerprint.
+
             dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
             dng_memory_stream stream(memalloc);
-            stream.Put(zCompressData.data(), zCompressData.size());
-            AutoPtr<dng_memory_block> block(host.Allocate(zCompressData.size()));
+            stream.Put(zipRawFileData.data(), zipRawFileData.size());
+            AutoPtr<dng_memory_block> block(host.Allocate(zipRawFileData.size()));
             stream.SetReadPosition(0);
-            stream.Get(block->Buffer(), zCompressData.size());
+            stream.Get(block->Buffer(), zipRawFileData.size());
+
+            dng_md5_printer md5;
+            md5.Process(block->Buffer(), block->LogicalSize());
             negative->SetOriginalRawFileData(block);
-            negative->SetHasOriginalRawFileData(true);
+            negative->SetOriginalRawFileDigest(md5.Result());
+            negative->ValidateOriginalRawFileDigest();
+
+            zipFile.remove();
         }
-*/
+
         if (d->cancel) return -2;
 
         // -----------------------------------------------------------------------------------------
@@ -681,7 +710,7 @@ int DNGWriter::convert()
 
         dng_preview_list previewList;
 
-        // NOTE: something is wrong with Qt < 4.4.0 to import TIFF data as stream in QImage.
+// NOTE: something is wrong with Qt < 4.4.0 to import TIFF data as stream in QImage.
 #if QT_VERSION >= 0x40400
 
         if (d->previewMode != DNGWriter::NONE)
@@ -744,7 +773,8 @@ int DNGWriter::convert()
 
             previewFile.remove();
         }
-#endif
+
+#endif /* QT_VERSION >= 0x40400 */
 
         if (d->cancel) return -2;
 

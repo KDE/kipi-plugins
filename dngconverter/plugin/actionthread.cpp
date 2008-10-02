@@ -58,9 +58,10 @@ public:
 
     ActionThreadPriv()
     {
-        compressLossLess = true;
-        running          = false;
-        previewMode      = DNGWriter::MEDIUM;
+        backupOriginalRawFile = false;
+        compressLossLess      = true;
+        running               = false;
+        previewMode           = DNGWriter::MEDIUM;
     }
 
     class Task 
@@ -71,6 +72,7 @@ public:
             Action action;
     };
 
+    bool           backupOriginalRawFile;
     bool           compressLossLess;
     bool           running;
 
@@ -100,6 +102,11 @@ ActionThread::~ActionThread()
     wait();
 
     delete d;
+}
+
+void ActionThread::setBackupOriginalRawFile(bool b)
+{
+    d->backupOriginalRawFile = b;
 }
 
 void ActionThread::setCompressLossLess(bool b)
@@ -290,6 +297,7 @@ void ActionThread::run()
                     d->dngProcessor.reset();
                     d->dngProcessor.setInputFile(t->fileUrl.path());
                     d->dngProcessor.setOutputFile(destPath);
+                    d->dngProcessor.setBackupOriginalRawFile(d->backupOriginalRawFile);
                     d->dngProcessor.setCompressLossLess(d->compressLossLess);
                     d->dngProcessor.setPreviewMode(d->previewMode);
                     int ret = d->dngProcessor.convert();

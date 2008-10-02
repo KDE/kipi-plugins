@@ -74,6 +74,7 @@ public:
 
     bool    cancel;
     bool    jpegLossLessCompression;
+    bool    backupOriginalRawFile;
 
     int     previewMode;
 

@@ -281,6 +281,7 @@ void BatchDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("DNGConverter Settings"));
 
+    d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile", false));
     d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess", true));
     d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode", (int)(DNGWriter::MEDIUM)));
     d->settingsBox->setConflictRule(
@@ -296,9 +297,10 @@ void BatchDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("DNGConverter Settings"));
 
-    group.writeEntry("CompressLossLess", d->settingsBox->compressLossLess());
-    group.writeEntry("PreviewMode", (int)d->settingsBox->previewMode());
-    group.writeEntry("Conflict", (int)d->settingsBox->conflictRule());
+    group.writeEntry("BackupOriginalRawFile", d->settingsBox->backupOriginalRawFile());
+    group.writeEntry("CompressLossLess",      d->settingsBox->compressLossLess());
+    group.writeEntry("PreviewMode",           (int)d->settingsBox->previewMode());
+    group.writeEntry("Conflict",              (int)d->settingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Batch DNG Converter Dialog"));
     saveDialogSize(group2);
@@ -449,6 +451,7 @@ void BatchDialog::processOne()
     QString file(d->fileList.first());
     d->fileList.pop_front();
 
+    d->thread->setBackupOriginalRawFile(d->settingsBox->backupOriginalRawFile());
     d->thread->setCompressLossLess(d->settingsBox->compressLossLess());
     d->thread->setPreviewMode(d->settingsBox->previewMode());
     d->thread->processRawFile(KUrl(file));

@@ -50,6 +50,7 @@ public:
     ActionThread(QObject *parent);
     ~ActionThread();
 
+    void setBackupOriginalRawFile(bool b);
     void setCompressLossLess(bool b);
     void setPreviewMode(int mode);
 

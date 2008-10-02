@@ -58,6 +58,9 @@ public:
     void setCompressLossLess(bool b);
     bool compressLossLess() const;
 
+    void setBackupOriginalRawFile(bool b);
+    bool backupOriginalRawFile() const;
+
     void setPreviewMode(int mode);
     int  previewMode() const;
 

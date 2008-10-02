@@ -58,6 +58,9 @@ public:
     void setPreviewMode(int mode);
     int  previewMode() const;
 
+    void setBackupOriginalRawFile(bool b);
+    bool backupOriginalRawFile() const;
+
     void setDefaultSettings();
 
 private slots:

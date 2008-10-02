@@ -61,13 +61,14 @@ public:
 
     SettingsWidgetPriv()
     {
-        conflictLabel       = 0;
-        conflictButtonGroup = 0;
-        overwriteButton     = 0;
-        promptButton        = 0;
-        compressLossLess    = 0;
-        previewModeCB       = 0;
-        previewModeLabel    = 0;
+        conflictLabel         = 0;
+        conflictButtonGroup   = 0;
+        overwriteButton       = 0;
+        promptButton          = 0;
+        compressLossLess      = 0;
+        previewModeCB         = 0;
+        previewModeLabel      = 0;
+        backupOriginalRawFile = 0;
     }
 
     QLabel       *conflictLabel;
@@ -79,6 +80,7 @@ public:
     QRadioButton *promptButton;
 
     QCheckBox    *compressLossLess;
+    QCheckBox    *backupOriginalRawFile;
 
     RComboBox    *previewModeCB;
 };
@@ -99,6 +101,8 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     dngLogoLabel->setAlignment(Qt::AlignRight);
 
     // ------------------------------------------------------------------------
+
+    d->backupOriginalRawFile = new QCheckBox(i18n("Embed Original File"), this);
 
     d->compressLossLess = new QCheckBox(i18n("Lossless Compression"), this);
 
@@ -128,14 +132,15 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
-    settingsBoxLayout->addWidget(dngLogoLabel,        0, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->compressLossLess, 1, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->previewModeLabel, 2 ,0, 1, 1);
-    settingsBoxLayout->addWidget(d->previewModeCB,    3 ,0 ,1, 1);
-    settingsBoxLayout->addWidget(line,                4, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->conflictLabel,    5, 0, 1, 1);
-    settingsBoxLayout->addWidget(conflictBox,         6, 0, 1, 1);
-    settingsBoxLayout->setRowStretch(7, 10);
+    settingsBoxLayout->addWidget(dngLogoLabel,             0, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->backupOriginalRawFile, 1, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->compressLossLess,      2, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->previewModeLabel,      3 ,0, 1, 1);
+    settingsBoxLayout->addWidget(d->previewModeCB,         4 ,0 ,1, 1);
+    settingsBoxLayout->addWidget(line,                     5, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->conflictLabel,         6, 0, 1, 1);
+    settingsBoxLayout->addWidget(conflictBox,              7, 0, 1, 1);
+    settingsBoxLayout->setRowStretch(8, 10);
     settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
@@ -157,6 +162,7 @@ void SettingsWidget::setDefaultSettings()
 {
     d->previewModeCB->slotReset();
     setCompressLossLess(true);
+    setBackupOriginalRawFile(false);
     setConflictRule(OVERWRITE);
 }
 
@@ -178,6 +184,16 @@ void SettingsWidget::setCompressLossLess(bool b)
 bool SettingsWidget::compressLossLess() const
 {
     return d->compressLossLess->isChecked();
+}
+
+void SettingsWidget::setBackupOriginalRawFile(bool b)
+{
+    d->backupOriginalRawFile->setChecked(b);
+}
+
+bool SettingsWidget::backupOriginalRawFile() const
+{
+    return d->backupOriginalRawFile->isChecked();
 }
 
 SettingsWidget::ConflictRule SettingsWidget::conflictRule()
