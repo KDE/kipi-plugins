@@ -33,8 +33,9 @@
 #include <kdebug.h>
 
 // Local includes
-#include "soundtrackdialog.h"
 #include "playbackwidget.h"
+#include "soundtrackdialog.h"
+#include "soundtrackdialog.moc"
 
 namespace KIPISlideShowPlugin
 {
