@@ -34,6 +34,7 @@
 
 // local includes
 #include "imageviewer.h"
+#include "imageviewer.moc"
 
 namespace KIPISlideShowPlugin
 {
