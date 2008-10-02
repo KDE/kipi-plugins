@@ -241,6 +241,7 @@ void PlaybackWidget::slotPrev()
     m_currIndex--;
 
     if ( m_currIndex < 0 )
+    {
         if ( m_sharedData->soundtrackLoop )
             m_currIndex = m_urlList.count()-1;
         else 
@@ -248,7 +249,7 @@ void PlaybackWidget::slotPrev()
             m_currIndex = 0;
             return;
         }
-
+    }
     setZeroTime();
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
@@ -259,6 +260,7 @@ void PlaybackWidget::slotNext()
     m_currIndex++;
     
     if ( m_currIndex >= m_urlList.count() )
+    {
         if ( m_sharedData->soundtrackLoop )
             m_currIndex = 0;
         else
@@ -266,7 +268,7 @@ void PlaybackWidget::slotNext()
             m_currIndex = m_urlList.count()-1;
             return;
         }
-
+    }
     setZeroTime();
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
@@ -309,12 +311,14 @@ void PlaybackWidget::slotMediaStateChanged(Phonon::State newstate, Phonon::State
             m_playButton->setEnabled(true);
             setGUIPlay(true);       
             if ( oldstate == Phonon::LoadingState )
-                if    ( m_stopCalled ) m_stopCalled = false;
+            {
+                if ( m_stopCalled ) m_stopCalled = false;
                 else   
                 {
                     slotPlay();
                     checkSkip();
                 }
+            }
             break;
         case Phonon::ErrorState :
             slotError();
