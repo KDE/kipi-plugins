@@ -292,7 +292,7 @@ int DNGWriter::convert()
 
         kDebug( 51000 ) << "DNGWriter: DNG IFD structure creation" << endl;
 
-        dng_ifd ifd; 
+        dng_ifd ifd;
 
         ifd.fUsesNewSubFileType        = true;
         ifd.fNewSubFileType            = 0;
@@ -443,11 +443,11 @@ int DNGWriter::convert()
         camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
         camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
         camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
-        camXYZ[1][1] = identify.cameraXYZMatrix[0][4];
-        camXYZ[1][2] = identify.cameraXYZMatrix[0][5];
-        camXYZ[2][0] = identify.cameraXYZMatrix[0][6];
-        camXYZ[2][1] = identify.cameraXYZMatrix[0][7];
-        camXYZ[2][2] = identify.cameraXYZMatrix[0][8];
+        camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
+        camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
+        camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
+        camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
+        camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
 
         if (camXYZ.MaxEntry() == 0.0)
             kDebug( 51000 ) << "DNGWriter: Warning, camera XYZ Matrix is null" << endl;
