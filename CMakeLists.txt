@@ -77,7 +77,7 @@ ENDIF(DEPEND_PACKAGE_KSane)
 
 MESSAGE(STATUS "")
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
-MESSAGE(STATUS " kipi-plugins ${KIPIPLUGINS_VERSION_STRING} dependencies results")
+MESSAGE(STATUS " kipi-plugins ${KIPIPLUGINS_VERSION_STRING} dependencies results   <http://www.kipi-plugins.org>")
 MESSAGE(STATUS "")
 
 IF(JPEG_FOUND)
