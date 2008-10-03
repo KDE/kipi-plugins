@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=DNGConverter
+Name[de]=DNGkonverter
 Name[el]=Μετατροπέας DNG
 Name[it]=Convertitore DNG
 Name[nds]=DNG-Wanneln
@@ -8,6 +9,7 @@ Name[pt]=Conversão para DNG
 Name[pt_BR]=Conversão para DNG
 Name[zh_CN]=DNG 转换器
 Comment=KIPI RAW to DNG Camera Image Converter
+Comment[de]=KIPI-Modul zum Konvertieren von Rohbildern nach DNG
 Comment[el]=Μετατροπέας του KIPI από εικόνες ανεπεξέργαστης μορφής RAW σε DNG
 Comment[it]=Convertitore di immagini grezze in DNG di KIPI
 Comment[nds]=KIPI-Wannelmoduul för Roh- na DNG-Biller
