@@ -1,33 +1,31 @@
 /* ============================================================
- *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
- *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ *
  *
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 // standard includes
-
 #include <cstring>
 #include <cstdio>
 
 // Qt includes
-
 #include <QByteArray>
 #include <QTextStream>
 #include <QFile>
@@ -36,7 +34,6 @@
 #include <QImageReader>
 
 // KDE includes
-
 #include <KLocale>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -45,14 +42,15 @@
 
 
 // LibKExiv2 includes.
-
 #include <libkexiv2/kexiv2.h>
 
 // local includes
-
 #include "gallerytalker.h"
 #include "galleryitem.h"
 #include "gallerympform.h"
+
+
+// self
 #include "gallerytalker.moc"
 
 namespace KIPIGalleryExportPlugin
@@ -84,6 +82,7 @@ bool GalleryTalker::loggedIn() const
 void GalleryTalker::login(const KUrl& url, const QString& name,
                           const QString& passwd)
 {
+    m_job = 0;
     m_url = url;
     m_state = GE_LOGIN;
     m_talker_buffer.resize(0);
@@ -95,15 +94,15 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     form.addPair("password", passwd);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
-    job->addMetaData("cookies", "manual");
+    kWarning() << endl << endl << " form : " << form.formData() << endl << endl;
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-        this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", form.contentType());
+    m_job->addMetaData("cookies", "manual");
 
-    m_job  = job;
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+
     emit signalBusy(true);
 }
 
@@ -111,24 +110,28 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
 
 void GalleryTalker::listAlbums()
 {
+    m_job = 0;
     m_state = GE_LISTALBUMS;
     m_talker_buffer.resize(0);
 
     GalleryMPForm form;
-    form.addPair("cmd", "fetch-albums");
+    if (s_using_gallery2)
+        form.addPair("cmd", "fetch-albums-prune");
+    else
+        form.addPair("cmd", "fetch-albums");
     form.addPair("protocol_version", "2.11");
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
-    job->addMetaData("cookies", "manual");
-    job->addMetaData("setcookies", m_cookie);
+    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", form.contentType());
+    m_job->addMetaData("cookies", "manual");
+    m_job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-        this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    kWarning() << "COOKIE: " << m_cookie << endl;
 
-    m_job = job;
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+
     emit signalBusy(true);
 }
 
@@ -136,6 +139,7 @@ void GalleryTalker::listAlbums()
 
 void GalleryTalker::listPhotos(const QString& albumName)
 {
+    m_job = 0;
     m_state = GE_LISTPHOTOS;
     m_talker_buffer.resize(0);
 
@@ -145,18 +149,16 @@ void GalleryTalker::listPhotos(const QString& albumName)
     form.addPair("set_albumName", albumName);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
-    job->addMetaData("cookies", "manual");
-    job->addMetaData("setcookies", m_cookie);
+    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", form.contentType());
+    m_job->addMetaData("cookies", "manual");
+    m_job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-        this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job = job;
     emit signalBusy(true);
-}
+} 
 
 
 
@@ -165,10 +167,11 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
                                 const QString& albumTitle,
                                 const QString& albumCaption)
 {
-    GalleryMPForm form;
+    m_job = 0;
     m_state = GE_CREATEALBUM;
     m_talker_buffer.resize(0);
 
+    GalleryMPForm form;
     form.addPair("cmd", "new-album");
     form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", parentAlbumName);
@@ -180,15 +183,16 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
         form.addPair("newAlbumDesc", albumCaption);
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
-    job->addMetaData("cookies", "manual");
-    job->addMetaData("setcookies", m_cookie);
+    kWarning() << endl << endl << "form data : " << form.formData() << endl << endl;
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", form.contentType());
+    m_job->addMetaData("cookies", "manual");
+    m_job->addMetaData("setcookies", m_cookie);
 
-    m_job  = job;
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+
     emit signalBusy(true);
 }
 
@@ -200,13 +204,14 @@ bool GalleryTalker::addPhoto(const QString& albumName,
                              bool  captionIsTitle, bool captionIsDescription,
                              bool  rescale, int maxDim)
 {
+    m_job = 0;
     QString path = photoPath;
     QString display_filename = QFile::encodeName(KUrl(path).fileName());
 
-    GalleryMPForm form;
     m_state = GE_ADDPHOTO;
     m_talker_buffer.resize(0);
 
+    GalleryMPForm form;
     form.addPair("cmd", "add-item");
     form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", albumName);
@@ -245,15 +250,14 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
     form.finish();
 
-    KIO::TransferJob* job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    job->addMetaData("content-type", form.contentType());
-    job->addMetaData("cookies", "manual");
-    job->addMetaData("setcookies", m_cookie);
+    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", form.contentType());
+    m_job->addMetaData("cookies", "manual");
+    m_job->addMetaData("setcookies", m_cookie);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
-    m_job  = job;
     emit signalBusy(true);
 
     return true;
@@ -263,22 +267,27 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
 void GalleryTalker::cancel()
 {
-//     if (m_job) {     // FIXME killing jobs crash applications..
-//         m_job->kill();
+    if (m_job) {
+        m_job->kill();
         m_job = 0;
-//     }
+    }
 }
 
 
 
-void GalleryTalker::data(KIO::Job*, const QByteArray& data)
+void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
         return;
 
+    kWarning() << endl << endl << " m_talker_buffer PRIMA: " << m_talker_buffer << endl << endl;
+
     int oldSize = m_talker_buffer.size();
     m_talker_buffer.resize(oldSize + data.size());
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
+
+    kWarning() << endl << endl << " m_talker_buffer DOPO: " << m_talker_buffer << endl << endl;
+
 }
 
 
@@ -327,16 +336,24 @@ void GalleryTalker::slotResult(KJob *job)
             break;
     }
 
-    if (m_state == GE_LOGIN && m_loggedIn)
+    if (m_state == GE_LOGIN && m_loggedIn)      // FIXME adjust cookies..
     {
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
-        for (QStringList::Iterator it = cookielist.begin(); it != cookielist.end(); ++it)
+
+        QRegExp rx("^GALLERYSID=.+");
+        QString str, app;
+        foreach(str, cookielist)
         {
-            QRegExp rx("^Set-Cookie: ([^;]+=[^;]+)");
-            if (rx.exactMatch(*it))   //rx.search(*it) > -1)
-                m_cookie += ' ' + rx.cap(1) + ';';
+            if(str.contains("Set-Cookie: "))
+            {
+                QStringList cl = str.split(" ");
+                int n = cl.lastIndexOf(rx);
+                app = cl.at(n);
+            }
         }
+        m_cookie += app;
+        tempjob->kill();
         listAlbums();
     }
 }
@@ -361,13 +378,16 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             if (strlist.count() == 2) {
                 if (("status" == strlist[0]) && ("0" == strlist[1])) {
                     m_loggedIn = true;
-                } else
+                } else {
                     if ("auth_token" == strlist[0]) {
                         s_authToken = strlist[1];
                     }
+                }
             }
         }
     }
+
+    kWarning() << endl << endl << "authToken = " << s_authToken << endl << endl;
 
     if (!foundResponse) {
         emit signalLoginFailed(i18n("Gallery URL probably incorrect"));
@@ -406,37 +426,37 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else
+                } else 
                     if (key.startsWith("album.name")) {
                         GAlbum album;
                         album.name    = value;
                         album.ref_num = key.section(".", 2, 2).toInt();
                         iter = albumList.insert(iter, album);
-                } else
+                } else 
                     if (key.startsWith("album.title")) {
                         (*iter).title = value;
-                } else
+                } else 
                     if (key.startsWith("album.summary")) {
                         (*iter).summary = value;
-                } else
+                } else 
                     if (key.startsWith("album.parent")) {
                         (*iter).parent_ref_num = value.toInt();
-                } else
+                } else 
                     if (key.startsWith("album.perms.add")) {
                         (*iter).add = (value == "true");
-                } else
+                } else 
                     if (key.startsWith("album.perms.write")) {
                         (*iter).write = (value == "true");
-                } else
+                } else 
                     if (key.startsWith("album.perms.del_item")) {
                         (*iter).del_item = (value == "true");
-                } else
+                } else 
                     if (key.startsWith("album.perms.del_alb")) {
                         (*iter).del_alb = (value == "true");
-                } else
+                } else 
                     if (key.startsWith("album.perms.create_sub")) {
                         (*iter).create_sub = (value == "true");
-                } else
+                } else 
                     if (key == "auth_token") {
                     s_authToken = value;
                 }
@@ -491,19 +511,19 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else
+                } else 
                     if (key.startsWith("image.name")) {
                         GPhoto photo;
                         photo.name    = value;
                         photo.ref_num = key.section(".", 2, 2).toInt();
                         iter = photoList.insert(iter, photo);
-                } else
-                    if (key.startsWith("image.caption")) {
+                } else 
+                    if (key.startsWith("image.caption")) { 
                         (*iter).caption = value;
-                } else
+                } else 
                     if (key.startsWith("image.thumbName")) {
                         (*iter).thumbName = value;
-                } else
+                } else 
                     if (key.startsWith("baseurl")) {
                         albumURL = value.replace("\\", "");
                 }
@@ -522,7 +542,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     }
 
     emit signalPhotos(photoList);
-    }
+}
 
 
 
@@ -535,18 +555,23 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     bool foundResponse = false;
     bool success = false;
 
+    kWarning() << "str: " << data << endl;
+
     while (!ts.atEnd()) {
         line = ts.readLine();
 
         if (!foundResponse) {
             foundResponse = line.startsWith("#__GR2PROTO__");
+            kWarning() << "foundResponse: " << foundResponse << endl;
         } else {
             QStringList strlist = line.split('=');
             if (strlist.count() == 2) {
+                kWarning() << "line count = 2 " << endl;
                 QString key   = strlist[0];
                 QString value = strlist[1];
-
-                if (key == "status") {
+                kWarning() << "key = " << key <<endl;
+                kWarning() << "value =  " << value  << endl;
+                if (key == "status") {      // NON TROVA key == "status"!!!
                     success = (value == "0");
                     kWarning( 51000 ) << "Create Album. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
@@ -620,5 +645,3 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 
 
 }
-
-// self

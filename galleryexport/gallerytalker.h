@@ -68,6 +68,7 @@ public:
     static void setGallery2(bool usegallery2) {
         s_using_gallery2 = usegallery2;
     };
+
     static bool isGallery2() {
         return s_using_gallery2;
     };
@@ -100,7 +101,7 @@ private:
     State      m_state;
     QString    m_cookie;
     KUrl       m_url;
-    KIO::Job*  m_job;
+    KIO::TransferJob* m_job;
     bool       m_loggedIn;
     QByteArray m_talker_buffer;
 
@@ -127,7 +128,7 @@ signals:
 
 private slots:
 
-    void data(KIO::Job *job, const QByteArray &data);
+    void slotTalkerData(KIO::Job *job, const QByteArray &data);
     void slotResult(KJob *job);
 };
 
