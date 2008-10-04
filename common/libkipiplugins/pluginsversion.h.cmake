@@ -23,6 +23,30 @@
 #ifndef KIPIPLUGINS_VERSION_H
 #define KIPIPLUGINS_VERSION_H
 
+// Qt includes.
+
+#include <QString>
+
+// KDE includes.
+
+#include <klocale.h>
+
+// Local includes.
+
+#include "svnversion.h"
+
 static const char kipiplugins_version[] = "${KIPIPLUGINS_VERSION_STRING}";
+
+static inline const QString kipipluginsVersion()
+{
+    // We only take the mixed revision
+    QString svnVer         = QString(SVNVERSION).section(":", 0, 0);
+        
+    QString kipipluginsVer = QString(kipiplugins_version);
+    if (!svnVer.isEmpty() && !svnVer.startsWith("unknow") && !svnVer.startsWith("export"))
+    kipipluginsVer = i18nc("%1 is kipi-plugins version, %2 is the svn revision", "%1 (rev.: %2)", kipiplugins_version, svnVer);
+                    
+    return kipipluginsVer;
+}
 
 #endif // KIPIPLUGINS_VERSION_H
