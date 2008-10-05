@@ -41,7 +41,6 @@
 #include <qfont.h>
 #include <qmatrix.h>
 #include <qtextcodec.h>
-//Added by qt3to4:
 #include <QKeyEvent>
 #include <Q3PointArray>
 #include <QMouseEvent>
@@ -55,9 +54,9 @@
 #include <kdebug.h>
 #include <kurl.h>
 #include <KConfigGroup>
+
 // Local includes.
 
-#include "toolbar.h"
 #include "slideshow.h"
 #include "slideshow.moc"
 
@@ -82,28 +81,28 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     paletteSelection.setColor(QPalette::Window, QColor(0, 0, 0));
     setPalette(paletteSelection);
 
-    m_toolBar = new ToolBar(this);
-    m_toolBar->hide();
+    m_slidePlaybackWidget = new SlidePlaybackWidget(this);
+    m_slidePlaybackWidget->hide();
 
     if (!m_sharedData->loop)
     {
-        m_toolBar->setEnabledPrev(false);
+        m_slidePlaybackWidget->setEnabledPrev(false);
     }
 
-    connect(m_toolBar, SIGNAL(signalPause()),
+    connect(m_slidePlaybackWidget, SIGNAL(signalPause()),
 
             this, SLOT(slotPause()));
 
-    connect(m_toolBar, SIGNAL(signalPlay()),
+    connect(m_slidePlaybackWidget, SIGNAL(signalPlay()),
             this, SLOT(slotPlay()));
 
-    connect(m_toolBar, SIGNAL(signalNext()),
+    connect(m_slidePlaybackWidget, SIGNAL(signalNext()),
             this, SLOT(slotNext()));
 
-    connect(m_toolBar, SIGNAL(signalPrev()),
+    connect(m_slidePlaybackWidget, SIGNAL(signalPrev()),
             this, SLOT(slotPrev()));
 
-    connect(m_toolBar, SIGNAL(signalClose()),
+    connect(m_slidePlaybackWidget, SIGNAL(signalClose()),
             this, SLOT(slotClose()));
 
     // ---------------------------------------------------------------
@@ -323,8 +322,8 @@ void SlideShow::loadNextImage()
 
     if (!m_sharedData->loop)
     {
-        m_toolBar->setEnabledPrev(m_fileIndex > 0);
-        m_toolBar->setEnabledNext(m_fileIndex < num - 1);
+        m_slidePlaybackWidget->setEnabledPrev(m_fileIndex > 0);
+        m_slidePlaybackWidget->setEnabledNext(m_fileIndex < num - 1);
     }
 
     QPixmap* oldPixmap = m_currImage;
@@ -381,8 +380,8 @@ void SlideShow::loadPrevImage()
 
     if (!m_sharedData->loop)
     {
-        m_toolBar->setEnabledPrev(m_fileIndex > 0);
-        m_toolBar->setEnabledNext(m_fileIndex < num - 1);
+        m_slidePlaybackWidget->setEnabledPrev(m_fileIndex > 0);
+        m_slidePlaybackWidget->setEnabledNext(m_fileIndex < num - 1);
     }
 
     QPixmap* oldPixmap = m_currImage;
@@ -581,9 +580,9 @@ void SlideShow::showEndOfShow()
 //     p.drawText(100, 150, i18n("Click To Exit..."));
 //     p.end();
     update();
-    m_toolBar->setEnabledPlay(false);
-    m_toolBar->setEnabledNext(false);
-    m_toolBar->setEnabledPrev(false);
+    m_slidePlaybackWidget->setEnabledPlay(false);
+    m_slidePlaybackWidget->setEnabledNext(false);
+    m_slidePlaybackWidget->setEnabledPrev(false);
 }
 
 void SlideShow::keyPressEvent(QKeyEvent *event)
@@ -591,7 +590,7 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
     if (!event)
         return;
 
-    m_toolBar->keyPressEvent(event);
+    m_slidePlaybackWidget->keyPressEvent(event);
 }
 
 void SlideShow::mousePressEvent(QMouseEvent *e)
@@ -602,13 +601,13 @@ void SlideShow::mousePressEvent(QMouseEvent *e)
     if (e->button() == Qt::LeftButton)
     {
         m_timer->stop();
-        m_toolBar->setPaused(true);
+        m_slidePlaybackWidget->setPaused(true);
         slotNext();
     }
     else if (e->button() == Qt::RightButton && m_fileIndex - 1 >= 0)
     {
         m_timer->stop();
-        m_toolBar->setPaused(true);
+        m_slidePlaybackWidget->setPaused(true);
         slotPrev();
     }
 }
@@ -619,7 +618,7 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
     m_mouseMoveTimer->setSingleShot(true);
     m_mouseMoveTimer->start(1000);
 
-    if (!m_toolBar->canHide())
+    if (!m_slidePlaybackWidget->canHide())
         return;
 
     QPoint pos(e->pos());
@@ -627,38 +626,38 @@ void SlideShow::mouseMoveEvent(QMouseEvent *e)
     if ((pos.y() > (m_deskY + 20)) &&
             (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
     {
-        if (m_toolBar->isHidden())
+        if (m_slidePlaybackWidget->isHidden())
             return;
         else
-            m_toolBar->hide();
+            m_slidePlaybackWidget->hide();
 
         return;
     }
 
-    int w = m_toolBar->width();
+    int w = m_slidePlaybackWidget->width();
 
-    int h = m_toolBar->height();
+    int h = m_slidePlaybackWidget->height();
 
     if (pos.y() < (m_deskY + 20))
     {
         if (pos.x() <= (m_deskX + m_deskWidth / 2))
             // position top left
-            m_toolBar->move(m_deskX, m_deskY);
+            m_slidePlaybackWidget->move(m_deskX, m_deskY);
         else
             // position top right
-            m_toolBar->move(m_deskX + m_deskWidth - w - 1, m_deskY);
+            m_slidePlaybackWidget->move(m_deskX + m_deskWidth - w - 1, m_deskY);
     }
     else
     {
         if (pos.x() <= (m_deskX + m_deskWidth / 2))
             // position bot left
-            m_toolBar->move(m_deskX, m_deskY + m_deskHeight - h - 1);
+            m_slidePlaybackWidget->move(m_deskX, m_deskY + m_deskHeight - h - 1);
         else
             // position bot right
-            m_toolBar->move(m_deskX + m_deskWidth - w - 1, m_deskY + m_deskHeight - h - 1);
+            m_slidePlaybackWidget->move(m_deskX + m_deskWidth - w - 1, m_deskY + m_deskHeight - h - 1);
     }
 
-    m_toolBar->show();
+    m_slidePlaybackWidget->show();
 }
 
 void SlideShow::wheelEvent(QWheelEvent *e)
@@ -673,13 +672,13 @@ void SlideShow::wheelEvent(QWheelEvent *e)
     if (delta < 0)
     {
         m_timer->stop();
-        m_toolBar->setPaused(true);
+        m_slidePlaybackWidget->setPaused(true);
         slotNext();
     }
     else if (delta > 0 && m_fileIndex - 1 >= 0)
     {
         m_timer->stop();
-        m_toolBar->setPaused(true);
+        m_slidePlaybackWidget->setPaused(true);
         slotPrev();
     }
 }
@@ -1351,17 +1350,17 @@ void SlideShow::slotPause()
 {
     m_timer->stop();
 
-    if (m_toolBar->isHidden())
+    if (m_slidePlaybackWidget->isHidden())
     {
-        int w = m_toolBar->width();
-        m_toolBar->move(m_deskWidth - w - 1, 0);
-        m_toolBar->show();
+        int w = m_slidePlaybackWidget->width();
+        m_slidePlaybackWidget->move(m_deskWidth - w - 1, 0);
+        m_slidePlaybackWidget->show();
     }
 }
 
 void SlideShow::slotPlay()
 {
-    m_toolBar->hide();
+    m_slidePlaybackWidget->hide();
     slotTimeOut();
 }
 

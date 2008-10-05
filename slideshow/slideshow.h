@@ -53,6 +53,7 @@
 // Local includes.
 
 #include "slideshowloader.h"
+#include "slideplaybackwidget.h"
 #include "common.h"
 
 class QTimer;
@@ -63,7 +64,7 @@ typedef Q3ValueList<FileAnglePair > FileList;
 namespace KIPISlideShowPlugin
 {
 
-class ToolBar;
+class SlidePlaybackWidget;
 
 class SlideShow;
 
@@ -168,7 +169,7 @@ private:
     double                      m_fx, m_fy, m_alpha, m_fd;
     int*                        m_intArray;
 
-    ToolBar*                    m_toolBar;
+    SlidePlaybackWidget*        m_slidePlaybackWidget;
     QTimer*                     m_mouseMoveTimer;
 
     int                         m_deskX;

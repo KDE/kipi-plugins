@@ -40,7 +40,7 @@
 
 // Local includes
 #include "slideshowloader.h"
-#include "toolbar.h"
+#include "slideplaybackwidget.h"
 #include "playbackwidget.h"
 #include "common.h"
 
@@ -151,7 +151,7 @@ private:
     int                               m_dir;
     float                             m_points[40][40][3];
 
-    ToolBar*                          m_toolBar;
+    SlidePlaybackWidget*              m_slidePlaybackWidget;
     PlaybackWidget*                   m_playbackWidget;
     QTimer*                           m_mouseMoveTimer;
 

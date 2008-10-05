@@ -3,7 +3,6 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                )
 
 SET(kipiplugin_slideshow_PART_SRCS common.cpp
-			           toolbar.cpp
                                    kbeffect.cpp 
                                    screenproperties.cpp
                                    slideshowkb.cpp 
@@ -15,6 +14,7 @@ SET(kipiplugin_slideshow_PART_SRCS common.cpp
 				   soundtrackdialog.cpp
 				   advanceddialog.cpp 
 				   playbackwidget.cpp
+				   slideplaybackwidget.cpp
                                    slideshow.cpp 
                                    slideshowconfig.cpp 
                                    slideshowgl.cpp 
@@ -27,6 +27,7 @@ KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS maindialog.ui
 						 captiondialog.ui 
 						 advanceddialog.ui
 						 soundtrackdialog.ui
+						 slideplaybackwidget.ui
 						 playbackwidget.ui
 		 )
 
