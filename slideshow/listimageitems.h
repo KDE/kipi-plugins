@@ -45,7 +45,7 @@ class ImageItem : public QObject, public QListWidgetItem
 
 public:
 
-    ImageItem(QListWidget* parent, QString const & name, QString const & comments, 
+    ImageItem(QListWidget* parent, QString const & name, QString const & comments,
               QString const & path, QString const & album);
     ~ImageItem();
 
@@ -57,7 +57,9 @@ public:
 
 private slots:
     void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
-    void slotFailedPreview(const KFileItem&);private:
+    void slotFailedPreview(const KFileItem&);
+
+private:
 
 private:
     QString m_name;
@@ -68,13 +70,13 @@ private:
     KIO::PreviewJob* m_thumbJob;
 };
 
-class ListImageItems : public QListWidget 
+class ListImageItems : public QListWidget
 {
     Q_OBJECT
 
 public:
 
-    ListImageItems(QWidget *parent=0);
+    ListImageItems(QWidget *parent = 0);
 
 signals:
 

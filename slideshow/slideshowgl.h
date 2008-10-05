@@ -48,7 +48,8 @@ class QTimer;
 
 namespace KIPISlideShowPlugin
 {
-class SlideShowGL;   
+
+class SlideShowGL;
 
 class SlideShowGL : public QGLWidget
 {
@@ -63,7 +64,7 @@ public:
     void registerEffects();
 
     static QStringList effectNames();
-    static QMap<QString,QString> effectNamesI18N();
+    static QMap<QString, QString> effectNamesI18N();
 
 protected:
 
@@ -77,7 +78,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-  
+
     typedef void (SlideShowGL::*EffectMethod)();
 
     void          paintTexture();
@@ -151,15 +152,15 @@ private:
     float                             m_points[40][40][3];
 
     ToolBar*                          m_toolBar;
-    PlaybackWidget*					  m_playbackWidget;
+    PlaybackWidget*                   m_playbackWidget;
     QTimer*                           m_mouseMoveTimer;
 
     int                               m_deskX;
     int                               m_deskY;
     int                               m_deskWidth;
     int                               m_deskHeight;
-    
-    SharedData*						  m_sharedData;
+
+    SharedData*                       m_sharedData;
 };
 
 }  // NameSpace KIPISlideShowPlugin

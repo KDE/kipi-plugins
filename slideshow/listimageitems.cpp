@@ -44,29 +44,48 @@
 namespace KIPISlideShowPlugin
 {
 
-ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & comments, 
+ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & comments,
                      QString const & path, QString const & album)
-    : QListWidgetItem(parent), m_name(name), m_comments(comments), m_path(path), m_album(album)
-{ 
-  m_thumbJob = KIO::filePreview( KUrl(m_path), 32);
+        : QListWidgetItem(parent), m_name(name), m_comments(comments), m_path(path), m_album(album)
+{
+    m_thumbJob = KIO::filePreview( KUrl(m_path), 32);
 
 
-  connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-          SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
-  connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
-          SLOT(slotFailedPreview(const KFileItem&)));
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+            SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
+            SLOT(slotFailedPreview(const KFileItem&)));
 }
 
 ImageItem::~ImageItem()
 {
-  if (m_thumbJob) delete m_thumbJob;
+    if (m_thumbJob) delete m_thumbJob;
 }
 
-QString ImageItem::comments()                    { return m_comments; }
-QString ImageItem::name()                        { return m_name;     }
-QString ImageItem::path()                        { return m_path;     }
-QString ImageItem::album()                       { return m_album;    }
-void  ImageItem::setName(const QString &newName) { setText(newName);  }
+QString ImageItem::comments()
+{
+    return m_comments;
+}
+
+QString ImageItem::name()
+{
+    return m_name;
+}
+
+QString ImageItem::path()
+{
+    return m_path;
+}
+
+QString ImageItem::album()
+{
+    return m_album;
+}
+
+void  ImageItem::setName(const QString &newName)
+{
+    setText(newName);
+}
 
 void ImageItem::slotGotPreview(const KFileItem& , const QPixmap &pixmap)
 {
@@ -83,7 +102,7 @@ void ImageItem::slotFailedPreview(const KFileItem&)
 // ---------------------------------------------
 
 ListImageItems::ListImageItems(QWidget *parent)
-              : QListWidget(parent)
+        : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);
@@ -104,7 +123,9 @@ void ListImageItems::dropEvent(QDropEvent *e)
     if ( !Q3UriDrag::decode(e, strList) ) return;
 
     Q3StrList stringList;
+
     Q3StrListIterator it(strList);
+
     char *str;
 
     while ( (str = it.current()) != 0 )

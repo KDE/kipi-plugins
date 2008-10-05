@@ -58,28 +58,30 @@ namespace KIPISlideShowPlugin
 
 SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedData* sharedData)
-    : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
-                Qt::WX11BypassWM | Qt::WDestructiveClose)
-{	
+        : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
+                    Qt::WX11BypassWM | Qt::WDestructiveClose)
+{
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
     m_deskWidth  = deskRect.width();
     m_deskHeight = deskRect.height();
-    
+
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
 
     m_sharedData = sharedData;
-    
+
     m_toolBar = new ToolBar(this);
     m_toolBar->hide();
+
     if (!m_sharedData->loop)
-    {		
+    {
         m_toolBar->setEnabledPrev(false);
     }
-	
+
     connect(m_toolBar, SIGNAL(signalPause()),
+
             SLOT(slotPause()));
     connect(m_toolBar, SIGNAL(signalPlay()),
             SLOT(slotPlay()));
@@ -89,15 +91,15 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
             SLOT(slotPrev()));
     connect(m_toolBar, SIGNAL(signalClose()),
             SLOT(slotClose()));
-    
-    m_playbackWidget = new PlaybackWidget(this,m_sharedData->soundtrackUrls,m_sharedData);
+
+    m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
     m_playbackWidget->hide();
-       
+
     int w = m_toolBar->width();
-    
-    m_toolBar->move(m_deskX+m_deskWidth-w-1, m_deskY);
+
+    m_toolBar->move(m_deskX + m_deskWidth - w - 1, m_deskY);
     m_playbackWidget->move(m_deskX, m_deskY);
-    
+
     // -- Minimal texture size (opengl specs) --------------
 
     m_width  = 64;
@@ -105,15 +107,15 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
 
     // -- Margin -------------------------------------------
 
-    m_xMargin = int (m_deskWidth/m_width);
-    m_yMargin = int (m_deskWidth/m_height);
+    m_xMargin = int (m_deskWidth / m_width);
+    m_yMargin = int (m_deskWidth / m_height);
 
     // --------------------------------------------------
 
     m_fileList       = fileList;
     m_commentsList   = commentsList;
 
-	m_cacheSize = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
+    m_cacheSize = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
 
     // ------------------------------------------------------------------
 
@@ -133,32 +135,41 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
 
     registerEffects();
 
-    if (m_sharedData->effectNameGL == "Random") {
+    if (m_sharedData->effectNameGL == "Random")
+    {
         m_effect = getRandomEffect();
         m_random = true;
     }
-    else {
+    else
+    {
         m_effect = m_effects[m_sharedData->effectNameGL];
+
         if (!m_effect)
             m_effect = m_effects["None"];
+
         m_random = false;
     }
 
     // --------------------------------------------------
 
     m_timer = new QTimer();
+
     connect(m_timer, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
+
     m_timer->setSingleShot(true);
+
     m_timer->start(m_timeout);
 
     // -- hide cursor when not moved --------------------
 
     m_mouseMoveTimer = new QTimer;
+
     connect(m_mouseMoveTimer, SIGNAL(timeout()),
             SLOT(slotMouseMoveTimeOut()));
 
     setMouseTracking(true);
+
     slotMouseMoveTimeOut();
 }
 
@@ -167,14 +178,15 @@ SlideShowGL::~SlideShowGL()
     delete m_timer;
     delete m_mouseMoveTimer;
     delete m_playbackWidget;
-    
+
     if (m_texture[0])
         glDeleteTextures(1, &m_texture[0]);
+
     if (m_texture[1])
         glDeleteTextures(1, &m_texture[1]);
 
     if (m_imageLoader)
-      delete m_imageLoader;
+        delete m_imageLoader;
 }
 
 void SlideShowGL::initializeGL()
@@ -187,7 +199,7 @@ void SlideShowGL::initializeGL()
     // Turn Blending On
     glEnable(GL_BLEND);
     // Blending Function For Translucency Based On Source Alpha Value
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Enable perspective vision
     glClearDepth(1.0f);
@@ -202,8 +214,8 @@ void SlideShowGL::initializeGL()
     m_width  = QApplication::desktop()->width();
     m_height = QApplication::desktop()->height();
 
-    m_width  = 1 << (int)ceil(log((float)m_width)/log((float)2)) ;
-    m_height = 1 << (int)ceil(log((float)m_height)/log((float)2));
+    m_width  = 1 << (int)ceil(log((float)m_width) / log((float)2)) ;
+    m_height = 1 << (int)ceil(log((float)m_height) / log((float)2));
 
     m_width  = qMin( maxTexVal, m_width );
     m_height = qMin( maxTexVal, m_height );
@@ -228,7 +240,8 @@ void SlideShowGL::paintGL()
 
     if (m_endOfShow)
         showEndOfShow();
-    else {
+    else
+    {
         if (m_effectRunning && m_effect)
             (this->*m_effect)();
         else
@@ -247,10 +260,11 @@ void SlideShowGL::resizeGL(int w, int h)
 
 void SlideShowGL::keyPressEvent(QKeyEvent *event)
 {
-    if(!event)
+    if (!event)
         return;
 
     m_toolBar->keyPressEvent(event);
+
     m_playbackWidget->keyPressEvent(event);
 }
 
@@ -265,7 +279,7 @@ void SlideShowGL::mousePressEvent(QMouseEvent *e)
         m_toolBar->setPaused(true);
         slotNext();
     }
-    else if (e->button() == Qt::RightButton && m_fileIndex-1 >= 0)
+    else if (e->button() == Qt::RightButton && m_fileIndex - 1 >= 0)
     {
         m_timer->stop();
         m_toolBar->setPaused(true);
@@ -284,8 +298,8 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
 
     QPoint pos(e->pos());
 
-    if ((pos.y() > (m_deskY+20)) &&
-        (pos.y() < (m_deskY+m_deskHeight-20-1)))
+    if ((pos.y() > (m_deskY + 20)) &&
+            (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
     {
         if (m_toolBar->isHidden() || m_playbackWidget->isHidden())
             return;
@@ -294,10 +308,12 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
             m_toolBar->hide();
             m_playbackWidget->hide();
         }
+
         return;
     }
 
     m_toolBar->show();
+
     m_playbackWidget->show();
 }
 
@@ -316,7 +332,7 @@ void SlideShowGL::wheelEvent(QWheelEvent *e)
         m_toolBar->setPaused(true);
         slotNext();
     }
-    else if (delta > 0 && m_fileIndex-1 >= 0)
+    else if (delta > 0 && m_fileIndex - 1 >= 0)
     {
         m_timer->stop();
         m_toolBar->setPaused(true);
@@ -355,9 +371,9 @@ QStringList SlideShowGL::effectNames()
     return effects;
 }
 
-QMap<QString,QString> SlideShowGL::effectNamesI18N()
+QMap<QString, QString> SlideShowGL::effectNamesI18N()
 {
-    QMap<QString,QString> effects;
+    QMap<QString, QString> effects;
 
     effects["None"]    = i18n("None");
     effects["Bend"]    = i18n("Bend");
@@ -375,14 +391,14 @@ QMap<QString,QString> SlideShowGL::effectNamesI18N()
 
 SlideShowGL::EffectMethod SlideShowGL::getRandomEffect()
 {
-    QMap<QString,EffectMethod>  tmpMap(m_effects);
+    QMap<QString, EffectMethod>  tmpMap(m_effects);
 
     tmpMap.remove("None");
     QStringList t = tmpMap.keys();
 
     int count = t.count();
 
-    int i = (int)((float)(count)*rand()/(RAND_MAX+1.0));
+    int i = (int)((float)(count) * rand() / (RAND_MAX + 1.0));
     QString key = t[i];
 
     return tmpMap[key];
@@ -393,14 +409,16 @@ void SlideShowGL::advanceFrame()
     m_fileIndex++;
     m_imageLoader->next();
     int num = m_fileList.count();
-    if (m_fileIndex >= num) {
+
+    if (m_fileIndex >= num)
+    {
         if (m_sharedData->loop)
         {
             m_fileIndex = 0;
         }
         else
         {
-            m_fileIndex = num-1;
+            m_fileIndex = num - 1;
             m_endOfShow = true;
             m_toolBar->setEnabledPlay(false);
             m_toolBar->setEnabledNext(false);
@@ -411,10 +429,11 @@ void SlideShowGL::advanceFrame()
     if (!m_sharedData->loop && !m_endOfShow)
     {
         m_toolBar->setEnabledPrev(m_fileIndex > 0);
-        m_toolBar->setEnabledNext(m_fileIndex < num-1);
+        m_toolBar->setEnabledNext(m_fileIndex < num - 1);
     }
 
     m_tex1First = !m_tex1First;
+
     m_curr      = (m_curr == 0) ? 1 : 0;
 }
 
@@ -423,10 +442,12 @@ void SlideShowGL::previousFrame()
     m_fileIndex--;
     m_imageLoader->prev();
     int num = m_fileList.count();
-    if (m_fileIndex < 0) {
+
+    if (m_fileIndex < 0)
+    {
         if (m_sharedData->loop)
         {
-            m_fileIndex = num-1;
+            m_fileIndex = num - 1;
         }
         else
         {
@@ -441,10 +462,11 @@ void SlideShowGL::previousFrame()
     if (!m_sharedData->loop && !m_endOfShow)
     {
         m_toolBar->setEnabledPrev(m_fileIndex > 0);
-        m_toolBar->setEnabledNext(m_fileIndex < num-1);
+        m_toolBar->setEnabledNext(m_fileIndex < num - 1);
     }
 
     m_tex1First = !m_tex1First;
+
     m_curr      = (m_curr == 0) ? 1 : 0;
 }
 
@@ -453,7 +475,8 @@ void SlideShowGL::loadImage()
 
     QImage image = m_imageLoader->getCurrent();
 
-    if (!image.isNull()) {
+    if (!image.isNull())
+    {
 
         int a  = m_tex1First ? 0 : 1;
         GLuint& tex = m_texture[a];
@@ -462,35 +485,39 @@ void SlideShowGL::loadImage()
             glDeleteTextures(1, &tex);
 
         QImage black(width(), height(), QImage::Format_RGB32);
-        black.fill(QColor(0,0,0).rgb());
 
-/*        image = image.smoothScale(width(), height(),
-                                  Qt::ScaleMin);*/
+        black.fill(QColor(0, 0, 0).rgb());
+
+        /*        image = image.smoothScale(width(), height(),
+                                          Qt::ScaleMin);*/
         montage(image, black);
 
         black = black.scaled(m_width, m_height);
 
-	if (m_sharedData->printFileName)
-	    printFilename(black);
+        if (m_sharedData->printFileName)
+            printFilename(black);
 
-    if (m_sharedData->printProgress)
-        printProgress(black);
+        if (m_sharedData->printProgress)
+            printProgress(black);
 
-    if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments)
-        printComments(black);
+        if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments)
+            printComments(black);
 
-	QImage t = convertToGLFormat(black);
+        QImage t = convertToGLFormat(black);
 
         /* create the texture */
         glGenTextures(1, &tex);
+
         glBindTexture(GL_TEXTURE_2D, tex);
 
         /* actually generate the texture */
         glTexImage2D( GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0,
                       GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
+
         /* enable linear filtering  */
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 
     }
@@ -499,26 +526,36 @@ void SlideShowGL::loadImage()
 
 void SlideShowGL::montage(QImage& top, QImage& bot)
 {
-    int tw = top.width(); int th = top.height();
-    int bw = bot.width(); int bh = bot.height();
+    int tw = top.width();
+    int th = top.height();
+    int bw = bot.width();
+    int bh = bot.height();
 
     if (tw > bw || th > bh)
         qFatal("Top Image should be smaller or same size as Bottom Image");
 
     if (top.depth() != 32) top = top.convertToFormat(QImage::Format_RGB32);
+
     if (bot.depth() != 32) bot = bot.convertToFormat(QImage::Format_RGB32);
 
-    int sw = bw/2 - tw/2; //int ew = bw/2 + tw/2;
-    int sh = bh/2 - th/2; int eh = bh/2 + th/2;
+    int sw = bw / 2 - tw / 2; //int ew = bw/2 + tw/2;
+
+    int sh = bh / 2 - th / 2;
+
+    int eh = bh / 2 + th / 2;
 
 
     unsigned int *tdata = (unsigned int*) top.scanLine(0);
+
     unsigned int *bdata = 0;
 
-    for (int y = sh; y < eh; y++) {
+    for (int y = sh; y < eh; y++)
+    {
 
         bdata = (unsigned int*) bot.scanLine(y) + sw;
-        for (int x = 0; x < tw; x++) {
+
+        for (int x = 0; x < tw; x++)
+        {
             *(bdata++) = *(tdata++);
         }
 
@@ -535,21 +572,21 @@ void SlideShowGL::printFilename(QImage& layer)
     fn.setBold(true);
 
     QFontMetrics fm(fn);
-    QRect rect=fm.boundingRect(filename);
+    QRect rect = fm.boundingRect(filename);
     rect.adjust( 0, 0, 2, 2 );
 
-    QPixmap pix(rect.width(),rect.height());
+    QPixmap pix(rect.width(), rect.height());
     pix.fill(Qt::transparent);
 
     QPainter p(&pix);
     p.setPen(Qt::white);
     p.setFont(fn);
-    p.drawText(1,fn.pointSize()+1 , filename);
+    p.drawText(1, fn.pointSize() + 1 , filename);
     p.end();
 
     QPainter painter;
-    painter.begin(&layer); 
-    QRect target = QRect(m_xMargin, m_height-rect.height()-m_yMargin, rect.width(), rect.height());
+    painter.begin(&layer);
+    QRect target = QRect(m_xMargin, m_height - rect.height() - m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
     painter.drawPixmap(target, pix, source);
     painter.end();
@@ -565,22 +602,22 @@ void SlideShowGL::printProgress(QImage& layer)
     fn.setBold(true);
 
     QFontMetrics fm(fn);
-    QRect rect=fm.boundingRect(progress);
+    QRect rect = fm.boundingRect(progress);
     rect.adjust( 0, 0, 2, 2 );
 
-    QPixmap pix(rect.width(),rect.height());
+    QPixmap pix(rect.width(), rect.height());
     pix.fill(Qt::transparent);
 
     QPainter p(&pix);
 
     p.setPen(Qt::white);
     p.setFont(fn);
-    p.drawText(1,fn.pointSize()+1 , progress);
+    p.drawText(1, fn.pointSize() + 1 , progress);
     p.end();
 
     QPainter painter;
-    painter.begin(&layer); 
-    QRect target = QRect(m_width - rect.width()- m_xMargin, m_yMargin, rect.width(), rect.height());
+    painter.begin(&layer);
+    QRect target = QRect(m_width - rect.width() - m_xMargin, m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
     painter.drawPixmap(target, pix, source);
     painter.end();
@@ -592,6 +629,7 @@ void SlideShowGL::printComments(QImage& layer)
     QString comments = m_commentsList[m_fileIndex];
 
     int yPos = 5; // Text Y coordinate
+
     if (m_sharedData->printFileName) yPos += 20;
 
     QStringList commentsByLines;
@@ -609,7 +647,7 @@ void SlideShowGL::printComments(QImage& layer)
         int commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
         for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
-            if( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
+            if ( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
 
         if (commentsLinesLengthLocal <= (int)((currIndex - commentsIndex)))
             commentsLinesLengthLocal = (currIndex - commentsIndex);
@@ -617,8 +655,8 @@ void SlideShowGL::printComments(QImage& layer)
         breakLine = FALSE;
 
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-              currIndex < (uint) comments.length() &&
-                      !breakLine; currIndex++ )
+                currIndex < (uint) comments.length() &&
+                !breakLine; currIndex++ )
         {
             breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
 
@@ -632,53 +670,63 @@ void SlideShowGL::printComments(QImage& layer)
 
         if ( commentsIndex != (uint) comments.length() )
             while ( !newLine.endsWith(" ") )
-        {
-            newLine.truncate(newLine.length() - 1);
-            commentsIndex--;
-        }
+            {
+                newLine.truncate(newLine.length() - 1);
+                commentsIndex--;
+            }
 
         commentsByLines.prepend(newLine.trimmed());
     }
 
     QFontMetrics fm(*m_sharedData->captionFont);
-  
+
     yPos += int(2.0 * m_sharedData->captionFont->pointSize());
 
-    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ ) {
+    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ )
+    {
 
-        QRect rect=fm.boundingRect(commentsByLines[lineNumber]);
+        QRect rect = fm.boundingRect(commentsByLines[lineNumber]);
         rect.adjust( 0, 0, 2, 2 );
 
-        QPixmap pix(rect.width(),rect.height());
-        
+        QPixmap pix(rect.width(), rect.height());
+
         if ( m_sharedData->transparentBg ) pix.fill(Qt::transparent);
-        else pix.fill(QColor(m_sharedData->commentsFontColor));  
+        else pix.fill(QColor(m_sharedData->commentsFontColor));
 
         QPainter p(&pix);
+
         p.setPen(QColor(m_sharedData->commentsFontColor));
+
         p.setFont(*m_sharedData->captionFont);
-        p.drawText(1,m_sharedData->captionFont->pointSize()+0 , commentsByLines[lineNumber]);
+
+        p.drawText(1, m_sharedData->captionFont->pointSize() + 0 , commentsByLines[lineNumber]);
+
         p.end();
 
-	QPainter painter;
-	painter.begin(&layer); 
-	QRect target = QRect(m_xMargin, m_height-rect.height()-yPos, rect.width(), rect.height());
-	QRect source = pix.rect();
-	painter.drawPixmap(target, pix, source);
-	painter.end();
+        QPainter painter;
 
-        yPos += int(rect.height() + m_height/400);
+        painter.begin(&layer);
+
+        QRect target = QRect(m_xMargin, m_height - rect.height() - yPos, rect.width(), rect.height());
+
+        QRect source = pix.rect();
+
+        painter.drawPixmap(target, pix, source);
+
+        painter.end();
+
+        yPos += int(rect.height() + m_height / 400);
 
     }
 }
 
 void SlideShowGL::showEndOfShow()
 {
-    QPixmap pix(512,512);
+    QPixmap pix(512, 512);
     pix.fill(Qt::black);
 
     QFont fn(font());
-    fn.setPointSize(fn.pointSize()+10);
+    fn.setPointSize(fn.pointSize() + 10);
     fn.setBold(true);
 
     QPainter p(&pix);
@@ -701,8 +749,8 @@ void SlideShowGL::showEndOfShow()
     glTexImage2D( GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0,
                   GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
     /* enable linear filtering  */
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     /* paint the texture */
 
@@ -725,29 +773,35 @@ void SlideShowGL::showEndOfShow()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0, 1.0, 0);
     }
+
     glEnd();
 
 }
 
 void SlideShowGL::slotTimeOut()
 {
-    if (!m_effect) {
+    if (!m_effect)
+    {
         kWarning( 51000 ) << "SlideShowGL: No transition method"
-                    << endl;
+        << endl;
         m_effect = &SlideShowGL::effectNone;
     }
 
-    if (m_effectRunning) {
+    if (m_effectRunning)
+    {
         m_timeout = 10;
     }
-    else {
-        if (m_timeout == -1) {
+    else
+    {
+        if (m_timeout == -1)
+        {
             // effect was running and is complete now
             // run timer while showing current image
             m_timeout = m_sharedData->delay;
             m_i     = 0;
         }
-        else {
+        else
+        {
 
             // timed out after showing current image
             // load next image and start effect
@@ -755,12 +809,15 @@ void SlideShowGL::slotTimeOut()
                 m_effect = getRandomEffect();
 
             advanceFrame();
-            if (m_endOfShow) {
+
+            if (m_endOfShow)
+            {
                 updateGL();
                 return;
             }
 
             loadImage();
+
             m_timeout = 10;
             m_effectRunning = true;
             m_i = 0;
@@ -769,16 +826,20 @@ void SlideShowGL::slotTimeOut()
     }
 
     updateGL();
+
     if (m_timeout < 0) m_timeout = 0;
+
     m_timer->setSingleShot(true);
+
     m_timer->start(m_timeout);
 }
 
 void SlideShowGL::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
-    if ((pos.y() < (m_deskY+20)) ||
-        (pos.y() > (m_deskY+m_deskHeight-20-1)))
+
+    if ((pos.y() < (m_deskY + 20)) ||
+            (pos.y() > (m_deskY + m_deskHeight - 20 - 1)))
         return;
 
     setCursor(QCursor(Qt::BlankCursor));
@@ -807,6 +868,7 @@ void SlideShowGL::paintTexture()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0, 1.0, 0);
     }
+
     glEnd();
 }
 
@@ -820,7 +882,8 @@ void SlideShowGL::effectNone()
 
 void SlideShowGL::effectBlend()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -828,6 +891,7 @@ void SlideShowGL::effectBlend()
     }
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
@@ -849,12 +913,13 @@ void SlideShowGL::effectBlend()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, tb);
     glBegin(GL_QUADS);
     {
-        glColor4f(1.0, 1.0, 1.0, 1.0/(100.0)*(float)m_i);
+        glColor4f(1.0, 1.0, 1.0, 1.0 / (100.0)*(float)m_i);
         glTexCoord2f(0, 0);
         glVertex3f(-1.0f, -1.0f, 0);
 
@@ -867,6 +932,7 @@ void SlideShowGL::effectBlend()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     m_i++;
@@ -874,7 +940,8 @@ void SlideShowGL::effectBlend()
 
 void SlideShowGL::effectFade()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -882,13 +949,17 @@ void SlideShowGL::effectFade()
     }
 
     int a;
+
     float opacity;
-    if (m_i <= 50) {
+
+    if (m_i <= 50)
+    {
         a =  (m_curr == 0) ? 1 : 0;
-        opacity = 1.0 - 1.0/50.0*(float)(m_i);
+        opacity = 1.0 - 1.0 / 50.0 * (float)(m_i);
     }
-    else {
-        opacity = 1.0/50.0*(float)(m_i-50.0);
+    else
+    {
+        opacity = 1.0 / 50.0 * (float)(m_i - 50.0);
         a = m_curr;
     }
 
@@ -910,6 +981,7 @@ void SlideShowGL::effectFade()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
 
@@ -918,7 +990,8 @@ void SlideShowGL::effectFade()
 
 void SlideShowGL::effectRotate()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -926,16 +999,20 @@ void SlideShowGL::effectRotate()
     }
 
     if (m_i == 0)
-        m_dir = (int)((2.0*rand()/(RAND_MAX+1.0)));
+        m_dir = (int)((2.0 * rand() / (RAND_MAX + 1.0)));
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
+
     GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
+
     glBegin(GL_QUADS);
+
     {
         glColor4f(1.0, 1.0, 1.0, 1.0);
         glTexCoord2f(0, 0);
@@ -950,15 +1027,16 @@ void SlideShowGL::effectRotate()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float rotate = 360.0/100.0*(float)m_i;
+    float rotate = 360.0 / 100.0 * (float)m_i;
     glRotatef( ((m_dir == 0) ? -1 : 1) * rotate,
                0.0, 0.0, 1.0);
-    float scale = 1.0/100.0*(100.0-(float)(m_i));
-    glScalef(scale,scale,1.0);
+    float scale = 1.0 / 100.0 * (100.0 - (float)(m_i));
+    glScalef(scale, scale, 1.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
     glBegin(GL_QUADS);
@@ -976,6 +1054,7 @@ void SlideShowGL::effectRotate()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     m_i++;
@@ -983,7 +1062,8 @@ void SlideShowGL::effectRotate()
 
 void SlideShowGL::effectBend()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -991,16 +1071,20 @@ void SlideShowGL::effectBend()
     }
 
     if (m_i == 0)
-        m_dir = (int)((2.0*rand()/(RAND_MAX+1.0)));
+        m_dir = (int)((2.0 * rand() / (RAND_MAX + 1.0)));
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
+
     GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
+
     glBegin(GL_QUADS);
+
     {
         glColor4f(1.0, 1.0, 1.0, 1.0);
         glTexCoord2f(0, 0);
@@ -1015,11 +1099,12 @@ void SlideShowGL::effectBend()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glRotatef(90.0/100.0*(float)m_i,
+    glRotatef(90.0 / 100.0*(float)m_i,
               (m_dir == 0) ? 1.0 : 0.0,
               (m_dir == 1) ? 1.0 : 0.0,
               0.0);
@@ -1040,6 +1125,7 @@ void SlideShowGL::effectBend()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     m_i++;
@@ -1047,24 +1133,30 @@ void SlideShowGL::effectBend()
 
 void SlideShowGL::effectInOut()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
         return;
     }
 
-    if (m_i == 0) {
-        m_dir = 1 + (int)((4.0*rand()/(RAND_MAX+1.0)));
+    if (m_i == 0)
+    {
+        m_dir = 1 + (int)((4.0 * rand() / (RAND_MAX + 1.0)));
     }
 
     int a;
+
     bool out;
-    if (m_i <= 50) {
+
+    if (m_i <= 50)
+    {
         a   = (m_curr == 0) ? 1 : 0;
         out = 1;
     }
-    else {
+    else
+    {
         a   = m_curr;
         out = 0;
     }
@@ -1073,11 +1165,11 @@ void SlideShowGL::effectInOut()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float t = out ? 1.0/50.0*(50.0-m_i) : 1.0/50.0*(m_i-50.0);
+    float t = out ? 1.0 / 50.0 * (50.0 - m_i) : 1.0 / 50.0 * (m_i - 50.0);
     glScalef(t, t, 1.0);
     t = 1.0 - t;
-    glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2)? 1 : -1) * t : 0.0,
-                 (m_dir % 2 == 1) ? ((m_dir == 1)? 1 : -1) * t : 0.0,
+glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * t : 0.0,
+             (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * t : 0.0,
                  0.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
@@ -1098,6 +1190,7 @@ void SlideShowGL::effectInOut()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
 
@@ -1106,7 +1199,8 @@ void SlideShowGL::effectInOut()
 
 void SlideShowGL::effectSlide()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -1114,16 +1208,20 @@ void SlideShowGL::effectSlide()
     }
 
     if (m_i == 0)
-        m_dir = 1 + (int)((4.0*rand()/(RAND_MAX+1.0)));
+        m_dir = 1 + (int)((4.0 * rand() / (RAND_MAX + 1.0)));
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
+
     GLuint& tb = m_texture[b];
 
     glBindTexture(GL_TEXTURE_2D, tb);
+
     glBegin(GL_QUADS);
+
     {
         glColor4f(1.0, 1.0, 1.0, 1.0);
         glTexCoord2f(0, 0);
@@ -1138,13 +1236,14 @@ void SlideShowGL::effectSlide()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float trans = 2.0/100.0*(float)m_i;
-    glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2)? 1 : -1) * trans : 0.0,
-                 (m_dir % 2 == 1) ? ((m_dir == 1)? 1 : -1) * trans : 0.0,
+    float trans = 2.0 / 100.0 * (float)m_i;
+glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * trans : 0.0,
+             (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * trans : 0.0,
                  0.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
@@ -1165,6 +1264,7 @@ void SlideShowGL::effectSlide()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     m_i++;
@@ -1172,7 +1272,8 @@ void SlideShowGL::effectSlide()
 
 void SlideShowGL::effectFlutter()
 {
-    if (m_i > 100) {
+    if (m_i > 100)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -1180,24 +1281,29 @@ void SlideShowGL::effectFlutter()
     }
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
     GLuint& tb = m_texture[b];
 
-    if (m_i == 0) {
-        for (int x = 0; x<40; x++) {
-            for (int y = 0; y < 40; y++) {
+    if (m_i == 0)
+    {
+        for (int x = 0; x < 40; x++)
+        {
+            for (int y = 0; y < 40; y++)
+            {
                 m_points[x][y][0] = (float) (x / 20.0f - 1.0f);
                 m_points[x][y][1] = (float) (y / 20.0f - 1.0f);
                 m_points[x][y][2] = (float) sin((x / 20.0f - 1.0f) *
-                                                3.141592654*2.0f)/5.0;
+                                                3.141592654 * 2.0f) / 5.0;
             }
         }
     }
 
 
     glBindTexture(GL_TEXTURE_2D, tb);
+
     glBegin(GL_QUADS);
     {
         glColor4f(1.0, 1.0, 1.0, 1.0);
@@ -1213,15 +1319,16 @@ void SlideShowGL::effectFlutter()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0f, 1.0f, 0);
     }
+
     glEnd();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float rotate = 60.0/100.0*(float)m_i;
+    float rotate = 60.0 / 100.0 * (float)m_i;
     glRotatef(rotate, 1.0f, 0.0f, 0.0f);
-    float scale = 1.0/100.0*(100.0-(float)m_i);
+    float scale = 1.0 / 100.0 * (100.0 - (float)m_i);
     glScalef(scale, scale, scale);
-    glTranslatef(1.0/100.0*(float)m_i, 1.0/100.0*(float)m_i, 0.0);
+    glTranslatef(1.0 / 100.0*(float)m_i, 1.0 / 100.0*(float)m_i, 0.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
     glBegin(GL_QUADS);
@@ -1253,23 +1360,30 @@ void SlideShowGL::effectFlutter()
             }
         }
     }
+
     glEnd();
 
     // wave every two iterations
-    if (m_i%2 == 0) {
+
+    if (m_i % 2 == 0)
+    {
 
         float hold;
         int x, y;
+
         for (y = 0; y < 40; y++)
         {
             hold = m_points[0][y][2];
+
             for (x = 0; x < 39; x++)
             {
                 m_points[x][y][2] = m_points[x + 1][y][2];
             }
+
             m_points[39][y][2] = hold;
         }
     }
+
     m_i++;
 }
 
@@ -1278,7 +1392,8 @@ void SlideShowGL::effectCube()
     int tot = 200;
     int rotStart = 50;
 
-    if (m_i > tot) {
+    if (m_i > tot)
+    {
         paintTexture();
         m_effectRunning = false;
         m_timeout = -1;
@@ -1287,41 +1402,53 @@ void SlideShowGL::effectCube()
 
     // Enable perspective vision
     glEnable(GL_DEPTH_TEST);
+
     glDepthFunc(GL_LEQUAL);
+
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     int a = (m_curr == 0) ? 1 : 0;
+
     int b =  m_curr;
 
     GLuint& ta = m_texture[a];
+
     GLuint& tb = m_texture[b];
 
     glMatrixMode(GL_PROJECTION);
+
     glLoadIdentity();
 
     float PI = 4.0 * atan(1.0);
-    float znear = 3.0;
-    float theta = 2.0 * atan2((float)2.0/(float)2.0, (float)znear);
-    theta = theta * 180.0/PI;
 
-    glFrustum(-1.0,1.0,-1.0,1.0, znear-0.01,10.0);
+    float znear = 3.0;
+
+    float theta = 2.0 * atan2((float)2.0 / (float)2.0, (float)znear);
+
+    theta = theta * 180.0 / PI;
+
+    glFrustum(-1.0, 1.0, -1.0, 1.0, znear - 0.01, 10.0);
 
 
     static float xrot;
+
     static float yrot;
+
     static float zrot;
 
-    if (m_i == 0) {
+    if (m_i == 0)
+    {
         xrot = 0.0;
         yrot = 0.0;
         zrot = 0.0;
     }
 
     glMatrixMode( GL_MODELVIEW );
+
     glLoadIdentity();
 
-    float trans = 5.0 * (float)((m_i <= tot/2) ? m_i : tot-m_i)/(float)tot;
-    glTranslatef(0.0,0.0, -znear - 1.0 - trans);
+    float trans = 5.0 * (float)((m_i <= tot / 2) ? m_i : tot - m_i) / (float)tot;
+    glTranslatef(0.0, 0.0, -znear - 1.0 - trans);
 
     glRotatef(xrot, 1.0f, 0.0f, 0.0f);
     glRotatef(yrot, 0.0f, 1.0f, 0.0f);
@@ -1369,6 +1496,7 @@ void SlideShowGL::effectCube()
         glVertex3f( -0.99f,  1.00f, -1.00f );
 
     }
+
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, ta);
@@ -1377,37 +1505,58 @@ void SlideShowGL::effectCube()
         glColor4d(1.0, 1.0, 1.0, 1.0);
 
         // Front Face
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f( -1.0f, -1.0f,  1.00f );
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  1.0f, -1.0f,  1.00f );
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  1.0f,  1.0f,  1.00f );
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f( -1.0f,  1.0f,  1.00f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f( -1.0f, -1.0f,  1.00f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f(  1.0f, -1.0f,  1.00f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f(  1.0f,  1.0f,  1.00f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f( -1.0f,  1.0f,  1.00f );
 
 
         // Top Face
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f( -1.0f,  1.00f, -1.0f );
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f( -1.0f,  1.00f,  1.0f );
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  1.0f,  1.00f,  1.0f );
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  1.0f,  1.00f, -1.0f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f( -1.0f,  1.00f, -1.0f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f( -1.0f,  1.00f,  1.0f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f(  1.0f,  1.00f,  1.0f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f(  1.0f,  1.00f, -1.0f );
 
         // Bottom Face
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f( -1.0f, -1.00f, -1.0f );
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f(  1.0f, -1.00f, -1.0f );
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f(  1.0f, -1.00f,  1.0f );
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f( -1.0f, -1.00f,  1.0f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f( -1.0f, -1.00f, -1.0f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f(  1.0f, -1.00f, -1.0f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f(  1.0f, -1.00f,  1.0f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f( -1.0f, -1.00f,  1.0f );
 
         // Right face
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f( 1.00f, -1.0f, -1.0f );
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f( 1.00f, -1.0f,  1.0f );
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f( 1.00f,  1.0f,  1.0f );
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f( 1.00f,  1.0f, -1.0f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f( 1.00f, -1.0f, -1.0f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f( 1.00f, -1.0f,  1.0f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f( 1.00f,  1.0f,  1.0f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f( 1.00f,  1.0f, -1.0f );
 
         // Left Face
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f( -1.00f, -1.0f, -1.0f );
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f( -1.00f,  1.0f, -1.0f );
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f( -1.00f,  1.0f,  1.0f );
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f( -1.00f, -1.0f,  1.0f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f( -1.00f, -1.0f, -1.0f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f( -1.00f,  1.0f, -1.0f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f( -1.00f,  1.0f,  1.0f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f( -1.00f, -1.0f,  1.0f );
 
     }
+
     glEnd();
 
     glBindTexture(GL_TEXTURE_2D, tb);
@@ -1416,16 +1565,22 @@ void SlideShowGL::effectCube()
         glColor4d(1.0, 1.0, 1.0, 1.0);
 
         // Back Face
-        glTexCoord2f( 1.0f, 0.0f ); glVertex3f( -1.0f, -1.0f, -1.00f );
-        glTexCoord2f( 1.0f, 1.0f ); glVertex3f( -1.0f,  1.0f, -1.00f );
-        glTexCoord2f( 0.0f, 1.0f ); glVertex3f(  1.0f,  1.0f, -1.00f );
-        glTexCoord2f( 0.0f, 0.0f ); glVertex3f(  1.0f, -1.0f, -1.00f );
+        glTexCoord2f( 1.0f, 0.0f );
+        glVertex3f( -1.0f, -1.0f, -1.00f );
+        glTexCoord2f( 1.0f, 1.0f );
+        glVertex3f( -1.0f,  1.0f, -1.00f );
+        glTexCoord2f( 0.0f, 1.0f );
+        glVertex3f(  1.0f,  1.0f, -1.00f );
+        glTexCoord2f( 0.0f, 0.0f );
+        glVertex3f(  1.0f, -1.0f, -1.00f );
     }
+
     glEnd();
 
-    if (m_i >= rotStart && m_i < (tot-rotStart)) {
-        xrot += 360.0f/(float)(tot-2*rotStart);
-        yrot += 180.0f/(float)(tot-2*rotStart);
+    if (m_i >= rotStart && m_i < (tot - rotStart))
+    {
+        xrot += 360.0f / (float)(tot - 2 * rotStart);
+        yrot += 180.0f / (float)(tot - 2 * rotStart);
     }
 
     m_i++;
@@ -1438,7 +1593,7 @@ void SlideShowGL::slotPause()
     if (m_toolBar->isHidden())
     {
         int w = m_toolBar->width();
-        m_toolBar->move(m_deskWidth-w-1,0);
+        m_toolBar->move(m_deskWidth - w - 1, 0);
         m_toolBar->show();
     }
 }
@@ -1452,12 +1607,15 @@ void SlideShowGL::slotPlay()
 void SlideShowGL::slotPrev()
 {
     previousFrame();
-    if (m_endOfShow) {
+
+    if (m_endOfShow)
+    {
         updateGL();
         return;
     }
 
     m_effectRunning = false;
+
     loadImage();
     updateGL();
 }
@@ -1465,12 +1623,15 @@ void SlideShowGL::slotPrev()
 void SlideShowGL::slotNext()
 {
     advanceFrame();
-    if (m_endOfShow) {
+
+    if (m_endOfShow)
+    {
         updateGL();
         return;
     }
 
     m_effectRunning = false;
+
     loadImage();
     updateGL();
 }

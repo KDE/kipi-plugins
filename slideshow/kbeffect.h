@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
- * <carsten dot weinhold at gmx dot de>                                           
+ * Parts of this code are based on smoothslidesaver by Carsten Weinhold
+ * <carsten dot weinhold at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,22 +30,26 @@ namespace KIPISlideShowPlugin
 {
 
 class Image;
+
 class SlideShowKB;
 
-class KBEffect 
+class KBEffect
 {
 
 public:
 
     typedef enum { Fade, Blend } Type;
-    
+
     KBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
     virtual ~KBEffect();
 
     virtual void advanceTime(float step) = 0;
     virtual Type type() = 0;
     virtual bool done() = 0;
-    virtual bool fadeIn() const { return m_needFadeIn; };
+    virtual bool fadeIn() const
+    {
+        return m_needFadeIn;
+    };
 
     static Type chooseKBEffect(Type oldType);
 
@@ -54,7 +58,7 @@ protected:
     void   setupNewImage(int img);
     void   swapImages();
     Image *image(int img);
-            
+
 protected:
 
     static int m_numKBEffectRepeated;
@@ -68,7 +72,7 @@ private:
 
 // -------------------------------------------------------------------------
 
-class FadeKBEffect: public KBEffect 
+class FadeKBEffect: public KBEffect
 {
 
 public:
@@ -77,13 +81,17 @@ public:
     virtual ~FadeKBEffect();
 
     virtual void advanceTime(float step);
-    virtual Type type() { return Fade; };
+    virtual Type type()
+    {
+        return Fade;
+    };
+
     virtual bool done();
 };
 
 // -------------------------------------------------------------------------
 
-class BlendKBEffect: public KBEffect 
+class BlendKBEffect: public KBEffect
 {
 
 public:
@@ -92,7 +100,11 @@ public:
     virtual ~BlendKBEffect();
 
     virtual void advanceTime(float step);
-    virtual Type type() { return Blend; };
+    virtual Type type()
+    {
+        return Blend;
+    };
+
     virtual bool done();
 };
 

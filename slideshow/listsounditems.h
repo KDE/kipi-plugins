@@ -45,7 +45,7 @@ namespace KIPISlideShowPlugin
 class SoundItem : public QObject, public QListWidgetItem
 {
 
-  Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -59,8 +59,8 @@ public:
     void    setName(QString text);
 
 signals:
-    void totalTimeReady(KUrl,QTime);
-    
+    void totalTimeReady(KUrl, QTime);
+
 private slots:
 
     void slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate);
@@ -74,13 +74,13 @@ private:
     Phonon::MediaObject*    m_mediaObject;
 };
 
-class ListSoundItems : public QListWidget 
+class ListSoundItems : public QListWidget
 {
     Q_OBJECT
 
 public:
 
-    ListSoundItems(QWidget *parent=0);
+    ListSoundItems(QWidget *parent = 0);
 
 signals:
 

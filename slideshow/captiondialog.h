@@ -24,7 +24,7 @@
 #define CAPTIONDIALOG_H
 
 // Local includes
-#include "common.h" 
+#include "common.h"
 #include "ui_captiondialog.h"
 
 namespace KIPISlideShowPlugin
@@ -36,19 +36,19 @@ class CaptionDialog : public QWidget, Ui::CaptionDialog
 {
     Q_OBJECT
 
-  public:
-   CaptionDialog(QWidget* parent, SharedData* sharedData);
+public:
+    CaptionDialog(QWidget* parent, SharedData* sharedData);
     ~CaptionDialog();
 
     void readSettings();
     void saveSettings();
-  
-  private slots:
+
+private slots:
     void slotCommentsFontColorChanged( void );
     void slotCommentsBgColorChanged( void );
     void slotTransparentBgToggled( void );
 
-  private:
+private:
     SharedData*       m_sharedData;
 };
 

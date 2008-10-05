@@ -30,29 +30,30 @@ namespace KIPISlideShowPlugin
 {
 
 class SharedData;
+
 class SlideShowConfigPrivate;
 
 class SlideShowConfig : public KPageDialog
 {
     Q_OBJECT
 
-  public: 
+public:
     SlideShowConfig (QWidget *parent, SharedData* sharedData);
     ~SlideShowConfig();
 
-  private:
+private:
     void readSettings();
     void saveSettings();
-  
-  private slots:
+
+private slots:
     void slotStartClicked();
     void slotHelp();
     void slotClose();
 
-  signals:
+signals:
     void buttonStartClicked(); // Signal needed by plugin_slideshow class
 
-  private:
+private:
     SlideShowConfigPrivate* d;
 };
 

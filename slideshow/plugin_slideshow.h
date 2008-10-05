@@ -38,6 +38,7 @@ class KAction;
 
 namespace KIPISlideShowPlugin
 {
+
 class SharedData;
 }
 
@@ -66,7 +67,7 @@ private:
 
     KAction*                         m_actionSlideShow;
     KIPI::Interface*                 m_interface;
-    KUrl::List*      	             m_urlList;
+    KUrl::List*                      m_urlList;
 
     KIPISlideShowPlugin::SharedData* m_sharedData;
 };

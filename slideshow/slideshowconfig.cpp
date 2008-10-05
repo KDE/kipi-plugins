@@ -48,212 +48,239 @@ class SlideShowConfigPrivate
 
 public:
 
-  SlideShowConfigPrivate() {}
-  ~SlideShowConfigPrivate()
-  {
-      if (config) delete config;
-  }
+    SlideShowConfigPrivate() {}
 
-  KIPIPlugins::KPAboutData* about;
-  SharedData*               sharedData;
-  KConfig*                  config;
+    ~SlideShowConfigPrivate()
+    {
+        if (config) delete config;
+    }
+
+    KIPIPlugins::KPAboutData* about;
+    SharedData*               sharedData;
+    KConfig*                  config;
 
 };
 
 
 SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
-              : KPageDialog(parent)
+        : KPageDialog(parent)
 {
-  setWindowTitle(i18n("SlideShow"));
-  
-  d = new SlideShowConfigPrivate();
-  d->config = new KConfig("kipirc");
- 
-  d->sharedData = sharedData;
-  
-  setButtons(Help|Close|User1);
-  setDefaultButton(User1);
-  setButtonIcon(User1, KIcon("system-run"));
-  setButtonText(User1, i18n("Start SlideShow"));
-  setFaceType(List);
-  setModal(true);
+    setWindowTitle(i18n("SlideShow"));
 
-  // --- Pages settings ---
+    d = new SlideShowConfigPrivate();
+    d->config = new KConfig("kipirc");
 
-  d->sharedData->mainPage   = new MainDialog(this, d->sharedData);
-  d->sharedData->page_main  = addPage(d->sharedData->mainPage, i18n("Main"));
-  d->sharedData->page_main->setHeader(i18n("Main Settings"));
-  d->sharedData->page_main->setIcon(KIcon("view-presentation"));
+    d->sharedData = sharedData;
 
-  d->sharedData->captionPage   = new CaptionDialog(this, d->sharedData);
-  d->sharedData->page_caption  = addPage(d->sharedData->captionPage, i18n("Caption"));
-  d->sharedData->page_caption->setHeader(i18n("Caption"));
-  d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
+    setButtons(Help | Close | User1);
+    setDefaultButton(User1);
+    setButtonIcon(User1, KIcon("system-run"));
+    setButtonText(User1, i18n("Start SlideShow"));
+    setFaceType(List);
+    setModal(true);
 
-  d->sharedData->soundtrackPage   = new SoundtrackDialog(this, d->sharedData);
-  d->sharedData->page_soundtrack  = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
-  d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
-  d->sharedData->page_soundtrack->setIcon(KIcon("speaker"));
+    // --- Pages settings ---
 
-  d->sharedData->advancedPage   = new AdvancedDialog(this, d->sharedData);
-  d->sharedData->page_advanced  = addPage(d->sharedData->advancedPage, i18n("Advanced"));
-  d->sharedData->page_advanced->setHeader(i18n("Advanced"));
-  d->sharedData->page_advanced->setIcon(KIcon("configure"));
+    d->sharedData->mainPage   = new MainDialog(this, d->sharedData);
+    d->sharedData->page_main  = addPage(d->sharedData->mainPage, i18n("Main"));
+    d->sharedData->page_main->setHeader(i18n("Main Settings"));
+    d->sharedData->page_main->setIcon(KIcon("view-presentation"));
 
-  // --- About --
+    d->sharedData->captionPage   = new CaptionDialog(this, d->sharedData);
+    d->sharedData->page_caption  = addPage(d->sharedData->captionPage, i18n("Caption"));
+    d->sharedData->page_caption->setHeader(i18n("Caption"));
+    d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
 
-  d->about = new KIPIPlugins::KPAboutData(ki18n("SlideShow"),
-                                          0,
-                                          KAboutData::License_GPL,
-                                          ki18n("A Kipi plugin for image slideshow"),
-                                          ki18n("(c) 2003-2004, Renchi Raju\n(c) 2006-2008, Valerio Fuoglio"));
+    d->sharedData->soundtrackPage   = new SoundtrackDialog(this, d->sharedData);
+    d->sharedData->page_soundtrack  = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
+    d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
+    d->sharedData->page_soundtrack->setIcon(KIcon("speaker"));
 
-  d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
-                     "renchi@pooh.tam.uiuc.edu");
-  d->about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
-                     "valerio.fuoglio@gmail.com");
+    d->sharedData->advancedPage   = new AdvancedDialog(this, d->sharedData);
+    d->sharedData->page_advanced  = addPage(d->sharedData->advancedPage, i18n("Advanced"));
+    d->sharedData->page_advanced->setHeader(i18n("Advanced"));
+    d->sharedData->page_advanced->setIcon(KIcon("configure"));
 
-  disconnect(this, SIGNAL(helpClicked()),
-              this, SLOT(slotHelp()));
+    // --- About --
 
-  KPushButton *helpButton = button( Help );
-  KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
-  helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-  QAction *handbook       = new QAction(i18n("SlideShow Handbook"), this);
-  connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
-  helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-  helpButton->setDelayedMenu( helpMenu->menu() );
+    d->about = new KIPIPlugins::KPAboutData(ki18n("SlideShow"),
+                                            0,
+                                            KAboutData::License_GPL,
+                                            ki18n("A Kipi plugin for image slideshow"),
+                                            ki18n("(c) 2003-2004, Renchi Raju\n(c) 2006-2008, Valerio Fuoglio"));
+
+    d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
+                        "renchi@pooh.tam.uiuc.edu");
+    d->about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
+                        "valerio.fuoglio@gmail.com");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KPushButton *helpButton = button( Help );
+    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook       = new QAction(i18n("SlideShow Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setDelayedMenu( helpMenu->menu() );
 
 
-  // Slot connections
-  
-  connect(this, SIGNAL(user1Clicked()),
-          this, SLOT(slotStartClicked()));
+    // Slot connections
 
-  connect(this, SIGNAL(closeClicked()),
-          this, SLOT(slotClose()));
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartClicked()));
 
-  readSettings();
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
+    readSettings();
 
 }
 
-SlideShowConfig::~SlideShowConfig () 
+SlideShowConfig::~SlideShowConfig ()
 {
-  delete d;
+    delete d;
 }
 
-void SlideShowConfig::readSettings() {
-  KConfigGroup grp = d->config->group("SlideShow Settings");
+void SlideShowConfig::readSettings()
+{
+    KConfigGroup grp = d->config->group("SlideShow Settings");
 
-  d->sharedData->opengl                = grp.readEntry("OpenGL", false);
-  d->sharedData->delay                 = grp.readEntry("Delay", 1500);
-  d->sharedData->printFileName         = grp.readEntry("Print Filename", true);
-  d->sharedData->printProgress         = grp.readEntry("Print Progress Inticator", true);
-  d->sharedData->printFileComments     = grp.readEntry("Print Comments", false);
-  d->sharedData->loop                  = grp.readEntry("Loop", false);
-  d->sharedData->shuffle               = grp.readEntry("Shuffle", false);
-  d->sharedData->showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
-  d->sharedData->effectName            = grp.readEntry("Effect Name", "Random");
-  d->sharedData->effectNameGL          = grp.readEntry("Effect Name (OpenGL)", "Random");
+    d->sharedData->opengl                = grp.readEntry("OpenGL", false);
+    d->sharedData->delay                 = grp.readEntry("Delay", 1500);
+    d->sharedData->printFileName         = grp.readEntry("Print Filename", true);
+    d->sharedData->printProgress         = grp.readEntry("Print Progress Inticator", true);
+    d->sharedData->printFileComments     = grp.readEntry("Print Comments", false);
+    d->sharedData->loop                  = grp.readEntry("Loop", false);
+    d->sharedData->shuffle               = grp.readEntry("Shuffle", false);
+    d->sharedData->showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
+    d->sharedData->effectName            = grp.readEntry("Effect Name", "Random");
+    d->sharedData->effectNameGL          = grp.readEntry("Effect Name (OpenGL)", "Random");
 
-  d->sharedData->delayMsMaxValue = 10000;
-  d->sharedData->delayMsMinValue = 100;
-  d->sharedData->delayMsLineStep = 100;
+    d->sharedData->delayMsMaxValue = 10000;
+    d->sharedData->delayMsMinValue = 100;
+    d->sharedData->delayMsLineStep = 100;
 
-  // Comments tab settings
-  QFont *savedFont = new QFont();
-  savedFont->setFamily(grp.readEntry("Comments Font Family"));
-  savedFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
-  savedFont->setBold(grp.readEntry("Comments Font Bold", false));
-  savedFont->setItalic(grp.readEntry("Comments Font Italic", false));
-  savedFont->setUnderline(grp.readEntry("Comments Font Underline", false));
-  savedFont->setOverline(grp.readEntry("Comments Font Overline", false));
-  savedFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
-  savedFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
+    // Comments tab settings
+    QFont *savedFont = new QFont();
+    savedFont->setFamily(grp.readEntry("Comments Font Family"));
+    savedFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
+    savedFont->setBold(grp.readEntry("Comments Font Bold", false));
+    savedFont->setItalic(grp.readEntry("Comments Font Italic", false));
+    savedFont->setUnderline(grp.readEntry("Comments Font Underline", false));
+    savedFont->setOverline(grp.readEntry("Comments Font Overline", false));
+    savedFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
+    savedFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
 
-  d->sharedData->captionFont = savedFont;
-  
-  d->sharedData->commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
-  d->sharedData->commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
-  d->sharedData->transparentBg         = grp.readEntry("Transparent Bg", true);
+    d->sharedData->captionFont = savedFont;
 
-  d->sharedData->commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
+    d->sharedData->commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
+    d->sharedData->commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
+    d->sharedData->transparentBg         = grp.readEntry("Transparent Bg", true);
 
-  // Soundtrack tab
-  d->sharedData->soundtrackLoop        = grp.readEntry("Sountrack Loop", false);
-  d->sharedData->soundtrackPath        = KUrl(grp.readEntry("Sountrack Path", "" ));
+    d->sharedData->commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
 
-  // Advanced tab
-  d->sharedData->useMilliseconds       = grp.readEntry("Use Milliseconds", false);
-  d->sharedData->enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
-  
-  d->sharedData->kbDisableFadeInOut = grp.readEntry("KB Disable FadeInOut", false);
-  d->sharedData->kbDisableCrossFade = grp.readEntry("KB Disable Crossfade", false);
+    // Soundtrack tab
+    d->sharedData->soundtrackLoop        = grp.readEntry("Sountrack Loop", false);
+    d->sharedData->soundtrackPath        = KUrl(grp.readEntry("Sountrack Path", "" ));
 
-  d->sharedData->enableCache = grp.readEntry("Enable Cache", false);
-  d->sharedData->cacheSize  = grp.readEntry("Cache Size", 5);
+    // Advanced tab
+    d->sharedData->useMilliseconds       = grp.readEntry("Use Milliseconds", false);
+    d->sharedData->enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
 
-  d->sharedData->mainPage->readSettings();
-  d->sharedData->captionPage->readSettings();
-  d->sharedData->soundtrackPage->readSettings();
-  d->sharedData->advancedPage->readSettings();
+    d->sharedData->kbDisableFadeInOut = grp.readEntry("KB Disable FadeInOut", false);
+    d->sharedData->kbDisableCrossFade = grp.readEntry("KB Disable Crossfade", false);
+
+    d->sharedData->enableCache = grp.readEntry("Enable Cache", false);
+    d->sharedData->cacheSize  = grp.readEntry("Cache Size", 5);
+
+    d->sharedData->mainPage->readSettings();
+    d->sharedData->captionPage->readSettings();
+    d->sharedData->soundtrackPage->readSettings();
+    d->sharedData->advancedPage->readSettings();
 }
 
 void SlideShowConfig::saveSettings()
-{ 
-  if (!d->config) return;
-    
-  d->sharedData->mainPage->saveSettings();
-  d->sharedData->captionPage->saveSettings();
-  d->sharedData->soundtrackPage->saveSettings();
-  d->sharedData->advancedPage->saveSettings();
-    
-  KConfigGroup grp= d->config->group("SlideShow Settings");
+{
+    if (!d->config) return;
 
-  grp.writeEntry("OpenGL", d->sharedData->opengl);
-  grp.writeEntry("Delay", d->sharedData->delay);
-  
-  grp.writeEntry("Print Filename", d->sharedData->printFileName);
-  grp.writeEntry("Print Progress Indicator", d->sharedData->printProgress);
-  grp.writeEntry("Print Comments", d->sharedData->printFileComments);
-  grp.writeEntry("Loop", d->sharedData->loop);
-  grp.writeEntry("Shuffle", d->sharedData->shuffle);
-  grp.writeEntry("Show Selected Files Only", d->sharedData->showSelectedFilesOnly);
+    d->sharedData->mainPage->saveSettings();
 
-  grp.writeEntry("Use Milliseconds", d->sharedData->useMilliseconds);
-  grp.writeEntry("Enable Mouse Wheel", d->sharedData->enableMouseWheel);
+    d->sharedData->captionPage->saveSettings();
 
-  // Comments tab settings
-  QFont* commentsFont = d->sharedData->captionFont;
-  grp.writeEntry("Comments Font Family", commentsFont->family());
-  grp.writeEntry("Comments Font Size", commentsFont->pointSize());
-  grp.writeEntry("Comments Font Bold", commentsFont->bold());
-  grp.writeEntry("Comments Font Italic", commentsFont->italic());
-  grp.writeEntry("Comments Font Underline", commentsFont->underline());
-  grp.writeEntry("Comments Font Overline", commentsFont->overline());
-  grp.writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
-  grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
+    d->sharedData->soundtrackPage->saveSettings();
 
-  grp.writeEntry("Comments Font Color", d->sharedData->commentsFontColor);
-  grp.writeEntry("Comments Bg Color", d->sharedData->commentsBgColor);
-  grp.writeEntry("Transparent Bg", d->sharedData->transparentBg);
-  grp.writeEntry("Comments Lines Length", d->sharedData->commentsLinesLength);
+    d->sharedData->advancedPage->saveSettings();
 
-  grp.writeEntry("Effect Name (OpenGL)", d->sharedData->effectNameGL);
-  grp.writeEntry("Effect Name", d->sharedData->effectName);
-  
-  // Sountrack tab
-  grp.writeEntry("Sountrack Loop", d->sharedData->soundtrackLoop);
-  grp.writeEntry("Sountrack Path", d->sharedData->soundtrackPath.path());
+    KConfigGroup grp = d->config->group("SlideShow Settings");
 
-  // Advanced settings
-  grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
-  grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);
+    grp.writeEntry("OpenGL", d->sharedData->opengl);
 
-  grp.writeEntry("Enable Cache", d->sharedData->enableCache);
-  grp.writeEntry("Cache Size", d->sharedData->cacheSize);
+    grp.writeEntry("Delay", d->sharedData->delay);
 
-  d->config->sync();
+    grp.writeEntry("Print Filename", d->sharedData->printFileName);
+
+    grp.writeEntry("Print Progress Indicator", d->sharedData->printProgress);
+
+    grp.writeEntry("Print Comments", d->sharedData->printFileComments);
+
+    grp.writeEntry("Loop", d->sharedData->loop);
+
+    grp.writeEntry("Shuffle", d->sharedData->shuffle);
+
+    grp.writeEntry("Show Selected Files Only", d->sharedData->showSelectedFilesOnly);
+
+    grp.writeEntry("Use Milliseconds", d->sharedData->useMilliseconds);
+
+    grp.writeEntry("Enable Mouse Wheel", d->sharedData->enableMouseWheel);
+
+    // Comments tab settings
+    QFont* commentsFont = d->sharedData->captionFont;
+
+    grp.writeEntry("Comments Font Family", commentsFont->family());
+
+    grp.writeEntry("Comments Font Size", commentsFont->pointSize());
+
+    grp.writeEntry("Comments Font Bold", commentsFont->bold());
+
+    grp.writeEntry("Comments Font Italic", commentsFont->italic());
+
+    grp.writeEntry("Comments Font Underline", commentsFont->underline());
+
+    grp.writeEntry("Comments Font Overline", commentsFont->overline());
+
+    grp.writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
+
+    grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
+
+    grp.writeEntry("Comments Font Color", d->sharedData->commentsFontColor);
+
+    grp.writeEntry("Comments Bg Color", d->sharedData->commentsBgColor);
+
+    grp.writeEntry("Transparent Bg", d->sharedData->transparentBg);
+
+    grp.writeEntry("Comments Lines Length", d->sharedData->commentsLinesLength);
+
+    grp.writeEntry("Effect Name (OpenGL)", d->sharedData->effectNameGL);
+
+    grp.writeEntry("Effect Name", d->sharedData->effectName);
+
+    // Sountrack tab
+    grp.writeEntry("Sountrack Loop", d->sharedData->soundtrackLoop);
+
+    grp.writeEntry("Sountrack Path", d->sharedData->soundtrackPath.path());
+
+    // Advanced settings
+    grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
+
+    grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);
+
+    grp.writeEntry("Enable Cache", d->sharedData->enableCache);
+
+    grp.writeEntry("Cache Size", d->sharedData->cacheSize);
+
+    d->config->sync();
 }
 
 // -- SLOTS
@@ -263,7 +290,7 @@ void SlideShowConfig::slotStartClicked()
     saveSettings();
 
     if ( d->sharedData->mainPage->updateUrlList() )
-      emit buttonStartClicked();
+        emit buttonStartClicked();
 
     return;
 }

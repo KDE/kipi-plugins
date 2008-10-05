@@ -8,8 +8,8 @@
  *
  * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Parts of this code are based on smoothslidesaver by Carsten Weinhold 
- * <carsten dot weinhold at gmx dot de>                                           
+ * Parts of this code are based on smoothslidesaver by Carsten Weinhold
+ * <carsten dot weinhold at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,12 +29,12 @@
 #include <QDesktopWidget>
 
 #ifdef Q_WS_X11
-  #include <QX11Info>
+#include <QX11Info>
 
-  // X11 includes.
+// X11 includes.
 
-  #include <X11/Xlib.h>
-  #include <X11/extensions/Xrandr.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/Xrandr.h>
 #endif
 
 // Local includes.
@@ -44,31 +44,37 @@
 namespace KIPISlideShowPlugin
 {
 
-ScreenProperties::ScreenProperties(QWidget *mainWidget) 
+ScreenProperties::ScreenProperties(QWidget *mainWidget)
 {
     activeScreen = QApplication::desktop()->screenNumber(mainWidget);
 }
-    
-unsigned ScreenProperties::suggestFrameRate() 
+
+unsigned ScreenProperties::suggestFrameRate()
 {
 // use XRandR only in X11
 #ifndef Q_WS_X11
     return 25;
 #else
     int eventBase, errorBase;
-    if ( !XRRQueryExtension(QX11Info::display(), &eventBase, &errorBase)) {
+
+    if ( !XRRQueryExtension(QX11Info::display(), &eventBase, &errorBase))
+    {
         // No information, make a lucky guess on based on that ;)
         return 25;
     }
 
     // ask X11 for the refresh rate of the current screen
     XRRScreenConfiguration* config;
+
     int screenRate;
 
     config        = XRRGetScreenInfo(QX11Info::display(), RootWindow(QX11Info::display(),
-                                    activeScreen));
+                                     activeScreen));
+
     screenRate    = XRRConfigCurrentRate(config);
+
     XRRFreeScreenConfigInfo(config);
+
     //qDebug("monitor refresh rate %d Hz", screenRate);
 
     // Find the frame rate, that matches the monitor's refresh rate best.
@@ -85,23 +91,31 @@ unsigned ScreenProperties::suggestFrameRate()
     // screensaver at the right time (a 2.6.x kernel should work fine,
     // because of the high HZ value).
     int candidateRate[3] = { 30, 25, 28 };
+
     int bestRate = candidateRate[0];
+
     int smallestError = 1000, i = 0;
-    do {
+
+    do
+    {
         int r     = candidateRate[i];
         int error = qMin(screenRate % r, (screenRate + r) % r);
-        
-        if (error < smallestError) {
+
+        if (error < smallestError)
+        {
             smallestError = error;
             bestRate      = r;
         }
-    } while (++i < 3);
+    }
+    while (++i < 3);
+
     //qDebug("using %d Hz as framerate for effects", bestRate);
     return bestRate;
+
 #endif // Q_WS_X11
 }
 
-bool ScreenProperties::enableVSync() 
+bool ScreenProperties::enableVSync()
 {
     // currently only supported on NVidia hardware using the
     // proprietary driver

@@ -47,17 +47,17 @@ typedef QMap<KUrl, QImage> LoadedImages;
 class LoadThread : public QThread
 {
 
-    public:
+public:
 
-    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path, 
-                const int angle, int width, int height);
+    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path,
+               const int angle, int width, int height);
     ~LoadThread();
 
-    protected:
+protected:
 
     void run();
 
-    private:
+private:
 
     QMutex*       m_imageLock;
     LoadedImages* m_loadedImages;
@@ -74,29 +74,29 @@ typedef QMap<KUrl, LoadThread*> LoadingThreads;
 class SlideShowLoader
 {
 
-    public: 
+public:
 
-    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex=0);
+    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex = 0);
     ~SlideShowLoader();
-    
+
     void next();
     void prev();
-    
+
     QImage getCurrent();
     QString currFileName();
     KUrl    currPath();
-    
-    private:
 
-    void checkIsIn(int index); 
-    
+private:
+
+    void checkIsIn(int index);
+
     LoadingThreads* m_loadingThreads;
     LoadedImages*   m_loadedImages;
     FileList        m_pathList;
 
     QMutex*         m_imageLock;
     QMutex*         m_threadLock;
-    
+
     uint            m_cacheSize;
     int             m_currIndex;
     int             m_swidth;

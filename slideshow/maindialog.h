@@ -28,7 +28,7 @@
 #include "kurl.h"
 
 // Local includes
-#include "common.h" 
+#include "common.h"
 #include "ui_maindialog.h"
 
 namespace KIPISlideShowPlugin
@@ -40,22 +40,22 @@ class MainDialog : public QWidget, Ui::MainDialog
 {
     Q_OBJECT
 
-  public:
+public:
     MainDialog(QWidget* parent, SharedData* sharedData);
     ~MainDialog();
 
     void  readSettings();
     void  saveSettings();
     bool  updateUrlList();
-    
-  private slots:
+
+private slots:
     void slotOpenGLToggled( void );
     void slotEffectChanged( void );
     void slotDelayChanged( void );
     void slotPrintCommentsToggled( void );
     void slotSelection( void );
     void slotUseMillisecondsToggled( void );
-  
+
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( int );
     void slotAddDropItems(KUrl::List filesUrl);
@@ -66,10 +66,10 @@ class MainDialog : public QWidget, Ui::MainDialog
     void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
     void slotFailedPreview(const KFileItem&);
 
-  signals :
+signals :
     void totalTimeChanged( QTime );
 
-  private:
+private:
 
     void loadEffectNames();
     void loadEffectNamesGL();
@@ -77,7 +77,7 @@ class MainDialog : public QWidget, Ui::MainDialog
     void ShowNumberImages( int Number );
     void addItems(const KUrl::List& fileList);
 
-  private:
+private:
     SharedData*       m_sharedData;
     KIO::PreviewJob*  m_thumbJob;
     QTime             m_totalTime;

@@ -48,36 +48,36 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 {
     Q_OBJECT
 
-  public:
+public:
     PlaybackWidget(QWidget*, KUrl::List&, SharedData* sharedData);
     ~PlaybackWidget();
 
     void enqueue(const KUrl::List);
     bool canHide() const;
     bool isPaused() const;
-  	void setPaused(bool);
-  	void keyPressEvent(QKeyEvent*);
-  
-  private slots:
-	void slotPlay( void );
-	void slotStop( void );
-	void slotPrev( void );
-	void slotNext( void );
+    void setPaused(bool);
+    void keyPressEvent(QKeyEvent*);
+
+private slots:
+    void slotPlay( void );
+    void slotStop( void );
+    void slotPrev( void );
+    void slotNext( void );
     void slotTimeUpdaterTimeout( void );
     void slotError( void );
     void slotMediaStateChanged(Phonon::State, Phonon::State);
     void slotSongFinished( void );
 
-  private:
+private:
     void checkSkip ( void );
     void setGUIPlay( bool );
     void setZeroTime( void);
-    
-  signals:
-  	void signalPlay();
-  	void signalPause();
 
-  private:
+signals:
+    void signalPlay();
+    void signalPause();
+
+private:
     SharedData* m_sharedData;
     KUrl::List  m_urlList;
     int         m_currIndex;
@@ -87,8 +87,8 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
     Phonon::MediaObject*    m_mediaObject;
     Phonon::AudioOutput*    m_audioOutput;
-    
-    bool		m_canHide;
+
+    bool        m_canHide;
 };
 
 } // NameSpace KIPISlideShowPlugin

@@ -34,25 +34,25 @@
 namespace KIPISlideShowPlugin
 {
 
-class ImageViewer : public QWidget 
+class ImageViewer : public QWidget
 {
     Q_OBJECT
 
-  public:
+public:
     ImageViewer(QWidget *parent = 0);
     ~ImageViewer();
 
-    QImage image() const; 
+    QImage image() const;
     void setImage(const QImage &image);
     void clear() ;
 
-  protected:
+protected:
     void updateViewer();
 
     void resizeEvent(QResizeEvent *);
     void paintEvent(QPaintEvent *);
 
-  private:
+private:
     QImage          m_image;
     QPixmap         m_pixmap;
     QSvgRenderer*   m_svgRenderer;

@@ -32,23 +32,23 @@ namespace KIPISlideShowPlugin
 {
 
 AdvancedDialog::AdvancedDialog( QWidget* parent, SharedData* sharedData)
-            :QWidget(parent)
-{ 
-  setupUi(this);
+        : QWidget(parent)
+{
+    setupUi(this);
 
-  m_sharedData = sharedData;  
-  
-  connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)), 
-          this, SLOT(slotUseMillisecondsToggled(void)));
-  connect(m_cacheCheckBox, SIGNAL(toggled(bool)),
-          this, SLOT(slotCacheToggled(void)));
+    m_sharedData = sharedData;
+
+    connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotUseMillisecondsToggled(void)));
+    connect(m_cacheCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotCacheToggled(void)));
 }
 
 AdvancedDialog::~AdvancedDialog()
 {
 }
 
-void AdvancedDialog::readSettings() 
+void AdvancedDialog::readSettings()
 {
     m_enableMouseWheelCheckBox->setChecked(m_sharedData->enableMouseWheel);
     m_useMillisecondsCheckBox->setChecked(m_sharedData->useMilliseconds);
@@ -62,29 +62,29 @@ void AdvancedDialog::readSettings()
 
 void AdvancedDialog::saveSettings()
 {
-  m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
-  m_sharedData->enableMouseWheel = m_enableMouseWheelCheckBox->isChecked();
-  m_sharedData->kbDisableFadeInOut = m_kbDisableFadeCheckBox->isChecked();
-  m_sharedData->kbDisableCrossFade = m_kbDisableCrossfadeCheckBox->isChecked();
-  m_sharedData->cacheSize = m_cacheSizeSpinBox->value();
-  m_sharedData->enableCache =  m_cacheCheckBox->isChecked();
+    m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
+    m_sharedData->enableMouseWheel = m_enableMouseWheelCheckBox->isChecked();
+    m_sharedData->kbDisableFadeInOut = m_kbDisableFadeCheckBox->isChecked();
+    m_sharedData->kbDisableCrossFade = m_kbDisableCrossfadeCheckBox->isChecked();
+    m_sharedData->cacheSize = m_cacheSizeSpinBox->value();
+    m_sharedData->enableCache =  m_cacheCheckBox->isChecked();
 }
 
 // --- Slots
 
 void AdvancedDialog::slotUseMillisecondsToggled( void )
 {
-  m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
-  emit useMillisecondsToggled();
+    m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
+    emit useMillisecondsToggled();
 }
 
 void AdvancedDialog::slotCacheToggled( void )
 {
-  bool isEnabled = m_cacheCheckBox->isChecked();
+    bool isEnabled = m_cacheCheckBox->isChecked();
 
-  m_cacheSizeLabel1->setEnabled(isEnabled);
-  m_cacheSizeLabel2->setEnabled(isEnabled);
-  m_cacheSizeSpinBox->setEnabled(isEnabled);
+    m_cacheSizeLabel1->setEnabled(isEnabled);
+    m_cacheSizeLabel2->setEnabled(isEnabled);
+    m_cacheSizeSpinBox->setEnabled(isEnabled);
 }
 
 }  // NameSpace KIPISlideShowPlugin

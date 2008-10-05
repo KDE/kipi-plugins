@@ -36,88 +36,96 @@ namespace KIPISlideShowPlugin
 {
 
 PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedData* sharedData)
-    : QWidget(parent)
+        : QWidget(parent)
 {
-  setupUi(this);
-  
-  m_sharedData = sharedData;
-  m_currIndex = 0;
-  m_urlList = urls;
-  m_stopCalled = false;
-  m_canHide = true;
+    setupUi(this);
 
-  m_soundLabel->setPixmap(KIcon("speaker").pixmap(64,64));
+    m_sharedData = sharedData;
+    m_currIndex = 0;
+    m_urlList = urls;
+    m_stopCalled = false;
+    m_canHide = true;
 
-  m_prevButton->setText("");
-  m_nextButton->setText("");
-  m_playButton->setText("");
-  m_stopButton->setText(""); 
+    m_soundLabel->setPixmap(KIcon("speaker").pixmap(64, 64));
 
-  m_prevButton->setIcon(KIcon("media-skip-backward"));
-  m_nextButton->setIcon(KIcon("media-skip-forward"));
-  m_playButton->setIcon(KIcon("media-playback-start"));
-  m_stopButton->setIcon(KIcon("media-playback-stop")); 
+    m_prevButton->setText("");
+    m_nextButton->setText("");
+    m_playButton->setText("");
+    m_stopButton->setText("");
 
-  connect(m_prevButton, SIGNAL(clicked(void)),
-          this, SLOT(slotPrev(void)));
-  connect(m_nextButton, SIGNAL(clicked(void)),
-          this, SLOT(slotNext(void)));
-  connect(m_playButton, SIGNAL(clicked(void)),
-          this, SLOT(slotPlay(void)));
-  connect(m_stopButton, SIGNAL(clicked(void)),
-          this, SLOT(slotStop(void)));
+    m_prevButton->setIcon(KIcon("media-skip-backward"));
+    m_nextButton->setIcon(KIcon("media-skip-forward"));
+    m_playButton->setIcon(KIcon("media-playback-start"));
+    m_stopButton->setIcon(KIcon("media-playback-stop"));
 
-  if ( m_urlList.empty() ) 
-  {
-	  setEnabled(false);
-	  return;
-  }
-  
-  // Waiting for files to be enqueued.
-  m_playButton->setEnabled(false);
-  m_prevButton->setEnabled(false);
+    connect(m_prevButton, SIGNAL(clicked(void)),
+            this, SLOT(slotPrev(void)));
+    connect(m_nextButton, SIGNAL(clicked(void)),
+            this, SLOT(slotNext(void)));
+    connect(m_playButton, SIGNAL(clicked(void)),
+            this, SLOT(slotPlay(void)));
+    connect(m_stopButton, SIGNAL(clicked(void)),
+            this, SLOT(slotStop(void)));
 
-  // Phonon
-  m_mediaObject = new Phonon::MediaObject(this);
-  m_mediaObject->setTransitionTime(1000);
-  m_mediaObject->setTickInterval(500);  
-  connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-          this, SLOT(slotMediaStateChanged(Phonon::State, Phonon::State)));
-  connect(m_mediaObject, SIGNAL(finished( void )),
-          this, SLOT(slotSongFinished( void )));
-  connect(m_mediaObject, SIGNAL(tick(qint64)),
-          this, SLOT(slotTimeUpdaterTimeout( void )));
-  
-  m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-  Phonon::createPath(m_mediaObject, m_audioOutput);  
+    if ( m_urlList.empty() )
+    {
+        setEnabled(false);
+        return;
+    }
 
-  m_volumeSlider->setAudioOutput(m_audioOutput);
-  m_volumeSlider->setOrientation(Qt::Horizontal); 
+    // Waiting for files to be enqueued.
+    m_playButton->setEnabled(false);
 
-  setZeroTime();
+    m_prevButton->setEnabled(false);
 
-  // Loading first song
-  m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
+    // Phonon
+    m_mediaObject = new Phonon::MediaObject(this);
+
+    m_mediaObject->setTransitionTime(1000);
+
+    m_mediaObject->setTickInterval(500);
+
+    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
+            this, SLOT(slotMediaStateChanged(Phonon::State, Phonon::State)));
+
+    connect(m_mediaObject, SIGNAL(finished( void )),
+            this, SLOT(slotSongFinished( void )));
+
+    connect(m_mediaObject, SIGNAL(tick(qint64)),
+            this, SLOT(slotTimeUpdaterTimeout( void )));
+
+    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+
+    Phonon::createPath(m_mediaObject, m_audioOutput);
+
+    m_volumeSlider->setAudioOutput(m_audioOutput);
+
+    m_volumeSlider->setOrientation(Qt::Horizontal);
+
+    setZeroTime();
+
+    // Loading first song
+    m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
 }
 
 PlaybackWidget::~PlaybackWidget()
 {
-  if (!m_urlList.empty())
-  {
-	  m_mediaObject->stop();
-	  delete m_mediaObject;
-	  delete m_audioOutput;	  
-  }
+    if (!m_urlList.empty())
+    {
+        m_mediaObject->stop();
+        delete m_mediaObject;
+        delete m_audioOutput;
+    }
 }
 
 bool PlaybackWidget::canHide() const
 {
-	return m_canHide;
+    return m_canHide;
 }
 
 bool PlaybackWidget::isPaused() const
 {
-	return m_mediaObject->state() == Phonon::PausedState;
+    return m_mediaObject->state() == Phonon::PausedState;
 }
 
 void PlaybackWidget::checkSkip()
@@ -125,26 +133,27 @@ void PlaybackWidget::checkSkip()
     m_prevButton->setEnabled(true);
     m_nextButton->setEnabled(true);
 
-    if ( !m_sharedData->soundtrackLoop ) 
+    if ( !m_sharedData->soundtrackLoop )
     {
-        if ( m_currIndex == 0 ) 
+        if ( m_currIndex == 0 )
             m_prevButton->setEnabled(false);
-        if ( m_currIndex == m_urlList.count()-1 ) 
+
+        if ( m_currIndex == m_urlList.count() - 1 )
             m_nextButton->setEnabled(false);
     }
 }
 
 void PlaybackWidget::setGUIPlay( bool isPlaying)
 {
-    m_playButton->setIcon(KIcon( isPlaying? "media-playback-start" :
-                                            "media-playback-pause" ));
+    m_playButton->setIcon(KIcon( isPlaying ? "media-playback-start" :
+                                 "media-playback-pause" ));
 }
 
 void PlaybackWidget::setZeroTime()
 {
-    QTime zeroTime(0,0,0);
+    QTime zeroTime(0, 0, 0);
     m_elapsedTimeLabel->setText(zeroTime.toString("H:mm:ss"));
-    m_totalTimeLabel->setText(zeroTime.toString("H:mm:ss")); 
+    m_totalTimeLabel->setText(zeroTime.toString("H:mm:ss"));
     m_isZeroTime = true;
 }
 
@@ -153,10 +162,11 @@ void PlaybackWidget::enqueue(const KUrl::List urls)
     m_urlList = urls;
     m_currIndex = 0;
 
-    if ( m_urlList.isEmpty() ) 
-      return; // return on empty list   
+    if ( m_urlList.isEmpty() )
+        return; // return on empty list
 
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
+
     m_playButton->setEnabled(true);
 }
 
@@ -170,31 +180,38 @@ void PlaybackWidget::setPaused(bool val)
 
 void PlaybackWidget::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key())
+    switch (event->key())
     {
         case(Qt::Key_Space):
         {
             m_playButton->animateClick();
             break;
         }
+
         case(Qt::Key_A):
         {
             if (m_prevButton->isEnabled())
                 m_prevButton->animateClick();
+
             break;
         }
+
         case(Qt::Key_S):
         {
             if (m_nextButton->isEnabled())
                 m_nextButton->animateClick();
+
             break;
         }
+
         case(Qt::Key_Escape):
         {
             if (m_stopButton->isEnabled())
                 m_stopButton->animateClick();
+
             break;
         }
+
         default:
             break;
     }
@@ -205,7 +222,7 @@ void PlaybackWidget::keyPressEvent(QKeyEvent *event)
 void PlaybackWidget::slotPlay()
 {
     if ( m_mediaObject->state() == Phonon::PlayingState ||
-        m_mediaObject->state() == Phonon::BufferingState )
+            m_mediaObject->state() == Phonon::BufferingState )
     {
         m_mediaObject->pause();
         setGUIPlay(true);
@@ -214,14 +231,14 @@ void PlaybackWidget::slotPlay()
         return;
     }
 
-    if ( m_mediaObject->state() == Phonon::PausedState || 
-         m_mediaObject->state() == Phonon::StoppedState )
+    if ( m_mediaObject->state() == Phonon::PausedState ||
+            m_mediaObject->state() == Phonon::StoppedState )
     {
         m_mediaObject->play();
         setGUIPlay(false);
         m_canHide = true;
         emit signalPlay();
-    }   
+    }
 }
 
 void PlaybackWidget::slotStop()
@@ -237,20 +254,22 @@ void PlaybackWidget::slotStop()
 }
 
 void PlaybackWidget::slotPrev()
-{    
+{
     m_currIndex--;
 
     if ( m_currIndex < 0 )
     {
         if ( m_sharedData->soundtrackLoop )
-            m_currIndex = m_urlList.count()-1;
-        else 
+            m_currIndex = m_urlList.count() - 1;
+        else
         {
             m_currIndex = 0;
             return;
         }
     }
+
     setZeroTime();
+
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
 }
@@ -258,18 +277,20 @@ void PlaybackWidget::slotPrev()
 void PlaybackWidget::slotNext()
 {
     m_currIndex++;
-    
+
     if ( m_currIndex >= m_urlList.count() )
     {
         if ( m_sharedData->soundtrackLoop )
             m_currIndex = 0;
         else
         {
-            m_currIndex = m_urlList.count()-1;
+            m_currIndex = m_urlList.count() - 1;
             return;
         }
     }
+
     setZeroTime();
+
     m_mediaObject->setCurrentSource(static_cast<QUrl>(m_urlList[m_currIndex]));
     m_mediaObject->play();
 }
@@ -278,59 +299,68 @@ void PlaybackWidget::slotTimeUpdaterTimeout( void )
 {
     if ( m_mediaObject->state() == Phonon::ErrorState )
     {
-      slotError();
-      return;
+        slotError();
+        return;
     }
 
     long int current = m_mediaObject->currentTime();
-    int hours = (int)(current/(long int)( 60 * 60 * 1000 ));
-    int mins  = (int)((current/(long int)( 60 * 1000 ))-(long int)(hours*60));
-    int secs  = (int)((current/(long int)1000) - (long int)(hours*60 + mins*60));
-    QTime elapsedTime(hours, mins, secs); 
-    
+
+    int hours = (int)(current / (long int)( 60 * 60 * 1000 ));
+    int mins  = (int)((current / (long int)( 60 * 1000 )) - (long int)(hours * 60));
+    int secs  = (int)((current / (long int)1000) - (long int)(hours * 60 + mins * 60));
+    QTime elapsedTime(hours, mins, secs);
+
     if ( m_isZeroTime )
     {
         m_isZeroTime = false;
 
         long int total = m_mediaObject->totalTime();
-        hours = (int)(total/(long int)( 60 * 60 * 1000 ));
-        mins  = (int)((total/(long int)( 60 * 1000 ))-(long int)(hours*60));
-        secs  = (int)((total/(long int)1000) - (long int)(hours*60 + mins*60));
+        hours = (int)(total / (long int)( 60 * 60 * 1000 ));
+        mins  = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
+        secs  = (int)((total / (long int)1000) - (long int)(hours * 60 + mins * 60));
         QTime totalTime(hours, mins, secs);
-        m_totalTimeLabel->setText(totalTime.toString("H:mm:ss"));  
+        m_totalTimeLabel->setText(totalTime.toString("H:mm:ss"));
     }
 
     m_elapsedTimeLabel->setText(elapsedTime.toString("H:mm:ss"));
 }
 
 void PlaybackWidget::slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate)
-{  
-    switch (newstate) 
+{
+    switch (newstate)
     {
+
         case Phonon::StoppedState :
             m_playButton->setEnabled(true);
-            setGUIPlay(true);       
+            setGUIPlay(true);
+
             if ( oldstate == Phonon::LoadingState )
             {
                 if ( m_stopCalled ) m_stopCalled = false;
-                else   
+                else
                 {
                     slotPlay();
                     checkSkip();
                 }
             }
+
             break;
+
         case Phonon::ErrorState :
             slotError();
             break;
+
         case Phonon::PlayingState :
             setGUIPlay(false);
             checkSkip();
             break;
+
         case Phonon::PausedState :
             break;
+
         case Phonon::LoadingState :
             break;
+
         case Phonon::BufferingState :
             break;
     }
@@ -344,11 +374,11 @@ void PlaybackWidget::slotSongFinished( void )
 
 void PlaybackWidget::slotError( void )
 {
-	/* TODO : 
-	 * Display error on slideshow.
-	 * A QWidget pop-up could help
-	 */
-	
+    /* TODO :
+     * Display error on slideshow.
+     * A QWidget pop-up could help
+     */
+
     slotNext();
 }
 

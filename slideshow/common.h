@@ -45,21 +45,27 @@
 #include "advanceddialog.h"
 #include "playbackwidget.h"
 
-namespace KIPISlideShowPlugin {
+namespace KIPISlideShowPlugin
+{
 
 class MainDialog;
+
 class CaptionDialog;
+
 class SoundtrackDialog;
+
 class AdvancedDialog;
+
 class PlaybackWidget;
 
 class SharedData
 {
-  public:
+
+public:
     SharedData();
     ~SharedData();
 
-  public:
+public:
 
     KIPI::Interface*     interface;
 
@@ -101,22 +107,23 @@ class SharedData
     // --> Soundtrack page
     bool             soundtrackLoop;
     KUrl             soundtrackPath;
-    KUrl::List		 soundtrackUrls;
+    KUrl::List       soundtrackUrls;
 
     // --> Advanced page
     bool             useMilliseconds;
     bool             enableMouseWheel;
-    bool             enableCache; 
+    bool             enableCache;
     bool             kbDisableFadeInOut;
     bool             kbDisableCrossFade;
     uint             cacheSize;
 
 };
 
-class VolumeSlider : public Phonon::VolumeSlider 
+class VolumeSlider : public Phonon::VolumeSlider
 {
-    public:
-        VolumeSlider(QWidget* parent);
+
+public:
+    VolumeSlider(QWidget* parent);
 };
 
 

@@ -41,10 +41,12 @@ namespace KIPISlideShowPlugin
 {
 
 class PlaybackWidget;
+
 class SharedData;
 
 class SoundtrackPreview : public KDialog
 {
+
 public :
     SoundtrackPreview(QWidget*, KUrl::List&, SharedData*);
     ~SoundtrackPreview();
@@ -57,19 +59,19 @@ class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
 {
     Q_OBJECT
 
-  public:
+public:
     SoundtrackDialog( QWidget* parent, SharedData* sharedData );
     ~SoundtrackDialog();
 
     void readSettings();
     void saveSettings();
 
-  private:
+private:
     void addItems(const KUrl::List& fileList);
     void updateTracksNumber();
     void compareTimes();
 
-  private slots:
+private slots:
     void slotAddDropItems(KUrl::List filesUrl);
     void slotSoundFilesButtonAdd( void );
     void slotSoundFilesButtonDelete( void );
@@ -79,16 +81,16 @@ class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
     void slotPreviewButtonClicked( void );
     void slotImageTotalTimeChanged( QTime );
     void slotAddNewTime(KUrl, QTime);
-    
-  private:
+
+private:
     KUrl::List              m_urlList;
     int                     m_currIndex;
     SharedData*             m_sharedData;
     QTime                   m_totalTime;
-    QTime					m_imageTime;
-    QMap<KUrl,QTime>*       m_tracksTime;    
-    QMap<KUrl,SoundItem*>*  m_soundItems;
-    QMutex*					m_timeMutex;		
+    QTime                   m_imageTime;
+    QMap<KUrl, QTime>*       m_tracksTime;
+    QMap<KUrl, SoundItem*>*  m_soundItems;
+    QMutex*                 m_timeMutex;
 };
 
 } // NameSpace KIPISlideShowPlugin

@@ -43,7 +43,7 @@ namespace KIPISlideShowPlugin
 {
 
 ToolBar::ToolBar(QWidget* parent)
-       : QWidget(parent)
+        : QWidget(parent)
 {
     QHBoxLayout* lay = new QHBoxLayout();
     setLayout(lay);
@@ -68,7 +68,7 @@ ToolBar::ToolBar(QWidget* parent)
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     m_canHide = true;
-    
+
     connect(m_playBtn, SIGNAL(toggled(bool)),
             this, SLOT(slotPlayBtnToggled()));
 
@@ -89,12 +89,12 @@ ToolBar::ToolBar(QWidget* parent)
 }
 
 ToolBar::~ToolBar()
-{    
+{
 }
 
 bool ToolBar::canHide() const
 {
-    return m_canHide;    
+    return m_canHide;
 }
 
 bool ToolBar::isPaused() const
@@ -108,22 +108,23 @@ void ToolBar::setPaused(bool val)
         return;
 
     m_playBtn->setChecked(val);
+
     slotPlayBtnToggled();
 }
 
 void ToolBar::setEnabledPlay(bool val)
 {
-    m_playBtn->setEnabled(val);    
+    m_playBtn->setEnabled(val);
 }
 
 void ToolBar::setEnabledNext(bool val)
 {
-    m_nextBtn->setEnabled(val);    
+    m_nextBtn->setEnabled(val);
 }
 
 void ToolBar::setEnabledPrev(bool val)
 {
-    m_prevBtn->setEnabled(val);    
+    m_prevBtn->setEnabled(val);
 }
 
 void ToolBar::slotPlayBtnToggled()
@@ -158,32 +159,40 @@ void ToolBar::slotNexPrevClicked()
 
 void ToolBar::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key())
+    switch (event->key())
     {
         case(Qt::Key_Space):
         {
             if (m_playBtn->isEnabled())
                 m_playBtn->animateClick();
+
             break;
         }
+
         case(Qt::Key_PageUp):
         {
             if (m_prevBtn->isEnabled())
                 m_prevBtn->animateClick();
+
             break;
         }
+
         case(Qt::Key_PageDown):
         {
             if (m_nextBtn->isEnabled())
                 m_nextBtn->animateClick();
+
             break;
         }
+
         case(Qt::Key_Escape):
         {
             if (m_stopBtn->isEnabled())
                 m_stopBtn->animateClick();
+
             break;
         }
+
         default:
             break;
     }

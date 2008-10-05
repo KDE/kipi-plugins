@@ -38,7 +38,7 @@ namespace KIPISlideShowPlugin
 class ToolBar : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
     ToolBar(QWidget* parent);
@@ -51,7 +51,7 @@ public:
     void setEnabledPlay(bool val);
     void setEnabledNext(bool val);
     void setEnabledPrev(bool val);
-    
+
 signals:
 
     void signalNext();
@@ -63,7 +63,7 @@ signals:
 protected:
 
     void keyPressEvent(QKeyEvent *event);
-    
+
 private slots:
 
     void slotPlayBtnToggled();
@@ -78,6 +78,7 @@ private:
     bool         m_canHide;
 
     friend class SlideShow;
+
     friend class SlideShowGL;
 };
 

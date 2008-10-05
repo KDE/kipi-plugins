@@ -39,7 +39,7 @@ extern "C"
 #include <QPair>
 #include <QStringList>
 
- // KDE includes.
+// KDE includes.
 
 #include <klocale.h>
 #include <kaction.h>
@@ -69,13 +69,13 @@ K_PLUGIN_FACTORY( SlideShowFactory, registerPlugin<Plugin_SlideShow>(); )
 K_EXPORT_PLUGIN ( SlideShowFactory("kipiplugin_slideshow") )
 
 Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
-                : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
+        : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
 {
     // Useless: to please the compiler
     QVariantList argsList = args;
 
     kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
-                    << endl;
+    << endl;
 }
 
 void Plugin_SlideShow::setup( QWidget* widget )
@@ -92,8 +92,8 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
     if ( !m_interface )
     {
-       kError( 51000 ) << "Kipi m_interface is null!" << endl;
-       return;
+        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        return;
     }
 
     m_actionSlideShow->setEnabled( false );
@@ -129,24 +129,27 @@ void Plugin_SlideShow::slotActivate()
 
     m_sharedData = new KIPISlideShowPlugin::SharedData();
 
-    m_sharedData->showSelectedFilesOnly = true; 
+    m_sharedData->showSelectedFilesOnly = true;
+
     m_sharedData->interface = m_interface;
     m_sharedData->ImagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
     m_sharedData->urlList = m_urlList;
 
     KIPI::ImageCollection currSel = m_interface->currentSelection();
+
     if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
         m_sharedData->showSelectedFilesOnly = false;
     }
 
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-            = new KIPISlideShowPlugin::SlideShowConfig( kapp->activeWindow(), m_sharedData );
+
+    = new KIPISlideShowPlugin::SlideShowConfig( kapp->activeWindow(), m_sharedData );
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
 
-     slideShowConfig->show();
+    slideShowConfig->show();
 }
 
 void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
@@ -158,6 +161,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     }
 
     KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
+
     if ( !m_interface )
     {
         kError( 51000 ) << "Kipi m_interface is null!" << endl;
@@ -166,6 +170,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     }
 
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
+
     if ( !currAlbum.isValid() )
     {
         kError( 51000 ) << "Current image collection is not valid." << endl;
@@ -180,8 +185,8 @@ void Plugin_SlideShow::slotSlideShow()
 {
     if ( !m_interface )
     {
-           kError( 51000 ) << "Kipi m_interface is null!" << endl;
-           return;
+        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        return;
     }
 
     KConfig config("kipirc");
@@ -201,11 +206,12 @@ void Plugin_SlideShow::slotSlideShow()
     }
 
     typedef QPair<QString, int> FileAnglePair;
+
     typedef Q3ValueList<FileAnglePair > FileList;
     FileList fileList;
     QStringList commentsList;
 
-    for( KUrl::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
+    for ( KUrl::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
     {
         KIPI::ImageInfo info = m_interface->info( *urlIt );
         fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
@@ -216,6 +222,7 @@ void Plugin_SlideShow::slotSlideShow()
 
     if (shuffle)
     {
+
         struct timeval tv;
         gettimeofday(&tv, 0);
         srand(tv.tv_sec);
@@ -226,9 +233,9 @@ void Plugin_SlideShow::slotSlideShow()
         QStringList::iterator itcom = commentsList.begin();
         QStringList::iterator itcom1;
 
-        for (uint i=0; i< (uint) fileList.size(); i++)
+        for (uint i = 0; i < (uint) fileList.size(); i++)
         {
-            int inc = (int) (float(fileList.count())*rand()/(RAND_MAX+1.0));
+            int inc = (int) (float(fileList.count()) * rand() / (RAND_MAX + 1.0));
 
             it1 = fileList.begin();
             it1 += inc;
@@ -241,29 +248,29 @@ void Plugin_SlideShow::slotSlideShow()
         }
     }
 
-    if (!opengl) 
+    if (!opengl)
     {
         KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList,
-                                                      commentsList, m_sharedData);
+                commentsList, m_sharedData);
         slideShow->show();
     }
-    else 
+    else
     {
         if (!QGLFormat::hasOpenGL())
             KMessageBox::error(kapp->activeWindow(),
                                i18n("Sorry. OpenGL support not available on your system"));
-        else 
+        else
         {
-            if (wantKB) 
+            if (wantKB)
             {
-                KIPISlideShowPlugin::SlideShowKB* slideShow = new KIPISlideShowPlugin::SlideShowKB(fileList, 
-                                                                  commentsList, m_sharedData);
+                KIPISlideShowPlugin::SlideShowKB* slideShow = new KIPISlideShowPlugin::SlideShowKB(fileList,
+                        commentsList, m_sharedData);
                 slideShow->show();
             }
-            else 
+            else
             {
-            	KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList, 
-                                                                  commentsList, m_sharedData);
+                KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList,
+                        commentsList, m_sharedData);
                 slideShow->show();
             }
         }
@@ -273,8 +280,9 @@ void Plugin_SlideShow::slotSlideShow()
 KIPI::Category Plugin_SlideShow::category( KAction* action ) const
 {
     if ( action == m_actionSlideShow )
-       return KIPI::ToolsPlugin;
+        return KIPI::ToolsPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+
     return KIPI::ToolsPlugin; // no warning from compiler, please
 }

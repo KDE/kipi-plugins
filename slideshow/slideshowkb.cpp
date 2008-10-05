@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
- * Parts of this code are based on 
+ * Parts of this code are based on
  * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
  * and slideshowgl by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  *
@@ -58,14 +58,15 @@
 namespace KIPISlideShowPlugin
 {
 
-ViewTrans::ViewTrans(bool zoomIn, float relAspect) 
+ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 {
     int i;
 
     // randomly select sizes of start end end viewport
     double s[2];
     i = 0;
-    do 
+
+    do
     {
         s[0]  = 0.3 * rnd() + 1.0;
         s[1]  = 0.3 * rnd() + 1.0;
@@ -80,11 +81,13 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     }
 
     m_deltaScale = s[1] / s[0] - 1.0;
+
     m_baseScale  = s[0];
 
     // additional scale factors to ensure proper m_aspect of the displayed image
     double x[2], y[2], xMargin[2], yMargin[2], bestDist;
     double sx, sy;
+
     if (relAspect > 1.0)
     {
         sx = 1.0;
@@ -95,7 +98,9 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
         sx = 1.0 / relAspect;
         sy = 1.0;
     }
+
     m_xScale = sx;
+
     m_yScale = sy;
 
     // calculate path
@@ -106,6 +111,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 
     i = 0;
     bestDist = 0.0;
+
     do
     {
         double sign = rndSign();
@@ -129,7 +135,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 
 // -------------------------------------------------------------------------
 
-Image::Image(ViewTrans *viewTrans, float aspect) 
+Image::Image(ViewTrans *viewTrans, float aspect)
 {
     this->m_viewTrans = viewTrans;
     this->m_aspect    = aspect;
@@ -139,9 +145,10 @@ Image::Image(ViewTrans *viewTrans, float aspect)
     this->m_texture   = 0;
 }
 
-Image::~Image() 
+Image::~Image()
 {
     delete m_viewTrans;
+
     if (glIsTexture(m_texture))
         glDeleteTextures(1, &m_texture);
 }
@@ -150,7 +157,7 @@ Image::~Image()
 
 SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedData* sharedData)
-           : QGLWidget()
+        : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::X11BypassWindowManagerHint |
@@ -172,7 +179,7 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
-    
+
     m_sharedData = sharedData;
 
     // =======================================================
@@ -180,7 +187,7 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     // These parameters could be useful for future implementations
     m_commentsList = commentsList;
     // =======================================================
-    
+
     srand(QTime::currentTime().msec());
     readSettings();
 
@@ -188,25 +195,34 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     m_screen->enableVSync();
 
     unsigned frameRate;
+
     if (m_forceFrameRate == 0)
         frameRate = m_screen->suggestFrameRate() * 2;
     else
         frameRate = m_forceFrameRate;
 
     m_image[0]    = new Image(0);
+
     m_image[1]    = new Image(0);
+
     m_effect      = 0;
+
     m_step        = 1.0 / ((float) (m_delay * frameRate));
+
     m_zoomIn      = rand() < RAND_MAX / 2;
+
     m_initialized = false;
+
     m_haveImages  = true;
 
     Q3ValueList<QPair<QString, int> > m_fileList = fileList;
 
     m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
+
     m_timer           = new QTimer(this);
 
     m_endOfShow = false;
+
     m_showingEnd = false;
 
     connect(m_timer, SIGNAL(timeout(void)),
@@ -223,34 +239,37 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
             this, SLOT(slotMouseMoveTimeOut()));
 
     setMouseTracking(true);
+
     slotMouseMoveTimeOut();
 
     // -- playback widget -------------------------------
-    
-    
-    m_playbackWidget = new PlaybackWidget(this,m_sharedData->soundtrackUrls,m_sharedData);
+
+
+    m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
+
     m_playbackWidget->hide();
-       
-    m_playbackWidget->move(m_deskX, m_deskY);    
-    
+
+    m_playbackWidget->move(m_deskX, m_deskY);
+
     // -- load image and let's start
-    
+
     m_imageLoadThread->start();
+
     m_timer->start(1000 / frameRate);
 }
 
-SlideShowKB::~SlideShowKB() 
+SlideShowKB::~SlideShowKB()
 {
     delete m_effect;
     delete m_image[0];
     delete m_image[1];
 
     delete m_playbackWidget;
-    
+
     m_imageLoadThread->quit();
     bool terminated = m_imageLoadThread->wait(10000);
 
-    if ( !terminated) 
+    if ( !terminated)
     {
         m_imageLoadThread->terminate();
         terminated = m_imageLoadThread->wait(3000);
@@ -260,16 +279,19 @@ SlideShowKB::~SlideShowKB()
         delete m_imageLoadThread;
 
     delete m_mouseMoveTimer;
+
     delete m_timer;
+
     delete m_screen;
 }
 
-void SlideShowKB::setNewKBEffect() 
+void SlideShowKB::setNewKBEffect()
 {
     KBEffect::Type type;
     bool needFadeIn = (m_effect == 0 || m_effect->type() == KBEffect::Fade);
 
     // we currently only have two effects
+
     if (m_disableFadeInOut)
         type = KBEffect::Blend;
     else if (m_disableCrossFade)
@@ -278,14 +300,18 @@ void SlideShowKB::setNewKBEffect()
         type = KBEffect::chooseKBEffect((m_effect) ? m_effect->type() : KBEffect::Fade);
 
     delete m_effect;
+
     switch (type)
     {
+
         case KBEffect::Fade:
             m_effect = new FadeKBEffect(this, needFadeIn);
             break;
+
         case KBEffect::Blend:
             m_effect = new BlendKBEffect(this, needFadeIn);
             break;
+
         default:
             qDebug("Unknown transition effect, falling back to crossfade");
             m_effect = new BlendKBEffect(this, needFadeIn);
@@ -301,13 +327,14 @@ void SlideShowKB::moveSlot()
             setNewKBEffect();
             m_imageLoadThread->requestNewImage();
         }
+
         m_effect->advanceTime(m_step);
     }
 
     updateGL();
 }
 
-bool SlideShowKB::setupNewImage(int idx) 
+bool SlideShowKB::setupNewImage(int idx)
 {
     assert(idx >= 0 && idx < 2);
 
@@ -315,6 +342,7 @@ bool SlideShowKB::setupNewImage(int idx)
         return false;
 
     bool ok = false;
+
     m_zoomIn  = !m_zoomIn;
 
     if (m_imageLoadThread->grabImage())
@@ -330,7 +358,7 @@ bool SlideShowKB::setupNewImage(int idx)
         ok = true;
 
     }
-    else 
+    else
     {
         m_haveImages = false;
     }
@@ -342,7 +370,7 @@ bool SlideShowKB::setupNewImage(int idx)
     return ok;
 }
 
-void SlideShowKB::startSlideShowOnce() 
+void SlideShowKB::startSlideShowOnce()
 {
     // when the image loader thread is ready, it will already have loaded
     // the first image
@@ -356,14 +384,14 @@ void SlideShowKB::startSlideShowOnce()
     }
 }
 
-void SlideShowKB::swapImages() 
+void SlideShowKB::swapImages()
 {
     Image *tmp = m_image[0];
     m_image[0] = m_image[1];
     m_image[1] = tmp;
 }
 
-void SlideShowKB::initializeGL() 
+void SlideShowKB::initializeGL()
 {
     // Enable Texture Mapping
     glEnable(GL_TEXTURE_2D);
@@ -383,7 +411,7 @@ void SlideShowKB::initializeGL()
     glClearDepth(1.0f);
 }
 
-void SlideShowKB::paintGL() 
+void SlideShowKB::paintGL()
 {
     startSlideShowOnce();
 
@@ -391,16 +419,19 @@ void SlideShowKB::paintGL()
     glDepthMask(GL_FALSE);
 
     // only clear the color buffer, if none of the active images is fully opaque
+
     if ( !((m_image[0]->m_paint && m_image[0]->m_opacity == 1.0) ||
-        (m_image[1]->m_paint && m_image[1]->m_opacity == 1.0)) )
+            (m_image[1]->m_paint && m_image[1]->m_opacity == 1.0)) )
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
 
     glMatrixMode(GL_PROJECTION);
+
     glLoadIdentity();
 
     glMatrixMode(GL_MODELVIEW);
+
     glLoadIdentity();
 
     if (m_endOfShow && m_image[0]->m_paint && m_image[1]->m_paint)
@@ -412,9 +443,11 @@ void SlideShowKB::paintGL()
     {
         if (m_image[1]->m_paint)
             paintTexture(m_image[1]);
+
         if (m_image[0]->m_paint)
             paintTexture(m_image[0]);
     }
+
     glFlush();
 }
 
@@ -423,7 +456,7 @@ void SlideShowKB::resizeGL(int w, int h)
     glViewport(0, 0, (GLint) w, (GLint) h);
 }
 
-void SlideShowKB::applyTexture(Image *img, const QImage &texture) 
+void SlideShowKB::applyTexture(Image *img, const QImage &texture)
 {
     /* create the texture */
     glGenTextures(1, &img->m_texture);
@@ -431,10 +464,10 @@ void SlideShowKB::applyTexture(Image *img, const QImage &texture)
 
     /* actually generate the texture */
     glTexImage2D(GL_TEXTURE_2D, 0, 3, texture.width(), texture.height(), 0,
-                GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
+                 GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
     /* enable linear filtering  */
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
 void SlideShowKB::paintTexture(Image *img)
@@ -468,31 +501,33 @@ void SlideShowKB::paintTexture(Image *img)
         glTexCoord2f(0, 1);
         glVertex3f(-sx, sy, 0);
     }
+
     glEnd();
 }
 
-void SlideShowKB::readSettings() 
+void SlideShowKB::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("SlideShow Settings");
 
-    m_delay            = group.readEntry("Delay", 8000)/1000;
+    m_delay            = group.readEntry("Delay", 8000) / 1000;
     m_disableFadeInOut = group.readEntry("KB Disable FadeInOut", false);
     m_disableCrossFade = group.readEntry("KB Disable Crossfade", false);
     m_forceFrameRate   = group.readEntry("KB Force Framerate", 0);
 
     if (m_delay < 5)  m_delay = 5;
+
 //       if (m_delay > 20) m_delay = 20;
     if (m_forceFrameRate > 120) m_forceFrameRate = 120;
 }
 
-void SlideShowKB::endOfShow() 
+void SlideShowKB::endOfShow()
 {
-    QPixmap pix(512,512);
+    QPixmap pix(512, 512);
     pix.fill(Qt::black);
 
     QFont fn(font());
-    fn.setPointSize(fn.pointSize()+10);
+    fn.setPointSize(fn.pointSize() + 10);
     fn.setBold(true);
 
     QPainter p(&pix);
@@ -515,8 +550,8 @@ void SlideShowKB::endOfShow()
     glTexImage2D( GL_TEXTURE_2D, 0, 3, t.width(), t.height(), 0,
                   GL_RGBA, GL_UNSIGNED_BYTE, t.bits() );
     /* enable linear filtering  */
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     /* paint the texture */
 
@@ -539,6 +574,7 @@ void SlideShowKB::endOfShow()
         glTexCoord2f(0, 1);
         glVertex3f(-1.0, 1.0, 0);
     }
+
     glEnd();
 
     m_showingEnd = true;
@@ -552,9 +588,9 @@ QStringList SlideShowKB::effectNames()
     return effects;
 }
 
-QMap<QString,QString> SlideShowKB::effectNamesI18N()
+QMap<QString, QString> SlideShowKB::effectNamesI18N()
 {
-    QMap<QString,QString> effects;
+    QMap<QString, QString> effects;
 
     effects["Ken Burns"] = i18n("Ken Burns");
 
@@ -563,20 +599,20 @@ QMap<QString,QString> SlideShowKB::effectNamesI18N()
 
 void SlideShowKB::keyPressEvent(QKeyEvent *event)
 {
-    if(!event)
+    if (!event)
         return;
 
     m_playbackWidget->keyPressEvent(event);
-    
+
     if (event->key() == Qt::Key_Escape)
-    	close();
+        close();
 }
 
 
 void SlideShowKB::mousePressEvent(QMouseEvent *e)
 {
     if ( !e )
-    	return;
+        return;
 
     if (m_endOfShow && m_showingEnd)
         slotClose();
@@ -593,13 +629,14 @@ void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
 
     QPoint pos(e->pos());
 
-    if ((pos.y() > (m_deskY+20)) &&
-        (pos.y() < (m_deskY+m_deskHeight-20-1)))
+    if ((pos.y() > (m_deskY + 20)) &&
+            (pos.y() < (m_deskY + m_deskHeight - 20 - 1)))
     {
         if (m_playbackWidget->isHidden())
             return;
         else
             m_playbackWidget->hide();
+
         return;
     }
 
@@ -614,8 +651,9 @@ void SlideShowKB::slotEndOfShow()
 void SlideShowKB::slotMouseMoveTimeOut()
 {
     QPoint pos(QCursor::pos());
-    if ((pos.y() < (m_deskY+20)) ||
-        (pos.y() > (m_deskY+m_deskHeight-20-1)))
+
+    if ((pos.y() < (m_deskY + 20)) ||
+            (pos.y() > (m_deskY + m_deskHeight - 20 - 1)))
         return;
 
     setCursor(QCursor(Qt::BlankCursor));
