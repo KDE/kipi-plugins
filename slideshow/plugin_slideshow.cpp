@@ -244,7 +244,7 @@ void Plugin_SlideShow::slotSlideShow()
     if (!opengl) 
     {
         KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList,
-                                                      commentsList, m_sharedData->ImagesHasComments);
+                                                      commentsList, m_sharedData);
         slideShow->show();
     }
     else 

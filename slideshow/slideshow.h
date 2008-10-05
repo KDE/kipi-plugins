@@ -53,6 +53,7 @@
 // Local includes.
 
 #include "slideshowloader.h"
+#include "common.h"
 
 class QTimer;
 
@@ -63,6 +64,7 @@ namespace KIPISlideShowPlugin
 {
 
 class ToolBar;
+
 class SlideShow;
 
 class SlideShow : public QWidget
@@ -70,17 +72,17 @@ class SlideShow : public QWidget
 
     Q_OBJECT
 
-typedef int (SlideShow::*EffectMethod)(bool);
+    typedef int (SlideShow::*EffectMethod)(bool);
 
 public:
 
-    SlideShow(const FileList& fileList, const QStringList& commentsList, bool ImagesHasComments);
+    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedData* sharedData);
     ~SlideShow();
 
     void registerEffects();
 
     static QStringList effectNames();
-    static QMap<QString,QString> effectNamesI18N();
+    static QMap<QString, QString> effectNamesI18N();
 
 
 protected:
@@ -105,11 +107,11 @@ protected:
     int effectBlobs(bool doInit);
 
     void paintEvent(QPaintEvent*);
-    void startPainter(Qt::PenStyle penStyle=Qt::NoPen);
+    void startPainter(Qt::PenStyle penStyle = Qt::NoPen);
 
-    bool			m_simplyShow;
-    bool			m_startPainter;	
-    int				m_px, m_py, m_psx, m_psy, m_psw, m_psh;
+    bool            m_simplyShow;
+    bool            m_startPainter;
+    int             m_px, m_py, m_psx, m_psy, m_psw, m_psh;
     QPainter*                   m_painter;
     bool                        m_endOfShow;
 
@@ -139,27 +141,10 @@ private:
 
 private:
 
-    // config ------------------
-
-    KConfig*    m_config;
-
-    int         m_delay;
-    bool        m_printName;
-    bool        m_printComments;
-    bool        m_printProgress;
-    QString     m_effectName;
-    bool        m_loop;
-
-    bool        m_ImagesHasComments;
-
-    QFont*      m_commentsFont;
-    uint        m_commentsFontColor;
-    uint        m_commentsBgColor;
-    int         m_commentsLinesLength;
-
-    bool        m_enableMouseWheel;
+    SharedData* m_sharedData;
 
     uint        m_cacheSize;
+
     // -------------------------
 
     QMap<QString, EffectMethod> Effects;
