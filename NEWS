@@ -1,7 +1,7 @@
-Note: for details and info about current version, see ChangeLog.
-
 v 0.1.6 - beta2
 ---------------------------------------------------------------------------
+
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 162687 : FlickrExport       : Make Flickr Export screen non-modal.
 002 ==> 162683 : FlickrExport       : New: export to picassaweb doesn't works.
@@ -16,7 +16,7 @@ v 0.1.6 - beta2
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 FlickrExport   : dialog layout re-written to be more suitable.
 FlickrExport   : list of item to upload is now display in dialog.
@@ -44,7 +44,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.5
 ---------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 SimpleViewerExport : plugin is now compatible with SimpleViewer version 1.8.x.
 SimpleViewerExport : plugin now support RAW files format.
@@ -62,7 +62,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.5 - RC2
 ---------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 PrintWizard    : caption can contain more exif info 
 
@@ -77,7 +77,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.5 - RC1
 ---------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 General        : Added the availability to disable plugins we don't want to build.
                : This feature is very useful for source based distros (Matej Laitl)
@@ -108,7 +108,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.5 - Beta1
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 General        : Added configure options to allow disabling plugins (--disable-XXXX)
                  provided by Matej Laitl (bug #149666)
@@ -151,7 +151,7 @@ final release, apologize for that.
 v 0.1.4 beta2
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 HTMLExport     : Option to specify whether the original images should be included
 HTMLExport     : Support for theme variants
@@ -175,7 +175,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.4 beta1 
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 General        : Moved Exiv2Iface class to a new shared library named libkexiv2 used by 
                  kipi-plugins and digiKam.
@@ -206,7 +206,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.3 
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
@@ -216,7 +216,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.3 rc1
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 Slideshow      : Show image comments (configurable)
 
@@ -231,7 +231,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 v 0.1.3 beta1
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 New Plugin    : MetadataEdit : New kipi plugin to edit EXIF and IPTC pictures metadata (by Gilles Caulier).
 New Plugin    : GPSSync      : New kipi plugin to sync photo metadata with a GPS device (by Gilles Caulier).
@@ -289,20 +289,20 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 021 ==> 117399 : BatchProcess : Usability of Target folder.
 022 ==> 137921 : MetadataEdit : wrong country code in IPTC.
 
-v 0.1.2                                                           2006-07-08
+v 0.1.2       
 ----------------------------------------------------------------------------
 
 Compilation fix release.
 
-v 0.1.1                                                           2006-06-26
+v 0.1.1       
 ----------------------------------------------------------------------------
 
 Compilation fix release.
 
-v 0.1.0                                                           2006-06-22
+v 0.1.0       
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 GalleryExport : added Gallery 2 version support.
 ImageGallery  : removed is removed and replaced by HTML export plugin.
@@ -337,10 +337,10 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 026 ==> 127532 : MPEGEncoder   : 'image2mpg' wrong directory error.
 027 ==> 101455 : RAWConverter  : Make it possible to enter numbers with 2 digit precision in RAW converter dialog.
 
-v0.1.0-rc2                                                        2006-05-06
+v0.1.0-rc2    
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 New Plugin     : HTMLExport   : new images gallery export supporting XHTML and CSS (by Aurelien Gateau).
 New Plugin     : SimpleViewer : new plugin to export to flash web page (by Joern Ahrens)
@@ -376,10 +376,10 @@ Kipi-plugins BUGFIX from B.K.O (http://bugs.kde.org):
 025 ==> 119562 : SendImages   : A patch that adds support for the Sylpheed-Claws mua.
 026 ==> 119867 : Slideshow    : Different icon types used by slideshow for for backwards/forwards.
 
-v0.1.0-rc1                                                        2005-09-04
+v0.1.0-rc1    
 ----------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES
+Kipi-plugins NEW FEATURES:
 
 New Plugin     : FlickrExport : new plugin to upload pictures on Flickr web service (by Vardhman Jain).
 
