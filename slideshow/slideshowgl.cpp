@@ -794,7 +794,7 @@ void SlideShowGL::slotTimeOut()
     }
     else
     {
-        if (m_timeout == -1)
+        if (m_timeout == 0)
         {
             // effect was running and is complete now
             // run timer while showing current image
