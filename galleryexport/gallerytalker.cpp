@@ -127,8 +127,6 @@ void GalleryTalker::listAlbums()
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    kWarning() << "COOKIE: " << m_cookie << endl;
-
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
     connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
@@ -182,8 +180,6 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     if (!albumCaption.isEmpty())
         form.addPair("newAlbumDesc", albumCaption);
     form.finish();
-
-    kWarning() << endl << endl << "form data : " << form.formData() << endl << endl;
 
     m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     m_job->addMetaData("content-type", form.contentType());
@@ -280,14 +276,9 @@ void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
     if (data.isEmpty())
         return;
 
-    kWarning() << endl << endl << " m_talker_buffer PRIMA: " << m_talker_buffer << endl << endl;
-
     int oldSize = m_talker_buffer.size();
     m_talker_buffer.resize(oldSize + data.size());
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
-
-    kWarning() << endl << endl << " m_talker_buffer DOPO: " << m_talker_buffer << endl << endl;
-
 }
 
 
@@ -555,8 +546,6 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     bool foundResponse = false;
     bool success = false;
 
-    kWarning() << "str: " << data << endl;
-
     while (!ts.atEnd()) {
         line = ts.readLine();
 
@@ -571,7 +560,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
                 QString value = strlist[1];
                 kWarning() << "key = " << key <<endl;
                 kWarning() << "value =  " << value  << endl;
-                if (key == "status") {      // NON TROVA key == "status"!!!
+                if (key == "status") {      // key == "status" NOT FOUND!!!
                     success = (value == "0");
                     kWarning( 51000 ) << "Create Album. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
