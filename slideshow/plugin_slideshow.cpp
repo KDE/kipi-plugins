@@ -76,6 +76,8 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
 
     kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
     << endl;
+
+    m_sharedData = 0;
 }
 
 void Plugin_SlideShow::setup( QWidget* widget )
@@ -102,18 +104,11 @@ void Plugin_SlideShow::setup( QWidget* widget )
             this, SLOT( slotAlbumChanged( bool )));
 
     addAction( m_actionSlideShow );
+
 }
 
 Plugin_SlideShow::~Plugin_SlideShow()
 {
-    if ( m_sharedData )
-    {
-        delete m_sharedData->mainPage;
-        delete m_sharedData->captionPage;
-        delete m_sharedData->advancedPage;
-        delete m_sharedData->soundtrackPage;
-    }
-
     if (m_urlList)
         delete m_urlList;
 }
@@ -125,7 +120,6 @@ void Plugin_SlideShow::slotActivate()
         kError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
     }
-
 
     m_sharedData = new KIPISlideShowPlugin::SharedData();
 

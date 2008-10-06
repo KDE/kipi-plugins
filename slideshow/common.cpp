@@ -37,6 +37,7 @@ SharedData::SharedData()
     mainPage = 0;
     captionPage = 0;
     advancedPage = 0;
+    soundtrackPage = 0;
 
     opengl = false;
     delay = 0;
@@ -60,14 +61,26 @@ SharedData::SharedData()
     kbDisableFadeInOut = false;
     kbDisableCrossFade = false;
     cacheSize = 0;
+
+    page_main = 0;
+    page_caption = 0;
+    page_soundtrack = 0;
+    page_advanced = 0;
 }
 
 SharedData::~SharedData() 
 {
-    delete page_main;
-    delete page_caption; 
-    delete page_soundtrack;
-    delete page_advanced;
+    if ( mainPage ) delete mainPage;
+    if ( captionPage ) delete captionPage;
+    if ( soundtrackPage ) delete soundtrackPage;
+    if ( advancedPage ) delete advancedPage;
+
+    if ( page_main ) delete page_main;
+    if ( page_caption ) delete page_caption;
+    if ( page_soundtrack ) delete page_soundtrack;
+    if ( page_advanced ) delete page_advanced;
+
+    if ( captionFont ) delete captionFont;
 }
 
 

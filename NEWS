@@ -1,6 +1,10 @@
 v 0.2.0 - beta3
 ------------------------------------------------------------------------
 
+Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+
+001 ==> 172283 : SlideShow          : SlideShow crashes host application 
+
 v 0.2.0 - beta2
 ------------------------------------------------------------------------
 
