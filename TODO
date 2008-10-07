@@ -1,42 +1,30 @@
 ----------------------------------------------------------------------------
 * General
 
- - anaselli: fix kipi-plugins building if libkipi is missed or a wrong 
-             release is present
- - anaselli: add svn2cl management also for prepare_libkipi.rb
-
- - All dialog less plugins which modify images should only use
-   currentSelection().
- - All dialog less plugins which do not modify images should use either
-   current* methods.
+ - All dialog less plugins which modify images should only use currentSelection().
+ - All dialog less plugins which do not modify images should use either current* methods.
  
 ----------------------------------------------------------------------------
 * SLIDESHOW PLUGIN 
-  (SlideShow with snazzy effects)
 
- - Add preview Slideshow effects in dialogbox similar Kcontrol
-   screensavers settings.
+ - Add preview Slideshow effects in dialogbox similar Kcontrol screensavers settings.
  - Auto-rotate according to EXIF orientation tag
 
 ----------------------------------------------------------------------------
 * MPEGENCODER PLUGIN
-  (MPEG images encoder)
 
  - Add DIVX support using mencoder program.
- - Using new C++ implementation with MJPEGTools and IMLIB from Renchi instead
-   images2mpg bash script.
+ - Using new C++ implementation with MJPEGTools and IMLIB from Renchi instead images2mpg bash script.
  - Add file name or image comment in MPEG flux.
 
 ----------------------------------------------------------------------------
 
 * PRINTWIZARD PLUGIN
-  (Multiples images printing wizzard)
 
  - Check for existence of Gimp and disable option if not available.
 
 ----------------------------------------------------------------------------
 * CALENDAR PLUGIN
-  (Calendar creation wizzard)
 
  - Use QSimpleRichText to render the calendar text
  - Add more options for controlling the appearance.
@@ -44,11 +32,6 @@
 
 ----------------------------------------------------------------------------
 * SENDIMAGES PLUGIN
-  (E-mail images)
 
  - Add tarball, zip, bz2, gz generation.
  - Add support of 'Aethera' and 'Opera' mail agents.
-
-
-
-
