@@ -39,7 +39,7 @@ IpodExport         : A tool to export pictures to an Ipod device.
 MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 PrintWizard        : A wizard to print images in various format.
 CDArchiving        : A tool to archive your image collections to a CD or DVD.
-Calendar:          : A tool to create calendars.
+Calendar           : A tool to create calendars.
 BatchProcess       : A collection of tools to batch process images (convert, resize, rename, etc.)
 
 -- DEPENDENCIES -------------------------------------------------------
@@ -81,6 +81,7 @@ If you have questions, comments, suggestions to make do email at :
 kde-imaging@kde.org
 
 IRC channel from irc.freenode.org server: #kde-imaging
+                                          #digikam
 
 IMPORTANT : the bugreports and wishlist are hosted by the KDE bugs report 
 system who can be contacted by the standard Kde help menu of plugins dialog. 
