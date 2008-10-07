@@ -14,7 +14,7 @@ Notes:
 Most of the KipiPlugins have previously been DigikamPlugins.
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
-Currently implemented plugins are:
+Current plugins ported to Qt4/KDE4:
 
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 ImageViewer        : A tool to preview images using OpenGL.
