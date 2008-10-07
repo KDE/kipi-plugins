@@ -16,43 +16,22 @@ kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Currently implemented plugins are:
 
-RawConverter       : A Raw Image Converter for digital cameras.
-
-SlideShow          : Slideshow with 2D and 3D effects using OpenGL.
-
-ImageViewer        : Fast image viewer using OpenGL.
-
-JpegLossLess       : Batch images processing (rotation/flipping) without losing meta informations
-                     embedded in the image and without recompression of jpeg data.
-
-AcquireImages      : Acquire images interface using flat scanner.
-
-SendImages         : A plugin to send images by e-mail, allowing resizing and recompressing before sending.
-
-TimeAdjust         : Adjust image file Time and Date.
-
-WallPaper          : Image to KDE Desktop.
-
-GalleryExport      : Plugin to export images to a remote Gallery (and Gallery 2) server
-                     (http://gallery.sf.net).
-
-FlickrExport       : Plugin to export images to a remote Flickr web service 
-                     (http://www.flickr.com).
-
-HTMLExport         : Plugin to export images collections into XHTML page.
-
-SimpleViewerExport : Plugin to export images to SimpleViewer
-                     (http://www.airtightinteractive.com/simpleviewer).
-
-GPSSync            : Plugin to geolocalize pictures.
-
-MetadataEdit       : Plugin to edit EXIF and IPTC pictures metadata.
-
-PicasaWebExport    : Plugin to export images to a remote Picasa web service 
-                     (http://www.picasaweb.com).
-
-DngConverter       : A Raw Image Converter for digital cameras to Digital NeGative 
-                     (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
+RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
+SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
+ImageViewer        : A tool to preview images using OpenGL.
+JpegLossLess       : A tool to rotate/flip images without losing quality.
+AcquireImages      : A tool to acquire images using flat scanner.
+SendImages         : A tool to send images by e-mail, allowing resizing and recompressing before sending.
+TimeAdjust         : A tool to adjust date and time.
+GalleryExport      : A tool to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net).
+FlickrExport       : A tool to export images to a remote Flickr web service (http://www.flickr.com).
+PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
+HTMLExport         : A tool to export images collections into a static XHTML page.
+SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
+GPSSync            : A tool to geolocalize pictures.
+MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
+DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
+WallPaper          : A tool to set image to KDE Desktop.
 
 
 -- DEPENDENCIES -------------------------------------------------------
