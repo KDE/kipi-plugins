@@ -28,8 +28,10 @@
 extern "C"
 {
 #include <unistd.h>
+#ifndef _WIN32
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#endif
 #include <sys/types.h>
 #include <tiffvers.h>
 #include "iccjpeg.h"
