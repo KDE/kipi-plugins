@@ -50,6 +50,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 MACRO_OPTIONAL_FIND_PACKAGE(X11)     # For Slideshow
 
+IF(NOT WIN32)
 # Check KDcraw version installed to compile fine DngConverter plugin.
 FIND_PACKAGE(PkgConfig)
 PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
@@ -58,6 +59,9 @@ IF(Kdcraw_FOUND)
 ELSE(Kdcraw_FOUND)
     SET(KDCRAW_FOR_DNGCONVERTER FALSE)
 ENDIF(Kdcraw_FOUND)
+ELSE(NOT WIN32)
+    SET(KDCRAW_FOR_DNGCONVERTER TRUE)
+ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
 MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
@@ -135,7 +139,7 @@ IF(KDCRAW_FOUND)
 ELSE(KDCRAW_FOUND)
     MESSAGE(STATUS " libkdcraw library found........ NO")
     MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libkdcraw library >= 0.2.0. You need to install libkdcraw first")
+    MESSAGE(SEND_ERROR " kipi-plugins needs libkdcraw library >= 0.4.0. You need to install libkdcraw first")
     MESSAGE(STATUS " libkdcraw website is at http://www.kipi-plugins.org")
     MESSAGE(STATUS "")
 ENDIF(KDCRAW_FOUND)
