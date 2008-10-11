@@ -1,3 +1,260 @@
+V 0.1.6 - 2008-10-11
+----------------------------------------------------------------------------
+
+2008-10-06 06:07  cgilles
+
+    * NEWS: update
+
+2008-09-14 16:36  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: compile
+
+2008-09-14 13:30  cgilles
+
+    * rawconverter/plugin_rawconverter.cpp: compile with new libkdcraw
+
+2008-09-14 13:27  cgilles
+
+    * printwizard/tphoto.cpp: compile with new libkdcraw
+
+2008-09-14 13:26  cgilles
+
+    * simpleviewerexport/simpleviewerexport.cpp: compile with new
+      libkdcraw
+
+2008-09-14 13:25  cgilles
+
+    * sendimages/sendimages.cpp: compile with new libkdcraw
+
+2008-09-14 13:21  cgilles
+
+    * picasawebexport/picasawebtalker.cpp: compile with new libkdcraw
+
+2008-09-14 13:20  cgilles
+
+    * jpeglossless/utils.cpp: compile with new libkdcraw
+
+2008-09-14 13:19  cgilles
+
+    * imageviewer/texture.cpp: compile with new libkdcraw
+
+2008-09-14 13:18  cgilles
+
+    * flickrexport/flickrtalker.cpp: compile with new libkdcraw
+
+2008-08-27 18:59  cgilles
+
+    * NEWS: update
+
+2008-08-27 18:59  cgilles
+
+    * NEWS: update
+
+2008-08-27 18:58  cgilles
+
+    * NEWS: update
+
+2008-08-27 18:13  jaiva
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Fixing the upload photo to
+      allow uploading in albums with spaces in the album name,
+      basically changed the upload post url to use album id instead of
+      album name.
+      
+      BUG:1501912
+
+2008-08-11 19:13  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: do not record IPTC preview
+      into JPEG.
+
+2008-08-07 13:52  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      support median filter passes
+
+2008-08-07 10:09  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      polish
+
+2008-08-07 09:43  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile with older libkdcraw
+
+2008-08-07 09:21  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile
+
+2008-08-06 08:57  cgilles
+
+    * rawconverter/singledialog.cpp: polish
+
+2008-08-06 08:51  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      added white point settings support
+
+2008-07-16 18:43  aclemens
+
+    * NEWS: update
+
+2008-07-16 11:19  aclemens
+
+    * printwizard/frmprintwizard.cpp: connection missing for
+      BtnCropRotate
+
+2008-07-16 11:09  aclemens
+
+    * printwizard/frmprintwizard.cpp: connections for crop buttons were
+      missing.
+      
+      CCBUGS:166712
+
+2008-07-10 06:57  cgilles
+
+    * NEWS: update
+
+2008-07-09 13:35  cgilles
+
+    * gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+      gpssync/plugin_gpssync.cpp: kipi-plugins from KDE3 branch : with
+      Exiv2 0.18, we will be able to set GPS info to TIFF files on the
+      fly. so, no need to limit GPS location recording to JPEG files.
+
+2008-07-08 13:12  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: fix broken compilation with
+      gcc 4.3.1
+
+2008-07-07 21:26  kusi
+
+    * imageviewer/TODO, imageviewer/texture.cpp, imageviewer/texture.h,
+      imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h:
+      backport from kde4: respect exif orientation
+
+2008-07-03 13:34  cgilles
+
+    * jpeglossless/actionthread.cpp: backport commit #827616 from KDE4
+
+2008-06-23 06:29  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: Tiff writer now generate a
+      thumb in IFD1
+
+2008-06-22 21:27  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: polish
+
+2008-06-22 21:22  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: Raw converter no store all
+      metadata to tiff file is Exiv2 0.18 is used
+
+2008-06-13 07:54  cgilles
+
+    * flickrexport/flickrwindow.cpp: backport commit #820103 from KDE4
+
+2008-06-11 10:27  cgilles
+
+    * flickrexport/imageslist.cpp: polish
+
+2008-06-10 17:15  aclemens
+
+    * cdarchiving/actions.h, cdarchiving/cdarchiving.cpp,
+      cdarchiving/cdarchiving.h, cdarchiving/cdarchivingdialog.cpp,
+      cdarchiving/cdarchivingdialog.h,
+      cdarchiving/plugin_cdarchiving.cpp,
+      cdarchiving/plugin_cdarchiving.h: * code cleanup
+      * fixed indentation
+
+2008-06-10 16:59  aclemens
+
+    * cdarchiving/cdarchiving.cpp, cdarchiving/cdarchiving.h,
+      cdarchiving/plugin_cdarchiving.cpp: fixed progress bar issue...
+      the number of total actions was not calculated correctly, so when
+      exporting many images, the progress bar didn't move for quite a
+      long time.
+      
+      CCBUG: 163529
+      TODO: KDE4PORT
+
+2008-06-09 18:29  aclemens
+
+    * flickrexport/flickrwindow.cpp: check for HostSupportsTags moved
+      to readSettings() to make sure that everything is setup well
+
+2008-06-09 13:33  aclemens
+
+    * flickrexport/flickrwindow.cpp: "Strip Space..." checkbox should
+      only be enabled if "Use Host Application Tags" is set, too.
+
+2008-06-09 06:19  cgilles
+
+    * picasawebexport/mpform.cpp, picasawebexport/mpform.h:
+      kipi-plugins from KDE3 branch : Picasa Web Export tool : backport
+      MPForm class utf-8 support patch from HJ D Lee.
+      Jain, it's a simple fix backported from FlickrExport tool (see
+      B.K.O #155270).
+      Indeep tests are require with strings using Arab, asia, and
+      non-latin1 encoding.
+      CCMAIL: vardhman@gmail.com
+      
+      Work for me. indeep tests are require especially with
+      asian/greek/arab/etc... charsets.
+
+2008-06-09 04:19  cgilles
+
+    * NEWS: update
+
+2008-06-06 15:27  jaiva
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwindow.cpp: Added listAllAlbums()
+      replacing listAlbums() which now uses authenticated call to fetch
+      the list of all albums for the user including the unlisted
+      albums.
+      
+      BUG:162994
+
+2008-06-03 14:54  cgilles
+
+    * TODO: update
+
+2008-05-28 08:02  cgilles
+
+    * flickrexport/imageslist.cpp: missing signal to toggle Upload
+      button when d&d is used from digiKam
+
+2008-05-28 08:00  cgilles
+
+    * flickrexport/imageslist.cpp: fix obsolete signal
+
+2008-05-27 09:40  cgilles
+
+    * NEWS: update
+
+2008-05-25 20:32  anaselli
+
+    * common/include/pluginsversion.h: SVN_SILENT: kipi-plugins 0.1.6 -
+      beta1
+
+2008-05-25 20:31  anaselli
+
+    * kipi-plugins.lsm: SVN_SILENT: kipi-plugins 0.1.6 - beta1
+
+2008-05-25 20:31  anaselli
+
+    * ChangeLog: SVN_SILENT: kipi-plugins 0.1.6 - beta1
+
+2008-05-25 20:17  anaselli
+
+    * NEWS: SVN_SILENT: kipi-plugins 0.1.6 - beta1
+
 V 0.1.6-beta1 - 2008-05-25
 ----------------------------------------------------------------------------
 
