@@ -1,17 +1,16 @@
-v 0.1.6 - beta2
+v 0.1.6
 ---------------------------------------------------------------------------
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 162687 : FlickrExport       : Make Flickr Export screen non-modal.
-002 ==> 162683 : FlickrExport       : New: export to picassaweb doesn't works.
-003 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
-004 ==> 164152 : FlickrExport       : Geotagging when exporting to Flickr.
-005 ==> 166712 : PrintWizard        : Choosing the part which is cut off for printing only works for the first photo.
+002 ==> 162683 : FlickrExport       : Export to picassaweb doesn't works.
+003 ==> 164152 : FlickrExport       : Geotagging when exporting to Flickr.
+004 ==> 166712 : PrintWizard        : Choosing the part which is cut off for printing only works for the first photo.
+005 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
 006 ==> 150912 : PicasaWebExport    : Uploader does not upload.
 007 ==> 164908 : PicasaWebExport    : Private albums are not listed (and then not usable).
 008 ==> 150979 : PicasaWebExport    : Picasa Export-Plugins does not work.
-009 ==> 
 
 v 0.1.6 - beta1
 ---------------------------------------------------------------------------
