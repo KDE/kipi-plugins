@@ -49,7 +49,6 @@
 #include "galleryitem.h"
 #include "gallerympform.h"
 
-
 // self
 #include "gallerytalker.moc"
 

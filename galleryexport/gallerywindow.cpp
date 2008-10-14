@@ -30,12 +30,10 @@
 #include "gallerytalker.h"
 #include "galleryitem.h"
 #include "galleryconfig.h"
+#include "albumdlg.h"
 
 // KIPI include files
 #include <libkipi/interface.h>
-
-// UI includes
-#include "ui_galleryalbumwidget.h"
 
 // Qt includes
 #include <Qt>
@@ -64,8 +62,10 @@
 #include <ktoolinvocation.h>
 
 
-
 using namespace KIPIGalleryExportPlugin;
+
+
+// -------------------------------------------------------------------------------
 
 class GalleryWindow::Private
 {
@@ -86,7 +86,6 @@ private:
 
     friend class GalleryWindow;
 };
-
 
 
 GalleryWindow::Private::Private(GalleryWindow* parent)
@@ -161,8 +160,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     widget->setLayout(galleryWidgetLayout);
 }
 
-
-// --------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------------
 
 GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Gallery* pGallery)
         : KDialog(parent),
@@ -442,15 +440,21 @@ void GalleryWindow::slotAlbumSelected()
 
 void GalleryWindow::slotNewAlbum()
 {
-    QString text = QInputDialog::getText(this, i18n("Create New album"), i18n("Insert new album name") );
+    AlbumDlg *dlg = new AlbumDlg(d->widget);
+    dlg->titleEdit->setFocus();
+    if ( dlg->exec() != QDialog::Accepted )
+    {
+        return;
+    }
 
-    QString name  = text;
-    QString title  = text;
-    QString caption = text;
+    QString name = dlg->nameEdit->text();
+    QString title = dlg->titleEdit->text();
+    QString caption = dlg->captionEdit->text();
+    delete dlg;
 
     // check for prohibited chars in the album name
     // \ / * ? " ' & < > | . + # ( ) or spaces
-    // Todo: Change this to a QRegExp check.
+    // TODO: Change this to a QRegExp check.
     QChar ch;
     bool  clean = true;
     for (int i = 0; i < name.length(); ++i) {
@@ -639,9 +643,9 @@ void GalleryWindow::slotEnableSpinBox(int n)
         break;
     default:
         b = false;
-        break;
     }
     d->dimensionSpinBox->setEnabled(b);
 }
+
 
 #include "gallerywindow.moc"

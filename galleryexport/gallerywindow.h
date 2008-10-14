@@ -31,6 +31,7 @@
 #include <QList>
 #include <QProgressDialog>
 
+
 namespace KIPI
 {
 class Interface;
@@ -43,12 +44,10 @@ class KPAboutData;
 
 namespace KIPIGalleryExportPlugin
 {
-
 class Gallery;
 class GalleryTalker;
 class GAlbum;
 class GPhoto;
-
 
 class GalleryWindow : public KDialog
 {
