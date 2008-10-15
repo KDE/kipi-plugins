@@ -14,9 +14,25 @@ INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue
                    )
 
-ADD_DEFINITIONS(
-                -DUNIX_ENV=1
-               )
+# Set platteforms env.
+IF(WIN32)
+    ADD_DEFINITIONS(
+                    # Set Windows rules.
+                    -DWIN_ENV=1
+                   )
+ELSE(WIN32)
+    IF(APPLE)
+        ADD_DEFINITIONS(
+                        # Set MACOS-X rules.
+                        -DMAC_ENV=1
+                       )
+    ELSE(APPLE)
+        ADD_DEFINITIONS(
+                        # Set Linux & co rules.
+                        -DUNIX_ENV=1
+                       )
+    ENDIF(APPLE)
+ENDIF(WIN32)
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
@@ -89,21 +105,20 @@ ELSE(WIN32)
     ENDIF(APPLE)
 ENDIF(WIN32)
 
-# Check endianness
+# Check processor endianness
 INCLUDE(TestBigEndian)
 TEST_BIG_ENDIAN(IS_BIG_ENDIAN)
 IF(NOT IS_BIG_ENDIAN)
     ADD_DEFINITIONS(-DqDNGLittleEndian=1)
 ENDIF(NOT IS_BIG_ENDIAN)
 
-# Set other compilation flags.
-ADD_DEFINITIONS(
-                # Thread safe support: always enable.
-                -DqDNGThreadSafe=1
+# Thread safe support under Mac and Linux using pthread library
+IF(NOT WIN32)
+    ADD_DEFINITIONS(-DqDNGThreadSafe=1)
+ENDIF(NOT WIN32)
 
-                # Level of debug info in the console.
-                -DqDNGDebug=0
-               )
+# Level of debug info in the console.
+ADD_DEFINITIONS(-DqDNGDebug=0)
 
 SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_1d_function.cpp
