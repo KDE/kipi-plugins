@@ -16,8 +16,11 @@ SET(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp
                                       imageflip.cpp 
                                       actionthread.cpp
    )
-
+   
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
+if(WIN32)
+    set_target_properties( kipiplugin_jpeglossless PROPERTIES COMPILE_FLAGS -DJPEG_STATIC )
+endif(WIN32)
 
 TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless 
                       ${KDE4_KPARTS_LIBS} 
