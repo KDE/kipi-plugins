@@ -43,7 +43,7 @@ extern "C"
 
 // KDE includes.
 
-#include <k3process.h>
+#include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kdebug.h>
@@ -214,25 +214,24 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
 bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err)
 {
-    K3Process process;
-    process.clearArguments();
+    KProcess process;
+    process.clearProgram();
     process << "convert";
     process << "-verbose";
     process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.program() << endl;
 
-    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotReadStderr(K3Process*, char*, int)));
+    process.start();
 
-    if (!process.start(K3Process::Block, K3Process::Stderr))
+    if (!process.waitForFinished())
         return false;
 
-    if (!process.normalExit())
+    if (process.exitStatus() != QProcess::NormalExit)
         return false;
 
-    switch (process.exitStatus())
+    switch (process.exitCode())
     {
         case 0:  // Process finished successfully !
         {
@@ -247,13 +246,9 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     }
 
     // Processing error !
-    err = i18n("Cannot convert to gray scale: %1",m_stdErr.replace('\n', ' '));
+    m_stdErr = process.readAllStandardError();
+    err      = i18n("Cannot convert to gray scale: %1", m_stdErr.replace('\n', ' '));
     return false;
-}
-
-void ImageGrayScale::slotReadStderr(K3Process*, char* buffer, int buflen)
-{
-    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin

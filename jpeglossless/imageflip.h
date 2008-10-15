@@ -55,7 +55,6 @@ public:
 private:
 
     bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
-
     bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
 
 private:

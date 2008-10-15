@@ -91,7 +91,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
     {
         err = i18n("Cannot rotate RAW file");
         return false;
-    }    
+    }
     else if (Utils::isJPEG(src))
     {
         if (!flipJPEG(src, tmp, action, err))
