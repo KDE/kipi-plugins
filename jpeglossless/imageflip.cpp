@@ -6,7 +6,7 @@
  * Date        : 2003-10-14
  * Description : batch image flip
  *
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -43,7 +43,7 @@ extern "C"
 
 // KDE includes.
 
-#include <k3process.h>
+#include <kprocess.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -149,10 +149,10 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
 
 bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
-    K3Process process;
-    process.clearArguments();
+    KProcess process;
+    process.clearProgram();
     process << "convert";
-    process << "-verbose";     
+    process << "-verbose";
 
     switch(action)
     {
@@ -176,18 +176,17 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.program() << endl;
 
-    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotReadStderr(K3Process*, char*, int)));
+    process.start();
 
-    if (!process.start(K3Process::Block, K3Process::Stderr))
+    if (!process.waitForFinished())
         return false;
 
-    if (!process.normalExit())
+    if (process.exitStatus() != QProcess::NormalExit)
         return false;
 
-    switch (process.exitStatus())
+    switch (process.exitCode())
     {
         case 0:  // Process finished successfully !
         {
@@ -202,13 +201,9 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     }
 
     // Processing error !
-    err = i18n("Cannot flip: %1",m_stdErr.replace('\n', ' '));
+    m_stdErr = process.readAllStandardError();
+    err      = i18n("Cannot flip: %1", m_stdErr.replace('\n', ' '));
     return false;
-}
-
-void ImageFlip::slotReadStderr(K3Process*, char* buffer, int buflen)
-{
-    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
 
 }  // NameSpace KIPIJPEGLossLessPlugin
