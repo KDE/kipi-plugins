@@ -266,11 +266,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     ADD_SUBDIRECTORY(common)
     ADD_SUBDIRECTORY(timeadjust)
-    
-    IF(NOT WIN32)
-		ADD_SUBDIRECTORY(jpeglossless) #contains k3process.h
-    ENDIF(NOT WIN32)
-
+    ADD_SUBDIRECTORY(jpeglossless) #contains k3process.h
     ADD_SUBDIRECTORY(rawconverter)
     ADD_SUBDIRECTORY(metadataedit)
     ADD_SUBDIRECTORY(sendimages)
