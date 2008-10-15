@@ -24,7 +24,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <utime.h>
 #include <unistd.h>
@@ -42,7 +42,7 @@ extern "C"
 
 // KDE includes.
 
-#include <k3process.h>
+#include <kprocess.h>
 #include <kdebug.h>
 #include <ktemporaryfile.h>
 #include <klocale.h>
@@ -143,8 +143,8 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     streamXmp.writeRawData(xmpData.data(), xmpData.size());
     xmpTemp.close();
 
-    K3Process process;
-    process.clearArguments();
+    KProcess process;
+    process.clearProgram();
     process << "mogrify";
     process << "-verbose";
 
@@ -159,18 +159,17 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 
     process << src + QString("[0]");
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.args() << endl;
+    kDebug( 51000 ) << "ImageMagick Command line: " << process.program() << endl;
 
-    connect(&process, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotReadStderr(K3Process*, char*, int)));
+    process.start();
 
-    if (!process.start(K3Process::Block, K3Process::Stderr))
+    if (!process.waitForFinished())
         return false;
 
-    if (!process.normalExit())
+    if (process.exitStatus() != QProcess::NormalExit)
         return false;
 
-    switch (process.exitStatus())
+    switch (process.exitCode())
     {
         case 0:  // Process finished successfully !
         {
@@ -185,13 +184,9 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     }
 
     // Processing error !
-    err = i18n("Cannot update metadata: %1",m_stdErr.replace('\n', ' '));
+    m_stdErr = process.readAllStandardError();
+    err      = i18n("Cannot update metadata: %1", m_stdErr.replace('\n', ' '));
     return false;
-}
-
-void Utils::slotReadStderr(K3Process*, char* buffer, int buflen)
-{
-    m_stdErr.append(QString::fromLocal8Bit(buffer, buflen));
 }
 
 bool Utils::isJPEG(const QString& file)
