@@ -73,14 +73,6 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     connect(m_action, SIGNAL(triggered(bool)), this, SLOT(slotSync()));
     m_action->setEnabled(true);
     addAction(m_action);
-
-
-//     m_action_configure = new KAction(i18n("remote-galleries-setting"), this);
-//     m_action_configure->setText(i18n("Remote Gallery Setting..."));
-//     m_action_configure->setIcon(KIcon("applications-system"));
-//     connect(m_action_configure, SIGNAL(triggered(bool)), this, SLOT(slotConfigure()));
-//     m_action_configure->setEnabled(true);
-//     addAction(m_action_configure);
 }
 
 
@@ -108,19 +100,6 @@ void Plugin_GalleryExport::slotSync()
     KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpGallery);
     dlg.exec();
 }
-
-// // this slot uses GalleryConfig Class
-// void Plugin_GalleryExport::slotConfigure()
-// {
-//     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-//     if (!interface) {
-//         kError(51000) << "Kipi interface is null!" << endl;
-//         return;
-//     }
-// 
-//     KIPIGalleryExportPlugin::GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
-//     dlg.exec();
-// }
 
 
 KIPI::Category Plugin_GalleryExport::category(KAction* action) const

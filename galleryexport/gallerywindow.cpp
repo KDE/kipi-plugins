@@ -341,12 +341,17 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
     if (KMessageBox::warningYesNo(this,
                                   i18n("Failed to login into remote gallery. ")
                                   + msg
-                                  + i18n("\nDo you want to try again?"))
+                                  + i18n("\nDo you want to check your settings and try again?"))
             != KMessageBox::Yes) {
         close();
         return;
     }
 
+    GalleryEdit configDlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    if ( configDlg.exec() != QDialog::Accepted )
+    {
+        return;
+    }
     slotDoLogin();
 }
 
