@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>299</height>
+    <width>212</width>
+    <height>177</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" >
@@ -140,6 +140,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

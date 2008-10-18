@@ -81,6 +81,7 @@ private slots:
     void slotAddPhotoCancel();
     void slotHelp();
     void slotEnableSpinBox(int n);
+    void slotSettings();
 
 private:
 

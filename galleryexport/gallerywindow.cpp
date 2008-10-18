@@ -76,7 +76,6 @@ private:
     QTreeWidget *albumView;
     QPushButton *newAlbumBtn;
     QPushButton *addPhotoBtn;
-    QPushButton *helpButton;
     QCheckBox *captTitleCheckBox;
     QCheckBox *captDescrCheckBox;
     QCheckBox *resizeCheckBox;
@@ -169,7 +168,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
         d(new Private(this))
 {
     setWindowTitle( i18n("Gallery Export") );
-    setButtons( KDialog::Close | KDialog::Help);
+    setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
 
     // About data.
@@ -198,6 +197,12 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     helpButton->setDelayedMenu( helpMenu->menu() );
+
+    // User1 Button : to conf gallery settings
+    KPushButton *confButton = button( User1 );
+    confButton->setText( i18n("settings") );
+    confButton->setIcon( KIcon("applications-system") );
+    connect(confButton, SIGNAL(clicked()), this, SLOT(slotSettings() ) ); 
 
     // we need to let m_talker work..
     m_talker = new GalleryTalker(d->widget);
@@ -645,6 +650,12 @@ void GalleryWindow::slotEnableSpinBox(int n)
         b = false;
     }
     d->dimensionSpinBox->setEnabled(b);
+}
+
+void GalleryWindow::slotSettings()
+{
+    GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    dlg.exec();
 }
 
 

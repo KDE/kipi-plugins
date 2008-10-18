@@ -55,13 +55,12 @@ public:
 
 public slots:
 
+
     void slotSync();
-    void slotConfigure();
 
 private:
 
-    KAction *m_action_sync;
-    KAction *m_action_configure;
+    KAction *m_action;
 
     KIPIGalleryExportPlugin::Gallery* mpGallery;
 };
