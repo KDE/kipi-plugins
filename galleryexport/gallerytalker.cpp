@@ -331,18 +331,26 @@ void GalleryTalker::slotResult(KJob *job)
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
 
-        QRegExp rx("^GALLERYSID=.+");
-        QString str, app;
-        foreach(str, cookielist)
+
+        if(!cookielist.isEmpty())
         {
-            if(str.contains("Set-Cookie: "))
+            QRegExp rx("^GALLERYSID=.+");
+            QString str, app;
+            foreach(str, cookielist)
             {
-                QStringList cl = str.split(" ");
-                int n = cl.lastIndexOf(rx);
-                app = cl.at(n);
+                if(str.contains("Set-Cookie: "))
+                {
+                    QStringList cl = str.split(" ");
+                    int n = cl.lastIndexOf(rx);
+                    if(n!= -1) 
+                    {
+                        app = cl.at(n);
+                    }
+                }
             }
+            m_cookie += app;
         }
-        m_cookie += app;
+
         tempjob->kill();
         listAlbums();
     }
