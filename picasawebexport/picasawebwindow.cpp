@@ -23,24 +23,23 @@
 
 // Qt includes.
 
+#include <Q3ValueList>
+#include <q3progressdialog.h>
 #include <q3listview.h>
+#include <q3datetimeedit.h>
+#include <q3textedit.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qcursor.h>
 #include <qlineedit.h>
-#include <q3progressdialog.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qradiobutton.h>
-#include <q3datetimeedit.h>
 #include <qdatetime.h>
-#include <q3textedit.h>
 #include <qlinkedlist.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 // KDE includes.
 
@@ -65,8 +64,8 @@
 #include <ktoolinvocation.h>
 
 // Local includes.
-#include "imagedialog.h"
 
+#include "imagedialog.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "picasawebtalker.h"
