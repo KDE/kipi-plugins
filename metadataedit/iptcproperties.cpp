@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -43,14 +43,13 @@
 #include <kseparator.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
 
 #include "pluginsversion.h"
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "objectattributesedit.h"
 #include "iptcproperties.h"
@@ -201,7 +200,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->objectCycleCB->insertItem(1, i18n("Afternoon"));
     d->objectCycleCB->insertItem(2, i18n("Evening"));
     d->objectCycleCB->setWhatsThis(i18n("<p>Select here the editorial cycle of content."));
-      
+
     // --------------------------------------------------------
 
     d->objectTypeCheck    = new MetadataCheckBox(i18n("Type:"), this);
@@ -258,8 +257,8 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 9, 0, 1, 5);
     grid->addWidget(d->objectAttribute, 10, 0, 1, 5);
     grid->addWidget(note, 11, 0, 1, 5);
-    grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(12, 10);                     
+    grid->setColumnStretch(3, 10);
+    grid->setRowStretch(12, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -397,7 +396,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->dateReleasedCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
+    if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
@@ -405,12 +404,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->dateReleasedSel->setDate(date);
             d->dateReleasedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateReleasedSel->setEnabled(d->dateReleasedCheck->isChecked());
 
     d->timeReleasedSel->setTime(QTime::currentTime());
     d->timeReleasedCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
+    if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
@@ -418,7 +417,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->timeReleasedSel->setTime(time);
             d->timeReleasedCheck->setChecked(true);
         }
-    }    
+    }
     d->timeReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
 
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ExpirationDate", false);
@@ -426,7 +425,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->dateExpiredCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
+    if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
@@ -434,12 +433,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->dateExpiredSel->setDate(date);
             d->dateExpiredCheck->setChecked(true);
         }
-    }    
+    }
     d->dateExpiredSel->setEnabled(d->dateExpiredCheck->isChecked());
 
     d->timeExpiredSel->setTime(QTime::currentTime());
     d->timeExpiredCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
+    if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
@@ -447,11 +446,11 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->timeExpiredSel->setTime(time);
             d->timeExpiredCheck->setChecked(true);
         }
-    }   
+    }
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
 
     d->languageCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Language", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Language", false);
     if (!data.isNull())
     {
         if (d->languageBtn->contains(data))
@@ -463,13 +462,13 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->languageCheck->setValid(false);
     }
     d->languageBtn->setEnabled(d->languageCheck->isChecked());
-    
+
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);
     if (!data.isNull())
     {
-        val = data.toInt(); 
+        val = data.toInt();
         if (val >= 0 && val <= 8)
         {
             d->priorityCB->setCurrentIndex(val);
@@ -482,7 +481,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->objectCycleCB->setCurrentIndex(0);
     d->objectCycleCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);
     if (!data.isNull())
     {
         if (data == QString("a"))
@@ -500,7 +499,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
             d->objectCycleCB->setCurrentIndex(2);
             d->objectCycleCheck->setChecked(true);
         }
-        else 
+        else
             d->objectCycleCheck->setValid(false);
     }
     d->objectCycleCB->setEnabled(d->objectCycleCheck->isChecked());
@@ -508,7 +507,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setCurrentIndex(0);
     d->objectTypeDescEdit->clear();
     d->objectTypeCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);
     if (!data.isNull())
     {
         QString typeSec = data.section(":", 0, 0);
@@ -528,7 +527,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);    
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);
     d->objectAttribute->setValues(list);
 
     blockSignals(false);
@@ -580,11 +579,11 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
             case(0):
                 exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("a"));
                 break;
-                
+
             case(1):
                 exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("b"));
                 break;
-        
+
             case(2):
                 exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("c"));
                 break;

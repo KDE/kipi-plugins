@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -40,20 +40,25 @@
 #include <ktextedit.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
 
 // Local includes.
 
 #include "pluginsversion.h"
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "multivaluesedit.h"
 #include "altlangstringedit.h"
 #include "objectattributesedit.h"
 #include "xmpproperties.h"
 #include "xmpproperties.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -115,7 +120,7 @@ public:
         typeCodeMap.insert( "TopicSet",           i18n("Topic Set") );
     }
 
-    typedef QMap<QString, QString>  SceneCodeMap; 
+    typedef QMap<QString, QString>  SceneCodeMap;
     typedef QMap<QString, QString>  TypeCodeMap;
 
     SceneCodeMap                    sceneCodeMap;
@@ -131,11 +136,11 @@ public:
     MetadataCheckBox               *priorityCheck;
     MetadataCheckBox               *languageCheck;
     MetadataCheckBox               *objectAttributeCheck;
- 
+
     MultiValuesEdit                *sceneEdit;
     MultiValuesEdit                *objectTypeEdit;
 
-    KIPIPlugins::SqueezedComboBox  *objectAttributeCB;
+    SqueezedComboBox               *objectAttributeCB;
 };
 
 XMPProperties::XMPProperties(QWidget* parent)
@@ -178,32 +183,32 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sceneEdit = new MultiValuesEdit(this, i18n("Scene:"), 
+    d->sceneEdit = new MultiValuesEdit(this, i18n("Scene:"),
                        i18n("<p>Select here the scene type of content."));
- 
+
     QStringList list2;
     for (XMPPropertiesPriv::SceneCodeMap::Iterator it = d->sceneCodeMap.begin();
          it != d->sceneCodeMap.end(); ++it)
         list2.append(QString("%1 - %2").arg(it.key()).arg(it.value()));
- 
+
     d->sceneEdit->setData(list2);
 
     // --------------------------------------------------------
 
-    d->objectTypeEdit = new MultiValuesEdit(this, i18n("Type:"), 
+    d->objectTypeEdit = new MultiValuesEdit(this, i18n("Type:"),
                             i18n("<p>Select here the editorial type of content."));
 
     QStringList list3;
     for (XMPPropertiesPriv::TypeCodeMap::Iterator it = d->typeCodeMap.begin();
          it != d->typeCodeMap.end(); ++it)
         list3.append(it.value());
- 
+
     d->objectTypeEdit->setData(list3);
 
     // --------------------------------------------------------
 
     d->objectAttributeCheck = new MetadataCheckBox(i18n("Attribute:"), this);
-    d->objectAttributeCB    = new KIPIPlugins::SqueezedComboBox(this);
+    d->objectAttributeCB    = new SqueezedComboBox(this);
     d->objectAttributeEdit  = new KLineEdit(this);
     d->objectAttributeEdit->setClearButtonShown(true);
     d->objectAttributeEdit->setWhatsThis(i18n("<p><p>Set here the editorial attribute description of content."));
@@ -244,8 +249,8 @@ XMPProperties::XMPProperties(QWidget* parent)
     grid->addWidget(d->objectAttributeCheck, 5, 0, 1, 1);
     grid->addWidget(d->objectAttributeCB, 5, 1, 1, 2);
     grid->addWidget(d->objectAttributeEdit, 5, 3, 1, 2);
-    grid->setRowStretch(6, 10);                     
-    grid->setColumnStretch(4, 10);                     
+    grid->setRowStretch(6, 10);
+    grid->setColumnStretch(4, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -310,10 +315,10 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     QString     data;
     QStringList code, list, list2;
     QString     dateStr, timeStr;
-    KExiv2Iface::KExiv2::AltLangMap map;   
+    KExiv2Iface::KExiv2::AltLangMap map;
 
     d->languageCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.dc.language", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.dc.language", false);
     if (!data.isNull())
     {
         if (d->languageBtn->contains(data))
@@ -325,13 +330,13 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
             d->languageCheck->setValid(false);
     }
     d->languageBtn->setEnabled(d->languageCheck->isChecked());
-    
+
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Urgency", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Urgency", false);
     if (!data.isNull())
     {
-        val = data.toInt(); 
+        val = data.toInt();
         if (val >= 0 && val <= 8)
         {
             d->priorityCB->setCurrentIndex(val);
@@ -347,7 +352,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     {
         QStringList data = d->sceneEdit->getData();
         QStringList::Iterator it2;
-        for (it2 = data.begin(); it2 != data.end(); ++it2)        
+        for (it2 = data.begin(); it2 != data.end(); ++it2)
         {
             if ((*it2).left(6) == (*it))
             {
@@ -355,7 +360,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
                 break;
             }
         }
-        if (it2 == data.end())  
+        if (it2 == data.end())
             d->sceneEdit->setValid(false);
     }
     d->sceneEdit->setValues(list);
@@ -365,7 +370,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     {
         QStringList data = d->objectTypeEdit->getData();
         QStringList::Iterator it4;
-        for (it4 = data.begin(); it4 != data.end(); ++it4)        
+        for (it4 = data.begin(); it4 != data.end(); ++it4)
         {
             if ((*it4) == (*it3))
             {
@@ -373,7 +378,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
                 break;
             }
         }
-        if (it4 == data.end())  
+        if (it4 == data.end())
             d->objectTypeEdit->setValid(false);
     }
     d->objectTypeEdit->setValues(list2);
@@ -381,7 +386,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     d->objectAttributeCB->setCurrentIndex(0);
     d->objectAttributeEdit->clear();
     d->objectAttributeCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.IntellectualGenre", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.IntellectualGenre", false);
     if (!data.isNull())
     {
         QString attrSec = data.section(":", 0, 0);

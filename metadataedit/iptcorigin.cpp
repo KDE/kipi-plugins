@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -43,17 +43,22 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
+
 // Local includes.
 
-#include "squeezedcombobox.h"
 #include "multivaluesedit.h"
 #include "metadatacheckbox.h"
 #include "iptcorigin.h"
 #include "iptcorigin.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -87,8 +92,8 @@ public:
         setTodayCreatedBtn     = 0;
         setTodayDigitalizedBtn = 0;
 
-        // We cannot use KLocale::allCountriesList() here because KDE only 
-        // support 2 characters country codes. IPTC require 3 characters country 
+        // We cannot use KLocale::allCountriesList() here because KDE only
+        // support 2 characters country codes. IPTC require 3 characters country
         // following ISO 3166 (http://userpage.chemie.fu-berlin.de/diverse/doc/ISO_3166.html)
 
         // Standard ISO 3166 country codes.
@@ -350,7 +355,7 @@ public:
         countryCodeMap.insert( "JRO", i18n("Jericho") );
     }
 
-    typedef QMap<QString, QString> CountryCodeMap; 
+    typedef QMap<QString, QString> CountryCodeMap;
 
     CountryCodeMap                 countryCodeMap;
 
@@ -383,7 +388,7 @@ public:
 
     MetadataCheckBox              *countryCheck;
 
-    KIPIPlugins::SqueezedComboBox *countryCB;
+    SqueezedComboBox              *countryCB;
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent)
@@ -422,7 +427,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->dateCreatedSel     = new KDateWidget(this);
     d->timeCreatedSel     = new QTimeEdit(this);
     d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
-                                               KGlobal::mainComponent().aboutData()->programName()), 
+                                               KGlobal::mainComponent().aboutData()->programName()),
                                                this);
     d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
 
@@ -439,14 +444,14 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->locationEdit = new MultiValuesEdit(this, i18n("Location:"), 
+    d->locationEdit = new MultiValuesEdit(this, i18n("Location:"),
                           i18n("<p>Set here the full country name referenced by the content."));
- 
+
     QStringList list;
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
          it != d->countryCodeMap.end(); ++it)
         list.append(QString("%1 - %2").arg(it.key()).arg(it.value()));
- 
+
     d->locationEdit->setData(list);
 
     // --------------------------------------------------------
@@ -482,7 +487,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     // --------------------------------------------------------
 
     d->countryCheck = new MetadataCheckBox(i18n("Country:"), this);
-    d->countryCB    = new KIPIPlugins::SqueezedComboBox(this);
+    d->countryCB    = new SqueezedComboBox(this);
 
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
          it != d->countryCodeMap.end(); ++it)
@@ -541,10 +546,10 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     grid->addWidget(d->originalTransCheck, 13, 0, 1, 1);
     grid->addWidget(d->originalTransEdit, 13, 1, 1, 4);
     grid->addWidget(note, 14, 0, 1, 5);
-    grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(15, 10);  
+    grid->setColumnStretch(3, 10);
+    grid->setRowStretch(15, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());                    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -700,7 +705,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
- 
+
     QString     data;
     QStringList code, list;
     QDate       date;
@@ -712,7 +717,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->dateCreatedSel->setDate(QDate::currentDate());
     d->dateCreatedCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
+    if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
@@ -720,14 +725,14 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
             d->dateCreatedSel->setDate(date);
             d->dateCreatedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
 
     d->timeCreatedSel->setTime(QTime::currentTime());
     d->timeCreatedCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
+    if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
@@ -735,7 +740,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
             d->timeCreatedSel->setTime(time);
             d->timeCreatedCheck->setChecked(true);
         }
-    }    
+    }
     d->timeCreatedSel->setEnabled(d->timeCreatedCheck->isChecked());
 
     dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.DigitizationDate", false);
@@ -743,7 +748,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->dateDigitalizedSel->setDate(QDate::currentDate());
     d->dateDigitalizedCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
+    if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
@@ -751,12 +756,12 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
             d->dateDigitalizedSel->setDate(date);
             d->dateDigitalizedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
     d->timeDigitalizedSel->setTime(QTime::currentTime());
     d->timeDigitalizedCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
+    if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
@@ -764,7 +769,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
             d->timeDigitalizedSel->setTime(time);
             d->timeDigitalizedCheck->setChecked(true);
         }
-    }   
+    }
     d->timeDigitalizedSel->setEnabled(d->timeDigitalizedCheck->isChecked());
 
 
@@ -773,7 +778,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     {
         QStringList data = d->locationEdit->getData();
         QStringList::Iterator it2;
-        for (it2 = data.begin(); it2 != data.end(); ++it2)        
+        for (it2 = data.begin(); it2 != data.end(); ++it2)
         {
             if ((*it2).left(3) == (*it))
             {
@@ -781,14 +786,14 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
                 break;
             }
         }
-        if (it2 == data.end())  
+        if (it2 == data.end())
             d->locationEdit->setValid(false);
     }
     d->locationEdit->setValues(list);
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.City", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.City", false);
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
@@ -798,7 +803,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->sublocationEdit->clear();
     d->sublocationCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.SubLocation", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.SubLocation", false);
     if (!data.isNull())
     {
         d->sublocationEdit->setText(data);
@@ -808,7 +813,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->provinceEdit->clear();
     d->provinceCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ProvinceState", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ProvinceState", false);
     if (!data.isNull())
     {
         d->provinceEdit->setText(data);
@@ -818,7 +823,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.CountryCode", false);
     if (!data.isNull())
     {
         int item = -1;
@@ -838,7 +843,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
 
     d->originalTransEdit->clear();
     d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);
     if (!data.isNull())
     {
         d->originalTransEdit->setText(data);

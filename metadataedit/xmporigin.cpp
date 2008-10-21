@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -43,16 +43,21 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
+
 // Local includes.
 
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "xmporigin.h"
 #include "xmporigin.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -81,8 +86,8 @@ public:
         setTodayCreatedBtn     = 0;
         setTodayDigitalizedBtn = 0;
 
-        // We cannot use KLocale::allCountriesList() here because KDE only 
-        // support 2 characters country codes. XMP require 3 characters country 
+        // We cannot use KLocale::allCountriesList() here because KDE only
+        // support 2 characters country codes. XMP require 3 characters country
         // following ISO 3166 (http://userpage.chemie.fu-berlin.de/diverse/doc/ISO_3166.html)
 
         // Standard ISO 3166 country codes.
@@ -344,7 +349,7 @@ public:
         countryCodeMap.insert( "JRO", i18n("Jericho") );
     }
 
-    typedef QMap<QString, QString> CountryCodeMap; 
+    typedef QMap<QString, QString> CountryCodeMap;
 
     CountryCodeMap                 countryCodeMap;
 
@@ -370,7 +375,7 @@ public:
 
     MetadataCheckBox              *countryCheck;
 
-    KIPIPlugins::SqueezedComboBox *countryCB;
+    SqueezedComboBox              *countryCB;
 };
 
 XMPOrigin::XMPOrigin(QWidget* parent)
@@ -399,7 +404,7 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     d->dateCreatedCheck   = new QCheckBox(i18n("Creation date"), this);
     d->dateCreatedSel     = new KDateTimeWidget(this);
     d->syncHOSTDateCheck  = new QCheckBox(i18n("Sync creation date hosted by %1",
-                                               KGlobal::mainComponent().aboutData()->programName()), 
+                                               KGlobal::mainComponent().aboutData()->programName()),
                                                this);
     d->syncEXIFDateCheck  = new QCheckBox(i18n("Sync EXIF creation date"), this);
 
@@ -436,7 +441,7 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     // --------------------------------------------------------
 
     d->countryCheck = new MetadataCheckBox(i18n("Country:"), this);
-    d->countryCB    = new KIPIPlugins::SqueezedComboBox(this);
+    d->countryCB    = new SqueezedComboBox(this);
 
     for (XMPOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
          it != d->countryCodeMap.end(); ++it)
@@ -475,10 +480,10 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     grid->addWidget(new KSeparator(Qt::Horizontal, this), 11, 0, 1, 5);
     grid->addWidget(d->originalTransCheck, 12, 0, 1, 1);
     grid->addWidget(d->originalTransEdit, 12, 1, 1, 4);
-    grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(13, 10);  
+    grid->setColumnStretch(3, 10);
+    grid->setRowStretch(13, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());                    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -611,7 +616,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
- 
+
     QString     data;
     QStringList code, list;
     QDateTime   dateTime;
@@ -635,7 +640,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
-    if (!dateTimeStr.isEmpty()) 
+    if (!dateTimeStr.isEmpty())
     {
         dateTime = QDateTime::fromString(dateTimeStr, Qt::ISODate);
         if (dateTime.isValid())
@@ -643,7 +648,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
             d->dateCreatedSel->setDateTime(dateTime);
             d->dateCreatedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
@@ -652,7 +657,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
-    if (!dateTimeStr.isEmpty()) 
+    if (!dateTimeStr.isEmpty())
     {
         dateTime = QDateTime::fromString(dateTimeStr, Qt::ISODate);
         if (dateTime.isValid())
@@ -660,12 +665,12 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
             d->dateDigitalizedSel->setDateTime(dateTime);
             d->dateDigitalizedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.City", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.City", false);
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
@@ -675,7 +680,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->sublocationEdit->clear();
     d->sublocationCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.Location", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.Location", false);
     if (!data.isNull())
     {
         d->sublocationEdit->setText(data);
@@ -685,7 +690,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->provinceEdit->clear();
     d->provinceCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.State", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.State", false);
     if (!data.isNull())
     {
         d->provinceEdit->setText(data);
@@ -695,7 +700,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CountryCode", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CountryCode", false);
     if (!data.isNull())
     {
         int item = -1;
@@ -715,7 +720,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->originalTransEdit->clear();
     d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.TransmissionReference", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.TransmissionReference", false);
     if (!data.isNull())
     {
         d->originalTransEdit->setText(data);

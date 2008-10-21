@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-10-08
- * Description : a widget to edit Application2 ObjectAttribute 
+ * Description : a widget to edit Application2 ObjectAttribute
  *               Iptc tag.
  *
  * Copyright (C) 2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -38,16 +38,21 @@
 #include <kiconloader.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
+
 // Local includes.
 
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "objectattributesedit.h"
 #include "objectattributesedit.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -78,8 +83,8 @@ public:
     KListWidget                   *valueBox;
 
     MetadataCheckBox              *valueCheck;
- 
-    KIPIPlugins::SqueezedComboBox *dataList;
+
+    SqueezedComboBox              *dataList;
 };
 
 ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size)
@@ -95,7 +100,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
 
     // --------------------------------------------------------
 
-    d->valueCheck = new MetadataCheckBox(i18n("Attribute:"), this);    
+    d->valueCheck = new MetadataCheckBox(i18n("Attribute:"), this);
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -115,7 +120,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
 
     // --------------------------------------------------------
 
-    d->dataList = new KIPIPlugins::SqueezedComboBox(this);
+    d->dataList = new SqueezedComboBox(this);
     d->dataList->model()->sort(0);
     d->dataList->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
     d->dataList->addSqueezedItem(QString("001 - ") + i18n("Current"));
@@ -166,7 +171,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
     }
 
     d->valueEdit->setWhatsThis(whatsThis);
-    
+
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
@@ -177,20 +182,20 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
     grid->addWidget(d->valueBox, 0, 4, 4, 1);
     grid->addWidget(d->dataList, 1, 0, 1, 4);
     grid->addWidget(d->valueEdit, 2, 0, 1, 4);
-    grid->setRowStretch(3, 10);                     
-    grid->setColumnStretch(0, 10);                     
-    grid->setColumnStretch(4, 100);                     
+    grid->setRowStretch(3, 10);
+    grid->setColumnStretch(0, 10);
+    grid->setColumnStretch(4, 100);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->valueBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSelectionChanged()));
-    
+
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SLOT(slotAddValue()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SLOT(slotDeleteValue()));
 
@@ -224,7 +229,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
 
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -283,7 +288,7 @@ void ObjectAttributesEdit::slotAddValue()
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
-        if (newValue == item->text()) 
+        if (newValue == item->text())
         {
             found = true;
             break;
@@ -328,14 +333,14 @@ bool ObjectAttributesEdit::getValues(QStringList& oldValues, QStringList& newVal
     return d->valueCheck->isChecked();
 }
 
-void ObjectAttributesEdit::setValid(bool v) 
+void ObjectAttributesEdit::setValid(bool v)
 {
-    d->valueCheck->setValid(v); 
+    d->valueCheck->setValid(v);
 }
 
-bool ObjectAttributesEdit::isValid() const 
+bool ObjectAttributesEdit::isValid() const
 {
-    return d->valueCheck->isValid(); 
+    return d->valueCheck->isValid();
 }
 
 }  // namespace KIPIMetadataEditPlugin

@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -36,16 +36,21 @@
 #include <klistwidget.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
+
 // Local includes.
 
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "multivaluesedit.h"
 #include "multivaluesedit.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -73,8 +78,8 @@ public:
     KListWidget                   *valueBox;
 
     MetadataCheckBox              *valueCheck;
- 
-    KIPIPlugins::SqueezedComboBox *dataList;
+
+    SqueezedComboBox              *dataList;
 };
 
 MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QString& desc)
@@ -86,7 +91,7 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
 
     // --------------------------------------------------------
 
-    d->valueCheck = new MetadataCheckBox(title, this);    
+    d->valueCheck = new MetadataCheckBox(title, this);
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -104,33 +109,33 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     d->valueBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored);
     d->valueBox->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    d->dataList = new KIPIPlugins::SqueezedComboBox(this);
+    d->dataList = new SqueezedComboBox(this);
     d->dataList->model()->sort(0);
     d->dataList->setWhatsThis(desc);
-    
+
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->valueCheck, 0, 0, 1, 1 );
-    grid->addWidget(d->addValueButton, 0, 1, 1, 1);
-    grid->addWidget(d->delValueButton, 0, 2, 1, 1);
-    grid->addWidget(d->repValueButton, 0, 3, 1, 1);
-    grid->addWidget(d->valueBox, 0, 4, 3, 1);
-    grid->addWidget(d->dataList, 2, 0, 1, 4);
-    grid->setRowStretch(1, 10);                     
-    grid->setColumnStretch(0, 10);                     
-    grid->setColumnStretch(4, 100);                     
+    grid->addWidget(d->valueCheck,      0, 0, 1, 1 );
+    grid->addWidget(d->addValueButton,  0, 1, 1, 1);
+    grid->addWidget(d->delValueButton,  0, 2, 1, 1);
+    grid->addWidget(d->repValueButton,  0, 3, 1, 1);
+    grid->addWidget(d->valueBox,        0, 4, 3, 1);
+    grid->addWidget(d->dataList,        2, 0, 1, 4);
+    grid->setRowStretch(1, 10);
+    grid->setColumnStretch(0, 10);
+    grid->setColumnStretch(4, 100);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->valueBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSelectionChanged()));
-    
+
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SLOT(slotAddValue()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SLOT(slotDeleteValue()));
 
@@ -161,7 +166,7 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
 
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -215,7 +220,7 @@ void MultiValuesEdit::slotAddValue()
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
-        if (newValue == item->text()) 
+        if (newValue == item->text())
         {
             found = true;
             break;
@@ -277,14 +282,14 @@ bool MultiValuesEdit::getValues(QStringList& oldValues, QStringList& newValues)
     return d->valueCheck->isChecked();
 }
 
-void MultiValuesEdit::setValid(bool v) 
+void MultiValuesEdit::setValid(bool v)
 {
-    d->valueCheck->setValid(v); 
+    d->valueCheck->setValid(v);
 }
 
-bool MultiValuesEdit::isValid() const 
+bool MultiValuesEdit::isValid() const
 {
-    return d->valueCheck->isValid(); 
+    return d->valueCheck->isValid();
 }
 
 }  // namespace KIPIMetadataEditPlugin

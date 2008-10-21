@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -40,17 +40,22 @@
 #include <kdatewidget.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
 
 // Local includes.
 
 #include "pluginsversion.h"
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "iptcenvelope.h"
 #include "iptcenvelope.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -82,7 +87,7 @@ public:
         formatCheck      = 0;
 
         // Map : "file format - version"  ==> description
-                  
+
         fileFormatMap.insert( "00-00", i18n("No ObjectData") );
         fileFormatMap.insert( "01-01", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 1)") );
         fileFormatMap.insert( "01-02", i18n("IPTC-NAA Digital Newsphoto Parameter Record (version 2)") );
@@ -122,7 +127,7 @@ public:
         fileFormatMap.insert( "29-01", i18n("Corel Draw [*.CDR]") );
     }
 
-    typedef QMap<QString, QString> FileFormatMap; 
+    typedef QMap<QString, QString> FileFormatMap;
 
     FileFormatMap                  fileFormatMap;
 
@@ -152,7 +157,7 @@ public:
     MetadataCheckBox              *priorityCheck;
     MetadataCheckBox              *formatCheck;
 
-    KIPIPlugins::SqueezedComboBox *formatCB;
+    SqueezedComboBox              *formatCB;
 };
 
 IPTCEnvelope::IPTCEnvelope(QWidget* parent)
@@ -233,7 +238,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     // --------------------------------------------------------
 
     d->formatCheck = new MetadataCheckBox(i18n("Format:"), this);
-    d->formatCB    = new KIPIPlugins::SqueezedComboBox(this);
+    d->formatCB    = new SqueezedComboBox(this);
 
     int index = 0;
     for (IPTCEnvelopePriv::FileFormatMap::Iterator it = d->fileFormatMap.begin();
@@ -295,8 +300,8 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     grid->addWidget(d->timeSentSel, 9, 2, 1, 1);
     grid->addWidget(d->setTodaySentBtn, 9, 4, 1, 1);
     grid->addWidget(note, 10, 0, 1, 5);
-    grid->setColumnStretch(3, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->setColumnStretch(3, 10);
+    grid->setRowStretch(11, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -419,7 +424,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->destinationEdit->clear();
     d->destinationCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.Destination", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.Destination", false);
     if (!data.isNull())
     {
         d->destinationEdit->setText(data);
@@ -429,7 +434,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->envelopeIDEdit->clear();
     d->envelopeIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopeNumber", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopeNumber", false);
     if (!data.isNull())
     {
         d->envelopeIDEdit->setText(data);
@@ -439,7 +444,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->serviceIDEdit->clear();
     d->serviceIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ServiceId", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ServiceId", false);
     if (!data.isNull())
     {
         d->serviceIDEdit->setText(data);
@@ -449,7 +454,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->unoIDEdit->clear();
     d->unoIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.UNO", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.UNO", false);
     if (!data.isNull())
     {
         d->unoIDEdit->setText(data);
@@ -459,7 +464,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->productIDEdit->clear();
     d->productIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ProductId", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ProductId", false);
     if (!data.isNull())
     {
         d->productIDEdit->setText(data);
@@ -469,10 +474,10 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);
     if (!data.isNull())
     {
-        val = data.toInt(); 
+        val = data.toInt();
         if (val >= 0 && val <= 8)
         {
             d->priorityCB->setCurrentIndex(val);
@@ -485,8 +490,8 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->formatCB->setCurrentIndex(0);
     d->formatCheck->setChecked(false);
-    format  = exiv2Iface.getIptcTagString("Iptc.Envelope.FileFormat", false);    
-    version = exiv2Iface.getIptcTagString("Iptc.Envelope.FileVersion", false);    
+    format  = exiv2Iface.getIptcTagString("Iptc.Envelope.FileFormat", false);
+    version = exiv2Iface.getIptcTagString("Iptc.Envelope.FileVersion", false);
     if (!format.isNull())
     {
         if (!version.isNull())
@@ -501,7 +506,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
                 if (it.key() == key) index = i;
                 i++;
             }
-            
+
             if (index != -1)
             {
                 d->formatCB->setCurrentIndex(index);
@@ -520,7 +525,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->dateSentSel->setDate(QDate::currentDate());
     d->dateSentCheck->setChecked(false);
-    if (!dateStr.isEmpty()) 
+    if (!dateStr.isEmpty())
     {
         date = QDate::fromString(dateStr, Qt::ISODate);
         if (date.isValid())
@@ -528,12 +533,12 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
             d->dateSentSel->setDate(date);
             d->dateSentCheck->setChecked(true);
         }
-    }    
+    }
     d->dateSentSel->setEnabled(d->dateSentCheck->isChecked());
 
     d->timeSentSel->setTime(QTime::currentTime());
     d->timeSentCheck->setChecked(false);
-    if (!timeStr.isEmpty()) 
+    if (!timeStr.isEmpty())
     {
         time = QTime::fromString(timeStr, Qt::ISODate);
         if (time.isValid())
@@ -541,7 +546,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
             d->timeSentSel->setTime(time);
             d->timeSentCheck->setChecked(true);
         }
-    }    
+    }
     d->timeSentSel->setEnabled(d->timeSentCheck->isChecked());
 
     blockSignals(false);
@@ -586,7 +591,7 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
     {
         QString key;
         int i = 0;
-        
+
         for (IPTCEnvelopePriv::FileFormatMap::Iterator it = d->fileFormatMap.begin();
              it != d->fileFormatMap.end(); ++it)
         {

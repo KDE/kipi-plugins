@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // QT includes.
@@ -38,16 +38,21 @@
 #include <ktextedit.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/squeezedcombobox.h>
+
 // Local includes.
 
-#include "squeezedcombobox.h"
 #include "metadatacheckbox.h"
 #include "altlangstringedit.h"
 #include "altlangstringedit.moc"
+
+using namespace KDcrawIface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -66,8 +71,8 @@ public:
         valueBox       = 0;
         languageCB     = 0;
 
-        // We cannot use KLocale::allLanguagesList() here because KDE only 
-        // support 2 characters country codes. XMP require 2+2 characters language+country 
+        // We cannot use KLocale::allLanguagesList() here because KDE only
+        // support 2 characters country codes. XMP require 2+2 characters language+country
         // following ISO 3066 (http://babelwiki.babelzilla.org/index.php?title=Language_codes)
 
         // The first one from the list is the Default Language code specified by XMP paper
@@ -248,7 +253,7 @@ public:
         languageCodeMap.insert( "zu-ZA", i18n("isiZulu Zulu (South Africa)") );
     }
 
-    typedef QMap<QString, QString>   LanguageCodeMap; 
+    typedef QMap<QString, QString>   LanguageCodeMap;
 
     LanguageCodeMap                  languageCodeMap;
 
@@ -259,12 +264,12 @@ public:
     QPushButton                     *repValueButton;
 
     KListWidget                     *valueBox;
-    
+
     KTextEdit                       *valueEdit;
 
-    KIPIPlugins::SqueezedComboBox   *languageCB;
+    SqueezedComboBox                *languageCB;
 
-    MetadataCheckBox               *valueCheck;
+    MetadataCheckBox                *valueCheck;
 };
 
 AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc)
@@ -276,7 +281,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     // --------------------------------------------------------
 
-    d->valueCheck     = new MetadataCheckBox(title, this);  
+    d->valueCheck     = new MetadataCheckBox(title, this);
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -296,7 +301,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->valueBox->setSelectionMode(QAbstractItemView::SingleSelection);
     d->valueBox->setSortingEnabled(true);
 
-    d->languageCB = new KIPIPlugins::SqueezedComboBox(this);
+    d->languageCB = new SqueezedComboBox(this);
     d->languageCB->setWhatsThis(i18n("<p>Select here language code."));
 
     d->valueEdit = new KTextEdit(this);
@@ -314,19 +319,19 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     grid->addWidget(d->languageCB, 1, 1, 1, 4);
     grid->addWidget(d->valueEdit, 2, 0, 1, 5);
     grid->addWidget(d->valueBox, 0, 5, 3, 1);
-    grid->setColumnStretch(1, 5);   
-    grid->setColumnStretch(5, 10);                     
+    grid->setColumnStretch(1, 5);
+    grid->setColumnStretch(5, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->valueBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSelectionChanged()));
-    
+
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SLOT(slotAddValue()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SLOT(slotDeleteValue()));
 
@@ -360,7 +365,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -373,14 +378,14 @@ AltLangStringsEdit::~AltLangStringsEdit()
     delete d;
 }
 
-void AltLangStringsEdit::setValid(bool v) 
+void AltLangStringsEdit::setValid(bool v)
 {
-    d->valueCheck->setValid(v); 
+    d->valueCheck->setValid(v);
 }
 
-bool AltLangStringsEdit::isValid() const 
+bool AltLangStringsEdit::isValid() const
 {
-    return d->valueCheck->isValid(); 
+    return d->valueCheck->isValid();
 }
 
 void AltLangStringsEdit::slotDeleteValue()
@@ -441,7 +446,7 @@ void AltLangStringsEdit::slotAddValue()
         QString language = item->text().left(item->text().indexOf("] "));
         language.remove(0, 1);
 
-        if (lang.contains(language)) 
+        if (lang.contains(language))
         {
             found = true;
             break;
@@ -477,13 +482,13 @@ void AltLangStringsEdit::slotReplaceValue()
         QString language = item->text().left(item->text().indexOf("] "));
         language.remove(0, 1);
 
-        if (lang.contains(language)) 
+        if (lang.contains(language))
         {
             found = true;
             break;
         }
     }
-    
+
     if (found)
     {
         slotAddValue();
@@ -507,11 +512,11 @@ void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values
     d->valueCheck->setChecked(false);
     if (!d->oldValues.isEmpty())
     {
-        for (KExiv2Iface::KExiv2::AltLangMap::Iterator it = d->oldValues.begin(); 
+        for (KExiv2Iface::KExiv2::AltLangMap::Iterator it = d->oldValues.begin();
              it != d->oldValues.end(); ++it)
         {
             QString newValue = QString("[%1] %2").arg(it.key()).arg(it.value());
-            d->valueBox->insertItem(0, newValue);    
+            d->valueBox->insertItem(0, newValue);
         }
 
         d->valueCheck->setChecked(true);
@@ -555,7 +560,7 @@ void AltLangStringsEdit::loadLangAltListEntries()
         lang.remove(0, 1);
         list.append(lang);
     }
-    
+
     d->languageCB->clear();
     for (AltLangStringsEditPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
          it != d->languageCodeMap.end(); ++it)
