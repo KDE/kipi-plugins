@@ -27,9 +27,8 @@
 // Qt includes.
 
 #include <q3valuelist.h>
-#include <qpair.h>
 #include <q3intdict.h>
-//Added by qt3to4:
+#include <qpair.h>
 #include <QLabel>
 
 // KDE includes.
@@ -45,15 +44,16 @@
 #include "kpaboutdata.h"
 
 class Q3ListView;
+class Q3ProgressDialog;
 class QPushButton;
 class QRadioButton;
 class QSpinBox;
 class QCheckBox;
-class Q3ProgressDialog;
-class KHTMLPart;
-class KUrl;
 class QLineEdit;
 class QComboBox;
+
+class KHTMLPart;
+class KUrl;
 
 namespace KIPI
 {
@@ -129,9 +129,9 @@ private:
     PicasawebWidget                         *m_widget;
     PicasawebTalker                         *m_talker;
 
-    Q3IntDict<GAlbumViewItem>                 m_albumDict;
+    Q3IntDict<GAlbumViewItem>                m_albumDict;
 
-    Q3ValueList< QPair<QString,FPhotoInfo> >  m_uploadQueue;
+    Q3ValueList< QPair<QString,FPhotoInfo> > m_uploadQueue;
 
     KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData                *m_about;
