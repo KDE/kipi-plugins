@@ -740,8 +740,8 @@ dng_time_zone LocalTimeZone (const dng_date_time &dt)
 		
 		#endif
 		
-		#if qWinOS
-		
+		#if qWinOS && !defined(GNUGCCCOMPILER)
+
 		if (GetTimeZoneInformation          != NULL &&
 			SystemTimeToTzSpecificLocalTime != NULL &&
 		    SystemTimeToFileTime            != NULL)
@@ -794,7 +794,7 @@ dng_time_zone LocalTimeZone (const dng_date_time &dt)
 			
 			}
 		
-		#endif
+		#endif /* qWinOS */
 		
 		}
 	

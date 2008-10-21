@@ -86,6 +86,13 @@ IF(WIN32)
                     -DqWinOS=1
                     -DqMacOS=0
                    )
+
+    IF(CMAKE_COMPILER_IS_GNUCXX)
+
+        ADD_DEFINITIONS(-DGNUGCCCOMPILER)
+
+    ENDIF(CMAKE_COMPILER_IS_GNUCXX)
+
 ELSE(WIN32)
     IF(APPLE)
         ADD_DEFINITIONS(
