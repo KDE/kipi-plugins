@@ -740,7 +740,7 @@ dng_time_zone LocalTimeZone (const dng_date_time &dt)
 		
 		#endif
 		
-		#if qWinOS && !defined(GNUGCCCOMPILER)
+		#if qWinOS && !defined(__GNUC__)
 
 		if (GetTimeZoneInformation          != NULL &&
 			SystemTimeToTzSpecificLocalTime != NULL &&
