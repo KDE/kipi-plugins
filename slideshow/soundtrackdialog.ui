@@ -9,9 +9,6 @@
     <height>494</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Form</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5" >
    <item>
     <widget class="QGroupBox" name="m_selectionGroupBox" >
