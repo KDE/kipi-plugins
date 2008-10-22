@@ -42,6 +42,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       kipiplugins
+                      kdcraw
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
