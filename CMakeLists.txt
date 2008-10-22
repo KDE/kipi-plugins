@@ -273,15 +273,18 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     ADD_SUBDIRECTORY(common)
     ADD_SUBDIRECTORY(timeadjust)
-    ADD_SUBDIRECTORY(jpeglossless) #contains k3process.h
+    ADD_SUBDIRECTORY(jpeglossless)
     ADD_SUBDIRECTORY(rawconverter)
     ADD_SUBDIRECTORY(metadataedit)
     ADD_SUBDIRECTORY(sendimages)
     ADD_SUBDIRECTORY(gpssync)
     ADD_SUBDIRECTORY(simpleviewerexport)
     ADD_SUBDIRECTORY(flickrexport)
-    ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(galleryexport)
+    
+    IF(NOT WIN32)
+        ADD_SUBDIRECTORY(picasawebexport)       # Do not compile yet under Win32
+    ENDIF(NOT WIN32)
 
     IF(SANE_FOUND AND KSANE_FOUND)
         ADD_SUBDIRECTORY(acquireimages)
