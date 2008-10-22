@@ -3,10 +3,10 @@ ADD_DEFINITIONS(-DQT3_SUPPORT
                )
 
 SET(kipiplugin_imageviewer_PART_SRCS 
-    viewerwidget.cpp
     texture.cpp
     timer.cpp
     plugin_viewer.cpp
+    viewerwidget.cpp
    )
 
 #KDE4_ADD_UI_FILES has to be BEFORE KDE4_ADD_PLUGIN
@@ -18,12 +18,12 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${QT_QTOPENGL_LIBRARY}
-                      ${X11_LIBRARIES}
                       ${OPENGL_LIBRARIES} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
                       ${QT_QT3SUPPORT_LIBRARY} 
+                      ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
                       kipiplugins
                      )
