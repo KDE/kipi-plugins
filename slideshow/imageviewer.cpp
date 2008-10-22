@@ -49,7 +49,7 @@ ImageViewer::ImageViewer(QWidget* parent)
 
 ImageViewer::~ImageViewer()
 {
-    delete m_svgRenderer;
+//    delete m_svgRenderer;
 }
 
 QImage ImageViewer::image() const

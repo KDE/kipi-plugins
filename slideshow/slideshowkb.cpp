@@ -264,7 +264,7 @@ SlideShowKB::~SlideShowKB()
     delete m_image[0];
     delete m_image[1];
 
-    delete m_playbackWidget;
+//    delete m_playbackWidget;
 
     m_imageLoadThread->quit();
     bool terminated = m_imageLoadThread->wait(10000);
@@ -275,12 +275,12 @@ SlideShowKB::~SlideShowKB()
         terminated = m_imageLoadThread->wait(3000);
     }
 
-    if (terminated)
-        delete m_imageLoadThread;
+//    if (terminated)
+//        delete m_imageLoadThread;
 
-    delete m_mouseMoveTimer;
-
-    delete m_timer;
+//    delete m_mouseMoveTimer;
+//
+//    delete m_timer;
 
     delete m_screen;
 }

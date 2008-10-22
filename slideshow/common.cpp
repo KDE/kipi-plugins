@@ -22,11 +22,11 @@
 
 // local includes
 #include "common.h"
- 
+
 namespace KIPISlideShowPlugin
 {
 
-SharedData::SharedData() 
+SharedData::SharedData()
 {
     interface = 0;
     delayMsMaxValue = 0;
@@ -57,7 +57,7 @@ SharedData::SharedData()
 
     useMilliseconds = false;
     enableMouseWheel = false;
-    enableCache = false; 
+    enableCache = false;
     kbDisableFadeInOut = false;
     kbDisableCrossFade = false;
     cacheSize = 0;
@@ -68,24 +68,24 @@ SharedData::SharedData()
     page_advanced = 0;
 }
 
-SharedData::~SharedData() 
+SharedData::~SharedData()
 {
-    if ( mainPage ) delete mainPage;
-    if ( captionPage ) delete captionPage;
-    if ( soundtrackPage ) delete soundtrackPage;
-    if ( advancedPage ) delete advancedPage;
-
-    if ( page_main ) delete page_main;
-    if ( page_caption ) delete page_caption;
-    if ( page_soundtrack ) delete page_soundtrack;
-    if ( page_advanced ) delete page_advanced;
-
-    if ( captionFont ) delete captionFont;
+//    if ( mainPage ) delete mainPage;
+//    if ( captionPage ) delete captionPage;
+//    if ( soundtrackPage ) delete soundtrackPage;
+//    if ( advancedPage ) delete advancedPage;
+//
+//    if ( page_main ) delete page_main;
+//    if ( page_caption ) delete page_caption;
+//    if ( page_soundtrack ) delete page_soundtrack;
+//    if ( page_advanced ) delete page_advanced;
+//
+//    if ( captionFont ) delete captionFont;
 }
 
 
 VolumeSlider::VolumeSlider(QWidget* parent)
-            : Phonon::VolumeSlider(parent) 
+            : Phonon::VolumeSlider(parent)
 {
 }
 

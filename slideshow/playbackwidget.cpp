@@ -113,8 +113,8 @@ PlaybackWidget::~PlaybackWidget()
     if (!m_urlList.empty())
     {
         m_mediaObject->stop();
-        delete m_mediaObject;
-        delete m_audioOutput;
+//        delete m_mediaObject;
+//        delete m_audioOutput;
     }
 }
 

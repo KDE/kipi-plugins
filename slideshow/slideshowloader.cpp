@@ -129,11 +129,11 @@ SlideShowLoader::~SlideShowLoader()
     m_threadLock->unlock();
 
 
-    delete(m_loadingThreads);
-    delete(m_loadedImages);
-
-    delete(m_imageLock);
-    delete(m_threadLock);
+//    delete(m_loadingThreads);
+//    delete(m_loadedImages);
+//
+//    delete(m_imageLock);
+//    delete(m_threadLock);
 }
 
 void SlideShowLoader::next()

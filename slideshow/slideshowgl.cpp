@@ -175,10 +175,10 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
 
 SlideShowGL::~SlideShowGL()
 {
-    delete m_timer;
-    delete m_mouseMoveTimer;
-    delete m_playbackWidget;
-    delete m_slidePlaybackWidget;
+//    delete m_timer;
+//    delete m_mouseMoveTimer;
+//    delete m_playbackWidget;
+//    delete m_slidePlaybackWidget;
 
     if (m_texture[0])
         glDeleteTextures(1, &m_texture[0]);

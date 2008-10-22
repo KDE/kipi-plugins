@@ -60,7 +60,7 @@ SoundItem::SoundItem(QListWidget* parent, KUrl &url)
 
 SoundItem::~SoundItem()
 {
-    delete m_mediaObject;
+//    delete m_mediaObject;
 }
 
 KUrl SoundItem::url()

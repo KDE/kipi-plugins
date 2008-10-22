@@ -59,7 +59,7 @@ ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & 
 
 ImageItem::~ImageItem()
 {
-    if (m_thumbJob) delete m_thumbJob;
+//    if (m_thumbJob) delete m_thumbJob;
 }
 
 QString ImageItem::comments()

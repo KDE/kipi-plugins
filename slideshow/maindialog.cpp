@@ -69,7 +69,7 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
 
 MainDialog::~MainDialog()
 {
-    if (m_thumbJob) delete m_thumbJob;
+//    if (m_thumbJob) delete m_thumbJob;
 }
 
 void MainDialog::readSettings()

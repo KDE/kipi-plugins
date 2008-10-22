@@ -56,7 +56,7 @@ SoundtrackPreview::SoundtrackPreview( QWidget* parent, KUrl::List& urls, SharedD
 
 SoundtrackPreview::~SoundtrackPreview()
 {
-    delete m_playbackWidget;
+//    delete m_playbackWidget;
 }
 
 // ===================

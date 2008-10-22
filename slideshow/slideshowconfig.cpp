@@ -52,7 +52,7 @@ public:
 
     ~SlideShowConfigPrivate()
     {
-        if (config) delete config;
+//        if (config) delete config;
     }
 
     KIPIPlugins::KPAboutData* about;
