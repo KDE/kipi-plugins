@@ -31,7 +31,7 @@
     <string>O&amp;K</string>
    </property>
   </widget>
-  <widget class="Q3TextBrowser" name="textBrowser2" >
+  <widget class="QTextBrowser" name="textBrowser2" >
    <property name="geometry" >
     <rect>
      <x>10</x>
