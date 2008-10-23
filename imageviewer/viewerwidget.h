@@ -30,13 +30,13 @@
 
 //QT includes
 
-#include <qgl.h>
-#include <qdir.h>
-#include <qimage.h>
-#include <qdatetime.h>
-#include <qregexp.h>
-#include <qcursor.h>
-#include <qtimer.h>
+#include <QtOpenGL>
+#include <QDir>
+#include <QImage>
+#include <QDateTime>
+#include <QRegExp>
+#include <QCursor>
+#include <QTimer>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>

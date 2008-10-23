@@ -25,8 +25,8 @@
 
 // Qt includes
 
-#include <qlabel.h>
-#include <qbitmap.h>
+#include <QLabel>
+#include <QBitmap>
 #include <QDesktopWidget>
 
 // KDE includes.
@@ -41,7 +41,7 @@
 
 //#define PERFORMANCE_ANALYSIS
 #ifdef PERFORMANCE_ANALYSIS
-	#include "timer.h"
+    #include "timer.h"
 #endif
 
 #include "texture.h"
