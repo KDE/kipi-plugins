@@ -30,11 +30,10 @@
 #undef UNICODE
 #undef _UNICODE
 
+#if defined(__GNUC__)
+  #define WINVER 0x0500
+#endif
 #include <windows.h>
-WINBASEAPI HANDLE WINAPI OpenThread(DWORD,BOOL,DWORD);
-int main () {
-  HANDLE x = OpenThread(0, FALSE, 0);
-}
 
 #include <process.h>
 #include <errno.h>
@@ -1090,9 +1089,9 @@ int dng_pthread_now (struct timespec *now)
 
 	__int64 sys_time = ((__int64)ft.dwHighDateTime << 32) + ft.dwLowDateTime;
 
-	#define SecsFrom1601To1970 11644473600
+	#define SecsFrom1601To1970 11644473600ULL
 	
-	sys_time -= SecsFrom1601To1970 * 10000000LL;
+	sys_time -= SecsFrom1601To1970 * 10000000ULL;
 	
 	sys_time *= 100;	// Convert from 100ns to 1ns units
 
