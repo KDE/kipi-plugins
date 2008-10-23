@@ -40,7 +40,8 @@ KDE4_ADD_EXECUTABLE(raw2dng NOGUI
 
 TARGET_LINK_LIBRARIES(raw2dng
                       ${EXPAT_LIBRARY}
-                      ${KDE4_KDEUI_LIBS}
+                      ${KDE4_KDECORE_LIBS} 
+                      ${KDE4_KIO_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${QT_LIBRARIES} 
                       ${KEXIV2_LIBRARIES}
