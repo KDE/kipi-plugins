@@ -93,8 +93,6 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     form.addPair("password", passwd);
     form.finish();
 
-    kWarning() << endl << endl << " form : " << form.formData() << endl << endl;
-
     m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
     m_job->addMetaData("content-type", form.contentType());
     m_job->addMetaData("cookies", "manual");
@@ -326,7 +324,7 @@ void GalleryTalker::slotResult(KJob *job)
             break;
     }
 
-    if (m_state == GE_LOGIN && m_loggedIn)      // FIXME adjust cookies..
+    if (m_state == GE_LOGIN && m_loggedIn)
     {
         QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
@@ -384,8 +382,6 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             }
         }
     }
-
-    kWarning() << endl << endl << "authToken = " << s_authToken << endl << endl;
 
     if (!foundResponse) {
         emit signalLoginFailed(i18n("Gallery URL probably incorrect"));
@@ -558,15 +554,11 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 
         if (!foundResponse) {
             foundResponse = line.startsWith("#__GR2PROTO__");
-            kWarning() << "foundResponse: " << foundResponse << endl;
         } else {
             QStringList strlist = line.split('=');
             if (strlist.count() == 2) {
-                kWarning() << "line count = 2 " << endl;
                 QString key   = strlist[0];
                 QString value = strlist[1];
-                kWarning() << "key = " << key <<endl;
-                kWarning() << "value =  " << value  << endl;
                 if (key == "status") {      // key == "status" NOT FOUND!!!
                     success = (value == "0");
                     kWarning( 51000 ) << "Create Album. success: " << success << endl;

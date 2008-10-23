@@ -387,16 +387,35 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     d->albumDict.clear();
     d->albumView->clear();
 
-    typedef QList<GAlbum> GAlbumList;
-    GAlbumList::const_iterator iterator;
-    for (iterator = albumList.begin(); iterator != albumList.end(); ++iterator) {
-        if ( (*iterator).parent_ref_num != 0 ) {
-            QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, (*iterator).title );
-            item->setIcon(0, KIcon("inode-directory") );
-            d->albumView->addTopLevelItem(item);
+//     typedef QList<GAlbum> GAlbumList;
+    QVector<int> ref_num_vect( albumList.size() );
 
-            const GAlbum& album = *iterator;
+    for (int i = 0; i < albumList.size(); ++i) 
+    {
+        const GAlbum& album = albumList.at(i);
+        ref_num_vect.insert( i, album.name.toInt() );
+
+        int parentRefNum = album.parent_ref_num;
+        if ( parentRefNum == 0 ) 
+        {
+            QTreeWidgetItem *item = new QTreeWidgetItem();
+            item->setText(0, album.title );
+            item->setIcon(0, KIcon("inode-directory") );
+
+            d->albumView->addTopLevelItem(item);
+            d->albumDict.insert(album.title, album);
+        }
+        else
+        {
+            int n = ref_num_vect.indexOf( parentRefNum );
+            const GAlbum& parentAlbum = albumList.at(n);    // ERROR
+            QString parentTitle = parentAlbum.title;
+            QTreeWidgetItem *parentItem = ( d->albumView->findItems(parentTitle, Qt::MatchExactly) ).at(0);
+
+            QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+            item->setText(0, album.title );
+            item->setIcon(0, KIcon("inode-directory") );
+        
             d->albumDict.insert(album.title, album);
         }
     }
