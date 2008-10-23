@@ -222,7 +222,7 @@ IF(NOT WIN32 AND NOT APPLE)
         MESSAGE(STATUS " SlideShow plugin will not be compiled! Look README file for more details about dependencies... ")
         MESSAGE(STATUS " ImageViewer plugin will not be compiled! Look README file for more details about dependencies... ")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-ELSEIF(NOT WIN32 AND NOT APPLE)
+ELSE(NOT WIN32 AND NOT APPLE)
     IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
         MESSAGE(STATUS " SlideShow plugin will be compiled...")
         MESSAGE(STATUS " ImageViewer plugin will be compiled...")
@@ -310,31 +310,16 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     # Plugins which depend on OpenGL
 
     IF(NOT WIN32 AND NOT APPLE)
-
-        IF(X11_FOUND AND X11_Xrandr_FOUND)
-
+        IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
             # Under LINUX we need X11 library with OpenGL.
-
-            IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-                MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-            ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
-            IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-                MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
-            ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
-        ENDIF(X11_FOUND AND X11_Xrandr_FOUND)
-
-    ELSEIF(NOT WIN32 AND NOT APPLE)
-
+            MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
+            MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+        ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
+    ELSE(NOT WIN32 AND NOT APPLE)
         IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
             MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-        ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
-        IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
             MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
     ENDIF(NOT WIN32 AND NOT APPLE)
 
     IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
