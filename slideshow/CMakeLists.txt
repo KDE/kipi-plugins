@@ -37,14 +37,17 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${QT_QTOPENGL_LIBRARY}
-                      ${X11_LIBRARIES}
                       ${OPENGL_LIBRARIES} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
                       ${KDE4_KDE3SUPPORT_LIBS}
 		      ${KDE4_PHONON_LIBRARY}
+		      
+		      # For Linux only.
+                      ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
+                      
                       kipiplugins
                      )
 
