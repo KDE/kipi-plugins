@@ -25,13 +25,9 @@
 
 // Qt includes
 
-#include <qgl.h>
 #include <qlabel.h>
 #include <qbitmap.h>
 #include <QDesktopWidget>
-#include <QWheelEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
 
 // KDE includes.
 
