@@ -18,8 +18,11 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
+
+                      # For Linux Only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
+
                       kipiplugins
                      )
 
