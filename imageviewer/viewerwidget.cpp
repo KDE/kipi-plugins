@@ -23,42 +23,35 @@
 
 #undef PERFORMANCE_ANALYSIS
 
-//qt extensions
-#include "viewerwidget.moc"
+// Qt includes
 
-// global includes
 #include <qgl.h>
-//Added by qt3to4:
+#include <qlabel.h>
+#include <qbitmap.h>
+#include <QDesktopWidget>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include <iostream>
-#include <qlabel.h>
-#include <klocale.h>
 
-//TODO
-//#include <q3dragobject.h>
+// KDE includes.
 
-#include <qbitmap.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
-#include <QDesktopWidget>
+#include <klocale.h>
 
 // local includes.
-#include "viewerwidget.h"
-#include "texture.h"
-
-//designer
-#include "ui_helpdialog.h"
 
 //#define PERFORMANCE_ANALYSIS
 #ifdef PERFORMANCE_ANALYSIS
 	#include "timer.h"
 #endif
 
-
+#include "texture.h"
+#include "ui_helpdialog.h"
+#include "viewerwidget.h"
+#include "viewerwidget.moc"
 
 // using namespace std;
 using namespace KIPIviewer;

@@ -24,28 +24,36 @@
 #ifndef _VIEWERWIDGET_H_
 #define _VIEWERWIDGET_H_
 
+// C++ includes.
+
+#include <iostream>
+
 //QT includes
+
 #include <qgl.h>
 #include <qdir.h>
 #include <qimage.h>
 #include <qdatetime.h>
-//Added by qt3to4:
-#include <QWheelEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
-#include <iostream>
-#include <kurl.h>
-#include <kmimetype.h>
 #include <qregexp.h>
 #include <qcursor.h>
 #include <qtimer.h>
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
 
-//kipi includes
+// KDE includes.
+
+#include <kurl.h>
+#include <kmimetype.h>
+
+// Kipi includes
+
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 //local includes
+
 #include "texture.h"
 
 /**
@@ -136,5 +144,7 @@ protected:
 private slots:
     void timeoutMouseMove();
 };
+
 } //namespace KIPIviewer
+
 #endif // _VIEWERWIDGET_H_
