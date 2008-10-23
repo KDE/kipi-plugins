@@ -31,6 +31,11 @@
 #undef _UNICODE
 
 #include <windows.h>
+WINBASEAPI HANDLE WINAPI OpenThread(DWORD,BOOL,DWORD);
+int main () {
+  HANDLE x = OpenThread(0, FALSE, 0);
+}
+
 #include <process.h>
 #include <errno.h>
 #include <memory>
@@ -369,7 +374,6 @@ int dng_pthread_detach(dng_pthread_t thread)
 
 	return 0;
 }
-
 /*****************************************************************************/
 
 int dng_pthread_join(dng_pthread_t thread, void **result)
