@@ -49,6 +49,14 @@
 #include "viewerwidget.h"
 #include "viewerwidget.moc"
 
+#ifndef GL_TEXTURE_RECTANGLE_ARB
+#define GL_TEXTURE_RECTANGLE_ARB   0x84F5
+#endif
+
+#ifndef GL_TEXTURE_RECTANGLE_NV
+#define GL_TEXTURE_RECTANGLE_NV    0x84F5
+#endif
+
 // using namespace std;
 using namespace KIPIviewer;
 
