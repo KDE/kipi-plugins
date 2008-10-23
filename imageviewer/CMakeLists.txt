@@ -1,7 +1,3 @@
-ADD_DEFINITIONS(-DQT3_SUPPORT 
-                -DQT3_SUPPORT_WARNINGS
-               )
-
 SET(kipiplugin_imageviewer_PART_SRCS 
     texture.cpp
     timer.cpp
@@ -22,7 +18,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_imageviewer
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${QT_QT3SUPPORT_LIBRARY} 
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
                       kipiplugins

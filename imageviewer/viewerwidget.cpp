@@ -743,7 +743,7 @@ void ViewerWidget::mouseReleaseEvent(QMouseEvent * )
  */
 void ViewerWidget::timeoutMouseMove()
 {
-	setCursor (QCursor (Qt::blankCursor));
+	setCursor (QCursor (Qt::BlankCursor));
 }
 
 
