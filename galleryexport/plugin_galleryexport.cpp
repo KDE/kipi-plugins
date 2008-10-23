@@ -68,7 +68,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     }
 
     m_action = new KAction(i18n("remote-gallery-sync"), this);
-    m_action->setText(i18n("Gallery Export..."));
+    m_action->setText(i18n("Export to Gallery..."));
     m_action->setIcon(KIcon("applications-internet"));
     connect(m_action, SIGNAL(triggered(bool)), this, SLOT(slotSync()));
     m_action->setEnabled(true);
