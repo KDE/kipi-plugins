@@ -46,6 +46,7 @@
 #include <QSpinBox>
 #include <QGroupBox>
 #include <QInputDialog>
+#include <QFileInfo>
 
 // KDE includes
 #include <KAboutData>
@@ -229,7 +230,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 GalleryWindow::~GalleryWindow()
 {
     // write config
-    KConfig config("kipirc");
+    KConfig config("galleryrc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
     group.writeEntry("Resize", d->resizeCheckBox->isChecked());
@@ -277,7 +278,7 @@ void GalleryWindow::connectSignals()
 void GalleryWindow::readSettings()
 {
     // read Config
-    KConfig config("kipirc");
+    KConfig config("galleryrc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
     if (group.readEntry("Resize", false)) {
@@ -606,7 +607,8 @@ void GalleryWindow::slotAddPhotoNext()
     const GAlbum& album = d->albumDict.value(albumTitle);
 
     QString photoPath = mpUploadList->takeFirst();
-    bool res = m_talker->addPhoto(album.name, photoPath, QString(),
+    QString photoName = QFileInfo(photoPath).baseName();
+    bool res = m_talker->addPhoto(album.name, photoPath, photoName,
                                   d->captTitleCheckBox->isChecked(),
                                   d->captDescrCheckBox->isChecked(),
                                   d->resizeCheckBox->isChecked(),
@@ -618,8 +620,7 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file %1 ")
-                                 .arg( KUrl(photoPath).fileName() ) );
+    m_progressDlg->setLabelText( i18n("Uploading file %1 ").arg( photoName ) );
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
 }

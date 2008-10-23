@@ -199,7 +199,6 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 {
     m_job = 0;
     QString path = photoPath;
-    QString display_filename = QFile::encodeName(KUrl(path).fileName());
 
     m_state = GE_ADDPHOTO;
     m_talker_buffer.resize(0);
@@ -227,7 +226,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
             if ("JPEG" == QString(QImageReader::imageFormat(photoPath)).toUpper()) {
                 KExiv2Iface::KExiv2 exiv2;
                 if (exiv2.load(photoPath)) {
-                    exiv2.save(path);
+                    exiv2.save(path);           // FIXME ???
                 }
             }
             kDebug( 51000 ) << "Resizing and saving to temp file: "
@@ -238,7 +237,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     // The filename bit can perhaps be calculated in addFile()
     // but not sure of the temporary filename that could be
     // used for resizing... so I've added it explicitly for now.
-    if (!form.addFile(path, display_filename))
+    if (!form.addFile(path, caption))
         return false;
 
     form.finish();
