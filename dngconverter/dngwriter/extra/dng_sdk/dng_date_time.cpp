@@ -28,6 +28,9 @@
 #endif
 
 #if qWinOS
+#if defined(__GNUC__)
+  #define WINVER 0x0500
+#endif
 #include <windows.h>
 #endif
 
@@ -740,7 +743,7 @@ dng_time_zone LocalTimeZone (const dng_date_time &dt)
 		
 		#endif
 		
-		#if qWinOS && !defined(__GNUC__)
+		#if qWinOS
 
 		if (GetTimeZoneInformation          != NULL &&
 			SystemTimeToTzSpecificLocalTime != NULL &&
