@@ -1,13 +1,13 @@
 ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 SET(kipiplugin_picasawebexport_PART_SRCS
+    mpform.cpp
     plugin_picasawebexport.cpp
-    picasawebwindow.cpp
     picasaweblogin.cpp
     picasawebtalker.cpp
     picasawebwidget.cpp
-    mpform.cpp
     picasawebviewitem.cpp
+    picasawebwindow.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_picasawebexport_PART_SRCS uploadwidget.ui)
