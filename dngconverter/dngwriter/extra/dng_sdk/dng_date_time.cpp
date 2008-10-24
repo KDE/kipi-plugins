@@ -28,11 +28,13 @@
 #endif
 
 #if qWinOS
-#if defined(__GNUC__)
-  #define WINVER 0x0500
-#endif
 #include <windows.h>
-#endif
+#if defined(__GNUC__)
+BOOL TzSpecificLocalTimeToSystemTime(LPTIME_ZONE_INFORMATION lpTimeZoneInformation,
+                                     LPSYSTEMTIME lpLocalTime, 
+                                     LPSYSTEMTIME lpUniversalTime);
+#endif /* defined(__GNUC__) */
+#endif /* qWinOS */
 
 /******************************************************************************/
 
@@ -869,4 +871,50 @@ dng_date_time_format dng_date_time_storage_info::Format () const
 	
 	}
 
-/*****************************************************************************/
+#if qWinOS && defined(__GNUC__)
+
+/***********************************************************************
+ *              TzSpecificLocalTimeToSystemTime  (KERNEL32.Wine API)
+ *
+ *  Converts a local time to a time in utc.
+ *
+ * PARAMS
+ *  lpTimeZoneInformation [in]  The desired time zone.
+ *  lpLocalTime           [in]  The local time.
+ *  lpUniversalTime       [out] The calculated utc time.
+ *
+ * RETURNS
+ *  Success: TRUE. lpUniversalTime contains the converted time.
+ *  Failure: FALSE.
+ */
+BOOL TzSpecificLocalTimeToSystemTime(
+    LPTIME_ZONE_INFORMATION lpTimeZoneInformation,
+    LPSYSTEMTIME lpLocalTime, LPSYSTEMTIME lpUniversalTime)
+{
+    FILETIME ft;
+    LONG lBias;
+    LONGLONG t;
+    TIME_ZONE_INFORMATION tzinfo;
+
+    if (lpTimeZoneInformation != NULL)
+    {
+        memcpy(&tzinfo, lpTimeZoneInformation, sizeof(TIME_ZONE_INFORMATION));
+    }
+    else
+    {
+        if (GetTimeZoneInformation(&tzinfo) == TIME_ZONE_ID_INVALID)
+            return FALSE;
+    }
+
+    if (!SystemTimeToFileTime(lpLocalTime, &ft))
+        return FALSE;
+    FILETIME2LL( &ft, t)
+    if (!TIME_GetTimezoneBias(&tzinfo, &ft, TRUE, &lBias))
+        return FALSE;
+    /* convert minutes to 100-nanoseconds-ticks */
+    t += (LONGLONG)lBias * 600000000;
+    LL2FILETIME( t, &ft)
+    return FileTimeToSystemTime(&ft, lpUniversalTime);
+}
+
+#endif /* qWinOS && defined(__GNUC__) */
