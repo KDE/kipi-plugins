@@ -23,7 +23,7 @@
 #ifndef SLIDESHOWLOADER_H
 #define SLIDESHOWLOADER_H
 
-// QT includes
+// Qt includes.
 
 #include <Q3ValueList>
 #include <QMap>
@@ -32,7 +32,7 @@
 #include <QThread>
 #include <QPair>
 
-// KDE includes
+// KDE includes.
 
 #include <kurl.h>
 
@@ -103,6 +103,6 @@ private:
     int             m_sheight;
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif // SLIDESHOWLOADER_H

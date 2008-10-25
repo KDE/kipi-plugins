@@ -24,7 +24,7 @@
 #ifndef LISTIMAGEITEM_H
 #define LISTIMAGEITEM_H
 
-// QT includes
+// Qt includes.
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
@@ -32,7 +32,7 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
-// KDE includes
+// KDE includes.
 #include <kurl.h>
 #include "kio/previewjob.h"
 
@@ -88,6 +88,6 @@ protected:
     void dropEvent(QDropEvent *e);
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif /* LISTIMAGEITEM_H */

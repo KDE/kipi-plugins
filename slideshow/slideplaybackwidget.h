@@ -30,7 +30,7 @@
 #include <QWidget>
 #include <QKeyEvent>
 
-// Local includes
+// Local includes.
 
 #include "ui_slideplaybackwidget.h"
 
@@ -80,6 +80,6 @@ private:
     friend class SlideShowGL;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif // SLIDEPLAYBACKWIDGET_H

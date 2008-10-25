@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "batchdialog.h"
+#include "batchdialog.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -36,32 +39,32 @@ extern "C"
 
 // Qt includes.
 
-#include <QHeaderView>
-#include <QTreeWidgetItemIterator>
-#include <QTimer>
-#include <QFileInfo>
 #include <QCloseEvent>
-#include <QPushButton>
 #include <QFile>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QHeaderView>
 #include <QPixmap>
 #include <QProgressBar>
-#include <QGridLayout>
+#include <QPushButton>
+#include <QTimer>
+#include <QTreeWidgetItemIterator>
 
 // KDE includes.
 
-#include <kmenu.h>
-#include <kcursor.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kio/renamedialog.h>
 #include <kapplication.h>
+#include <kconfig.h>
+#include <kcursor.h>
+#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <ktoolinvocation.h>
+#include <kio/renamedialog.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
 #include <kpushbutton.h>
+#include <kstandarddirs.h>
+#include <ktoolinvocation.h>
 
 // LibKDcraw includes.
 
@@ -76,15 +79,13 @@ extern "C"
 // Local includes.
 
 #include "actions.h"
-#include "kpaboutdata.h"
+#include "actionthread.h"
+#include "clistviewitem.h"
 #include "imagedialog.h"
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
-#include "actionthread.h"
-#include "clistviewitem.h"
-#include "batchdialog.h"
-#include "batchdialog.moc"
 
 using namespace KDcrawIface;
 

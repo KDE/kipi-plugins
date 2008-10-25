@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "singledialog.h"
+#include "singledialog.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -36,28 +39,28 @@ extern "C"
 
 // Qt includes.
 
-#include <QTimer>
-#include <QFileInfo>
 #include <QCloseEvent>
-#include <QPushButton>
 #include <QFile>
+#include <QFileInfo>
 #include <QGridLayout>
+#include <QPushButton>
+#include <QTimer>
 
 // KDE includes.
 
-#include <kmenu.h>
-#include <kcursor.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kio/renamedialog.h>
 #include <kapplication.h>
+#include <kconfig.h>
+#include <kcursor.h>
+#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <ktoolinvocation.h>
+#include <kio/renamedialog.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
 #include <kpushbutton.h>
+#include <kstandarddirs.h>
+#include <ktoolinvocation.h>
 
 // LibKDcraw includes.
 
@@ -72,14 +75,12 @@ extern "C"
 // Local includes.
 
 #include "actions.h"
+#include "actionthread.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "previewwidget.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
-#include "actionthread.h"
-#include "singledialog.h"
-#include "singledialog.moc"
 
 using namespace KDcrawIface;
 

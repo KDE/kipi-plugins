@@ -22,6 +22,9 @@
  * 
  * ============================================================ */
 
+#include "sendimagesdialog.h"
+#include "sendimagesdialog.moc"
+
 // Qt includes.
 
 #include <QCloseEvent>
@@ -51,8 +54,6 @@
 #include "pluginsversion.h"
 #include "imagespage.h"
 #include "emailpage.h"
-#include "sendimagesdialog.h"
-#include "sendimagesdialog.moc"
 
 namespace KIPISendimagesPlugin
 {

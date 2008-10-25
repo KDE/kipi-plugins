@@ -26,6 +26,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+class QWidget;
+
 namespace KIPISlideShowPlugin
 {
 
@@ -45,6 +47,6 @@ protected:
     unsigned activeScreen;
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif // SCREEN_H

@@ -20,7 +20,11 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "listsounditems.h"
+#include "listsounditems.moc"
+
+// Qt includes.
+
 #include <q3strlist.h>
 #include <q3dragobject.h>
 #include <qstring.h>
@@ -32,15 +36,12 @@
 #include <QIcon>
 #include <QBrush>
 
-// KDE includes
+// KDE includes.
+
 #include <kurl.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-
-// Local includes
-#include "listsounditems.h"
-#include "listsounditems.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -182,4 +183,4 @@ void ListSoundItems::dropEvent(QDropEvent *e)
         emit addedDropItems(filesUrl);
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

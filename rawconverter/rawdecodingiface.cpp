@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "rawdecodingiface.h"
+#include "rawdecodingiface.moc"
+
 // C++ includes.
 
 #include <cstdio>
@@ -45,8 +48,6 @@
 
 #include "pluginsversion.h"
 #include "kpwriteimage.h"
-#include "rawdecodingiface.h"
-#include "rawdecodingiface.moc"
 
 namespace KIPIRawConverterPlugin
 {

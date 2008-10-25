@@ -21,7 +21,10 @@
  *
  * ============================================================ */
 
-// C Ansi includes.
+#include "plugin_slideshow.h"
+#include "plugin_slideshow.moc"
+
+// C ANSI includes.
 
 extern "C"
 {
@@ -51,18 +54,17 @@ extern "C"
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-// Lib KIPI includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 // Local includes.
+
 #include "slideshowconfig.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "plugin_slideshow.h"
-#include "plugin_slideshow.moc"
 
 
 K_PLUGIN_FACTORY( SlideShowFactory, registerPlugin<Plugin_SlideShow>(); )

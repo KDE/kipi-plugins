@@ -20,12 +20,12 @@
  *
  * ============================================================ */
 
-// QT includes
-#include <QFont>
-
-// Local includes
 #include "captiondialog.h"
 #include "captiondialog.moc"
+
+// Qt includes.
+
+#include <QFont>
 
 namespace KIPISlideShowPlugin
 {
@@ -88,4 +88,4 @@ void CaptionDialog::slotTransparentBgToggled( void )
     m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

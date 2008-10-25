@@ -24,28 +24,27 @@
 #ifndef SLIDESHOW_H
 #define SLIDESHOW_H
 
-// QT includes.
+// Qt includes.
 
 #include <Q3ValueList>
-#include <QStringList>
-#include <QPair>
-#include <QString>
-#include <QWidget>
-#include <QPainter>
-#include <QPixmap>
-#include <QMap>
 #include <QFont>
-#include <QString>
-#include <QWheelEvent>
-#include <QMouseEvent>
 #include <QKeyEvent>
+#include <QMap>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPair>
+#include <QPixmap>
+#include <QString>
+#include <QStringList>
+#include <QWheelEvent>
+#include <QWidget>
 
 // KDE includes.
 
 #include <kconfig.h>
 #include <kurl.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
@@ -113,8 +112,8 @@ protected:
     bool            m_simplyShow;
     bool            m_startPainter;
     int             m_px, m_py, m_psx, m_psy, m_psw, m_psh;
-    QPainter*                   m_painter;
-    bool                        m_endOfShow;
+    QPainter*       m_painter;
+    bool            m_endOfShow;
 
 private slots:
 
@@ -142,9 +141,9 @@ private:
 
 private:
 
-    SharedData* m_sharedData;
+    SharedData*  m_sharedData;
 
-    uint        m_cacheSize;
+    uint         m_cacheSize;
 
     // -------------------------
 
@@ -179,6 +178,6 @@ private:
 
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif /* SLIDESHOW_H */

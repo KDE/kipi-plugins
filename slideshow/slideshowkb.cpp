@@ -24,6 +24,9 @@
  *
  * ============================================================ */
 
+#include "slideshowkb.h"
+#include "slideshowkb.moc"
+
 // C++ includes.
 
 #include <cassert>
@@ -52,8 +55,6 @@
 // Local includes.
 
 #include "imageloadthread.h"
-#include "slideshowkb.h"
-#include "slideshowkb.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -664,4 +665,4 @@ void SlideShowKB::slotClose()
     close();
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

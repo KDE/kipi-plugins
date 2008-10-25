@@ -22,6 +22,9 @@
  *
  * ============================================================ */
 
+#include "plugin_rawconverter.h"
+#include "plugin_rawconverter.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -41,14 +44,14 @@ extern "C"
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 
 // LibKDcraw includes.
@@ -68,8 +71,6 @@ extern "C"
 
 #include "singledialog.h"
 #include "batchdialog.h"
-#include "plugin_rawconverter.h"
-#include "plugin_rawconverter.moc"
 
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )

@@ -20,7 +20,16 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "slideshowgl.h"
+#include "slideshowgl.moc"
+
+// C++ includes
+
+#include <cmath>
+#include <cstdlib>
+
+// Qt includes.
+
 #include <Q3ValueList>
 #include <qtimer.h>
 #include <qpixmap.h>
@@ -37,21 +46,14 @@
 #include <QWheelEvent>
 #include <QDesktopWidget>
 
-// KDE includes
+// KDE includes.
+
 #include <kconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 #include <KConfigGroup>
-
-// C includes
-#include <cmath>
-#include <cstdlib>
-
-// Local includes
-#include "slideshowgl.h"
-#include "slideshowgl.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -1642,4 +1644,4 @@ void SlideShowGL::slotClose()
     close();
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

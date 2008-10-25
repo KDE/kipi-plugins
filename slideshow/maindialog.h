@@ -23,11 +23,11 @@
 #ifndef MAINDIALOG_H
 #define MAINDIALOG_H
 
-// KDE includes
+// KDE includes.
 #include "kio/previewjob.h"
 #include "kurl.h"
 
-// Local includes
+// Local includes.
 #include "common.h"
 #include "ui_maindialog.h"
 
@@ -83,6 +83,6 @@ private:
     QTime             m_totalTime;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif // MAINDIALOG_H

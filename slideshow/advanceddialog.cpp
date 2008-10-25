@@ -20,13 +20,15 @@
  *
  * ============================================================ */
 
-// Local includes
-#include "slideshow.h"
-#include "slideshowkb.h"
-#include "slideshowgl.h"
-#include "listimageitems.h"
 #include "advanceddialog.h"
 #include "advanceddialog.moc"
+
+// Local includes.
+
+#include "listimageitems.h"
+#include "slideshow.h"
+#include "slideshowgl.h"
+#include "slideshowkb.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -87,4 +89,4 @@ void AdvancedDialog::slotCacheToggled( void )
     m_cacheSizeSpinBox->setEnabled(isEnabled);
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

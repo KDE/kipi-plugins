@@ -34,21 +34,21 @@
 // Qt includes.
 
 #include <Q3ValueList>
-#include <QtOpenGL>
-#include <QTimer>
+#include <QKeyEvent>
+#include <QMap>
+#include <QMouseEvent>
 #include <QPair>
 #include <QString>
 #include <QStringList>
-#include <QMap>
-#include <QMouseEvent>
-#include <QKeyEvent>
+#include <QTimer>
+#include <QGLWidget>
 
 // Local includes.
 
-#include "kbeffect.h"
-#include "screenproperties.h"
 #include "common.h"
+#include "kbeffect.h"
 #include "playbackwidget.h"
+#include "screenproperties.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -186,36 +186,36 @@ private:
     int m_deskWidth;
     int m_deskHeight;
 
-    QStringList  m_commentsList;
+    QStringList         m_commentsList;
 
-    ScreenProperties* m_screen;
-    QTimer           *m_timer;
-    QTimer           *m_mouseMoveTimer;
-    ImageLoadThread  *m_imageLoadThread;
-    bool              m_haveImages;
+    ImageLoadThread*    m_imageLoadThread;
+    QTimer*             m_mouseMoveTimer;
+    QTimer*             m_timer;
+    ScreenProperties*   m_screen;
+    bool                m_haveImages;
 
-    Image  *m_image[2];
-    KBEffect *m_effect;
-    int     m_numKBEffectRepeated;
-    bool    m_zoomIn, m_initialized;
-    float   m_step;
+    Image*              m_image[2];
+    KBEffect*           m_effect;
+    int                 m_numKBEffectRepeated;
+    bool                m_zoomIn, m_initialized;
+    float               m_step;
 
-    bool    m_endOfShow;
-    bool    m_showingEnd;
+    bool                m_endOfShow;
+    bool                m_showingEnd;
 
     // settings from config file
-    int      m_delay;
-    bool     m_disableFadeInOut;
-    bool     m_disableCrossFade;
-    unsigned m_forceFrameRate;
+    int                 m_delay;
+    bool                m_disableFadeInOut;
+    bool                m_disableCrossFade;
+    unsigned            m_forceFrameRate;
 
-    SharedData* m_sharedData;
+    SharedData*         m_sharedData;
 
-    PlaybackWidget* m_playbackWidget;
+    PlaybackWidget*     m_playbackWidget;
 
     friend class KBEffect;
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif // SLIDESHOWKB_H

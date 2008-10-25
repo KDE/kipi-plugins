@@ -23,7 +23,7 @@
 #ifndef CAPTIONDIALOG_H
 #define CAPTIONDIALOG_H
 
-// Local includes
+// Local includes.
 #include "common.h"
 #include "ui_captiondialog.h"
 
@@ -52,6 +52,6 @@ private:
     SharedData*       m_sharedData;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif //CAPTIONDIALOG_H

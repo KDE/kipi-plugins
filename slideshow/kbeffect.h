@@ -108,6 +108,6 @@ public:
     virtual bool done();
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif // KBEFFECT_H

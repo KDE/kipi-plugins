@@ -20,29 +20,34 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "maindialog.h"
+#include "maindialog.moc"
+
+// Qt includes.
+
+#include <QFile>
+#include <QFileInfo>
 #include <QMap>
 #include <QString>
 #include <QStringList>
 #include <QTime>
-#include <QFile>
 
-// KDE includes
+// KDE includes.
+
+#include <kdebug.h>
+#include <kicon.h>
+#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kurl.h>
-#include <kiconloader.h>
-#include <kicon.h>
-#include <kdebug.h>
 
-// Local includes
-#include "slideshow.h"
-#include "slideshowkb.h"
-#include "slideshowgl.h"
-#include "listimageitems.h"
+// Local includes.
+
 #include "imagedialog.h"
 #include "imageviewer.h"
-#include "maindialog.h"
-#include "maindialog.moc"
+#include "listimageitems.h"
+#include "slideshow.h"
+#include "slideshowgl.h"
+#include "slideshowkb.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -624,4 +629,4 @@ void MainDialog::slotPrintCommentsToggled( void )
     m_sharedData->page_caption->setEnabled(m_printCommentsCheckBox->isChecked());
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

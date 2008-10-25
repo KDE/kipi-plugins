@@ -20,22 +20,26 @@
  *
  * ============================================================ */
 
+#include "soundtrackdialog.h"
+#include "soundtrackdialog.moc"
+
 // Phonon includes
+
 #include <Phonon/BackendCapabilities>
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
 
-// KDE includes
+// KDE includes.
+
 #include <kfile.h>
 #include <kicon.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-// Local includes
+// Local includes.
+
 #include "playbackwidget.h"
-#include "soundtrackdialog.h"
-#include "soundtrackdialog.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -401,4 +405,4 @@ void SoundtrackDialog::slotImageTotalTimeChanged( QTime imageTotalTime )
     compareTimes();
 }
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin

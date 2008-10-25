@@ -24,11 +24,20 @@
 #ifndef PLUGIN_TIMEADJUST_H
 #define PLUGIN_TIMEADJUST_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
 
 class KAction;
+
+namespace KIPI
+{
+    class Interface;
+}
 
 class Plugin_TimeAdjust : public KIPI::Plugin
 {

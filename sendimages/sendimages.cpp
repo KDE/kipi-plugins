@@ -22,6 +22,9 @@
  *
  * ============================================================ */
 
+#include "sendimages.h"
+#include "sendimages.moc"
+
 // Qt includes.
 
 #include <QFile>
@@ -49,8 +52,6 @@
 #include "batchprogressdialog.h"
 #include "imageresize.h"
 #include "emailsettingscontainer.h"
-#include "sendimages.h"
-#include "sendimages.moc"
 
 namespace KIPISendimagesPlugin
 {

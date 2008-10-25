@@ -23,7 +23,7 @@
 #ifndef SLIDESHOWCONFIG_H
 #define SLIDESHOWCONFIG_H
 
-// local includes
+// Local includes.
 #include "common.h"
 
 namespace KIPISlideShowPlugin
@@ -57,6 +57,6 @@ private:
     SlideShowConfigPrivate* d;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif //SLIDESHOWCONFIG_H

@@ -21,25 +21,24 @@
  *
  * ============================================================ */
 
-// QT includes
-#include <q3strlist.h>
-#include <q3dragobject.h>
-#include <q3listbox.h>
-#include <qstring.h>
-#include <qwidget.h>
-#include <qevent.h>
-#include <qfileinfo.h>
+#include "listimageitems.h"
+#include "listimageitems.moc"
+
+// Qt includes.
+
+#include <Q3StrList>
+#include <Q3DragObject>
+#include <QWidget>
+#include <QEvent>
+#include <QFileInfo>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QIcon>
 
-// KDE includes
+// KDE includes.
+
 #include <kurl.h>
 #include <kiconloader.h>
-
-// Local includes
-#include "listimageitems.h"
-#include "listimageitems.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -146,4 +145,4 @@ void ListImageItems::dropEvent(QDropEvent *e)
         emit addedDropItems(filesUrl);
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

@@ -20,21 +20,22 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "imageviewer.h"
+#include "imageviewer.moc"
+
+// Qt includes.
+
 #include <QWidget>
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
 #include <QString>
-#include <QtSvg>
+#include <QSvgRenderer>
 #include <QSize>
 
-// KDE includes
-#include <kstandarddirs.h>
+// KDE includes.
 
-// local includes
-#include "imageviewer.h"
-#include "imageviewer.moc"
+#include <kstandarddirs.h>
 
 namespace KIPISlideShowPlugin
 {
@@ -109,5 +110,5 @@ void ImageViewer::paintEvent(QPaintEvent *)
                                     (int) ((height() - m_pixmap.height()) / 2)), m_pixmap );
 }
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 

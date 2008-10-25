@@ -20,6 +20,9 @@
  * 
  * ============================================================ */
 
+#include "imageresize.h"
+#include "imageresize.moc"
+
 // Qt includes.
 
 #include <QImage>
@@ -50,8 +53,6 @@
 
 #include "pluginsversion.h"
 #include "kpwriteimage.h"
-#include "imageresize.h"
-#include "imageresize.moc"
 
 namespace KIPISendimagesPlugin
 {

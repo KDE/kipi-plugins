@@ -23,13 +23,14 @@
 #ifndef IMAGEVIEWER_H
 #define IMAGEVIEWER_H
 
-// QT includes
+// Qt includes.
+
 #include <QWidget>
 #include <QImage>
 #include <QPixmap>
 #include <QPainter>
-#include <QtSvg>
 
+class QSvgRenderer;
 
 namespace KIPISlideShowPlugin
 {
@@ -59,5 +60,5 @@ private:
     bool            m_clear;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 #endif

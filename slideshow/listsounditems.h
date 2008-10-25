@@ -23,7 +23,7 @@
 #ifndef LISTSOUNDITEM_H
 #define LISTSOUNDITEM_H
 
-// QT includes
+// Qt includes.
 #include <QTime>
 #include <QWidget>
 #include <QString>
@@ -36,7 +36,7 @@
 #include <Phonon/Global>
 #include <Phonon/MediaObject>
 
-// KDE includes
+// KDE includes.
 #include <kurl.h>
 
 namespace KIPISlideShowPlugin
@@ -92,6 +92,6 @@ protected:
     void dropEvent(QDropEvent *e);
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif /* LISTSOUNDITEM_H */

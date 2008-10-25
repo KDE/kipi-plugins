@@ -24,14 +24,14 @@
 #ifndef PLUGIN_SLIDESHOW_H
 #define PLUGIN_SLIDESHOW_H
 
-// KDE includes
+// KDE includes.
 #include <kurl.h>
 
-// libKIPI includes.
+// LibKIPI includes.
 #include <libkipi/plugin.h>
 #include <libkipi/interface.h>
 
-// local includes
+// Local includes.
 #include "common.h"
 
 class KAction;

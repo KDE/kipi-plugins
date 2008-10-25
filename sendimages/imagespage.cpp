@@ -22,6 +22,9 @@
 
 #define ICONSIZE 64
 
+#include "imagespage.h"
+#include "imagespage.moc"
+
 // Qt includes.
 
 #include <QPushButton>
@@ -47,8 +50,6 @@
 // Local includes.
 
 #include "imagedialog.h"
-#include "imagespage.h"
-#include "imagespage.moc"
 
 namespace KIPISendimagesPlugin
 {

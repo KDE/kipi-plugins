@@ -21,12 +21,15 @@
  *
  * ============================================================ */
 
+#include "actionthread.h"
+#include "actionthread.moc"
+
 // Qt includes.
 
-#include <QtDebug>
-#include <QMutexLocker>
 #include <QMutex>
+#include <QMutexLocker>
 #include <QWaitCondition>
+#include <QtDebug>
 
 // KDE includes.
 
@@ -41,8 +44,6 @@
 
 #include "actions.h"
 #include "rawdecodingiface.h"
-#include "actionthread.h"
-#include "actionthread.moc"
 
 namespace KIPIRawConverterPlugin
 {

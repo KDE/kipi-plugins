@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-// local includes
 #include "common.h"
 
 namespace KIPISlideShowPlugin

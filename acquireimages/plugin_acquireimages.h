@@ -23,11 +23,20 @@
 #ifndef PLUGIN_ACQUIREIMAGES_H
 #define PLUGIN_ACQUIREIMAGES_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
 
 class KAction;
+
+namespace KIPI
+{
+    class Interface;
+}
 
 class Plugin_AcquireImages : public KIPI::Plugin
 {

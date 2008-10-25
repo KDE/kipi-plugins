@@ -22,6 +22,9 @@
  *
  * ============================================================ */
 
+#include "slideplaybackwidget.h"
+#include "slideplaybackwidget.moc"
+
 // Qt includes.
 
 #include <QToolButton>
@@ -35,11 +38,6 @@
 #include <kicon.h>
 #include <klocale.h>
 #include <kdebug.h>
-
-// Local includes.
-
-#include "slideplaybackwidget.h"
-#include "slideplaybackwidget.moc"
 
 namespace KIPISlideShowPlugin
 {

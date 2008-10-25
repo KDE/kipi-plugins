@@ -23,6 +23,8 @@
  *
  * ============================================================ */
 
+#include "screenproperties.h"
+
 // Qt includes.
 
 #include <QApplication>
@@ -36,10 +38,6 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #endif
-
-// Local includes.
-
-#include "screenproperties.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -126,4 +124,4 @@ bool ScreenProperties::enableVSync()
     return false; // To please compiler.
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

@@ -23,6 +23,9 @@
  *
  * ============================================================ */
 
+#include "imageloadthread.h"
+#include "imageloadthread.moc"
+
 // Qt includes.
 
 #include <Q3ValueList>
@@ -36,8 +39,6 @@
 // Local includes.
 
 #include "slideshowkb.h"
-#include "imageloadthread.h"
-#include "imageloadthread.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -80,7 +81,7 @@ void ImageLoadThread::run()
 {
     QMutexLocker locker(&m_condLock);
 
-    // we enter the loop with m_needImage==true, so we will immediatly
+    // we enter the loop with m_needImage==true, so we will immediately
     // try to load an image
 
     while (true)
@@ -191,4 +192,4 @@ void ImageLoadThread::invalidateCurrentImageName()
     m_fileIndex++;
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

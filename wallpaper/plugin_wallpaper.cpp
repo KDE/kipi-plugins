@@ -21,6 +21,9 @@
  * 
  * ============================================================ */
 
+#include "plugin_wallpaper.h"
+#include "plugin_wallpaper.moc"
+
 // KDE includes.
 
 #include <klocale.h>
@@ -43,8 +46,6 @@
 // Local includes.
 
 #include "kdesktop_interface.h"
-#include "plugin_wallpaper.h"
-#include "plugin_wallpaper.moc"
 
 K_PLUGIN_FACTORY( WallPaperFactory, registerPlugin<Plugin_WallPaper>(); )
 K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )

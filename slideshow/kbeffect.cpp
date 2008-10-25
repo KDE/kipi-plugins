@@ -23,16 +23,11 @@
  *
  * ============================================================ */
 
-// C++ includes.
+#include "kbeffect.h"
+
+// C ANSI includes.
 
 #include <assert.h>
-
-// Qt includes.
-
-
-// KDE includes.
-
-#include "kbeffect.h"
 
 // Local includes.
 
@@ -209,4 +204,4 @@ void BlendKBEffect::advanceTime(float step)
         m_img[0]->m_opacity = 1.0;
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

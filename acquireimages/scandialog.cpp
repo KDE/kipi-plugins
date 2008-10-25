@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "scandialog.h"
+#include "scandialog.moc"
+
 // Qt includes.
 
 #include <QDateTime>
@@ -27,20 +30,20 @@
 
 // KDE includes.
 
-#include <ktoolinvocation.h>
 #include <kapplication.h>
-#include <kimageio.h>
-#include <kurl.h>
 #include <kconfig.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kfiledialog.h>
-#include <kpushbutton.h>
 #include <kdebug.h>
-#include <kiconloader.h>
+#include <kfiledialog.h>
 #include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kimageio.h>
+#include <klocale.h>
 #include <kmenu.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kstandarddirs.h>
+#include <ktoolinvocation.h>
+#include <kurl.h>
 
 // LibKSane includes.
 
@@ -55,8 +58,6 @@
 #include "kpaboutdata.h"
 #include "kpwriteimage.h"
 #include "pluginsversion.h"
-#include "scandialog.h"
-#include "scandialog.moc"
 
 namespace KIPIAcquireImagesPlugin
 {

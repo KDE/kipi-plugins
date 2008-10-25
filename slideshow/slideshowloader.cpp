@@ -20,20 +20,18 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "slideshowloader.h"
+
+// Qt includes.
 
 #include <qimage.h>
 #include <qmatrix.h>
 #include <qpainter.h>
 #include <q3valuelist.h>
 
-// KDE includes
+// KDE includes.
 
 #include <kdebug.h>
-
-// Local includes
-
-#include "slideshowloader.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -249,4 +247,4 @@ void SlideShowLoader::checkIsIn(int index)
     }
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

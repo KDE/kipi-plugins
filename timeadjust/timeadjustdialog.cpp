@@ -21,6 +21,9 @@
  * 
  * ============================================================ */
 
+#include "timeadjustdialog.h"
+#include "timeadjustdialog.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -31,34 +34,34 @@ extern "C"
 // Qt includes.
 
 #include <QButtonGroup>
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QGroupBox>
 #include <QCheckBox>
-#include <QRadioButton>
-#include <QFile>
-#include <QSpinBox>
-#include <QPushButton>
-#include <QToolButton>
 #include <QCloseEvent>
+#include <QFile>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QSpinBox>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 // KDE includes.
 
-#include <kmenu.h>
-#include <kvbox.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kapplication.h>
 #include <kaboutdata.h>
-#include <kiconloader.h>
-#include <kstandarddirs.h>
-#include <kdatetimewidget.h>
+#include <kapplication.h>
 #include <kconfig.h>
+#include <kdatetimewidget.h>
+#include <kdebug.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <khelpmenu.h>
+#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
+#include <kvbox.h>
 
 // LibKIPI includes.
 
@@ -73,8 +76,6 @@ extern "C"
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "timeadjustdialog.h"
-#include "timeadjustdialog.moc"
 
 namespace KIPITimeAdjustPlugin
 {

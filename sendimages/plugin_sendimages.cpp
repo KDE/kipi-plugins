@@ -20,17 +20,20 @@
  *
  * ============================================================ */
  
-// Include files for KDE
+#include "plugin_sendimages.h"
+#include "plugin_sendimages.moc"
 
-#include <klocale.h>
-#include <kapplication.h>
-#include <kglobal.h>
+// KDE includes.
+
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <kglobal.h>
+#include <klibloader.h>
+#include <klocale.h>
 
 // LibKIPI includes.
 
@@ -40,8 +43,6 @@
 
 #include "sendimages.h"
 #include "sendimagesdialog.h"
-#include "plugin_sendimages.h"
-#include "plugin_sendimages.moc"
 
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )

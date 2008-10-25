@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "slideshow.h"
+#include "slideshow.moc"
+
 // C++ includes.
 
 #include <cstdlib>
@@ -54,11 +57,6 @@
 #include <kdebug.h>
 #include <kurl.h>
 #include <KConfigGroup>
-
-// Local includes.
-
-#include "slideshow.h"
-#include "slideshow.moc"
 
 namespace KIPISlideShowPlugin
 {
@@ -1399,4 +1397,4 @@ void SlideShow::slotClose()
     close();
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

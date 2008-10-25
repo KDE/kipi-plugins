@@ -20,17 +20,18 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "playbackwidget.h"
+#include "playbackwidget.moc"
+
+// Qt includes.
+
 #include <QTime>
 #include <QUrl>
 #include <QKeyEvent>
 
-// KDE includes
-#include <kicon.h>
+// KDE includes.
 
-// Local includes
-#include "playbackwidget.h"
-#include "playbackwidget.moc"
+#include <kicon.h>
 
 namespace KIPISlideShowPlugin
 {
@@ -382,4 +383,4 @@ void PlaybackWidget::slotError( void )
     slotNext();
 }
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin

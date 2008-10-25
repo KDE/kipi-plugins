@@ -20,10 +20,15 @@
  *
  * ============================================================ */
 
-// QT includes
+#include "slideshowconfig.h"
+#include "slideshowconfig.moc"
+
+// Qt includes.
+
 #include <QFont>
 
-// KDE includes
+// KDE includes.
+
 #include <ktoolinvocation.h>
 #include <kconfig.h>
 #include <kiconloader.h>
@@ -33,12 +38,9 @@
 #include <kmenu.h>
 #include <kdebug.h>
 
-// libkipi includes
-#include "kpaboutdata.h"
+// LibKIPI includes.
 
-// Local includes
-#include "slideshowconfig.h"
-#include "slideshowconfig.moc"
+#include "kpaboutdata.h"
 
 namespace KIPISlideShowPlugin
 {
@@ -305,4 +307,4 @@ void SlideShowConfig::slotClose()
     close();
 }
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin

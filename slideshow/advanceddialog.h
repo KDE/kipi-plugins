@@ -23,7 +23,7 @@
 #ifndef ADVANCEDDIALOG_H
 #define ADVANCEDDIALOG_H
 
-// Local includes
+// Local includes.
 #include "common.h"
 #include "ui_advanceddialog.h"
 
@@ -54,6 +54,6 @@ private:
     SharedData*       m_sharedData;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif //ADVANCEDDIALOG_H

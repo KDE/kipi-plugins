@@ -26,7 +26,7 @@
 #ifndef IMAGELOADTHREAD_H
 #define IMAGELOADTHREAD_H
 
-// QT includes.
+// Qt includes.
 
 #include <Q3ValueList>
 #include <QImage>
@@ -102,6 +102,6 @@ private:
     QImage                            m_texture;
 };
 
-}  // NameSpace KIPISlideShowPlugin
+}  // namespace KIPISlideShowPlugin
 
 #endif // IMAGELOADTHREAD_H

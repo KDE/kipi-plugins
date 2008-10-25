@@ -23,7 +23,7 @@
 #ifndef PLAYBACKWIDGET_H
 #define PLAYBACKWIDGET_H
 
-// QT includes
+// Qt includes.
 #include <QKeyEvent>
 
 // Phonon includes
@@ -32,10 +32,10 @@
 #include <Phonon/Global>
 #include <Phonon/VolumeSlider>
 
-// KDE includes
+// KDE includes.
 #include <kurl.h>
 
-// Local includes
+// Local includes.
 #include "ui_playbackwidget.h"
 #include "common.h"
 
@@ -91,6 +91,6 @@ private:
     bool        m_canHide;
 };
 
-} // NameSpace KIPISlideShowPlugin
+} // namespace KIPISlideShowPlugin
 
 #endif // PLAYBACKWIDGET_H

@@ -21,20 +21,18 @@
  * 
  * ============================================================ */
 
+#include "previewwidget.h"
+#include "previewwidget.moc"
+
 // Qt includes.
 
-#include <QPainter>
 #include <QImage>
 #include <QPaintEvent>
+#include <QPainter>
 
 // KDE includes.
 
 #include <klocale.h>
-
-// Local includes.
-
-#include "previewwidget.h"
-#include "previewwidget.moc"
 
 namespace KIPIRawConverterPlugin
 {

@@ -21,17 +21,20 @@
  * 
  * ============================================================ */
 
+#include "plugin_timeadjust.h"
+#include "plugin_timeadjust.moc"
+
 // KDE includes.
 
-#include <kiconloader.h>
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <kiconloader.h>
+#include <klibloader.h>
+#include <klocale.h>
 
 // LibKIPI includes.
 
@@ -41,8 +44,6 @@
 // Local includes.
 
 #include "timeadjustdialog.h"
-#include "plugin_timeadjust.h"
-#include "plugin_timeadjust.moc"
 
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
 K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )

@@ -20,17 +20,20 @@
  *
  * ============================================================ */
 
+#include "plugin_acquireimages.h"
+#include "plugin_acquireimages.moc"
+
 // KDE includes.
 
-#include <kiconloader.h>
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <kiconloader.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 
 // LibKSane includes.
@@ -45,8 +48,6 @@
 // Local includes.
 
 #include "scandialog.h"
-#include "plugin_acquireimages.h"
-#include "plugin_acquireimages.moc"
 
 K_PLUGIN_FACTORY( AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>(); )
 K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )

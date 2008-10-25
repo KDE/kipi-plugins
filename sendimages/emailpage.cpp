@@ -20,6 +20,9 @@
  * 
  * ============================================================ */
 
+#include "emailpage.h"
+#include "emailpage.moc"
+
 // Qt includes.
 
 #include <QLabel>
@@ -35,11 +38,6 @@
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kiconloader.h>
-
-// Local includes.
-
-#include "emailpage.h"
-#include "emailpage.moc"
 
 namespace KIPISendimagesPlugin
 {

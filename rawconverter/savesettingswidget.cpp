@@ -20,24 +20,22 @@
  * 
  * ============================================================ */
 
+#include "savesettingswidget.h"
+#include "savesettingswidget.moc"
+
 // Qt includes.
 
-#include <QComboBox>
 #include <QButtonGroup>
-#include <QRadioButton>
-#include <QLabel>
+#include <QComboBox>
 #include <QGridLayout>
+#include <QLabel>
+#include <QRadioButton>
 #include <QVBoxLayout>
 
 // KDE includes.
 
 #include <kdialog.h>
 #include <klocale.h>
-
-// Local includes.
-
-#include "savesettingswidget.h"
-#include "savesettingswidget.moc"
 
 namespace KIPIRawConverterPlugin
 {
