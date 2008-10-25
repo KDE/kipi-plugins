@@ -71,6 +71,6 @@ private:
     double m_longitude;
 };
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
 
 #endif  // GPSDATACONTAINER_H

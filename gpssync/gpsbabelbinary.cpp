@@ -24,7 +24,7 @@
 
 #include <QProcess>
 
-// KDE includes
+// KDE includes.
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -32,7 +32,7 @@
 #include <kglobal.h>
 #include <kdebug.h>
 
-// Local includes
+// Local includes.
 
 #include "gpsbabelbinary.h"
 

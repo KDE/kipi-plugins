@@ -25,11 +25,11 @@
 #ifndef GALLERYCONFIG_H
 #define GALLERYCONFIG_H
 
-// Qt includes
+// Qt includes.
 #include <QLabel>
 #include <QCheckBox>
 
-//KDE includes
+// KDE includes.
 #include <KDialog>
 #include <KLineEdit>
 

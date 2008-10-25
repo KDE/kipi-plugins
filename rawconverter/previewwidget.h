@@ -60,6 +60,6 @@ private:
     PreviewWidgetPriv* d;
 };
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin
 
 #endif /* PREVIEWWIDGET_H */

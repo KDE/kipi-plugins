@@ -24,7 +24,7 @@
 #ifndef MPFORM_H
 #define MPFORM_H
 
-// Qt includes
+// Qt includes.
 
 #include <q3cstring.h>
 #include <qstring.h>

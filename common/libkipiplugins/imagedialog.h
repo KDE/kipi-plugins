@@ -28,7 +28,7 @@
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

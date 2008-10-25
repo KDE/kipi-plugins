@@ -126,6 +126,6 @@ void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
 
 void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation);
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif  // JPEGTRANSFORM_H

@@ -71,6 +71,6 @@ private:
     QString m_stdErr;
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* UTILS_H */

@@ -86,6 +86,6 @@ private:
     ActionThreadPriv *d;
 };
 
-}  // NameSpace KIPIRawConverterPlugin
+}  // namespace KIPIRawConverterPlugin
 
 #endif /* ACTIONTHREAD_H */

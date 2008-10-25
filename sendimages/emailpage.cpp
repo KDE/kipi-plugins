@@ -20,7 +20,7 @@
  * 
  * ============================================================ */
 
-// QT includes.
+// Qt includes.
 
 #include <QLabel>
 #include <QGroupBox>

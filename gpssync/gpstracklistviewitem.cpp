@@ -111,4 +111,4 @@ int GPSTrackListViewItem::id() const
     return d->data.id();
 }
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin

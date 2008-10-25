@@ -67,6 +67,6 @@ private:
     GPSTrackListViewItemPriv *d;
 };
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
 
 #endif /* GPSTRACKLISTVIEWITEM_H */

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-// Qt Includes.
+// Qt includes.
 
 #include <QFileInfo>
 
@@ -41,7 +41,7 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

@@ -32,11 +32,11 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
-// Local includes
+// Local includes.
 
 #include "sendimages.h"
 #include "sendimagesdialog.h"

@@ -58,7 +58,7 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <ktoolinvocation.h>

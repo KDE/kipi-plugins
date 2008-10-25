@@ -127,6 +127,6 @@ private:
     KUrl    m_url;
 };
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin
 
 #endif /* CLISTVIEWITEM_H */

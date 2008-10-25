@@ -93,6 +93,6 @@ private:
     BatchDialogPriv* d;
 };
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin
 
 #endif /* BATCHDIALOG_H */

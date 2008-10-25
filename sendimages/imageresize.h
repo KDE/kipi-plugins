@@ -71,6 +71,6 @@ private:
     ImageResizePriv *d;
 };
 
-}  // NameSpace KIPISendimagesPlugin
+}  // namespace KIPISendimagesPlugin
 
 #endif /* IMAGERESIZE_H */

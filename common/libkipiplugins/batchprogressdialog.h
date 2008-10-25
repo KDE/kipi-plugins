@@ -66,6 +66,6 @@ private:
     BatchProgressDialogPriv *d;
 };
 
-}  // NameSpace KIPIPlugins
+}  // namespace KIPIPlugins
 
 #endif  // BATCHPROGRESSDIALOG_H

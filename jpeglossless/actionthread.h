@@ -72,6 +72,6 @@ private:
     ActionThreadPriv *d;
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* ACTIONTHREAD_H */

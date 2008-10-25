@@ -28,7 +28,7 @@
 
 #include <iostream>
 
-//QT includes
+// Qt includes.
 
 #include <QtOpenGL>
 #include <QDir>
@@ -46,13 +46,13 @@
 #include <kurl.h>
 #include <kmimetype.h>
 
-// Kipi includes
+// LibKIPI includes.
 
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-//local includes
+// Local includes.
 
 #include "texture.h"
 

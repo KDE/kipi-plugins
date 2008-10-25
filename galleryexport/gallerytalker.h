@@ -25,11 +25,11 @@
 #ifndef GALLERYTALKER_H
 #define GALLERYTALKER_H
 
-// KDE includes
+// KDE includes.
 #include <KUrl>
 #include <kio/job.h>
 
-// Qt includes
+// Qt includes.
 #include <QObject>
 #include <QList>
 

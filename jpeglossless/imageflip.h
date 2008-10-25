@@ -64,6 +64,6 @@ private:
     KTemporaryFile m_tmpFile;
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* IMAGEFLIP_H */

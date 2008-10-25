@@ -45,7 +45,7 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

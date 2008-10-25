@@ -35,7 +35,7 @@ extern "C"
 
 #include <cstdlib>
 
-// Qt Includes.
+// Qt includes.
 
 #include <QFileInfo>
 
@@ -60,7 +60,7 @@ extern "C"
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

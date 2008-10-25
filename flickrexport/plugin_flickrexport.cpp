@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-// C ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -40,7 +40,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 
-// libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

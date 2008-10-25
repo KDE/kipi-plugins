@@ -21,12 +21,12 @@
  * 
  * ============================================================ */
 
-// QT include files
+// Qt includes.
 
 #include <QFrame>
 #include <QCloseEvent>
 
-// KDE include files
+// KDE includes.
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -40,7 +40,7 @@
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-// Local include files
+// Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"

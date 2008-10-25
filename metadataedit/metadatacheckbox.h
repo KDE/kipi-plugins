@@ -26,7 +26,7 @@
 #ifndef METADATA_CHECKBOX_H
 #define METADATA_CHECKBOX_H
 
-// QT includes.
+// Qt includes.
 
 #include <QCheckBox>
 

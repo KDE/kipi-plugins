@@ -68,6 +68,6 @@ public:
     Action  action;
 };
 
-}  // NameSpace KIPIDNGConverterPlugin
+}  // namespace KIPIDNGConverterPlugin
 
 #endif /* ACTIONS_H */

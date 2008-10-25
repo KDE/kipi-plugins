@@ -72,6 +72,6 @@ private:
     SettingsWidgetPriv* d;
 };
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin
 
 #endif /* SETTINGSWIDGET_H */

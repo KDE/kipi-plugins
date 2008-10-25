@@ -286,4 +286,4 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     return false;
 }
 
-}  // NameSpace KIPISendimagesPlugin
+}  // namespace KIPISendimagesPlugin

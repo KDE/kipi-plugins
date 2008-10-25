@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kvbox.h>
 
-// Local includes
+// Local includes.
 
 #include "batchprogressdialog.h"
 #include "batchprogressdialog.moc"
@@ -151,4 +151,4 @@ void BatchProgressDialog::setProgress(int current, int total)
     d->progress->setValue(current);
 }
 
-}  // NameSpace KIPIPlugins
+}  // namespace KIPIPlugins

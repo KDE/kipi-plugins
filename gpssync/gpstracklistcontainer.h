@@ -87,6 +87,6 @@ private:
 
 typedef QMap<QDateTime, GPSTrackListItem> GPSTrackList;
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
 
 #endif  // GPSTRACKLISTCONTAINER_H

@@ -69,6 +69,6 @@ protected:
     GPSDataMap m_GPSDataMap;
 };
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
 
 #endif  // GPSDATAPARSER_H

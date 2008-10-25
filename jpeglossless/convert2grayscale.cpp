@@ -27,7 +27,7 @@
 
 #include <cstdio>
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C" 
 {
@@ -251,4 +251,4 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     return false;
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

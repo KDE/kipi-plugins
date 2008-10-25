@@ -26,7 +26,7 @@
 #include <cstdio>
 #include <cmath>
 
-// Qt Includes.
+// Qt includes.
 
 #include <QByteArray>
 #include <QDateTime>

@@ -21,7 +21,7 @@
 #ifndef GALLERY_ALBUM_H
 #define GALLERY_ALBUM_H
 
-// Qt includes
+// Qt includes.
 #include <QDialog>
 #include <QWidget>
 

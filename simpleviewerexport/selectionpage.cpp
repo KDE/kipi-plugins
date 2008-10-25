@@ -20,7 +20,7 @@
  * 
  * ============================================================ */
 
-// QT includes.
+// Qt includes.
 
 #include <QLayout>
 
@@ -29,7 +29,7 @@
 #include <klocale.h>
 #include <kdialog.h>
 
-// KIPI include files
+// LibKIPI includes.
 
 #include <libkipi/imagecollectionselector.h>
 

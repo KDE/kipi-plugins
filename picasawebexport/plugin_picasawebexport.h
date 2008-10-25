@@ -24,7 +24,7 @@
 #ifndef PLUGIN_PICASAWEBEXPORT_H
 #define PLUGIN_PICASAWEBEXPORT_H
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

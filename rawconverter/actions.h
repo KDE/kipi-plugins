@@ -69,6 +69,6 @@ public:
     Action  action;
 };
 
-}  // NameSpace KIPIRawConverterPlugin
+}  // namespace KIPIRawConverterPlugin
 
 #endif /* ACTIONS_H */

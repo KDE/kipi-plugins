@@ -46,7 +46,7 @@
 #include <kapplication.h>
 #include <kstandardguiitem.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

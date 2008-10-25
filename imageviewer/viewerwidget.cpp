@@ -23,7 +23,7 @@
 
 #undef PERFORMANCE_ANALYSIS
 
-// Qt includes
+// Qt includes.
 
 #include <QLabel>
 #include <QBitmap>
@@ -37,7 +37,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 
-// local includes.
+// Local includes.
 
 //#define PERFORMANCE_ANALYSIS
 #ifdef PERFORMANCE_ANALYSIS

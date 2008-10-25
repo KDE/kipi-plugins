@@ -272,4 +272,4 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
     return true;
 }
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin

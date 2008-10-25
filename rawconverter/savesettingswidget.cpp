@@ -168,4 +168,4 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     }
 }
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin

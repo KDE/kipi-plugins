@@ -25,7 +25,7 @@
 #ifndef GALLERYMPFORM_H
 #define GALLERYMPFORM_H
 
-// Qt includes
+// Qt includes.
 #include <QByteArray>
 #include <QString>
 

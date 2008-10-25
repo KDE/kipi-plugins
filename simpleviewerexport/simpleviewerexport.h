@@ -24,7 +24,7 @@
 #ifndef SIMPLEVIEWEREXPORT_H
 #define SIMPLEVIEWEREXPORT_H
 
-// QT includes
+// Qt includes.
 
 #include <QObject>
 #include <QList>
@@ -41,7 +41,7 @@
 
 #include <libkexiv2/kexiv2.h>
 
-// KIPI includes
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -64,7 +64,7 @@ extern "C"
 #include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
@@ -727,4 +727,4 @@ void SingleDialog::slotAction(const ActionData& ad)
     }
 }
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin

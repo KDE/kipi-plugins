@@ -22,7 +22,7 @@
  * ============================================================ */
 
 
-// local includes.
+// Local includes.
 #include "gallerywindow.h"
 #include "imagedialog.h"
 #include "kpaboutdata.h"
@@ -32,10 +32,10 @@
 #include "galleryconfig.h"
 #include "albumdlg.h"
 
-// KIPI include files
+// LibKIPI includes.
 #include <libkipi/interface.h>
 
-// Qt includes
+// Qt includes.
 #include <Qt>
 #include <QDialog>
 #include <QPushButton>
@@ -48,7 +48,7 @@
 #include <QInputDialog>
 #include <QFileInfo>
 
-// KDE includes
+// KDE includes.
 #include <KAboutData>
 #include <KHelpMenu>
 #include <KIcon>

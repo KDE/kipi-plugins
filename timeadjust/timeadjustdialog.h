@@ -78,7 +78,7 @@ private:
     TimeAdjustDialogPrivate *d;
 };
 
-}  // NameSpace KIPITimeAdjustPlugin
+}  // namespace KIPITimeAdjustPlugin
 
 #endif /* TIMEADJUSTDIALOG_H */
 

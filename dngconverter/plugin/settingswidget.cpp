@@ -206,4 +206,4 @@ void SettingsWidget::setConflictRule(SettingsWidget::ConflictRule r)
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin

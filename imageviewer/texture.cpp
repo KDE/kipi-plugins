@@ -23,12 +23,12 @@
 
 #undef PERFORMANCE_ANALYSIS
 
-// Qt includes
+// Qt includes.
 
 #include <qmatrix.h>
 #include <qfileinfo.h>
 
-//KDE includes
+// KDE includes.
 
 #include <kdebug.h>
 
@@ -41,12 +41,12 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// libkipi includes
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes
+// Local includes.
 #ifdef PERFORMANCE_ANALYSIS
     #include "timer.h"
 #endif

@@ -27,7 +27,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -434,4 +434,4 @@ void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOri
     }
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

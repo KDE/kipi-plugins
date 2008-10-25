@@ -23,7 +23,7 @@
 #ifndef PLUGIN_DNGCONVERTER_H
 #define PLUGIN_DNGCONVERTER_H
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

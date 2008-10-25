@@ -78,6 +78,6 @@ private:
     SaveSettingsWidgetPriv* d;
 };
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin
 
 #endif /* SAVESETTINGSWIDGET_H */

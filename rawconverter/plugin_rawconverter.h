@@ -25,7 +25,7 @@
 #ifndef PLUGIN_RAWCONVERTER_H
 #define PLUGIN_RAWCONVERTER_H
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

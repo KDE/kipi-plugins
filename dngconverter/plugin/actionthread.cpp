@@ -325,4 +325,4 @@ void ActionThread::run()
     }
 }
 
-}  // NameSpace KIPIDNGConverterPlugin
+}  // namespace KIPIDNGConverterPlugin

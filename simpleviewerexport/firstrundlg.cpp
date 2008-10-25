@@ -21,13 +21,13 @@
  *
  * ============================================================ */
 
-// QT include files
+// Qt includes.
 
 #include <QFrame>
 #include <QLayout>
 #include <QLabel>
 
-// KDE include files
+// KDE includes.
 
 #include <klocale.h>
 #include <kurllabel.h>
@@ -37,12 +37,12 @@
 #include <kpushbutton.h>
 #include <kmenu.h>
 
-// KIPI include files
+// LibKIPI includes.
 
 #include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
 
-// Local include files
+// Local includes.
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"

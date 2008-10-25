@@ -24,7 +24,7 @@
 #ifndef PLUGIN_SIMPLEVIEWER_H
 #define PLUGIN_SIMPLEVIEWER_H
 
-// LibKIPI includes
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

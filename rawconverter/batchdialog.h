@@ -29,7 +29,7 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-// Local includes
+// Local includes.
 
 #include "kpaboutdata.h"
 
@@ -101,6 +101,6 @@ private:
     BatchDialogPriv* d;
 };
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin
 
 #endif /* BATCHDIALOG_H */

@@ -22,14 +22,14 @@
  * ============================================================ */
 
 
-// local includes
+// Local includes.
 #include "galleries.h"
 
-// Qt includes
+// Qt includes.
 #include <QString>
 #include <QWidget>
 
-// KDE includes
+// KDE includes.
 #include <KDebug>
 #include <KConfig>
 #include <KConfigGroup>

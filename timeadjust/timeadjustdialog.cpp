@@ -21,7 +21,7 @@
  * 
  * ============================================================ */
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -60,7 +60,7 @@ extern "C"
 #include <khelpmenu.h>
 #include <ktoolinvocation.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
@@ -635,4 +635,4 @@ QDateTime TimeAdjustDialog::updateTime(const KUrl& url, const QDateTime& time) c
     }
 }
 
-}  // NameSpace KIPITimeAdjustPlugin
+}  // namespace KIPITimeAdjustPlugin

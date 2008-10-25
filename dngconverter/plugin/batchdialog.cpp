@@ -49,7 +49,7 @@
 #include <ktoolinvocation.h>
 #include <kpushbutton.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
@@ -690,4 +690,4 @@ CListViewItem* BatchDialog::findItem(const KUrl& url)
     return 0;
 }
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin

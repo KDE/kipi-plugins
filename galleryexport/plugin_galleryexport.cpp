@@ -27,7 +27,7 @@
 #include "gallerywindow.h"
 #include "galleryconfig.h"
 
-// libkipi includes.
+// LibKIPI includes.
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 

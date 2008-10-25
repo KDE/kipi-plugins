@@ -29,7 +29,7 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
@@ -80,6 +80,6 @@ private:
     GPSSyncDialogPriv *d;
 };
 
-}  // NameSpace KIPIGPSSyncPlugin
+}  // namespace KIPIGPSSyncPlugin
 
 #endif /* GPSSYNCDIALOG_H */

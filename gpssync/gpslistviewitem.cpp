@@ -251,4 +251,4 @@ void GPSListViewItem::setThumbnail(const QPixmap& pix)
     setIcon(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin

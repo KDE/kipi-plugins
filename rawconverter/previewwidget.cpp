@@ -164,4 +164,4 @@ void PreviewWidget::resizeEvent(QResizeEvent*)
     update();
 }
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin

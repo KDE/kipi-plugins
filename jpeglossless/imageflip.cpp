@@ -27,7 +27,7 @@
 
 #include <cstdio>
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C" 
 {
@@ -47,7 +47,7 @@ extern "C"
 #include <kdebug.h>
 #include <klocale.h>
 
-// Local includes
+// Local includes.
 
 #include "transupp.h"
 #include "jpegtransform.h"
@@ -206,4 +206,4 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     return false;
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

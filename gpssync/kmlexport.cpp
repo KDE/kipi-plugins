@@ -46,7 +46,7 @@ extern "C"
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKipi includes
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 #include <libkipi/imageinfo.h>

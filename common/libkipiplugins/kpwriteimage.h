@@ -33,7 +33,7 @@
 #include <cstdlib>
 #include <cstdarg>
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -43,7 +43,7 @@ extern "C"
 #include <png.h>
 }
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include "kipiplugins_export.h"
 
@@ -108,6 +108,6 @@ private:
     KPWriteImagePriv* d;
 };
 
-}  // NameSpace KIPIPlugins
+}  // namespace KIPIPlugins
 
 #endif /* KIPI_WRITE_IMAGE_H */

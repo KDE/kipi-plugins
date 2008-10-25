@@ -58,7 +58,7 @@
 
 #include <libkexiv2/kexiv2.h>
 
-// local includes.
+// Local includes.
 
 #include "dngwriterprivate.h"
 #include "dngwriterhost.h"

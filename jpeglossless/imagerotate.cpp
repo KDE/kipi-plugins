@@ -28,7 +28,7 @@
 
 #include <cstdio>
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -230,4 +230,4 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
     return false;
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

@@ -35,11 +35,11 @@
 
 #include <kdialog.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
-// Local includes
+// Local includes.
 
 #include "kpaboutdata.h"
 

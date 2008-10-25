@@ -29,7 +29,7 @@
 #include <QTextCodec>
 #include <QProcess>
 
-// KDE includes
+// KDE includes.
 
 #include <kguiitem.h>
 #include <ktoolinvocation.h>
@@ -40,7 +40,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
@@ -561,4 +561,4 @@ void SendImages::slotCleanUp()
     KTempDir::removeDir(d->settings.tempPath);
 }
 
-}  // NameSpace KIPISendimagesPlugin
+}  // namespace KIPISendimagesPlugin

@@ -1120,6 +1120,6 @@ static const unsigned char DNGLOGO_pixel_data[96 * 65 * 4 + 1] =
     "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
     "\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
 
-} // NameSpace KIPIDNGConverterPlugin
+} // namespace KIPIDNGConverterPlugin
 
 #endif /* DNGLOGO_H */

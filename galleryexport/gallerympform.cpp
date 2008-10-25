@@ -21,17 +21,17 @@
  * ============================================================ */
 
 
-// local includes
+// Local includes.
 #include "gallerympform.h"
 #include "gallerytalker.h"
 
-// KDE includes
+// KDE includes.
 #include <KDebug>
 #include <KMimeType>
 #include <KUrl>
 #include <KRandom>
 
-// Qt includes
+// Qt includes.
 #include <QFile>
 #include <QFileInfo>
 #include <QTextStream>

@@ -79,6 +79,6 @@ private:
     ActionThreadPriv *d;
 };
 
-}  // NameSpace KIPIDNGConverterPlugin
+}  // namespace KIPIDNGConverterPlugin
 
 #endif /* ACTIONTHREAD_H */

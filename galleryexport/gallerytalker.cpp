@@ -25,7 +25,7 @@
 #include <cstring>
 #include <cstdio>
 
-// Qt includes
+// Qt includes.
 #include <QByteArray>
 #include <QTextStream>
 #include <QFile>
@@ -33,7 +33,7 @@
 #include <QRegExp>
 #include <QImageReader>
 
-// KDE includes
+// KDE includes.
 #include <KLocale>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -44,7 +44,7 @@
 // LibKExiv2 includes.
 #include <libkexiv2/kexiv2.h>
 
-// local includes
+// Local includes.
 #include "gallerytalker.h"
 #include "galleryitem.h"
 #include "gallerympform.h"

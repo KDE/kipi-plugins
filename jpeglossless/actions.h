@@ -49,6 +49,6 @@ enum FlipAction
     FlipVertical   = 1
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* ACTIONS_H */

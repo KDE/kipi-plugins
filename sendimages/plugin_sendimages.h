@@ -23,7 +23,7 @@
 #ifndef PLUGIN_SENDIMAGES_H
 #define PLUGIN_SENDIMAGES_H
 
-// KIPI includes
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

@@ -23,7 +23,7 @@
 
 //#define ENABLE_DEBUG_MESSAGES 1
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -1009,4 +1009,4 @@ void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_li
 #endif
 }
 
-}  // NameSpace KIPIPlugins
+}  // namespace KIPIPlugins

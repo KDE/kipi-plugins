@@ -58,6 +58,6 @@ private:
     KTemporaryFile m_tmpFile;
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* convert2grayscale_H */

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -308,4 +308,4 @@ bool Utils::deleteDir(const QString& dirPath)
     return true;
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

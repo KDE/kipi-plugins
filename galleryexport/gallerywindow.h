@@ -24,10 +24,10 @@
 #ifndef GALLERYWINDOW_H
 #define GALLERYWINDOW_H
 
-// KDE includes
+// KDE includes.
 #include <KDialog>
 
-// Qt includes
+// Qt includes.
 #include <QList>
 #include <QProgressDialog>
 

@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-// QT includes.
+// Qt includes.
 
 #include <QLayout>
 #include <QLabel>

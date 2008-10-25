@@ -76,6 +76,6 @@ private:
     SendImagesPriv *d;
 };
 
-}  // NameSpace KIPISendimagesPlugin
+}  // namespace KIPISendimagesPlugin
 
 #endif  // SENDIMAGES_H

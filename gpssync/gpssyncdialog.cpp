@@ -603,4 +603,4 @@ void GPSSyncDialog::slotApply()
     while (item);
 }
 
-}  // NameSpace KIPIGPSSyncPlugin
+}  // namespace KIPIGPSSyncPlugin

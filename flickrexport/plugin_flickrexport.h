@@ -24,7 +24,7 @@
 #ifndef PLUGIN_FLICKREXPORT_H
 #define PLUGIN_FLICKREXPORT_H
 
-// libKIPI includes.
+// LibKIPI includes.
 
 #include <libkipi/plugin.h>
 

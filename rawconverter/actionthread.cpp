@@ -350,4 +350,4 @@ void ActionThread::run()
     }
 }
 
-}  // NameSpace KIPIRawConverterPlugin
+}  // namespace KIPIRawConverterPlugin

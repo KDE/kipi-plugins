@@ -21,11 +21,11 @@
  *
  * ============================================================ */
 
-// QT includes
+// Qt includes.
 
 #include <qmessagebox.h>
 
-// KDE includes
+// KDE includes.
 
 #include <kdebug.h>
 #include <kaction.h>
@@ -34,14 +34,14 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 
-// kipi includes
+// LibKIPI includes.
 
 #include <libkipi/imageinfo.h>
 //TODO new:necessary
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// local includes
+// Local includes.
 
 #include "viewerwidget.h"
 #include "plugin_viewer.h"

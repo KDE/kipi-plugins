@@ -26,10 +26,10 @@
 #ifndef PLUGIN_GALLERYEXPORT_H
 #define PLUGIN_GALLERYEXPORT_H
 
-// libKIPI includes.
+// LibKIPI includes.
 #include <libkipi/plugin.h>
 
-// Qt includes
+// Qt includes.
 #include <QVariantList>
 
 class KAction;

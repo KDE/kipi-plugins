@@ -21,7 +21,7 @@
  * 
  * ============================================================ */
 
-// QT includes
+// Qt includes.
 
 #include <QFile>
 #include <QDir>
@@ -29,7 +29,7 @@
 #include <QDataStream>
 #include <QDomText>
 
-// KDE includes
+// KDE includes.
 
 #include <kstandardguiitem.h>
 #include <kdebug.h>
@@ -44,7 +44,7 @@
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
 
-// KIPI includes
+// LibKIPI includes.
 
 #include <libkipi/imageinfo.h>
 
@@ -57,7 +57,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes
+// Local includes.
 
 #include "batchprogressdialog.h"
 #include "pluginsversion.h"

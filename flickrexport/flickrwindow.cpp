@@ -52,7 +52,7 @@
 #include <kwallet.h>
 #include <kpushbutton.h>
 
-// Libkipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <ktoolinvocation.h>

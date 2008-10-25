@@ -46,7 +46,7 @@
 
 #include <libksane/ksane.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 

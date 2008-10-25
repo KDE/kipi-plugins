@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-// C Ansi includes.
+// C ANSI includes.
 
 extern "C"
 {
@@ -40,7 +40,7 @@ extern "C"
 
 #include <kdebug.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
@@ -283,4 +283,4 @@ void ActionThread::run()
     }
 }
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin

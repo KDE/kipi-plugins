@@ -63,6 +63,6 @@ private:
     KTemporaryFile m_tmpFile;
 };
 
-}  // NameSpace KIPIJPEGLossLessPlugin
+}  // namespace KIPIJPEGLossLessPlugin
 
 #endif /* IMAGEROTATE_H */

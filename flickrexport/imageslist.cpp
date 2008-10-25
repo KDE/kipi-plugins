@@ -22,7 +22,7 @@
 
 #define ICONSIZE 64
 
-// QT includes.
+// Qt includes.
 
 #include <QPushButton>
 #include <QPainter>

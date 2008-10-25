@@ -21,7 +21,7 @@
  * 
  * ============================================================ */
 
-// KDE includes
+// KDE includes.
 
 #include <klocale.h>
 #include <kactionmenu.h>
@@ -35,12 +35,12 @@
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
 
-// KIPI includes
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes
+// Local includes.
 
 #include "kdesktop_interface.h"
 #include "plugin_wallpaper.h"

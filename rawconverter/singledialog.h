@@ -103,6 +103,6 @@ private:
     SingleDialogPriv* d;
 };
 
-} // NameSpace KIPIRawConverterPlugin
+} // namespace KIPIRawConverterPlugin
 
 #endif // SINGLEDIALOG_H

@@ -24,7 +24,7 @@
 
 #include <kdebug.h>
 
-// local includes.
+// Local includes.
 
 #include "dngwriterhost.h"
 

@@ -33,7 +33,7 @@
 
 #include <kurl.h>
 
-// LibKipi includes.
+// LibKIPI includes.
 
 #include <libkipi/interface.h>
 
@@ -76,6 +76,6 @@ private:
     GPSListViewItemPriv *d;
 };
 
-} // NameSpace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
 
 #endif /* GPSLISTVIEWITEM_H */
