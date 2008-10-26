@@ -74,7 +74,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
     }
     while (fabs(s[0] - s[1]) < 0.15 && ++i < 10);
 
-    if (zoomIn xor (s[0] > s[1]))
+    if (!(zoomIn || (s[0] > s[1])))
     {
         double tmp = s[0];
         s[0]       = s[1];

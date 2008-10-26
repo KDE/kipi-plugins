@@ -28,8 +28,11 @@
 #define SLIDESHOWKB_H
 
 // C++ includes.
-
+#ifndef _MSC_VER
 #include <cstdlib>
+#else
+#include <winsock2.h>
+#endif
 
 // Qt includes.
 
