@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -39,7 +39,7 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -93,19 +93,19 @@ XMPContent::XMPContent(QWidget* parent)
     d->headlineCheck = new QCheckBox(i18n("Headline:"), this);
     d->headlineEdit  = new KLineEdit(this);
     d->headlineEdit->setClearButtonShown(true);
-    d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis."));
-    
+    d->headlineEdit->setWhatsThis(i18n("Enter here the content synopsis."));
+
     // --------------------------------------------------------
 
-    d->captionEdit          = new AltLangStringsEdit(this, i18n("Caption:"), 
-                                                     i18n("<p>Enter the content description."));
+    d->captionEdit          = new AltLangStringsEdit(this, i18n("Caption:"),
+                                                     i18n("Enter the content description."));
 
     QGroupBox *syncOptions  = new QGroupBox(i18n("Default Language Caption Options"), this);
     QVBoxLayout *vlay       = new QVBoxLayout(syncOptions);
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), syncOptions);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
-                                            KGlobal::mainComponent().aboutData()->programName()), 
+                                            KGlobal::mainComponent().aboutData()->programName()),
                                             syncOptions);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), syncOptions);
 
@@ -120,24 +120,24 @@ XMPContent::XMPContent(QWidget* parent)
     d->writerCheck = new QCheckBox(i18n("Caption Writer:"), this);
     d->writerEdit  = new KLineEdit(this);
     d->writerEdit->setClearButtonShown(true);
-    d->writerEdit->setWhatsThis(i18n("<p>Enter the name of the caption author."));
-        
+    d->writerEdit->setWhatsThis(i18n("Enter the name of the caption author."));
+
     // --------------------------------------------------------
 
-    grid->addWidget(d->headlineCheck, 0, 0, 1, 1);
-    grid->addWidget(d->headlineEdit, 0, 1, 1, 2);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 1, 0, 1, 3);
-    grid->addWidget(d->captionEdit, 2, 0, 1, 3);
-    grid->addWidget(syncOptions, 3, 0, 1, 3);
-    grid->addWidget(d->writerCheck, 4, 0, 1, 1);
-    grid->addWidget(d->writerEdit, 4, 1, 1, 2);
-    grid->setRowStretch(5, 10);  
-    grid->setColumnStretch(2, 10);                     
+    grid->addWidget(d->headlineCheck,                       0, 0, 1, 1);
+    grid->addWidget(d->headlineEdit,                        0, 1, 1, 2);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   1, 0, 1, 3);
+    grid->addWidget(d->captionEdit,                         2, 0, 1, 3);
+    grid->addWidget(syncOptions,                            3, 0, 1, 3);
+    grid->addWidget(d->writerCheck,                         4, 0, 1, 1);
+    grid->addWidget(d->writerEdit,                          4, 1, 1, 2);
+    grid->setRowStretch(5, 10);
+    grid->setColumnStretch(2, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
-                                     
+
     connect(d->captionEdit, SIGNAL(signalDefaultLanguageEnabled(bool)),
             this, SLOT(slotSyncOptionsEnabled(bool)));
 
@@ -157,12 +157,12 @@ XMPContent::XMPContent(QWidget* parent)
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
-    
+
     // --------------------------------------------------------
 
     connect(d->captionEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
@@ -216,12 +216,12 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
-    KExiv2Iface::KExiv2::AltLangMap map;   
+    KExiv2Iface::KExiv2::AltLangMap map;
     QString data;
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);
@@ -234,7 +234,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     if (!map.isEmpty())
         d->captionEdit->setValues(map);
 
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.CaptionWriter", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.CaptionWriter", false);
     if (!data.isNull())
     {
         d->writerEdit->setText(data);

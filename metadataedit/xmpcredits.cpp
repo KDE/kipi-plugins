@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -35,7 +35,7 @@
 #include <kdialog.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -113,18 +113,18 @@ XMPCredits::XMPCredits(QWidget* parent)
     d = new XMPCreditsPriv;
 
     QGridLayout* grid = new QGridLayout(this);
-    
+
     // --------------------------------------------------------
 
-    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"), 
-                                          i18n("<p>Set here the name of content creator."));
+    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"),
+                                          i18n("Set here the name of content creator."));
 
     // --------------------------------------------------------
 
     d->bylineTitleCheck = new QCheckBox(i18n("Byline Title:"), this);
     d->bylineTitleEdit  = new KLineEdit(this);
     d->bylineTitleEdit->setClearButtonShown(true);
-    d->bylineTitleEdit->setWhatsThis(i18n("<p>Set here the title of content creator."));
+    d->bylineTitleEdit->setWhatsThis(i18n("Set here the title of content creator."));
 
     // --------------------------------------------------------
 
@@ -134,37 +134,37 @@ XMPCredits::XMPCredits(QWidget* parent)
     d->emailCheck = new QCheckBox(i18n("E-mail:"), contactBox);
     d->emailEdit  = new KLineEdit(contactBox);
     d->emailEdit->setClearButtonShown(true);
-    d->emailEdit->setWhatsThis(i18n("<p>Set here the contact e-mail."));
+    d->emailEdit->setWhatsThis(i18n("Set here the contact e-mail."));
 
     d->urlCheck = new QCheckBox(i18n("URL:"), contactBox);
     d->urlEdit  = new KLineEdit(contactBox);
     d->urlEdit->setClearButtonShown(true);
-    d->urlEdit->setWhatsThis(i18n("<p>Set here the contact URL."));
+    d->urlEdit->setWhatsThis(i18n("Set here the contact URL."));
 
     d->phoneCheck = new QCheckBox(i18n("Phone:"), contactBox);
     d->phoneEdit  = new KLineEdit(contactBox);
     d->phoneEdit->setClearButtonShown(true);
-    d->phoneEdit->setWhatsThis(i18n("<p>Set here the contact phone."));
+    d->phoneEdit->setWhatsThis(i18n("Set here the contact phone."));
 
     d->addressCheck = new QCheckBox(i18n("Address:"), contactBox);
     d->addressEdit  = new KLineEdit(contactBox);
     d->addressEdit->setClearButtonShown(true);
-    d->addressEdit->setWhatsThis(i18n("<p>Set here the contact address."));
+    d->addressEdit->setWhatsThis(i18n("Set here the contact address."));
 
     d->postalCodeCheck = new QCheckBox(i18n("Postal code:"), contactBox);
     d->postalCodeEdit  = new KLineEdit(contactBox);
     d->postalCodeEdit->setClearButtonShown(true);
-    d->postalCodeEdit->setWhatsThis(i18n("<p>Set here the contact postal code."));
+    d->postalCodeEdit->setWhatsThis(i18n("Set here the contact postal code."));
 
     d->cityCheck = new QCheckBox(i18n("City:"), contactBox);
     d->cityEdit  = new KLineEdit(contactBox);
     d->cityEdit->setClearButtonShown(true);
-    d->cityEdit->setWhatsThis(i18n("<p>Set here the contact city."));
+    d->cityEdit->setWhatsThis(i18n("Set here the contact city."));
 
     d->countryCheck = new QCheckBox(i18n("Country:"), contactBox);
     d->countryEdit  = new KLineEdit(contactBox);
     d->countryEdit->setClearButtonShown(true);
-    d->countryEdit->setWhatsThis(i18n("<p>Set here the contact country."));
+    d->countryEdit->setWhatsThis(i18n("Set here the contact country."));
 
     grid2->addWidget(d->emailCheck, 0, 0, 1, 1);
     grid2->addWidget(d->emailEdit, 0, 1, 1, 2);
@@ -180,7 +180,7 @@ XMPCredits::XMPCredits(QWidget* parent)
     grid2->addWidget(d->cityEdit, 5, 1, 1, 2);
     grid2->addWidget(d->countryCheck, 6, 0, 1, 1);
     grid2->addWidget(d->countryEdit, 6, 1, 1, 2);
-    grid2->setColumnStretch(2, 10);                     
+    grid2->setColumnStretch(2, 10);
     grid2->setMargin(KDialog::spacingHint());
     grid2->setSpacing(KDialog::spacingHint());
 
@@ -189,39 +189,39 @@ XMPCredits::XMPCredits(QWidget* parent)
     d->creditCheck = new QCheckBox(i18n("Credit:"), this);
     d->creditEdit  = new KLineEdit(this);
     d->creditEdit->setClearButtonShown(true);
-    d->creditEdit->setWhatsThis(i18n("<p>Set here the content provider."));
+    d->creditEdit->setWhatsThis(i18n("Set here the content provider."));
 
     // --------------------------------------------------------
 
     d->sourceCheck = new QCheckBox(i18n("Source:"), this);
     d->sourceEdit  = new KLineEdit(this);
     d->sourceEdit->setClearButtonShown(true);
-    d->sourceEdit->setWhatsThis(i18n("<p>Set here the original owner of content."));
+    d->sourceEdit->setWhatsThis(i18n("Set here the original owner of content."));
 
-    
+
     // --------------------------------------------------------
 
     d->copyrightCheck = new QCheckBox(i18n("Copyright:"), this);
     d->copyrightEdit  = new KLineEdit(this);
     d->copyrightEdit->setClearButtonShown(true);
-    d->copyrightEdit->setWhatsThis(i18n("<p>Set here the necessary copyright notice."));
+    d->copyrightEdit->setWhatsThis(i18n("Set here the necessary copyright notice."));
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->bylineEdit, 0, 0, 1, 3);
-    grid->addWidget(d->bylineTitleCheck, 1, 0, 1, 1);
-    grid->addWidget(d->bylineTitleEdit, 1, 1, 1, 2);
-    grid->addWidget(contactBox, 2, 0, 1, 3);
-    grid->addWidget(d->creditCheck, 3, 0, 1, 1);
-    grid->addWidget(d->creditEdit, 3, 1, 1, 2);
-    grid->addWidget(d->sourceCheck, 4, 0, 1, 1);
-    grid->addWidget(d->sourceEdit, 4, 1, 1, 2);
-    grid->addWidget(d->copyrightCheck, 5, 0, 1, 1);
-    grid->addWidget(d->copyrightEdit, 5, 1, 1, 2);
-    grid->setRowStretch(6, 10);  
-    grid->setColumnStretch(2, 10);                     
+    grid->addWidget(d->bylineEdit,          0, 0, 1, 3);
+    grid->addWidget(d->bylineTitleCheck,    1, 0, 1, 1);
+    grid->addWidget(d->bylineTitleEdit,     1, 1, 1, 2);
+    grid->addWidget(contactBox,             2, 0, 1, 3);
+    grid->addWidget(d->creditCheck,         3, 0, 1, 1);
+    grid->addWidget(d->creditEdit,          3, 1, 1, 2);
+    grid->addWidget(d->sourceCheck,         4, 0, 1, 1);
+    grid->addWidget(d->sourceEdit,          4, 1, 1, 2);
+    grid->addWidget(d->copyrightCheck,      5, 0, 1, 1);
+    grid->addWidget(d->copyrightEdit,       5, 1, 1, 2);
+    grid->setRowStretch(6, 10);
+    grid->setColumnStretch(2, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -345,12 +345,12 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     QString     data;
     QStringList list;
 
-    list = exiv2Iface.getXmpTagStringSeq("Xmp.dc.creator", false);    
+    list = exiv2Iface.getXmpTagStringSeq("Xmp.dc.creator", false);
     d->bylineEdit->setValues(list);
 
     d->bylineTitleEdit->clear();
     d->bylineTitleCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.AuthorsPosition", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.AuthorsPosition", false);
     if (!data.isNull())
     {
         d->bylineTitleEdit->setText(data);
@@ -360,7 +360,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->emailEdit->clear();
     d->emailCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiEmailWork", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiEmailWork", false);
     if (!data.isNull())
     {
         d->emailEdit->setText(data);
@@ -370,7 +370,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->urlEdit->clear();
     d->urlCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiUrlWork", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiUrlWork", false);
     if (!data.isNull())
     {
         d->urlEdit->setText(data);
@@ -380,7 +380,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->phoneEdit->clear();
     d->phoneCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiTelWork", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiTelWork", false);
     if (!data.isNull())
     {
         d->phoneEdit->setText(data);
@@ -390,7 +390,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->addressEdit->clear();
     d->addressCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
     if (!data.isNull())
     {
         d->addressEdit->setText(data);
@@ -400,7 +400,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->postalCodeEdit->clear();
     d->postalCodeCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrPcode", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
     if (!data.isNull())
     {
         d->postalCodeEdit->setText(data);
@@ -410,7 +410,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCity", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCity", false);
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
@@ -420,7 +420,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->countryEdit->clear();
     d->countryCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCtry", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
     if (!data.isNull())
     {
         d->countryEdit->setText(data);
@@ -430,7 +430,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Credit", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Credit", false);
     if (!data.isNull())
     {
         d->creditEdit->setText(data);
@@ -440,9 +440,9 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Source", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Source", false);
     if (data.isNull())
-        data = exiv2Iface.getXmpTagString("Xmp.dc.source", false);    
+        data = exiv2Iface.getXmpTagString("Xmp.dc.source", false);
 
     if (!data.isNull())
     {
@@ -453,7 +453,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.dc.rights", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.dc.rights", false);
     if (!data.isNull())
     {
         d->copyrightEdit->setText(data);

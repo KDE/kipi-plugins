@@ -207,7 +207,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->iprEdit = new KLineEdit(d->optionsBox);
     d->iprEdit->setClearButtonShown(true);
     d->iprEdit->setValidator(subjectValidator);
-    d->iprEdit->setWhatsThis(i18n("<p>Enter here the Informative Provider Reference. "
+    d->iprEdit->setWhatsThis(i18n("Enter here the Informative Provider Reference. "
                                   "I.P.R is a name registered with the XMP/NAA, identifying the "
                                   "provider that provides an indicator of the content. "
                                   "The default value for the I.P.R is \"XMP\" if a standard Reference "
@@ -219,7 +219,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->refEdit->setClearButtonShown(true);
     d->refEdit->setValidator(refValidator);
     d->refEdit->setMaxLength(8);
-    d->refEdit->setWhatsThis(i18n("<p>Enter here the Subject Reference Number. "
+    d->refEdit->setWhatsThis(i18n("Enter here the Subject Reference Number. "
                                   "Provides a numeric code to indicate the Subject Name plus "
                                   "optional Subject Matter and Subject Detail Names in the "
                                   "language of the service. Subject Reference is a number "
@@ -236,7 +236,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->nameEdit = new KLineEdit(d->optionsBox);
     d->nameEdit->setClearButtonShown(true);
     d->nameEdit->setValidator(subjectValidator);
-    d->nameEdit->setWhatsThis(i18n("<p>Enter here the Subject Name. English language is used "
+    d->nameEdit->setWhatsThis(i18n("Enter here the Subject Name. English language is used "
                                    "if you selected a standard XMP/NAA reference code."));
 
     // --------------------------------------------------------
@@ -244,7 +244,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->matterEdit = new KLineEdit(d->optionsBox);
     d->matterEdit->setClearButtonShown(true);
     d->matterEdit->setValidator(subjectValidator);
-    d->matterEdit->setWhatsThis(i18n("<p>Enter here the Subject Matter Name. English language is used "
+    d->matterEdit->setWhatsThis(i18n("Enter here the Subject Matter Name. English language is used "
                                      "if you selected a standard XMP/NAA reference code."));
 
     // --------------------------------------------------------
@@ -252,7 +252,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     d->detailEdit = new KLineEdit(d->optionsBox);
     d->detailEdit->setClearButtonShown(true);
     d->detailEdit->setValidator(subjectValidator);
-    d->detailEdit->setWhatsThis(i18n("<p>Enter here the Subject Detail Name. English language is used "
+    d->detailEdit->setWhatsThis(i18n("Enter here the Subject Detail Name. English language is used "
                                      "if you selected a standard XMP/NAA reference code."));
 
     // --------------------------------------------------------

@@ -159,56 +159,56 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     d->contentPage   = new IPTCContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
-    d->page_content->setHeader(i18n("<qt>Content Information<br>"
-                     "<i>Use this panel to describe the visual content of the image</i></qt>"));
+    d->page_content->setHeader(i18n("Content Information<br/>"
+                     "<i>Use this panel to describe the visual content of the image</i>"));
     d->page_content->setIcon(KIcon("help-contents"));
 
     d->originPage  = new IPTCOrigin(this);
     d->page_origin = addPage(d->originPage, i18n("Origin"));
-    d->page_origin->setHeader(i18n("<qt>Origin Information<br>"
-                    "<i>Use this panel for formal descriptive information about the image</i></qt>"));
+    d->page_origin->setHeader(i18n("Origin Information<br/>"
+                    "<i>Use this panel for formal descriptive information about the image</i>"));
     d->page_origin->setIcon(KIcon("applications-internet"));
 
     d->creditsPage  = new IPTCCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
-    d->page_credits->setHeader(i18n("<qt>Credits Information<br>"
-                     "<i>Use this panel to record copyright information about the image</i></qt>"));
+    d->page_credits->setHeader(i18n("Credits Information<br/>"
+                     "<i>Use this panel to record copyright information about the image</i>"));
     d->page_credits->setIcon(KIcon("view-pim-contacts"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
-    d->page_subjects->setHeader(i18n("<qt>Subjects Information<br>"
-                      "<i>Use this panel to record subjects about the image</i></qt>"));
+    d->page_subjects->setHeader(i18n("Subjects Information<br/>"
+                      "<i>Use this panel to record subjects about the image</i>"));
     d->page_subjects->setIcon(KIcon("feed-subscribe"));
 
     d->keywordsPage  = new IPTCKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
-    d->page_keywords->setHeader(i18n("<qt>Keywords Information<br>"
-                      "<i>Use this panel to record keywords about the image</i></qt>"));
+    d->page_keywords->setHeader(i18n("Keywords Information<br/>"
+                      "<i>Use this panel to record keywords about the image</i>"));
     d->page_keywords->setIcon(KIcon("bookmarks"));
 
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
-    d->page_categories->setHeader(i18n("<qt>Categories Information<br>"
-                        "<i>Use this panel to record categories about the image</i></qt>"));
+    d->page_categories->setHeader(i18n("Categories Information<br/>"
+                        "<i>Use this panel to record categories about the image</i>"));
     d->page_categories->setIcon(KIcon("folder-image"));
 
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
-    d->page_status->setHeader(i18n("<qt>Status Information<br>"
-                    "<i>Use this panel to record workflow description</i></qt>"));
+    d->page_status->setHeader(i18n("Status Information<br/>"
+                    "<i>Use this panel to record workflow description</i>"));
     d->page_status->setIcon(KIcon("view-pim-tasks"));
 
     d->propertiesPage  = new IPTCProperties(this);
     d->page_properties = addPage(d->propertiesPage, i18n("Properties"));
-    d->page_properties->setHeader(i18n("<qt>Status Properties<br>"
-                      "<i>Use this panel to record workflow properties</i></qt>"));
+    d->page_properties->setHeader(i18n("Status Properties<br/>"
+                      "<i>Use this panel to record workflow properties</i>"));
     d->page_properties->setIcon(KIcon("draw-freehand"));
 
     d->envelopePage  = new IPTCEnvelope(this);
     d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
-    d->page_envelope->setHeader(i18n("<qt>Envelope Information<br>"
-                      "<i>Use this panel to record editorial description</i></qt>"));
+    d->page_envelope->setHeader(i18n("Envelope Information<br/>"
+                      "<i>Use this panel to record editorial description</i>"));
     d->page_envelope->setIcon(KIcon("view-pim-mail"));
   
     // ---------------------------------------------------------------

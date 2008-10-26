@@ -413,9 +413,9 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
-    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+    d->dateDigitalizedSel->setWhatsThis(i18n("Set here the creation date of "
                                              "digital representation."));
-    d->timeDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+    d->timeDigitalizedSel->setWhatsThis(i18n("Set here the creation time of "
                                              "digital representation."));
 
     slotSetTodayDigitalized();
@@ -435,9 +435,9 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
-    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+    d->dateCreatedSel->setWhatsThis(i18n("Set here the creation date of "
                                          "intellectual content."));
-    d->timeCreatedSel->setWhatsThis(i18n("<p>Set here the creation time of "
+    d->timeCreatedSel->setWhatsThis(i18n("Set here the creation time of "
                                          "intellectual content."));
 
     slotSetTodayCreated();
@@ -445,7 +445,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     // --------------------------------------------------------
 
     d->locationEdit = new MultiValuesEdit(this, i18n("Location:"),
-                          i18n("<p>Set here the full country name referenced by the content."));
+                          i18n("Set here the full country name referenced by the content."));
 
     QStringList list;
     for (IPTCOriginPriv::CountryCodeMap::Iterator it = d->countryCodeMap.begin();
@@ -461,7 +461,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->cityEdit->setClearButtonShown(true);
     d->cityEdit->setValidator(asciiValidator);
     d->cityEdit->setMaxLength(32);
-    d->cityEdit->setWhatsThis(i18n("<p>Set here the city of content origin. "
+    d->cityEdit->setWhatsThis(i18n("Set here the city of content origin. "
                                    "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -471,7 +471,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->sublocationEdit->setClearButtonShown(true);
     d->sublocationEdit->setValidator(asciiValidator);
     d->sublocationEdit->setMaxLength(32);
-    d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city. "
+    d->sublocationEdit->setWhatsThis(i18n("Set here the content location within city. "
                                           "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -481,7 +481,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->provinceEdit->setClearButtonShown(true);
     d->provinceEdit->setValidator(asciiValidator);
     d->provinceEdit->setMaxLength(32);
-    d->provinceEdit->setWhatsThis(i18n("<p>Set here the Province or State of content origin. "
+    d->provinceEdit->setWhatsThis(i18n("Set here the Province or State of content origin. "
                                        "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -494,7 +494,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
         d->countryCB->addSqueezedItem(QString("%1 - %2").arg(it.key()).arg(it.value()));
 
     d->countryCB->model()->sort(0);
-    d->countryCB->setWhatsThis(i18n("<p>Select here country name of content origin."));
+    d->countryCB->setWhatsThis(i18n("Select here country name of content origin."));
 
     // --------------------------------------------------------
 
@@ -503,7 +503,7 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     d->originalTransEdit->setClearButtonShown(true);
     d->originalTransEdit->setValidator(asciiValidator);
     d->originalTransEdit->setMaxLength(32);
-    d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission "
+    d->originalTransEdit->setWhatsThis(i18n("Set here the location of original content transmission "
                                             "reference. This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------

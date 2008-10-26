@@ -164,7 +164,7 @@ XMPProperties::XMPProperties(QWidget* parent)
             d->languageBtn->insertLanguage(*it);
     }
 
-    d->languageBtn->setWhatsThis(i18n("<p>Select here the language of content."));
+    d->languageBtn->setWhatsThis(i18n("Select here the language of content."));
 
     // --------------------------------------------------------
 
@@ -179,12 +179,12 @@ XMPProperties::XMPProperties(QWidget* parent)
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
     d->priorityCB->insertItem(8, i18n("8: Low"));
-    d->priorityCB->setWhatsThis(i18n("<p>Select here the editorial urgency of content."));
+    d->priorityCB->setWhatsThis(i18n("Select here the editorial urgency of content."));
 
     // --------------------------------------------------------
 
     d->sceneEdit = new MultiValuesEdit(this, i18n("Scene:"),
-                       i18n("<p>Select here the scene type of content."));
+                       i18n("Select here the scene type of content."));
 
     QStringList list2;
     for (XMPPropertiesPriv::SceneCodeMap::Iterator it = d->sceneCodeMap.begin();
@@ -196,7 +196,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     // --------------------------------------------------------
 
     d->objectTypeEdit = new MultiValuesEdit(this, i18n("Type:"),
-                            i18n("<p>Select here the editorial type of content."));
+                            i18n("Select here the editorial type of content."));
 
     QStringList list3;
     for (XMPPropertiesPriv::TypeCodeMap::Iterator it = d->typeCodeMap.begin();
@@ -211,9 +211,9 @@ XMPProperties::XMPProperties(QWidget* parent)
     d->objectAttributeCB    = new SqueezedComboBox(this);
     d->objectAttributeEdit  = new KLineEdit(this);
     d->objectAttributeEdit->setClearButtonShown(true);
-    d->objectAttributeEdit->setWhatsThis(i18n("<p><p>Set here the editorial attribute description of content."));
+    d->objectAttributeEdit->setWhatsThis(i18n("Set here the editorial attribute description of content."));
 
-    d->objectAttributeCB->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
+    d->objectAttributeCB->setWhatsThis(i18n("Select here the editorial attribute of content."));
     d->objectAttributeCB->addSqueezedItem(QString("001 - ") + i18n("Current"));
     d->objectAttributeCB->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
     d->objectAttributeCB->addSqueezedItem(QString("003 - ") + i18n("Archive material"));

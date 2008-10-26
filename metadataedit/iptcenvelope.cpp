@@ -177,7 +177,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->destinationEdit  = new KTextEdit(this);
 /*    d->specialInstructionEdit->setValidator(asciiValidator);
     d->specialInstructionEdit->document()->setMaxLength;*/
-    d->destinationEdit->setWhatsThis(i18n("<p>Enter the envelope destination. "
+    d->destinationEdit->setWhatsThis(i18n("Enter the envelope destination. "
                                           "This field is limited to 1024 ASCII characters."));
 
     // --------------------------------------------------------
@@ -187,7 +187,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->unoIDEdit->setClearButtonShown(true);
     d->unoIDEdit->setValidator(asciiValidator);
     d->unoIDEdit->setMaxLength(80);
-    d->unoIDEdit->setWhatsThis(i18n("<p>Set here the Unique Name of Object identifier. "
+    d->unoIDEdit->setWhatsThis(i18n("Set here the Unique Name of Object identifier. "
                                   "This field is limited to 80 ASCII characters."));
 
     // --------------------------------------------------------
@@ -197,7 +197,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->productIDEdit->setClearButtonShown(true);
     d->productIDEdit->setValidator(asciiValidator);
     d->productIDEdit->setMaxLength(32);
-    d->productIDEdit->setWhatsThis(i18n("<p>Set here the product identifier. "
+    d->productIDEdit->setWhatsThis(i18n("Set here the product identifier. "
                                          "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -207,7 +207,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->serviceIDEdit->setClearButtonShown(true);
     d->serviceIDEdit->setValidator(asciiValidator);
     d->serviceIDEdit->setMaxLength(10);
-    d->serviceIDEdit->setWhatsThis(i18n("<p>Set here the service identifier. "
+    d->serviceIDEdit->setWhatsThis(i18n("Set here the service identifier. "
                                          "This field is limited to 10 ASCII characters."));
 
     // --------------------------------------------------------
@@ -217,7 +217,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->envelopeIDEdit->setClearButtonShown(true);
     d->envelopeIDEdit->setValidator(asciiValidator);
     d->envelopeIDEdit->setMaxLength(8);
-    d->envelopeIDEdit->setWhatsThis(i18n("<p>Set here the envelope identifier. "
+    d->envelopeIDEdit->setWhatsThis(i18n("Set here the envelope identifier. "
                                          "This field is limited to 8 ASCII characters."));
 
     // --------------------------------------------------------
@@ -233,7 +233,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
     d->priorityCB->insertItem(8, i18n("8: Low"));
-    d->priorityCB->setWhatsThis(i18n("<p>Select here the envelope priority."));
+    d->priorityCB->setWhatsThis(i18n("Select here the envelope priority."));
 
     // --------------------------------------------------------
 
@@ -249,7 +249,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     }
 
     d->formatCB->model()->sort(0);
-    d->formatCB->setWhatsThis(i18n("<p>Select here envelope file format."));
+    d->formatCB->setWhatsThis(i18n("Select here envelope file format."));
 
     // --------------------------------------------------------
 
@@ -262,8 +262,8 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     d->setTodaySentBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodaySentBtn->setWhatsThis(i18n("Set envelope sent date to today"));
 
-    d->dateSentSel->setWhatsThis(i18n("<p>Set here the date when the service sent the material."));
-    d->timeSentSel->setWhatsThis(i18n("<p>Set here the time when the service sent the material."));
+    d->dateSentSel->setWhatsThis(i18n("Set here the date when the service sent the material."));
+    d->timeSentSel->setWhatsThis(i18n("Set here the time when the service sent the material."));
     slotSetTodaySent();
 
     // --------------------------------------------------------
@@ -280,26 +280,26 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->destinationCheck, 0, 0, 1, 5);
-    grid->addWidget(d->destinationEdit, 1, 0, 1, 5);
-    grid->addWidget(d->unoIDCheck, 2, 0, 1, 1);
-    grid->addWidget(d->unoIDEdit, 2, 1, 1, 4);
-    grid->addWidget(d->productIDCheck, 3, 0, 1, 1);
-    grid->addWidget(d->productIDEdit, 3, 1, 1, 4);
-    grid->addWidget(d->serviceIDCheck, 4, 0, 1, 1);
-    grid->addWidget(d->serviceIDEdit, 4, 1, 1, 1);
-    grid->addWidget(d->envelopeIDCheck, 5, 0, 1, 1);
-    grid->addWidget(d->envelopeIDEdit, 5, 1, 1, 1);
-    grid->addWidget(d->priorityCheck, 6, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 6, 1, 1, 1);
-    grid->addWidget(d->formatCheck, 7, 0, 1, 1);
-    grid->addWidget(d->formatCB, 7, 1, 1, 4);
-    grid->addWidget(d->dateSentCheck, 8, 0, 1, 2);
-    grid->addWidget(d->timeSentCheck, 8, 2, 1, 2);
-    grid->addWidget(d->dateSentSel, 9, 0, 1, 2);
-    grid->addWidget(d->timeSentSel, 9, 2, 1, 1);
-    grid->addWidget(d->setTodaySentBtn, 9, 4, 1, 1);
-    grid->addWidget(note, 10, 0, 1, 5);
+    grid->addWidget(d->destinationCheck,    0, 0, 1, 5);
+    grid->addWidget(d->destinationEdit,     1, 0, 1, 5);
+    grid->addWidget(d->unoIDCheck,          2, 0, 1, 1);
+    grid->addWidget(d->unoIDEdit,           2, 1, 1, 4);
+    grid->addWidget(d->productIDCheck,      3, 0, 1, 1);
+    grid->addWidget(d->productIDEdit,       3, 1, 1, 4);
+    grid->addWidget(d->serviceIDCheck,      4, 0, 1, 1);
+    grid->addWidget(d->serviceIDEdit,       4, 1, 1, 1);
+    grid->addWidget(d->envelopeIDCheck,     5, 0, 1, 1);
+    grid->addWidget(d->envelopeIDEdit,      5, 1, 1, 1);
+    grid->addWidget(d->priorityCheck,       6, 0, 1, 1);
+    grid->addWidget(d->priorityCB,          6, 1, 1, 1);
+    grid->addWidget(d->formatCheck,         7, 0, 1, 1);
+    grid->addWidget(d->formatCB,            7, 1, 1, 4);
+    grid->addWidget(d->dateSentCheck,       8, 0, 1, 2);
+    grid->addWidget(d->timeSentCheck,       8, 2, 1, 2);
+    grid->addWidget(d->dateSentSel,         9, 0, 1, 2);
+    grid->addWidget(d->timeSentSel,         9, 2, 1, 1);
+    grid->addWidget(d->setTodaySentBtn,     9, 4, 1, 1);
+    grid->addWidget(note,                  10, 0, 1, 5);
     grid->setColumnStretch(3, 10);
     grid->setRowStretch(11, 10);
     grid->setMargin(0);

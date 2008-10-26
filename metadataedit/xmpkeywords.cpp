@@ -87,7 +87,7 @@ XMPKeywords::XMPKeywords(QWidget* parent)
 
     d->keywordEdit   = new KLineEdit(this);
     d->keywordEdit->setClearButtonShown(true);
-    d->keywordEdit->setWhatsThis(i18n("<p>Enter here a new keyword."));
+    d->keywordEdit->setWhatsThis(i18n("Enter here a new keyword."));
 
     d->keywordsBox   = new KListWidget(this);
     d->keywordsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);

@@ -129,9 +129,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     if (!KExiv2Iface::KExiv2::supportXmp())
         d->syncXMPDateCheck->setEnabled(false);
 
-    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the date and time of image creation. "
+    d->dateCreatedSel->setWhatsThis(i18n("Set here the date and time of image creation. "
                                        "In this standard it is the date and time the file was changed."));
-    d->dateCreatedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
+    d->dateCreatedSubSecEdit->setWhatsThis(i18n("Set here the fractions of seconds for the date "
                                                 "and time of image creation."));
 
     slotSetTodayCreated();
@@ -147,10 +147,10 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->setTodayOriginalBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayOriginalBtn->setWhatsThis(i18n("Set original date to today"));
 
-    d->dateOriginalSel->setWhatsThis(i18n("<p>Set here the date and time when the original image "
+    d->dateOriginalSel->setWhatsThis(i18n("Set here the date and time when the original image "
                                           "data was generated. For a digital still camera the date and "
                                           "time the picture was taken are recorded."));
-    d->dateOriginalSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
+    d->dateOriginalSubSecEdit->setWhatsThis(i18n("Set here the fractions of seconds for the date "
                                                  "and time when the original image data was generated."));
 
     slotSetTodayOriginal();
@@ -166,12 +166,12 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
-    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the date and time when the image was "
+    d->dateDigitalizedSel->setWhatsThis(i18n("Set here the date and time when the image was "
                                              "stored as digital data. If, for example, an image was "
                                              "captured by a digital still camera and at the same "
                                              "time the file was recorded, then Original and Digitization "
                                              "date and time will have the same contents."));
-    d->dateDigitalizedSubSecEdit->setWhatsThis(i18n("<p>Set here the fractions of seconds for the date "
+    d->dateDigitalizedSubSecEdit->setWhatsThis(i18n("Set here the fractions of seconds for the date "
                                                     "and time when the image was stored as digital data."));
 
     slotSetTodayDigitalized();

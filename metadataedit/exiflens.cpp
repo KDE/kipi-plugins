@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -36,7 +36,7 @@
 #include <kdialog.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -131,7 +131,7 @@ public:
     QCheckBox        *focalLength35mmCheck;
     QCheckBox        *focalLengthCheck;
     QCheckBox        *digitalZoomRatioCheck;
-   
+
     QComboBox        *apertureCB;
     QComboBox        *maxApertureCB;
 
@@ -159,14 +159,14 @@ EXIFLens::EXIFLens(QWidget* parent)
     d->focalLengthEdit->setSingleStep(1.0);
     d->focalLengthEdit->setValue(50.0);
     d->focalLengthEdit->setDecimals(1);
-    d->focalLengthEdit->setWhatsThis(i18n("<p>Set here the lens focal length in milimeters "
+    d->focalLengthEdit->setWhatsThis(i18n("Set here the lens focal length in millimeters "
                                           "used by camera to take the picture."));
 
     // --------------------------------------------------------
 
     d->focalLength35mmCheck = new QCheckBox(i18n("Focal length in 35mm film (mm):"), this);
     d->focalLength35mmEdit  = new KIntSpinBox(1, 10000, 1, 1, this);
-    d->focalLength35mmEdit->setWhatsThis(i18n("<p>Set here equivalent focal length assuming "
+    d->focalLength35mmEdit->setWhatsThis(i18n("Set here equivalent focal length assuming "
                                               "a 35mm film camera, in mm. A value of 0 means the focal "
                                               "length is unknown."));
 
@@ -178,7 +178,7 @@ EXIFLens::EXIFLens(QWidget* parent)
     d->digitalZoomRatioEdit->setSingleStep(0.1);
     d->digitalZoomRatioEdit->setValue(1.0);
     d->digitalZoomRatioEdit->setDecimals(1);
-    d->digitalZoomRatioEdit->setWhatsThis(i18n("<p>Set here the digital zoom ratio "
+    d->digitalZoomRatioEdit->setWhatsThis(i18n("Set here the digital zoom ratio "
                                                "used by camera to take the picture."));
 
     // --------------------------------------------------------
@@ -186,7 +186,7 @@ EXIFLens::EXIFLens(QWidget* parent)
     d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), this);
     d->apertureCB    = new QComboBox(this);
     d->apertureCB->insertItems(0, d->apertureValues);
-    d->apertureCB->setWhatsThis(i18n("<p>Select here the lens aperture used by camera "
+    d->apertureCB->setWhatsThis(i18n("Select here the lens aperture used by camera "
                                      "to take the picture."));
 
     // --------------------------------------------------------
@@ -194,23 +194,23 @@ EXIFLens::EXIFLens(QWidget* parent)
     d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), this);
     d->maxApertureCB    = new QComboBox(this);
     d->maxApertureCB->insertItems(0, d->apertureValues);
-    d->maxApertureCB->setWhatsThis(i18n("<p>Select here the smallest aperture of the lens used by camera "
+    d->maxApertureCB->setWhatsThis(i18n("Select here the smallest aperture of the lens used by camera "
                                         "to take the picture."));
 
-    grid->addWidget(d->focalLengthCheck, 0, 0, 1, 1);
-    grid->addWidget(d->focalLengthEdit, 0, 2, 1, 1);
-    grid->addWidget(d->focalLength35mmCheck, 1, 0, 1, 1);
-    grid->addWidget(d->focalLength35mmEdit, 1, 2, 1, 1);
-    grid->addWidget(d->digitalZoomRatioCheck, 2, 0, 1, 1);
-    grid->addWidget(d->digitalZoomRatioEdit, 2, 2, 1, 1);
-    grid->addWidget(d->apertureCheck, 3, 0, 1, 1);
-    grid->addWidget(d->apertureCB, 3, 2, 1, 1);
-    grid->addWidget(d->maxApertureCheck, 4, 0, 1, 1);
-    grid->addWidget(d->maxApertureCB, 4, 2, 1, 1);
-    grid->setColumnStretch(1, 10);                     
-    grid->setRowStretch(5, 10);  
+    grid->addWidget(d->focalLengthCheck,        0, 0, 1, 1);
+    grid->addWidget(d->focalLengthEdit,         0, 2, 1, 1);
+    grid->addWidget(d->focalLength35mmCheck,    1, 0, 1, 1);
+    grid->addWidget(d->focalLength35mmEdit,     1, 2, 1, 1);
+    grid->addWidget(d->digitalZoomRatioCheck,   2, 0, 1, 1);
+    grid->addWidget(d->digitalZoomRatioEdit,    2, 2, 1, 1);
+    grid->addWidget(d->apertureCheck,           3, 0, 1, 1);
+    grid->addWidget(d->apertureCB,              3, 2, 1, 1);
+    grid->addWidget(d->maxApertureCheck,        4, 0, 1, 1);
+    grid->addWidget(d->maxApertureCB,           4, 2, 1, 1);
+    grid->setColumnStretch(1, 10);
+    grid->setRowStretch(5, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());                        
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -345,7 +345,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->apertureCheck->setValid(false);
     }
     d->apertureCB->setEnabled(d->apertureCheck->isChecked());
-    
+
     d->maxApertureCB->setCurrentIndex(0);
     d->maxApertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))

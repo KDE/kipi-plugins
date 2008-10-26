@@ -98,7 +98,7 @@ IPTCContent::IPTCContent(QWidget* parent)
     d->headlineEdit->setClearButtonShown(true);
     d->headlineEdit->setValidator(asciiValidator);
     d->headlineEdit->setMaxLength(256);
-    d->headlineEdit->setWhatsThis(i18n("<p>Enter here the content synopsis. This field is limited "
+    d->headlineEdit->setWhatsThis(i18n("Enter here the content synopsis. This field is limited "
                                        "to 256 ASCII characters."));
     
     // --------------------------------------------------------
@@ -113,13 +113,13 @@ IPTCContent::IPTCContent(QWidget* parent)
 
 /*    d->captionEdit->setValidator(asciiValidator);
     d->captionEdit->setMaxLength(2000);*/
-    d->captionEdit->setWhatsThis(i18n("<p>Enter the content description. This field is limited "
+    d->captionEdit->setWhatsThis(i18n("Enter the content description. This field is limited "
                                       "to 2000 ASCII characters."));
 
     // --------------------------------------------------------
 
     d->writerEdit  = new MultiStringsEdit(this, i18n("Caption Writer:"), 
-                                          i18n("<p>Enter the name of the caption author."), 
+                                          i18n("Enter the name of the caption author."), 
                                           true, 32);
         
     // --------------------------------------------------------

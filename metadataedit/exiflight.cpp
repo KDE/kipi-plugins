@@ -154,7 +154,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     d->lightSourceCB->insertItem(18, i18n("D50"));
     d->lightSourceCB->insertItem(19, i18n("ISO studio tungsten"));
     d->lightSourceCB->insertItem(20, i18n("Other light source"));
-    d->lightSourceCB->setWhatsThis(i18n("<p>Select here the kind of light source used "
+    d->lightSourceCB->setWhatsThis(i18n("Select here the kind of light source used "
                                         "to take the picture."));
 
     // --------------------------------------------------------
@@ -166,7 +166,7 @@ EXIFLight::EXIFLight(QWidget* parent)
         it != d->flashModeMap.end(); ++it )
        d->flashModeCB->addItem(it.value().desc());
 
-    d->flashModeCB->setWhatsThis(i18n("<p>Select here the flash program mode used by camera "
+    d->flashModeCB->setWhatsThis(i18n("Select here the flash program mode used by camera "
                                       "to take the picture."));
 
     // --------------------------------------------------------
@@ -177,7 +177,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     d->flashEnergyEdit->setSingleStep(1.0);
     d->flashEnergyEdit->setValue(1.0);
     d->flashEnergyEdit->setDecimals(1);
-    d->flashEnergyEdit->setWhatsThis(i18n("<p>Set here the flash energy used to take the picture "
+    d->flashEnergyEdit->setWhatsThis(i18n("Set here the flash energy used to take the picture "
                                           "in BCPS unit. Beam Candle Power Seconds is the measure "
                                           "of effective intensity of a light source when it is "
                                           "focused into a beam by a reflector or lens. This value "
@@ -189,7 +189,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     d->whiteBalanceCB    = new QComboBox(this);
     d->whiteBalanceCB->insertItem(0, i18n("Auto"));
     d->whiteBalanceCB->insertItem(1, i18n("Manual"));
-    d->whiteBalanceCB->setWhatsThis(i18n("<p>Select here the white balance mode set by camera when "
+    d->whiteBalanceCB->setWhatsThis(i18n("Select here the white balance mode set by camera when "
                                          "the picture have been shot."));
 
     // --------------------------------------------------------

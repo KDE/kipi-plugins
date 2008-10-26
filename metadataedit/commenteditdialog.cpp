@@ -120,7 +120,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
     setMainWidget(new QWidget(this));
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
-    QLabel *title = new QLabel(i18n("<p>Enter the image caption entered through <b>%1</b>. "
+    QLabel *title = new QLabel(i18n("Enter the image caption entered through <b>%1</b>. "
                                     "This field is not limited (excepted with IPTC). UTF-8 encoding "
                                     "will be used to save text.", 
                                     KGlobal::mainComponent().aboutData()->programName()),

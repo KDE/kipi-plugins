@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -34,7 +34,7 @@
 #include <kdialog.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -89,7 +89,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     d = new IPTCCreditsPriv;
 
     QGridLayout* grid = new QGridLayout(this);
-    
+
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
     QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
@@ -101,19 +101,19 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     d->copyrightEdit->setClearButtonShown(true);
     d->copyrightEdit->setValidator(asciiValidator);
     d->copyrightEdit->setMaxLength(128);
-    d->copyrightEdit->setWhatsThis(i18n("<p>Set here the necessary copyright notice. This field is limited "
+    d->copyrightEdit->setWhatsThis(i18n("Set here the necessary copyright notice. This field is limited "
                                         "to 128 ASCII characters."));
-    
+
     // --------------------------------------------------------
 
-    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"), 
-                                          i18n("<p>Set here the name of content creator."), 
+    d->bylineEdit  = new MultiStringsEdit(this, i18n("Byline:"),
+                                          i18n("Set here the name of content creator."),
                                           true, 32);
 
     // --------------------------------------------------------
 
-    d->bylineTitleEdit  = new MultiStringsEdit(this, i18n("Byline Title:"), 
-                                               i18n("<p>Set here the title of content creator."), 
+    d->bylineTitleEdit  = new MultiStringsEdit(this, i18n("Byline Title:"),
+                                               i18n("Set here the title of content creator."),
                                                true, 32);
 
     // --------------------------------------------------------
@@ -123,7 +123,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     d->creditEdit->setClearButtonShown(true);
     d->creditEdit->setValidator(asciiValidator);
     d->creditEdit->setMaxLength(32);
-    d->creditEdit->setWhatsThis(i18n("<p>Set here the content provider. "
+    d->creditEdit->setWhatsThis(i18n("Set here the content provider. "
                                      "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -133,13 +133,13 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     d->sourceEdit->setClearButtonShown(true);
     d->sourceEdit->setValidator(asciiValidator);
     d->sourceEdit->setMaxLength(32);
-    d->sourceEdit->setWhatsThis(i18n("<p>Set here the original owner of content. "
+    d->sourceEdit->setWhatsThis(i18n("Set here the original owner of content. "
                                      "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
 
-    d->contactEdit  = new MultiStringsEdit(this, i18n("Contact:"), 
-                                           i18n("<p>Set here the person or organisation to contact."), 
+    d->contactEdit  = new MultiStringsEdit(this, i18n("Contact:"),
+                                           i18n("Set here the person or organisation to contact."),
                                            true, 128);
 
     // --------------------------------------------------------
@@ -166,10 +166,10 @@ IPTCCredits::IPTCCredits(QWidget* parent)
     grid->addWidget(d->copyrightCheck, 5, 0, 1, 1);
     grid->addWidget(d->copyrightEdit, 5, 1, 1, 2);
     grid->addWidget(note, 6, 0, 1, 3 );
-    grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(7, 10);  
+    grid->setColumnStretch(2, 10);
+    grid->setRowStretch(7, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -230,7 +230,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false);
     if (!data.isNull())
     {
         d->copyrightEdit->setText(data);
@@ -238,15 +238,15 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Byline", false);    
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Byline", false);
     d->bylineEdit->setValues(list);
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.BylineTitle", false);    
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.BylineTitle", false);
     d->bylineTitleEdit->setValues(list);
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false);
     if (!data.isNull())
     {
         d->creditEdit->setText(data);
@@ -256,7 +256,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Source", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Source", false);
     if (!data.isNull())
     {
         d->sourceEdit->setText(data);
@@ -264,7 +264,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Contact", false);    
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Contact", false);
     d->contactEdit->setValues(list);
 
     blockSignals(false);

@@ -302,7 +302,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->valueBox->setSortingEnabled(true);
 
     d->languageCB = new SqueezedComboBox(this);
-    d->languageCB->setWhatsThis(i18n("<p>Select here language code."));
+    d->languageCB->setWhatsThis(i18n("Select here language code."));
 
     d->valueEdit = new KTextEdit(this);
     d->valueEdit->setWhatsThis(desc);

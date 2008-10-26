@@ -93,7 +93,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->objectNameEdit->setClearButtonShown(true);
     d->objectNameEdit->setValidator(asciiValidator);
     d->objectNameEdit->setMaxLength(64);
-    d->objectNameEdit->setWhatsThis(i18n("<p>Set here the shorthand reference of content. "
+    d->objectNameEdit->setWhatsThis(i18n("Set here the shorthand reference of content. "
                                          "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------
@@ -103,7 +103,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->statusEdit->setClearButtonShown(true);
     d->statusEdit->setValidator(asciiValidator);
     d->statusEdit->setMaxLength(64);
-    d->statusEdit->setWhatsThis(i18n("<p>Set here the title of content status. This field is limited "
+    d->statusEdit->setWhatsThis(i18n("Set here the title of content status. This field is limited "
                                      "to 64 ASCII characters."));
 
     // --------------------------------------------------------
@@ -113,7 +113,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->JobIDEdit->setClearButtonShown(true);
     d->JobIDEdit->setValidator(asciiValidator);
     d->JobIDEdit->setMaxLength(32);
-    d->JobIDEdit->setWhatsThis(i18n("<p>Set here the string that identifies content that recurs. "
+    d->JobIDEdit->setWhatsThis(i18n("Set here the string that identifies content that recurs. "
                                     "This field is limited to 32 ASCII characters."));
 
     // --------------------------------------------------------
@@ -122,7 +122,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
     d->specialInstructionEdit  = new KTextEdit(this);
 /*    d->specialInstructionEdit->setValidator(asciiValidator);
     d->specialInstructionEdit->document()->setMaxLength;*/
-    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions. "
+    d->specialInstructionEdit->setWhatsThis(i18n("Enter the editorial usage instructions. "
                                                  "This field is limited to 256 ASCII characters."));
 
     // --------------------------------------------------------

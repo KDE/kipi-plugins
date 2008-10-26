@@ -93,7 +93,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     d->keywordEdit->setClearButtonShown(true);
     d->keywordEdit->setValidator(asciiValidator);
     d->keywordEdit->setMaxLength(64);
-    d->keywordEdit->setWhatsThis(i18n("<p>Enter here a new keyword. "
+    d->keywordEdit->setWhatsThis(i18n("Enter here a new keyword. "
                                       "This field is limited to 64 ASCII characters."));
 
     d->keywordsBox   = new KListWidget(this);

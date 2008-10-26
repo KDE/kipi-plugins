@@ -87,25 +87,25 @@ XMPStatus::XMPStatus(QWidget* parent)
     // --------------------------------------------------------
 
     d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"), 
-                                                i18n("<p>Set here the shorthand reference of content."));
+                                                i18n("Set here the shorthand reference of content."));
 
     // --------------------------------------------------------
 
     d->nicknameCheck = new QCheckBox(i18n("Nickname:"), this);
     d->nicknameEdit  = new KLineEdit(this);
     d->nicknameEdit->setClearButtonShown(true);
-    d->nicknameEdit->setWhatsThis(i18n("<p>A short informal name for the ressource."));
+    d->nicknameEdit->setWhatsThis(i18n("A short informal name for the ressource."));
 
     // --------------------------------------------------------
 
     d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"), 
-                              i18n("<p>Set here the strings that identifies content that recurs."));
+                              i18n("Set here the strings that identifies content that recurs."));
 
     // --------------------------------------------------------
 
     d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
     d->specialInstructionEdit  = new KTextEdit(this);
-    d->specialInstructionEdit->setWhatsThis(i18n("<p>Enter the editorial usage instructions."));
+    d->specialInstructionEdit->setWhatsThis(i18n("Enter the editorial usage instructions."));
 
     // --------------------------------------------------------
 

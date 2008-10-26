@@ -122,7 +122,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
 
     d->dataList = new SqueezedComboBox(this);
     d->dataList->model()->sort(0);
-    d->dataList->setWhatsThis(i18n("<p>Select here the editorial attribute of content."));
+    d->dataList->setWhatsThis(i18n("Select here the editorial attribute of content."));
     d->dataList->addSqueezedItem(QString("001 - ") + i18n("Current"));
     d->dataList->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
     d->dataList->addSqueezedItem(QString("003 - ") + i18n("Archive material"));
@@ -150,7 +150,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
 
     d->valueEdit = new KLineEdit(this);
     d->valueEdit->setClearButtonShown(true);
-    QString whatsThis = i18n("<p>Set here the editorial attribute description of "
+    QString whatsThis = i18n("Set here the editorial attribute description of "
                              "content. This field is limited to 64 ASCII characters.");
 
     if (ascii || size != -1)

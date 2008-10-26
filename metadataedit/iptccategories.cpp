@@ -96,7 +96,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     d->categoryEdit->setClearButtonShown(true);
     d->categoryEdit->setValidator(asciiValidator);
     d->categoryEdit->setMaxLength(3);
-    d->categoryEdit->setWhatsThis(i18n("<p>Set here the category of content. This field is limited "
+    d->categoryEdit->setWhatsThis(i18n("Set here the category of content. This field is limited "
                                        "to 3 ASCII characters."));
 
     d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), this);    
@@ -105,7 +105,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     d->subCategoryEdit->setClearButtonShown(true);
     d->subCategoryEdit->setValidator(asciiValidator);
     d->subCategoryEdit->setMaxLength(32);
-    d->subCategoryEdit->setWhatsThis(i18n("<p>Enter here a new supplemental category of content. "
+    d->subCategoryEdit->setWhatsThis(i18n("Enter here a new supplemental category of content. "
                                           "This field is limited to 32 ASCII characters."));
 
     d->subCategoriesBox = new KListWidget(this);

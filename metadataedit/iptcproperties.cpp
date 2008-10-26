@@ -137,9 +137,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->setTodayReleasedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayReleasedBtn->setWhatsThis(i18n("Set release date to today"));
 
-    d->dateReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable date of "
+    d->dateReleasedSel->setWhatsThis(i18n("Set here the earliest intended usable date of "
                                           "intellectual content."));
-    d->timeReleasedSel->setWhatsThis(i18n("<p>Set here the earliest intended usable time of "
+    d->timeReleasedSel->setWhatsThis(i18n("Set here the earliest intended usable time of "
                                           "intellectual content."));
     slotSetTodayReleased();
 
@@ -154,9 +154,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->setTodayExpiredBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayExpiredBtn->setWhatsThis(i18n("Set expiration date to today"));
 
-    d->dateExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable date of "
+    d->dateExpiredSel->setWhatsThis(i18n("Set here the latest intended usable date of "
                                          "intellectual content."));
-    d->timeExpiredSel->setWhatsThis(i18n("<p>Set here the latest intended usable time of "
+    d->timeExpiredSel->setWhatsThis(i18n("Set here the latest intended usable time of "
                                          "intellectual content."));
 
     slotSetTodayExpired();
@@ -175,7 +175,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
             d->languageBtn->insertLanguage(*it);
     }
 
-    d->languageBtn->setWhatsThis(i18n("<p>Select here the language of content."));
+    d->languageBtn->setWhatsThis(i18n("Select here the language of content."));
 
     // --------------------------------------------------------
 
@@ -190,7 +190,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
     d->priorityCB->insertItem(8, i18n("8: Low"));
-    d->priorityCB->setWhatsThis(i18n("<p>Select here the editorial urgency of content."));
+    d->priorityCB->setWhatsThis(i18n("Select here the editorial urgency of content."));
 
     // --------------------------------------------------------
 
@@ -199,7 +199,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->objectCycleCB->insertItem(0, i18n("Morning"));
     d->objectCycleCB->insertItem(1, i18n("Afternoon"));
     d->objectCycleCB->insertItem(2, i18n("Evening"));
-    d->objectCycleCB->setWhatsThis(i18n("<p>Select here the editorial cycle of content."));
+    d->objectCycleCB->setWhatsThis(i18n("Select here the editorial cycle of content."));
 
     // --------------------------------------------------------
 
@@ -212,8 +212,8 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     d->objectTypeCB->insertItem(0, i18n("News"));
     d->objectTypeCB->insertItem(1, i18n("Data"));
     d->objectTypeCB->insertItem(2, i18n("Advisory"));
-    d->objectTypeCB->setWhatsThis(i18n("<p>Select here the editorial type of content."));
-    d->objectTypeDescEdit->setWhatsThis(i18n("<p>Set here the editorial type description of content. "
+    d->objectTypeCB->setWhatsThis(i18n("Select here the editorial type of content."));
+    d->objectTypeDescEdit->setWhatsThis(i18n("Set here the editorial type description of content. "
                                              "This field is limited to 64 ASCII characters."));
 
     // --------------------------------------------------------

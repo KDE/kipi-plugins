@@ -100,7 +100,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->brightnessEdit->setRange(-99.99, 99.99);
     d->brightnessEdit->setSingleStep(0.1);
     d->brightnessEdit->setValue(0.0);
-    d->brightnessEdit->setWhatsThis(i18n("<p>Set here the brightness adjustment value in APEX unit "
+    d->brightnessEdit->setWhatsThis(i18n("Set here the brightness adjustment value in APEX unit "
                                          "used by camera to take the picture."));
 
     // --------------------------------------------------------
@@ -112,7 +112,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->gainControlCB->insertItem(2, i18n("High gain up"));
     d->gainControlCB->insertItem(3, i18n("Low gain down"));
     d->gainControlCB->insertItem(4, i18n("High gain down"));
-    d->gainControlCB->setWhatsThis(i18n("<p>Set here the degree of overall image gain adjustment "
+    d->gainControlCB->setWhatsThis(i18n("Set here the degree of overall image gain adjustment "
                                         "used by camera to take the picture."));
 
     // --------------------------------------------------------
@@ -122,7 +122,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->contrastCB->insertItem(0, i18n("Normal"));
     d->contrastCB->insertItem(1, i18n("Soft"));
     d->contrastCB->insertItem(2, i18n("Hard"));
-    d->contrastCB->setWhatsThis(i18n("<p>Set here the direction of contrast processing "
+    d->contrastCB->setWhatsThis(i18n("Set here the direction of contrast processing "
                                      "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
@@ -132,7 +132,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->saturationCB->insertItem(0, i18n("Normal"));
     d->saturationCB->insertItem(1, i18n("Low"));
     d->saturationCB->insertItem(2, i18n("High"));
-    d->saturationCB->setWhatsThis(i18n("<p>Set here the direction of saturation processing "
+    d->saturationCB->setWhatsThis(i18n("Set here the direction of saturation processing "
                                        "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
@@ -142,7 +142,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->sharpnessCB->insertItem(0, i18n("Normal"));
     d->sharpnessCB->insertItem(1, i18n("Soft"));
     d->sharpnessCB->insertItem(2, i18n("Hard"));
-    d->sharpnessCB->setWhatsThis(i18n("<p>Set here the direction of sharpness processing "
+    d->sharpnessCB->setWhatsThis(i18n("Set here the direction of sharpness processing "
                                       "applied by the camera to take the picture."));
 
     // --------------------------------------------------------
@@ -151,7 +151,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->customRenderedCB    = new QComboBox(this);
     d->customRenderedCB->insertItem(0, i18n("Normal process"));
     d->customRenderedCB->insertItem(1, i18n("Custom process"));
-    d->customRenderedCB->setWhatsThis(i18n("<p>Set here the use of special processing on "
+    d->customRenderedCB->setWhatsThis(i18n("Set here the use of special processing on "
                                            "image data, such as rendering geared to output."));
 
     grid->addWidget(d->brightnessCheck, 0, 0, 1, 1);

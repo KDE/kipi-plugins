@@ -133,7 +133,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->makeEdit  = new KLineEdit(this);
     d->makeEdit->setClearButtonShown(true);
     d->makeEdit->setValidator(asciiValidator);
-    d->makeEdit->setWhatsThis(i18n("<p>Set here the manufacturer of image input equipment used to "
+    d->makeEdit->setWhatsThis(i18n("Set here the manufacturer of image input equipment used to "
                                    "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
@@ -142,7 +142,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->modelEdit  = new KLineEdit(this);
     d->modelEdit->setClearButtonShown(true);
     d->modelEdit->setValidator(asciiValidator);
-    d->modelEdit->setWhatsThis(i18n("<p>Set here the model of image input equipment used to "
+    d->modelEdit->setWhatsThis(i18n("Set here the model of image input equipment used to "
                                     "take the picture. This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
@@ -152,7 +152,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->deviceTypeCB->insertItem(0, i18n("Film scanner"));
     d->deviceTypeCB->insertItem(1, i18n("Reflection print scanner"));
     d->deviceTypeCB->insertItem(2, i18n("Digital still camera"));
-    d->deviceTypeCB->setWhatsThis(i18n("<p>Select here the image input equipment type used to "
+    d->deviceTypeCB->setWhatsThis(i18n("Select here the image input equipment type used to "
                                        "take the picture."));
 
     QLabel *warning = new QLabel(i18n("<b>Warning: EXIF <b><a href="
@@ -172,7 +172,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureTimeDenEdit = new KIntSpinBox(1, 100000, 1, 1, this);
     QLabel *exposureLabel  = new QLabel("/", this);
     exposureLabel->setAlignment (Qt::AlignRight|Qt::AlignVCenter);
-    d->exposureTimeCheck->setWhatsThis(i18n("<p>Set on this option to set the exposure time "
+    d->exposureTimeCheck->setWhatsThis(i18n("Set on this option to set the exposure time "
                                             "of picture, given in seconds."));
 
     // --------------------------------------------------------
@@ -188,7 +188,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureProgramCB->insertItem(6, i18n("Action program"));
     d->exposureProgramCB->insertItem(7, i18n("Portrait mode"));
     d->exposureProgramCB->insertItem(8, i18n("Landscape mode"));
-    d->exposureProgramCB->setWhatsThis(i18n("<p>Select here the program used by the camera "
+    d->exposureProgramCB->setWhatsThis(i18n("Select here the program used by the camera "
                                             "to set exposure when the picture have been taken."));
 
     // --------------------------------------------------------
@@ -198,7 +198,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureModeCB->insertItem(0, i18n("Auto"));
     d->exposureModeCB->insertItem(1, i18n("Manual"));
     d->exposureModeCB->insertItem(2, i18n("Auto bracket"));
-    d->exposureModeCB->setWhatsThis(i18n("<p>Select here the mode used by the camera "
+    d->exposureModeCB->setWhatsThis(i18n("Select here the mode used by the camera "
                                          "to set exposure when the picture have been shot. "
                                          "In auto-bracketing mode, the camera shoots a "
                                          "series of frames of the same scene at different "
@@ -211,7 +211,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureBiasEdit->setRange(-99.99, 99.99);
     d->exposureBiasEdit->setSingleStep(0.1);
     d->exposureBiasEdit->setValue(0.0);
-    d->exposureBiasEdit->setWhatsThis(i18n("<p>Set here the exposure bias value in APEX unit "
+    d->exposureBiasEdit->setWhatsThis(i18n("Set here the exposure bias value in APEX unit "
                                            "used by camera to take the picture."));
 
     KSeparator *line2 = new KSeparator(Qt::Horizontal, this);
@@ -228,7 +228,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->meteringModeCB->insertItem(5, i18n("Multi-segment"));
     d->meteringModeCB->insertItem(6, i18n("Partial"));
     d->meteringModeCB->insertItem(7, i18n("Other"));
-    d->meteringModeCB->setWhatsThis(i18n("<p>Select here the metering mode used by the camera "
+    d->meteringModeCB->setWhatsThis(i18n("Select here the metering mode used by the camera "
                                          "to set exposure when the picture have been shot."));
 
     // --------------------------------------------------------
@@ -271,7 +271,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->ISOSpeedCB->insertItem(34, "20000");
     d->ISOSpeedCB->insertItem(35, "25000");
     d->ISOSpeedCB->insertItem(36, "32000");
-    d->ISOSpeedCB->setWhatsThis(i18n("<p>Select here the ISO Speed of the camera "
+    d->ISOSpeedCB->setWhatsThis(i18n("Select here the ISO Speed of the camera "
                                      "witch have taken the picture."));
 
     // --------------------------------------------------------
@@ -285,7 +285,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->sensingMethodCB->insertItem(4, i18n("Color sequential area"));
     d->sensingMethodCB->insertItem(5, i18n("Trilinear sensor"));
     d->sensingMethodCB->insertItem(6, i18n("Color sequential linear"));
-    d->sensingMethodCB->setWhatsThis(i18n("<p>Select here the image sensor type used by the camera "
+    d->sensingMethodCB->setWhatsThis(i18n("Select here the image sensor type used by the camera "
                                           "to take the picture."));
 
     // --------------------------------------------------------
@@ -296,7 +296,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->sceneTypeCB->insertItem(1, i18n("Landscape"));
     d->sceneTypeCB->insertItem(2, i18n("Portrait"));
     d->sceneTypeCB->insertItem(3, i18n("Night scene"));
-    d->sceneTypeCB->setWhatsThis(i18n("<p>Select here the type of scene used by the camera "
+    d->sceneTypeCB->setWhatsThis(i18n("Select here the type of scene used by the camera "
                                       "to take the picture."));
 
     // --------------------------------------------------------
@@ -307,7 +307,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->subjectDistanceTypeCB->insertItem(2, i18n("Macro"));
     d->subjectDistanceTypeCB->insertItem(3, i18n("Close view"));
     d->subjectDistanceTypeCB->insertItem(4, i18n("Distant view"));
-    d->subjectDistanceTypeCB->setWhatsThis(i18n("<p>Select here the type of distance between "
+    d->subjectDistanceTypeCB->setWhatsThis(i18n("Select here the type of distance between "
                                                 "the subject and the image input equipment."));
 
     // --------------------------------------------------------

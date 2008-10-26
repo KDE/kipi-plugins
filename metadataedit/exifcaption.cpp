@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -37,7 +37,7 @@
 #include <ktextedit.h>
 #include <kaboutdata.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -99,15 +99,15 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);  
-  
+    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+
     // --------------------------------------------------------
 
     d->documentNameCheck = new QCheckBox(i18n("Name (*):"), this);
     d->documentNameEdit  = new KLineEdit(this);
     d->documentNameEdit->setClearButtonShown(true);
     d->documentNameEdit->setValidator(asciiValidator);
-    d->documentNameEdit->setWhatsThis(i18n("<p>Enter the name of the document from which "
+    d->documentNameEdit->setWhatsThis(i18n("Enter the name of the document from which "
                                            "this image was been scanned. This field is limited "
                                            "to ASCII characters."));
 
@@ -117,16 +117,16 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->imageDescEdit  = new KLineEdit(this);
     d->imageDescEdit->setClearButtonShown(true);
     d->imageDescEdit->setValidator(asciiValidator);
-    d->imageDescEdit->setWhatsThis(i18n("<p>Enter the image title. This field is limited "
+    d->imageDescEdit->setWhatsThis(i18n("Enter the image title. This field is limited "
                                         "to ASCII characters."));
-        
+
     // --------------------------------------------------------
 
     d->artistCheck = new QCheckBox(i18n("Artist (*):"), this);
     d->artistEdit  = new KLineEdit(this);
     d->artistEdit->setClearButtonShown(true);
     d->artistEdit->setValidator(asciiValidator);
-    d->artistEdit->setWhatsThis(i18n("<p>Enter the image author's name. "
+    d->artistEdit->setWhatsThis(i18n("Enter the image author's name. "
                                      "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
@@ -135,21 +135,21 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->copyrightEdit  = new KLineEdit(this);
     d->copyrightEdit->setClearButtonShown(true);
     d->copyrightEdit->setValidator(asciiValidator);
-    d->copyrightEdit->setWhatsThis(i18n("<p>Enter the copyright owner of the image. "
+    d->copyrightEdit->setWhatsThis(i18n("Enter the copyright owner of the image. "
                                         "This field is limited to ASCII characters."));
 
     // --------------------------------------------------------
 
     d->userCommentCheck = new QCheckBox(i18n("Caption:"), this);
     d->userCommentEdit  = new KTextEdit(this);
-    d->userCommentEdit->setWhatsThis(i18n("<p>Enter the image's caption. "
+    d->userCommentEdit->setWhatsThis(i18n("Enter the image's caption. "
                                           "This field is not limited. UTF8 encoding "
                                           "will be used to save the text."));
 
-    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1", 
-                                            KGlobal::mainComponent().aboutData()->programName()), 
+    d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync captions entered through %1",
+                                            KGlobal::mainComponent().aboutData()->programName()),
                                             this);
-    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);   
+    d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
     d->syncXMPCaptionCheck  = new QCheckBox(i18n("Sync XMP caption"), this);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters set)"), this);
@@ -170,23 +170,23 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->documentNameCheck, 0, 0, 1, 1);
-    grid->addWidget(d->documentNameEdit, 0, 1, 1, 2);
-    grid->addWidget(d->imageDescCheck, 1, 0, 1, 1);
-    grid->addWidget(d->imageDescEdit, 1, 1, 1, 2);
-    grid->addWidget(d->artistCheck, 2, 0, 1, 1);
-    grid->addWidget(d->artistEdit, 2, 1, 1, 2);
-    grid->addWidget(d->copyrightCheck, 3, 0, 1, 1);
-    grid->addWidget(d->copyrightEdit, 3, 1, 1, 2);
-    grid->addWidget(d->userCommentCheck, 4, 0, 1, 3);
-    grid->addWidget(d->userCommentEdit, 5, 0, 1, 3);
-    grid->addWidget(d->syncHOSTCommentCheck, 6, 0, 1, 3);
-    grid->addWidget(d->syncJFIFCommentCheck, 7, 0, 1, 3);
-    grid->addWidget(d->syncXMPCaptionCheck, 8, 0, 1, 3);
-    grid->addWidget(d->syncIPTCCaptionCheck, 9, 0, 1, 3);
-    grid->addWidget(note, 10, 0, 1, 3);
-    grid->setRowStretch(11, 10);  
-    grid->setColumnStretch(2, 10);      
+    grid->addWidget(d->documentNameCheck,       0, 0, 1, 1);
+    grid->addWidget(d->documentNameEdit,        0, 1, 1, 2);
+    grid->addWidget(d->imageDescCheck,          1, 0, 1, 1);
+    grid->addWidget(d->imageDescEdit,           1, 1, 1, 2);
+    grid->addWidget(d->artistCheck,             2, 0, 1, 1);
+    grid->addWidget(d->artistEdit,              2, 1, 1, 2);
+    grid->addWidget(d->copyrightCheck,          3, 0, 1, 1);
+    grid->addWidget(d->copyrightEdit,           3, 1, 1, 2);
+    grid->addWidget(d->userCommentCheck,        4, 0, 1, 3);
+    grid->addWidget(d->userCommentEdit,         5, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck,    6, 0, 1, 3);
+    grid->addWidget(d->syncJFIFCommentCheck,    7, 0, 1, 3);
+    grid->addWidget(d->syncXMPCaptionCheck,     8, 0, 1, 3);
+    grid->addWidget(d->syncIPTCCaptionCheck,    9, 0, 1, 3);
+    grid->addWidget(note,                      10, 0, 1, 3);
+    grid->setRowStretch(11, 10);
+    grid->setColumnStretch(2, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -223,7 +223,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     connect(d->documentNameCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->imageDescCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -240,7 +240,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     connect(d->userCommentEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->documentNameEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
@@ -313,7 +313,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->documentNameEdit->clear();
     d->documentNameCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);
     if (!data.isNull())
     {
         d->documentNameEdit->setText(data);
@@ -323,7 +323,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->imageDescEdit->clear();
     d->imageDescCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.ImageDescription", false);     
+    data = exiv2Iface.getExifTagString("Exif.Image.ImageDescription", false);
     if (!data.isNull())
     {
         d->imageDescEdit->setText(data);
@@ -333,7 +333,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->artistEdit->clear();
     d->artistCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);
     if (!data.isNull())
     {
         d->artistEdit->setText(data);
@@ -343,7 +343,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Copyright", false);    
+    data = exiv2Iface.getExifTagString("Exif.Image.Copyright", false);
     if (!data.isNull())
     {
         d->copyrightEdit->setText(data);
@@ -353,7 +353,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->userCommentEdit->clear();
     d->userCommentCheck->setChecked(false);
-    data = exiv2Iface.getExifComment();    
+    data = exiv2Iface.getExifComment();
     if (!data.isNull())
     {
         d->userCommentEdit->setText(data);
@@ -398,18 +398,18 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByt
     if (d->userCommentCheck->isChecked())
     {
         exiv2Iface.setExifComment(d->userCommentEdit->toPlainText());
-        
+
         if (syncJFIFCommentIsChecked())
             exiv2Iface.setComments(d->userCommentEdit->toPlainText().toUtf8());
-        
+
         if (exiv2Iface.supportXmp() && syncXMPCaptionIsChecked())
         {
-            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", 
-                                              d->userCommentEdit->toPlainText(), 
+            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description",
+                                              d->userCommentEdit->toPlainText(),
                                               QString(), false);
-        
+
             exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment",
-                                              d->userCommentEdit->toPlainText(), 
+                                              d->userCommentEdit->toPlainText(),
                                               QString(), false);
         }
 

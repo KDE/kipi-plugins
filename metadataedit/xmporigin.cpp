@@ -394,7 +394,7 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayDigitalizedBtn->setWhatsThis(i18n("Set digitization date to today"));
 
-    d->dateDigitalizedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+    d->dateDigitalizedSel->setWhatsThis(i18n("Set here the creation date of "
                                              "digital representation."));
 
     slotSetTodayDigitalized();
@@ -412,7 +412,7 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
-    d->dateCreatedSel->setWhatsThis(i18n("<p>Set here the creation date of "
+    d->dateCreatedSel->setWhatsThis(i18n("Set here the creation date of "
                                          "intellectual content."));
 
     slotSetTodayCreated();
@@ -422,21 +422,21 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     d->cityCheck = new QCheckBox(i18n("City:"), this);
     d->cityEdit  = new KLineEdit(this);
     d->cityEdit->setClearButtonShown(true);
-    d->cityEdit->setWhatsThis(i18n("<p>Set here the city of content origin."));
+    d->cityEdit->setWhatsThis(i18n("Set here the city of content origin."));
 
     // --------------------------------------------------------
 
     d->sublocationCheck = new QCheckBox(i18n("Sublocation:"), this);
     d->sublocationEdit  = new KLineEdit(this);
     d->sublocationEdit->setClearButtonShown(true);
-    d->sublocationEdit->setWhatsThis(i18n("<p>Set here the content location within city."));
+    d->sublocationEdit->setWhatsThis(i18n("Set here the content location within city."));
 
     // --------------------------------------------------------
 
     d->provinceCheck = new QCheckBox(i18n("State/Province:"), this);
     d->provinceEdit  = new KLineEdit(this);
     d->provinceEdit->setClearButtonShown(true);
-    d->provinceEdit->setWhatsThis(i18n("<p>Set here the Province or State of content origin."));
+    d->provinceEdit->setWhatsThis(i18n("Set here the Province or State of content origin."));
 
     // --------------------------------------------------------
 
@@ -448,14 +448,14 @@ XMPOrigin::XMPOrigin(QWidget* parent)
         d->countryCB->addSqueezedItem(QString("%1 - %2").arg(it.key()).arg(it.value()));
 
     d->countryCB->model()->sort(0);
-    d->countryCB->setWhatsThis(i18n("<p>Select here country name of content origin."));
+    d->countryCB->setWhatsThis(i18n("Select here country name of content origin."));
 
     // --------------------------------------------------------
 
     d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
     d->originalTransEdit  = new KLineEdit(this);
     d->originalTransEdit->setClearButtonShown(true);
-    d->originalTransEdit->setWhatsThis(i18n("<p>Set here the location of original content transmission "
+    d->originalTransEdit->setWhatsThis(i18n("Set here the location of original content transmission "
                                             "reference."));
 
     // --------------------------------------------------------

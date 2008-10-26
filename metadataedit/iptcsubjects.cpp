@@ -208,7 +208,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->iprEdit->setClearButtonShown(true);
     d->iprEdit->setValidator(subjectAsciiValidator);
     d->iprEdit->setMaxLength(32);
-    d->iprEdit->setWhatsThis(i18n("<p>Enter here the Informative Provider Reference. "
+    d->iprEdit->setWhatsThis(i18n("Enter here the Informative Provider Reference. "
                                   "I.P.R is a name registered with the IPTC/NAA, identifying the "
                                   "provider that provides an indicator of the content. "
                                   "The default value for the I.P.R is \"IPTC\" if a standard Reference "
@@ -220,7 +220,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->refEdit->setClearButtonShown(true);
     d->refEdit->setValidator(refValidator);
     d->refEdit->setMaxLength(8);
-    d->refEdit->setWhatsThis(i18n("<p>Enter here the Subject Reference Number. "
+    d->refEdit->setWhatsThis(i18n("Enter here the Subject Reference Number. "
                                   "Provides a numeric code to indicate the Subject Name plus "
                                   "optional Subject Matter and Subject Detail Names in the "
                                   "language of the service. Subject Reference is a number "
@@ -238,7 +238,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->nameEdit->setClearButtonShown(true);
     d->nameEdit->setValidator(subjectAsciiValidator);
     d->nameEdit->setMaxLength(64);
-    d->nameEdit->setWhatsThis(i18n("<p>Enter here the Subject Name. English language is used "
+    d->nameEdit->setWhatsThis(i18n("Enter here the Subject Name. English language is used "
                                    "if you selected a standard IPTC/NAA reference code. "
                                    "This field is limited to 64 ASCII characters."));
 
@@ -248,7 +248,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->matterEdit->setClearButtonShown(true);
     d->matterEdit->setValidator(subjectAsciiValidator);
     d->matterEdit->setMaxLength(64);
-    d->matterEdit->setWhatsThis(i18n("<p>Enter here the Subject Matter Name. English language is used "
+    d->matterEdit->setWhatsThis(i18n("Enter here the Subject Matter Name. English language is used "
                                      "if you selected a standard IPTC/NAA reference code. "
                                      "This field is limited to 64 ASCII characters."));
 
@@ -258,7 +258,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->detailEdit->setClearButtonShown(true);
     d->detailEdit->setValidator(subjectAsciiValidator);
     d->detailEdit->setMaxLength(64);
-    d->detailEdit->setWhatsThis(i18n("<p>Enter here the Subject Detail Name. English language is used "
+    d->detailEdit->setWhatsThis(i18n("Enter here the Subject Detail Name. English language is used "
                                      "if you selected a standard IPTC/NAA reference code. "
                                      "This field is limited to 64 ASCII characters."));
 
