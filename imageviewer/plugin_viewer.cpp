@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "plugin_viewer.h"
+#include "plugin_viewer.moc"
+
 // Qt includes.
 
 #include <qmessagebox.h>
@@ -44,14 +47,12 @@
 // Local includes.
 
 #include "viewerwidget.h"
-#include "plugin_viewer.h"
-#include "plugin_viewer.moc"
 
 K_PLUGIN_FACTORY( viewerFactory, registerPlugin<Plugin_viewer>(); )
-K_EXPORT_PLUGIN ( viewerFactory("kipiplugin_imageviewer") )
+K_EXPORT_PLUGIN( viewerFactory("kipiplugin_imageviewer") )
 
 Plugin_viewer::Plugin_viewer( QObject *parent, const QVariantList & )
-             : KIPI::Plugin::Plugin( viewerFactory::componentData(), parent, "kipiplugin_imageviewer" )
+             : KIPI::Plugin( viewerFactory::componentData(), parent, "kipiplugin_imageviewer" )
 {
     kDebug( 51001 ) << "OpenGL viewer plugin loaded";
 }
@@ -60,9 +61,9 @@ void Plugin_viewer::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) {
+    if ( !pv_interface ) {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
@@ -94,14 +95,14 @@ KIPI::Category Plugin_viewer::category( KAction* action ) const
  */
 void  Plugin_viewer::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) {
+    if ( !pv_interface ) {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
-    widget = new KIPIviewer::ViewerWidget(interface);
+    widget = new KIPIviewer::ViewerWidget(pv_interface);
     if ( widget->listOfFilesIsEmpty() )
     {
         delete widget;
