@@ -91,7 +91,7 @@ void GPSTrackListWidget::setZoomLevel(int zoomLevel)
     d->zoomLevel = QString::number(zoomLevel);
 }
 
-int GPSTrackListWidget::GPSTrackListWidget::zoomLevel()
+int GPSTrackListWidget::zoomLevel()
 {
     return d->zoomLevel.toInt();
 }
