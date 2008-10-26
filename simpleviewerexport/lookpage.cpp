@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU Look
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -89,13 +89,13 @@ LookPage::LookPage(QWidget* parent)
     d->thumbnailRows->setRange(1, 10, 1);
     d->thumbnailRows->setValue(3);
     d->thumbnailRows->setLabel(i18n("Thumbnail &Rows:"), Qt::AlignVCenter);
-    d->thumbnailRows->setWhatsThis(i18n("<p>Number of thumbnails rows"));
+    d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
 
     d->thumbnailColumns = new KIntNumInput(this);
     d->thumbnailColumns->setRange(1, 10, 1);
     d->thumbnailColumns->setValue(3);
     d->thumbnailColumns->setLabel(i18n("Thumbnail &Columns:"), Qt::AlignVCenter);
-    d->thumbnailColumns->setWhatsThis(i18n("<p>Number of thumbnails columns"));
+    d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
 
     KHBox *hbox          = new KHBox;
     QLabel *label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
@@ -131,7 +131,7 @@ LookPage::LookPage(QWidget* parent)
     QLabel *label3  = new QLabel(i18n("&Text Color:"), hbox3);
     d->textColor    = new KColorButton(hbox3);
     d->textColor->setColor(QColor("#FFFFFF"));
-    d->textColor->setWhatsThis(i18n("<p>Color of title and caption text"));
+    d->textColor->setWhatsThis(i18n("Color of title and caption text"));
     label3->setBuddy(d->textColor);
 
     KHBox *hbox4       = new KHBox;
@@ -144,7 +144,7 @@ LookPage::LookPage(QWidget* parent)
     QLabel *label5  = new QLabel(i18n("&Frame Color:"), hbox5);
     d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
     d->frameColor->setColor(QColor("#FFFFFF"));
-    d->frameColor->setWhatsThis(i18n("<p>Color of image frame, viewed icon, load bars, thumbnail arrows"));
+    d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
     label5->setBuddy(d->frameColor);
 
     vlay2->setMargin(KDialog::spacingHint());
@@ -162,13 +162,13 @@ LookPage::LookPage(QWidget* parent)
     d->frameWidth->setRange(0, 10, 1);
     d->frameWidth->setValue(1);
     d->frameWidth->setLabel(i18n("Frame &Width:"), Qt::AlignVCenter);
-    d->frameWidth->setWhatsThis(i18n("<p>Width of image frame in pixels."));
+    d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
 
     d->stagePadding = new KIntNumInput(this);
     d->stagePadding->setRange(10, 100, 1);
     d->stagePadding->setValue(20);
     d->stagePadding->setLabel(i18n("Stage &Padding:"), Qt::AlignVCenter);
-    d->stagePadding->setWhatsThis(i18n("<p>Distance between image and thumbnails in pixels."));
+    d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
 
     vlay3->setMargin(KDialog::spacingHint());
     vlay3->setSpacing(KDialog::spacingHint());

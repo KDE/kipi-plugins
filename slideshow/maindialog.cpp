@@ -129,7 +129,7 @@ void MainDialog::readSettings()
     m_openglCheckBox->setEnabled(false);
 
     m_openglCheckBox->setToolTip(i18n("In this version of kipi-plugins, normal SlideShow's effects "
-                                      "still under porting.<br>"
+                                      "still under porting.<br/>"
                                       "<b>They will be available again in the future.</b>"));
 
     //----------------------

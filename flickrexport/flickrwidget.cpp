@@ -72,11 +72,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     QLabel *headerLabel = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
-    headerLabel->setText(i18n("<qt><b><h2><a href='http://www.flickr.com'>"
+    headerLabel->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
                               "<font color=\"#0065DE\">flick</font>"
                               "<font color=\"#FF0084\">r</font></a>"
                               " Export"
-                              "</h2></b></qt>"));
+                              "</h2></b>"));
 
     // -------------------------------------------------------------------
 

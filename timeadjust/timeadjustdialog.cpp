@@ -470,8 +470,8 @@ void TimeAdjustDialog::slotUpdateExample()
     QString oldDate = d->exampleDate.toString(Qt::LocalDate);
     QDateTime date  = updateTime(KUrl(), d->exampleDate);
     QString newDate = date.toString(Qt::LocalDate);
-    d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
-                                "change into<br><b>%2</b>",
+    d->exampleAdj->setText(i18n("<b>%1</b><br/>would, for example, "
+                                "change into<br/><b>%2</b>",
                                 oldDate, newDate));
 }
 

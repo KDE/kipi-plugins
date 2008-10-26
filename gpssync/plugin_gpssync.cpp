@@ -134,11 +134,11 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
     {
         KMessageBox::information(
                      kapp->activeWindow(),
-                     i18n("<qt><p>Unable to find the gpsbabel executable:<br> "
+                     i18n("<p>Unable to find the gpsbabel executable:<br/> "
                           "This program is required by this plugin to support GPS data file decoding. "
                           "Please install gpsbabel as a package from your distributor "
                           "or <a href=\"%1\">download the source</a>.</p>"
-                          "<p>Note: at least, gpsbabel version %2 is required by this plugin.</p></qt>",
+                          "<p>Note: at least, gpsbabel version %2 is required by this plugin.</p>",
                           QString("http://www.gpsbabel.org"),
                           gpsBabelBinary.minimalVersion()),
                      QString::null,
@@ -151,13 +151,13 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
     {
         KMessageBox::information(
                      kapp->activeWindow(),
-                     i18n("<qt><p>gpsbabel executable is not up to date:<br> "
+                     i18n("<p>gpsbabel executable is not up to date:<br/> "
                           "The version %1 of gpsbabel have been found on your computer. "
                           "This version is too old to run properly with this plugin. "
                           "Please update gpsbabel as a package from your distributor "
                           "or <a href=\"%2\">download the source</a>.</p>"
                           "<p>Note: at least, gpsbabel version %3 is required by this "
-                          "plugin</p></qt>",
+                          "plugin</p>",
                           gpsBabelVersion,
                           QString("http://www.gpsbabel.org"),
                           gpsBabelBinary.minimalVersion()),

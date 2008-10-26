@@ -169,7 +169,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), settingsBox);
     d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, settingsBox);
-    d->maxGapInput->setWhatsThis(i18n("<p>Sets the maximum difference in "
+    d->maxGapInput->setWhatsThis(i18n("Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
 
@@ -221,17 +221,17 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->timeZoneCB->addItem("GMT+14:00");
     d->timeZoneCB->setWhatsThis(i18n("<p>Sets the time zone the camera was set to "
                     "during photo shooting, so that the time stamps of the images "
-                    "can be converted to GMT to match the GPS time reference.\n"
-                    "Note: positive offsets count eastwards from zero longitude (GMT), "
-                    "they are 'ahead of time'."));
+                    "can be converted to GMT to match the GPS time reference.</p>"
+                    "<p>Note: positive offsets count eastwards from zero longitude (GMT), "
+                    "they are 'ahead of time'.</p>"));
 
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
-    d->interpolateBox->setWhatsThis(i18n("<p>Set this option to interpolate GPS track points "
+    d->interpolateBox->setWhatsThis(i18n("Set this option to interpolate GPS track points "
                     "which are not closely matched to the GPX data file."));
 
     d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), settingsBox);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, settingsBox);
-    d->maxTimeInput->setWhatsThis(i18n("<p>Sets the maximum time difference in minutes (240 max.)"
+    d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
     settingsBoxLayout->addWidget(loadGPXButton,     0, 0, 1, 2);

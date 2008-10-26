@@ -314,7 +314,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
     kDebug( 51000 ) << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
-    m_userNameDisplayLabel->setText(QString("<qt><b>%1</b></qt>").arg(m_username));
+    m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
     m_widget->setEnabled(true);
 }
 

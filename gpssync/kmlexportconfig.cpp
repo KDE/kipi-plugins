@@ -55,7 +55,7 @@
 #include "kmlexportconfig.h"
 #include "kmlexportconfig.moc"
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIGPSSyncPlugin
 {
 
 /*
@@ -71,7 +71,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    KMLExportConfigLayout = new QGridLayout(page); 
+    KMLExportConfigLayout = new QGridLayout(page);
 
     // --------------------------------------------------------------
     // Target preferences
@@ -202,7 +202,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     timeZoneCB->addItem(i18n("GMT+12:00"), 24);
     timeZoneCB->addItem(i18n("GMT+13:00"), 25);
     timeZoneCB->addItem(i18n("GMT+14:00"), 26);
-    timeZoneCB->setWhatsThis(i18n("<p>Sets the time zone of the camera during "
+    timeZoneCB->setWhatsThis(i18n("Sets the time zone of the camera during "
                                   "picture shooting, so that the time stamps of the GPS "
                                   "can be converted to match the local time"));
 
@@ -267,10 +267,10 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
-    connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ), 
+    connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ),
              this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
 
-    connect( GPXTracksCheckBox_, SIGNAL( toggled(bool) ), 
+    connect( GPXTracksCheckBox_, SIGNAL( toggled(bool) ),
              this, SLOT( KMLTracksCheckButton__toggled(bool) ) );
 
     // --------------------------------------------------------------
@@ -282,11 +282,11 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                    ki18n("A Kipi plugin for KML exporting"),
                    ki18n("(c) 2006-2007, Stéphane Pontier"));
 
-    m_about->addAuthor(ki18n("Stéphane Pontier"), 
+    m_about->addAuthor(ki18n("Stéphane Pontier"),
                         ki18n("Developer and maintainer"),
                               "shadow dot walker at free dot fr");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), 
+    m_about->addAuthor(ki18n("Gilles Caulier"),
                        ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
@@ -303,7 +303,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     helpButton->setDelayedMenu( helpMenu->menu() );
 
     // --------------------------------------------------------------
-    // Configuration file management 
+    // Configuration file management
 
     readSettings();
 
@@ -343,14 +343,14 @@ void KMLExportConfig::slotHelp()
 
 void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
 {
-    if (GoogleMapTargetRadioButton_->isChecked()) 
+    if (GoogleMapTargetRadioButton_->isChecked())
     {
         DestinationUrlLabel_->setEnabled(true);
         DestinationUrl_->setEnabled(true);
         IconSizeLabel->setEnabled(false);
         IconSizeInput_->setEnabled(false);
-    } 
-    else 
+    }
+    else
     {
         DestinationUrlLabel_->setEnabled(false);
         DestinationUrl_->setEnabled(false);
@@ -359,9 +359,9 @@ void KMLExportConfig::GoogleMapTargetRadioButton__toggled(bool)
     }
 }
 
-void KMLExportConfig::KMLTracksCheckButton__toggled(bool) 
+void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
 {
-    if (GPXTracksCheckBox_->isChecked()) 
+    if (GPXTracksCheckBox_->isChecked())
     {
         GPXFileKUrlRequester_->setEnabled(true);
         GPXFileLabel_->setEnabled(true);
@@ -374,8 +374,8 @@ void KMLExportConfig::KMLTracksCheckButton__toggled(bool)
         GPXLineWidthLabel_->setEnabled(true);
         GPXLineWidthInput_->setEnabled(true);
         GPXTracksOpacityInput_->setEnabled(true);
-    } 
-    else 
+    }
+    else
     {
         GPXFileKUrlRequester_->setEnabled(false);
         GPXFileLabel_->setEnabled(false);
@@ -467,13 +467,13 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("iconSize", IconSizeInput_->value());
     group.writeEntry("size", ImageSizeInput_->value());
     QString destination = DestinationDirectory_->url().path();
-    if (!destination.endsWith("/")) 
+    if (!destination.endsWith("/"))
     {
         destination.append("/");
     }
     group.writeEntry("baseDestDir", destination);
     QString url = DestinationUrl_->text();
-    if (!url.endsWith("/")) 
+    if (!url.endsWith("/"))
     {
         url.append("/");
     }

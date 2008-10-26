@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include "savesettingswidget.h"
@@ -75,23 +75,23 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new QComboBox( this );
-    d->formatComboBox->setWhatsThis(i18n("<p>Set here the output file format to use:<p>"
-                                         "<b>JPEG</b>: output the processed image in JPEG Format. "
+    d->formatComboBox->setWhatsThis(i18n("<p>Set here the output file format to use:</p>"
+                                         "<p><b>JPEG</b>: output the processed image in JPEG Format. "
                                          "this format will give smaller-sized files. Minimum JPEG "
-                                         "compression level will be used during Raw conversion.<p>"
-                                         "<b>Warning!!! duing of destructive compression algorithm, "
-                                         "JPEG is a lossy quality format.</b><p>"
-                                         "<b>TIFF</b>: output the processed image in TIFF Format. "
+                                         "compression level will be used during Raw conversion.</p>"
+                                         "<p><b>Warning!!! duing of destructive compression algorithm, "
+                                         "JPEG is a lossy quality format.</b></p>"
+                                         "<p><b>TIFF</b>: output the processed image in TIFF Format. "
                                          "This generates larges, without "
                                          "losing quality. Adobe Deflate compression "
-                                         "will be used during conversion.<p>"
-                                         "<b>PPM</b>: output the processed image in PPM Format. "
+                                         "will be used during conversion.</p>"
+                                         "<p><b>PPM</b>: output the processed image in PPM Format. "
                                          "This generates the largest files, without "
-                                         "losing quality.<p>"
-                                         "<b>PNG</b>: output the processed image in PNG Format. "
+                                         "losing quality.</p>"
+                                         "<p><b>PNG</b>: output the processed image in PNG Format. "
                                          "This generates larges, without "
                                          "losing quality. Maximum PNG compression "
-                                         "will be used during conversion."));
+                                         "will be used during conversion.</p>"));
     slotPopulateImageFormat(false);
 
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
@@ -114,7 +114,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
     settingsBoxLayout->addWidget(d->conflictLabel,  1, 0, 1, 1);
     settingsBoxLayout->addWidget(conflictBox,       2, 0, 1, 1);
-    settingsBoxLayout->setRowStretch(3, 10);   
+    settingsBoxLayout->setRowStretch(3, 10);
     settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
@@ -129,7 +129,7 @@ SaveSettingsWidget::~SaveSettingsWidget()
 
 void SaveSettingsWidget::setDefaultSettings()
 {
-    setFileFormat(OUTPUT_PNG); 
+    setFileFormat(OUTPUT_PNG);
     setConflictRule(OVERWRITE);
 }
 

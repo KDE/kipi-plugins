@@ -78,14 +78,14 @@ public:
     KLineEdit                *latitudeInput;
     KLineEdit                *longitudeInput;
 
-    KIPIPlugins::KPAboutData *about; 
+    KIPIPlugins::KPAboutData *about;
 
     GPSDataContainer          gpsData;
 
     GPSMapWidget             *worldMap;
 };
 
-GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData, 
+GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
                              const QString& fileName, bool hasGPSInfo)
              : KDialog(parent)
 {
@@ -105,7 +105,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the location where "
                                         "the picture has been taken. Click with left mouse button or move the marker "
-                                        "on the map to get the GPS coordinates.<p>"), page);
+                                        "on the map to get the GPS coordinates.</p>"), page);
     message->setWordWrap(true);
 
     QLabel *altitudeLabel  = new QLabel(i18n("Altitude:"), page);
@@ -155,7 +155,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
                    ki18n("A Plugin to edit geographical coordinates"),
                    ki18n("(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                        ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 

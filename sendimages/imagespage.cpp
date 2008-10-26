@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #define ICONSIZE 64
@@ -89,9 +89,9 @@ void ImagesListViewItem::setUrl(const KUrl& url)
     setText(m_item.orgUrl.fileName());
 }
 
-KUrl ImagesListViewItem::url() 
+KUrl ImagesListViewItem::url()
 {
-    return m_item.orgUrl; 
+    return m_item.orgUrl;
 }
 
 void ImagesListViewItem::setComments(const QString& comments)
@@ -99,43 +99,43 @@ void ImagesListViewItem::setComments(const QString& comments)
     m_item.comments = comments;
 }
 
-QString ImagesListViewItem::comments() 
-{ 
-    return m_item.comments; 
+QString ImagesListViewItem::comments()
+{
+    return m_item.comments;
 }
 
-void ImagesListViewItem::setTags(const QStringList& tags) 
-{ 
-    m_item.tags = tags; 
+void ImagesListViewItem::setTags(const QStringList& tags)
+{
+    m_item.tags = tags;
 }
 
-QStringList ImagesListViewItem::tags() 
-{ 
-    return m_item.tags; 
+QStringList ImagesListViewItem::tags()
+{
+    return m_item.tags;
 }
 
-void ImagesListViewItem::setRating(int rating) 
-{ 
-    m_item.rating = rating; 
+void ImagesListViewItem::setRating(int rating)
+{
+    m_item.rating = rating;
 }
 
-int ImagesListViewItem::rating() 
-{ 
-    return m_item.rating; 
+int ImagesListViewItem::rating()
+{
+    return m_item.rating;
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix) 
-{ 
+void ImagesListViewItem::setThumb(const QPixmap& pix)
+{
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
     pixmap.fill(Qt::color0);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    setIcon(QIcon(pixmap)); 
+    setIcon(QIcon(pixmap));
 }
 
-EmailItem ImagesListViewItem::emailItem() 
-{ 
-    return m_item; 
+EmailItem ImagesListViewItem::emailItem()
+{
+    return m_item;
 }
 
 // ---------------------------------------------------------------------------
@@ -144,8 +144,8 @@ ImagesListView::ImagesListView(QWidget *parent)
               : QListWidget(parent)
 {
     setIconSize(QSize(ICONSIZE, ICONSIZE));
-    setSelectionMode(QAbstractItemView::MultiSelection);    
-    setWhatsThis(i18n("<p>This is the list of images to e-mail."));
+    setSelectionMode(QAbstractItemView::MultiSelection);
+    setWhatsThis(i18n("This is the list of images to e-mail."));
     setAcceptDrops(true);
 }
 
@@ -225,7 +225,7 @@ ImagesPage::ImagesPage(QWidget* parent, KIPI::Interface *iface)
     grid->addWidget(d->addButton,    0, 1, 1, 1);
     grid->addWidget(d->removeButton, 1, 1, 1, 1);
     grid->setColumnStretch(0, 10);
-    grid->setRowStretch(2, 10); 
+    grid->setRowStretch(2, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 

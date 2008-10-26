@@ -200,16 +200,16 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    setButtonToolTip(User1, i18n("<p>Generate a Preview from current settings. "
+    setButtonToolTip(User1, i18n("Generate a Preview from current settings. "
                                  "Uses a simple bilinear interpolation for "
                                  "quick results."));
 
-    setButtonToolTip(User2, i18n("<p>Convert the Raw Image from current settings. "
+    setButtonToolTip(User2, i18n("Convert the Raw Image from current settings. "
                                  "This uses a high-quality adaptive algorithm."));
 
-    setButtonToolTip(User3, i18n("<p>Abort the current Raw file conversion"));
+    setButtonToolTip(User3, i18n("Abort the current Raw file conversion"));
 
-    setButtonToolTip(Close, i18n("<p>Exit Raw Converter"));
+    setButtonToolTip(Close, i18n("Exit Raw Converter"));
 
     d->blinkPreviewTimer = new QTimer(this);
     d->blinkConvertTimer = new QTimer(this);
