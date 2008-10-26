@@ -105,7 +105,7 @@ void GPSMapWidget::setZoomLevel(int zoomLevel)
     d->zoomLevel = QString::number(zoomLevel);
 }
 
-int GPSMapWidget::GPSMapWidget::zoomLevel()
+int GPSMapWidget::zoomLevel()
 {
     return d->zoomLevel.toInt();
 }
