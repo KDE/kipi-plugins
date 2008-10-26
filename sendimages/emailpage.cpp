@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include "emailpage.h"
@@ -59,7 +59,7 @@ public:
         labelImagesFormat       = 0;
         attachmentlimit         = 0;
     }
-    
+
     QLabel        *labelMailAgent;
     QLabel        *labelImagesResize;
     QLabel        *labelImagesFormat;
@@ -177,7 +177,7 @@ EmailPage::EmailPage(QWidget* parent)
 
     d->labelImagesFormat = new QLabel(i18n("Image file format:"), groupBox);
     d->labelImagesFormat->setBuddy(d->imagesFormat);
-    
+
     // --------------------------------------------------------
 
     d->imageCompression = new KIntNumInput(groupBox);
@@ -194,29 +194,29 @@ EmailPage::EmailPage(QWidget* parent)
     d->imageCompression->setWhatsThis(whatsThis);
 
     //---------------------------------------------
-    grid2->addWidget(d->labelImagesResize, 0, 0, 1, 1);
-    grid2->addWidget(d->imagesResize, 0, 1, 1, 2);
-    grid2->addWidget(d->labelImagesFormat, 1, 0, 1, 1);
-    grid2->addWidget(d->imagesFormat, 1, 1, 1, 2);
-    grid2->addWidget(d->imageCompression, 2, 0, 1, 3);
-    grid2->setRowStretch(4, 10);    
-    grid2->setColumnStretch(2, 10);                     
+    grid2->addWidget(d->labelImagesResize,  0, 0, 1, 1);
+    grid2->addWidget(d->imagesResize,       0, 1, 1, 2);
+    grid2->addWidget(d->labelImagesFormat,  1, 0, 1, 1);
+    grid2->addWidget(d->imagesFormat,       1, 1, 1, 2);
+    grid2->addWidget(d->imageCompression,   2, 0, 1, 3);
+    grid2->setRowStretch(4, 10);
+    grid2->setColumnStretch(2, 10);
     grid2->setMargin(KDialog::spacingHint());
-    grid2->setSpacing(KDialog::spacingHint());        
+    grid2->setSpacing(KDialog::spacingHint());
     grid2->setAlignment(Qt::AlignTop);
-            
+
     // --------------------------------------------------------
 
-    grid->addWidget(d->labelMailAgent, 0, 0, 1, 1);
-    grid->addWidget(d->mailAgentName, 0, 1, 1, 2);
-    grid->addWidget(d->attachmentlimit, 1, 0, 1, 4);
-    grid->addWidget(d->addComments, 2, 0, 1, 4);
-    grid->addWidget(d->changeImagesProp, 3, 0, 1, 4);
-    grid->addWidget(groupBox, 4, 0, 1, 4);
-    grid->setRowStretch(5, 10);    
-    grid->setColumnStretch(3, 10);                     
+    grid->addWidget(d->labelMailAgent,      0, 0, 1, 1);
+    grid->addWidget(d->mailAgentName,       0, 1, 1, 2);
+    grid->addWidget(d->attachmentlimit,     1, 0, 1, 4);
+    grid->addWidget(d->addComments,         2, 0, 1, 4);
+    grid->addWidget(d->changeImagesProp,    3, 0, 1, 4);
+    grid->addWidget(groupBox,               4, 0, 1, 4);
+    grid->setRowStretch(5, 10);
+    grid->setColumnStretch(3, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());        
+    grid->setSpacing(KDialog::spacingHint());
 
     //---------------------------------------------
 
@@ -254,7 +254,7 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
 
     slotImagesFormatChanged(d->imagesFormat->currentIndex());
 }
-                                    
+
 EmailSettingsContainer EmailPage::emailSettings()
 {
     EmailSettingsContainer settings;

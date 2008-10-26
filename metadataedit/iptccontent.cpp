@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -38,7 +38,7 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -100,14 +100,14 @@ IPTCContent::IPTCContent(QWidget* parent)
     d->headlineEdit->setMaxLength(256);
     d->headlineEdit->setWhatsThis(i18n("Enter here the content synopsis. This field is limited "
                                        "to 256 ASCII characters."));
-    
+
     // --------------------------------------------------------
 
     d->captionCheck         = new QCheckBox(i18n("Caption:"), this);
     d->captionEdit          = new KTextEdit(this);
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",
-                                              KGlobal::mainComponent().aboutData()->programName()), 
+                                              KGlobal::mainComponent().aboutData()->programName()),
                                             this);
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), this);
 
@@ -118,10 +118,10 @@ IPTCContent::IPTCContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->writerEdit  = new MultiStringsEdit(this, i18n("Caption Writer:"), 
-                                          i18n("Enter the name of the caption author."), 
+    d->writerEdit  = new MultiStringsEdit(this, i18n("Caption Writer:"),
+                                          i18n("Enter the name of the caption author."),
                                           true, 32);
-        
+
     // --------------------------------------------------------
 
     QLabel *note = new QLabel(i18n("<b>Note: "
@@ -136,23 +136,23 @@ IPTCContent::IPTCContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->headlineCheck, 0, 0, 1, 1);
-    grid->addWidget(d->headlineEdit, 0, 1, 1, 2);
-    grid->addWidget(d->captionCheck, 1, 0, 1, 3);
-    grid->addWidget(d->captionEdit, 2, 0, 1, 3);
-    grid->addWidget(d->syncJFIFCommentCheck, 3, 0, 1, 3);
-    grid->addWidget(d->syncHOSTCommentCheck, 4, 0, 1, 3);
-    grid->addWidget(d->syncEXIFCommentCheck, 5, 0, 1, 3);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 6, 0, 1, 3);
-    grid->addWidget(d->writerEdit, 7, 0, 1, 3);
-    grid->addWidget(note, 8, 0, 1, 3 );
-    grid->setRowStretch(9, 10);  
-    grid->setColumnStretch(2, 10);                     
+    grid->addWidget(d->headlineCheck,                       0, 0, 1, 1);
+    grid->addWidget(d->headlineEdit,                        0, 1, 1, 2);
+    grid->addWidget(d->captionCheck,                        1, 0, 1, 3);
+    grid->addWidget(d->captionEdit,                         2, 0, 1, 3);
+    grid->addWidget(d->syncJFIFCommentCheck,                3, 0, 1, 3);
+    grid->addWidget(d->syncHOSTCommentCheck,                4, 0, 1, 3);
+    grid->addWidget(d->syncEXIFCommentCheck,                5, 0, 1, 3);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   6, 0, 1, 3);
+    grid->addWidget(d->writerEdit,                          7, 0, 1, 3);
+    grid->addWidget(note,                                   8, 0, 1, 3);
+    grid->setRowStretch(9, 10);
+    grid->setColumnStretch(2, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
-                                     
+
     connect(d->captionCheck, SIGNAL(toggled(bool)),
             d->captionEdit, SLOT(setEnabled(bool)));
 
@@ -178,12 +178,12 @@ IPTCContent::IPTCContent(QWidget* parent)
 
     connect(d->headlineCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
-    
+
     // --------------------------------------------------------
 
     connect(d->captionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
@@ -238,7 +238,7 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
 
     d->captionEdit->clear();
     d->captionCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);
     if (!data.isNull())
     {
         d->captionEdit->setText(data);
@@ -249,12 +249,12 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
     d->syncHOSTCommentCheck->setEnabled(d->captionCheck->isChecked());
     d->syncEXIFCommentCheck->setEnabled(d->captionCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);    
+    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);
     d->writerEdit->setValues(list);
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);

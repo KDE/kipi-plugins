@@ -123,7 +123,7 @@ public:
 
     DcrawSettingsWidget      *decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData *about; 
+    KIPIPlugins::KPAboutData *about;
 
     KIPI::Interface          *iface;
 };
@@ -161,8 +161,8 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
     d->decodingSettingsBox->updateMinimumWidth();
 
-    mainLayout->addWidget(d->previewWidget, 0, 0, 2, 1);
-    mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
+    mainLayout->addWidget(d->previewWidget,         0, 0, 2, 1);
+    mainLayout->addWidget(d->decodingSettingsBox,   0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setMargin(0);
@@ -178,11 +178,11 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Renchi Raju"), 
+    d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),
                              "renchi at pooh dot tam dot uiuc dot edu");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                        ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
@@ -328,16 +328,16 @@ void SingleDialog::readSettings()
     d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
 
     d->decodingSettingsBox->setQuality(
-        (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality", 
-            (int)(KDcrawIface::RawDecodingSettings::BILINEAR))); 
+        (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality",
+            (int)(KDcrawIface::RawDecodingSettings::BILINEAR)));
 
     d->decodingSettingsBox->setOutputColorSpace(
-        (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space", 
-            (int)(KDcrawIface::RawDecodingSettings::SRGB))); 
+        (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space",
+            (int)(KDcrawIface::RawDecodingSettings::SRGB)));
 
     d->saveSettingsBox->setFileFormat(
-        (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", 
-            (int)(SaveSettingsWidget::OUTPUT_PNG))); 
+        (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format",
+            (int)(SaveSettingsWidget::OUTPUT_PNG)));
 
     d->saveSettingsBox->setConflictRule(
         (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
@@ -556,7 +556,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
     if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
-        if (::stat(QFile::encodeName(destFile), &statBuf) == 0) 
+        if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
             KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as", fi.fileName()),
                                   tmpFile, destFile,
@@ -581,7 +581,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
         }
     }
 
-    if (!destFile.isEmpty()) 
+    if (!destFile.isEmpty())
     {
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
@@ -637,10 +637,10 @@ void SingleDialog::slotAction(const ActionData& ad)
 
     if (ad.starting)            // Something have been started...
     {
-        switch (ad.action) 
+        switch (ad.action)
         {
-            case(IDENTIFY_FULL): 
-            case(THUMBNAIL): 
+            case(IDENTIFY_FULL):
+            case(THUMBNAIL):
                 break;
             case(PREVIEW):
             {
@@ -654,7 +654,7 @@ void SingleDialog::slotAction(const ActionData& ad)
                 processing(ad.fileUrl);
                 break;
             }
-            default: 
+            default:
             {
                 kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
                 break;
@@ -665,10 +665,10 @@ void SingleDialog::slotAction(const ActionData& ad)
     {
         if (!ad.success)        // Something is failed...
         {
-            switch (ad.action) 
+            switch (ad.action)
             {
-                case(IDENTIFY_FULL): 
-                case(THUMBNAIL): 
+                case(IDENTIFY_FULL):
+                case(THUMBNAIL):
                     break;
                 case(PREVIEW):
                 {
@@ -682,7 +682,7 @@ void SingleDialog::slotAction(const ActionData& ad)
                     busy(false);
                     break;
                 }
-                default: 
+                default:
                 {
                     kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
                     break;
@@ -693,13 +693,13 @@ void SingleDialog::slotAction(const ActionData& ad)
         {
             switch (ad.action)
             {
-                case(IDENTIFY_FULL): 
+                case(IDENTIFY_FULL):
                 {
                     setIdentity(ad.fileUrl, ad.message);
                     busy(false);
                     break;
                 }
-                case(THUMBNAIL): 
+                case(THUMBNAIL):
                 {
                     QPixmap pix = QPixmap::fromImage(ad.image.scaled(256, 256, Qt::KeepAspectRatio));
                     setThumbnail(ad.fileUrl, pix);
@@ -718,7 +718,7 @@ void SingleDialog::slotAction(const ActionData& ad)
                     busy(false);
                     break;
                 }
-                default: 
+                default:
                 {
                     kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
                     break;

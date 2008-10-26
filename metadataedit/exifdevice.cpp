@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -39,7 +39,7 @@
 #include <klineedit.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -88,7 +88,7 @@ public:
     QCheckBox        *modelCheck;
     QCheckBox        *exposureTimeCheck;
     QCheckBox        *exposureBiasCheck;
-   
+
     QComboBox        *deviceTypeCB;
     QComboBox        *exposureProgramCB;
     QComboBox        *exposureModeCB;
@@ -323,41 +323,41 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->makeCheck, 0, 0, 1, 1);
-    grid->addWidget(d->makeEdit, 0, 2, 1, 5- 2+1);
-    grid->addWidget(d->modelCheck, 1, 0, 1, 1);
-    grid->addWidget(d->modelEdit, 1, 2, 1, 5- 2+1);
-    grid->addWidget(d->deviceTypeCheck, 2, 0, 1, 1);
-    grid->addWidget(d->deviceTypeCB, 2, 2, 1, 5- 2+1);
-    grid->addWidget(warning, 3, 0, 1, 5+1);
-    grid->addWidget(line, 4, 0, 1, 5+1);
-    grid->addWidget(d->exposureTimeCheck, 5, 0, 1, 1);
-    grid->addWidget(d->exposureTimeNumEdit, 5, 2, 1, 1);
-    grid->addWidget(exposureLabel, 5, 3, 1, 1);
-    grid->addWidget(d->exposureTimeDenEdit, 5, 4, 1, 1);
-    grid->addWidget(d->exposureProgramCheck, 6, 0, 1, 1);
-    grid->addWidget(d->exposureProgramCB, 6, 2, 1, 5- 2+1);
-    grid->addWidget(d->exposureModeCheck, 7, 0, 1, 1);
-    grid->addWidget(d->exposureModeCB, 7, 2, 1, 5- 2+1);
-    grid->addWidget(d->exposureBiasCheck, 8, 0, 1, 1);
-    grid->addWidget(d->exposureBiasEdit, 8, 2, 1, 1);
-    grid->addWidget(line2, 9, 0, 1, 5+1);
-    grid->addWidget(d->meteringModeCheck, 10, 0, 1, 1);
-    grid->addWidget(d->meteringModeCB, 10, 2, 1, 5- 2+1);
-    grid->addWidget(d->ISOSpeedCheck, 11, 0, 1, 1);
-    grid->addWidget(d->ISOSpeedCB, 11, 2, 1, 5- 2+1);
-    grid->addWidget(d->sensingMethodCheck, 12, 0, 1, 1);
-    grid->addWidget(d->sensingMethodCB, 12, 2, 1, 5- 2+1);
-    grid->addWidget(d->sceneTypeCheck, 13, 0, 1, 1);
-    grid->addWidget(d->sceneTypeCB, 13, 2, 1, 5- 2+1);
-    grid->addWidget(d->subjectDistanceTypeCheck, 14, 0, 1, 1);
-    grid->addWidget(d->subjectDistanceTypeCB, 14, 2, 1, 5- 2+1);
+    grid->addWidget(d->makeCheck,                   0, 0, 1, 1);
+    grid->addWidget(d->makeEdit,                    0, 2, 1, 4);
+    grid->addWidget(d->modelCheck,                  1, 0, 1, 1);
+    grid->addWidget(d->modelEdit,                   1, 2, 1, 4);
+    grid->addWidget(d->deviceTypeCheck,             2, 0, 1, 1);
+    grid->addWidget(d->deviceTypeCB,                2, 2, 1, 4);
+    grid->addWidget(warning,                        3, 0, 1, 6);
+    grid->addWidget(line,                           4, 0, 1, 6);
+    grid->addWidget(d->exposureTimeCheck,           5, 0, 1, 1);
+    grid->addWidget(d->exposureTimeNumEdit,         5, 2, 1, 1);
+    grid->addWidget(exposureLabel,                  5, 3, 1, 1);
+    grid->addWidget(d->exposureTimeDenEdit,         5, 4, 1, 1);
+    grid->addWidget(d->exposureProgramCheck,        6, 0, 1, 1);
+    grid->addWidget(d->exposureProgramCB,           6, 2, 1, 4);
+    grid->addWidget(d->exposureModeCheck,           7, 0, 1, 1);
+    grid->addWidget(d->exposureModeCB,              7, 2, 1, 4);
+    grid->addWidget(d->exposureBiasCheck,           8, 0, 1, 1);
+    grid->addWidget(d->exposureBiasEdit,            8, 2, 1, 1);
+    grid->addWidget(line2,                          9, 0, 1, 6);
+    grid->addWidget(d->meteringModeCheck,          10, 0, 1, 1);
+    grid->addWidget(d->meteringModeCB,             10, 2, 1, 4);
+    grid->addWidget(d->ISOSpeedCheck,              11, 0, 1, 1);
+    grid->addWidget(d->ISOSpeedCB,                 11, 2, 1, 4);
+    grid->addWidget(d->sensingMethodCheck,         12, 0, 1, 1);
+    grid->addWidget(d->sensingMethodCB,            12, 2, 1, 4);
+    grid->addWidget(d->sceneTypeCheck,             13, 0, 1, 1);
+    grid->addWidget(d->sceneTypeCB,                13, 2, 1, 4);
+    grid->addWidget(d->subjectDistanceTypeCheck,   14, 0, 1, 1);
+    grid->addWidget(d->subjectDistanceTypeCB,      14, 2, 1, 4);
     grid->addWidget(note, 15, 0, 1, 5+1);
-    grid->setColumnStretch(1, 10);                     
-    grid->setColumnStretch(5, 10);                     
-    grid->setRowStretch(16, 10);     
+    grid->setColumnStretch(1, 10);
+    grid->setColumnStretch(5, 10);
+    grid->setRowStretch(16, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());                
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -496,7 +496,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->makeEdit->clear();
     d->makeCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);       
+    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);
     if (!data.isNull())
     {
         d->makeEdit->setText(data);
@@ -506,7 +506,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->modelEdit->clear();
     d->modelCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);     
+    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);
     if (!data.isNull())
     {
         d->modelEdit->setText(data);
@@ -540,14 +540,14 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     else if (exiv2Iface.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
     {
         double tmp = exp(log(2.0) * (double)(num)/(double)(den));
-        if (tmp > 1.0) 
+        if (tmp > 1.0)
             num = (long int)(tmp + 0.5);
-        else 
+        else
             den = (long int)(1.0/tmp + 0.5);
 
         d->exposureTimeNumEdit->setValue(num);
         d->exposureTimeDenEdit->setValue(den);
-        d->exposureTimeCheck->setChecked(true);        
+        d->exposureTimeCheck->setChecked(true);
     }
     d->exposureTimeNumEdit->setEnabled(d->exposureTimeCheck->isChecked());
     d->exposureTimeDenEdit->setEnabled(d->exposureTimeCheck->isChecked());
@@ -561,7 +561,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
             d->exposureProgramCB->setCurrentIndex(val);
             d->exposureProgramCheck->setChecked(true);
         }
-        else 
+        else
             d->exposureProgramCheck->setValid(false);
     }
     d->exposureProgramCB->setEnabled(d->exposureProgramCheck->isChecked());
@@ -593,7 +593,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     d->meteringModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.MeteringMode", val))
     {
-        if ((val>= 0 && val <=6) || val == 255) 
+        if ((val>= 0 && val <=6) || val == 255)
         {
             d->meteringModeCB->setCurrentIndex(val == 255 ? 7 : val);
             d->meteringModeCheck->setChecked(true);
@@ -622,7 +622,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     else if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureIndex", num, den))
     {
-        val = num / den;    
+        val = num / den;
         int item = -1;
         for (int i = 0 ; i < d->ISOSpeedCB->count() ; i++)
             if (d->ISOSpeedCB->itemText(i) == QString::number(val))
@@ -648,7 +648,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
             d->sensingMethodCheck->setChecked(true);
         }
         else
-            d->sensingMethodCheck->setValid(false);            
+            d->sensingMethodCheck->setValid(false);
     }
     d->sensingMethodCB->setEnabled(d->sensingMethodCheck->isChecked());
 
@@ -662,7 +662,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
             d->sceneTypeCheck->setChecked(true);
         }
         else
-            d->sceneTypeCheck->setValid(false);            
+            d->sceneTypeCheck->setValid(false);
     }
     d->sceneTypeCB->setEnabled(d->sceneTypeCheck->isChecked());
 
@@ -676,7 +676,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
             d->subjectDistanceTypeCheck->setChecked(true);
         }
         else
-            d->subjectDistanceTypeCheck->setValid(false);            
+            d->subjectDistanceTypeCheck->setValid(false);
     }
     d->subjectDistanceTypeCB->setEnabled(d->subjectDistanceTypeCheck->isChecked());
 

@@ -239,16 +239,16 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->languageCheck, 0, 0, 1, 1);
-    grid->addWidget(d->languageBtn, 0, 1, 1, 1);
-    grid->addWidget(d->priorityCheck, 1, 0, 1, 1);
-    grid->addWidget(d->priorityCB, 1, 1, 1, 1);
-    grid->addWidget(d->sceneEdit, 2, 0, 1, 5);
-    grid->addWidget(d->objectTypeEdit, 3, 0, 1, 5);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 4, 0, 1, 5);
-    grid->addWidget(d->objectAttributeCheck, 5, 0, 1, 1);
-    grid->addWidget(d->objectAttributeCB, 5, 1, 1, 2);
-    grid->addWidget(d->objectAttributeEdit, 5, 3, 1, 2);
+    grid->addWidget(d->languageCheck,                       0, 0, 1, 1);
+    grid->addWidget(d->languageBtn,                         0, 1, 1, 1);
+    grid->addWidget(d->priorityCheck,                       1, 0, 1, 1);
+    grid->addWidget(d->priorityCB,                          1, 1, 1, 1);
+    grid->addWidget(d->sceneEdit,                           2, 0, 1, 5);
+    grid->addWidget(d->objectTypeEdit,                      3, 0, 1, 5);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   4, 0, 1, 5);
+    grid->addWidget(d->objectAttributeCheck,                5, 0, 1, 1);
+    grid->addWidget(d->objectAttributeCB,                   5, 1, 1, 2);
+    grid->addWidget(d->objectAttributeEdit,                 5, 3, 1, 2);
     grid->setRowStretch(6, 10);
     grid->setColumnStretch(4, 10);
     grid->setMargin(0);

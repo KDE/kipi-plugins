@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -37,7 +37,7 @@
 #include <kdialog.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -105,12 +105,12 @@ public:
         flashModeMap.insert(21, FlashMode( 0x5f, i18n("Yes, auto, red-eye, return light") ));
     }
 
-    typedef QMap<int, FlashMode> FlashModeMap; 
+    typedef QMap<int, FlashMode> FlashModeMap;
 
     FlashModeMap      flashModeMap;
 
     QCheckBox        *flashEnergyCheck;
-   
+
     QComboBox        *lightSourceCB;
     QComboBox        *flashModeCB;
     QComboBox        *whiteBalanceCB;
@@ -194,16 +194,16 @@ EXIFLight::EXIFLight(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->lightSourceCheck, 0, 0, 1, 1);
-    grid->addWidget(d->lightSourceCB, 0, 2, 1, 3- 2+1);
-    grid->addWidget(d->flashModeCheck, 1, 0, 1, 1);
-    grid->addWidget(d->flashModeCB, 1, 2, 1, 3- 2+1);
-    grid->addWidget(d->flashEnergyCheck, 2, 0, 1, 1);
-    grid->addWidget(d->flashEnergyEdit, 2, 2, 1, 1);
-    grid->addWidget(d->whiteBalanceCheck, 3, 0, 1, 1);
-    grid->addWidget(d->whiteBalanceCB, 3, 2, 1, 1);
-    grid->setColumnStretch(1, 10);                     
-    grid->setRowStretch(4, 10);                     
+    grid->addWidget(d->lightSourceCheck,    0, 0, 1, 1);
+    grid->addWidget(d->lightSourceCB,       0, 2, 1, 2);
+    grid->addWidget(d->flashModeCheck,      1, 0, 1, 1);
+    grid->addWidget(d->flashModeCB,         1, 2, 1, 2);
+    grid->addWidget(d->flashEnergyCheck,    2, 0, 1, 1);
+    grid->addWidget(d->flashEnergyEdit,     2, 2, 1, 1);
+    grid->addWidget(d->whiteBalanceCheck,   3, 0, 1, 1);
+    grid->addWidget(d->whiteBalanceCB,      3, 2, 1, 1);
+    grid->setColumnStretch(1, 10);
+    grid->setRowStretch(4, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -267,19 +267,19 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     d->lightSourceCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
     {
-        if ((val>=0 && val <=4) || (val> 8 && val <16) || (val> 16 && val <25) || val == 255) 
-        {    
+        if ((val>=0 && val <=4) || (val> 8 && val <16) || (val> 16 && val <25) || val == 255)
+        {
             if (val > 8 && val < 16)
                 val = val - 4;
             else if (val > 16 && val < 25)
                 val = val - 5;
-            else if (val == 255)    
+            else if (val == 255)
                 val = 20;
-    
+
             d->lightSourceCB->setCurrentIndex(val);
             d->lightSourceCheck->setChecked(true);
         }
-        else 
+        else
             d->lightSourceCheck->setValid(false);
     }
     d->lightSourceCB->setEnabled(d->lightSourceCheck->isChecked());
@@ -288,14 +288,14 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     d->flashModeCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
     {
-        int item = -1;    
+        int item = -1;
         for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
             it != d->flashModeMap.end(); ++it )
         {
             if (it.value().id() == val)
                 item = it.key();
         }
-        
+
         if (item != -1)
         {
             d->flashModeCB->setCurrentIndex(item);
@@ -345,7 +345,7 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
             val = val + 4;
         else if (val > 11 && val < 20)
             val = val + 5;
-        else if (val == 20)    
+        else if (val == 20)
             val = 255;
 
         exiv2Iface.setExifTagLong("Exif.Photo.LightSource", val);

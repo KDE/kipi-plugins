@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -36,7 +36,7 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -91,7 +91,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), this);    
+    d->categoryCheck = new QCheckBox(i18n("Identify subject of content (3 chars max):"), this);
     d->categoryEdit  = new KLineEdit(this);
     d->categoryEdit->setClearButtonShown(true);
     d->categoryEdit->setValidator(asciiValidator);
@@ -99,7 +99,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     d->categoryEdit->setWhatsThis(i18n("Set here the category of content. This field is limited "
                                        "to 3 ASCII characters."));
 
-    d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), this);    
+    d->subCategoriesCheck = new QCheckBox(i18n("Supplemental categories:"), this);
 
     d->subCategoryEdit = new KLineEdit(this);
     d->subCategoryEdit->setClearButtonShown(true);
@@ -110,7 +110,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     d->subCategoriesBox = new KListWidget(this);
     d->subCategoriesBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    
+
     d->addSubCategoryButton = new QPushButton( i18n("&Add"), this);
     d->delSubCategoryButton = new QPushButton( i18n("&Delete"), this);
     d->repSubCategoryButton = new QPushButton( i18n("&Replace"), this);
@@ -136,20 +136,20 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->categoryCheck, 0, 0, 1, 2);
-    grid->addWidget(d->categoryEdit, 0, 2, 1, 1);
-    grid->addWidget(d->subCategoriesCheck, 1, 0, 1, 3);
-    grid->addWidget(d->subCategoryEdit, 2, 0, 1, 3);
-    grid->addWidget(d->subCategoriesBox, 3, 0, 5, 3);
-    grid->addWidget(d->addSubCategoryButton, 3, 3, 1, 1);
-    grid->addWidget(d->delSubCategoryButton, 4, 3, 1, 1);
-    grid->addWidget(d->repSubCategoryButton, 5, 3, 1, 1);
-    grid->addWidget(note, 6, 3, 1, 1);
-    grid->setColumnStretch(1, 10);                     
-    grid->setRowStretch(7, 10);    
+    grid->addWidget(d->categoryCheck,           0, 0, 1, 2);
+    grid->addWidget(d->categoryEdit,            0, 2, 1, 1);
+    grid->addWidget(d->subCategoriesCheck,      1, 0, 1, 3);
+    grid->addWidget(d->subCategoryEdit,         2, 0, 1, 3);
+    grid->addWidget(d->subCategoriesBox,        3, 0, 5, 3);
+    grid->addWidget(d->addSubCategoryButton,    3, 3, 1, 1);
+    grid->addWidget(d->delSubCategoryButton,    4, 3, 1, 1);
+    grid->addWidget(d->repSubCategoryButton,    5, 3, 1, 1);
+    grid->addWidget(note,                       6, 3, 1, 1);
+    grid->setColumnStretch(1, 10);
+    grid->setRowStretch(7, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());      
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->categoryCheck, SIGNAL(toggled(bool)),
@@ -194,10 +194,10 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     connect(d->subCategoriesBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotCategorySelectionChanged()));
-    
+
     connect(d->addSubCategoryButton, SIGNAL(clicked()),
             this, SLOT(slotAddCategory()));
-    
+
     connect(d->delSubCategoryButton, SIGNAL(clicked()),
             this, SLOT(slotDelCategory()));
 
@@ -214,7 +214,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
 
     connect(d->addSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -274,7 +274,7 @@ void IPTCCategories::slotAddCategory()
     for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
     {
         QListWidgetItem *item = d->subCategoriesBox->item(i);
-        if (newCategory == item->text()) 
+        if (newCategory == item->text())
         {
             found = true;
             break;
@@ -310,7 +310,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 
     d->categoryEdit->clear();
     d->categoryCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Category", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.Category", false);
     if (!data.isNull())
     {
         d->categoryEdit->setText(data);
@@ -328,7 +328,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 
 void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
-    QStringList newCategories;    
+    QStringList newCategories;
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 

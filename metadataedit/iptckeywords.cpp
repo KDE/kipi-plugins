@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -36,7 +36,7 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -87,7 +87,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->keywordsCheck = new QCheckBox(i18n("Use information retrieval words:"), this);    
+    d->keywordsCheck = new QCheckBox(i18n("Use information retrieval words:"), this);
 
     d->keywordEdit   = new KLineEdit(this);
     d->keywordEdit->setClearButtonShown(true);
@@ -98,7 +98,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
 
     d->keywordsBox   = new KListWidget(this);
     d->keywordsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    
+
     d->addKeywordButton = new QPushButton( i18n("&Add"), this);
     d->delKeywordButton = new QPushButton( i18n("&Delete"), this);
     d->repKeywordButton = new QPushButton( i18n("&Replace"), this);
@@ -124,26 +124,26 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->keywordsCheck, 0, 0, 1, 2 );
-    grid->addWidget(d->keywordEdit, 1, 0, 1, 1);
-    grid->addWidget(d->keywordsBox, 2, 0, 5, 1);
-    grid->addWidget(d->addKeywordButton, 2, 1, 1, 1);
-    grid->addWidget(d->delKeywordButton, 3, 1, 1, 1);
-    grid->addWidget(d->repKeywordButton, 4, 1, 1, 1);
-    grid->addWidget(note, 5, 1, 1, 1);
-    grid->setColumnStretch(0, 10);                     
-    grid->setRowStretch(6, 10);      
+    grid->addWidget(d->keywordsCheck,       0, 0, 1, 2 );
+    grid->addWidget(d->keywordEdit,         1, 0, 1, 1);
+    grid->addWidget(d->keywordsBox,         2, 0, 5, 1);
+    grid->addWidget(d->addKeywordButton,    2, 1, 1, 1);
+    grid->addWidget(d->delKeywordButton,    3, 1, 1, 1);
+    grid->addWidget(d->repKeywordButton,    4, 1, 1, 1);
+    grid->addWidget(note,                   5, 1, 1, 1);
+    grid->setColumnStretch(0, 10);
+    grid->setRowStretch(6, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->keywordsBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotKeywordSelectionChanged()));
-    
+
     connect(d->addKeywordButton, SIGNAL(clicked()),
             this, SLOT(slotAddKeyword()));
-    
+
     connect(d->delKeywordButton, SIGNAL(clicked()),
             this, SLOT(slotDelKeyword()));
 
@@ -174,7 +174,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
 
     connect(d->addKeywordButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delKeywordButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -231,7 +231,7 @@ void IPTCKeywords::slotAddKeyword()
     for (int i = 0 ; i < d->keywordsBox->count(); i++)
     {
         QListWidgetItem *item = d->keywordsBox->item(i);
-        if (newKeyword == item->text()) 
+        if (newKeyword == item->text())
         {
             found = true;
             break;
@@ -271,7 +271,7 @@ void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QStringList newKeywords;    
+    QStringList newKeywords;
 
     for (int i = 0 ; i < d->keywordsBox->count(); i++)
     {

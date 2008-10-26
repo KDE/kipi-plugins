@@ -156,16 +156,16 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->bylineEdit, 0, 0, 1, 3);
+    grid->addWidget(d->bylineEdit,      0, 0, 1, 3);
     grid->addWidget(d->bylineTitleEdit, 1, 0, 1, 3);
-    grid->addWidget(d->contactEdit, 2, 0, 1, 3);
-    grid->addWidget(d->creditCheck, 3, 0, 1, 1);
-    grid->addWidget(d->creditEdit, 3, 1, 1, 2);
-    grid->addWidget(d->sourceCheck, 4, 0, 1, 1);
-    grid->addWidget(d->sourceEdit, 4, 1, 1, 2);
-    grid->addWidget(d->copyrightCheck, 5, 0, 1, 1);
-    grid->addWidget(d->copyrightEdit, 5, 1, 1, 2);
-    grid->addWidget(note, 6, 0, 1, 3 );
+    grid->addWidget(d->contactEdit,     2, 0, 1, 3);
+    grid->addWidget(d->creditCheck,     3, 0, 1, 1);
+    grid->addWidget(d->creditEdit,      3, 1, 1, 2);
+    grid->addWidget(d->sourceCheck,     4, 0, 1, 1);
+    grid->addWidget(d->sourceEdit,      4, 1, 1, 2);
+    grid->addWidget(d->copyrightCheck,  5, 0, 1, 1);
+    grid->addWidget(d->copyrightEdit,   5, 1, 1, 2);
+    grid->addWidget(note,               6, 0, 1, 3);
     grid->setColumnStretch(2, 10);
     grid->setRowStretch(7, 10);
     grid->setMargin(0);

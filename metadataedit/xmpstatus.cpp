@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -36,7 +36,7 @@
 #include <ktextedit.h>
 #include <klineedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -86,7 +86,7 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"), 
+    d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"),
                                                 i18n("Set here the shorthand reference of content."));
 
     // --------------------------------------------------------
@@ -98,7 +98,7 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"), 
+    d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"),
                               i18n("Set here the strings that identifies content that recurs."));
 
     // --------------------------------------------------------
@@ -109,14 +109,14 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->objectNameEdit, 0, 0, 1, 3);
-    grid->addWidget(d->nicknameCheck, 1, 0, 1, 1);
-    grid->addWidget(d->nicknameEdit, 1, 1, 1, 2);
-    grid->addWidget(d->identifiersEdit, 2, 0, 1, 3);
+    grid->addWidget(d->objectNameEdit,          0, 0, 1, 3);
+    grid->addWidget(d->nicknameCheck,           1, 0, 1, 1);
+    grid->addWidget(d->nicknameEdit,            1, 1, 1, 2);
+    grid->addWidget(d->identifiersEdit,         2, 0, 1, 3);
     grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3);
-    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3);
-    grid->setRowStretch(5, 10);                     
-    grid->setColumnStretch(3, 10);                     
+    grid->addWidget(d->specialInstructionEdit,  4, 0, 1, 3);
+    grid->setRowStretch(5, 10);
+    grid->setColumnStretch(3, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -167,7 +167,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 
     QString                         data;
     QStringList                     list;
-    KExiv2Iface::KExiv2::AltLangMap map;   
+    KExiv2Iface::KExiv2::AltLangMap map;
 
     d->objectNameEdit->setValid(false);
     map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.title", false);
@@ -176,7 +176,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 
     d->nicknameEdit->clear();
     d->nicknameCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.xmp.Nickname", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.xmp.Nickname", false);
     if (!data.isNull())
     {
         d->nicknameEdit->setText(data);
@@ -184,12 +184,12 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     }
     d->nicknameEdit->setEnabled(d->nicknameCheck->isChecked());
 
-    list = exiv2Iface.getXmpTagStringSeq("Xmp.xmp.Identifier", false);    
+    list = exiv2Iface.getXmpTagStringSeq("Xmp.xmp.Identifier", false);
     d->identifiersEdit->setValues(list);
 
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);    
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);
     if (!data.isNull())
     {
         d->specialInstructionEdit->setText(data);

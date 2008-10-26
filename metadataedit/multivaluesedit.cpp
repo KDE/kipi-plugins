@@ -116,7 +116,7 @@ MultiValuesEdit::MultiValuesEdit(QWidget* parent, const QString& title, const QS
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->valueCheck,      0, 0, 1, 1 );
+    grid->addWidget(d->valueCheck,      0, 0, 1, 1);
     grid->addWidget(d->addValueButton,  0, 1, 1, 1);
     grid->addWidget(d->delValueButton,  0, 2, 1, 1);
     grid->addWidget(d->repValueButton,  0, 3, 1, 1);

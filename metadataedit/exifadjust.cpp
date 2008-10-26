@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
@@ -36,7 +36,7 @@
 #include <kdialog.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -76,7 +76,7 @@ public:
     QComboBox        *saturationCB;
     QComboBox        *sharpnessCB;
     QComboBox        *customRenderedCB;
-   
+
     QDoubleSpinBox   *brightnessEdit;
 
     MetadataCheckBox *gainControlCheck;
@@ -154,22 +154,22 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     d->customRenderedCB->setWhatsThis(i18n("Set here the use of special processing on "
                                            "image data, such as rendering geared to output."));
 
-    grid->addWidget(d->brightnessCheck, 0, 0, 1, 1);
-    grid->addWidget(d->brightnessEdit, 0, 2, 1, 1);
-    grid->addWidget(d->gainControlCheck, 1, 0, 1, 1);
-    grid->addWidget(d->gainControlCB, 1, 2, 1, 1);
-    grid->addWidget(d->contrastCheck, 2, 0, 1, 1);
-    grid->addWidget(d->contrastCB, 2, 2, 1, 1);
-    grid->addWidget(d->saturationCheck, 3, 0, 1, 1);
-    grid->addWidget(d->saturationCB, 3, 2, 1, 1);
-    grid->addWidget(d->sharpnessCheck, 4, 0, 1, 1);
-    grid->addWidget(d->sharpnessCB, 4, 2, 1, 1);
+    grid->addWidget(d->brightnessCheck,     0, 0, 1, 1);
+    grid->addWidget(d->brightnessEdit,      0, 2, 1, 1);
+    grid->addWidget(d->gainControlCheck,    1, 0, 1, 1);
+    grid->addWidget(d->gainControlCB,       1, 2, 1, 1);
+    grid->addWidget(d->contrastCheck,       2, 0, 1, 1);
+    grid->addWidget(d->contrastCB,          2, 2, 1, 1);
+    grid->addWidget(d->saturationCheck,     3, 0, 1, 1);
+    grid->addWidget(d->saturationCB,        3, 2, 1, 1);
+    grid->addWidget(d->sharpnessCheck,      4, 0, 1, 1);
+    grid->addWidget(d->sharpnessCB,         4, 2, 1, 1);
     grid->addWidget(d->customRenderedCheck, 5, 0, 1, 1);
-    grid->addWidget(d->customRenderedCB, 5, 2, 1, 1);
-    grid->setColumnStretch(1, 10);                     
-    grid->setRowStretch(6, 10);    
+    grid->addWidget(d->customRenderedCB,    5, 2, 1, 1);
+    grid->setColumnStretch(1, 10);
+    grid->setRowStretch(6, 10);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());                 
+    grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
@@ -195,7 +195,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     connect(d->brightnessCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->gainControlCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -244,7 +244,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
-    
+
     d->brightnessEdit->setValue(0.0);
     d->brightnessCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.BrightnessValue", num, den))
@@ -267,7 +267,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
             d->gainControlCheck->setValid(false);
     }
     d->gainControlCB->setEnabled(d->gainControlCheck->isChecked());
-    
+
     d->contrastCB->setCurrentIndex(0);
     d->contrastCheck->setChecked(false);
     if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))

@@ -234,24 +234,24 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->maxTimeInput->setWhatsThis(i18n("<p>Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
-    settingsBoxLayout->addWidget(loadGPXButton, 0, 0, 1, 2 );
-    settingsBoxLayout->addWidget(gpxFileLabel, 1, 0, 1, 2 );
-    settingsBoxLayout->addWidget(d->gpxFileName, 2, 0, 1, 2 );
-    settingsBoxLayout->addWidget(d->gpxPointsLabel, 3, 0, 1, 2 );
-    settingsBoxLayout->addWidget(line, 4, 0, 1, 2 );
-    settingsBoxLayout->addWidget(maxGapLabel, 5, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxGapInput, 5, 1, 1, 1);
-    settingsBoxLayout->addWidget(timeZoneLabel, 6, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->timeZoneCB, 6, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->interpolateBox, 7, 0, 1, 2 );
-    settingsBoxLayout->addWidget(d->maxTimeLabel, 8, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxTimeInput, 8, 1, 1, 1);
+    settingsBoxLayout->addWidget(loadGPXButton,     0, 0, 1, 2);
+    settingsBoxLayout->addWidget(gpxFileLabel,      1, 0, 1, 2);
+    settingsBoxLayout->addWidget(d->gpxFileName,    2, 0, 1, 2);
+    settingsBoxLayout->addWidget(d->gpxPointsLabel, 3, 0, 1, 2);
+    settingsBoxLayout->addWidget(line,              4, 0, 1, 2);
+    settingsBoxLayout->addWidget(maxGapLabel,       5, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxGapInput,    5, 1, 1, 1);
+    settingsBoxLayout->addWidget(timeZoneLabel,     6, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->timeZoneCB,     6, 1, 1, 1);
+    settingsBoxLayout->addWidget(d->interpolateBox, 7, 0, 1, 2);
+    settingsBoxLayout->addWidget(d->maxTimeLabel,   8, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxTimeInput,   8, 1, 1, 1);
     settingsBoxLayout->setSpacing(spacingHint());
     settingsBoxLayout->setMargin(spacingHint());
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(d->listView, 0, 0, 3, 2 );
+    mainLayout->addWidget(d->listView, 0, 0, 3, 2);
     mainLayout->addWidget(settingsBox, 0, 2, 2, 1);
     mainLayout->setColumnStretch(1, 10);
     mainLayout->setRowStretch(2, 10);
@@ -267,7 +267,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                    ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
                    ki18n("(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
                               "caulier dot gilles at gmail dot com");
 

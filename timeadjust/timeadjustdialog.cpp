@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include "timeadjustdialog.h"
@@ -68,7 +68,7 @@ extern "C"
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -173,11 +173,11 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
                          "(c) 2006-2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Jesper K. Pedersen"), 
+    d->about->addAuthor(ki18n("Jesper K. Pedersen"),
                         ki18n("Author"),
                         "blackie at kde dot org");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
                         "caulier dot gilles at gmail dot com");
 
@@ -216,11 +216,11 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->dateCreatedSel  = new KDateTimeWidget(hbox);
     QLabel *space2     = new QLabel(hbox);
     space2->setFixedWidth(15);
-    d->todayBtn        = new QToolButton(hbox);   
+    d->todayBtn        = new QToolButton(hbox);
     d->todayBtn->setIcon(SmallIcon("go-jump-today"));
     d->todayBtn->setToolTip(i18n("Reset to current date"));
     new QLabel(hbox);
-    
+
     d->syncEXIFDateCheck = new QCheckBox(i18n("Update EXIF creation date"), d->adjTypeGB);
     d->syncIPTCDateCheck = new QCheckBox(i18n("Update IPTC creation date"), d->adjTypeGB);
     d->syncXMPDateCheck  = new QCheckBox(i18n("Update XMP creation date"), d->adjTypeGB);
@@ -278,18 +278,18 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     gridLay->setSpacing(spacingHint());
     gridLay->setColumnStretch(2, 1);
     gridLay->setColumnStretch(5, 1);
-    gridLay->addWidget(label1, 0, 0, 1, 1);
-    gridLay->addWidget(d->hours, 0, 1, 1, 1);
-    gridLay->addWidget(label2, 0, 3, 1, 1);
-    gridLay->addWidget(d->minutes, 0, 4, 1, 1);
-    gridLay->addWidget(label3, 0, 6, 1, 1);
-    gridLay->addWidget(d->secs, 0, 7, 1, 1);
-    gridLay->addWidget(label4, 1, 0, 1, 1);
-    gridLay->addWidget(d->days, 1, 1, 1, 1);
-    gridLay->addWidget(label5, 1, 3, 1, 1);
-    gridLay->addWidget(d->months, 1, 4, 1, 1);
-    gridLay->addWidget(label6, 1, 6, 1, 1);
-    gridLay->addWidget(d->years, 1, 7, 1, 1);
+    gridLay->addWidget(label1,      0, 0, 1, 1);
+    gridLay->addWidget(d->hours,    0, 1, 1, 1);
+    gridLay->addWidget(label2,      0, 3, 1, 1);
+    gridLay->addWidget(d->minutes,  0, 4, 1, 1);
+    gridLay->addWidget(label3,      0, 6, 1, 1);
+    gridLay->addWidget(d->secs,     0, 7, 1, 1);
+    gridLay->addWidget(label4,      1, 0, 1, 1);
+    gridLay->addWidget(d->days,     1, 1, 1, 1);
+    gridLay->addWidget(label5,      1, 3, 1, 1);
+    gridLay->addWidget(d->months,   1, 4, 1, 1);
+    gridLay->addWidget(label6,      1, 6, 1, 1);
+    gridLay->addWidget(d->years,    1, 7, 1, 1);
 
     // -- Example ------------------------------------------------------------
 
@@ -319,7 +319,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->adjustTypeGrp, SIGNAL( buttonReleased(int) ),
             this, SLOT( slotAdjustmentTypeChanged() ));
 
-    connect(d->secs, SIGNAL( valueChanged( int ) ), 
+    connect(d->secs, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
     connect(d->minutes, SIGNAL( valueChanged( int ) ),
@@ -430,10 +430,10 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
     int exactCount   = 0;
     int inexactCount = 0;
 
-    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it ) 
+    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
     {
         KIPI::ImageInfo info = d->interface->info( *it );
-        if (info.isTimeExact()) 
+        if (info.isTimeExact())
         {
             exactCount++;
             d->exampleDate = info.time();
@@ -443,7 +443,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
             inexactCount++;
     }
 
-    if ( inexactCount > 0 ) 
+    if ( inexactCount > 0 )
     {
         QString tmpLabel = i18np("1 image will be changed; ",
                                  "%1 images will be changed; ",
@@ -454,7 +454,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
 
         d->infoLabel->setText(tmpLabel);
     }
-    else 
+    else
     {
         d->infoLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
@@ -471,7 +471,7 @@ void TimeAdjustDialog::slotUpdateExample()
     QDateTime date  = updateTime(KUrl(), d->exampleDate);
     QString newDate = date.toString(Qt::LocalDate);
     d->exampleAdj->setText(i18n("<b>%1</b><br>would, for example, "
-                                "change into<br><b>%2</b>", 
+                                "change into<br><b>%2</b>",
                                 oldDate, newDate));
 }
 
@@ -534,7 +534,7 @@ void TimeAdjustDialog::slotOk()
                         ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
-        
+
                     if (d->syncIPTCDateCheck->isChecked())
                     {
                         ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
@@ -558,7 +558,7 @@ void TimeAdjustDialog::slotOk()
                         ret &= exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
-    
+
                     ret &= exiv2Iface.save(url.path());
 
                     if (!ret)
@@ -571,10 +571,10 @@ void TimeAdjustDialog::slotOk()
                     kDebug( 51000 ) << "Failed to load metadata from file " << url.fileName();
                 }
             }
-    
+
             if (!ret)
                 errorFiles.append(url.fileName());
-            else 
+            else
                 updatedURLs.append(url);
         }
 
@@ -585,7 +585,7 @@ void TimeAdjustDialog::slotOk()
         ::utime(QFile::encodeName(url.path()), &ut);
     }
 
-    // We use kipi interface refreshImages() method to tell to host than 
+    // We use kipi interface refreshImages() method to tell to host than
     // metadata from pictures have changed and need to be re-read.
     d->interface->refreshImages(d->images);
 
@@ -595,7 +595,7 @@ void TimeAdjustDialog::slotOk()
                      kapp->activeWindow(),
                      i18n("Unable to set date and time like picture metadata from:"),
                      errorFiles,
-                     i18n("Adjust Time & Date"));  
+                     i18n("Adjust Time & Date"));
     }
 
     saveSettings();

@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -40,7 +40,7 @@
 #include <kaboutdata.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -117,7 +117,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->dateCreatedSel         = new KDateTimeWidget(this);
     d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
-                                              KGlobal::mainComponent().aboutData()->programName()), 
+                                              KGlobal::mainComponent().aboutData()->programName()),
                                               this);
     d->syncXMPDateCheck       = new QCheckBox(i18n("Sync XMP creation date"), this);
     d->syncIPTCDateCheck      = new QCheckBox(i18n("Sync IPTC creation date"), this);
@@ -178,28 +178,28 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->dateCreatedCheck, 0, 0, 1, 1);
-    grid->addWidget(d->dateCreatedSubSecCheck, 0, 1, 1, 3);
-    grid->addWidget(d->dateCreatedSel, 1, 0, 1, 1);
-    grid->addWidget(d->dateCreatedSubSecEdit, 1, 1, 1, 1);
-    grid->addWidget(d->setTodayCreatedBtn, 1, 3, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck, 2, 0, 1, 4);
-    grid->addWidget(d->syncXMPDateCheck, 3, 0, 1, 4);
-    grid->addWidget(d->syncIPTCDateCheck, 4, 0, 1, 4);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 5, 0, 1, 4);
-    grid->addWidget(d->dateOriginalCheck, 6, 0, 1, 1);
-    grid->addWidget(d->dateOriginalSubSecCheck, 6, 1, 1, 3);
-    grid->addWidget(d->dateOriginalSel, 7, 0, 1, 1);
-    grid->addWidget(d->dateOriginalSubSecEdit, 7, 1, 1, 1);
-    grid->addWidget(d->setTodayOriginalBtn, 7, 3, 1, 1);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 8, 0, 1, 4);
-    grid->addWidget(d->dateDigitalizedCheck, 9, 0, 1, 1);
-    grid->addWidget(d->dateDigitalizedSubSecCheck, 9, 1, 1, 3);
-    grid->addWidget(d->dateDigitalizedSel, 10, 0, 1, 1);
-    grid->addWidget(d->dateDigitalizedSubSecEdit, 10, 1, 1, 1);
-    grid->addWidget(d->setTodayDigitalizedBtn, 10, 3, 1, 1);
-    grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(11, 10);                     
+    grid->addWidget(d->dateCreatedCheck,                    0, 0, 1, 1);
+    grid->addWidget(d->dateCreatedSubSecCheck,              0, 1, 1, 3);
+    grid->addWidget(d->dateCreatedSel,                      1, 0, 1, 1);
+    grid->addWidget(d->dateCreatedSubSecEdit,               1, 1, 1, 1);
+    grid->addWidget(d->setTodayCreatedBtn,                  1, 3, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck,                   2, 0, 1, 4);
+    grid->addWidget(d->syncXMPDateCheck,                    3, 0, 1, 4);
+    grid->addWidget(d->syncIPTCDateCheck,                   4, 0, 1, 4);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   5, 0, 1, 4);
+    grid->addWidget(d->dateOriginalCheck,                   6, 0, 1, 1);
+    grid->addWidget(d->dateOriginalSubSecCheck,             6, 1, 1, 3);
+    grid->addWidget(d->dateOriginalSel,                     7, 0, 1, 1);
+    grid->addWidget(d->dateOriginalSubSecEdit,              7, 1, 1, 1);
+    grid->addWidget(d->setTodayOriginalBtn,                 7, 3, 1, 1);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   8, 0, 1, 4);
+    grid->addWidget(d->dateDigitalizedCheck,                9, 0, 1, 1);
+    grid->addWidget(d->dateDigitalizedSubSecCheck,          9, 1, 1, 3);
+    grid->addWidget(d->dateDigitalizedSel,                 10, 0, 1, 1);
+    grid->addWidget(d->dateDigitalizedSubSecEdit,          10, 1, 1, 1);
+    grid->addWidget(d->setTodayDigitalizedBtn,             10, 3, 1, 1);
+    grid->setColumnStretch(2, 10);
+    grid->setRowStretch(11, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -236,7 +236,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->dateOriginalCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -256,7 +256,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
 
     connect(d->dateCreatedSubSecEdit, SIGNAL(valueChanged(int)),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->dateOriginalSubSecEdit, SIGNAL(valueChanged(int)),
             this, SIGNAL(signalModified()));
 
@@ -354,7 +354,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Image.DateTime", false);
-    if (!datetimeStr.isEmpty()) 
+    if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
@@ -362,7 +362,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
             d->dateCreatedSel->setDateTime(datetime);
             d->dateCreatedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateCreatedSel->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncXMPDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
@@ -370,7 +370,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateCreatedSubSecEdit->setValue(0);
     d->dateCreatedSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTime", false);    
+    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTime", false);
     if (!data.isNull())
     {
         bool ok    = false;
@@ -386,7 +386,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
     d->dateOriginalCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal", false);
-    if (!datetimeStr.isEmpty()) 
+    if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
@@ -394,12 +394,12 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
             d->dateOriginalSel->setDateTime(datetime);
             d->dateOriginalCheck->setChecked(true);
         }
-    }    
+    }
     d->dateOriginalSel->setEnabled(d->dateOriginalCheck->isChecked());
 
     d->dateOriginalSubSecEdit->setValue(0);
     d->dateOriginalSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeOriginal", false);    
+    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeOriginal", false);
     if (!data.isNull())
     {
         bool ok    = false;
@@ -415,7 +415,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
     datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized", false);
-    if (!datetimeStr.isEmpty()) 
+    if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
         if (datetime.isValid())
@@ -423,12 +423,12 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
             d->dateDigitalizedSel->setDateTime(datetime);
             d->dateDigitalizedCheck->setChecked(true);
         }
-    }    
+    }
     d->dateDigitalizedSel->setEnabled(d->dateDigitalizedCheck->isChecked());
 
     d->dateDigitalizedSubSecEdit->setValue(0);
     d->dateDigitalizedSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeDigitized", false);    
+    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeDigitized", false);
     if (!data.isNull())
     {
         bool ok    = false;

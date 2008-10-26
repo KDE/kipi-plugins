@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -36,7 +36,7 @@
 #include <klineedit.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -89,7 +89,7 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
 
     // --------------------------------------------------------
 
-    d->valueCheck = new QCheckBox(title, this);    
+    d->valueCheck = new QCheckBox(title, this);
 
     d->addValueButton = new QPushButton(this);
     d->delValueButton = new QPushButton(this);
@@ -129,30 +129,30 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     }
 
     d->valueEdit->setWhatsThis(whatsThis);
-   
+
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->valueCheck, 0, 0, 1, 1 );
-    grid->addWidget(d->addValueButton, 0, 1, 1, 1);
-    grid->addWidget(d->delValueButton, 0, 2, 1, 1);
-    grid->addWidget(d->repValueButton, 0, 3, 1, 1);
-    grid->addWidget(d->valueBox, 0, 4, 3, 1);
-    grid->addWidget(d->valueEdit, 2, 0, 1, 4);
-    grid->setRowStretch(1, 10);   
-    grid->setColumnStretch(0, 10);   
-    grid->setColumnStretch(4, 100);                     
+    grid->addWidget(d->valueCheck,      0, 0, 1, 1);
+    grid->addWidget(d->addValueButton,  0, 1, 1, 1);
+    grid->addWidget(d->delValueButton,  0, 2, 1, 1);
+    grid->addWidget(d->repValueButton,  0, 3, 1, 1);
+    grid->addWidget(d->valueBox,        0, 4, 3, 1);
+    grid->addWidget(d->valueEdit,       2, 0, 1, 4);
+    grid->setRowStretch(1, 10);
+    grid->setColumnStretch(0, 10);
+    grid->setColumnStretch(4, 100);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->valueBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSelectionChanged()));
-    
+
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SLOT(slotAddValue()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SLOT(slotDeleteValue()));
 
@@ -183,7 +183,7 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
 
     connect(d->addValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
-    
+
     connect(d->delValueButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
@@ -240,7 +240,7 @@ void MultiStringsEdit::slotAddValue()
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
         QListWidgetItem *item = d->valueBox->item(i);
-        if (newValue == item->text()) 
+        if (newValue == item->text())
         {
             found = true;
             break;

@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -34,7 +34,7 @@
 #include <klineedit.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -139,17 +139,17 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->objectNameCheck, 0, 0, 1, 1);
-    grid->addWidget(d->objectNameEdit, 0, 1, 1, 2);
-    grid->addWidget(d->statusCheck, 1, 0, 1, 1);
-    grid->addWidget(d->statusEdit, 1, 1, 1, 2);
-    grid->addWidget(d->JobIDCheck, 2, 0, 1, 1);
-    grid->addWidget(d->JobIDEdit, 2, 1, 1, 2);
+    grid->addWidget(d->objectNameCheck,         0, 0, 1, 1);
+    grid->addWidget(d->objectNameEdit,          0, 1, 1, 2);
+    grid->addWidget(d->statusCheck,             1, 0, 1, 1);
+    grid->addWidget(d->statusEdit,              1, 1, 1, 2);
+    grid->addWidget(d->JobIDCheck,              2, 0, 1, 1);
+    grid->addWidget(d->JobIDEdit,               2, 1, 1, 2);
     grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3);
-    grid->addWidget(d->specialInstructionEdit, 4, 0, 1, 3);
-    grid->addWidget(note, 9, 0, 1, 3);
-    grid->setColumnStretch(2, 10);                     
-    grid->setRowStretch(10, 10);                     
+    grid->addWidget(d->specialInstructionEdit,  4, 0, 1, 3);
+    grid->addWidget(note,                       9, 0, 1, 3);
+    grid->setColumnStretch(2, 10);
+    grid->setRowStretch(10, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -212,7 +212,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->objectNameEdit->clear();
     d->objectNameCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false);
     if (!data.isNull())
     {
         d->objectNameEdit->setText(data);
@@ -222,7 +222,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->statusEdit->clear();
     d->statusCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);
     if (!data.isNull())
     {
         d->statusEdit->setText(data);
@@ -232,7 +232,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->JobIDEdit->clear();
     d->JobIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);
     if (!data.isNull())
     {
         d->JobIDEdit->setText(data);
@@ -242,7 +242,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);    
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);
     if (!data.isNull())
     {
         d->specialInstructionEdit->setText(data);

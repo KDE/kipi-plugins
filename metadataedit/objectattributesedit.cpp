@@ -175,13 +175,13 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->valueCheck, 0, 0, 1, 1 );
-    grid->addWidget(d->addValueButton, 0, 1, 1, 1);
-    grid->addWidget(d->delValueButton, 0, 2, 1, 1);
-    grid->addWidget(d->repValueButton, 0, 3, 1, 1);
-    grid->addWidget(d->valueBox, 0, 4, 4, 1);
-    grid->addWidget(d->dataList, 1, 0, 1, 4);
-    grid->addWidget(d->valueEdit, 2, 0, 1, 4);
+    grid->addWidget(d->valueCheck,      0, 0, 1, 1);
+    grid->addWidget(d->addValueButton,  0, 1, 1, 1);
+    grid->addWidget(d->delValueButton,  0, 2, 1, 1);
+    grid->addWidget(d->repValueButton,  0, 3, 1, 1);
+    grid->addWidget(d->valueBox,        0, 4, 4, 1);
+    grid->addWidget(d->dataList,        1, 0, 1, 4);
+    grid->addWidget(d->valueEdit,       2, 0, 1, 4);
     grid->setRowStretch(3, 10);
     grid->setColumnStretch(0, 10);
     grid->setColumnStretch(4, 100);

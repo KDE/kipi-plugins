@@ -460,26 +460,26 @@ XMPOrigin::XMPOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->dateDigitalizedCheck, 0, 0, 1, 5);
-    grid->addWidget(d->dateDigitalizedSel, 1, 0, 1, 3);
-    grid->addWidget(d->setTodayDigitalizedBtn, 1, 4, 1, 1);
-    grid->addWidget(d->dateCreatedCheck, 2, 0, 1, 5);
-    grid->addWidget(d->dateCreatedSel, 3, 0, 1, 3);
-    grid->addWidget(d->setTodayCreatedBtn, 3, 4, 1, 1);
-    grid->addWidget(d->syncHOSTDateCheck, 4, 0, 1, 5);
-    grid->addWidget(d->syncEXIFDateCheck, 5, 0, 1, 5);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 6, 0, 1, 5);
-    grid->addWidget(d->cityCheck, 7, 0, 1, 1);
-    grid->addWidget(d->cityEdit, 7, 1, 1, 4);
-    grid->addWidget(d->sublocationCheck, 8, 0, 1, 1);
-    grid->addWidget(d->sublocationEdit, 8, 1, 1, 4);
-    grid->addWidget(d->provinceCheck, 9, 0, 1, 1);
-    grid->addWidget(d->provinceEdit, 9, 1, 1, 4);
-    grid->addWidget(d->countryCheck, 10, 0, 1, 1);
-    grid->addWidget(d->countryCB, 10, 1, 1, 4);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this), 11, 0, 1, 5);
-    grid->addWidget(d->originalTransCheck, 12, 0, 1, 1);
-    grid->addWidget(d->originalTransEdit, 12, 1, 1, 4);
+    grid->addWidget(d->dateDigitalizedCheck,                0, 0, 1, 5);
+    grid->addWidget(d->dateDigitalizedSel,                  1, 0, 1, 3);
+    grid->addWidget(d->setTodayDigitalizedBtn,              1, 4, 1, 1);
+    grid->addWidget(d->dateCreatedCheck,                    2, 0, 1, 5);
+    grid->addWidget(d->dateCreatedSel,                      3, 0, 1, 3);
+    grid->addWidget(d->setTodayCreatedBtn,                  3, 4, 1, 1);
+    grid->addWidget(d->syncHOSTDateCheck,                   4, 0, 1, 5);
+    grid->addWidget(d->syncEXIFDateCheck,                   5, 0, 1, 5);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   6, 0, 1, 5);
+    grid->addWidget(d->cityCheck,                           7, 0, 1, 1);
+    grid->addWidget(d->cityEdit,                            7, 1, 1, 4);
+    grid->addWidget(d->sublocationCheck,                    8, 0, 1, 1);
+    grid->addWidget(d->sublocationEdit,                     8, 1, 1, 4);
+    grid->addWidget(d->provinceCheck,                       9, 0, 1, 1);
+    grid->addWidget(d->provinceEdit,                        9, 1, 1, 4);
+    grid->addWidget(d->countryCheck,                       10, 0, 1, 1);
+    grid->addWidget(d->countryCB,                          10, 1, 1, 4);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),  11, 0, 1, 5);
+    grid->addWidget(d->originalTransCheck,                 12, 0, 1, 1);
+    grid->addWidget(d->originalTransEdit,                  12, 1, 1, 4);
     grid->setColumnStretch(3, 10);
     grid->setRowStretch(13, 10);
     grid->setMargin(0);

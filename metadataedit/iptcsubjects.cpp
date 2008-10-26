@@ -12,12 +12,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
@@ -47,7 +47,7 @@
 #include <kglobal.h>
 #include <kdebug.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -79,7 +79,7 @@ class IPTCSubjectsPriv
 {
 public:
 
-    enum EditionMode 
+    enum EditionMode
     {
         STANDARD = 0,
         CUSTOM
@@ -109,7 +109,7 @@ public:
         optionsBox       = 0;
     }
 
-    typedef QMap<QString, SubjectData>  SubjectCodesMap; 
+    typedef QMap<QString, SubjectData>  SubjectCodesMap;
 
     SubjectCodesMap                     subMap;
 
@@ -152,8 +152,8 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     QGridLayout *grid = new QGridLayout(this);
 
     // --------------------------------------------------------
-    
-    // Load subject codes provided by IPTC/NAA as xml file. 
+
+    // Load subject codes provided by IPTC/NAA as xml file.
     // See http://www.iptc.org/NewsCodes/nc_ts-table01.php for details.
 
     KGlobal::dirs()->addResourceDir("iptcschema", KStandardDirs::installPath("data") +
@@ -176,7 +176,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     QRegExp refDigitRx("^[0-9]{8}$");
     QValidator *refValidator = new QRegExpValidator(refDigitRx, this);
 
-    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);    
+    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);
 
     // --------------------------------------------------------
 
@@ -272,20 +272,20 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid2->addWidget(hbox, 0, 0, 1, 2);
-    grid2->addWidget(d->refCB, 0, 2, 1, 1);
-    grid2->addWidget(d->customBtn, 1, 0, 1, 4);
-    grid2->addWidget(d->iprLabel, 2, 0, 1, 1);
-    grid2->addWidget(d->iprEdit, 2, 1, 1, 4);
-    grid2->addWidget(d->refLabel, 3, 0, 1, 1);
-    grid2->addWidget(d->refEdit, 3, 1, 1, 1);
-    grid2->addWidget(d->nameLabel,  4, 0, 1, 1);
-    grid2->addWidget(d->nameEdit, 4, 1, 1, 4);
-    grid2->addWidget(d->matterLabel, 5, 0, 1, 1);
-    grid2->addWidget(d->matterEdit, 5, 1, 1, 4);
-    grid2->addWidget(d->detailLabel, 6, 0, 1, 1);
-    grid2->addWidget(d->detailEdit, 6, 1, 1, 4);
-    grid2->setColumnStretch(4, 10);                     
+    grid2->addWidget(hbox,              0, 0, 1, 2);
+    grid2->addWidget(d->refCB,          0, 2, 1, 1);
+    grid2->addWidget(d->customBtn,      1, 0, 1, 4);
+    grid2->addWidget(d->iprLabel,       2, 0, 1, 1);
+    grid2->addWidget(d->iprEdit,        2, 1, 1, 4);
+    grid2->addWidget(d->refLabel,       3, 0, 1, 1);
+    grid2->addWidget(d->refEdit,        3, 1, 1, 1);
+    grid2->addWidget(d->nameLabel,      4, 0, 1, 1);
+    grid2->addWidget(d->nameEdit,       4, 1, 1, 4);
+    grid2->addWidget(d->matterLabel,    5, 0, 1, 1);
+    grid2->addWidget(d->matterEdit,     5, 1, 1, 4);
+    grid2->addWidget(d->detailLabel,    6, 0, 1, 1);
+    grid2->addWidget(d->detailEdit,     6, 1, 1, 4);
+    grid2->setColumnStretch(4, 10);
     grid2->setMargin(0);
     grid2->setSpacing(KDialog::spacingHint());
 
@@ -293,7 +293,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     d->subjectsBox = new KListWidget(this);
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    
+
     d->addSubjectButton = new QPushButton( i18n("&Add"), this);
     d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
     d->repSubjectButton = new QPushButton( i18n("&Replace"), this);
@@ -326,19 +326,19 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     grid->addWidget(d->delSubjectButton, 3, 3, 1, 1);
     grid->addWidget(d->repSubjectButton, 4, 3, 1, 1);
     grid->addWidget(note, 5, 3, 1, 1);
-    grid->setRowStretch(6, 10);  
-    grid->setColumnStretch(2, 1);                     
+    grid->setRowStretch(6, 10);
+    grid->setColumnStretch(2, 1);
     grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());    
-                                         
+    grid->setSpacing(KDialog::spacingHint());
+
     // --------------------------------------------------------
 
     connect(d->subjectsBox, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotSubjectSelectionChanged()));
-    
+
     connect(d->addSubjectButton, SIGNAL(clicked()),
             this, SLOT(slotAddSubject()));
-    
+
     connect(d->delSubjectButton, SIGNAL(clicked()),
             this, SLOT(slotDelSubject()));
 
@@ -415,7 +415,7 @@ void IPTCSubjects::slotEditOptionChanged(int b)
         d->nameEdit->setEnabled(false);
         d->matterEdit->setEnabled(false);
         d->detailEdit->setEnabled(false);
-        slotRefChanged(); 
+        slotRefChanged();
     }
 }
 
@@ -509,7 +509,7 @@ void IPTCSubjects::slotAddSubject()
     for (int i = 0 ; i < d->subjectsBox->count(); i++)
     {
         QListWidgetItem *item = d->subjectsBox->item(i);
-        if (newSubject == item->text()) 
+        if (newSubject == item->text())
         {
             found = true;
             break;
@@ -549,7 +549,7 @@ void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    QStringList newSubjects;    
+    QStringList newSubjects;
 
     for (int i = 0 ; i < d->subjectsBox->count(); i++)
     {
@@ -581,21 +581,21 @@ bool IPTCSubjects::loadSubjectCodesFromXML(const KUrl& url)
         return false;
 
     for (QDomNode nbE1 = xmlDocElem.firstChild();
-         !nbE1.isNull(); nbE1 = nbE1.nextSibling()) 
+         !nbE1.isNull(); nbE1 = nbE1.nextSibling())
     {
         QDomElement newsItemElement = nbE1.toElement();
         if (newsItemElement.isNull()) continue;
         if (newsItemElement.tagName() != "NewsItem") continue;
 
         for (QDomNode nbE2 = newsItemElement.firstChild();
-            !nbE2.isNull(); nbE2 = nbE2.nextSibling()) 
+            !nbE2.isNull(); nbE2 = nbE2.nextSibling())
         {
             QDomElement topicSetElement = nbE2.toElement();
             if (topicSetElement.isNull()) continue;
             if (topicSetElement.tagName() != "TopicSet") continue;
 
             for (QDomNode nbE3 = topicSetElement.firstChild();
-                !nbE3.isNull(); nbE3 = nbE3.nextSibling()) 
+                !nbE3.isNull(); nbE3 = nbE3.nextSibling())
             {
                 QDomElement topicElement = nbE3.toElement();
                 if (topicElement.isNull()) continue;
@@ -603,19 +603,19 @@ bool IPTCSubjects::loadSubjectCodesFromXML(const KUrl& url)
 
                 QString type, name, matter, detail, ref;
                 for (QDomNode nbE4 = topicElement.firstChild();
-                    !nbE4.isNull(); nbE4 = nbE4.nextSibling()) 
+                    !nbE4.isNull(); nbE4 = nbE4.nextSibling())
                 {
                     QDomElement topicSubElement = nbE4.toElement();
                     if (topicSubElement.isNull()) continue;
 
-                    if (topicSubElement.tagName() == "TopicType") 
+                    if (topicSubElement.tagName() == "TopicType")
                         type = topicSubElement.attribute("FormalName");
 
-                    if (topicSubElement.tagName() == "FormalName") 
+                    if (topicSubElement.tagName() == "FormalName")
                         ref = topicSubElement.text();
 
                     if (topicSubElement.tagName() == "Description" &&
-                        topicSubElement.attribute("Variant") == "Name") 
+                        topicSubElement.attribute("Variant") == "Name")
                     {
                         if (type == "Subject")
                             name = topicSubElement.text();
@@ -645,7 +645,7 @@ bool IPTCSubjects::loadSubjectCodesFromXML(const KUrl& url)
             for (IPTCSubjectsPriv::SubjectCodesMap::Iterator it2 = d->subMap.begin();
                 it2 != d->subMap.end(); ++it2)
             {
-                if (it2.key().startsWith(keyPrefix) && 
+                if (it2.key().startsWith(keyPrefix) &&
                     !it2.key().endsWith("00000"))
                 {
                     it2.value().name = name;
@@ -668,7 +668,7 @@ bool IPTCSubjects::loadSubjectCodesFromXML(const KUrl& url)
             for (IPTCSubjectsPriv::SubjectCodesMap::Iterator it2 = d->subMap.begin();
                 it2 != d->subMap.end(); ++it2)
             {
-                if (it2.key().startsWith(keyPrefix) && 
+                if (it2.key().startsWith(keyPrefix) &&
                     !it2.key().endsWith("000"))
                 {
                     it2.value().matter = matter;
