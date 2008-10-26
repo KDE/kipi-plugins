@@ -22,6 +22,9 @@
 
 #define ICONSIZE 64
 
+#include "imageslist.h"
+#include "imageslist.moc"
+
 // Qt includes.
 
 #include <QPushButton>
@@ -48,8 +51,6 @@
 // Local includes.
 
 #include "imagedialog.h"
-#include "imageslist.h"
-#include "imageslist.moc"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -92,7 +93,7 @@ ImagesListView::ImagesListView(QWidget *parent)
 {
     setIconSize(QSize(ICONSIZE, ICONSIZE));
     setSelectionMode(QAbstractItemView::MultiSelection);
-    setWhatsThis(i18n("<p>This is the list of images to upload on your Flickr account."));
+    setWhatsThis(i18n("This is the list of images to upload on your Flickr account."));
     setAcceptDrops(true);
     setSortingEnabled(false);
     setAllColumnsShowFocus(true);

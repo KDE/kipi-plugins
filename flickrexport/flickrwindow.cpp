@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "flickrwindow.h"
+#include "flickrwindow.moc"
+
 // Qt includes.
 
 #include <QProgressDialog>
@@ -68,8 +71,6 @@
 #include "flickrviewitem.h"
 #include "flickrwidget.h"
 #include "flickralbumdialog.h"
-#include "flickrwindow.h"
-#include "flickrwindow.moc"
 
 namespace KIPIFlickrExportPlugin
 {

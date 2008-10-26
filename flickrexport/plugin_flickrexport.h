@@ -24,13 +24,20 @@
 #ifndef PLUGIN_FLICKREXPORT_H
 #define PLUGIN_FLICKREXPORT_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
 
 class KAction;
 
-using namespace KIPIFlickrExportPlugin;
+namespace KIPIFlickrExportPlugin
+{
+    class FlickrWindow;
+}
 
 class Plugin_FlickrExport : public KIPI::Plugin
 {
@@ -50,8 +57,8 @@ public slots:
 
 private:
 
-    KAction      *m_action;
-    FlickrWindow *m_dlg;
+    KAction                                 *m_action;
+    KIPIFlickrExportPlugin::FlickrWindow    *m_dlg;
 };
 
 #endif // PLUGIN_FLICKREXPORT_H

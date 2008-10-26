@@ -21,14 +21,12 @@
  *
  * ============================================================ */
 
+#include "flickrviewitem.h"
+
 // Qt includes.
 
 #include <qpainter.h>
 #include <qpixmap.h>
-
-// Local includes.
-
-#include "flickrviewitem.h"
 
 namespace KIPIFlickrExportPlugin
 {

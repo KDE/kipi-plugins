@@ -21,6 +21,8 @@
  *
  * ============================================================ */
 
+#include "mpform.h"
+
 // C++ includes.
 
 #include <cstring>
@@ -39,10 +41,6 @@
 #include <kmimetype.h>
 #include <kurl.h>
 #include <krandom.h>
-
-// Local includes.
-
-#include "mpform.h"
 
 namespace KIPIFlickrExportPlugin
 {

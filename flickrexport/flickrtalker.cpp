@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "flickrtalker.h"
+#include "flickrtalker.moc"
+
 // C++ includes.
 
 #include <cstring>
@@ -74,8 +77,6 @@
 #include "mpform.h"
 #include "flickritem.h"
 #include "flickrwindow.h"
-#include "flickrtalker.h"
-#include "flickrtalker.moc"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -116,7 +117,7 @@ QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
     return context.hexDigest().data();
 }
 
-/**get the Api sig and send it to the server server should return a frob.
+/**get the API sig and send it to the server server should return a frob.
 */
 void FlickrTalker::getFrob()
 {
@@ -506,7 +507,7 @@ void FlickrTalker::slotError(const QString& error)
             transError = i18n("Filesize was zero");
             break;
         case 5:
-            transError = i18n("Filetype was not recognised");
+            transError = i18n("Filetype was not recognized");
             break;
         case 6:
             transError = i18n("User exceeded upload limit");
@@ -550,7 +551,7 @@ void FlickrTalker::slotError(const QString& error)
     };
 
     KMessageBox::error(kapp->activeWindow(),
-                 i18n("Error Occured: %1\n We can not proceed further",transError));
+                 i18n("Error Occurred: %1\n We can not proceed further",transError));
 
 //  kDebug( 51000 ) << "Not handling the error now will see it later" << endl;
 }

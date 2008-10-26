@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "plugin_flickrexport.h"
+#include "plugin_flickrexport.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -47,8 +50,6 @@ extern "C"
 // Local includes.
 
 #include "flickrwindow.h"
-#include "plugin_flickrexport.h"
-#include "plugin_flickrexport.moc"
 
 K_PLUGIN_FACTORY( FlickrExportFactory, registerPlugin<Plugin_FlickrExport>(); )
 K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )

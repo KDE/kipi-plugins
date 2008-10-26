@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "login.h"
+#include "login.moc"
+
 // Qt includes.
 
 #include <QGridLayout>
@@ -35,11 +38,6 @@
 #include <klocale.h>
 #include <kseparator.h>
 #include <kdialog.h>
-
-// Local includes.
-
-#include "login.h"
-#include "login.moc"
 
 namespace KIPIFlickrExportPlugin
 {

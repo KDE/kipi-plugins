@@ -16,47 +16,50 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-
 */
-// Self
+
 #include "wizard.moc"
 
-// Qt
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qspinbox.h>
+// Qt includes.
 
-// KDE
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
+#include <QLabel>
+#include <QLayout>
+#include <QPainter>
+#include <QSpinBox>
+
+// KDE includes.
+
+#include <kapplication.h>
 #include <kconfigdialogmanager.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klistwidget.h>
 #include <klocale.h>
+#include <kmenu.h>
 #include <ktextbrowser.h>
 #include <kurlrequester.h>
-#include <kapplication.h>
-#include <kmenu.h>
 
-// KIPI
+// KIPI includes.
+
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
-// Local
+// Local includes.
+
 #include "abstractthemeparameter.h"
+#include "galleryinfo.h"
+#include "kpaboutdata.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "galleryinfo.h"
-#include "ui_imagesettingspage.h"
 #include "theme.h"
+#include "ui_imagesettingspage.h"
+#include "ui_outputpage.h"
 #include "ui_themepage.h"
 #include "ui_themeparameterspage.h"
-#include "ui_outputpage.h"
-#include "kpaboutdata.h"
 
 namespace KIPIHTMLExport {
 

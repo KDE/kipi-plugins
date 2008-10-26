@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "flickrwidget.h"
+#include "flickrwidget.moc"
+
 // Qt includes.
 
 #include <QGroupBox>
@@ -52,8 +55,6 @@
 // Local includes.
 
 #include "imageslist.h"
-#include "flickrwidget.h"
-#include "flickrwidget.moc"
 
 namespace KIPIFlickrExportPlugin
 {
