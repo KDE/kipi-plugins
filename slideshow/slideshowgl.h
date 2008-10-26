@@ -24,6 +24,10 @@
 #ifndef SLIDESHOWGL_H
 #define SLIDESHOWGL_H
 
+#ifdef _MSC_VER
+#include <winsock2.h>
+#endif
+
 // Qt includes.
 #include <Q3ValueList>
 #include <QStringList>
