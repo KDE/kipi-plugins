@@ -224,15 +224,15 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
         bool find = false;
 
-        QTreeWidgetItemIterator it(d->listView);
-        while (*it)
+        QTreeWidgetItemIterator iter(d->listView);
+        while (*iter)
         {
-            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*iter);
 
             if (item->url() == imageUrl)
                 find = true;
 
-            ++it;
+            ++iter;
         }
 
         if (!find)
