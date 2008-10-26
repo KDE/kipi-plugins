@@ -27,8 +27,8 @@ kde4_add_plugin(kipiplugin_htmlexport ${kipiplugin_htmlexport_SRCS})
 target_link_libraries(
     kipiplugin_htmlexport
 	kipiplugins
-	exslt
 	${KIPI_LIBRARIES}
+	${LIBEXSLT_LIBRARIES}
 	${LIBXSLT_LIBRARIES}
 	${LIBXML2_LIBRARIES}
     ${KDE4_KDECORE_LIBS}
