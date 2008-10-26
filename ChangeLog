@@ -1,3 +1,800 @@
+0.2.0-beta3 2008-10-26
+--------------------------------------------------------------------------------
+
+2008-10-26 16:47  sengels
+
+	* imageviewer/plugin_viewer.cpp: interface is a reserved keyword on
+	  msvc
+
+2008-10-26 16:47  sengels
+
+	* slideshow/slideshowkb.cpp: correct this as supposed by pinotree
+
+2008-10-26 15:53  sengels
+
+	* slideshow/slideshowgl.h: add windows specific header
+
+2008-10-26 15:52  sengels
+
+	* slideshow/slideshowkb.cpp, slideshow/slideshowkb.h: include
+	  explicitly && xor -> !(||)
+
+2008-10-26 15:49  aclemens
+
+	* dngconverter/plugin/batchdialog.cpp,
+	  flickrexport/flickrwidget.cpp, flickrexport/flickrwindow.cpp,
+	  gpssync/gpseditdialog.cpp, gpssync/gpssyncdialog.cpp,
+	  gpssync/kmlexportconfig.cpp, gpssync/plugin_gpssync.cpp,
+	  htmlexport/wizard.cpp, project/release/lib/libl10n.rb,
+	  rawconverter/batchdialog.cpp,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/singledialog.cpp, sendimages/emailpage.cpp,
+	  sendimages/imagespage.cpp, simpleviewerexport/generalpage.cpp,
+	  simpleviewerexport/lookpage.cpp, slideshow/maindialog.cpp,
+	  timeadjust/timeadjustdialog.cpp, wallpaper/plugin_wallpaper.cpp:
+	  fix malformed i18n strings
+
+2008-10-26 15:49  aclemens
+
+	* gpssync/gpssyncdialog.cpp, metadataedit/altlangstringedit.cpp,
+	  metadataedit/exifadjust.cpp, metadataedit/exifdatetime.cpp,
+	  metadataedit/exifdevice.cpp, metadataedit/exiflight.cpp,
+	  metadataedit/iptccategories.cpp, metadataedit/iptccontent.cpp,
+	  metadataedit/iptccredits.cpp, metadataedit/iptckeywords.cpp,
+	  metadataedit/iptcorigin.cpp, metadataedit/iptcproperties.cpp,
+	  metadataedit/iptcstatus.cpp, metadataedit/iptcsubjects.cpp,
+	  metadataedit/multistringsedit.cpp,
+	  metadataedit/multivaluesedit.cpp,
+	  metadataedit/objectattributesedit.cpp,
+	  metadataedit/xmpcredits.cpp, metadataedit/xmpkeywords.cpp,
+	  metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+	  metadataedit/xmpstatus.cpp, metadataedit/xmpsubjects.cpp,
+	  rawconverter/singledialog.cpp, sendimages/emailpage.cpp,
+	  timeadjust/timeadjustdialog.cpp: polish gridlayout code
+
+2008-10-26 15:49  aclemens
+
+	* metadataedit/altlangstringedit.cpp,
+	  metadataedit/commenteditdialog.cpp, metadataedit/exifadjust.cpp,
+	  metadataedit/exifcaption.cpp, metadataedit/exifdatetime.cpp,
+	  metadataedit/exifdevice.cpp, metadataedit/exiflens.cpp,
+	  metadataedit/exiflight.cpp, metadataedit/iptccategories.cpp,
+	  metadataedit/iptccontent.cpp, metadataedit/iptccredits.cpp,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptcenvelope.cpp,
+	  metadataedit/iptckeywords.cpp, metadataedit/iptcorigin.cpp,
+	  metadataedit/iptcproperties.cpp, metadataedit/iptcstatus.cpp,
+	  metadataedit/iptcsubjects.cpp,
+	  metadataedit/objectattributesedit.cpp,
+	  metadataedit/xmpcategories.cpp, metadataedit/xmpcontent.cpp,
+	  metadataedit/xmpcredits.cpp, metadataedit/xmpeditdialog.cpp,
+	  metadataedit/xmpkeywords.cpp, metadataedit/xmporigin.cpp,
+	  metadataedit/xmpproperties.cpp, metadataedit/xmpstatus.cpp,
+	  metadataedit/xmpsubjects.cpp: polish i18n calls in metadataedit
+	  plugin
+
+2008-10-26 15:48  aclemens
+
+	* flickrexport/flickrtalker.cpp, flickrexport/flickrviewitem.cpp,
+	  flickrexport/flickrwidget.cpp, flickrexport/flickrwindow.cpp,
+	  flickrexport/imageslist.cpp, flickrexport/login.cpp,
+	  flickrexport/mpform.cpp, flickrexport/plugin_flickrexport.cpp,
+	  flickrexport/plugin_flickrexport.h, htmlexport/wizard.cpp:
+	  include own header first for flickrexport and htmlexport plugin
+
+2008-10-26 15:11  sengels
+
+	* htmlexport/CMakeLists.txt: fix linkage
+
+2008-10-26 15:04  sengels
+
+	* flickrexport/imageslist.cpp: don't mess with iterator names
+
+2008-10-26 14:34  sengels
+
+	* gpssync/gpstracklistwidget.cpp: SV_SILENT: copy of the previous
+
+2008-10-26 14:33  sengels
+
+	* gpssync/gpsmapwidget.cpp: that one is not needed
+
+2008-10-26 12:39  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2008-10-25 20:31  aclemens
+
+	* acquireimages/plugin_acquireimages.cpp,
+	  acquireimages/plugin_acquireimages.h,
+	  acquireimages/scandialog.cpp, rawconverter/actionthread.cpp,
+	  rawconverter/batchdialog.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  rawconverter/previewwidget.cpp,
+	  rawconverter/rawdecodingiface.cpp,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/singledialog.cpp, sendimages/emailpage.cpp,
+	  sendimages/imageresize.cpp, sendimages/imagespage.cpp,
+	  sendimages/plugin_sendimages.cpp, sendimages/plugin_sendimages.h,
+	  sendimages/sendimages.cpp, sendimages/sendimagesdialog.cpp,
+	  slideshow/advanceddialog.cpp, slideshow/advanceddialog.h,
+	  slideshow/captiondialog.cpp, slideshow/captiondialog.h,
+	  slideshow/common.cpp, slideshow/common.h,
+	  slideshow/imageloadthread.cpp, slideshow/imageloadthread.h,
+	  slideshow/imageviewer.cpp, slideshow/imageviewer.h,
+	  slideshow/kbeffect.cpp, slideshow/kbeffect.h,
+	  slideshow/listimageitems.cpp, slideshow/listimageitems.h,
+	  slideshow/listsounditems.cpp, slideshow/listsounditems.h,
+	  slideshow/maindialog.cpp, slideshow/maindialog.h,
+	  slideshow/playbackwidget.cpp, slideshow/playbackwidget.h,
+	  slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h,
+	  slideshow/screenproperties.cpp, slideshow/screenproperties.h,
+	  slideshow/slideplaybackwidget.cpp,
+	  slideshow/slideplaybackwidget.h, slideshow/slideshow.cpp,
+	  slideshow/slideshow.h, slideshow/slideshowconfig.cpp,
+	  slideshow/slideshowconfig.h, slideshow/slideshowgl.cpp,
+	  slideshow/slideshowgl.h, slideshow/slideshowkb.cpp,
+	  slideshow/slideshowkb.h, slideshow/slideshowloader.cpp,
+	  slideshow/slideshowloader.h, slideshow/soundtrackdialog.cpp,
+	  slideshow/soundtrackdialog.h, timeadjust/plugin_timeadjust.cpp,
+	  timeadjust/plugin_timeadjust.h, timeadjust/timeadjustdialog.cpp,
+	  wallpaper/plugin_wallpaper.cpp: this commit fixes the following
+	  issues for the plugins
+	  slideshow
+	  wallpaper
+	  sendimages
+	  timeadjust
+	  rawconverter
+	  acquireimages:
+	  
+	  - include own header first
+	  - don't include QtModules
+	  - use Qt4 module notation (Q3ValueList, not q3valuelist.h)
+	  - some spelling errors
+
+2008-10-25 20:31  aclemens
+
+	* acquireimages/scandialog.cpp,
+	  common/libkipiplugins/batchprogressdialog.cpp,
+	  common/libkipiplugins/batchprogressdialog.h,
+	  common/libkipiplugins/imagedialog.h,
+	  common/libkipiplugins/kpaboutdata.h,
+	  common/libkipiplugins/kpwriteimage.cpp,
+	  common/libkipiplugins/kpwriteimage.h,
+	  dngconverter/dngwriter/dngwriter.cpp,
+	  dngconverter/dngwriter/dngwriterhost.cpp,
+	  dngconverter/plugin/actions.h,
+	  dngconverter/plugin/actionthread.cpp,
+	  dngconverter/plugin/actionthread.h,
+	  dngconverter/plugin/batchdialog.cpp,
+	  dngconverter/plugin/batchdialog.h,
+	  dngconverter/plugin/clistviewitem.h,
+	  dngconverter/plugin/dnglogo.h,
+	  dngconverter/plugin/plugin_dngconverter.cpp,
+	  dngconverter/plugin/plugin_dngconverter.h,
+	  dngconverter/plugin/settingswidget.cpp,
+	  dngconverter/plugin/settingswidget.h,
+	  flickrexport/flickrwidget.cpp, flickrexport/flickrwindow.cpp,
+	  flickrexport/flickrwindow.h, flickrexport/imageslist.cpp,
+	  flickrexport/plugin_flickrexport.cpp,
+	  flickrexport/plugin_flickrexport.h, galleryexport/albumdlg.h,
+	  galleryexport/galleries.cpp, galleryexport/galleries.h,
+	  galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+	  galleryexport/galleryitem.h, galleryexport/gallerympform.cpp,
+	  galleryexport/gallerympform.h, galleryexport/gallerytalker.cpp,
+	  galleryexport/gallerytalker.h, galleryexport/gallerywindow.cpp,
+	  galleryexport/gallerywindow.h,
+	  galleryexport/plugin_galleryexport.cpp,
+	  galleryexport/plugin_galleryexport.h, gpssync/gpsbabelbinary.cpp,
+	  gpssync/gpsdatacontainer.h, gpssync/gpsdataparser.cpp,
+	  gpssync/gpsdataparser.h, gpssync/gpslistviewitem.cpp,
+	  gpssync/gpslistviewitem.h, gpssync/gpssyncdialog.cpp,
+	  gpssync/gpssyncdialog.h, gpssync/gpstracklistcontainer.h,
+	  gpssync/gpstracklisteditdialog.h,
+	  gpssync/gpstracklistviewitem.cpp, gpssync/gpstracklistviewitem.h,
+	  gpssync/kmlexport.cpp, imageviewer/plugin_viewer.cpp,
+	  imageviewer/plugin_viewer.h, imageviewer/texture.cpp,
+	  imageviewer/texture.h, imageviewer/viewerwidget.cpp,
+	  imageviewer/viewerwidget.h, jpeglossless/actions.h,
+	  jpeglossless/actionthread.cpp, jpeglossless/actionthread.h,
+	  jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/jpegtransform.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h, metadataedit/altlangstringedit.cpp,
+	  metadataedit/exifadjust.cpp, metadataedit/exifcaption.cpp,
+	  metadataedit/exifdatetime.cpp, metadataedit/exifdevice.cpp,
+	  metadataedit/exiflens.cpp, metadataedit/exiflight.cpp,
+	  metadataedit/iptccategories.cpp, metadataedit/iptccontent.cpp,
+	  metadataedit/iptccredits.cpp, metadataedit/iptcenvelope.cpp,
+	  metadataedit/iptckeywords.cpp, metadataedit/iptcorigin.cpp,
+	  metadataedit/iptcproperties.cpp, metadataedit/iptcstatus.cpp,
+	  metadataedit/iptcsubjects.cpp, metadataedit/metadatacheckbox.h,
+	  metadataedit/multistringsedit.cpp,
+	  metadataedit/multivaluesedit.cpp,
+	  metadataedit/objectattributesedit.cpp,
+	  metadataedit/xmpcategories.cpp, metadataedit/xmpcontent.cpp,
+	  metadataedit/xmpcredits.cpp, metadataedit/xmpkeywords.cpp,
+	  metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+	  metadataedit/xmpstatus.cpp, metadataedit/xmpsubjects.cpp,
+	  picasawebexport/mpform.h, picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h,
+	  picasawebexport/plugin_picasawebexport.cpp,
+	  picasawebexport/plugin_picasawebexport.h, rawconverter/actions.h,
+	  rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+	  rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+	  rawconverter/clistviewitem.h,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/plugin_rawconverter.h,
+	  rawconverter/previewwidget.cpp, rawconverter/previewwidget.h,
+	  rawconverter/rawdecodingiface.cpp,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/savesettingswidget.h, rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h, sendimages/emailpage.cpp,
+	  sendimages/imageresize.cpp, sendimages/imageresize.h,
+	  sendimages/imagespage.cpp, sendimages/plugin_sendimages.cpp,
+	  sendimages/plugin_sendimages.h, sendimages/sendimages.cpp,
+	  sendimages/sendimages.h, simpleviewerexport/firstrundlg.cpp,
+	  simpleviewerexport/generalpage.cpp,
+	  simpleviewerexport/lookpage.cpp,
+	  simpleviewerexport/plugin_simpleviewer.h,
+	  simpleviewerexport/selectionpage.cpp,
+	  simpleviewerexport/simpleviewerexport.cpp,
+	  simpleviewerexport/simpleviewerexport.h,
+	  simpleviewerexport/svedialog.cpp,
+	  timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h,
+	  wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h: fix
+	  spelling in comments to match the look of digiKam and
+	  kipi-plugins
+
+2008-10-25 13:16  cgilles
+
+	* NEWS: polish
+
+2008-10-25 07:38  cgilles
+
+	* project/release/README: read me
+
+2008-10-24 18:40  cgilles
+
+	* CMakeLists.txt: optional message
+
+2008-10-24 13:10  cgilles
+
+	* CMakeLists.txt: better report panel
+
+2008-10-24 12:53  cgilles
+
+	* project/release/lib/libbase.rb,
+	  project/release/lib/libkdialog.rb,
+	  project/release/lib/libl10n.rb,
+	  project/release/lib/librelease.rb,
+	  project/release/lib/libreleasedigikamkipi.rb: update release
+	  script
+
+2008-10-24 09:08  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: backport
+	  Wine api from Kernel32 to implement
+	  TzSpecificLocalTimeToSystemTime() which is unavailable with
+	  MinGW.
+	  CCMAIL: ps_ml@gmx.de
+
+2008-10-24 08:14  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: another
+	  try to fix broken compilation
+
+2008-10-24 07:59  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: try to
+	  fix win32 date time compilation
+
+2008-10-24 06:05  cgilles
+
+	* picasawebexport/CMakeLists.txt: fix order for win32
+
+2008-10-24 06:03  cgilles
+
+	* picasawebexport/CMakeLists.txt: polish
+
+2008-10-23 23:52  adjam
+
+	* galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+	  Some ads in gtalker. Fix config file in gwindow
+
+2008-10-23 23:49  adjam
+
+	* galleryexport/plugin_galleryexport.cpp: Modified string "xx
+	  Export.." 2 "Export to xx..." as Flick and
+	  Picasaweb export plugins
+
+2008-10-23 13:30  cgilles
+
+	* dngconverter/test/CMakeLists.txt: Et voilà. excepted PicasaWeb
+	  plugin which do not compile duing an old Qt3 ui file to convert
+	  to Qt4, all kipi-plugins compile fine under Windows using MinGw.
+	  
+	  CCMAIL: digikam-devel@kde.org
+	  CCMAIL: kde-imaging@kde.org
+
+2008-10-23 12:58  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_pthread.cpp: compile
+	  with mingw under win32
+
+2008-10-23 09:55  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_pthread.cpp: try to fix
+	  openThread issu with MinGW
+
+2008-10-23 09:28  adjam
+
+	* galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+	  New (simple) algorithm in GalleryWindow slotAlbum function.
+	  Now it shows an albums/photos tree.
+	  Removed eccessive kWarning(ing..)
+
+2008-10-23 09:26  cgilles
+
+	* imageviewer/viewerwidget.cpp: compile under win32
+
+2008-10-23 08:28  cgilles
+
+	* imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: polish
+
+2008-10-23 08:23  cgilles
+
+	* imageviewer/viewerwidget.cpp: polish
+
+2008-10-23 08:16  cgilles
+
+	* imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: polish
+
+2008-10-23 07:55  cgilles
+
+	* CMakeLists.txt: fix else statement
+
+2008-10-23 07:47  cgilles
+
+	* CMakeLists.txt: simplification
+
+2008-10-23 07:38  cgilles
+
+	* CMakeLists.txt: polish
+
+2008-10-23 07:09  cgilles
+
+	* README: update
+
+2008-10-23 07:06  cgilles
+
+	* slideshow/CMakeLists.txt: add comment
+
+2008-10-23 07:05  cgilles
+
+	* imageviewer/CMakeLists.txt: addc omment
+
+2008-10-23 06:31  cgilles
+
+	* CMakeLists.txt: Only check X11 libraries under Linux for OpenGL
+	  based plugins. Under Win32, all compile and link fine without
+	  this depency
+
+2008-10-23 06:11  cgilles
+
+	* imageviewer/helpdialog.ui: q3textbrowser => qtextbrowser
+
+2008-10-23 06:05  cgilles
+
+	* imageviewer/CMakeLists.txt, imageviewer/viewerwidget.cpp: Pure
+	  Qt4 implementation
+
+2008-10-22 18:09  cgilles
+
+	* CMakeLists.txt, imageviewer/CMakeLists.txt: polish for win32
+
+2008-10-22 13:51  cgilles
+
+	* CMakeLists.txt: update
+
+2008-10-22 13:50  cgilles
+
+	* CMakeLists.txt: polish
+
+2008-10-22 12:46  cgilles
+
+	* CMakeLists.txt: polish
+
+2008-10-22 11:43  cgilles
+
+	* CMakeLists.txt, README: patch from Valeriio to compile SlideShow
+	  without X11 library. this plugin compile fine under Win32
+
+2008-10-22 11:36  mlaurent
+
+	* metadataedit/CMakeLists.txt: Link
+
+2008-10-22 11:28  mlaurent
+
+	* slideshow/playbackwidget.ui, slideshow/slideplaybackwidget.ui,
+	  slideshow/soundtrackdialog.ui: Fix ui files
+
+2008-10-22 09:42  vfuoglio
+
+	* NEWS, slideshow/common.cpp, slideshow/imageviewer.cpp,
+	  slideshow/listimageitems.cpp, slideshow/listsounditems.cpp,
+	  slideshow/maindialog.cpp, slideshow/playbackwidget.cpp,
+	  slideshow/plugin_slideshow.cpp, slideshow/slideshow.cpp,
+	  slideshow/slideshowconfig.cpp, slideshow/slideshowgl.cpp,
+	  slideshow/slideshowkb.cpp, slideshow/slideshowloader.cpp,
+	  slideshow/soundtrackdialog.cpp: Fixed bug 173276.
+	  Patch by Andi Clemens (thanks Andi).
+	  
+	  BUG: 173276
+	  CCMAIL: kde-imaging@kde.org
+
+2008-10-22 09:10  cgilles
+
+	* dngconverter/CMakeLists.txt,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: use
+	  standard GCC pre compiler definition here. No need to re-invent
+	  the wheel
+
+2008-10-21 15:39  cgilles
+
+	* dngconverter/CMakeLists.txt,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: compile
+	  under win32
+
+2008-10-21 14:10  cgilles
+
+	* picasawebexport/picasaweblogin.h: polish
+
+2008-10-21 14:09  cgilles
+
+	* picasawebexport/picasawebwindow.h: polish
+
+2008-10-21 14:08  cgilles
+
+	* picasawebexport/picasawebwindow.cpp: polish
+
+2008-10-21 12:30  aclemens
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/squeezedcombobox.cpp,
+	  common/libkipiplugins/squeezedcombobox.h,
+	  metadataedit/altlangstringedit.cpp,
+	  metadataedit/iptcenvelope.cpp, metadataedit/iptcorigin.cpp,
+	  metadataedit/iptcproperties.cpp,
+	  metadataedit/multivaluesedit.cpp,
+	  metadataedit/objectattributesedit.cpp,
+	  metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp:
+	  squeezedcombobox has been moved to libkdcraw to have a common
+	  place for digiKam and kipi-plugins
+
+2008-10-20 11:50  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: SVN_SILENT
+	  made messages (.desktop file)
+
+2008-10-18 09:33  adjam
+
+	* galleryexport/gallerywindow.cpp,
+	  galleryexport/plugin_galleryexport.cpp: Added ability to check
+	  again own settings if 1st connection goes wrong.
+
+2008-10-18 00:39  adjam
+
+	* galleryexport/gallerytalker.cpp: Added check on Qlist emptyness
+	  and lastIndex return to try
+	  solving bug 172910.
+
+2008-10-18 00:03  adjam
+
+	* galleryexport/galleries.cpp, galleryexport/galleryalbumwidget.ui,
+	  galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h,
+	  galleryexport/plugin_galleryexport.cpp,
+	  galleryexport/plugin_galleryexport.h: - Removed the "infamous"
+	  remote-gallery-setting from tools menu.
+	  Now it is integrated into gallery-export interface,
+	  with a "settings" button.
+	  - Renamed config file from "kipirc" to "galleryrc"
+	  - Added a simple check on that file to anyway use
+	  gallery-settings
+	  at 1st login.
+
+2008-10-16 11:15  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: SVN_SILENT
+	  made messages (.desktop file)
+
+2008-10-15 19:16  sengels
+
+	* jpeglossless/CMakeLists.txt: fix linker error to jpegtransform
+	  etc. (same as in gwenviewlib)
+
+2008-10-15 19:04  cgilles
+
+	* CMakeLists.txt: typo
+
+2008-10-15 11:18  cgilles
+
+	* NEWS: update
+
+2008-10-15 11:17  cgilles
+
+	* CMakeLists.txt: kipi-plugins from trunk : JPEGLossLess is now a
+	  pure Qt4/KDE4 plugin
+	  K3Process is now ported to KProcess. We can compile it under
+	  Windows !
+	  CCMAIL: ps_ml@gmx.de
+	  CCMAIL: julien@rasselet.de
+
+2008-10-15 11:14  cgilles
+
+	* jpeglossless/CMakeLists.txt, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h: K3Process => KProcess
+	  Now JPEGLossLess is a pure Qt4/KDE4 plugin
+
+2008-10-15 11:10  cgilles
+
+	* jpeglossless/imagerotate.cpp, jpeglossless/imagerotate.h:
+	  K3Process => QProcess
+
+2008-10-15 11:07  cgilles
+
+	* jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h: K3Process => Qprocess
+
+2008-10-15 11:01  cgilles
+
+	* jpeglossless/imageflip.cpp, jpeglossless/imageflip.h: K3Process
+	  => KProcess
+
+2008-10-15 06:42  cgilles
+
+	* CMakeLists.txt: kipi-plugins from trunk : re-enable DNGConverter
+	  under Windows.
+	  Patrick : compilation is fine. only linking fail about a Win32
+	  library method into DNG SDK.
+	  Something is just missing in linking rules.
+	  CCMAIL: ps_ml@gmx.de
+	  CCMAIL: julien@rasselet.de
+
+2008-10-15 06:38  cgilles
+
+	* dngconverter/CMakeLists.txt: kipi-plugins from trunk :
+	  DNGConverter : fix compilation rules under Windows and MacOS-X
+	  CCMAIL: ps_ml@gmx.de
+	  CCMAIL: julien@rasselet.de
+
+2008-10-14 19:07  sengels
+
+	* CMakeLists.txt: disable those two plugins for now on Windows -
+	  jpeglossless needs to be ported to KProcess, the other needs some
+	  more work
+	  CCMAIL:julien@rasselet.de
+
+2008-10-14 01:50  adjam
+
+	* galleryexport/CMakeLists.txt, galleryexport/albumdlg.cpp,
+	  galleryexport/albumdlg.h, galleryexport/gallerytalker.cpp,
+	  galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+	  Re-enabled old 3-fields new-album GUI with some changes.
+
+2008-10-13 11:39  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  htmlexport/themes/matrix/matrix.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2008-10-11 15:12  cgilles
+
+	* slideshow/slideplaybackwidget.cpp,
+	  slideshow/slideplaybackwidget.h: fix warnings
+
+2008-10-10 01:26  sengels
+
+	* common/libkipiplugins/kpwriteimage.cpp: non-existing headers
+
+2008-10-10 01:19  sengels
+
+	* CMakeLists.txt: some first fixes
+	  - kdcraw is available on windows
+	  - typo: kdcraw is needed in version 0.4.0
+
+2008-10-08 04:09  cgilles
+
+	* NEWS: update
+
+2008-10-07 10:52  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: SVN_SILENT
+	  made messages (.desktop file)
+
+2008-10-07 07:03  cgilles
+
+	* README: update
+
+2008-10-07 06:59  cgilles
+
+	* README: update
+
+2008-10-07 06:54  cgilles
+
+	* README, TODO: update
+
+2008-10-07 06:22  cgilles
+
+	* README: polish
+
+2008-10-06 15:39  vfuoglio
+
+	* NEWS, slideshow/common.cpp, slideshow/plugin_slideshow.cpp: Fixed
+	  crash.
+	  
+	  BUG: 172283
+	  CCMAIL: kde-imaging@kde.org
+
+2008-10-06 11:04  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: SVN_SILENT
+	  made messages (.desktop file)
+
+2008-10-06 09:37  adjam
+
+	* galleryexport/gallerytalker.cpp: Removing (my) eccessive
+	  kWarning(ing)..
+
+2008-10-06 06:11  cgilles
+
+	* NEWS: update
+
+2008-10-06 01:28  vfuoglio
+
+	* slideshow/toolbar.cpp, slideshow/toolbar.h: Sobstituted by
+	  SlidePlaybackWidget
+
+2008-10-06 00:29  vfuoglio
+
+	* slideshow/slideshowgl.cpp: Fixed bug in SlideShowGL timeout
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2008-10-05 23:22  vfuoglio
+
+	* slideshow/CMakeLists.txt, slideshow/slideplaybackwidget.cpp,
+	  slideshow/slideplaybackwidget.h,
+	  slideshow/slideplaybackwidget.ui, slideshow/slideshow.cpp,
+	  slideshow/slideshow.h, slideshow/slideshowgl.cpp,
+	  slideshow/slideshowgl.h: ToolBar restyle
+	  
+	  CCMAIL: kde-imaging@kde.org
+	  GUI:
+
+2008-10-05 21:45  vfuoglio
+
+	* slideshow/advanceddialog.cpp, slideshow/advanceddialog.h,
+	  slideshow/captiondialog.cpp, slideshow/captiondialog.h,
+	  slideshow/common.h, slideshow/imageloadthread.cpp,
+	  slideshow/imageloadthread.h, slideshow/imageviewer.cpp,
+	  slideshow/imageviewer.h, slideshow/kbeffect.cpp,
+	  slideshow/kbeffect.h, slideshow/listimageitems.cpp,
+	  slideshow/listimageitems.h, slideshow/listsounditems.cpp,
+	  slideshow/listsounditems.h, slideshow/maindialog.cpp,
+	  slideshow/maindialog.h, slideshow/playbackwidget.cpp,
+	  slideshow/playbackwidget.h, slideshow/plugin_slideshow.cpp,
+	  slideshow/plugin_slideshow.h, slideshow/screenproperties.cpp,
+	  slideshow/screenproperties.h, slideshow/slideshowconfig.cpp,
+	  slideshow/slideshowconfig.h, slideshow/slideshowgl.cpp,
+	  slideshow/slideshowgl.h, slideshow/slideshowkb.cpp,
+	  slideshow/slideshowkb.h, slideshow/slideshowloader.cpp,
+	  slideshow/slideshowloader.h, slideshow/soundtrackdialog.cpp,
+	  slideshow/soundtrackdialog.h, slideshow/toolbar.cpp,
+	  slideshow/toolbar.h: indentation
+
+2008-10-05 21:34  vfuoglio
+
+	* slideshow/plugin_slideshow.cpp, slideshow/slideshow.cpp,
+	  slideshow/slideshow.h: Slideshow class use SharedData as well
+
+2008-10-04 17:36  cgilles
+
+	* cmake/templates/svnscript.cmake.in_cmake,
+	  common/libkipiplugins/kpaboutdata.cpp,
+	  common/libkipiplugins/pluginsversion.h.cmake: use svn version
+	  info into plugins about data container
+
+2008-10-04 17:16  cgilles
+
+	* svnscript.cmake: this file is temp data
+
+2008-10-04 17:15  cgilles
+
+	* CMakeLists.txt, cmake, cmake/modules, cmake/templates,
+	  cmake/templates/svnscript.cmake.in_cmake,
+	  cmake/templates/svnversion.h.in_cmake, svnscript.cmake: add
+	  script to handle svn revision and generate svnversion.h.
+	  subversion revision is add to plugin about data to be able to
+	  check
+	  the version installed by user when a bug report is done
+
+2008-10-03 22:20  adjam
+
+	* galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+	  galleryexport/gallerywindow.cpp: Solved cookies retrieving.
+	  Authentication restarts to work.
+
+2008-10-03 11:10  scripty
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: SVN_SILENT
+	  made messages (.desktop file)
+
+2008-10-02 18:50  cgilles
+
+	* CMakeLists.txt, NEWS: beta3
+
+2008-10-02 18:24  aclemens
+
+	* CMakeLists.txt: typo
+
+2008-10-02 17:38  cgilles
+
+	* ChangeLog: prepare 0.2.0-beta2
+
+2008-10-02 17:22  cgilles
+
+	* NEWS: add release date
+
+2008-10-02 14:55  cgilles
+
+	* slideshow/listimageitems.cpp, slideshow/listsounditems.cpp,
+	  slideshow/maindialog.cpp, slideshow/plugin_slideshow.cpp,
+	  slideshow/plugin_slideshow.h, slideshow/slideshowgl.cpp: polish
+
+2008-10-02 14:46  cgilles
+
+	* slideshow/advanceddialog.cpp: polish
+
+2008-10-02 14:46  cgilles
+
+	* slideshow/imageviewer.cpp: missing moc file
+
+2008-10-02 14:44  cgilles
+
+	* slideshow/soundtrackdialog.cpp: missing moc file
+
+2008-10-02 14:42  cgilles
+
+	* slideshow/playbackwidget.cpp: fix compilation warnings
+
+2008-10-02 14:40  cgilles
+
+	* slideshow/slideshowloader.cpp: fix compilation warnings
+
+2008-10-02 14:37  cgilles
+
+	* dngconverter/dngwriter/dngwriter.cpp: fix gcc warnings
+
+2008-10-02 13:36  cgilles
+
+	* CMakeLists.txt: add url
+
+2008-10-02 13:34  cgilles
+
+	* CMakeLists.txt: indent + uppercase
+
 V 0.2.0-beta2 - 2008-10-02
 ----------------------------------------------------------------------------
 2008-10-02 11:14  scripty
