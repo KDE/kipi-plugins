@@ -317,6 +317,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
+	# Under Linux, this plugin use KSane interface
         IF(SANE_FOUND AND KSANE_FOUND)
             ADD_SUBDIRECTORY(acquireimages)
         ENDIF(SANE_FOUND AND KSANE_FOUND)
@@ -329,7 +330,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-#        ADD_SUBDIRECTORY(acquireimages)
+	# Under Windows, this plugin use TWAIN interface
+        ADD_SUBDIRECTORY(acquireimages)
 
     ENDIF(NOT WIN32 AND NOT APPLE)
 
