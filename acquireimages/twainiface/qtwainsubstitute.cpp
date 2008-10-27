@@ -1,22 +1,25 @@
-/*
-QTwain interface class set
-Copyright (C) 2002-2003         Stephan Stapel
-                                stephan.stapel@web.de
-
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
-
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2008-27-10
+ * Description : Twain interface
+ *
+ * Copyright (C) 2002-2003 Stephan Stapel <stephan dot stapel at web dot de>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #include <windows.h>
 #include <QPixmap>
@@ -25,67 +28,53 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "dib.h"
 #include "qtwainsubstitute.h"
 
-
-
-
-
 QTwainSubstitute::QTwainSubstitute(QWidget* parent)
-	: QTwainInterface(parent)
+                : QTwainInterface(parent)
 {
-} // !QTwainSubstitute()
-
-
+}
 
 QTwainSubstitute::~QTwainSubstitute()
 {
-} // !~QTwainSubstitute()
-
-
+}
 
 bool QTwainSubstitute::selectSource()
 {
-	QMessageBox::information(m_pParent, "Select Source", "Here, the source should be selected by the user", QMessageBox::Ok);
-	return true;
-} // !selectSource()
-
-
+    QMessageBox::information(m_pParent, "Select Source", "Here, the source should be selected by the user", QMessageBox::Ok);
+    return true;
+}
 
 bool QTwainSubstitute::acquire(unsigned int maxNumImages)
 {
-	QString s = QFileDialog::getOpenFileName(m_pParent, tr("Open File"),
-		                                     "/home",
-											 "Images (*.png *.jpg)");
+    QString s = QFileDialog::getOpenFileName(m_pParent, tr("Open File"),
+                                             "/home",
+                                             "Images (*.png *.jpg)");
 
-	if (s != QString::null)
-	{
-		QPixmap* pPixmap = new QPixmap();
-		pPixmap->load(s);
+    if (s != QString::null)
+    {
+        QPixmap* pPixmap = new QPixmap();
+        pPixmap->load(s);
 
-		if (emitPixmaps())
-		{			
-			emit pixmapAcquired(pPixmap);			
-		}
-		else
-		{
-			CDIB* pDib = QTwainInterface::convertToDib(pPixmap);
-			emit dibAcquired(pDib);
-			delete pPixmap;
-		}
-	}
+        if (emitPixmaps())
+        {
+            emit pixmapAcquired(pPixmap);
+        }
+        else
+        {
+            CDIB* pDib = QTwainInterface::convertToDib(pPixmap);
+            emit dibAcquired(pDib);
+            delete pPixmap;
+        }
+    }
 
-	return true;
-} // !acquire()
-
-
+    return true;
+}
 
 bool QTwainSubstitute::isValidDriver() const
 {
-	return true;
-} // !isValidDriver()
-
-
+    return true;
+}
 
 bool QTwainSubstitute::processMessage(MSG& msg)
 {
-	return false;
-} // !processMessage()
+    return false;
+}

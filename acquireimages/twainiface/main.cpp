@@ -1,33 +1,35 @@
-/*
-QTwain interface class set
-Copyright (C) 2002-2003         Stephan Stapel
-                                stephan.stapel@web.de
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2008-27-10
+ * Description : Twain interface
+ *
+ * Copyright (C) 2002-2003 Stephan Stapel <stephan dot stapel at web dot de>
+ * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+#include <QApplication>
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public
-License along with this library; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
-
-#include <qapplication.h>
 #include "qtwainmainwindow.h"
-
-
 
 int main(int argc, char** argv)
 {
-	QApplication app(argc, argv);
-	QTwainMainWindow mainwindow;
-	mainwindow.show();
+    QApplication app(argc, argv);
+    QTwainMainWindow mainwindow;
+    mainwindow.show();
 
-	return app.exec();
-} // !main()
+    return app.exec();
+}
