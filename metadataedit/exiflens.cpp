@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "exiflens.h"
+#include "exiflens.moc"
+
 // C++ includes.
 
 #include <cmath>
@@ -43,8 +46,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "exiflens.h"
-#include "exiflens.moc"
 
 namespace KIPIMetadataEditPlugin
 {

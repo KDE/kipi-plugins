@@ -20,27 +20,30 @@
  *
  * ============================================================ */
 
+#include "iptcorigin.h"
+#include "iptcorigin.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
-#include <QComboBox>
-#include <QMap>
-#include <QTimeEdit>
-#include <QPushButton>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QLabel>
+#include <QLayout>
+#include <QMap>
+#include <QPushButton>
+#include <QTimeEdit>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klineedit.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <kdatewidget.h>
-#include <kcomponentdata.h>
-#include <kglobal.h>
 #include <kaboutdata.h>
+#include <kcomponentdata.h>
+#include <kdatewidget.h>
+#include <kdialog.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klocale.h>
 #include <kseparator.h>
 
 // LibKExiv2 includes.
@@ -53,10 +56,8 @@
 
 // Local includes.
 
-#include "multivaluesedit.h"
 #include "metadatacheckbox.h"
-#include "iptcorigin.h"
-#include "iptcorigin.moc"
+#include "multivaluesedit.h"
 
 using namespace KDcrawIface;
 

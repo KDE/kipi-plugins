@@ -20,25 +20,28 @@
  *
  * ============================================================ */
 
+#include "xmpproperties.h"
+#include "xmpproperties.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
-#include <QPushButton>
 #include <QComboBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <kiconloader.h>
-#include <klocale.h>
-#include <klanguagebutton.h>
 #include <kdialog.h>
 #include <kglobal.h>
+#include <kiconloader.h>
+#include <klanguagebutton.h>
+#include <klineedit.h>
+#include <klocale.h>
 #include <kseparator.h>
 #include <ktextedit.h>
-#include <klineedit.h>
 
 // LibKExiv2 includes.
 
@@ -50,13 +53,11 @@
 
 // Local includes.
 
-#include "pluginsversion.h"
+#include "altlangstringedit.h"
 #include "metadatacheckbox.h"
 #include "multivaluesedit.h"
-#include "altlangstringedit.h"
 #include "objectattributesedit.h"
-#include "xmpproperties.h"
-#include "xmpproperties.moc"
+#include "pluginsversion.h"
 
 using namespace KDcrawIface;
 

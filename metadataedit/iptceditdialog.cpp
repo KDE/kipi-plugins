@@ -12,35 +12,38 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "iptceditdialog.h"
+#include "iptceditdialog.moc"
 
 // Qt includes.
 
-#include <QTimer>
-#include <QFrame>
-#include <QLayout>
 #include <QCloseEvent>
+#include <QFrame>
 #include <QKeyEvent>
+#include <QLayout>
+#include <QTimer>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kguiitem.h>
+#include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
 #include <ktoolinvocation.h>
-#include <kguiitem.h>
 
 // LibKIPI includes.
 
@@ -49,25 +52,23 @@
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "iptccategories.h"
 #include "iptccontent.h"
 #include "iptccredits.h"
-#include "iptcstatus.h"
-#include "iptcproperties.h"
-#include "iptcorigin.h"
-#include "iptckeywords.h"
-#include "iptcsubjects.h"
-#include "iptccategories.h"
 #include "iptcenvelope.h"
-#include "iptceditdialog.h"
-#include "iptceditdialog.moc"
+#include "iptckeywords.h"
+#include "iptcorigin.h"
+#include "iptcproperties.h"
+#include "iptcstatus.h"
+#include "iptcsubjects.h"
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 
 namespace KIPIMetadataEditPlugin
 {
@@ -145,7 +146,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->interface = iface;
     d->currItem  = d->urls.begin();
 
-    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close 
+    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close
                                    : Help|Ok|Apply|Close);
     setDefaultButton(Ok);
     setButtonIcon(User1, KIcon("go-next"));
@@ -210,7 +211,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_envelope->setHeader(i18n("Envelope Information<br/>"
                       "<i>Use this panel to record editorial description</i>"));
     d->page_envelope->setIcon(KIcon("view-pim-mail"));
-  
+
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -356,7 +357,7 @@ void IPTCEditDialog::slotItemChanged()
     d->propertiesPage->readMetadata(d->iptcData);
     d->envelopePage->readMetadata(d->iptcData);
 
-    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteIptc((*d->currItem).path()); 
+    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteIptc((*d->currItem).path());
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
@@ -367,12 +368,12 @@ void IPTCEditDialog::slotItemChanged()
     d->page_properties->setEnabled(!d->isReadOnly);
     d->page_envelope->setEnabled(!d->isReadOnly);
     enableButton(Apply, !d->isReadOnly);
-    
+
     setCaption(QString("%1 (%2/%3) - %4")
                .arg((*d->currItem).fileName())
                .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
-               .arg(i18n("Edit IPTC Metadata")) + 
+               .arg(i18n("Edit IPTC Metadata")) +
                (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
@@ -381,7 +382,7 @@ void IPTCEditDialog::slotItemChanged()
 
 void IPTCEditDialog::slotApply()
 {
-    if (d->modified && !d->isReadOnly) 
+    if (d->modified && !d->isReadOnly)
     {
         KIPI::ImageInfo info = d->interface->info(*d->currItem);
 
@@ -482,34 +483,34 @@ void IPTCEditDialog::showPage(int page)
     switch(page)
     {
         case 0:
-            setCurrentPage(d->page_content); 
+            setCurrentPage(d->page_content);
             break;
         case 1:
-            setCurrentPage(d->page_origin); 
+            setCurrentPage(d->page_origin);
             break;
         case 2:
-            setCurrentPage(d->page_credits); 
+            setCurrentPage(d->page_credits);
             break;
         case 3:
-            setCurrentPage(d->page_subjects); 
+            setCurrentPage(d->page_subjects);
             break;
         case 4:
-            setCurrentPage(d->page_keywords); 
+            setCurrentPage(d->page_keywords);
             break;
         case 5:
-            setCurrentPage(d->page_categories); 
+            setCurrentPage(d->page_categories);
             break;
         case 6:
-            setCurrentPage(d->page_status); 
+            setCurrentPage(d->page_status);
             break;
         case 7:
-            setCurrentPage(d->page_properties); 
+            setCurrentPage(d->page_properties);
             break;
         case 8:
-            setCurrentPage(d->page_envelope); 
+            setCurrentPage(d->page_envelope);
             break;
-        default: 
-            setCurrentPage(d->page_content); 
+        default:
+            setCurrentPage(d->page_content);
             break;
     }
 }

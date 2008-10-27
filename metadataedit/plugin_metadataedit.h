@@ -23,9 +23,18 @@
 #ifndef PLUGIN_METADATAEDIT_H
 #define PLUGIN_METADATAEDIT_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
+
+namespace KIPI
+{
+class Interface;
+} // namespace KIPI
 
 class KActionMenu;
 

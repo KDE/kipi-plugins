@@ -12,37 +12,40 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "commentremovedialog.h"
+#include "commentremovedialog.moc"
 
 // Qt includes.
 
-#include <QLabel>
-#include <QFrame>
-#include <QLayout>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QFrame>
+#include <QLabel>
+#include <QLayout>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kcomponentdata.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <ktextedit.h>
-#include <kiconloader.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
-#include <ktoolinvocation.h>
-#include <kcomponentdata.h>
 #include <kglobal.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
+#include <ktoolinvocation.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -50,8 +53,6 @@
 
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
-#include "commentremovedialog.h"
-#include "commentremovedialog.moc"
 
 namespace KIPIMetadataEditPlugin
 {
@@ -119,8 +120,8 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     setMainWidget(new QWidget(this));
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
 
-    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption hosted by %1", 
-                                    KGlobal::mainComponent().aboutData()->programName()), 
+    d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption hosted by %1",
+                                    KGlobal::mainComponent().aboutData()->programName()),
                                     mainWidget());
     d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF Comment section"), mainWidget());
     d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF Comment"), mainWidget());

@@ -20,41 +20,39 @@
  *
  * ============================================================ */
 
+#include "iptcsubjects.h"
+#include "iptcsubjects.moc"
+
 // Qt includes.
 
-#include <QMap>
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
-#include <QCheckBox>
-#include <QPushButton>
 #include <QButtonGroup>
-#include <QRadioButton>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
+#include <QLabel>
+#include <QLayout>
+#include <QMap>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <khbox.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <klistwidget.h>
-#include <klineedit.h>
-#include <kiconloader.h>
-#include <kstandarddirs.h>
-#include <kglobal.h>
 #include <kdebug.h>
+#include <kdialog.h>
+#include <kglobal.h>
+#include <khbox.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klistwidget.h>
+#include <klocale.h>
+#include <kstandarddirs.h>
 
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
-
-// Local includes.
-
-#include "iptcsubjects.h"
-#include "iptcsubjects.moc"
 
 namespace KIPIMetadataEditPlugin
 {

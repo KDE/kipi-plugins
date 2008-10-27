@@ -21,22 +21,25 @@
  *
  * ============================================================ */
 
+#include "objectattributesedit.h"
+#include "objectattributesedit.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <klistwidget.h>
 #include <kiconloader.h>
 #include <klineedit.h>
+#include <klistwidget.h>
+#include <klocale.h>
 
 // LibKExiv2 includes.
 
@@ -49,8 +52,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "objectattributesedit.h"
-#include "objectattributesedit.moc"
 
 using namespace KDcrawIface;
 

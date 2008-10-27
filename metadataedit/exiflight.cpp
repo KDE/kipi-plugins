@@ -20,21 +20,24 @@
  *
  * ============================================================ */
 
+#include "exiflight.h"
+#include "exiflight.moc"
+
 // C++ includes.
 
 #include <cmath>
 
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
 #include <QComboBox>
+#include <QLabel>
+#include <QLayout>
 #include <QMap>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
+#include <klocale.h>
 #include <knuminput.h>
 
 // LibKExiv2 includes.
@@ -44,8 +47,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "exiflight.h"
-#include "exiflight.moc"
 
 namespace KIPIMetadataEditPlugin
 {

@@ -20,30 +20,28 @@
  *
  * ============================================================ */
 
+#include "multistringsedit.h"
+#include "multistringsedit.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <klistwidget.h>
-#include <klineedit.h>
 #include <kiconloader.h>
+#include <klineedit.h>
+#include <klistwidget.h>
+#include <klocale.h>
 
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
-
-// Local includes.
-
-#include "multistringsedit.h"
-#include "multistringsedit.moc"
 
 namespace KIPIMetadataEditPlugin
 {

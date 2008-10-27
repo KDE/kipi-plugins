@@ -20,21 +20,24 @@
  *
  * ============================================================ */
 
+#include "xmpstatus.h"
+#include "xmpstatus.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
 
 // KDE includes.
 
-#include <kiconloader.h>
-#include <klocale.h>
 #include <kdialog.h>
 #include <kglobal.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klocale.h>
 #include <kseparator.h>
 #include <ktextedit.h>
-#include <klineedit.h>
 
 // LibKExiv2 includes.
 
@@ -42,11 +45,9 @@
 
 // Local includes.
 
-#include "pluginsversion.h"
-#include "multistringsedit.h"
 #include "altlangstringedit.h"
-#include "xmpstatus.h"
-#include "xmpstatus.moc"
+#include "multistringsedit.h"
+#include "pluginsversion.h"
 
 namespace KIPIMetadataEditPlugin
 {

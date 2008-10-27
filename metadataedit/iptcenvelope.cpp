@@ -20,25 +20,28 @@
  *
  * ============================================================ */
 
+#include "iptcenvelope.h"
+#include "iptcenvelope.moc"
+
 // Qt includes.
 
-#include <QDateTime>
-#include <QTimeEdit>
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDateTime>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QTimeEdit>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
-#include <kdialog.h>
-#include <klineedit.h>
-#include <ktextedit.h>
 #include <kdatewidget.h>
+#include <kdialog.h>
 #include <kiconloader.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <ktextedit.h>
 
 // LibKExiv2 includes.
 
@@ -50,10 +53,8 @@
 
 // Local includes.
 
-#include "pluginsversion.h"
 #include "metadatacheckbox.h"
-#include "iptcenvelope.h"
-#include "iptcenvelope.moc"
+#include "pluginsversion.h"
 
 using namespace KDcrawIface;
 

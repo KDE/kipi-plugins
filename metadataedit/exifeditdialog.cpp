@@ -12,35 +12,38 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "exifeditdialog.h"
+#include "exifeditdialog.moc"
 
 // Qt includes.
 
-#include <QTimer>
-#include <QFrame>
-#include <QLayout>
 #include <QCloseEvent>
+#include <QFrame>
 #include <QKeyEvent>
+#include <QLayout>
+#include <QTimer>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kguiitem.h>
+#include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
 #include <ktoolinvocation.h>
-#include <kguiitem.h>
 
 // LibKIPI includes.
 
@@ -49,22 +52,20 @@
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "exifadjust.h"
 #include "exifcaption.h"
 #include "exifdatetime.h"
-#include "exiflens.h"
 #include "exifdevice.h"
+#include "exiflens.h"
 #include "exiflight.h"
-#include "exifadjust.h"
-#include "exifeditdialog.h"
-#include "exifeditdialog.moc"
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 
 namespace KIPIMetadataEditPlugin
 {
@@ -135,7 +136,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->interface = iface;
     d->currItem  = d->urls.begin();
 
-    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close 
+    setButtons(d->urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close
                                    : Help|Ok|Apply|Close);
     setDefaultButton(Ok);
     setButtonIcon(User1, KIcon("go-next"));
@@ -313,7 +314,7 @@ void EXIFEditDialog::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path()); 
+    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path());
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_lens->setEnabled(!d->isReadOnly);
@@ -326,7 +327,7 @@ void EXIFEditDialog::slotItemChanged()
                .arg((*d->currItem).fileName())
                .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
-               .arg(i18n("Edit EXIF Metadata")) + 
+               .arg(i18n("Edit EXIF Metadata")) +
                (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
@@ -335,7 +336,7 @@ void EXIFEditDialog::slotItemChanged()
 
 void EXIFEditDialog::slotApply()
 {
-    if (d->modified && !d->isReadOnly) 
+    if (d->modified && !d->isReadOnly)
     {
         KIPI::ImageInfo info = d->interface->info(*d->currItem);
 
@@ -435,25 +436,25 @@ void EXIFEditDialog::showPage(int page)
     switch(page)
     {
         case 0:
-            setCurrentPage(d->page_caption); 
+            setCurrentPage(d->page_caption);
             break;
         case 1:
-            setCurrentPage(d->page_datetime); 
+            setCurrentPage(d->page_datetime);
             break;
         case 2:
-            setCurrentPage(d->page_lens); 
+            setCurrentPage(d->page_lens);
             break;
         case 3:
-            setCurrentPage(d->page_device); 
+            setCurrentPage(d->page_device);
             break;
         case 4:
-            setCurrentPage(d->page_light); 
+            setCurrentPage(d->page_light);
             break;
         case 5:
-            setCurrentPage(d->page_adjust); 
+            setCurrentPage(d->page_adjust);
             break;
-        default: 
-            setCurrentPage(d->page_caption); 
+        default:
+            setCurrentPage(d->page_caption);
             break;
     }
 }

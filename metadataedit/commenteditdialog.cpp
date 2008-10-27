@@ -12,37 +12,40 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "commenteditdialog.h"
+#include "commenteditdialog.moc"
 
 // Qt includes.
 
-#include <QLabel>
-#include <QFrame>
-#include <QLayout>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QFrame>
+#include <QLabel>
+#include <QLayout>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kcomponentdata.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <ktextedit.h>
-#include <kiconloader.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
-#include <ktoolinvocation.h>
-#include <kcomponentdata.h>
 #include <kglobal.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
+#include <ktoolinvocation.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -50,8 +53,6 @@
 
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
-#include "commenteditdialog.h"
-#include "commenteditdialog.moc"
 
 namespace KIPIMetadataEditPlugin
 {
@@ -122,7 +123,7 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
 
     QLabel *title = new QLabel(i18n("Enter the image caption entered through <b>%1</b>. "
                                     "This field is not limited (excepted with IPTC). UTF-8 encoding "
-                                    "will be used to save text.", 
+                                    "will be used to save text.",
                                     KGlobal::mainComponent().aboutData()->programName()),
                                mainWidget());
     title->setWordWrap(true);

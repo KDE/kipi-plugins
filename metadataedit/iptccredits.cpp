@@ -20,19 +20,22 @@
  *
  * ============================================================ */
 
+#include "iptccredits.h"
+#include "iptccredits.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <klocale.h>
 
 // LibKExiv2 includes.
 
@@ -41,8 +44,6 @@
 // Local includes.
 
 #include "multistringsedit.h"
-#include "iptccredits.h"
-#include "iptccredits.moc"
 
 namespace KIPIMetadataEditPlugin
 {

@@ -20,23 +20,26 @@
  *
  * ============================================================ */
 
+#include "exifdevice.h"
+#include "exifdevice.moc"
+
 // C++ includes.
 
 #include <cmath>
 
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
 #include <QComboBox>
+#include <QLabel>
+#include <QLayout>
 #include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <knuminput.h>
 #include <klineedit.h>
+#include <klocale.h>
+#include <knuminput.h>
 #include <kseparator.h>
 
 // LibKExiv2 includes.
@@ -46,8 +49,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "exifdevice.h"
-#include "exifdevice.moc"
 
 namespace KIPIMetadataEditPlugin
 {

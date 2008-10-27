@@ -20,21 +20,24 @@
  *
  * ============================================================ */
 
+#include "multivaluesedit.h"
+#include "multivaluesedit.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <klistwidget.h>
 #include <kiconloader.h>
+#include <klistwidget.h>
+#include <klocale.h>
 
 // LibKExiv2 includes.
 
@@ -47,8 +50,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "multivaluesedit.h"
-#include "multivaluesedit.moc"
 
 using namespace KDcrawIface;
 

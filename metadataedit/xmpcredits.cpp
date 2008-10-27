@@ -20,20 +20,23 @@
  *
  * ============================================================ */
 
+#include "xmpcredits.h"
+#include "xmpcredits.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
-#include <QPushButton>
 #include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <klocale.h>
 
 // LibKExiv2 includes.
 
@@ -42,8 +45,6 @@
 // Local includes.
 
 #include "multistringsedit.h"
-#include "xmpcredits.h"
-#include "xmpcredits.moc"
 
 namespace KIPIMetadataEditPlugin
 {

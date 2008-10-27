@@ -20,18 +20,21 @@
  *
  * ============================================================ */
 
+#include "iptcstatus.h"
+#include "iptcstatus.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
 #include <klineedit.h>
+#include <klocale.h>
 #include <ktextedit.h>
 
 // LibKExiv2 includes.
@@ -41,8 +44,6 @@
 // Local includes.
 
 #include "pluginsversion.h"
-#include "iptcstatus.h"
-#include "iptcstatus.moc"
 
 namespace KIPIMetadataEditPlugin
 {

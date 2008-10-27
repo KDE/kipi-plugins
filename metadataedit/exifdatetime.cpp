@@ -20,34 +20,32 @@
  *
  * ============================================================ */
 
+#include "exifdatetime.h"
+#include "exifdatetime.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
+#include <QValidator>
 
 // KDE includes.
 
+#include <kaboutdata.h>
+#include <kcomponentdata.h>
+#include <kdatetimewidget.h>
+#include <kdialog.h>
+#include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kdialog.h>
-#include <kdatetimewidget.h>
 #include <knuminput.h>
-#include <kcomponentdata.h>
-#include <kglobal.h>
-#include <kaboutdata.h>
 #include <kseparator.h>
 
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
-
-// Local includes.
-
-#include "exifdatetime.h"
-#include "exifdatetime.moc"
 
 namespace KIPIMetadataEditPlugin
 {

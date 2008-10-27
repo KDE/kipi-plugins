@@ -21,22 +21,25 @@
  *
  * ============================================================ */
 
+#include "altlangstringedit.h"
+#include "altlangstringedit.moc"
+
 // Qt includes.
 
-#include <QMap>
-#include <QLayout>
-#include <QLabel>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
+#include <QMap>
 #include <QPushButton>
 
 // KDE includes.
 
+#include <kdialog.h>
+#include <kglobal.h>
+#include <kiconloader.h>
 #include <klistwidget.h>
 #include <klocale.h>
-#include <kglobal.h>
-#include <kdialog.h>
 #include <ktextedit.h>
-#include <kiconloader.h>
 
 // LibKExiv2 includes.
 
@@ -49,8 +52,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "altlangstringedit.h"
-#include "altlangstringedit.moc"
 
 using namespace KDcrawIface;
 

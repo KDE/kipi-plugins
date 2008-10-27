@@ -20,27 +20,30 @@
  *
  * ============================================================ */
 
+#include "xmporigin.h"
+#include "xmporigin.moc"
+
 // Qt includes.
 
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
-#include <QComboBox>
-#include <QMap>
-#include <QTimeEdit>
-#include <QPushButton>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QLabel>
+#include <QLayout>
+#include <QMap>
+#include <QPushButton>
+#include <QTimeEdit>
+#include <QValidator>
 
 // KDE includes.
 
-#include <klineedit.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <kdatetimewidget.h>
-#include <kcomponentdata.h>
-#include <kglobal.h>
 #include <kaboutdata.h>
+#include <kcomponentdata.h>
+#include <kdatetimewidget.h>
+#include <kdialog.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klocale.h>
 #include <kseparator.h>
 
 // LibKExiv2 includes.
@@ -54,8 +57,6 @@
 // Local includes.
 
 #include "metadatacheckbox.h"
-#include "xmporigin.h"
-#include "xmporigin.moc"
 
 using namespace KDcrawIface;
 

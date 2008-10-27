@@ -20,28 +20,31 @@
  *
  * ============================================================ */
 
+#include "iptcproperties.h"
+#include "iptcproperties.moc"
+
 // Qt includes.
 
-#include <QDateTime>
-#include <QTimeEdit>
-#include <QLayout>
-#include <QLabel>
-#include <QValidator>
 #include <QCheckBox>
-#include <QPushButton>
 #include <QComboBox>
+#include <QDateTime>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QTimeEdit>
+#include <QValidator>
 #include <QtCore/QtDebug>
 
 // KDE includes.
 
-#include <kiconloader.h>
-#include <klocale.h>
-#include <klanguagebutton.h>
-#include <kdialog.h>
 #include <kdatewidget.h>
+#include <kdialog.h>
 #include <kglobal.h>
-#include <kseparator.h>
+#include <kiconloader.h>
+#include <klanguagebutton.h>
 #include <klineedit.h>
+#include <klocale.h>
+#include <kseparator.h>
 
 // LibKExiv2 includes.
 
@@ -49,11 +52,9 @@
 
 // Local includes.
 
-#include "pluginsversion.h"
 #include "metadatacheckbox.h"
 #include "objectattributesedit.h"
-#include "iptcproperties.h"
-#include "iptcproperties.moc"
+#include "pluginsversion.h"
 
 namespace KIPIMetadataEditPlugin
 {
