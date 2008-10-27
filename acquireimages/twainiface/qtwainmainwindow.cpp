@@ -21,10 +21,15 @@
  *
  * ============================================================ */
 
+#include "qtwainmainwindow.h"
+#include "qtwainmainwindow.moc"
+
+// Qt includes.
+
 #include <QPainter>
 
-#include "qtwainmainwindow.h"
-#include "qtwaininterface.h"
+// Local includes.
+
 #include "qtwain.h"
 #include "dib.h"
 
@@ -33,7 +38,7 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
                 : QMainWindow(parent, f)
 {
     m_pTwain         = new QTwain(0);
-    m_pWidget        = new QWidget(this);    // do this as your first call!
+    m_pWidget        = new QWidget(this);
     m_pVBox          = new QGridLayout();
     m_pWidget->setLayout(m_pVBox);
     m_pAcquireButton = new QPushButton("Acquire image", m_pWidget);
@@ -98,14 +103,10 @@ void QTwainMainWindow::onAcquireButton()
 
 void QTwainMainWindow::onDibAcquired(CDIB* pDib)
 {
-    if (m_pPixmap)
-        delete m_pPixmap;
-
+    delete m_pPixmap;
     m_pPixmap = QTwainInterface::convertToPixmap(pDib);
-
     m_pLabel->setPixmap(*m_pPixmap);
     delete pDib;
-    //repaint();
 }
 
 void QTwainMainWindow::paintEvent(QPaintEvent* thisEvent)

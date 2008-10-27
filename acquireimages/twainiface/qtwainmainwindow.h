@@ -24,12 +24,17 @@
 #ifndef _QTWAINMAINWINDOW_H_
 #define _QTWAINMAINWINDOW_H_
 
+// Qt includes.
+
 #include <QMainWindow>
 #include <QPushButton>
 #include <QPixmap>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QLabel>
+
+// Local includes.
+
 #include "qtwaininterface.h"
 
 class QTwainMainWindow : public QMainWindow
