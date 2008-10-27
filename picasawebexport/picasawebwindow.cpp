@@ -21,25 +21,26 @@
  *
  * ============================================================ */
 
+#include "picasawebwindow.h"
+#include "picasawebwindow.moc"
+
 // Qt includes.
 
-#include <Q3ValueList>
-#include <q3datetimeedit.h>
-#include <q3listview.h>
-#include <q3progressdialog.h>
-#include <q3textedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qcursor.h>
-#include <qdatetime.h>
-#include <qlineedit.h>
-#include <qlinkedlist.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <qspinbox.h>
-#include <qstringlist.h>
-#include <qtimer.h>
+//#include <Q3ValueList>
+//#include <Q3ListView>
+//#include <Q3ProgressDialog>
+//#include <QCheckBox>
+//#include <QComboBox>
+//#include <QCursor>
+//#include <QDateTime>
+//#include <QLineEdit>
+//#include <QLinkedList>
+//#include <QPixmap>
+//#include <QPushButton>
+//#include <QRadioButton>
+//#include <QSpinBox>
+//#include <QStringList>
+//#include <QTimer>
 
 // KDE includes.
 
@@ -67,6 +68,7 @@
 
 #include "imagedialog.h"
 #include "kpaboutdata.h"
+#include "newalbumdialog.h"
 #include "picasawebitem.h"
 #include "picasaweblogin.h"
 #include "picasaweblogin.h"
@@ -74,9 +76,6 @@
 #include "picasawebviewitem.h"
 #include "picasawebwidget.h"
 #include "pluginsversion.h"
-#include "newalbumdialog.h"
-#include "picasawebwindow.h"
-#include "picasawebwindow.moc"
 
 namespace KIPIPicasawebExportPlugin
 {

@@ -22,29 +22,15 @@
 
 #include "picasawebwidget.h"
 #include "picasawebwidget.moc"
+
 // Qt includes.
 
-//#include <q3frame.h>
-//#include <q3header.h>
-//#include <q3listview.h>
-//#include <q3buttongroup.h>
-//#include <q3groupbox.h>
-//#include <q3whatsthis.h>
-//#include <qpushbutton.h>
-//#include <qlabel.h>
-//#include <qradiobutton.h>
-//#include <qspinbox.h>
-//#include <qcheckbox.h>
-//#include <qlayout.h>
-//#include <qtooltip.h>
-//#include <qsplitter.h>
-//#include <qlineedit.h>
+#include <Q3ListView>
+#include <QCheckBox>
 
 // KDE includes.
 
-//#include <klocale.h>
-//#include <khtml_part.h>
-//#include <khtmlview.h>
+#include <khtml_part.h>
 
 namespace KIPIPicasawebExportPlugin
 {

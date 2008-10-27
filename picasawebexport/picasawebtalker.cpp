@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "picasawebtalker.h"
+#include "picasawebtalker.moc"
+
 // C++ includes.
 
 #include <cstring>
@@ -30,31 +33,32 @@
 
 // Qt includes.
 
-#include <q3cstring.h>
-#include <q3textstream.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qstringlist.h>
-#include <q3url.h>
-#include <qlineedit.h>
-#include <qmessagebox.h>
-#include <qdom.h>
+#include <Q3CString>
+#include <Q3TextStream>
 #include <Q3ValueList>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QDomNode>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QStringList>
 
 // KDE includes.
 
-#include <klocale.h>
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
+#include <kapplication.h>
+#include <kcodecs.h>
 #include <kdebug.h>
+#include <kio/job.h>
+#include <kio/jobclasses.h>
+#include <kio/jobuidelegate.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
-#include <kcodecs.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <kio/jobclasses.h>
-#include <KUrl>
+#include <kurl.h>
 
 // LibKExiv2 includes.
 
@@ -71,13 +75,11 @@
 
 // Local includes.
 
-#include "pluginsversion.h"
 #include "mpform.h"
 #include "picasawebitem.h"
-#include "picasawebtalker.h"
-#include "picasawebwindow.h"
 #include "picasaweblogin.h"
-#include "picasawebtalker.moc"
+#include "picasawebwindow.h"
+#include "pluginsversion.h"
 
 class PicasawebLogin;
 

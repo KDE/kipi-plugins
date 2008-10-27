@@ -21,6 +21,8 @@
  *
  * ============================================================ */
 
+#include "mpform.h"
+
 // C++ includes.
 
 #include <cstring>
@@ -28,22 +30,18 @@
 
 // Qt includes.
 
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <q3textstream.h>
 #include <Q3CString>
+#include <Q3TextStream>
+#include <QFile>
+#include <QFileInfo>
 
 // KDE includes.
 
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kmimetype.h>
-#include <kurl.h>
 #include <krandom.h>
-
-// Local includes.
-
-#include "mpform.h"
+#include <kurl.h>
 
 namespace KIPIPicasawebExportPlugin
 {

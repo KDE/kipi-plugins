@@ -20,26 +20,23 @@
  *
  * ============================================================ */
 
+#include "picasaweblogin.h"
+#include "picasaweblogin.moc"
+
 // Qt includes.
 
-#include <qlabel.h>
-#include <q3frame.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qlayout.h>
+#include <Q3Frame>
 #include <Q3GridLayout>
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 
 // KDE includes.
 
 #include <kdebug.h>
 #include <klocale.h>
-
-// Local includes.
-
-#include "picasaweblogin.h"
-#include "picasaweblogin.moc"
 
 namespace KIPIPicasawebExportPlugin
 {

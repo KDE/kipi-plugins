@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "plugin_picasawebexport.h"
+#include "plugin_picasawebexport.moc"
+
 // C ANSI includes.
 
 extern "C"
@@ -47,8 +50,6 @@ extern "C"
 // Local includes.
 
 #include "picasawebwindow.h"
-#include "plugin_picasawebexport.h"
-#include "plugin_picasawebexport.moc"
 
 K_PLUGIN_FACTORY( PicasawebExportFactory, registerPlugin<Plugin_PicasawebExport>(); )
 K_EXPORT_PLUGIN ( PicasawebExportFactory("kipiplugin_picasawebexport") )

@@ -26,10 +26,10 @@
 
 // Qt includes.
 
-#include <q3valuelist.h>
-#include <qobject.h>
-#include <q3progressdialog.h>
-#include <qmap.h>
+#include <Q3ValueList>
+#include <QObject>
+#include <Q3ProgressDialog>
+#include <QMap>
 
 // KDE includes.
 

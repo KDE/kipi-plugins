@@ -4,7 +4,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'picasawebnewalbumdialog.ui'
 **
-** Created: Mon Oct 27 12:46:19 2008
+** Created: Mon Oct 27 13:05:52 2008
 **      by: Qt User Interface Compiler version 4.4.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

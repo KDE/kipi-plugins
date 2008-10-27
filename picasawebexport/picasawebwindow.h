@@ -26,9 +26,9 @@
 
 // Qt includes.
 
-#include <q3valuelist.h>
-#include <q3intdict.h>
-#include <qpair.h>
+#include <Q3ValueList>
+#include <Q3IntDict>
+//#include <QPair>
 #include <QLabel>
 
 // KDE includes.

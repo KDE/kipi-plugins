@@ -21,14 +21,12 @@
  *
  * ============================================================ */
 
+#include "picasawebviewitem.h"
+
 // Qt includes.
 
-#include <qpainter.h>
-#include <qpixmap.h>
-
-// Local includes.
-
-#include "picasawebviewitem.h"
+#include <QPainter>
+#include <QPixmap>
 
 namespace KIPIPicasawebExportPlugin
 {

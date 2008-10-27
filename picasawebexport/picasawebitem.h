@@ -25,7 +25,7 @@
 
 // Qt includes.
 
-#include <qstring.h>
+#include <QString>
 #include <Q3StrList>
 
 namespace KIPIPicasawebExportPlugin
