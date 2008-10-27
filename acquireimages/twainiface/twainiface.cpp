@@ -63,19 +63,23 @@ TwainIface::~TwainIface()
 bool TwainIface::InitTwain(HWND hWnd)
 {
     char libName[512];
+
     if(IsValidDriver()) 
     {
         return true;
     }
+
     memset(&m_AppId,0,sizeof(m_AppId));
+
     if(!IsWindow(hWnd))
     {
         return false;
     }
+
     m_hMessageWnd = hWnd;
     strcpy(libName, "TWAIN_32.DLL");
 
-    m_hTwainDLL  = LoadLibraryA(libName);
+    m_hTwainDLL = LoadLibraryA(libName);
     if(m_hTwainDLL != NULL)
     {
         if(!(m_pDSMProc = (DSMENTRYPROC)GetProcAddress(m_hTwainDLL,(LPCSTR)MAKEINTRESOURCE(1))))
@@ -84,6 +88,7 @@ bool TwainIface::InitTwain(HWND hWnd)
             m_hTwainDLL = NULL;
         }
     }
+
     if(IsValidDriver())
     {
         GetIdentity();
@@ -161,9 +166,9 @@ void TwainIface::GetIdentity()
     m_AppId.ProtocolMajor   = TWON_PROTOCOLMAJOR;
     m_AppId.ProtocolMinor   = TWON_PROTOCOLMINOR;
     m_AppId.SupportedGroups = DG_IMAGE | DG_CONTROL;
-    strcpy(m_AppId.Manufacturer, "MICSS");
+    strcpy(m_AppId.Manufacturer,  "MICSS");
     strcpy(m_AppId.ProductFamily, "Generic");
-    strcpy(m_AppId.ProductName, "Twain Test");
+    strcpy(m_AppId.ProductName,   "Twain Test");
 }
 
 /** Called to display a dialog box to select the Twain source to use.
@@ -179,9 +184,9 @@ bool TwainIface::SelectSource()
     {
         SelectDefaultSource();
     }
- 
-   if(CallTwainProc(&m_AppId, NULL, DG_CONTROL,
-                    DAT_IDENTITY, MSG_USERSELECT, &m_Source))
+
+    if(CallTwainProc(&m_AppId, NULL, DG_CONTROL,
+                     DAT_IDENTITY, MSG_USERSELECT, &m_Source))
     {
         m_bSourceSelected = true;
     }
@@ -245,6 +250,7 @@ bool TwainIface::OpenSource(TW_IDENTITY *pSource)
     {
         m_Source = *pSource;
     }
+
     if(DSMOpen())
     {
         if(!SourceSelected())
@@ -254,6 +260,7 @@ bool TwainIface::OpenSource(TW_IDENTITY *pSource)
         m_bDSOpen = CallTwainProc(&m_AppId, NULL, DG_CONTROL,
                                   DAT_IDENTITY, MSG_OPENDS, (TW_MEMREF)&m_Source);
     }
+
     return DSOpen();
 }
 
@@ -273,6 +280,7 @@ bool TwainIface::ProcessMessage(MSG msg)
         twEvent.TWMessage = MSG_NULL;
 
         CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_EVENT,MSG_PROCESSEVENT,(TW_MEMREF)&twEvent);
+
         if(GetRC() != TWRC_NOTDSEVENT)
         {
             TranslateMessage(twEvent);
@@ -311,6 +319,7 @@ bool TwainIface::GetCapability(TW_UINT16 cap,TW_UINT32& value)
     {
         pTW_ONEVALUE pVal;
         pVal = (pTW_ONEVALUE )GlobalLock(twCap.hContainer);
+
         if(pVal)
         {
             value = pVal->Item;
@@ -330,18 +339,18 @@ bool TwainIface::SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign)
     {
         TW_CAPABILITY twCap;
         pTW_ONEVALUE pVal;
-        bool ret_value = false;
-        twCap.Cap      = cap;
-        twCap.ConType  = TWON_ONEVALUE;
-
+        bool ret_value   = false;
+        twCap.Cap        = cap;
+        twCap.ConType    = TWON_ONEVALUE;
         twCap.hContainer = GlobalAlloc(GHND,sizeof(TW_ONEVALUE));
+
         if(twCap.hContainer)
         {
-            pVal = (pTW_ONEVALUE)GlobalLock(twCap.hContainer);
+            pVal           = (pTW_ONEVALUE)GlobalLock(twCap.hContainer);
             pVal->ItemType = sign ? TWTY_INT16 : TWTY_UINT16;
-            pVal->Item = (TW_UINT32)value;
+            pVal->Item     = (TW_UINT32)value;
             GlobalUnlock(twCap.hContainer);
-            ret_value = SetCapability(twCap);
+            ret_value      = SetCapability(twCap);
             GlobalFree(twCap.hContainer);
         }
         return ret_value;
@@ -374,10 +383,12 @@ bool TwainIface::SetImageCount(TW_INT16 nCount)
     {
         if(GetRC() == TWRC_CHECKSTATUS)
         {
-           TW_UINT32 count;
+            TW_UINT32 count;
+
             if(GetCapability(CAP_XFERCOUNT,count))
             {
                 nCount = (TW_INT16)count;
+
                 if(SetCapability(CAP_XFERCOUNT,nCount))
                 {
                     m_nImageCount = nCount;
@@ -399,6 +410,7 @@ bool TwainIface::EnableSource(bool showUI)
         TW_USERINTERFACE twUI;
         twUI.ShowUI  = showUI;
         twUI.hParent = (TW_HANDLE)m_hMessageWnd;
+
         if(CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
                          DAT_USERINTERFACE, MSG_ENABLEDS, (TW_MEMREF)&twUI))
         {
@@ -462,6 +474,7 @@ void TwainIface::TranslateMessage(TW_EVENT& twEvent)
         case MSG_XFERREADY:
             TransferImage();
             break;
+
         case MSG_CLOSEDSREQ:
             if(CanClose())
             {
@@ -548,8 +561,10 @@ bool TwainIface::GetImage(TW_IMAGEINFO& info)
         case TWRC_XFERDONE:
             CopyImage(hBitmap, info);
             break;
+
         case TWRC_CANCEL:
             break;
+
         case TWRC_FAILURE:
             CancelTransfer();
             return false;

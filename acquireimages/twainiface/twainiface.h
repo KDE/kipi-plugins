@@ -32,10 +32,10 @@
 
 #include "twain.h"
 
-#define TWCPP_ANYCOUNT      (-1)
-#define TWCPP_CANCELTHIS    (1)
-#define TWCPP_CANCELALL     (2)
-#define TWCPP_DOTRANSFER    (0)
+#define TWCPP_ANYCOUNT   (-1)
+#define TWCPP_CANCELTHIS (1)
+#define TWCPP_CANCELALL  (2)
+#define TWCPP_DOTRANSFER (0)
 
 class TwainIface
 {
@@ -88,12 +88,12 @@ protected:
     bool GetCapability(TW_UINT16 cap,TW_UINT32& value);
     bool SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign=false);
     bool SetCapability(TW_CAPABILITY& twCap);
-    bool EnableSource(bool showUI = true);
+    bool EnableSource(bool showUI=true);
 
     bool GetImageInfo(TW_IMAGEINFO& info);
 
     virtual bool DisableSource();
-    virtual bool CanClose()  { return true; };
+    virtual bool CanClose() { return true; };
 
     void TranslateMessage(TW_EVENT& twEvent);
     void TransferImage();
