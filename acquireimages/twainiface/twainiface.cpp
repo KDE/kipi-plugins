@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "twaincpp.h"
+#include "twainiface.h"
 
 #include <string.h>
 

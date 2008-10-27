@@ -10,7 +10,7 @@ IF(WIN32)
         twainiface/qtwaininterface.cpp
         twainiface/qtwainmainwindow.cpp
         twainiface/qtwainsubstitute.cpp
-        twainiface/twaincpp.cpp
+        twainiface/twainiface.cpp
        )
 
     KDE4_ADD_EXECUTABLE(twainiface ${twainiface_SRCS})

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef TWAIN_CPP_H
-#define TWAIN_CPP_H
+#ifndef TWAINIFACE_H
+#define TWAINIFACE_H
 
 #include <windows.h>
 
@@ -120,4 +120,4 @@ protected:
     HWND         m_hMessageWnd;
 };
 
-#endif /* TWAIN_CPP_H */
+#endif /* TWAINIFACE_H */

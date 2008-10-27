@@ -25,7 +25,7 @@
 #define _QTWAIN_H_
 
 #include "qtwaininterface.h"
-#include "twaincpp.h"
+#include "twainiface.h"
 
 const unsigned int AnyCount = UINT_MAX;
 
