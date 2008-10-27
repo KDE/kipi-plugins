@@ -24,10 +24,15 @@
 #ifndef QTWAININTERFACE_H
 #define QTWAININTERFACE_H
 
+// Qt includes.
+
 #include <QObject>
 #include <QPixmap>
 #include <QImage>
-#include <limits.h>
+
+// C++ includes.
+
+#include <climits>
 
 class CDIB;
 
@@ -61,7 +66,7 @@ public:
      *
      * @param  parent  (optional); pointer to the parent widget
      */
-    QTwainInterface(QWidget* parent = 0);
+    QTwainInterface(QWidget* parent=0);
 
     /**
      * Standard destructor
@@ -85,8 +90,7 @@ public:
     virtual bool selectSource() = 0;
 
     /**
-     * Acquires a number of images, e.g. may open the scanning dialog
-     * or the file-open dialog or.....
+     * Acquires a number of imagesusing scanning dialog.
      */
     virtual bool acquire(unsigned int maxNumImages = UINT_MAX) = 0;
 
@@ -129,12 +133,7 @@ public:
 
 protected:
 
-    /**
-     * @name hooks
-     */
-    /*@{*/
     virtual bool onSetParent();
-    /*@}*/
 
     /**
      * Returns whether the components emits pixmap pointers or dib

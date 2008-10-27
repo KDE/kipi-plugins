@@ -21,14 +21,18 @@
  *
  * ============================================================ */
 
+#include "qtwaininterface.h"
+#include "qtwaininterface.moc"
+
+// Qt includes.
+
 #include <QWidget>
-#include <QPixmap>
-#include <QImage>
+
+// Locla includes.
 
 #include "dib.h"
 #include "dibutil.h"
 #include "dibapi.h"
-#include "qtwaininterface.h"
 
 QTwainInterface::QTwainInterface(QWidget* parent)
 {
@@ -109,8 +113,8 @@ QImage* QTwainInterface::convertToImage(CDIB* pDib, unsigned int nWidth, unsigne
         nUseHeight = pDib->Height();
 
     QPixmap pixmap(pDib->Width(), pDib->Height());
-/*    pDib->BitBlt(pixmap.handle(), 
-                 0, 0, 
+/*    pDib->BitBlt(pixmap.handle(),
+                 0, 0,
                  pDib->Width(), pDib->Height(),
                  0, 0);
 */
