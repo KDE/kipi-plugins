@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -26,15 +26,15 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qdatetime.h>
+#include <QDateTime>
+#include <QString>
 
 /**
  * @short convenience class for profiling
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.2
  */
-namespace KIPIviewer 
+namespace KIPIviewer
 {
 
 class Timer

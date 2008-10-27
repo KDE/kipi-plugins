@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef _VIEWERWIDGET_H_
-#define _VIEWERWIDGET_H_
+#ifndef VIEWERWIDGET_H
+#define VIEWERWIDGET_H
 
 // C++ includes.
 
@@ -30,16 +30,15 @@
 
 // Qt includes.
 
-#include <QtOpenGL>
+#include <QCursor>
+#include <QDateTime>
 #include <QDir>
 #include <QImage>
-#include <QDateTime>
+#include <QKeyEvent>
+#include <QMouseEvent>
 #include <QRegExp>
-#include <QCursor>
 #include <QTimer>
 #include <QWheelEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
 
 // KDE includes.
 
@@ -48,9 +47,9 @@
 
 // LibKIPI includes.
 
+#include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
 
 // Local includes.
 
@@ -147,4 +146,4 @@ private slots:
 
 } //namespace KIPIviewer
 
-#endif // _VIEWERWIDGET_H_
+#endif // VIEWERWIDGET_H

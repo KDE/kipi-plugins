@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -25,15 +25,15 @@
 #define TEXTURE_H
 
 // Qt includes.
-#include <qgl.h>
-#include <qstring.h>
-#include <qdatetime.h>
-#include <qimage.h>
+
+#include <QGLWidget>
+#include <QImage>
+#include <QString>
 
 // LibKIPI includes.
 
-#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 /**
  * @short Texture class
@@ -41,7 +41,7 @@
  * @version 0.2
  */
 
-namespace KIPIviewer 
+namespace KIPIviewer
 {
 
 class Texture

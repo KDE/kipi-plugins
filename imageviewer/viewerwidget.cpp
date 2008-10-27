@@ -23,19 +23,22 @@
 
 #undef PERFORMANCE_ANALYSIS
 
+#include "viewerwidget.h"
+#include "viewerwidget.moc"
+
 // Qt includes.
 
-#include <QLabel>
 #include <QBitmap>
 #include <QDesktopWidget>
+#include <QLabel>
 
 // KDE includes.
 
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kstandarddirs.h>
-#include <kmessagebox.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 // Local includes.
 
@@ -46,8 +49,6 @@
 
 #include "texture.h"
 #include "ui_helpdialog.h"
-#include "viewerwidget.h"
-#include "viewerwidget.moc"
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5

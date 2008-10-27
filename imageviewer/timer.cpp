@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at- forum dot titlis dot org>
@@ -21,13 +21,11 @@
  *
  * ============================================================ */
 
+#include "timer.h"
+
 // KDE includes.
 
 #include <kdebug.h>
-
-// Local includes.
-
-#include "timer.h"
 
 using namespace KIPIviewer;
 
@@ -35,7 +33,7 @@ Timer::Timer()
 {
 }
 
-void Timer::start() 
+void Timer::start()
 {
     timer.start();
     meantime=0;

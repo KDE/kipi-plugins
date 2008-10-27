@@ -26,13 +26,13 @@
 
 // Qt includes.
 
-#include <qmessagebox.h>
+#include <QMessageBox>
 
 // KDE includes.
 
-#include <kdebug.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
