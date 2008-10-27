@@ -40,11 +40,11 @@ public:
 
     CTwain(HWND hWnd = NULL);
     virtual ~CTwain();
+
     bool InitTwain(HWND hWnd);
     void ReleaseTwain();
 
-
-    /*
+    /**
       This routine must be implemented by the derived class 
       After setting the required values in the m_AppId structure,
       the derived class should call the parent class implementation
@@ -102,22 +102,22 @@ protected:
 
 protected:
 
-    HINSTANCE m_hTwainDLL;
+    bool         m_bSourceSelected;
+    bool         m_bDSMOpen;
+    bool         m_bDSOpen;
+    bool         m_bSourceEnabled;
+    bool         m_bModalUI;
+
+    int          m_nImageCount;
+
+    HINSTANCE    m_hTwainDLL;
     DSMENTRYPROC m_pDSMProc;
 
-    TW_IDENTITY m_AppId;
-    TW_IDENTITY m_Source;
-    TW_STATUS m_Status;
-    TW_INT16  m_returnCode;
-    HWND m_hMessageWnd;
-
-    bool m_bSourceSelected;
-    bool m_bDSMOpen;
-    bool m_bDSOpen;
-    bool m_bSourceEnabled;
-    bool m_bModalUI;
-
-    int m_nImageCount;
+    TW_IDENTITY  m_AppId;
+    TW_IDENTITY  m_Source;
+    TW_STATUS    m_Status;
+    TW_INT16     m_returnCode;
+    HWND         m_hMessageWnd;
 };
 
 #endif /* TWAIN_CPP_H */
