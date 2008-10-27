@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with 
+ * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
  * Copyright 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -25,12 +25,21 @@
 #ifndef PLUGIN_GPSSYNC_H
 #define PLUGIN_GPSSYNC_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
 
 class KActionMenu;
 class KAction;
+
+namespace KIPI
+{
+class Interface;
+} // namespace KIPI
 
 class Plugin_GPSSync : public KIPI::Plugin
 {

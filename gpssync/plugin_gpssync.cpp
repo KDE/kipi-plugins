@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with 
+ * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -22,28 +22,31 @@
  *
  * ============================================================ */
 
+#include "plugin_gpssync.h"
+#include "plugin_gpssync.moc"
+
 // Qt includes.
 
 #include <QFileInfo>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -51,14 +54,12 @@
 
 #include "gpsbabelbinary.h"
 #include "gpsdatacontainer.h"
-#include "gpstracklistcontainer.h"
 #include "gpseditdialog.h"
-#include "gpstracklisteditdialog.h"
 #include "gpssyncdialog.h"
+#include "gpstracklistcontainer.h"
+#include "gpstracklisteditdialog.h"
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
-#include "plugin_gpssync.h"
-#include "plugin_gpssync.moc"
 
 K_PLUGIN_FACTORY( GPSSyncFactory, registerPlugin<Plugin_GPSSync>(); )
 K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
@@ -79,25 +80,25 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     KAction *gpssync = new KAction(KIcon("gpsimagetag"), i18n("Correlator"), actionCollection());
     gpssync->setObjectName("gpssync");
-    connect(gpssync, SIGNAL(triggered(bool)), 
+    connect(gpssync, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSSync()));
     m_action_geolocation->addAction(gpssync);
 
     KAction *gpsedit = new KAction(i18n("Edit Coordinates..."), actionCollection());
     gpsedit->setObjectName("gpsedit");
-    connect(gpsedit, SIGNAL(triggered(bool)), 
+    connect(gpsedit, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSEdit()));
     m_action_geolocation->addAction(gpsedit);
 
     KAction *gpstracklistedit = new KAction(i18n("Track List Editor..."), actionCollection());
     gpstracklistedit->setObjectName("gpstracklistedit");
-    connect(gpstracklistedit, SIGNAL(triggered(bool)), 
+    connect(gpstracklistedit, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSTrackListEdit()));
     m_action_geolocation->addAction(gpstracklistedit);
 
     KAction *gpsremove = new KAction(i18n("Remove Coordinates..."), actionCollection());
     gpsremove->setObjectName("gpsremove");
-    connect(gpsremove, SIGNAL(triggered(bool)), 
+    connect(gpsremove, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSRemove()));
     m_action_geolocation->addAction(gpsremove);
 
@@ -105,7 +106,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     m_actionKMLExport = new KAction(KIcon("applications-internet"), i18n("KML Export..."), actionCollection());
     m_actionKMLExport->setObjectName("kmlexport");
-    connect(m_actionKMLExport, SIGNAL(triggered(bool)), 
+    connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
     addAction( m_actionKMLExport );
@@ -130,7 +131,7 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
     KIPIGPSSyncPlugin::GPSBabelBinary gpsBabelBinary;
     gpsBabelVersion = gpsBabelBinary.version();
 
-    if (!gpsBabelBinary.isAvailable()) 
+    if (!gpsBabelBinary.isAvailable())
     {
         KMessageBox::information(
                      kapp->activeWindow(),
@@ -147,7 +148,7 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
         return false;
     }
 
-    if (!gpsBabelBinary.versionIsRight()) 
+    if (!gpsBabelBinary.versionIsRight())
     {
         KMessageBox::information(
                      kapp->activeWindow(),
@@ -180,7 +181,7 @@ void Plugin_GPSSync::slotGPSSync()
 
     /* NOTE: this plugin do not use yet GPSBabel to convert GPS data file to GPX
     QString gpsBabelVersion;
-    if (!checkBinaries(gpsBabelVersion)) 
+    if (!checkBinaries(gpsBabelVersion))
         return;
     */
 
@@ -207,7 +208,7 @@ void Plugin_GPSSync::slotGPSEdit()
     attributes = info.attributes();
 
     if (attributes.contains("latitude") &&
-        attributes.contains("longitude") && 
+        attributes.contains("longitude") &&
         attributes.contains("altitude"))
     {
         lat = attributes["latitude"].toDouble();
@@ -223,14 +224,14 @@ void Plugin_GPSSync::slotGPSEdit()
 
     KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
 
-    KIPIGPSSyncPlugin::GPSEditDialog dlg(kapp->activeWindow(), 
+    KIPIGPSSyncPlugin::GPSEditDialog dlg(kapp->activeWindow(),
                                          gpsData, img.fileName(), hasGPSInfo);
 
     if (dlg.exec() == KDialog::Accepted)
     {
         gpsData = dlg.getGPSInfo();
 
-        for( KUrl::List::iterator it = imageURLs.begin() ; 
+        for( KUrl::List::iterator it = imageURLs.begin() ;
             it != imageURLs.end(); ++it)
         {
             KUrl url = *it;
@@ -239,17 +240,17 @@ void Plugin_GPSSync::slotGPSEdit()
             bool ret = exiv2Iface.load(url.path());
             if (ret)
             {
-                ret &= exiv2Iface.setGPSInfo(gpsData.altitude(), 
-                                             gpsData.latitude(), 
+                ret &= exiv2Iface.setGPSInfo(gpsData.altitude(),
+                                             gpsData.latitude(),
                                              gpsData.longitude());
                 ret &= exiv2Iface.save(url.path());
             }
 
             if (!ret)
-                kDebug( 51000 ) << "Cannot set GPS location into file metadata from " 
+                kDebug( 51000 ) << "Cannot set GPS location into file metadata from "
                          << url.fileName() << endl;
 
-            // Set kipi host GPS location 
+            // Set kipi host GPS location
             attributes.clear();
             attributes.insert("latitude",  gpsData.latitude());
             attributes.insert("longitude", gpsData.longitude());
@@ -274,14 +275,14 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     KIPIGPSSyncPlugin::GPSTrackList trackList;
     KUrl::List urls = images.images();
 
-    for( KUrl::List::iterator it = urls.begin() ; 
+    for( KUrl::List::iterator it = urls.begin() ;
         it != urls.end() ; ++it)
     {
         bool hasGPSInfo = false;
         KIPI::ImageInfo info = m_interface->info(*it);
         attributes = info.attributes();
         if (attributes.contains("latitude") &&
-            attributes.contains("longitude") && 
+            attributes.contains("longitude") &&
             attributes.contains("altitude"))
         {
             lat = attributes["latitude"].toDouble();
@@ -318,7 +319,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
     // Set track list id sorted by datetime.
     int id = 1;
-    for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
+    for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ;
          it != trackList.end() ; ++it)
     {
         it.value().setId(id);
@@ -331,7 +332,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     {
         trackList = dlg.trackList();
 
-        for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ; 
+        for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ;
             it != trackList.end() ; ++it)
         {
             if ((*it).isDirty())
@@ -340,16 +341,16 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
                 // Set file metadata GPS location.
                 bool ret = exiv2Iface.load(url.path());
-                ret &= exiv2Iface.setGPSInfo((*it).gpsData().altitude(), 
-                                             (*it).gpsData().latitude(), 
+                ret &= exiv2Iface.setGPSInfo((*it).gpsData().altitude(),
+                                             (*it).gpsData().latitude(),
                                              (*it).gpsData().longitude());
                 ret &= exiv2Iface.save(url.path());
-    
+
                 if (!ret)
-                    kDebug( 51000 ) << "Cannot set GPS location into file metadata from " 
+                    kDebug( 51000 ) << "Cannot set GPS location into file metadata from "
                              << url.fileName() << endl;
 
-                // Set kipi host GPS location 
+                // Set kipi host GPS location
                 attributes.clear();
                 attributes.insert("latitude",  (*it).gpsData().latitude());
                 attributes.insert("longitude", (*it).gpsData().longitude());
@@ -379,7 +380,7 @@ void Plugin_GPSSync::slotGPSRemove()
     QStringList errorFiles;
     KExiv2Iface::KExiv2 exiv2Iface;
 
-    for( KUrl::List::iterator it = imageURLs.begin() ; 
+    for( KUrl::List::iterator it = imageURLs.begin() ;
          it != imageURLs.end(); ++it)
     {
         KUrl url = *it;
@@ -388,12 +389,12 @@ void Plugin_GPSSync::slotGPSRemove()
         bool ret = exiv2Iface.load(url.path());
         ret &= exiv2Iface.removeGPSInfo();
         ret &= exiv2Iface.save(url.path());
-        
+
         if (!ret)
-            kDebug( 51000 ) << "Cannot remove GPS location into file metadata from " 
+            kDebug( 51000 ) << "Cannot remove GPS location into file metadata from "
                      << url.fileName() << endl;
 
-        // Remove kipi host GPS location 
+        // Remove kipi host GPS location
         QStringList list;
         list << "gpslocation";
         KIPI::ImageInfo info = m_interface->info(url);
@@ -405,14 +406,14 @@ void Plugin_GPSSync::slotKMLExport()
 {
     KIPI::ImageCollection selection = m_interface->currentSelection();
 
-    if ( !selection.isValid() ) 
+    if ( !selection.isValid() )
     {
         kDebug( 51000) << "No Selection!" << endl;
     }
-    else 
+    else
     {
         KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(kapp->activeWindow());
-        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()), 
+        connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
     }

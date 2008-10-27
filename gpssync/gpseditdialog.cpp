@@ -20,36 +20,37 @@
  *
  * ============================================================ */
 
+#include "gpseditdialog.h"
+#include "gpseditdialog.moc"
+
 // Qt includes.
 
-#include <QTimer>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
+#include <QTimer>
 #include <QValidator>
 
 // KDE includes.
 
-#include <ktoolinvocation.h>
-#include <klocale.h>
-#include <khelpmenu.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kiconloader.h>
-#include <kapplication.h>
-#include <klineedit.h>
-#include <kmessagebox.h>
+#include <khelpmenu.h>
 #include <khtmlview.h>
+#include <kiconloader.h>
+#include <klineedit.h>
+#include <klocale.h>
 #include <kmenu.h>
+#include <kmessagebox.h>
 #include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
+#include "gpsmapwidget.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "gpsmapwidget.h"
-#include "gpseditdialog.h"
-#include "gpseditdialog.moc"
 
 namespace KIPIGPSSyncPlugin
 {

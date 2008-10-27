@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "gpsbabelbinary.h"
+
 // Qt includes.
 
 #include <QProcess>
@@ -27,14 +29,10 @@
 // KDE includes.
 
 #include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kglobal.h>
 #include <kdebug.h>
-
-// Local includes.
-
-#include "gpsbabelbinary.h"
+#include <kglobal.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -75,12 +73,12 @@ void GPSBabelBinary::checkSystem()
     QString headerStarts("GPSBabel Version ");
 
     QString stdOut(process.readAll());
-    QString firstLine = stdOut.section('\n', 1, 1);    
+    QString firstLine = stdOut.section('\n', 1, 1);
 
     if (firstLine.startsWith(headerStarts))
     {
-        d->version = firstLine.remove(0, headerStarts.length());   
-        kDebug( 51001 ) << "Found gpsbabel version: " << version() << endl;    
+        d->version = firstLine.remove(0, headerStarts.length());
+        kDebug( 51001 ) << "Found gpsbabel version: " << version() << endl;
     }
 }
 

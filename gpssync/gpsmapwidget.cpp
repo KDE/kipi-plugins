@@ -21,16 +21,14 @@
  *
  * ============================================================ */
 
+#include "gpsmapwidget.h"
+#include "gpsmapwidget.moc"
+
 // KDE includes.
 
 #include <kdebug.h>
 #include <khtmlview.h>
 #include <kurl.h>
-
-// Local includes.
-
-#include "gpsmapwidget.h"
-#include "gpsmapwidget.moc"
 
 namespace KIPIGPSSyncPlugin
 {

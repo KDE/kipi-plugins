@@ -21,6 +21,8 @@
  *
  * ============================================================ */
 
+#include "gpsdataparser.h"
+
 // C++ includes.
 
 #include <cmath>
@@ -28,19 +30,15 @@
 
 // Qt includes.
 
+#include <QDomDocument>
+#include <QFile>
 #include <QString>
 #include <QStringList>
-#include <QFile>
-#include <QDomDocument>
 #include <QTextStream>
 
 // KDE includes.
 
 #include <kdebug.h>
-
-// Local includes.
-
-#include "gpsdataparser.h"
 
 namespace KIPIGPSSyncPlugin
 {

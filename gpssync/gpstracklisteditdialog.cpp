@@ -20,35 +20,36 @@
  *
  * ============================================================ */
 
+#include "gpstracklisteditdialog.h"
+#include "gpstracklisteditdialog.moc"
+
 // Qt includes.
 
+#include <QHeaderView>
 #include <QLayout>
 #include <QTimer>
 #include <QTreeWidget>
 #include <QTreeWidgetItemIterator>
-#include <QHeaderView>
 
 // KDE includes.
 
-#include <ktoolinvocation.h>
-#include <klocale.h>
-#include <khelpmenu.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kpushbutton.h>
-#include <kiconloader.h>
-#include <kapplication.h>
+#include <khelpmenu.h>
 #include <khtmlview.h>
+#include <kiconloader.h>
+#include <klocale.h>
 #include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
+#include "gpstracklistviewitem.h"
+#include "gpstracklistwidget.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "gpstracklistwidget.h"
-#include "gpstracklistviewitem.h"
-#include "gpstracklisteditdialog.h"
-#include "gpstracklisteditdialog.moc"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -57,7 +58,7 @@ class GPSTrackListView : public QTreeWidget
 {
 public :
 
-    GPSTrackListView(QWidget *parent) 
+    GPSTrackListView(QWidget *parent)
         : QTreeWidget(parent)
     {
         setColumnCount(8);
@@ -82,7 +83,7 @@ public :
         header()->setResizeMode(QHeaderView::Stretch);
     }
 
-    ~GPSTrackListView() 
+    ~GPSTrackListView()
     {
     }
 };
@@ -101,7 +102,7 @@ public:
 
     GPSTrackListView         *listView;
 
-    KIPIPlugins::KPAboutData *about; 
+    KIPIPlugins::KPAboutData *about;
 
     GPSTrackList              gpsTrackList;
 
@@ -146,7 +147,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
                    ki18n("A Plugin to edit GPS track list"),
                    ki18n("(c) 2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
                               "caulier dot gilles at gmail dot com");
 
@@ -179,7 +180,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     // ---------------------------------------------------------------
 
     KUrl::List urls;
-    for( GPSTrackList::iterator it = d->gpsTrackList.begin() ; 
+    for( GPSTrackList::iterator it = d->gpsTrackList.begin() ;
          it != d->gpsTrackList.end() ; ++it)
     {
         GPSTrackListViewItem *item = new GPSTrackListViewItem(d->listView);

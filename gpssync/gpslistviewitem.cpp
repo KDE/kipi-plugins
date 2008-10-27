@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "gpslistviewitem.h"
+
 // Qt includes.
 
 #include <QPainter>
@@ -30,13 +32,9 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
-
-// Local includes.
-
-#include "gpslistviewitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -86,7 +84,7 @@ GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, QTreeWidget *view, 
     attributes = info.attributes();
 
     if (attributes.contains("latitude") &&
-        attributes.contains("longitude") && 
+        attributes.contains("longitude") &&
         attributes.contains("altitude"))
     {
         lat = attributes["latitude"].toDouble();
@@ -205,7 +203,7 @@ void GPSListViewItem::writeGPSInfoToFile()
             // Remove file metadata GPS location.
             exiv2Iface.removeGPSInfo();
 
-            // Remove kipi host GPS location 
+            // Remove kipi host GPS location
             QStringList list;
             list << "latitude" << "longitude" << "altitude";
             info.delAttributes(list);
@@ -213,11 +211,11 @@ void GPSListViewItem::writeGPSInfoToFile()
         else
         {
             // Set file metadata GPS location.
-            exiv2Iface.setGPSInfo(d->gpsData.altitude(), 
-                                  d->gpsData.latitude(), 
+            exiv2Iface.setGPSInfo(d->gpsData.altitude(),
+                                  d->gpsData.latitude(),
                                   d->gpsData.longitude());
 
-            // Set kipi host GPS location 
+            // Set kipi host GPS location
             attributes.clear();
             attributes.insert("latitude",  d->gpsData.latitude());
             attributes.insert("longitude", d->gpsData.longitude());

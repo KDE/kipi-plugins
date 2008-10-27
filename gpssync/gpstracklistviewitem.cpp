@@ -20,20 +20,18 @@
  *
  * ============================================================ */
 
+#include "gpstracklistviewitem.h"
+
 // Qt includes.
 
 #include <QDateTime>
-#include <QPainter>
 #include <QFileInfo>
+#include <QPainter>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kiconloader.h>
-
-// Local includes.
-
-#include "gpstracklistviewitem.h"
+#include <klocale.h>
 
 namespace KIPIGPSSyncPlugin
 {

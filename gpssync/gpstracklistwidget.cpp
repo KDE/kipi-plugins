@@ -20,16 +20,14 @@
  *
  * ============================================================ */
 
+#include "gpstracklistwidget.h"
+#include "gpstracklistwidget.moc"
+
 // KDE includes.
 
 #include <kdebug.h>
 #include <khtmlview.h>
 #include <kurl.h>
-
-// Local includes.
-
-#include "gpstracklistwidget.h"
-#include "gpstracklistwidget.moc"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -105,7 +103,7 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
     QString latTxt = status.section(",", 1, 1);
     QString lngTxt = status.section(",", 2, 2);
     QString altTxt = status.section(",", 3, 3);
-    int id         = idTxt.toInt();        
+    int id         = idTxt.toInt();
     if (latTxt.isEmpty() || lngTxt.isEmpty())
     {
         // Special case if only marker have been selected but not moved.
@@ -140,12 +138,12 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
     QString status = jsStatusBarText();
 
-    // If a new point to the map have been moved around the map, the Status 
+    // If a new point to the map have been moved around the map, the Status
     // string is like : "(mkr:1, lat:25.5894748, lon:47.6897455478, alt:211)"
     if (status.startsWith(QString("(mkr:")))
         extractGPSPositionfromStatusbar(status);
 
-    // If a new map zoom level have been selected, the Status 
+    // If a new map zoom level have been selected, the Status
     // string is like : "newZoomLevel:5"
     if (status.startsWith(QString("newZoomLevel:")))
     {
@@ -153,7 +151,7 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
         d->zoomLevel = status;
     }
 
-    // If a new map type have been selected, the Status 
+    // If a new map type have been selected, the Status
     // string is like : "newMapType:G_SATELLITE_TYPE"
     if (status.startsWith(QString("newMapType:")))
     {
@@ -179,7 +177,7 @@ void GPSTrackListWidget::resized()
     int count = d->gpsTrackList.count();
     url.append("&items=");
     url.append(QString::number(count));
-    for( GPSTrackList::iterator it = d->gpsTrackList.begin() ; 
+    for( GPSTrackList::iterator it = d->gpsTrackList.begin() ;
          it != d->gpsTrackList.end() ; ++it)
     {
         int id = it.value().id();

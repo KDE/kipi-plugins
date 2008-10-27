@@ -21,47 +21,48 @@
  *
  * ============================================================ */
 
+#include "gpssyncdialog.h"
+#include "gpssyncdialog.moc"
+
 // Qt includes.
 
-#include <QGroupBox>
-#include <QComboBox>
-#include <QPainter>
-#include <QLayout>
-#include <QLabel>
-#include <QPushButton>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QComboBox>
+#include <QGroupBox>
 #include <QHeaderView>
+#include <QLabel>
+#include <QLayout>
+#include <QPainter>
+#include <QPushButton>
 #include <QTreeWidget>
 
 // KDE includes.
 
-#include <ktoolinvocation.h>
-#include <kdebug.h>
-#include <kpushbutton.h>
-#include <klocale.h>
 #include <kapplication.h>
-#include <khelpmenu.h>
-#include <ksqueezedtextlabel.h>
-#include <kiconloader.h>
-#include <kmenu.h>
-#include <kstandarddirs.h>
-#include <kfiledialog.h>
 #include <kconfig.h>
-#include <kmessagebox.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
 #include <kglobalsettings.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
 #include <knuminput.h>
+#include <kpushbutton.h>
 #include <kseparator.h>
+#include <ksqueezedtextlabel.h>
+#include <kstandarddirs.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
-#include "gpslistviewitem.h"
 #include "gpsdataparser.h"
 #include "gpseditdialog.h"
-#include "gpssyncdialog.h"
-#include "gpssyncdialog.moc"
+#include "gpslistviewitem.h"
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 
 namespace KIPIGPSSyncPlugin
 {

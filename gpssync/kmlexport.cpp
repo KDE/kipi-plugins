@@ -21,16 +21,20 @@
  *
  * ============================================================ */
 
-extern "C" 
+#include "kmlexport.h"
+
+// C ANSI includes.
+
+extern "C"
 {
 #include <unistd.h>
 }
 
 // Qt includes.
 
+#include <QImageReader>
 #include <QPainter>
 #include <QRegExp>
-#include <QImageReader>
 #include <QTextStream>
 
 // KDE includes.
@@ -48,16 +52,15 @@ extern "C"
 
 // LibKIPI includes.
 
-#include <libkipi/plugin.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
+#include <libkipi/plugin.h>
 
 // Local includes.
 
 #include "batchprogressdialog.h"
-#include "kmlexport.h"
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIGPSSyncPlugin
 {
 
 kmlExport::kmlExport(KIPI::Interface* interface)
@@ -74,14 +77,14 @@ kmlExport::~kmlExport()
 /*!
 	\fn kmlExport::createDir(QDir dir)
  */
-bool kmlExport::createDir(QDir dir) 
+bool kmlExport::createDir(QDir dir)
 {
     if (dir.exists()) return true;
 
     QDir parent = dir;
     parent.cdUp();
     bool ok = createDir(parent);
-    if (!ok) 
+    if (!ok)
     {
         logError(i18n("Could not create '%1'",parent.path()));
         return false;
@@ -92,7 +95,7 @@ bool kmlExport::createDir(QDir dir)
 /*!
 \fn kmlExport::webifyFileName(const QString &fileName)
  */
-QString kmlExport::webifyFileName(const QString &fileName) 
+QString kmlExport::webifyFileName(const QString &fileName)
 {
     QString webFileName=fileName.toLower();
 
@@ -105,11 +108,11 @@ QString kmlExport::webifyFileName(const QString &fileName)
 /*!
     \fn kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
  */
-QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size) 
+QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
 {
     QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding);
 
-    if (image.width() == size && image.height() == size) 
+    if (image.width() == size && image.height() == size)
     {
         return image;
     }
@@ -117,11 +120,11 @@ QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
     QPainter painter(&croppedPix);
 
     int sx=0, sy=0;
-    if (image.width()>size) 
+    if (image.width()>size)
     {
         sx=(image.width() - size)/2;
-    } 
-    else 
+    }
+    else
     {
         sy=(image.height() - size)/2;
     }
@@ -134,11 +137,11 @@ QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
 /*!
     \fn kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
  */
-QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size) 
+QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
 {
     int image_border = 3;
 
-    // getting an image minus the border 
+    // getting an image minus the border
     QImage image = fullImage.scaled(size -(2*image_border), size - (2*image_border), Qt::KeepAspectRatioByExpanding);
 
     QPixmap croppedPix(image.width() + (2*image_border), image.height() + (2*image_border));
@@ -157,7 +160,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
 /*!
 \fn kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum )
  */
-void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum ) 
+void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum )
 {
     KIPI::Interface* mInterface = interface;
     KIPI::ImageInfo info        = mInterface->info(imageURL);
@@ -165,7 +168,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     // Load image
     QString path = imageURL.path();
     QFile imageFile(path);
-    if (!imageFile.open(QIODevice::ReadOnly)) 
+    if (!imageFile.open(QIODevice::ReadOnly))
     {
         logWarning(i18n("Could not read image '%1'",path));
         return;
@@ -173,7 +176,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
 
     QImageReader reader(&imageFile);
     QString imageFormat = reader.format();
-    if (imageFormat.isEmpty()) 
+    if (imageFormat.isEmpty())
     {
         logWarning(i18n("Format of image '%1' is unknown",path));
         return;
@@ -183,7 +186,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
 
     QByteArray imageData = imageFile.readAll();
     QImage image;
-    if (!image.loadFromData(imageData) ) 
+    if (!image.loadFromData(imageData) )
     {
         logWarning(i18n("Error loading image '%1'",path));
         return;
@@ -193,7 +196,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     /** FIXME depending the soft used, angle could return a good value (digikam) or a value of 0 (gwenview)
         * and, in some case the picture is not rotated as it should be.
         */
-    if ( info.angle() != 0 ) 
+    if ( info.angle() != 0 )
     {
         QMatrix matrix;
         matrix.rotate( info.angle() );
@@ -202,11 +205,11 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
 
     QImage icon;
-    if (m_optimize_googlemap) 
+    if (m_optimize_googlemap)
     {
         icon = generateSquareThumbnail(image,m_googlemapSize);
-    } 
-    else 
+    }
+    else
     {
     //	icon = image.smoothScale(m_iconSize, m_iconSize, QImage::ScaleMax);
         icon = generateBorderedThumbnail(image, m_iconSize);
@@ -222,12 +225,12 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     QString fullFileName;
     fullFileName     = baseFileName + '.' + imageFormat.toLower();
     QString destPath = m_tempDestDir + m_imageDir + fullFileName;
-    if (!image.save(destPath, imageFormat.toAscii(), 85)) 
+    if (!image.save(destPath, imageFormat.toAscii(), 85))
     {
         // if not able to save the image, it's pointless to create a placemark
         logWarning(i18n("Could not save image '%1' to '%2'",path,destPath));
     }
-    else 
+    else
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
@@ -238,7 +241,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         attributes           = info.attributes();
 
         if (attributes.contains("latitude") &&
-            attributes.contains("longitude") && 
+            attributes.contains("longitude") &&
             attributes.contains("altitude"))
         {
             lat = attributes["latitude"].toDouble();
@@ -256,24 +259,24 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         // location and altitude
         QDomElement kmlGeometry = addKmlElement(kmlPlacemark, "Point");
 
-        if (alt) 
+        if (alt)
         {
             addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3").arg(lng).arg(lat).arg(alt));
-        } 
-        else 
+        }
+        else
         {
             addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(lng).arg(lat));
         }
 
-        if (m_altitudeMode == 2 ) 
+        if (m_altitudeMode == 2 )
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "absolute");
-        } 
-        else if (m_altitudeMode == 1 ) 
+        }
+        else if (m_altitudeMode == 1 )
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "relativeToGround");
-        } 
-        else 
+        }
+        else
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "clampToGround");
         }
@@ -283,7 +286,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         /** we need to take the DateTimeOriginal
           * if we refer to http://www.exif.org/Exif2-2.PDF
           * (standard)DateTime: is The date and time of image creation. In this standard it is the date and time the file was changed
-          * DateTimeOriginal: The date and time when the original image data was generated. 
+          * DateTimeOriginal: The date and time when the original image data was generated.
           *                   For a DSC the date and time the picture was taken are recorded.
           * DateTimeDigitized: The date and time when the image was stored as digital data.
           * So for:
@@ -298,26 +301,26 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
           * libkexiv2 seems to take Original dateTime first so it shoul be alright now.
           */
         QDateTime datetime = exiv2Iface.getImageDateTime();
-        if (datetime.isValid()) 
+        if (datetime.isValid())
         {
             QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", datetime.toString("yyyy-MM-ddThh:mm:ssZ"));
-        } 
+        }
         else if ( mInterface->hasFeature(KIPI::ImagesHasTime))
         {
             QDomElement kmlTimeStamp = addKmlElement(kmlGeometry, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", (info.time()).toString("yyyy-MM-ddThh:mm:ssZ"));
         }
         QString my_description;
-        if (m_optimize_googlemap) 
+        if (m_optimize_googlemap)
         {
             my_description = "<img src=\"" + m_UrlDestDir + m_imageDir + fullFileName + "\">";
-        } 
-        else 
+        }
+        else
         {
             my_description = "<img src=\"" + m_imageDir + fullFileName + "\">";
         }
-        if ( m_interface->hasFeature( KIPI::ImagesHasComments ) ) 
+        if ( m_interface->hasFeature( KIPI::ImagesHasComments ) )
         {
             my_description += "<br/>" + info.description() ;
         }
@@ -327,22 +330,22 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         // Save icon
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
         QString destPath     = m_tempDestDir + m_imageDir + iconFileName;
-        if (!icon.save(destPath, imageFormat.toAscii(), 85)) 
+        if (!icon.save(destPath, imageFormat.toAscii(), 85))
         {
             logWarning(i18n("Could not save icon for image '%1' to '%2'",path,destPath));
-        } 
-        else 
+        }
+        else
         {
             //logInfo(i18n("Creation of icon '%1'").arg(iconFileName));
             // style et icon
             QDomElement kmlStyle     = addKmlElement(kmlPlacemark, "Style");
             QDomElement kmlIconStyle = addKmlElement(kmlStyle, "IconStyle");
             QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
-            if (m_optimize_googlemap) 
+            if (m_optimize_googlemap)
             {
                 addKmlTextElement(kmlIcon, "href", m_UrlDestDir + m_imageDir + iconFileName);
             }
-            else 
+            else
             {
                 addKmlTextElement(kmlIcon, "href", m_imageDir + iconFileName);
             }
@@ -357,7 +360,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
  */
 void kmlExport::addTrack(QDomElement &kmlAlbum)
 {
-    if( m_GPXFile.isEmpty() ) 
+    if( m_GPXFile.isEmpty() )
     {
         logWarning(i18n("No GPX file Chosen!"));
         return;
@@ -383,7 +386,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
     QDomElement kmlFolder = addKmlElement(kmlAlbum, "Folder");
     addKmlTextElement(kmlFolder, "name", i18n("Tracks"));
 
-    if (!m_optimize_googlemap) 
+    if (!m_optimize_googlemap)
     {
         // style of points and track
         QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
@@ -435,7 +438,7 @@ void kmlExport::generate()
     QDomElement kmlName= addKmlTextElement( kmlAlbum, "name", album.name());
     QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description", "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
 
-    if (m_GPXtracks) 
+    if (m_GPXtracks)
     {
         addTrack(kmlAlbum);
     }
@@ -446,7 +449,7 @@ void kmlExport::generate()
     int pos           = 1;
     int count         = images.count();
     KUrl::List::ConstIterator imagesEnd (images.constEnd());
-    for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos) 
+    for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
         KUrl url = *selIt;
 
@@ -457,7 +460,7 @@ void kmlExport::generate()
         attributes           = info.attributes();
 
         if (attributes.contains("latitude") &&
-            attributes.contains("longitude") && 
+            attributes.contains("longitude") &&
             attributes.contains("altitude"))
         {
             lat = attributes["latitude"].toDouble();
@@ -471,12 +474,12 @@ void kmlExport::generate()
             hasGPSInfo = exiv2Iface.getGPSInfo(alt, lat, lng);
         }
 
-        if ( hasGPSInfo ) 
+        if ( hasGPSInfo )
         {
             // generation de l'image et de l'icone
             generateImagesthumb(m_interface,url,kmlAlbum);
         }
-        else 
+        else
         {
             logWarning(i18n("No position data for '%1'",info.title()));
             defectImage++;
@@ -485,10 +488,10 @@ void kmlExport::generate()
         qApp->processEvents();
     }
 
-    if (defectImage) 
+    if (defectImage)
     {
         /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
-        KMessageBox::information(kapp->activeWindow(), 
+        KMessageBox::information(kapp->activeWindow(),
                                  i18np("No position data for 1 picture",
                                        "No position data for %1 pictures", defectImage));
     }
@@ -522,7 +525,7 @@ int kmlExport::getConfig()
     //	googlemapSize       = group.readNumEntry("googlemapSize");
     m_size                  = group.readEntry("size", 320);
 
-    // UrlDestDir have to have the trailing 
+    // UrlDestDir have to have the trailing
     m_baseDestDir           = group.readEntry("baseDestDir", QString("/tmp/"));
     m_UrlDestDir            = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
     m_KMLFileName           = group.readEntry("KMLFileName", QString("kmldocument"));
@@ -543,20 +546,20 @@ int kmlExport::getConfig()
     return 1;
 }
 
-void kmlExport::logInfo(const QString& msg) 
+void kmlExport::logInfo(const QString& msg)
 {
     m_progressDialog->addedAction(msg, KIPIPlugins::ProgressMessage);
 }
 
-void kmlExport::logError(const QString& msg) 
+void kmlExport::logError(const QString& msg)
 {
     m_progressDialog->addedAction(msg, KIPIPlugins::ErrorMessage);
 }
 
-void kmlExport::logWarning(const QString& msg) 
+void kmlExport::logWarning(const QString& msg)
 {
     m_progressDialog->addedAction(msg, KIPIPlugins::WarningMessage);
     //	mWarnings=true;
 }
 
-} //namespace KIPIGPSSyncPlugin 
+} //namespace KIPIGPSSyncPlugin

@@ -21,8 +21,6 @@
  *
  * ============================================================ */
 
-// Local includes.
-
 #include "kmlgpsdataparser.h"
 
 // KDE includes.
@@ -30,7 +28,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIGPSSyncPlugin
 {
 
 KMLGPSDataParser::KMLGPSDataParser()
@@ -42,7 +40,7 @@ KMLGPSDataParser::~KMLGPSDataParser()
 {
 }
 
-QString KMLGPSDataParser::lineString() 
+QString KMLGPSDataParser::lineString()
 {
     QString line = "";
     // cache the end to not recalculate it with large number of points
@@ -68,15 +66,15 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, Q
     QDomElement kmlLineString = addKmlElement(kmlPlacemark, "LineString");
     addKmlTextElement(kmlLineString, "coordinates", lineString());
     addKmlTextElement(kmlPlacemark, "styleUrl", "#linetrack");
-    if (altitudeMode == 2 ) 
+    if (altitudeMode == 2 )
     {
         addKmlTextElement(kmlLineString, "altitudeMode", "absolute");
-    } 
-    else if (altitudeMode == 1 ) 
+    }
+    else if (altitudeMode == 1 )
     {
         addKmlTextElement(kmlLineString, "altitudeMode", "relativeToGround");
-    } 
-    else 
+    }
+    else
     {
         addKmlTextElement(kmlLineString, "altitudeMode", "clampToGround");
     }
@@ -85,7 +83,7 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, Q
 /*!
 \fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
  */
-void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, 
+void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root,
                                                             int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
@@ -115,28 +113,28 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
         addKmlTextElement(kmlTimeStamp, "when", GPSLocalizedTime.toString("yyyy-MM-ddThh:mm:ssZ"));
         QDomElement kmlGeometry = addKmlElement(kmlPointPlacemark, "Point");
         addKmlTextElement(kmlPointPlacemark, "visibility", "0");
-        if (it.value().latitude()) 
+        if (it.value().latitude())
         {
             addKmlTextElement(kmlGeometry, "coordinates",
                               QString("%1,%2,%3").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude()));
-        } 
-        else 
+        }
+        else
         {
             addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(it.value().longitude()).arg(it.value().latitude()));
         }
-        if (altitudeMode == 2 ) 
+        if (altitudeMode == 2 )
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "absolute");
-        } 
-        else if (altitudeMode == 1 ) 
+        }
+        else if (altitudeMode == 1 )
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "relativeToGround");
-        } 
-        else 
+        }
+        else
         {
             addKmlTextElement(kmlGeometry, "altitudeMode", "clampToGround");
         }
     }
 }
 
-} // namespace KIPIGPSSyncPlugin 
+} // namespace KIPIGPSSyncPlugin

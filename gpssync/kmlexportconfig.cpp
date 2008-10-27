@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "kmlexportconfig.h"
+#include "kmlexportconfig.moc"
+
 // Qt includes.
 
 #include <qbuttongroup.h>
@@ -35,25 +38,23 @@
 
 // KDE includes.
 
-#include <ktoolinvocation.h>
+#include "kpaboutdata.h"
 #include <kapplication.h>
-#include <kconfig.h>
 #include <kcolorbutton.h>
+#include <kconfig.h>
 #include <kdialog.h>
 #include <khelpmenu.h>
-#include <klocale.h>
 #include <klineedit.h>
-#include <knuminput.h>
-#include "kpaboutdata.h"
+#include <klocale.h>
 #include <kmenu.h>
+#include <knuminput.h>
 #include <kstandarddirs.h>
+#include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
 // Local includes.
 
 #include "pluginsversion.h"
-#include "kmlexportconfig.h"
-#include "kmlexportconfig.moc"
 
 namespace KIPIGPSSyncPlugin
 {
