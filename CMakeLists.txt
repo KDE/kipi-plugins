@@ -43,16 +43,16 @@ FIND_PACKAGE(TIFF REQUIRED)
 
 # Optional depencies detection required by some plugins
 
-MACRO_OPTIONAL_FIND_PACKAGE(Sane)    # For AcquireImages
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)   # For DNGConverter: XMP SDK need Expat library to compile.
 MACRO_OPTIONAL_FIND_PACKAGE(Threads) # For DNGConverter: DNG SDK need native threads support.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
 
-# LINUX Only need X11.
+# LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
-    MACRO_OPTIONAL_FIND_PACKAGE(X11) # For Slideshow and ImageViewer (under Linux)
+    MACRO_OPTIONAL_FIND_PACKAGE(Sane)  # For AcquireImages.
+    MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For Slideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(NOT WIN32)
@@ -69,12 +69,16 @@ ELSE(NOT WIN32)
 ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
-MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
-IF(DEPEND_PACKAGE_KSane)
-    MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
-ELSE(DEPEND_PACKAGE_KSane)
-    SET(KSANE_FOUND FALSE)
-ENDIF(DEPEND_PACKAGE_KSane)
+
+# LINUX Only.
+IF(NOT WIN32 AND NOT APPLE)
+    MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
+        IF(DEPEND_PACKAGE_KSane)
+        MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
+    ELSE(DEPEND_PACKAGE_KSane)
+        SET(KSANE_FOUND FALSE)
+    ENDIF(DEPEND_PACKAGE_KSane)
+ENDIF(NOT WIN32 AND NOT APPLE)
 
 # TODO: add others optional depencies to check when others plugins will be ported to KDE4
 #
@@ -149,12 +153,6 @@ ELSE(KDCRAW_FOUND)
     MESSAGE(STATUS "")
 ENDIF(KDCRAW_FOUND)
 
-IF(KSANE_FOUND)
-    MESSAGE(STATUS " libksane library found.............. YES (optional)")
-ELSE(KSANE_FOUND)
-    MESSAGE(STATUS " libksane library found.............. NO  (optional)")
-ENDIF(KSANE_FOUND)
-
 IF(LIBXML2_FOUND)
     MESSAGE(STATUS " libxml2 library found............... YES (optional)")
 ELSE(LIBXML2_FOUND)
@@ -185,13 +183,19 @@ ELSE(OPENGL_FOUND AND OPENGL_GLU_FOUND)
     MESSAGE(STATUS " libopengl library found............. NO  (optional)")
 ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-# LINUX Only need X11.
+# LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     IF(X11_FOUND AND X11_Xrandr_FOUND)
         MESSAGE(STATUS " libX11 library found................ YES (optional)")
     ELSE(X11_FOUND AND X11_Xrandr_FOUND)
         MESSAGE(STATUS " libX11 library found................ NO  (optional)")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND)
+
+    IF(KSANE_FOUND)
+        MESSAGE(STATUS " libksane library found.............. YES (optional)")
+    ELSE(KSANE_FOUND)
+        MESSAGE(STATUS " libksane library found.............. NO  (optional)")
+    ENDIF(KSANE_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
@@ -202,12 +206,6 @@ ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND A
     SET(KIPIPLUGINS_CAN_BE_COMPILED false)
 ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
 
-IF(SANE_FOUND AND KSANE_FOUND)
-    MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
-ELSE(SANE_FOUND AND KSANE_FOUND)
-    MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(SANE_FOUND AND KSANE_FOUND)
-
 IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
     MESSAGE(STATUS " HtmlExport will be compiled......... YES (optional)")
 ELSE(LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -215,6 +213,7 @@ ELSE(LIBXML2_FOUND AND LIBXSLT_FOUND)
 ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
 
 IF(NOT WIN32 AND NOT APPLE)
+
     IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
         MESSAGE(STATUS " SlideShow will be compiled.......... YES (optional)")
         MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
@@ -222,7 +221,15 @@ IF(NOT WIN32 AND NOT APPLE)
         MESSAGE(STATUS " SlideShow will be compiled.......... NO  (optional - Look README file for more details about dependencies)")
         MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
+    IF(SANE_FOUND AND KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
+    ELSE(SANE_FOUND AND KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
+    ENDIF(SANE_FOUND AND KSANE_FOUND)
+
 ELSE(NOT WIN32 AND NOT APPLE)
+
     IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
         MESSAGE(STATUS " SlideShow will be compiled.......... YES (optional)")
         MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
@@ -230,6 +237,7 @@ ELSE(NOT WIN32 AND NOT APPLE)
         MESSAGE(STATUS " SlideShow will be compiled.......... NO  (optional - Look README file for more details about dependencies)")
         MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
     ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
@@ -299,27 +307,31 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(picasawebexport)       # Do not compile yet under Win32
     ENDIF(NOT WIN32)
 
-    IF(SANE_FOUND AND KSANE_FOUND)
-        ADD_SUBDIRECTORY(acquireimages)
-    ENDIF(SANE_FOUND AND KSANE_FOUND)
-
     IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
         ADD_SUBDIRECTORY(htmlexport)
     ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
 
-    # Plugins which depend on OpenGL
-
     IF(NOT WIN32 AND NOT APPLE)
+
+        # Plugins which depend on OpenGL
         IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
             # Under LINUX we need X11 library with OpenGL.
-            MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-            MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+            ADD_SUBDIRECTORY(slideshow)
+            ADD_SUBDIRECTORY(imageviewer)
         ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
+        IF(SANE_FOUND AND KSANE_FOUND)
+            ADD_SUBDIRECTORY(acquireimages)
+        ENDIF(SANE_FOUND AND KSANE_FOUND)
+
     ELSE(NOT WIN32 AND NOT APPLE)
+
+        # Plugins which depend on OpenGL
         IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-            MACRO_OPTIONAL_ADD_SUBDIRECTORY(slideshow)
-            MACRO_OPTIONAL_ADD_SUBDIRECTORY(imageviewer)
+            ADD_SUBDIRECTORY(slideshow)
+            ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
     ENDIF(NOT WIN32 AND NOT APPLE)
 
     IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
