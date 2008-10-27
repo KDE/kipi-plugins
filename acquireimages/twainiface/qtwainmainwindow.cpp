@@ -29,22 +29,22 @@
 #include "dib.h"
 
 
-QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f )
+QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
                 : QMainWindow(parent, f)
 {
     m_pTwain         = new QTwain(0);
     m_pWidget        = new QWidget(this);    // do this as your first call!
     m_pVBox          = new QGridLayout();
     m_pWidget->setLayout(m_pVBox);
-    m_pAcquireButton = new QPushButton("Acquire image",m_pWidget);
-    m_pSelectButton  = new QPushButton("Select source",m_pWidget);
+    m_pAcquireButton = new QPushButton("Acquire image", m_pWidget);
+    m_pSelectButton  = new QPushButton("Select source", m_pWidget);
     m_pLabel         = new QLabel();
 
-    m_pVBox->addWidget(m_pAcquireButton,0,0,0);
-    m_pVBox->addWidget(m_pSelectButton,0,1,0);
-    m_pVBox->addWidget(m_pLabel,1,0,2,2,0);
+    m_pVBox->addWidget(m_pAcquireButton,0, 0, 0);
+    m_pVBox->addWidget(m_pSelectButton, 0, 1, 0);
+    m_pVBox->addWidget(m_pLabel,        1, 0, 2, 2, 0);
     m_pWidget->setMinimumSize(500,500);
-    m_pPixmap        = 0;
+    m_pPixmap = 0;
 
     connect(m_pSelectButton, SIGNAL(clicked()),
             this, SLOT(onSelectButton()));
@@ -56,7 +56,7 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f )
             this, SLOT(onDibAcquired(CDIB*)));
 
     setMinimumSize(800, 600);
-    setGeometry ( 300,300 ,800,600 ) ;
+    setGeometry(300, 300, 800, 600) ;
 }
 
 QTwainMainWindow::~QTwainMainWindow()
