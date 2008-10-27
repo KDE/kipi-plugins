@@ -69,11 +69,11 @@ bool CTwain::InitTwain(HWND hWnd)
         return false;
     }
     m_hMessageWnd = hWnd;
-    strcpy(libName,"TWAIN_32.DLL");
+    strcpy(libName, "TWAIN_32.DLL");
 
     m_hTwainDLL  = LoadLibraryA(libName);
     if(m_hTwainDLL != NULL)
-    {  qWarning("valid driver");
+    {
         if(!(m_pDSMProc = (DSMENTRYPROC)GetProcAddress(m_hTwainDLL,(LPCSTR)MAKEINTRESOURCE(1))))
         {
             FreeLibrary(m_hTwainDLL);
