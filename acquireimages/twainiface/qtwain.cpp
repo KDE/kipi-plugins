@@ -47,7 +47,7 @@ bool QTwain::selectSource()
 
 bool QTwain::acquire(unsigned int maxNumImages)
 {
-    unsigned int nMaxNum = 1;
+    int nMaxNum = 1;
 
     if (maxNumImages == UINT_MAX)
         nMaxNum = TWCPP_ANYCOUNT;
@@ -154,6 +154,7 @@ void QTwain::Create24Bit(CDIB& source,CDIB& dest)
             Q_ASSERT(index < pal);
             memcpy(ptr,palet+index*3,3);
         }
+
         index = (ptr - dst)/3;
         Q_ASSERT(index <= source.Width());
     }
