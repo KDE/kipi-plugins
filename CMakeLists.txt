@@ -302,10 +302,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(simpleviewerexport)
     ADD_SUBDIRECTORY(flickrexport)
     ADD_SUBDIRECTORY(galleryexport)
-
-    IF(NOT WIN32)
-        ADD_SUBDIRECTORY(picasawebexport)       # Do not compile yet under Win32
-    ENDIF(NOT WIN32)
+    ADD_SUBDIRECTORY(picasawebexport)
 
     IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
         ADD_SUBDIRECTORY(htmlexport)
@@ -331,6 +328,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(slideshow)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
+
+#        ADD_SUBDIRECTORY(acquireimages)
 
     ENDIF(NOT WIN32 AND NOT APPLE)
 
