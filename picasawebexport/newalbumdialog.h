@@ -3,9 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2007-16-07
+ * Date        : 2008-10-27
  * Description : a kipi plugin to export images to Picasa web service
  *
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -20,62 +21,28 @@
  *
  * ============================================================ */
 
-#ifndef PICASAWEBWIDGET_H
-#define PICASAWEBWIDGET_H
+#ifndef NEWALBUMDIALOG_H
+#define NEWALBUMDIALOG_H
 
 // Qt includes.
 
-#include <qwidget.h>
+#include <QDialog>
 
 // Local includes.
 
-#include "ui_uploadwidget.h"
-
-class Q3ListView;
-class QCheckBox;
-
-class KHTMLPart;
+#include "ui_picasawebnewalbumdialog.h"
 
 namespace KIPIPicasawebExportPlugin
 {
 
-
-class UploadWidget : public QWidget, public Ui::UploadWidget
+class NewAlbumDialog : public QDialog, public Ui::NewAlbumDialog
 {
 public:
-  UploadWidget( QWidget *parent ) : QWidget( parent ) {
+    NewAlbumDialog( QWidget *parent ) : QDialog( parent ) {
     setupUi( this );
   }
 };
 
-class PicasawebWidget : public UploadWidget
-{
-    Q_OBJECT
-
-public:
-
-    PicasawebWidget(QWidget* parent=0);
-    ~PicasawebWidget();
-
-private slots:
-
-    void slotResizeChecked();
-    void slotSelectionChecked();
-
-private:
-
-    Q3ListView*    m_tagView;
-//
-//    Q3ButtonGroup* m_fileSrcButtonGroup;
-
-//  QCheckBox*    m_resizeCheckBox;
-//  QCheckBox*    m_exportApplicationTags;
-
-    KHTMLPart*    m_photoView;
-
-    friend class PicasawebWindow;
-};
-
 } // namespace KIPIPicasawebExportPlugin
 
-#endif // PICASAWEBWIDGET_H
+#endif // NEWALBUMDIALOG_H

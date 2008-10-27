@@ -24,38 +24,38 @@
 // Qt includes.
 
 #include <Q3ValueList>
-#include <q3progressdialog.h>
-#include <q3listview.h>
 #include <q3datetimeedit.h>
+#include <q3listview.h>
+#include <q3progressdialog.h>
 #include <q3textedit.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qcursor.h>
-#include <qlineedit.h>
-#include <qspinbox.h>
 #include <qcheckbox.h>
-#include <qstringlist.h>
-#include <qradiobutton.h>
+#include <qcombobox.h>
+#include <qcursor.h>
 #include <qdatetime.h>
+#include <qlineedit.h>
 #include <qlinkedlist.h>
+#include <qpixmap.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qspinbox.h>
+#include <qstringlist.h>
+#include <qtimer.h>
 
 // KDE includes.
 
-#include <khelpmenu.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 #include <kapplication.h>
-#include <kiconloader.h>
+#include <kdebug.h>
+#include <kdeversion.h>
+#include <khelpmenu.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
 #include <krun.h>
-#include <kdebug.h>
 #include <ksimpleconfig.h>
-#include <kdeversion.h>
 #include <kwallet.h>
 
 // LibKIPI includes.
@@ -67,14 +67,14 @@
 
 #include "imagedialog.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
-#include "picasawebtalker.h"
 #include "picasawebitem.h"
+#include "picasaweblogin.h"
+#include "picasaweblogin.h"
+#include "picasawebtalker.h"
 #include "picasawebviewitem.h"
-#include "picasaweblogin.h"
 #include "picasawebwidget.h"
-#include "PicasawebNewAlbumDialog.h"
-#include "picasaweblogin.h"
+#include "pluginsversion.h"
+#include "newalbumdialog.h"
 #include "picasawebwindow.h"
 #include "picasawebwindow.moc"
 
@@ -535,7 +535,7 @@ void PicasawebWindow::slotAddPhotoNext()
        }
        it++;
     }
-	
+
     bool res = m_talker->addPhoto(pathComments.first,          //the file path
                                   info, albumId,
                                   m_resizeCheckBox->isChecked(),

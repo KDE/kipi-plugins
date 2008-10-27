@@ -31,7 +31,6 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <q3textstream.h>
-//Added by qt3to4:
 #include <Q3CString>
 
 // KDE includes.

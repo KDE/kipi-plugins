@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item rowspan="2" row="1" column="0" >
-    <widget class="Q3GroupBox" name="groupBox1" >
+    <widget class="QGroupBox" name="groupBox1" >
      <property name="title" >
       <string/>
      </property>
@@ -110,7 +110,7 @@
        </widget>
       </item>
       <item>
-       <widget class="Q3GroupBox" name="m_resizeGroupBox" >
+       <widget class="QGroupBox" name="m_resizeGroupBox" >
         <property name="title" >
          <string/>
         </property>
@@ -163,7 +163,7 @@
     </widget>
    </item>
    <item row="1" column="1" >
-    <widget class="Q3Frame" name="m_selectionFrame" >
+    <widget class="QFrame" name="m_selectionFrame" >
      <property name="frameShape" >
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -172,7 +172,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4" >
       <item>
-       <widget class="Q3ButtonGroup" name="buttonGroup1" >
+       <widget class="QGroupBox" name="buttonGroup1" >
         <property name="title" >
          <string>Images to upload</string>
         </property>
@@ -205,7 +205,7 @@
     </widget>
    </item>
    <item row="2" column="1" >
-    <widget class="Q3GroupBox" name="groupBox2" >
+    <widget class="QGroupBox" name="groupBox2" >
      <property name="title" >
       <string>Account Details</string>
      </property>
@@ -247,26 +247,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3Frame</class>
-   <extends>QFrame</extends>
-   <header>Qt3Support/Q3Frame</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>Q3GroupBox</extends>
-   <header>Qt3Support/Q3ButtonGroup</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -27,7 +27,6 @@
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlayout.h>
-//Added by qt3to4:
 #include <Q3GridLayout>
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>

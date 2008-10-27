@@ -10,9 +10,7 @@ SET(kipiplugin_picasawebexport_PART_SRCS
     picasawebwindow.cpp
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_picasawebexport_PART_SRCS uploadwidget.ui)
-
-KDE4_ADD_UI3_FILES(kipiplugin_picasawebexport_PART_SRCS PicasawebNewAlbumDialog.ui)
+KDE4_ADD_UI_FILES(kipiplugin_picasawebexport_PART_SRCS uploadwidget.ui picasawebnewalbumdialog.ui)
 
 KDE4_ADD_PLUGIN(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})
 
