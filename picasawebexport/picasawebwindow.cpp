@@ -71,7 +71,6 @@
 #include "newalbumdialog.h"
 #include "picasawebitem.h"
 #include "picasaweblogin.h"
-#include "picasaweblogin.h"
 #include "picasawebtalker.h"
 #include "picasawebviewitem.h"
 #include "picasawebwidget.h"
