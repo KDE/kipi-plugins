@@ -21,8 +21,10 @@
  *
  * ============================================================ */
 
-#ifndef _QTWAIN_H_
-#define _QTWAIN_H_
+#ifndef QTWAIN_H
+#define QTWAIN_H
+
+// Local includes.
 
 #include "qtwaininterface.h"
 #include "twainiface.h"
@@ -46,12 +48,10 @@ public:
     /**
      * @name necessary function implementations
      */
-    /*@{*/
     virtual bool selectSource();
     virtual bool acquire(unsigned int maxNumImages = AnyCount);
     virtual bool isValidDriver() const;
     virtual bool processMessage(MSG& msg);
-    /*@}*/
 
 protected:
 
@@ -64,4 +64,4 @@ protected:
     void Create24Bit(CDIB& source,CDIB& dest);
 };
 
-#endif // !_QTWAIN_H_
+#endif /* QTWAIN_H */

@@ -23,9 +23,13 @@
 
 #include "twainiface.h"
 
-#include <string.h>
+// Qt includes.
 
 #include <QtGlobal>
+
+// C++ includes.
+
+#include <cstring>
 
 /** Constructor parameters : HWND: Window to subclass
  */

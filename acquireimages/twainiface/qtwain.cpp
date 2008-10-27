@@ -21,12 +21,17 @@
  *
  * ============================================================ */
 
+#include "qtwain.h"
+
+// Qt includeS.
+
 #include <QWidget>
 #include <QPixmap>
 #include <QImage>
 
+// Local includes.
+
 #include "dib.h"
-#include "qtwain.h"
 
 static unsigned char masktable[] = { 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01 };
 

@@ -24,7 +24,11 @@
 #ifndef TWAINIFACE_H
 #define TWAINIFACE_H
 
+// Windows includes.
+
 #include <windows.h>
+
+// Local includes.
 
 #include "twain.h"
 

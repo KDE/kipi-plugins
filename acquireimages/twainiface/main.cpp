@@ -21,7 +21,11 @@
  *
  * ============================================================ */
 
+// Qt includes.
+
 #include <QApplication>
+
+// Local includes.
 
 #include "qtwainmainwindow.h"
 
