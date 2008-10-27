@@ -29,7 +29,7 @@
 
 const unsigned int AnyCount = UINT_MAX;
 
-class QTwain : public QTwainInterface, CTwain
+class QTwain : public QTwainInterface, TwainIface
 {
 public:
 

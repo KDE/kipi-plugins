@@ -31,7 +31,7 @@
 static unsigned char masktable[] = { 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01 };
 
 QTwain::QTwain(QWidget* parent)
-      : QTwainInterface(parent), CTwain()
+      : QTwainInterface(parent), TwainIface()
 {
 }
 
@@ -61,7 +61,7 @@ bool QTwain::isValidDriver() const
     return (IsValidDriver() == true);
 }
 
-/** internal, implementation of CTwain function
+/** internal, implementation of TwainIface function
  */
 void QTwain::CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info)
 {

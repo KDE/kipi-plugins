@@ -33,13 +33,13 @@
 #define TWCPP_CANCELALL     (2)
 #define TWCPP_DOTRANSFER    (0)
 
-class CTwain
+class TwainIface
 {
 
 public:
 
-    CTwain(HWND hWnd = NULL);
-    virtual ~CTwain();
+    TwainIface(HWND hWnd = NULL);
+    virtual ~TwainIface();
 
     bool InitTwain(HWND hWnd);
     void ReleaseTwain();

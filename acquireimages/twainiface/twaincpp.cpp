@@ -29,7 +29,7 @@
 
 /** Constructor parameters : HWND: Window to subclass
  */
-CTwain::CTwain(HWND hWnd)
+TwainIface::TwainIface(HWND hWnd)
 {
     m_hMessageWnd     = 0;
     m_hTwainDLL       = NULL;
@@ -46,7 +46,7 @@ CTwain::CTwain(HWND hWnd)
     }
 }
 
-CTwain::~CTwain()
+TwainIface::~TwainIface()
 {
     ReleaseTwain();
 }
@@ -56,7 +56,7 @@ CTwain::~CTwain()
     hWnd is the window which has to subclassed in order to recieve
     Twain messaged. Normally - this would be your main application window.
  */
-bool CTwain::InitTwain(HWND hWnd)
+bool TwainIface::InitTwain(HWND hWnd)
 {
     char libName[512];
     if(IsValidDriver()) 
@@ -96,7 +96,7 @@ bool CTwain::InitTwain(HWND hWnd)
 /** Releases the twain interface . Need not be called unless you
     want to specifically shut it down.
  */
-void CTwain::ReleaseTwain()
+void TwainIface::ReleaseTwain()
 {
     if(IsValidDriver())
     {
@@ -109,7 +109,7 @@ void CTwain::ReleaseTwain()
 
 /** Returns true if a valid driver has been loaded
  */
-bool CTwain::IsValidDriver() const
+bool TwainIface::IsValidDriver() const
 {
     return (m_hTwainDLL && m_pDSMProc);
 }
@@ -117,7 +117,7 @@ bool CTwain::IsValidDriver() const
 /** Entry point into Twain. For a complete description of this
     routine  please refer to the Twain specification 1.8
  */
-bool CTwain::CallTwainProc(pTW_IDENTITY pOrigin,pTW_IDENTITY pDest,
+bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin,pTW_IDENTITY pDest,
                            TW_UINT32 DG,TW_UINT16 DAT,TW_UINT16 MSG,
                            TW_MEMREF pData)
 {
@@ -144,7 +144,7 @@ bool CTwain::CallTwainProc(pTW_IDENTITY pOrigin,pTW_IDENTITY pDest,
     few fields need to be updated , call CTawin::GetIdentity first in your
     derived class
  */
-void CTwain::GetIdentity()
+void TwainIface::GetIdentity()
 {
     // Expects all the fields in m_AppId to be set except for the id field.
     m_AppId.Id               = 0; // Initialize to 0 (Source Manager will assign real value)
@@ -165,9 +165,9 @@ void CTwain::GetIdentity()
 /** Called to display a dialog box to select the Twain source to use.
     This can be overridden if a list of all sources is available
     to the application. These sources can be enumerated by Twain.
-    it is not yet supportted by CTwain.
+    it is not yet supportted by TwainIface.
  */
-bool CTwain::SelectSource()
+bool TwainIface::SelectSource()
 {
     memset(&m_Source, 0, sizeof(m_Source));
 
@@ -187,7 +187,7 @@ bool CTwain::SelectSource()
 
 /** Called to select the default source
  */
-bool CTwain::SelectDefaultSource()
+bool TwainIface::SelectDefaultSource()
 {
     m_bSourceSelected = CallTwainProc(&m_AppId,NULL,DG_CONTROL,DAT_IDENTITY,MSG_GETDEFAULT,&m_Source);
     return m_bSourceSelected;
@@ -195,7 +195,7 @@ bool CTwain::SelectDefaultSource()
 
 /** Closes the Data Source
  */
-void CTwain::CloseDS()
+void TwainIface::CloseDS()
 {
     if(DSOpen())
     {
@@ -208,7 +208,7 @@ void CTwain::CloseDS()
 
 /** Closes the Data Source Manager
  */
-void CTwain::CloseDSM()
+void TwainIface::CloseDSM()
 {
     if(DSMOpen())
     {
@@ -221,21 +221,21 @@ void CTwain::CloseDSM()
 
 /** Returns true if the Data Source Manager is Open
  */
-bool CTwain::DSMOpen() const
+bool TwainIface::DSMOpen() const
 {
     return IsValidDriver() && m_bDSMOpen;
 }
 
 /** Returns true if the Data Source is Open
  */
-bool CTwain::DSOpen() const
+bool TwainIface::DSOpen() const
 {
     return IsValidDriver() && DSMOpen() && m_bDSOpen;
 }
 
 /** Opens a Data Source supplied as the input parameter
  */
-bool CTwain::OpenSource(TW_IDENTITY *pSource)
+bool TwainIface::OpenSource(TW_IDENTITY *pSource)
 {
     if(pSource) 
     {
@@ -256,7 +256,7 @@ bool CTwain::OpenSource(TW_IDENTITY *pSource)
 /** Should be called from the main message loop of the application. Can always be called,
     it will not process the message unless a scan is in progress.
  */
-bool CTwain::ProcessMessage(MSG msg)
+bool TwainIface::ProcessMessage(MSG msg)
 {
     if(SourceEnabled())
     {
@@ -282,7 +282,7 @@ bool CTwain::ProcessMessage(MSG msg)
 
 /** Queries the capability of the Twain Data Source
  */
-bool CTwain::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conType)
+bool TwainIface::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conType)
 {
     if(DSOpen())
     {
@@ -300,7 +300,7 @@ bool CTwain::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conType)
 
 /** Queries the capability of the Twain Data Source
  */
-bool CTwain::GetCapability(TW_UINT16 cap,TW_UINT32& value)
+bool TwainIface::GetCapability(TW_UINT16 cap,TW_UINT32& value)
 {
     TW_CAPABILITY twCap;
     if(GetCapability(twCap,cap))
@@ -320,7 +320,7 @@ bool CTwain::GetCapability(TW_UINT16 cap,TW_UINT32& value)
 
 /** Sets the capability of the Twain Data Source
  */
-bool CTwain::SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign)
+bool TwainIface::SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign)
 {
     if(DSOpen())
     {
@@ -347,7 +347,7 @@ bool CTwain::SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign)
 
 /** Sets the capability of the Twain Data Source
  */
-bool CTwain::SetCapability(TW_CAPABILITY& cap)
+bool TwainIface::SetCapability(TW_CAPABILITY& cap)
 {
     if(DSOpen())
     {
@@ -359,7 +359,7 @@ bool CTwain::SetCapability(TW_CAPABILITY& cap)
 
 /** Sets the number of images which can be accpeted by the application at one time
  */
-bool CTwain::SetImageCount(TW_INT16 nCount)
+bool TwainIface::SetImageCount(TW_INT16 nCount)
 {
     if(SetCapability(CAP_XFERCOUNT,(TW_UINT16)nCount,true))
     {
@@ -388,7 +388,7 @@ bool CTwain::SetImageCount(TW_INT16 nCount)
 /** Called to enable the Twain Acquire Dialog. This too can be
     overridden but is a helluva job .
  */
-bool CTwain::EnableSource(bool showUI)
+bool TwainIface::EnableSource(bool showUI)
 {
     if(DSOpen() && !SourceEnabled())
     {
@@ -414,7 +414,7 @@ bool CTwain::EnableSource(bool showUI)
 /** Called to acquire images from the source. parameter numImages i the
     number of images that you an handle concurrently
  */
-bool CTwain::Acquire(int numImages)
+bool TwainIface::Acquire(int numImages)
 {
     if(DSOpen() || OpenSource())
     {
@@ -435,7 +435,7 @@ bool CTwain::Acquire(int numImages)
 
 /** Called to disable the source.
  */
-bool CTwain::DisableSource()
+bool TwainIface::DisableSource()
 {
     if(SourceEnabled())
     {
@@ -451,7 +451,7 @@ bool CTwain::DisableSource()
 
 /** Called by ProcessMessage to Translate a TWAIN message
  */
-void CTwain::TranslateMessage(TW_EVENT& twEvent)
+void TwainIface::TranslateMessage(TW_EVENT& twEvent)
 {
     switch(twEvent.TWMessage)
     {
@@ -469,7 +469,7 @@ void CTwain::TranslateMessage(TW_EVENT& twEvent)
 
 /** Gets Imageinfo for an image which is about to be transferred.
  */
-bool CTwain::GetImageInfo(TW_IMAGEINFO& info)
+bool TwainIface::GetImageInfo(TW_IMAGEINFO& info)
 {
     if(SourceEnabled())
     {
@@ -481,7 +481,7 @@ bool CTwain::GetImageInfo(TW_IMAGEINFO& info)
 
 /** Trasnfers the image or cancels the transfer depending on the state of the TWAIN system
  */
-void CTwain::TransferImage()
+void TwainIface::TransferImage()
 {
     TW_IMAGEINFO info;
     bool bContinue=true;
@@ -514,7 +514,7 @@ void CTwain::TransferImage()
 /** Ends the current transfer.
     Returns true if the more images are pending
  */
-bool CTwain::EndTransfer()
+bool TwainIface::EndTransfer()
 {
     TW_PENDINGXFERS twPend;
     if(CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_PENDINGXFERS,MSG_ENDXFER,(TW_MEMREF)&twPend))
@@ -526,7 +526,7 @@ bool CTwain::EndTransfer()
 
 /** Aborts all transfers
  */
-void CTwain::CancelTransfer()
+void TwainIface::CancelTransfer()
 {
     TW_PENDINGXFERS twPend;
     CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_PENDINGXFERS,MSG_RESET,(TW_MEMREF)&twPend);
@@ -534,7 +534,7 @@ void CTwain::CancelTransfer()
 
 /** Calls TWAIN to actually get the image
  */
-bool CTwain::GetImage(TW_IMAGEINFO& info)
+bool TwainIface::GetImage(TW_IMAGEINFO& info)
 {
     HANDLE hBitmap;
     CallTwainProc(&m_AppId, &m_Source, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, &hBitmap);
