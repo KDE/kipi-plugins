@@ -26,3 +26,23 @@ INSTALL(TARGETS kipiplugin_dngconverter DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
+
+# =======================================================
+# Stand alone version of dngconverter plugin
+
+SET(dngconverter_SRCS dngconverter.cpp ${kipiplugin_dngconverter_PART_SRCS})
+
+KDE4_ADD_APP_ICON(dngconverter_SRCS "hi*-action-dngconverter.png")
+
+KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
+
+TARGET_LINK_LIBRARIES(dngconverter
+                      ${EXPAT_LIBRARY}
+                      ${KDE4_KDEUI_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${QT_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
+                      ${CMAKE_THREAD_LIBS_INIT}
+                      kipiplugins
+                     )
