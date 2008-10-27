@@ -42,9 +42,7 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
     m_pWidget->setLayout(m_pVBox);
     m_pLabel         = new QLabel();
 
-    m_pVBox->addWidget(m_pAcquireButton,0, 0, 0);
-    m_pVBox->addWidget(m_pSelectButton, 0, 1, 0);
-    m_pVBox->addWidget(m_pLabel,        1, 0, 2, 2, 0);
+    m_pVBox->addWidget(m_pLabel, 1, 0, 2, 2, 0);
     m_pWidget->setMinimumSize(500, 500);
     m_pPixmap = 0;
 
