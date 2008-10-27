@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <Q3CString>
+#include <QByteArray>
 #include <QString>
 
 namespace KIPIPicasawebExportPlugin
@@ -52,8 +52,8 @@ public:
 
 private:
 
-    QByteArray m_buffer;
-    Q3CString   m_boundary;
+    QByteArray  m_buffer;
+    QByteArray  m_boundary;
 };
 
 } // namespace KIPIPicasawebExportPlugin

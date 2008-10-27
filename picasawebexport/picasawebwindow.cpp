@@ -26,7 +26,6 @@
 
 // Qt includes.
 
-//#include <Q3ValueList>
 //#include <Q3ListView>
 //#include <Q3ProgressDialog>
 //#include <QCheckBox>
@@ -315,9 +314,9 @@ void PicasawebWindow::slotGetAlbumsListSucceeded()
 {
     if (m_talker && m_talker->m_albumsList)
     {
-        Q3ValueList <PicasaWebAlbum> *list = m_talker->m_albumsList;
+        QLinkedList <PicasaWebAlbum> *list = m_talker->m_albumsList;
         m_albumsListComboBox->clear();
-        Q3ValueList<PicasaWebAlbum>::iterator it = list->begin();
+        QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
 
         while(it != list->end())
         {
@@ -416,7 +415,7 @@ void PicasawebWindow::slotOpenPhoto( const KUrl& url )
 }
 */
 
-void PicasawebWindow::slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& /*photoSetList*/)
+void PicasawebWindow::slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& /*photoSetList*/)
 {
 }
 

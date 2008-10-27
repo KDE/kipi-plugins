@@ -33,9 +33,7 @@
 
 // Qt includes.
 
-#include <Q3CString>
-#include <Q3TextStream>
-#include <Q3ValueList>
+#include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QDomNode>
@@ -43,8 +41,10 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QLineEdit>
+#include <QLinkedList>
 #include <QMessageBox>
 #include <QStringList>
+#include <QTextStream>
 
 // KDE includes.
 
@@ -178,8 +178,8 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     qsl.append("source=kipi-picasaweb-client");
     QString dataParameters = qsl.join("&");
 
-    Q3TextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << dataParameters;
 
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
@@ -325,8 +325,8 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
                                 "</entry>").arg(tag);
     QString postUrl = QString("%1").arg(photoURI);
     QByteArray buffer;
-    Q3TextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << addTagXML;
 
     QString auth_string = "GoogleLogin auth=" + m_token;
@@ -385,8 +385,8 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
                                     .arg(media_keywords);
 
     QByteArray buffer;
-    Q3TextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << newAlbumXML;
 
     MPForm form;
@@ -727,7 +727,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
     QString feed_username, feed_user_uri;
 
     QString album_id, album_title, album_description;
-    m_albumsList = new Q3ValueList <PicasaWebAlbum>();
+    m_albumsList = new QLinkedList <PicasaWebAlbum>();
 
     while(!node.isNull())
     {

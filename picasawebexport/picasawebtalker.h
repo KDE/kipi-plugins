@@ -26,10 +26,10 @@
 
 // Qt includes.
 
-#include <Q3ValueList>
-#include <QObject>
 #include <Q3ProgressDialog>
+#include <QLinkedList>
 #include <QMap>
+#include <QObject>
 
 // KDE includes.
 
@@ -77,7 +77,7 @@ public:
     PicasawebTalker(QWidget* parent);
     ~PicasawebTalker();
 
-    Q3ValueList <PicasaWebAlbum> * m_albumsList;
+    QLinkedList <PicasaWebAlbum> * m_albumsList;
     QString getApiSig(QString,QStringList) ;
     void addPhotoTag(const QString& photoURI, const QString& tag);
     void getToken(const QString& user, const QString& passwd) ;
@@ -105,8 +105,8 @@ signals:
     void signalError( const QString& msg );
 //  void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
-    void signalAlbums( const Q3ValueList<GAlbum>& albumList );
-    void signalPhotos( const Q3ValueList<GPhoto>& photoList );
+    void signalAlbums( const QLinkedList<GAlbum>& albumList );
+    void signalPhotos( const QLinkedList<GPhoto>& photoList );
     void signalAddPhotoSucceeded( );
     void signalGetAlbumsListSucceeded();
     void signalGetAlbumsListFailed( const QString& msg );

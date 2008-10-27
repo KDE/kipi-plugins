@@ -26,10 +26,10 @@
 
 // Qt includes.
 
-#include <Q3ValueList>
 #include <Q3IntDict>
-//#include <QPair>
 #include <QLabel>
+#include <QLinkedList>
+#include <QPair>
 
 // KDE includes.
 
@@ -131,7 +131,7 @@ private:
 
     Q3IntDict<GAlbumViewItem>                m_albumDict;
 
-    Q3ValueList< QPair<QString,FPhotoInfo> > m_uploadQueue;
+    QLinkedList< QPair<QString,FPhotoInfo> > m_uploadQueue;
 
     KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData                *m_about;
@@ -149,7 +149,7 @@ private slots:
 //  void slotOpenPhoto( const KUrl& url );
     void slotUpdateAlbumsList();
     void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const Q3ValueList <FPhotoSet>& photoSetList);
+    void slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& photoSetList);
     void slotAddPhotos();
     void slotUploadImages();
     void slotAddPhotoNext();

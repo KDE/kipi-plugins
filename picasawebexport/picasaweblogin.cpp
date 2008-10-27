@@ -25,10 +25,10 @@
 
 // Qt includes.
 
-#include <Q3Frame>
 #include <Q3GridLayout>
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
+#include <QFrame>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -55,10 +55,10 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     m_headerLabel->setText(header);
     vbox->addWidget( m_headerLabel );
 
-    Q3Frame* hline = new Q3Frame( this, "hline" );
-    hline->setFrameShape( Q3Frame::HLine );
-    hline->setFrameShadow( Q3Frame::Sunken );
-    hline->setFrameShape( Q3Frame::HLine );
+    QFrame* hline = new QFrame( this, "hline" );
+    hline->setFrameShape( QFrame::HLine );
+    hline->setFrameShadow( QFrame::Sunken );
+    hline->setFrameShape( QFrame::HLine );
     vbox->addWidget( hline );
 
     Q3GridLayout* centerLayout = new Q3GridLayout(0, 1, 1, 5, 5);

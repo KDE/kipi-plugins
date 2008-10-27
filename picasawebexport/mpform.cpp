@@ -30,10 +30,10 @@
 
 // Qt includes.
 
-#include <Q3CString>
-#include <Q3TextStream>
+#include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QTextStream>
 
 // KDE includes.
 
@@ -63,19 +63,19 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    Q3CString str;
+    QByteArray str;
     str += "--";
     str += m_boundary;
     str += "--";
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << str;
 }
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
-    Q3CString str;
+    QByteArray str;
     QString  content_length = QString("%1").arg(value.length());
     str += "--";
     str += m_boundary;
@@ -90,7 +90,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: "+ Q3CString(contentType.ascii());
+        str += "Content-Type: "+ QByteArray(contentType.ascii());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
@@ -106,8 +106,8 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     //m_buffer.resize(oldSize + str.size());
     //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
 
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << QString::fromUtf8(str);
 
     return true;
@@ -130,7 +130,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
     QByteArray imageData = imageFile.readAll();
 
-    Q3CString str;
+    QByteArray str;
     QString file_size = QString("%1").arg(imageFile.size());
 
     str += "--";
@@ -150,8 +150,8 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\r\n\r\n";
 
     imageFile.close();
-    Q3TextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(Q3TextStream::UnicodeUTF8);
+    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
+    ts.setEncoding(QTextStream::UnicodeUTF8);
     ts << str;
 
     int oldSize = m_buffer.size();
