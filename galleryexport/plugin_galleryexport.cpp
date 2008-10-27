@@ -21,25 +21,28 @@
  *
  * ============================================================ */
 
-// Local includes.
 #include "plugin_galleryexport.h"
-#include "galleries.h"
-#include "gallerywindow.h"
-#include "galleryconfig.h"
+
+// KDE includes.
+
+#include <kaction.h>
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kgenericfactory.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 // LibKIPI includes.
+
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// KDE includes.
-#include <KLocale>
-#include <KAction>
-#include <KDebug>
-#include <KMessageBox>
-#include <KIconLoader>
-#include <KApplication>
-#include <KGenericFactory>
+// Local includes.
 
+#include "galleries.h"
+#include "galleryconfig.h"
+#include "gallerywindow.h"
 
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_galleryexport"))
@@ -108,7 +111,7 @@ KIPI::Category Plugin_GalleryExport::category(KAction* action) const
         return KIPI::ExportPlugin;
 //     if (action == m_action_configure)
 //         return KIPI::ToolsPlugin;
-// 
+//
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::ExportPlugin;
 }

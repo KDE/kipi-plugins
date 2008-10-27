@@ -21,21 +21,20 @@
  *
  * ============================================================ */
 
-
-// Local includes.
 #include "galleries.h"
 
 // Qt includes.
+
 #include <QString>
 #include <QWidget>
 
 // KDE includes.
-#include <KDebug>
-#include <KConfig>
-#include <KConfigGroup>
-#include <KLocale>
-#include <KApplication>
 
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
+#include <kdebug.h>
+#include <klocale.h>
 
 namespace KIPIGalleryExportPlugin
 {

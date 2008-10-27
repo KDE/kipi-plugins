@@ -26,6 +26,7 @@
 #define GALLERYITEM_H
 
 // Qt includes.
+
 #include <QString>
 
 namespace KIPIGalleryExportPlugin

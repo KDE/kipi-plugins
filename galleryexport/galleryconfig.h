@@ -26,12 +26,14 @@
 #define GALLERYCONFIG_H
 
 // Qt includes.
+
 #include <QLabel>
 #include <QCheckBox>
 
 // KDE includes.
-#include <KDialog>
-#include <KLineEdit>
+
+#include <kdialog.h>
+#include <klineedit.h>
 
 namespace KIPIGalleryExportPlugin
 {

@@ -26,9 +26,9 @@
 #define GALLERYMPFORM_H
 
 // Qt includes.
+
 #include <QByteArray>
 #include <QString>
-
 
 namespace KIPIGalleryExportPlugin
 {

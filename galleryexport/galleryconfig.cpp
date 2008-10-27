@@ -21,26 +21,29 @@
  *
  * ============================================================ */
 
-
-// Local includes.
 #include "galleryconfig.h"
-#include "galleries.h"
-
-// LibKIPI includes.
-#include <libkipi/version.h>
-#include <libkipi/interface.h>
 
 // Qt includes.
+
 #include <QFrame>
-#include <QPushButton>
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 // KDE includes.
-#include <KLocale>
-#include <KDebug>
 
+#include <kdebug.h>
+#include <klocale.h>
+
+// LibKIPI includes.
+
+#include <libkipi/version.h>
+#include <libkipi/interface.h>
+
+// Local includes.
+
+#include "galleries.h"
 
 namespace KIPIGalleryExportPlugin
 {

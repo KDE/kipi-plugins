@@ -21,50 +21,52 @@
  *
  * ============================================================ */
 
-
-// Local includes.
 #include "gallerywindow.h"
-#include "imagedialog.h"
-#include "kpaboutdata.h"
-#include "galleries.h"
-#include "gallerytalker.h"
-#include "galleryitem.h"
-#include "galleryconfig.h"
-#include "albumdlg.h"
-
-// LibKIPI includes.
-#include <libkipi/interface.h>
 
 // Qt includes.
-#include <Qt>
-#include <QDialog>
-#include <QPushButton>
-#include <QPixmap>
-#include <QCursor>
+
 #include <QCheckBox>
-#include <QListWidgetItem>
-#include <QSpinBox>
+#include <QCursor>
+#include <QDialog>
+#include <QFileInfo>
 #include <QGroupBox>
 #include <QInputDialog>
-#include <QFileInfo>
+#include <QListWidgetItem>
+#include <QPixmap>
+#include <QPushButton>
+#include <QSpinBox>
+#include <Qt>
 
 // KDE includes.
-#include <KAboutData>
-#include <KHelpMenu>
-#include <KIcon>
-#include <KMenu>
-#include <KPushButton>
-#include <KLocale>
-#include <KMessageBox>
-#include <KApplication>
-#include <KRun>
-#include <KDebug>
-#include <KConfig>
+
+#include <kaboutdata.h>
+#include <kapplication.h>
+#include <kconfig.h>
+#include <kdebug.h>
+#include <khelpmenu.h>
+#include <kicon.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <krun.h>
 #include <ktoolinvocation.h>
 
+// LibKIPI includes.
+
+#include <libkipi/interface.h>
+
+// Local includes.
+
+#include "albumdlg.h"
+#include "galleries.h"
+#include "galleryconfig.h"
+#include "galleryitem.h"
+#include "gallerytalker.h"
+#include "imagedialog.h"
+#include "kpaboutdata.h"
 
 using namespace KIPIGalleryExportPlugin;
-
 
 // -------------------------------------------------------------------------------
 
@@ -203,7 +205,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     KPushButton *confButton = button( User1 );
     confButton->setText( i18n("settings") );
     confButton->setIcon( KIcon("applications-system") );
-    connect(confButton, SIGNAL(clicked()), this, SLOT(slotSettings() ) ); 
+    connect(confButton, SIGNAL(clicked()), this, SLOT(slotSettings() ) );
 
     // we need to let m_talker work..
     m_talker = new GalleryTalker(d->widget);
@@ -391,13 +393,13 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 //     typedef QList<GAlbum> GAlbumList;
     QVector<int> ref_num_vect( albumList.size() );
 
-    for (int i = 0; i < albumList.size(); ++i) 
+    for (int i = 0; i < albumList.size(); ++i)
     {
         const GAlbum& album = albumList.at(i);
         ref_num_vect.insert( i, album.name.toInt() );
 
         int parentRefNum = album.parent_ref_num;
-        if ( parentRefNum == 0 ) 
+        if ( parentRefNum == 0 )
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, album.title );
@@ -416,7 +418,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
             item->setText(0, album.title );
             item->setIcon(0, KIcon("inode-directory") );
-        
+
             d->albumDict.insert(album.title, album);
         }
     }

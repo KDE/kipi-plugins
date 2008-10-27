@@ -24,13 +24,14 @@
 #ifndef GALLERYWINDOW_H
 #define GALLERYWINDOW_H
 
-// KDE includes.
-#include <KDialog>
-
 // Qt includes.
+
 #include <QList>
 #include <QProgressDialog>
 
+// KDE includes.
+
+#include <KDialog>
 
 namespace KIPI
 {

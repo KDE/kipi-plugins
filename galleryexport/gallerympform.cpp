@@ -20,27 +20,30 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-
-// Local includes.
 #include "gallerympform.h"
-#include "gallerytalker.h"
 
-// KDE includes.
-#include <KDebug>
-#include <KMimeType>
-#include <KUrl>
-#include <KRandom>
+// C++ includes.
 
-// Qt includes.
-#include <QFile>
-#include <QFileInfo>
-#include <QTextStream>
-#include <QTextCodec>
-
-// standard includes
 #include <cstring>
 #include <cstdio>
 
+// Qt includes.
+
+#include <QFile>
+#include <QFileInfo>
+#include <QTextCodec>
+#include <QTextStream>
+
+// KDE includes.
+
+#include <kdebug.h>
+#include <kmimetype.h>
+#include <krandom.h>
+#include <kurl.h>
+
+// Local includes.
+
+#include "gallerytalker.h"
 
 namespace KIPIGalleryExportPlugin
 {

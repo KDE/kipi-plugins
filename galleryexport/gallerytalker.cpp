@@ -21,36 +21,39 @@
  *
  * ============================================================ */
 
-// standard includes
+#include "gallerytalker.h"
+#include "gallerytalker.moc"
+
+// C++ includes.
+
 #include <cstring>
 #include <cstdio>
 
 // Qt includes.
+
 #include <QByteArray>
-#include <QTextStream>
 #include <QFile>
 #include <QImage>
-#include <QRegExp>
 #include <QImageReader>
+#include <QRegExp>
+#include <QTextStream>
 
 // KDE includes.
-#include <KLocale>
+
+#include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <KDebug>
-#include <KStandardDirs>
-
+#include <klocale.h>
+#include <kstandarddirs.h>
 
 // LibKExiv2 includes.
+
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
-#include "gallerytalker.h"
+
 #include "galleryitem.h"
 #include "gallerympform.h"
-
-// self
-#include "gallerytalker.moc"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -153,7 +156,7 @@ void GalleryTalker::listPhotos(const QString& albumName)
     connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
 
     emit signalBusy(true);
-} 
+}
 
 
 
@@ -339,7 +342,7 @@ void GalleryTalker::slotResult(KJob *job)
                 {
                     QStringList cl = str.split(" ");
                     int n = cl.lastIndexOf(rx);
-                    if(n!= -1) 
+                    if(n!= -1)
                     {
                         app = cl.at(n);
                     }
@@ -419,37 +422,37 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else 
+                } else
                     if (key.startsWith("album.name")) {
                         GAlbum album;
                         album.name    = value;
                         album.ref_num = key.section(".", 2, 2).toInt();
                         iter = albumList.insert(iter, album);
-                } else 
+                } else
                     if (key.startsWith("album.title")) {
                         (*iter).title = value;
-                } else 
+                } else
                     if (key.startsWith("album.summary")) {
                         (*iter).summary = value;
-                } else 
+                } else
                     if (key.startsWith("album.parent")) {
                         (*iter).parent_ref_num = value.toInt();
-                } else 
+                } else
                     if (key.startsWith("album.perms.add")) {
                         (*iter).add = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.write")) {
                         (*iter).write = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.del_item")) {
                         (*iter).del_item = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.del_alb")) {
                         (*iter).del_alb = (value == "true");
-                } else 
+                } else
                     if (key.startsWith("album.perms.create_sub")) {
                         (*iter).create_sub = (value == "true");
-                } else 
+                } else
                     if (key == "auth_token") {
                     s_authToken = value;
                 }
@@ -504,19 +507,19 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
                 if (key == "status") {
                     success = (value == "0");
-                } else 
+                } else
                     if (key.startsWith("image.name")) {
                         GPhoto photo;
                         photo.name    = value;
                         photo.ref_num = key.section(".", 2, 2).toInt();
                         iter = photoList.insert(iter, photo);
-                } else 
-                    if (key.startsWith("image.caption")) { 
+                } else
+                    if (key.startsWith("image.caption")) {
                         (*iter).caption = value;
-                } else 
+                } else
                     if (key.startsWith("image.thumbName")) {
                         (*iter).thumbName = value;
-                } else 
+                } else
                     if (key.startsWith("baseurl")) {
                         albumURL = value.replace("\\", "");
                 }

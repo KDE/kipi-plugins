@@ -21,18 +21,18 @@
  *
  * ============================================================ */
 
-
 #ifndef GALLERYTALKER_H
 #define GALLERYTALKER_H
 
-// KDE includes.
-#include <KUrl>
-#include <kio/job.h>
-
 // Qt includes.
+
 #include <QObject>
 #include <QList>
 
+// KDE includes.
+
+#include <KUrl>
+#include <kio/job.h>
 
 namespace KIO
 {

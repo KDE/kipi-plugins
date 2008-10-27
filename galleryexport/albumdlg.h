@@ -18,15 +18,15 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GALLERY_ALBUM_H
-#define GALLERY_ALBUM_H
+#ifndef ALBUMDLG_H
+#define ALBUMDLG_H
+
+#include "ui_galleryalbumwidget.h"
 
 // Qt includes.
+
 #include <QDialog>
 #include <QWidget>
-
-// UI includes
-#include "ui_galleryalbumwidget.h"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -41,4 +41,4 @@ public:
 };
 
 }
-#endif
+#endif // ALBUMDLG_H
