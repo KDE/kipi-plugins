@@ -14,37 +14,33 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // C++ includes.
 
 #include <iostream>
 
-// Qt includes.
-
-#include <kurl.h>
-
 // KDE includes.
 
-#include <kshortcut.h>
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kurl.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <kshortcut.h>
 #include <kstandardguiitem.h>
+#include <kurl.h>
 
 // LibKIPI includes.
 
@@ -114,7 +110,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     d->action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
     d->action_AutoExif->setObjectName("rotate_exif");
-    connect(d->action_AutoExif, SIGNAL(triggered(bool)), 
+    connect(d->action_AutoExif, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateExif()));
     addAction(d->action_AutoExif);
 
@@ -125,14 +121,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KAction *left = new KAction(i18n("Left"), actionCollection());
     left->setObjectName("rotate_ccw");
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
-    connect(left, SIGNAL(triggered(bool)), 
+    connect(left, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateLeft()));
     d->action_RotateImage->addAction(left);
 
     KAction *right = new KAction(i18n("Right"), actionCollection());
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
     right->setObjectName("rotate_cw");
-    connect(right, SIGNAL(triggered(bool)), 
+    connect(right, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateRight()));
     d->action_RotateImage->addAction(right);
 
@@ -142,25 +138,25 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
     hori->setObjectName("flip_horizontal");
-    connect(hori, SIGNAL(triggered(bool)), 
+    connect(hori, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipHorizontally()));
     d->action_FlipImage->addAction(hori);
 
     KAction *verti = new KAction(i18n("Vertically"), actionCollection());
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
     verti->setObjectName("flip_vertical");
-    connect(verti, SIGNAL(triggered(bool)), 
+    connect(verti, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipVertically()));
     d->action_FlipImage->addAction(verti);
 
     d->action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
     d->action_Convert2GrayScale->setObjectName("jpeglossless_convert2grayscale");
-    connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)), 
+    connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
             this, SLOT(slotConvert2GrayScale()));
     addAction(d->action_Convert2GrayScale);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !interface ) 
+    if ( !interface )
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -216,13 +212,13 @@ void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const 
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg) 
+    if (d->progressDlg)
     {
         delete d->progressDlg;
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Flip images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -260,13 +256,13 @@ void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, co
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg) 
+    if (d->progressDlg)
     {
         delete d->progressDlg;
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Rotate images %1", title));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -293,13 +289,13 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg) 
+    if (d->progressDlg)
     {
         delete d->progressDlg;
         d->progressDlg = 0;
     }
 
-    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Convert images to black & white"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -318,7 +314,7 @@ void Plugin_JPEGLossless::slotCancel()
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
+    if ( !interface )
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -445,7 +441,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
             disconnect(d->progressDlg, SIGNAL(cancelClicked()),
                        this, SLOT(slotCancel()));
         }
-        else 
+        else
         {
             slotCancel();
             d->progressDlg->close();
@@ -454,7 +450,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-        if ( !interface ) 
+        if ( !interface )
         {
            kError( 51000 ) << "Kipi interface is null!" << endl;
            return;
@@ -483,7 +479,7 @@ KUrl::List Plugin_JPEGLossless::images()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !interface ) 
+    if ( !interface )
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return KUrl::List();

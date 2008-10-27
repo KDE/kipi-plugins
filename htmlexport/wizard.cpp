@@ -53,7 +53,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"
 #include "kpaboutdata.h"
-#include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "theme.h"
 #include "ui_imagesettingspage.h"
@@ -102,7 +101,7 @@ typedef WizardPage<Ui_OutputPage> OutputPage;
 struct Wizard::Private {
 	GalleryInfo* mInfo;
 	KConfigDialogManager* mConfigManager;
-	
+
 	KIPI::ImageCollectionSelector* mCollectionSelector;
 	ThemePage* mThemePage;
 	ThemeParametersPage* mThemeParametersPage;
@@ -111,7 +110,7 @@ struct Wizard::Private {
 
 	KIPIPlugins::KPAboutData* mAbout;
 	QMap<QByteArray, QWidget*> mThemeParameterWidgetFromName;
-	
+
 	void initThemePage() {
 		KListWidget* listWidget=mThemePage->mThemeList;
 		Theme::List list=Theme::getList();
@@ -217,7 +216,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	d->mThemeParametersPage = new ThemeParametersPage(this, i18n("Theme Parameters"));
 
 	d->mImageSettingsPage=new ImageSettingsPage(this, i18n("Image Settings"));
-	
+
 	d->mOutputPage=new OutputPage(this, i18n("Output"));
 	d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
@@ -250,13 +249,13 @@ void Wizard::slotThemeSelectionChanged() {
 	KTextBrowser* browser=d->mThemePage->mThemeInfo;
 	if (listWidget->currentItem()) {
 		Theme::Ptr theme=static_cast<ThemeListBoxItem*>(listWidget->currentItem())->mTheme;
-		
+
 		QString url=theme->authorUrl();
 		QString author=theme->authorName();
 		if (!url.isEmpty()) {
 			author=QString("<a href='%1'>%2</a>").arg(url).arg(author);
 		}
-		
+
 		QString txt=
 			QString("<b>%1</b><br/><br/>%2<br/><br/>").arg(theme->name(), theme->comment())
 			+ i18n("Author: %1", author);

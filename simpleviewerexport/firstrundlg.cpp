@@ -24,18 +24,18 @@
 // Qt includes.
 
 #include <QFrame>
-#include <QLayout>
 #include <QLabel>
+#include <QLayout>
 
 // KDE includes.
 
+#include <khelpmenu.h>
 #include <klocale.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <kurlrequester.h>
-#include <ktoolinvocation.h>
-#include <khelpmenu.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
 
 // LibKIPI includes.
 
@@ -45,7 +45,6 @@
 // Local includes.
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
 #include "firstrundlg.h"
 #include "firstrundlg.moc"
 

@@ -33,29 +33,28 @@
 
 // DNG SDK includes.
 
+#include "dng_camera_profile.h"
 #include "dng_color_space.h"
 #include "dng_exceptions.h"
 #include "dng_file_stream.h"
 #include "dng_globals.h"
+#include "dng_host.h"
 #include "dng_ifd.h"
 #include "dng_image_writer.h"
 #include "dng_info.h"
 #include "dng_linearization_info.h"
+#include "dng_memory_stream.h"
 #include "dng_mosaic_info.h"
+#include "dng_negative.h"
 #include "dng_preview.h"
+#include "dng_read_image.h"
 #include "dng_render.h"
 #include "dng_simple_image.h"
 #include "dng_tag_codes.h"
 #include "dng_tag_types.h"
 #include "dng_tag_values.h"
-#include "dng_xmp_sdk.h"
-#include "dng_camera_profile.h"
-#include "dng_memory_stream.h"
 #include "dng_xmp.h"
-#include "dng_read_image.h"
-#include "dng_camera_profile.h"
-#include "dng_negative.h"
-#include "dng_host.h"
+#include "dng_xmp_sdk.h"
 
 using namespace KDcrawIface;
 
