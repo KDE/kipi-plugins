@@ -9,7 +9,6 @@ IF(WIN32)
         twainiface/qtwain.cpp
         twainiface/qtwaininterface.cpp
         twainiface/qtwainmainwindow.cpp
-        twainiface/qtwainsubstitute.cpp
         twainiface/twainiface.cpp
        )
 

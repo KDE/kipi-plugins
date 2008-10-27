@@ -21,28 +21,18 @@
  *
  * ============================================================ */
 
-#ifndef _QTWAININTERFACE_H_
-#define _QTWAININTERFACE_H_
+#ifndef QTWAININTERFACE_H
+#define QTWAININTERFACE_H
 
 #include <QObject>
 #include <QPixmap>
 #include <QImage>
 #include <limits.h>
 
-class CDIB; // we don't need the definition in the header
+class CDIB;
 
 /**
- * @class    QTwainInterface
- * @author   Stephan Stapel, <stephan.stapel@web.de>
- * @date     15.04.2003
- *
- * @brief    interface class
- *
- * More or less pure virtual interface class to the twain interface.
- * This class allows to implement the actual twain interfaces in
- * custom ways, i.e. for example for Windows (QTwain class) or 
- * substituted by a regular file-open dialog (QTwainSubstitute class)
- * or even by implementing a SANE interface.
+ * This class allows to implement the actual twain interfaces (QTwain class)
  *
  * A window that invokes twain operations needs to overwrite two
  * methods:
@@ -60,7 +50,7 @@ class CDIB; // we don't need the definition in the header
  * which is more effective. Huge problems occur if acquiring a high number
  * of pixmaps in a row (see it's implementation in Qt for details).
  */
-class QTwainInterface : public QObject  
+class QTwainInterface : public QObject
 {
     Q_OBJECT
 
@@ -122,7 +112,7 @@ public:
     void setEmitPixmaps(bool emitThem = true)
     {
         m_bEmitPixmaps = emitThem;
-    } // !setEmitPixmaps()
+    }
 
     /**
      * Helper operation to convert a dib structure into a QPixmap
@@ -153,7 +143,7 @@ protected:
     inline bool emitPixmaps() const
     {
         return m_bEmitPixmaps;
-    } // !emitPixmaps()
+    }
 
 signals:
 
@@ -179,8 +169,9 @@ signals:
 
 protected:
 
+    bool     m_bEmitPixmaps;
+
     QWidget* m_pParent;
-    bool m_bEmitPixmaps;
 };
 
-#endif /* _QTWAININTERFACE_H_ */
+#endif /* QTWAININTERFACE_H */
