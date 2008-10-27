@@ -55,8 +55,6 @@ void QTwainInterface::setParent(QWidget* parent)
     }
 }
 
-
-
 QPixmap* QTwainInterface::convertToPixmap(CDIB* pDib) 
 //,const unsigned int nWidth,const unsigned int nHeight)
 {
@@ -108,7 +106,7 @@ QImage* QTwainInterface::convertToImage(CDIB* pDib, unsigned int nWidth, unsigne
     if (nUseWidth == 0)
         nUseWidth = pDib->Width();
     if (nUseHeight == 0)
-        nUseHeight = pDib->Height();    
+        nUseHeight = pDib->Height();
 
     QPixmap pixmap(pDib->Width(), pDib->Height());
 /*    pDib->BitBlt(pixmap.handle(), 
@@ -116,7 +114,8 @@ QImage* QTwainInterface::convertToImage(CDIB* pDib, unsigned int nWidth, unsigne
                  pDib->Width(), pDib->Height(),
                  0, 0);
 */
-    QImage* retval = new QImage( pixmap.toImage().scaled(nUseWidth, nUseHeight,Qt::KeepAspectRatio,Qt::SmoothTransformation) );
+    QImage* retval = new QImage(pixmap.toImage().scaled(nUseWidth, nUseHeight,
+                                Qt::KeepAspectRatio, Qt::SmoothTransformation));
     return retval;
 }
 
