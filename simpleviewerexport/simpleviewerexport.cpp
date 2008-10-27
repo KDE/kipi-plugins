@@ -13,34 +13,37 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "simpleviewerexport.h"
+#include "simpleviewerexport.moc"
 
 // Qt includes.
 
-#include <QFile>
-#include <QDir>
 #include <QByteArray>
 #include <QDataStream>
+#include <QDir>
 #include <QDomText>
+#include <QFile>
 
 // KDE includes.
 
-#include <kstandardguiitem.h>
-#include <kdebug.h>
-#include <klocale.h>
+#include <kaboutdata.h>
 #include <kapplication.h>
+#include <kdebug.h>
 #include <kfilemetainfo.h>
-#include <kstandarddirs.h>
 #include <kio/copyjob.h>
 #include <kio/netaccess.h>
+#include <klocale.h>
 #include <kmessagebox.h>
-#include <kaboutdata.h>
+#include <kstandarddirs.h>
+#include <kstandardguiitem.h>
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
 
@@ -60,11 +63,9 @@
 // Local includes.
 
 #include "batchprogressdialog.h"
-#include "pluginsversion.h"
 #include "firstrundlg.h"
+#include "pluginsversion.h"
 #include "svedialog.h"
-#include "simpleviewerexport.h"
-#include "simpleviewerexport.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -178,7 +179,7 @@ bool SimpleViewerExport::configure()
                     if(!KIO::NetAccess::del(d->configDlg->settings().exportUrl, kapp->activeWindow()))
                     {
                         KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1\n"
-                                           "Please choose another export folder", 
+                                           "Please choose another export folder",
                                            d->configDlg->settings().exportUrl.path()));
                         configured = false;
                     }
@@ -355,7 +356,7 @@ bool SimpleViewerExport::exportImages()
     QDomDocument xmlDoc;
     xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QString::fromLatin1("xml"),
                        QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
-    QDomElement galleryElem = xmlDoc.createElement(QString::fromLatin1("simpleviewerGallery")); 
+    QDomElement galleryElem = xmlDoc.createElement(QString::fromLatin1("simpleviewerGallery"));
     xmlDoc.appendChild( galleryElem );
     galleryElem.setAttribute(QString::fromLatin1("enableRightClickOpen"), d->configDlg->settings().enableRightClickToOpen());
     galleryElem.setAttribute(QString::fromLatin1("maxImageWidth"),        d->configDlg->settings().maxImageDimension);
@@ -411,7 +412,7 @@ bool SimpleViewerExport::exportImages()
 
             if(image.isNull())
             {
-                d->progressDlg->addedAction(i18n("Could not open image '%1'", url.fileName()), 
+                d->progressDlg->addedAction(i18n("Could not open image '%1'", url.fileName()),
                                            KIPIPlugins::WarningMessage);
                 continue;
             }
@@ -515,7 +516,7 @@ bool SimpleViewerExport::resizeImage(const QImage &image, int maxSize, QImage &r
     return true;
 }
 
-void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, 
+void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem,
                                      const KUrl &url, const QString& newName)
 {
     if(d->canceled)
@@ -533,15 +534,15 @@ void SimpleViewerExport::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryE
         comment = QString();
     }
 
-    QDomElement img = xmlDoc.createElement(QString::fromLatin1("image")); 
+    QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
     galleryElem.appendChild(img);
 
-    QDomElement name = xmlDoc.createElement(QString::fromLatin1("name")); 
+    QDomElement name = xmlDoc.createElement(QString::fromLatin1("name"));
     img.appendChild(name);
     QDomText nametxt = xmlDoc.createTextNode(newName);
     name.appendChild(nametxt);
 
-    QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption")); 
+    QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption"));
     img.appendChild(caption);
     QDomText captiontxt = xmlDoc.createTextNode(comment);
     caption.appendChild(captiontxt);
@@ -608,7 +609,7 @@ bool SimpleViewerExport::copySimpleViewer()
 
     dir.setPath(dataDir);
     entries = dir.entryList(QDir::Files);
-    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it) 
+    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
     {
         files.append(KUrl(dir.absolutePath() + "/" + *it));
     }
@@ -617,7 +618,7 @@ bool SimpleViewerExport::copySimpleViewer()
     dataDir = KStandardDirs::locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html/");
     dir.setPath(dataDir);
     entries = dir.entryList(QDir::Files);
-    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it) 
+    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
     {
         files.append(dir.absolutePath() + "/" + *it);
     }
@@ -713,8 +714,8 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
     const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
 
     // extract the needed files from SimpleViewer archive
-    for(QStringList::Iterator it = d->simpleViewerFiles.begin(); 
-        it != d->simpleViewerFiles.end(); ++it ) 
+    for(QStringList::Iterator it = d->simpleViewerFiles.begin();
+        it != d->simpleViewerFiles.end(); ++it )
     {
         const KArchiveEntry *entry = dir->entry(*it);
         if(!extractFile(entry))
@@ -730,14 +731,14 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
 
 bool SimpleViewerExport::extractFile(const KArchiveEntry *entry)
 {
-    if( !entry || !entry->isFile() ) 
+    if( !entry || !entry->isFile() )
         return false;
 
     const KArchiveFile *entryFile = dynamic_cast<const KArchiveFile*>(entry);
     QByteArray array = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );
-    if(file.open( QIODevice::WriteOnly )) 
+    if(file.open( QIODevice::WriteOnly ))
     {
         int ret = file.write(array);
         file.close();

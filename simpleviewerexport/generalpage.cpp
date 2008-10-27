@@ -20,25 +20,23 @@
  *
  * ============================================================ */
 
+#include "generalpage.h"
+#include "generalpage.moc"
+
 // Qt includes.
 
-#include <QLabel>
-#include <QGroupBox>
 #include <QCheckBox>
+#include <QGroupBox>
+#include <QLabel>
 #include <QLayout>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <knuminput.h>
 #include <klineedit.h>
+#include <klocale.h>
+#include <knuminput.h>
 #include <kurlrequester.h>
-
-// Local includes.
-
-#include "generalpage.h"
-#include "generalpage.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {

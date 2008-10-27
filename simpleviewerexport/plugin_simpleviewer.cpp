@@ -13,24 +13,27 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
+#include "plugin_simpleviewer.h"
+#include "plugin_simpleviewer.moc"
+
 // KDE includes.
-  
-#include <klocale.h>
+
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 
 // LibKIPI includes.
 
@@ -40,8 +43,6 @@
 
 #include "svedialog.h"
 #include "simpleviewerexport.h"
-#include "plugin_simpleviewer.h"
-#include "plugin_simpleviewer.moc"
 
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SimpleViewer>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_simpleviewer") )
@@ -55,10 +56,10 @@ Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const QVariantList&)
 void Plugin_SimpleViewer::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
-    
+
     m_actionSimpleViewer = new KAction(KIcon("applications-internet"), i18n("Flash Export..."), actionCollection());
     m_actionSimpleViewer->setObjectName("simpleviewer");
-    connect(m_actionSimpleViewer, SIGNAL(triggered(bool)), 
+    connect(m_actionSimpleViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
     addAction(m_actionSimpleViewer);
 
@@ -74,7 +75,7 @@ KIPI::Category Plugin_SimpleViewer::category( KAction* action ) const
 {
     if ( action == m_actionSimpleViewer )
        return KIPI::ExportPlugin;
-    
+
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::ExportPlugin; // no warning from compiler, please
 }

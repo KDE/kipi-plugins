@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "firstrundlg.h"
+#include "firstrundlg.moc"
+
 // Qt includes.
 
 #include <QFrame>
@@ -45,8 +48,6 @@
 // Local includes.
 
 #include "kpaboutdata.h"
-#include "firstrundlg.h"
-#include "firstrundlg.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {

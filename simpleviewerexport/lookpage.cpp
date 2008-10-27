@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "lookpage.h"
+#include "lookpage.moc"
+
 // Qt includes.
 
 #include <QLabel>
@@ -29,16 +32,11 @@
 
 // KDE includes.
 
+#include <kcolorbutton.h>
+#include <kdialog.h>
 #include <khbox.h>
 #include <klocale.h>
-#include <kdialog.h>
 #include <knuminput.h>
-#include <kcolorbutton.h>
-
-// Local includes.
-
-#include "lookpage.h"
-#include "lookpage.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {

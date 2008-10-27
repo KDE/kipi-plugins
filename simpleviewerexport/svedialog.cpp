@@ -13,13 +13,16 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
+
+#include "svedialog.h"
+#include "svedialog.moc"
 
 // Qt includes.
 
@@ -28,27 +31,25 @@
 
 // KDE includes.
 
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <khelpmenu.h>
-#include <kmenu.h>
-#include <kiconloader.h>
-#include <knuminput.h>
-#include <kglobalsettings.h>
-#include <kpushbutton.h>
 #include <kconfig.h>
-#include <ktoolinvocation.h>
+#include <kglobalsettings.h>
 #include <kguiitem.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
+#include <knuminput.h>
+#include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
+#include "generalpage.h"
 #include "kpaboutdata.h"
+#include "lookpage.h"
 #include "pluginsversion.h"
 #include "selectionpage.h"
-#include "generalpage.h"
-#include "lookpage.h"
-#include "svedialog.h"
-#include "svedialog.moc"
 
 namespace KIPISimpleViewerExportPlugin
 {
@@ -122,11 +123,11 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
                          "(c) 2008, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Joern Ahrens"), 
+    d->about->addAuthor(ki18n("Joern Ahrens"),
                        ki18n("Author"),
                              "joern dot ahrens at kdemail dot net");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), 
+    d->about->addAuthor(ki18n("Gilles Caulier"),
                        ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
@@ -176,16 +177,16 @@ void SVEDialog::showPage(int page)
     switch(page)
     {
         case 0:
-            setCurrentPage(d->page_selection); 
+            setCurrentPage(d->page_selection);
             break;
         case 1:
-            setCurrentPage(d->page_general); 
+            setCurrentPage(d->page_general);
             break;
         case 2:
-            setCurrentPage(d->page_look); 
+            setCurrentPage(d->page_look);
             break;
-        default: 
-            setCurrentPage(d->page_selection); 
+        default:
+            setCurrentPage(d->page_selection);
             break;
     }
 }
