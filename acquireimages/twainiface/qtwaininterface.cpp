@@ -69,15 +69,15 @@ QPixmap* QTwainInterface::convertToPixmap(CDIB* pDib)
     unsigned int nUseHeight;
 
 //    if (nUseWidth == 0)
-    nUseWidth = pDib->Width();
+    nUseWidth  = pDib->Width();
 //    if (nUseHeight == 0)
     nUseHeight = pDib->Height();
 
     //QPixmap* retval = new QPixmap(nUseWidth, nUseHeight);
-    HANDLE hdib=pDib->DIBHandle();
-    HPALETTE pepe =CreateDIBPalette(hdib);
-    HBITMAP ima =DIBToBitmap(hdib,pepe);
-    QPixmap* retval2= new QPixmap(QPixmap::fromWinHBITMAP ( ima,QPixmap::NoAlpha));
+    HANDLE hdib   = pDib->DIBHandle();
+    HPALETTE pepe = CreateDIBPalette(hdib);
+    HBITMAP ima   = DIBToBitmap(hdib,pepe);
+    QPixmap* retval2= new QPixmap(QPixmap::fromWinHBITMAP(ima, QPixmap::NoAlpha));
 
     //return retval2;
     //HDC hehe;

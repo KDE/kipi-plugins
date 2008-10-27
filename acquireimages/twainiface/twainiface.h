@@ -42,7 +42,7 @@ class TwainIface
 
 public:
 
-    TwainIface(HWND hWnd = NULL);
+    TwainIface(HWND hWnd=NULL);
     virtual ~TwainIface();
 
     bool InitTwain(HWND hWnd);
@@ -77,16 +77,16 @@ public:
 
 protected:
 
-    bool CallTwainProc(pTW_IDENTITY pOrigin,pTW_IDENTITY pDest,
-                       TW_UINT32 DG,TW_UINT16 DAT,TW_UINT16 MSG,
+    bool CallTwainProc(pTW_IDENTITY pOrigin, pTW_IDENTITY pDest,
+                       TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG,
                        TW_MEMREF pData);
 
     void CloseDSM();
     void CloseDS();
 
-    bool GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conType=TWON_DONTCARE16);
-    bool GetCapability(TW_UINT16 cap,TW_UINT32& value);
-    bool SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign=false);
+    bool GetCapability(TW_CAPABILITY& twCap, TW_UINT16 cap, TW_UINT16 conType=TWON_DONTCARE16);
+    bool GetCapability(TW_UINT16 cap, TW_UINT32& value);
+    bool SetCapability(TW_UINT16 cap, TW_UINT16 value, bool sign=false);
     bool SetCapability(TW_CAPABILITY& twCap);
     bool EnableSource(bool showUI=true);
 
@@ -102,7 +102,7 @@ protected:
     bool ShouldContinue();
     bool GetImage(TW_IMAGEINFO& info);
 
-    virtual void CopyImage(HANDLE hBitmap,TW_IMAGEINFO& info)=0;
+    virtual void CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info)=0;
 
 protected:
 

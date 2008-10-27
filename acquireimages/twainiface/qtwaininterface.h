@@ -92,7 +92,7 @@ public:
     /**
      * Acquires a number of imagesusing scanning dialog.
      */
-    virtual bool acquire(unsigned int maxNumImages = UINT_MAX) = 0;
+    virtual bool acquire(unsigned int maxNumImages=UINT_MAX) = 0;
 
     /**
      * Returns whether the device that is currently being used
@@ -127,9 +127,9 @@ public:
     /**
      * Helper operation to convert a dib structure into a QImage
      */
-    static QImage* convertToImage(CDIB* pDib,unsigned int nWidth = 0,unsigned int nHeight = 0);
+    static QImage* convertToImage(CDIB* pDib, unsigned int nWidth = 0, unsigned int nHeight = 0);
 
-    static CDIB* convertToDib(QPixmap* pPixmap,unsigned int nWidth = 0,unsigned int nHeight = 0);
+    static CDIB* convertToDib(QPixmap* pPixmap, unsigned int nWidth = 0, unsigned int nHeight = 0);
 
 protected:
 
