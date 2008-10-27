@@ -33,7 +33,6 @@
 #include "qtwain.h"
 #include "dib.h"
 
-
 QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
                 : QMainWindow(parent, f)
 {
@@ -41,27 +40,25 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
     m_pWidget        = new QWidget(this);
     m_pVBox          = new QGridLayout();
     m_pWidget->setLayout(m_pVBox);
-    m_pAcquireButton = new QPushButton("Acquire image", m_pWidget);
-    m_pSelectButton  = new QPushButton("Select source", m_pWidget);
     m_pLabel         = new QLabel();
 
     m_pVBox->addWidget(m_pAcquireButton,0, 0, 0);
     m_pVBox->addWidget(m_pSelectButton, 0, 1, 0);
     m_pVBox->addWidget(m_pLabel,        1, 0, 2, 2, 0);
-    m_pWidget->setMinimumSize(500,500);
+    m_pWidget->setMinimumSize(500, 500);
     m_pPixmap = 0;
-
-    connect(m_pSelectButton, SIGNAL(clicked()),
-            this, SLOT(onSelectButton()));
-
-    connect(m_pAcquireButton, SIGNAL(clicked()),
-            this, SLOT(onAcquireButton()));
 
     connect(m_pTwain, SIGNAL(dibAcquired(CDIB*)),
             this, SLOT(onDibAcquired(CDIB*)));
 
     setMinimumSize(800, 600);
     setGeometry(300, 300, 800, 600) ;
+
+    m_pTwain->selectSource();
+    if (!m_pTwain->acquire())
+    {
+        qWarning("acquire() call not successful!");
+    }
 }
 
 QTwainMainWindow::~QTwainMainWindow()
@@ -69,7 +66,7 @@ QTwainMainWindow::~QTwainMainWindow()
     delete m_pTwain;
 }
 
-void QTwainMainWindow::showEvent(QShowEvent* thisEvent)
+void QTwainMainWindow::showEvent(QShowEvent*)
 {
     // set the parent here to be sure to have a really
     // valid window as the twain parent!
@@ -79,26 +76,12 @@ void QTwainMainWindow::showEvent(QShowEvent* thisEvent)
 bool QTwainMainWindow::winEvent(MSG* pMsg, long* result)
 {
     //return (m_pTwain->processMessage(*pMsg) == true);
-    m_pTwain->processMessage(*pMsg); 
+    m_pTwain->processMessage(*pMsg);
     return false;
 }
 
-void QTwainMainWindow::resizeEvent(QResizeEvent* thisEvent)
+void QTwainMainWindow::resizeEvent(QResizeEvent*)
 {
-    //this->setGeometry(0, 0, 170, 70);
-}
-
-void QTwainMainWindow::onSelectButton()
-{
-    m_pTwain->selectSource();
-}
-
-void QTwainMainWindow::onAcquireButton()
-{
-    if (!m_pTwain->acquire())
-    {
-        qWarning("acquire() call not successful!");
-    }
 }
 
 void QTwainMainWindow::onDibAcquired(CDIB* pDib)
@@ -109,7 +92,7 @@ void QTwainMainWindow::onDibAcquired(CDIB* pDib)
     delete pDib;
 }
 
-void QTwainMainWindow::paintEvent(QPaintEvent* thisEvent)
+void QTwainMainWindow::paintEvent(QPaintEvent*)
 {
     if (m_pPixmap)
     {

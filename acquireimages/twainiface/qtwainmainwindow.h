@@ -21,13 +21,12 @@
  *
  * ============================================================ */
 
-#ifndef _QTWAINMAINWINDOW_H_
-#define _QTWAINMAINWINDOW_H_
+#ifndef QTWAINMAINWINDOW_H
+#define QTWAINMAINWINDOW_H
 
 // Qt includes.
 
 #include <QMainWindow>
-#include <QPushButton>
 #include <QPixmap>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -46,7 +45,7 @@ public:
     /**
      * Standard constructor
      */
-    QTwainMainWindow(QWidget* parent = 0,  Qt::WindowFlags f =  Qt::Window);
+    QTwainMainWindow(QWidget* parent=0,  Qt::WindowFlags f=Qt::Window);
 
     /**
      * Standard destructor
@@ -56,31 +55,25 @@ public:
     /**
      * @name overwritten to hook-in twain interface
      */
-    /*@{*/
-    void showEvent(QShowEvent* thisEvent);
-    /*@}*/
+    void showEvent(QShowEvent*);
 
 protected:
 
-    void paintEvent(QPaintEvent* thisEvent);
-    void resizeEvent(QResizeEvent* thisEvent);
-    virtual bool winEvent(MSG* pMsg,long * result);
+    void paintEvent(QPaintEvent*);
+    void resizeEvent(QResizeEvent*);
+    virtual bool winEvent(MSG* pMsg, long *result);
 
 private slots:
 
-    void onSelectButton();
-    void onAcquireButton();
     void onDibAcquired(CDIB* pDib);
 
 protected:
 
     QTwainInterface* m_pTwain;
-    QPushButton*     m_pSelectButton;
-    QPushButton*     m_pAcquireButton;
     QPixmap*         m_pPixmap;
     QGridLayout*     m_pVBox;
     QWidget*         m_pWidget;
     QLabel*          m_pLabel;
 };
 
-#endif // !_QTWAINMAINWINDOW_H_
+#endif /* QTWAINMAINWINDOW_H */
