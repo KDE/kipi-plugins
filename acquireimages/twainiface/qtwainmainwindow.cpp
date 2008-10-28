@@ -79,6 +79,6 @@ bool QTwainMainWindow::winEvent(MSG* pMsg, long* /*result*/)
 
 void QTwainMainWindow::slotImageAcquired(const QImage& img)
 {
-    QPixmap pix = img.toPixmap();
+    QPixmap pix = QPixmap::fromImage(img);
     m_pLabel->setPixmap(pix);
 }
