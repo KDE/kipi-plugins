@@ -42,30 +42,18 @@ class QTwainMainWindow : public QMainWindow
 
 public:
 
-    /**
-     * Standard constructor
-     */
-    QTwainMainWindow(QWidget* parent=0,  Qt::WindowFlags f=Qt::Window);
-
-    /**
-     * Standard destructor
-     */
+    QTwainMainWindow(QWidget* parent=0, Qt::WindowFlags f=Qt::Window);
     virtual ~QTwainMainWindow();
-
-    /**
-     * @name overwritten to hook-in twain interface
-     */
-    void showEvent(QShowEvent*);
 
 protected:
 
     void paintEvent(QPaintEvent*);
-    void resizeEvent(QResizeEvent*);
+
     virtual bool winEvent(MSG* pMsg, long *result);
 
 private slots:
 
-    void slotSelectSource();
+    void slotInit();
     void onDibAcquired(CDIB* pDib);
 
 protected:

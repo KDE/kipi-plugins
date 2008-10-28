@@ -29,6 +29,11 @@
 #include <QPainter>
 #include <QTimer>
 
+// KDE includes.
+
+#include <kmessagebox.h>
+#include <klocale.h>
+
 // Local includes.
 
 #include "qtwain.h"
@@ -39,8 +44,7 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
 {
     m_pTwain         = new QTwain(0);
     m_pWidget        = new QWidget(this);
-    m_pVBox          = new QGridLayout();
-    m_pWidget->setLayout(m_pVBox);
+    m_pVBox          = new QGridLayout(m_pWidget);
     m_pLabel         = new QLabel();
 
     m_pVBox->addWidget(m_pLabel, 1, 0, 2, 2, 0);
@@ -53,12 +57,7 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
     setMinimumSize(800, 600);
     setGeometry(300, 300, 800, 600) ;
 
-    QTimer::singleShot(0, this, SLOT(slotSelectSource()));
-
-/*    if (!m_pTwain->acquire())
-    {
-        qWarning("acquire() call not successful!");
-    }*/
+    QTimer::singleShot(0, this, SLOT(slotInit()));
 }
 
 QTwainMainWindow::~QTwainMainWindow()
@@ -66,27 +65,20 @@ QTwainMainWindow::~QTwainMainWindow()
     delete m_pTwain;
 }
 
-void QTwainMainWindow::slotSelectSource()
+void QTwainMainWindow::slotInit()
 {
-    m_pTwain->selectSource();
-}
-
-void QTwainMainWindow::showEvent(QShowEvent*)
-{
-    // set the parent here to be sure to have a really
-    // valid window as the twain parent!
     m_pTwain->setParent(this);
+    m_pTwain->selectSource();
+
+    if (!m_pTwain->acquire())
+        KMessageBox::error(this, i18n("Cannot acquire image..."));
 }
 
-bool QTwainMainWindow::winEvent(MSG* pMsg, long* result)
+bool QTwainMainWindow::winEvent(MSG* pMsg, long* /*result*/)
 {
     //return (m_pTwain->processMessage(*pMsg) == true);
     m_pTwain->processMessage(*pMsg);
     return false;
-}
-
-void QTwainMainWindow::resizeEvent(QResizeEvent*)
-{
 }
 
 void QTwainMainWindow::onDibAcquired(CDIB* pDib)

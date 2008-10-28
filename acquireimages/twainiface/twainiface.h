@@ -57,22 +57,22 @@ public:
     virtual void GetIdentity();
     virtual bool SelectSource();
     virtual bool OpenSource(TW_IDENTITY *pSource=NULL);
-    virtual int  ShouldTransfer(TW_IMAGEINFO& info) { return TWCPP_DOTRANSFER;};
+    virtual int  ShouldTransfer(TW_IMAGEINFO& info) { return TWCPP_DOTRANSFER; };
 
     bool ProcessMessage(MSG msg);
 
     bool SelectDefaultSource();
     bool IsValidDriver() const;
-    bool SourceSelected() const {return m_bSourceSelected;} ;
+    bool SourceSelected() const { return m_bSourceSelected; };
     bool DSMOpen() const;
     bool DSOpen() const;
-    bool SourceEnabled() const  { return m_bSourceEnabled;};
-    bool ModalUI() const        { return m_bModalUI; };
+    bool SourceEnabled() const  { return m_bSourceEnabled;  };
+    bool ModalUI() const        { return m_bModalUI;        };
 
-    TW_INT16 GetRC() const      { return m_returnCode; };
-    TW_STATUS GetStatus() const { return m_Status; };
+    TW_INT16 GetRC() const      { return m_returnCode;      };
+    TW_STATUS GetStatus() const { return m_Status;          };
 
-    bool SetImageCount(TW_INT16 nCount = 1);
+    bool SetImageCount(TW_INT16 nCount=1);
     bool Acquire(int numImages=1);
 
 protected:
