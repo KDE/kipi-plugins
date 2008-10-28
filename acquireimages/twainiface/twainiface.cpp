@@ -559,7 +559,7 @@ void TwainIface::CancelTransfer()
 bool TwainIface::GetImage(TW_IMAGEINFO& info)
 {
     TW_MEMREF pdata;
-    CallTwainProc(&m_AppId, &m_Source, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, &data);
+    CallTwainProc(&m_AppId, &m_Source, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, &pdata);
 
     switch(m_returnCode)
     {
