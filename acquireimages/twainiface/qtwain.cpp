@@ -99,11 +99,11 @@ void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
 {
     if (pdata && (info.ImageWidth != -1) && (info.ImageLength != - 1))
     {
-        int size = (int)GlobalSize((HGLOBAL)(long)pdata);
-        printf("size=%i", size);
+        HGLOBAL hDIB = (HGLOBAL)(long)pdata;
+        int size = (int)GlobalSize(hDIB);
+        const uchar* bits = (const uchar*)GlobalLock(hDIB);
 
-        /*QImage img = QImage::fromData((const uchar*)pdata, size);
-        if (!img.isNull())
-            emit signalImageAcquired(img);*/
+        QImage img = QImage::fromData(bits, size);
+        emit signalImageAcquired(img);
     }
 }

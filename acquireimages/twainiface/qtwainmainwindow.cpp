@@ -30,16 +30,16 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QGridLayout>
+#include <QMessageBox>
 
 // KDE includes.
 
-#include <kmessagebox.h>
 #include <klocale.h>
 
 QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
                 : QMainWindow(parent, f)
 {
-    m_pTwain          = new QTwain(this);
+    m_pTwain          = new QTwain(0);
     m_pWidget         = new QWidget(this);
     QGridLayout *grid = new QGridLayout(m_pWidget);
     m_pLabel          = new QLabel();
@@ -70,9 +70,8 @@ void QTwainMainWindow::showEvent(QShowEvent*)
 void QTwainMainWindow::slotInit()
 {
     m_pTwain->selectSource();
-
     if (!m_pTwain->acquire())
-        KMessageBox::error(this, i18n("Cannot acquire image..."));
+        QMessageBox::critical(this, QString(), i18n("Cannot acquire image..."));
 }
 
 bool QTwainMainWindow::winEvent(MSG* pMsg, long* /*result*/)
@@ -84,6 +83,9 @@ bool QTwainMainWindow::winEvent(MSG* pMsg, long* /*result*/)
 
 void QTwainMainWindow::slotImageAcquired(const QImage& img)
 {
+    if (img.isNull())
+        QMessageBox::information(this, QString(), "image is null");
+
     QPixmap pix = QPixmap::fromImage(img);
     m_pLabel->setPixmap(pix);
 }

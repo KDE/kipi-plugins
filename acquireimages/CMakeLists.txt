@@ -2,14 +2,14 @@ IF(WIN32)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/twainiface)
 
     SET(twainiface_SRCS
-        twainiface/dib.cpp
-        twainiface/dibfile.c
-        twainiface/dibutil.c
-        twainiface/main.cpp
-        twainiface/qtwain.cpp
-        twainiface/qtwaininterface.cpp
-        twainiface/qtwainmainwindow.cpp
+#        twainiface/dib.cpp
+#        twainiface/dibfile.c
+#        twainiface/dibutil.c
+#        twainiface/qtwaininterface.cpp
         twainiface/twainiface.cpp
+        twainiface/qtwain.cpp
+        twainiface/qtwainmainwindow.cpp
+        twainiface/main.cpp
        )
 
     KDE4_ADD_EXECUTABLE(twainiface ${twainiface_SRCS})
