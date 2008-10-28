@@ -82,7 +82,7 @@ bool TwainIface::InitTwain(HWND hWnd)
     m_hTwainDLL = LoadLibraryA(libName);
     if(m_hTwainDLL != NULL)
     {
-        if(!(m_pDSMProc = (DSMENTRYPROC)GetProcAddress(m_hTwainDLL,(LPCSTR)MAKEINTRESOURCE(1))))
+        if(!(m_pDSMProc = (DSMENTRYPROC)GetProcAddress(m_hTwainDLL, (LPCSTR)MAKEINTRESOURCE(1))))
         {
             FreeLibrary(m_hTwainDLL);
             m_hTwainDLL = NULL;
@@ -92,7 +92,7 @@ bool TwainIface::InitTwain(HWND hWnd)
     if(IsValidDriver())
     {
         GetIdentity();
-        m_bDSMOpen= CallTwainProc(&m_AppId, NULL, DG_CONTROL, 
+        m_bDSMOpen= CallTwainProc(&m_AppId, NULL, DG_CONTROL,
                                   DAT_PARENT, MSG_OPENDSM, (TW_MEMREF)&m_hMessageWnd);
         return true;
     }
@@ -127,8 +127,7 @@ bool TwainIface::IsValidDriver() const
     routine  please refer to the Twain specification 1.8
  */
 bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin, pTW_IDENTITY pDest,
-                           TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG,
-                           TW_MEMREF pData)
+                               TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF pData)
 {
     if(IsValidDriver())
     {
@@ -150,7 +149,7 @@ bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin, pTW_IDENTITY pDest,
 }
 
 /** This function should ideally be overridden in the derived class . If only a 
-    few fields need to be updated , call CTawin::GetIdentity first in your
+    few fields need to be updated , call TwainIface::GetIdentity first in your
     derived class
  */
 void TwainIface::GetIdentity()
