@@ -29,6 +29,10 @@
 #include <QObject>
 #include <QImage>
 
+// C++ includes.
+
+#include <climits>
+
 // Local includes.
 
 #include "twainiface.h"
@@ -51,7 +55,7 @@ public:
     virtual bool selectSource();
 
     /**
-     * Acquires a number of imagesusing scanning dialog.
+     * Acquires a number of images using scanning dialog.
      */
     virtual bool acquire(unsigned int maxNumImages=AnyCount);
 
