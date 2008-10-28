@@ -35,6 +35,7 @@
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
 {
+    m_parent = parent;
 }
 
 QTwain::~QTwain()
@@ -65,7 +66,7 @@ bool QTwain::isValidDriver() const
 
 bool QTwain::onSetParent()
 {
-    WId id = dynamic_cast<QWidget*>(parent())->winId();
+    WId id = m_parent->winId();
     InitTwain(id);
 
     return IsValidDriver();

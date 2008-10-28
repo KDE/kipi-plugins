@@ -83,6 +83,10 @@ protected:
     virtual bool onSetParent();
 
     virtual void CopyImage(TW_MEMREF data, TW_IMAGEINFO& info);
+
+private:
+
+    QWidget *m_parent;
 };
 
 #endif /* QTWAIN_H */
