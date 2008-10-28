@@ -29,6 +29,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QLabel>
+#include <QImage>
 
 // Local includes.
 
@@ -50,7 +51,7 @@ protected:
 private slots:
 
     void slotInit();
-    void onDibAcquired(CDIB* pDib);
+    void slotImageAcquired(const QImage& img);
 
 protected:
 
