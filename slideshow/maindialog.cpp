@@ -116,8 +116,8 @@ void MainDialog::readSettings()
     // Host application images has comments
     if ( ! m_sharedData->ImagesHasComments )
     {
-        m_printCommentsCheckBox->setEnabled(FALSE);
-        m_printCommentsCheckBox->setChecked(FALSE);
+        m_printCommentsCheckBox->setEnabled(false);
+        m_printCommentsCheckBox->setChecked(false);
     }
 
     // -----------------------
@@ -559,10 +559,10 @@ void MainDialog::slotSelection( void )
 
         urlList = m_sharedData->interface->currentSelection().images();
 
-        m_ImagesFilesButtonAdd->setEnabled(FALSE);
-        m_ImagesFilesButtonDelete->setEnabled(FALSE);
-        m_ImagesFilesButtonUp->setEnabled(FALSE);
-        m_ImagesFilesButtonDown->setEnabled(FALSE);
+        m_ImagesFilesButtonAdd->setEnabled(false);
+        m_ImagesFilesButtonDelete->setEnabled(false);
+        m_ImagesFilesButtonUp->setEnabled(false);
+        m_ImagesFilesButtonDown->setEnabled(false);
     }
     else
         if (m_allFilesButton->isChecked())
@@ -580,21 +580,21 @@ void MainDialog::slotSelection( void )
                 if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
                     urlList += (*it).images();
 
-            m_ImagesFilesButtonAdd->setEnabled(FALSE);
+            m_ImagesFilesButtonAdd->setEnabled(false);
 
-            m_ImagesFilesButtonDelete->setEnabled(FALSE);
+            m_ImagesFilesButtonDelete->setEnabled(false);
 
-            m_ImagesFilesButtonUp->setEnabled(FALSE);
+            m_ImagesFilesButtonUp->setEnabled(false);
 
-            m_ImagesFilesButtonDown->setEnabled(FALSE);
+            m_ImagesFilesButtonDown->setEnabled(false);
         }
 
     if ( m_customButton->isChecked() )    // Custom selected
     {
-        m_ImagesFilesButtonAdd->setEnabled(TRUE);
-        m_ImagesFilesButtonDelete->setEnabled(TRUE);
-        m_ImagesFilesButtonUp->setEnabled(TRUE);
-        m_ImagesFilesButtonDown->setEnabled(TRUE);
+        m_ImagesFilesButtonAdd->setEnabled(true);
+        m_ImagesFilesButtonDelete->setEnabled(true);
+        m_ImagesFilesButtonUp->setEnabled(true);
+        m_ImagesFilesButtonDown->setEnabled(true);
     }
     else
     {

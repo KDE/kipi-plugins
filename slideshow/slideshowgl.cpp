@@ -642,7 +642,7 @@ void SlideShowGL::printComments(QImage& layer)
     while (commentsIndex < (uint) comments.length())
     {
         QString newLine;
-        bool breakLine = FALSE; // End Of Line found
+        bool breakLine = false; // End Of Line found
         uint currIndex; //  Comments QString current index
 
         // Check miminal lines dimension
@@ -650,18 +650,18 @@ void SlideShowGL::printComments(QImage& layer)
         int commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
         for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
-            if ( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = TRUE;
+            if ( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = true;
 
         if (commentsLinesLengthLocal <= (int)((currIndex - commentsIndex)))
             commentsLinesLengthLocal = (currIndex - commentsIndex);
 
-        breakLine = FALSE;
+        breakLine = false;
 
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
                 currIndex < (uint) comments.length() &&
                 !breakLine; currIndex++ )
         {
-            breakLine = (comments[currIndex] == QChar('\n')) ? TRUE : FALSE;
+            breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
 
             if (breakLine)
                 newLine.append( ' ' );
