@@ -52,8 +52,6 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
 
     setMinimumSize(800, 600);
     setGeometry(300, 300, 800, 600) ;
-
-    QTimer::singleShot(0, this, SLOT(slotInit()));
 }
 
 QTwainMainWindow::~QTwainMainWindow()
@@ -61,9 +59,16 @@ QTwainMainWindow::~QTwainMainWindow()
     delete m_pTwain;
 }
 
+void QTwainMainWindow::showEvent(QShowEvent*)
+{
+    // set the parent here to be sure to have a really
+    // valid window as the twain parent!
+    m_pTwain->setParent(this);
+    QTimer::singleShot(0, this, SLOT(slotInit()));
+}
+
 void QTwainMainWindow::slotInit()
 {
-    m_pTwain->setParent(this);
     m_pTwain->selectSource();
 
     if (!m_pTwain->acquire())
