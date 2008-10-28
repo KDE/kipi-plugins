@@ -44,6 +44,8 @@ public:
     QTwainMainWindow(QWidget* parent=0, Qt::WindowFlags f=Qt::Window);
     virtual ~QTwainMainWindow();
 
+    void showEvent(QShowEvent*);
+
 protected:
 
     virtual bool winEvent(MSG* pMsg, long *result);
