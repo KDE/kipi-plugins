@@ -64,7 +64,7 @@ bool QTwain::isValidDriver() const
     return (IsValidDriver() == true);
 }
 
-void QTwainInterface::setParent(QWidget* parent)
+void QTwain::setParent(QWidget* parent)
 {
     m_parent = parent;
     if (m_parent)
