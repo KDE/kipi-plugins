@@ -27,6 +27,7 @@
 // Qt includes.
 
 #include <QPainter>
+#include <QTimer>
 
 // Local includes.
 
@@ -52,16 +53,22 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
     setMinimumSize(800, 600);
     setGeometry(300, 300, 800, 600) ;
 
-    m_pTwain->selectSource();
-    if (!m_pTwain->acquire())
+    QTimer::singleShot(0, this, SLOT(slotSelectSource()));
+
+/*    if (!m_pTwain->acquire())
     {
         qWarning("acquire() call not successful!");
-    }
+    }*/
 }
 
 QTwainMainWindow::~QTwainMainWindow()
 {
     delete m_pTwain;
+}
+
+void QTwainMainWindow::slotSelectSource()
+{
+    m_pTwain->selectSource();
 }
 
 void QTwainMainWindow::showEvent(QShowEvent*)
