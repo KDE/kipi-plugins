@@ -2,10 +2,6 @@ IF(WIN32)
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/twainiface)
 
     SET(twainiface_SRCS
-#        twainiface/dib.cpp
-#        twainiface/dibfile.c
-#        twainiface/dibutil.c
-#        twainiface/qtwaininterface.cpp
         twainiface/twainiface.cpp
         twainiface/qtwain.cpp
         twainiface/qtwainmainwindow.cpp
@@ -22,7 +18,7 @@ IF(WIN32)
                           ${KDCRAW_LIBRARIES}
                           kipiplugins
                          )
-ELSEIF(WIN32)
+ELSE(WIN32)
 
     SET(kipiplugin_acquireimages_PART_SRCS plugin_acquireimages.cpp scandialog.cpp)
 
