@@ -65,6 +65,7 @@ protected:
 
 private slots:
 
+    void slotSelectSource();
     void onDibAcquired(CDIB* pDib);
 
 protected:
