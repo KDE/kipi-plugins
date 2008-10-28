@@ -74,6 +74,16 @@ public:
      */
     virtual bool processMessage(MSG& msg);
 
+    /**
+     * Sets the parent of the twain interface. Also calls the 
+     * onSetParent() hook where implementations of this interface
+     * might perform custom behaviour.
+     * See the class documentation for details
+     *
+     * @see onSetParent()
+     */
+    virtual void setParent(QWidget* parent);
+
 signals:
 
     void signalImageAcquired(const QImage& img);
