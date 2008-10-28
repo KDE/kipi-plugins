@@ -31,6 +31,8 @@
 // Qt includes.
 
 #include <QPixmap>
+#include <QDataStream>
+#include <QByteArray>
 
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
@@ -101,9 +103,11 @@ void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
     {
         HGLOBAL hDIB = (HGLOBAL)(long)pdata;
         int size = (int)GlobalSize(hDIB);
-        const uchar* bits = (const uchar*)GlobalLock(hDIB);
-
-        QImage img = QImage::fromData(bits, size);
+        const char* bits = (const char*)GlobalLock(hDIB);
+        QByteArray ba(bits, size);
+        QDataStream ds(ba);
+        QImage img;
+        ds >> img;
         emit signalImageAcquired(img);
     }
 }
