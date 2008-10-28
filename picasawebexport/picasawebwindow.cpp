@@ -26,20 +26,10 @@
 
 // Qt includes.
 
-//#include <Q3ListView>
-//#include <Q3ProgressDialog>
-//#include <QCheckBox>
-//#include <QComboBox>
-//#include <QCursor>
-//#include <QDateTime>
-//#include <QLineEdit>
-//#include <QLinkedList>
-//#include <QPixmap>
-//#include <QPushButton>
-//#include <QRadioButton>
-//#include <QSpinBox>
-//#include <QStringList>
-//#include <QTimer>
+#include <Q3ProgressDialog>
+#include <QDateTime>
+#include <QLinkedList>
+#include <QStringList>
 
 // KDE includes.
 

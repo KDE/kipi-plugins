@@ -16,21 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
-
 */
-// Self
+
 #include "stringthemeparameter.h"
 
-// Qt
+// Qt includes.
+
 #include <qlineedit.h>
 
-// KDE
+// KDE includes.
+
 #include <kconfiggroup.h>
+#include <klineedit.h>
 
 namespace KIPIHTMLExport {
 
 QWidget* StringThemeParameter::createWidget(QWidget* parent, const QString& value) const {
-	QLineEdit* edit = new QLineEdit(parent);
+	KLineEdit* edit = new KLineEdit(parent);
 	edit->setText(value);
 
 	return edit;
@@ -38,7 +40,7 @@ QWidget* StringThemeParameter::createWidget(QWidget* parent, const QString& valu
 
 QString StringThemeParameter::valueFromWidget(QWidget* widget) const {
 	Q_ASSERT(widget);
-	QLineEdit* edit = static_cast<QLineEdit*>(widget);
+	KLineEdit* edit = static_cast<KLineEdit*>(widget);
 	return edit->text();
 }
 

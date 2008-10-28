@@ -4,7 +4,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'picasawebnewalbumdialog.ui'
 **
-** Created: Mon Oct 27 13:05:52 2008
+** Created: Tue Oct 28 13:12:51 2008
 **      by: Qt User Interface Compiler version 4.4.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -22,7 +22,6 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QVBoxLayout>
@@ -43,7 +42,7 @@ public:
     QLabel *textLabel2;
     KTextEdit *m_descriptionTextBox;
     QLabel *textLabel4;
-    QLineEdit *m_locationLineEdit;
+    KLineEdit *m_locationLineEdit;
     QGroupBox *m_accessRadioButton;
     QVBoxLayout *verticalLayout_2;
     QRadioButton *m_isPublicRadioButton;
@@ -99,7 +98,7 @@ public:
 
     gridLayout->addWidget(textLabel4, 3, 0, 1, 1);
 
-    m_locationLineEdit = new QLineEdit(NewAlbumDialog);
+    m_locationLineEdit = new KLineEdit(NewAlbumDialog);
     m_locationLineEdit->setObjectName(QString::fromUtf8("m_locationLineEdit"));
 
     gridLayout->addWidget(m_locationLineEdit, 3, 1, 1, 2);

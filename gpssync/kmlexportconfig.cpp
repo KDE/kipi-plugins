@@ -28,7 +28,6 @@
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
-#include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -40,6 +39,7 @@
 
 #include "kpaboutdata.h"
 #include <kapplication.h>
+#include <kcombobox.h>
 #include <kcolorbutton.h>
 #include <kconfig.h>
 #include <kdialog.h>
@@ -100,7 +100,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     // target preference, suite
 
     QLabel *AltitudeLabel_ = new QLabel(i18n("Picture Altitude:" ), TargetPreferenceGroupBox);
-    AltitudeCB_            = new QComboBox( TargetPreferenceGroupBox );
+    AltitudeCB_            = new KComboBox( TargetPreferenceGroupBox );
     AltitudeCB_->addItem(i18n("clamp to ground"));
     AltitudeCB_->addItem(i18n("relative to ground"));
     AltitudeCB_->addItem(i18n("absolute"));
@@ -116,15 +116,15 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     destinationDirectoryLabel_ = new QLabel(i18n("Destination Directory:"), TargetPreferenceGroupBox);
 
-    // DestinationDirectory_ = new QLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
+    // DestinationDirectory_ = new KLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
     DestinationDirectory_= new KUrlRequester(TargetPreferenceGroupBox);
     DestinationDirectory_->setWindowTitle(i18n("Select a directory to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
 
     DestinationUrlLabel_ = new QLabel(i18n("Destination Url:"), TargetPreferenceGroupBox);
-    DestinationUrl_      = new QLineEdit(TargetPreferenceGroupBox);
+    DestinationUrl_      = new KLineEdit(TargetPreferenceGroupBox);
     FileNameLabel_       = new QLabel(i18n( "File Name:" ), TargetPreferenceGroupBox);
-    FileName_            = new QLineEdit(TargetPreferenceGroupBox);
+    FileName_            = new KLineEdit(TargetPreferenceGroupBox);
 
     TargetPreferenceGroupBoxLayout->addWidget(TargetTypeGroupBox,         0, 0, 2, 5);
     TargetPreferenceGroupBoxLayout->addWidget(AltitudeLabel_,             2, 0, 1, 5);
@@ -175,7 +175,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     GPXFileKUrlRequester_->setWindowTitle(i18n("Select GPX File to Load"));
 
     timeZoneLabel_ = new QLabel(i18n("Time Zone:"), GPXTracksGroupBox);
-    timeZoneCB     = new QComboBox(GPXTracksGroupBox );
+    timeZoneCB     = new KComboBox(GPXTracksGroupBox );
     timeZoneCB->addItem(i18n("GMT-12:00"), 0);
     timeZoneCB->addItem(i18n("GMT-11:00"), 1);
     timeZoneCB->addItem(i18n("GMT-10:00"), 2);
@@ -221,7 +221,7 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     GPXTracksOpacityInput_->setSuffix(QString::fromAscii("%"));
 
     GPXAltitudeLabel_ = new QLabel(i18n("Track Altitude:"), GPXTracksGroupBox);
-    GPXAltitudeCB_    = new QComboBox(GPXTracksGroupBox);
+    GPXAltitudeCB_    = new KComboBox(GPXTracksGroupBox);
     GPXAltitudeCB_->addItem(i18n("clamp to ground"));
     GPXAltitudeCB_->addItem(i18n("relative to ground"));
     GPXAltitudeCB_->addItem(i18n("absolute"));

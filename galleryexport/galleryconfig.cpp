@@ -72,7 +72,7 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     centerLayout->addWidget(mpUsernameEdit, 2, 1);
 
     mpPasswordEdit = new KLineEdit(this);
-    mpPasswordEdit->setEchoMode(QLineEdit::Password);
+    mpPasswordEdit->setEchoMode(KLineEdit::Password);
     centerLayout->addWidget(mpPasswordEdit, 3, 1);
 
     QLabel* namelabel = new QLabel(this);

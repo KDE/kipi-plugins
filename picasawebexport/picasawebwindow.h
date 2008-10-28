@@ -49,8 +49,8 @@ class QPushButton;
 class QRadioButton;
 class QSpinBox;
 class QCheckBox;
-class QLineEdit;
-class QComboBox;
+class KLineEdit;
+class KComboBox;
 
 class KHTMLPart;
 class KUrl;
@@ -110,14 +110,14 @@ private:
 
     QCheckBox                               *m_resizeCheckBox;
 
-    QLineEdit                               *m_tagsLineEdit;
+    KLineEdit                               *m_tagsLineEdit;
 
     QRadioButton                            *m_exportApplicationTags;
 
     Q3ProgressDialog                         *m_progressDlg;
     Q3ProgressDialog                         *m_authProgressDlg;
 
-    QComboBox                               *m_albumsListComboBox;
+    KComboBox                               *m_albumsListComboBox;
 
     QLabel                                  *m_userNameDisplayLabel;
 

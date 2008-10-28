@@ -29,13 +29,13 @@
 
 // Qt includes.
 
-#include <QComboBox>
 #include <QLabel>
 #include <QLayout>
 #include <QValidator>
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <klineedit.h>
 #include <klocale.h>
@@ -90,14 +90,14 @@ public:
     QCheckBox        *exposureTimeCheck;
     QCheckBox        *exposureBiasCheck;
 
-    QComboBox        *deviceTypeCB;
-    QComboBox        *exposureProgramCB;
-    QComboBox        *exposureModeCB;
-    QComboBox        *ISOSpeedCB;
-    QComboBox        *meteringModeCB;
-    QComboBox        *sensingMethodCB;
-    QComboBox        *sceneTypeCB;
-    QComboBox        *subjectDistanceTypeCB;
+    KComboBox        *deviceTypeCB;
+    KComboBox        *exposureProgramCB;
+    KComboBox        *exposureModeCB;
+    KComboBox        *ISOSpeedCB;
+    KComboBox        *meteringModeCB;
+    KComboBox        *sensingMethodCB;
+    KComboBox        *sceneTypeCB;
+    KComboBox        *subjectDistanceTypeCB;
 
     KLineEdit        *makeEdit;
     KLineEdit        *modelEdit;
@@ -149,7 +149,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->deviceTypeCheck = new MetadataCheckBox(i18n("Device type:"), this);
-    d->deviceTypeCB    = new QComboBox(this);
+    d->deviceTypeCB    = new KComboBox(this);
     d->deviceTypeCB->insertItem(0, i18n("Film scanner"));
     d->deviceTypeCB->insertItem(1, i18n("Reflection print scanner"));
     d->deviceTypeCB->insertItem(2, i18n("Digital still camera"));
@@ -179,7 +179,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->exposureProgramCheck = new MetadataCheckBox(i18n("Exposure program:"), this);
-    d->exposureProgramCB    = new QComboBox(this);
+    d->exposureProgramCB    = new KComboBox(this);
     d->exposureProgramCB->insertItem(0, i18n("Not defined"));
     d->exposureProgramCB->insertItem(1, i18n("Manual"));
     d->exposureProgramCB->insertItem(2, i18n("Auto"));
@@ -195,7 +195,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->exposureModeCheck = new MetadataCheckBox(i18n("Exposure mode:"), this);
-    d->exposureModeCB    = new QComboBox(this);
+    d->exposureModeCB    = new KComboBox(this);
     d->exposureModeCB->insertItem(0, i18n("Auto"));
     d->exposureModeCB->insertItem(1, i18n("Manual"));
     d->exposureModeCB->insertItem(2, i18n("Auto bracket"));
@@ -220,7 +220,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->meteringModeCheck = new MetadataCheckBox(i18n("Metering mode:"), this);
-    d->meteringModeCB    = new QComboBox(this);
+    d->meteringModeCB    = new KComboBox(this);
     d->meteringModeCB->insertItem(0, i18n("Unknown"));
     d->meteringModeCB->insertItem(1, i18n("Average"));
     d->meteringModeCB->insertItem(2, i18n("Center weighted average"));
@@ -235,7 +235,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->ISOSpeedCheck = new MetadataCheckBox(i18n("Sensitivity (ISO):"), this);
-    d->ISOSpeedCB    = new QComboBox(this);
+    d->ISOSpeedCB    = new KComboBox(this);
     d->ISOSpeedCB->insertItem(1, "10");
     d->ISOSpeedCB->insertItem(2, "12");
     d->ISOSpeedCB->insertItem(3, "16");
@@ -278,7 +278,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->sensingMethodCheck = new MetadataCheckBox(i18n("Sensing method:"), this);
-    d->sensingMethodCB    = new QComboBox(this);
+    d->sensingMethodCB    = new KComboBox(this);
     d->sensingMethodCB->insertItem(0, i18n("Not defined"));
     d->sensingMethodCB->insertItem(1, i18n("One-chip color area"));
     d->sensingMethodCB->insertItem(2, i18n("Two-chip color area"));
@@ -292,7 +292,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->sceneTypeCheck = new MetadataCheckBox(i18n("Scene capture type:"), this);
-    d->sceneTypeCB    = new QComboBox(this);
+    d->sceneTypeCB    = new KComboBox(this);
     d->sceneTypeCB->insertItem(0, i18n("Standard"));
     d->sceneTypeCB->insertItem(1, i18n("Landscape"));
     d->sceneTypeCB->insertItem(2, i18n("Portrait"));
@@ -303,7 +303,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     // --------------------------------------------------------
 
     d->subjectDistanceTypeCheck = new MetadataCheckBox(i18n("Subject distance type:"), this);
-    d->subjectDistanceTypeCB    = new QComboBox(this);
+    d->subjectDistanceTypeCB    = new KComboBox(this);
     d->subjectDistanceTypeCB->insertItem(1, i18n("Unknow"));
     d->subjectDistanceTypeCB->insertItem(2, i18n("Macro"));
     d->subjectDistanceTypeCB->insertItem(3, i18n("Close view"));

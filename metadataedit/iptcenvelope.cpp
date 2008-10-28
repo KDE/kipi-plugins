@@ -26,7 +26,6 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QComboBox>
 #include <QDateTime>
 #include <QLabel>
 #include <QLayout>
@@ -36,6 +35,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdatewidget.h>
 #include <kdialog.h>
 #include <kiconloader.h>
@@ -134,7 +134,7 @@ public:
 
     QTimeEdit                     *timeSentSel;
 
-    QComboBox                     *priorityCB;
+    KComboBox                     *priorityCB;
 
     QCheckBox                     *unoIDCheck;
     QCheckBox                     *destinationCheck;
@@ -224,7 +224,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     // --------------------------------------------------------
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
-    d->priorityCB    = new QComboBox(this);
+    d->priorityCB    = new KComboBox(this);
     d->priorityCB->insertItem(0, i18n("0: None"));
     d->priorityCB->insertItem(1, i18n("1: High"));
     d->priorityCB->insertItem(2, "2");

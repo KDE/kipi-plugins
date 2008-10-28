@@ -27,12 +27,12 @@
 
 #include <QLabel>
 #include <QGroupBox>
-#include <QComboBox>
 #include <QLayout>
 
 // KDE includes.
 
 #include <kcolorbutton.h>
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <khbox.h>
 #include <klocale.h>
@@ -58,8 +58,8 @@ public:
         thumbnailRows     = 0;
     }
 
-    QComboBox    *thumbnailPosition;
-    QComboBox    *navDirection;
+    KComboBox    *thumbnailPosition;
+    KComboBox    *navDirection;
 
     KColorButton *textColor;
     KColorButton *backgroundColor;
@@ -97,7 +97,7 @@ LookPage::LookPage(QWidget* parent)
 
     KHBox *hbox          = new KHBox;
     QLabel *label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
-    d->thumbnailPosition = new QComboBox(hbox);
+    d->thumbnailPosition = new KComboBox(hbox);
     d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  i18n("Right"));
     d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   i18n("Left"));
     d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    i18n("Top"));
@@ -107,7 +107,7 @@ LookPage::LookPage(QWidget* parent)
 
     KHBox *hbox2    = new KHBox;
     QLabel *label2  = new QLabel(i18n("&Direction of Navigation:"), hbox2);
-    d->navDirection = new QComboBox(hbox2);
+    d->navDirection = new KComboBox(hbox2);
     d->navDirection->insertItem(SimpleViewerSettingsContainer::LEFT2RIGHT, i18n("Left to Right"));
     d->navDirection->insertItem(SimpleViewerSettingsContainer::RIGHT2LEFT, i18n("Right to Left"));
     d->navDirection->setCurrentIndex(SimpleViewerSettingsContainer::LEFT2RIGHT);

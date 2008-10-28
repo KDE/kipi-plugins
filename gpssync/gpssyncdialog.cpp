@@ -28,7 +28,6 @@
 
 #include <QCheckBox>
 #include <QCloseEvent>
-#include <QComboBox>
 #include <QGroupBox>
 #include <QHeaderView>
 #include <QLabel>
@@ -40,6 +39,7 @@
 // KDE includes.
 
 #include <kapplication.h>
+#include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -88,7 +88,7 @@ public:
     QLabel                   *gpxPointsLabel;
     QLabel                   *maxTimeLabel;
 
-    QComboBox                *timeZoneCB;
+    KComboBox                *timeZoneCB;
 
     QCheckBox                *interpolateBox;
 
@@ -175,7 +175,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                     "If the time difference exceeds this setting, no match will be attempted."));
 
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
-    d->timeZoneCB         = new QComboBox(settingsBox);
+    d->timeZoneCB         = new KComboBox(settingsBox);
 
     // See list of time zomes over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones

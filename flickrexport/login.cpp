@@ -27,17 +27,17 @@
 
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
 #include <QLayout>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 // KDE includes.
 
+#include <kdialog.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kseparator.h>
-#include <kdialog.h>
 
 namespace KIPIFlickrExportPlugin
 {
@@ -63,9 +63,9 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
 
     QGridLayout* centerLayout = new QGridLayout();
 
-    m_nameEdit   = new QLineEdit(widget);
-    m_passwdEdit = new QLineEdit(widget);
-    m_passwdEdit->setEchoMode(QLineEdit::Password);
+    m_nameEdit   = new KLineEdit(widget);
+    m_passwdEdit = new KLineEdit(widget);
+    m_passwdEdit->setEchoMode(KLineEdit::Password);
 
     QLabel* nameLabel = new QLabel(widget);
     nameLabel->setText(i18n("Username:"));

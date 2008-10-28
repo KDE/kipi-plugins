@@ -26,7 +26,6 @@
 // Qt includes.
 
 #include <QButtonGroup>
-#include <QComboBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QRadioButton>
@@ -34,6 +33,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <klocale.h>
 
@@ -59,7 +59,7 @@ public:
 
     QButtonGroup *conflictButtonGroup;
 
-    QComboBox    *formatComboBox;
+    KComboBox    *formatComboBox;
 
     QRadioButton *overwriteButton;
     QRadioButton *promptButton;
@@ -74,7 +74,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
-    d->formatComboBox = new QComboBox( this );
+    d->formatComboBox = new KComboBox( this );
     d->formatComboBox->setWhatsThis(i18n("<p>Set here the output file format to use:</p>"
                                          "<p><b>JPEG</b>: output the processed image in JPEG Format. "
                                          "this format will give smaller-sized files. Minimum JPEG "

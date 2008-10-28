@@ -26,7 +26,6 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QComboBox>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
@@ -34,6 +33,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -127,8 +127,8 @@ public:
     SceneCodeMap                    sceneCodeMap;
     TypeCodeMap                     typeCodeMap;
 
-    QComboBox                      *priorityCB;
-    QComboBox                      *objectTypeCB;
+    KComboBox                      *priorityCB;
+    KComboBox                      *objectTypeCB;
 
     KLanguageButton                *languageBtn;
 
@@ -170,7 +170,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     // --------------------------------------------------------
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
-    d->priorityCB    = new QComboBox(this);
+    d->priorityCB    = new KComboBox(this);
     d->priorityCB->insertItem(0, i18n("0: None"));
     d->priorityCB->insertItem(1, i18n("1: High"));
     d->priorityCB->insertItem(2, "2");

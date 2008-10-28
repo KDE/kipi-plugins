@@ -18,13 +18,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-// Self
+
 #include "listthemeparameter.h"
 
-// Qt
-#include <qcombobox.h>
+// KDE includes.
 
-// KDE
+#include <kcombobox.h>
 #include <kconfiggroup.h>
 
 namespace KIPIHTMLExport {
@@ -64,7 +63,7 @@ void ListThemeParameter::init(const QByteArray& internalName, const KConfigGroup
 }
 
 QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widgetDefaultValue) const {
-	QComboBox* comboBox = new QComboBox(parent);
+	KComboBox* comboBox = new KComboBox(parent);
 
 	QStringList::ConstIterator
 		it = d->mOrderedValueList.begin(),
@@ -83,7 +82,7 @@ QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widget
 
 QString ListThemeParameter::valueFromWidget(QWidget* widget) const {
 	Q_ASSERT(widget);
-	QComboBox* comboBox = static_cast<QComboBox*>(widget);
+	KComboBox* comboBox = static_cast<KComboBox*>(widget);
 	return d->mOrderedValueList[comboBox->currentIndex()];
 }
 

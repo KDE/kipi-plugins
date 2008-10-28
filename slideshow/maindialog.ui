@@ -403,7 +403,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
            </widget>
           </item>
           <item row="1" column="1" colspan="2" >
-           <widget class="QComboBox" name="m_effectsComboBox" />
+           <widget class="KComboBox" name="m_effectsComboBox" />
           </item>
          </layout>
         </item>

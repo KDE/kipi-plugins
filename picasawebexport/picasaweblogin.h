@@ -28,7 +28,7 @@
 #include <QDialog>
 
 class QLabel;
-class QLineEdit;
+class KLineEdit;
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -52,8 +52,8 @@ public:
 private:
 
     QLabel*    m_headerLabel;
-    QLineEdit* m_nameEdit;
-    QLineEdit* m_passwdEdit;
+    KLineEdit* m_nameEdit;
+    KLineEdit* m_passwdEdit;
 };
 
 } // namespace KIPIPicasawebExportPlugin

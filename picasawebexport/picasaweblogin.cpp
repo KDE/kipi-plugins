@@ -30,12 +30,12 @@
 #include <Q3VBoxLayout>
 #include <QFrame>
 #include <QLabel>
-#include <QLineEdit>
 #include <QPushButton>
 
 // KDE includes.
 
 #include <kdebug.h>
+#include <klineedit.h>
 #include <klocale.h>
 
 namespace KIPIPicasawebExportPlugin
@@ -63,11 +63,11 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 
     Q3GridLayout* centerLayout = new Q3GridLayout(0, 1, 1, 5, 5);
 
-    m_nameEdit = new QLineEdit( this );
+    m_nameEdit = new KLineEdit( this );
     centerLayout->addWidget(m_nameEdit, 0, 1);
 
-    m_passwdEdit = new QLineEdit( this );
-    m_passwdEdit->setEchoMode(QLineEdit::Password);
+    m_passwdEdit = new KLineEdit( this );
+    m_passwdEdit->setEchoMode(KLineEdit::Password);
     centerLayout->addWidget(m_passwdEdit, 1, 1);
 
     QLabel* nameLabel = new QLabel(this);

@@ -40,7 +40,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
-#include <QLineEdit>
 #include <QLinkedList>
 #include <QMessageBox>
 #include <QStringList>
@@ -54,6 +53,7 @@
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>

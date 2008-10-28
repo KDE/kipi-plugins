@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // Qt includes.
 
 #include <QCheckBox>
-#include <QComboBox>
 #include <QDir>
 #include <QFileInfo>
 #include <QLabel>
@@ -34,6 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // KDE includes.
 
 #include <kapplication.h>
+#include <kcombobox.h>
 #include <kconfigdialogmanager.h>
 #include <kdebug.h>
 #include <kdialog.h>

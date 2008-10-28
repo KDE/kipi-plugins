@@ -30,24 +30,24 @@
 
 class QButtonGroup;
 class QCheckBox;
-class QComboBox;
 class QGridLayout;
 class QGroupBox;
 class QLabel;
-class QLineEdit;
+class KLineEdit;
 class QRadioButton;
 class QSpacerItem;
 
+class KComboBox;
 class KColorButton;
 class KIntNumInput;
 class KUrlRequester;
 
-namespace KIPIPlugins 
+namespace KIPIPlugins
 {
     class KPAboutData;
 }
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIGPSSyncPlugin
 {
 
 class KMLExportConfig : public KDialog
@@ -81,14 +81,14 @@ public:
     QRadioButton  *LocalTargetRadioButton_;
     QRadioButton  *GoogleMapTargetRadioButton_;
 
-    QLineEdit     *DestinationUrl_;
-    QLineEdit     *FileName_;
+    KLineEdit     *DestinationUrl_;
+    KLineEdit     *FileName_;
 
     QCheckBox     *GPXTracksCheckBox_;
 
-    QComboBox     *AltitudeCB_;
-    QComboBox     *timeZoneCB;
-    QComboBox     *GPXAltitudeCB_;
+    KComboBox     *AltitudeCB_;
+    KComboBox     *timeZoneCB;
+    KComboBox     *GPXAltitudeCB_;
 
     KColorButton  *GPXTrackColor_;
 

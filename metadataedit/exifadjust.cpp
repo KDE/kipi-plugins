@@ -31,12 +31,12 @@
 
 #include <QLayout>
 #include <QLabel>
-#include <QComboBox>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kcombobox.h>
 #include <kdialog.h>
+#include <klocale.h>
 #include <knuminput.h>
 
 // LibKExiv2 includes.
@@ -72,11 +72,11 @@ public:
 
     QCheckBox        *brightnessCheck;
 
-    QComboBox        *gainControlCB;
-    QComboBox        *contrastCB;
-    QComboBox        *saturationCB;
-    QComboBox        *sharpnessCB;
-    QComboBox        *customRenderedCB;
+    KComboBox        *gainControlCB;
+    KComboBox        *contrastCB;
+    KComboBox        *saturationCB;
+    KComboBox        *sharpnessCB;
+    KComboBox        *customRenderedCB;
 
     QDoubleSpinBox   *brightnessEdit;
 
@@ -107,7 +107,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), this);
-    d->gainControlCB    = new QComboBox(this);
+    d->gainControlCB    = new KComboBox(this);
     d->gainControlCB->insertItem(0, i18n("None"));
     d->gainControlCB->insertItem(1, i18n("Low gain up"));
     d->gainControlCB->insertItem(2, i18n("High gain up"));
@@ -119,7 +119,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), this);
-    d->contrastCB    = new QComboBox(this);
+    d->contrastCB    = new KComboBox(this);
     d->contrastCB->insertItem(0, i18n("Normal"));
     d->contrastCB->insertItem(1, i18n("Soft"));
     d->contrastCB->insertItem(2, i18n("Hard"));
@@ -129,7 +129,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), this);
-    d->saturationCB    = new QComboBox(this);
+    d->saturationCB    = new KComboBox(this);
     d->saturationCB->insertItem(0, i18n("Normal"));
     d->saturationCB->insertItem(1, i18n("Low"));
     d->saturationCB->insertItem(2, i18n("High"));
@@ -139,7 +139,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), this);
-    d->sharpnessCB    = new QComboBox(this);
+    d->sharpnessCB    = new KComboBox(this);
     d->sharpnessCB->insertItem(0, i18n("Normal"));
     d->sharpnessCB->insertItem(1, i18n("Soft"));
     d->sharpnessCB->insertItem(2, i18n("Hard"));
@@ -149,7 +149,7 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
     // --------------------------------------------------------
 
     d->customRenderedCheck = new MetadataCheckBox(i18n("Custom rendered:"), this);
-    d->customRenderedCB    = new QComboBox(this);
+    d->customRenderedCB    = new KComboBox(this);
     d->customRenderedCB->insertItem(0, i18n("Normal process"));
     d->customRenderedCB->insertItem(1, i18n("Custom process"));
     d->customRenderedCB->setWhatsThis(i18n("Set here the use of special processing on "

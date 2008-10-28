@@ -31,12 +31,12 @@
 
 #include <QLayout>
 #include <QLabel>
-#include <QComboBox>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kcombobox.h>
 #include <kdialog.h>
+#include <klocale.h>
 #include <knuminput.h>
 
 // LibKExiv2 includes.
@@ -133,8 +133,8 @@ public:
     QCheckBox        *focalLengthCheck;
     QCheckBox        *digitalZoomRatioCheck;
 
-    QComboBox        *apertureCB;
-    QComboBox        *maxApertureCB;
+    KComboBox        *apertureCB;
+    KComboBox        *maxApertureCB;
 
     KIntSpinBox      *focalLength35mmEdit;
 
@@ -185,7 +185,7 @@ EXIFLens::EXIFLens(QWidget* parent)
     // --------------------------------------------------------
 
     d->apertureCheck = new MetadataCheckBox(i18n("Lens aperture (f-number):"), this);
-    d->apertureCB    = new QComboBox(this);
+    d->apertureCB    = new KComboBox(this);
     d->apertureCB->insertItems(0, d->apertureValues);
     d->apertureCB->setWhatsThis(i18n("Select here the lens aperture used by camera "
                                      "to take the picture."));
@@ -193,7 +193,7 @@ EXIFLens::EXIFLens(QWidget* parent)
     // --------------------------------------------------------
 
     d->maxApertureCheck = new MetadataCheckBox(i18n("Max. lens aperture (f-number):"), this);
-    d->maxApertureCB    = new QComboBox(this);
+    d->maxApertureCB    = new KComboBox(this);
     d->maxApertureCB->insertItems(0, d->apertureValues);
     d->maxApertureCB->setWhatsThis(i18n("Select here the smallest aperture of the lens used by camera "
                                         "to take the picture."));

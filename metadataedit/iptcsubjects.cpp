@@ -27,7 +27,6 @@
 
 #include <QButtonGroup>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
@@ -40,6 +39,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kglobal.h>
@@ -132,7 +132,7 @@ public:
     QRadioButton                       *stdBtn;
     QRadioButton                       *customBtn;
 
-    QComboBox                          *refCB;
+    KComboBox                          *refCB;
 
     KLineEdit                          *iprEdit;
     KLineEdit                          *refEdit;
@@ -184,7 +184,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     KHBox *hbox        = new KHBox(d->optionsBox);
     d->stdBtn          = new QRadioButton(i18n("Use standard"), hbox);
     QLabel *codeLink   = new QLabel("<b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>", hbox);
-    d->refCB           = new QComboBox(d->optionsBox);
+    d->refCB           = new KComboBox(d->optionsBox);
     d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
     codeLink->setOpenExternalLinks(true);
     codeLink->setWordWrap(true);

@@ -63,7 +63,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="m_albumsListComboBox" >
+         <widget class="KComboBox" name="m_albumsListComboBox" >
           <property name="editable" >
            <bool>false</bool>
           </property>
@@ -98,7 +98,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="m_tagsLineEdit" />
+         <widget class="KLineEdit" name="m_tagsLineEdit" />
         </item>
        </layout>
       </item>

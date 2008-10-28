@@ -26,7 +26,6 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QComboBox>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
@@ -34,6 +33,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klistwidget.h>

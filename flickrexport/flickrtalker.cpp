@@ -33,30 +33,29 @@
 
 // Qt includes.
 
-#include <QProgressDialog>
-
 #include <QByteArray>
-#include <QFile>
-#include <QImage>
-#include <QStringList>
-#include <QLineEdit>
-#include <QMessageBox>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QMap>
+#include <QFile>
 #include <QFileInfo>
+#include <QImage>
+#include <QMap>
+#include <QMessageBox>
+#include <QProgressDialog>
+#include <QStringList>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kapplication.h>
+#include <kcodecs.h>
 #include <kdebug.h>
+#include <kio/jobuidelegate.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
-#include <kcodecs.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
 #include <ktoolinvocation.h>
-#include <kio/jobuidelegate.h>
 
 // LibKExiv2 includes.
 

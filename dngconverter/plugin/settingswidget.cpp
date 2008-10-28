@@ -22,21 +22,21 @@
 
 // Qt includes.
 
-#include <QComboBox>
 #include <QButtonGroup>
-#include <QRadioButton>
-#include <QLabel>
-#include <QGridLayout>
-#include <QVBoxLayout>
 #include <QCheckBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QRadioButton>
+#include <QVBoxLayout>
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <klocale.h>
+#include <kseparator.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
-#include <kseparator.h>
 
 // Libkdcraw includes.
 

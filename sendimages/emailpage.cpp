@@ -25,19 +25,19 @@
 
 // Qt includes.
 
-#include <QLabel>
-#include <QGroupBox>
-#include <QComboBox>
 #include <QCheckBox>
-#include <QPushButton>
 #include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
 
 // KDE includes.
 
-#include <klocale.h>
+#include <kcombobox.h>
 #include <kdialog.h>
-#include <knuminput.h>
 #include <kiconloader.h>
+#include <klocale.h>
+#include <knuminput.h>
 
 namespace KIPISendimagesPlugin
 {
@@ -64,9 +64,9 @@ public:
     QLabel        *labelImagesResize;
     QLabel        *labelImagesFormat;
 
-    QComboBox     *mailAgentName;
-    QComboBox     *imagesResize;
-    QComboBox     *imagesFormat;
+    KComboBox     *mailAgentName;
+    KComboBox     *imagesResize;
+    KComboBox     *imagesFormat;
 
     QCheckBox     *changeImagesProp;
     QCheckBox     *addComments;
@@ -86,7 +86,7 @@ EmailPage::EmailPage(QWidget* parent)
 
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
-    d->mailAgentName = new QComboBox(this);
+    d->mailAgentName = new KComboBox(this);
     d->mailAgentName->insertItem(EmailSettingsContainer::DEFAULT,       i18n("Default"));
     d->mailAgentName->insertItem(EmailSettingsContainer::BALSA,         "Balsa");
     d->mailAgentName->insertItem(EmailSettingsContainer::CLAWSMAIL,     "Claws Mail");
@@ -127,7 +127,7 @@ EmailPage::EmailPage(QWidget* parent)
     QGroupBox *groupBox = new QGroupBox(i18n("Image Properties"), this);
     QGridLayout *grid2  = new QGridLayout(groupBox);
 
-    d->imagesResize = new QComboBox(groupBox);
+    d->imagesResize = new KComboBox(groupBox);
     d->imagesResize->insertItem(EmailSettingsContainer::VERYSMALL, i18n("Very Small (320 pixels)"));
     d->imagesResize->insertItem(EmailSettingsContainer::SMALL,     i18n("Small (640 pixels)"));
     d->imagesResize->insertItem(EmailSettingsContainer::MEDIUM,    i18n("Medium (800 pixels)"));
@@ -160,7 +160,7 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
-    d->imagesFormat = new QComboBox(groupBox);
+    d->imagesFormat = new KComboBox(groupBox);
     d->imagesFormat->insertItem(EmailSettingsContainer::JPEG, "JPEG");
     d->imagesFormat->insertItem(EmailSettingsContainer::PNG,  "PNG");
     d->imagesFormat->setCurrentIndex(EmailSettingsContainer::JPEG);

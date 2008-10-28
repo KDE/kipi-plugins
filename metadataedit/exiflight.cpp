@@ -29,13 +29,13 @@
 
 // Qt includes.
 
-#include <QComboBox>
 #include <QLabel>
 #include <QLayout>
 #include <QMap>
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <kdialog.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -112,9 +112,9 @@ public:
 
     QCheckBox        *flashEnergyCheck;
 
-    QComboBox        *lightSourceCB;
-    QComboBox        *flashModeCB;
-    QComboBox        *whiteBalanceCB;
+    KComboBox        *lightSourceCB;
+    KComboBox        *flashModeCB;
+    KComboBox        *whiteBalanceCB;
 
     QDoubleSpinBox   *flashEnergyEdit;
 
@@ -133,7 +133,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     // --------------------------------------------------------
 
     d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), this);
-    d->lightSourceCB    = new QComboBox(this);
+    d->lightSourceCB    = new KComboBox(this);
     d->lightSourceCB->insertItem(0, i18n("Unknown"));
     d->lightSourceCB->insertItem(1, i18n("Daylight"));
     d->lightSourceCB->insertItem(2, i18n("Fluorescent"));
@@ -161,7 +161,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     // --------------------------------------------------------
 
     d->flashModeCheck = new MetadataCheckBox(i18n("Flash mode:"), this);
-    d->flashModeCB    = new QComboBox(this);
+    d->flashModeCB    = new KComboBox(this);
 
     for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
         it != d->flashModeMap.end(); ++it )
@@ -187,7 +187,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     // --------------------------------------------------------
 
     d->whiteBalanceCheck = new MetadataCheckBox(i18n("White balance:"), this);
-    d->whiteBalanceCB    = new QComboBox(this);
+    d->whiteBalanceCB    = new KComboBox(this);
     d->whiteBalanceCB->insertItem(0, i18n("Auto"));
     d->whiteBalanceCB->insertItem(1, i18n("Manual"));
     d->whiteBalanceCB->setWhatsThis(i18n("Select here the white balance mode set by camera when "
