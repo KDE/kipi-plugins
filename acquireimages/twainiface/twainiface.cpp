@@ -126,19 +126,19 @@ bool TwainIface::IsValidDriver() const
 /** Entry point into Twain. For a complete description of this
     routine  please refer to the Twain specification 1.8
  */
-bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin,pTW_IDENTITY pDest,
-                           TW_UINT32 DG,TW_UINT16 DAT,TW_UINT16 MSG,
+bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin, pTW_IDENTITY pDest,
+                           TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG,
                            TW_MEMREF pData)
 {
     if(IsValidDriver())
     {
         USHORT ret_val;
-        ret_val      = (*m_pDSMProc)(pOrigin,pDest,DG,DAT,MSG,pData);
+        ret_val      = (*m_pDSMProc)(pOrigin, pDest, DG, DAT, MSG, pData);
         m_returnCode = ret_val;
 
         if(ret_val == TWRC_FAILURE)
         {
-            (*m_pDSMProc)(pOrigin,pDest,DG_CONTROL,DAT_STATUS,MSG_GET,&m_Status);
+            (*m_pDSMProc)(pOrigin, pDest, DG_CONTROL, DAT_STATUS, MSG_GET, &m_Status);
         }
         return (ret_val == TWRC_SUCCESS);
     }
@@ -163,9 +163,9 @@ void TwainIface::GetIdentity()
     m_AppId.Version.Country  = TWCY_USA;
     strcpy (m_AppId.Version.Info, "3.5");
 
-    m_AppId.ProtocolMajor   = TWON_PROTOCOLMAJOR;
-    m_AppId.ProtocolMinor   = TWON_PROTOCOLMINOR;
-    m_AppId.SupportedGroups = DG_IMAGE | DG_CONTROL;
+    m_AppId.ProtocolMajor    = TWON_PROTOCOLMAJOR;
+    m_AppId.ProtocolMinor    = TWON_PROTOCOLMINOR;
+    m_AppId.SupportedGroups  = DG_IMAGE | DG_CONTROL;
     strcpy(m_AppId.Manufacturer,  "MICSS");
     strcpy(m_AppId.ProductFamily, "Generic");
     strcpy(m_AppId.ProductName,   "Twain Test");
@@ -198,7 +198,8 @@ bool TwainIface::SelectSource()
  */
 bool TwainIface::SelectDefaultSource()
 {
-    m_bSourceSelected = CallTwainProc(&m_AppId,NULL,DG_CONTROL,DAT_IDENTITY,MSG_GETDEFAULT,&m_Source);
+    m_bSourceSelected = CallTwainProc(&m_AppId, NULL, DG_CONTROL,
+                                      DAT_IDENTITY, MSG_GETDEFAULT, &m_Source);
     return m_bSourceSelected;
 }
 
@@ -209,7 +210,7 @@ void TwainIface::CloseDS()
     if(DSOpen())
     {
         DisableSource();
-        CallTwainProc(&m_AppId, NULL, DG_CONTROL, 
+        CallTwainProc(&m_AppId, NULL, DG_CONTROL,
                       DAT_IDENTITY, MSG_CLOSEDS, (TW_MEMREF)&m_Source);
         m_bDSOpen = false;
     }
@@ -222,7 +223,7 @@ void TwainIface::CloseDSM()
     if(DSMOpen())
     {
         CloseDS();
-        CallTwainProc(&m_AppId, NULL, DG_CONTROL, 
+        CallTwainProc(&m_AppId, NULL, DG_CONTROL,
                       DAT_PARENT, MSG_CLOSEDSM, (TW_MEMREF)&m_hMessageWnd);
         m_bDSMOpen = false;
     }
@@ -279,7 +280,8 @@ bool TwainIface::ProcessMessage(MSG msg)
 
         twEvent.TWMessage = MSG_NULL;
 
-        CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_EVENT,MSG_PROCESSEVENT,(TW_MEMREF)&twEvent);
+        CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
+                      DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF)&twEvent);
 
         if(GetRC() != TWRC_NOTDSEVENT)
         {
@@ -294,7 +296,7 @@ bool TwainIface::ProcessMessage(MSG msg)
 
 /** Queries the capability of the Twain Data Source
  */
-bool TwainIface::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conType)
+bool TwainIface::GetCapability(TW_CAPABILITY& twCap, TW_UINT16 cap, TW_UINT16 conType)
 {
     if(DSOpen())
     {
@@ -302,7 +304,8 @@ bool TwainIface::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conT
         twCap.ConType    = conType;
         twCap.hContainer = NULL;
 
-        if(CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_CAPABILITY,MSG_GET,(TW_MEMREF)&twCap))
+        if(CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
+                         DAT_CAPABILITY, MSG_GET, (TW_MEMREF)&twCap))
         {
             return true;
         }
@@ -315,7 +318,7 @@ bool TwainIface::GetCapability(TW_CAPABILITY& twCap,TW_UINT16 cap,TW_UINT16 conT
 bool TwainIface::GetCapability(TW_UINT16 cap,TW_UINT32& value)
 {
     TW_CAPABILITY twCap;
-    if(GetCapability(twCap,cap))
+    if(GetCapability(twCap, cap))
     {
         pTW_ONEVALUE pVal;
         pVal = (pTW_ONEVALUE )GlobalLock(twCap.hContainer);
@@ -385,11 +388,11 @@ bool TwainIface::SetImageCount(TW_INT16 nCount)
         {
             TW_UINT32 count;
 
-            if(GetCapability(CAP_XFERCOUNT,count))
+            if(GetCapability(CAP_XFERCOUNT, count))
             {
                 nCount = (TW_INT16)count;
 
-                if(SetCapability(CAP_XFERCOUNT,nCount))
+                if(SetCapability(CAP_XFERCOUNT, nCount))
                 {
                     m_nImageCount = nCount;
                     return true;
@@ -456,7 +459,8 @@ bool TwainIface::DisableSource()
     if(SourceEnabled())
     {
         TW_USERINTERFACE twUI;
-        if(CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_USERINTERFACE,MSG_DISABLEDS,&twUI))
+        if(CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
+                         DAT_USERINTERFACE, MSG_DISABLEDS, &twUI))
         {
             m_bSourceEnabled = false;
             return true;
@@ -496,7 +500,7 @@ bool TwainIface::GetImageInfo(TW_IMAGEINFO& info)
     return false;
 }
 
-/** Trasnfers the image or cancels the transfer depending on the state of the TWAIN system
+/** Transfers the image or cancels the transfer depending on the state of the TWAIN system
  */
 void TwainIface::TransferImage()
 {
@@ -507,8 +511,8 @@ void TwainIface::TransferImage()
     {
         if(GetImageInfo(info))
         {
-            int permission;
-            permission = ShouldTransfer(info);
+            int permission = ShouldTransfer(info);
+
             switch(permission)
             {
                 case TWCPP_CANCELTHIS:
