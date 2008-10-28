@@ -18,30 +18,71 @@
   <property name="modal" >
    <bool>true</bool>
   </property>
-  <widget class="QPushButton" name="pushButton1" >
-   <property name="geometry" >
-    <rect>
-     <x>260</x>
-     <y>500</y>
-     <width>230</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text" >
-    <string>O&amp;K</string>
-   </property>
-  </widget>
-  <widget class="QTextBrowser" name="textBrowser2" >
-   <property name="geometry" >
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>690</width>
-     <height>480</height>
-    </rect>
-   </property>
-   <property name="text" >
-    <string>&lt;b>&lt;font color="#5500ff">&lt;font size="+2">Image Access&lt;/font>&lt;/font>&lt;/b>&lt;br>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="0" colspan="2" >
+    <widget class="QTextBrowser" name="textBrowser2" >
+     <property name="html" >
+      <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:x-large; font-weight:600; color:#5500ff;">Image Access&lt;/span>&lt;br />&lt;/p>
+&lt;table border="0" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;" cellspacing="2" cellpadding="0">
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">next image  &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">scrollwheel down/down arrow/right arrow/PgDown/Space/n   &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">previous image   &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">scrollwheel up/up arrow/left arrow/PgUp/p   &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">quit  &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Esc    &lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;span style=" font-size:x-large; color:#5500ff;">Display&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:x-large; font-weight:600; color:#5500ff;">&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:x-large; font-weight:600; color:#5500ff;">&lt;/p>
+&lt;table border="0" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;" cellspacing="2" cellpadding="0">
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">toggle fullscreen/normal   &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">f    &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">toggle scrollwheel action  &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">c (either zoom or change image)   &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">rotation   &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">r    &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">reset view   &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">double click    &lt;/p>&lt;/td>&lt;/tr>
+&lt;tr>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">original size  &lt;/p>&lt;/td>
+&lt;td>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">o   &lt;/p>&lt;/td>&lt;/tr>&lt;/table>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;br />&lt;span style=" font-size:x-large; font-weight:600; color:#5500ff;">Zooming&lt;/span>&lt;/p>
+&lt;ul style="-qt-list-indent: 1;">&lt;li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">move mouse in up/down-direction while pressing the right mouse button&lt;/li>
+&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">alternatively, press c and use the scrollwheel&lt;br />&lt;/li>
+&lt;li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">plus/minus&lt;/li>
+&lt;li style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">ctrl + scrollwheel&lt;/li>&lt;/ul>
+&lt;p style=" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:x-large; font-weight:600; color:#5500ff;">&lt;span style=" font-size:x-large;">Panning&lt;/span>&lt;/p>
+&lt;ul style="-qt-list-indent: 1;">&lt;li style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">move mouse while pressing the left button&lt;/li>&lt;/ul>&lt;/body>&lt;/html></string>
+     </property>
+     <property name="text" stdset="0" >
+      <string>&lt;b>&lt;font color="#5500ff">&lt;font size="+2">Image Access&lt;/font>&lt;/font>&lt;/b>&lt;br>
 &lt;TABLE> 
  &lt;TR> 
  &lt;TD>next image&lt;/TD> 
@@ -95,18 +136,33 @@
 &lt;UL> 
 &lt;LI>move mouse while pressing the left button
 &lt;/UL></string>
-   </property>
-  </widget>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <spacer name="horizontalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>650</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QPushButton" name="pushButton1" >
+     <property name="text" >
+      <string>O&amp;K</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>Q3TextBrowser</class>
-   <extends>Q3TextEdit</extends>
-   <header>Qt3Support/Q3TextBrowser</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
