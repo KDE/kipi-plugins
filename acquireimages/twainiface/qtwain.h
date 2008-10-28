@@ -82,7 +82,7 @@ protected:
 
     virtual bool onSetParent();
 
-    virtual void CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info);
+    virtual void CopyImage(TW_MEMREF data, TW_IMAGEINFO& info);
 };
 
 #endif /* QTWAIN_H */

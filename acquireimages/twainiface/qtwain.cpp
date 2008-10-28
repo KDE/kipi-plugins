@@ -26,7 +26,7 @@
 
 // Windows includes.
 
-#include <windef.h>
+#include <windows.h>
 
 // Qt includes.
 
@@ -82,9 +82,12 @@ bool QTwain::processMessage(MSG& msg)
     return (ProcessMessage(msg) == true);
 }
 
-void QTwain::CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info)
+void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
 {
-    QPixmap pix = QPixmap::fromWinHBITMAP(hBitmap);
-    QImage img  = pix.toImage();
-    emit signalImageAcquired(img);
+    if (pdata && (info.ImageWidth != -1) && (info.ImageLength != - 1))
+    {
+        QImage img = QImage::fromData((const uchar*)pdata, (int)GlobalSize((HGLOBAL)(long)pdata));
+        if (!img.isNull())
+            emit signalImageAcquired(img);
+    }
 }

@@ -102,7 +102,7 @@ protected:
     bool ShouldContinue();
     bool GetImage(TW_IMAGEINFO& info);
 
-    virtual void CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info)=0;
+    virtual void CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)=0;
 
 protected:
 

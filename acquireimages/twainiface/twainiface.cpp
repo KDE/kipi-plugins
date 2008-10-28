@@ -156,18 +156,18 @@ void TwainIface::GetIdentity()
 {
     // Expects all the fields in m_AppId to be set except for the id field.
     m_AppId.Id               = 0; // Initialize to 0 (Source Manager will assign real value)
-    m_AppId.Version.MajorNum = 3; // Your app's version number
-    m_AppId.Version.MinorNum = 5;
+    m_AppId.Version.MajorNum = 2; // Your app's version number
+    m_AppId.Version.MinorNum = 0;
     m_AppId.Version.Language = TWLG_USA;
     m_AppId.Version.Country  = TWCY_USA;
-    strcpy (m_AppId.Version.Info, "3.5");
+    strcpy(m_AppId.Version.Info, "AcquireImage kipi plugin");
 
     m_AppId.ProtocolMajor    = TWON_PROTOCOLMAJOR;
     m_AppId.ProtocolMinor    = TWON_PROTOCOLMINOR;
     m_AppId.SupportedGroups  = DG_IMAGE | DG_CONTROL;
-    strcpy(m_AppId.Manufacturer,  "MICSS");
+    strcpy(m_AppId.Manufacturer,  "KDE");
     strcpy(m_AppId.ProductFamily, "Generic");
-    strcpy(m_AppId.ProductName,   "Twain Test");
+    strcpy(m_AppId.ProductName,   "AcquireImage");
 }
 
 /** Called to display a dialog box to select the Twain source to use.
@@ -558,13 +558,13 @@ void TwainIface::CancelTransfer()
  */
 bool TwainIface::GetImage(TW_IMAGEINFO& info)
 {
-    HANDLE hBitmap;
-    CallTwainProc(&m_AppId, &m_Source, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, &hBitmap);
+    TW_MEMREF pdata;
+    CallTwainProc(&m_AppId, &m_Source, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, &data);
 
     switch(m_returnCode)
     {
         case TWRC_XFERDONE:
-            CopyImage(hBitmap, info);
+            CopyImage(pdata, info);
             break;
 
         case TWRC_CANCEL:
@@ -576,6 +576,6 @@ bool TwainIface::GetImage(TW_IMAGEINFO& info)
             break;
     }
 
-    GlobalFree(hBitmap);
+    GlobalFree(pdata);
     return EndTransfer();
 }
