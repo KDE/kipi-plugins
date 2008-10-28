@@ -315,7 +315,7 @@ bool TwainIface::GetCapability(TW_CAPABILITY& twCap, TW_UINT16 cap, TW_UINT16 co
 
 /** Queries the capability of the Twain Data Source
  */
-bool TwainIface::GetCapability(TW_UINT16 cap,TW_UINT32& value)
+bool TwainIface::GetCapability(TW_UINT16 cap, TW_UINT32& value)
 {
     TW_CAPABILITY twCap;
     if(GetCapability(twCap, cap))
@@ -336,7 +336,7 @@ bool TwainIface::GetCapability(TW_UINT16 cap,TW_UINT32& value)
 
 /** Sets the capability of the Twain Data Source
  */
-bool TwainIface::SetCapability(TW_UINT16 cap,TW_UINT16 value,bool sign)
+bool TwainIface::SetCapability(TW_UINT16 cap, TW_UINT16 value, bool sign)
 {
     if(DSOpen())
     {
@@ -430,7 +430,7 @@ bool TwainIface::EnableSource(bool showUI)
     return false;
 }
 
-/** Called to acquire images from the source. parameter numImages i the
+/** Called to acquire images from the source. parameter numImages is the
     number of images that you an handle concurrently
  */
 bool TwainIface::Acquire(int numImages)
@@ -538,7 +538,8 @@ void TwainIface::TransferImage()
 bool TwainIface::EndTransfer()
 {
     TW_PENDINGXFERS twPend;
-    if(CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_PENDINGXFERS,MSG_ENDXFER,(TW_MEMREF)&twPend))
+    if(CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
+                     DAT_PENDINGXFERS, MSG_ENDXFER, (TW_MEMREF)&twPend))
     {
         return twPend.Count != 0;
     }
@@ -550,7 +551,8 @@ bool TwainIface::EndTransfer()
 void TwainIface::CancelTransfer()
 {
     TW_PENDINGXFERS twPend;
-    CallTwainProc(&m_AppId,&m_Source,DG_CONTROL,DAT_PENDINGXFERS,MSG_RESET,(TW_MEMREF)&twPend);
+    CallTwainProc(&m_AppId, &m_Source, DG_CONTROL,
+                  DAT_PENDINGXFERS, MSG_RESET, (TW_MEMREF)&twPend);
 }
 
 /** Calls TWAIN to actually get the image

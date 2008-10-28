@@ -6,7 +6,7 @@
   Copyright (C) 1997 TWAIN Working Group: Bell+Howell, Canon, DocuMagix, 
   Fujitsu, Genoa Technology, Hewlett-Packard, Kofax Imaging Products, and
   Ricoh Corporation.  All rights reserved.
- 
+
   Copyright © 1998 TWAIN Working Group: Adobe Systems Incorporated, 
   Canon Information Systems, Eastman Kodak Company, 
   Fujitsu Computer Products of America, Genoa Technology, 
@@ -33,7 +33,7 @@
                                  Change DC to TW 
                                  Change filename from DC.H to TWAIN.H
     version 1.5, July 1993.      Remove spaces from country identifiers
- 
+
     version 1.7, July 1997       Added Capabilities and data structure for 
                                  document imaging and digital cameras.
                                  KHL.
@@ -53,19 +53,19 @@
                                  for 1.8 Specification JMH
     version 1.8  January 1999    Changed search mode from SRCH_ to TWBD_ as
                                  in 1.8 Specification, added TWBT_MAXICODE	JMH
-	  version 1.8  January 1999    Removed undocumented duplicate AUTO<cap> JMH
+    version 1.8  January 1999    Removed undocumented duplicate AUTO<cap> JMH
     version 1.8  March 1999      Removed undocumented 1.8 caps:
                                  CAP_FILESYSTEM
                                  CAP_PAPERBINDING
                                  CAP_PASSTHRU
                                  CAP_POWERDOWNTIME
                                  ICAP_AUTODISCARDBLANKPAGES
-                               * CAP_PAGEMULTIPLEACQUIRE - is CAP_REACQUIREALLOWED,
-							                   requires spec change.  JMH
+                                 * CAP_PAGEMULTIPLEACQUIRE - is CAP_REACQUIREALLOWED,
+                                 requires spec change.  JMH
                                  Added Mac structure packing modifications JMH
-	  version 1.9  March 2000	     Added new types and definations required
-	                               for 1.9 Specification MLM
-	  version 1.9  March 2000	     Added ICAP_JPEGQUALITY, TWJQ_ values,
+    version 1.9  March 2000      Added new types and definations required
+                                 for 1.9 Specification MLM
+    version 1.9  March 2000      Added ICAP_JPEGQUALITY, TWJQ_ values,
                                  updated TWON_PROTOCOLMINOR for Release v1.9 MN
 \* ======================================================================== */
 
