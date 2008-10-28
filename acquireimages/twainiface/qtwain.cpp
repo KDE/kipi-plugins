@@ -32,7 +32,7 @@
 
 #include "dib.h"
 
-QTwain::QTwain(QObject* parent)
+QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
 {
 }
@@ -65,7 +65,7 @@ bool QTwain::isValidDriver() const
 
 bool QTwain::onSetParent()
 {
-    WId id = m_pParent->winId();
+    WId id = dynamic_cast<QWidget*>(parent())->winId();
     InitTwain(id);
 
     return IsValidDriver();
@@ -84,7 +84,7 @@ bool QTwain::processMessage(MSG& msg)
 
 void QTwain::CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info)
 {
-    QPixmap pix = QPixmap.fromWinHBITMAP(hBitmap);
+    QPixmap pix = QPixmap::fromWinHBITMAP(hBitmap);
     QImage img  = pix.toImage();
-    emit signalImageAcquired(image);
+    emit signalImageAcquired(img);
 }

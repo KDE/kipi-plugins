@@ -27,6 +27,7 @@
 // Qt includes.
 
 #include <QObject>
+#include <QWidget>
 #include <QImage>
 
 // C++ includes.
@@ -45,7 +46,7 @@ class QTwain : public QObject, TwainIface
 
 public:
 
-    QTwain(QObject* parent=0);
+    QTwain(QWidget* parent);
     virtual ~QTwain();
 
     /**
