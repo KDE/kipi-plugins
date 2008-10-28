@@ -24,13 +24,13 @@
 #include "qtwain.h"
 #include "qtwain.moc"
 
+// Windows includes.
+
+#include <windef.h>
+
 // Qt includes.
 
 #include <QPixmap>
-
-// Local includes.
-
-#include "dib.h"
 
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
