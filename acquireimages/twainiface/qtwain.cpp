@@ -35,7 +35,7 @@
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
 {
-    m_parent = parent;
+    setParent(parent);
 }
 
 QTwain::~QTwain()
@@ -62,6 +62,18 @@ bool QTwain::acquire(unsigned int maxNumImages)
 bool QTwain::isValidDriver() const
 {
     return (IsValidDriver() == true);
+}
+
+void QTwainInterface::setParent(QWidget* parent)
+{
+    m_parent = parent;
+    if (m_parent)
+    {
+        if (!onSetParent())
+        {
+            // TODO
+        }
+    }
 }
 
 bool QTwain::onSetParent()
