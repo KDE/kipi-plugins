@@ -28,31 +28,27 @@
 
 #include <QPainter>
 #include <QTimer>
+#include <QPixmap>
+#include <QGridLayout>
 
 // KDE includes.
 
 #include <kmessagebox.h>
 #include <klocale.h>
 
-// Local includes.
-
-#include "qtwain.h"
-#include "dib.h"
-
 QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
                 : QMainWindow(parent, f)
 {
-    m_pTwain         = new QTwain(0);
-    m_pWidget        = new QWidget(this);
-    m_pVBox          = new QGridLayout(m_pWidget);
-    m_pLabel         = new QLabel();
+    m_pTwain          = new QTwain(this);
+    m_pWidget         = new QWidget(this);
+    QGridLayout *grid = new QGridLayout(m_pWidget);
+    m_pLabel          = new QLabel();
 
-    m_pVBox->addWidget(m_pLabel, 1, 0, 2, 2, 0);
+    grid->addWidget(m_pLabel, 1, 0, 2, 2, 0);
     m_pWidget->setMinimumSize(500, 500);
-    m_pPixmap = 0;
 
-    connect(m_pTwain, SIGNAL(dibAcquired(CDIB*)),
-            this, SLOT(onDibAcquired(CDIB*)));
+    connect(m_pTwain, SIGNAL(signalImageAcquired(const QImage&)),
+            this, SLOT(slotImageAcquired(const QImage&)));
 
     setMinimumSize(800, 600);
     setGeometry(300, 300, 800, 600) ;
@@ -81,24 +77,8 @@ bool QTwainMainWindow::winEvent(MSG* pMsg, long* /*result*/)
     return false;
 }
 
-void QTwainMainWindow::onDibAcquired(CDIB* pDib)
+void QTwainMainWindow::slotImageAcquired(const QImage& img)
 {
-    delete m_pPixmap;
-    m_pPixmap = QTwainInterface::convertToPixmap(pDib);
-    m_pLabel->setPixmap(*m_pPixmap);
-    delete pDib;
-}
-
-void QTwainMainWindow::paintEvent(QPaintEvent*)
-{
-    if (m_pPixmap)
-    {
-        //QPainter p(m_pWidget);
-        //m_pVBox->addWidget(p,1,0,0);
-        /*p.drawPixmap(0, 71, 
-                     *m_pPixmap,
-                     0, 0,
-                     width(), height() - 71);
-                     */
-    }
+    QPixmap pix = img.toPixmap();
+    m_pLabel->setPixmap(pix);
 }

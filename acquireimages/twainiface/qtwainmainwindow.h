@@ -27,14 +27,12 @@
 // Qt includes.
 
 #include <QMainWindow>
-#include <QPixmap>
-#include <QVBoxLayout>
 #include <QWidget>
 #include <QLabel>
 
 // Local includes.
 
-#include "qtwaininterface.h"
+#include "qtwain.h"
 
 class QTwainMainWindow : public QMainWindow
 {
@@ -47,8 +45,6 @@ public:
 
 protected:
 
-    void paintEvent(QPaintEvent*);
-
     virtual bool winEvent(MSG* pMsg, long *result);
 
 private slots:
@@ -58,11 +54,11 @@ private slots:
 
 protected:
 
-    QTwainInterface* m_pTwain;
-    QPixmap*         m_pPixmap;
-    QGridLayout*     m_pVBox;
-    QWidget*         m_pWidget;
-    QLabel*          m_pLabel;
+    QWidget*     m_pWidget;
+
+    QLabel*      m_pLabel;
+
+    QTwain*      m_pTwain;
 };
 
 #endif /* QTWAINMAINWINDOW_H */

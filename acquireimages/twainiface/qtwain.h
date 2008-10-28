@@ -24,44 +24,60 @@
 #ifndef QTWAIN_H
 #define QTWAIN_H
 
+// Qt includes.
+
+#include <QObject>
+#include <QImage>
+
 // Local includes.
 
-#include "qtwaininterface.h"
 #include "twainiface.h"
 
 const unsigned int AnyCount = UINT_MAX;
 
-class QTwain : public QTwainInterface, TwainIface
+class QTwain : public QObject, TwainIface
 {
+    Q_OBJECT
+
 public:
 
-    /**
-     * Standard constructor
-     */
-    QTwain(QWidget* parent = 0);
-
-    /**
-     * Standard destructor
-     */
+    QTwain(QObject* parent=0);
     virtual ~QTwain();
 
     /**
-     * @name necessary function implementations
+     * Allows the selection of the device to be used, in a true Twain
+     * implementation, this method opens the device selection dialog
      */
     virtual bool selectSource();
-    virtual bool acquire(unsigned int maxNumImages = AnyCount);
+
+    /**
+     * Acquires a number of imagesusing scanning dialog.
+     */
+    virtual bool acquire(unsigned int maxNumImages=AnyCount);
+
+    /**
+     * Returns whether the device that is currently being used
+     * is valid or not.
+     */
     virtual bool isValidDriver() const;
+
+    /**
+     * Hook-in. See class documentation for details!
+     *
+     * @result    One should return false to get the message being
+     *            processed by the application (should return false by default!)
+     */
     virtual bool processMessage(MSG& msg);
+
+signals:
+
+    void signalImageAcquired(const QImage& img);
 
 protected:
 
-    /**
-     * Implemented hook-in function
-     */
     virtual bool onSetParent();
 
     virtual void CopyImage(HANDLE hBitmap, TW_IMAGEINFO& info);
-    void Create24Bit(CDIB& source,CDIB& dest);
 };
 
 #endif /* QTWAIN_H */
