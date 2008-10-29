@@ -96,13 +96,13 @@ void Plugin_AcquireImages::slotActivate()
 
     QTwain *twIface = new QTwain(m_parentWidget);
 
-    connect(m_pTwain, SIGNAL(signalImageAcquired(const QImage&)),
+    connect(twIface, SIGNAL(signalImageAcquired(const QImage&)),
             this, SLOT(slotImageAcquiredFromTwain(const QImage&)));
 
     twIface->selectSource();
 
     if (!twIface->acquire())
-        QMessageBox::critical(this, QString(), i18n("Cannot open scanner device."));
+        KMessageBox::sorry(0, i18n("Cannot open scanner device."));
 
 #else /*  WIN32 */
 
