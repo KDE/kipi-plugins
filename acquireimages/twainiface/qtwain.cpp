@@ -33,6 +33,7 @@
 #include <QPixmap>
 #include <QDataStream>
 #include <QByteArray>
+#include <QFile>
 
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
@@ -103,24 +104,37 @@ void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
     {
         // Under Windows, Tawin interface return a DIB data structure.
         // See http://en.wikipedia.org/wiki/Device-independent_bitmap#DIBs_in_memory for details.
-        HGLOBAL hDIB     = (HGLOBAL)(long)pdata;
-        int size         = (int)GlobalSize(hDIB);
-        const char* bits = (const char*)GlobalLock(hDIB);
+        HGLOBAL hDIB = (HGLOBAL)(long)pdata;
+        int size     = (int)GlobalSize(hDIB);
+        const char* bits  = (const char*)GlobalLock(hDIB);
 
         // DIB is BMP without header. we will add it to load data in QImage using std loader from Qt.
-        QByteArray ba, tmp;
-        ba.append("BM");
-        qint32 filesize = size + 14;
-        tmp             = QByteArray(&filesize, 4);
-        ba.append(tmp);
-        ba.append("\x00\x00\x00\x00");
-        qint32 filesize = 14 + 40 + 0;
-        tmp             = QByteArray(&filesize, 4);
-        ba.append(tmp);
+        QByteArray baBmp;      
+        QDataStream ds(&baBmp, QIODevice::WriteOnly);
 
-        QDataStream ds(da);
-        QImage img;
-        ds >> img;
+        ds.writeRawData("BM", 2);
+
+        qint32 filesize = size + 14;
+        ds << filesize;
+
+        qint16 reserved = 0;
+        ds << reserved;
+        ds << reserved;
+
+        qint32 pixOffset = 14 + 40 + 0;
+        ds << pixOffset;
+
+        ds.writeRawData(bits, size);
+        QImage img = QImage::fromData(baBmp, "BMP");
         emit signalImageAcquired(img);
+
+        QFile file("dib2bmp.bmp");
+        if ( !file.open(QIODevice::WriteOnly) )
+            return;
+        QDataStream stream( &file );
+        stream.writeRawData(baBmp.data(), baBmp.size());
+        file.close();
+
+        GlobalUnlock(hDIB);
     }
 }
