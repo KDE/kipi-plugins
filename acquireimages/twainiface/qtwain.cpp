@@ -102,11 +102,11 @@ void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
 {
     if (pdata && (info.ImageWidth != -1) && (info.ImageLength != - 1))
     {
-        // Under Windows, Tawin interface return a DIB data structure.
+        // Under Windows, Twain interface return a DIB data structure.
         // See http://en.wikipedia.org/wiki/Device-independent_bitmap#DIBs_in_memory for details.
-        HGLOBAL hDIB = (HGLOBAL)(long)pdata;
-        int size     = (int)GlobalSize(hDIB);
-        const char* bits  = (const char*)GlobalLock(hDIB);
+        HGLOBAL hDIB     = (HGLOBAL)(long)pdata;
+        int size         = (int)GlobalSize(hDIB);
+        const char* bits = (const char*)GlobalLock(hDIB);
 
         // DIB is BMP without header. we will add it to load data in QImage using std loader from Qt.
         QByteArray baBmp;      
@@ -125,16 +125,10 @@ void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
         ds << pixOffset;
 
         ds.writeRawData(bits, size);
+
         QImage img = QImage::fromData(baBmp, "BMP");
-        emit signalImageAcquired(img);
-
-        QFile file("dib2bmp.bmp");
-        if ( !file.open(QIODevice::WriteOnly) )
-            return;
-        QDataStream stream( &file );
-        stream.writeRawData(baBmp.data(), baBmp.size());
-        file.close();
-
         GlobalUnlock(hDIB);
+
+        emit signalImageAcquired(img);
     }
 }

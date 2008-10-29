@@ -127,7 +127,7 @@ void Plugin_AcquireImages::slotActivate()
 
 void Plugin_AcquireImages::slotImageAcquiredFromTwain(const QImage& img)
 {
-    img.save("twain.png", "PNG");
+        KMessageBox::sorry(0, i18n("image is here."));
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
