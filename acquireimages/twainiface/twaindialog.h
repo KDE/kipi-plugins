@@ -49,7 +49,7 @@ class TwainDialog : public KDialog
 
 public:
 
-    TwainDialog(KIPI::Interface* interface, QWidget *parent);
+    TwainDialog(KIPI::Interface* interface=0, QWidget *parent=0);
     ~TwainDialog();
 
     void showEvent(QShowEvent*);

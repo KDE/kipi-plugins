@@ -28,6 +28,7 @@
 #include <QDateTime>
 #include <QPushButton>
 #include <QTimer>
+#include <QLabel>
 
 // KDE includes.
 
@@ -92,7 +93,7 @@ TwainDialog::TwainDialog(KIPI::Interface* interface, QWidget *parent)
     d->preview   = new QLabel(this);
 
     setButtons(Help|User1|Close);
-    SetButtonText(User1, i18n("Save As..."));
+    setButtonText(User1, i18n("Save As..."));
     setCaption(i18n("Scan Image"));
     setModal(true);
     setMainWidget(d->preview);
@@ -102,7 +103,7 @@ TwainDialog::TwainDialog(KIPI::Interface* interface, QWidget *parent)
     d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to acquire images using a flat bed scanner"),
+                   ki18n("A Kipi plugin to acquire images using a flat scanner"),
                    ki18n("(c) 2003-2008, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
@@ -143,20 +144,20 @@ void TwainDialog::showEvent(QShowEvent*)
 {
     // set the parent here to be sure to have a really
     // valid window as the twain parent!
-    d-twIface->setParent(this);
+    d->twIface->setParent(this);
     QTimer::singleShot(0, this, SLOT(slotInit()));
 }
 
 void TwainDialog::slotInit()
 {
-    d-twIface->selectSource();
-    if (!m_pTwain->acquire())
+    d->twIface->selectSource();
+    if (!d->twIface->acquire())
         QMessageBox::critical(this, QString(), i18n("Cannot acquire image..."));
 }
 
 bool TwainDialog::winEvent(MSG* pMsg, long* /*result*/)
 {
-    m_pTwain->processMessage(*pMsg);
+    d->twIface->processMessage(*pMsg);
     return false;
 }
 
@@ -183,7 +184,6 @@ void TwainDialog::slotClose()
 
 void TwainDialog::closeEvent(QCloseEvent *e)
 {
-    d->saneWidget->scanCancel();
     saveSettings();
     e->accept();
 }
@@ -193,7 +193,7 @@ void TwainDialog::slotHelp()
     KToolInvocation::invokeHelp("acquireimages", "kipi-plugins");
 }
 
-void QTwainMainWindow::slotImageAcquired(const QImage& img)
+void TwainDialog::slotImageAcquired(const QImage& img)
 {
     d->img = img;
     QPixmap pix = QPixmap::fromImage(d->img);
@@ -217,7 +217,10 @@ void TwainDialog::slotSaveImage()
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    KFileDialog imageFileSaveDialog(d->interface->currentAlbum().uploadPath(), QString(), 0);
+    KUrl uurl;
+    if (d->interface) uurl = d->interface->currentAlbum().uploadPath();
+
+    KFileDialog imageFileSaveDialog(uurl, QString(), 0);
 
     imageFileSaveDialog.setModal(false);
     imageFileSaveDialog.setOperationMode(KFileDialog::Saving);
@@ -298,7 +301,7 @@ void TwainDialog::slotSaveImage()
 
     KExiv2Iface::KExiv2 meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-    meta.setImageDimensions(img.size());
+    meta.setImageDimensions(d->img.size());
     meta.setImagePreview(prev);
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
