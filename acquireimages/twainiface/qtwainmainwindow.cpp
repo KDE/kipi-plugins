@@ -56,7 +56,6 @@ QTwainMainWindow::QTwainMainWindow(QWidget* parent, Qt::WindowFlags f)
 
 QTwainMainWindow::~QTwainMainWindow()
 {
-    delete m_pTwain;
 }
 
 void QTwainMainWindow::showEvent(QShowEvent*)
