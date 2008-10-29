@@ -36,18 +36,25 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKSane includes.
+#ifdef WIN32
 
+// Twain interface includes.
+#include <qtwain.h>
+
+#else /*  WIN32 */
+
+// LibKSane includes.
 #include <libksane/ksane.h>
+
+// Local includes.
+#include "scandialog.h"
+
+#endif /*  WIN32 */
 
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
-
-// Local includes.
-
-#include "scandialog.h"
 
 K_PLUGIN_FACTORY( AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>(); )
 K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
@@ -55,11 +62,14 @@ K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
                     : KIPI::Plugin( AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
+    m_parentWidget = 0;
     kDebug( 51001 ) << "Plugin_AcquireImages plugin loaded";
 }
 
 void Plugin_AcquireImages::setup(QWidget* widget)
 {
+    m_parentWidget = widget;
+
     KIPI::Plugin::setup(widget);
 
     m_action_scanimages = new KAction(KIcon("scanner"), i18n("Scan Images..."), actionCollection());
@@ -82,6 +92,20 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
+#ifdef WIN32
+
+    QTwain *twIface = new QTwain(m_parentWidget);
+
+    connect(m_pTwain, SIGNAL(signalImageAcquired(const QImage&)),
+            this, SLOT(slotImageAcquiredFromTwain(const QImage&)));
+
+    twIface->selectSource();
+
+    if (!twIface->acquire())
+        QMessageBox::critical(this, QString(), i18n("Cannot open scanner device."));
+
+#else /*  WIN32 */
+
     KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
 
     QString dev = saneWidget->selectDevice(0);
@@ -97,6 +121,13 @@ void Plugin_AcquireImages::slotActivate()
 
     KIPIAcquireImagesPlugin::ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
     dlg.exec();
+
+#endif /*  WIN32 */
+}
+
+void Plugin_AcquireImages::slotImageAcquiredFromTwain(const QImage& img)
+{
+    img.save("twain.png", "PNG");
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const

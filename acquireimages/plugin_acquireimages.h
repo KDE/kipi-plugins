@@ -31,6 +31,8 @@
 
 #include <libkipi/plugin.h>
 
+class QWidget;
+
 class KAction;
 
 namespace KIPI
@@ -54,7 +56,13 @@ public slots:
 
     void slotActivate();
 
+private slots:
+
+    void slotImageAcquiredFromTwain(const QImage&);
+
 private:
+
+    QWidget         *m_parentWidget;
 
     KAction         *m_action_scanimages;
 
