@@ -62,7 +62,10 @@ K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
                     : KIPI::Plugin( AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
-    m_parentWidget = 0;
+    m_parentWidget      = 0;
+    m_twIface           = 0;
+    m_interface         = 0;
+    m_action_scanimages = 0;
     kDebug( 51001 ) << "Plugin_AcquireImages plugin loaded";
 }
 
@@ -94,14 +97,14 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    QTwain *twIface = new QTwain(m_parentWidget);
+    m_twIface = new QTwain(m_parentWidget);
 
-    connect(twIface, SIGNAL(signalImageAcquired(const QImage&)),
+    connect(m_twIface, SIGNAL(signalImageAcquired(const QImage&)),
             this, SLOT(slotImageAcquiredFromTwain(const QImage&)));
 
-    twIface->selectSource();
+    m_twIface->selectSource();
 
-    if (!twIface->acquire())
+    if (!m_twIface->acquire())
         KMessageBox::sorry(0, i18n("Cannot open scanner device."));
 
 #else /*  WIN32 */

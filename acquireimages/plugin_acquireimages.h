@@ -35,6 +35,8 @@ class QWidget;
 
 class KAction;
 
+class QTwain;
+
 namespace KIPI
 {
     class Interface;
@@ -67,6 +69,8 @@ private:
     KAction         *m_action_scanimages;
 
     KIPI::Interface *m_interface;
+
+    QTwain          *m_twIface;
 };
 
 #endif /* PLUGIN_ACQUIREIMAGES_H */

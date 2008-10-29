@@ -33,7 +33,7 @@
 #include <QPixmap>
 #include <QDataStream>
 #include <QByteArray>
-#include <QFile>
+#include <QMessageBox>
 
 QTwain::QTwain(QWidget* parent)
       : QObject(parent), TwainIface()
@@ -100,6 +100,8 @@ bool QTwain::processMessage(MSG& msg)
 
 void QTwain::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
 {
+        QMessageBox::information(0, QString(), "fire!");
+
     if (pdata && (info.ImageWidth != -1) && (info.ImageLength != - 1))
     {
         // Under Windows, Twain interface return a DIB data structure.
