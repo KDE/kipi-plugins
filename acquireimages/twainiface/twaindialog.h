@@ -3,10 +3,9 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-27-10
+ * Date        : 2008-10-29
  * Description : Twain interface
  *
- * Copyright (C) 2002-2003 Stephan Stapel <stephan dot stapel at web dot de>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -21,18 +20,63 @@
  *
  * ============================================================ */
 
+#ifndef TWAINDIALOG_H
+#define TWAINDIALOG_H
+
 // Qt includes.
 
-#include <QApplication>
+#include <QCloseEvent>
 
-// Local includes.
+// KDE includes.
 
-#include "twaindialog.h"
+#include <kdialog.h>
 
-int main(int argc, char** argv)
+class QWidget;
+
+namespace KIPI
 {
-    QApplication app(argc, argv);
-    TwainDialog dlg;
-    dlg.show();
-    return app.exec();
+    class Interface;
 }
+
+namespace KIPIAcquireImagesPlugin
+{
+
+class TwainDialogPriv;
+
+class TwainDialog : public KDialog
+{
+    Q_OBJECT
+
+public:
+
+    TwainDialog(KIPI::Interface* interface, QWidget *parent);
+    ~TwainDialog();
+
+    void showEvent(QShowEvent*);
+
+protected:
+
+    bool winEvent(MSG* pMsg, long *result);
+    void closeEvent(QCloseEvent* e);
+
+private slots:
+
+    void slotInit();
+    void slotImageAcquired(const QImage& img);
+    void slotSaveImage();
+    void slotClose();
+    void slotHelp();
+
+private:
+
+    void readSettings();
+    void saveSettings();
+
+private:
+
+    TwainDialogPriv* d;
+};
+
+}  // namespace KIPIAcquireImagesPlugin
+
+#endif // TWAINDIALOG_H

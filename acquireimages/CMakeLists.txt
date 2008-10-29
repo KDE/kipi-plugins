@@ -3,8 +3,9 @@ IF(WIN32)
 
     SET(twainiface_SRCS
         twainiface/twainiface.cpp
+        twainiface/twaindialog.cpp
         twainiface/qtwain.cpp
-        twainiface/qtwainmainwindow.cpp
+        twainiface/twaindialog.cpp
         twainiface/main.cpp
        )
 
