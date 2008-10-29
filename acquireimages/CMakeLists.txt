@@ -5,7 +5,6 @@ IF(WIN32)
         twainiface/twainiface.cpp
         twainiface/twaindialog.cpp
         twainiface/qtwain.cpp
-        twainiface/twaindialog.cpp
         twainiface/main.cpp
        )
 
