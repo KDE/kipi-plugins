@@ -33,8 +33,6 @@
 #include <QPixmap>
 #include <QDataStream>
 #include <QByteArray>
-#include <QMessageBox>
-#include <QTimer>
 
 // KDE includes.
 
