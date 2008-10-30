@@ -48,8 +48,24 @@ public:
     bool InitTwain(HWND hWnd);
     void ReleaseTwain();
 
+    bool ProcessMessage(MSG msg);
+
+    bool IsValidDriver() const;
+    bool SelectDefaultSource();
+    bool DSMOpen() const;
+    bool DSOpen() const;
+    bool SourceEnabled() const  { return m_bSourceEnabled;  };
+    bool SourceSelected() const { return m_bSourceSelected; };
+    bool ModalUI() const        { return m_bModalUI;        };
+
+    TW_INT16 GetRC() const      { return m_returnCode;      };
+    TW_STATUS GetStatus() const { return m_Status;          };
+
+    bool SetImageCount(TW_INT16 nCount=1);
+    bool Acquire(int numImages=1);
+
     /**
-      This routine must be implemented by the derived class 
+      These routines must be implemented by the derived class 
       After setting the required values in the m_AppId structure,
       the derived class should call the parent class implementation
       Refer Pg: 51 of the Twain Specification version 1.8
@@ -58,22 +74,6 @@ public:
     virtual bool SelectSource();
     virtual bool OpenSource(TW_IDENTITY *pSource=NULL);
     virtual int  ShouldTransfer(TW_IMAGEINFO& info) { return TWCPP_DOTRANSFER; };
-
-    bool ProcessMessage(MSG msg);
-
-    bool SelectDefaultSource();
-    bool IsValidDriver() const;
-    bool SourceSelected() const { return m_bSourceSelected; };
-    bool DSMOpen() const;
-    bool DSOpen() const;
-    bool SourceEnabled() const  { return m_bSourceEnabled;  };
-    bool ModalUI() const        { return m_bModalUI;        };
-
-    TW_INT16 GetRC() const      { return m_returnCode;      };
-    TW_STATUS GetStatus() const { return m_Status;          };
-
-    bool SetImageCount(TW_INT16 nCount=1);
-    bool Acquire(int numImages=1);
 
 protected:
 
@@ -92,9 +92,6 @@ protected:
 
     bool GetImageInfo(TW_IMAGEINFO& info);
 
-    virtual bool DisableSource();
-    virtual bool CanClose() { return true; };
-
     void TranslateMessage(TW_EVENT& twEvent);
     void TransferImage();
     bool EndTransfer();
@@ -103,6 +100,8 @@ protected:
     bool GetImage(TW_IMAGEINFO& info);
 
     virtual void CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)=0;
+    virtual bool DisableSource();
+    virtual bool CanClose() { return true; };
 
 protected:
 

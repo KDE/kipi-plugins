@@ -40,7 +40,7 @@
 
 const unsigned int AnyCount = UINT_MAX;
 
-class QTwain : public QObject, TwainIface
+class QTwain : public QObject, public TwainIface
 {
     Q_OBJECT
 

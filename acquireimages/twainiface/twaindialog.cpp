@@ -46,6 +46,7 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kurl.h>
+#include <kglobalsettings.h>
 
 // LibKIPI includes.
 
@@ -155,7 +156,7 @@ void TwainDialog::slotInit()
         QMessageBox::critical(this, QString(), i18n("Cannot acquire image..."));
 }
 
-bool TwainDialog::winEvent(MSG* pMsg, long* /*result*/)
+bool TwainDialog::winEvent(MSG* pMsg, long* result)
 {
     d->twIface->processMessage(*pMsg);
     return false;
@@ -195,9 +196,9 @@ void TwainDialog::slotHelp()
 
 void TwainDialog::slotImageAcquired(const QImage& img)
 {
-    d->img = img;
+    d->img      = img;
     QPixmap pix = QPixmap::fromImage(d->img);
-    d->preview->setPixmap(pix);
+    d->preview->setPixmap(pix.scaled(320, 240, Qt::KeepAspectRatio));
 }
 
 void TwainDialog::slotSaveImage()
@@ -211,13 +212,15 @@ void TwainDialog::slotSaveImage()
     writableMimetypes.insert(1, "image/jpeg");
     writableMimetypes.insert(2, "image/tiff");
 
+    //QMessageBox::critical(this, QString(), writableMimetypes.join(","));
+
     kDebug( 51000 ) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
 
     QString defaultMimeType("image/png");
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    KUrl uurl;
+    KUrl uurl = KGlobalSettings::documentPath();
     if (d->interface) uurl = d->interface->currentAlbum().uploadPath();
 
     KFileDialog imageFileSaveDialog(uurl, QString(), 0);
