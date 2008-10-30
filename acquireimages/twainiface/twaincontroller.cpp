@@ -39,13 +39,34 @@
 // KDE includes.
 
 #include <klocale.h>
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
+#include <kimageio.h>
+#include <kmessagebox.h>
+#include <kstandarddirs.h>
+#include <kurl.h>
+#include <kglobalsettings.h>
+
+// LibKIPI includes.
+
+#include <libkipi/interface.h>
+
+// Local includes.
+
+#include "kpwriteimage.h"
+#include "pluginsversion.h"
 
 namespace KIPIAcquireImagesPlugin
 {
 
-TwainController::TwainController(QWidget* parent)
+TwainController::TwainController(KIPI::Interface* interface, QWidget* parent)
                : QWidget(parent), TwainIface()
 {
+    m_interface = interface;
+
+    setParent(this);
+    QTimer::singleShot(0, this, SLOT(slotInit()));
     // This is a dumy widget not visible. We use Qwidget to dispatch Windows event to Twain interface.
     // This is not possible to do it using QObject as well.
     hide();
@@ -58,10 +79,6 @@ TwainController::~TwainController()
 
 void TwainController::showEvent(QShowEvent*)
 {
-    // set the parent here to be sure to have a really
-    // valid window as the twain parent!
-    setParent(this);
-    QTimer::singleShot(0, this, SLOT(slotInit()));
 }
 
 void TwainController::slotInit()
@@ -160,8 +177,147 @@ void TwainController::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
         QImage img = QImage::fromData(baBmp, "BMP");
         GlobalUnlock(hDIB);
 
-        emit signalImageAcquired(img);
+        saveImage(img);
     }
+}
+
+void TwainController::saveImage(const QImage& img)
+{
+    QStringList writableMimetypes = KImageIO::mimeTypes(KImageIO::Writing);
+    // Put first class citizens at first place
+    writableMimetypes.removeAll("image/jpeg");
+    writableMimetypes.removeAll("image/tiff");
+    writableMimetypes.removeAll("image/png");
+    writableMimetypes.insert(0, "image/png");
+    writableMimetypes.insert(1, "image/jpeg");
+    writableMimetypes.insert(2, "image/tiff");
+
+    kDebug( 51000 ) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
+
+    QString defaultMimeType("image/png");
+    QString defaultFileName("image.png");
+    QString format("PNG");
+
+    KUrl uurl = KGlobalSettings::documentPath();
+    if (m_interface) uurl = m_interface->currentAlbum().uploadPath();
+
+    KFileDialog imageFileSaveDialog(uurl, QString(), this);
+
+/*  FIXME: This line make an eternal loop under Windows. why ???
+    imageFileSaveDialog.setOperationMode(KFileDialog::Saving);*/
+
+    imageFileSaveDialog.setMode(KFile::File);
+    imageFileSaveDialog.setSelection(defaultFileName);
+    imageFileSaveDialog.setCaption(i18n("New Image File Name"));
+    imageFileSaveDialog.setModal(false);
+    imageFileSaveDialog.setMimeFilter(writableMimetypes, defaultMimeType);
+
+    // Start dialog and check if canceled.
+    if ( imageFileSaveDialog.exec() != KFileDialog::Accepted )
+       return;
+
+    KUrl newURL = imageFileSaveDialog.selectedUrl();
+    QFileInfo fi(newURL.path());
+
+    // Check if target image format have been selected from Combo List of dialog.
+
+    QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
+    if (!mimes.isEmpty())
+    {
+        format = mimes.first().toUpper();
+    }
+    else
+    {
+        // Else, check if target image format have been add to target image file name using extension.
+
+        format = fi.suffix().toUpper();
+
+        // Check if format from file name extension is include on file mime type list.
+
+        QStringList imgExtList = KImageIO::types(KImageIO::Writing);
+        imgExtList << "TIF";
+        imgExtList << "TIFF";
+        imgExtList << "JPG";
+        imgExtList << "JPE";
+
+        if ( !imgExtList.contains( format ) )
+        {
+            KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.", format));
+            kWarning( 51000 ) << "target image file format " << format << " is unsupported!";
+            return;
+        }
+    }
+
+    if (!newURL.isValid())
+    {
+        KMessageBox::error(0, i18n("Failed to save file\n\"%1\" to\n\"%2\".",
+                              newURL.fileName(),
+                              newURL.path().section('/', -2, -2)));
+        kWarning( 51000 ) << "target URL is not valid !";
+        return;
+    }
+
+    // Check for overwrite ----------------------------------------------------------
+
+    if ( fi.exists() )
+    {
+        int result = KMessageBox::warningYesNo(0, i18n("A file named \"%1\" already "
+                                                       "exists. Are you sure you want "
+                                                       "to overwrite it?",
+                                               newURL.fileName()),
+                                               i18n("Overwrite File?"),
+                                               KStandardGuiItem::overwrite(),
+                                               KStandardGuiItem::cancel());
+
+        if (result != KMessageBox::Yes)
+            return;
+    }
+
+    // Perform saving ---------------------------------------------------------------
+
+    kapp->setOverrideCursor( Qt::WaitCursor );
+
+    QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio);
+    QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio);
+    QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
+
+    KExiv2Iface::KExiv2 meta;
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageDimensions(img.size());
+    meta.setImagePreview(prev);
+    meta.setExifThumbnail(thumb);
+    meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
+/*    meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
+    meta.setXmpTagString("Xmp.tiff.Make", d->saneWidget->make());
+    meta.setExifTagString("Exif.Image.Model", d->saneWidget->model());
+    meta.setXmpTagString("Xmp.tiff.Model", d->saneWidget->model());*/
+    meta.setImageDateTime(QDateTime::currentDateTime());
+    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+    meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
+
+    KIPIPlugins::KPWriteImage wImageIface;
+    QByteArray data((const char*)img.bits(), img.numBytes());
+    wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
+
+    if (format == QString("JPEG"))
+    {
+        wImageIface.write2JPEG(newURL.path());
+    }
+    else if (format == QString("PNG"))
+    {
+        wImageIface.write2PNG(newURL.path());
+    }
+    else if (format == QString("TIFF"))
+    {
+        wImageIface.write2TIFF(newURL.path());
+    }
+    else
+    {
+        img.save(newURL.path(), format.toAscii().data());
+    }
+
+    if (m_interface) m_interface->refreshImages( KUrl::List(newURL) );
+    kapp->restoreOverrideCursor();
 }
 
 }  // namespace KIPIAcquireImagesPlugin

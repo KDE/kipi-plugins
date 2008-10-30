@@ -37,6 +37,11 @@
 
 #include "twainiface.h"
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIAcquireImagesPlugin
 {
 
@@ -48,7 +53,7 @@ class TwainController : public QWidget, public TwainIface
 
 public:
 
-    TwainController(QWidget* parent);
+    TwainController(KIPI::Interface* interface=0, QWidget* parent=0);
     virtual ~TwainController();
 
     void showEvent(QShowEvent*);
@@ -99,13 +104,19 @@ protected:
     virtual bool onSetParent();
     virtual void CopyImage(TW_MEMREF data, TW_IMAGEINFO& info);
 
+private:
+
+  void saveImage(const QImage& img);
+
 private slots:
 
     void slotInit();
 
 private:
 
-    QWidget *m_parent;
+    QWidget         *m_parent;
+
+    KIPI::Interface *m_interface;
 };
 
 }  // namespace KIPIAcquireImagesPlugin
