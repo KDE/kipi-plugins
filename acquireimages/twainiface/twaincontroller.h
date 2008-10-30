@@ -39,14 +39,14 @@
 
 const unsigned int AnyCount = UINT_MAX;
 
-class QTwain : public QWidget, public TwainIface
+class TwainController : public QWidget, public TwainIface
 {
     Q_OBJECT
 
 public:
 
-    QTwain(QWidget* parent);
-    virtual ~QTwain();
+    TwainController(QWidget* parent);
+    virtual ~TwainController();
 
     void showEvent(QShowEvent*);
 

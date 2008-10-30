@@ -36,7 +36,7 @@
 
 // Local includes.
 
-#include "twaindialog.h"
+#include "twaincontroller.h"
 #include "pluginsversion.h"
 
 using namespace KIPIAcquireImagesPlugin;
@@ -66,9 +66,8 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    TwainDialog *scandlg = new TwainDialog;
-    app.setTopWidget(scandlg);
-    scandlg->show();
+    TwainController *twainCtrl = new TwainController;
+    app.setTopWidget(twainCtrl);
 
     int ret = app.exec();
 
