@@ -56,8 +56,6 @@ public:
     TwainController(KIPI::Interface* interface=0, QWidget* parent=0);
     virtual ~TwainController();
 
-    void showEvent(QShowEvent*);
-
     /**
      * Allows the selection of the device to be used, in a true Twain
      * implementation, this method opens the device selection dialog
@@ -107,10 +105,6 @@ protected:
 private:
 
   void saveImage(const QImage& img);
-
-private slots:
-
-    void slotInit();
 
 private:
 

@@ -64,28 +64,20 @@ TwainController::TwainController(KIPI::Interface* interface, QWidget* parent)
                : QWidget(parent), TwainIface()
 {
     m_interface = interface;
-
     setParent(this);
-    QTimer::singleShot(0, this, SLOT(slotInit()));
-    // This is a dumy widget not visible. We use Qwidget to dispatch Windows event to Twain interface.
-    // This is not possible to do it using QObject as well.
+
+    // This is a dumy widget not visible. We use Qwidget to dispatch Windows event to 
+    // Twain interface. This is not possible to do it using QObject as well.
     hide();
+
+    selectSource();
+    if (!acquire())
+        KMessageBox::error(this, i18n("Cannot acquire image..."));
 }
 
 TwainController::~TwainController()
 {
     ReleaseTwain();
-}
-
-void TwainController::showEvent(QShowEvent*)
-{
-}
-
-void TwainController::slotInit()
-{
-    selectSource();
-    if (!acquire())
-        QMessageBox::critical(this, QString(), i18n("Cannot acquire image..."));
 }
 
 bool TwainController::winEvent(MSG* pMsg, long* result)
@@ -106,7 +98,6 @@ bool TwainController::acquire(unsigned int maxNumImages)
     if (maxNumImages == UINT_MAX)
         nMaxNum = TWCPP_ANYCOUNT;
 
-
     return (Acquire(nMaxNum) == true);
 }
 
@@ -121,9 +112,7 @@ void TwainController::setParent(QWidget* parent)
     if (m_parent)
     {
         if (!onSetParent())
-        {
-            // TODO
-        }
+            KMessageBox::error(this, i18n("Cannot handle parent windows..."));
     }
 }
 
@@ -131,7 +120,6 @@ bool TwainController::onSetParent()
 {
     WId id = m_parent->winId();
     InitTwain(id);
-
     return IsValidDriver();
 }
 
