@@ -178,6 +178,8 @@ void TwainController::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
         GlobalUnlock(hDIB);
 
         saveImage(img);
+
+        close();
     }
 }
 
