@@ -39,7 +39,7 @@
 #ifdef WIN32
 
 // Twain interface includes.
-#include "twaindialog.h"
+#include "twaincontroller.h"
 
 #else /*  WIN32 */
 
@@ -95,8 +95,7 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    TwainDialog dlg(m_interface, kapp->activeWindow());
-    dlg.exec();
+    TwainController dlg(m_interface, kapp->activeWindow());
 
 #else /*  WIN32 */
 
