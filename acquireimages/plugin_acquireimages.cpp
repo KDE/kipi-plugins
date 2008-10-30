@@ -39,7 +39,7 @@
 #ifdef WIN32
 
 // Twain interface includes.
-#include <qtwain.h>
+#include "twaindialog.h"
 
 #else /*  WIN32 */
 
@@ -56,14 +56,14 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
+using namespace KIPIAcquireImagesPlugin;
+
 K_PLUGIN_FACTORY( AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>(); )
 K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
 
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
                     : KIPI::Plugin( AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
-    m_parentWidget      = 0;
-    m_twIface           = 0;
     m_interface         = 0;
     m_action_scanimages = 0;
     kDebug( 51001 ) << "Plugin_AcquireImages plugin loaded";
@@ -71,8 +71,6 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
 
 void Plugin_AcquireImages::setup(QWidget* widget)
 {
-    m_parentWidget = widget;
-
     KIPI::Plugin::setup(widget);
 
     m_action_scanimages = new KAction(KIcon("scanner"), i18n("Scan Images..."), actionCollection());
@@ -97,15 +95,8 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    m_twIface = new QTwain(m_parentWidget);
-
-    connect(m_twIface, SIGNAL(signalImageAcquired(const QImage&)),
-            this, SLOT(slotImageAcquiredFromTwain(const QImage&)));
-
-    m_twIface->selectSource();
-
-    if (!m_twIface->acquire())
-        KMessageBox::sorry(0, i18n("Cannot open scanner device."));
+    TwainDialog dlg(m_interface, kapp->activeWindow());
+    dlg.exec();
 
 #else /*  WIN32 */
 
@@ -122,15 +113,10 @@ void Plugin_AcquireImages::slotActivate()
         return;
     }
 
-    KIPIAcquireImagesPlugin::ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
+    ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
     dlg.exec();
 
 #endif /*  WIN32 */
-}
-
-void Plugin_AcquireImages::slotImageAcquiredFromTwain(const QImage& img)
-{
-        KMessageBox::sorry(0, i18n("image is here."));
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const

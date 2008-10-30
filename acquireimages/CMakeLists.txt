@@ -22,6 +22,7 @@ IF(WIN32)
     SET(kipiplugin_acquireimages_PART_SRCS
         plugin_acquireimages.cpp
         twainiface/twainiface.cpp
+        twainiface/twaindialog.cpp
         twainiface/qtwain.cpp
         )
 

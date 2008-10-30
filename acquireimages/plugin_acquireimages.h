@@ -35,8 +35,6 @@ class QWidget;
 
 class KAction;
 
-class QTwain;
-
 namespace KIPI
 {
     class Interface;
@@ -58,19 +56,11 @@ public slots:
 
     void slotActivate();
 
-private slots:
-
-    void slotImageAcquiredFromTwain(const QImage&);
-
 private:
-
-    QWidget         *m_parentWidget;
 
     KAction         *m_action_scanimages;
 
     KIPI::Interface *m_interface;
-
-    QTwain          *m_twIface;
 };
 
 #endif /* PLUGIN_ACQUIREIMAGES_H */
