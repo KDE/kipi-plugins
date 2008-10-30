@@ -4,9 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-05-16
- * Description : a plugin to set time stamp of picture files.
+ * Description : a plugin to acquire image using flat scanner.
  *
- * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
