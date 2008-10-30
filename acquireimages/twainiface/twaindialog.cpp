@@ -92,6 +92,7 @@ TwainDialog::TwainDialog(KIPI::Interface* interface, QWidget *parent)
     d->interface = interface;
     d->twIface   = new QTwain(0);
     d->preview   = new QLabel(this);
+    d->preview.setFixedSize(320, 240);
 
     setButtons(Help|User1|Close);
     setButtonText(User1, i18n("Save As..."));
