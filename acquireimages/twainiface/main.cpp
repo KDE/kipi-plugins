@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    TwainController *twainCtrl = new TwainController;
+    TwainController *twainCtrl = new TwainController(0);
     app.setTopWidget(twainCtrl);
 
     int ret = app.exec();

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#include "qtwain.h"
-#include "qtwain.moc"
+#include "twaincontroller.h"
+#include "twaincontroller.moc"
 
 // Windows includes.
 
@@ -34,6 +34,14 @@
 #include <QDataStream>
 #include <QByteArray>
 #include <QMessageBox>
+#include <QTimer>
+
+// KDE includes.
+
+#include <klocale.h>
+
+namespace KIPIAcquireImagesPlugin
+{
 
 TwainController::TwainController(QWidget* parent)
                : QWidget(parent), TwainIface()
@@ -155,3 +163,5 @@ void TwainController::CopyImage(TW_MEMREF pdata, TW_IMAGEINFO& info)
         emit signalImageAcquired(img);
     }
 }
+
+}  // namespace KIPIAcquireImagesPlugin

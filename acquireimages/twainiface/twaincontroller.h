@@ -37,6 +37,9 @@
 
 #include "twainiface.h"
 
+namespace KIPIAcquireImagesPlugin
+{
+
 const unsigned int AnyCount = UINT_MAX;
 
 class TwainController : public QWidget, public TwainIface
@@ -92,7 +95,6 @@ signals:
 protected:
 
     bool winEvent(MSG* pMsg, long *result);
-    void closeEvent(QCloseEvent* e);
 
     virtual bool onSetParent();
     virtual void CopyImage(TW_MEMREF data, TW_IMAGEINFO& info);
@@ -105,5 +107,7 @@ private:
 
     QWidget *m_parent;
 };
+
+}  // namespace KIPIAcquireImagesPlugin
 
 #endif /* QTWAIN_H */
