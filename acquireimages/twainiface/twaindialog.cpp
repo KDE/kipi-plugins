@@ -212,8 +212,6 @@ void TwainDialog::slotSaveImage()
     writableMimetypes.insert(1, "image/jpeg");
     writableMimetypes.insert(2, "image/tiff");
 
-    //QMessageBox::critical(this, QString(), writableMimetypes.join(","));
-
     kDebug( 51000 ) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
 
     QString defaultMimeType("image/png");
@@ -223,13 +221,15 @@ void TwainDialog::slotSaveImage()
     KUrl uurl = KGlobalSettings::documentPath();
     if (d->interface) uurl = d->interface->currentAlbum().uploadPath();
 
-    KFileDialog imageFileSaveDialog(uurl, QString(), 0);
+    KFileDialog imageFileSaveDialog(uurl, QString(), this);
 
-    imageFileSaveDialog.setModal(false);
-    imageFileSaveDialog.setOperationMode(KFileDialog::Saving);
+/*  FIXME: This line make an eternal loop under Windows. why ???
+    imageFileSaveDialog.setOperationMode(KFileDialog::Saving);*/
+
     imageFileSaveDialog.setMode(KFile::File);
     imageFileSaveDialog.setSelection(defaultFileName);
     imageFileSaveDialog.setCaption(i18n("New Image File Name"));
+    imageFileSaveDialog.setModal(false);
     imageFileSaveDialog.setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
