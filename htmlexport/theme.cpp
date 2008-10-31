@@ -56,7 +56,7 @@ static Theme::List sList;
 
 struct Theme::Private {
 	KDesktopFile* mDesktopFile;
-	KUrl mURL;
+	KUrl mUrl;
 	ParameterList mParameterList;
 
 	/**
@@ -93,7 +93,7 @@ struct Theme::Private {
 
 	void init(const QString& desktopFileName) {
 		mDesktopFile=new KDesktopFile(desktopFileName);
-		mURL.setPath(desktopFileName);
+		mUrl.setPath(desktopFileName);
 
 		QStringList parameterNameList = readParameterNameList(desktopFileName);
 		readParameters(parameterNameList);
@@ -171,7 +171,7 @@ Theme::Ptr Theme::findByInternalName(const QString& internalName) {
 
 
 QString Theme::internalName() const {
-	KUrl url = d->mURL;
+	KUrl url = d->mUrl;
 	url.setFileName("");
 	return url.fileName();
 }
@@ -188,7 +188,7 @@ QString Theme::comment() const {
 
 
 QString Theme::directory() const {
-	return d->mURL.directory();
+	return d->mUrl.directory();
 }
 
 

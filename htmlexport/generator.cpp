@@ -180,15 +180,15 @@ struct Generator::Private {
 	bool copyTheme() {
 		mProgressDialog->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
 		
-		KUrl srcURL=KUrl(mTheme->directory());
+		KUrl srcUrl=KUrl(mTheme->directory());
 
-		KUrl destURL=mInfo->destUrl();
-		destURL.addPath(srcURL.fileName());
+		KUrl destUrl=mInfo->destUrl();
+		destUrl.addPath(srcUrl.fileName());
 		
-		if (QFile::exists(destURL.path())) {
-			KIO::NetAccess::del(destURL, mProgressDialog);
+		if (QFile::exists(destUrl.path())) {
+			KIO::NetAccess::del(destUrl, mProgressDialog);
 		}
-		bool ok=KIO::NetAccess::dircopy(srcURL, destURL, mProgressDialog);
+		bool ok=KIO::NetAccess::dircopy(srcUrl, destUrl, mProgressDialog);
 		if (!ok) {
 			logError(i18n("Could not copy theme"));
 			return false;
@@ -210,7 +210,7 @@ struct Generator::Private {
 	}
 
 	/**
-	 * Helper class for generateImageAndXMLForURL
+	 * Helper class for generateImageAndXMLForUrl
 	 */
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QImage& image) {
 		XMLAttributeList attrList;
@@ -222,14 +222,14 @@ struct Generator::Private {
 
 
 	/**
-	 * Generate images (full and thumbnail) for imageURL
+	 * Generate images (full and thumbnail) for imageUrl
 	 * Fills xmlWriter with info about this image
 	 */
-	void generateImageAndXMLForURL(XMLWriter& xmlWriter, const QString& destDir, const KUrl& imageURL) {
-		KIPI::ImageInfo info=mInterface->info(imageURL);
+	void generateImageAndXMLForUrl(XMLWriter& xmlWriter, const QString& destDir, const KUrl& imageUrl) {
+		KIPI::ImageInfo info=mInterface->info(imageUrl);
 	
 		// Load image
-		QString path=imageURL.path();
+		QString path=imageUrl.path();
 		QFile imageFile(path);
 		if (!imageFile.open(QIODevice::ReadOnly)) {
 			logWarning(i18n("Could not read image '%1'", path));
@@ -356,7 +356,7 @@ struct Generator::Private {
 			for (; it!=end; ++it, ++pos) {
 				mProgressDialog->setProgress(pos, count);
 				qApp->processEvents();
-				generateImageAndXMLForURL(xmlWriter, destDir, *it);
+				generateImageAndXMLForUrl(xmlWriter, destDir, *it);
 			}
 
 		}
