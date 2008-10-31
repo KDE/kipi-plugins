@@ -4,6 +4,7 @@ set(kipiplugin_htmlexport_SRCS
 	galleryinfo.cpp
 	generator.cpp
 	intthemeparameter.cpp
+	invisiblebuttongroup.cpp
 	listthemeparameter.cpp
 	plugin.cpp
 	stringthemeparameter.cpp
