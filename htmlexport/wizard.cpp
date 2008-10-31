@@ -103,6 +103,7 @@ struct Wizard::Private {
 	KConfigDialogManager* mConfigManager;
 
 	KIPI::ImageCollectionSelector* mCollectionSelector;
+	KPageWidgetItem* mCollectionSelectorPage;
 	ThemePage* mThemePage;
 	ThemeParametersPage* mThemeParametersPage;
 	ImageSettingsPage* mImageSettingsPage;
@@ -206,7 +207,10 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 		"aurelien.gateau@free.fr");
 
 	d->mCollectionSelector = interface->imageCollectionSelector(this);
-	addPage(d->mCollectionSelector, i18n("Collection Selection"));
+	d->mCollectionSelectorPage = addPage(d->mCollectionSelector, i18n("Collection Selection"));
+	setValid(d->mCollectionSelectorPage, false);
+	connect(d->mCollectionSelector, SIGNAL(selectionChanged()),
+		SLOT(updateCollectionSelectorPageValidity()));
 
 	d->mThemePage=new ThemePage(this, i18n("Theme"));
 	d->initThemePage();
@@ -241,6 +245,11 @@ Wizard::~Wizard() {
 
 void Wizard::updateFinishButton() {
 	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
+}
+
+
+void Wizard::updateCollectionSelectorPageValidity() {
+	setValid(d->mCollectionSelectorPage, !d->mCollectionSelector->selectedImageCollections().empty());
 }
 
 
