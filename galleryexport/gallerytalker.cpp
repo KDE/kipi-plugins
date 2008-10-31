@@ -335,7 +335,7 @@ void GalleryTalker::slotResult(KJob *job)
             {
                 if(str.contains("Set-Cookie: "))
                 {
-                    QStringList cl = str.split(" ");
+                    QStringList cl = str.split(' ');
                     int n = cl.lastIndexOf(rx);
                     if(n!= -1)
                     {
@@ -516,7 +516,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                         (*iter).thumbName = value;
                 } else
                     if (key.startsWith("baseurl")) {
-                        albumURL = value.replace("\\", "");
+                        albumURL = value.replace("\\", "");     // doesn't compile fixing EBN Krazy issue!!
                 }
             }
         }

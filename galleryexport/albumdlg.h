@@ -25,13 +25,13 @@
 
 // Qt includes.
 
-#include <QDialog>
+#include <KDialog>
 #include <QWidget>
 
 namespace KIPIGalleryExportPlugin
 {
 
-class AlbumDlg : public QDialog , public Ui::GalleryAlbumWidget
+class AlbumDlg : public KDialog , public Ui::GalleryAlbumWidget
 {
 Q_OBJECT
 

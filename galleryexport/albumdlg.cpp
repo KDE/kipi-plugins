@@ -23,7 +23,7 @@
 using namespace KIPIGalleryExportPlugin;
 
 AlbumDlg::AlbumDlg(QWidget *parent)
-     : QDialog(parent)
+     : KDialog(parent)
 {
     setupUi(this);
 
