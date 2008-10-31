@@ -52,6 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"
+#include "invisiblebuttongroup.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "theme.h"
@@ -93,9 +94,20 @@ private:
 
 
 typedef WizardPage<Ui_ThemePage> ThemePage;
-typedef WizardPage<Ui_ImageSettingsPage> ImageSettingsPage;
 typedef WizardPage<Ui_ThemeParametersPage> ThemeParametersPage;
 typedef WizardPage<Ui_OutputPage> OutputPage;
+
+class ImageSettingsPage : public WizardPage<Ui_ImageSettingsPage> {
+public:
+	ImageSettingsPage(KAssistantDialog* dialog, const QString& title)
+	: WizardPage<Ui_ImageSettingsPage>(dialog, title)
+	{
+		InvisibleButtonGroup* group = new InvisibleButtonGroup(this);
+		group->setObjectName("kcfg_useOriginalImageAsFullImage");
+		group->addButton(mSaveImageButton, int(false));
+		group->addButton(mUseOriginalImageButton, int(true));
+	}
+};
 
 
 struct Wizard::Private {
@@ -225,7 +237,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
 	connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(const QString&)),
-		this, SLOT(updateFinishButton()) );
+		this, SLOT(updateFinishPageValidity()) );
 
 	d->mConfigManager=new KConfigDialogManager(this, d->mInfo);
 	d->mConfigManager->updateWidgets();
@@ -233,7 +245,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	// Set page states
 	// Pages can only be disabled after they have *all* been added!
 	slotThemeSelectionChanged();
-	updateFinishButton();
+	updateFinishPageValidity();
 }
 
 
@@ -243,7 +255,7 @@ Wizard::~Wizard() {
 }
 
 
-void Wizard::updateFinishButton() {
+void Wizard::updateFinishPageValidity() {
 	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
 }
 
