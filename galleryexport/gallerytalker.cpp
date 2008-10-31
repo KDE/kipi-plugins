@@ -217,24 +217,19 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         if (captionIsDescription)
             form.addPair("extrafield.Description", caption);
     }
-    QImage image(photoPath);
+
+
+    QImage image;
+    image.load(photoPath);
 
     if (!image.isNull()) {
         // image file - see if we need to rescale it
         if (rescale && (image.width() > maxDim || image.height() > maxDim)) {
-            image = image.scaled(maxDim, maxDim);
-            path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
-            image.save(path);
-
-            if ("JPEG" == QString(QImageReader::imageFormat(photoPath)).toUpper()) {
-                KExiv2Iface::KExiv2 exiv2;
-                if (exiv2.load(photoPath)) {
-                    exiv2.save(path);           // FIXME ???
-                }
-            }
-            kDebug( 51000 ) << "Resizing and saving to temp file: "
-            << path << endl;
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio);
         }
+        path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
+        image.save(path);
+        kDebug( 51000 ) << "Resizing and saving to temp file: "  << path << endl;
     }
 
     // The filename bit can perhaps be calculated in addFile()

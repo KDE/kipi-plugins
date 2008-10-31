@@ -35,7 +35,7 @@
      <item row="0" column="0" >
       <widget class="QLabel" name="titleLabel" >
        <property name="text" >
-        <string>Title (optional):</string>
+        <string>Title:</string>
        </property>
        <property name="wordWrap" >
         <bool>false</bool>

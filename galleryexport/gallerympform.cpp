@@ -121,6 +121,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 
 bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
+
     QString filename = "userfile_name";
     if (GalleryTalker::isGallery2())
         filename = "g2_userfile_name";
@@ -171,6 +172,12 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
+    
+    QFile file("data.txt");
+    if (file.open(QFile::WriteOnly | QFile::Truncate)) {
+     QTextStream out(&file);
+     out << m_buffer ;
+    }
 
     return true;
 }
@@ -182,7 +189,7 @@ QString GalleryMPForm::contentType() const
     return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
 }
 
-
+  
 QString GalleryMPForm::boundary() const
 {
     return m_boundary;

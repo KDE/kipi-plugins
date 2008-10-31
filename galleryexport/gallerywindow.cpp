@@ -568,17 +568,17 @@ void GalleryWindow::slotAddPhoto()
     QTreeWidgetItem* item = d->albumView->currentItem();
     int column = d->albumView->currentColumn();
     if (!item)
-        return;     // NO item selected FIXME: do something
+        return;     // NO album selected: FIXME: do something
 
     // albumName
     QString albumTitle = item->text(column);
     if(!d->albumDict.contains(albumTitle))
-        return;     // NO album selected: FIXME: do something
+        return;     // NO album name found: FIXME: do something
 
     // photoPath
     KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
     if (urls.isEmpty())
-        return;
+        return; // NO photo selected: FIXME: do something
 
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
@@ -622,7 +622,7 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file %1 ").arg( photoName ) );
+    m_progressDlg->setLabelText( i18n("Uploading file ") +  KUrl(photoPath).fileName()  );
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
 }
