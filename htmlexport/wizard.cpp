@@ -225,7 +225,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
 	connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(const QString&)),
-		this, SLOT(updateFinishButton()) );
+		this, SLOT(updateFinishPageValidity()) );
 
 	d->mConfigManager=new KConfigDialogManager(this, d->mInfo);
 	d->mConfigManager->updateWidgets();
@@ -233,7 +233,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	// Set page states
 	// Pages can only be disabled after they have *all* been added!
 	slotThemeSelectionChanged();
-	updateFinishButton();
+	updateFinishPageValidity();
 }
 
 
@@ -243,7 +243,7 @@ Wizard::~Wizard() {
 }
 
 
-void Wizard::updateFinishButton() {
+void Wizard::updateFinishPageValidity() {
 	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
 }
 

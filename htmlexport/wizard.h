@@ -46,7 +46,7 @@ protected slots:
 
 private slots:
 	void updateCollectionSelectorPageValidity();
-	void updateFinishButton();
+	void updateFinishPageValidity();
 	void slotThemeSelectionChanged();
 
 private:
