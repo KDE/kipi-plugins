@@ -138,21 +138,17 @@ struct Wizard::Private {
 	}
 
 	void fillThemeParametersPage(Theme::Ptr theme) {
-		// Delete any previous widgets
-		QFrame* content = mThemeParametersPage->content;
-		if (content->layout()) {
-			Q_FOREACH(QObject* object, content->children()) {
-				if (object->isWidgetType()) {
-					delete object;
-				}
-			}
-			delete content->layout();
-		}
+		// Create a new content page
+		delete mThemeParametersPage->content;
+		QWidget* content = new QWidget;
+		mThemeParametersPage->content = content;
+		mThemeParametersPage->scrollArea->setWidget(mThemeParametersPage->content);
 		mThemeParameterWidgetFromName.clear();
 
 		// Create layout. We need to recreate it everytime, to get rid of
 		// spacers
 		QGridLayout* layout = new QGridLayout(content);
+		layout->setMargin(0);
 		layout->setSpacing(KDialog::spacingHint());
 
 		// Create widgets
@@ -173,6 +169,7 @@ struct Wizard::Private {
 			name = i18nc("'%1' is a label for a theme parameter", "%1:", name);
 
 			QLabel* label = new QLabel(name, content);
+			label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 			QWidget* widget = themeParameter->createWidget(content, value);
 			label->setBuddy(widget);
 
