@@ -666,8 +666,6 @@ int SlideShow::effectNone(bool /* aInit */)
 
 int SlideShow::effectChessboard(bool aInit)
 {
-    int y;
-
     if (aInit)
     {
         m_w  = width();
@@ -701,7 +699,7 @@ int SlideShow::effectChessboard(bool aInit)
 
 int SlideShow::effectMeltdown(bool aInit)
 {
-    int i, x, y;
+    int i;
 
     if (aInit)
     {
@@ -835,8 +833,6 @@ int SlideShow::effectGrowing(bool aInit)
 int SlideShow::effectHorizLines(bool aInit)
 {
     static int iyPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
-
-    int y;
 
     if (aInit)
     {
