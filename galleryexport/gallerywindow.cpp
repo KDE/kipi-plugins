@@ -232,7 +232,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 GalleryWindow::~GalleryWindow()
 {
     // write config
-    KConfig config("galleryrc");
+    KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
     group.writeEntry("Resize", d->resizeCheckBox->isChecked());
@@ -280,7 +280,7 @@ void GalleryWindow::connectSignals()
 void GalleryWindow::readSettings()
 {
     // read Config
-    KConfig config("galleryrc");
+    KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
     if (group.readEntry("Resize", false)) {

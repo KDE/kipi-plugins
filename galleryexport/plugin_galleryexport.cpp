@@ -94,7 +94,7 @@ void Plugin_GalleryExport::slotSync()
         return;
     }
 
-    KConfig config("galleryrc");
+    KConfig config("kipirc");
     if(!config.hasGroup("Gallery Settings") )
     {
         KIPIGalleryExportPlugin::GalleryEdit configDlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );

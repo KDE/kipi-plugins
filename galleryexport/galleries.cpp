@@ -126,16 +126,16 @@ void Gallery::setGalleryId(unsigned int galleryId)
 
 void Gallery::load()
 {
-// FIXME: sure we need this??
+// FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
     if (bln_loaded) return;
     bln_loaded = true;
 
     // read config
-    KConfig config("galleryrc");
+    KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kWarning( 51000 ) << "Reading data from galleryrc file.." << endl;
+    kWarning( 51000 ) << "Reading data from kipirc file.." << endl;
 
     mName = group.readEntry("Name", QString() );
     mUrl = group.readEntry("URL", QString() );
@@ -149,10 +149,10 @@ void Gallery::load()
 
 void Gallery::save()
 {
-    KConfig config("galleryrc");
+    KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kWarning( 51000 ) << "Saving data to galleryrc file.." << endl;
+    kWarning( 51000 ) << "Saving data to kipirc file.." << endl;
 
     group.writeEntry(QString("Name"), name() );
     group.writeEntry(QString("URL"), url() );
