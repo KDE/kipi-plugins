@@ -23,13 +23,13 @@
 
 #include "ui_galleryalbumwidget.h"
 
-#include <KDialog>
+#include <QDialog>
 #include <QWidget>
 
 namespace KIPIGalleryExportPlugin
 {
 
-class AlbumDlg : public KDialog , public Ui::GalleryAlbumWidget
+class AlbumDlg : public QDialog , public Ui::GalleryAlbumWidget
 {
 Q_OBJECT
 
