@@ -61,6 +61,13 @@ public:
     void reset();
     void setProgress(int current, int total);
 
+    int progress() const;
+    int total() const;
+
+public Q_SLOTS:
+    void setProgress(int);
+    void setTotal(int total);
+
 private:
 
     BatchProgressDialogPriv *d;

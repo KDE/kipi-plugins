@@ -151,4 +151,24 @@ void BatchProgressDialog::setProgress(int current, int total)
     d->progress->setValue(current);
 }
 
+int BatchProgressDialog::progress() const
+{
+    return d->progress->value();
+}
+
+int BatchProgressDialog::total() const
+{
+    return d->progress->maximum();
+}
+
+void BatchProgressDialog::setTotal(int total)
+{
+    d->progress->setMaximum(total);
+}
+
+void BatchProgressDialog::setProgress(int current)
+{
+    d->progress->setValue(current);
+}
+
 }  // namespace KIPIPlugins
