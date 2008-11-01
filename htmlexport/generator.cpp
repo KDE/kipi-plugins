@@ -377,16 +377,14 @@ struct Generator::Private {
 
 			// Loop on image in collection
 			KUrl::List imageList = collection.images();
-			KUrl::List::Iterator it = imageList.begin();
-			KUrl::List::Iterator end = imageList.end();
-
 			int pos = 1;
 			int count = imageList.count();
-			for (; it!=end; ++it, ++pos) {
+			Q_FOREACH(const KUrl& url, imageList) {
 				mProgressDialog->setProgress(pos, count);
 				qApp->processEvents();
-				ImageElement element = generateImagesForUrl(destDir, *it);
+				ImageElement element = generateImagesForUrl(destDir, url);
 				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
+				++pos;
 			}
 
 		}
