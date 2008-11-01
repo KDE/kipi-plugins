@@ -48,6 +48,8 @@
 #include <Q3PointArray>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QPainterPath>
+#include <QPolygon>
 
 // KDE includes.
 
@@ -105,7 +107,6 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 
     // ---------------------------------------------------------------
 
-    m_currImage     = 0;
     m_fileIndex     = -1; // start with -1
     m_effect        = 0;
     m_effectRunning = false;
@@ -114,13 +115,13 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_simplyShow    = false;
     m_startPainter  = false;
 
-    m_painter = new QPainter();
-
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()),
             this, SLOT(slotTimeOut()));
 
-    // --------------------------------------------------
+    m_pa = Q3PointArray(4);
+    m_buffer = QPixmap(size());
+    m_buffer.fill(Qt::black);
 
     m_fileList          = fileList;
     m_commentsList      = commentsList;
@@ -128,10 +129,10 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     if (m_sharedData->enableCache)
         m_cacheSize  = m_sharedData->cacheSize;
     else
-        m_cacheSize = 2;
+        m_cacheSize = 1;
 
     m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height(), m_fileIndex);
-
+    
     // --------------------------------------------------
 
     registerEffects();
@@ -140,11 +141,13 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
         m_effect = getRandomEffect();
     else
     {
-        m_effect = Effects[m_sharedData->effectName ];
+        m_effectName = m_sharedData->effectName;
+        m_effect = Effects[m_sharedData->effectName];
 
         if (!m_effect)
         {
             m_effect = Effects["None"];
+            m_effectName = "None";
         }
     }
 
@@ -166,23 +169,13 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
 SlideShow::~SlideShow()
 {
     m_timer->stop();
-//    delete m_timer;
     m_mouseMoveTimer->stop();
-//    delete m_mouseMoveTimer;
-
-    if (m_painter->isActive())
-        m_painter->end();
-
+    
     if (m_intArray)
         delete [] m_intArray;
 
-//    if (m_currImage)
-//        delete m_currImage;
-
     if (m_imageLoader)
         delete m_imageLoader;
-
-//    delete m_painter;
 }
 
 void SlideShow::readSettings()
@@ -198,9 +191,8 @@ void SlideShow::registerEffects()
     Effects.insert("Chess Board", &SlideShow::effectChessboard);
     Effects.insert("Melt Down", &SlideShow::effectMeltdown);
     Effects.insert("Sweep", &SlideShow::effectSweep);
-    Effects.insert("Noise", &SlideShow::effectRandom);
+//    Effects.insert("Noise", &SlideShow::effectRandom);
     Effects.insert("Growing", &SlideShow::effectGrowing);
-    Effects.insert("Incom_ing Edges", &SlideShow::effectIncom_ingEdges);
     Effects.insert("Horizontal Lines", &SlideShow::effectHorizLines);
     Effects.insert("Vertical Lines", &SlideShow::effectVertLines);
     Effects.insert("Circle Out", &SlideShow::effectCircleOut);
@@ -217,9 +209,8 @@ QStringList SlideShow::effectNames()
     effects.append("Chess Board");
     effects.append("Melt Down");
     effects.append("Sweep");
-    effects.append("Noise");
+//    effects.append("Noise");
     effects.append("Growing");
-    effects.append("Incom_ing Edges");
     effects.append("Horizontal Lines");
     effects.append("Vertical Lines");
     effects.append("Circle Out");
@@ -239,9 +230,8 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
     effects["Chess Board"] = i18n("Chess Board");
     effects["Melt Down"] = i18n("Melt Down");
     effects["Sweep"] = i18n("Sweep");
-    effects["Noise"] = i18n("Noise");
+//    effects["Noise"] = i18n("Noise");
     effects["Growing"] = i18n("Growing");
-    effects["Incom_ing Edges"] = i18n("Incom_ing Edges");
     effects["Horizontal Lines"] = i18n("Horizontal Lines");
     effects["Vertical Lines"] = i18n("Vertical Lines");
     effects["Circle Out"] = i18n("Circle Out");
@@ -266,8 +256,8 @@ void SlideShow::slotTimeOut()
     else
     {
         loadNextImage();
-
-        if (!m_currImage || m_fileList.isEmpty())   // End of slideshow ?
+        
+        if (m_currImage.isNull() || m_fileList.isEmpty())   // End of slideshow ?
         {
             showEndOfShow();
             return;
@@ -298,9 +288,16 @@ void SlideShow::slotTimeOut()
 
 void SlideShow::loadNextImage()
 {
-    delete m_currImage;
-    m_currImage = 0;
-
+    if ( !m_currImage.isNull() )
+    { 
+        m_buffer = m_currImage;
+    }
+    else
+    {
+        m_buffer = QPixmap(size());
+        m_buffer.fill(Qt::black);
+    }
+    
     m_fileIndex++;
     m_imageLoader->next();
     int num = m_fileList.count();
@@ -313,6 +310,7 @@ void SlideShow::loadNextImage()
         }
         else
         {
+            m_currImage = QPixmap(0,0);
             m_fileIndex = num - 1;
             return;
         }
@@ -324,21 +322,17 @@ void SlideShow::loadNextImage()
         m_slidePlaybackWidget->setEnabledNext(m_fileIndex < num - 1);
     }
 
-    QPixmap* oldPixmap = m_currImage;
-
-    QPixmap* newPixmap = new QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
+    QPixmap newPixmap = QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
 
     QPixmap pixmap(width(), height());
     pixmap.fill(Qt::black);
 
     QPainter p(&pixmap);
-    p.drawPixmap((width() - newPixmap->width()) / 2,
-                 (height() - newPixmap->height()) / 2, *newPixmap,
-                 0, 0, newPixmap->width(), newPixmap->height());
+    p.drawPixmap((width() - newPixmap.width()) / 2,
+                 (height() - newPixmap.height()) / 2, newPixmap,
+                 0, 0, newPixmap.width(), newPixmap.height());
 
-    delete newPixmap;
-    m_currImage = new QPixmap(pixmap);
-    delete oldPixmap;
+    m_currImage = QPixmap(pixmap);
 
     if (m_sharedData->printFileName)
         printFilename();
@@ -352,13 +346,7 @@ void SlideShow::loadNextImage()
 
 void SlideShow::loadPrevImage()
 {
-    if (m_currImage)
-        delete m_currImage;
-
-    m_currImage = 0;
-
     m_fileIndex--;
-
     m_imageLoader->prev();
 
     int num = m_fileList.count();
@@ -376,27 +364,24 @@ void SlideShow::loadPrevImage()
         }
     }
 
+
     if (!m_sharedData->loop)
     {
         m_slidePlaybackWidget->setEnabledPrev(m_fileIndex > 0);
         m_slidePlaybackWidget->setEnabledNext(m_fileIndex < num - 1);
     }
 
-    QPixmap* oldPixmap = m_currImage;
-
-    QPixmap* newPixmap = new QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
+    QPixmap newPixmap = QPixmap(QPixmap::fromImage(m_imageLoader->getCurrent()));
 
     QPixmap pixmap(width(), height());
     pixmap.fill(Qt::black);
 
     QPainter p(&pixmap);
-    p.drawPixmap((width() - newPixmap->width()) / 2,
-                 (height() - newPixmap->height()) / 2, *newPixmap,
-                 0, 0, newPixmap->width(), newPixmap->height());
+    p.drawPixmap((width() - newPixmap.width()) / 2,
+                 (height() - newPixmap.height()) / 2, newPixmap,
+                 0, 0, newPixmap.width(), newPixmap.height());
 
-    delete newPixmap;
-    m_currImage = new QPixmap(pixmap);
-    delete oldPixmap;
+    m_currImage = QPixmap(pixmap);
 
     if (m_sharedData->printFileName)
         printFilename();
@@ -410,29 +395,21 @@ void SlideShow::loadPrevImage()
 
 void SlideShow::showCurrentImage()
 {
-    if (!m_currImage)
+    if (m_currImage.isNull())
         return;
 
-    //Port it
-#if 0
-    bitBlt(this, 0, 0, m_currImage,
-           0, 0, m_currImage->width(),
-           m_currImage->height(), Qt::CopyROP, true);
-
-#endif
     m_simplyShow = true;
 
-//  update();
     repaint();
 }
 
 void SlideShow::printFilename()
 {
-    if (!m_currImage) return;
+    if (m_currImage.isNull()) return;
 
     QPainter p;
 
-    p.begin(m_currImage);
+    p.begin(&m_currImage);
 
     p.setPen(Qt::black);
 
@@ -447,7 +424,7 @@ void SlideShow::printFilename()
 
 void SlideShow::printComments()
 {
-    if (!m_currImage) return;
+    if (m_currImage.isNull()) return;
 
     QString comments = m_commentsList[m_fileIndex];
 
@@ -503,7 +480,7 @@ void SlideShow::printComments()
 
     QPainter p;
 
-    p.begin(m_currImage);
+    p.begin(&m_currImage);
     p.setFont(*m_sharedData->captionFont);
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ )
@@ -526,11 +503,11 @@ void SlideShow::printComments()
 
 void SlideShow::printProgress()
 {
-    if (!m_currImage) return;
+    if (m_currImage.isNull()) return;
 
     QPainter p;
 
-    p.begin(m_currImage);
+    p.begin(&m_currImage);
 
     QString progress(QString::number(m_fileIndex + 1) + "/" + QString::number(m_fileList.count()));
 
@@ -556,28 +533,16 @@ SlideShow::EffectMethod SlideShow::getRandomEffect()
 
     int i = rand() % count;
     QString key = effs[i];
+    m_effectName = key;
 
     return Effects[key];
 }
 
 void SlideShow::showEndOfShow()
 {
-    /*    QPainter p;
-        p.begin(this); */
     m_endOfShow = true;
-
-//     p.fillRect(0, 0, width(), height(), Qt::black);
-//
-//     QFont fn(font());
-//     fn.setPointSize(fn.pointSize()+10);
-//     fn.setBold(true);
-//
-//     p.setFont(fn);
-//     p.setPen(Qt::white);
-//     p.drawText(100, 100, i18n("SlideShow Completed."));
-//     p.drawText(100, 150, i18n("Click To Exit..."));
-//     p.end();
     update();
+    
     m_slidePlaybackWidget->setEnabledPlay(false);
     m_slidePlaybackWidget->setEnabledNext(false);
     m_slidePlaybackWidget->setEnabledPrev(false);
@@ -729,33 +694,7 @@ int SlideShow::effectChessboard(bool aInit)
     m_iy = m_iy ? 0 : m_dy;
     m_y  = m_y ? 0 : m_dy;
 
-    for (y = 0; y < m_w; y += (m_dy << 1))
-    {
-        //PORT to kde4
-#if 0
-        bitBlt(this, m_ix, y + m_iy, m_currImage, m_ix, y + m_iy,
-               m_dx, m_dy, CopyROP, true);
-        bitBlt(this, m_x, y + m_y, m_currImage, m_x, y + m_y,
-               m_dx, m_dy, CopyROP, true);
-#endif
-        m_px = m_ix;
-        m_py = y + m_iy;
-        m_psx = m_ix;
-        m_psy = y + m_iy;
-        m_psw = m_dx;
-        m_psh = m_dy;
-        repaint();
-
-        m_px = m_x;
-        m_py = y + m_y;
-        m_psx = m_x;
-        m_psy = y + m_y;
-        m_psw = m_dx;
-        m_psh = m_dy;
-        repaint();
-
-
-    }
+    repaint();
 
     return m_wait;
 }
@@ -763,7 +702,6 @@ int SlideShow::effectChessboard(bool aInit)
 int SlideShow::effectMeltdown(bool aInit)
 {
     int i, x, y;
-    bool done;
 
     if (aInit)
     {
@@ -779,29 +717,11 @@ int SlideShow::effectMeltdown(bool aInit)
             m_intArray[i] = 0;
     }
 
-    done = true;
+    m_pdone = true;
 
-    for (i = 0, x = 0; i < m_ix; i++, x += m_dx)
-    {
-        y = m_intArray[i];
-
-        if (y >= m_h) continue;
-
-        done = false;
-
-        if ((rand()&15) < 6) continue;
-
-        //PORT to kde4
-#if 0
-        bitBlt(this, x, y + m_dy, this, x, y, m_dx, m_h - y - m_dy, CopyROP, true);
-
-        bitBlt(this, x, y, m_currImage, x, y, m_dx, m_dy, CopyROP, true);
-
-#endif
-        m_intArray[i] += m_dy;
-    }
-
-    if (done)
+    repaint();
+    
+    if (m_pdone)
     {
         delete [] m_intArray;
         m_intArray = NULL;
@@ -839,10 +759,11 @@ int SlideShow::effectSweep(bool aInit)
 
         for (w = 2, i = 4, x = m_x; i > 0; i--, w <<= 1, x -= m_dx)
         {
-            //PORT to kde4
-#if 0
-            bitBlt(this, x, 0, m_currImage, x, 0, w, m_h, CopyROP, true);
-#endif
+            m_px = x;
+            m_py = 0;
+            m_psx = w;
+            m_psy = m_h;
+            repaint();
         }
 
         m_x += m_dx;
@@ -858,10 +779,11 @@ int SlideShow::effectSweep(bool aInit)
 
         for (h = 2, i = 4, y = m_y; i > 0; i--, h <<= 1, y -= m_dy)
         {
-            //PORT to kde4
-#if 0
-            bitBlt(this, 0, y, m_currImage, 0, y, m_w, h, CopyROP, true);
-#endif
+            m_px = 0;
+            m_py = y;
+            m_psx = m_w;
+            m_psy = h;
+            repaint();
         }
 
         m_y += m_dy;
@@ -872,26 +794,8 @@ int SlideShow::effectSweep(bool aInit)
 
 int SlideShow::effectRandom(bool /*aInit*/)
 {
-    int x, y, i, w, h, fact, sz;
-
-    fact = (rand() % 3) + 1;
-
-    w = width() >> fact;
-    h = height() >> fact;
-    sz = 1 << fact;
-
-    for (i = (w * h) << 1; i > 0; i--)
-    {
-        x = (rand() % w) << fact;
-        y = (rand() % h) << fact;
-        //PORT to kde4
-#if 0
-        bitBlt(this, x, y, m_currImage, x, y, sz, sz, CopyROP, true);
-#endif
-    }
-
-    showCurrentImage();
-
+    m_fileIndex--;
+    
     return -1;
 }
 
@@ -919,68 +823,11 @@ int SlideShow::effectGrowing(bool aInit)
         return -1;
     }
 
-    //PORT to kde4
-#if 0
-    bitBlt(this, m_x, m_y, m_currImage, m_x, m_y,
-           m_w - (m_x << 1), m_h - (m_y << 1), CopyROP, true);
-
-#endif
-    return 20;
-}
-
-int SlideShow::effectIncom_ingEdges(bool aInit)
-{
-    int x1, y1;
-
-    if (aInit)
-    {
-        m_w = width();
-        m_h = height();
-        m_ix = m_w >> 1;
-        m_iy = m_h >> 1;
-        m_fx = m_ix / 100.0;
-        m_fy = m_iy / 100.0;
-        m_i = 0;
-        m_subType = rand() & 1;
-    }
-
-    m_x = (int)(m_fx * m_i);
-
-    m_y = (int)(m_fy * m_i);
-
-    if (m_x > m_ix || m_y > m_iy)
-    {
-        showCurrentImage();
-        return -1;
-    }
-
-    x1 = m_w - m_x;
-
-    y1 = m_h - m_y;
-    m_i++;
-
-    if (m_subType)
-    {
-        //PORT to kde4
-#if 0
-        // moving image edges
-        bitBlt(this,  0,  0, m_currImage, m_ix - m_x, m_iy - m_y, m_x, m_y, CopyROP, true);
-        bitBlt(this, x1,  0, m_currImage, m_ix, m_iy - m_y, m_x, m_y, CopyROP, true);
-        bitBlt(this,  0, y1, m_currImage, m_ix - m_x, m_iy, m_x, m_y, CopyROP, true);
-        bitBlt(this, x1, y1, m_currImage, m_ix, m_iy, m_x, m_y, CopyROP, true);
-#endif
-    }
-    else
-    {
-        //PORT to kde4
-#if 0
-        // fixed image edges
-        bitBlt(this,  0,  0, m_currImage,  0,  0, m_x, m_y, CopyROP, true);
-        bitBlt(this, x1,  0, m_currImage, x1,  0, m_x, m_y, CopyROP, true);
-        bitBlt(this,  0, y1, m_currImage,  0, y1, m_x, m_y, CopyROP, true);
-        bitBlt(this, x1, y1, m_currImage, x1, y1, m_x, m_y, CopyROP, true);
-#endif
-    }
+    m_px = m_x;
+    m_py = m_y;
+    m_psx = m_w - (m_x << 1);
+    m_psy = m_h - (m_y << 1);
+    repaint();
 
     return 20;
 }
@@ -988,6 +835,7 @@ int SlideShow::effectIncom_ingEdges(bool aInit)
 int SlideShow::effectHorizLines(bool aInit)
 {
     static int iyPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
+
     int y;
 
     if (aInit)
@@ -999,13 +847,7 @@ int SlideShow::effectHorizLines(bool aInit)
 
     if (iyPos[m_i] < 0) return -1;
 
-    for (y = iyPos[m_i]; y < m_h; y += 8)
-    {
-        //PORT to kde4
-#if 0
-        bitBlt(this, 0, y, m_currImage, 0, y, m_w, 1, CopyROP, true);
-#endif
-    }
+    repaint();
 
     m_i++;
 
@@ -1016,8 +858,7 @@ int SlideShow::effectHorizLines(bool aInit)
 
 int SlideShow::effectVertLines(bool aInit)
 {
-    static int ixPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
-    int x;
+     static int ixPos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
 
     if (aInit)
     {
@@ -1028,14 +869,8 @@ int SlideShow::effectVertLines(bool aInit)
 
     if (ixPos[m_i] < 0) return -1;
 
-    for (x = ixPos[m_i]; x < m_w; x += 8)
-    {
-        //PORT to kde4
-#if 0
-        bitBlt(this, x, 0, m_currImage, x, 0, 1, m_h, CopyROP, true);
-#endif
-    }
-
+    repaint();
+    
     m_i++;
 
     if (ixPos[m_i] >= 0) return 160;
@@ -1047,18 +882,16 @@ int SlideShow::effectMultiCircleOut(bool aInit)
 {
     int x, y, i;
     double alpha;
-    static Q3PointArray pa(4);
 
     if (aInit)
     {
         startPainter();
-        //update();
         m_w = width();
         m_h = height();
         m_x = m_w;
         m_y = m_h >> 1;
-        pa.setPoint(0, m_w >> 1, m_h >> 1);
-        pa.setPoint(3, m_w >> 1, m_h >> 1);
+        m_pa.setPoint(0, m_w >> 1, m_h >> 1);
+        m_pa.setPoint(3, m_w >> 1, m_h >> 1);
         m_fy = sqrt((double)m_w * m_w + m_h * m_h) / 2;
         m_i  = rand() % 15 + 2;
         m_fd = M_PI * 2 / m_i;
@@ -1069,7 +902,6 @@ int SlideShow::effectMultiCircleOut(bool aInit)
 
     if (m_alpha < 0)
     {
-        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1082,10 +914,10 @@ int SlideShow::effectMultiCircleOut(bool aInit)
         m_x = (m_w >> 1) + (int)(m_fy * cos(-alpha + m_fx));
         m_y = (m_h >> 1) + (int)(m_fy * sin(-alpha + m_fx));
 
-        pa.setPoint(1, x, y);
-        pa.setPoint(2, m_x, m_y);
+        m_pa.setPoint(1, x, y);
+        m_pa.setPoint(2, m_x, m_y);
 
-        m_painter->drawPolygon(pa);
+        repaint();
     }
 
     m_alpha -= m_fx;
@@ -1097,7 +929,6 @@ int SlideShow::effectSpiralIn(bool aInit)
 {
     if (aInit)
     {
-        //    startPainter();
         update();
         m_w = width();
         m_h = height();
@@ -1117,7 +948,6 @@ int SlideShow::effectSpiralIn(bool aInit)
 
     if (m_i == 0 && m_x0 >= m_x1)
     {
-        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1151,11 +981,12 @@ int SlideShow::effectSpiralIn(bool aInit)
         m_y0 += m_iy;
     }
 
-    //PORT to kde4
-#if 0
-    bitBlt(this, m_x, m_y, m_currImage, m_x, m_y, m_ix, m_iy, CopyROP, true);
-
-#endif
+    m_px = m_x;
+    m_py = m_y;
+    m_psx = m_ix;
+    m_psy = m_iy;
+    repaint();
+    
     m_x += m_dx;
 
     m_y += m_dy;
@@ -1168,26 +999,23 @@ int SlideShow::effectSpiralIn(bool aInit)
 int SlideShow::effectCircleOut(bool aInit)
 {
     int x, y;
-    static Q3PointArray pa(4);
 
     if (aInit)
     {
-        //     startPainter();
-        update();
+        startPainter();
         m_w = width();
         m_h = height();
         m_x = m_w;
         m_y = m_h >> 1;
         m_alpha = 2 * M_PI;
-        pa.setPoint(0, m_w >> 1, m_h >> 1);
-        pa.setPoint(3, m_w >> 1, m_h >> 1);
+        m_pa.setPoint(0, m_w >> 1, m_h >> 1);
+        m_pa.setPoint(3, m_w >> 1, m_h >> 1);
         m_fx = M_PI / 16;  // divisor must be powers of 8
         m_fy = sqrt((double)m_w * m_w + m_h * m_h) / 2;
     }
 
     if (m_alpha < 0)
     {
-        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1199,10 +1027,10 @@ int SlideShow::effectCircleOut(bool aInit)
     m_y = (m_h >> 1) + (int)(m_fy * sin(m_alpha));
     m_alpha -= m_fx;
 
-    pa.setPoint(1, x, y);
-    pa.setPoint(2, m_x, m_y);
-
-    m_painter->drawPolygon(pa);
+    m_pa.setPoint(1, x, y);
+    m_pa.setPoint(2, m_x, m_y);
+    
+    repaint();
 
     return 20;
 }
@@ -1214,7 +1042,6 @@ int SlideShow::effectBlobs(bool aInit)
 
     if (aInit)
     {
-        startPainter();
         m_alpha = M_PI * 2;
         m_w = width();
         m_h = height();
@@ -1223,7 +1050,6 @@ int SlideShow::effectBlobs(bool aInit)
 
     if (m_i <= 0)
     {
-        m_painter->end();
         showCurrentImage();
         return -1;
     }
@@ -1238,8 +1064,8 @@ int SlideShow::effectBlobs(bool aInit)
     m_psx = r;
     m_psy = r;
 
-    // update();
     repaint();
+    
     m_i--;
 
     return 10;
@@ -1247,25 +1073,6 @@ int SlideShow::effectBlobs(bool aInit)
 
 void SlideShow::paintEvent(QPaintEvent *)
 {
-    if ( m_startPainter == true )
-    {
-        QBrush brush;
-        Qt::PenStyle aPen = Qt::NoPen;
-        brush.setTexture(*(m_currImage));
-
-        if (m_painter->isActive())
-            m_painter->end();
-
-        m_painter->begin(this);
-
-        m_painter->setBrush(brush);
-
-        m_painter->setPen(aPen);
-
-        m_startPainter = false;
-
-        return;
-    }
 
     QPainter p(this);
 
@@ -1273,8 +1080,8 @@ void SlideShow::paintEvent(QPaintEvent *)
 
     if ( m_simplyShow == true )
     {
-        p.drawPixmap(0, 0, *(m_currImage),
-                     0, 0, m_currImage->width(), m_currImage->height());
+        p.drawPixmap(0, 0, m_currImage,
+                     0, 0, m_currImage.width(), m_currImage.height());
         p.end();
         m_simplyShow = false;
         return;
@@ -1294,50 +1101,117 @@ void SlideShow::paintEvent(QPaintEvent *)
         p.drawText(100, 100, i18n("SlideShow Completed."));
         p.drawText(100, 150, i18n("Click To Exit..."));
         p.end();
-        m_endOfShow = false;
         return;
     }
 
     //Different behaviour on different effect
 
-    if ( QString::compare(m_sharedData->effectName , "Chess Board") == 0 )
+    if ( QString::compare(m_effectName , "Melt Down") == 0 )
     {
-        p.drawPixmap(m_px, m_py, *m_currImage, m_psx, m_psy, m_psw, m_psh);
-        p.end();
-    }
+        int y, x, i;
+        QPainter bufferPainter(&m_buffer);
+        
+        for (i = 0, x = 0; i < m_ix; i++, x += m_dx)
+        {
+            y = m_intArray[i];
 
-    if ( QString::compare(m_sharedData->effectName , "Blobs") == 0 )
-    {
-        m_painter->drawEllipse(m_px, m_py, m_psx, m_psy);
+            if (y >= m_h) continue;
+
+            m_pdone = false;
+
+            if ((rand()&15) < 6) continue;
+
+            bufferPainter.drawPixmap(x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy);
+            bufferPainter.drawPixmap(x, y, m_currImage, x, y, m_dx, m_dy);
+            
+            m_intArray[i] += m_dy;
+        }
+        bufferPainter.end();
+        p.drawPixmap(0,0, m_buffer);
         return;
     }
 
-    /*
-        switch ( m_sharedData->effectName  ) {
-          case "Chess Board" :
-        break;*/
-    /*case "Melt Down" :
-    case "Sweep" :
-    case "Noise" :
-    case "Growing" :
-    case "Incom_ing Edges" :
-    case "Horizontal Lines" :
-    case "Vertical Lines" :
-    case "Circle Out" :
-    case "MultiCircle Out" :
-    case "Spiral In" :
-    case "Blobs" :
-    */
-//       default :
-//     }
+    if ( QString::compare(m_effectName , "Chess Board") == 0 )
+    {
+        QPainter bufferPainter(&m_buffer);
+        QBrush brush = QBrush(m_currImage);
+        
+        for (int y = 0; y < m_w; y += (m_dy << 1))
+        {
+            bufferPainter.fillRect(m_ix, y + m_iy, m_dx, m_dy, brush);
+            bufferPainter.fillRect(m_x, y + m_y, m_dx, m_dy, brush);
+        }
+        
+        bufferPainter.end();
+        p.drawPixmap(0,0, m_buffer);
+        return;
+    }
+    
+         
+    if ( QString::compare(m_effectName, "Growing" ) == 0 
+         || QString::compare(m_effectName, "Spiral In") == 0
+         || QString::compare(m_effectName, "Sweep") == 0 )
+    {
+        QPainter bufferPainter(&m_buffer);
+        bufferPainter.fillRect(m_px, m_py, m_psx, m_psy, QBrush(m_currImage));
+        bufferPainter.end();
+        p.drawPixmap(0,0, m_buffer);
+        return;
+    }
+
+    if ( QString::compare(m_effectName , "Blobs") == 0 )
+    {
+        QPainterPath painterPath;
+        painterPath.addEllipse(m_px, m_py, m_psx, m_psy);
+        
+        QPainter bufferPainter(&m_buffer);
+        bufferPainter.fillPath(painterPath, QBrush(m_currImage));
+        bufferPainter.end();
+        p.drawPixmap(0, 0, m_buffer);
+        return;
+    }
+
+    if ( QString::compare(m_effectName, "Circle Out") == 0 
+         || QString::compare(m_effectName, "MultiCircle Out") == 0 )
+    {   
+        QPainterPath painterPath;
+        painterPath.addPolygon(QPolygon(m_pa));
+        
+        QPainter bufferPainter(&m_buffer);
+        bufferPainter.fillPath(painterPath, QBrush(m_currImage));
+        bufferPainter.end();
+        p.drawPixmap(0,0, m_buffer);                       
+        return;
+    }
+    
+    if ( QString::compare(m_effectName, "Horizontal Lines") == 0  
+         || QString::compare(m_effectName, "Vertical Lines") == 0 ) 
+    {
+        bool isVertical = ( QString::compare(m_sharedData->effectName, "Vertical Lines" ) == 0) ?
+                            true : false;
+        
+        static int pos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
+        int iPos;
+        int until = isVertical ? m_w : m_h;
+        QPainter bufferPainter(&m_buffer);
+        QBrush brush = QBrush(m_currImage);
+        
+        for (iPos = pos[m_i]; iPos < until; iPos += 8)
+        {
+            if ( isVertical ) 
+                bufferPainter.fillRect(iPos, 0, 1, m_h, brush);
+            else
+                bufferPainter.fillRect(0, iPos, m_w, 1, brush);
+        }
+        
+        bufferPainter.end();
+        p.drawPixmap(0,0, m_buffer);
+        return;
+    }
 }
 
-void SlideShow::startPainter(Qt::PenStyle aPen)
+void SlideShow::startPainter()
 {
-    // To please complier
-    if ( aPen == aPen ) {}
-
-    // Will be removed on SlideShow fix
 
     m_startPainter = true;
 
@@ -1366,7 +1240,7 @@ void SlideShow::slotPrev()
 {
     loadPrevImage();
 
-    if (!m_currImage || m_fileList.isEmpty())
+    if (m_currImage.isNull() || m_fileList.isEmpty())
     {
         showEndOfShow();
         return;
@@ -1381,7 +1255,7 @@ void SlideShow::slotNext()
 {
     loadNextImage();
 
-    if (!m_currImage || m_fileList.isEmpty())
+    if (m_currImage.isNull() || m_fileList.isEmpty())
     {
         showEndOfShow();
         return;

@@ -74,14 +74,14 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
 
 MainDialog::~MainDialog()
 {
-//    if (m_thumbJob) delete m_thumbJob;
 }
 
 void MainDialog::readSettings()
 {
     connect(m_sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this, SLOT(slotUseMillisecondsToggled()));
     connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotPrintCommentsToggled()));
-
+    connect(m_openglCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotOpenGLToggled()));
+    
     connect(m_allFilesButton, SIGNAL(toggled(bool)), this, SLOT(slotSelection()));
 
     connect(m_delaySpinBox, SIGNAL(valueChanged(int)), this, SLOT(slotDelayChanged()));
@@ -119,20 +119,6 @@ void MainDialog::readSettings()
         m_printCommentsCheckBox->setEnabled(false);
         m_printCommentsCheckBox->setChecked(false);
     }
-
-    // -----------------------
-    // Disable normal effects
-    // TODO: find a way to make them work again.
-
-    m_openglCheckBox->setChecked(true);
-
-    m_openglCheckBox->setEnabled(false);
-
-    m_openglCheckBox->setToolTip(i18n("In this version of kipi-plugins, normal SlideShow's effects "
-                                      "still under porting.<br/>"
-                                      "<b>They will be available again in the future.</b>"));
-
-    //----------------------
 
     // Switch to selected files only (it depends on showSelectedFilesOnly)
 

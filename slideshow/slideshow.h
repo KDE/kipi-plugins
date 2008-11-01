@@ -38,6 +38,7 @@
 #include <QStringList>
 #include <QWheelEvent>
 #include <QWidget>
+#include <Q3PointArray>
 
 // KDE includes.
 
@@ -98,7 +99,6 @@ protected:
     int effectSweep(bool doInit);
     int effectRandom(bool doInit);
     int effectGrowing(bool doInit);
-    int effectIncom_ingEdges(bool doInit);
     int effectHorizLines(bool doInit);
     int effectVertLines(bool doInit);
     int effectMultiCircleOut(bool doInit);
@@ -107,13 +107,13 @@ protected:
     int effectBlobs(bool doInit);
 
     void paintEvent(QPaintEvent*);
-    void startPainter(Qt::PenStyle penStyle = Qt::NoPen);
+    void startPainter();
 
     bool            m_simplyShow;
     bool            m_startPainter;
     int             m_px, m_py, m_psx, m_psy, m_psw, m_psh;
-    QPainter*       m_painter;
     bool            m_endOfShow;
+    QPixmap         m_buffer;
 
 private slots:
 
@@ -150,7 +150,7 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     SlideShowLoader*            m_imageLoader;
-    QPixmap*                    m_currImage;
+    QPixmap                     m_currImage;
 
     FileList                    m_fileList;
     QStringList                 m_commentsList;
@@ -159,6 +159,7 @@ private:
 
     EffectMethod                m_effect;
     bool                        m_effectRunning;
+    QString                     m_effectName;
 
     int                         m_commentsLinesLenght;
 
@@ -167,6 +168,10 @@ private:
     int                         m_x0, m_y0, m_x1, m_y1, m_wait;
     double                      m_fx, m_fy, m_alpha, m_fd;
     int*                        m_intArray;
+    bool                        m_pdone;
+
+    //static 
+    Q3PointArray                 m_pa;
 
     SlidePlaybackWidget*        m_slidePlaybackWidget;
     QTimer*                     m_mouseMoveTimer;

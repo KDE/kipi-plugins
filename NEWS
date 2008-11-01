@@ -4,6 +4,7 @@ v 0.2.0 - beta4
 Kipi-plugins NEW FEATURES:
 
 AcquireImages  : Under Windows, TWAIN interface is used to scan image using flat scanner.
+SlideShow      : Normal effects are back.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
