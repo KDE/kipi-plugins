@@ -60,6 +60,47 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace KIPIHTMLExport {
 
 
+/**
+ * This structure stores all the necessary information to produce an XML
+ * description of an image
+ */
+struct ImageElement {
+	ImageElement() : mValid(false) {}
+	bool mValid;
+	QString mTitle;
+	QString mDescription;
+	QString mThumbnailFileName;
+	QSize mThumbnailSize;
+	QString mFullFileName;
+	QSize mFullSize;
+	QString mOriginalFileName;
+	QSize mOriginalSize;
+
+	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) {
+		if (!mValid) {
+			return;
+		}
+		XMLElement imageX(xmlWriter, "image");
+		xmlWriter.writeElement("title", mTitle);
+		xmlWriter.writeElement("description", mDescription);
+
+		appendImageElementToXML(xmlWriter, "full", mFullFileName, mFullSize);
+		appendImageElementToXML(xmlWriter, "thumbnail", mThumbnailFileName, mThumbnailSize);
+		if (copyOriginalImage) {
+			appendImageElementToXML(xmlWriter, "original", mOriginalFileName, mOriginalSize);
+		}
+	}
+
+	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) {
+		XMLAttributeList attrList;
+		attrList.append("fileName", fileName);
+		attrList.append("width", size.width());
+		attrList.append("height", size.height());
+		XMLElement elem(xmlWriter, elementName, &attrList);
+	}
+};
+
+
 typedef QMap<QByteArray,QByteArray> XsltParameterMap;
 
 
@@ -210,36 +251,27 @@ struct Generator::Private {
 	}
 
 	/**
-	 * Helper class for generateImageAndXMLForUrl
-	 */
-	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) {
-		XMLAttributeList attrList;
-		attrList.append("fileName", fileName);
-		attrList.append("width", size.width());
-		attrList.append("height", size.height());
-		XMLElement elem(xmlWriter, elementName, &attrList);
-	}
-
-
-	/**
 	 * Generate images (full and thumbnail) for imageUrl
-	 * Fills xmlWriter with info about this image
+	 * Returns an ImageElement initialized to fill the xml writer
 	 */
-	void generateImageAndXMLForUrl(XMLWriter& xmlWriter, const QString& destDir, const KUrl& imageUrl) {
+	ImageElement generateImagesForUrl(const QString& destDir, const KUrl& imageUrl) {
 		KIPI::ImageInfo info=mInterface->info(imageUrl);
+		ImageElement element;
+		element.mTitle = info.title();
+		element.mDescription = info.description();
 	
 		// Load image
 		QString path=imageUrl.path();
 		QFile imageFile(path);
 		if (!imageFile.open(QIODevice::ReadOnly)) {
 			logWarning(i18n("Could not read image '%1'", path));
-			return;
+			return element;
 		}
 
 		QString imageFormat = QImageReader::imageFormat(&imageFile);
 		if (imageFormat.isEmpty()) {
 			logWarning(i18n("Format of image '%1' is unknown", path));
-			return;
+			return element;
 		}
 		imageFile.close();
 		imageFile.open(QIODevice::ReadOnly);
@@ -248,7 +280,7 @@ struct Generator::Private {
 		QImage originalImage;
 		if (!originalImage.loadFromData(imageData) ) {
 			logWarning(i18n("Error loading image '%1'", path));
-			return;
+			return element;
 		}
 
 		// Process images
@@ -276,7 +308,7 @@ struct Generator::Private {
 		if (mInfo->useOriginalImageAsFullImage()) {
 			fullFileName = baseFileName + "." + imageFormat.toLower();
 			if (!writeDataToFile(imageData, destDir + "/" + fullFileName)) {
-				return;
+				return element;
 			}
 
 		} else {
@@ -284,17 +316,20 @@ struct Generator::Private {
 			QString destPath = destDir + "/" + fullFileName;
 			if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
 				logWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
-				return;
+				return element;
 			}
 		}
+		element.mFullFileName = fullFileName;
+		element.mFullSize = fullImage.size();
 
 		// Save original
-		QString originalFileName;
 		if (mInfo->copyOriginalImage()) {
-			originalFileName = "original_" + fullFileName;
+			QString originalFileName = "original_" + fullFileName;
 			if (!writeDataToFile(imageData, destDir + "/" + originalFileName)) {
-				return;
+				return element;
 			}
+			element.mOriginalFileName = originalFileName;
+			element.mOriginalSize = originalImage.size();
 		}
 
 		// Save thumbnail
@@ -302,19 +337,12 @@ struct Generator::Private {
 		QString destPath = destDir + "/" + thumbnailFileName;
 		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
 			logWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
-			return;
+			return element;
 		}
-		
-		// Write XML
-		XMLElement imageX(xmlWriter, "image");
-		xmlWriter.writeElement("title", info.title());
-		xmlWriter.writeElement("description", info.description());
-
-		appendImageElementToXML(xmlWriter, "full", fullFileName, fullImage.size());
-		appendImageElementToXML(xmlWriter, "thumbnail", thumbnailFileName, thumbnail.size());
-		if (mInfo->copyOriginalImage()) {
-			appendImageElementToXML(xmlWriter, "original", originalFileName, originalImage.size());
-		}
+		element.mThumbnailFileName = thumbnailFileName;
+		element.mThumbnailSize = thumbnail.size();
+		element.mValid = true;
+		return element;
 	}
 
 
@@ -356,7 +384,8 @@ struct Generator::Private {
 			for (; it!=end; ++it, ++pos) {
 				mProgressDialog->setProgress(pos, count);
 				qApp->processEvents();
-				generateImageAndXMLForUrl(xmlWriter, destDir, *it);
+				ImageElement element = generateImagesForUrl(destDir, *it);
+				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
 			}
 
 		}
