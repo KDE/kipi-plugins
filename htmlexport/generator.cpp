@@ -76,7 +76,7 @@ struct ImageElement {
 	QString mOriginalFileName;
 	QSize mOriginalSize;
 
-	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) {
+	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) const {
 		if (!mValid) {
 			return;
 		}
@@ -91,7 +91,7 @@ struct ImageElement {
 		}
 	}
 
-	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) {
+	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) const {
 		XMLAttributeList attrList;
 		attrList.append("fileName", fileName);
 		attrList.append("width", size.width());
@@ -375,16 +375,21 @@ struct Generator::Private {
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
 
-			// Loop on image in collection
+			// Generate images
 			KUrl::List imageList = collection.images();
 			int pos = 1;
 			int count = imageList.count();
+			QList<ImageElement> imageElementList;
 			Q_FOREACH(const KUrl& url, imageList) {
 				mProgressDialog->setProgress(pos, count);
 				qApp->processEvents();
-				ImageElement element = generateImagesForUrl(destDir, url);
-				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
+				imageElementList <<  generateImagesForUrl(destDir, url);
 				++pos;
+			}
+
+			// Generate xml
+			Q_FOREACH(const ImageElement& element, imageElementList) {
+				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
 			}
 
 		}
