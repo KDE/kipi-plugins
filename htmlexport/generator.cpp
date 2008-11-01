@@ -199,6 +199,7 @@ QImage generateSquareThumbnail(const QImage& fullImage, int size) {
 
 
 struct Generator::Private {
+	Generator* that;
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
 	KIPIPlugins::BatchProgressDialog* mProgressDialog;
@@ -264,13 +265,13 @@ struct Generator::Private {
 		QString path=imageUrl.path();
 		QFile imageFile(path);
 		if (!imageFile.open(QIODevice::ReadOnly)) {
-			logWarning(i18n("Could not read image '%1'", path));
+			that->emitWarning(i18n("Could not read image '%1'", path));
 			return element;
 		}
 
 		QString imageFormat = QImageReader::imageFormat(&imageFile);
 		if (imageFormat.isEmpty()) {
-			logWarning(i18n("Format of image '%1' is unknown", path));
+			that->emitWarning(i18n("Format of image '%1' is unknown", path));
 			return element;
 		}
 		imageFile.close();
@@ -279,7 +280,7 @@ struct Generator::Private {
 		QByteArray imageData = imageFile.readAll();
 		QImage originalImage;
 		if (!originalImage.loadFromData(imageData) ) {
-			logWarning(i18n("Error loading image '%1'", path));
+			that->emitWarning(i18n("Error loading image '%1'", path));
 			return element;
 		}
 
@@ -315,7 +316,7 @@ struct Generator::Private {
 			fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
 			QString destPath = destDir + "/" + fullFileName;
 			if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
-				logWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
+				that->emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
 				return element;
 			}
 		}
@@ -336,7 +337,7 @@ struct Generator::Private {
 		QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
 		QString destPath = destDir + "/" + thumbnailFileName;
 		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
-			logWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
+			that->emitWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
 			return element;
 		}
 		element.mThumbnailFileName = thumbnailFileName;
@@ -522,10 +523,14 @@ struct Generator::Private {
 Generator::Generator(KIPI::Interface* interface, GalleryInfo* info, KIPIPlugins::BatchProgressDialog* progressDialog)
 : QObject() {
 	d=new Private;
+	d->that = this;
 	d->mInterface=interface;
 	d->mInfo=info;
 	d->mProgressDialog=progressDialog;
 	d->mWarnings=false;
+
+	connect(this, SIGNAL(logWarningRequested(const QString&)),
+		SLOT(logWarning(const QString&)), Qt::QueuedConnection);
 }
 
 
@@ -555,5 +560,16 @@ bool Generator::run() {
 bool Generator::warnings() const {
 	return d->mWarnings;
 }
+
+
+void Generator::emitWarning(const QString& text) {
+	emit logWarningRequested(text);
+}
+
+
+void Generator::logWarning(const QString& text) {
+	d->logWarning(text);
+}
+
 
 } // namespace

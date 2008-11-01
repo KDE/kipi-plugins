@@ -48,9 +48,21 @@ public:
 	bool run();
 	bool warnings() const;
 
+Q_SIGNALS:
+	void logWarningRequested(const QString& text);
+
 private:
 	struct Private;
+	friend struct Private;
 	Private* d;
+
+	/**
+	 * Emit warning message, used to notify gui from worker thread
+	 */
+	void emitWarning(const QString&);
+
+private Q_SLOTS:
+	void logWarning(const QString& text);
 };
 
 
