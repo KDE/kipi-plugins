@@ -212,11 +212,11 @@ struct Generator::Private {
 	/**
 	 * Helper class for generateImageAndXMLForUrl
 	 */
-	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QImage& image) {
+	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) {
 		XMLAttributeList attrList;
 		attrList.append("fileName", fileName);
-		attrList.append("width", image.width());
-		attrList.append("height", image.height());
+		attrList.append("width", size.width());
+		attrList.append("height", size.height());
 		XMLElement elem(xmlWriter, elementName, &attrList);
 	}
 
@@ -235,7 +235,7 @@ struct Generator::Private {
 			logWarning(i18n("Could not read image '%1'", path));
 			return;
 		}
-		
+
 		QString imageFormat = QImageReader::imageFormat(&imageFile);
 		if (imageFormat.isEmpty()) {
 			logWarning(i18n("Format of image '%1' is unknown", path));
@@ -310,10 +310,10 @@ struct Generator::Private {
 		xmlWriter.writeElement("title", info.title());
 		xmlWriter.writeElement("description", info.description());
 
-		appendImageElementToXML(xmlWriter, "full", fullFileName, fullImage);
-		appendImageElementToXML(xmlWriter, "thumbnail", thumbnailFileName, thumbnail);
+		appendImageElementToXML(xmlWriter, "full", fullFileName, fullImage.size());
+		appendImageElementToXML(xmlWriter, "thumbnail", thumbnailFileName, thumbnail.size());
 		if (mInfo->copyOriginalImage()) {
-			appendImageElementToXML(xmlWriter, "original", originalFileName, originalImage);
+			appendImageElementToXML(xmlWriter, "original", originalFileName, originalImage.size());
 		}
 	}
 
