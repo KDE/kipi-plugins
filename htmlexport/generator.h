@@ -42,8 +42,9 @@ class Generator;
 class ImageElement;
 
 /**
- * This functor generate images (full and thumbnail) for an url and returns an
- * ImageElement initialized to fill the xml writer
+ * This functor generates images (full and thumbnail) for an url and returns an
+ * ImageElement initialized to fill the xml writer.
+ * It is used as an argument to QtConcurrent::mapped().
  */
 class ImageGenerationFunctor {
 public:
