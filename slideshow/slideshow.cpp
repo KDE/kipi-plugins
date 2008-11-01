@@ -517,7 +517,7 @@ void SlideShow::printProgress()
 
     for (int x = 9; x <= 11; x++)
         for (int y = 21; y >= 19; y--)
-            p.drawText(x, height() - y, progress);
+            p.drawText(width() - stringLenght - x, y, progress);
 
     p.setPen(QColor(Qt::white));
 
