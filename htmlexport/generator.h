@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <qobject.h>
 
+#include "uniquenamehelper.h"
+
+class KUrl;
+
 namespace KIPIPlugins {
 class BatchProgressDialog;
 }
@@ -34,9 +38,33 @@ class Interface;
 namespace KIPIHTMLExport {
 
 class GalleryInfo;
+class Generator;
+class ImageElement;
+
+/**
+ * This functor generate images (full and thumbnail) for an url and returns an
+ * ImageElement initialized to fill the xml writer
+ */
+class ImageGenerationFunctor {
+public:
+	typedef ImageElement result_type;
+
+	ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir);
+
+	ImageElement operator()(const KUrl& imageUrl);
+
+private:
+	Generator* that;
+	KIPI::Interface* mInterface;
+	GalleryInfo* mInfo;
+	QString mDestDir;
+
+	UniqueNameHelper mUniqueNameHelper;
+
+	bool writeDataToFile(const QByteArray& data, const QString& destPath);
+};
 
 
-class ImageGenerationFunctor;
 /**
  * This class is responsible for generating the HTML and scaling the images
  * according to the settings specified by the user.

@@ -57,7 +57,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"
 #include "theme.h"
-#include "uniquenamehelper.h"
 #include "xmlutils.h"
 
 namespace KIPIHTMLExport {
@@ -179,136 +178,122 @@ QImage generateSquareThumbnail(const QImage& fullImage, int size) {
 }
 
 
-/**
- * This functor generate images (full and thumbnail) for an url and returns an
- * ImageElement initialized to fill the xml writer
- */
-class ImageGenerationFunctor {
-public:
-	typedef ImageElement result_type;
+//// ImageGenerationFunctor ////
+ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir)
+: that(generator)
+, mInterface(iface)
+, mInfo(info)
+, mDestDir(destDir)
+{}
 
-	ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir)
-	: that(generator)
-	, mInterface(iface)
-	, mInfo(info)
-	, mDestDir(destDir)
-	{}
 
-	ImageElement operator()(const KUrl& imageUrl) {
-		KIPI::ImageInfo info=mInterface->info(imageUrl);
-		ImageElement element;
-		element.mTitle = info.title();
-		element.mDescription = info.description();
+ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
+	KIPI::ImageInfo info=mInterface->info(imageUrl);
+	ImageElement element;
+	element.mTitle = info.title();
+	element.mDescription = info.description();
 
-		// Load image
-		QString path=imageUrl.path();
-		QFile imageFile(path);
-		if (!imageFile.open(QIODevice::ReadOnly)) {
-			that->emitWarning(i18n("Could not read image '%1'", path));
-			return element;
-		}
-
-		QString imageFormat = QImageReader::imageFormat(&imageFile);
-		if (imageFormat.isEmpty()) {
-			that->emitWarning(i18n("Format of image '%1' is unknown", path));
-			return element;
-		}
-		imageFile.close();
-		imageFile.open(QIODevice::ReadOnly);
-
-		QByteArray imageData = imageFile.readAll();
-		QImage originalImage;
-		if (!originalImage.loadFromData(imageData) ) {
-			that->emitWarning(i18n("Error loading image '%1'", path));
-			return element;
-		}
-
-		// Process images
-		QImage fullImage = originalImage;
-		if (!mInfo->useOriginalImageAsFullImage()) {
-			if (mInfo->fullResize()) {
-				int size = mInfo->fullSize();
-				fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-			}
-			if (info.angle() != 0) {
-				QMatrix matrix;
-				matrix.rotate(info.angle());
-				fullImage = fullImage.transformed(matrix);
-			}
-		}
-
-		QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
-
-		// Save images
-		QString baseFileName = webifyFileName(info.title());
-		baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
-
-		// Save full
-		QString fullFileName;
-		if (mInfo->useOriginalImageAsFullImage()) {
-			fullFileName = baseFileName + "." + imageFormat.toLower();
-			if (!writeDataToFile(imageData, mDestDir + "/" + fullFileName)) {
-				return element;
-			}
-
-		} else {
-			fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
-			QString destPath = mDestDir + "/" + fullFileName;
-			if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
-				that->emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
-				return element;
-			}
-		}
-		element.mFullFileName = fullFileName;
-		element.mFullSize = fullImage.size();
-
-		// Save original
-		if (mInfo->copyOriginalImage()) {
-			QString originalFileName = "original_" + fullFileName;
-			if (!writeDataToFile(imageData, mDestDir + "/" + originalFileName)) {
-				return element;
-			}
-			element.mOriginalFileName = originalFileName;
-			element.mOriginalSize = originalImage.size();
-		}
-
-		// Save thumbnail
-		QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
-		QString destPath = mDestDir + "/" + thumbnailFileName;
-		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
-			that->emitWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
-			return element;
-		}
-		element.mThumbnailFileName = thumbnailFileName;
-		element.mThumbnailSize = thumbnail.size();
-		element.mValid = true;
+	// Load image
+	QString path=imageUrl.path();
+	QFile imageFile(path);
+	if (!imageFile.open(QIODevice::ReadOnly)) {
+		that->emitWarning(i18n("Could not read image '%1'", path));
 		return element;
 	}
 
-private:
-	Generator* that;
-	KIPI::Interface* mInterface;
-	GalleryInfo* mInfo;
-	QString mDestDir;
-
-	UniqueNameHelper mUniqueNameHelper;
-
-
-	bool writeDataToFile(const QByteArray& data, const QString& destPath) {
-		QFile destFile(destPath);
-		if (!destFile.open(QIODevice::WriteOnly)) {
-			that->emitWarning(i18n("Could not open file '%1' for writing", destPath));
-			return false;
-		}
-		if (destFile.write(data) != data.size()) {
-			that->emitWarning(i18n("Could not save image to file '%1'", destPath));
-			return false;
-		}
-		return true;
+	QString imageFormat = QImageReader::imageFormat(&imageFile);
+	if (imageFormat.isEmpty()) {
+		that->emitWarning(i18n("Format of image '%1' is unknown", path));
+		return element;
 	}
-};
+	imageFile.close();
+	imageFile.open(QIODevice::ReadOnly);
+
+	QByteArray imageData = imageFile.readAll();
+	QImage originalImage;
+	if (!originalImage.loadFromData(imageData) ) {
+		that->emitWarning(i18n("Error loading image '%1'", path));
+		return element;
+	}
+
+	// Process images
+	QImage fullImage = originalImage;
+	if (!mInfo->useOriginalImageAsFullImage()) {
+		if (mInfo->fullResize()) {
+			int size = mInfo->fullSize();
+			fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+		}
+		if (info.angle() != 0) {
+			QMatrix matrix;
+			matrix.rotate(info.angle());
+			fullImage = fullImage.transformed(matrix);
+		}
+	}
+
+	QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
+
+	// Save images
+	QString baseFileName = webifyFileName(info.title());
+	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
+
+	// Save full
+	QString fullFileName;
+	if (mInfo->useOriginalImageAsFullImage()) {
+		fullFileName = baseFileName + "." + imageFormat.toLower();
+		if (!writeDataToFile(imageData, mDestDir + "/" + fullFileName)) {
+			return element;
+		}
+
+	} else {
+		fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
+		QString destPath = mDestDir + "/" + fullFileName;
+		if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
+			that->emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
+			return element;
+		}
+	}
+	element.mFullFileName = fullFileName;
+	element.mFullSize = fullImage.size();
+
+	// Save original
+	if (mInfo->copyOriginalImage()) {
+		QString originalFileName = "original_" + fullFileName;
+		if (!writeDataToFile(imageData, mDestDir + "/" + originalFileName)) {
+			return element;
+		}
+		element.mOriginalFileName = originalFileName;
+		element.mOriginalSize = originalImage.size();
+	}
+
+	// Save thumbnail
+	QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
+	QString destPath = mDestDir + "/" + thumbnailFileName;
+	if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
+		that->emitWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
+		return element;
+	}
+	element.mThumbnailFileName = thumbnailFileName;
+	element.mThumbnailSize = thumbnail.size();
+	element.mValid = true;
+	return element;
+}
 
 
+bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QString& destPath) {
+	QFile destFile(destPath);
+	if (!destFile.open(QIODevice::WriteOnly)) {
+		that->emitWarning(i18n("Could not open file '%1' for writing", destPath));
+		return false;
+	}
+	if (destFile.write(data) != data.size()) {
+		that->emitWarning(i18n("Could not save image to file '%1'", destPath));
+		return false;
+	}
+	return true;
+}
+
+
+//// Generator::Private ////
 struct Generator::Private {
 	Generator* that;
 	KIPI::Interface* mInterface;
