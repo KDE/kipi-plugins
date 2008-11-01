@@ -36,6 +36,7 @@ namespace KIPIHTMLExport {
 class GalleryInfo;
 
 
+class ImageGenerationFunctor;
 /**
  * This class is responsible for generating the HTML and scaling the images
  * according to the settings specified by the user.
@@ -54,6 +55,7 @@ Q_SIGNALS:
 private:
 	struct Private;
 	friend struct Private;
+	friend class ImageGenerationFunctor;
 	Private* d;
 
 	/**

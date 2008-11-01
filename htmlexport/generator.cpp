@@ -24,10 +24,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // Qt
 #include <QDir>
 #include <QFile>
+#include <QFutureWatcher>
 #include <QImageReader>
 #include <QPainter>
 #include <QRegExp>
 #include <QStringList>
+#include <QtConcurrentMap>
 
 // KDE
 #include <kaboutdata.h>
@@ -198,69 +200,27 @@ QImage generateSquareThumbnail(const QImage& fullImage, int size) {
 }
 
 
-struct Generator::Private {
-	Generator* that;
-	KIPI::Interface* mInterface;
-	GalleryInfo* mInfo;
-	KIPIPlugins::BatchProgressDialog* mProgressDialog;
-	Theme::Ptr mTheme;
-	
-	// State info
-	bool mWarnings;
-	QString mXMLFileName;
-	UniqueNameHelper mUniqueNameHelper;
+/**
+ * This functor generate images (full and thumbnail) for an url and returns an
+ * ImageElement initialized to fill the xml writer
+ */
+class ImageGenerationFunctor {
+public:
+	typedef ImageElement result_type;
 
-	bool init() {
-		mTheme=Theme::findByInternalName(mInfo->theme());
-		if (!mTheme) {
-			logError( i18n("Could not find theme in '%1'", mInfo->theme()) );
-			return false;
-		}
-		return true;
-	}
+	ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir)
+	: that(generator)
+	, mInterface(iface)
+	, mInfo(info)
+	, mDestDir(destDir)
+	{}
 
-	bool copyTheme() {
-		mProgressDialog->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
-		
-		KUrl srcUrl=KUrl(mTheme->directory());
-
-		KUrl destUrl=mInfo->destUrl();
-		destUrl.addPath(srcUrl.fileName());
-		
-		if (QFile::exists(destUrl.path())) {
-			KIO::NetAccess::del(destUrl, mProgressDialog);
-		}
-		bool ok=KIO::NetAccess::dircopy(srcUrl, destUrl, mProgressDialog);
-		if (!ok) {
-			logError(i18n("Could not copy theme"));
-			return false;
-		}
-		return true;
-	}
-
-	bool writeDataToFile(const QByteArray& data, const QString& destPath) {
-		QFile destFile(destPath);
-		if (!destFile.open(QIODevice::WriteOnly)) {
-			logWarning(i18n("Could not open file '%1' for writing", destPath));
-			return false;
-		}
-		if (destFile.write(data) != data.size()) {
-			logWarning(i18n("Could not save image to file '%1'", destPath));
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Generate images (full and thumbnail) for imageUrl
-	 * Returns an ImageElement initialized to fill the xml writer
-	 */
-	ImageElement generateImagesForUrl(const QString& destDir, const KUrl& imageUrl) {
+	ImageElement operator()(const KUrl& imageUrl) {
 		KIPI::ImageInfo info=mInterface->info(imageUrl);
 		ImageElement element;
 		element.mTitle = info.title();
 		element.mDescription = info.description();
-	
+
 		// Load image
 		QString path=imageUrl.path();
 		QFile imageFile(path);
@@ -308,13 +268,13 @@ struct Generator::Private {
 		QString fullFileName;
 		if (mInfo->useOriginalImageAsFullImage()) {
 			fullFileName = baseFileName + "." + imageFormat.toLower();
-			if (!writeDataToFile(imageData, destDir + "/" + fullFileName)) {
+			if (!writeDataToFile(imageData, mDestDir + "/" + fullFileName)) {
 				return element;
 			}
 
 		} else {
 			fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
-			QString destPath = destDir + "/" + fullFileName;
+			QString destPath = mDestDir + "/" + fullFileName;
 			if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
 				that->emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
 				return element;
@@ -326,7 +286,7 @@ struct Generator::Private {
 		// Save original
 		if (mInfo->copyOriginalImage()) {
 			QString originalFileName = "original_" + fullFileName;
-			if (!writeDataToFile(imageData, destDir + "/" + originalFileName)) {
+			if (!writeDataToFile(imageData, mDestDir + "/" + originalFileName)) {
 				return element;
 			}
 			element.mOriginalFileName = originalFileName;
@@ -335,7 +295,7 @@ struct Generator::Private {
 
 		// Save thumbnail
 		QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
-		QString destPath = destDir + "/" + thumbnailFileName;
+		QString destPath = mDestDir + "/" + thumbnailFileName;
 		if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
 			that->emitWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
 			return element;
@@ -346,6 +306,68 @@ struct Generator::Private {
 		return element;
 	}
 
+private:
+	Generator* that;
+	KIPI::Interface* mInterface;
+	GalleryInfo* mInfo;
+	QString mDestDir;
+
+	UniqueNameHelper mUniqueNameHelper;
+
+
+	bool writeDataToFile(const QByteArray& data, const QString& destPath) {
+		QFile destFile(destPath);
+		if (!destFile.open(QIODevice::WriteOnly)) {
+			that->emitWarning(i18n("Could not open file '%1' for writing", destPath));
+			return false;
+		}
+		if (destFile.write(data) != data.size()) {
+			that->emitWarning(i18n("Could not save image to file '%1'", destPath));
+			return false;
+		}
+		return true;
+	}
+};
+
+
+struct Generator::Private {
+	Generator* that;
+	KIPI::Interface* mInterface;
+	GalleryInfo* mInfo;
+	KIPIPlugins::BatchProgressDialog* mProgressDialog;
+	Theme::Ptr mTheme;
+	
+	// State info
+	bool mWarnings;
+	QString mXMLFileName;
+
+	bool init() {
+		mTheme=Theme::findByInternalName(mInfo->theme());
+		if (!mTheme) {
+			logError( i18n("Could not find theme in '%1'", mInfo->theme()) );
+			return false;
+		}
+		return true;
+	}
+
+	bool copyTheme() {
+		mProgressDialog->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
+		
+		KUrl srcUrl=KUrl(mTheme->directory());
+
+		KUrl destUrl=mInfo->destUrl();
+		destUrl.addPath(srcUrl.fileName());
+		
+		if (QFile::exists(destUrl.path())) {
+			KIO::NetAccess::del(destUrl, mProgressDialog);
+		}
+		bool ok=KIO::NetAccess::dircopy(srcUrl, destUrl, mProgressDialog);
+		if (!ok) {
+			logError(i18n("Could not copy theme"));
+			return false;
+		}
+		return true;
+	}
 
 	bool generateImagesAndXML() {
 		QString baseDestDir=mInfo->destUrl().path();
@@ -376,21 +398,34 @@ struct Generator::Private {
 			xmlWriter.writeElement("fileName", collectionFileName);
 
 			// Generate images
+			QTime chrono;
+			chrono.start();
+			ImageGenerationFunctor functor(that, mInterface, mInfo, destDir);
+
 			KUrl::List imageList = collection.images();
-			int pos = 1;
-			int count = imageList.count();
-			QList<ImageElement> imageElementList;
-			Q_FOREACH(const KUrl& url, imageList) {
-				mProgressDialog->setProgress(pos, count);
+			QFuture<ImageElement> future = QtConcurrent::mapped(imageList, functor);
+			QFutureWatcher<ImageElement> watcher;
+			watcher.setFuture(future);
+			connect(&watcher, SIGNAL(progressValueChanged(int)),
+				mProgressDialog, SLOT(setProgress(int)));
+
+			mProgressDialog->setTotal(imageList.count());
+			while (!future.isFinished()) {
 				qApp->processEvents();
-				imageElementList <<  generateImagesForUrl(destDir, url);
-				++pos;
+				if (mProgressDialog->isHidden()) {
+					future.cancel();
+					future.waitForFinished();
+					return false;
+				}
 			}
 
+			kDebug() << chrono.restart();
+
 			// Generate xml
-			Q_FOREACH(const ImageElement& element, imageElementList) {
+			Q_FOREACH(const ImageElement& element, future.results()) {
 				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
 			}
+			kDebug() << chrono.restart();
 
 		}
 		return true;
@@ -522,6 +557,7 @@ struct Generator::Private {
 		mWarnings=true;
 	}
 };
+
 
 Generator::Generator(KIPI::Interface* interface, GalleryInfo* info, KIPIPlugins::BatchProgressDialog* progressDialog)
 : QObject() {
