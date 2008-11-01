@@ -77,10 +77,6 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
 
-    QPalette paletteSelection = palette();
-    paletteSelection.setColor(QPalette::Window, QColor(0, 0, 0));
-    setPalette(paletteSelection);
-
     m_slidePlaybackWidget = new SlidePlaybackWidget(this);
     m_slidePlaybackWidget->hide();
 
