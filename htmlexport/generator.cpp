@@ -57,6 +57,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"
 #include "theme.h"
+#include "uniquenamehelper.h"
 #include "xmlutils.h"
 
 namespace KIPIHTMLExport {
@@ -117,28 +118,6 @@ QString webifyFileName(QString fileName) {
 
 	return fileName;
 }
-
-
-/**
- * This helper class is used to make sure we use unique filenames
- */
-class UniqueNameHelper {
-public:
-	QString makeNameUnique(QString name) {
-		QString nameBase = name;
-		int count=2;
-		while (mList.indexOf(name)!=-1) {
-			name = nameBase + QString::number(count);
-			++count;
-		};
-
-		mList.append(name);
-		return name;
-	}
-
-private:
-	QStringList mList;
-};
 
 
 /**
