@@ -78,6 +78,7 @@ public:
     ~PicasawebTalker();
 
     QLinkedList <PicasaWebAlbum> * m_albumsList;
+    QString token() { return m_token;}
     QString getApiSig(QString,QStringList) ;
     void addPhotoTag(const QString& photoURI, const QString& tag);
     void getToken(const QString& user, const QString& passwd) ;

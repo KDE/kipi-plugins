@@ -25,7 +25,6 @@
 
 // Qt includes.
 
-#include <Q3ListView>
 #include <QCheckBox>
 
 // KDE includes.

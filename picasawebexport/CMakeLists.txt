@@ -6,7 +6,6 @@ SET(kipiplugin_picasawebexport_PART_SRCS
     picasaweblogin.cpp
     picasawebtalker.cpp
     picasawebwidget.cpp
-    picasawebviewitem.cpp
     picasawebwindow.cpp
    )
 

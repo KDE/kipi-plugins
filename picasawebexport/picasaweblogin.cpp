@@ -25,9 +25,9 @@
 
 // Qt includes.
 
-#include <Q3GridLayout>
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
@@ -47,7 +47,7 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 {
     setSizeGripEnabled(false);
 
-    Q3VBoxLayout* vbox = new Q3VBoxLayout( this, 5, 5, "vbox");
+    QVBoxLayout* vbox = new QVBoxLayout( this, 5, 5, "vbox");
 
     m_headerLabel = new QLabel(this);
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
@@ -61,9 +61,9 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     hline->setFrameShape( QFrame::HLine );
     vbox->addWidget( hline );
 
-    Q3GridLayout* centerLayout = new Q3GridLayout(0, 1, 1, 5, 5);
+    QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
 
-    m_nameEdit = new KLineEdit( this );
+    m_nameEdit = new KLineEdit(this);
     centerLayout->addWidget(m_nameEdit, 0, 1);
 
     m_passwdEdit = new KLineEdit( this );
@@ -80,7 +80,7 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 
     vbox->addLayout( centerLayout );
 
-    Q3HBoxLayout* btnLayout = new Q3HBoxLayout(0, 0, 5);
+    QHBoxLayout* btnLayout = new QHBoxLayout(0, 0, 5);
     btnLayout->addItem( new QSpacerItem( 20, 20, QSizePolicy::Expanding,
                                          QSizePolicy::Minimum ) );
 

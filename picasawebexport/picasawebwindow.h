@@ -132,6 +132,8 @@ private:
 
 private slots:
 
+    void closeEvent(QCloseEvent *e);
+    void saveSettings();
     void slotTokenObtained(const QString& token);
     void slotDoLogin();
 //  void slotLoginFailed( const QString& msg );

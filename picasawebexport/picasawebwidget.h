@@ -31,7 +31,6 @@
 
 #include "ui_uploadwidget.h"
 
-class Q3ListView;
 class QCheckBox;
 
 class KHTMLPart;
@@ -63,10 +62,6 @@ private slots:
     void slotSelectionChecked();
 
 private:
-
-    Q3ListView*    m_tagView;
-//
-//    Q3ButtonGroup* m_fileSrcButtonGroup;
 
 //  QCheckBox*    m_resizeCheckBox;
 //  QCheckBox*    m_exportApplicationTags;

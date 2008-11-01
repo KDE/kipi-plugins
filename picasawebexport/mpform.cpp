@@ -48,7 +48,7 @@ namespace KIPIPicasawebExportPlugin
 MPForm::MPForm()
 {
     m_boundary  = "----------";
-    m_boundary += KRandom::randomString(42 + 13).ascii();
+    m_boundary += KRandom::randomString(42 + 13).toAscii();
 }
 
 MPForm::~MPForm()
@@ -67,7 +67,7 @@ void MPForm::finish()
     str += m_boundary;
     str += "--";
 
-    m_buffer.append(str.utf8());
+    m_buffer.append(str.toUtf8());
 }
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
@@ -81,25 +81,25 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     if (!name.isEmpty())
     {
         str += "Content-Disposition: form-data; name=\"";
-        str += name.ascii();
+        str += name.toAscii();
         str += "\"\r\n";
     }
 
     if (!contentType.isEmpty())
     {
-        str += "Content-Type: "+ QByteArray(contentType.ascii());
+        str += "Content-Type: "+ QByteArray(contentType.toAscii());
         str += "\r\n";
         str += "Mime-version: 1.0 ";
         str += "\r\n";
     }
 
     str += "Content-Length: " ;
-    str += content_length.ascii();
+    str += content_length.toAscii();
     str += "\r\n\r\n";
-    str += value.utf8();
+    str += value.toUtf8();
     str += "\r\n";
 
-    m_buffer.append(str.utf8());
+    m_buffer.append(str.toUtf8());
     return true;
 }
 
@@ -127,20 +127,20 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
-    str += name.ascii();
+    str += name.toAscii();
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KUrl(path).fileName());
     str += "\"\r\n";
     str += "Content-Length: " ;
-    str +=  file_size.ascii();
+    str +=  file_size.toAscii();
     str += "\r\n";
     str += "Content-Type: ";
-    str +=  mime.ascii();
+    str +=  mime.toAscii();
     str += "\r\n\r\n";
 
     imageFile.close();
-    m_buffer.append(str.utf8());
+    m_buffer.append(str.toUtf8());
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);

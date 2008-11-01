@@ -43,6 +43,7 @@
 #include <QLinkedList>
 #include <QMessageBox>
 #include <QStringList>
+#include <QUrl>
 
 // KDE includes.
 
@@ -108,16 +109,16 @@ QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
     QStringList compressed ;//= new List<string>(headers.Length);
 
     for ( QStringList::Iterator it = headers.begin(); it != headers.end(); ++it ) {
-        QStringList str=QStringList::split("=",(*it));
-        compressed.append(str[0].trimmed()+str[1].trimmed());
+	QString str = (*it);
+        QStringList strList = str.split("=");
+        compressed.append(strList[0].trimmed()+strList[1].trimmed());
     }
 
     compressed.sort();
     QString merged=compressed.join("");
     QString final = secret + merged;
-    const char *test=final.ascii();
-    KMD5 context (test);
-    //kDebug( 51000 )<< "Test Hex Digest output: " << context.hexDigest().data() << endl;
+    const char *text = final.toAscii();
+    KMD5 context (text);
     return context.hexDigest().data();
 }
 
@@ -132,16 +133,6 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     QString url = "https://www.google.com/accounts/ClientLogin";
 
     PicasawebLogin *loginDialog = new PicasawebLogin(kapp->activeWindow(), QString("LoginWindow"), username, password);
-    /*if (username!=NULL && username.length() > 0){
-        //  kDebug( 51000 )<<"Showing stored username"<< username << endl;
-        loginDialog->setUsername(username);
-        if (password != NULL && password.length() > 0){
-        //    kDebug( 51000 )<<"Showing stored password"<< password << endl;
-            loginDialog->setPassword(password);
-            //  kDebug( 51000 )<<"Showing stored password"<< password << endl;
-        }
-    }
-    */
 
     QString username_edit, password_edit;
 
@@ -168,7 +159,6 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     if (!(username_edit.endsWith("@gmail.com")))
         username_edit += "@gmail.com";
 
-    QByteArray buffer;
     QStringList qsl;
     qsl.append("Email="+username_edit);
     qsl.append("Passwd="+password_edit);
@@ -176,8 +166,10 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     qsl.append("service=lh2");
     qsl.append("source=kipi-picasaweb-client");
     QString dataParameters = qsl.join("&");
-    buffer.append(dataParameters.utf8());
+    QByteArray buffer;
+    buffer.append(dataParameters.toUtf8());
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_state = FE_GETTOKEN;
     authProgressDlg->setLabelText(i18n("Getting the token"));
@@ -195,7 +187,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
 void PicasawebTalker::authenticate(const QString& token, const QString& username, const QString& password)
 {
-    if (!token.isNull() || token.length() < 1)
+    if (!token.isNull() || token.length() > 0)
     {
         checkToken(token);
         m_username = username;
@@ -208,7 +200,7 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
     }
 }
 
-void PicasawebTalker::checkToken(const QString& /*token*/)
+void PicasawebTalker::checkToken(const QString& token)
 {
     if (m_job)
     {
@@ -216,14 +208,12 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
         m_job = 0;
     }
 
-    kdDebug () <<" checkToken running " <<endl;
-    QString    url         = "https://www.google.com/accounts/ClientLogin";
-    QString    auth_string = "GoogleLogin auth=" + m_token;
-    QByteArray tmp;
-    KIO::TransferJob* job  = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string);
-
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
+    QString auth_string = "GoogleLogin auth=" + m_token;
+    KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
+    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -253,10 +243,10 @@ void PicasawebTalker::listAllAlbums() {
         m_job->kill();
         m_job = 0;
     }
-    kdDebug () <<" ListAllAlbums running " <<endl;
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
@@ -292,6 +282,7 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
     QString postUrl=url+queryStr;
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl, tmp, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -322,10 +313,11 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
                                 "</entry>").arg(tag);
     QString postUrl = QString("%1").arg(photoURI);
     QByteArray buffer;
-    buffer.append(addTagXML.utf8());
+    buffer.append(addTagXML.toUtf8());
 
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(postUrl, buffer, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
     job->addMetaData("content-length", QString("Content-Length: %1").arg(addTagXML.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
@@ -380,12 +372,13 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
                                     .arg(media_keywords);
 
     QByteArray buffer;
-    buffer.append(newAlbumXML.utf8());
+    buffer.append(newAlbumXML.toUtf8());
 
     MPForm form;
     QString postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + m_username ;
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(postUrl, buffer, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
     job->addMetaData("content-length", QString("Content-Length: %1").arg(newAlbumXML.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
@@ -419,7 +412,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     if (album_id.length() == 0)
         album_id = "test";
 
-    QString     postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + KUrl::encode_string(m_username) + "/albumid/" + album_id;
+    QString     postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + QUrl::toPercentEncoding(m_username) + "/albumid/" + album_id;
     QString     path = postUrl;
     QStringList headers;
     MPForm      form;
@@ -451,7 +444,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.toUpper().contains(fileInfo.extension(false).toUpper()))
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
@@ -461,7 +454,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.smoothScale(maxDim, maxDim, Qt::KeepAspectRatio);
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         image.save(path, "JPEG", imageQuality);
 
@@ -489,6 +482,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     form.finish();
 
     KIO::TransferJob* job = KIO::http_post(postUrl, form.formData(), KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
@@ -589,7 +583,6 @@ void PicasawebTalker::slotError(const QString & error)
     };
 
     KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError + error));
-    //kDebug( 51000 )<<"Not handling the error now will see it later"<<endl;
 }
 
 void PicasawebTalker::slotResult(KJob *job)
@@ -605,7 +598,7 @@ void PicasawebTalker::slotResult(KJob *job)
         }
         else
         {
-            static_cast<KIO::Job*>(job)->showErrorDialog(m_parent);
+            static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
         }
 
         return;
@@ -654,11 +647,11 @@ void PicasawebTalker::parseResponseCheckToken(const QByteArray &data)
     QString transReturn(data);
     // If checktoken failed.
     // getToken ...
-    kdDebug () << "Parsig Response Check Token " << transReturn <<endl;
-    if(transReturn.startsWith("Error="))
+    // TODO(vardhman): Fix this with proper error handling.
+    //if(transReturn.contains("Error"))
         success = false;
-    else
-        success = true;
+    //else
+    //    success = true;
 
     if(!success)
         getToken(m_username, m_password);
@@ -676,10 +669,11 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
 
     if (str.contains("Auth="))
     {
-        QStringList strList = QStringList::split("Auth=", str);
+        QStringList strList = str.split("Auth=");
         if ( strList.count() > 0 )
         {
-            m_token = strList[1];
+            m_token = strList[1].trimmed();
+            kDebug () << " m_token as obtained in token Response " << m_token << endl;
             success = true;
         }
     }
@@ -740,7 +734,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
 			// The node data is a URL of which album id is the string following the last /
 			// like <id>http://www.picasaweb.google.com/.../AlbumID<id>
 			QString albumIdUrl = detailsNode.toElement().text();
-                        int index = albumIdUrl.findRev("/");
+                        int index = albumIdUrl.lastIndexOf("/");
                         int length = albumIdUrl.length();
                         QString album_id = albumIdUrl.right(length - index - 1);
                         fps.id = album_id;
@@ -933,16 +927,16 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
 
         if ( node.isElement() && node.nodeName() == "err" )
         {
-            kDebug( 51000 )<<"Checking Error in response"<<endl;
-            QString code=node.toElement().attribute("code");
-            kDebug( 51000 )<<"Error code="<<code<<endl;
-            kDebug( 51000 )<<"Msg="<<node.toElement().attribute("msg")<<endl;
+            kDebug(51001) << "Checking Error in response" << endl;
+            QString code = node.toElement().attribute("code");
+            kDebug(51001) << "Error code=" << code << endl;
+            kDebug(51001) << "Msg=" << node.toElement().attribute("msg") << endl;
             emit signalError(code);
         }
         node = node.nextSibling();
     }
 
-    kDebug( 51000 )<<"GetToken finished"<<endl;
+    kDebug(51001) << "GetToken finished" << endl;
     if (!success)
     {
         emit signalAddPhotoFailed(i18n("Failed to query photo information"));
