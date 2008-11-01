@@ -55,7 +55,7 @@ public:
 	ImageElement operator()(const KUrl& imageUrl);
 
 private:
-	Generator* that;
+	Generator* mGenerator;
 	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
 	QString mDestDir;
@@ -63,6 +63,7 @@ private:
 	UniqueNameHelper mUniqueNameHelper;
 
 	bool writeDataToFile(const QByteArray& data, const QString& destPath);
+	void emitWarning(const QString& msg);
 };
 
 
@@ -79,18 +80,19 @@ public:
 	bool warnings() const;
 
 Q_SIGNALS:
+	/**
+	 * This signal is emitted from ImageGenerationFunctor. It uses a
+	 * QueuedConnection to switch between the ImageGenerationFunctor thread and
+	 * the gui thread.
+	 */
 	void logWarningRequested(const QString& text);
 
 private:
 	struct Private;
 	friend struct Private;
-	friend class ImageGenerationFunctor;
 	Private* d;
 
-	/**
-	 * Emit warning message, used to notify gui from worker thread
-	 */
-	void emitWarning(const QString&);
+	friend class ImageGenerationFunctor;
 
 private Q_SLOTS:
 	void logWarning(const QString& text);

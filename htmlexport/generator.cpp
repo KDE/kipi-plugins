@@ -180,7 +180,7 @@ QImage generateSquareThumbnail(const QImage& fullImage, int size) {
 
 //// ImageGenerationFunctor ////
 ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir)
-: that(generator)
+: mGenerator(generator)
 , mInterface(iface)
 , mInfo(info)
 , mDestDir(destDir)
@@ -197,13 +197,13 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QString path=imageUrl.path();
 	QFile imageFile(path);
 	if (!imageFile.open(QIODevice::ReadOnly)) {
-		that->emitWarning(i18n("Could not read image '%1'", path));
+		emitWarning(i18n("Could not read image '%1'", path));
 		return element;
 	}
 
 	QString imageFormat = QImageReader::imageFormat(&imageFile);
 	if (imageFormat.isEmpty()) {
-		that->emitWarning(i18n("Format of image '%1' is unknown", path));
+		emitWarning(i18n("Format of image '%1' is unknown", path));
 		return element;
 	}
 	imageFile.close();
@@ -212,7 +212,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QByteArray imageData = imageFile.readAll();
 	QImage originalImage;
 	if (!originalImage.loadFromData(imageData) ) {
-		that->emitWarning(i18n("Error loading image '%1'", path));
+		emitWarning(i18n("Error loading image '%1'", path));
 		return element;
 	}
 
@@ -248,7 +248,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 		fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
 		QString destPath = mDestDir + "/" + fullFileName;
 		if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
-			that->emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
+			emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
 			return element;
 		}
 	}
@@ -269,7 +269,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
 	QString destPath = mDestDir + "/" + thumbnailFileName;
 	if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
-		that->emitWarning(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
+		mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
 		return element;
 	}
 	element.mThumbnailFileName = thumbnailFileName;
@@ -282,14 +282,19 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QString& destPath) {
 	QFile destFile(destPath);
 	if (!destFile.open(QIODevice::WriteOnly)) {
-		that->emitWarning(i18n("Could not open file '%1' for writing", destPath));
+		emitWarning(i18n("Could not open file '%1' for writing", destPath));
 		return false;
 	}
 	if (destFile.write(data) != data.size()) {
-		that->emitWarning(i18n("Could not save image to file '%1'", destPath));
+		emitWarning(i18n("Could not save image to file '%1'", destPath));
 		return false;
 	}
 	return true;
+}
+
+
+void ImageGenerationFunctor::emitWarning(const QString& message) {
+	emit mGenerator->logWarningRequested(message);
 }
 
 
@@ -562,11 +567,6 @@ bool Generator::run() {
 
 bool Generator::warnings() const {
 	return d->mWarnings;
-}
-
-
-void Generator::emitWarning(const QString& text) {
-	emit logWarningRequested(text);
 }
 
 
