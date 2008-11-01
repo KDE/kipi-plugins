@@ -63,3 +63,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 006 ==> 158792 : GPSsync            : Plugin do not working with Canon RAW CR2.
 007 ==> 165078 : GPSSync            : GPS correlator does not show thumbnails.
 008 ==> 165278 : GPSSync            : Geotagging dialog doesn't display all thumbnails.
+009 ==> 172910 : GalleryExport      : Gallery crash (letting crash Didikam) with valid data and url
+010 ==> 161855 : GalleryExport      : Remote Gallery Sync loses password
+011 ==> 154752 : GalleryExport      : Export to Gallery2 seems to fail, but in fact works
