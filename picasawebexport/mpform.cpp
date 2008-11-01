@@ -33,7 +33,6 @@
 #include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
-#include <QTextStream>
 
 // KDE includes.
 
@@ -63,19 +62,17 @@ void MPForm::reset()
 
 void MPForm::finish()
 {
-    QByteArray str;
+    QString str;
     str += "--";
     str += m_boundary;
     str += "--";
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << str;
+    m_buffer.append(str.utf8());
 }
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
-    QByteArray str;
+    QString str;
     QString  content_length = QString("%1").arg(value.length());
     str += "--";
     str += m_boundary;
@@ -102,14 +99,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += value.utf8();
     str += "\r\n";
 
-    //uint oldSize = m_buffer.size();
-    //m_buffer.resize(oldSize + str.size());
-    //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
-
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << QString::fromUtf8(str);
-
+    m_buffer.append(str.utf8());
     return true;
 }
 
@@ -130,7 +120,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
 
     QByteArray imageData = imageFile.readAll();
 
-    QByteArray str;
+    QString str;
     QString file_size = QString("%1").arg(imageFile.size());
 
     str += "--";
@@ -150,9 +140,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\r\n\r\n";
 
     imageFile.close();
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << str;
+    m_buffer.append(str.utf8());
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);

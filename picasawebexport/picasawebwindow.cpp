@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <Q3ProgressDialog>
+#include <QProgressDialog>
 #include <QDateTime>
 #include <QLinkedList>
 #include <QStringList>
@@ -82,7 +82,6 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 //  m_wallet                 = 0;
     m_urls                   = 0;
     m_widget                 = new PicasawebWidget(this);
-    m_tagView                = m_widget->m_tagView;
     m_photoView              = m_widget->m_photoView;
     m_newAlbumButton         = m_widget->m_newAlbumButton;
     m_addPhotoButton         = m_widget->m_selectPhotosButton;
@@ -149,7 +148,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_progressDlg = new Q3ProgressDialog(this, 0, true);
+    m_progressDlg = new QProgressDialog(this);
+    m_progressDlg->setModal(true);
     m_progressDlg->setAutoReset(true);
     m_progressDlg->setAutoClose(true);
 
@@ -195,7 +195,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_authProgressDlg = new Q3ProgressDialog( this, 0, true );
+    m_authProgressDlg = new QProgressDialog(this);
+    m_authProgressDlg->setModal(true);
     m_authProgressDlg->setAutoReset( true );
     m_authProgressDlg->setAutoClose( true );
 
@@ -542,7 +543,8 @@ void PicasawebWindow::slotAddPhotoNext()
 void PicasawebWindow::slotAddPhotoSucceeded()
 {
     m_uploadCount++;
-    m_progressDlg->setProgress( m_uploadCount, m_uploadTotal );
+    m_progressDlg->setMaximum(m_uploadTotal);
+    m_progressDlg->setValue( m_uploadCount);
     slotAddPhotoNext();
 }
 
@@ -561,7 +563,8 @@ void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
     else
     {
         m_uploadTotal--;
-        m_progressDlg->setProgress(m_uploadCount, m_uploadTotal);
+	m_progressDlg->setMaximum( m_uploadTotal);
+        m_progressDlg->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
 }

@@ -43,7 +43,6 @@
 #include <QLinkedList>
 #include <QMessageBox>
 #include <QStringList>
-#include <QTextStream>
 
 // KDE includes.
 
@@ -95,7 +94,7 @@ PicasawebTalker::PicasawebTalker( QWidget* parent )
         connect(this, SIGNAL(signalError(const QString&)),
                 this, SLOT(slotError(const QString&)));
 
-        authProgressDlg=new Q3ProgressDialog();
+        authProgressDlg=new QProgressDialog();
     }
 
 PicasawebTalker::~PicasawebTalker()
@@ -177,11 +176,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     qsl.append("service=lh2");
     qsl.append("source=kipi-picasaweb-client");
     QString dataParameters = qsl.join("&");
-
-    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << dataParameters;
-
+    buffer.append(dataParameters.utf8());
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_state = FE_GETTOKEN;
@@ -221,6 +216,7 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
         m_job = 0;
     }
 
+    kdDebug () <<" checkToken running " <<endl;
     QString    url         = "https://www.google.com/accounts/ClientLogin";
     QString    auth_string = "GoogleLogin auth=" + m_token;
     QByteArray tmp;
@@ -237,7 +233,8 @@ void PicasawebTalker::checkToken(const QString& /*token*/)
 
     m_state = FE_CHECKTOKEN;
     authProgressDlg->setLabelText(i18n("Checking if previous token is still valid"));
-    authProgressDlg->setProgress(1,4);
+    authProgressDlg->setMaximum(4);
+    authProgressDlg->setValue(1);
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy( true );
@@ -256,7 +253,7 @@ void PicasawebTalker::listAllAlbums() {
         m_job->kill();
         m_job = 0;
     }
-
+    kdDebug () <<" ListAllAlbums running " <<endl;
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
@@ -325,9 +322,7 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
                                 "</entry>").arg(tag);
     QString postUrl = QString("%1").arg(photoURI);
     QByteArray buffer;
-    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << addTagXML;
+    buffer.append(addTagXML.utf8());
 
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(postUrl, buffer, KIO::HideProgressInfo);
@@ -385,9 +380,7 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
                                     .arg(media_keywords);
 
     QByteArray buffer;
-    QTextStream ts(buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setEncoding(QTextStream::UnicodeUTF8);
-    ts << newAlbumXML;
+    buffer.append(newAlbumXML.utf8());
 
     MPForm form;
     QString postUrl = "http://www.picasaweb.google.com/data/feed/api/user/" + m_username ;
@@ -595,7 +588,7 @@ void PicasawebTalker::slotError(const QString & error)
             transError=i18n("Unknown error");
     };
 
-    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError));
+    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError + error));
     //kDebug( 51000 )<<"Not handling the error now will see it later"<<endl;
 }
 
@@ -617,7 +610,6 @@ void PicasawebTalker::slotResult(KJob *job)
 
         return;
     }
-
     switch(m_state)
     {
         case(FE_LOGIN):
@@ -662,7 +654,7 @@ void PicasawebTalker::parseResponseCheckToken(const QByteArray &data)
     QString transReturn(data);
     // If checktoken failed.
     // getToken ...
-
+    kdDebug () << "Parsig Response Check Token " << transReturn <<endl;
     if(transReturn.startsWith("Error="))
         success = false;
     else

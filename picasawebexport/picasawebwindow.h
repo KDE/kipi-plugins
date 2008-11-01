@@ -26,7 +26,6 @@
 
 // Qt includes.
 
-#include <Q3IntDict>
 #include <QLabel>
 #include <QLinkedList>
 #include <QPair>
@@ -43,8 +42,7 @@
 
 #include "kpaboutdata.h"
 
-class Q3ListView;
-class Q3ProgressDialog;
+class QProgressDialog;
 class QPushButton;
 class QRadioButton;
 class QSpinBox;
@@ -70,7 +68,7 @@ namespace KIPIPicasawebExportPlugin
 class PicasawebWidget;
 class PicasawebTalker;
 class GAlbum;
-class GPhoto;
+// class GPhoto;
 class FPhotoInfo;
 class FPhotoSet;
 class GAlbumViewItem;
@@ -90,8 +88,6 @@ private:
 
     unsigned int                             m_uploadCount;
     unsigned int                             m_uploadTotal;
-
-    Q3ListView                               *m_tagView;
 
     QSpinBox                                *m_dimensionSpinBox;
     QSpinBox                                *m_imageQualitySpinBox;
@@ -114,8 +110,8 @@ private:
 
     QRadioButton                            *m_exportApplicationTags;
 
-    Q3ProgressDialog                         *m_progressDlg;
-    Q3ProgressDialog                         *m_authProgressDlg;
+    QProgressDialog                         *m_progressDlg;
+    QProgressDialog                         *m_authProgressDlg;
 
     KComboBox                               *m_albumsListComboBox;
 
@@ -128,8 +124,6 @@ private:
 
     PicasawebWidget                         *m_widget;
     PicasawebTalker                         *m_talker;
-
-    Q3IntDict<GAlbumViewItem>                m_albumDict;
 
     QLinkedList< QPair<QString,FPhotoInfo> > m_uploadQueue;
 

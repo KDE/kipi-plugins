@@ -26,31 +26,10 @@
 // Qt includes.
 
 #include <QString>
-#include <Q3StrList>
+#include <QStringList>
 
 namespace KIPIPicasawebExportPlugin
 {
-
-class GPhoto
-{
-
-public:
-
-    GPhoto()
-    {
-        //ref_num = -1;
-    }
-
-    bool     is_public;
-    bool     is_private;
-    bool     is_family;
-
-    int      ref_num;
-
-    Q3StrList tags;
-    QString  title;
-    QString  description;
-};
 
 // ------------------------------------------------------
 

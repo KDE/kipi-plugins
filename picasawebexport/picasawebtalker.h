@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <Q3ProgressDialog>
+#include <QProgressDialog>
 #include <QLinkedList>
 #include <QMap>
 #include <QObject>
@@ -47,7 +47,7 @@ namespace KIPIPicasawebExportPlugin
 {
 
 class GAlbum;
-class GPhoto;
+// class GPhoto;
 class FPhotoInfo;
 class PicasaWebAlbum;
 
@@ -98,7 +98,7 @@ public:
 
 public:
 
-    Q3ProgressDialog *authProgressDlg;
+    QProgressDialog *authProgressDlg;
 
 signals:
 
@@ -106,7 +106,7 @@ signals:
 //  void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
     void signalAlbums( const QLinkedList<GAlbum>& albumList );
-    void signalPhotos( const QLinkedList<GPhoto>& photoList );
+    // void signalPhotos( const QLinkedList<GPhoto>& photoList );
     void signalAddPhotoSucceeded( );
     void signalGetAlbumsListSucceeded();
     void signalGetAlbumsListFailed( const QString& msg );
