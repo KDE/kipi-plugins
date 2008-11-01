@@ -76,15 +76,13 @@ void GalleryMPForm::reset()
 
 void GalleryMPForm::finish()
 {
-    QByteArray str;
+    QString str;
     str += "--";
     str += m_boundary;
     str += "--";
     str += "\r\n";
 
-    QTextStream ts(&m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << str << '\0' ;
+    m_buffer.append(str.toUtf8());
 }
 
 
@@ -99,7 +97,7 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
 
 bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 {
-    QByteArray str;
+    QString str;
 
     str += "--";
     str += m_boundary;
@@ -111,10 +109,7 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     str += value.toAscii();
     str += "\r\n";
 
-    QTextStream ts(&m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << str;
-
+    m_buffer.append(str.toUtf8());
     return true;
 }
 
@@ -144,16 +139,18 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     QByteArray imageData = imageFile.readAll();
     imageFile.close();
 
-    QByteArray str;
+    QString str;
 
     str += "--";
     str += m_boundary;
     str += "\r\n";
     str += "Content-Disposition: form-data; name=\"";
+
     if (GalleryTalker::isGallery2())
         str += "g2_userfile";
     else
         str += "userfile";
+
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KUrl(path).fileName());
@@ -163,21 +160,13 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    QTextStream ts(&m_buffer, QIODevice::Append | QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << str;
+    m_buffer.append(str.toUtf8());
 
     int oldSize = m_buffer.size();
     m_buffer.resize(oldSize + imageData.size() + 2);
     memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
     m_buffer[m_buffer.size()-2] = '\r';
     m_buffer[m_buffer.size()-1] = '\n';
-    
-    QFile file("data.txt");
-    if (file.open(QFile::WriteOnly | QFile::Truncate)) {
-     QTextStream out(&file);
-     out << m_buffer ;
-    }
 
     return true;
 }

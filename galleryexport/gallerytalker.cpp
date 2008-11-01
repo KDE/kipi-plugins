@@ -211,14 +211,6 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", albumName);
 
-    if (!caption.isEmpty()) {
-        if (captionIsTitle)
-            form.addPair("caption", caption);
-        if (captionIsDescription)
-            form.addPair("extrafield.Description", caption);
-    }
-
-
     QImage image;
     image.load(photoPath);
 
@@ -237,6 +229,14 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     // used for resizing... so I've added it explicitly for now.
     if (!form.addFile(path, caption))
         return false;
+
+
+    if (!caption.isEmpty()) {
+        if (captionIsTitle)
+            form.addPair("caption", caption);
+        if (captionIsDescription)
+            form.addPair("extrafield.Description", caption);
+    }
 
     form.finish();
 

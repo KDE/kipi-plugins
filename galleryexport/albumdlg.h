@@ -23,8 +23,6 @@
 
 #include "ui_galleryalbumwidget.h"
 
-// Qt includes.
-
 #include <KDialog>
 #include <QWidget>
 
