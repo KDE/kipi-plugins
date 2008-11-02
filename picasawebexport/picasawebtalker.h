@@ -114,6 +114,7 @@ signals:
     void signalAddPhotoFailed( const QString& msg );
     void signalAuthenticate() ;
     void signalTokenObtained(const QString& token);
+    void signalCheckTokenSuccessful();
 
 private:
 
@@ -129,6 +130,7 @@ private:
 
 private slots:
 
+    void slotCheckTokenSuccessful();
     void slotError( const QString& msg );
 //  void slotAuthenticate() ;
     void data(KIO::Job *job, const QByteArray &data);

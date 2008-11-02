@@ -189,10 +189,12 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
 {
     if (!token.isNull() || token.length() > 0)
     {
-        checkToken(token);
+	kDebug() << " Checktoken being called" << token << endl;
         m_username = username;
         m_password = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
+        m_token = token;
+        checkToken(token);
     }
     else
     {
@@ -209,7 +211,8 @@ void PicasawebTalker::checkToken(const QString& token)
     }
 
     QString    url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
-    QString auth_string = "GoogleLogin auth=" + m_token;
+    kDebug() << " token value is " << token << endl;
+    QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -279,7 +282,7 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
     QString md5=getApiSig(m_secret,headers);
     headers.append("api_sig="+ md5);
     QString queryStr=headers.join("&");
-    QString postUrl=url+queryStr;
+    QString postUrl = url+queryStr;
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(postUrl, tmp, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -536,6 +539,15 @@ void PicasawebTalker::data(KIO::Job*, const QByteArray& data)
     memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
+void PicasawebTalker::slotCheckTokenSuccessful() {
+    if (authProgressDlg && !authProgressDlg->isHidden()) {
+	authProgressDlg->setValue(4);
+        authProgressDlg->hide();
+    }
+    emit signalTokenObtained(m_token); 
+}
+
+
 void PicasawebTalker::slotError(const QString & error)
 {
     QString transError;
@@ -603,6 +615,12 @@ void PicasawebTalker::slotResult(KJob *job)
 
         return;
     }
+    if (static_cast<KIO::TransferJob*>(job)->isErrorPage()) {
+	if (m_state == FE_CHECKTOKEN) {
+	    kDebug() << " Error encountered in checking token, require user credentials" << endl;
+	    return getToken(m_username, "");
+	}
+    }
     switch(m_state)
     {
         case(FE_LOGIN):
@@ -641,21 +659,16 @@ void PicasawebTalker::slotResult(KJob *job)
 
 void PicasawebTalker::parseResponseCheckToken(const QByteArray &data)
 {
-    bool success = false;
+    bool success = true;
     QString errorString;
     QString username;
     QString transReturn(data);
-    // If checktoken failed.
-    // getToken ...
     // TODO(vardhman): Fix this with proper error handling.
-    //if(transReturn.contains("Error"))
-        success = false;
-    //else
-    //    success = true;
-
     if(!success)
         getToken(m_username, m_password);
-    //emit signalError(errorString);
+     // kDebug() << "Return code is " << transReturn << endl;
+     emit slotCheckTokenSuccessful();
+    // emit signalError(errorString);
 }
 
 void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
