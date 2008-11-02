@@ -67,33 +67,36 @@ void MPForm::finish()
     str += m_boundary;
     str += "--";
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << str;
+    m_buffer.append(str);
 }
 
-bool MPForm::addPair(const QString& name, const QString& value)
+bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
     QByteArray str;
+    QString content_length = QString("%1").arg(value.length());
 
     str += "--";
     str += m_boundary;
     str += "\r\n";
-    str += "Content-Disposition: form-data; name=\"";
-    str += name.toAscii();
-    str += "\"";
+
+    if (!name.isEmpty()) { 
+      	str += "Content-Disposition: form-data; name=\"";
+    	str += name.toAscii();
+    	str += "\"\r\n";
+    }
+    if (!contentType.isEmpty()) {
+        str += "Content-Type: " + QByteArray(contentType.toAscii());
+        str += "\r\n";
+    	str += "Mime-version: 1.0 ";
+    	str += "\r\n";
+    }
+    str += "Content-Length: ";
+    str += content_length.toAscii();
     str += "\r\n\r\n";
     str += value.toUtf8();
-    str += "\r\n";
 
-    //uint oldSize = m_buffer.size();
-    //m_buffer.resize(oldSize + str.size());
-    //memcpy(m_buffer.data() + oldSize, str.data(), str.size());
-
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << QString::fromUtf8(str);
-
+    m_buffer.append(str); 
+    m_buffer.append("\r\n");
     return true;
 }
 
@@ -113,9 +116,10 @@ bool MPForm::addFile(const QString& name,const QString& path)
         return false;
 
     QByteArray imageData = imageFile.readAll();
-    imageFile.close();
 
     QByteArray str;
+    QString file_size = QString("%1").arg(imageFile.size());
+    imageFile.close();
 
     str += "--";
     str += m_boundary;
@@ -125,21 +129,18 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\"; ";
     str += "filename=\"";
     str += QFile::encodeName(KUrl(path).fileName());
-    str += "\"";
+    str += "\"\r\n";
+    str += "Content-Length: ";
+    str += file_size.toAscii();
     str += "\r\n";
     str += "Content-Type: ";
     str +=  mime.toAscii();
     str += "\r\n\r\n";
 
-    QTextStream ts(m_buffer, QIODevice::Append|QIODevice::WriteOnly);
-    ts.setCodec(QTextCodec::codecForName("UTF-8"));
-    ts << str;
-
+    m_buffer.append(str);
     int oldSize = m_buffer.size();
-    m_buffer.resize(oldSize + imageData.size() + 2);
-    memcpy(m_buffer.data() + oldSize, imageData.data(), imageData.size());
-    m_buffer[m_buffer.size()-2] = '\r';
-    m_buffer[m_buffer.size()-1] = '\n';
+    m_buffer.append(imageData);
+    m_buffer.append("\r\n");
 
     return true;
 }

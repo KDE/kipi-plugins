@@ -116,6 +116,25 @@ QString FlickrTalker::getApiSig(const QString& secret, const KUrl& url)
     return context.hexDigest().data();
 }
 
+// MD5 signature of the request.
+/*
+QString FlickrTalker::getApiSig(const QString& secret, const QStringList &headers)
+{
+    QMap<QString, QString> queries = url.queryItems();
+    QString compressed(secret);
+
+    // NOTE: iterator QMap iterator will sort alphabetically items based on key values.
+    for (QMap<QString, QString>::iterator it = queries.begin() ; it != queries.end(); ++it)
+    {
+        compressed.append(it.key());
+        compressed.append(it.value());
+    }
+
+    KMD5 context(compressed.toUtf8());
+    return context.hexDigest().data();
+}
+*/
+
 /**get the API sig and send it to the server server should return a frob.
 */
 void FlickrTalker::getFrob()
@@ -344,50 +363,52 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    KUrl    url("http://www.flickr.com/services/upload/");
+    KUrl    url("http://api.flickr.com/services/upload/");
+
+    // We dont' want to modify url as such, we just used the KURL object for storing the query items.
+    KUrl  url2("");
     QString path = photoPath;
     MPForm  form;
 
-    form.addPair("auth_token", m_token);
-    url.addQueryItem("auth_token", m_token);
+    form.addPair("auth_token", m_token, "text/plain");
+    url2.addQueryItem("auth_token", m_token);
 
-    form.addPair("api_key", m_apikey);
-    url.addQueryItem("api_key", m_apikey);
+    form.addPair("api_key", m_apikey, "text/plain");
+    url2.addQueryItem("api_key", m_apikey);
 
     QString ispublic = (info.is_public == 1) ? "1" : "0";
-    form.addPair("is_public", ispublic);
-    url.addQueryItem("is_public", ispublic);
+    form.addPair("is_public", ispublic, "text/plain");
+    url2.addQueryItem("is_public", ispublic);
 
     QString isfamily = (info.is_family == 1) ? "1" : "0";
-    form.addPair("is_family", isfamily);
-    url.addQueryItem("is_family", isfamily);
+    form.addPair("is_family", isfamily, "text/plain");
+    url2.addQueryItem("is_family", isfamily);
 
     QString isfriend = (info.is_friend == 1) ? "1" : "0";
-    form.addPair("is_friend", isfriend);
-    url.addQueryItem("is_friend", isfriend);
+    form.addPair("is_friend", isfriend, "text/plain");
+    url2.addQueryItem("is_friend", isfriend);
 
     QString tags = info.tags.join(" ");
     if(tags.length() > 0)
     {
-        form.addPair("tags", tags);
-        url.addQueryItem("tags", tags);
+        form.addPair("tags", tags, "text/plain");
+        url2.addQueryItem("tags", tags);
     }
 
     if (!info.title.isEmpty())
     {
-        form.addPair("title", info.title);
-        url.addQueryItem("title", info.title);
+        form.addPair("title", info.title, "text/plain");
+        url2.addQueryItem("title", info.title);
     }
 
     if (!info.description.isEmpty())
     {
-        form.addPair("description", info.description);
-        url.addQueryItem("description", info.description);
+        form.addPair("description", info.description, "text/plain");
+        url2.addQueryItem("description", info.description);
     }
 
-    QString md5 = getApiSig(m_secret, url);
-    form.addPair("api_sig", md5);
-    url.addQueryItem("api_sig", md5);
+    QString md5 = getApiSig(m_secret, url2);
+    form.addPair("api_sig", md5, "text/plain");
     QImage image;
 
     // Check if RAW file.
@@ -401,8 +422,6 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
         image.load(photoPath);
-
-    kDebug( 51000 ) << "Add photo query: " << url << endl;
 
     if (!image.isNull())
     {
@@ -552,7 +571,6 @@ void FlickrTalker::slotError(const QString& error)
     KMessageBox::error(kapp->activeWindow(),
                  i18n("Error Occurred: %1\n We can not proceed further",transError));
 
-//  kDebug( 51000 ) << "Not handling the error now will see it later" << endl;
 }
 
 void FlickrTalker::slotResult(KJob *kjob)
