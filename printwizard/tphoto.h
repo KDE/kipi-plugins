@@ -39,9 +39,11 @@ class KPrinter;
 namespace KIPIPrintWizardPlugin
 {
 
-class TPhoto 
+class TPhoto
 {
-  public:
+
+public:
+
     TPhoto(int thumbnailSize);
     ~TPhoto();
 
@@ -60,15 +62,18 @@ class TPhoto
     int rotation;
     KExiv2Iface::KExiv2 *exiv2Iface();
 
-  private:
-    QPixmap *m_thumbnail;
-    void loadCache();
-    QSize & size();
-    QSize * m_size;
+private:
+
+    void   loadCache();
+    QSize& size();
+
+private:
+
+    QPixmap             *m_thumbnail;
+    QSize               *m_size;
     KExiv2Iface::KExiv2 *m_exiv2Iface;
 };
 
 }  // NameSpace KIPIPrintWizardPlugin
 
 #endif // TPHOTO_H
-

@@ -17,14 +17,14 @@
  ***************************************************************************/
 
 // Qt includes.
- 
+
 #include <qpainter.h>
 #include <qdir.h>
 #include <qmessagebox.h>
-// #include <qdragobject.h>
 #include <qstringlist.h>
 #include <qurl.h>
 // #include <qstrlist.h>
+// #include <qdragobject.h>
 
 // KDE includes.
 
@@ -40,7 +40,6 @@
 
 // LibKDcraw includes.
 
-#include <libkdcraw/dcrawbinary.h>
 #include <libkdcraw/kdcraw.h>
 
 
@@ -52,17 +51,17 @@ namespace KIPIPrintWizardPlugin
 
 TPhoto::TPhoto(int thumbnailSize)
 {
-  m_size = 0;
-  cropRegion = QRect(-1, -1, -1, -1);
-  rotation = 0;
-  copies = 1;
+    m_size = 0;
+    cropRegion = QRect(-1, -1, -1, -1);
+    rotation = 0;
+    copies = 1;
 
-  filename = "";
-  m_exiv2Iface = NULL;
+    filename = "";
+    m_exiv2Iface = NULL;
 
-  m_thumbnail = NULL;
+    m_thumbnail = NULL;
 
-  this->m_thumbnailSize = thumbnailSize;
+    this->m_thumbnailSize = thumbnailSize;
 }
 
 TPhoto::~TPhoto()
@@ -74,71 +73,69 @@ TPhoto::~TPhoto()
 
 void TPhoto::loadCache()
 {
-  // load the thumbnail and size only once.
-  delete m_thumbnail;
+    // load the thumbnail and size only once.
+    delete m_thumbnail;
 
-  QImage photo = loadPhoto();
-  QImage image = photo.scaled(m_thumbnailSize, m_thumbnailSize, Qt::KeepAspectRatio);
+    QImage photo = loadPhoto();
+    QImage image = photo.scaled(m_thumbnailSize, m_thumbnailSize, Qt::KeepAspectRatio);
 
-  m_thumbnail = new QPixmap(image.width(), image.height());
-  QPainter painter(m_thumbnail);
-  painter.drawImage(0, 0, image );
-  painter.end();
+    m_thumbnail = new QPixmap(image.width(), image.height());
+    QPainter painter(m_thumbnail);
+    painter.drawImage(0, 0, image );
+    painter.end();
 
-  if (m_size)
-    delete m_size;
-  m_size = new QSize(photo.width(), photo.height());
+    if (m_size)
+        delete m_size;
+    m_size = new QSize(photo.width(), photo.height());
 }
 
 QPixmap & TPhoto::thumbnail()
 {
-  if (!m_thumbnail)
-    loadCache();
-  return *m_thumbnail;
+    if (!m_thumbnail)
+        loadCache();
+    return *m_thumbnail;
 }
 
 QImage  TPhoto::loadPhoto()
 {
-  QImage photo;
+    QImage photo;
 
-  // Check if RAW file.
-  QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-  QFileInfo fileInfo(filename.path());
-  if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper()))
-    KDcrawIface::KDcraw::loadDcrawPreview(photo, filename.path());
-  else
-    photo.load(filename.path()); // PENDING(blackie) handle URL
+    // Check if RAW file.
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QFileInfo fileInfo(filename.path());
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper()))
+        KDcrawIface::KDcraw::loadDcrawPreview(photo, filename.path());
+    else
+        photo.load(filename.path()); // PENDING(blackie) handle URL
 
-  return photo;
+    return photo;
 }
 
 QSize & TPhoto::size()  // private
 {
-  if (m_size == 0)
-    loadCache();
-  return *m_size;
+    if (m_size == 0)
+        loadCache();
+    return *m_size;
 }
 
 KExiv2Iface::KExiv2 *TPhoto::exiv2Iface()
 {
-  if (!m_exiv2Iface && !filename.url().isEmpty())
-  {
-    m_exiv2Iface = new KExiv2Iface::KExiv2(filename.path());
-  }
+    if (!m_exiv2Iface && !filename.url().isEmpty())
+    {
+        m_exiv2Iface = new KExiv2Iface::KExiv2(filename.path());
+    }
 
-  return m_exiv2Iface;
+    return m_exiv2Iface;
 }
 
 int TPhoto::width()
 {
-  return size().width();
+    return size().width();
 }
 
 int TPhoto::height()
 {
-  return size().height();
+    return size().height();
 }
 
 }  // NameSpace KIPIPrintWizardPlugin
-
-
