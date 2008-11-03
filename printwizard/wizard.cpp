@@ -6,7 +6,7 @@
  * Date        : 2008-01-11
  * Description : a kipi plugin to print images
  *
- * Copyright 2008 by 2007 Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2008 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
