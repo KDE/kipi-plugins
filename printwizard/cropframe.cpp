@@ -43,6 +43,12 @@ CropFrame::CropFrame(QWidget *parent=0)
   m_mouseDown = false;
 }
 
+
+CropFrame::~CropFrame()
+{
+   delete m_pixmap;
+}
+
 // FIXME:  This method is doing way too much.  The cropFrame initialization
 // should be a TPhoto method, and should not require the scaling of
 // pixmaps to get the desired effect, which are too slow.
@@ -202,9 +208,6 @@ QRect CropFrame::_photoToScreenRect(QRect r)
   return result;
 }
 
-CropFrame::~CropFrame()
-{
-}
 void CropFrame::paintEvent (QPaintEvent *)
 {
 
