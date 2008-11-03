@@ -1,0 +1,77 @@
+/* ============================================================
+ *
+ * This file is a part of digiKam project
+ * http://www.digikam.org
+ *
+ * Date        : 2008-11-01
+ * Description : a widget that holds all storage settings
+ *
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#ifndef STORAGESETTINGSBOX_H
+#define STORAGESETTINGSBOX_H
+
+// Qt includes.
+
+#include <QGroupBox>
+
+namespace KIPIRemoveRedEyesPlugin
+{
+
+class StorageSettingsBoxPriv;
+
+class StorageSettingsBox : public QGroupBox
+{
+    Q_OBJECT
+
+public:
+
+
+    enum StorageMode
+    {
+        Subfolder=0,
+        Prefix,
+        Overwrite
+    };
+
+    StorageSettingsBox(QWidget* parent = 0);
+    virtual ~StorageSettingsBox();
+
+    int storageMode() const;
+    void setStorageMode(int mode);
+
+    QString prefix() const;
+    void setPrefix(const QString& prefix);
+
+    QString subfolder() const;
+    void setSubfolder(const QString& subfolder);
+
+signals:
+
+    void settingsChanged();
+
+private slots:
+
+    void buttonClicked(int);
+
+private:
+
+    StorageSettingsBoxPriv* const d;
+};
+
+}
+
+#endif /* STORAGESETTINGSBOX_H */

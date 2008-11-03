@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=RemoveRedEyes
+Name[de]=Rote Augen korrigieren
+Comment=KIPI Remove Red Eyes Plugin
+Comment[de]=Ein KIPI-Modul zum automatischen Korrigieren von roten Augen
+
+Icon=
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=kipiplugin_removeredeyes
+author=Andi Clemens, andi dot clemens at gmx dot net
