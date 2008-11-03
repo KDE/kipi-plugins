@@ -147,7 +147,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
 
 SimpleSettings::~SimpleSettings()
 {
-    delete d->settings;
+//    delete d->settings;
     delete d;
 }
 

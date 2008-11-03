@@ -83,7 +83,7 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
 
 AdvancedSettings::~AdvancedSettings()
 {
-    delete d->settings;
+//    delete d->settings;
     delete d;
 }
 
