@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_acquireimages.pot
+$XGETTEXT twainiface/*.cpp *.cpp -o $podir/kipiplugin_acquireimages.pot
 
