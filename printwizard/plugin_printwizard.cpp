@@ -31,19 +31,17 @@ extern "C"
 #include <unistd.h>
 }
 
+// Qt includes.
+
+#include <QWidget>
+
 // KDE includes.
 
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kconfig.h>
-#include <kdebug.h>
 #include <kgenericfactory.h>
-#include <klibloader.h>
-#include <klocale.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kurl.h>
 
 // LibKIPI includes.
 

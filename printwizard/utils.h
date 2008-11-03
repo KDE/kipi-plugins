@@ -24,8 +24,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+// Qt includes.
+
+#include <QString>
+
 class QWidget;
-class QString;
 class QStringList;
 
 namespace KIPIPrintWizardPlugin

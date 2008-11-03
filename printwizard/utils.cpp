@@ -33,17 +33,13 @@ extern "C"
 
 // Qt includes.
 
-#include <QStringList>
-#include <QWidget>
 #include <QDir>
 #include <QProcess>
 
 // KDE includes.
 
-#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kurl.h>
 
 namespace KIPIPrintWizardPlugin
 {

@@ -32,10 +32,8 @@ extern "C"
 }
 
 // Qt includes.
-
-#include <QMatrix>
+//
 #include <QPainter>
-#include <QImage>
 #include <QMouseEvent>
 
 // Local includes.

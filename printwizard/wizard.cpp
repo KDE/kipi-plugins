@@ -25,30 +25,18 @@
 
 // Qt includes.
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qspinbox.h>
+#include <QFileInfo>
 
 // KDE includes.
 
 #include <kapplication.h>
 #include <kconfigdialogmanager.h>
-#include <kdebug.h>
-#include <kdialog.h>
 #include <khelpmenu.h>
-#include <klistwidget.h>
-#include <klocale.h>
 #include <kmenu.h>
-#include <ktextbrowser.h>
+#include <kpushbutton.h>
 #include <ktoolinvocation.h>
-#include <kurlrequester.h>
 
-// KIPI includes.
+// LibKIPI includes.
 
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>

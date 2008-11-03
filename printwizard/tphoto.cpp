@@ -27,21 +27,18 @@
 
 #include <QPainter>
 #include <QFileInfo>
-#include <QString>
 
-// KDE includes.
+// LibKExiv2 includes.
 
-#include <kglobal.h>
-#include <klocale.h>
-#include <kdebug.h>
-
-// Local includes.
-
-#include "utils.h"
+#include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes.
 
 #include <libkdcraw/kdcraw.h>
+
+// Local includes.
+
+#include "utils.h"
 
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"

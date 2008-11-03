@@ -26,20 +26,16 @@
 
 // Qt includes.
 
-#include <QString>
-//#include <qptrlist.h>
-//#include <qrect.h>
-//#include <qiconview.h>
+#include <QRect>
 
 // KDE includes.
 
 #include <kurl.h>
-#include <libkexiv2/kexiv2.h>
 
-class QImage;
-class QPixmap;
-
-class KPrinter;
+namespace KExiv2Iface
+{
+class KExiv2;
+}
 
 namespace KIPIPrintWizardPlugin
 {
