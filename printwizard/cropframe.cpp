@@ -21,7 +21,9 @@
  *
  * ============================================================ */
 
-// C Ansi includes.
+#include "cropframe.h"
+
+// C ANSI includes.
 
 extern "C"
 {
@@ -30,14 +32,14 @@ extern "C"
 }
 
 // Qt includes.
+
 #include <QMatrix>
-#include <qpainter.h>
-#include <qimage.h>
+#include <QPainter>
+#include <QImage>
 #include <QMouseEvent>
 
 // Local includes.
 
-#include "cropframe.h"
 #include "utils.h"
 
 namespace KIPIPrintWizardPlugin
@@ -66,7 +68,7 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
 
   // has the cropRegion been set yet?
   bool resetCropRegion = (m_photo->cropRegion == QRect(-1, -1, -1, -1));
-  if (resetCropRegion) 
+  if (resetCropRegion)
   {
     // first, let's see if we should rotate
     if (autoRotate) {
@@ -85,13 +87,13 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
     // does the crop region need updating (but the image shouldn't be rotated)?
     resetCropRegion = (m_photo->cropRegion == QRect(-2, -2, -2, -2));
   }
-  
+
   // rotate
   QMatrix matrix;
   matrix.rotate(m_photo->rotation);
   scaledImg = scaledImg.transformed(matrix);
 
-  scaledImg = scaledImg.scaled(this->width(), this->height(), Qt::KeepAspectRatio); 
+  scaledImg = scaledImg.scaled(this->width(), this->height(), Qt::KeepAspectRatio);
   //TODO check for cropping Qt::KeepAspectRatioByExpanding);
 
   m_pixmap = new QPixmap();
@@ -131,7 +133,7 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
   else
     m_cropRegion = _photoToScreenRect(m_photo->cropRegion);
 
-  if (paint)  
+  if (paint)
     repaint(m_cropRegion);
 }
 
@@ -162,7 +164,7 @@ QRect CropFrame::_screenToPhotoRect(QRect r)
   if (m_pixmap->height() > 0)
     yRatio = (double) photoH / (double) m_pixmap->height();
 
-  
+
   int x1 = NINT((r.left() - m_pixmapX) * xRatio);
   int y1 = NINT((r.top()  - m_pixmapY) * yRatio);
 
@@ -184,7 +186,7 @@ QRect CropFrame::_photoToScreenRect(QRect r)
   // flip the photo dimensions if rotated
   int photoW;
   int photoH;
-  
+
   if (m_photo->rotation == 0 || m_photo->rotation == 180)
   {
     photoW = m_photo->width();
@@ -195,7 +197,7 @@ QRect CropFrame::_photoToScreenRect(QRect r)
     photoW = m_photo->height();
     photoH = m_photo->width();
   }
-  
+
   if (m_photo->width() > 0)
     xRatio = (double) m_pixmap->width() / (double) photoW;
 

@@ -21,30 +21,32 @@
  *
  * ============================================================ */
 
-// C Ansi includes
+#include "plugin_printwizard.h"
+#include "plugin_printwizard.moc"
+
+// C ANSI includes.
 
 extern "C"
 {
 #include <unistd.h>
 }
 
-// Include files for Qt
+// KDE includes.
 
-#include <qdir.h>
-
-// Include files for KDE
-
-#include <klocale.h>
 #include <kaction.h>
-#include <kapplication.h>
 #include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
+
+// LibKIPI includes.
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
@@ -52,8 +54,6 @@ extern "C"
 // Local includes
 
 #include "wizard.h"
-#include "plugin_printwizard.h"
-#include "plugin_printwizard.moc"
 
 K_PLUGIN_FACTORY( PrintAssistantFactory, registerPlugin<Plugin_PrintWizard>(); )
 K_EXPORT_PLUGIN( PrintAssistantFactory("kipiplugin_printwizard") )
@@ -77,7 +77,7 @@ void Plugin_PrintWizard::setup( QWidget* widget )
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
        kError(  ) << "Kipi interface is null!" << endl;
        return;

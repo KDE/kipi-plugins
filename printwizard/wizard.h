@@ -23,7 +23,8 @@
 #ifndef WIZARD_H
 #define WIZARD_H
 
-// KDE
+// KDE includes.
+
 #include <kassistantdialog.h>
 
 namespace KIPI {

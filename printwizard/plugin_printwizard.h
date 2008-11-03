@@ -24,11 +24,20 @@
 #ifndef PLUGIN_PRINTWIZARD_H
 #define PLUGIN_PRINTWIZARD_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>
 
 class KAction;
+
+namespace KIPI
+{
+class Interface;
+} // namespace KIPI
 
 class Plugin_PrintWizard : public KIPI::Plugin
 {

@@ -26,12 +26,13 @@
 
 // Qt includes.
 
-#include <qwidget.h>
-#include <qpixmap.h>
+#include <QWidget>
 
 // Local includes.
 
 #include "tphoto.h"
+
+class QPixmap;
 
 namespace KIPIPrintWizardPlugin
 {
@@ -61,7 +62,7 @@ class CropFrame : public QWidget
 
     QRect _screenToPhotoRect(QRect r);
     QRect _photoToScreenRect(QRect r);
-  
+
   protected:
     void paintEvent (QPaintEvent *);
     void mousePressEvent(QMouseEvent *);

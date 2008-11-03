@@ -20,10 +20,11 @@
  *
  * ============================================================ */
 
-// Self
+#include "wizard.h"
 #include "wizard.moc"
 
-// Qt
+// Qt includes.
+
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qdir.h>
@@ -33,29 +34,32 @@
 #include <qpainter.h>
 #include <qspinbox.h>
 
-// KDE
+// KDE includes.
+
+#include <kapplication.h>
 #include <kconfigdialogmanager.h>
 #include <kdebug.h>
 #include <kdialog.h>
+#include <khelpmenu.h>
 #include <klistwidget.h>
 #include <klocale.h>
-#include <ktextbrowser.h>
-#include <kurlrequester.h>
-#include <kapplication.h>
 #include <kmenu.h>
-#include <khelpmenu.h>
+#include <ktextbrowser.h>
 #include <ktoolinvocation.h>
+#include <kurlrequester.h>
 
-// KIPI
+// KIPI includes.
+
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
-// Local
-#include "ui_intropage.h"
-#include "ui_infopage.h"
-#include "ui_photopage.h"
-#include "ui_croppage.h"
+// Local includes.
+
 #include "kpaboutdata.h"
+#include "ui_croppage.h"
+#include "ui_infopage.h"
+#include "ui_intropage.h"
+#include "ui_photopage.h"
 
 namespace KIPIPrintWizardPlugin {
 
@@ -90,7 +94,7 @@ struct Wizard::Private {
   IntroPage *mIntroPage;
   InfoPage  *mInfoPage;
   PhotoPage *mPhotoPage;
-  CropPage  *mCropPage; 
+  CropPage  *mCropPage;
 
   KPushButton  *m_helpButton;
   QButtonGroup *m_outputSettings;
@@ -133,7 +137,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->mPhotoPage = new PhotoPage(this, i18n("Photo information"));
   d->mCropPage  = new CropPage(this, i18n("Crop photos")) ;
 
-  
+
   //TODO fix icons
 #ifdef NOT_YET
   // setting-up icons on buttons
@@ -180,8 +184,8 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   // change caption information
   connect(d->mInfoPage->m_captions, SIGNAL(activated(const QString & )),
           this, SLOT(captionChanged(const QString &)));
-  
-  // Output button group 
+
+  // Output button group
   connect(d->m_outputSettings, SIGNAL(buttonClicked(int)),
           this, SLOT(outputSettingsClicked(int)));
 
@@ -215,7 +219,7 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
   if (current->name() == i18n("Introduction"))
   {
   }
-  else if (current->name() == i18n("Select printing information")) 
+  else if (current->name() == i18n("Select printing information"))
   {
 #ifdef NOT_YET
     if (d->mInfoPage->GrpOutputSettings->id(RdoOutputPrinter))
@@ -237,10 +241,10 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
     kDebug() << "CCCC" << endl;
 #endif
   }
-  else if (current->name() == i18n("Crop photos")) 
+  else if (current->name() == i18n("Crop photos"))
   {
   }
-     
+
 
   /*d->mIntroPage = new IntroPage(this, i18n("Introduction"));
   d->mInfoPage  = new InfoPage(this, i18n("Select printing information"));
@@ -259,7 +263,7 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
 //   }
 //   else if (current == d->mCropPage)
 //   {
-//   } 
+//   }
 }
 
 
@@ -308,7 +312,7 @@ void Wizard::captionChanged(const QString & text)
 }
 
 /**
- * 
+ *
  */
 void Wizard::accept() {
   KDialog();

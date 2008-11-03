@@ -21,7 +21,9 @@
  *
  * ============================================================ */
 
-// C Ansi includes
+#include "utils.h"
+
+// C ANSI includes.
 
 extern "C"
 {
@@ -29,19 +31,19 @@ extern "C"
 #include <stdio.h>
 }
 
-// Include files for Qt
+// Qt includes.
 
-#include <qstringlist.h>
-#include <qwidget.h>
-#include <qdir.h>
-#include <qprocess.h>
+#include <QStringList>
+#include <QWidget>
+#include <QDir>
+#include <QProcess>
 
-// Include files for KDE
+// KDE includes.
 
-#include <kurl.h>
+#include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kio/netaccess.h>
+#include <kurl.h>
 
 namespace KIPIPrintWizardPlugin
 {

@@ -21,32 +21,27 @@
  *
  * ============================================================ */
 
+#include "tphoto.h"
+
 // Qt includes.
 
-#include <qpainter.h>
-#include <qdir.h>
-#include <qmessagebox.h>
-#include <qstringlist.h>
-#include <qurl.h>
-// #include <qstrlist.h>
-// #include <qdragobject.h>
+#include <QPainter>
+#include <QFileInfo>
+#include <QString>
 
 // KDE includes.
 
-// #include <kprinter.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
 
 // Local includes.
 
-#include "tphoto.h"
 #include "utils.h"
 
 // LibKDcraw includes.
 
 #include <libkdcraw/kdcraw.h>
-
 
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
