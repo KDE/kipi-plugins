@@ -304,6 +304,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(galleryexport)
     ADD_SUBDIRECTORY(picasawebexport)
 #    ADD_SUBDIRECTORY(printwizard)
+    #ADD_SUBDIRECTORY(removeredeyes)
 
     IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
         ADD_SUBDIRECTORY(htmlexport)
