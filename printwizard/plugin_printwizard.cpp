@@ -1,19 +1,22 @@
 /* ============================================================
- * Author: Todd Shoemaker <todd@theshoemakers.net>
- * Date  : 2003-09-30
- * Description :
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-30-09
+ * Description : a kipi plugin to print images
  *
  * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
-
+ * Copyright 2007-2008 by 2007 Angelo Naselli <anaselli at linux dot it>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -52,24 +55,20 @@ extern "C"
 #include "plugin_printwizard.h"
 #include "plugin_printwizard.moc"
 
+K_PLUGIN_FACTORY( PrintAssistantFactory, registerPlugin<Plugin_PrintWizard>(); )
+K_EXPORT_PLUGIN( PrintAssistantFactory("kipiplugin_printwizard") )
 
-K_PLUGIN_FACTORY(PrintAssistantFactory, registerPlugin<Plugin_PrintWizard>();)
-K_EXPORT_PLUGIN( PrintAssistantFactory("kipiplugin_printwizard"))
-
-
-             
 Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const QVariantList &args)
-    : KIPI::Plugin(PrintAssistantFactory::componentData(), parent, "PrintWizard")
+                  : KIPI::Plugin(PrintAssistantFactory::componentData(), parent, "PrintWizard")
 {
-    kDebug(  ) << "Plugin_PrintWizard plugin loaded"
-                     << endl;
+    kDebug(51001) << "Plugin_PrintWizard plugin loaded" << endl;
 }
 
 void Plugin_PrintWizard::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_printAction =  new KAction (KIcon("fileprint"), i18n("Print Assistant..."), actionCollection());
+    m_printAction = new KAction (KIcon("document-print"), i18n("Print Assistant..."), actionCollection());
     m_printAction->setObjectName("printwizard");
     connect(m_printAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
@@ -77,18 +76,18 @@ void Plugin_PrintWizard::setup( QWidget* widget )
     addAction( m_printAction );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-        
+
     if ( !m_interface ) 
     {
        kError(  ) << "Kipi interface is null!" << endl;
        return;
     }
-    
+
     KIPI::ImageCollection selection = m_interface->currentSelection();
     m_printAction->setEnabled( selection.isValid() &&
                                !selection.images().isEmpty() );
 
-    connect( m_interface, SIGNAL( selectionChanged( bool ) ), 
+    connect( m_interface, SIGNAL( selectionChanged( bool ) ),
              m_printAction, SLOT( setEnabled( bool ) )  );
 }
 
@@ -99,7 +98,7 @@ Plugin_PrintWizard::~Plugin_PrintWizard()
 void Plugin_PrintWizard::slotActivate()
 {
     KIPI::ImageCollection album = m_interface->currentSelection();
-    
+
     if ( !album.isValid() )
         return;
 
@@ -127,8 +126,7 @@ KIPI::Category Plugin_PrintWizard::category( KAction* action ) const
 {
     if ( action == m_printAction )
        return KIPI::ImagesPlugin;
-    
-    kWarning(  ) << "Unrecognized action for plugin category identification" << endl;
+
+    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::ImagesPlugin; // no warning from compiler, please
 }
-
