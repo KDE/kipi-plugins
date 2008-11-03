@@ -67,19 +67,15 @@ TPhoto::TPhoto(int thumbnailSize)
 
 TPhoto::~TPhoto()
 {
-  if (m_thumbnail)
     delete m_thumbnail;
-  if (m_size)
     delete m_size;
-  if (m_exiv2Iface)
     delete m_exiv2Iface;
 }
 
 void TPhoto::loadCache()
 {
   // load the thumbnail and size only once.
-  if (m_thumbnail)
-    delete m_thumbnail;
+  delete m_thumbnail;
 
   QImage photo = loadPhoto();
   QImage image = photo.scaled(m_thumbnailSize, m_thumbnailSize, Qt::KeepAspectRatio);
