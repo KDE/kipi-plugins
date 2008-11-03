@@ -146,7 +146,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->mPhotoPage->BtnPreviewPageDown->setIcon( SmallIcon( "previous" ) );
   d->mCropPage->BtnCropPrev->setText("");
   d->mCropPage->BtnCropPrev->setIcon( SmallIcon( "previous" ) );
-  d->mCropPage->BtnCropNext->setText("");pp
+  d->mCropPage->BtnCropNext->setText("");
   d->mCropPage->BtnCropNext->setIcon( SmallIcon( "next" ) );
   d->mCropPage->BtnCropRotate->setText("");
   d->mCropPage->BtnCropRotate->setIcon( SmallIcon( "rotate" ) );
