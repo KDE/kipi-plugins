@@ -73,6 +73,7 @@ private slots:
 
     void checkForNoneCorrectedImages();
     void slotClose();
+    void slotHelp();
     void slotFoundRAWImages(bool);
     void slotImageListChanged(bool);
     void slotProgressBarChanged(int);

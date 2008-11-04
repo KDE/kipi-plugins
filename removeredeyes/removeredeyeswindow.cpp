@@ -51,6 +51,7 @@
 #include <knuminput.h>
 #include <kseparator.h>
 #include <ktabwidget.h>
+#include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
 // LibKIPI includes.
@@ -120,7 +121,7 @@ RedEyesWindow::RedEyesWindow(KIPI::Interface *interface, QWidget *parent)
                d(new RedEyesWindowPriv)
 {
     setWindowTitle(i18n("Remove Red-Eyes From Your Photos"));
-    setButtons(User1|User2|Close);
+    setButtons(Help|User1|User2|Close);
     setDefaultButton(Close);
     setModal(false);
 
@@ -140,16 +141,32 @@ RedEyesWindow::RedEyesWindow(KIPI::Interface *interface, QWidget *parent)
     d->progress->setMaximumHeight(fontMetrics().height() + 2);
     d->progress->hide();
 
-    d->about                = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eyes"),
-                                      0,
-                                      KAboutData::License_GPL,
-                                      ki18n("A Kipi plugin to automatically "
-                                            "detect and remove red-eyes"),
-                                      ki18n("(c) 2008, Andi Clemens"));
+    // about & help ----------------------------------------------------------
 
-    d->about->addAuthor(ki18n("Andi Clemens"),
-                        ki18n("Developer"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eyes"),
+                                            0,
+                                            KAboutData::License_GPL,
+                                            ki18n("A plugin to automatically "
+                                                  "detect and remove red-eyes"),
+                                            ki18n("(c) 2008, Andi Clemens"));
+
+    d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                               "andi dot clemens at gmx dot net");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
+
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setDelayedMenu(helpMenu->menu());
+
+    // ----------------------------------------------------------
 
     setButtonGuiItem(User1, KGuiItem(i18n("Correct Photos"), KIcon("dialog-ok-apply")));
     setButtonGuiItem(User2, KGuiItem(i18n("Test Run"), KIcon("dialog-information")));
@@ -311,6 +328,11 @@ void RedEyesWindow::slotClose()
     done(Close);
 }
 
+void RedEyesWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
+}
+
 void RedEyesWindow::startWorkerThread(int type)
 {
     KUrl::List urls = d->imageList->imageUrls();
@@ -411,9 +433,9 @@ void RedEyesWindow::slotFoundRAWImages(bool raw)
     if (raw)
     {
         KMessageBox::information(this,
-                                 i18n("You tried to add <b>RAW images</b> to the red-eye batch removal plugin,"
-                                      "but those filetypes are not " "supported. They were automatically "
-                                      "removed from the list."),
+                                 i18n("<p>You tried to add <b>RAW images</b> to the red-eye batch removal plugin,"
+                                      "but those filetypes are not " "supported.</p>"
+                                      "<p><b>They were automatically removed from the list.</b></p>"),
                                       i18n("RAW images found"));
     }
 }
