@@ -247,33 +247,20 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::connectSignals()
 {
-    connect(d->albumView, SIGNAL(itemSelectionChanged()),
-        this , SLOT(slotAlbumSelected()));
-    connect(d->newAlbumBtn, SIGNAL(clicked()),
-        this, SLOT(slotNewAlbum()));
-    connect(d->addPhotoBtn, SIGNAL(clicked()),
-        this, SLOT(slotAddPhoto()));
-    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
-        this, SLOT(slotEnableSpinBox(int)));
+    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
+    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
+    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhoto()));
+    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotEnableSpinBox(int)));
 
     connect(m_progressDlg, SIGNAL( canceled() ), this, SLOT( slotAddPhotoCancel() ));
 
-    connect(m_talker, SIGNAL(signalError(const QString&)),
-        this, SLOT(slotError(const QString&)));
-    connect(m_talker, SIGNAL(signalBusy(bool)),
-        this, SLOT(slotBusy(bool)));
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)),
-        this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)),
-        this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)),
-        this, SLOT(slotPhotos(const QList<GPhoto>&)));
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
-        this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
-        this, SLOT(slotAddPhotoFailed(const QString&)));
-
-
+    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), this, SLOT(slotLoginFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), this, SLOT(slotAlbums(const QList<GAlbum>&)));
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), this, SLOT(slotPhotos(const QList<GPhoto>&)));
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), this, SLOT(slotAddPhotoFailed(const QString&)));
 }
 
 
@@ -453,10 +440,17 @@ void GalleryWindow::slotAlbumSelected()
     {
         if (m_talker->loggedIn())
         {
-                d->addPhotoBtn->setEnabled(true);
                 QString title = item->text(column);
                 const GAlbum& album = d->albumDict.value(title);
-                m_talker->listPhotos(album.name);
+                if ( album.name != "" )
+                {
+                    d->addPhotoBtn->setEnabled(true);
+                    m_talker->listPhotos(album.name);
+                }
+                else
+                {
+                    d->addPhotoBtn->setEnabled(false);
+                }
         }
     }
 }
