@@ -12,7 +12,7 @@
   <property name="windowTitle" >
    <string>mainDialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_6" >
+  <layout class="QVBoxLayout" name="verticalLayout_7" >
    <item>
     <widget class="QGroupBox" name="m_fileSrcButtonGroup" >
      <property name="title" >
@@ -219,14 +219,53 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
        </layout>
       </item>
       <item row="0" column="2" >
-       <widget class="KIPISlideShowPlugin::ImageViewer" native="1" name="m_ImageViewer" >
-        <property name="sizePolicy" >
-         <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_6" >
+        <item>
+         <spacer name="verticalSpacer_5" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="m_previewLabel" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Minimum" hsizetype="Minimum" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize" >
+           <size>
+            <width>256</width>
+            <height>256</height>
+           </size>
+          </property>
+          <property name="text" >
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_6" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
       <item row="1" column="0" >
        <widget class="QLabel" name="m_label6" >
@@ -442,15 +481,14 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>KIPISlideShowPlugin::ListImageItems</class>
    <extends>QListView</extends>
    <header>listimageitems.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIPISlideShowPlugin::ImageViewer</class>
-   <extends>QWidget</extends>
-   <header>imageviewer.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

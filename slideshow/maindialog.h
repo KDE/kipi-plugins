@@ -23,6 +23,9 @@
 #ifndef MAINDIALOG_H
 #define MAINDIALOG_H
 
+// Qt includes
+#include <QSvgRenderer>
+
 // KDE includes.
 #include "kio/previewjob.h"
 #include "kurl.h"
@@ -55,7 +58,8 @@ private slots:
     void slotPrintCommentsToggled( void );
     void slotSelection( void );
     void slotUseMillisecondsToggled( void );
-
+    void slotThumbnail(const KUrl&, const QPixmap&);
+    
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( int );
     void slotAddDropItems(KUrl::List filesUrl);
@@ -63,8 +67,6 @@ private slots:
     void slotImagesFilesButtonDelete( void );
     void slotImagesFilesButtonUp( void );
     void slotImagesFilesButtonDown( void );
-    void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
-    void slotFailedPreview(const KFileItem&);
 
 signals :
     void totalTimeChanged( QTime );
@@ -81,6 +83,7 @@ private:
     SharedData*       m_sharedData;
     KIO::PreviewJob*  m_thumbJob;
     QTime             m_totalTime;
+    QPixmap           m_noPreviewPixmap;
 };
 
 } // namespace KIPISlideShowPlugin

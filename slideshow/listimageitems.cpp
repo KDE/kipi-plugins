@@ -24,6 +24,8 @@
 #include "listimageitems.h"
 #include "listimageitems.moc"
 
+#define ICONSIZE 32
+
 // Qt includes.
 
 #include <Q3StrList>
@@ -39,26 +41,27 @@
 
 #include <kurl.h>
 #include <kiconloader.h>
+#include <kdebug.h>
+
 
 namespace KIPISlideShowPlugin
 {
 
 ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & comments,
-                     QString const & path, QString const & album)
+                     QString const & path, QString const & album, KIPI::Interface* interface)
         : QListWidgetItem(parent), m_name(name), m_comments(comments), m_path(path), m_album(album)
 {
-    m_thumbJob = KIO::filePreview( KUrl(m_path), 32);
-
-
-    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
-    connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
-            SLOT(slotFailedPreview(const KFileItem&)));
+    m_interface = interface;
+    connect(m_interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    
+    KUrl url;
+    url.setPath(path);
+    interface->thumbnail(url, ICONSIZE);
 }
 
 ImageItem::~ImageItem()
 {
-//    if (m_thumbJob) delete m_thumbJob;
 }
 
 QString ImageItem::comments()
@@ -81,21 +84,22 @@ QString ImageItem::album()
     return m_album;
 }
 
-void  ImageItem::setName(const QString &newName)
+void ImageItem::setName(const QString &newName)
 {
     setText(newName);
 }
 
-void ImageItem::slotGotPreview(const KFileItem& , const QPixmap &pixmap)
+void ImageItem::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    setIcon(QIcon(pixmap));
-    m_thumbJob = 0L;
-}
+    if (url!=m_path)
+        return;
+    
+    if (pix.isNull())
+        setIcon(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
+    else
+        setIcon(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
 
-void ImageItem::slotFailedPreview(const KFileItem&)
-{
-    setIcon(SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
-    m_thumbJob = 0L;
+    disconnect(m_interface, 0, this, 0);
 }
 
 // ---------------------------------------------
@@ -106,7 +110,7 @@ ListImageItems::ListImageItems(QWidget *parent)
     setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);
     setSortingEnabled(false);
-    setIconSize(QSize(32, 32));
+    setIconSize(QSize(ICONSIZE, ICONSIZE));
 }
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)

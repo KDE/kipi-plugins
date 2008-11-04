@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#define ICONSIZE 256
+
 #include "maindialog.h"
 #include "maindialog.moc"
 
@@ -39,6 +41,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kurl.h>
+#include <kstandarddirs.h>
 
 // Local includes.
 
@@ -48,6 +51,7 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+
 
 namespace KIPISlideShowPlugin
 {
@@ -69,7 +73,14 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     m_ImagesFilesButtonDown->setText("");
     m_ImagesFilesButtonAdd->setText("");
     m_ImagesFilesButtonDelete->setText("");
-
+    
+    // Prepare a preview pixmap (KIPI logo) for no image selection
+    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_slideshow/KIPIicon.svg") );
+    m_noPreviewPixmap = QPixmap(ICONSIZE, ICONSIZE);
+    m_noPreviewPixmap.fill(Qt::transparent);
+    QPaintDevice* pdp = &m_noPreviewPixmap;
+    QPainter painter(pdp);
+    svgRenderer.render(&painter);
 }
 
 MainDialog::~MainDialog()
@@ -329,7 +340,7 @@ void MainDialog::slotImagesFilesSelected( int row )
     if ( !item || m_ImagesFilesListBox->count() == 0 )
     {
         m_label7->setText("");
-        m_ImageViewer->clear();
+        m_previewLabel->setPixmap(m_noPreviewPixmap);
         return;
     }
 
@@ -341,15 +352,9 @@ void MainDialog::slotImagesFilesSelected( int row )
 
     url.setPath(pitem->path());
 
-    if ( m_thumbJob ) delete m_thumbJob;
-
-    m_thumbJob = KIO::filePreview( url, m_ImageViewer->width() );
-
-    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-            SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
-
-    connect(m_thumbJob, SIGNAL(failed(const KFileItem&)),
-            SLOT(slotFailedPreview(const KFileItem&)));
+    connect(m_sharedData->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    m_sharedData->interface->thumbnail(url, ICONSIZE);
 
     int index = m_ImagesFilesListBox->row ( item );
 
@@ -377,7 +382,8 @@ void MainDialog::addItems(const KUrl::List& fileList)
                                          currentFile.path().section('/', -1 ),   // File name with extension.
                                          comments,                               // Image comments.
                                          currentFile.path().section('/', 0, -1), // Complete path with file name.
-                                         albumName                               // Album name.
+                                         albumName,                              // Album name.
+                                         m_sharedData->interface
                                        );
 
         item->setName( currentFile.path().section('/', -1) );
@@ -598,15 +604,18 @@ void MainDialog::SlotPortfolioDurationChanged ( int )
     emit totalTimeChanged( m_totalTime );
 }
 
-void MainDialog::slotGotPreview(const KFileItem&, const QPixmap &pixmap)
-{
-    m_ImageViewer->setImage(pixmap.toImage());
-    m_thumbJob = 0L;
-}
-
-void MainDialog::slotFailedPreview(const KFileItem&)
-{
-    m_thumbJob = 0L;
+void MainDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{ 
+    kDebug() << "-------- " << url << " : ENTERED"<<endl;
+    
+    if (pix.isNull())
+        m_previewLabel->setPixmap(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
+    else
+        m_previewLabel->setPixmap(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
+    
+    disconnect(m_sharedData->interface, 0, this, 0);
+    
+    kDebug() << "-------- " << url << " : EXIT"<<endl;
 }
 
 void MainDialog::slotPrintCommentsToggled( void )

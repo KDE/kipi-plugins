@@ -36,6 +36,11 @@
 #include <kurl.h>
 #include "kio/previewjob.h"
 
+// LibKIPI includes.
+
+#include <libkipi/interface.h>
+
+
 namespace KIPISlideShowPlugin
 {
 
@@ -46,7 +51,7 @@ class ImageItem : public QObject, public QListWidgetItem
 public:
 
     ImageItem(QListWidget* parent, QString const & name, QString const & comments,
-              QString const & path, QString const & album);
+              QString const & path, QString const & album, KIPI::Interface*);
     ~ImageItem();
 
     QString comments();
@@ -56,8 +61,7 @@ public:
     void setName(const QString &newName);
 
 private slots:
-    void slotGotPreview(const KFileItem& , const QPixmap &pixmap);
-    void slotFailedPreview(const KFileItem&);
+    void slotThumbnail(const KUrl&, const QPixmap&);
 
 private:
 
@@ -66,8 +70,8 @@ private:
     QString m_comments;
     QString m_path;
     QString m_album;
-
-    KIO::PreviewJob* m_thumbJob;
+    
+    KIPI::Interface* m_interface;
 };
 
 class ListImageItems : public QListWidget

@@ -8,7 +8,6 @@ SET(kipiplugin_slideshow_PART_SRCS common.cpp
                                    slideshowkb.cpp 
                                    imageloadthread.cpp
                                    listimageitems.cpp
-				   imageviewer.cpp
 				   maindialog.cpp
 				   captiondialog.cpp
 				   soundtrackdialog.cpp
