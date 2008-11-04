@@ -20,7 +20,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     removeredeyeswindow.cpp
     storagesettingsbox.cpp
     workerthread.cpp
-    wteventdata.cpp
+    workerthreaddata.cpp
     ${libcvblobs_SRCS}
    )
 

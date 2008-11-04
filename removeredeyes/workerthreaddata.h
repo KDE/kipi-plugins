@@ -22,39 +22,33 @@
  *
  * ============================================================ */
 
-#include "wteventdata.h"
+#ifndef WORKERTHREADDATA_H
+#define WORKERTHREADDATA_H
 
-// KDE includes.
-
-#include <kurl.h>
+class KUrl;
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-WTEventData::WTEventData(const KUrl& url, int current, int eyes): m_url(url)
+class WorkerThreadData
 {
-    m_current = current;
-    m_eyes    = eyes;
-}
 
+public:
 
-WTEventData::~WTEventData()
-{
-}
+    WorkerThreadData(const KUrl& url, int current = 0, int eyes = 0);
+    ~WorkerThreadData();
 
-int WTEventData::current() const
-{
-    return m_current;
-}
+    int         current() const;
+    int         eyes() const;
+    const KUrl& url() const;
 
-int WTEventData::eyes() const
-{
-    return m_eyes;
-}
+private:
 
-const KUrl& WTEventData::url() const
-{
-    return m_url;
-}
+    int         m_current;
+    int         m_eyes;
+    const KUrl& m_url;
+};
 
 } // namespace KIPIRemoveRedEyesPlugin
+
+#endif // WORKERTHREADDATA_H

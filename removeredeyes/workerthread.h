@@ -36,7 +36,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class WTEventData;
+class WorkerThreadData;
 class RemovalSettings;
 
 class WorkerThread : public QThread
@@ -54,8 +54,7 @@ public:
 
 signals:
 
-//    void calculationStarted(WTEventData*);
-    void calculationFinished(WTEventData*);
+    void calculationFinished(WorkerThreadData*);
 
 public:
 

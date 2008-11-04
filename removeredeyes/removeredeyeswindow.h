@@ -39,7 +39,7 @@ namespace KIPIRemoveRedEyesPlugin
 {
 
 class RemovalSettings;
-class WTEventData;
+class WorkerThreadData;
 class RedEyesWindowPriv;
 
 class RemoveRedEyesWindow : public KDialog
@@ -83,7 +83,7 @@ private slots:
 
 public slots:
 
-    void calculationFinished(WTEventData*);
+    void calculationFinished(WorkerThreadData*);
 
 private slots:
 

@@ -37,7 +37,7 @@
 #include "eyelocator.h"
 #include "removalsettings.h"
 #include "storagesettingsbox.h"
-#include "wteventdata.h"
+#include "workerthreaddata.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -125,7 +125,7 @@ void WorkerThread::run()
         }
 
         int eyes = loc.redEyes();
-        emit calculationFinished(new WTEventData(url, i, eyes));
+        emit calculationFinished(new WorkerThreadData(url, i, eyes));
     }
 }
 } // namespace KIPIRemoveRedEyesPlugin

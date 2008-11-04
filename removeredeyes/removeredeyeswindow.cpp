@@ -67,7 +67,7 @@
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthread.h"
-#include "wteventdata.h"
+#include "workerthreaddata.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -360,8 +360,8 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
         return;
     }
 
-    connect(d->wth, SIGNAL(calculationFinished(WTEventData*)),
-            this, SLOT(calculationFinished(WTEventData*)));
+    connect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
+            this, SLOT(calculationFinished(WorkerThreadData*)));
 
     if (d->progress->isHidden())
         d->progress->show();
@@ -441,7 +441,7 @@ void RemoveRedEyesWindow::slotFoundRAWImages(bool raw)
     }
 }
 
-void RemoveRedEyesWindow::calculationFinished(WTEventData* data)
+void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
 {
     if (!data)
         return;
