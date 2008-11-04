@@ -46,7 +46,6 @@
 // Local includes.
 
 #include "imagedialog.h"
-#include "imageviewer.h"
 #include "listimageitems.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
