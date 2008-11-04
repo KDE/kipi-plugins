@@ -97,6 +97,7 @@ protected:
     int effectChessboard(bool doInit);
     int effectMeltdown(bool doInit);
     int effectSweep(bool doInit);
+    int effectCubism(bool doInit);
     int effectRandom(bool doInit);
     int effectGrowing(bool doInit);
     int effectHorizLines(bool doInit);
