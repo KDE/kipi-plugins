@@ -32,12 +32,6 @@
 #include <QFile>
 #include <QFileInfo>
 
-// KDE includes.
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <kurl.h>
-
 // Local includes.
 
 #include "eyelocator.h"
@@ -67,7 +61,6 @@ WorkerThread::~ WorkerThread()
 void WorkerThread::run()
 {
     int total = m_urls.count();
-    kDebug(50001) << "classifier file: " << m_settings->classifierFile << endl;
 
     if (total <= 0)
         return;
@@ -98,30 +91,33 @@ void WorkerThread::run()
             QFileInfo info(url.path());
             KUrl saveLocation = KUrl(info.path());
 
-            // create a new subfolder?
-            if (m_settings->storageMode == StorageSettingsBox::Subfolder)
+            switch (m_settings->storageMode)
             {
-                saveLocation.addPath(m_settings->subfolderName);
+                case StorageSettingsBox::Subfolder:
+                {
+                    saveLocation.addPath(m_settings->subfolderName);
 
-                // check if subfolder exists
-                if (!QDir(saveLocation.path()).exists())
-                    QDir(info.path()).mkdir(m_settings->subfolderName);
+                    // check if subfolder exists
+                    if (!QDir(saveLocation.path()).exists())
+                        QDir(info.path()).mkdir(m_settings->subfolderName);
 
-                saveLocation.addPath(info.fileName());
-            }
-            // append a custom string?
-            else if (m_settings->storageMode == StorageSettingsBox::Prefix)
-            {
-                QString file = info.baseName();
-                file.append(m_settings->prefixName);
-                file.append(".");
-                file.append(info.suffix());
-                saveLocation.addPath(file);
-            }
-            // overwrite original file?
-            else if (m_settings->storageMode == StorageSettingsBox::Overwrite)
-            {
-                saveLocation.addPath(info.fileName());
+                    saveLocation.addPath(info.fileName());
+                    break;
+                }
+                case StorageSettingsBox::Prefix:
+                {
+                    QString file = info.baseName();
+                    file.append(m_settings->prefixName);
+                    file.append(".");
+                    file.append(info.suffix());
+                    saveLocation.addPath(file);
+                    break;
+                }
+                case StorageSettingsBox::Overwrite:
+                {
+                    saveLocation.addPath(info.fileName());
+                    break;
+                }
             }
 
             QByteArray dest = QFile::encodeName(saveLocation.path());
