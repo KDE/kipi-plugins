@@ -25,8 +25,6 @@
 // color dels p�xels de la m�scara per ser exteriors
 #define PIXEL_EXTERIOR 0
 
-#include <opencv/cxtypes.h>
-
 #include "BlobResult.h"
 #include "BlobExtraction.h"
 
@@ -107,7 +105,8 @@ bool BlobAnalysis(	IplImage* inputImage,
 			return false;
 
 		// comprova que la m�scara tingui les mateixes dimensions que la imatge
-		if( !CV_ARE_SIZES_EQ(inputImage, maskImage ) )
+
+        if( !((inputImage)->height == (maskImage)->height && (inputImage)->width == (maskImage)->width) )
 		{
 			return false;
 		}
