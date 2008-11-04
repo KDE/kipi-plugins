@@ -336,14 +336,6 @@ void SlideShow::loadNextImage()
 
     m_currImage = QPixmap( pixmap );
 
-    if ( m_sharedData->printFileName )
-        printFilename();
-
-    if ( m_sharedData->printProgress )
-        printProgress();
-
-    if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments )
-        printComments();
 }
 
 void SlideShow::loadPrevImage()
@@ -385,14 +377,6 @@ void SlideShow::loadPrevImage()
 
     m_currImage = QPixmap( pixmap );
 
-    if ( m_sharedData->printFileName )
-        printFilename();
-
-    if ( m_sharedData->printProgress )
-        printProgress();
-
-    if ( m_sharedData->printFileComments )
-        printComments();
 }
 
 void SlideShow::showCurrentImage()
@@ -697,6 +681,15 @@ int SlideShow::effectChessboard( bool aInit )
     m_iy = m_iy ? 0 : m_dy;
     m_y  = m_y ? 0 : m_dy;
 
+    QPainter bufferPainter( &m_buffer );
+    QBrush brush = QBrush( m_currImage );
+
+    for ( int y = 0; y < m_w; y += ( m_dy << 1 ) )
+    {
+        bufferPainter.fillRect( m_ix, y + m_iy, m_dx, m_dy, brush );
+        bufferPainter.fillRect( m_x, y + m_y, m_dx, m_dy, brush );
+    }
+    
     repaint();
 
     return m_wait;
@@ -722,12 +715,35 @@ int SlideShow::effectMeltdown( bool aInit )
 
     m_pdone = true;
 
+    int y, x;
+    QPainter bufferPainter( &m_buffer );
+
+    for ( i = 0, x = 0; i < m_ix; i++, x += m_dx )
+    {
+        y = m_intArray[i];
+
+        if ( y >= m_h ) continue;
+
+        m_pdone = false;
+
+        if (( rand()&15 ) < 6 ) continue;
+
+        bufferPainter.drawPixmap( x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy );
+
+        bufferPainter.drawPixmap( x, y, m_currImage, x, y, m_dx, m_dy );
+
+        m_intArray[i] += m_dy;
+    }
+
+    bufferPainter.end();
+    
     repaint();
 
     if ( m_pdone )
     {
         delete [] m_intArray;
         m_intArray = NULL;
+        showCurrentImage();
         return -1;
     }
 
@@ -757,6 +773,7 @@ int SlideShow::effectSweep( bool aInit )
         if (( m_subType == 0 && m_x < -64 ) ||
                 ( m_subType == 1 && m_x > m_w + 64 ) )
         {
+            showCurrentImage();
             return -1;
         }
 
@@ -766,6 +783,11 @@ int SlideShow::effectSweep( bool aInit )
             m_py = 0;
             m_psx = w;
             m_psy = m_h;
+            
+            QPainter bufferPainter( &m_buffer );
+            bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
+            bufferPainter.end();
+            
             repaint();
         }
 
@@ -777,6 +799,7 @@ int SlideShow::effectSweep( bool aInit )
         if (( m_subType == 2 && m_y < -64 ) ||
                 ( m_subType == 3 && m_y > m_h + 64 ) )
         {
+            showCurrentImage();
             return -1;
         }
 
@@ -786,6 +809,11 @@ int SlideShow::effectSweep( bool aInit )
             m_py = y;
             m_psx = m_w;
             m_psy = h;
+            
+            QPainter bufferPainter( &m_buffer );
+            bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
+            bufferPainter.end();
+            
             repaint();
         }
 
@@ -811,6 +839,25 @@ int SlideShow::effectCubism( bool aInit )
         return -1;
     }
 
+    QPainterPath painterPath;
+    QPainter bufferPainter( &m_buffer );
+
+    m_x = rand() % m_w;
+    m_y = rand() % m_h;
+    int r = ( rand()%100 )+100;
+
+    m_px = m_x - r;
+    m_py = m_y - r;
+    m_psx = r;
+    m_psy = r;
+
+    QMatrix matrix;
+    matrix.rotate(( rand()%20 )-10 );
+    QRect rect( m_px, m_py, m_psx, m_psy );
+    bufferPainter.setMatrix( matrix );
+    bufferPainter.fillRect( rect, QBrush( m_currImage ) );
+    bufferPainter.end();
+    
     repaint();
 
     m_i--;
@@ -854,6 +901,11 @@ int SlideShow::effectGrowing( bool aInit )
     m_py = m_y;
     m_psx = m_w - ( m_x << 1 );
     m_psy = m_h - ( m_y << 1 );
+    
+    QPainter bufferPainter( &m_buffer );
+    bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
+    bufferPainter.end();
+    
     repaint();
 
     return 20;
@@ -872,12 +924,23 @@ int SlideShow::effectHorizLines( bool aInit )
 
     if ( iyPos[m_i] < 0 ) return -1;
 
+    int iPos;
+    int until = m_h;
+    QPainter bufferPainter( &m_buffer );
+    QBrush brush = QBrush( m_currImage );
+
+    for ( iPos = iyPos[m_i]; iPos < until; iPos += 8 )
+            bufferPainter.fillRect( 0, iPos, m_w, 1, brush );
+ 
+    bufferPainter.end();
+    
     repaint();
 
     m_i++;
 
     if ( iyPos[m_i] >= 0 ) return 160;
 
+    showCurrentImage();
     return -1;
 }
 
@@ -894,12 +957,23 @@ int SlideShow::effectVertLines( bool aInit )
 
     if ( ixPos[m_i] < 0 ) return -1;
 
+    int iPos;
+    int until = m_w;
+    QPainter bufferPainter( &m_buffer );
+    QBrush brush = QBrush( m_currImage );
+
+    for ( iPos = ixPos[m_i]; iPos < until; iPos += 8 )
+        bufferPainter.fillRect( iPos, 0, 1, m_h, brush );
+
+    bufferPainter.end();
+    
     repaint();
 
     m_i++;
 
     if ( ixPos[m_i] >= 0 ) return 160;
 
+    showCurrentImage();
     return -1;
 }
 
@@ -942,6 +1016,13 @@ int SlideShow::effectMultiCircleOut( bool aInit )
         m_pa.setPoint( 1, x, y );
         m_pa.setPoint( 2, m_x, m_y );
 
+        QPainterPath painterPath;
+        painterPath.addPolygon( QPolygon( m_pa ) );
+
+        QPainter bufferPainter( &m_buffer );
+        bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
+        bufferPainter.end();
+        
         repaint();
     }
 
@@ -1011,6 +1092,11 @@ int SlideShow::effectSpiralIn( bool aInit )
     m_py = m_y;
     m_psx = m_ix;
     m_psy = m_iy;
+    
+    QPainter bufferPainter( &m_buffer );
+    bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
+    bufferPainter.end();
+    
     repaint();
 
     m_x += m_dx;
@@ -1056,6 +1142,13 @@ int SlideShow::effectCircleOut( bool aInit )
     m_pa.setPoint( 1, x, y );
     m_pa.setPoint( 2, m_x, m_y );
 
+    QPainterPath painterPath;
+    painterPath.addPolygon( QPolygon( m_pa ) );
+
+    QPainter bufferPainter( &m_buffer );
+    bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
+    bufferPainter.end();
+    
     repaint();
 
     return 20;
@@ -1090,6 +1183,13 @@ int SlideShow::effectBlobs( bool aInit )
     m_psx = r;
     m_psy = r;
 
+    QPainterPath painterPath;
+    painterPath.addEllipse( m_px, m_py, m_psx, m_psy );
+
+    QPainter bufferPainter( &m_buffer );
+    bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
+    bufferPainter.end();
+    
     repaint();
 
     m_i--;
@@ -1104,6 +1204,15 @@ void SlideShow::paintEvent( QPaintEvent * )
 
     if ( m_simplyShow == true )
     {
+        if ( m_sharedData->printFileName )
+            printFilename();
+
+        if ( m_sharedData->printProgress )
+            printProgress();
+
+        if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments )
+            printComments();
+        
         p.drawPixmap( 0, 0, m_currImage,
                       0, 0, m_currImage.width(), m_currImage.height() );
         p.end();
@@ -1141,140 +1250,8 @@ void SlideShow::paintEvent( QPaintEvent * )
         return;
     }
 
-    //Different behaviour on different effect
-    if ( QString::compare( m_effectName , "Melt Down" ) == 0 )
-    {
-        int y, x, i;
-        QPainter bufferPainter( &m_buffer );
-
-        for ( i = 0, x = 0; i < m_ix; i++, x += m_dx )
-        {
-            y = m_intArray[i];
-
-            if ( y >= m_h ) continue;
-
-            m_pdone = false;
-
-            if (( rand()&15 ) < 6 ) continue;
-
-            bufferPainter.drawPixmap( x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy );
-
-            bufferPainter.drawPixmap( x, y, m_currImage, x, y, m_dx, m_dy );
-
-            m_intArray[i] += m_dy;
-        }
-
-        bufferPainter.end();
-
-        p.drawPixmap( 0,0, m_buffer );
-        return;
-    }
-
-    if ( QString::compare( m_effectName , "Chess Board" ) == 0 )
-    {
-        QPainter bufferPainter( &m_buffer );
-        QBrush brush = QBrush( m_currImage );
-
-        for ( int y = 0; y < m_w; y += ( m_dy << 1 ) )
-        {
-            bufferPainter.fillRect( m_ix, y + m_iy, m_dx, m_dy, brush );
-            bufferPainter.fillRect( m_x, y + m_y, m_dx, m_dy, brush );
-        }
-
-        bufferPainter.end();
-
-        p.drawPixmap( 0,0, m_buffer );
-        return;
-    }
-
-
-    if ( QString::compare( m_effectName, "Growing" ) == 0
-            || QString::compare( m_effectName, "Spiral In" ) == 0
-            || QString::compare( m_effectName, "Sweep" ) == 0 )
-    {
-        QPainter bufferPainter( &m_buffer );
-        bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
-        bufferPainter.end();
-        p.drawPixmap( 0,0, m_buffer );
-        return;
-    }
-
-    if ( QString::compare( m_effectName , "Blobs" ) == 0 )
-    {
-        QPainterPath painterPath;
-        painterPath.addEllipse( m_px, m_py, m_psx, m_psy );
-
-        QPainter bufferPainter( &m_buffer );
-        bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
-        bufferPainter.end();
-        p.drawPixmap( 0, 0, m_buffer );
-        return;
-    }
-
-    if ( QString::compare( m_effectName, "Cubism" ) == 0 )
-    {
-        QPainterPath painterPath;
-        QPainter bufferPainter( &m_buffer );
-
-        m_x = rand() % m_w;
-        m_y = rand() % m_h;
-        int r = ( rand()%100 )+100;
-
-        m_px = m_x - r;
-        m_py = m_y - r;
-        m_psx = r;
-        m_psy = r;
-
-        QMatrix matrix;
-        matrix.rotate(( rand()%20 )-10 );
-        QRect rect( m_px, m_py, m_psx, m_psy );
-        bufferPainter.setMatrix( matrix );
-        bufferPainter.fillRect( rect, QBrush( m_currImage ) );
-
-        bufferPainter.end();
-        p.drawPixmap( 0, 0, m_buffer );
-
-        return;
-    }
-
-    if ( QString::compare( m_effectName, "Circle Out" ) == 0
-            || QString::compare( m_effectName, "MultiCircle Out" ) == 0 )
-    {
-        QPainterPath painterPath;
-        painterPath.addPolygon( QPolygon( m_pa ) );
-
-        QPainter bufferPainter( &m_buffer );
-        bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
-        bufferPainter.end();
-        p.drawPixmap( 0,0, m_buffer );
-        return;
-    }
-
-    if ( QString::compare( m_effectName, "Horizontal Lines" ) == 0
-            || QString::compare( m_effectName, "Vertical Lines" ) == 0 )
-    {
-        bool isVertical = ( QString::compare( m_sharedData->effectName, "Vertical Lines" ) == 0 ) ?
-                          true : false;
-
-        static int pos[] = { 0, 4, 2, 6, 1, 5, 3, 7, -1 };
-        int iPos;
-        int until = isVertical ? m_w : m_h;
-        QPainter bufferPainter( &m_buffer );
-        QBrush brush = QBrush( m_currImage );
-
-        for ( iPos = pos[m_i]; iPos < until; iPos += 8 )
-        {
-            if ( isVertical )
-                bufferPainter.fillRect( iPos, 0, 1, m_h, brush );
-            else
-                bufferPainter.fillRect( 0, iPos, m_w, 1, brush );
-        }
-
-        bufferPainter.end();
-
-        p.drawPixmap( 0,0, m_buffer );
-        return;
-    }
+    // If execution can reach this line, an effect is running
+    p.drawPixmap( 0,0, m_buffer );
 }
 
 void SlideShow::startPainter()
