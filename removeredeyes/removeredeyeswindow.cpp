@@ -365,6 +365,7 @@ void RedEyesWindow::startWorkerThread(int type)
 
     if (d->progress->isHidden())
         d->progress->show();
+    d->progress->reset();
     d->progress->setRange(0, urls.count());
 
     // start image processing
