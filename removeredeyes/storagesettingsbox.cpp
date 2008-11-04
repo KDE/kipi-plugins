@@ -116,23 +116,17 @@ void StorageSettingsBox::buttonClicked(int mode)
     switch (mode)
     {
         case Subfolder:
-            d->subfolderLineEdit->setVisible(true);
             d->subfolderLineEdit->setEnabled(true);
-            d->prefixLineEdit->setVisible(false);
             d->prefixLineEdit->setEnabled(false);
             break;
 
         case Prefix:
-            d->prefixLineEdit->setVisible(true);
             d->prefixLineEdit->setEnabled(true);
-            d->subfolderLineEdit->setVisible(false);
             d->subfolderLineEdit->setEnabled(false);
             break;
 
         case Overwrite:
-            d->subfolderLineEdit->setVisible(false);
             d->subfolderLineEdit->setEnabled(false);
-            d->prefixLineEdit->setVisible(false);
             d->prefixLineEdit->setEnabled(false);
             break;
     }
