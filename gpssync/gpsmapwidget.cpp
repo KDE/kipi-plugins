@@ -152,7 +152,7 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     }
 
     // If a new map type have been selected, the Status
-    // string is like : "newMapType:G_SATELLITE_TYPE"
+    // string is like : "newMapType:G_SATELLITE_MAP"
     if (status.startsWith(QString("newMapType:")))
     {
         status.remove(0, 11);
