@@ -37,7 +37,8 @@ namespace KIPIPrintWizardPlugin {
 /**
  * The wizard used by the user to select the various settings.
  */
-  class Wizard : public KAssistantDialog {
+  class Wizard : public KAssistantDialog 
+  {
     Q_OBJECT
     public:
       Wizard(QWidget* parent, KIPI::Interface*);
@@ -49,12 +50,23 @@ namespace KIPIPrintWizardPlugin {
       virtual void pageChanged(KPageWidgetItem *);
       virtual void captionChanged(const QString & text);
       virtual void outputSettingsClicked(int);
-    //virtual void pageSelected();
+      virtual void btnBrowseOutputPathClicked(void);
+      virtual void paperSizeChanged(int);
 
-    //private slots:
-    //	void updateFinishButton();
+      //private slots:
+      //	void updateFinishButton();
 
     private:
+      enum PageSize {
+        Unknown = -1,
+        A4      = 0,
+        Letter,
+        A6,
+        P10X15,
+        P13X18
+      };
+      void initPhotoSizes(PageSize pageSize);
+
       struct Private;
       Private* d;
   };
