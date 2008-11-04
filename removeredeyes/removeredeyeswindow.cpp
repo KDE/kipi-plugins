@@ -80,40 +80,41 @@ public:
     RedEyesWindowPriv()
     {
         interface           = 0;
-        wth                 = 0;
-        progressTimer       = 0;
         about               = 0;
 
         progress            = 0;
+        settingsSwitcherBtn = 0;
         settingsStack       = 0;
+        progressTimer       = 0;
 
         tabWidget           = 0;
 
         advancedSettings    = 0;
         imageList           = 0;
-        simpleSettings      = 0;
-        settingsSwitcherBtn = 0;
         settings            = 0;
+        simpleSettings      = 0;
+        wth                 = 0;
     }
 
+    bool                        busy;
     bool                        simpleCorrectionMode;
     int                         runtype;
-    QTimer*                     progressTimer;
+
     KIPI::Interface*            interface;
     KIPIPlugins::KPAboutData*   about;
-    WorkerThread*               wth;
 
     QProgressBar*               progress;
     QPushButton*                settingsSwitcherBtn;
     QStackedWidget*             settingsStack;
+    QTimer*                     progressTimer;
 
     KTabWidget*                 tabWidget;
 
     AdvancedSettings*           advancedSettings;
     ImagesList*                 imageList;
-    SimpleSettings*             simpleSettings;
-
     RemovalSettings*            settings;
+    SimpleSettings*             simpleSettings;
+    WorkerThread*               wth;
 };
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent)
@@ -125,17 +126,17 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     setDefaultButton(Close);
     setModal(false);
 
+    d->busy                 = false;
+    d->simpleCorrectionMode = true;
+    d->runtype              = WorkerThread::TestRun;
     d->settings             = new RemovalSettings;
     d->interface            = interface;
-    d->runtype              = WorkerThread::TestRun;
-    d->simpleCorrectionMode = true;
-
-    d->progressTimer        = new QTimer(this);
-    d->progressTimer->setSingleShot(true);
-
     d->tabWidget            = new KTabWidget;
     d->settingsSwitcherBtn  = new QPushButton;
     d->imageList            = new ImagesList(interface);
+
+    d->progressTimer        = new QTimer(this);
+    d->progressTimer->setSingleShot(true);
 
     d->progress             = new QProgressBar;
     d->progress->setMaximumHeight(fontMetrics().height() + 2);
@@ -170,7 +171,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
     setButtonGuiItem(User1, KGuiItem(i18n("Correct Photos"), KIcon("dialog-ok-apply")));
     setButtonGuiItem(User2, KGuiItem(i18n("Test Run"), KIcon("dialog-information")));
-
     setButtonToolTip(User1, i18n("Start correcting the listed images"));
     setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
     setButtonToolTip(Close, i18n("Exit"));
@@ -224,14 +224,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(this, SIGNAL(signalTestRunFinished()),
             this, SLOT(checkForNoneCorrectedImages()));
 
-    connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(slotImageListChanged(bool)));
-
     connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(slotFoundRAWImages(bool)));
-
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(startCorrection()));
 
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(startTestrun()));
@@ -247,6 +241,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
         d->imageList->slotAddImages(images.images());
 
     readSettings();
+    setBusy(false);
 }
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
@@ -316,6 +311,10 @@ void RemoveRedEyesWindow::startCorrection()
     startWorkerThread(WorkerThread::Correction);
 }
 
+void RemoveRedEyesWindow::abortCorrection()
+{
+}
+
 void RemoveRedEyesWindow::startTestrun()
 {
     updateSettings();
@@ -339,17 +338,8 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
     if (urls.isEmpty())
         return;
 
-    // disable connection to make sure that the "test run" and "correct photos"
-    // buttons are not enabled again on ImageListChange
-    disconnect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-               this, SLOT(slotImageListChanged(bool)));
-
-    d->imageList->resetEyeCounterColumn();
-
-    d->tabWidget->setCurrentIndex(FileList);
-
-    enableButton(User1, false);
-    enableButton(User2, false);
+    if (d->busy)
+        return;
 
     // create the worker thread
     d->wth = new WorkerThread(this, d->settings, type, urls);
@@ -357,11 +347,10 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
     if (!d->wth)
     {
         kError(51000) << "Creation of WorkerThread failed!" << endl;
+        setBusy(false);
         return;
     }
-
-    connect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
-            this, SLOT(calculationFinished(WorkerThreadData*)));
+    setBusy(true);
 
     if (d->progress->isHidden())
         d->progress->show();
@@ -369,8 +358,54 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
     d->progress->setRange(0, urls.count());
     d->progress->setValue(0);
 
+    connect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
+            this, SLOT(calculationFinished(WorkerThreadData*)));
+
     // start image processing
     d->wth->start();
+}
+
+void RemoveRedEyesWindow::setBusy(bool busy)
+{
+    d->busy = busy;
+
+    if (busy)
+    {
+        // disable connection to make sure that the "test run" and "correct photos"
+        // buttons are not enabled again on ImageListChange
+        disconnect(d->imageList, SIGNAL(signalImageListChanged(bool)),
+                this, SLOT(slotImageListChanged(bool)));
+
+        disconnect(this, SIGNAL(closeClicked()),
+                   this, SLOT(slotClose()));
+
+        connect(this, SIGNAL(closeClicked()),
+                this, SLOT(abortCorrection()));
+
+        d->imageList->resetEyeCounterColumn();
+        d->tabWidget->setCurrentIndex(FileList);
+
+        setButtonGuiItem(Close, KGuiItem(i18n("Cancel"), KIcon("dialog-cancel")));
+        enableButton(User1, false);
+        enableButton(User2, false);
+    }
+    else
+    {
+        // enable connection again to make sure that an empty image list will
+        // disable the "test run" and "correct photos" buttons
+        connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
+                this, SLOT(slotImageListChanged(bool)));
+
+        disconnect(this, SIGNAL(closeClicked()),
+                   this, SLOT(abortCorrection()));
+
+        connect(this, SIGNAL(closeClicked()),
+                this, SLOT(slotClose()));
+
+        setButtonGuiItem(Close, KGuiItem(i18n("Close"), KIcon("dialog-close")));
+        enableButton(User1, true);
+        enableButton(User2, true);
+    }
 }
 
 void RemoveRedEyesWindow::slotProgressBarChanged(int v)
@@ -383,19 +418,15 @@ void RemoveRedEyesWindow::slotProgressBarChanged(int v)
 void RemoveRedEyesWindow::slotProgressBarTimedOut()
 {
     d->progress->hide();
-
-    // enable connection again to make sure that an empty image list will
-    // disable the "test run" and "correct photos" buttons
-    connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(slotImageListChanged(bool)));
-
-    enableButton(User1, true);
-    enableButton(User2, true);
+    setBusy(false);
 
     if (d->runtype == WorkerThread::TestRun)
     {
         emit signalTestRunFinished();
     }
+
+    disconnect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
+               this, SLOT(calculationFinished(WorkerThreadData*)));
 }
 
 void RemoveRedEyesWindow::checkForNoneCorrectedImages()

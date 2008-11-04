@@ -79,6 +79,7 @@ private slots:
     void slotProgressBarChanged(int);
     void slotProgressBarTimedOut();
     void startCorrection();
+    void abortCorrection();
     void startTestrun();
 
 public slots:
@@ -98,6 +99,7 @@ private:
     void setSettingsMode(SettingsMode mode);
 
     void startWorkerThread(int type);
+    void setBusy(bool);
 
 
 private:
