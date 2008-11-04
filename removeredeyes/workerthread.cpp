@@ -49,11 +49,11 @@ namespace KIPIRemoveRedEyesPlugin
 {
 WorkerThread::WorkerThread(QObject* parent, RemovalSettings* settings, int type, KUrl::List urls)
 {
-    m_parent        = parent;
-    m_settings      = settings;
-    m_cancel        = false;
-    m_type          = type;
-    m_urls          = urls;
+    m_parent    = parent;
+    m_settings  = settings;
+    m_cancel    = false;
+    m_type      = type;
+    m_urls      = urls;
 }
 
 WorkerThread::~ WorkerThread()

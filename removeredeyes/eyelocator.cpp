@@ -102,8 +102,7 @@ int EyeLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile
                                csf,
                                ngf,
                                CV_HAAR_DO_CANNY_PRUNING, // use Canny edge detector
-                               cvSize(0,0)
-                              );
+                               cvSize(0,0));
 
     // extract each region as a new image
     numEyes = eyes ? eyes->total : 0;

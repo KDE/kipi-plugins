@@ -72,7 +72,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     QRadioButton* subfolderMode = new QRadioButton(i18n("Save files in subfolder"));
     subfolderMode->setToolTip(i18n("If checked, the corrected files will be saved "
-            "in a subfolder under the current image album path."));
+                                   "in a subfolder under the current image album path."));
     d->storageGroup->addButton(subfolderMode, Subfolder);
 
     QRadioButton* prefixMode = new QRadioButton(i18n("Append custom string to files"));
@@ -98,12 +98,6 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     connect(d->storageGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(buttonClicked(int)));
-//
-//    connect(d->subfolderLineEdit, SIGNAL(textChanged (const QString &)),
-//            this, SIGNAL(settingsChanged()));
-//
-//    connect(d->prefixLineEdit, SIGNAL(textChanged (const QString &)),
-//            this, SIGNAL(settingsChanged()));
 }
 
 StorageSettingsBox::~StorageSettingsBox()

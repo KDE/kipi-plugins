@@ -69,8 +69,8 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     d->standardClassifierCheckBox    = new QCheckBox(i18n("Use standard classifier"));
     d->classifierUrlRequester        = new KUrlRequester;
     d->classifierUrlRequester->setFilter("*.xml");
-    d->standardClassifierCheckBox->setToolTip(i18n("If checked, use the standard classifier "
-            "shipped with this KIPI plugin"));
+    d->standardClassifierCheckBox->setToolTip(i18n("If checked, the standard classifier "
+                                                   "shipped with this KIPI plugin is used."));
     d->classifierUrlRequester->setToolTip(i18n("Enter the location of the classifier here."));
 
     d->neighborGroupsNumInput    = new KIntNumInput;
