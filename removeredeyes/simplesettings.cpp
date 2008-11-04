@@ -38,7 +38,7 @@
 
 // Local includes.
 
-#include "settings.h"
+#include "removalsettings.h"
 #include "storagesettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin

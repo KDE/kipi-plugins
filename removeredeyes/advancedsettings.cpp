@@ -36,8 +36,8 @@
 
 #include "blobsettingsbox.h"
 #include "classifiersettingsbox.h"
+#include "removalsettings.h"
 #include "storagesettingsbox.h"
-#include "settings.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {

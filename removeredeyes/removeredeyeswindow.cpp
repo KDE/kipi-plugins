@@ -63,7 +63,7 @@
 #include "advancedsettings.h"
 #include "imageslist.h"
 #include "kpaboutdata.h"
-#include "settings.h"
+#include "removalsettings.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthread.h"

@@ -41,7 +41,7 @@
 // Local includes.
 
 #include "eyelocator.h"
-#include "settings.h"
+#include "removalsettings.h"
 #include "storagesettingsbox.h"
 #include "wteventdata.h"
 

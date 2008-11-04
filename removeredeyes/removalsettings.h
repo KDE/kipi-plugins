@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef REMOVALSETTINGS_H
+#define REMOVALSETTINGS_H
 
 // Qt includes.
 
@@ -71,4 +71,4 @@ class RemovalSettings
 
 }; // namespace KIPIRemoveRedEyesPlugin
 
-#endif // SETTINGS_H
+#endif // REMOVALSETTINGS_H
