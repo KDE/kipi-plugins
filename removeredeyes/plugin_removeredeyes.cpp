@@ -66,7 +66,7 @@ void Plugin_RemoveRedEyes::setup( QWidget* widget )
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(KIcon("applications-misc"), i18n("Remove Red-Eyes..."), actionCollection());
+    m_action = new KAction(KIcon("draw-eraser"), i18n("Remove Red-Eyes..."), actionCollection());
     m_action->setObjectName("removeredeyes");
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
