@@ -90,20 +90,19 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     );
     d->settingsSlider->setStyleSheet(sliderStyle);
 
-    QLabel* lSlow = new QLabel(i18n("<p><b>Slow<br/>(low-res and slightly blurred images)</b></p>"
+    QLabel* lSlow = new QLabel(i18n("<p><b>Slow<br/>(low-res / slightly blurred images)</b></p>"
                                     "<p>In this mode the automatic detection and correction of the "
                                     "red eyes is the most reliable. The drawback "
                                     "of the higher detection rate is a much slower computation.</p>"));
 
     QLabel* lStd = new QLabel(i18n("<p><b>Standard</b></p>"
-                                   "<p>This mode is quite accurate for most image resolutions. If the images "
-                                   "are not too small or blurry, detection is quite good. Always try this mode "
-                                   "first.</p>"));
+                                   "<p>This mode is adequate for most image resolutions. Always try "
+                                   "this mode first.</p>"));
 
-    QLabel* lFast = new QLabel(i18n("<p><b>Fast<br/>(high-res files)</b></p>"
-                                    "<p>In this mode the automatic detection and correction of the red eyes "
-                                    "will be faster, but more false positives may occur. Use this mode "
-                                    "only for very high-resolution images.</p>"));
+    QLabel* lFast = new QLabel(i18n("<p><b>Fast<br/>(high-res images)</b></p>"
+                                    "<p>In this mode the automatic detection will be faster, but more "
+                                    "false positives may occur. Use this mode only for very high-resolution "
+                                    "and sharp images.</p>"));
 
     lSlow->setWordWrap(true);
     lStd->setWordWrap(true);
