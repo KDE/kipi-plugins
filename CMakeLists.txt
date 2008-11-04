@@ -45,9 +45,10 @@ FIND_PACKAGE(TIFF REQUIRED)
 
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)   # For DNGConverter: XMP SDK need Expat library to compile.
 MACRO_OPTIONAL_FIND_PACKAGE(Threads) # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)  # For RemoveRedEyes.
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -183,6 +184,12 @@ ELSE(OPENGL_FOUND AND OPENGL_GLU_FOUND)
     MESSAGE(STATUS " libopengl library found............. NO  (optional)")
 ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
+IF(OPENCV_FOUND)
+    MESSAGE(STATUS " libopencv library found............. YES (optional)")
+ELSE(OPENCV_FOUND)
+    MESSAGE(STATUS " libopencv library found............. NO  (optional)")
+ENDIF(OPENCV_FOUND)
+
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     IF(X11_FOUND AND X11_Xrandr_FOUND)
@@ -246,6 +253,12 @@ ELSE(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
     MESSAGE(STATUS " DNGConverter will be compiled....... NO  (optional - Look README file for more details about dependencies)")
 ENDIF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
 
+IF(OPENCV_FOUND)
+    MESSAGE(STATUS " RemoveRedEyes will be compiled...... YES (optional)")
+ELSE(OPENCV_FOUND)
+    MESSAGE(STATUS " RemoveRedEyes will be compiled...... NO  (optional - Look README file for more details about dependencies)")
+ENDIF(OPENCV_FOUND)
+
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
 
@@ -304,7 +317,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(galleryexport)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(printwizard)
-    #ADD_SUBDIRECTORY(removeredeyes)
+
+    IF(OPENCV_FOUND)
+        ADD_SUBDIRECTORY(removeredeyes)
+    ENDIF(OPENCV_FOUND)
 
     IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
         ADD_SUBDIRECTORY(htmlexport)
@@ -319,7 +335,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-	# Under Linux, this plugin use KSane interface
+        # Under Linux, this plugin use KSane interface
         IF(SANE_FOUND AND KSANE_FOUND)
             ADD_SUBDIRECTORY(acquireimages)
         ENDIF(SANE_FOUND AND KSANE_FOUND)
@@ -332,7 +348,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-	# Under Windows, this plugin use TWAIN interface
+        # Under Windows, this plugin use TWAIN interface
         ADD_SUBDIRECTORY(acquireimages)
 
     ENDIF(NOT WIN32 AND NOT APPLE)
