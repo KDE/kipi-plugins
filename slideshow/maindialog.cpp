@@ -605,16 +605,12 @@ void MainDialog::SlotPortfolioDurationChanged ( int )
 
 void MainDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 { 
-    kDebug() << "-------- " << url << " : ENTERED"<<endl;
-    
     if (pix.isNull())
         m_previewLabel->setPixmap(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
     else
         m_previewLabel->setPixmap(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
     
     disconnect(m_sharedData->interface, 0, this, 0);
-    
-    kDebug() << "-------- " << url << " : EXIT"<<endl;
 }
 
 void MainDialog::slotPrintCommentsToggled( void )
