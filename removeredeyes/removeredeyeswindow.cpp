@@ -367,6 +367,7 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
         d->progress->show();
     d->progress->reset();
     d->progress->setRange(0, urls.count());
+    d->progress->setValue(0);
 
     // start image processing
     d->wth->start();
