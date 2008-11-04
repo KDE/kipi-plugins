@@ -260,7 +260,7 @@ void GPSTrackListEditDialog::readSettings()
     restoreDialogSize(group2);
 
     d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
-    d->worldMap->setMapType(group.readEntry("Track List Map Type", QString("G_MAP_TYPE")));
+    d->worldMap->setMapType(group.readEntry("Track List Map Type", QString("G_NORMAL_MAP")));
 
     d->worldMap->setTrackList(d->gpsTrackList);
     d->worldMap->resized();

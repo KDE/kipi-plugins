@@ -254,7 +254,7 @@ void GPSEditDialog::readSettings()
     restoreDialogSize(group2);
 
     d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 8));
-    d->worldMap->setMapType(group.readEntry("Map Type", QString("G_MAP_TYPE")));
+    d->worldMap->setMapType(group.readEntry("Map Type", QString("G_NORMAL_MAP")));
 
     d->altitudeInput->blockSignals(true);
     d->latitudeInput->blockSignals(true);
