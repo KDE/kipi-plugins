@@ -227,6 +227,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(slotFoundRAWImages(bool)));
 
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(startCorrection()));
+
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(startTestrun()));
 
