@@ -70,10 +70,19 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
     d->classifierSettingsBox    = new ClassifierSettingsBox;
     d->storageSettingsBox       = new StorageSettingsBox;
 
-    QGridLayout* mainLayout     = new QGridLayout;
-    mainLayout->addWidget(d->storageSettingsBox,    0, 0, 1, 2);
-    mainLayout->addWidget(d->classifierSettingsBox, 1, 0, 1, 1);
-    mainLayout->addWidget(d->blobSettingsBox,       1, 1, 1, 1);
+
+    QGridLayout* advLayout = new QGridLayout;
+    advLayout->addWidget(d->classifierSettingsBox,  0, 0, 1, 1);
+    advLayout->addWidget(d->blobSettingsBox,        1, 0, 1, 1);
+    advLayout->setRowStretch(2, 10);
+
+    QGridLayout* storageLayout = new QGridLayout;
+    storageLayout->addWidget(d->storageSettingsBox, 0, 0, 1, 1);
+    storageLayout->setRowStretch(1, 10);
+
+    QGridLayout* mainLayout = new QGridLayout;
+    mainLayout->addLayout(advLayout,     0, 0, 1, 1);
+    mainLayout->addLayout(storageLayout, 0, 1, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
 
