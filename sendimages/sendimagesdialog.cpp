@@ -102,7 +102,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->imagesPage  = new ImagesPage(this, iface);
     d->page_images = addPage(d->imagesPage, i18n("Images"));
     d->page_images->setHeader(i18n("Images List"));
-    d->page_images->setIcon(KIcon("image-jpeg2000"));
+    d->page_images->setIcon(KIcon("image-jp2"));
     d->imagesPage->slotAddImages(urls);
 
     d->emailPage  = new EmailPage(this);
