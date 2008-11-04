@@ -51,6 +51,8 @@ ImageItem::ImageItem(QListWidget* parent, QString const & name, QString const & 
                      QString const & path, QString const & album, KIPI::Interface* interface)
         : QListWidgetItem(parent), m_name(name), m_comments(comments), m_path(path), m_album(album)
 {
+    setIcon(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
+
     m_interface = interface;
     connect(m_interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
@@ -94,9 +96,7 @@ void ImageItem::slotThumbnail(const KUrl& url, const QPixmap& pix)
     if (url!=m_path)
         return;
     
-    if (pix.isNull())
-        setIcon(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
-    else
+    if (!pix.isNull())
         setIcon(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
 
     disconnect(m_interface, 0, this, 0);
