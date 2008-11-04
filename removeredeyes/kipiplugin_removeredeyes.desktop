@@ -1,9 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RemoveRedEyes
-Name[de]=Rote Augen korrigieren
 Comment=KIPI Remove Red Eyes Plugin
-Comment[de]=Ein KIPI-Modul zum automatischen Korrigieren von roten Augen
 
 Icon=
 ServiceTypes=KIPI/Plugin

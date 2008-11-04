@@ -1,9 +1,25 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=PrintWizard
+Name[de]=Druck-Assistent
 Name[ga]=DraoiPriontála
+Name[it]=Assistente di stampa
+Name[nds]=Druckhölper
+Name[nl]=PrintAssistent
+Name[pt]=Assistente de Impressão
+Name[pt_BR]=Assistente de Impressão
+Name[sv]=Utskriftsguide
+Name[uk]=Майстер друку
 Comment=KIPI Print Wizard Plugin
+Comment[de]=KIPI-Assistent Modul zum Drucken
 Comment[ga]=Breiseán Treoraí Priontála KIPI
+Comment[it]=Estensione assistente di stampa di KIPI
+Comment[nds]=KIPI-Moduul, dat bi't Drucken hölpt
+Comment[nl]=KIPI-plugin voor printassistent
+Comment[pt]='Plugin' de Assistência à Impressão do KIPI
+Comment[pt_BR]='Plugin' de Assistência à Impressão do KIPI
+Comment[sv]=KIPI-insticksprogram: utskriftsguide
+Comment[uk]=Додаток майстра друку KIPI
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_printwizard
