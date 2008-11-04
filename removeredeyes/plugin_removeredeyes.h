@@ -37,7 +37,7 @@ class KAction;
 
 namespace KIPIRemoveRedEyesPlugin
 {
-class RedEyesWindow;
+class RemoveRedEyesWindow;
 }
 
 class Plugin_RemoveRedEyes : public KIPI::Plugin
@@ -58,7 +58,7 @@ private slots:
 private:
 
     KAction                                *m_action;
-    KIPIRemoveRedEyesPlugin::RedEyesWindow *m_dlg;
+    KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow *m_dlg;
 };
 
 #endif // PLUGIN_REMOVEREDEYES_H

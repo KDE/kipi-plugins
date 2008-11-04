@@ -93,7 +93,7 @@ void Plugin_RemoveRedEyes::slotActivate()
         return;
     }
 
-    m_dlg = new KIPIRemoveRedEyesPlugin::RedEyesWindow(interface, kapp->activeWindow());
+    m_dlg = new KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow(interface, kapp->activeWindow());
     m_dlg->show();
 }
 

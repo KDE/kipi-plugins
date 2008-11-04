@@ -42,7 +42,7 @@ class RemovalSettings;
 class WTEventData;
 class RedEyesWindowPriv;
 
-class RedEyesWindow : public KDialog
+class RemoveRedEyesWindow : public KDialog
 {
     Q_OBJECT
 
@@ -62,8 +62,8 @@ public:
 
 public:
 
-    RedEyesWindow(KIPI::Interface *interface, QWidget *parent);
-    ~RedEyesWindow();
+    RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent);
+    ~RemoveRedEyesWindow();
 
 signals:
 

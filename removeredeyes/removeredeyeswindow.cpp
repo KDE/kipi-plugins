@@ -116,9 +116,9 @@ public:
     RemovalSettings*            settings;
 };
 
-RedEyesWindow::RedEyesWindow(KIPI::Interface *interface, QWidget *parent)
-             : KDialog(parent),
-               d(new RedEyesWindowPriv)
+RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent)
+                   : KDialog(parent),
+                     d(new RedEyesWindowPriv)
 {
     setWindowTitle(i18n("Remove Red-Eyes From Your Photos"));
     setButtons(Help|User1|User2|Close);
@@ -249,13 +249,13 @@ RedEyesWindow::RedEyesWindow(KIPI::Interface *interface, QWidget *parent)
     readSettings();
 }
 
-RedEyesWindow::~RedEyesWindow()
+RemoveRedEyesWindow::~RemoveRedEyesWindow()
 {
     delete d->settings;
     delete d;
 }
 
-void RedEyesWindow::readSettings()
+void RemoveRedEyesWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("RemoveRedEyes Settings");
@@ -275,7 +275,7 @@ void RedEyesWindow::readSettings()
     d->advancedSettings->loadSettings(d->settings);
 }
 
-void RedEyesWindow::writeSettings()
+void RemoveRedEyesWindow::writeSettings()
 {
     updateSettings();
 
@@ -302,7 +302,7 @@ void RedEyesWindow::writeSettings()
     config.sync();
 }
 
-void RedEyesWindow::updateSettings()
+void RemoveRedEyesWindow::updateSettings()
 {
     if (d->simpleCorrectionMode)
         d->settings = d->simpleSettings->readSettings();
@@ -310,30 +310,30 @@ void RedEyesWindow::updateSettings()
         d->settings = d->advancedSettings->readSettings();
 }
 
-void RedEyesWindow::startCorrection()
+void RemoveRedEyesWindow::startCorrection()
 {
     updateSettings();
     startWorkerThread(WorkerThread::Correction);
 }
 
-void RedEyesWindow::startTestrun()
+void RemoveRedEyesWindow::startTestrun()
 {
     updateSettings();
     startWorkerThread(WorkerThread::TestRun);
 }
 
-void RedEyesWindow::slotClose()
+void RemoveRedEyesWindow::slotClose()
 {
     writeSettings();
     done(Close);
 }
 
-void RedEyesWindow::slotHelp()
+void RemoveRedEyesWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
 }
 
-void RedEyesWindow::startWorkerThread(int type)
+void RemoveRedEyesWindow::startWorkerThread(int type)
 {
     KUrl::List urls = d->imageList->imageUrls();
     if (urls.isEmpty())
@@ -372,14 +372,14 @@ void RedEyesWindow::startWorkerThread(int type)
     d->wth->start();
 }
 
-void RedEyesWindow::slotProgressBarChanged(int v)
+void RemoveRedEyesWindow::slotProgressBarChanged(int v)
 {
     int total = d->imageList->imageUrls().count();
     if (v == total)
         d->progressTimer->start(500);
 }
 
-void RedEyesWindow::slotProgressBarTimedOut()
+void RemoveRedEyesWindow::slotProgressBarTimedOut()
 {
     d->progress->hide();
 
@@ -397,7 +397,7 @@ void RedEyesWindow::slotProgressBarTimedOut()
     }
 }
 
-void RedEyesWindow::checkForNoneCorrectedImages()
+void RemoveRedEyesWindow::checkForNoneCorrectedImages()
 {
     // check if imageslist has none corrected eyes
     if (d->imageList->hasNoneCorrectedImages())
@@ -415,7 +415,7 @@ void RedEyesWindow::checkForNoneCorrectedImages()
     }
 }
 
-void RedEyesWindow::slotImageListChanged(bool)
+void RemoveRedEyesWindow::slotImageListChanged(bool)
 {
     if (d->imageList->imageUrls().isEmpty())
     {
@@ -429,7 +429,7 @@ void RedEyesWindow::slotImageListChanged(bool)
     }
 }
 
-void RedEyesWindow::slotFoundRAWImages(bool raw)
+void RemoveRedEyesWindow::slotFoundRAWImages(bool raw)
 {
     if (raw)
     {
@@ -441,7 +441,7 @@ void RedEyesWindow::slotFoundRAWImages(bool raw)
     }
 }
 
-void RedEyesWindow::calculationFinished(WTEventData* data)
+void RemoveRedEyesWindow::calculationFinished(WTEventData* data)
 {
     if (!data)
         return;
@@ -457,7 +457,7 @@ void RedEyesWindow::calculationFinished(WTEventData* data)
     d->imageList->slotAddEyeCounterByUrl(url, eyes);
 }
 
-void RedEyesWindow::settingsModeChanged()
+void RemoveRedEyesWindow::settingsModeChanged()
 {
     switch (d->settingsStack->currentIndex())
     {
@@ -471,7 +471,7 @@ void RedEyesWindow::settingsModeChanged()
     }
 }
 
-void RedEyesWindow::setSettingsMode(SettingsMode mode)
+void RemoveRedEyesWindow::setSettingsMode(SettingsMode mode)
 {
     switch (mode)
     {
