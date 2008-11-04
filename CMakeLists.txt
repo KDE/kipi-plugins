@@ -43,6 +43,8 @@ FIND_PACKAGE(TIFF REQUIRED)
 
 # Optional depencies detection required by some plugins
 
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+
 MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)   # For DNGConverter: XMP SDK need Expat library to compile.
 MACRO_OPTIONAL_FIND_PACKAGE(Threads) # For DNGConverter: DNG SDK need native threads support.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport.
