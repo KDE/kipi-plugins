@@ -89,7 +89,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     );
     d->settingsSlider->setStyleSheet(sliderStyle);
 
-    QLabel* lSlow = new QLabel("<p><b>More reliable (very slow)</b></p>"
+    QLabel* lSlow = new QLabel("<p><b>Slow<br/>(low-res and slightly blurred images)</b></p>"
                                "<p>In this mode the automatic detection and correction of the "
                                "red eyes is the most reliable. The drawback "
                                "of the higher detection rate is a much slower computation.</p>");
@@ -99,7 +99,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
                               "are not too small or blurry, detection is quite good. Always try this mode "
                               "first.</p>");
 
-    QLabel* lFast = new QLabel("<p><b>Less reliable (faster)</b></p>"
+    QLabel* lFast = new QLabel("<p><b>Fast<br/>(high-res files)</b></p>"
                                "<p>In this mode the automatic detection and correction of the red eyes "
                                "will be very fast, but more false positives may occur. Use this mode "
                                "only for very high-resolution images.</p>");
@@ -163,9 +163,9 @@ void SimpleSettings::simpleModeChanged(int value)
             break;
 
         case Fast:
-            d->settings->minRoundness           = 6;
+            d->settings->minRoundness           = 3.2;
             d->settings->scaleFactor            = 3.6;
-            d->settings->minBlobsize            = 20;
+            d->settings->minBlobsize            = 40;
             d->settings->neighborGroups         = 1;
             break;
 
