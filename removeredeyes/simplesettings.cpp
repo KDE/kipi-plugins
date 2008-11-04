@@ -101,7 +101,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
 
     QLabel* lFast = new QLabel("<p><b>Fast<br/>(high-res files)</b></p>"
                                "<p>In this mode the automatic detection and correction of the red eyes "
-                               "will be very fast, but more false positives may occur. Use this mode "
+                               "will be faster, but more false positives may occur. Use this mode "
                                "only for very high-resolution images.</p>");
 
     lSlow->setWordWrap(true);
