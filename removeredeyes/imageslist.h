@@ -4,8 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-05-21
- * Description : a kipi plugin to automatically detect
- *               and remove red eyes from images
+ * Description : a widget to display the imagelist
  *
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>

@@ -4,8 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-06-08
- * Description : a kipi plugin to automatically detect
- *               and remove red eyes from images
+ * Description : the calculation thread for red-eye removal
  *
  * Copyright 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
