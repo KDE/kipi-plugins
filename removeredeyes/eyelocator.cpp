@@ -26,7 +26,7 @@
 
 // OpenCV includes.
 
-#include <opencv/BlobResult.h>
+#include <BlobResult.h>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 

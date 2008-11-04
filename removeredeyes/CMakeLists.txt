@@ -1,4 +1,14 @@
 
+ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs)
+
+SET(libcvblobs_SRCS
+    libcvblobs/Blob.cpp
+    libcvblobs/BlobResult.cpp
+    libcvblobs/BlobExtraction.cpp
+   )
+
 SET(kipiplugin_removeredeyes_PART_SRCS
     advancedsettings.cpp
     blobsettingsbox.cpp
@@ -11,17 +21,17 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     storagesettingsbox.cpp
     workerthread.cpp
     wteventdata.cpp
+    ${libcvblobs_SRCS}
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       kipiplugins
-                      blob
-                      ${KIPI_LIBRARIES} 
-                      ${KDCRAW_LIBRARIES} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KDE4_KPARTS_LIBS} 
+                      ${KIPI_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KDE4_KPARTS_LIBS}
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
                       ${OpenCV_LIBRARIES}
