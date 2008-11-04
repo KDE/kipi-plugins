@@ -50,6 +50,7 @@
 #include <QWheelEvent>
 #include <QPainterPath>
 #include <QPolygon>
+#include <QSvgRenderer>
 
 // KDE includes.
 
@@ -58,6 +59,7 @@
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <kstandarddirs.h>
 #include <KConfigGroup>
 
 namespace KIPISlideShowPlugin
@@ -1121,7 +1123,20 @@ void SlideShow::paintEvent( QPaintEvent * )
         p.setFont( fn );
         p.setPen( Qt::white );
         p.drawText( 100, 100, i18n( "SlideShow Completed." ) );
-        p.drawText( 100, 150, i18n( "Click To Exit..." ) );
+        p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click To Exit..." ) );
+        
+        
+        QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_slideshow/KIPIicon.svg") );
+        QPixmap kipiLogoPixmap = QPixmap(width()/6, width()/6);
+        kipiLogoPixmap.fill(Qt::black);
+        QPaintDevice* pdp = &kipiLogoPixmap;
+        QPainter painter(pdp);
+        svgRenderer.render(&painter);
+        
+        p.drawPixmap(width()-(width()/12)-kipiLogoPixmap.width(), 
+                     height()-(height()/12)-kipiLogoPixmap.height(),
+                     kipiLogoPixmap);
+        
         p.end();
         return;
     }

@@ -45,6 +45,8 @@
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QDesktopWidget>
+#include <QSvgRenderer>
+#include <QPainter>
 
 // KDE includes.
 
@@ -54,6 +56,7 @@
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 #include <KConfigGroup>
+#include <kstandarddirs.h>
 
 namespace KIPISlideShowPlugin
 {
@@ -177,10 +180,6 @@ SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
 
 SlideShowGL::~SlideShowGL()
 {
-//    delete m_timer;
-//    delete m_mouseMoveTimer;
-//    delete m_playbackWidget;
-//    delete m_slidePlaybackWidget;
 
     if (m_texture[0])
         glDeleteTextures(1, &m_texture[0]);
@@ -725,7 +724,7 @@ void SlideShowGL::printComments(QImage& layer)
 
 void SlideShowGL::showEndOfShow()
 {
-    QPixmap pix(512, 512);
+    QPixmap pix(width(), height());
     pix.fill(Qt::black);
 
     QFont fn(font());
@@ -737,6 +736,18 @@ void SlideShowGL::showEndOfShow()
     p.setFont(fn);
     p.drawText(20, 50, i18n("SlideShow Completed."));
     p.drawText(20, 100, i18n("Click To Exit..."));
+    
+    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_slideshow/KIPIicon.svg") );
+    QPixmap kipiLogoPixmap = QPixmap(width()/6, width()/6);
+    kipiLogoPixmap.fill(Qt::black);
+    QPaintDevice* pdp = &kipiLogoPixmap;
+    QPainter painter(pdp);
+    svgRenderer.render(&painter);
+    
+    p.drawPixmap(width()-(width()/12)-kipiLogoPixmap.width(), 
+                 height()-(height()/12)-kipiLogoPixmap.height(),
+                 kipiLogoPixmap);
+    
     p.end();
 
     QImage image(pix.toImage());
