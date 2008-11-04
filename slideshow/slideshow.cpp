@@ -795,8 +795,6 @@ int SlideShow::effectSweep( bool aInit )
 
 int SlideShow::effectCubism( bool aInit )
 {
-    int r;
-
     if ( aInit )
     {
         m_alpha = M_PI * 2;
