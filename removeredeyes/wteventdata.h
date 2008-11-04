@@ -35,7 +35,7 @@ class WTEventData
 
 public:
 
-    WTEventData(int current, const KUrl& url, int eyes = 0);
+    WTEventData(const KUrl& url, int current = 0, int eyes = 0);
     ~WTEventData();
 
     int         current() const;

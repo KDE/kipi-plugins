@@ -1,7 +1,6 @@
 BASIC IMPLEMENTATION
 
 * cancel function for calculation process
-* remove WTEventData, I guess this is not needed anymore, since QThreads communicate via signals now
 * improve detection (set parameters depending on filesize / dimension)
 * move StorageSettings out of simple and advanced settings
 

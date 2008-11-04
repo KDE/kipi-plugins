@@ -31,7 +31,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-WTEventData::WTEventData(int current, const KUrl& url, int eyes): m_url(url)
+WTEventData::WTEventData(const KUrl& url, int current, int eyes): m_url(url)
 {
     m_current = current;
     m_eyes    = eyes;

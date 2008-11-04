@@ -129,7 +129,7 @@ void WorkerThread::run()
         }
 
         int eyes = loc.redEyes();
-        emit calculationFinished(new WTEventData(i, url, eyes));
+        emit calculationFinished(new WTEventData(url, i, eyes));
     }
 }
 } // namespace KIPIRemoveRedEyesPlugin
