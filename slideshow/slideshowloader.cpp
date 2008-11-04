@@ -24,14 +24,25 @@
 
 // Qt includes.
 
-#include <qimage.h>
-#include <qmatrix.h>
-#include <qpainter.h>
-#include <q3valuelist.h>
+#include <QImage>
+#include <QMatrix>
+#include <QPainter>
+#include <Q3ValueList>
+#include <QFileInfo>
 
 // KDE includes.
 
 #include <kdebug.h>
+
+// LibKDcraw includes
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
+
 
 namespace KIPISlideShowPlugin
 {
@@ -54,10 +65,24 @@ LoadThread::~LoadThread()
 
 void LoadThread::run()
 {
+    QImage newImage;
+    
+    // check if it's a RAW file.
+#if KDCRAW_VERSION < 0x000400
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+    QFileInfo fileInfo(m_path.path());
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) {
+        // it's a RAW file, use the libkdcraw loader
+        KDcrawIface::KDcraw::loadDcrawPreview(newImage, m_path.path());
+    } else {
+        // use the standard loader
+        newImage=QImage(m_path.path());
+    }
 
-    QImage newImage(m_path.path());
     // Rotate according to angle
-
     if ( m_angle != 0 )
     {
         QMatrix matrix;
@@ -126,12 +151,6 @@ SlideShowLoader::~SlideShowLoader()
 
     m_threadLock->unlock();
 
-
-//    delete(m_loadingThreads);
-//    delete(m_loadedImages);
-//
-//    delete(m_imageLock);
-//    delete(m_threadLock);
 }
 
 void SlideShowLoader::next()

@@ -7,13 +7,15 @@ RemoveRedEyes  : New plugin to remove red eyes in batch. Tool is based on OpenCV
 AcquireImages  : Under Windows, TWAIN interface is used to scan image using flat scanner.
 SlideShow      : Normal effects are back.
 SlideShow      : New effect "Cubism".
+SlideShow      : Added support for RAW images.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 172910 : GalleryExport      : Gallery crash (letting crash digiKam) with valid data and url.
 002 ==> 161855 : GalleryExport      : Remote Gallery Sync loses password.
 003 ==> 154752 : GalleryExport      : Export to Gallery2 seems to fail, but in fact works.
-004 ==> 
+004 ==> 157285 : SlideShow          : digikam advanced slideshow not working with Canon RAWs 
+005 ==>
 
 v 0.2.0 - beta3
 ------------------------------------------------------------------------

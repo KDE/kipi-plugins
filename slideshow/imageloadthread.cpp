@@ -30,11 +30,21 @@
 
 #include <Q3ValueList>
 #include <QMatrix>
+#include <QFileInfo>
 
 // KDE includes.
 
 #include <klocale.h>
 #include <kdebug.h>
+
+// LibKDcraw includes
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
 
 // Local includes.
 
@@ -154,9 +164,23 @@ bool ImageLoadThread::loadImage()
     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
     QString path(fileAngle.first);
     int     angle(fileAngle.second);
-    QImage image(path);
-
-
+    
+    QImage image;
+    
+    // check if it's a RAW file.
+#if KDCRAW_VERSION < 0x000400
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+    QFileInfo fileInfo(path);
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) {
+        // it's a RAW file, use the libkdcraw loader
+        KDcrawIface::KDcraw::loadDcrawPreview(image, path);
+    } else {
+        // use the standard loader
+        image=QImage(path);
+    }
 
     if (angle != 0)
     {
