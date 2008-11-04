@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#include "redeyeswindow.h"
-#include "redeyeswindow.moc"
+#include "removeredeyeswindow.h"
+#include "removeredeyeswindow.moc"
 
 // Qt includes.
 

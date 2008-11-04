@@ -17,7 +17,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     eyelocator.cpp
     imageslist.cpp
     plugin_removeredeyes.cpp
-    redeyeswindow.cpp
+    removeredeyeswindow.cpp
     storagesettingsbox.cpp
     workerthread.cpp
     wteventdata.cpp

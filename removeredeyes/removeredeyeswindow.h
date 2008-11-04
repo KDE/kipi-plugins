@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef REDEYESWINDOW_H
-#define REDEYESWINDOW_H
+#ifndef REMOVEREDEYESWINDOW_H
+#define REMOVEREDEYESWINDOW_H
 
 // KDE includes.
 
@@ -106,4 +106,4 @@ private:
 
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif // REDEYESWINDOW_H
+#endif // REMOVEREDEYESWINDOW_H

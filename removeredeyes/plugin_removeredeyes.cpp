@@ -51,7 +51,7 @@ extern "C"
 
 // Local includes.
 
-#include "redeyeswindow.h"
+#include "removeredeyeswindow.h"
 
 K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); )
 K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )

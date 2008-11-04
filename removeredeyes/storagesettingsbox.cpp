@@ -37,7 +37,7 @@
 
 // Local includes.
 
-#include "redeyeswindow.h"
+#include "removeredeyeswindow.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
