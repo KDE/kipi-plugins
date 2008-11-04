@@ -236,13 +236,6 @@ ImagesList::ImagesList(KIPI::Interface *iface, QWidget* parent)
 
     connect(this, SIGNAL(signalImageListChanged(bool)),
             this, SLOT(slotUpdateSummary()));
-
-    // --------------------------------------------------------
-
-    KIPI::ImageCollection images = d->iface->currentSelection();
-
-    if (images.isValid())
-        slotAddImages(images.images());
 }
 
 ImagesList::~ImagesList()
@@ -264,7 +257,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
         // Check if the new item already exist in the list.
 
-        bool find = false;
+        bool found = false;
 
         QTreeWidgetItemIterator it(d->listView);
         while (*it)
@@ -272,13 +265,13 @@ void ImagesList::slotAddImages(const KUrl::List& list)
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
 
             if (item->url() == imageUrl)
-                find = true;
+                found = true;
 
             ++it;
         }
 
         // RAW files are not allowed, don't add them to ImagesList
-        if (!find)
+        if (!found)
         {
             if (!isRAWFile(imageUrl.path()))
             {
@@ -331,10 +324,10 @@ void ImagesList::slotAddItems()
 
 void ImagesList::slotRemoveItems()
 {
-    bool find;
+    bool found;
     do
     {
-        find = false;
+        found = false;
         QTreeWidgetItemIterator it(d->listView);
         while (*it)
         {
@@ -342,23 +335,23 @@ void ImagesList::slotRemoveItems()
             if (item->isSelected())
             {
                 delete item;
-                find = true;
+                found = true;
                 break;
             }
             ++it;
         }
     }
-    while (find);
+    while (found);
 
     emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
 {
-    bool find;
+    bool found;
     do
     {
-        find = false;
+        found = false;
         QTreeWidgetItemIterator it(d->listView);
         while (*it)
         {
@@ -366,13 +359,13 @@ void ImagesList::removeItemByUrl(const KUrl& url)
             if (item->url() == url)
             {
                 delete item;
-                find = true;
+                found = true;
                 break;
             }
             ++it;
         }
     }
-    while (find);
+    while (found);
 
     emit signalImageListChanged(imageUrls().isEmpty());
 }

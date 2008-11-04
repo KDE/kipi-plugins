@@ -224,6 +224,11 @@ RedEyesWindow::RedEyesWindow(KIPI::Interface *interface, QWidget *parent)
 
     // ------------------------------------------------------------------
 
+    KIPI::ImageCollection images = interface->currentSelection();
+
+    if (images.isValid())
+        d->imageList->slotAddImages(images.images());
+
     readSettings();
 }
 
@@ -406,8 +411,8 @@ void RedEyesWindow::slotFoundRAWImages(bool raw)
     if (raw)
     {
         KMessageBox::information(this,
-                                 i18n("You tried to add <b>RAW images</b>, which are not "
-                                      "supported by this plugin. They were automatically "
+                                 i18n("You tried to add <b>RAW images</b> to the red-eye batch remover plugin,"
+                                      "but those filetypes are not " "supported. They were automatically "
                                       "removed from the list."),
                                       i18n("RAW images found"));
     }
