@@ -97,6 +97,7 @@ protected:
     int effectChessboard(bool doInit);
     int effectMeltdown(bool doInit);
     int effectSweep(bool doInit);
+    int effectMosaic(bool doInit);
     int effectCubism(bool doInit);
     int effectRandom(bool doInit);
     int effectGrowing(bool doInit);
@@ -170,6 +171,7 @@ private:
     double                      m_fx, m_fy, m_alpha, m_fd;
     int*                        m_intArray;
     bool                        m_pdone;
+    bool**                      m_pixelMatrix;
 
     //static 
     Q3PointArray                 m_pa;

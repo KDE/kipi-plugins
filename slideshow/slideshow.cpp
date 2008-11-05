@@ -189,7 +189,7 @@ void SlideShow::registerEffects()
     Effects.insert( "Chess Board", &SlideShow::effectChessboard );
     Effects.insert( "Melt Down", &SlideShow::effectMeltdown );
     Effects.insert( "Sweep", &SlideShow::effectSweep );
-//    Effects.insert("Noise", &SlideShow::effectRandom);
+    Effects.insert( "Mosaic", &SlideShow::effectMosaic );
     Effects.insert( "Cubism", &SlideShow::effectCubism );
     Effects.insert( "Growing", &SlideShow::effectGrowing );
     Effects.insert( "Horizontal Lines", &SlideShow::effectHorizLines );
@@ -208,7 +208,7 @@ QStringList SlideShow::effectNames()
     effects.append( "Chess Board" );
     effects.append( "Melt Down" );
     effects.append( "Sweep" );
-//    effects.append("Noise");
+    effects.append( "Mosaic" );
     effects.append( "Cubism" );
     effects.append( "Growing" );
     effects.append( "Horizontal Lines" );
@@ -230,7 +230,7 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
     effects["Chess Board"] = i18n( "Chess Board" );
     effects["Melt Down"] = i18n( "Melt Down" );
     effects["Sweep"] = i18n( "Sweep" );
-//    effects["Noise"] = i18n("Noise");
+    effects["Mosaic"] = i18n( "Mosaic" );
     effects["Cubism"] = i18n( "Cubism" );
     effects["Growing"] = i18n( "Growing" );
     effects["Horizontal Lines"] = i18n( "Horizontal Lines" );
@@ -689,7 +689,7 @@ int SlideShow::effectChessboard( bool aInit )
         bufferPainter.fillRect( m_ix, y + m_iy, m_dx, m_dy, brush );
         bufferPainter.fillRect( m_x, y + m_y, m_dx, m_dy, brush );
     }
-    
+
     repaint();
 
     return m_wait;
@@ -736,7 +736,7 @@ int SlideShow::effectMeltdown( bool aInit )
     }
 
     bufferPainter.end();
-    
+
     repaint();
 
     if ( m_pdone )
@@ -783,11 +783,11 @@ int SlideShow::effectSweep( bool aInit )
             m_py = 0;
             m_psx = w;
             m_psy = m_h;
-            
+
             QPainter bufferPainter( &m_buffer );
             bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
             bufferPainter.end();
-            
+
             repaint();
         }
 
@@ -809,16 +809,78 @@ int SlideShow::effectSweep( bool aInit )
             m_py = y;
             m_psx = m_w;
             m_psy = h;
-            
+
             QPainter bufferPainter( &m_buffer );
             bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
             bufferPainter.end();
-            
+
             repaint();
         }
 
         m_y += m_dy;
     }
+
+    return 20;
+}
+
+int SlideShow::effectMosaic( bool aInit )
+{
+    int dim = 10; // Size of a cell (dim x dim)
+    int margin = dim + ( int )( dim/4 );
+
+
+    if ( aInit )
+    {
+        m_i = 30; // giri totali
+        m_pixelMatrix = new bool*[width()];
+
+        for ( int x=0; x<width(); x++ )
+        {
+            m_pixelMatrix[x] = new bool[height()];
+
+            for ( int y=0; y<height(); y++ )
+            {
+                m_pixelMatrix[x][y] = false;
+            }
+        }
+    }
+
+    if ( m_i <= 0 )
+    {
+        showCurrentImage();
+        return -1;
+    }
+
+    int w = width();
+    int h = height();
+
+    QPainter bufferPainter( &m_buffer );
+
+    for ( int x=0; x<w; x+=( rand()%margin )+dim )
+    {
+
+        for ( int y=0; y<h; y+=( rand()%margin )+dim )
+        {
+            if ( m_pixelMatrix[x][y] == true )
+            {
+                if ( y!=0 ) y--;
+
+                continue;
+            }
+
+            bufferPainter.fillRect( x, y, dim, dim, QBrush( m_currImage ) );
+
+            for ( int i=0; i<dim && ( x+i )<w; i++ )
+                for ( int j=0; j<dim && ( y+j )<h; j++ )
+                    m_pixelMatrix[x+i][y+j] = true;
+        }
+    }
+
+    bufferPainter.end();
+
+    repaint();
+
+    m_i--;
 
     return 20;
 }
@@ -840,6 +902,7 @@ int SlideShow::effectCubism( bool aInit )
     }
 
     QPainterPath painterPath;
+
     QPainter bufferPainter( &m_buffer );
 
     m_x = rand() % m_w;
@@ -857,7 +920,7 @@ int SlideShow::effectCubism( bool aInit )
     bufferPainter.setMatrix( matrix );
     bufferPainter.fillRect( rect, QBrush( m_currImage ) );
     bufferPainter.end();
-    
+
     repaint();
 
     m_i--;
@@ -901,11 +964,11 @@ int SlideShow::effectGrowing( bool aInit )
     m_py = m_y;
     m_psx = m_w - ( m_x << 1 );
     m_psy = m_h - ( m_y << 1 );
-    
+
     QPainter bufferPainter( &m_buffer );
     bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
     bufferPainter.end();
-    
+
     repaint();
 
     return 20;
@@ -925,15 +988,18 @@ int SlideShow::effectHorizLines( bool aInit )
     if ( iyPos[m_i] < 0 ) return -1;
 
     int iPos;
+
     int until = m_h;
+
     QPainter bufferPainter( &m_buffer );
+
     QBrush brush = QBrush( m_currImage );
 
     for ( iPos = iyPos[m_i]; iPos < until; iPos += 8 )
-            bufferPainter.fillRect( 0, iPos, m_w, 1, brush );
- 
+        bufferPainter.fillRect( 0, iPos, m_w, 1, brush );
+
     bufferPainter.end();
-    
+
     repaint();
 
     m_i++;
@@ -941,6 +1007,7 @@ int SlideShow::effectHorizLines( bool aInit )
     if ( iyPos[m_i] >= 0 ) return 160;
 
     showCurrentImage();
+
     return -1;
 }
 
@@ -958,15 +1025,18 @@ int SlideShow::effectVertLines( bool aInit )
     if ( ixPos[m_i] < 0 ) return -1;
 
     int iPos;
+
     int until = m_w;
+
     QPainter bufferPainter( &m_buffer );
+
     QBrush brush = QBrush( m_currImage );
 
     for ( iPos = ixPos[m_i]; iPos < until; iPos += 8 )
         bufferPainter.fillRect( iPos, 0, 1, m_h, brush );
 
     bufferPainter.end();
-    
+
     repaint();
 
     m_i++;
@@ -974,6 +1044,7 @@ int SlideShow::effectVertLines( bool aInit )
     if ( ixPos[m_i] >= 0 ) return 160;
 
     showCurrentImage();
+
     return -1;
 }
 
@@ -1022,7 +1093,7 @@ int SlideShow::effectMultiCircleOut( bool aInit )
         QPainter bufferPainter( &m_buffer );
         bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
         bufferPainter.end();
-        
+
         repaint();
     }
 
@@ -1092,11 +1163,11 @@ int SlideShow::effectSpiralIn( bool aInit )
     m_py = m_y;
     m_psx = m_ix;
     m_psy = m_iy;
-    
+
     QPainter bufferPainter( &m_buffer );
     bufferPainter.fillRect( m_px, m_py, m_psx, m_psy, QBrush( m_currImage ) );
     bufferPainter.end();
-    
+
     repaint();
 
     m_x += m_dx;
@@ -1148,7 +1219,7 @@ int SlideShow::effectCircleOut( bool aInit )
     QPainter bufferPainter( &m_buffer );
     bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
     bufferPainter.end();
-    
+
     repaint();
 
     return 20;
@@ -1189,7 +1260,7 @@ int SlideShow::effectBlobs( bool aInit )
     QPainter bufferPainter( &m_buffer );
     bufferPainter.fillPath( painterPath, QBrush( m_currImage ) );
     bufferPainter.end();
-    
+
     repaint();
 
     m_i--;
@@ -1212,11 +1283,14 @@ void SlideShow::paintEvent( QPaintEvent * )
 
         if ( m_sharedData->printFileComments && m_sharedData->ImagesHasComments )
             printComments();
-        
+
         p.drawPixmap( 0, 0, m_currImage,
                       0, 0, m_currImage.width(), m_currImage.height() );
+
         p.end();
+
         m_simplyShow = false;
+
         return;
     }
 
@@ -1233,24 +1307,24 @@ void SlideShow::paintEvent( QPaintEvent * )
         p.setPen( Qt::white );
         p.drawText( 100, 100, i18n( "SlideShow Completed." ) );
         p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click To Exit..." ) );
-        
-        
-        QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_slideshow/KIPIicon.svg") );
-        QPixmap kipiLogoPixmap = QPixmap(width()/6, width()/6);
-        kipiLogoPixmap.fill(Qt::black);
+
+
+        QSvgRenderer svgRenderer( KStandardDirs::locate( "data", "kipiplugin_slideshow/KIPIicon.svg" ) );
+        QPixmap kipiLogoPixmap = QPixmap( width()/6, width()/6 );
+        kipiLogoPixmap.fill( Qt::black );
         QPaintDevice* pdp = &kipiLogoPixmap;
-        QPainter painter(pdp);
-        svgRenderer.render(&painter);
-        
-        p.drawPixmap(width()-(width()/12)-kipiLogoPixmap.width(), 
-                     height()-(height()/12)-kipiLogoPixmap.height(),
-                     kipiLogoPixmap);
-        
+        QPainter painter( pdp );
+        svgRenderer.render( &painter );
+
+        p.drawPixmap( width()-( width()/12 )-kipiLogoPixmap.width(),
+                      height()-( height()/12 )-kipiLogoPixmap.height(),
+                      kipiLogoPixmap );
+
         p.end();
         return;
     }
 
-    // If execution can reach this line, an effect is running
+    // If execution reach this line, an effect is running
     p.drawPixmap( 0,0, m_buffer );
 }
 
