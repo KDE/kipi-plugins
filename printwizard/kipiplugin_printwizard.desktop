@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=PrintWizard
 Name[de]=Druck-Assistent
+Name[el]=Μάγος εκτύπωσης
 Name[ga]=DraoiPriontála
 Name[it]=Assistente di stampa
 Name[nds]=Druckhölper
@@ -12,6 +13,7 @@ Name[sv]=Utskriftsguide
 Name[uk]=Майстер друку
 Comment=KIPI Print Wizard Plugin
 Comment[de]=KIPI-Assistent Modul zum Drucken
+Comment[el]=Πρόσθετο μάγου εκτύπωσης του KIPI
 Comment[ga]=Breiseán Treoraí Priontála KIPI
 Comment[it]=Estensione assistente di stampa di KIPI
 Comment[nds]=KIPI-Moduul, dat bi't Drucken hölpt

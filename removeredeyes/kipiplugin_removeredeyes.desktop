@@ -1,7 +1,20 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=RemoveRedEyes
+Name[de]=RoteAugenEntfernen
+Name[el]=Αφαίρεση κόκκινων ματιών
+Name[nds]=Root Ogen richten
+Name[pt]=Remoção de Olhos Vermelhos
+Name[pt_BR]=Remoção de Olhos Vermelhos
+Name[sv]=Ta bort röda ögon
 Comment=KIPI Remove Red Eyes Plugin
+Comment[de]=KIPI-Modul zum Entfernen von roten Augen
+Comment[el]=Πρόσθετο αφαίρεσης κόκκινων ματιών του KIPI
+Comment[nds]=KIPI-Moduul för't Richten vun root Ogen
+Comment[pt]='Plugin' de Remoção de Olhos Vermelhos do KIPI
+Comment[pt_BR]='Plugin' de Remoção de Olhos Vermelhos do KIPI
+Comment[sv]=KIPI-insticksprogram för att ta bort röda ögon
+Comment[uk]=Додаток KIPI для вилучення ефекту «червоних очей»
 
 Icon=
 ServiceTypes=KIPI/Plugin
