@@ -8,6 +8,7 @@ AcquireImages  : Under Windows, TWAIN interface is used to scan image using flat
 SlideShow      : Normal effects are back.
 SlideShow      : New effect "Cubism".
 SlideShow      : Added support for RAW images.
+DNGConverter   : plugin is now available as a stand alone application.
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
