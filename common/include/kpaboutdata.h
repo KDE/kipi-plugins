@@ -2,7 +2,7 @@
 //
 //    KPABOUTDATA.H
 //
-//    Copyright (C) 2006 Angelo Naselli <anaselli at linux dot it>
+//    Copyright (C) 2006-2008 Angelo Naselli <anaselli at linux dot it>
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ namespace KIPIPlugins
                   const char *pluginVersion=0,
                   int licenseType=License_Unknown,
                   const char *pluginDescription=0,
-                  const char *copyrightStatement="Copyright 2003-2007, kipi-plugins team");
+                  const char *copyrightStatement="Copyright 2003-2008, kipi-plugins team");
 
   };
 
