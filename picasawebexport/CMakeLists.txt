@@ -1,4 +1,3 @@
-ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 SET(kipiplugin_picasawebexport_PART_SRCS
     mpform.cpp
