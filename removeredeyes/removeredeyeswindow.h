@@ -54,12 +54,6 @@ public:
         Settings
     };
 
-    enum SettingsMode
-    {
-        Simple = 0,
-        Advanced
-    };
-
 public:
 
     RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent);
@@ -86,17 +80,11 @@ public slots:
 
     void calculationFinished(WorkerThreadData*);
 
-private slots:
-
-    void settingsModeChanged();
-
 private:
 
     void readSettings();
     void writeSettings();
     void updateSettings();
-
-    void setSettingsMode(SettingsMode mode);
 
     void startWorkerThread(int type);
     void setBusy(bool);

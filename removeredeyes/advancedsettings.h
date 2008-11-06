@@ -49,7 +49,6 @@ public:
 private slots:
 
     void prepareSettings();
-    void storageSettingsChanged();
 
 private:
 

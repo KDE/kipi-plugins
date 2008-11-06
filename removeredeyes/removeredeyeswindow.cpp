@@ -60,10 +60,10 @@
 
 // Local includes.
 
-#include "advancedsettings.h"
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "removalsettings.h"
+#include "settingstab.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthread.h"
@@ -83,37 +83,31 @@ public:
         about               = 0;
 
         progress            = 0;
-        settingsSwitcherBtn = 0;
-        settingsStack       = 0;
         progressTimer       = 0;
 
         tabWidget           = 0;
 
-        advancedSettings    = 0;
         imageList           = 0;
         settings            = 0;
-        simpleSettings      = 0;
         wth                 = 0;
+
+        settingsTab         = 0;
     }
 
     bool                        busy;
-    bool                        simpleCorrectionMode;
     int                         runtype;
 
     KIPI::Interface*            interface;
     KIPIPlugins::KPAboutData*   about;
 
     QProgressBar*               progress;
-    QPushButton*                settingsSwitcherBtn;
-    QStackedWidget*             settingsStack;
     QTimer*                     progressTimer;
 
     KTabWidget*                 tabWidget;
 
-    AdvancedSettings*           advancedSettings;
     ImagesList*                 imageList;
     RemovalSettings*            settings;
-    SimpleSettings*             simpleSettings;
+    SettingsTab*                settingsTab;
     WorkerThread*               wth;
 };
 
@@ -127,12 +121,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     setModal(false);
 
     d->busy                 = false;
-    d->simpleCorrectionMode = true;
+
     d->runtype              = WorkerThread::TestRun;
     d->settings             = new RemovalSettings;
     d->interface            = interface;
     d->tabWidget            = new KTabWidget;
-    d->settingsSwitcherBtn  = new QPushButton;
+
     d->imageList            = new ImagesList(interface);
 
     d->progressTimer        = new QTimer(this);
@@ -175,45 +169,24 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
     setButtonToolTip(Close, i18n("Exit"));
 
-    // settings stack widget ----------------------------------------------------------
-
-    d->simpleSettings       = new SimpleSettings;
-    d->advancedSettings     = new AdvancedSettings;
-
-    d->settingsStack = new QStackedWidget;
-    d->settingsStack->insertWidget(Simple, d->simpleSettings);
-    d->settingsStack->insertWidget(Advanced, d->advancedSettings);
-    d->settingsStack->setCurrentIndex(Simple);
-    setSettingsMode(Simple);
-
-    // Set layouts --------------------------------------------------------------
-
-    QWidget* settingsTab    = new QWidget;
-    QGridLayout* settingsTabLayout = new QGridLayout;
-    settingsTabLayout->addWidget(d->settingsStack,          0, 0, 1, 2);
-    settingsTabLayout->addWidget(d->settingsSwitcherBtn,    1, 0, 1, 1);
-    settingsTabLayout->setColumnStretch(1, 10);
-    settingsTab->setLayout(settingsTabLayout);
-
     QWidget* imagesTab           = new QWidget;
     QVBoxLayout* imagesTabLayout = new QVBoxLayout;
     imagesTabLayout->addWidget(d->imageList);
     imagesTabLayout->addWidget(d->progress);
     imagesTab->setLayout(imagesTabLayout);
 
+    d->settingsTab          = new SettingsTab;
+
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
     d->tabWidget->insertTab(FileList, imagesTab,   i18n("Files List"));
-    d->tabWidget->insertTab(Settings, settingsTab, i18n("Settings"));
+    d->tabWidget->insertTab(Settings, d->settingsTab, i18n("Settings"));
 
     mainLayout->addWidget(d->tabWidget, 5);
     mainWidget->setLayout(mainLayout);
     setMainWidget(mainWidget);
 
     // connections ------------------------------------------------------------------
-
-    connect(d->settingsSwitcherBtn, SIGNAL(clicked()),
-            this, SLOT(settingsModeChanged()));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressBarTimedOut()));
@@ -269,13 +242,12 @@ void RemoveRedEyesWindow::readSettings()
     d->settings->useStandardClassifier  = group.readEntry("Use Standard Classifier", true);
     d->settings->classifierFile         = group.readEntry("Classifier", STANDARD_CLASSIFIER);
 
-    d->simpleSettings->loadSettings(d->settings);
-    d->advancedSettings->loadSettings(d->settings);
+    d->settingsTab->loadSettings(d->settings);
 }
 
 void RemoveRedEyesWindow::writeSettings()
 {
-    updateSettings();
+    d->settings = d->settingsTab->readSettingsForSave();
 
     KConfig config("kipirc");
     KConfigGroup grp = config.group("RemoveRedEyes Settings");
@@ -285,15 +257,12 @@ void RemoveRedEyesWindow::writeSettings()
     grp.writeEntry("Subfolder Name",    d->settings->subfolderName);
     grp.writeEntry("Filename Prefix",   d->settings->prefixName);
 
-    if (!d->simpleCorrectionMode)
-    {
-        grp.writeEntry("Minimum Blob Size",         d->settings->minBlobsize);
-        grp.writeEntry("Minimum Roundness",         d->settings->minRoundness);
-        grp.writeEntry("Neighbor Groups",           d->settings->neighborGroups);
-        grp.writeEntry("Scaling Factor",            d->settings->scaleFactor);
-        grp.writeEntry("Use Standard Classifier",   d->settings->useStandardClassifier);
-        grp.writeEntry("Classifier",                d->settings->classifierFile);
-    }
+    grp.writeEntry("Minimum Blob Size",         d->settings->minBlobsize);
+    grp.writeEntry("Minimum Roundness",         d->settings->minRoundness);
+    grp.writeEntry("Neighbor Groups",           d->settings->neighborGroups);
+    grp.writeEntry("Scaling Factor",            d->settings->scaleFactor);
+    grp.writeEntry("Use Standard Classifier",   d->settings->useStandardClassifier);
+    grp.writeEntry("Classifier",                d->settings->classifierFile);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
     saveDialogSize(dialogGroup);
@@ -302,10 +271,7 @@ void RemoveRedEyesWindow::writeSettings()
 
 void RemoveRedEyesWindow::updateSettings()
 {
-    if (d->simpleCorrectionMode)
-        d->settings = d->simpleSettings->readSettings();
-    else
-        d->settings = d->advancedSettings->readSettings();
+    d->settings = d->settingsTab->readSettings();
 }
 
 void RemoveRedEyesWindow::startCorrection()
@@ -314,14 +280,14 @@ void RemoveRedEyesWindow::startCorrection()
     startWorkerThread(WorkerThread::Correction);
 }
 
-void RemoveRedEyesWindow::abortCorrection()
-{
-}
-
 void RemoveRedEyesWindow::startTestrun()
 {
     updateSettings();
     startWorkerThread(WorkerThread::TestRun);
+}
+
+void RemoveRedEyesWindow::abortCorrection()
+{
 }
 
 void RemoveRedEyesWindow::slotClose()
@@ -492,36 +458,6 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     d->imageList->slotAddEyeCounterByUrl(url, eyes);
 }
 
-void RemoveRedEyesWindow::settingsModeChanged()
-{
-    switch (d->settingsStack->currentIndex())
-    {
-        case Simple:
-            setSettingsMode(Advanced);
-            break;
 
-        case Advanced:
-            setSettingsMode(Simple);
-            break;
-    }
-}
-
-void RemoveRedEyesWindow::setSettingsMode(SettingsMode mode)
-{
-    switch (mode)
-    {
-        case Simple:
-            d->settingsSwitcherBtn->setText(i18n("Advanced Mode"));
-            d->settingsStack->setCurrentIndex(Simple);
-            d->simpleCorrectionMode = true;
-            break;
-
-        case Advanced:
-            d->settingsSwitcherBtn->setText(i18n("Simple Mode"));
-            d->settingsStack->setCurrentIndex(Advanced);
-            d->simpleCorrectionMode = false;
-            break;
-    }
-}
 
 } // namespace KIPIRemoveRedEyesPlugin

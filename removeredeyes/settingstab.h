@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SIMPLESETTINGS_H
-#define SIMPLESETTINGS_H
+#ifndef SETTINGSTAB_H
+#define SETTINGSTAB_H
 
 // Qt includes.
 
@@ -31,40 +31,44 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SimpleSettingsPriv;
+class SettingsTabPriv;
 class RemovalSettings;
 
-class SimpleSettings : public QWidget
+class SettingsTab : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    enum SettingsType
+    enum SettingsMode
     {
-        Fast = 0,
-        Standard,
-        Slow
+        Simple = 0,
+        Advanced
     };
 
-    SimpleSettings(QWidget* parent = 0);
-    virtual ~SimpleSettings();
+    SettingsTab(QWidget* parent = 0);
+    virtual ~SettingsTab();
 
     void loadSettings(RemovalSettings*);
     RemovalSettings* readSettings();
-
-    int simpleMode() const;
+    RemovalSettings* readSettingsForSave();
 
 private slots:
 
-    void simpleModeChanged(int);
     void prepareSettings();
+    void settingsModeChanged();
 
 private:
 
-    SimpleSettingsPriv* const d;
+    void applySettings();
+    void updateSettings();
+    void setSettingsMode(SettingsMode mode);
+
+private:
+
+    SettingsTabPriv* const d;
 };
 
 }
 
-#endif /* SIMPLESETTINGS_H */
+#endif // SETTINGSTAB_H

@@ -37,7 +37,6 @@
 #include "blobsettingsbox.h"
 #include "classifiersettingsbox.h"
 #include "removalsettings.h"
-#include "storagesettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -52,13 +51,11 @@ public:
         blobSettingsBox         = 0;
         classifierSettingsBox   = 0;
         settings                = 0;
-        storageSettingsBox      = 0;
     }
 
     BlobSettingsBox*        blobSettingsBox;
     ClassifierSettingsBox*  classifierSettingsBox;
     RemovalSettings*        settings;
-    StorageSettingsBox*     storageSettingsBox;
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
@@ -68,7 +65,6 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
     d->settings                 = new RemovalSettings;
     d->blobSettingsBox          = new BlobSettingsBox;
     d->classifierSettingsBox    = new ClassifierSettingsBox;
-    d->storageSettingsBox       = new StorageSettingsBox;
 
 
     QGridLayout* advLayout = new QGridLayout;
@@ -76,18 +72,10 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
     advLayout->addWidget(d->blobSettingsBox,        1, 0, 1, 1);
     advLayout->setRowStretch(2, 10);
 
-    QGridLayout* storageLayout = new QGridLayout;
-    storageLayout->addWidget(d->storageSettingsBox, 0, 0, 1, 1);
-    storageLayout->setRowStretch(1, 10);
-
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addLayout(advLayout,     0, 0, 1, 1);
-    mainLayout->addLayout(storageLayout, 0, 1, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
-
-    connect(d->storageSettingsBox, SIGNAL(settingsChanged()),
-            this, SLOT(storageSettingsChanged()));
 }
 
 AdvancedSettings::~AdvancedSettings()
@@ -99,28 +87,25 @@ AdvancedSettings::~AdvancedSettings()
 void AdvancedSettings::prepareSettings()
 {
     d->settings->useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
-    if (!d->classifierSettingsBox->useStandardClassifier())
+    if (d->classifierSettingsBox->useStandardClassifier())
+        d->settings->classifierFile = STANDARD_CLASSIFIER;
+    else
         d->settings->classifierFile = d->classifierSettingsBox->classifierUrl();
     d->settings->neighborGroups         = d->classifierSettingsBox->neighborGroups();
     d->settings->scaleFactor            = d->classifierSettingsBox->scalingFactor();
 
     d->settings->minBlobsize            = d->blobSettingsBox->minBlobSize();
     d->settings->minRoundness           = d->blobSettingsBox->minRoundness();
-    storageSettingsChanged();
 }
 
 void AdvancedSettings::loadSettings(RemovalSettings* newSettings)
 {
-    d->settings = newSettings;
+    d->settings = new RemovalSettings(*newSettings);
     applySettings();
 }
 
 void AdvancedSettings::applySettings()
 {
-    d->storageSettingsBox->setPrefix(d->settings->prefixName);
-    d->storageSettingsBox->setSubfolder(d->settings->subfolderName);
-    d->storageSettingsBox->setStorageMode(d->settings->storageMode);
-
     d->blobSettingsBox->setMinBlobSize(d->settings->minBlobsize);
     d->blobSettingsBox->setMinRoundness(d->settings->minRoundness);
 
@@ -128,13 +113,6 @@ void AdvancedSettings::applySettings()
     d->classifierSettingsBox->setNeighborGroups(d->settings->neighborGroups);
     d->classifierSettingsBox->setUseStandardClassifier(d->settings->useStandardClassifier);
     d->classifierSettingsBox->setClassifierUrl(d->settings->classifierFile);
-}
-
-void AdvancedSettings::storageSettingsChanged()
-{
-    d->settings->storageMode            = d->storageSettingsBox->storageMode();
-    d->settings->subfolderName          = d->storageSettingsBox->subfolder();
-    d->settings->prefixName             = d->storageSettingsBox->prefix();
 }
 
 RemovalSettings* AdvancedSettings::readSettings()

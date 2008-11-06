@@ -39,7 +39,6 @@
 // Local includes.
 
 #include "removalsettings.h"
-#include "storagesettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -52,12 +51,10 @@ public:
     SimpleSettingsPriv()
     {
         settingsSlider      = 0;
-        storageSettingsBox  = 0;
         settings            = 0;
     }
 
     QSlider*            settingsSlider;
-    StorageSettingsBox* storageSettingsBox;
     RemovalSettings*    settings;
 };
 
@@ -70,8 +67,6 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     d->settingsSlider->setRange(0, 2);
     d->settingsSlider->setValue(Standard);
     d->settingsSlider->setTickPosition(QSlider::TicksRight);
-
-    d->storageSettingsBox = new StorageSettingsBox;
 
     QString sliderStyle("QSlider::groove:vertical {"
                         "border: 1px solid #999999;"
@@ -128,21 +123,13 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     sliderLayout->setColumnStretch(1, 10);
     sliderLayout->setRowStretch(6, 10);
 
-    QGridLayout* storageLayout = new QGridLayout;
-    storageLayout->addWidget(d->storageSettingsBox, 0, 0, 1, 1);
-    storageLayout->setRowStretch(1, 10);
-
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addLayout(sliderLayout,     0, 0, 1, 1);
-    mainLayout->addLayout(storageLayout,    0, 1, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
 
     connect(d->settingsSlider, SIGNAL(valueChanged(int)),
             this, SLOT(simpleModeChanged(int)));
-
-    connect(d->storageSettingsBox, SIGNAL(settingsChanged()),
-            this, SLOT(storageSettingsChanged()));
 }
 
 SimpleSettings::~SimpleSettings()
@@ -176,6 +163,7 @@ void SimpleSettings::simpleModeChanged(int value)
             d->settings->neighborGroups = 2;
             break;
     }
+    d->settings->simpleMode = value;
 }
 
 void SimpleSettings::prepareSettings()
@@ -183,35 +171,23 @@ void SimpleSettings::prepareSettings()
     d->settings->useStandardClassifier  = true;
     d->settings->simpleMode             = d->settingsSlider->value();
     d->settings->classifierFile         = STANDARD_CLASSIFIER;
-    storageSettingsChanged();
-}
-
-void SimpleSettings::storageSettingsChanged()
-{
-    d->settings->storageMode            = d->storageSettingsBox->storageMode();
-    d->settings->subfolderName          = d->storageSettingsBox->subfolder();
-    d->settings->prefixName             = d->storageSettingsBox->prefix();
 }
 
 void SimpleSettings::loadSettings(RemovalSettings* newSettings)
 {
-    d->settings = newSettings;
-    applySettings();
-}
-
-void SimpleSettings::applySettings()
-{
-    d->storageSettingsBox->setPrefix(d->settings->prefixName);
-    d->storageSettingsBox->setSubfolder(d->settings->subfolderName);
-    d->storageSettingsBox->setStorageMode(d->settings->storageMode);
+    d->settings = new RemovalSettings(*newSettings);
     d->settingsSlider->setValue(d->settings->simpleMode);
-    simpleModeChanged(d->settingsSlider->value());
 }
 
 RemovalSettings* SimpleSettings::readSettings()
 {
     prepareSettings();
     return d->settings;
+}
+
+int SimpleSettings::simpleMode() const
+{
+    return d->settings->simpleMode;
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

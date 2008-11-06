@@ -13,11 +13,12 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     advancedsettings.cpp
     blobsettingsbox.cpp
     classifiersettingsbox.cpp
-    simplesettings.cpp
     eyelocator.cpp
     imageslist.cpp
     plugin_removeredeyes.cpp
     removeredeyeswindow.cpp
+    settingstab.cpp
+    simplesettings.cpp
     storagesettingsbox.cpp
     workerthread.cpp
     workerthreaddata.cpp
