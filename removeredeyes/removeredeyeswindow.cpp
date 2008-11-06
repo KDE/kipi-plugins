@@ -149,14 +149,14 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
                               "andi dot clemens at gmx dot net");
 
     disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+               this, SLOT(helpClicked()));
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
 
     connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
+            this, SLOT(helpClicked()));
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setDelayedMenu(helpMenu->menu());
@@ -189,16 +189,16 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     // connections ------------------------------------------------------------------
 
     connect(d->progressTimer, SIGNAL(timeout()),
-            this, SLOT(slotProgressBarTimedOut()));
+            this, SLOT(progressBarTimedOut()));
 
     connect(d->progress, SIGNAL(valueChanged(int)),
-            this, SLOT(slotProgressBarChanged(int)));
+            this, SLOT(progressBarChanged(int)));
 
-    connect(this, SIGNAL(signalTestRunFinished()),
+    connect(this, SIGNAL(testRunFinished()),
             this, SLOT(checkForNoneCorrectedImages()));
 
-    connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
-            this, SLOT(slotFoundRAWImages(bool)));
+    connect(d->imageList, SIGNAL(foundRAWImages(bool)),
+            this, SLOT(foundRAWImages(bool)));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(startCorrection()));
@@ -207,14 +207,14 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
             this, SLOT(startTestrun()));
 
     connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
+            this, SLOT(closeClicked()));
 
     // ------------------------------------------------------------------
 
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
-        d->imageList->slotAddImages(images.images());
+        d->imageList->addImages(images.images());
 
     readSettings();
     setBusy(false);
@@ -290,13 +290,13 @@ void RemoveRedEyesWindow::abortCorrection()
 {
 }
 
-void RemoveRedEyesWindow::slotClose()
+void RemoveRedEyesWindow::closeClicked()
 {
     writeSettings();
     done(Close);
 }
 
-void RemoveRedEyesWindow::slotHelp()
+void RemoveRedEyesWindow::helpClicked()
 {
     KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
 }
@@ -342,11 +342,11 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // disable connection to make sure that the "test run" and "correct photos"
         // buttons are not enabled again on ImageListChange
-        disconnect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-                this, SLOT(slotImageListChanged(bool)));
+        disconnect(d->imageList, SIGNAL(imageListChanged(bool)),
+                this, SLOT(imageListChanged(bool)));
 
         disconnect(this, SIGNAL(closeClicked()),
-                   this, SLOT(slotClose()));
+                   this, SLOT(closeClicked()));
 
         connect(this, SIGNAL(closeClicked()),
                 this, SLOT(abortCorrection()));
@@ -362,14 +362,14 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // enable connection again to make sure that an empty image list will
         // disable the "test run" and "correct photos" buttons
-        connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-                this, SLOT(slotImageListChanged(bool)));
+        connect(d->imageList, SIGNAL(imageListChanged(bool)),
+                this, SLOT(imageListChanged(bool)));
 
         disconnect(this, SIGNAL(closeClicked()),
                    this, SLOT(abortCorrection()));
 
         connect(this, SIGNAL(closeClicked()),
-                this, SLOT(slotClose()));
+                this, SLOT(closeClicked()));
 
         setButtonGuiItem(Close, KGuiItem(i18n("Close"), KIcon("dialog-close")));
         enableButton(User1, true);
@@ -377,21 +377,21 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     }
 }
 
-void RemoveRedEyesWindow::slotProgressBarChanged(int v)
+void RemoveRedEyesWindow::progressBarChanged(int v)
 {
     int total = d->imageList->imageUrls().count();
     if (v == total)
         d->progressTimer->start(500);
 }
 
-void RemoveRedEyesWindow::slotProgressBarTimedOut()
+void RemoveRedEyesWindow::progressBarTimedOut()
 {
     d->progress->hide();
     setBusy(false);
 
     if (d->runtype == WorkerThread::TestRun)
     {
-        emit signalTestRunFinished();
+        emit testRunFinished();
     }
 
     disconnect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
@@ -416,7 +416,7 @@ void RemoveRedEyesWindow::checkForNoneCorrectedImages()
     }
 }
 
-void RemoveRedEyesWindow::slotImageListChanged(bool)
+void RemoveRedEyesWindow::imageListChanged(bool)
 {
     if (d->imageList->imageUrls().isEmpty())
     {
@@ -430,7 +430,7 @@ void RemoveRedEyesWindow::slotImageListChanged(bool)
     }
 }
 
-void RemoveRedEyesWindow::slotFoundRAWImages(bool raw)
+void RemoveRedEyesWindow::foundRAWImages(bool raw)
 {
     if (raw)
     {
@@ -455,7 +455,7 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     delete data;
 
     d->progress->setValue(current);
-    d->imageList->slotAddEyeCounterByUrl(url, eyes);
+    d->imageList->addEyeCounterByUrl(url, eyes);
 }
 
 

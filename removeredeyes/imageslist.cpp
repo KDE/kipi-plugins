@@ -222,19 +222,19 @@ ImagesList::ImagesList(KIPI::Interface *iface, QWidget* parent)
     // --------------------------------------------------------
 
     connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
-            this, SLOT(slotAddImages(const KUrl::List&)));
+            this, SLOT(addImages(const KUrl::List&)));
 
     connect(d->addButton, SIGNAL(clicked()),
-            this, SLOT(slotAddItems()));
+            this, SLOT(addItems()));
 
     connect(d->removeButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveItems()));
+            this, SLOT(removeItems()));
 
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+            this, SLOT(thumbnail(const KUrl&, const QPixmap&)));
 
-    connect(this, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(slotUpdateSummary()));
+    connect(this, SIGNAL(imageListChanged(bool)),
+            this, SLOT(updateSummary()));
 }
 
 ImagesList::~ImagesList()
@@ -242,7 +242,7 @@ ImagesList::~ImagesList()
     delete d;
 }
 
-void ImagesList::slotAddImages(const KUrl::List& list)
+void ImagesList::addImages(const KUrl::List& list)
 {
     if (list.count() == 0) return;
 
@@ -286,13 +286,13 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
     d->iface->thumbnails(urls, ICONSIZE);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
-    emit signalFoundRAWImages(raw);
+    emit imageListChanged(imageUrls().isEmpty());
+    emit foundRAWImages(raw);
 
-    slotUpdateSummary();
+    updateSummary();
 }
 
-void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void ImagesList::thumbnail(const KUrl& url, const QPixmap& pix)
 {
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
@@ -311,17 +311,17 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
     }
 }
 
-void ImagesList::slotAddItems()
+void ImagesList::addItems()
 {
     KIPIPlugins::ImageDialog dlg(this, d->iface, false);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
-        slotAddImages(urls);
+        addImages(urls);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit imageListChanged(imageUrls().isEmpty());
 }
 
-void ImagesList::slotRemoveItems()
+void ImagesList::removeItems()
 {
     bool found;
     do
@@ -342,7 +342,7 @@ void ImagesList::slotRemoveItems()
     }
     while (found);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit imageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
@@ -366,10 +366,10 @@ void ImagesList::removeItemByUrl(const KUrl& url)
     }
     while (found);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit imageListChanged(imageUrls().isEmpty());
 }
 
-void ImagesList::slotAddEyeCounterByUrl(const KUrl& url, int eyes)
+void ImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
 {
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
@@ -382,7 +382,7 @@ void ImagesList::slotAddEyeCounterByUrl(const KUrl& url, int eyes)
         }
         ++it;
     }
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit imageListChanged(imageUrls().isEmpty());
 }
 
 KUrl::List ImagesList::imageUrls() const
@@ -409,7 +409,7 @@ void ImagesList::resetEyeCounterColumn()
         ++it;
     }
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit imageListChanged(imageUrls().isEmpty());
 }
 
 bool ImagesList::hasNoneCorrectedImages()
@@ -452,7 +452,7 @@ void ImagesList::removeNoneCorrectedImages()
         }
         ++it;
     }
-    slotRemoveItems();
+    removeItems();
 }
 
 bool ImagesList::isRAWFile(const QString & filePath)
@@ -466,7 +466,7 @@ bool ImagesList::isRAWFile(const QString & filePath)
     return false;
 }
 
-void ImagesList::slotUpdateSummary()
+void ImagesList::updateSummary()
 {
     int total       = imageUrls().count();
     int processed   = 0;

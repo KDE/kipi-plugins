@@ -61,17 +61,17 @@ public:
 
 signals:
 
-    void signalTestRunFinished();
+    void testRunFinished();
 
 private slots:
 
     void checkForNoneCorrectedImages();
-    void slotClose();
-    void slotHelp();
-    void slotFoundRAWImages(bool);
-    void slotImageListChanged(bool);
-    void slotProgressBarChanged(int);
-    void slotProgressBarTimedOut();
+    void closeClicked();
+    void helpClicked();
+    void foundRAWImages(bool);
+    void imageListChanged(bool);
+    void progressBarChanged(int);
+    void progressBarTimedOut();
     void startCorrection();
     void abortCorrection();
     void startTestrun();

@@ -91,7 +91,7 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     setLayout(mainLayout);
 
     connect(d->standardClassifierCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(slotStandardClassifier()));
+            this, SLOT(standardClassifierChecked()));
 }
 
 ClassifierSettingsBox::~ClassifierSettingsBox()
@@ -99,7 +99,7 @@ ClassifierSettingsBox::~ClassifierSettingsBox()
     delete d;
 }
 
-void ClassifierSettingsBox::slotStandardClassifier()
+void ClassifierSettingsBox::standardClassifierChecked()
 {
     d->classifierUrlRequester->setEnabled(!d->standardClassifierCheckBox->isChecked());
 }

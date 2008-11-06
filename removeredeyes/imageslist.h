@@ -104,21 +104,21 @@ public:
 
 signals:
 
-    void signalImageListChanged(bool);
-    void signalFoundRAWImages(bool);
+    void imageListChanged(bool);
+    void foundRAWImages(bool);
 
 public slots:
 
-    void slotAddImages(const KUrl::List& list);
-    void slotAddEyeCounterByUrl(const KUrl&, int);
+    void addImages(const KUrl::List& list);
+    void addEyeCounterByUrl(const KUrl&, int);
 
 
 private slots:
 
-    void slotAddItems();
-    void slotRemoveItems();
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
-    void slotUpdateSummary();
+    void addItems();
+    void removeItems();
+    void thumbnail(const KUrl& url, const QPixmap& pix);
+    void updateSummary();
 
 private:
 

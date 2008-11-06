@@ -53,7 +53,7 @@ public:
 
 private slots:
 
-    void slotActivate();
+    void activate();
 
 private:
 

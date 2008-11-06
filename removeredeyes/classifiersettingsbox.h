@@ -58,7 +58,7 @@ public:
 
 public slots:
 
-    void slotStandardClassifier();
+    void standardClassifierChecked();
 
 private:
 
