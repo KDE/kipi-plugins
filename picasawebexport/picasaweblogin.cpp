@@ -47,57 +47,61 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout( this, 5, 5, "vbox");
+    QVBoxLayout* vbox = new QVBoxLayout(this);
 
     m_headerLabel = new QLabel(this);
-    m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum,
-                                             QSizePolicy::Fixed));
+    m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
-    vbox->addWidget( m_headerLabel );
 
-    QFrame* hline = new QFrame( this, "hline" );
+    QFrame* hline = new QFrame(this);
+    hline->setObjectName("hline");
     hline->setFrameShape( QFrame::HLine );
     hline->setFrameShadow( QFrame::Sunken );
     hline->setFrameShape( QFrame::HLine );
-    vbox->addWidget( hline );
 
-    QGridLayout* centerLayout = new QGridLayout(0, 1, 1, 5, 5);
+    QGridLayout* centerLayout = new QGridLayout();
 
-    m_nameEdit = new KLineEdit(this);
-    centerLayout->addWidget(m_nameEdit, 0, 1);
-
-    m_passwdEdit = new KLineEdit( this );
+    m_nameEdit   = new KLineEdit(this);
+    m_passwdEdit = new KLineEdit(this);
     m_passwdEdit->setEchoMode(KLineEdit::Password);
-    centerLayout->addWidget(m_passwdEdit, 1, 1);
 
     QLabel* nameLabel = new QLabel(this);
-    nameLabel->setText(i18n( "Username:" ));
-    centerLayout->addWidget(nameLabel, 0, 0);
+    nameLabel->setText(i18n("Username:"));
 
     QLabel* passwdLabel = new QLabel(this);
-    passwdLabel->setText(i18n( "Password:" ));
-    centerLayout->addWidget(passwdLabel, 1, 0);
+    passwdLabel->setText(i18n("Password:"));
 
-    vbox->addLayout( centerLayout );
+    centerLayout->addWidget(m_nameEdit,   0, 1);
+    centerLayout->addWidget(m_passwdEdit, 1, 1);
+    centerLayout->addWidget(nameLabel,    0, 0);
+    centerLayout->addWidget(passwdLabel,  1, 0);
 
-    QHBoxLayout* btnLayout = new QHBoxLayout(0, 0, 5);
-    btnLayout->addItem( new QSpacerItem( 20, 20, QSizePolicy::Expanding,
-                                         QSizePolicy::Minimum ) );
+    QHBoxLayout* btnLayout = new QHBoxLayout();
+    QPushButton *okBtn     = new QPushButton(this);
+    okBtn->setAutoDefault(true);
+    okBtn->setDefault(true);
+    okBtn->setText(i18n("&OK"));
 
-    QPushButton *okBtn = new QPushButton( this );
-    okBtn->setAutoDefault( true );
-    okBtn->setDefault( true );
-    okBtn->setText( i18n( "&OK" ) );
-    btnLayout->addWidget( okBtn );
+    QPushButton *cancelBtn = new QPushButton(this);
+    cancelBtn->setText(i18n("&Cancel"));
 
-    QPushButton *cancelBtn = new QPushButton( this );
-    cancelBtn->setText( i18n( "&Cancel" ) );
-    btnLayout->addWidget( cancelBtn );
+    btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    btnLayout->addWidget(okBtn);
+    btnLayout->addWidget(cancelBtn);
+    btnLayout->setMargin(0);
+    btnLayout->setSpacing(5);
 
-    vbox->addLayout( btnLayout );
+    vbox->setMargin(5);
+    vbox->setSpacing(5);
+    vbox->setObjectName("vbox");
+    vbox->addWidget(m_headerLabel);
+    vbox->addWidget(hline);
+    vbox->addLayout(centerLayout);
+    vbox->addLayout(btnLayout);
 
-    resize( QSize(300, 150).expandedTo(minimumSizeHint()) );
-    //PORT to kde4
+    resize(QSize(300, 150).expandedTo(minimumSizeHint()));
+
+    //TODO: KDE4PORT
     //clearWState( WState_Polished );
 
     m_nameEdit->setText(_name);
