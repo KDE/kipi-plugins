@@ -396,6 +396,8 @@ void RemoveRedEyesWindow::progressBarTimedOut()
 
     disconnect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
                this, SLOT(calculationFinished(WorkerThreadData*)));
+
+    delete d->wth;
 }
 
 void RemoveRedEyesWindow::checkForNoneCorrectedImages()
