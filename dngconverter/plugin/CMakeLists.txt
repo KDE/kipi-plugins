@@ -46,3 +46,6 @@ TARGET_LINK_LIBRARIES(dngconverter
                       ${CMAKE_THREAD_LIBS_INIT}
                       kipiplugins
                      )
+
+INSTALL(TARGETS dngconverter ${INSTALL_TARGETS_DEFAULT_ARGS})
+INSTALL(FILES dngconverter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
