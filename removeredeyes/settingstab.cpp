@@ -90,7 +90,6 @@ SettingsTab::SettingsTab(QWidget* parent)
     d->settingsStack->insertWidget(Simple, d->simpleSettings);
     d->settingsStack->insertWidget(Advanced, d->advancedSettings);
     d->settingsStack->setCurrentIndex(Simple);
-    setSettingsMode(Simple);
 
     // Set layouts --------------------------------------------------------------
 
@@ -132,6 +131,7 @@ void SettingsTab::loadSettings(RemovalSettings* newSettings)
     d->simpleSettings->loadSettings(d->settings);
     d->advancedSettings->loadSettings(d->settings);
     applySettings();
+    setSettingsMode(Simple);
 }
 
 void SettingsTab::applySettings()
