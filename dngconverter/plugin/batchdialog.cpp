@@ -56,7 +56,7 @@
 
 // Local includes.
 
-#include "kpaboutdata.h"
+#include "aboutdata.h"
 #include "imagedialog.h"
 #include "pluginsversion.h"
 #include "actions.h"
@@ -92,28 +92,28 @@ public:
         about               = 0;
     }
 
-    bool             busy;
-    bool             convertBlink;
+    bool                   busy;
+    bool                   convertBlink;
 
-    QTimer          *blinkConvertTimer;
+    QTimer                *blinkConvertTimer;
 
-    QWidget         *page;
+    QWidget               *page;
 
-    QStringList      fileList;
+    QStringList            fileList;
 
-    QProgressBar    *progressBar;
+    QProgressBar          *progressBar;
 
-    QTreeWidget     *listView;
+    QTreeWidget           *listView;
 
-    CListViewItem   *currentConvertItem;
+    CListViewItem         *currentConvertItem;
 
-    ActionThread    *thread;
+    ActionThread          *thread;
 
-    SettingsWidget  *settingsBox;
+    SettingsWidget        *settingsBox;
 
-    KIPI::Interface *iface;
+    KIPI::Interface       *iface;
 
-    KPAboutData     *about;
+    DNGConverterAboutData *about;
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)
@@ -176,16 +176,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
     // About data and help button.
-
-    d->about = new KPAboutData(ki18n("DNG Image Converter"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A tool to batch convert RAW camera images to DNG"),
-                   ki18n("(c) 2008, Gilles Caulier"));
-
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Author"),
-                              "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));

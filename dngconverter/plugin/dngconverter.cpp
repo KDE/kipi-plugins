@@ -25,7 +25,6 @@
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kaboutdata.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kglobal.h>
@@ -37,6 +36,7 @@
 
 // Local includes.
 
+#include "aboutdata.h"
 #include "plugin_dngconverter.h"
 #include "pluginsversion.h"
 #include "batchdialog.h"
@@ -46,19 +46,7 @@ using namespace KExiv2Iface;
 
 int main(int argc, char *argv[])
 {
-    KAboutData aboutData("dngconverter", 
-                         "kipiplugin_dngconverter",
-                         ki18n("DNG Image Converter"),
-                         QByteArray(kipiplugins_version),
-                         ki18n("A tool to batch convert RAW camera images to DNG"),
-                         KAboutData::License_GPL,
-                         ki18n("(c) 2008, Gilles Caulier"),
-                         KLocalizedString(),
-                         "http://www.kipi-plugins.org");
-
-    aboutData.addAuthor(ki18n("Gilles Caulier"),
-                         ki18n("Author"),
-                               "caulier dot gilles at gmail dot com");
+    DNGConverterAboutData aboutData;
 
     KCmdLineArgs::init(argc, argv, &aboutData);
 
