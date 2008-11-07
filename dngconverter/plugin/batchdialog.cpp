@@ -177,6 +177,8 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     // ---------------------------------------------------------------
     // About data and help button.
 
+    d->about = new DNGConverterAboutData;
+
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
