@@ -1298,9 +1298,9 @@ bool BlobAnalysis(	IplImage* inputImage,
 	}
 
 	free(SubsumedRegion);
-	delete Transition;
-	delete ThisRegion;
-	delete LastRegion;
+	delete [] Transition;
+	delete [] ThisRegion;
+	delete [] LastRegion;
 
 	if( imatgePerimetreExtern ) cvReleaseImage(&imatgePerimetreExtern);
 
