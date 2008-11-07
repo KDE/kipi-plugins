@@ -27,8 +27,6 @@
 // OpenCV includes.
 
 #include <BlobResult.h>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
 
 namespace KIPIRemoveRedEyesPlugin
 {

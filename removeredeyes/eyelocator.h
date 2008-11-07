@@ -27,8 +27,13 @@
 
 // OpenCV includes.
 
+#ifdef WIN32
+#include <cv.h>
+#include <highgui.h>
+#else
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#endif
 
 class KUrl;
 
