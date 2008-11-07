@@ -1,3 +1,5 @@
+# ------------------------------------------------------------------------------
+#
 # - Try to find OpenCV library installation
 # See http://sourceforge.net/projects/opencvlibrary/
 #
@@ -8,26 +10,22 @@
 #
 # The following are set after configuration is done: 
 #  OpenCV_FOUND
-#  OpenCV_INCLUDE_DIR
+#  OpenCV_INCLUDE_DIRS
 #  OpenCV_LIBRARIES
 #  OpenCV_LINK_DIRECTORIES
 #
-# deprecated:
-#  OPENCV_* uppercase replaced by case sensitive OpenCV_*
-#  OPENCV_EXE_LINKER_FLAGS
-#  OPENCV_INCLUDE_DIR : replaced by plural *_DIRS
-# 
+# 2008/11 Caulier Gilles
 # 2004/05 Jan Woetzel, Friso, Daniel Grest 
 # 2006/01 complete rewrite by Jan Woetzel
 # 1006/09 2nd rewrite introducing ROOT_DIR and PATH_SUFFIXES 
-#   to handle multiple installed versions gracefully by Jan Woetzel
+#         to handle multiple installed versions gracefully by Jan Woetzel
 #
 # tested with:
 # -OpenCV 0.97 (beta5a):  MSVS 7.1, gcc 3.3, gcc 4.1
 # -OpenCV 0.99 (1.0rc1):  MSVS 7.1
+# -OpenCV 1.1: gcc 3.3
 #
-# www.mip.informatik.uni-kiel.de/~jw
-# --------------------------------
+# ------------------------------------------------------------------------------
 
 MACRO(DBG_MSG _MSG)
     MESSAGE(STATUS "${CMAKE_CURRENT_LIST_FILE}(${CMAKE_CURRENT_LIST_LINE}):\n${_MSG}")

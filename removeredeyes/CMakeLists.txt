@@ -2,7 +2,7 @@
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
-                    ${OpenCV_INCLUDE_DIR})
+                    ${OpenCV_INCLUDE_DIRS})
 
 SET(libcvblobs_SRCS
     libcvblobs/Blob.cpp
