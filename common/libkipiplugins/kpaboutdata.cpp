@@ -5,19 +5,19 @@
  *
  * Date        : 2006-14-09
  * Description : Kipi-Plugins shared library.
- * 
- * Copyright (C) 2006 Angelo Naselli <anaselli at linux dot it>
+ *
+ * Copyright (C) 2006-2008 Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // KDE includes.
@@ -50,11 +50,14 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          pluginDescription,
                          QByteArray("http://www.kipi-plugins.org"))
 {
-    // setProgramLogo is defined from kde 3.4.0 on
-    QString directory = KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png");
+    if (KGlobal::hasMainComponent())
+    {
+        // setProgramLogo is defined from kde 3.4.0 on
+        QString directory = KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png");
 
-    // set the kipiplugins logo inside the about dialog
-    setProgramLogo(QImage(directory));
+        // set the kipiplugins logo inside the about dialog
+        setProgramLogo(QImage(directory));
+    }
 
     // set the plugin description into long text description
     setOtherText(pluginDescription);
