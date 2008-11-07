@@ -82,11 +82,11 @@ SET (OpenCV_POSSIBLE_ROOT_DIRS
 #
 FIND_PATH(OpenCV_ROOT_DIR 
           NAMES 
-	  cv/include/cv.h     # windows
-	  include/opencv/cv.h # linux /opt/net
-	  include/cv/cv.h 
-	  include/cv.h 
-	  PATHS ${OpenCV_POSSIBLE_ROOT_DIRS}
+          cv/include/cv.h     # windows
+          include/opencv/cv.h # linux /opt/net
+          include/cv/cv.h 
+          include/cv.h 
+          PATHS ${OpenCV_POSSIBLE_ROOT_DIRS}
          )
 
 DBG_MSG("OpenCV_ROOT_DIR=${OpenCV_ROOT_DIR}")
@@ -208,23 +208,24 @@ FIND_LIBRARY(OpenCV_BLOB_LIBRARY
 #
 SET(OpenCV_FOUND ON)
 DBG_MSG("OpenCV_FIND_REQUIRED_COMPONENTS=${OpenCV_FIND_REQUIRED_COMPONENTS}")
+
 FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
 
-# only good if header and library both found   
-IF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
+    # only good if header and library both found   
+    IF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
-    LIST(APPEND OpenCV_INCLUDE_DIRS ${OpenCV_${NAME}_INCLUDE_DIR} )
-    LIST(APPEND OpenCV_LIBRARIES    ${OpenCV_${NAME}_LIBRARY} )
-    #DBG_MSG("appending for NAME=${NAME} ${OpenCV_${NAME}_INCLUDE_DIR} and ${OpenCV_${NAME}_LIBRARY}" )
+        LIST(APPEND OpenCV_INCLUDE_DIRS ${OpenCV_${NAME}_INCLUDE_DIR} )
+        LIST(APPEND OpenCV_LIBRARIES    ${OpenCV_${NAME}_LIBRARY} )
+        DBG_MSG("appending for NAME=${NAME} ${OpenCV_${NAME}_INCLUDE_DIR} and ${OpenCV_${NAME}_LIBRARY}" )
 
-ELSE(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
+    ELSE(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
-    DBG_MSG("OpenCV component NAME=${NAME} not found! "
-            "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR} "
-            "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY} ")
-    SET(OpenCV_FOUND OFF)
+        DBG_MSG("OpenCV component NAME=${NAME} not found! "
+                "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR} "
+                "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY} ")
+        SET(OpenCV_FOUND OFF)
 
-ENDIF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
+    ENDIF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
   
 ENDFOREACH(NAME)
 
@@ -264,14 +265,17 @@ SET(OPENCV_FOUND       ${OpenCV_FOUND})
 
 # display help message
 IF(NOT OpenCV_FOUND)
+
     # make FIND_PACKAGE friendly
     IF(NOT OpenCV_FIND_QUIETLY)
+
         IF(OpenCV_FIND_REQUIRED)
-            MESSAGE(FATAL_ERROR
-                    "OpenCV required but some headers or libs not found. Please specify it's location with OpenCV_ROOT_DIR env. variable.")
+            MESSAGE(FATAL_ERROR "Error: OpenCV required but some headers or libs not found. "
+                                "Please specify it's location with OpenCV_ROOT_DIR env. variable.")
         ELSE(OpenCV_FIND_REQUIRED)
-            MESSAGE(STATUS 
-                    "ERROR: OpenCV was not found.")
+            MESSAGE(STATUS "Warning: OpenCV was not found.")
         ENDIF(OpenCV_FIND_REQUIRED)
+
     ENDIF(NOT OpenCV_FIND_QUIETLY)
+
 ENDIF(NOT OpenCV_FOUND)
