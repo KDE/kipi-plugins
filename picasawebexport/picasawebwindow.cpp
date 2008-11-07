@@ -109,7 +109,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collection to "
-                                                     "Picasaweb web service."),
+                                                 "Picasaweb web service."),
                                            ki18n( "(c) 2007-2008, Vardhman Jain\n"
                                            "(c) 2008, Gilles Caulier" ));
 
@@ -125,6 +125,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setDelayedMenu(helpMenu->menu());
+    
     // ------------------------------------------------------------
 
     m_talker = new PicasawebTalker(this);
@@ -180,8 +181,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     KConfig config("kipirc");
     KConfigGroup grp = config.group( "PicasawebExport Settings");
-    QString token = grp.readEntry("token");
-    kDebug () << "Read token from database to be " << token << endl;
+    QString token    = grp.readEntry("token");
+    kDebug (51000) << "Read token from database to be " << token << endl;
     QString username = grp.readEntry("username");
     QString password = grp.readEntry("password");
 
@@ -232,18 +233,20 @@ void PicasawebWindow::slotClose()
     delete this;
 }
 
-void PicasawebWindow::closeEvent(QCloseEvent *e) {
+void PicasawebWindow::closeEvent(QCloseEvent *e) 
+{
     if (!e) return;
     
-    kDebug () << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
+    kDebug (51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
     saveSettings();
     e->accept();
 }
 
-void PicasawebWindow::saveSettings() {
+void PicasawebWindow::saveSettings() 
+{
     KConfig config("kipirc");
     KConfigGroup grp = config.group("PicasawebExport Settings");
-    kDebug () << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
+    kDebug (51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
     grp.writeEntry("token", m_talker->token());
     grp.writeEntry("username", m_username);
     grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
@@ -299,7 +302,7 @@ void PicasawebWindow::slotGetAlbumsListSucceeded()
         QLinkedList <PicasaWebAlbum> *list = m_talker->m_albumsList;
         m_albumsListComboBox->clear();
         QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
-	int index = 0;
+	    int index = 0;
         while(it != list->end())
         {
             PicasaWebAlbum pwa=*it;
@@ -314,10 +317,10 @@ void PicasawebWindow::slotDoLogin()
 {
 }
 
-void PicasawebWindow::slotTokenObtained( const QString& token )
+void PicasawebWindow::slotTokenObtained( const QString& /*token*/ )
 {
-    m_username=m_talker->getUserName();
-    m_userId=m_talker->getUserId();
+    m_username = m_talker->getUserName();
+    m_userId   = m_talker->getUserId();
     m_userNameDisplayLabel->setText(m_username);
     m_widget->setEnabled(true);
     m_talker->listAllAlbums();
@@ -374,11 +377,12 @@ void PicasawebWindow::slotCreateNewAlbum()
     {
         if (t == QDialog::Rejected)
         {
-            kDebug(51001) << "Album Creation cancelled" <<endl;
+            kDebug(51000) << "Album Creation cancelled" <<endl;
         }
     }
     delete dlg;
 }
+
 /*
 void PicasawebWindow::slotPhotos( const QValueList<GPhoto>& photoList)
 {
@@ -504,10 +508,12 @@ void PicasawebWindow::slotAddPhotoNext()
     QString selectedAlbumName = m_albumsListComboBox->currentText();
 
     QLinkedList<PicasaWebAlbum>::iterator it = m_talker->m_albumsList->begin();
-    while(it != m_talker->m_albumsList->end()) {
+    while(it != m_talker->m_albumsList->end()) 
+    {
        PicasaWebAlbum pwa=*it;
        QString name = pwa.title;
-       if (name == selectedAlbumName) {
+       if (name == selectedAlbumName) 
+        {
            albumId = pwa.id;
            break;
        }
