@@ -1,10 +1,17 @@
 [Desktop Entry]
 Name=DNGConverter
+Name[de]=DNGkonverter
+Name[el]=Μετατροπέας DNG
+Name[it]=Convertitore DNG
+Name[nds]=DNG-Wanneln
+Name[nl]=DNG-convertor
+Name[pt]=Conversão para DNG
+Name[pt_BR]=Conversão para DNG
+Name[sv]=DNG-konvertering
 Name[x-test]=xxDNGConverterxx
+Name[zh_CN]=DNG 转换器
 GenericName=DNG Image Converter
-GenericName[x-test]=xxDNG Image Converterxx
 Comment=A tool to batch convert RAW camera images to DNG
-Comment[x-test]=xxA tool to batch convert RAW camera images to DNGxx
 Exec=dngconverter %i -caption "%c" %U
 Icon=dngconverter
 Type=Application
