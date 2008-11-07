@@ -51,18 +51,16 @@ public:
     SimpleSettingsPriv()
     {
         settingsSlider      = 0;
-        settings            = 0;
     }
 
     QSlider*            settingsSlider;
-    RemovalSettings*    settings;
+    RemovalSettings     settings;
 };
 
 SimpleSettings::SimpleSettings(QWidget* parent)
               : QWidget(parent),
                 d(new SimpleSettingsPriv)
 {
-    d->settings       = new RemovalSettings;
     d->settingsSlider = new QSlider(Qt::Vertical);
     d->settingsSlider->setRange(0, 2);
     d->settingsSlider->setValue(Standard);
@@ -134,7 +132,6 @@ SimpleSettings::SimpleSettings(QWidget* parent)
 
 SimpleSettings::~SimpleSettings()
 {
-//    delete d->settings;
     delete d;
 }
 
@@ -143,43 +140,43 @@ void SimpleSettings::simpleModeChanged(int value)
     switch (value)
     {
         case Standard:
-            d->settings->minRoundness   = 3.2;
-            d->settings->scaleFactor    = 1.2;
-            d->settings->minBlobsize    = 10;
-            d->settings->neighborGroups = 2;
+            d->settings.minRoundness   = 3.2;
+            d->settings.scaleFactor    = 1.2;
+            d->settings.minBlobsize    = 10;
+            d->settings.neighborGroups = 2;
             break;
 
         case Fast:
-            d->settings->minRoundness   = 3.2;
-            d->settings->scaleFactor    = 3.6;
-            d->settings->minBlobsize    = 20;
-            d->settings->neighborGroups = 1;
+            d->settings.minRoundness   = 3.2;
+            d->settings.scaleFactor    = 3.6;
+            d->settings.minBlobsize    = 20;
+            d->settings.neighborGroups = 1;
             break;
 
         case Slow:
-            d->settings->minRoundness   = 3.2;
-            d->settings->scaleFactor    = 1.05;
-            d->settings->minBlobsize    = 6;
-            d->settings->neighborGroups = 2;
+            d->settings.minRoundness   = 3.2;
+            d->settings.scaleFactor    = 1.05;
+            d->settings.minBlobsize    = 6;
+            d->settings.neighborGroups = 2;
             break;
     }
-    d->settings->simpleMode = value;
+    d->settings.simpleMode = value;
 }
 
 void SimpleSettings::prepareSettings()
 {
-    d->settings->useStandardClassifier  = true;
-    d->settings->simpleMode             = d->settingsSlider->value();
-    d->settings->classifierFile         = STANDARD_CLASSIFIER;
+    d->settings.useStandardClassifier  = true;
+    d->settings.simpleMode             = d->settingsSlider->value();
+    d->settings.classifierFile         = STANDARD_CLASSIFIER;
 }
 
-void SimpleSettings::loadSettings(RemovalSettings* newSettings)
+void SimpleSettings::loadSettings(RemovalSettings newSettings)
 {
-    d->settings = new RemovalSettings(*newSettings);
-    d->settingsSlider->setValue(d->settings->simpleMode);
+    d->settings = newSettings;
+    d->settingsSlider->setValue(d->settings.simpleMode);
 }
 
-RemovalSettings* SimpleSettings::readSettings()
+RemovalSettings SimpleSettings::readSettings()
 {
     prepareSettings();
     return d->settings;
@@ -187,7 +184,7 @@ RemovalSettings* SimpleSettings::readSettings()
 
 int SimpleSettings::simpleMode() const
 {
-    return d->settings->simpleMode;
+    return d->settings.simpleMode;
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

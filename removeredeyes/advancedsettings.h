@@ -43,8 +43,8 @@ public:
     AdvancedSettings(QWidget* parent = 0);
     virtual ~AdvancedSettings();
 
-    void loadSettings(RemovalSettings*);
-    RemovalSettings* readSettings();
+    void loadSettings(RemovalSettings);
+    RemovalSettings readSettings();
 
 private slots:
 

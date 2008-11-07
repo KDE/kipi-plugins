@@ -50,8 +50,8 @@ public:
     SimpleSettings(QWidget* parent = 0);
     virtual ~SimpleSettings();
 
-    void loadSettings(RemovalSettings*);
-    RemovalSettings* readSettings();
+    void loadSettings(RemovalSettings);
+    RemovalSettings readSettings();
 
     int simpleMode() const;
 

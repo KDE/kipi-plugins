@@ -50,19 +50,17 @@ public:
     {
         blobSettingsBox         = 0;
         classifierSettingsBox   = 0;
-        settings                = 0;
     }
 
     BlobSettingsBox*        blobSettingsBox;
     ClassifierSettingsBox*  classifierSettingsBox;
-    RemovalSettings*        settings;
+    RemovalSettings         settings;
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
                 : QWidget(parent),
                   d(new AdvancedSettingsPriv)
 {
-    d->settings                 = new RemovalSettings;
     d->blobSettingsBox          = new BlobSettingsBox;
     d->classifierSettingsBox    = new ClassifierSettingsBox;
 
@@ -80,42 +78,41 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
 
 AdvancedSettings::~AdvancedSettings()
 {
-//    delete d->settings;
     delete d;
 }
 
 void AdvancedSettings::prepareSettings()
 {
-    d->settings->useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
+    d->settings.useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
     if (d->classifierSettingsBox->useStandardClassifier())
-        d->settings->classifierFile = STANDARD_CLASSIFIER;
+        d->settings.classifierFile = STANDARD_CLASSIFIER;
     else
-        d->settings->classifierFile = d->classifierSettingsBox->classifierUrl();
-    d->settings->neighborGroups         = d->classifierSettingsBox->neighborGroups();
-    d->settings->scaleFactor            = d->classifierSettingsBox->scalingFactor();
+        d->settings.classifierFile = d->classifierSettingsBox->classifierUrl();
+    d->settings.neighborGroups         = d->classifierSettingsBox->neighborGroups();
+    d->settings.scaleFactor            = d->classifierSettingsBox->scalingFactor();
 
-    d->settings->minBlobsize            = d->blobSettingsBox->minBlobSize();
-    d->settings->minRoundness           = d->blobSettingsBox->minRoundness();
+    d->settings.minBlobsize            = d->blobSettingsBox->minBlobSize();
+    d->settings.minRoundness           = d->blobSettingsBox->minRoundness();
 }
 
-void AdvancedSettings::loadSettings(RemovalSettings* newSettings)
+void AdvancedSettings::loadSettings(RemovalSettings newSettings)
 {
-    d->settings = new RemovalSettings(*newSettings);
+    d->settings = newSettings;
     applySettings();
 }
 
 void AdvancedSettings::applySettings()
 {
-    d->blobSettingsBox->setMinBlobSize(d->settings->minBlobsize);
-    d->blobSettingsBox->setMinRoundness(d->settings->minRoundness);
+    d->blobSettingsBox->setMinBlobSize(d->settings.minBlobsize);
+    d->blobSettingsBox->setMinRoundness(d->settings.minRoundness);
 
-    d->classifierSettingsBox->setScalingFactor(d->settings->scaleFactor);
-    d->classifierSettingsBox->setNeighborGroups(d->settings->neighborGroups);
-    d->classifierSettingsBox->setUseStandardClassifier(d->settings->useStandardClassifier);
-    d->classifierSettingsBox->setClassifierUrl(d->settings->classifierFile);
+    d->classifierSettingsBox->setScalingFactor(d->settings.scaleFactor);
+    d->classifierSettingsBox->setNeighborGroups(d->settings.neighborGroups);
+    d->classifierSettingsBox->setUseStandardClassifier(d->settings.useStandardClassifier);
+    d->classifierSettingsBox->setClassifierUrl(d->settings.classifierFile);
 }
 
-RemovalSettings* AdvancedSettings::readSettings()
+RemovalSettings AdvancedSettings::readSettings()
 {
     prepareSettings();
     return d->settings;

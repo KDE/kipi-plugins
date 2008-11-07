@@ -88,7 +88,6 @@ public:
         tabWidget           = 0;
 
         imageList           = 0;
-        settings            = 0;
         wth                 = 0;
 
         settingsTab         = 0;
@@ -106,7 +105,7 @@ public:
     KTabWidget*                 tabWidget;
 
     ImagesList*                 imageList;
-    RemovalSettings*            settings;
+    RemovalSettings             settings;
     SettingsTab*                settingsTab;
     WorkerThread*               wth;
 };
@@ -123,7 +122,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     d->busy                 = false;
 
     d->runtype              = WorkerThread::TestRun;
-    d->settings             = new RemovalSettings;
     d->interface            = interface;
     d->tabWidget            = new KTabWidget;
 
@@ -222,7 +220,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
 {
-    delete d->settings;
     delete d->about;
     delete d;
 }
@@ -232,16 +229,16 @@ void RemoveRedEyesWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("RemoveRedEyes Settings");
 
-    d->settings->storageMode            = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
-    d->settings->subfolderName          = group.readEntry("Subfolder Name", "corrected");
-    d->settings->simpleMode             = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
-    d->settings->prefixName             = group.readEntry("Filename Prefix", "_corr");
-    d->settings->minBlobsize            = group.readEntry("Minimum Blob Size", 10);
-    d->settings->minRoundness           = group.readEntry("Minimum Roundness", 3.2);
-    d->settings->neighborGroups         = group.readEntry("Neighbor Groups", 2);
-    d->settings->scaleFactor            = group.readEntry("Scaling Factor", 1.2);
-    d->settings->useStandardClassifier  = group.readEntry("Use Standard Classifier", true);
-    d->settings->classifierFile         = group.readEntry("Classifier", STANDARD_CLASSIFIER);
+    d->settings.storageMode            = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
+    d->settings.subfolderName          = group.readEntry("Subfolder Name", "corrected");
+    d->settings.simpleMode             = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
+    d->settings.prefixName             = group.readEntry("Filename Prefix", "_corr");
+    d->settings.minBlobsize            = group.readEntry("Minimum Blob Size", 10);
+    d->settings.minRoundness           = group.readEntry("Minimum Roundness", 3.2);
+    d->settings.neighborGroups         = group.readEntry("Neighbor Groups", 2);
+    d->settings.scaleFactor            = group.readEntry("Scaling Factor", 1.2);
+    d->settings.useStandardClassifier  = group.readEntry("Use Standard Classifier", true);
+    d->settings.classifierFile         = group.readEntry("Classifier", STANDARD_CLASSIFIER);
 
     d->settingsTab->loadSettings(d->settings);
 }
@@ -253,17 +250,17 @@ void RemoveRedEyesWindow::writeSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("RemoveRedEyes Settings");
 
-    grp.writeEntry("Simple Mode",       d->settings->simpleMode);
-    grp.writeEntry("Storage Mode",      d->settings->storageMode);
-    grp.writeEntry("Subfolder Name",    d->settings->subfolderName);
-    grp.writeEntry("Filename Prefix",   d->settings->prefixName);
+    grp.writeEntry("Simple Mode",       d->settings.simpleMode);
+    grp.writeEntry("Storage Mode",      d->settings.storageMode);
+    grp.writeEntry("Subfolder Name",    d->settings.subfolderName);
+    grp.writeEntry("Filename Prefix",   d->settings.prefixName);
 
-    grp.writeEntry("Minimum Blob Size",         d->settings->minBlobsize);
-    grp.writeEntry("Minimum Roundness",         d->settings->minRoundness);
-    grp.writeEntry("Neighbor Groups",           d->settings->neighborGroups);
-    grp.writeEntry("Scaling Factor",            d->settings->scaleFactor);
-    grp.writeEntry("Use Standard Classifier",   d->settings->useStandardClassifier);
-    grp.writeEntry("Classifier",                d->settings->classifierFile);
+    grp.writeEntry("Minimum Blob Size",         d->settings.minBlobsize);
+    grp.writeEntry("Minimum Roundness",         d->settings.minRoundness);
+    grp.writeEntry("Neighbor Groups",           d->settings.neighborGroups);
+    grp.writeEntry("Scaling Factor",            d->settings.scaleFactor);
+    grp.writeEntry("Use Standard Classifier",   d->settings.useStandardClassifier);
+    grp.writeEntry("Classifier",                d->settings.classifierFile);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
     saveDialogSize(dialogGroup);
@@ -312,7 +309,7 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
         return;
 
     // create the worker thread
-    d->wth = new WorkerThread(this, d->settings, type, urls);
+    d->wth = new WorkerThread(this, &d->settings, type, urls);
 
     if (!d->wth)
     {

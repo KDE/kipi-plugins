@@ -52,7 +52,6 @@ public:
     SettingsTabPriv()
     {
         storageSettingsBox  = 0;
-        settings            = 0;
 
         advancedSettings    = 0;
         simpleSettings      = 0;
@@ -67,7 +66,7 @@ public:
     QStackedWidget*             settingsStack;
 
     AdvancedSettings*           advancedSettings;
-    RemovalSettings*            settings;
+    RemovalSettings             settings;
     SimpleSettings*             simpleSettings;
     StorageSettingsBox*         storageSettingsBox;
 };
@@ -76,7 +75,6 @@ SettingsTab::SettingsTab(QWidget* parent)
               : QWidget(parent),
                 d(new SettingsTabPriv)
 {
-    d->settings             = new RemovalSettings;
     d->simpleCorrectionMode = true;
     d->settingsSwitcherBtn  = new QPushButton;
     d->storageSettingsBox = new StorageSettingsBox;
@@ -114,20 +112,19 @@ SettingsTab::SettingsTab(QWidget* parent)
 
 SettingsTab::~SettingsTab()
 {
-//    delete d->settings;
     delete d;
 }
 
 void SettingsTab::prepareSettings()
 {
-    d->settings->storageMode            = d->storageSettingsBox->storageMode();
-    d->settings->subfolderName          = d->storageSettingsBox->subfolder();
-    d->settings->prefixName             = d->storageSettingsBox->prefix();
+    d->settings.storageMode            = d->storageSettingsBox->storageMode();
+    d->settings.subfolderName          = d->storageSettingsBox->subfolder();
+    d->settings.prefixName             = d->storageSettingsBox->prefix();
 }
 
-void SettingsTab::loadSettings(RemovalSettings* newSettings)
+void SettingsTab::loadSettings(RemovalSettings newSettings)
 {
-    d->settings = new RemovalSettings(*newSettings);
+    d->settings = newSettings;
     d->simpleSettings->loadSettings(d->settings);
     d->advancedSettings->loadSettings(d->settings);
     applySettings();
@@ -136,26 +133,26 @@ void SettingsTab::loadSettings(RemovalSettings* newSettings)
 
 void SettingsTab::applySettings()
 {
-    d->storageSettingsBox->setPrefix(d->settings->prefixName);
-    d->storageSettingsBox->setSubfolder(d->settings->subfolderName);
-    d->storageSettingsBox->setStorageMode(d->settings->storageMode);
+    d->storageSettingsBox->setPrefix(d->settings.prefixName);
+    d->storageSettingsBox->setSubfolder(d->settings.subfolderName);
+    d->storageSettingsBox->setStorageMode(d->settings.storageMode);
 }
 
-RemovalSettings* SettingsTab::readSettings()
+RemovalSettings SettingsTab::readSettings()
 {
     if (d->simpleCorrectionMode)
-        d->settings = new RemovalSettings(*(d->simpleSettings->readSettings()));
+        d->settings = d->simpleSettings->readSettings();
     else
-        d->settings = new RemovalSettings(*(d->advancedSettings->readSettings()));
+        d->settings = d->advancedSettings->readSettings();
 
     prepareSettings();
     return d->settings;
 }
 
-RemovalSettings* SettingsTab::readSettingsForSave()
+RemovalSettings SettingsTab::readSettingsForSave()
 {
     d->settings = d->advancedSettings->readSettings();
-    d->settings->simpleMode = d->simpleSettings->simpleMode();
+    d->settings.simpleMode = d->simpleSettings->simpleMode();
     prepareSettings();
     return d->settings;
 }

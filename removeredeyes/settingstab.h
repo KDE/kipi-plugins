@@ -49,9 +49,9 @@ public:
     SettingsTab(QWidget* parent = 0);
     virtual ~SettingsTab();
 
-    void loadSettings(RemovalSettings*);
-    RemovalSettings* readSettings();
-    RemovalSettings* readSettingsForSave();
+    void loadSettings(RemovalSettings);
+    RemovalSettings readSettings();
+    RemovalSettings readSettingsForSave();
 
 private slots:
 

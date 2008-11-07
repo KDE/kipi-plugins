@@ -53,8 +53,6 @@ WorkerThread::~ WorkerThread()
 {
     // wait for the thread to finish
     wait();
-
-    delete m_settings;
 }
 
 void WorkerThread::run()
