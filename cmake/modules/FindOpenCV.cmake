@@ -33,18 +33,15 @@ MACRO(DBG_MSG _MSG)
     MESSAGE(STATUS "${CMAKE_CURRENT_LIST_FILE}(${CMAKE_CURRENT_LIST_LINE}):\n${_MSG}")
 ENDMACRO(DBG_MSG)
 
-
-# required cv components with header and library if COMPONENTS unspecified
+# Required OpenCV components with header and library if COMPONENTS unspecified
+#
 IF(NOT OpenCV_FIND_COMPONENTS)
-    # default
+    # Default components to find.
     SET(OpenCV_FIND_REQUIRED_COMPONENTS CV CXCORE CVAUX HIGHGUI)
-    IF(WIN32)
-	LIST(APPEND OpenCV_FIND_REQUIRED_COMPONENTS CVCAM) # WIN32 only actually
-    ENDIF(WIN32)  
 ENDIF (NOT OpenCV_FIND_COMPONENTS)
 
-
-# typical root dirs of installations, exactly one of them is used
+# Typical root dirs of installations, exactly one of them is used
+#
 SET (OpenCV_POSSIBLE_ROOT_DIRS
      "${OpenCV_ROOT_DIR}"
      "$ENV{OpenCV_ROOT_DIR}"  
@@ -55,7 +52,6 @@ SET (OpenCV_POSSIBLE_ROOT_DIRS
      /usr/local
      /usr
     )
-
 
 # MIP Uni Kiel /opt/net network installation 
 # get correct prefix for current gcc compiler version for gcc 3.x  4.x
@@ -77,7 +73,7 @@ SET (OpenCV_POSSIBLE_ROOT_DIRS
 #DBG_MSG("DBG (OpenCV_POSSIBLE_ROOT_DIRS=${OpenCV_POSSIBLE_ROOT_DIRS}")
 
 
-# select exactly ONE OpenCV base directory/tree 
+# Select exactly ONE OpenCV base directory/tree 
 # to avoid mixing different version headers and libs
 #
 FIND_PATH(OpenCV_ROOT_DIR 
@@ -89,10 +85,10 @@ FIND_PATH(OpenCV_ROOT_DIR
           PATHS ${OpenCV_POSSIBLE_ROOT_DIRS}
          )
 
-DBG_MSG("OpenCV_ROOT_DIR=${OpenCV_ROOT_DIR}")
+MESSAGE("-- OpenCV root directory: ${OpenCV_ROOT_DIR}")
 
-
-# header include dir suffixes appended to OpenCV_ROOT_DIR
+# Header include dir suffixes appended to OpenCV_ROOT_DIR
+#
 SET(OpenCV_INCDIR_SUFFIXES
     include
     include/cv
@@ -106,17 +102,18 @@ SET(OpenCV_INCDIR_SUFFIXES
     otherlibs/_graphics/include
    )
 
-# library linkdir suffixes appended to OpenCV_ROOT_DIR 
+# Library link directory suffixes appended to OpenCV_ROOT_DIR 
+#
 SET(OpenCV_LIBDIR_SUFFIXES
     lib
     OpenCV/lib
     otherlibs/_graphics/lib
    )
 
-DBG_MSG("OpenCV_LIBDIR_SUFFIXES=${OpenCV_LIBDIR_SUFFIXES}")
+#DBG_MSG("OpenCV_LIBDIR_SUFFIXES=${OpenCV_LIBDIR_SUFFIXES}")
 
 
-# find incdir for each lib
+# Find include directory for each lib
 #
 FIND_PATH(OpenCV_CV_INCLUDE_DIR
           NAMES cv.h      
@@ -148,8 +145,7 @@ FIND_PATH(OpenCV_CVCAM_INCLUDE_DIR
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-
-# find sbsolute path to all libraries 
+# Find sbsolute path to all libraries 
 # some are optionally, some may not exist on Linux
 #
 FIND_LIBRARY(OpenCV_CV_LIBRARY   
@@ -203,36 +199,36 @@ FIND_LIBRARY(OpenCV_BLOB_LIBRARY
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-
 # Logic selecting required libs and headers
 #
 SET(OpenCV_FOUND ON)
-DBG_MSG("OpenCV_FIND_REQUIRED_COMPONENTS=${OpenCV_FIND_REQUIRED_COMPONENTS}")
+#DBG_MSG("OpenCV_FIND_REQUIRED_COMPONENTS=${OpenCV_FIND_REQUIRED_COMPONENTS}")
 
 FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
 
-    # only good if header and library both found   
+    # Only good if header and library both found   
     IF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
         LIST(APPEND OpenCV_INCLUDE_DIRS ${OpenCV_${NAME}_INCLUDE_DIR} )
         LIST(APPEND OpenCV_LIBRARIES    ${OpenCV_${NAME}_LIBRARY} )
-        DBG_MSG("appending for NAME=${NAME} ${OpenCV_${NAME}_INCLUDE_DIR} and ${OpenCV_${NAME}_LIBRARY}" )
+        #DBG_MSG("appending for NAME=${NAME} ${OpenCV_${NAME}_INCLUDE_DIR} and ${OpenCV_${NAME}_LIBRARY}" )
 
     ELSE(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
-        DBG_MSG("OpenCV component NAME=${NAME} not found! "
-                "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR} "
-                "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY} ")
+        MESSAGE("OpenCV component NAME=${NAME} not found!"
+                "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR}"
+                "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY}")
         SET(OpenCV_FOUND OFF)
 
     ENDIF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
   
 ENDFOREACH(NAME)
 
-DBG_MSG("OpenCV_INCLUDE_DIRS=${OpenCV_INCLUDE_DIRS}")
-DBG_MSG("OpenCV_LIBRARIES=${OpenCV_LIBRARIES}")
+MESSAGE("-- OpenCV Include Directory: ${OpenCV_INCLUDE_DIRS}")
+MESSAGE("-- OpenCV Libraries: ${OpenCV_LIBRARIES}")
 
-# get the link directory for rpath to be used with LINK_DIRECTORIES: 
+# Get the link directory for rpath to be used with LINK_DIRECTORIES: 
+#
 IF(OpenCV_CV_LIBRARY)
     GET_FILENAME_COMPONENT(OpenCV_LINK_DIRECTORIES ${OpenCV_CV_LIBRARY} PATH)
 ENDIF(OpenCV_CV_LIBRARY)
@@ -258,15 +254,15 @@ MARK_AS_ADVANCED(OpenCV_ROOT_DIR
                 )
 
 
-# be backward compatible:
+# Be backward compatible:
 SET(OPENCV_LIBRARIES   ${OpenCV_LIBRARIES} )
 SET(OPENCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS} )
 SET(OPENCV_FOUND       ${OpenCV_FOUND})
 
-# display help message
+# Display help message
 IF(NOT OpenCV_FOUND)
 
-    # make FIND_PACKAGE friendly
+    # Make FIND_PACKAGE friendly
     IF(NOT OpenCV_FIND_QUIETLY)
 
         IF(OpenCV_FIND_REQUIRED)
