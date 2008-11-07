@@ -223,6 +223,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
 {
     delete d->settings;
+    delete d->about;
     delete d;
 }
 
