@@ -32,9 +32,8 @@ namespace KIPIRemoveRedEyesPlugin
 
 //! Extreu els blobs d'una imatge
 bool BlobAnalysis(IplImage* inputImage, uchar threshold, IplImage* maskImage,
-				    bool borderColor, bool findmoments, blob_vector &RegionData );
+                    bool borderColor, bool findmoments, blob_vector &RegionData );
 
- 
 // FUNCIONS AUXILIARS
 
 //! Fusiona dos blobs
