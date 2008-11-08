@@ -175,16 +175,16 @@ void EyeLocator::removeRedEyes()
     cvCopy(m_src, removed_redchannel);
 
     // remove red channel
-    uchar* c_data = (uchar*) removed_redchannel->imageData;
-    int c_step = removed_redchannel->widthStep / sizeof(uchar);
+    uchar* c_data  = (uchar*) removed_redchannel->imageData;
+    int c_step     = removed_redchannel->widthStep / sizeof(uchar);
     int c_channels = removed_redchannel->nChannels;
     for (int i = 0; i < removed_redchannel->height - 1; i++)
     {
         for (int j=0; j<removed_redchannel->width-1; j++)
         {
-            c_data[i*c_step+j*c_channels+2] = uchar(c_data[i*c_step+j*c_channels+2])*0.02 +
-                                              uchar(c_data[i*c_step+j*c_channels+1])*0.68 +
-                                              uchar(c_data[i*c_step+j*c_channels+0])*0.3;
+            c_data[i*c_step+j*c_channels+2] = uchar(uchar(c_data[i*c_step+j*c_channels+2])*0.02 +
+                                                    uchar(c_data[i*c_step+j*c_channels+1])*0.68 +
+                                                    uchar(c_data[i*c_step+j*c_channels+0])*0.3);
         }
     }
     // smooth the mask
