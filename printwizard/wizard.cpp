@@ -266,7 +266,7 @@ void Wizard::print( KUrl::List fileList, QString tempPath)
     // load the print order listbox
     d->mPhotoPage->ListPrintOrder->addItem(photo->filename.fileName());
   }
-  d->mPhotoPage->ListPrintOrder->setCurrentItem(0);
+  d->mPhotoPage->ListPrintOrder->setCurrentRow (0, QItemSelectionModel::Select);
 
   d->m_tempPath = tempPath;
   d->mPhotoPage->LblPhotoCount->setText(QString::number(d->m_photos.count()));
@@ -1457,6 +1457,9 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
   }
   else if (current->name() == i18n("Crop photos"))
   {
+    TPhoto *photo = d->m_photos[0];
+    setBtnCropEnabled();
+    updateCropFrame(photo, d->m_currentCropPhoto);
   }
 
 
@@ -1656,10 +1659,14 @@ void Wizard::EditCopies_valueChanged( int copies )
 
   d->mPhotoPage->LblPhotoCount->setText(QString::number(d->m_photos.count()));
 
-  int index = 0;
   // TODO check if possible to use iterator
-  for (TPhoto *pPhoto = d->m_photos[index]; pPhoto != 0; pPhoto = d->m_photos[++index])
+  for (int index = 0;
+       index < d->m_photos.count();
+       ++index)
   {
+    TPhoto *pPhoto = d->m_photos[index];
+    if (pPhoto == 0) 
+      break;
     if (pPhoto->filename == fileName)
     {
       pPhoto->copies = copies;
@@ -1667,9 +1674,12 @@ void Wizard::EditCopies_valueChanged( int copies )
         currentIndex = index;
     }
   }
-  d->mPhotoPage->ListPrintOrder->blockSignals(true);
-  d->mPhotoPage->ListPrintOrder->setCurrentRow (currentIndex, QItemSelectionModel::Select);
-  d->mPhotoPage->ListPrintOrder->blockSignals(false);
+  if (currentIndex != -1)
+  {
+    d->mPhotoPage->ListPrintOrder->blockSignals(true);
+    d->mPhotoPage->ListPrintOrder->setCurrentRow (currentIndex, QItemSelectionModel::Select);
+    d->mPhotoPage->ListPrintOrder->blockSignals(false);
+  }
   previewPhotos();
 }
 
