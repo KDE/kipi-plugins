@@ -1,24 +1,35 @@
-/************************************************************************
-  			Blob.cpp
-  			
-- FUNCIONALITAT: Implementaci� de la classe CBlob
-- AUTOR: Inspecta S.L.
-MODIFICACIONS (Modificaci�, Autor, Data):
-
- 
-FUNCTIONALITY: Implementation of the CBlob class and some helper classes to perform
-			   some calculations on it
-AUTHOR: Inspecta S.L.
-MODIFICATIONS (Modification, Author, Date):
-
-**************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-08-08
+ * Description : Blob analysis package 
+ *               http://opencvlibrary.sourceforge.net/cvBlobsLib
+ *               Implementation of the CBlob class and some helper classes 
+ *               to perform some calculations on it.
+ *
+ * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #include <climits>
 #include "Blob.h"
 
 #ifdef WIN32 
 #include <cv.h>
-#else 	 
+#else
 #include <opencv/cv.h>
 #endif
 

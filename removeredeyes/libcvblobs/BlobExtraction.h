@@ -1,13 +1,28 @@
-//***********************************************************//
-//* Blob analysis package  8 August 2003                    *//
-//* Version 1.0                                             *//
-//* Input: IplImage* binary image                           *//
-//* Output: attributes of each connected region             *//
-//* Author: Dave Grossman                                   *//
-//* Email: dgrossman@cdr.stanford.edu                       *//
-//* Acknowledgement: the algorithm has been around > 20 yrs *//
-//***********************************************************//
-
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-08-08
+ * Description : Blob analysis package 
+ *               http://opencvlibrary.sourceforge.net/cvBlobsLib
+ *               Input: IplImage* binary image
+ *               Output: attributes of each connected region 
+ *
+ * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #if !defined(_CLASSE_BLOBEXTRACTION_INCLUDED)
 #define _CLASSE_BLOBEXTRACTION_INCLUDED

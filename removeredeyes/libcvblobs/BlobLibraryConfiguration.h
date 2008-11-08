@@ -1,15 +1,26 @@
-/************************************************************************
-  			BlobLibraryConfiguration.h
-  			
-FUNCIONALITAT: Configuraci� del comportament global de la llibreria
-AUTOR: Inspecta S.L.
-MODIFICACIONS (Modificaci�, Autor, Data):
-
-FUNCTIONALITY: Global configuration of the library
-AUTHOR: Inspecta S.L.
-MODIFICATIONS (Modification, Author, Date):
-
-**************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-08-08
+ * Description : Blob analysis package 
+ *               Global configuration of the library
+ *
+ * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 //! Indica si es volen fer servir les MatrixCV o no
 //! Use/Not use the MatrixCV class
