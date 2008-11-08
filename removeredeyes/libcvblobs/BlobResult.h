@@ -11,7 +11,6 @@ MODIFICATIONS (Modification, Author, Date):
 
 **************************************************************************/
 
-
 #if !defined(_CLASSE_BLOBRESULT_INCLUDED)
 #define _CLASSE_BLOBRESULT_INCLUDED
 
@@ -20,13 +19,9 @@ MODIFICATIONS (Modification, Author, Date):
 #endif // _MSC_VER > 1000
 
 #include "BlobLibraryConfiguration.h"
-#include <math.h>
+#include <cmath>
 
-#ifdef WIN32
-#include <cxcore.h>
-#else
 #include <opencv/cxcore.h>
-#endif
 
 #ifdef MATRIXCV_ACTIU
 	#include <opencv/matrixCV.h>

@@ -13,6 +13,22 @@
 #  OpenCV_INCLUDE_DIRS
 #  OpenCV_LIBRARIES
 #  OpenCV_LINK_DIRECTORIES
+#  OpenCV_ROOT_DIR
+#  OpenCV_CV_INCLUDE_DIR
+#  OpenCV_CXCORE_INCLUDE_DIR
+#  OpenCV_CVAUX_INCLUDE_DIR
+#  OpenCV_CVCAM_INCLUDE_DIR
+#  OpenCV_HIGHGUI_INCLUDE_DIR
+#  OpenCV_CV_LIBRARY
+#  OpenCV_CXCORE_LIBRARY
+#  OpenCV_CVAUX_LIBRARY
+#  OpenCV_CVCAM_LIBRARY
+#  OpenCV_CVHAARTRAINING_LIBRARY
+#  OpenCV_CXTS_LIBRARY
+#  OpenCV_HIGHGUI_LIBRARY
+#  OpenCV_ML_LIBRARY
+#  OpenCV_TRS_LIBRARY
+#  OpenCV_BLOB_LIBRARY
 #
 # 2008/11 Caulier Gilles
 # 2004/05 Jan Woetzel, Friso, Daniel Grest 
@@ -23,7 +39,7 @@
 # tested with:
 # -OpenCV 0.97 (beta5a):  MSVS 7.1, gcc 3.3, gcc 4.1
 # -OpenCV 0.99 (1.0rc1):  MSVS 7.1
-# -OpenCV 1.1: gcc 3.3
+# -OpenCV 1.1: gcc 3.5
 #
 # ------------------------------------------------------------------------------
 
@@ -114,41 +130,41 @@ SET(OpenCV_LIBDIR_SUFFIXES
 # Find include directory for each lib
 #
 FIND_PATH(OpenCV_CV_INCLUDE_DIR
-          NAMES cv.h      
-          PATHS ${OpenCV_ROOT_DIR} 
+          NAMES cv.h
+          PATHS ${OpenCV_ROOT_DIR}
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-FIND_PATH(OpenCV_CXCORE_INCLUDE_DIR   
+FIND_PATH(OpenCV_CXCORE_INCLUDE_DIR
           NAMES cxcore.h
           PATHS ${OpenCV_ROOT_DIR} 
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-FIND_PATH(OpenCV_CVAUX_INCLUDE_DIR    
+FIND_PATH(OpenCV_CVAUX_INCLUDE_DIR
           NAMES cvaux.h
-          PATHS ${OpenCV_ROOT_DIR} 
+          PATHS ${OpenCV_ROOT_DIR}
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-FIND_PATH(OpenCV_HIGHGUI_INCLUDE_DIR  
-          NAMES highgui.h 
-          PATHS ${OpenCV_ROOT_DIR} 
+FIND_PATH(OpenCV_HIGHGUI_INCLUDE_DIR
+          NAMES highgui.h
+          PATHS ${OpenCV_ROOT_DIR}
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-FIND_PATH(OpenCV_CVCAM_INCLUDE_DIR    
-          NAMES cvcam.h 
-          PATHS ${OpenCV_ROOT_DIR} 
+FIND_PATH(OpenCV_CVCAM_INCLUDE_DIR
+          NAMES cvcam.h
+          PATHS ${OpenCV_ROOT_DIR}
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
 # Find sbsolute path to all libraries 
 # some are optionally, some may not exist on Linux
 #
-FIND_LIBRARY(OpenCV_CV_LIBRARY   
+FIND_LIBRARY(OpenCV_CV_LIBRARY
              NAMES cv opencv
-             PATHS ${OpenCV_ROOT_DIR}  
+             PATHS ${OpenCV_ROOT_DIR}
              PATH_SUFFIXES  ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
@@ -157,42 +173,42 @@ FIND_LIBRARY(OpenCV_CVAUX_LIBRARY
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_CVCAM_LIBRARY   
+FIND_LIBRARY(OpenCV_CVCAM_LIBRARY
              NAMES cvcam
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
-            ) 
+            )
 
 FIND_LIBRARY(OpenCV_CVHAARTRAINING_LIBRARY
              NAMES cvhaartraining
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
-            ) 
+            )
 
-FIND_LIBRARY(OpenCV_CXCORE_LIBRARY  
+FIND_LIBRARY(OpenCV_CXCORE_LIBRARY
              NAMES cxcore
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_CXTS_LIBRARY   
+FIND_LIBRARY(OpenCV_CXTS_LIBRARY
              NAMES cxts
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_HIGHGUI_LIBRARY  
+FIND_LIBRARY(OpenCV_HIGHGUI_LIBRARY
              NAMES highgui
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_ML_LIBRARY  
+FIND_LIBRARY(OpenCV_ML_LIBRARY
              NAMES ml
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_TRS_LIBRARY  
+FIND_LIBRARY(OpenCV_TRS_LIBRARY
              NAMES trs
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
-FIND_LIBRARY(OpenCV_BLOB_LIBRARY  
+FIND_LIBRARY(OpenCV_BLOB_LIBRARY
              NAMES blob
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
@@ -219,7 +235,7 @@ FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
         SET(OpenCV_FOUND OFF)
 
     ENDIF(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
-  
+
 ENDFOREACH(NAME)
 
 MESSAGE("-- OpenCV Include Directory: ${OpenCV_INCLUDE_DIRS}")
@@ -253,8 +269,8 @@ MARK_AS_ADVANCED(OpenCV_ROOT_DIR
 
 
 # Be backward compatible:
-SET(OPENCV_LIBRARIES   ${OpenCV_LIBRARIES} )
-SET(OPENCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS} )
+SET(OPENCV_LIBRARIES   ${OpenCV_LIBRARIES})
+SET(OPENCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS})
 SET(OPENCV_FOUND       ${OpenCV_FOUND})
 
 # Display help message
