@@ -3,6 +3,9 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
+ * Date        : 2003-10-01
+ * Description : a plugin to export to a remote Gallery server.
+ *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -18,6 +21,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * ============================================================ */
 
 #include "gallerympform.h"
