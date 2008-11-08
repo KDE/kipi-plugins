@@ -27,11 +27,11 @@
 #include <climits>
 #include "Blob.h"
 
-#ifdef WIN32 
+#ifdef WIN32
 #include <cv.h>
 #else
 #include <opencv/cv.h>
-#endif
+#endif // WIN32
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -41,8 +41,8 @@ namespace KIPIRemoveRedEyesPlugin
 - FUNCIONALITAT: Constructor est�ndard 
 - PAR�METRES:
 - RESULTAT:
-	- inicialitzaci� de totes les variables internes i de l'storage i la sequencia
-  	  per a les cantonades del blob
+    - inicialitzaci� de totes les variables internes i de l'storage i la sequencia
+        per a les cantonades del blob
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 25-05-2005.
@@ -53,7 +53,7 @@ namespace KIPIRemoveRedEyesPlugin
 - FUNCTIONALITY: Standard constructor
 - PARAMETERS:
 - RESULT:
-	- memory allocation for the blob edges and initialization of member variables
+    - memory allocation for the blob edges and initialization of member variables
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -61,28 +61,28 @@ namespace KIPIRemoveRedEyesPlugin
 */
 CBlob::CBlob()
 {
-	etiqueta = -1;		// Flag indicates null region
-	exterior = 0;
-	area = 0.0f;
-	perimeter = 0.0f;
-	parent = -1;
-	minx = LONG_MAX;
-	maxx = 0;
-	miny = LONG_MAX;
-	maxy = 0;
-	sumx = 0;
-	sumy = 0;
-	sumxx = 0;
-	sumyy = 0;
-	sumxy = 0;
-	mean = 0;
-	stddev = 0;
-	externPerimeter = 0;
+    etiqueta = -1;        // Flag indicates null region
+    exterior = 0;
+    area = 0.0f;
+    perimeter = 0.0f;
+    parent = -1;
+    minx = LONG_MAX;
+    maxx = 0;
+    miny = LONG_MAX;
+    maxy = 0;
+    sumx = 0;
+    sumy = 0;
+    sumxx = 0;
+    sumyy = 0;
+    sumxy = 0;
+    mean = 0;
+    stddev = 0;
+    externPerimeter = 0;
 
-	m_storage = cvCreateMemStorage(0);
-	edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-			     		 sizeof(CvContour),
-			     		 sizeof(CvPoint),m_storage);
+    m_storage = cvCreateMemStorage(0);
+    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                          sizeof(CvContour),
+                          sizeof(CvPoint),m_storage);
 }
 
 /**
@@ -107,89 +107,89 @@ CBlob::CBlob()
 */
 CBlob::CBlob( const CBlob &src )
 {
-	// copiem les propietats del blob origen a l'actual
-	etiqueta = src.etiqueta;		
-	exterior = src.exterior;
-	area = src.Area();
-	perimeter = src.Perimeter();
-	parent = src.parent;
-	minx = src.minx;
-	maxx = src.maxx;
-	miny = src.miny;
-	maxy = src.maxy;
-	sumx = src.sumx;
-	sumy = src.sumy;
-	sumxx = src.sumxx;
-	sumyy = src.sumyy;
-	sumxy = src.sumxy;
-	mean = src.mean;
-	stddev = src.stddev;
-	externPerimeter = src.externPerimeter;
+    // copiem les propietats del blob origen a l'actual
+    etiqueta = src.etiqueta;
+    exterior = src.exterior;
+    area = src.Area();
+    perimeter = src.Perimeter();
+    parent = src.parent;
+    minx = src.minx;
+    maxx = src.maxx;
+    miny = src.miny;
+    maxy = src.maxy;
+    sumx = src.sumx;
+    sumy = src.sumy;
+    sumxx = src.sumxx;
+    sumyy = src.sumyy;
+    sumxy = src.sumxy;
+    mean = src.mean;
+    stddev = src.stddev;
+    externPerimeter = src.externPerimeter;
 
-	// copiem els edges del blob origen a l'actual
-	CvSeqReader reader;
-	CvSeqWriter writer;
-	CvPoint edgeactual;
-	
-	// creem una sequencia buida per als edges
-	m_storage = cvCreateMemStorage(0);
-	edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-							   sizeof(CvContour),
-							   sizeof(CvPoint),m_storage);
+    // copiem els edges del blob origen a l'actual
+    CvSeqReader reader;
+    CvSeqWriter writer;
+    CvPoint edgeactual;
 
-	cvStartReadSeq( src.Edges(), &reader);
-	cvStartAppendToSeq( edges, &writer );
+    // creem una sequencia buida per als edges
+    m_storage = cvCreateMemStorage(0);
+    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                               sizeof(CvContour),
+                               sizeof(CvPoint),m_storage);
 
-	for( int i=0; i< src.Edges()->total; i++)
-	{
-		CV_READ_SEQ_ELEM( edgeactual ,reader);
-		CV_WRITE_SEQ_ELEM( edgeactual , writer );
-	}
-	
-	cvEndWriteSeq( &writer );
+    cvStartReadSeq( src.Edges(), &reader);
+    cvStartAppendToSeq( edges, &writer );
+
+    for( int i=0; i< src.Edges()->total; i++)
+    {
+        CV_READ_SEQ_ELEM( edgeactual ,reader);
+        CV_WRITE_SEQ_ELEM( edgeactual , writer );
+    }
+
+    cvEndWriteSeq( &writer );
 }
 CBlob::CBlob( const CBlob *src )
 {
-	// copiem les propietats del blob origen a l'actual
-	etiqueta = src->etiqueta;		
-	exterior = src->exterior;
-	area = src->Area();
-	perimeter = src->Perimeter();
-	parent = src->parent;
-	minx = src->minx;
-	maxx = src->maxx;
-	miny = src->miny;
-	maxy = src->maxy;
-	sumx = src->sumx;
-	sumy = src->sumy;
-	sumxx = src->sumxx;
-	sumyy = src->sumyy;
-	sumxy = src->sumxy;
-	mean = src->mean;
-	stddev = src->stddev;
-	externPerimeter = src->externPerimeter;
+    // copiem les propietats del blob origen a l'actual
+    etiqueta = src->etiqueta;
+    exterior = src->exterior;
+    area = src->Area();
+    perimeter = src->Perimeter();
+    parent = src->parent;
+    minx = src->minx;
+    maxx = src->maxx;
+    miny = src->miny;
+    maxy = src->maxy;
+    sumx = src->sumx;
+    sumy = src->sumy;
+    sumxx = src->sumxx;
+    sumyy = src->sumyy;
+    sumxy = src->sumxy;
+    mean = src->mean;
+    stddev = src->stddev;
+    externPerimeter = src->externPerimeter;
 
-	// copiem els edges del blob origen a l'actual
-	CvSeqReader reader;
-	CvSeqWriter writer;
-	CvPoint edgeactual;
-	
-	// creem una sequencia buida per als edges
-	m_storage = cvCreateMemStorage(0);
-	edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-							   sizeof(CvContour),
-							   sizeof(CvPoint),m_storage);
+    // copiem els edges del blob origen a l'actual
+    CvSeqReader reader;
+    CvSeqWriter writer;
+    CvPoint edgeactual;
 
-	cvStartReadSeq( src->Edges(), &reader);
-	cvStartAppendToSeq( edges, &writer );
+    // creem una sequencia buida per als edges
+    m_storage = cvCreateMemStorage(0);
+    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                               sizeof(CvContour),
+                               sizeof(CvPoint),m_storage);
 
-	for( int i=0; i< src->Edges()->total; i++)
-	{
-		CV_READ_SEQ_ELEM( edgeactual ,reader);
-		CV_WRITE_SEQ_ELEM( edgeactual , writer );
-	}
-	
-	cvEndWriteSeq( &writer );
+    cvStartReadSeq( src->Edges(), &reader);
+    cvStartAppendToSeq( edges, &writer );
+
+    for( int i=0; i< src->Edges()->total; i++)
+    {
+        CV_READ_SEQ_ELEM( edgeactual ,reader);
+        CV_WRITE_SEQ_ELEM( edgeactual , writer );
+    }
+
+    cvEndWriteSeq( &writer );
 }
 
 /**
@@ -214,19 +214,19 @@ CBlob::CBlob( const CBlob *src )
 */
 CBlob::~CBlob()
 {
-	// Eliminar v�rtexs del blob 
-	cvClearSeq(edges);
-	// i la zona de mem�ria on s�n
-	cvReleaseMemStorage( &m_storage );
+    // Eliminar v�rtexs del blob 
+    cvClearSeq(edges);
+    // i la zona de mem�ria on s�n
+    cvReleaseMemStorage( &m_storage );
 }
 
 /**
 - FUNCI�: operator=
 - FUNCIONALITAT: Operador d'assignaci�
 - PAR�METRES:
-	- src: blob a assignar a l'actual
+    - src: blob a assignar a l'actual
 - RESULTAT:
-	- Substitueix el blob actual per el src
+    - Substitueix el blob actual per el src
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 25-05-2005.
@@ -236,9 +236,9 @@ CBlob::~CBlob()
 - FUNCTION: Assigment operator
 - FUNCTIONALITY: Assigns a blob to the current 
 - PARAMETERS:
-	- src: blob to assign
+    - src: blob to assign
 - RESULT:
-	- the current blob is replaced by the src blob
+    - the current blob is replaced by the src blob
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -246,66 +246,66 @@ CBlob::~CBlob()
 */
 CBlob& CBlob::operator=(const CBlob &src )
 {
-	// si ja s�n el mateix, no cal fer res
-	if (this != &src)
-	{
-		// Eliminar v�rtexs del blob 
-		cvClearSeq(edges);
-		// i la zona de mem�ria on s�n
-		cvReleaseMemStorage( &m_storage );
+    // si ja s�n el mateix, no cal fer res
+    if (this != &src)
+    {
+        // Eliminar v�rtexs del blob 
+        cvClearSeq(edges);
+        // i la zona de mem�ria on s�n
+        cvReleaseMemStorage( &m_storage );
 
-		// creem una sequencia buida per als edges
-		m_storage = cvCreateMemStorage(0);
-		edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-								   sizeof(CvContour),
-								   sizeof(CvPoint),m_storage);
+        // creem una sequencia buida per als edges
+        m_storage = cvCreateMemStorage(0);
+        edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                                   sizeof(CvContour),
+                                   sizeof(CvPoint),m_storage);
 
-		// copiem les propietats del blob origen a l'actual
-		etiqueta = src.etiqueta;		
-		exterior = src.exterior;
-		area = src.Area();
-		perimeter = src.Perimeter();
-		parent = src.parent;
-		minx = src.minx;
-		maxx = src.maxx;
-		miny = src.miny;
-		maxy = src.maxy;
-		sumx = src.sumx;
-		sumy = src.sumy;
-		sumxx = src.sumxx;
-		sumyy = src.sumyy;
-		sumxy = src.sumxy;
-		mean = src.mean;
-		stddev = src.stddev;
-		externPerimeter = src.externPerimeter;
+        // copiem les propietats del blob origen a l'actual
+        etiqueta = src.etiqueta;
+        exterior = src.exterior;
+        area = src.Area();
+        perimeter = src.Perimeter();
+        parent = src.parent;
+        minx = src.minx;
+        maxx = src.maxx;
+        miny = src.miny;
+        maxy = src.maxy;
+        sumx = src.sumx;
+        sumy = src.sumy;
+        sumxx = src.sumxx;
+        sumyy = src.sumyy;
+        sumxy = src.sumxy;
+        mean = src.mean;
+        stddev = src.stddev;
+        externPerimeter = src.externPerimeter;
 
-		// copiem els edges del blob origen a l'actual
-		CvSeqReader reader;
-		CvSeqWriter writer;
-		CvPoint edgeactual;
-		
-		cvStartReadSeq( src.Edges(), &reader);
-		cvStartAppendToSeq( edges, &writer );
+        // copiem els edges del blob origen a l'actual
+        CvSeqReader reader;
+        CvSeqWriter writer;
+        CvPoint edgeactual;
 
-		for( int i=0; i< src.Edges()->total; i++)
-		{
-			CV_READ_SEQ_ELEM( edgeactual ,reader);
-			CV_WRITE_SEQ_ELEM( edgeactual , writer );
-		}
-		
-		cvEndWriteSeq( &writer );
-	}
-	return *this;
+        cvStartReadSeq( src.Edges(), &reader);
+        cvStartAppendToSeq( edges, &writer );
+
+        for( int i=0; i< src.Edges()->total; i++)
+        {
+            CV_READ_SEQ_ELEM( edgeactual ,reader);
+            CV_WRITE_SEQ_ELEM( edgeactual , writer );
+        }
+
+        cvEndWriteSeq( &writer );
+    }
+    return *this;
 }
 
 /**
 - FUNCI�: FillBlob
 - FUNCIONALITAT: Pinta l'interior d'un blob amb el color especificat
 - PAR�METRES:
-	- imatge: imatge on es vol pintar el el blob
-	- color: color amb que es vol pintar el blob
+    - imatge: imatge on es vol pintar el el blob
+    - color: color amb que es vol pintar el blob
 - RESULTAT:
-	- retorna la imatge d'entrada amb el blob pintat
+    - retorna la imatge d'entrada amb el blob pintat
 - RESTRICCIONS:
 - AUTOR: 
 - Ricard Borr�s
@@ -315,80 +315,79 @@ CBlob& CBlob::operator=(const CBlob &src )
 /**
 - FUNCTION: FillBlob
 - FUNCTIONALITY: 
-	- Fills the blob with a specified colour
+    - Fills the blob with a specified colour
 - PARAMETERS:
-	- imatge: where to paint
-	- color: colour to paint the blob
+    - imatge: where to paint
+    - color: colour to paint the blob
 - RESULT:
-	- modifies input image and returns the seed point used to fill the blob
+    - modifies input image and returns the seed point used to fill the blob
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const					  
+void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const                      
 {
-	
-	//verifiquem que existeixi el blob i que tingui cantonades
-	if( edges == NULL || edges->total == 0 ) return;
-	
-	CvPoint edgeactual, pt1, pt2;
-	CvSeqReader reader;
-	vectorPunts vectorEdges = vectorPunts( edges->total );
-	vectorPunts::iterator itEdges, itEdgesSeguent;
-	bool dinsBlob;
-	int yActual;
-	
-	// passem els punts del blob a un vector de punts de les STL
-	cvStartReadSeq( edges, &reader);
-	itEdges = vectorEdges.begin();
-	while( itEdges != vectorEdges.end() )
-	{
-		CV_READ_SEQ_ELEM( edgeactual ,reader);
-		*itEdges = edgeactual;
-		itEdges++;
-	}
-	// ordenem el vector per les Y's i les X's d'esquerra a dreta
-	std::sort( vectorEdges.begin(), vectorEdges.end(), comparaCvPoint() );
+    //verifiquem que existeixi el blob i que tingui cantonades
+    if( edges == NULL || edges->total == 0 ) return;
 
-	// recorrem el vector ordenat i fem linies entre punts consecutius
-	itEdges = vectorEdges.begin();
-	itEdgesSeguent = vectorEdges.begin() + 1;
-	dinsBlob = true;
-	while( itEdges != (vectorEdges.end() - 1))
-	{
-		yActual = (*itEdges).y;
+    CvPoint edgeactual, pt1, pt2;
+    CvSeqReader reader;
+    vectorPunts vectorEdges = vectorPunts( edges->total );
+    vectorPunts::iterator itEdges, itEdgesSeguent;
+    bool dinsBlob;
+    int yActual;
 
-		if( ( (*itEdges).x != (*itEdgesSeguent).x ) &&
-			( (*itEdgesSeguent).y == yActual )
-		  )
-		{
-			if( dinsBlob )
-			{
-				pt1 = *itEdges;
-				pt1.x += offsetX;
-				pt1.y += offsetY;
+    // passem els punts del blob a un vector de punts de les STL
+    cvStartReadSeq( edges, &reader);
+    itEdges = vectorEdges.begin();
+    while( itEdges != vectorEdges.end() )
+    {
+        CV_READ_SEQ_ELEM( edgeactual ,reader);
+        *itEdges = edgeactual;
+        itEdges++;
+    }
+    // ordenem el vector per les Y's i les X's d'esquerra a dreta
+    std::sort( vectorEdges.begin(), vectorEdges.end(), comparaCvPoint() );
 
-				pt2 = *itEdgesSeguent;
-				pt2.x += offsetX;
-				pt2.y += offsetY;
+    // recorrem el vector ordenat i fem linies entre punts consecutius
+    itEdges = vectorEdges.begin();
+    itEdgesSeguent = vectorEdges.begin() + 1;
+    dinsBlob = true;
+    while( itEdges != (vectorEdges.end() - 1))
+    {
+        yActual = (*itEdges).y;
 
-				cvLine( imatge, pt1, pt2, color );
-			}
-			dinsBlob =! dinsBlob;
-		}
-		itEdges++;
-		itEdgesSeguent++;
-		if( (*itEdges).y != yActual ) dinsBlob = true;
-	}
-	vectorEdges.clear();
+        if( ( (*itEdges).x != (*itEdgesSeguent).x ) &&
+            ( (*itEdgesSeguent).y == yActual )
+          )
+        {
+            if( dinsBlob )
+            {
+                pt1 = *itEdges;
+                pt1.x += offsetX;
+                pt1.y += offsetY;
+
+                pt2 = *itEdgesSeguent;
+                pt2.x += offsetX;
+                pt2.y += offsetY;
+
+                cvLine( imatge, pt1, pt2, color );
+            }
+            dinsBlob =! dinsBlob;
+        }
+        itEdges++;
+        itEdgesSeguent++;
+        if( (*itEdges).y != yActual ) dinsBlob = true;
+    }
+    vectorEdges.clear();
 }
 
 /**
 - FUNCI�: CopyEdges
 - FUNCIONALITAT: Afegeix els v�rtexs del blob al blob destination
 - PAR�METRES:
-	- destination: blob al que volem afegir els v�rtexs
+    - destination: blob al que volem afegir els v�rtexs
 - RESULTAT:
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
@@ -399,7 +398,7 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
 - FUNCTION: CopyEdges
 - FUNCTIONALITY: Adds the blob edges to destination
 - PARAMETERS:
-	- destination: where to add the edges
+    - destination: where to add the edges
 - RESULT:
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
@@ -408,20 +407,20 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
 */
 void CBlob::CopyEdges( CBlob &destination ) const
 {
-	CvSeqReader reader;
-	CvSeqWriter writer;
-	CvPoint edgeactual;
-		
-	cvStartReadSeq( edges, &reader);
-	cvStartAppendToSeq( destination.Edges(), &writer );
+    CvSeqReader reader;
+    CvSeqWriter writer;
+    CvPoint edgeactual;
 
-	for( int i=0; i<edges->total; i++)
-	{
-		CV_READ_SEQ_ELEM( edgeactual ,reader);
-		CV_WRITE_SEQ_ELEM( edgeactual , writer );
-	}
-	
-	cvEndWriteSeq( &writer );
+    cvStartReadSeq( edges, &reader);
+    cvStartAppendToSeq( destination.Edges(), &writer );
+
+    for( int i=0; i<edges->total; i++)
+    {
+        CV_READ_SEQ_ELEM( edgeactual ,reader);
+        CV_WRITE_SEQ_ELEM( edgeactual , writer );
+    }
+
+    cvEndWriteSeq( &writer );
 }
 
 /**
@@ -446,17 +445,17 @@ void CBlob::CopyEdges( CBlob &destination ) const
 */
 void CBlob::ClearEdges()
 {
-	// Eliminar v�rtexs del blob eliminat
-	cvClearSeq( edges );
+    // Eliminar v�rtexs del blob eliminat
+    cvClearSeq( edges );
 }
 
 /**
 - FUNCI�: GetConvexHull
 - FUNCIONALITAT: Retorna el poligon convex del blob
 - PAR�METRES:
-	- dst: sequencia on desarem el resultat (no ha d'estar inicialitzada)
+    - dst: sequencia on desarem el resultat (no ha d'estar inicialitzada)
 - RESULTAT:
-	- true si tot ha anat b�
+    - true si tot ha anat b�
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 25-05-2005.
@@ -466,9 +465,9 @@ void CBlob::ClearEdges()
 - FUNCTION: GetConvexHull
 - FUNCTIONALITY: Calculates the convex hull polygon of the blob
 - PARAMETERS:
-	- dst: where to store the result
+    - dst: where to store the result
 - RESULT:
-	- true if no error ocurred
+    - true if no error ocurred
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -476,12 +475,12 @@ void CBlob::ClearEdges()
 */
 bool CBlob::GetConvexHull( CvSeq **dst ) const
 {
-	if( edges != NULL && edges->total > 0)
-	{
-		*dst = cvConvexHull2( edges, 0, CV_CLOCKWISE, 0 );
-		return true;
-	}
-	return false;
+    if( edges != NULL && edges->total > 0)
+    {
+        *dst = cvConvexHull2( edges, 0, CV_CLOCKWISE, 0 );
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -489,7 +488,7 @@ bool CBlob::GetConvexHull( CvSeq **dst ) const
 - FUNCIONALITAT: Retorna l'ellipse que s'ajusta millor a les cantonades del blob
 - PAR�METRES:
 - RESULTAT:
-	- estructura amb l'ellipse
+    - estructura amb l'ellipse
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 25-05-2005.
@@ -500,7 +499,7 @@ bool CBlob::GetConvexHull( CvSeq **dst ) const
 - FUNCTIONALITY: Calculates the ellipse that best fits the edges of the blob
 - PARAMETERS:
 - RESULT:
-	- CvBox2D struct with the calculated ellipse
+    - CvBox2D struct with the calculated ellipse
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -508,21 +507,21 @@ bool CBlob::GetConvexHull( CvSeq **dst ) const
 */
 CvBox2D CBlob::GetEllipse() const
 {
-	CvBox2D elipse;
-	// necessitem 6 punts per calcular l'elipse
-	if( edges != NULL && edges->total > 6)
-	{
-		elipse = cvFitEllipse2( edges );
-	}
-	else
-	{
-		elipse.center.x = 0.0;
-		elipse.center.y = 0.0;
-		elipse.size.width = 0.0;
-		elipse.size.height = 0.0;
-		elipse.angle = 0.0;
-	}
-	return elipse;
+    CvBox2D elipse;
+    // necessitem 6 punts per calcular l'elipse
+    if( edges != NULL && edges->total > 6)
+    {
+        elipse = cvFitEllipse2( edges );
+    }
+    else
+    {
+        elipse.center.x = 0.0;
+        elipse.center.y = 0.0;
+        elipse.size.width = 0.0;
+        elipse.size.height = 0.0;
+        elipse.angle = 0.0;
+    }
+    return elipse;
 }
 
 
@@ -537,9 +536,9 @@ CvBox2D CBlob::GetEllipse() const
 - FUNCI�: Moment
 - FUNCIONALITAT: Calcula el moment pq del blob
 - RESULTAT:
-	- retorna el moment pq especificat o 0 si el moment no est� implementat
+    - retorna el moment pq especificat o 0 si el moment no est� implementat
 - RESTRICCIONS:
-	- Implementats els moments pq: 00, 01, 10, 20, 02
+    - Implementats els moments pq: 00, 01, 10, 20, 02
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
 - MODIFICACI�: Data. Autor. Descripci�.
@@ -549,48 +548,48 @@ CvBox2D CBlob::GetEllipse() const
 - FUNCTIONALITY: Calculates the pq moment of the blob
 - PARAMETERS:
 - RESULT:
-	- returns the pq moment or 0 if the moment it is not implemented
+    - returns the pq moment or 0 if the moment it is not implemented
 - RESTRICTIONS:
-	- Currently, only implemented the 00, 01, 10, 20, 02 pq moments
+    - Currently, only implemented the 00, 01, 10, 20, 02 pq moments
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 20-07-2004.
 - MODIFICATION: Date. Author. Description.
 */
 double CBlobGetMoment::operator()(const CBlob &blob) const
 {
-	//Moment 00
-	if((m_p==0) && (m_q==0))
-		return blob.Area();
+    //Moment 00
+    if((m_p==0) && (m_q==0))
+        return blob.Area();
 
-	//Moment 10
-	if((m_p==1) && (m_q==0))
-		return blob.SumX();
+    //Moment 10
+    if((m_p==1) && (m_q==0))
+        return blob.SumX();
 
-	//Moment 01
-	if((m_p==0) && (m_q==1))
-		return blob.SumY();
+    //Moment 01
+    if((m_p==0) && (m_q==1))
+        return blob.SumY();
 
-	//Moment 20
-	if((m_p==2) && (m_q==0))
-		return blob.SumXX();
+    //Moment 20
+    if((m_p==2) && (m_q==0))
+        return blob.SumXX();
 
-	//Moment 02
-	if((m_p==0) && (m_q==2))
-		return blob.SumYY();
+    //Moment 02
+    if((m_p==0) && (m_q==2))
+        return blob.SumYY();
 
-	return 0;
+    return 0;
 }
 
 /**
 - FUNCI�: HullPerimeter
 - FUNCIONALITAT: Calcula la longitud del perimetre convex del blob.
-			   Fa servir la funci� d'OpenCV cvConvexHull2 per a 
-			   calcular el perimetre convex.
-			   
+               Fa servir la funci� d'OpenCV cvConvexHull2 per a 
+               calcular el perimetre convex.
+
 - PAR�METRES:
 - RESULTAT:
-	- retorna la longitud del per�metre convex del blob. Si el blob no t� coordenades
-	  associades retorna el per�metre normal del blob.
+    - retorna la longitud del per�metre convex del blob. Si el blob no t� coordenades
+      associades retorna el per�metre normal del blob.
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
@@ -601,8 +600,8 @@ double CBlobGetMoment::operator()(const CBlob &blob) const
 - FUNCTIONALITY: Calculates the convex hull perimeter of the blob
 - PARAMETERS:
 - RESULT:
-	- returns the convex hull perimeter of the blob or the perimeter if the 
-	blob edges could not be retrieved
+    - returns the convex hull perimeter of the blob or the perimeter if the 
+    blob edges could not be retrieved
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -610,31 +609,31 @@ double CBlobGetMoment::operator()(const CBlob &blob) const
 */
 double CBlobGetHullPerimeter::operator()(const CBlob &blob) const
 {
-	if(blob.Edges() != NULL && blob.Edges()->total > 0)
-	{
-		CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
-		return fabs(cvArcLength(hull,CV_WHOLE_SEQ,1));
-	}
-	return blob.Perimeter();
+    if(blob.Edges() != NULL && blob.Edges()->total > 0)
+    {
+        CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
+        return fabs(cvArcLength(hull,CV_WHOLE_SEQ,1));
+    }
+    return blob.Perimeter();
 }
 
 double CBlobGetHullArea::operator()(const CBlob &blob) const
 {
-	if(blob.Edges() != NULL && blob.Edges()->total > 0)
-	{
-		CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
-		return fabs(cvContourArea(hull));
-	}
-	return blob.Perimeter();
+    if(blob.Edges() != NULL && blob.Edges()->total > 0)
+    {
+        CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
+        return fabs(cvContourArea(hull));
+    }
+    return blob.Perimeter();
 }
 
 /**
 - FUNCI�: MinX_at_MinY
 - FUNCIONALITAT: Calcula el valor MinX a MinY.
 - PAR�METRES:
-	- blob: blob del que volem calcular el valor
+    - blob: blob del que volem calcular el valor
 - RESULTAT:
-	- retorna la X minima en la Y minima.
+    - retorna la X minima en la Y minima.
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
@@ -652,32 +651,32 @@ double CBlobGetHullArea::operator()(const CBlob &blob) const
 */
 double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
 {
-	double MinX_at_MinY = LONG_MAX;
-	
-	CvSeqReader reader;
-	CvPoint edgeactual;
-		
-	cvStartReadSeq(blob.Edges(),&reader);
-	
-	for(int j=0;j<blob.Edges()->total;j++)
-	{
-		CV_READ_SEQ_ELEM(edgeactual,reader);
-		if( (edgeactual.y == blob.MinY()) && (edgeactual.x < MinX_at_MinY) )
-		{
-			MinX_at_MinY = edgeactual.x;
-		}
-	}
-		
-	return MinX_at_MinY;
+    double MinX_at_MinY = LONG_MAX;
+
+    CvSeqReader reader;
+    CvPoint edgeactual;
+
+    cvStartReadSeq(blob.Edges(),&reader);
+
+    for(int j=0;j<blob.Edges()->total;j++)
+    {
+        CV_READ_SEQ_ELEM(edgeactual,reader);
+        if( (edgeactual.y == blob.MinY()) && (edgeactual.x < MinX_at_MinY) )
+        {
+            MinX_at_MinY = edgeactual.x;
+        }
+    }
+
+    return MinX_at_MinY;
 }
 
 /**
 - FUNCI�: MinY_at_MaxX
 - FUNCIONALITAT: Calcula el valor MinX a MaxX.
 - PAR�METRES:
-	- blob: blob del que volem calcular el valor
+    - blob: blob del que volem calcular el valor
 - RESULTAT:
-	- retorna la Y minima en la X maxima.
+    - retorna la Y minima en la X maxima.
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
@@ -695,32 +694,32 @@ double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
 */
 double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
 {
-	double MinY_at_MaxX = LONG_MAX;
-	
-	CvSeqReader reader;
-	CvPoint edgeactual;
-		
-	cvStartReadSeq(blob.Edges(),&reader);
-	
-	for(int j=0;j<blob.Edges()->total;j++)
-	{
-		CV_READ_SEQ_ELEM(edgeactual,reader);
-		if( (edgeactual.x == blob.MaxX()) && (edgeactual.y < MinY_at_MaxX) )
-		{
-			MinY_at_MaxX = edgeactual.y;
-		}
-	}
-		
-	return MinY_at_MaxX;
+    double MinY_at_MaxX = LONG_MAX;
+
+    CvSeqReader reader;
+    CvPoint edgeactual;
+
+    cvStartReadSeq(blob.Edges(),&reader);
+
+    for(int j=0;j<blob.Edges()->total;j++)
+    {
+        CV_READ_SEQ_ELEM(edgeactual,reader);
+        if( (edgeactual.x == blob.MaxX()) && (edgeactual.y < MinY_at_MaxX) )
+        {
+            MinY_at_MaxX = edgeactual.y;
+        }
+    }
+
+    return MinY_at_MaxX;
 }
 
 /**
 - FUNCI�: MaxX_at_MaxY
 - FUNCIONALITAT: Calcula el valor MaxX a MaxY.
 - PAR�METRES:
-	- blob: blob del que volem calcular el valor
+    - blob: blob del que volem calcular el valor
 - RESULTAT:
-	- retorna la X maxima en la Y maxima.
+    - retorna la X maxima en la Y maxima.
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
@@ -738,32 +737,32 @@ double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
 */
 double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
 {
-	double MaxX_at_MaxY = LONG_MIN;
-	
-	CvSeqReader reader;
-	CvPoint edgeactual;
-		
-	cvStartReadSeq(blob.Edges(),&reader);
-	
-	for(int j=0;j<blob.Edges()->total;j++)
-	{
-		CV_READ_SEQ_ELEM(edgeactual,reader);
-		if( (edgeactual.y == blob.MaxY()) && (edgeactual.x > MaxX_at_MaxY) )
-		{
-			MaxX_at_MaxY = edgeactual.x;
-		}
-	}
-		
-	return MaxX_at_MaxY;
+    double MaxX_at_MaxY = LONG_MIN;
+
+    CvSeqReader reader;
+    CvPoint edgeactual;
+
+    cvStartReadSeq(blob.Edges(),&reader);
+
+    for(int j=0;j<blob.Edges()->total;j++)
+    {
+        CV_READ_SEQ_ELEM(edgeactual,reader);
+        if( (edgeactual.y == blob.MaxY()) && (edgeactual.x > MaxX_at_MaxY) )
+        {
+            MaxX_at_MaxY = edgeactual.x;
+        }
+    }
+
+    return MaxX_at_MaxY;
 }
 
 /**
 - FUNCI�: MaxY_at_MinX
 - FUNCIONALITAT: Calcula el valor MaxY a MinX.
 - PAR�METRES:
-	- blob: blob del que volem calcular el valor
+    - blob: blob del que volem calcular el valor
 - RESULTAT:
-	- retorna la Y maxima en la X minima.
+    - retorna la Y maxima en la X minima.
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s
 - DATA DE CREACI�: 20-07-2004.
@@ -781,27 +780,27 @@ double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
 */
 double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
 {
-	double MaxY_at_MinX = LONG_MIN;
-	
-	CvSeqReader reader;
-	CvPoint edgeactual;
-		
-	cvStartReadSeq(blob.Edges(),&reader);
-	
-	for(int j=0;j<blob.Edges()->total;j++)
-	{
-		CV_READ_SEQ_ELEM(edgeactual,reader);
-		if( (edgeactual.x == blob.MinY()) && (edgeactual.y > MaxY_at_MinX) )
-		{
-			MaxY_at_MinX = edgeactual.y;
-		}
-	}
-		
-	return MaxY_at_MinX;
+    double MaxY_at_MinX = LONG_MIN;
+
+    CvSeqReader reader;
+    CvPoint edgeactual;
+
+    cvStartReadSeq(blob.Edges(),&reader);
+
+    for(int j=0;j<blob.Edges()->total;j++)
+    {
+        CV_READ_SEQ_ELEM(edgeactual,reader);
+        if( (edgeactual.x == blob.MinY()) && (edgeactual.y > MaxY_at_MinX) )
+        {
+            MaxY_at_MinX = edgeactual.y;
+        }
+    }
+
+    return MaxY_at_MinX;
 }
 
 /**
-	Retorna l'elongaci� del blob (longitud/amplada)
+    Retorna l'elongaci� del blob (longitud/amplada)
 */
 /**
 - FUNCTION: CBlobGetElongation
@@ -809,32 +808,32 @@ double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
-	- See below to see how the lenght and the breadth are aproximated
+    - See below to see how the lenght and the breadth are aproximated
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
 double CBlobGetElongation::operator()(const CBlob &blob) const
 {
-	double ampladaC,longitudC,amplada,longitud;
+    double ampladaC,longitudC,amplada,longitud;
 
-	ampladaC=(double) (blob.Perimeter()+sqrt(pow(blob.Perimeter(),2)-16*blob.Area()))/4;
-	if(ampladaC<=0.0) return 0;
-	longitudC=(double) blob.Area()/ampladaC;
+    ampladaC=(double) (blob.Perimeter()+sqrt(pow(blob.Perimeter(),2)-16*blob.Area()))/4;
+    if(ampladaC<=0.0) return 0;
+    longitudC=(double) blob.Area()/ampladaC;
 
-	longitud=MAX( longitudC , ampladaC );
-	amplada=MIN( longitudC , ampladaC );
+    longitud=MAX( longitudC , ampladaC );
+    amplada=MIN( longitudC , ampladaC );
 
-	return (double) longitud/amplada;
+    return (double) longitud/amplada;
 }
 
 /**
-	Retorna la compacitat del blob
+    Retorna la compacitat del blob
 */
 /**
 - FUNCTION: CBlobGetCompactness
 - FUNCTIONALITY: Calculates the compactness of the blob 
-			    ( maximum for circle shaped blobs, minimum for the rest)
+                ( maximum for circle shaped blobs, minimum for the rest)
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
@@ -844,19 +843,19 @@ double CBlobGetElongation::operator()(const CBlob &blob) const
 */
 double CBlobGetCompactness::operator()(const CBlob &blob) const
 {
-	if( blob.Area() != 0.0 )
-		return (double) pow(blob.Perimeter(),2)/(4*CV_PI*blob.Area());
-	else
-		return 0.0;
+    if( blob.Area() != 0.0 )
+        return (double) pow(blob.Perimeter(),2)/(4*CV_PI*blob.Area());
+    else
+        return 0.0;
 }
 
 /**
-	Retorna la rugositat del blob
+    Retorna la rugositat del blob
 */
 /**
 - FUNCTION: CBlobGetRoughness
 - FUNCTIONALITY: Calculates the roughness of the blob 
-			    ( ratio between perimeter and convex hull perimeter)
+                ( ratio between perimeter and convex hull perimeter)
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
@@ -866,18 +865,18 @@ double CBlobGetCompactness::operator()(const CBlob &blob) const
 */
 double CBlobGetRoughness::operator()(const CBlob &blob) const
 {
-	CBlobGetHullPerimeter getHullPerimeter = CBlobGetHullPerimeter();
-	
-	double hullPerimeter = getHullPerimeter(blob);
+    CBlobGetHullPerimeter getHullPerimeter = CBlobGetHullPerimeter();
 
-	if( hullPerimeter != 0.0 )
-		return blob.Perimeter() / hullPerimeter;//HullPerimeter();
+    double hullPerimeter = getHullPerimeter(blob);
 
-	return 0.0;
+    if( hullPerimeter != 0.0 )
+        return blob.Perimeter() / hullPerimeter;//HullPerimeter();
+
+    return 0.0;
 }
 
 /**
-	Retorna la longitud del blob
+    Retorna la longitud del blob
 */
 /**
 - FUNCTION: CBlobGetLength
@@ -885,32 +884,32 @@ double CBlobGetRoughness::operator()(const CBlob &blob) const
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
-	- The lenght is an aproximation to the real lenght
+    - The lenght is an aproximation to the real lenght
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
 double CBlobGetLength::operator()(const CBlob &blob) const
 {
-	double ampladaC,longitudC;
-	double tmp;
+    double ampladaC,longitudC;
+    double tmp;
 
-	tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
+    tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
 
-	if( tmp > 0.0 )
-		ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
-	// error intr�nsec en els c�lculs de l'�rea i el per�metre 
-	else
-		ampladaC = (double) (blob.Perimeter())/4;
+    if( tmp > 0.0 )
+        ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
+    // error intr�nsec en els c�lculs de l'�rea i el per�metre 
+    else
+        ampladaC = (double) (blob.Perimeter())/4;
 
-	if(ampladaC<=0.0) return 0;
-	longitudC=(double) blob.Area()/ampladaC;
+    if(ampladaC<=0.0) return 0;
+    longitudC=(double) blob.Area()/ampladaC;
 
-	return MAX( longitudC , ampladaC );
+    return MAX( longitudC , ampladaC );
 }
 
 /**
-	Retorna l'amplada del blob
+    Retorna l'amplada del blob
 */
 /**
 - FUNCTION: CBlobGetBreadth
@@ -918,37 +917,37 @@ double CBlobGetLength::operator()(const CBlob &blob) const
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
-	- The breadth is an aproximation to the real breadth
+    - The breadth is an aproximation to the real breadth
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
 double CBlobGetBreadth::operator()(const CBlob &blob) const
 {
-	double ampladaC,longitudC;
-	double tmp;
+    double ampladaC,longitudC;
+    double tmp;
 
-	tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
+    tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
 
-	if( tmp > 0.0 )
-		ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
-	// error intr�nsec en els c�lculs de l'�rea i el per�metre 
-	else
-		ampladaC = (double) (blob.Perimeter())/4;
+    if( tmp > 0.0 )
+        ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
+    // error intr�nsec en els c�lculs de l'�rea i el per�metre 
+    else
+        ampladaC = (double) (blob.Perimeter())/4;
 
-	if(ampladaC<=0.0) return 0;
-	longitudC = (double) blob.Area()/ampladaC;
+    if(ampladaC<=0.0) return 0;
+    longitudC = (double) blob.Area()/ampladaC;
 
-	return MIN( longitudC , ampladaC );
+    return MIN( longitudC , ampladaC );
 }
 
 /**
-	Calcula la dist�ncia entre un punt i el centre del blob
+    Calcula la dist�ncia entre un punt i el centre del blob
 */
 /**
 - FUNCTION: CBlobGetDistanceFromPoint
 - FUNCTIONALITY: Calculates the euclidean distance between the blob center and 
-				 the point specified in the constructor
+                 the point specified in the constructor
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
@@ -958,14 +957,14 @@ double CBlobGetBreadth::operator()(const CBlob &blob) const
 */
 double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
 {
-	double xmitjana, ymitjana;
-	CBlobGetXCenter getXCenter;
-	CBlobGetYCenter getYCenter;
+    double xmitjana, ymitjana;
+    CBlobGetXCenter getXCenter;
+    CBlobGetYCenter getYCenter;
 
-	xmitjana = m_x - getXCenter( blob );
-	ymitjana = m_y - getYCenter( blob );
+    xmitjana = m_x - getXCenter( blob );
+    ymitjana = m_y - getYCenter( blob );
 
-	return sqrt((xmitjana*xmitjana)+(ymitjana*ymitjana));
+    return sqrt((xmitjana*xmitjana)+(ymitjana*ymitjana));
 }
 
 /**
@@ -973,7 +972,7 @@ double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
 - FUNCIONALITAT: Calcula si un punt cau dins de la capsa rectangular
     del blob
 - RESULTAT:
-	- retorna 1 si hi est�; 0 si no
+    - retorna 1 si hi est�; 0 si no
 - RESTRICCIONS:
 - AUTOR: Francesc Pinyol Margalef
 - DATA DE CREACI�: 16-01-2006.
@@ -985,7 +984,7 @@ double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
     rectangular bounding box of a blob
 - PARAMETERS:
 - RESULT:
-	- returns 1 if it is inside; o if not
+    - returns 1 if it is inside; o if not
 - RESTRICTIONS:
 - AUTHOR: Francesc Pinyol Margalef
 - CREATION DATE: 16-01-2006.
@@ -993,52 +992,52 @@ double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
 */
 double CBlobGetXYInside::operator()(const CBlob &blob) const
 {
-	if( blob.Edges() == NULL || blob.Edges()->total == 0 ) return 0.0;
-	
-	// passem els punts del blob a un vector de punts de les STL
-	CvSeqReader reader;
-	CBlob::vectorPunts vectorEdges;
-	CBlob::vectorPunts::iterator itEdges, itEdgesSeguent;
-	CvPoint edgeactual;
-	bool dinsBlob;
-	
-	// agafem tots els punts amb la mateixa y que l'actual
-	cvStartReadSeq( blob.Edges(), &reader);
-	
-	for( int i=0; i< blob.Edges()->total; i++)
-	{
-		CV_READ_SEQ_ELEM( edgeactual ,reader );
-		if( edgeactual.y == m_p.y )
-			vectorEdges.push_back( edgeactual );
-	}
+    if( blob.Edges() == NULL || blob.Edges()->total == 0 ) return 0.0;
 
-	if( vectorEdges.size() == 0 ) return 0.0;
+    // passem els punts del blob a un vector de punts de les STL
+    CvSeqReader reader;
+    CBlob::vectorPunts vectorEdges;
+    CBlob::vectorPunts::iterator itEdges, itEdgesSeguent;
+    CvPoint edgeactual;
+    bool dinsBlob;
 
-	// ordenem el vector per les Y's i les X's d'esquerra a dreta
-	std::sort( vectorEdges.begin(), vectorEdges.end(), CBlob::comparaCvPoint() );
+    // agafem tots els punts amb la mateixa y que l'actual
+    cvStartReadSeq( blob.Edges(), &reader);
 
-	// recorrem el punts del blob de la mateixa fila que el punt d'entrada
-	// i mirem si la X del punt d'entrada est� entre dos coordenades "plenes"
-	// del blob
-	itEdges = vectorEdges.begin();
-	itEdgesSeguent = vectorEdges.begin() + 1;
-	dinsBlob = true;
+    for( int i=0; i< blob.Edges()->total; i++)
+    {
+        CV_READ_SEQ_ELEM( edgeactual ,reader );
+        if( edgeactual.y == m_p.y )
+            vectorEdges.push_back( edgeactual );
+    }
 
-	while( itEdges != (vectorEdges.end() - 1) )
-	{
-		if( (*itEdges).x <= m_p.x && (*itEdgesSeguent).x >= m_p.x && dinsBlob )
-		{
-			vectorEdges.clear();
-			return 1.0;
-		}
+    if( vectorEdges.size() == 0 ) return 0.0;
 
-		itEdges++;
-		itEdgesSeguent++;
-		dinsBlob = !dinsBlob;
-	}
+    // ordenem el vector per les Y's i les X's d'esquerra a dreta
+    std::sort( vectorEdges.begin(), vectorEdges.end(), CBlob::comparaCvPoint() );
 
-	vectorEdges.clear();
-	return 0.0;
+    // recorrem el punts del blob de la mateixa fila que el punt d'entrada
+    // i mirem si la X del punt d'entrada est� entre dos coordenades "plenes"
+    // del blob
+    itEdges = vectorEdges.begin();
+    itEdgesSeguent = vectorEdges.begin() + 1;
+    dinsBlob = true;
+
+    while( itEdges != (vectorEdges.end() - 1) )
+    {
+        if( (*itEdges).x <= m_p.x && (*itEdgesSeguent).x >= m_p.x && dinsBlob )
+        {
+            vectorEdges.clear();
+            return 1.0;
+        }
+
+        itEdges++;
+        itEdgesSeguent++;
+        dinsBlob = !dinsBlob;
+    }
+
+    vectorEdges.clear();
+    return 0.0;
 }
 
 #ifdef BLOB_OBJECT_FACTORY
@@ -1047,72 +1046,70 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
 - FUNCI�: RegistraTotsOperadors
 - FUNCIONALITAT: Registrar tots els operadors definits a blob.h
 - PAR�METRES:
-	- fabricaOperadorsBlob: f�brica on es registraran els operadors
+    - fabricaOperadorsBlob: f�brica on es registraran els operadors
 - RESULTAT:
-	- Modifica l'objecte fabricaOperadorsBlob
+    - Modifica l'objecte fabricaOperadorsBlob
 - RESTRICCIONS:
-	- Nom�s es registraran els operadors de blob.h. Si se'n volen afegir, cal afegir-los amb 
-	  el m�tode Register de la f�brica.
+    - Nom�s es registraran els operadors de blob.h. Si se'n volen afegir, cal afegir-los amb 
+      el m�tode Register de la f�brica.
 - AUTOR: rborras
 - DATA DE CREACI�: 2006/05/18
 - MODIFICACI�: Data. Autor. Descripci�.
 */
 void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob )
 {
-	// blob shape
-	fabricaOperadorsBlob.Register( CBlobGetArea().GetNom(), Type2Type<CBlobGetArea>());
-	fabricaOperadorsBlob.Register( CBlobGetBreadth().GetNom(), Type2Type<CBlobGetBreadth>());
-	fabricaOperadorsBlob.Register( CBlobGetCompactness().GetNom(), Type2Type<CBlobGetCompactness>());
-	fabricaOperadorsBlob.Register( CBlobGetElongation().GetNom(), Type2Type<CBlobGetElongation>());
-	fabricaOperadorsBlob.Register( CBlobGetExterior().GetNom(), Type2Type<CBlobGetExterior>());
-	fabricaOperadorsBlob.Register( CBlobGetLength().GetNom(), Type2Type<CBlobGetLength>());
-	fabricaOperadorsBlob.Register( CBlobGetPerimeter().GetNom(), Type2Type<CBlobGetPerimeter>());
-	fabricaOperadorsBlob.Register( CBlobGetRoughness().GetNom(), Type2Type<CBlobGetRoughness>());
+    // blob shape
+    fabricaOperadorsBlob.Register( CBlobGetArea().GetNom(), Type2Type<CBlobGetArea>());
+    fabricaOperadorsBlob.Register( CBlobGetBreadth().GetNom(), Type2Type<CBlobGetBreadth>());
+    fabricaOperadorsBlob.Register( CBlobGetCompactness().GetNom(), Type2Type<CBlobGetCompactness>());
+    fabricaOperadorsBlob.Register( CBlobGetElongation().GetNom(), Type2Type<CBlobGetElongation>());
+    fabricaOperadorsBlob.Register( CBlobGetExterior().GetNom(), Type2Type<CBlobGetExterior>());
+    fabricaOperadorsBlob.Register( CBlobGetLength().GetNom(), Type2Type<CBlobGetLength>());
+    fabricaOperadorsBlob.Register( CBlobGetPerimeter().GetNom(), Type2Type<CBlobGetPerimeter>());
+    fabricaOperadorsBlob.Register( CBlobGetRoughness().GetNom(), Type2Type<CBlobGetRoughness>());
 
-	// extern pixels
-	fabricaOperadorsBlob.Register( CBlobGetExternPerimeterRatio().GetNom(), Type2Type<CBlobGetExternPerimeterRatio>());
-	fabricaOperadorsBlob.Register( CBlobGetExternHullPerimeterRatio().GetNom(), Type2Type<CBlobGetExternHullPerimeterRatio>());
-	fabricaOperadorsBlob.Register( CBlobGetExternPerimeter().GetNom(), Type2Type<CBlobGetExternPerimeter>());
-	
+    // extern pixels
+    fabricaOperadorsBlob.Register( CBlobGetExternPerimeterRatio().GetNom(), Type2Type<CBlobGetExternPerimeterRatio>());
+    fabricaOperadorsBlob.Register( CBlobGetExternHullPerimeterRatio().GetNom(), Type2Type<CBlobGetExternHullPerimeterRatio>());
+    fabricaOperadorsBlob.Register( CBlobGetExternPerimeter().GetNom(), Type2Type<CBlobGetExternPerimeter>());
 
-	// hull 
-	fabricaOperadorsBlob.Register( CBlobGetHullPerimeter().GetNom(), Type2Type<CBlobGetHullPerimeter>());
-	fabricaOperadorsBlob.Register( CBlobGetHullArea().GetNom(), Type2Type<CBlobGetHullArea>());
-	
+    // hull 
+    fabricaOperadorsBlob.Register( CBlobGetHullPerimeter().GetNom(), Type2Type<CBlobGetHullPerimeter>());
+    fabricaOperadorsBlob.Register( CBlobGetHullArea().GetNom(), Type2Type<CBlobGetHullArea>());
 
-	// elipse info
-	fabricaOperadorsBlob.Register( CBlobGetMajorAxisLength().GetNom(), Type2Type<CBlobGetMajorAxisLength>());
-	fabricaOperadorsBlob.Register( CBlobGetMinorAxisLength().GetNom(), Type2Type<CBlobGetMinorAxisLength>());
-	fabricaOperadorsBlob.Register( CBlobGetAxisRatio().GetNom(), Type2Type<CBlobGetAxisRatio>());
-	fabricaOperadorsBlob.Register( CBlobGetOrientation().GetNom(), Type2Type<CBlobGetOrientation>());
-	fabricaOperadorsBlob.Register( CBlobGetOrientationCos().GetNom(), Type2Type<CBlobGetOrientationCos>());
-	fabricaOperadorsBlob.Register( CBlobGetAreaElipseRatio().GetNom(), Type2Type<CBlobGetAreaElipseRatio>());
+    // elipse info
+    fabricaOperadorsBlob.Register( CBlobGetMajorAxisLength().GetNom(), Type2Type<CBlobGetMajorAxisLength>());
+    fabricaOperadorsBlob.Register( CBlobGetMinorAxisLength().GetNom(), Type2Type<CBlobGetMinorAxisLength>());
+    fabricaOperadorsBlob.Register( CBlobGetAxisRatio().GetNom(), Type2Type<CBlobGetAxisRatio>());
+    fabricaOperadorsBlob.Register( CBlobGetOrientation().GetNom(), Type2Type<CBlobGetOrientation>());
+    fabricaOperadorsBlob.Register( CBlobGetOrientationCos().GetNom(), Type2Type<CBlobGetOrientationCos>());
+    fabricaOperadorsBlob.Register( CBlobGetAreaElipseRatio().GetNom(), Type2Type<CBlobGetAreaElipseRatio>());
 
-	// min an max
-	fabricaOperadorsBlob.Register( CBlobGetMaxX().GetNom(), Type2Type<CBlobGetMaxX>());
-	fabricaOperadorsBlob.Register( CBlobGetMaxY().GetNom(), Type2Type<CBlobGetMaxY>());
-	fabricaOperadorsBlob.Register( CBlobGetMinX().GetNom(), Type2Type<CBlobGetMinX>());
-	fabricaOperadorsBlob.Register( CBlobGetMinY().GetNom(), Type2Type<CBlobGetMinY>());
+    // min an max
+    fabricaOperadorsBlob.Register( CBlobGetMaxX().GetNom(), Type2Type<CBlobGetMaxX>());
+    fabricaOperadorsBlob.Register( CBlobGetMaxY().GetNom(), Type2Type<CBlobGetMaxY>());
+    fabricaOperadorsBlob.Register( CBlobGetMinX().GetNom(), Type2Type<CBlobGetMinX>());
+    fabricaOperadorsBlob.Register( CBlobGetMinY().GetNom(), Type2Type<CBlobGetMinY>());
 
-	fabricaOperadorsBlob.Register( CBlobGetMaxXatMaxY().GetNom(), Type2Type<CBlobGetMaxXatMaxY>());
-	fabricaOperadorsBlob.Register( CBlobGetMaxYatMinX().GetNom(), Type2Type<CBlobGetMaxYatMinX>());
-	fabricaOperadorsBlob.Register( CBlobGetMinXatMinY().GetNom(), Type2Type<CBlobGetMinXatMinY>());
-	fabricaOperadorsBlob.Register( CBlobGetMinYatMaxX().GetNom(), Type2Type<CBlobGetMinYatMaxX>());
+    fabricaOperadorsBlob.Register( CBlobGetMaxXatMaxY().GetNom(), Type2Type<CBlobGetMaxXatMaxY>());
+    fabricaOperadorsBlob.Register( CBlobGetMaxYatMinX().GetNom(), Type2Type<CBlobGetMaxYatMinX>());
+    fabricaOperadorsBlob.Register( CBlobGetMinXatMinY().GetNom(), Type2Type<CBlobGetMinXatMinY>());
+    fabricaOperadorsBlob.Register( CBlobGetMinYatMaxX().GetNom(), Type2Type<CBlobGetMinYatMaxX>());
 
-	// grey level stats
-	fabricaOperadorsBlob.Register( CBlobGetMean().GetNom(), Type2Type<CBlobGetMean>());
-	fabricaOperadorsBlob.Register( CBlobGetStdDev().GetNom(), Type2Type<CBlobGetStdDev>());
-	
-	// coordinate info
-	fabricaOperadorsBlob.Register( CBlobGetXYInside().GetNom(), Type2Type<CBlobGetXYInside>());
-	fabricaOperadorsBlob.Register( CBlobGetDiffY().GetNom(), Type2Type<CBlobGetDiffY>());
-	fabricaOperadorsBlob.Register( CBlobGetDiffX().GetNom(), Type2Type<CBlobGetDiffX>());
-	fabricaOperadorsBlob.Register( CBlobGetXCenter().GetNom(), Type2Type<CBlobGetXCenter>());
-	fabricaOperadorsBlob.Register( CBlobGetYCenter().GetNom(), Type2Type<CBlobGetYCenter>());
-	fabricaOperadorsBlob.Register( CBlobGetDistanceFromPoint().GetNom(), Type2Type<CBlobGetDistanceFromPoint>());
+    // grey level stats
+    fabricaOperadorsBlob.Register( CBlobGetMean().GetNom(), Type2Type<CBlobGetMean>());
+    fabricaOperadorsBlob.Register( CBlobGetStdDev().GetNom(), Type2Type<CBlobGetStdDev>());
 
-	// moments
-	fabricaOperadorsBlob.Register( CBlobGetMoment().GetNom(), Type2Type<CBlobGetMoment>());
+    // coordinate info
+    fabricaOperadorsBlob.Register( CBlobGetXYInside().GetNom(), Type2Type<CBlobGetXYInside>());
+    fabricaOperadorsBlob.Register( CBlobGetDiffY().GetNom(), Type2Type<CBlobGetDiffY>());
+    fabricaOperadorsBlob.Register( CBlobGetDiffX().GetNom(), Type2Type<CBlobGetDiffX>());
+    fabricaOperadorsBlob.Register( CBlobGetXCenter().GetNom(), Type2Type<CBlobGetXCenter>());
+    fabricaOperadorsBlob.Register( CBlobGetYCenter().GetNom(), Type2Type<CBlobGetYCenter>());
+    fabricaOperadorsBlob.Register( CBlobGetDistanceFromPoint().GetNom(), Type2Type<CBlobGetDistanceFromPoint>());
+
+    // moments
+    fabricaOperadorsBlob.Register( CBlobGetMoment().GetNom(), Type2Type<CBlobGetMoment>());
 
 }
 
