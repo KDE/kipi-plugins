@@ -69,6 +69,6 @@ class RemovalSettings
         QString     prefixName;
     };
 
-}; // namespace KIPIRemoveRedEyesPlugin
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif // REMOVALSETTINGS_H

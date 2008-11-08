@@ -80,6 +80,6 @@ private:
     void            findBlobs(IplImage* i_mask, int minsize);
     void            generateMask(int i_v, CvSeq* i_eyes);
 };
-}; // namespace KIPIRemoveRedEyesPlugin
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif

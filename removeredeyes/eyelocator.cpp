@@ -203,4 +203,4 @@ void EyeLocator::saveImage(const char * path)
     cvSaveImage(path, m_src);
 }
 
-}; // namespace KIPIRemoveRedEyesPlugin
+} // namespace KIPIRemoveRedEyesPlugin
