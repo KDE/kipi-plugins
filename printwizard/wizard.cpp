@@ -792,7 +792,7 @@ void Wizard::printCaption(QPainter &p, TPhoto*photo, int captionW, int captionH,
 
   p.setFont(font);
   p.setPen(d->mInfoPage->m_font_color->color());
-  kdDebug( 51000 ) << "Number of lines " << (int)captionByLines.count() << endl;
+  kDebug( 51000 ) << "Number of lines " << (int)captionByLines.count() << endl;
 
   // Now draw the caption
   // TODO allow printing captions  per photo and on top, bottom and vertically
@@ -957,11 +957,11 @@ bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layo
           format = d->mInfoPage->m_FreeCaptionFormat->text();
           break;
         default:
-          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          kWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
           break;
       }
       caption = captionFormatter(photo, format);
-      kdDebug( 51000 ) << "Caption " << caption << endl;
+      kDebug( 51000 ) << "Caption " << caption << endl;
 
       // draw the text at (0,0), but we will translate and rotate the world
       // before drawing so the text will be in the correct location
@@ -986,7 +986,7 @@ bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layo
         captionW = h;
       }
       p.rotate(orientatation);
-      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      kDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
       int tx = left;
       int ty = top;
 
@@ -1136,11 +1136,11 @@ bool Wizard::paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layout
           format = d->mInfoPage->m_FreeCaptionFormat->text();
           break;
         default:
-          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          kWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
           break;
       }
       caption = captionFormatter(photo, format);
-      kdDebug( 51000 ) << "Caption " << caption << endl;
+      kDebug( 51000 ) << "Caption " << caption << endl;
 
       int captionW = w-2;
       double ratio = d->mInfoPage->m_font_size->value() * 0.01;
@@ -1167,7 +1167,7 @@ bool Wizard::paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layout
       QPainter painter;
       painter.begin(&pixmap);
       painter.rotate(orientatation);
-      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      kDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
       int tx = left;
       int ty = top;
 
