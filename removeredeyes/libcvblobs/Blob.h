@@ -24,17 +24,19 @@
  *
  * ============================================================ */
 
+#ifdef WIN32
 //! Disable warnings referred to 255 character truncation for the std:map
-#pragma warning( disable : 4786 ) 
+#pragma warning( disable : 4786 )
+#endif // WIN32
 
 #ifndef CBLOB_INSPECTA_INCLUDED
 #define CBLOB_INSPECTA_INCLUDED
 
-#ifdef WIN32 
+#ifdef WIN32
 #include <cxcore.h>
-#else 	 
+#else
 #include <opencv/cxcore.h>
-#endif
+#endif // WIN32
 
 #include "BlobLibraryConfiguration.h"
 #include <functional>

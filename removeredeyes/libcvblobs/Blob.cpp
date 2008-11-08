@@ -531,7 +531,7 @@ CvBox2D CBlob::GetEllipse() const
   Implementaci� de les classes per al c�lcul de caracter�stiques sobre el blob
 
   Implementation of the helper classes to perform operations on blobs
-/**************************************************************************/
+ **************************************************************************/
 
 /**
 - FUNCI�: Moment
