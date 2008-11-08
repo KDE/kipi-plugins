@@ -111,8 +111,8 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
 Plugin_SlideShow::~Plugin_SlideShow()
 {
-//    if (m_urlList)
-//        delete m_urlList;
+    if (m_urlList)
+        delete m_urlList;
 }
 
 void Plugin_SlideShow::slotActivate()
