@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 #
 # - Try to find OpenCV library installation
-# See http://sourceforge.net/projects/opencvlibrary/
+# See http://sourceforge.net/projects/opencvlibrary
 #
 # The follwoing variables are optionally searched for defaults
 #  OpenCV_ROOT_DIR:            Base directory of OpenCv tree to use.
@@ -37,9 +37,9 @@
 #         to handle multiple installed versions gracefully by Jan Woetzel
 #
 # tested with:
-# -OpenCV 0.97 (beta5a):  MSVS 7.1, gcc 3.3, gcc 4.1
-# -OpenCV 0.99 (1.0rc1):  MSVS 7.1
-# -OpenCV 1.1: gcc 3.5
+# -OpenCV 0.97 (beta5a): MSVS 7.1, gcc 3.3, gcc 4.1
+# -OpenCV 0.99 (1.0rc1): MSVS 7.1
+# -OpenCV 1.1  (pre1)  : gcc 3.5
 #
 # ------------------------------------------------------------------------------
 
@@ -62,30 +62,12 @@ SET (OpenCV_POSSIBLE_ROOT_DIRS
      "$ENV{OPENCV_DIR}"  # only for backward compatibility deprecated by ROOT_DIR
      "$ENV{OPENCV_HOME}" # only for backward compatibility
      "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Intel(R) Open Source Computer Vision Library_is1;Inno Setup: App Path]"
-     "$ENV{ProgramFiles}/OpenCV"
-     /usr/local
-     /usr
+     "$ENV{ProgramFiles}/OpenCV/"
+     /usr/local/
+     /usr/
     )
 
-# MIP Uni Kiel /opt/net network installation 
-# get correct prefix for current gcc compiler version for gcc 3.x  4.x
-# IF    (${CMAKE_COMPILER_IS_GNUCXX})
-#   IF    (NOT OpenCV_FIND_QUIETLY)
-#     MESSAGE(STATUS "Checking GNUCXX version 3/4 to determine  OpenCV /opt/net/ path")
-#   ENDIF (NOT OpenCV_FIND_QUIETLY)
-#   EXEC_PROGRAM(${CMAKE_CXX_COMPILER} ARGS --version OUTPUT_VARIABLE CXX_COMPILER_VERSION)  
-#   IF   (CXX_COMPILER_VERSION MATCHES ".*3\\.[0-9].*")
-#     SET(IS_GNUCXX3 TRUE)
-#     LIST(APPEND OpenCV_POSSIBLE_ROOT_DIRS /opt/net/gcc33/OpenCV )
-#   ENDIF(CXX_COMPILER_VERSION MATCHES ".*3\\.[0-9].*")  
-#   IF   (CXX_COMPILER_VERSION MATCHES ".*4\\.[0-9].*")
-#     SET(IS_GNUCXX4 TRUE)
-#     LIST(APPEND OpenCV_POSSIBLE_ROOT_DIRS /opt/net/gcc41/OpenCV )
-#   ENDIF(CXX_COMPILER_VERSION MATCHES ".*4\\.[0-9].*")
-# ENDIF (${CMAKE_COMPILER_IS_GNUCXX})
-
 #DBG_MSG("DBG (OpenCV_POSSIBLE_ROOT_DIRS=${OpenCV_POSSIBLE_ROOT_DIRS}")
-
 
 # Select exactly ONE OpenCV base directory/tree 
 # to avoid mixing different version headers and libs
@@ -266,7 +248,6 @@ MARK_AS_ADVANCED(OpenCV_ROOT_DIR
                  OpenCV_TRS_LIBRARY
                  OpenCV_BLOB_LIBRARY
                 )
-
 
 # Be backward compatible:
 SET(OPENCV_LIBRARIES   ${OpenCV_LIBRARIES})
