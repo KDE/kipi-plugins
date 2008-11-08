@@ -8,6 +8,7 @@ Name[nl]=VerwijderRodeOgen
 Name[pt]=Remoção de Olhos Vermelhos
 Name[pt_BR]=Remoção de Olhos Vermelhos
 Name[sv]=Ta bort röda ögon
+Name[zh_CN]=去除红眼
 Comment=KIPI Remove Red Eyes Plugin
 Comment[de]=KIPI-Modul zum Entfernen von roten Augen
 Comment[el]=Πρόσθετο αφαίρεσης κόκκινων ματιών του KIPI
@@ -17,6 +18,7 @@ Comment[pt]='Plugin' de Remoção de Olhos Vermelhos do KIPI
 Comment[pt_BR]='Plugin' de Remoção de Olhos Vermelhos do KIPI
 Comment[sv]=KIPI-insticksprogram för att ta bort röda ögon
 Comment[uk]=Додаток KIPI для вилучення ефекту «червоних очей»
+Comment[zh_CN]=KIPI 去除红眼插件
 
 Icon=
 ServiceTypes=KIPI/Plugin
