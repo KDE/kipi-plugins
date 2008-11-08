@@ -25,18 +25,20 @@
 #if !defined(_CLASSE_BLOBRESULT_INCLUDED)
 #define _CLASSE_BLOBRESULT_INCLUDED
 
+#ifdef WIN32 
 #if _MSC_VER > 1000 
 #pragma once
 #endif // _MSC_VER > 1000
+#endif // WIN32
 
 #include "BlobLibraryConfiguration.h"
 #include <cmath>
 
 #ifdef WIN32 
 #include <cxcore.h>
-#else 	 
+#else
 #include <opencv/cxcore.h>
-#endif
+#endif // WIN32
 
 #ifdef MATRIXCV_ACTIU
 	#include <opencv/matrixCV.h>
