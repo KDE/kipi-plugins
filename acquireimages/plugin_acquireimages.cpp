@@ -95,9 +95,9 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    TwainController dlg(m_interface, kapp->activeWindow());
+    TwainController ctrl(m_interface, kapp->activeWindow());
 
-#else /*  WIN32 */
+#else /* WIN32 */
 
     KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
 
@@ -115,7 +115,7 @@ void Plugin_AcquireImages::slotActivate()
     ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
     dlg.exec();
 
-#endif /*  WIN32 */
+#endif /* WIN32 */
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
