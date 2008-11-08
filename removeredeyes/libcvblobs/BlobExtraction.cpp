@@ -358,7 +358,7 @@ bool BlobAnalysis(	IplImage* inputImage,
 	double ThisExternPerimeter;
 	
 	int HighRegionNum = 0;
-	int RegionNum = 0;
+/*    int RegionNum = 0;*/
 	int ErrorFlag = 0;
 	
 	int LastRow, ThisRow;			// Row number
