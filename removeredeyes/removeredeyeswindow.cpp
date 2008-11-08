@@ -352,7 +352,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         d->imageList->resetEyeCounterColumn();
         d->tabWidget->setCurrentIndex(FileList);
 
-        setButtonGuiItem(Close, KGuiItem(i18n("Cancel"), KIcon("dialog-cancel")));
+        setButtonGuiItem(Close, KStandardGuiItem::cancel());
         enableButton(User1, false);
         enableButton(User2, false);
     }
@@ -369,7 +369,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         connect(this, SIGNAL(closeClicked()),
                 this, SLOT(closeClicked()));
 
-        setButtonGuiItem(Close, KGuiItem(i18n("Close"), KIcon("dialog-close")));
+        setButtonGuiItem(Close, KStandardGuiItem::close());
         enableButton(User1, true);
         enableButton(User2, true);
     }
