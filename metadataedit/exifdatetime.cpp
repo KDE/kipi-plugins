@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF date and time settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -290,19 +290,19 @@ EXIFDateTime::~EXIFDateTime()
 void EXIFDateTime::slotSetTodayCreated()
 {
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
-    d->dateCreatedSubSecEdit->setValue(0.0);
+    d->dateCreatedSubSecEdit->setValue(0);
 }
 
 void EXIFDateTime::slotSetTodayOriginal()
 {
     d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
-    d->dateOriginalSubSecEdit->setValue(0.0);
+    d->dateOriginalSubSecEdit->setValue(0);
 }
 
 void EXIFDateTime::slotSetTodayDigitalized()
 {
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
-    d->dateDigitalizedSubSecEdit->setValue(0.0);
+    d->dateDigitalizedSubSecEdit->setValue(0);
 }
 
 bool EXIFDateTime::syncHOSTDateIsChecked()
