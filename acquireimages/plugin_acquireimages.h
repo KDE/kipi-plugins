@@ -58,6 +58,8 @@ public slots:
 
 private:
 
+    QWidget         *m_parentWidget;
+
     KAction         *m_action_scanimages;
 
     KIPI::Interface *m_interface;

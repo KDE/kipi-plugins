@@ -66,12 +66,14 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
 {
     m_interface         = 0;
     m_action_scanimages = 0;
+    m_parentWidget      = 0;
     kDebug( 51001 ) << "Plugin_AcquireImages plugin loaded";
 }
 
 void Plugin_AcquireImages::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    m_parentWidget = widget;
+    KIPI::Plugin::setup(m_parentWidget);
 
     m_action_scanimages = new KAction(KIcon("scanner"), i18n("Scan Images..."), actionCollection());
     m_action_scanimages->setObjectName("scan_images");
@@ -95,7 +97,7 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    TwainController ctrl(m_interface, kapp->activeWindow());
+    TwainController ctrl(m_interface, m_parentWidget);
 
 #else /* WIN32 */
 
