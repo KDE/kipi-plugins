@@ -18,7 +18,11 @@ MODIFICATIONS (Modification, Author, Date):
 #ifndef CBLOB_INSPECTA_INCLUDED
 #define CBLOB_INSPECTA_INCLUDED
 
+#ifdef WIN32 
+#include <cxcore.h>
+#else 	 
 #include <opencv/cxcore.h>
+#endif
 
 #include "BlobLibraryConfiguration.h"
 #include <functional>

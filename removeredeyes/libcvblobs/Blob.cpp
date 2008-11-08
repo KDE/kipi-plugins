@@ -16,7 +16,11 @@ MODIFICATIONS (Modification, Author, Date):
 #include <climits>
 #include "Blob.h"
 
+#ifdef WIN32 
+#include <cv.h>
+#else 	 
 #include <opencv/cv.h>
+#endif
 
 /**
 - FUNCI�: CBlob
