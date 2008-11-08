@@ -71,7 +71,6 @@
 #define B_INSIDE			    9L
 #define B_OUTSIDE			    10L
 
-
 /**************************************************************************
 	Excepcions / Exceptions
 **************************************************************************/
@@ -79,6 +78,9 @@
 //! Excepcions llen�ades per les funcions:
 #define EXCEPTION_BLOB_OUT_OF_BOUNDS	1000
 #define EXCEPCIO_CALCUL_BLOBS			1001
+
+namespace KIPIRemoveRedEyesPlugin
+{
 
 //! definici� de que es un vector de blobs
 typedef std::vector<CBlob*>	blob_vector;
@@ -176,5 +178,7 @@ protected:
 	//! Vector with all the blobs
 	blob_vector		m_blobs;
 };
+
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif // !defined(_CLASSE_BLOBRESULT_INCLUDED)

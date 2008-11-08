@@ -35,10 +35,12 @@
 	#include <afxwin.h>			//suport per a AfxMessageBox
 #endif
 
+namespace KIPIRemoveRedEyesPlugin
+{
+
 /**************************************************************************
 		Constructors / Destructors
 **************************************************************************/
-
 
 /**
 - FUNCI�: CBlobResult
@@ -887,5 +889,6 @@ void CBlobResult::PrintBlobs( char *nom_fitxer ) const
 				 i, area[i], perimetre[i], externPerimeter[i], perimetreConvex[i], exterior[i], mitjana[i], compacitat[i], longitud[i] );
 	}
 	fclose( fitxer_sortida );
-
 }
+
+} // namespace KIPIRemoveRedEyesPlugin

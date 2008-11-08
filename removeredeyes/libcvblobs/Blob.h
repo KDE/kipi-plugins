@@ -50,6 +50,10 @@
 
 //! Factor de conversi� de graus a radians
 #define DEGREE2RAD		(CV_PI / 180.0)
+
+namespace KIPIRemoveRedEyesPlugin
+{
+
 /**
 	Classe que representa un blob, ent�s com un conjunt de pixels del 
 	mateix color contigus en una imatge binaritzada.
@@ -817,5 +821,7 @@ private:
 	//! point to be considered
 	CvPoint m_p;
 };
+
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif //CBLOB_INSPECTA_INCLUDED

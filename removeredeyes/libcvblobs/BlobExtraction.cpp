@@ -42,6 +42,9 @@
 #include "BlobResult.h"
 #include "BlobExtraction.h"
 
+namespace KIPIRemoveRedEyesPlugin
+{
+
 /**
 - FUNCI�: BlobAnalysis
 - FUNCIONALITAT: Extreu els blobs d'una imatge d'un sol canal
@@ -1437,3 +1440,5 @@ double GetExternPerimeter( int start, int end, int row, int width, int height, I
 	
 	return perimeter;
 }
+
+} // namespace KIPIRemoveRedEyesPlugin

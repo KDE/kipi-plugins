@@ -33,6 +33,9 @@
 #include <opencv/cv.h>
 #endif
 
+namespace KIPIRemoveRedEyesPlugin
+{
+
 /**
 - FUNCI�: CBlob
 - FUNCIONALITAT: Constructor est�ndard 
@@ -1113,4 +1116,6 @@ void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob )
 
 }
 
-#endif
+#endif /* BLOB_OBJECT_FACTORY */
+
+} // namespace KIPIRemoveRedEyesPlugin

@@ -27,6 +27,8 @@
 #if !defined(_CLASSE_BLOBEXTRACTION_INCLUDED)
 #define _CLASSE_BLOBEXTRACTION_INCLUDED
 
+namespace KIPIRemoveRedEyesPlugin
+{
 
 //! Extreu els blobs d'una imatge
 bool BlobAnalysis(IplImage* inputImage, uchar threshold, IplImage* maskImage,
@@ -41,5 +43,7 @@ void Subsume(blob_vector &RegionData, int, int*, CBlob*, CBlob*, bool, int, int 
 int *NewSubsume(int *SubSumedRegion, int elems_inbuffer);
 //! Retorna el perimetre extern d'una run lenght
 double GetExternPerimeter( int start, int end, int row, int width, int height, IplImage *maskImage );
+
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif //_CLASSE_BLOBEXTRACTION_INCLUDED
