@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>824</width>
-    <height>714</height>
+    <height>882</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_5" >
@@ -357,12 +357,15 @@
          </spacer>
         </item>
         <item>
-         <widget class="QWidget" native="1" name="BmpFirstPagePreview" >
+         <widget class="QLabel" name="BmpFirstPagePreview" >
           <property name="minimumSize" >
            <size>
             <width>261</width>
             <height>301</height>
            </size>
+          </property>
+          <property name="text" >
+           <string/>
           </property>
          </widget>
         </item>

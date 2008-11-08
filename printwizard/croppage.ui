@@ -11,12 +11,15 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
-    <widget class="QWidget" native="1" name="cropFrame" >
+    <widget class="KIPIPrintWizardPlugin::CropFrame" native="1" name="cropFrame" >
      <property name="minimumSize" >
       <size>
        <width>0</width>
        <height>201</height>
       </size>
+     </property>
+     <property name="whatsThis" >
+      <string>Move the box below to tell this wizard how to crop the photos to fit inside the photo sizes you have given.  You can crop each image differently, or just click 'Next' to use the default center cropping for each photo.</string>
      </property>
     </widget>
    </item>
@@ -145,6 +148,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIPIPrintWizardPlugin::CropFrame</class>
+   <extends>QWidget</extends>
+   <header>cropframe.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

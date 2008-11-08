@@ -24,6 +24,9 @@
 
 // Qt includes
 #include <QFileInfo>
+#include <QPainter>
+#include <QPalette>
+#include <QtGlobal>
 
 // KDE includes
 #include <kapplication.h>
@@ -40,6 +43,9 @@
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
+// libkexiv2 includes
+#include <libkexiv2/kexiv2.h>
+
 // Local includes
 #include "kpaboutdata.h"
 #include "ui_croppage.h"
@@ -47,6 +53,7 @@
 #include "ui_intropage.h"
 #include "ui_photopage.h"
 #include "tphoto.h"
+#include "utils.h"
 
 namespace KIPIPrintWizardPlugin {
 
@@ -75,12 +82,6 @@ typedef WizardPage<Ui_InfoPage>  InfoPage;
 typedef WizardPage<Ui_PhotoPage> PhotoPage;
 typedef WizardPage<Ui_CropPage>  CropPage;
 
-typedef struct _TPhotoSize {
-  QString label;
-  int dpi;
-  bool autoRotate;
-  QList<QRect*> layouts;  // first element is page size
-} TPhotoSize;
 
 struct Wizard::Private {
   KConfigDialogManager* mConfigManager;
@@ -101,7 +102,8 @@ struct Wizard::Private {
   PageSize m_pageSize;
   QList<TPhoto*> m_photos;
   QList<TPhotoSize*> m_photoSizes;
-
+  int m_currentPreviewPage;
+  int m_currentCropPhoto;
 };
 
 enum OutputIDs
@@ -173,15 +175,33 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   // Paper Size
   connect(d->mInfoPage->CmbPaperSize, SIGNAL(activated(int)),
           this, SLOT(paperSizeChanged(int)));
+
+  // Print order (down)
+  connect(d->mPhotoPage->BtnPrintOrderDown, SIGNAL(clicked(void)),
+          this, SLOT(printOrderDownClicked(void)));
+
+  // Print order (up)
+  connect(d->mPhotoPage->BtnPrintOrderUp, SIGNAL(clicked(void)),
+          this, SLOT(BtnPrintOrderUp_clicked(void)));
+  
+  connect(d->mPhotoPage->BtnPreviewPageUp, SIGNAL(clicked(void)),
+          this, SLOT(BtnPreviewPageUp_clicked(void)));
+  connect(d->mPhotoPage->BtnPreviewPageDown, SIGNAL(clicked(void)),
+          this, SLOT(BtnPreviewPageDown_clicked(void)));
+
+  connect(d->mCropPage->BtnCropPrev, SIGNAL(clicked()),
+          this, SLOT(BtnCropPrev_clicked()));
+  connect(d->mCropPage->BtnCropNext, SIGNAL(clicked()),
+          this, SLOT(BtnCropNext_clicked()));
+
+  connect(d->mCropPage->BtnCropRotate, SIGNAL(clicked()),
+          this, SLOT(BtnCropRotate_clicked()));
+
   // Default is A4
   d->mInfoPage->CmbPaperSize->setCurrentIndex(A4);
   initPhotoSizes(A4);   // default to A4 for now.
-
-  
-  // back button pressed
-//  connect(this, SIGNAL(back(void)), this, SLOT(pageSelected(void)));
-  // next button pressed
-//  connect(this, SIGNAL(next(void)), this, SLOT(pageSelected(void)));
+  d->m_currentPreviewPage = 0;
+  d->m_currentCropPhoto   = 0;
 
   helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
   d->m_helpButton->setDelayedMenu( helpMenu->menu() );
@@ -648,15 +668,697 @@ void Wizard::initPhotoSizes(PageSize pageSize)
   }
   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
+double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current)
+{
+  Q_ASSERT(layouts.count() > 1);
+
+  QList<QRect*>::iterator it = layouts.begin();
+  QRect *layout = static_cast<QRect*>(*it);
+
+  double maxDPI = 0.0;
+
+  for(; current < photos.count(); current++)
+  {
+    TPhoto *photo = photos.at(current);
+    double dpi = ((double)photo->cropRegion.width() + (double)photo->cropRegion.height()) /
+          (((double)layout->width() / 1000.0) + ((double)layout->height() / 1000.0));
+    if (dpi > maxDPI)
+      maxDPI = dpi;
+    // iterate to the next position
+    it++;
+    layout = static_cast<QRect*>(*it);
+    if (layout == 0)
+    {
+      break;
+    }
+  }
+  return maxDPI;
+}
+
+QRect * Wizard::getLayout(int photoIndex)
+{
+  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+  // how many photos would actually be printed, including copies?
+  int photoCount  = (photoIndex + 1);
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+
+  int retVal = remainder;
+  if (remainder == 0)
+    retVal = photosPerPage;
+  return s->layouts.at(retVal);
+}
+
+int Wizard::getPageCount()
+{
+  // get the selected layout
+  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+  
+  int photoCount  =  d->m_photos.count();
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+  int emptySlots = 0;
+  if (remainder > 0)
+    emptySlots = photosPerPage - remainder;
+  int pageCount = photoCount / photosPerPage;
+  if (emptySlots > 0)
+    pageCount++;
+  return pageCount;
+}
+
+
+const float FONT_HEIGHT_RATIO = 0.8;
+
+void Wizard::printCaption(QPainter &p, TPhoto*photo, int captionW, int captionH, QString caption)
+{
+  // PENDING anaselli TPhoto*photo will be needed to add a per photo caption management
+  QStringList captionByLines;
+
+  uint captionIndex = 0;
+
+  while (captionIndex < caption.length())
+  {
+    QString newLine;
+    bool breakLine = false; // End Of Line found
+    uint currIndex; //  Caption QString current index
+
+    // Check minimal lines dimension
+    //TODO fix length, maybe useless
+    uint captionLineLocalLength = 40;
+
+    for ( currIndex = captionIndex; currIndex < caption.length() && !breakLine; currIndex++ )
+      if( caption[currIndex] == QChar('\n') || caption[currIndex].isSpace() )
+        breakLine = true;
+
+    if (captionLineLocalLength <= (currIndex - captionIndex))
+      captionLineLocalLength = (currIndex - captionIndex);
+
+    breakLine = false;
+
+    for ( currIndex = captionIndex;
+          currIndex <= captionIndex + captionLineLocalLength &&
+              currIndex < caption.length() && !breakLine;
+          currIndex++ )
+    {
+      breakLine = (caption[currIndex] == QChar('\n')) ? true : false;
+
+      if (breakLine)
+        newLine.append( ' ' );
+      else
+        newLine.append( caption[currIndex] );
+    }
+
+    captionIndex = currIndex; // The line is ended
+
+    if ( captionIndex != caption.length() )
+      while ( !newLine.endsWith(" ") )
+    {
+      newLine.truncate(newLine.length() - 1);
+      captionIndex--;
+    }
+
+    captionByLines.prepend(newLine.trimmed());
+  }
+
+  QFont font(d->mInfoPage->m_font_name->currentFont());
+  font.setStyleHint(QFont::SansSerif);
+  font.setPixelSize( (int)(captionH * FONT_HEIGHT_RATIO) );
+  font.setWeight(QFont::Normal);
+
+  QFontMetrics fm( font );
+  int pixelsHigh = fm.height();
+
+  p.setFont(font);
+  p.setPen(d->mInfoPage->m_font_color->color());
+  kdDebug( 51000 ) << "Number of lines " << (int)captionByLines.count() << endl;
+
+  // Now draw the caption
+  // TODO allow printing captions  per photo and on top, bottom and vertically
+  for ( int lineNumber = 0; lineNumber < (int)captionByLines.count(); lineNumber++ )
+  {
+    if (lineNumber > 0)
+      p.translate(0, -(int)(pixelsHigh));
+    QRect r(0, 0, captionW, captionH);
+    //TODO anaselli check if ok
+    p.drawText(r, Qt::AlignLeft, captionByLines[lineNumber], &r);
+  }
+}
 
 
 
+QString Wizard::captionFormatter(TPhoto *photo, const QString& format)
+{
+  QString str=format;
+
+  QFileInfo fi(photo->filename.path());
+  QString resolution;
+  QSize imageSize =  photo->exiv2Iface()->getImageDimensions();
+  if (imageSize.isValid()) {
+    resolution = QString( "%1x%2" ).arg( imageSize.width()).arg( imageSize.height());
+  }
+  str.replace("\\n", "\n");
+
+  // %f filename
+  // %c comment
+  // %d date-time
+  // %t exposure time
+  // %i iso
+  // %r resolution
+  // %a aperture
+  // %l focal length
+  str.replace("%f", fi.fileName());
+  str.replace("%c", photo->exiv2Iface()->getExifComment());
+  str.replace("%d", KGlobal::locale()->formatDateTime(photo->exiv2Iface()->getImageDateTime()));
+  str.replace("%t", photo->exiv2Iface()->getExifTagString("Exif.Photo.ExposureTime"));
+  str.replace("%i", photo->exiv2Iface()->getExifTagString("Exif.Photo.ISOSpeedRatings"));
+  str.replace("%r", resolution);
+  str.replace("%a", photo->exiv2Iface()->getExifTagString("Exif.Photo.FNumber"));
+  str.replace("%l", photo->exiv2Iface()->getExifTagString("Exif.Photo.FocalLength"));
+
+  return str;
+}
+
+bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                                  int captionType, unsigned int &current, bool useThumbnails)
+{
+  Q_ASSERT(layouts.count() > 1);
+
+  if (photos.count() == 0) return true; // no photos => last photo
+
+  QList<QRect*>::iterator it = layouts.begin();
+  QRect *srcPage = static_cast<QRect*>(*it);
+  it++;
+  QRect *layout = static_cast<QRect*>(*it);
+
+  // scale the page size to best fit the painter
+  // size the rectangle based on the minimum image dimension
+  int destW = p.window().width();
+  int destH = p.window().height();
+
+  int srcW = srcPage->width();
+  int srcH = srcPage->height();
+  if (destW < destH)
+  {
+    destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    if (destH > p.window().height())
+    {
+      destH = p.window().height();
+      destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    }
+  }
+  else
+  {
+    destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    if (destW > p.window().width())
+    {
+      destW = p.window().width();
+      destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    }
+  }
+
+  double xRatio = (double)destW / (double)srcPage->width();
+  double yRatio = (double)destH / (double)srcPage->height();
+
+  int left = (p.window().width()  - destW) / 2;
+  int top  = (p.window().height() - destH) / 2;
+
+  // FIXME: may not want to erase the background page
+  p.eraseRect(left, top,
+              NINT((double)srcPage->width() * xRatio),
+                    NINT((double)srcPage->height() * yRatio));
+
+  for(; current < photos.count(); current++)
+  {
+    TPhoto *photo = photos.at(current);
+    // crop
+    QImage img;
+    if (useThumbnails)
+      img = photo->thumbnail().toImage();
+    else
+      img = photo->loadPhoto();
+
+    // next, do we rotate?
+    if (photo->rotation != 0)
+    {
+      // rotate
+      QMatrix matrix;
+      matrix.rotate(photo->rotation);
+      img = img.transformed(matrix);
+    }
+
+    if (useThumbnails)
+    {
+      // scale the crop region to thumbnail coords
+      double xRatio = 0.0;
+      double yRatio = 0.0;
+
+      if (photo->thumbnail().width() != 0)
+        xRatio = (double)photo->thumbnail().width() / (double) photo->width();
+      if (photo->thumbnail().height() != 0)
+        yRatio = (double)photo->thumbnail().height() / (double) photo->height();
+
+      int x1 = NINT((double)photo->cropRegion.left() * xRatio);
+      int y1 = NINT((double)photo->cropRegion.top()  * yRatio);
+
+      int w = NINT((double)photo->cropRegion.width()  * xRatio);
+      int h = NINT((double)photo->cropRegion.height() * yRatio);
+
+      img = img.copy(QRect(x1, y1, w, h));
+    }
+    else
+      img = img.copy(photo->cropRegion);
+
+    int x1 = NINT((double)layout->left() * xRatio);
+    int y1 = NINT((double)layout->top()  * yRatio);
+    int w  = NINT((double)layout->width() * xRatio);
+    int h  = NINT((double)layout->height() * yRatio);
+
+    p.drawImage( QRect(x1 + left, y1 + top, w, h), img );
+
+    if (captionType > 0)
+    {
+      p.save();
+      QString caption;
+      QString format;
+      switch (captionType)
+      {
+        case FileNames:
+          format = "%f";
+          break;
+        case ExifDateTime:
+          format = "%d";
+          break;
+        case Comment:
+          format = "%c";
+          break;
+        case Free:
+          format = d->mInfoPage->m_FreeCaptionFormat->text();
+          break;
+        default:
+          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          break;
+      }
+      caption = captionFormatter(photo, format);
+      kdDebug( 51000 ) << "Caption " << caption << endl;
+
+      // draw the text at (0,0), but we will translate and rotate the world
+      // before drawing so the text will be in the correct location
+      // next, do we rotate?
+      int captionW = w-2;
+      double ratio =  d->mInfoPage->m_font_size->value() * 0.01;
+      int captionH = (int)(qMin(w, h) * ratio);
+
+      int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+      int orientatation = photo->rotation;
+
+
+      //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+      if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+        orientatation = (photo->rotation + 270) % 360; // -90 degrees
+
+      if(orientatation == 90 || orientatation == 270)
+      {
+        captionW = h;
+      }
+      p.rotate(orientatation);
+      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      int tx = left;
+      int ty = top;
+
+      switch(orientatation) {
+        case 0 : {
+          tx += x1 + 1;
+          ty += y1 + (h - captionH - 1);
+          break;
+        }
+        case 90 : {
+          tx = top + y1 + 1;
+          ty = -left - x1 - captionH - 1;
+          break;
+        }
+        case 180 : {
+          tx = -left - x1 - w + 1;
+          ty = -top -y1 - (captionH + 1);
+          break;
+        }
+        case 270 : {
+          tx = -top - y1 - h + 1;
+          ty = left + x1 + (w - captionH)- 1;
+          break;
+        }
+      }
+      p.translate(tx, ty);
+      printCaption(p, photo, captionW, captionH, caption);
+      p.restore();
+    } // caption
+
+    // iterate to the next position
+    it++;
+    layout = static_cast<QRect*>(*it);
+    if (layout == 0)
+    {
+      current++;
+      break;
+    }
+  }
+  // did we print the last photo?
+  return (current < photos.count());
+}
+
+
+// Like above, but outputs to an initialized QImage.  UseThumbnails is
+// not an option.
+// We have to use QImage for saving to a file, otherwise we would have
+// to use a QPixmap, which will have the same bit depth as the display.
+// So someone with an 8-bit display would not be able to save 24-bit
+// images!
+bool Wizard::paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                                  int captionType, unsigned int &current)
+{
+  Q_ASSERT(layouts.count() > 1);
+
+  QList<QRect*>::iterator it = layouts.begin();
+  QRect *srcPage = static_cast<QRect*>(*it);
+  it++;
+  QRect *layout = static_cast<QRect*>(*it);
+
+  // scale the page size to best fit the painter
+  // size the rectangle based on the minimum image dimension
+  int destW = p.width();
+  int destH = p.height();
+
+  int srcW = srcPage->width();
+  int srcH = srcPage->height();
+  if (destW < destH)
+  {
+    destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    if (destH > p.height())
+    {
+      destH = p.height();
+      destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    }
+  }
+  else
+  {
+    destW = NINT((double)destH * ((double)srcW / (double)srcH));
+    if (destW > p.width())
+    {
+      destW = p.width();
+      destH = NINT((double)destW * ((double)srcH / (double)srcW));
+    }
+  }
+
+  double xRatio = (double)destW / (double)srcPage->width();
+  double yRatio = (double)destH / (double)srcPage->height();
+
+  int left = (p.width()  - destW) / 2;
+  int top  = (p.height() - destH) / 2;
+
+
+  p.fill(0xffffff);
+
+  for(; current < photos.count(); current++)
+  {
+    TPhoto *photo = photos.at(current);
+    // crop
+    QImage img;
+    img = photo->loadPhoto();
+
+    // next, do we rotate?
+    if (photo->rotation != 0)
+    {
+      // rotate
+      QMatrix matrix;
+      matrix.rotate(photo->rotation);
+      img = img.transformed(matrix);
+    }
+
+    img = img.copy(photo->cropRegion);
+
+    int x1 = NINT((double)layout->left() * xRatio);
+    int y1 = NINT((double)layout->top()  * yRatio);
+    int w  = NINT((double)layout->width() * xRatio);
+    int h  = NINT((double)layout->height() * yRatio);
+
+    // We can use scaleFree because the crop frame should have the proper dimensions.
+    img = img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+//     img = img.smoothScale(w, h, QImage::ScaleFree);
+
+    // don't have drawimage, so we copy the pixels over manually
+    for(int srcY = 0; srcY < img.height(); srcY++)
+      for(int srcX = 0; srcX < img.width(); srcX++)
+    {
+      p.setPixel(x1 + left + srcX, y1 + top + srcY, img.pixel(srcX, srcY));
+    }
+
+    if (captionType != NoCaptions)
+    {
+      // Now draw the caption
+      QString caption;
+      QString format;
+      switch (captionType)
+      {
+        case FileNames:
+          format = "%f";
+          break;
+        case ExifDateTime:
+          format = "%d";
+          break;
+        case Comment:
+          format = "%c";
+          break;
+        case Free:
+          format = d->mInfoPage->m_FreeCaptionFormat->text();
+          break;
+        default:
+          kdWarning( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+          break;
+      }
+      caption = captionFormatter(photo, format);
+      kdDebug( 51000 ) << "Caption " << caption << endl;
+
+      int captionW = w-2;
+      double ratio = d->mInfoPage->m_font_size->value() * 0.01;
+      int captionH = (int)(qMin(w, h) * ratio);
+
+      int exifOrientation = photo->exiv2Iface()->getImageOrientation();
+      int orientatation = photo->rotation;
+
+      //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
+      if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
+          exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+        orientatation = (photo->rotation + 270) % 360; // -90 degrees
+
+      if (orientatation == 90 || orientatation == 270)
+      {
+        captionW = h;
+      }
+
+      QPixmap pixmap(w-2, img.height()-2);
+      //TODO black is not ok if font is black...
+      pixmap.fill(Qt::black);
+      QPainter painter;
+      painter.begin(&pixmap);
+      painter.rotate(orientatation);
+      kdDebug( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+      int tx = left;
+      int ty = top;
+
+      switch(orientatation) {
+        case 0 : {
+          tx += x1 + 1;
+          ty += y1 + (h - captionH - 1);
+          break;
+        }
+        case 90 : {
+          tx = top + y1 + 1;
+          ty = -left - x1 - captionH - 1;
+          break;
+        }
+        case 180 : {
+          tx = -left - x1 - w + 1;
+          ty = -top -y1 - (captionH + 1);
+          break;
+        }
+        case 270 : {
+          tx = -top - y1 - h + 1;
+          ty = left + x1 + (w - captionH)- 1;
+          break;
+        }
+      }
+
+      painter.translate(tx, ty);
+      printCaption(painter, photo, captionW, captionH, caption);
+      painter.end();
+
+      // now put it on picture
+      QImage fontImage = pixmap.toImage();
+      QRgb black = QColor(0, 0, 0).rgb();
+      for(int srcY = 0; srcY < fontImage.height(); srcY++)
+        for(int srcX = 0; srcX < fontImage.width(); srcX++)
+      {
+        if (fontImage.pixel(srcX, srcY) != black)
+          p.setPixel(srcX, srcY, fontImage.pixel(srcX, srcY));
+      }
+    } // caption
+
+    // iterate to the next position
+    it++;
+    layout = static_cast<QRect*>(*it);
+    if (layout == 0)
+    {
+      current++;
+      break;
+    }
+  }
+  // did we print the last photo?
+  return (current < photos.count());
+}
+
+void Wizard::updateCropFrame(TPhoto *photo, int photoIndex)
+{
+  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+  d->mCropPage->cropFrame->init(photo, getLayout(photoIndex)->width(), getLayout(photoIndex)->height(), s->autoRotate);
+  d->mCropPage->LblCropPhoto->setText(i18n("Photo %1 of %2").arg(photoIndex + 1).arg( QString::number(d->m_photos.count()) ));
+}
+
+// update the pages to be printed and preview first/last pages
+void Wizard::previewPhotos()
+{
+  // get the selected layout
+  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+
+  int photoCount  =  d->m_photos.count();
+  // how many pages?  Recall that the first layout item is the paper size
+  int photosPerPage = s->layouts.count() - 1;
+  int remainder = photoCount % photosPerPage;
+  int emptySlots = 0;
+  if (remainder > 0)
+    emptySlots = photosPerPage - remainder;
+  int pageCount = photoCount / photosPerPage;
+  if (emptySlots > 0)
+    pageCount++;
+
+  d->mPhotoPage->LblPhotoCount->setText(QString::number(photoCount));
+  d->mPhotoPage->LblSheetsPrinted->setText(QString::number(pageCount));
+  d->mPhotoPage->LblEmptySlots->setText(QString::number(emptySlots));
+
+  // photo previews
+  // preview the first page.
+  // find the first page of photos
+  int count = 0;
+  int page = 0;
+  unsigned int current = 0;
+  
+  QList<TPhoto*>::iterator it;
+  for (it = d->m_photos.begin(); it != d->m_photos.end(); it++)
+  {
+    TPhoto *photo = static_cast<TPhoto*>(*it);
+
+    if (page == d->m_currentPreviewPage) {
+      photo->cropRegion.setRect(-1, -1, -1, -1);
+      photo->rotation = 0;
+      int w = s->layouts.at(count+1)->width();
+      int h = s->layouts.at(count+1)->height();
+      d->mCropPage->cropFrame->init(photo, w, h, s->autoRotate, false);
+    }
+    count++;
+    if (count >= photosPerPage)
+    {
+      if (page == d->m_currentPreviewPage)
+        break;
+      page++;
+      current += photosPerPage;
+      count = 0;
+    }
+  }
+
+  // send this photo list to the painter
+  QPixmap img(d->mPhotoPage->BmpFirstPagePreview->width(), d->mPhotoPage->BmpFirstPagePreview->height());
+  QPainter p;
+  p.begin(&img);
+  QPalette palette(d->mPhotoPage->backgroundRole());
+  p.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Background));
+  paintOnePage(p, d->m_photos, s->layouts, d->mInfoPage->m_captions-> currentIndex(), current, true);
+  p.end();
+  d->mPhotoPage->BmpFirstPagePreview->setPixmap(img);
+  d->mPhotoPage->LblPreview->setText(i18n("Page ") + QString::number(d->m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
+  d->mPhotoPage->LblPreview->setText(i18n("Page %1 of %2").arg(d->m_currentPreviewPage + 1).arg(getPageCount()));
+
+  manageBtnPreviewPage();
+  manageBtnPrintOrder();
+}
+
+void Wizard::manageBtnPreviewPage()
+{
+  d->mPhotoPage->BtnPreviewPageDown->setEnabled(true);
+  d->mPhotoPage->BtnPreviewPageUp->setEnabled(true);
+  if (d->m_currentPreviewPage == 0)
+  {
+    d->mPhotoPage->BtnPreviewPageDown->setEnabled(false);
+  }
+  
+  if ((d->m_currentPreviewPage + 1) == getPageCount())
+  {
+    d->mPhotoPage->BtnPreviewPageUp->setEnabled(false);
+  }
+}
+
+void Wizard::manageBtnPrintOrder()
+{
+  if (d->mPhotoPage->ListPrintOrder->currentRow() == -1)
+    return;
+
+  d->mPhotoPage->BtnPrintOrderDown->setEnabled(true);
+  d->mPhotoPage->BtnPrintOrderUp->setEnabled(true);
+  if (d->mPhotoPage->ListPrintOrder->currentRow() == 0)
+  {
+    d->mPhotoPage->BtnPrintOrderUp->setEnabled(false);
+  }
+  if (uint(d->mPhotoPage->ListPrintOrder->currentRow() + 1) == d->mPhotoPage->ListPrintOrder->count())
+  {
+    d->mPhotoPage->BtnPrintOrderDown->setEnabled(false);
+  }
+}
 
 // Wizard SLOTS
 void Wizard::slotHelp()
 {
   KToolInvocation::invokeHelp("printwizard","kipi-plugins");
 }
+
+
+void Wizard::printOrderDownClicked()
+{
+  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
+
+  if (currentIndex == (signed int)d->mPhotoPage->ListPrintOrder->count() - 1)
+    return;
+
+  QString item1 = d->mPhotoPage->ListPrintOrder->currentItem()->text();
+  QString item2 = d->mPhotoPage->ListPrintOrder->item(currentIndex + 1)->text();
+
+  // swap these items
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex, item2);
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex + 1, item1);
+
+  // the list box items are swapped, now swap the items in the photo list
+  TPhoto *photo1 = d->m_photos.at(currentIndex);
+  TPhoto *photo2 = d->m_photos.at(currentIndex + 1);
+  d->m_photos.removeAt(currentIndex);
+  d->m_photos.removeAt(currentIndex);
+  d->m_photos.insert(currentIndex, photo1);
+  d->m_photos.insert(currentIndex, photo2);
+  previewPhotos();
+}
+
 
 void Wizard::btnBrowseOutputPathClicked(void)
 {
@@ -778,6 +1480,122 @@ void Wizard::captionChanged(const QString & text)
     d->mInfoPage->m_free_label->setEnabled(false);
   }
 }
+
+void Wizard::BtnCropRotate_clicked()
+{
+  // by definition, the cropRegion should be set by now,
+  // which means that after our rotation it will become invalid,
+  // so we will initialize it to -2 in an awful hack (this
+  // tells the cropFrame to reset the crop region, but don't
+  // automagically rotate the image to fit.
+  TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
+  photo->cropRegion = QRect(-2, -2, -2, -2);
+  photo->rotation = (photo->rotation + 90) % 360;
+
+  updateCropFrame(photo, d->m_currentCropPhoto);
+
+}
+
+void Wizard::setBtnCropEnabled()
+{
+  if (d->m_currentCropPhoto == 0)
+    d->mCropPage->BtnCropPrev->setEnabled(false);
+  else
+    d->mCropPage->BtnCropPrev->setEnabled(true);
+
+  if (d->m_currentCropPhoto == (int)d->m_photos.count() - 1)
+    d->mCropPage->BtnCropNext->setEnabled(false);
+  else
+    d->mCropPage->BtnCropNext->setEnabled(true);
+}
+
+void Wizard::BtnCropNext_clicked()
+{
+  TPhoto *photo = 0;
+  photo = d->m_photos[++d->m_currentCropPhoto];
+  setBtnCropEnabled();
+  if (photo == 0)
+  {
+    d->m_currentCropPhoto = d->m_photos.count() - 1;
+    return;
+  }
+  updateCropFrame(photo, d->m_currentCropPhoto);
+}
+
+void Wizard::BtnCropPrev_clicked()
+{
+  TPhoto *photo = 0;
+  photo = d->m_photos[--d->m_currentCropPhoto];
+
+  setBtnCropEnabled();
+
+  if (photo == 0)
+  {
+    d->m_currentCropPhoto = 0;
+    return;
+  }
+  updateCropFrame(photo, d->m_currentCropPhoto);
+}
+
+void Wizard::BtnPrintOrderUp_clicked() {
+  if (d->mPhotoPage->ListPrintOrder->currentItem() == 0)
+    return;
+
+  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
+
+  // swap these items
+  QListWidgetItem *item1 = d->mPhotoPage->ListPrintOrder->takeItem(currentIndex - 1);
+  QListWidgetItem *item2 = d->mPhotoPage->ListPrintOrder->takeItem(currentIndex - 1);
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex - 1, item2);
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex - 1, item1);
+
+  // the list box items are swapped, now swap the items in the photo list
+  d->m_photos.swap(currentIndex, currentIndex - 1);
+  /*
+  TPhoto *photo1 = d->m_photos.at(currentIndex);
+  TPhoto *photo2 = d->m_photos.at(currentIndex - 1);
+  d->m_photos.remove(currentIndex - 1);
+  d->m_photos.remove(currentIndex - 1);
+  d->m_photos.insert(currentIndex - 1, photo2);
+  d->m_photos.insert(currentIndex - 1, photo1);
+  */
+  previewPhotos();
+}
+
+void Wizard::BtnPrintOrderDown_clicked() {
+  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
+
+  if (currentIndex == d->mPhotoPage->ListPrintOrder->count() - 1)
+    return;
+
+
+  // swap these items
+  QListWidgetItem *item1 = d->mPhotoPage->ListPrintOrder->takeItem(currentIndex);
+  QListWidgetItem *item2 = d->mPhotoPage->ListPrintOrder->takeItem(currentIndex);
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex, item1);
+  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex, item2);
+
+  // the list box items are swapped, now swap the items in the photo list
+  d->m_photos.swap(currentIndex, currentIndex + 1);
+
+  previewPhotos();
+}
+
+void Wizard::BtnPreviewPageDown_clicked() {
+  if (d->m_currentPreviewPage == 0)
+    return;
+  d->m_currentPreviewPage--;
+  previewPhotos();
+}
+void Wizard::BtnPreviewPageUp_clicked() {
+  if (d->m_currentPreviewPage == getPageCount() - 1)
+    return;
+  d->m_currentPreviewPage++;
+  previewPhotos();
+}
+
+
+
 
 /**
  *

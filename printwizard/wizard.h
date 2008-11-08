@@ -23,15 +23,27 @@
 #ifndef WIZARD_H
 #define WIZARD_H
 
-// KDE includes.
+// QT incudes
+#include <QPainter>
 
+// KDE includes.
 #include <kassistantdialog.h>
+
 
 namespace KIPI {
 class Interface;
 }
 
 namespace KIPIPrintWizardPlugin {
+
+class TPhoto;
+
+typedef struct _TPhotoSize {
+  QString label;
+  int dpi;
+  bool autoRotate;
+  QList<QRect*> layouts;  // first element is page size
+} TPhotoSize;
 
 
 /**
@@ -52,7 +64,15 @@ namespace KIPIPrintWizardPlugin {
       virtual void outputSettingsClicked(int);
       virtual void btnBrowseOutputPathClicked(void);
       virtual void paperSizeChanged(int);
+      virtual void printOrderDownClicked(void);
+      virtual void BtnPrintOrderUp_clicked();
+      virtual void BtnPrintOrderDown_clicked();
 
+      virtual void BtnPreviewPageDown_clicked();
+      virtual void BtnPreviewPageUp_clicked();
+      virtual void BtnCropRotate_clicked();
+      virtual void BtnCropNext_clicked();
+      virtual void BtnCropPrev_clicked();
       //private slots:
       //	void updateFinishButton();
 
@@ -65,7 +85,39 @@ namespace KIPIPrintWizardPlugin {
         P10X15,
         P13X18
       };
+      enum AvailableCaptions {
+        NoCaptions = 0,
+        FileNames,
+        ExifDateTime,
+        Comment,
+        Free
+      };
       void initPhotoSizes(PageSize pageSize);
+      void previewPhotos();
+
+
+      void updateCropFrame(TPhoto *, int);
+  void setBtnCropEnabled();
+  void removeGimpFiles();
+  //void printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, KPrinter &printer);
+  QStringList printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize *layouts);
+  void loadSettings();
+  void saveSettings();
+
+  int getPageCount();
+  QRect *getLayout(int photoIndex);
+  QString captionFormatter(TPhoto *photo, const QString& format);
+  void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
+
+  bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                    int captionType, unsigned int &current, bool useThumbnails = false);
+
+  bool paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                    int captionType, unsigned int &current);
+  
+  void manageBtnPrintOrder();
+  void manageBtnPreviewPage();
+
 
       struct Private;
       Private* d;
