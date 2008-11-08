@@ -104,6 +104,7 @@ struct Wizard::Private {
   QList<TPhotoSize*> m_photoSizes;
   int m_currentPreviewPage;
   int m_currentCropPhoto;
+  QString      m_tempPath;
 };
 
 enum OutputIDs
@@ -247,6 +248,33 @@ TPhotoSize * createPhotoGrid(int pageWidth, int pageHeight, QString label, int r
     row++;
   }
   return p;
+}
+
+void Wizard::print( KUrl::List fileList, QString tempPath)
+{
+  for(unsigned int i=0; i < d->m_photos.count(); i++)
+    if (d->m_photos.at(i))
+      delete d->m_photos.at(i);
+  d->m_photos.clear();
+  d->mPhotoPage->ListPrintOrder->clear();
+
+  for(unsigned int i=0; i < fileList.count(); i++)
+  {
+    TPhoto *photo = new TPhoto(150);
+    photo->filename = fileList[i];
+    d->m_photos.append(photo);
+    // load the print order listbox
+    d->mPhotoPage->ListPrintOrder->addItem(photo->filename.fileName());
+  }
+  d->mPhotoPage->ListPrintOrder->setCurrentItem(0);
+
+  d->m_tempPath = tempPath;
+  d->mPhotoPage->LblPhotoCount->setText(QString::number(d->m_photos.count()));
+
+  d->mCropPage->BtnCropPrev->setEnabled(false);
+
+  if (d->m_photos.count() == 1)
+    d->mCropPage->BtnCropNext->setEnabled(false);
 }
 
 // TODO page layout configurable (using XML?)
@@ -670,7 +698,7 @@ void Wizard::initPhotoSizes(PageSize pageSize)
   // load the photo sizes into the listbox
   d->mPhotoPage->ListPhotoSizes->clear();
   QList<TPhotoSize*>::iterator it;
-  for (it = d->m_photoSizes.begin(); it != d->m_photoSizes.end(); it++)
+  for (it = d->m_photoSizes.begin(); it != d->m_photoSizes.end(); ++it)
   {
     TPhotoSize *s = static_cast<TPhotoSize*>(*it);
     if (s) d->mPhotoPage->ListPhotoSizes->addItem(s->label);
@@ -695,8 +723,8 @@ double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int 
     if (dpi > maxDPI)
       maxDPI = dpi;
     // iterate to the next position
-    it++;
-    layout = static_cast<QRect*>(*it);
+    ++it;
+    layout = (it == layouts.end()) ? 0 : static_cast<QRect*>(*it);
     if (layout == 0)
     {
       break;
@@ -859,7 +887,7 @@ bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layo
 
   QList<QRect*>::iterator it = layouts.begin();
   QRect *srcPage = static_cast<QRect*>(*it);
-  it++;
+  ++it;
   QRect *layout = static_cast<QRect*>(*it);
 
   // scale the page size to best fit the painter
@@ -1028,8 +1056,8 @@ bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layo
     } // caption
 
     // iterate to the next position
-    it++;
-    layout = static_cast<QRect*>(*it);
+    ++it;
+    layout = it == layouts.end() ? 0 : static_cast<QRect*>(*it);
     if (layout == 0)
     {
       current++;
@@ -1054,7 +1082,7 @@ bool Wizard::paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layout
 
   QList<QRect*>::iterator it = layouts.begin();
   QRect *srcPage = static_cast<QRect*>(*it);
-  it++;
+  ++it;
   QRect *layout = static_cast<QRect*>(*it);
 
   // scale the page size to best fit the painter
@@ -1220,8 +1248,8 @@ bool Wizard::paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layout
     } // caption
 
     // iterate to the next position
-    it++;
-    layout = static_cast<QRect*>(*it);
+    ++it;
+    layout = (it == layouts.end()) ? 0 : static_cast<QRect*>(*it);
     if (layout == 0)
     {
       current++;
@@ -1268,7 +1296,7 @@ void Wizard::previewPhotos()
   unsigned int current = 0;
   
   QList<TPhoto*>::iterator it;
-  for (it = d->m_photos.begin(); it != d->m_photos.end(); it++)
+  for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
   {
     TPhoto *photo = static_cast<TPhoto*>(*it);
 

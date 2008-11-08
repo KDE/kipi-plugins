@@ -55,6 +55,7 @@ typedef struct _TPhotoSize {
     public:
       Wizard(QWidget* parent, KIPI::Interface*);
       ~Wizard();
+      void print( KUrl::List fileList, QString tempPath);
 
     protected slots:
       virtual void accept();

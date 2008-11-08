@@ -32,25 +32,22 @@ extern "C"
 }
 
 // Qt includes.
-
 #include <QWidget>
 
 // KDE includes.
-
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 // LibKIPI includes.
-
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
 // Local includes
-
 #include "wizard.h"
 
 K_PLUGIN_FACTORY( PrintAssistantFactory, registerPlugin<Plugin_PrintWizard>(); )
@@ -111,13 +108,10 @@ void Plugin_PrintWizard::slotActivate()
 
     QWidget* parent=QApplication::activeWindow();
     KIPIPrintWizardPlugin::Wizard printWizard(parent, m_interface);
-    if (printWizard.exec()==QDialog::Rejected) return;
-#if 0
     KStandardDirs dir;
     QString tempPath = dir.saveLocation("tmp", "kipi-printwizardplugin-" + QString::number(getpid()) + "/");
     printWizard.print(fileList, tempPath);
-    printWizard.exec();
-#endif
+    if (printWizard.exec()==QDialog::Rejected) return;
 }
 
 KIPI::Category Plugin_PrintWizard::category( KAction* action ) const
