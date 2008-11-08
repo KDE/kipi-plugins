@@ -73,6 +73,10 @@ typedef struct _TPhotoSize {
       virtual void BtnCropRotate_clicked();
       virtual void BtnCropNext_clicked();
       virtual void BtnCropPrev_clicked();
+      virtual void ListPrintOrder_selected();
+      virtual void ListPhotoOrder_highlighted (int );
+      virtual void EditCopies_valueChanged(int);
+
       //private slots:
       //	void updateFinishButton();
 

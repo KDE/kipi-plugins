@@ -196,6 +196,15 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   connect(d->mCropPage->BtnCropRotate, SIGNAL(clicked()),
           this, SLOT(BtnCropRotate_clicked()));
+  
+  connect(d->mPhotoPage->ListPrintOrder, SIGNAL(itemSelectionChanged()),
+          this, SLOT(ListPrintOrder_selected()));
+  
+  connect(d->mPhotoPage->ListPrintOrder, SIGNAL(itemEntered(QListWidgetItem *)),
+          this, SLOT(ListPrintOrder_selected()));
+
+  connect(d->mPhotoPage->EditCopies, SIGNAL(valueChanged(int)), 
+          this, SLOT( EditCopies_valueChanged(int) ) );
 
   // Default is A4
   d->mInfoPage->CmbPaperSize->setCurrentIndex(A4);
@@ -666,7 +675,8 @@ void Wizard::initPhotoSizes(PageSize pageSize)
     TPhotoSize *s = static_cast<TPhotoSize*>(*it);
     if (s) d->mPhotoPage->ListPhotoSizes->addItem(s->label);
   }
-  d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
+  d->mPhotoPage->ListPhotoSizes->setCurrentRow (0, QItemSelectionModel::Select);
+//   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
 double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current)
 {
@@ -1411,6 +1421,12 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
     kDebug() << "CCCC" << endl;
 #endif
   }
+  else if (current->name() == i18n("Photo information"))
+  {
+    // create our photo sizes list
+    initPhotoSizes(d->m_pageSize);
+    previewPhotos();
+  }
   else if (current->name() == i18n("Crop photos"))
   {
   }
@@ -1560,6 +1576,95 @@ void Wizard::BtnPrintOrderUp_clicked() {
   d->m_photos.insert(currentIndex - 1, photo1);
   */
   previewPhotos();
+}
+
+
+void Wizard::EditCopies_valueChanged( int copies )
+{
+  if (copies < 1)
+    return;
+
+  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
+  QString item = d->mPhotoPage->ListPrintOrder->currentItem()->text();
+  TPhoto *pCurPhoto = d->m_photos.at(currentIndex);
+  KUrl fileName = pCurPhoto->filename;
+
+  if ( pCurPhoto->copies >= copies )
+  {
+    // removing copies
+    if (pCurPhoto->copies == 1 || pCurPhoto->copies == copies)
+      return;
+
+    d->mPhotoPage->ListPrintOrder->blockSignals(true);
+    d->mPhotoPage->ListPrintOrder->setCurrentRow (currentIndex, QItemSelectionModel::Deselect);
+    for (int removing = pCurPhoto->copies - copies; removing >0 ;removing--)
+    {
+      for (unsigned int index = 0; index < d->mPhotoPage->ListPrintOrder->count(); index++)
+      {
+        if (d->mPhotoPage->ListPrintOrder->item(index)->text() == item)
+        {
+          TPhoto *pPhoto = d->m_photos.at(index);
+          d->m_photos.removeAt(index);
+          delete (pPhoto);
+          d->mPhotoPage->ListPrintOrder->takeItem(index);
+          break;
+        } 
+      }
+    }
+    d->mPhotoPage->ListPrintOrder->blockSignals(false);
+    currentIndex = -1;
+  }
+  else
+  {
+		// adding copies
+    for (int adding = copies - pCurPhoto->copies; adding >0 ;adding--)
+    {
+      TPhoto *pPhoto = new TPhoto(150);
+      pPhoto->filename = pCurPhoto->filename;
+      d->m_photos.insert(currentIndex, pPhoto);
+      d->mPhotoPage->ListPrintOrder->insertItem(currentIndex, pPhoto->filename.fileName());
+    }
+  }
+
+  d->mPhotoPage->LblPhotoCount->setText(QString::number(d->m_photos.count()));
+
+  int index = 0;
+  // TODO check if possible to use iterator
+  for (TPhoto *pPhoto = d->m_photos[index]; pPhoto != 0; pPhoto = d->m_photos[++index])
+  {
+    if (pPhoto->filename == fileName)
+    {
+      pPhoto->copies = copies;
+      if (currentIndex == -1)
+        currentIndex = index;
+    }
+  }
+  d->mPhotoPage->ListPrintOrder->blockSignals(true);
+  d->mPhotoPage->ListPrintOrder->setCurrentRow (currentIndex, QItemSelectionModel::Select);
+  d->mPhotoPage->ListPrintOrder->blockSignals(false);
+  previewPhotos();
+}
+
+
+void Wizard::ListPhotoOrder_highlighted ( int index )
+{
+  d->mPhotoPage->EditCopies->blockSignals(true);
+  d->mPhotoPage->EditCopies->setValue ( d->m_photos.at(index)->copies );
+  d->mPhotoPage->EditCopies->blockSignals(false);
+
+  manageBtnPrintOrder();
+}
+
+
+
+void Wizard::ListPrintOrder_selected()
+{
+  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
+  d->mPhotoPage->EditCopies->blockSignals(true);
+  d->mPhotoPage->EditCopies->setValue ( d->m_photos.at(currentIndex)->copies );
+  d->mPhotoPage->EditCopies->blockSignals(false);
+
+  manageBtnPrintOrder();
 }
 
 void Wizard::BtnPrintOrderDown_clicked() {
