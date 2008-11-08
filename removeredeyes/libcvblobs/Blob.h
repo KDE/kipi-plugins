@@ -45,156 +45,155 @@
 
 
 #ifdef BLOB_OBJECT_FACTORY
-	//! Object factory pattern implementation
-	#include "..\inspecta\DesignPatterns\ObjectFactory.h"
+    //! Object factory pattern implementation
+    #include "..\inspecta\DesignPatterns\ObjectFactory.h"
 #endif
 
 
 //! Factor de conversi� de graus a radians
-#define DEGREE2RAD		(CV_PI / 180.0)
+#define DEGREE2RAD        (CV_PI / 180.0)
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
 /**
-	Classe que representa un blob, ent�s com un conjunt de pixels del 
-	mateix color contigus en una imatge binaritzada.
+    Classe que representa un blob, ent�s com un conjunt de pixels del 
+    mateix color contigus en una imatge binaritzada.
 
-	Class to represent a blob, a group of connected pixels in a binary image
+    Class to represent a blob, a group of connected pixels in a binary image
 */
 class CBlob
 {
 public:
-	//! Constructor est�ndard
-	//! Standard constructor
-	CBlob();
-	//! Constructor de c�pia
-	//! Copy constructor
-	CBlob( const CBlob &src );
-	CBlob( const CBlob *src );
+    //! Constructor est�ndard
+    //! Standard constructor
+    CBlob();
+    //! Constructor de c�pia
+    //! Copy constructor
+    CBlob( const CBlob &src );
+    CBlob( const CBlob *src );
 
-	//! Destructor est�ndard
-	//! Standard Destructor
-	~CBlob();
-	
-	//! Operador d'assignaci�
-	//! Assigment operator
-	CBlob& operator=(const CBlob &src );
+    //! Destructor est�ndard
+    //! Standard Destructor
+    ~CBlob();
 
-	//! Indica si el blob est� buit ( no t� cap info associada )
-	//! Shows if the blob has associated information
-	bool IsEmpty() const
-	{
-		return (area == 0.0 && perimeter == 0.0 );
-	};
+    //! Operador d'assignaci�
+    //! Assigment operator
+    CBlob& operator=(const CBlob &src );
 
-	//! Neteja les cantonades del blob
-	//! Clears the edges of the blob
-	void ClearEdges();
-	//! Copia les cantonades del blob a un altre (les afegeix al dest�)
-	//! Adds the blob edges to another blob
-	void CopyEdges( CBlob &destination ) const;
-	//! Retorna el poligon convex del blob
-	//! Calculates the convex hull of the blob
-	bool GetConvexHull( CvSeq **dst ) const;
-	//! Calcula l'elipse que s'adapta als v�rtexs del blob
-	//! Fits an ellipse to the blob edges
-	CvBox2D GetEllipse() const;
+    //! Indica si el blob est� buit ( no t� cap info associada )
+    //! Shows if the blob has associated information
+    bool IsEmpty() const
+    {
+        return (area == 0.0 && perimeter == 0.0 );
+    };
 
-	//! Pinta l'interior d'un blob d'un color determinat
-	//! Paints the blob in an image
-	void FillBlob( IplImage *imatge, CvScalar color, int offsetX = 0, int offsetY = 0 ) const;
+    //! Neteja les cantonades del blob
+    //! Clears the edges of the blob
+    void ClearEdges();
+    //! Copia les cantonades del blob a un altre (les afegeix al dest�)
+    //! Adds the blob edges to another blob
+    void CopyEdges( CBlob &destination ) const;
+    //! Retorna el poligon convex del blob
+    //! Calculates the convex hull of the blob
+    bool GetConvexHull( CvSeq **dst ) const;
+    //! Calcula l'elipse que s'adapta als v�rtexs del blob
+    //! Fits an ellipse to the blob edges
+    CvBox2D GetEllipse() const;
 
-	//! Funcions GET sobre els valors dels blobs
-	//! Get functions
+    //! Pinta l'interior d'un blob d'un color determinat
+    //! Paints the blob in an image
+    void FillBlob( IplImage *imatge, CvScalar color, int offsetX = 0, int offsetY = 0 ) const;
 
-	inline int Label() const	{ return etiqueta; }
-	inline int Parent() const	{ return parent; }
-	inline double Area() const { return area; }
-	inline double Perimeter() const { return perimeter; }
-	inline double ExternPerimeter() const { return externPerimeter; }
-	inline int	  Exterior() const { return exterior; }
-	inline double Mean() const { return mean; }
-	inline double StdDev() const { return stddev; }
-	inline double MinX() const { return minx; }
-	inline double MinY() const { return miny; }
-	inline double MaxX() const { return maxx; }
-	inline double MaxY() const { return maxy; }
-	inline CvSeq *Edges() const { return edges; }
-	inline double SumX() const { return sumx; }
-	inline double SumY() const { return sumy; }
-	inline double SumXX() const { return sumxx; }
-	inline double SumYY() const { return sumyy; }
-	inline double SumXY() const { return sumxy; }
-	
-	//! etiqueta del blob
-	//! label of the blob
-	int etiqueta;
-	//! flag per indicar si es exterior o no
-	//! true for extern blobs
-	int exterior;
-	//! area del blob
-	//! Blob area
-	double area;
-	//! perimetre del blob
-	//! Blob perimeter
-	double perimeter;
-	//! quantitat de perimetre del blob extern
-	//! amount of blob perimeter which is exterior
-	double externPerimeter;
-	//! etiqueta del blob pare
-	//! label of the parent blob
-	int parent;
-	//! moments
-	double sumx;
-	double sumy;
-	double sumxx;
-	double sumyy;
-	double sumxy;
-	//! Bounding rect
-	double minx;
-	double maxx;
-	double miny;
-	double maxy;
-	
-	//! mitjana
-	//! mean of the grey scale values of the blob pixels
-	double mean;
-	//! desviaci� standard
-	//! standard deviation of the grey scale values of the blob pixels
-	double stddev;
+    //! Funcions GET sobre els valors dels blobs
+    //! Get functions
 
-	//! �rea de mem�ria on es desaran els punts de contorn del blob
-	//! storage which contains the edges of the blob
-	CvMemStorage *m_storage;
-	//!	Sequ�ncia de punts del contorn del blob
-	//! Sequence with the edges of the blob
-	CvSeq *edges;
-	
+    inline int Label() const    { return etiqueta; }
+    inline int Parent() const    { return parent; }
+    inline double Area() const { return area; }
+    inline double Perimeter() const { return perimeter; }
+    inline double ExternPerimeter() const { return externPerimeter; }
+    inline int      Exterior() const { return exterior; }
+    inline double Mean() const { return mean; }
+    inline double StdDev() const { return stddev; }
+    inline double MinX() const { return minx; }
+    inline double MinY() const { return miny; }
+    inline double MaxX() const { return maxx; }
+    inline double MaxY() const { return maxy; }
+    inline CvSeq *Edges() const { return edges; }
+    inline double SumX() const { return sumx; }
+    inline double SumY() const { return sumy; }
+    inline double SumXX() const { return sumxx; }
+    inline double SumYY() const { return sumyy; }
+    inline double SumXY() const { return sumxy; }
 
-	//! Point datatype for plotting (FillBlob)
-	typedef std::vector<CvPoint> vectorPunts;
+    //! etiqueta del blob
+    //! label of the blob
+    int etiqueta;
+    //! flag per indicar si es exterior o no
+    //! true for extern blobs
+    int exterior;
+    //! area del blob
+    //! Blob area
+    double area;
+    //! perimetre del blob
+    //! Blob perimeter
+    double perimeter;
+    //! quantitat de perimetre del blob extern
+    //! amount of blob perimeter which is exterior
+    double externPerimeter;
+    //! etiqueta del blob pare
+    //! label of the parent blob
+    int parent;
+    //! moments
+    double sumx;
+    double sumy;
+    double sumxx;
+    double sumyy;
+    double sumxy;
+    //! Bounding rect
+    double minx;
+    double maxx;
+    double miny;
+    double maxy;
 
-	//! Helper class to compare two CvPoints (for sorting in FillBlob)
-	struct comparaCvPoint : public std::binary_function<CvPoint, CvPoint, bool> 
-	{
-		//! Definim que un punt �s menor com m�s amunt a la dreta estigui
-		bool operator()(CvPoint a, CvPoint b) 
-		{ 
-			if( a.y == b.y ) 
-				return a.x < b.x;
-			else 
-				return a.y < b.y; 
-		}
-	};
+    //! mitjana
+    //! mean of the grey scale values of the blob pixels
+    double mean;
+    //! desviaci� standard
+    //! standard deviation of the grey scale values of the blob pixels
+    double stddev;
+
+    //! �rea de mem�ria on es desaran els punts de contorn del blob
+    //! storage which contains the edges of the blob
+    CvMemStorage *m_storage;
+    //!    Sequ�ncia de punts del contorn del blob
+    //! Sequence with the edges of the blob
+    CvSeq *edges;
+
+    //! Point datatype for plotting (FillBlob)
+    typedef std::vector<CvPoint> vectorPunts;
+
+    //! Helper class to compare two CvPoints (for sorting in FillBlob)
+    struct comparaCvPoint : public std::binary_function<CvPoint, CvPoint, bool> 
+    {
+        //! Definim que un punt �s menor com m�s amunt a la dreta estigui
+        bool operator()(CvPoint a, CvPoint b) 
+        { 
+            if( a.y == b.y ) 
+                return a.x < b.x;
+            else 
+                return a.y < b.y; 
+        }
+    };
 };
 
 
 
 /**************************************************************************
-		Definici� de les classes per a fer operacions sobre els blobs
+        Definici� de les classes per a fer operacions sobre els blobs
 
-		Helper classes to perform operations on blobs
+        Helper classes to perform operations on blobs
 **************************************************************************/
 
 
@@ -203,38 +202,38 @@ public:
 class COperadorBlob
 {
 public:
-	virtual ~COperadorBlob(){};
+    virtual ~COperadorBlob(){};
 
-	//! Aplica l'operaci� al blob
-	virtual double operator()(const CBlob &blob) const = 0;
-	//! Obt� el nom de l'operador
-	virtual const char *GetNom() const = 0;
+    //! Aplica l'operaci� al blob
+    virtual double operator()(const CBlob &blob) const = 0;
+    //! Obt� el nom de l'operador
+    virtual const char *GetNom() const = 0;
 
-	operator COperadorBlob*() const
-	{
-		return (COperadorBlob*)this;
-	}
+    operator COperadorBlob*() const
+    {
+        return (COperadorBlob*)this;
+    }
 };
 
 typedef COperadorBlob funcio_calculBlob;
 
 #ifdef BLOB_OBJECT_FACTORY
-	/**
-		Funci� per comparar dos identificadors dins de la f�brica de COperadorBlobs
-	*/
-	struct functorComparacioIdOperador
-	{
-	  bool operator()(const char* s1, const char* s2) const
-	  {
-		return strcmp(s1, s2) < 0;
-	  }
-	};
+    /**
+        Funci� per comparar dos identificadors dins de la f�brica de COperadorBlobs
+    */
+    struct functorComparacioIdOperador
+    {
+      bool operator()(const char* s1, const char* s2) const
+      {
+        return strcmp(s1, s2) < 0;
+      }
+    };
 
-	//! Definition of Object factory type for COperadorBlob objects
-	typedef ObjectFactory<COperadorBlob, const char *, functorComparacioIdOperador > t_OperadorBlobFactory;
+    //! Definition of Object factory type for COperadorBlob objects
+    typedef ObjectFactory<COperadorBlob, const char *, functorComparacioIdOperador > t_OperadorBlobFactory;
 
-	//! Funci� global per a registrar tots els operadors definits a blob.h
-	void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob );
+    //! Funci� global per a registrar tots els operadors definits a blob.h
+    void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob );
 
 #endif
 
@@ -244,13 +243,13 @@ class CBlobGetArea : public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{ 
-		return blob.Area(); 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetArea";
-	}
+    { 
+        return blob.Area(); 
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetArea";
+    }
 };
 
 //! Classe per calcular el perimetre d'un blob
@@ -259,13 +258,13 @@ class CBlobGetPerimeter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{ 
-		return blob.Perimeter(); 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetPerimeter";
-	}
+    { 
+        return blob.Perimeter(); 
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetPerimeter";
+    }
 };
 
 //! Classe que diu si un blob �s extern o no
@@ -274,13 +273,13 @@ class CBlobGetExterior: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{ 
-		return blob.Exterior(); 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetExterior";
-	}
+    { 
+        return blob.Exterior(); 
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetExterior";
+    }
 };
 
 //! Classe per calcular la mitjana de nivells de gris d'un blob
@@ -289,13 +288,13 @@ class CBlobGetMean: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{ 
-		return blob.Mean(); 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMean";
-	}
+    { 
+        return blob.Mean(); 
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMean";
+    }
 };
 
 //! Classe per calcular la desviaci� est�ndard dels nivells de gris d'un blob
@@ -304,13 +303,13 @@ class CBlobGetStdDev: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{ 
-		return blob.StdDev(); 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetStdDev";
-	}
+    { 
+        return blob.StdDev(); 
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetStdDev";
+    }
 };
 
 //! Classe per calcular la compacitat d'un blob
@@ -319,10 +318,10 @@ class CBlobGetCompactness: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetCompactness";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetCompactness";
+    }
 };
 
 //! Classe per calcular la longitud d'un blob
@@ -331,10 +330,10 @@ class CBlobGetLength: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetLength";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetLength";
+    }
 };
 
 //! Classe per calcular l'amplada d'un blob
@@ -343,10 +342,10 @@ class CBlobGetBreadth: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetBreadth";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetBreadth";
+    }
 };
 
 //! Classe per calcular la difer�ncia en X del blob
@@ -354,13 +353,13 @@ class CBlobGetDiffX: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.maxx - blob.minx;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetDiffX";
-	}
+    {
+        return blob.maxx - blob.minx;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetDiffX";
+    }
 };
 
 //! Classe per calcular la difer�ncia en X del blob
@@ -368,13 +367,13 @@ class CBlobGetDiffY: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.maxy - blob.miny;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetDiffY";
-	}
+    {
+        return blob.maxy - blob.miny;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetDiffY";
+    }
 };
 
 //! Classe per calcular el moment PQ del blob
@@ -382,28 +381,28 @@ public:
 class CBlobGetMoment: public COperadorBlob
 {
 public:
-	//! Constructor est�ndard
-	//! Standard constructor (gets the 00 moment)
-	CBlobGetMoment()
-	{
-		m_p = m_q = 0;
-	}
-	//! Constructor: indiquem el moment p,q a calcular
-	//! Constructor: gets the PQ moment
-	CBlobGetMoment( int p, int q )
-	{
-		m_p = p;
-		m_q = q;
-	};
-	double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetMoment";
-	}
+    //! Constructor est�ndard
+    //! Standard constructor (gets the 00 moment)
+    CBlobGetMoment()
+    {
+        m_p = m_q = 0;
+    }
+    //! Constructor: indiquem el moment p,q a calcular
+    //! Constructor: gets the PQ moment
+    CBlobGetMoment( int p, int q )
+    {
+        m_p = p;
+        m_q = q;
+    };
+    double operator()(const CBlob &blob) const;
+    const char *GetNom() const
+    {
+        return "CBlobGetMoment";
+    }
 
 private:
-	//! moment que volem calcular
-	int m_p, m_q;
+    //! moment que volem calcular
+    int m_p, m_q;
 };
 
 //! Classe per calcular el perimetre del poligon convex d'un blob
@@ -412,10 +411,10 @@ class CBlobGetHullPerimeter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetHullPerimeter";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetHullPerimeter";
+    }
 };
 
 //! Classe per calcular l'�rea del poligon convex d'un blob
@@ -424,10 +423,10 @@ class CBlobGetHullArea: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetHullArea";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetHullArea";
+    }
 };
 
 //! Classe per calcular la x minima en la y minima
@@ -436,10 +435,10 @@ class CBlobGetMinXatMinY: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetMinXatMinY";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetMinXatMinY";
+    }
 };
 
 //! Classe per calcular la y minima en la x maxima
@@ -448,10 +447,10 @@ class CBlobGetMinYatMaxX: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetMinYatMaxX";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetMinYatMaxX";
+    }
 };
 
 //! Classe per calcular la x maxima en la y maxima
@@ -460,10 +459,10 @@ class CBlobGetMaxXatMaxY: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetMaxXatMaxY";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetMaxXatMaxY";
+    }
 };
 
 //! Classe per calcular la y maxima en la x minima
@@ -472,10 +471,10 @@ class CBlobGetMaxYatMinX: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetMaxYatMinX";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetMaxYatMinX";
+    }
 };
 
 //! Classe per a calcular la x m�nima
@@ -484,13 +483,13 @@ class CBlobGetMinX: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MinX();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMinX";
-	}
+    {
+        return blob.MinX();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMinX";
+    }
 };
 
 //! Classe per a calcular la x m�xima
@@ -499,13 +498,13 @@ class CBlobGetMaxX: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MaxX();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMaxX";
-	}
+    {
+        return blob.MaxX();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMaxX";
+    }
 };
 
 //! Classe per a calcular la y m�nima
@@ -514,13 +513,13 @@ class CBlobGetMinY: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MinY();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMinY";
-	}
+    {
+        return blob.MinY();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMinY";
+    }
 };
 
 //! Classe per a calcular la y m�xima
@@ -529,13 +528,13 @@ class CBlobGetMaxY: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MaxY();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMax";
-	}
+    {
+        return blob.MaxY();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMax";
+    }
 };
 
 
@@ -545,10 +544,10 @@ class CBlobGetElongation: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetElongation";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetElongation";
+    }
 };
 
 //! Classe per calcular la rugositat d'un blob
@@ -557,10 +556,10 @@ class CBlobGetRoughness: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetRoughness";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetRoughness";
+    }
 };
 
 //! Classe per calcular la dist�ncia entre el centre del blob i un punt donat
@@ -568,27 +567,27 @@ public:
 class CBlobGetDistanceFromPoint: public COperadorBlob
 {
 public:
-	//! Standard constructor (distance to point 0,0)
-	CBlobGetDistanceFromPoint()
-	{
-		m_x = m_y = 0.0;
-	}
-	//! Constructor (distance to point x,y)
-	CBlobGetDistanceFromPoint( const double x, const double y )
-	{
-		m_x = x;
-		m_y = y;
-	}
+    //! Standard constructor (distance to point 0,0)
+    CBlobGetDistanceFromPoint()
+    {
+        m_x = m_y = 0.0;
+    }
+    //! Constructor (distance to point x,y)
+    CBlobGetDistanceFromPoint( const double x, const double y )
+    {
+        m_x = x;
+        m_y = y;
+    }
 
     double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetDistanceFromPoint";
-	}
+    const char *GetNom() const
+    {
+        return "CBlobGetDistanceFromPoint";
+    }
 
 private:
-	// coordenades del punt on volem calcular la dist�ncia
-	double m_x, m_y;
+    // coordenades del punt on volem calcular la dist�ncia
+    double m_x, m_y;
 };
 
 //! Classe per calcular el nombre de pixels externs d'un blob
@@ -597,13 +596,13 @@ class CBlobGetExternPerimeter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.ExternPerimeter();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetExternPerimeter";
-	}
+    {
+        return blob.ExternPerimeter();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetExternPerimeter";
+    }
 };
 
 //! Classe per calcular el ratio entre el perimetre i nombre pixels externs
@@ -614,16 +613,16 @@ class CBlobGetExternPerimeterRatio: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		if( blob.Perimeter() != 0 )
-			return blob.ExternPerimeter() / blob.Perimeter();
-		else
-			return blob.ExternPerimeter();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetExternPerimeterRatio";
-	}
+    {
+        if( blob.Perimeter() != 0 )
+            return blob.ExternPerimeter() / blob.Perimeter();
+        else
+            return blob.ExternPerimeter();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetExternPerimeterRatio";
+    }
 };
 
 //! Classe per calcular el ratio entre el perimetre convex i nombre pixels externs
@@ -634,19 +633,19 @@ class CBlobGetExternHullPerimeterRatio: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CBlobGetHullPerimeter getHullPerimeter;
-		double hullPerimeter;
+    {
+        CBlobGetHullPerimeter getHullPerimeter;
+        double hullPerimeter;
 
-		if( (hullPerimeter = getHullPerimeter( blob ) ) != 0 )
-			return blob.ExternPerimeter() / hullPerimeter;
-		else
-			return blob.ExternPerimeter();
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetExternHullPerimeterRatio";
-	}
+        if( (hullPerimeter = getHullPerimeter( blob ) ) != 0 )
+            return blob.ExternPerimeter() / hullPerimeter;
+        else
+            return blob.ExternPerimeter();
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetExternHullPerimeterRatio";
+    }
 };
 
 //! Classe per calcular el centre en el eix X d'un blob
@@ -655,13 +654,13 @@ class CBlobGetXCenter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MinX() + (( blob.MaxX() - blob.MinX() ) / 2.0);
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetXCenter";
-	}
+    {
+        return blob.MinX() + (( blob.MaxX() - blob.MinX() ) / 2.0);
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetXCenter";
+    }
 };
 
 //! Classe per calcular el centre en el eix Y d'un blob
@@ -670,13 +669,13 @@ class CBlobGetYCenter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		return blob.MinY() + (( blob.MaxY() - blob.MinY() ) / 2.0);
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetYCenter";
-	}
+    {
+        return blob.MinY() + (( blob.MaxY() - blob.MinY() ) / 2.0);
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetYCenter";
+    }
 };
 
 //! Classe per calcular la longitud de l'eix major d'un blob
@@ -685,15 +684,15 @@ class CBlobGetMajorAxisLength: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CvBox2D elipse = blob.GetEllipse();
+    {
+        CvBox2D elipse = blob.GetEllipse();
 
-		return elipse.size.width;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMajorAxisLength";
-	}
+        return elipse.size.width;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMajorAxisLength";
+    }
 };
 
 //! Classe per calcular el ratio entre l'area de la elipse i la de la taca
@@ -702,24 +701,24 @@ class CBlobGetAreaElipseRatio: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		if( blob.Area()==0.0 ) return 0.0;
+    {
+        if( blob.Area()==0.0 ) return 0.0;
 
-		CvBox2D elipse = blob.GetEllipse();
-		double ratioAreaElipseAreaTaca = ( (elipse.size.width/2.0)
-										   *
-										   (elipse.size.height/2.0)
-							               *CV_PI
-						                 )
-									     /
-									     blob.Area();
+        CvBox2D elipse = blob.GetEllipse();
+        double ratioAreaElipseAreaTaca = ( (elipse.size.width/2.0)
+                                           *
+                                           (elipse.size.height/2.0)
+                                           *CV_PI
+                                         )
+                                         /
+                                         blob.Area();
 
-		return ratioAreaElipseAreaTaca;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetAreaElipseRatio";
-	}
+        return ratioAreaElipseAreaTaca;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetAreaElipseRatio";
+    }
 };
 
 //! Classe per calcular la longitud de l'eix menor d'un blob
@@ -728,15 +727,15 @@ class CBlobGetMinorAxisLength: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CvBox2D elipse = blob.GetEllipse();
+    {
+        CvBox2D elipse = blob.GetEllipse();
 
-		return elipse.size.height;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetMinorAxisLength";
-	}
+        return elipse.size.height;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetMinorAxisLength";
+    }
 };
 
 //! Classe per calcular l'orientaci� de l'ellipse del blob en radians
@@ -745,19 +744,19 @@ class CBlobGetOrientation: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CvBox2D elipse = blob.GetEllipse();
+    {
+        CvBox2D elipse = blob.GetEllipse();
 
-		if( elipse.angle > 180.0 )
-			return (( elipse.angle - 180.0 )* DEGREE2RAD);
-		else
-			return ( elipse.angle * DEGREE2RAD);
+        if( elipse.angle > 180.0 )
+            return (( elipse.angle - 180.0 )* DEGREE2RAD);
+        else
+            return ( elipse.angle * DEGREE2RAD);
 
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetOrientation";
-	}
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetOrientation";
+    }
 };
 
 //! Classe per calcular el cosinus de l'orientaci� de l'ellipse del blob
@@ -766,14 +765,14 @@ class CBlobGetOrientationCos: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CBlobGetOrientation getOrientation;
-		return fabs( cos( getOrientation(blob) ));
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetOrientationCos";
-	}
+    {
+        CBlobGetOrientation getOrientation;
+        return fabs( cos( getOrientation(blob) ));
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetOrientationCos";
+    }
 };
 
 
@@ -783,15 +782,15 @@ class CBlobGetAxisRatio: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-	{
-		CvBox2D elipse = blob.GetEllipse();
+    {
+        CvBox2D elipse = blob.GetEllipse();
 
-		return elipse.size.height / elipse.size.width;
-	}
-	const char *GetNom() const
-	{
-		return "CBlobGetAxisRatio";
-	}
+        return elipse.size.height / elipse.size.width;
+    }
+    const char *GetNom() const
+    {
+        return "CBlobGetAxisRatio";
+    }
 };
 
 
@@ -800,28 +799,28 @@ public:
 class CBlobGetXYInside: public COperadorBlob
 {
 public:
-	//! Constructor est�ndard
-	//! Standard constructor
-	CBlobGetXYInside()
-	{
-		m_p = cvPoint(0,0);
-	}
-	//! Constructor: indiquem el punt
-	//! Constructor: sets the point
-	CBlobGetXYInside( CvPoint p )
-	{
-		m_p = p;
-	};
-	double operator()(const CBlob &blob) const;
-	const char *GetNom() const
-	{
-		return "CBlobGetXYInside";
-	}
+    //! Constructor est�ndard
+    //! Standard constructor
+    CBlobGetXYInside()
+    {
+        m_p = cvPoint(0,0);
+    }
+    //! Constructor: indiquem el punt
+    //! Constructor: sets the point
+    CBlobGetXYInside( CvPoint p )
+    {
+        m_p = p;
+    };
+    double operator()(const CBlob &blob) const;
+    const char *GetNom() const
+    {
+        return "CBlobGetXYInside";
+    }
 
 private:
-	//! punt que considerem
-	//! point to be considered
-	CvPoint m_p;
+    //! punt que considerem
+    //! point to be considered
+    CvPoint m_p;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin
