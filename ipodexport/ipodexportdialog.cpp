@@ -28,6 +28,10 @@
 #include "ipodexportdialog.h"
 #include "ipodlistitem.h"
 
+#if KIPI_PLUGIN
+#include "imagedialog.h"
+#endif
+
 // Qt includes.
 
 #include <Q3Frame>
@@ -57,12 +61,6 @@
 #include <kmountpoint.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
-
-// Kipi includes.
-
-#if KIPI_PLUGIN
-//#include <libkipi/imagedialog.h>
-#endif
 
 namespace KIPIIpodExportPlugin
 {
@@ -251,7 +249,7 @@ void UploadDialog::getIpodAlbums()
     }
 }
 
-void UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
+void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem *item, Itdb_PhotoAlbum *album)
 {
     if( !item || !album || !m_itdb )
         return;
@@ -292,20 +290,20 @@ void UploadDialog::enableButtons()
     // enable the start button only if there are albums to transfer to, items to transfer
     // and a database to add to!
     const bool transfer = m_uploadList->childCount()     > 0 && // we have items to transfer
-                          m_ipodAlbumList->childCount() > 0 && // the ipod has albums
-                          !m_transferring                   && // we aren't transferring
-                          m_ipodAlbumList->selectedItem()   && // selected a destination album
+                          m_ipodAlbumList->childCount() > 0  && // the ipod has albums
+                          !m_transferring                    && // we aren't transferring
+                          m_ipodAlbumList->selectedItem()    && // selected a destination album
                           m_itdb;
 
-    m_transferImagesButton->setEnabled( transfer );
+    m_transferImagesButton->setEnabled(transfer);
 
-    enableButton( KDialog::Close, !m_transferring );
+    enableButton(KDialog::Close, !m_transferring);
 
     const Q3ListViewItem *ipodSelection = m_ipodAlbumList->selectedItem();
-    const bool isMasterLibrary = ( ipodSelection == m_ipodAlbumList->firstChild() );
+    const bool isMasterLibrary = (ipodSelection == m_ipodAlbumList->firstChild());
 
-    m_removeAlbumButton->setEnabled( ipodSelection && !isMasterLibrary );
-    m_renameAlbumButton->setEnabled( ipodSelection && !isMasterLibrary && ipodSelection->depth() == 0 );
+    m_removeAlbumButton->setEnabled(ipodSelection && !isMasterLibrary);
+    m_renameAlbumButton->setEnabled(ipodSelection && !isMasterLibrary && ipodSelection->depth() == 0);
 }
 
 void UploadDialog::startTransfer()
@@ -323,8 +321,8 @@ void UploadDialog::startTransfer()
 
     Itdb_PhotoAlbum *album = selected->photoAlbum();
 
-    enableButton( KDialog::User1, false );
-    enableButton( KDialog::Close, false );
+    enableButton(KDialog::User1, false);
+    enableButton(KDialog::Close, false);
 
     GError *err = 0;
 
@@ -348,7 +346,7 @@ void UploadDialog::startTransfer()
             itdb_photodb_photoalbum_add_photo( m_itdb, album, art, 0 );
 
         delete item;
-#undef  item
+#undef item
     }
 
     itdb_photodb_write( m_itdb, &err );
@@ -398,7 +396,7 @@ void UploadDialog::ipodItemSelected( Q3ListViewItem *item )
 //     m_ipodPreview->setPixmap( pix );
 }
 
-void UploadDialog::imageSelected( Q3ListViewItem *item )
+void UploadDialog::imageSelected(Q3ListViewItem *item)
 {
     if( !item || m_uploadList->childCount() == 0 || m_transferring )
     {
@@ -421,7 +419,7 @@ void UploadDialog::imageSelected( Q3ListViewItem *item )
                    this,   SLOT( gotImagePreview(const KFileItem*, const QPixmap&) ) );
 }
 
-void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap &pixmap )
+void UploadDialog::gotImagePreview(const KFileItem* url, const QPixmap& pixmap)
 {
 #if KIPI_PLUGIN
     QPixmap pix( pixmap );
@@ -449,9 +447,9 @@ void UploadDialog::imagesFilesButtonAdd()
 {
     QStringList fileList;
     KUrl::List urls;
+
 #if KIPI_PLUGIN
-    #warning "kde4 port it"
-    //urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
 #else
     const QString filter = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
     KFileDialog dlg( QString::null, filter, this, "addImagesDlg", true );
@@ -460,6 +458,7 @@ void UploadDialog::imagesFilesButtonAdd()
     dlg.exec();
     urls = dlg.selectedURLs();
 #endif
+
     for( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         fileList << (*it).path();
 
@@ -468,22 +467,21 @@ void UploadDialog::imagesFilesButtonAdd()
     addDropItems( fileList );
 }
 
-void
-UploadDialog::imagesFilesButtonRem()
+void UploadDialog::imagesFilesButtonRem()
 {
     QList<Q3ListViewItem*> selected = m_uploadList->selectedItems();
 
-    #warning "kde4 port it";
-#if 0 
-    for( Q3ListViewItem *it = selected.first(); it; it = selected.next() )
+    Q3ListViewItem *it;
+    foreach(it, selected)
         delete it;
-#endif
-    enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
+
+    enableButton(KDialog::User1, m_uploadList->childCount() > 0);
 }
 
 void UploadDialog::createIpodAlbum()
 {
     QString helper;
+
 #if KIPI_PLUGIN
     KIPI::ImageCollection album = m_interface->currentAlbum();
     if( album.isValid() )
