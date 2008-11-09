@@ -28,10 +28,6 @@
 #include "ipodexportdialog.h"
 #include "ipodlistitem.h"
 
-#if KIPI_PLUGIN
-#include "imagedialog.h"
-#endif
-
 // Qt includes.
 
 #include <Q3Frame>
@@ -52,15 +48,21 @@
 
 #include <kdebug.h>
 #include <kfileitem.h>
-#include <kfiledialog.h> // add images
 #include <kiconloader.h>
-#include <kinputdialog.h> //new album
+#include <kinputdialog.h>
 #include <kio/previewjob.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmountpoint.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
+#include <kconfig.h>
+#include <kapplication.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
+#include <khelpmenu.h>
+#include <ktoolinvocation.h>
+#include <kguiitem.h>
 
 namespace KIPIIpodExportPlugin
 {
@@ -90,8 +92,36 @@ UploadDialog::UploadDialog(
     QWidget *box = new QWidget();
     setMainWidget(box);
     setCaption(caption);
-    setButtons(KDialog::Close);
+    setButtons(Close|Help);
     setModal(false);
+
+    // ---------------------------------------------------------------
+    // About data and help button.
+
+    m_about = new KIPIPlugins::KPAboutData(ki18n("iPod Export"),
+                                           0,
+                                           KAboutData::License_GPL,
+                                           ki18n("A tool to export image to an iPod device"),
+                                           ki18n("(c) 2006-2008, Seb Ruiz"));
+
+    m_about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
+                       "me at sebruiz dot net");
+
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                       "caulier dot gilles at gmail dot com");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setDelayedMenu(helpMenu->menu());
+
+    // ------------------------------------------------------------
 
     QGridLayout *grid = new QGridLayout(box);
     m_ipodHeader      = new IpodHeader(box);
@@ -228,9 +258,22 @@ UploadDialog::UploadDialog(
             this, SLOT( startTransfer() ));
 }
 
+UploadDialog::~UploadDialog()
+{
+    if(m_itdb)
+        itdb_photodb_free(m_itdb);
+
+    delete m_about;
+}
+
+void UploadDialog::slotHelp()
+{
+    KToolInvocation::invokeHelp("ipodexport", "kipi-plugins");
+}
+
 void UploadDialog::getIpodAlbums()
 {
-    if( !m_itdb ) return;
+    if(!m_itdb) return;
 
     kDebug(51000) << "populating ipod view" << endl;
 

@@ -43,6 +43,9 @@ extern "C"
 
 #if KIPI_PLUGIN
 #include <libkipi/interface.h>
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
+#include "imagedialog.h"
 #endif
 
 class Q3ListViewItem;
@@ -59,6 +62,9 @@ class KComboBox;
 class KFileItem;
 class KLineEdit;
 class KUrl;
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIIpodExportPlugin
 {
@@ -80,11 +86,7 @@ public:
 #endif
                  const QString& caption, QWidget *parent=0 );
 
-    ~UploadDialog()
-    {
-        if( m_itdb )
-            itdb_photodb_free( m_itdb );
-    }
+    ~UploadDialog();
 
     static UploadDialog *instance() { return s_instance; }
 
@@ -102,7 +104,7 @@ private slots:
     void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
 
     void ipodItemSelected( Q3ListViewItem *item );
-    void ipodShowContextMenu( Q3ListViewItem * ) { }
+    void ipodShowContextMenu( Q3ListViewItem * ) {};
 
     void imagesFilesButtonAdd();
     void imagesFilesButtonRem();
@@ -113,6 +115,8 @@ private slots:
 
     void refreshDevices();
     void updateSysInfo();
+
+    void slotHelp();
 
 private:
 
@@ -128,17 +132,19 @@ private:
     bool openDevice(); // connect to the ipod
 
 #if KIPI_PLUGIN
-    KIPI::Interface *m_interface;
+    Interface       *m_interface;
+    KPAboutData     *m_about;
 #endif
+
     Itdb_PhotoDB    *m_itdb;
     Itdb_IpodInfo   *m_ipodInfo;
     IpodHeader      *m_ipodHeader;
     bool             m_transferring;
 
-    Q3ListViewItem   *m_destinationAlbum;
+    Q3ListViewItem  *m_destinationAlbum;
 
-    Q3HGroupBox      *m_destinationBox;
-    Q3HGroupBox      *m_urlListBox;
+    Q3HGroupBox     *m_destinationBox;
+    Q3HGroupBox     *m_urlListBox;
 
     QPushButton     *m_createAlbumButton;
     QPushButton     *m_removeAlbumButton;
@@ -153,7 +159,7 @@ private:
     QString          m_mountPoint;
     QString          m_deviceNode;
 
-    K3ListView       *m_ipodAlbumList;
+    K3ListView      *m_ipodAlbumList;
 
     ImageList       *m_uploadList;
 
