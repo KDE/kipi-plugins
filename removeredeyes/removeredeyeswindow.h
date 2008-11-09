@@ -77,7 +77,7 @@ private slots:
     void progressBarTimedOut();
 
     void startCorrection();
-    void abortCorrection();
+    void cancelCorrection();
     void startTestrun();
 
     // reimplement this slot from KDialog to avoid the call for close(),

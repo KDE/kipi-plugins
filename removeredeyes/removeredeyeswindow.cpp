@@ -280,7 +280,7 @@ void RemoveRedEyesWindow::startTestrun()
     startWorkerThread();
 }
 
-void RemoveRedEyesWindow::abortCorrection()
+void RemoveRedEyesWindow::cancelCorrection()
 {
 }
 
@@ -350,7 +350,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         enableButton(User2, false);
 
         connect(this, SIGNAL(myCloseClicked()),
-                this, SLOT(abortCorrection()));
+                this, SLOT(cancelCorrection()));
     }
     else
     {
@@ -360,7 +360,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
                 this, SLOT(imageListChanged(bool)));
 
         disconnect(this, SIGNAL(myCloseClicked()),
-                   this, SLOT(abortCorrection()));
+                   this, SLOT(cancelCorrection()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
         enableButton(User1, true);
