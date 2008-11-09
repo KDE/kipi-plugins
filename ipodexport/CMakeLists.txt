@@ -1,4 +1,4 @@
-
+INCLUDE_DIRECTORIES( ${GPOD_INCLUDE_DIR} )
 
 ########### next target ###############
 
@@ -11,7 +11,7 @@ set(kipiplugin_ipodexport_PART_SRCS
 
 kde4_add_plugin(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_ipodexport ${KDE4_KDECORE_LIBS} kio kdeui)
+target_link_libraries(kipiplugin_ipodexport ${KDE4_KDEUI_LIBS} kio  ${GPOD_LIBRARIES})
 
 install(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
 

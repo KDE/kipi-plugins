@@ -51,6 +51,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)  # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(Gpod)    # For ipodexport 
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -319,7 +320,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(galleryexport)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(printwizard)
-
+    IF(GPOD_FOUND)
+       ADD_SUBDIRECTORY(ipodexport)
+    ENDIF(GPOD_FOUND)
     IF(OPENCV_FOUND)
         ADD_SUBDIRECTORY(removeredeyes)
     ENDIF(OPENCV_FOUND)
