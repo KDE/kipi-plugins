@@ -1,4 +1,4 @@
-INCLUDE_DIRECTORIES( ${GPOD_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( ${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR} )
 
 ########### next target ###############
 
