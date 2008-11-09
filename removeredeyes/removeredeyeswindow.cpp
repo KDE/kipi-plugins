@@ -187,7 +187,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
             this, SLOT(progressBarChanged(int)));
 
     connect(this, SIGNAL(testRunFinished()),
-            this, SLOT(checkForNoneCorrectedImages()));
+            this, SLOT(checkForUnprocessedImages()));
 
     connect(d->imageList, SIGNAL(foundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
@@ -392,10 +392,10 @@ void RemoveRedEyesWindow::progressBarTimedOut()
     delete d->wth;
 }
 
-void RemoveRedEyesWindow::checkForNoneCorrectedImages()
+void RemoveRedEyesWindow::checkForUnprocessedImages()
 {
     // check if imageslist has none corrected eyes
-    if (d->imageList->hasNoneCorrectedImages())
+    if (d->imageList->hasUnprocessedImages())
     {
         if (KMessageBox::questionYesNo(this,
                                        i18n("<p>Some of the images could not be analyzed "
@@ -405,7 +405,7 @@ void RemoveRedEyesWindow::checkForNoneCorrectedImages()
                                             "from the list?</b></p>"),
                                        i18n("Remove unprocessed images?")) == KMessageBox::Yes)
         {
-            d->imageList->removeNoneCorrectedImages();
+            d->imageList->removeUnprocessedImages();
         }
     }
 }

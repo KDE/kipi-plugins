@@ -96,10 +96,10 @@ public:
 
     KUrl::List imageUrls() const;
 
-    bool hasNoneCorrectedImages();
+    bool hasUnprocessedImages();
 
     void removeItemByUrl(const KUrl& url);
-    void removeNoneCorrectedImages();
+    void removeUnprocessedImages();
     void resetEyeCounterColumn();
 
 signals:

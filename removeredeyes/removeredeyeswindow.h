@@ -69,7 +69,7 @@ private slots:
     void closeClicked();
     void helpClicked();
 
-    void checkForNoneCorrectedImages();
+    void checkForUnprocessedImages();
     void foundRAWImages(bool);
     void imageListChanged(bool);
 

@@ -412,7 +412,7 @@ void ImagesList::resetEyeCounterColumn()
     emit imageListChanged(imageUrls().isEmpty());
 }
 
-bool ImagesList::hasNoneCorrectedImages()
+bool ImagesList::hasUnprocessedImages()
 {
     bool hasNone = false;
 
@@ -433,7 +433,7 @@ bool ImagesList::hasNoneCorrectedImages()
     return hasNone;
 }
 
-void ImagesList::removeNoneCorrectedImages()
+void ImagesList::removeUnprocessedImages()
 {
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
