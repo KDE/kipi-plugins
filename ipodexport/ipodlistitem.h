@@ -26,7 +26,7 @@ namespace IpodExport
     class IpodAlbumItem : public KListViewItem
     {
         public:
-            IpodAlbumItem( QListView *parent, QListViewItem *after, Itdb_PhotoAlbum *pa );
+            IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa );
 
             QString          name()       const { return m_name;       }
             Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }

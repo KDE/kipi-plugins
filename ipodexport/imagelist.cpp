@@ -14,10 +14,15 @@
 
 #include <qapplication.h>
 #include <qevent.h>
-#include <qdragobject.h>
+#include <q3dragobject.h>
 #include <qfileinfo.h>
 #include <qpainter.h>
-#include <qsimplerichtext.h>
+#include <q3simplerichtext.h>
+//Added by qt3to4:
+#include <Q3StrList>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QPaintEvent>
 
 #include <klocale.h>
 
@@ -43,11 +48,11 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
         addColumn( i18n("Albums") );
         setRootIsDecorated( true ); // show expand icons
         setSorting( -1 );
-        setSelectionMode( QListView::Single );
+        setSelectionMode( Q3ListView::Single );
     }
 
     setItemMargin( 3 );
-    setResizeMode( QListView::LastColumn );
+    setResizeMode( Q3ListView::LastColumn );
     setAllColumnsShowFocus( true );
 }
 
@@ -80,7 +85,7 @@ ImageList::viewportPaintEvent( QPaintEvent *e )
                         "can be transferred to the iPod."
                     "</div>" ) );
         }
-        QSimpleRichText t( minimumText, QApplication::font() );
+        Q3SimpleRichText t( minimumText, QApplication::font() );
 
         if ( t.width()+30 >= viewport()->width() || t.height()+30 >= viewport()->height() )
             //too big, giving up
@@ -99,13 +104,13 @@ ImageList::viewportPaintEvent( QPaintEvent *e )
 
 void ImageList::dragEnterEvent( QDragEnterEvent *e )
 {
-    e->accept( QUriDrag::canDecode(e) );
+    e->accept( Q3UriDrag::canDecode(e) );
 }
 
 
 bool ImageList::acceptDrag( QDropEvent* e ) const
 {
-    return QUriDrag::canDecode( e );
+    return Q3UriDrag::canDecode( e );
 }
 
 void ImageList::contentsDropEvent( QDropEvent *e )
@@ -120,18 +125,18 @@ void ImageList::dropEvent( QDropEvent *e )
 
 void ImageList::droppedImagesItems( QDropEvent *e )
 {
-    QStrList strList;
+    Q3StrList strList;
     QStringList filesPath;
 
-    if ( !QUriDrag::decode(e, strList) ) return;
+    if ( !Q3UriDrag::decode(e, strList) ) return;
 
-    QStrList stringList;
-    QStrListIterator it(strList);
+    Q3StrList stringList;
+    Q3StrListIterator it(strList);
     char *str;
 
     while ( (str = it.current()) != 0 )
     {
-        QString filePath = QUriDrag::uriToLocalFile(str);
+        QString filePath = Q3UriDrag::uriToLocalFile(str);
         QFileInfo fileInfo(filePath);
 
         if( fileInfo.isFile() && fileInfo.exists() )

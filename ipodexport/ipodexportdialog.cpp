@@ -20,16 +20,20 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qframe.h>
-#include <qhgroupbox.h>
+#include <q3frame.h>
+#include <q3hgroupbox.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-#include <qvgroupbox.h>
-#include <qwhatsthis.h>
-#include <qwmatrix.h>
+#include <q3vgroupbox.h>
+#include <q3whatsthis.h>
+#include <qmatrix.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3PtrList>
+#include <Q3VBoxLayout>
 
 #include <kdebug.h>
 #include <kfileitem.h>
@@ -75,23 +79,23 @@ UploadDialog::UploadDialog(
     s_instance = this;
 
     QWidget       *box = plainPage();
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
+    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 6 );
 
     dvlay->setMargin( 2 );
 
     m_ipodHeader = new IpodHeader( box );
     dvlay->addWidget( m_ipodHeader );
 
-    m_destinationBox = new QHGroupBox( i18n("iPod"), box );
+    m_destinationBox = new Q3HGroupBox( i18n("iPod"), box );
 
     m_ipodAlbumList = new ImageList( ImageList::IpodType, m_destinationBox );
     m_ipodAlbumList->setMinimumHeight( 80 );
 
     QWidget          *buttons = new QWidget( m_destinationBox );
-    QVBoxLayout *buttonLayout = new QVBoxLayout( buttons, 0, spacingHint() );
+    Q3VBoxLayout *buttonLayout = new Q3VBoxLayout( buttons, 0, spacingHint() );
 
     m_createAlbumButton = new QPushButton( i18n("&New..."), buttons, "addAlbumButton");
-    QWhatsThis::add( m_createAlbumButton, i18n("Create a new photo album on the iPod."));
+    Q3WhatsThis::add( m_createAlbumButton, i18n("Create a new photo album on the iPod."));
 
     m_removeAlbumButton = new QPushButton( i18n("&Remove"), buttons, "remAlbumButton");
     m_renameAlbumButton = new QPushButton( i18n("R&ename..."), buttons, "renameAlbumsButton");
@@ -99,8 +103,8 @@ UploadDialog::UploadDialog(
     m_removeAlbumButton->setEnabled( false );
     m_renameAlbumButton->setEnabled( false );
 
-    QWhatsThis::add( m_removeAlbumButton, i18n("Remove the selected photos or albums from the iPod."));
-    QWhatsThis::add( m_renameAlbumButton, i18n("Rename the selected photo album on the iPod."));
+    Q3WhatsThis::add( m_removeAlbumButton, i18n("Remove the selected photos or albums from the iPod."));
+    Q3WhatsThis::add( m_renameAlbumButton, i18n("Rename the selected photo album on the iPod."));
 
     QLabel *ipod_icon = new QLabel( buttons );
     ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeHuge ) );
@@ -119,33 +123,33 @@ UploadDialog::UploadDialog(
 
     dvlay->addWidget( m_destinationBox );
 
-    m_urlListBox    = new QHGroupBox( i18n("Hard Disk"), box );
+    m_urlListBox    = new Q3HGroupBox( i18n("Hard Disk"), box );
     QWidget* urlBox = new QWidget( m_urlListBox );
-    QHBoxLayout* urlLayout = new QHBoxLayout( urlBox, 0, spacingHint() );
+    Q3HBoxLayout* urlLayout = new Q3HBoxLayout( urlBox, 0, spacingHint() );
     m_uploadList = new ImageList( ImageList::UploadType, urlBox );
     m_uploadList->setMinimumHeight( 80 );
     urlLayout->addWidget( m_uploadList );
 
     m_uploadList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
 
-    QVBoxLayout* uploadPaneLayout = new QVBoxLayout( urlLayout );
+    Q3VBoxLayout* uploadPaneLayout = new Q3VBoxLayout( urlLayout );
     m_addImagesButton = new QPushButton ( i18n( "&Add..." ), urlBox );
     uploadPaneLayout->addWidget( m_addImagesButton );
-    QWhatsThis::add( m_addImagesButton, i18n("Add images to be queued for the iPod.") );
+    Q3WhatsThis::add( m_addImagesButton, i18n("Add images to be queued for the iPod.") );
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), urlBox );
     uploadPaneLayout->addWidget( m_remImagesButton );
-    QWhatsThis::add( m_remImagesButton, i18n("Remove selected image from the list.") );
+    Q3WhatsThis::add( m_remImagesButton, i18n("Remove selected image from the list.") );
 
     m_transferImagesButton = new QPushButton( i18n( "&Transfer" ), urlBox );
     uploadPaneLayout->addWidget( m_transferImagesButton );
-    QWhatsThis::add( m_transferImagesButton, i18n("Transfer images to the selected iPod album.") );
+    Q3WhatsThis::add( m_transferImagesButton, i18n("Transfer images to the selected iPod album.") );
 
     m_imagePreview = new QLabel( urlBox );
     m_imagePreview->setFixedHeight( 80 );
     m_imagePreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    QWhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
+    Q3WhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
 
     QLabel *hdd_icon = new QLabel( urlBox );
     hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "system", KIcon::Desktop, KIcon::SizeHuge ) );
@@ -182,8 +186,8 @@ UploadDialog::UploadDialog(
     connect( m_renameAlbumButton, SIGNAL( clicked() ), SLOT( renameIpodAlbum() ) );
 
     connect( m_uploadList,     SIGNAL( addedDropItems(QStringList) ),    SLOT( addDropItems(QStringList) ) );
-    connect( m_uploadList,     SIGNAL( currentChanged(QListViewItem*) ), SLOT( imageSelected(QListViewItem*) ) );
-    connect( m_ipodAlbumList, SIGNAL( currentChanged(QListViewItem*) ), SLOT( ipodItemSelected(QListViewItem*) ) );
+    connect( m_uploadList,     SIGNAL( currentChanged(Q3ListViewItem*) ), SLOT( imageSelected(Q3ListViewItem*) ) );
+    connect( m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ), SLOT( ipodItemSelected(Q3ListViewItem*) ) );
 
     connect( m_addImagesButton,      SIGNAL( clicked() ), SLOT( imagesFilesButtonAdd() ) );
     connect( m_remImagesButton,      SIGNAL( clicked() ), SLOT( imagesFilesButtonRem() ) );
@@ -265,7 +269,7 @@ UploadDialog::enableButtons()
 
     enableButton( KDialogBase::Close, !m_transferring );
 
-    const QListViewItem *ipodSelection = m_ipodAlbumList->selectedItem();
+    const Q3ListViewItem *ipodSelection = m_ipodAlbumList->selectedItem();
     const bool isMasterLibrary = ( ipodSelection == m_ipodAlbumList->firstChild() );
 
     m_removeAlbumButton->setEnabled( ipodSelection && !isMasterLibrary );
@@ -278,7 +282,7 @@ UploadDialog::startTransfer()
     if( !m_itdb || !m_uploadList->childCount() )
         return;
 
-    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+    Q3ListViewItem *selected = m_ipodAlbumList->selectedItem();
     if( !selected || selected->depth() != 0 /*not album*/)
         return;
 
@@ -293,7 +297,7 @@ UploadDialog::startTransfer()
 
     GError *err = 0;
 
-    while( QListViewItem *item = m_uploadList->firstChild() )
+    while( Q3ListViewItem *item = m_uploadList->firstChild() )
     {
 #define item static_cast<ImageListItem*>(item)
         debug() << "Uploading "      << item->pathSrc()
@@ -330,7 +334,7 @@ UploadDialog::startTransfer()
 }
 
 void
-UploadDialog::ipodItemSelected( QListViewItem *item )
+UploadDialog::ipodItemSelected( Q3ListViewItem *item )
 {
     m_ipodPreview->clear();
 
@@ -364,7 +368,7 @@ UploadDialog::ipodItemSelected( QListViewItem *item )
 }
 
 void
-UploadDialog::imageSelected( QListViewItem *item )
+UploadDialog::imageSelected( Q3ListViewItem *item )
 {
     if( !item || m_uploadList->childCount() == 0 || m_transferring )
     {
@@ -398,7 +402,7 @@ UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap &pixmap )
     if ( info.angle() != 0 )
     {
         QImage img = pix.convertToImage();
-        QWMatrix matrix;
+        QMatrix matrix;
 
         matrix.rotate( info.angle() );
         img = img.xForm( matrix );
@@ -438,9 +442,9 @@ UploadDialog::imagesFilesButtonAdd()
 void
 UploadDialog::imagesFilesButtonRem()
 {
-    QPtrList<QListViewItem> selected = m_uploadList->selectedItems();
+    Q3PtrList<Q3ListViewItem> selected = m_uploadList->selectedItems();
 
-    for( QListViewItem *it = selected.first(); it; it = selected.next() )
+    for( Q3ListViewItem *it = selected.first(); it; it = selected.next() )
         delete it;
 
     enableButton( KDialogBase::User1, m_uploadList->childCount() > 0 );
@@ -525,10 +529,10 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
     // if we remove from the library, remove from all sub albums too
     if( photo_album->album_type == 0x01 ) // master album
     {
-        for( QListViewItem *albumIt = m_ipodAlbumList->firstChild()->nextSibling(); //skip library
+        for( Q3ListViewItem *albumIt = m_ipodAlbumList->firstChild()->nextSibling(); //skip library
              albumIt; albumIt = albumIt->nextSibling() )
         {
-            for( QListViewItem *photoIt = albumIt->firstChild();
+            for( Q3ListViewItem *photoIt = albumIt->firstChild();
                  photoIt; photoIt = photoIt->nextSibling() )
             {
                 if( photoIt->text(0) == photo->text(0) )
@@ -553,7 +557,7 @@ bool UploadDialog::deleteIpodAlbum( IpodAlbumItem *album )
 void
 UploadDialog::deleteIpodAlbum()
 {
-    QListViewItem *selected = m_ipodAlbumList->selectedItem();
+    Q3ListViewItem *selected = m_ipodAlbumList->selectedItem();
     if( !selected ) return;
 
     bool result = false;
@@ -588,7 +592,7 @@ UploadDialog::addDropItems( QStringList filesPath )
 
         bool itemExists = false;
 
-        QListViewItemIterator it2( m_uploadList );
+        Q3ListViewItemIterator it2( m_uploadList );
 
         while( it2.current() )
         {

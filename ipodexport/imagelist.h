@@ -25,6 +25,10 @@
 #define IMAGELIST_H
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 namespace IpodExport
 {

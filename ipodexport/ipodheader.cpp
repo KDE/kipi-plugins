@@ -19,20 +19,24 @@
 
 #include "qlabel.h"
 #include "qlayout.h"
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3Frame>
 
 using namespace IpodExport;
 
 IpodHeader::IpodHeader( QWidget *parent, const char *name, WFlags f )
-    : QFrame( parent, name, f )
+    : Q3Frame( parent, name, f )
 {
-    QVBoxLayout *layout = new QVBoxLayout( this, 10/*margin*/, 5/*spacing*/ );
+    Q3VBoxLayout *layout = new Q3VBoxLayout( this, 10/*margin*/, 5/*spacing*/ );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
     m_messageLabel = new QLabel( QString::null, this );
     m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    Q3HBoxLayout *buttonLayout = new Q3HBoxLayout;
     m_button = new KPushButton( this );
     m_button->hide();
 

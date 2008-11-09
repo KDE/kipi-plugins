@@ -1,3 +1,6 @@
+//Added by qt3to4:
+#include <QPixmap>
+#include <QLabel>
 /***************************************************************************
  * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
  **************************************************************************/
@@ -27,7 +30,7 @@ extern "C" {
 #endif
 
 class QCheckBox;
-class QHGroupBox;
+class Q3HGroupBox;
 class QLabel;
 class QPushButton;
 class KComboBox;
@@ -73,11 +76,11 @@ class UploadDialog : public KDialogBase
 
         void addDropItems( QStringList filesPath );
 
-        void imageSelected( QListViewItem *item );
+        void imageSelected( Q3ListViewItem *item );
         void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
 
-        void ipodItemSelected( QListViewItem *item );
-        void ipodShowContextMenu( QListViewItem * ) { }
+        void ipodItemSelected( Q3ListViewItem *item );
+        void ipodShowContextMenu( Q3ListViewItem * ) { }
 
         void imagesFilesButtonAdd();
         void imagesFilesButtonRem();
@@ -109,7 +112,7 @@ class UploadDialog : public KDialogBase
         IpodHeader      *m_ipodHeader;
         bool             m_transferring;
 
-        QListViewItem   *m_destinationAlbum;
+        Q3ListViewItem   *m_destinationAlbum;
 
         QPushButton     *m_createAlbumButton;
         QPushButton     *m_removeAlbumButton;
@@ -122,8 +125,8 @@ class UploadDialog : public KDialogBase
         QLabel          *m_imagePreview;
         QLabel          *m_ipodPreview;
 
-        QHGroupBox      *m_destinationBox;
-        QHGroupBox      *m_urlListBox;
+        Q3HGroupBox      *m_destinationBox;
+        Q3HGroupBox      *m_urlListBox;
 
         QString          m_mountPoint;
         QString          m_deviceNode;

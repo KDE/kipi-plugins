@@ -14,7 +14,9 @@
 #ifndef IPOD_HEADER_H
 #define IPOD_HEADER_H
 
-#include <qframe.h> //baseclass
+#include <q3frame.h> //baseclass
+//Added by qt3to4:
+#include <QLabel>
 
 class QLabel;
 class KPushButton;
@@ -22,7 +24,7 @@ class KPushButton;
 namespace IpodExport
 {
 
-class IpodHeader : public QFrame
+class IpodHeader : public Q3Frame
 {
     Q_OBJECT
 

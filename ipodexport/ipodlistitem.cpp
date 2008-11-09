@@ -22,7 +22,7 @@ using namespace IpodExport;
 /// Class IpodAlbumItem
 ////////////////////////////////////////////
 
-IpodAlbumItem::IpodAlbumItem( QListView *parent, QListViewItem *after, Itdb_PhotoAlbum *pa )
+IpodAlbumItem::IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa )
     : KListViewItem( parent, after )
     , m_photoAlbum( pa )
 {

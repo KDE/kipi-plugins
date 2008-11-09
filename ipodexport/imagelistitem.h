@@ -29,7 +29,7 @@ namespace IpodExport
     {
     public:
 
-        ImageListItem( QListView *parent, QString const & pathSrc, QString const & name )
+        ImageListItem( Q3ListView *parent, QString const & pathSrc, QString const & name )
             : KListViewItem( parent, QString::null/*set below*/, name )
             , m_pathSrc( pathSrc )
         {
