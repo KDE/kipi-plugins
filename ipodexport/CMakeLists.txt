@@ -1,0 +1,22 @@
+
+
+########### next target ###############
+
+set(kipiplugin_ipodexport_PART_SRCS
+    plugin_ipodexport.cpp
+    ipodexportdialog.cpp
+    ipodheader.cpp
+    ipodlistitem.cpp
+    imagelist.cpp)
+
+kde4_add_plugin(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
+
+target_link_libraries(kipiplugin_ipodexport ${KDE4_KDECORE_LIBS} kio kdeui)
+
+install(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
+
+
+########### install files ###############
+
+install(FILES  kipiplugin_ipodexport.desktop DESTINATION /share/services)
+
