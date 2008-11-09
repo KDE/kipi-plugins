@@ -48,7 +48,7 @@
 #include <kurl.h>
 
 #if KIPI_PLUGIN
-#include <libkipi/imagedialog.h>
+//#include <libkipi/imagedialog.h>
 #endif
 
 #define debug() kDebug()
@@ -271,7 +271,7 @@ UploadDialog::enableButtons()
 
     m_transferImagesButton->setEnabled( transfer );
 
-    enableButton( KDialogBase::Close, !m_transferring );
+    enableButton( KDialog::Close, !m_transferring );
 
     const Q3ListViewItem *ipodSelection = m_ipodAlbumList->selectedItem();
     const bool isMasterLibrary = ( ipodSelection == m_ipodAlbumList->firstChild() );
@@ -296,8 +296,8 @@ UploadDialog::startTransfer()
 
     Itdb_PhotoAlbum *album = selected->photoAlbum();
 
-    enableButton( KDialogBase::User1, false );
-    enableButton( KDialogBase::Close, false );
+    enableButton( KDialog::User1, false );
+    enableButton( KDialog::Close, false );
 
     GError *err = 0;
 
@@ -451,7 +451,7 @@ UploadDialog::imagesFilesButtonRem()
     for( Q3ListViewItem *it = selected.first(); it; it = selected.next() )
         delete it;
 
-    enableButton( KDialogBase::User1, m_uploadList->childCount() > 0 );
+    enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
 }
 
 void
@@ -614,7 +614,7 @@ UploadDialog::addDropItems( QStringList filesPath )
             addUrlToList( currentDropFile );
     }
 
-    enableButton( KDialogBase::User1, m_uploadList->childCount() > 0 );
+    enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
 }
 
 void

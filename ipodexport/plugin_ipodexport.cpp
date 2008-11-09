@@ -19,7 +19,7 @@ extern "C" {
 #include "plugin_ipodexport.h"
 
 #include <libkipi/imagecollection.h>
-
+#include <KActionCollection>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -49,9 +49,14 @@ void Plugin_iPodExport::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     // this is our action shown in the menubar/toolbar of the mainwindow
-    m_actionImageUpload = new KAction( i18n( "Export to iPod..." ), "ipod_unmount", 0, this,
-                                      SLOT( slotImageUpload() ), actionCollection(), "connectipod");
+    //m_actionImageUpload = new KAction( i18n( "Export to iPod..." ), "ipod_unmount", 0, this,
+    //                                  SLOT( slotImageUpload() ), actionCollection(), "connectipod");
 
+    m_actionImageUpload = new KAction(i18n( "Export to iPod..." ), actionCollection());
+    
+    m_actionImageUpload->setIcon(KIcon("ipod_unmount"));
+    connect(m_actionImageUpload, SIGNAL(triggered(bool)),
+            this, SLOT(slotImageUpload()));
     addAction( m_actionImageUpload );
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
