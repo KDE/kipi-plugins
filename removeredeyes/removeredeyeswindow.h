@@ -62,6 +62,7 @@ public:
 signals:
 
     void testRunFinished();
+    void myCloseClicked();
 
 private slots:
 
@@ -75,6 +76,10 @@ private slots:
     void startCorrection();
     void abortCorrection();
     void startTestrun();
+
+    // reimplement this slot from KDialog to avoid the call for close(),
+    // we will do this on our own here.
+    void slotButtonClicked(int);
 
 public slots:
 

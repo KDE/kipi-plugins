@@ -204,7 +204,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(startTestrun()));
 
-    connect(this, SIGNAL(closeClicked()),
+    connect(this, SIGNAL(myCloseClicked()),
             this, SLOT(closeClicked()));
 
     // ------------------------------------------------------------------
@@ -343,11 +343,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         disconnect(d->imageList, SIGNAL(imageListChanged(bool)),
                 this, SLOT(imageListChanged(bool)));
 
-        disconnect(this, SIGNAL(closeClicked()),
+        disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(closeClicked()));
-
-        connect(this, SIGNAL(closeClicked()),
-                this, SLOT(abortCorrection()));
 
         d->imageList->resetEyeCounterColumn();
         d->tabWidget->setCurrentIndex(FileList);
@@ -355,6 +352,9 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         setButtonGuiItem(Close, KStandardGuiItem::cancel());
         enableButton(User1, false);
         enableButton(User2, false);
+
+        connect(this, SIGNAL(myCloseClicked()),
+                this, SLOT(abortCorrection()));
     }
     else
     {
@@ -363,15 +363,15 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         connect(d->imageList, SIGNAL(imageListChanged(bool)),
                 this, SLOT(imageListChanged(bool)));
 
-        disconnect(this, SIGNAL(closeClicked()),
+        disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(abortCorrection()));
-
-        connect(this, SIGNAL(closeClicked()),
-                this, SLOT(closeClicked()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
         enableButton(User1, true);
         enableButton(User2, true);
+
+        connect(this, SIGNAL(myCloseClicked()),
+                this, SLOT(closeClicked()));
     }
 }
 
@@ -458,6 +458,31 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     d->imageList->addEyeCounterByUrl(url, eyes);
 }
 
+void RemoveRedEyesWindow::slotButtonClicked( int button )
+{
+    emit buttonClicked( static_cast<KDialog::ButtonCode>(button) );
 
+    switch( button ) {
+            break;
+        case User2:
+            emit user2Clicked();
+            break;
+        case User1:
+            emit user1Clicked();
+            break;
+        case Cancel:
+            emit cancelClicked();
+            break;
+        case Close:
+            emit myCloseClicked();
+            break;
+        case Help:
+            emit helpClicked();
+            break;
+        case Default:
+            emit defaultClicked();
+            break;
+    }
+}
 
 } // namespace KIPIRemoveRedEyesPlugin
