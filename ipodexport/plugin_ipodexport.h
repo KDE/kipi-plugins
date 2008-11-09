@@ -16,7 +16,7 @@
 
 
 #include <libkipi/plugin.h>
-
+#include <QVariant>
 class KAction;
 
 namespace KIPI
@@ -30,7 +30,7 @@ class Plugin_iPodExport : public KIPI::Plugin
     Q_OBJECT
 
 public:
-    Plugin_iPodExport( QObject *parent, const char* name, const QStringList &args);
+    Plugin_iPodExport( QObject *parent, const QVariantList&args);
     ~Plugin_iPodExport() { }
 
     virtual KIPI::Category category( KAction* action ) const;

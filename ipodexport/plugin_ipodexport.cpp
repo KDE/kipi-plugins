@@ -32,12 +32,12 @@ extern "C" {
 
 #define debug() kDebug( 51000 )
 
-typedef KGenericFactory<Plugin_iPodExport> Factory;
+K_PLUGIN_FACTORY( IpodFactory, registerPlugin<Plugin_iPodExport>(); )
+K_EXPORT_PLUGIN ( IpodFactory("kipiplugin_ipodexport") )
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_ipodexport, Factory("kipiplugin_ipodexport"));
 
-Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const char*, const QStringList& )
-    : KIPI::Plugin( Factory::instance(), parent, "iPodExport")
+Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
+    : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
     kDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
 
@@ -60,9 +60,9 @@ void Plugin_iPodExport::setup( QWidget* widget )
 KIPI::Category Plugin_iPodExport::category( KAction* action ) const
 {
     if ( action == m_actionImageUpload )
-        return KIPI::EXPORTPLUGIN;
+        return KIPI::ExportPlugin;
 
-    return KIPI::IMAGESPLUGIN; // no warning from compiler, please
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }
 
 
