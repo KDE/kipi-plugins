@@ -61,7 +61,6 @@ public:
 
 signals:
 
-    void testRunFinished();
     void myCloseClicked();
 
 private slots:
@@ -69,7 +68,6 @@ private slots:
     void closeClicked();
     void helpClicked();
 
-    void checkForUnprocessedImages();
     void foundRAWImages(bool);
     void imageListChanged(bool);
 
@@ -96,6 +94,7 @@ private:
     void startWorkerThread();
     void setBusy(bool);
 
+    void checkForUnprocessedImages();
 
 private:
 

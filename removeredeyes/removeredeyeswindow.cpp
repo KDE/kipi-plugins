@@ -172,9 +172,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(helpClicked()));
 
-    connect(this, SIGNAL(testRunFinished()),
-            this, SLOT(checkForUnprocessedImages()));
-
     connect(d->imageList, SIGNAL(foundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
 
@@ -370,8 +367,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
 
 void RemoveRedEyesWindow::checkForUnprocessedImages()
 {
-    // check if imageslist has none corrected eyes
-    if (d->imageList->hasUnprocessedImages())
+    if (d->imageList->hasUnprocessedImages() && d->runtype == WorkerThread::TestRun)
     {
         if (KMessageBox::questionYesNo(this,
                                        i18n("<p>Some of the images could not be analyzed "
@@ -459,10 +455,7 @@ void RemoveRedEyesWindow::threadFinished()
     setBusy(false);
     KApplication::restoreOverrideCursor();
 
-    if (d->runtype == WorkerThread::TestRun)
-    {
-        emit testRunFinished();
-    }
+    checkForUnprocessedImages();
 
     disconnect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
                this, SLOT(calculationFinished(WorkerThreadData*)));
