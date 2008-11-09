@@ -44,7 +44,7 @@ WorkerThread::WorkerThread(QObject* parent, RemovalSettings* settings, int type,
 {
     m_parent    = parent;
     m_settings  = settings;
-    m_settings->debug();
+    //    m_settings->debug();
     m_cancel    = false;
     m_type      = type;
     m_urls      = urls;

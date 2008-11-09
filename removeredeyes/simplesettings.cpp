@@ -174,6 +174,7 @@ void SimpleSettings::loadSettings(RemovalSettings newSettings)
 {
     d->settings = newSettings;
     d->settingsSlider->setValue(d->settings.simpleMode);
+    simpleModeChanged(d->settings.simpleMode);
 }
 
 RemovalSettings SimpleSettings::readSettings()
