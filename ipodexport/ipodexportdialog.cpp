@@ -32,10 +32,7 @@
 
 #include <Q3Frame>
 #include <Q3HGroupBox>
-#include <Q3VGroupBox>
 #include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
-#include <Q3PtrList>
 
 #include <QDir>
 #include <QFile>
@@ -101,41 +98,43 @@ UploadDialog::UploadDialog(
     QGridLayout *grid = new QGridLayout(box);
     m_ipodHeader      = new IpodHeader(box);
 
-    m_destinationBox = new Q3HGroupBox( i18n("iPod"), box );
-    m_ipodAlbumList  = new ImageList( ImageList::IpodType, m_destinationBox );
-    m_ipodAlbumList->setMinimumHeight( 80 );
+    m_destinationBox = new Q3HGroupBox(i18n("iPod"), box);
+    m_ipodAlbumList  = new ImageList(ImageList::IpodType, m_destinationBox);
+    m_ipodAlbumList->setMinimumHeight(80);
 
-    QWidget          *buttons  = new QWidget( m_destinationBox );
-    Q3VBoxLayout *buttonLayout = new Q3VBoxLayout( buttons, 0, spacingHint() );
+    QWidget          *buttons = new QWidget(m_destinationBox);
+    QVBoxLayout *buttonLayout = new QVBoxLayout(buttons);
 
-    m_createAlbumButton = new QPushButton( i18n("&New..."), buttons, "addAlbumButton");
-    m_createAlbumButton->setWhatsThis( i18n("Create a new photo album on the iPod."));
+    m_createAlbumButton = new QPushButton(i18n("&New..."), buttons);
+    m_createAlbumButton->setWhatsThis(i18n("Create a new photo album on the iPod."));
 
-    m_removeAlbumButton = new QPushButton( i18n("&Remove"), buttons, "remAlbumButton");
-    m_renameAlbumButton = new QPushButton( i18n("R&ename..."), buttons, "renameAlbumsButton");
+    m_removeAlbumButton = new QPushButton(i18n("&Remove"), buttons);
+    m_renameAlbumButton = new QPushButton(i18n("R&ename..."), buttons);
 
     m_removeAlbumButton->setEnabled(false);
     m_renameAlbumButton->setEnabled(false);
 
-    m_removeAlbumButton->setWhatsThis( i18n("Remove the selected photos or albums from the iPod."));
-    m_renameAlbumButton->setWhatsThis( i18n("Rename the selected photo album on the iPod."));
+    m_removeAlbumButton->setWhatsThis(i18n("Remove the selected photos or albums from the iPod."));
+    m_renameAlbumButton->setWhatsThis(i18n("Rename the selected photo album on the iPod."));
 
-    QLabel *ipod_icon = new QLabel( buttons );
+    QLabel *ipod_icon = new QLabel(buttons);
     ipod_icon->setPixmap(KIconLoader::global()->loadIcon("multimedia-player-apple-ipod",
                                                          KIconLoader::Desktop,
                                                          KIconLoader::SizeHuge ));
 
-    m_ipodPreview = new QLabel( buttons );
-    m_ipodPreview->setFixedHeight( 80 );
-    m_ipodPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_ipodPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
+    m_ipodPreview = new QLabel(buttons);
+    m_ipodPreview->setFixedHeight(80);
+    m_ipodPreview->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_ipodPreview->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
 
-    buttonLayout->addWidget( m_createAlbumButton );
-    buttonLayout->addWidget( m_removeAlbumButton );
-    buttonLayout->addWidget( m_renameAlbumButton );
-    buttonLayout->addWidget( m_ipodPreview );
-    buttonLayout->addStretch( 1 );
-    buttonLayout->addWidget( ipod_icon );
+    buttonLayout->addWidget(m_createAlbumButton);
+    buttonLayout->addWidget(m_removeAlbumButton);
+    buttonLayout->addWidget(m_renameAlbumButton);
+    buttonLayout->addWidget(m_ipodPreview);
+    buttonLayout->addStretch(1);
+    buttonLayout->addWidget(ipod_icon);
+    buttonLayout->setMargin(0);
+    buttonLayout->setMargin(spacingHint());
 
     m_urlListBox            = new Q3HGroupBox( i18n("Hard Disk"), box );
     QWidget* urlBox         = new QWidget( m_urlListBox );
@@ -146,33 +145,35 @@ UploadDialog::UploadDialog(
 
     m_uploadList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
 
-    Q3VBoxLayout* uploadPaneLayout = new Q3VBoxLayout( urlLayout );
-    m_addImagesButton = new QPushButton ( i18n( "&Add..." ), urlBox );
-    uploadPaneLayout->addWidget( m_addImagesButton );
-    m_addImagesButton->setWhatsThis( i18n("Add images to be queued for the iPod.") );
+    QVBoxLayout* uploadPaneLayout = new QVBoxLayout(urlLayout);
+    m_addImagesButton             = new QPushButton(i18n("&Add..."), urlBox);
+    m_addImagesButton->setWhatsThis(i18n("Add images to be queued for the iPod."));
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), urlBox );
-    uploadPaneLayout->addWidget( m_remImagesButton );
     m_remImagesButton->setWhatsThis( i18n("Remove selected image from the list.") );
 
     m_transferImagesButton = new QPushButton( i18n( "&Transfer" ), urlBox );
-    uploadPaneLayout->addWidget( m_transferImagesButton );
     m_transferImagesButton->setWhatsThis( i18n("Transfer images to the selected iPod album.") );
 
-    m_imagePreview = new QLabel( urlBox );
-    m_imagePreview->setFixedHeight( 80 );
-    m_imagePreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-    m_imagePreview->setWhatsThis( i18n( "The preview of the selected image in the list." ) );
+    m_imagePreview = new QLabel(urlBox);
+    m_imagePreview->setFixedHeight(80);
+    m_imagePreview->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_imagePreview->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
+    m_imagePreview->setWhatsThis(i18n("The preview of the selected image in the list."));
 
     QLabel *hdd_icon = new QLabel( urlBox );
     hdd_icon->setPixmap(KIconLoader::global()->loadIcon("computer",
                                                         KIconLoader::Desktop,
                                                         KIconLoader::SizeHuge));
 
-    uploadPaneLayout->addWidget( m_imagePreview );
-    uploadPaneLayout->addStretch( 1 );
-    uploadPaneLayout->addWidget( hdd_icon );
+    uploadPaneLayout->addWidget(m_addImagesButton);
+    uploadPaneLayout->addWidget(m_remImagesButton);
+    uploadPaneLayout->addWidget(m_transferImagesButton);
+    uploadPaneLayout->addWidget(m_imagePreview);
+    uploadPaneLayout->addStretch(1);
+    uploadPaneLayout->addWidget(hdd_icon);
+    uploadPaneLayout->setSpacing(spacingHint());
+    uploadPaneLayout->setMargin(0);
 
     grid->addWidget(m_ipodHeader,     0, 0, 1, 2);
     grid->addWidget(m_urlListBox,     1, 0, 1, 1);

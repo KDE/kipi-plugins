@@ -76,6 +76,7 @@ void Plugin_iPodExport::slotImageUpload()
 {
     UploadDialog *dlg = new UploadDialog(m_interface, i18n("iPod Export"),
                                          kapp->activeWindow());
+    dlg->setMinimumWidth(650);
     dlg->show();
 }
 
