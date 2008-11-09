@@ -90,7 +90,7 @@ void IpodHeader::setIncompatibleIpod()
 {
     const QString modelType = UploadDialog::instance()->ipodModel();
 
-    m_messageLabel->setText( i18n("<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></p>" ).arg( modelType ) );
+    m_messageLabel->setText( i18n("<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></p>" , modelType ) );
 
     setPaletteBackgroundColor( QColor(225,150,0) );
     m_messageLabel->setPaletteBackgroundColor( QColor(225,150,0)  );
