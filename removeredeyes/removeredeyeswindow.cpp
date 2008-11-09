@@ -31,6 +31,7 @@
 
 // KDE includes.
 
+#include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <khelpmenu.h>
@@ -271,7 +272,10 @@ void RemoveRedEyesWindow::startTestrun()
 void RemoveRedEyesWindow::cancelCorrection()
 {
     if (d->busy && d->thread->isRunning())
+    {
         d->thread->cancel();
+        KApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    }
 }
 
 void RemoveRedEyesWindow::closeClicked()
@@ -453,6 +457,7 @@ void RemoveRedEyesWindow::threadFinished()
 {
     d->progress->hide();
     setBusy(false);
+    KApplication::restoreOverrideCursor();
 
     if (d->runtype == WorkerThread::TestRun)
     {
