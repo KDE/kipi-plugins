@@ -163,7 +163,9 @@ UploadDialog::UploadDialog(
     m_imagePreview->setWhatsThis( i18n( "The preview of the selected image in the list." ) );
 
     QLabel *hdd_icon = new QLabel( urlBox );
-    hdd_icon->setPixmap( KIconLoader::global()->loadIcon( "system", KIconLoader::Desktop, KIconLoader::SizeHuge ) );
+    hdd_icon->setPixmap(KIconLoader::global()->loadIcon("computer",
+                                                        KIconLoader::Desktop,
+                                                        KIconLoader::SizeHuge));
 
     uploadPaneLayout->addWidget( m_imagePreview );
     uploadPaneLayout->addStretch( 1 );
@@ -234,9 +236,9 @@ void UploadDialog::getIpodAlbums()
     for( GList *it = m_itdb->photoalbums; it; it = it->next )
     {
         Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum *)it->data;
-        kDebug(51000) << "   found album: " << ipodAlbum->name << endl;
+        kDebug(51000) << " found album: " << ipodAlbum->name << endl;
         last = new IpodAlbumItem( m_ipodAlbumList, last, ipodAlbum );
-        last->setPixmap( 0, KIconLoader::global()->loadIcon( "folder", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
+        last->setPixmap( 0, KIconLoader::global()->loadIcon("folder", KIconLoader::Toolbar, KIconLoader::SizeSmall));
         getIpodAlbumPhotos( last, ipodAlbum );
     }
 }
@@ -253,7 +255,7 @@ void UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *alb
         gint photo_id = photo->id;
         last = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
-        last->setPixmap( 0, KIconLoader::global()->loadIcon( "image", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
+        last->setPixmap( 0, KIconLoader::global()->loadIcon("image-jp2", KIconLoader::Toolbar, KIconLoader::SizeSmall) );
     }
 }
 
