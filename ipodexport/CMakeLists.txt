@@ -11,7 +11,7 @@ set(kipiplugin_ipodexport_PART_SRCS
 
 kde4_add_plugin(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_ipodexport kipiplugins ${GLIB2_LIBRARIES} ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDEUI_LIBS} kio  ${GPOD_LIBRARIES})
+target_link_libraries(kipiplugin_ipodexport kipiplugins ${GOBJECT_LIBRARIES} ${GLIB2_LIBRARIES} ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDEUI_LIBS} kio  ${GPOD_LIBRARIES})
 
 install(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
