@@ -20,15 +20,19 @@
  *
  * ============================================================ */
 
-extern "C" 
+extern "C"
 {
-#include <glib-object.h> //g_type_init
+#include <glib-object.h> // g_type_init
 }
+
+// Local includes.
 
 #include "ipodexportdialog.h"
 #include "plugin_ipodexport.h"
 
-#include <KActionCollection>
+// KDE includes
+
+#include <kactioncollection.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -36,6 +40,8 @@ extern "C"
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
+
+// LibKipi includes.
 
 #include <libkipi/imagecollection.h>
 
@@ -47,12 +53,12 @@ K_EXPORT_PLUGIN ( IpodFactory("kipiplugin_ipodexport") )
 Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
                  : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
-    kDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
+    kDebug(51001) << "Plugin_iPodExport plugin loaded" << endl;
 
     g_type_init();
 }
 
-void Plugin_iPodExport::setup( QWidget* widget )
+void Plugin_iPodExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
@@ -70,11 +76,10 @@ void Plugin_iPodExport::slotImageUpload()
 {
     UploadDialog *dlg = new UploadDialog(m_interface, i18n("iPod Export"),
                                          kapp->activeWindow());
-    dlg->setMinimumWidth(460);
     dlg->show();
 }
 
-KIPI::Category Plugin_iPodExport::category( KAction* action ) const
+KIPI::Category Plugin_iPodExport::category(KAction* action) const
 {
     if ( action == m_actionImageUpload )
         return KIPI::ExportPlugin;

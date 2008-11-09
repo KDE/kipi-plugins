@@ -23,7 +23,11 @@
 #ifndef PLUGIN_IPODEXPORT_H
 #define PLUGIN_IPODEXPORT_H
 
+// Qt includes.
+
 #include <QVariant>
+
+// LibKipi inlcudes.
 
 #include <libkipi/plugin.h>
 
@@ -41,7 +45,7 @@ class Plugin_iPodExport : public KIPI::Plugin
 public:
 
     Plugin_iPodExport( QObject *parent, const QVariantList&args);
-    ~Plugin_iPodExport() {}
+    ~Plugin_iPodExport(){};
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget* widget);

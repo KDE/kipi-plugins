@@ -20,28 +20,34 @@
  *
  * ============================================================ */
 
+// Local includes.
+
 #include "ipodheader.h"
 #include "imagelist.h"
 #include "imagelistitem.h"
 #include "ipodexportdialog.h"
 #include "ipodlistitem.h"
 
-#include <q3frame.h>
-#include <q3hgroupbox.h>
-#include <q3vgroupbox.h>
-#include <Q3HBoxLayout>
-#include <Q3PtrList>
-#include <Q3VBoxLayout>
+// Qt includes.
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <qmatrix.h>
+#include <Q3Frame>
+#include <Q3HGroupBox>
+#include <Q3VGroupBox>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3PtrList>
+
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QLabel>
+#include <QLayout>
+#include <QPixmap>
+#include <QPushButton>
+#include <QMatrix>
+
+// KDE includes
 
 #include <kdebug.h>
 #include <kfileitem.h>
@@ -54,6 +60,8 @@
 #include <kmountpoint.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
+
+// Kipi includes.
 
 #if KIPI_PLUGIN
 //#include <libkipi/imagedialog.h>
@@ -84,17 +92,14 @@ UploadDialog::UploadDialog(
 {
     s_instance = this;
 
-    QWidget       *box = new QWidget();
+    QWidget *box = new QWidget();
     setMainWidget(box);
     setCaption(caption);
     setButtons(KDialog::Close);
     setModal(false);
 
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 6 );
-    dvlay->setMargin( 2 );
-
-    m_ipodHeader = new IpodHeader( box );
-    dvlay->addWidget( m_ipodHeader );
+    QGridLayout *grid = new QGridLayout(box);
+    m_ipodHeader      = new IpodHeader(box);
 
     m_destinationBox = new Q3HGroupBox( i18n("iPod"), box );
     m_ipodAlbumList  = new ImageList( ImageList::IpodType, m_destinationBox );
@@ -131,8 +136,6 @@ UploadDialog::UploadDialog(
     buttonLayout->addWidget( m_ipodPreview );
     buttonLayout->addStretch( 1 );
     buttonLayout->addWidget( ipod_icon );
-
-    dvlay->addWidget( m_destinationBox );
 
     m_urlListBox            = new Q3HGroupBox( i18n("Hard Disk"), box );
     QWidget* urlBox         = new QWidget( m_urlListBox );
@@ -171,7 +174,11 @@ UploadDialog::UploadDialog(
     uploadPaneLayout->addStretch( 1 );
     uploadPaneLayout->addWidget( hdd_icon );
 
-    dvlay->addWidget( m_urlListBox );
+    grid->addWidget(m_ipodHeader,     0, 0, 1, 2);
+    grid->addWidget(m_urlListBox,     1, 0, 1, 1);
+    grid->addWidget(m_destinationBox, 1, 1, 1, 1);
+    grid->setSpacing(spacingHint());
+    grid->setMargin(0);
 
     /// populate the ipod view with a list of albums etc
     refreshDevices();
@@ -476,11 +483,11 @@ UploadDialog::imagesFilesButtonRem()
 void UploadDialog::createIpodAlbum()
 {
     QString helper;
-    #if KIPI_PLUGIN
+#if KIPI_PLUGIN
     KIPI::ImageCollection album = m_interface->currentAlbum();
     if( album.isValid() )
         helper = album.name();
-    #endif
+#endif
 
     bool ok = false;
     QString newAlbum = KInputDialog::getText( i18n("New iPod Photo Album"),
@@ -783,7 +790,9 @@ void UploadDialog::refreshDevices()
     if( !openDevice() )
     {
         m_ipodHeader->setViewType( IpodHeader::NoIpod );
-        connect( m_ipodHeader, SIGNAL( refreshDevices() ), SLOT( refreshDevices() ) );
+
+        connect(m_ipodHeader, SIGNAL( refreshDevices() ),
+                this, SLOT( refreshDevices() ));
     }
     else //device opened! hooray!
     {
@@ -794,7 +803,10 @@ void UploadDialog::refreshDevices()
         {
             kDebug(51000) << "the ipod model must be set before photos can be added" << endl;
             m_ipodHeader->setViewType( IpodHeader::IncompatibleIpod );
-            connect( m_ipodHeader, SIGNAL( updateSysInfo() ), SLOT( updateSysInfo() ) );
+
+            connect(m_ipodHeader, SIGNAL( updateSysInfo() ),
+                    this, SLOT( updateSysInfo() ) );
+
             return;
         }
         else
