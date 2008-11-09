@@ -33,7 +33,7 @@ using namespace IpodExport;
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 ImageList::ImageList( ListType type, QWidget *parent, const char *name )
-    : K3ListView( parent, name )
+    : K3ListView( parent )
     , m_type( type )
 {
     if( type == ImageList::UploadType )

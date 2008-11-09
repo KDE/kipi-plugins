@@ -426,7 +426,8 @@ UploadDialog::imagesFilesButtonAdd()
     QStringList fileList;
     KUrl::List urls;
 #if KIPI_PLUGIN
-    urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    #warning "kde4 port it"
+    //urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
 #else
     const QString filter = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
     KFileDialog dlg( QString::null, filter, this, "addImagesDlg", true );
@@ -446,11 +447,13 @@ UploadDialog::imagesFilesButtonAdd()
 void
 UploadDialog::imagesFilesButtonRem()
 {
-    Q3PtrList<Q3ListViewItem> selected = m_uploadList->selectedItems();
+    QList<Q3ListViewItem*> selected = m_uploadList->selectedItems();
 
+    #warning "kde4 port it";
+#if 0 
     for( Q3ListViewItem *it = selected.first(); it; it = selected.next() )
         delete it;
-
+#endif
     enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
 }
 
