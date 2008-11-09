@@ -34,14 +34,17 @@ DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http
 WallPaper          : A tool to set image to KDE Desktop.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
 
-Plugins not yet ported to Qt4/KDE4 (or under progress):
+Porting under progress to Qt4/KDE4:
 
 IpodExport         : A tool to export pictures to an Ipod device.
-MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 PrintWizard        : A wizard to print images in various format.
-CDArchiving        : A tool to archive your image collections to a CD or DVD.
 Calendar           : A tool to create calendars.
+
+Not yet ported to Qt4/KDE4:
+
 BatchProcess       : A collection of tools to batch process images (convert, resize, rename, etc.)
+MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
+CDArchiving        : A tool to archive your image collections to a CD or DVD.
 
 -- DEPENDENCIES -------------------------------------------------------
 
@@ -65,6 +68,7 @@ libexpat        >= 2.0.1                        http://expat.sourceforge.net
 libqtopengl     >= 4.3.x                        http://www.trolltech.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libopencv       >= 1.0                          http://opencv.willowgarage.com
+libgpod         >= 0.6.0                        http://www.gtkpod.org/libgpod.html
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -76,6 +80,7 @@ htmlexport         : libxslt and libxml2
 jpeglossless       : imagemagick (runtime dependency)
 wallpaper          : kdebase (runtime dependency)
 RemoveRedEyes      : libopencv.
+ipodexport         : libgpod.
 
 -- CONTACT ------------------------------------------------------------
 
