@@ -109,14 +109,16 @@ UploadDialog::UploadDialog(
     m_removeAlbumButton = new QPushButton( i18n("&Remove"), buttons, "remAlbumButton");
     m_renameAlbumButton = new QPushButton( i18n("R&ename..."), buttons, "renameAlbumsButton");
 
-    m_removeAlbumButton->setEnabled( false );
-    m_renameAlbumButton->setEnabled( false );
+    m_removeAlbumButton->setEnabled(false);
+    m_renameAlbumButton->setEnabled(false);
 
     m_removeAlbumButton->setWhatsThis( i18n("Remove the selected photos or albums from the iPod."));
     m_renameAlbumButton->setWhatsThis( i18n("Rename the selected photo album on the iPod."));
 
     QLabel *ipod_icon = new QLabel( buttons );
-    ipod_icon->setPixmap( KIconLoader::global()->loadIcon( "ipod", KIconLoader::Desktop, KIconLoader::SizeHuge ) );
+    ipod_icon->setPixmap(KIconLoader::global()->loadIcon("multimedia-player-apple-ipod",
+                                                         KIconLoader::Desktop,
+                                                         KIconLoader::SizeHuge ));
 
     m_ipodPreview = new QLabel( buttons );
     m_ipodPreview->setFixedHeight( 80 );
