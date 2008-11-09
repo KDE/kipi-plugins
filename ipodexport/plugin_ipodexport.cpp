@@ -30,7 +30,7 @@ extern "C" {
 #include <klocale.h>
 
 
-#define debug() kdDebug( 51000 )
+#define debug() kDebug( 51000 )
 
 typedef KGenericFactory<Plugin_iPodExport> Factory;
 
@@ -39,7 +39,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_ipodexport, Factory("kipiplugin_ipodexpor
 Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const char*, const QStringList& )
     : KIPI::Plugin( Factory::instance(), parent, "iPodExport")
 {
-    kdDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
 
     g_type_init();
 }

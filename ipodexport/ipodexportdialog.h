@@ -36,9 +36,9 @@ class QPushButton;
 class KComboBox;
 class KFileItem;
 class KLineEdit;
-class KListView;
-class KListViewItem;
-class KURL;
+class K3ListView;
+class K3ListViewItem;
+class KUrl;
 
 namespace IpodExport
 {
@@ -121,7 +121,7 @@ class UploadDialog : public KDialogBase
         QPushButton     *m_remImagesButton;
         QPushButton     *m_transferImagesButton;
         ImageList       *m_uploadList;
-        KListView       *m_ipodAlbumList;
+        K3ListView       *m_ipodAlbumList;
         QLabel          *m_imagePreview;
         QLabel          *m_ipodPreview;
 

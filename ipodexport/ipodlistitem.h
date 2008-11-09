@@ -18,12 +18,12 @@ extern "C" {
 #include <gpod/itdb.h>
 }
 
-#include <klistview.h>
+#include <k3listview.h>
 
 namespace IpodExport
 {
 
-    class IpodAlbumItem : public KListViewItem
+    class IpodAlbumItem : public K3ListViewItem
     {
         public:
             IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa );
@@ -39,7 +39,7 @@ namespace IpodExport
             Itdb_PhotoAlbum *m_photoAlbum;
     };
 
-    class IpodPhotoItem : public KListViewItem
+    class IpodPhotoItem : public K3ListViewItem
     {
         public:
             IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after, Itdb_Artwork *art );

@@ -24,7 +24,7 @@
 #ifndef IMAGELIST_H
 #define IMAGELIST_H
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <QPaintEvent>
 #include <QDropEvent>
@@ -33,7 +33,7 @@
 namespace IpodExport
 {
 
-class ImageList : public KListView
+class ImageList : public K3ListView
 {
     Q_OBJECT
 

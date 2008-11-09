@@ -29,7 +29,7 @@ class IpodHeader : public Q3Frame
     Q_OBJECT
 
     public:
-        IpodHeader( QWidget *parent=0, const char *name=0, WFlags f=0 );
+        IpodHeader( QWidget *parent=0, const char *name=0, Qt::WFlags f=0 );
         ~IpodHeader() { }
 
         enum ViewType { NoIpod, IncompatibleIpod, ValidIpod };

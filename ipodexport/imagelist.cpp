@@ -33,7 +33,7 @@ using namespace IpodExport;
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 ImageList::ImageList( ListType type, QWidget *parent, const char *name )
-    : KListView( parent, name )
+    : K3ListView( parent, name )
     , m_type( type )
 {
     if( type == ImageList::UploadType )
@@ -59,7 +59,7 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
 void
 ImageList::viewportPaintEvent( QPaintEvent *e )
 {
-    if( e ) KListView::viewportPaintEvent( e );
+    if( e ) K3ListView::viewportPaintEvent( e );
 
     if( !childCount() && e )
     {

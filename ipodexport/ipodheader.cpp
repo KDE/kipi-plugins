@@ -26,7 +26,7 @@
 
 using namespace IpodExport;
 
-IpodHeader::IpodHeader( QWidget *parent, const char *name, WFlags f )
+IpodHeader::IpodHeader( QWidget *parent, const char *name, Qt::WFlags f )
     : Q3Frame( parent, name, f )
 {
     Q3VBoxLayout *layout = new Q3VBoxLayout( this, 10/*margin*/, 5/*spacing*/ );

@@ -51,7 +51,7 @@
 #include <libkipi/imagedialog.h>
 #endif
 
-#define debug() kdDebug()
+#define debug() kDebug()
 
 using namespace IpodExport;
 
@@ -107,7 +107,7 @@ UploadDialog::UploadDialog(
     Q3WhatsThis::add( m_renameAlbumButton, i18n("Rename the selected photo album on the iPod."));
 
     QLabel *ipod_icon = new QLabel( buttons );
-    ipod_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "ipod", KIcon::Desktop, KIcon::SizeHuge ) );
+    ipod_icon->setPixmap( KIconLoader::global()->loadIcon( "ipod", KIconLoader::Desktop, KIconLoader::SizeHuge ) );
 
     m_ipodPreview = new QLabel( buttons );
     m_ipodPreview->setFixedHeight( 80 );
@@ -152,7 +152,7 @@ UploadDialog::UploadDialog(
     Q3WhatsThis::add( m_imagePreview, i18n( "The preview of the selected image in the list." ) );
 
     QLabel *hdd_icon = new QLabel( urlBox );
-    hdd_icon->setPixmap( KGlobal::iconLoader()->loadIcon( "system", KIcon::Desktop, KIcon::SizeHuge ) );
+    hdd_icon->setPixmap( KIconLoader::global()->loadIcon( "system", KIconLoader::Desktop, KIconLoader::SizeHuge ) );
 
     uploadPaneLayout->addWidget( m_imagePreview );
     uploadPaneLayout->addStretch( 1 );
@@ -169,8 +169,8 @@ UploadDialog::UploadDialog(
 
     if ( images.isValid() )
     {
-        KURL::List selected = images.images();
-        for( KURL::List::Iterator it = selected.begin(); it != selected.end(); ++it )
+        KUrl::List selected = images.images();
+        for( KUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
         {
             addUrlToList( (*it).path() );
         }
@@ -211,7 +211,7 @@ UploadDialog::getIpodAlbums()
         Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum *)it->data;
         debug() << "   found album: " << ipodAlbum->name << endl;
         last = new IpodAlbumItem( m_ipodAlbumList, last, ipodAlbum );
-        last->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
+        last->setPixmap( 0, KIconLoader::global()->loadIcon( "folder", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
         getIpodAlbumPhotos( last, ipodAlbum );
     }
 }
@@ -229,7 +229,7 @@ UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
         gint photo_id = photo->id;
         last = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
-        last->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "image", KIcon::Toolbar, KIcon::SizeSmall ) );
+        last->setPixmap( 0, KIconLoader::global()->loadIcon( "image", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
     }
 }
 
@@ -383,7 +383,7 @@ UploadDialog::imageSelected( Q3ListViewItem *item )
 
     QString IdemIndexed = "file:" + pitem->pathSrc();
 
-    KURL url( IdemIndexed );
+    KUrl url( IdemIndexed );
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imagePreview->height() );
 
@@ -420,7 +420,7 @@ void
 UploadDialog::imagesFilesButtonAdd()
 {
     QStringList fileList;
-    KURL::List urls;
+    KUrl::List urls;
 #if KIPI_PLUGIN
     urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
 #else
@@ -431,7 +431,7 @@ UploadDialog::imagesFilesButtonAdd()
     dlg.exec();
     urls = dlg.selectedURLs();
 #endif
-    for( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
+    for( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         fileList << (*it).path();
 
     if ( urls.isEmpty() ) return;
@@ -473,7 +473,7 @@ UploadDialog::createIpodAlbum()
         Itdb_PhotoAlbum *photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
         // add the new album to the list view
         IpodAlbumItem *i = new IpodAlbumItem( m_ipodAlbumList, last, photoAlbum );
-        i->setPixmap( 0, KGlobal::iconLoader()->loadIcon( "folder", KIcon::Toolbar, KIcon::SizeSmall ) );
+        i->setPixmap( 0, KIconLoader::global()->loadIcon( "folder", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
         m_ipodAlbumList->clearSelection();
         m_ipodAlbumList->setSelected( i, true );
 

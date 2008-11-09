@@ -19,18 +19,18 @@ extern "C" {
 }
 
 #include <qstring.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 
 namespace IpodExport
 {
 
-    class ImageListItem : public KListViewItem
+    class ImageListItem : public K3ListViewItem
     {
     public:
 
         ImageListItem( Q3ListView *parent, QString const & pathSrc, QString const & name )
-            : KListViewItem( parent, QString::null/*set below*/, name )
+            : K3ListViewItem( parent, QString::null/*set below*/, name )
             , m_pathSrc( pathSrc )
         {
             setText( 0, pathSrc.section('/', -2, -2) );

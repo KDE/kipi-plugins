@@ -23,7 +23,7 @@ using namespace IpodExport;
 ////////////////////////////////////////////
 
 IpodAlbumItem::IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa )
-    : KListViewItem( parent, after )
+    : K3ListViewItem( parent, after )
     , m_photoAlbum( pa )
 {
     // don't use setName, as it writes to the ipod
@@ -57,7 +57,7 @@ void IpodAlbumItem::setName( const QString & name )
 
 IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after,
                               Itdb_Artwork *art )
-    : KListViewItem( parent, after )
+    : K3ListViewItem( parent, after )
     , m_artwork( art )
 {
 }
