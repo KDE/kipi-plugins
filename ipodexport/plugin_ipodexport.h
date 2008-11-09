@@ -19,6 +19,12 @@
 
 class KAction;
 
+namespace KIPI
+{
+    class Interface;
+}
+
+
 class Plugin_iPodExport : public KIPI::Plugin
 {
     Q_OBJECT
