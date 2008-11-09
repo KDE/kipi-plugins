@@ -18,5 +18,5 @@ install(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install(FILES  kipiplugin_ipodexport.desktop DESTINATION /share/services)
+install(FILES  kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
