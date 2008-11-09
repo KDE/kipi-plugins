@@ -422,7 +422,7 @@ bool ImagesList::hasUnprocessedImages()
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
         if (item)
         {
-            if (item->text(1).isEmpty() || item->text(1).toInt() <= 0)
+            if (item->text(1).toInt() <= 0)
             {
                 hasNone = true;
                 break;
@@ -445,7 +445,7 @@ void ImagesList::removeUnprocessedImages()
             item->setSelected(false);
 
             // now select those with no corrections to remove them
-            if (item->text(1).isEmpty() || item->text(1).toInt() <= 0)
+            if (item->text(1).toInt() <= 0 && !item->text(1).isEmpty())
             {
                 item->setSelected(true);
             }
