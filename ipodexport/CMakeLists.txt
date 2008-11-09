@@ -1,22 +1,26 @@
-INCLUDE_DIRECTORIES( ${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR} )
-add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
-########### next target ###############
+ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
-set(kipiplugin_ipodexport_PART_SRCS
+INCLUDE_DIRECTORIES(${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
+
+SET(kipiplugin_ipodexport_PART_SRCS
     plugin_ipodexport.cpp
     ipodexportdialog.cpp
     ipodheader.cpp
     ipodlistitem.cpp
-    imagelist.cpp)
+    imagelist.cpp
+   )
 
-kde4_add_plugin(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
 
-target_link_libraries(kipiplugin_ipodexport kipiplugins ${GOBJECT_LIBRARIES} ${GLIB2_LIBRARIES} ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDEUI_LIBS} kio  ${GPOD_LIBRARIES})
+TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
+                      ${GOBJECT_LIBRARIES}
+                      ${GLIB2_LIBRARIES}
+                      ${KDE4_KDE3SUPPORT_LIBS}
+                      ${KDE4_KDEUI_LIBS}
+                      ${GPOD_LIBRARIES}
+                      kipiplugins
+                      kio
+                     )
 
-install(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
-########### install files ###############
-
-install(FILES  kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
+INSTALL(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES kipiplugin_ipodexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
