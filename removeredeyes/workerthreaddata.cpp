@@ -30,30 +30,15 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-WorkerThreadData::WorkerThreadData(const KUrl& url, int current, int eyes): m_url(url)
+WorkerThreadData::WorkerThreadData(const KUrl& url, int current, int eyes): urls(url)
 {
-    m_current = current;
-    m_eyes    = eyes;
+    this->current = current;
+    this->eyes    = eyes;
 }
 
 
 WorkerThreadData::~WorkerThreadData()
 {
-}
-
-int WorkerThreadData::current() const
-{
-    return m_current;
-}
-
-int WorkerThreadData::eyes() const
-{
-    return m_eyes;
-}
-
-const KUrl& WorkerThreadData::url() const
-{
-    return m_url;
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

@@ -441,9 +441,9 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     if (!data)
         return;
 
-    int current     = data->current();
-    const KUrl& url = data->url();
-    int eyes        = data->eyes();
+    int current     = data->current;
+    const KUrl& url = data->urls;
+    int eyes        = data->eyes;
     delete data;
 
     d->progress->setValue(current);

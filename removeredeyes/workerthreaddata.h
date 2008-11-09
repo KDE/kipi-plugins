@@ -37,15 +37,9 @@ public:
     explicit WorkerThreadData(const KUrl& url, int current = 0, int eyes = 0);
     ~WorkerThreadData();
 
-    int         current() const;
-    int         eyes() const;
-    const KUrl& url() const;
-
-private:
-
-    int         m_current;
-    int         m_eyes;
-    const KUrl& m_url;
+    int         current;
+    int         eyes;
+    const KUrl& urls;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin
