@@ -419,11 +419,23 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
     QTreeWidgetItem* parentItem = d->albumView->currentItem();
 
+    // clean item to avoid duplications
+    QList<QTreeWidgetItem *> childrenList = parentItem->takeChildren();
+    foreach( QTreeWidgetItem *child, childrenList )
+        parentItem->removeChild( child );
+
     typedef QList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iterator;
-    for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator) {
+    for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator)
+    {
+        QString plain = (*iterator).caption;
+        plain.replace("&lt;", "<");
+        plain.replace("&gt;", ">");
+        plain.replace("&quot;", "\"");
+        plain.replace("&amp;", "&");
+
         QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
-        item->setText(0, (*iterator).caption );
+        item->setText(0, plain );
         item->setIcon(0, KIcon("image-x-generic") );
     }
 }
