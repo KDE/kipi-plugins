@@ -55,15 +55,11 @@ Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
 
 void Plugin_iPodExport::setup( QWidget* widget )
 {
-    KIPI::Plugin::setup( widget );
-
-    // this is our action shown in the menubar/toolbar of the mainwindow
-    //m_actionImageUpload = new KAction( i18n( "Export to iPod..." ), "ipod_unmount", 0, this,
-    //                                  SLOT( slotImageUpload() ), actionCollection(), "connectipod");
+    KIPI::Plugin::setup(widget);
 
     m_actionImageUpload = new KAction(i18n( "Export to iPod..." ), actionCollection());
 
-    m_actionImageUpload->setIcon(KIcon("ipod_unmount"));
+    m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));
     addAction( m_actionImageUpload );
@@ -75,7 +71,7 @@ void Plugin_iPodExport::slotImageUpload()
 {
     IpodExport::UploadDialog *dlg = new IpodExport::UploadDialog(m_interface, i18n("iPod Export"),
                                                                  kapp->activeWindow());
-    dlg->setMinimumWidth( 460 );
+    dlg->setMinimumWidth(460);
     dlg->show();
 }
 
