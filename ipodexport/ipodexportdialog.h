@@ -23,7 +23,7 @@ extern "C" {
 
 #define KIPI_PLUGIN 1
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 #if KIPI_PLUGIN
 #include <libkipi/interface.h>
@@ -39,6 +39,7 @@ class KLineEdit;
 class K3ListView;
 class K3ListViewItem;
 class KUrl;
+class Q3ListViewItem;
 
 namespace IpodExport
 {
@@ -48,7 +49,7 @@ class IpodAlbumItem;
 class IpodPhotoItem;
 class IpodHeader;
 
-class UploadDialog : public KDialogBase
+class UploadDialog : public KDialog
 {
     Q_OBJECT
 
@@ -57,7 +58,7 @@ class UploadDialog : public KDialogBase
                         #if KIPI_PLUGIN
                         KIPI::Interface* interface,
                         #endif
-                        QString caption, QWidget *parent=0 );
+                        const QString& caption, QWidget *parent=0 );
 
         ~UploadDialog()
         {

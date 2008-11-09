@@ -61,9 +61,8 @@ UploadDialog::UploadDialog(
                             #if KIPI_PLUGIN
                             KIPI::Interface* interface,
                             #endif
-                            QString caption, QWidget *parent )
-    : KDialogBase( KDialogBase::Plain, caption, /*Help|*/Close,
-                   Cancel, parent, "TripodDialog", false, false )
+                            const QString &caption, QWidget *parent )
+    : KDialog( parent)
 #if KIPI_PLUGIN
     , m_interface( interface )
 #endif
@@ -77,8 +76,13 @@ UploadDialog::UploadDialog(
     , m_deviceNode( QString::null )
 {
     s_instance = this;
+    
+    QWidget       *box = new QWidget();
+    setMainWidget(box);
+    setCaption(caption);
+    setButtons(KDialog::Close);
+    setModal(false);
 
-    QWidget       *box = plainPage();
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 6 );
 
     dvlay->setMargin( 2 );
