@@ -94,7 +94,7 @@ private:
     void writeSettings();
     void updateSettings();
 
-    void startWorkerThread(int type);
+    void startWorkerThread();
     void setBusy(bool);
 
 

@@ -269,13 +269,15 @@ void RemoveRedEyesWindow::updateSettings()
 void RemoveRedEyesWindow::startCorrection()
 {
     updateSettings();
-    startWorkerThread(WorkerThread::Correction);
+    d->runtype = WorkerThread::Correction;
+    startWorkerThread();
 }
 
 void RemoveRedEyesWindow::startTestrun()
 {
     updateSettings();
-    startWorkerThread(WorkerThread::TestRun);
+    d->runtype = WorkerThread::TestRun;
+    startWorkerThread();
 }
 
 void RemoveRedEyesWindow::abortCorrection()
@@ -293,7 +295,7 @@ void RemoveRedEyesWindow::helpClicked()
     KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
 }
 
-void RemoveRedEyesWindow::startWorkerThread(int type)
+void RemoveRedEyesWindow::startWorkerThread()
 {
     KUrl::List urls = d->imageList->imageUrls();
     if (urls.isEmpty())
@@ -303,7 +305,7 @@ void RemoveRedEyesWindow::startWorkerThread(int type)
         return;
 
     // create the worker thread
-    d->wth = new WorkerThread(this, &d->settings, type, urls);
+    d->wth = new WorkerThread(this, &d->settings, d->runtype, urls);
 
     if (!d->wth)
     {
