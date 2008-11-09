@@ -65,25 +65,25 @@ namespace KIPIIpodExportPlugin
 UploadDialog *UploadDialog::s_instance = 0;
 
 UploadDialog::UploadDialog(
-                            #if KIPI_PLUGIN
-                            KIPI::Interface* interface,
-                            #endif
-                            const QString &caption, QWidget *parent )
-    : KDialog( parent)
 #if KIPI_PLUGIN
-    , m_interface( interface )
+                           KIPI::Interface* interface,
 #endif
-    , m_itdb( 0 )
-    , m_ipodInfo( 0 )
-    , m_ipodHeader( 0 )
-    , m_transferring( false )
-    , m_destinationAlbum( 0 )
-    , m_ipodAlbumList( 0 )
-    , m_mountPoint( QString::null )
-    , m_deviceNode( QString::null )
+                           const QString &caption, QWidget *parent )
+            : KDialog( parent)
+#if KIPI_PLUGIN
+              , m_interface( interface )
+#endif
+              , m_itdb( 0 )
+              , m_ipodInfo( 0 )
+              , m_ipodHeader( 0 )
+              , m_transferring( false )
+              , m_destinationAlbum( 0 )
+              , m_ipodAlbumList( 0 )
+              , m_mountPoint( QString::null )
+              , m_deviceNode( QString::null )
 {
     s_instance = this;
-    
+
     QWidget       *box = new QWidget();
     setMainWidget(box);
     setCaption(caption);
@@ -91,18 +91,16 @@ UploadDialog::UploadDialog(
     setModal(false);
 
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 6 );
-
     dvlay->setMargin( 2 );
 
     m_ipodHeader = new IpodHeader( box );
     dvlay->addWidget( m_ipodHeader );
 
     m_destinationBox = new Q3HGroupBox( i18n("iPod"), box );
-
-    m_ipodAlbumList = new ImageList( ImageList::IpodType, m_destinationBox );
+    m_ipodAlbumList  = new ImageList( ImageList::IpodType, m_destinationBox );
     m_ipodAlbumList->setMinimumHeight( 80 );
 
-    QWidget          *buttons = new QWidget( m_destinationBox );
+    QWidget          *buttons  = new QWidget( m_destinationBox );
     Q3VBoxLayout *buttonLayout = new Q3VBoxLayout( buttons, 0, spacingHint() );
 
     m_createAlbumButton = new QPushButton( i18n("&New..."), buttons, "addAlbumButton");
@@ -134,8 +132,8 @@ UploadDialog::UploadDialog(
 
     dvlay->addWidget( m_destinationBox );
 
-    m_urlListBox    = new Q3HGroupBox( i18n("Hard Disk"), box );
-    QWidget* urlBox = new QWidget( m_urlListBox );
+    m_urlListBox            = new Q3HGroupBox( i18n("Hard Disk"), box );
+    QWidget* urlBox         = new QWidget( m_urlListBox );
     Q3HBoxLayout* urlLayout = new Q3HBoxLayout( urlBox, 0, spacingHint() );
     m_uploadList = new ImageList( ImageList::UploadType, urlBox );
     m_uploadList->setMinimumHeight( 80 );
@@ -192,21 +190,35 @@ UploadDialog::UploadDialog(
 
     /// connect the signals & slots
 
-    connect( m_createAlbumButton, SIGNAL( clicked() ), SLOT( createIpodAlbum() ) );
-    connect( m_removeAlbumButton, SIGNAL( clicked() ), SLOT( deleteIpodAlbum() ) );
-    connect( m_renameAlbumButton, SIGNAL( clicked() ), SLOT( renameIpodAlbum() ) );
+    connect(m_createAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( createIpodAlbum() ));
 
-    connect( m_uploadList,     SIGNAL( addedDropItems(QStringList) ),    SLOT( addDropItems(QStringList) ) );
-    connect( m_uploadList,     SIGNAL( currentChanged(Q3ListViewItem*) ), SLOT( imageSelected(Q3ListViewItem*) ) );
-    connect( m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ), SLOT( ipodItemSelected(Q3ListViewItem*) ) );
+    connect(m_removeAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( deleteIpodAlbum() ));
 
-    connect( m_addImagesButton,      SIGNAL( clicked() ), SLOT( imagesFilesButtonAdd() ) );
-    connect( m_remImagesButton,      SIGNAL( clicked() ), SLOT( imagesFilesButtonRem() ) );
-    connect( m_transferImagesButton, SIGNAL( clicked() ), SLOT( startTransfer()        ) );
+    connect(m_renameAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( renameIpodAlbum() ));
+
+    connect(m_uploadList, SIGNAL( addedDropItems(QStringList) ),
+            this, SLOT( addDropItems(QStringList) ));
+
+    connect(m_uploadList, SIGNAL( currentChanged(Q3ListViewItem*) ),
+            this, SLOT( imageSelected(Q3ListViewItem*) ));
+
+    connect(m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ),
+            this, SLOT( ipodItemSelected(Q3ListViewItem*) ));
+
+    connect(m_addImagesButton, SIGNAL( clicked() ), 
+            this, SLOT( imagesFilesButtonAdd() ));
+
+    connect(m_remImagesButton, SIGNAL( clicked() ), 
+            this, SLOT( imagesFilesButtonRem() ));
+
+    connect(m_transferImagesButton, SIGNAL( clicked() ),
+            this, SLOT( startTransfer() ));
 }
 
-void
-UploadDialog::getIpodAlbums()
+void UploadDialog::getIpodAlbums()
 {
     if( !m_itdb ) return;
 
@@ -227,8 +239,7 @@ UploadDialog::getIpodAlbums()
     }
 }
 
-void
-UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
+void UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
 {
     if( !item || !album || !m_itdb )
         return;
@@ -244,8 +255,7 @@ UploadDialog::getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
     }
 }
 
-void
-UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
+void UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
 {
     if( !item ) return;
 
@@ -265,8 +275,7 @@ UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
     getIpodAlbumPhotos( item, ipodAlbum );
 }
 
-void
-UploadDialog::enableButtons()
+void UploadDialog::enableButtons()
 {
     // enable the start button only if there are albums to transfer to, items to transfer
     // and a database to add to!
@@ -287,8 +296,7 @@ UploadDialog::enableButtons()
     m_renameAlbumButton->setEnabled( ipodSelection && !isMasterLibrary && ipodSelection->depth() == 0 );
 }
 
-void
-UploadDialog::startTransfer()
+void UploadDialog::startTransfer()
 {
     if( !m_itdb || !m_uploadList->childCount() )
         return;
@@ -345,8 +353,7 @@ UploadDialog::startTransfer()
 #undef selected
 }
 
-void
-UploadDialog::ipodItemSelected( Q3ListViewItem *item )
+void UploadDialog::ipodItemSelected( Q3ListViewItem *item )
 {
     m_ipodPreview->clear();
 
@@ -379,8 +386,7 @@ UploadDialog::ipodItemSelected( Q3ListViewItem *item )
 //     m_ipodPreview->setPixmap( pix );
 }
 
-void
-UploadDialog::imageSelected( Q3ListViewItem *item )
+void UploadDialog::imageSelected( Q3ListViewItem *item )
 {
     if( !item || m_uploadList->childCount() == 0 || m_transferring )
     {
@@ -403,8 +409,7 @@ UploadDialog::imageSelected( Q3ListViewItem *item )
                    this,   SLOT( gotImagePreview(const KFileItem*, const QPixmap&) ) );
 }
 
-void
-UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap &pixmap )
+void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap &pixmap )
 {
 #if KIPI_PLUGIN
     QPixmap pix( pixmap );
@@ -428,8 +433,7 @@ UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap &pixmap )
 #endif
 }
 
-void
-UploadDialog::imagesFilesButtonAdd()
+void UploadDialog::imagesFilesButtonAdd()
 {
     QStringList fileList;
     KUrl::List urls;
@@ -465,8 +469,7 @@ UploadDialog::imagesFilesButtonRem()
     enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
 }
 
-void
-UploadDialog::createIpodAlbum()
+void UploadDialog::createIpodAlbum()
 {
     QString helper;
     #if KIPI_PLUGIN
@@ -498,8 +501,7 @@ UploadDialog::createIpodAlbum()
     }
 }
 
-void
-UploadDialog::renameIpodAlbum()
+void UploadDialog::renameIpodAlbum()
 {
     IpodAlbumItem *selected = dynamic_cast<IpodAlbumItem*>(m_ipodAlbumList->selectedItem());
 
@@ -569,8 +571,7 @@ bool UploadDialog::deleteIpodAlbum( IpodAlbumItem *album )
     return true;
 }
 
-void
-UploadDialog::deleteIpodAlbum()
+void UploadDialog::deleteIpodAlbum()
 {
     Q3ListViewItem *selected = m_ipodAlbumList->selectedItem();
     if( !selected ) return;
@@ -594,8 +595,7 @@ UploadDialog::deleteIpodAlbum()
     itdb_photodb_write( m_itdb, &err );
 }
 
-void
-UploadDialog::addDropItems( QStringList filesPath )
+void UploadDialog::addDropItems( QStringList filesPath )
 {
     if( filesPath.isEmpty() ) return;
 
@@ -628,8 +628,7 @@ UploadDialog::addDropItems( QStringList filesPath )
     enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
 }
 
-void
-UploadDialog::addUrlToList( QString file )
+void UploadDialog::addUrlToList( QString file )
 {
     QFileInfo *fi = new QFileInfo( file );
 
@@ -639,8 +638,7 @@ UploadDialog::addUrlToList( QString file )
 }
 
 
-bool
-UploadDialog::openDevice()
+bool UploadDialog::openDevice()
 {
     if( m_itdb )
     {
@@ -653,8 +651,7 @@ UploadDialog::openDevice()
 
     KMountPoint::List currentmountpoints = KMountPoint::currentMountPoints();
     for( KMountPoint::List::Iterator mountiter = currentmountpoints.begin();
-         mountiter != currentmountpoints.end();
-         ++mountiter )
+         mountiter != currentmountpoints.end(); ++mountiter )
     {
         QString devicenode = (*mountiter)->mountedFrom();
         QString mountpoint = (*mountiter)->mountPoint();
@@ -744,8 +741,7 @@ UploadDialog::openDevice()
     return true;
 }
 
-Itdb_Artwork *
-UploadDialog::photoFromId( const uint id )
+Itdb_Artwork *UploadDialog::photoFromId(const uint id)
 {
     if( !m_itdb )
         return 0;

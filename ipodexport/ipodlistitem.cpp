@@ -28,7 +28,7 @@ namespace KIPIIpodExportPlugin
 {
 
 IpodAlbumItem::IpodAlbumItem(Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa)
-             : K3ListViewItem( parent, after ), m_photoAlbum( pa )
+             : K3ListViewItem(parent, after), m_photoAlbum(pa)
 {
     // don't use setName, as it writes to the ipod
     m_name = pa->name;
@@ -37,12 +37,12 @@ IpodAlbumItem::IpodAlbumItem(Q3ListView *parent, Q3ListViewItem *after, Itdb_Pho
     setText( 0, m_name );
 }
 
-void IpodAlbumItem::setPhotoAlbum( Itdb_PhotoAlbum *pa )
+void IpodAlbumItem::setPhotoAlbum(Itdb_PhotoAlbum *pa)
 {
     m_photoAlbum = pa;
 }
 
-void IpodAlbumItem::setName( const QString & name )
+void IpodAlbumItem::setName(const QString& name)
 {
     if( name == m_name )
         return;
@@ -56,10 +56,9 @@ void IpodAlbumItem::setName( const QString & name )
 
 // ---------------------------------------------------------------------------
 
-IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after,
-                              Itdb_Artwork *art )
-    : K3ListViewItem( parent, after )
-    , m_artwork( art )
+IpodPhotoItem::IpodPhotoItem(IpodAlbumItem *parent, IpodPhotoItem *after,
+                             Itdb_Artwork *art)
+    : K3ListViewItem(parent, after), m_artwork(art)
 {
 }
 
