@@ -31,6 +31,7 @@
 // KDE includes.
 
 #include <kstandarddirs.h>
+#include <kdebug.h>
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -42,7 +43,8 @@ class RemovalSettings
     {
     public:
 
-        RemovalSettings() {
+        RemovalSettings()
+        {
 
             useStandardClassifier   = true;
             minRoundness            = 0.0;
@@ -52,6 +54,23 @@ class RemovalSettings
             neighborGroups          = 0;
             storageMode             = 0;
             simpleMode              = 0;
+        };
+
+        void debug()
+        {
+            kDebug(50001) << "***************" << endl;
+            kDebug(50001) << "RemovalSettings" << endl;
+            kDebug(50001) << "***************" << endl;
+            kDebug(50001) << "useStandardClassifier = " << useStandardClassifier << endl;
+            kDebug(50001) << "minRoundness          = " << minRoundness << endl;
+            kDebug(50001) << "scaleFactor           = " << scaleFactor << endl;
+            kDebug(50001) << "minBlobsize           = " << minBlobsize << endl;
+            kDebug(50001) << "neighborGroups        = " << neighborGroups << endl;
+            kDebug(50001) << "storageMode           = " << storageMode << endl;
+            kDebug(50001) << "simpleMode            = " << simpleMode << endl;
+            kDebug(50001) << "classifierFile        = " << classifierFile << endl;
+            kDebug(50001) << "subfolderName         = " << subfolderName << endl;
+            kDebug(50001) << "prefixName            = " << prefixName << endl;
         };
 
         bool        useStandardClassifier;
