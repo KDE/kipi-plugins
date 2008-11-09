@@ -51,9 +51,9 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)  # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(Gpod)    # For ipodexport 
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)   # For ipodexport
-macro_optional_find_package(GObject) # For ipodexport
+MACRO_OPTIONAL_FIND_PACKAGE(Gpod)    # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)   # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject) # For ipodexport.
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -98,6 +98,8 @@ MESSAGE(STATUS "")
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS " kipi-plugins ${KIPIPLUGINS_VERSION_STRING} dependencies results   <http://www.kipi-plugins.org>")
 MESSAGE(STATUS "")
+
+# Require shared libraries results.
 
 IF(JPEG_FOUND)
     MESSAGE(STATUS " libjpeg library found............... YES")
@@ -159,6 +161,8 @@ ELSE(KDCRAW_FOUND)
     MESSAGE(STATUS "")
 ENDIF(KDCRAW_FOUND)
 
+# Optional shared libraries results.
+
 IF(LIBXML2_FOUND)
     MESSAGE(STATUS " libxml2 library found............... YES (optional)")
 ELSE(LIBXML2_FOUND)
@@ -195,6 +199,12 @@ ELSE(OPENCV_FOUND)
     MESSAGE(STATUS " libopencv library found............. NO  (optional)")
 ENDIF(OPENCV_FOUND)
 
+IF(GPOD_FOUND)
+    MESSAGE(STATUS " libgpod library found..  ........... YES (optional)")
+ELSE(GPOD_FOUND)
+    MESSAGE(STATUS " libgpod library found......  ....... NO  (optional)")
+ENDIF(GPOD_FOUND)
+
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     IF(X11_FOUND AND X11_Xrandr_FOUND)
@@ -209,6 +219,8 @@ IF(NOT WIN32 AND NOT APPLE)
         MESSAGE(STATUS " libksane library found.............. NO  (optional)")
     ENDIF(KSANE_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
+
+# Optional plugins results.
 
 IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     MESSAGE(STATUS " kipi-plugins will be compiled....... YES")
@@ -263,6 +275,12 @@ IF(OPENCV_FOUND)
 ELSE(OPENCV_FOUND)
     MESSAGE(STATUS " RemoveRedEyes will be compiled...... NO  (optional - Look README file for more details about dependencies)")
 ENDIF(OPENCV_FOUND)
+
+IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+    MESSAGE(STATUS " IpodExport will be compiled......... YES (optional)")
+ELSE(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+    MESSAGE(STATUS " IpodExport will be compiled......... NO  (optional - Look README file for more details about dependencies)")
+ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -322,9 +340,13 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(galleryexport)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(printwizard)
+
+    # Plugins which are optional depencies.
+
     IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
        ADD_SUBDIRECTORY(ipodexport)
     ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+
     IF(OPENCV_FOUND)
         ADD_SUBDIRECTORY(removeredeyes)
     ENDIF(OPENCV_FOUND)
