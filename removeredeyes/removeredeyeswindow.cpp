@@ -401,7 +401,7 @@ void RemoveRedEyesWindow::foundRAWImages(bool raw)
     if (raw)
     {
         KMessageBox::information(this,
-                                 i18n("<p>You tried to add <b>RAW images</b> to the red-eye batch removal plugin, "
+                                 i18n("<p>You tried to add <b>RAW images</b> to the plugin,<br/>"
                                       "but those filetypes are not supported.</p>"
                                       "<p><b>They were automatically removed from the list.</b></p>"),
                                  i18n("RAW images found"));
