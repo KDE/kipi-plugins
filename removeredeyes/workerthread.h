@@ -35,6 +35,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
+class WorkerThreadPriv;
 class WorkerThreadData;
 class RemovalSettings;
 
@@ -57,18 +58,22 @@ signals:
 
 public:
 
-    WorkerThread(QObject* parent, RemovalSettings* settings, int type, KUrl::List urls);
+    WorkerThread(QObject* parent);
     ~WorkerThread();
+
+    void setRunType(int);
+    int runType() const;
+
+    void loadSettings(RemovalSettings);
+    void setImagesList(const KUrl::List&);
+
+    void cancel();
 
     virtual void run();
 
 private:
 
-    int                     m_type;
-    bool                    m_cancel;
-    QObject*                m_parent;
-    RemovalSettings*        m_settings;
-    KUrl::List              m_urls;
+    WorkerThreadPriv* const d;
 };
 } // namespace KIPIRemoveRedEyesPlugin
 

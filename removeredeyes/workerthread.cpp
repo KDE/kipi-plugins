@@ -40,32 +40,48 @@
 
 namespace KIPIRemoveRedEyesPlugin
 {
-WorkerThread::WorkerThread(QObject* parent, RemovalSettings* settings, int type, KUrl::List urls)
+
+class WorkerThreadPriv
 {
-    m_parent    = parent;
-    m_settings  = settings;
-    //    m_settings->debug();
-    m_cancel    = false;
-    m_type      = type;
-    m_urls      = urls;
+public:
+
+    WorkerThreadPriv()
+    {
+        runtype = WorkerThread::TestRun;
+        cancel  = false;
+    }
+
+    int                     runtype;
+    bool                    cancel;
+    RemovalSettings         settings;
+    KUrl::List              urls;
+};
+
+WorkerThread::WorkerThread(QObject* parent)
+            : QThread(parent),
+              d(new WorkerThreadPriv)
+{
 }
 
 WorkerThread::~ WorkerThread()
 {
     // wait for the thread to finish
     wait();
+
+    delete d;
 }
 
 void WorkerThread::run()
 {
-    int total = m_urls.count();
+    int total = d->urls.count();
 
     if (total <= 0)
         return;
 
     int i = 1;
+    d->cancel = false;
 
-    for (KUrl::List::iterator it = m_urls.begin(); it != m_urls.end(); ++it, ++i)
+    for (KUrl::List::iterator it = d->urls.begin(); it != d->urls.end(); ++it, ++i)
     {
         KUrl& url = (KUrl&)(*it);
         if (!url.isLocalFile())
@@ -73,31 +89,31 @@ void WorkerThread::run()
 
         // we need to convert the QString to const char* for openCV to work
         QByteArray src = QFile::encodeName(url.path());
-        QByteArray cls = QFile::encodeName(m_settings->classifierFile);
+        QByteArray cls = QFile::encodeName(d->settings.classifierFile);
 
         // find and remove red eyes
         EyeLocator loc(src.data(),
                        cls.data(),
-                       m_settings->scaleFactor,
-                       m_settings->neighborGroups,
-                       m_settings->minRoundness,
-                       m_settings->minBlobsize);
+                       d->settings.scaleFactor,
+                       d->settings.neighborGroups,
+                       d->settings.minRoundness,
+                       d->settings.minBlobsize);
 
         // save image to specified location
-        if ((m_type == Correction) && (loc.redEyes() > 0))
+        if ((d->runtype == Correction) && (loc.redEyes() > 0))
         {
             QFileInfo info(url.path());
             KUrl saveLocation = KUrl(info.path());
 
-            switch (m_settings->storageMode)
+            switch (d->settings.storageMode)
             {
                 case StorageSettingsBox::Subfolder:
                 {
-                    saveLocation.addPath(m_settings->subfolderName);
+                    saveLocation.addPath(d->settings.subfolderName);
 
                     // check if subfolder exists
                     if (!QDir(saveLocation.path()).exists())
-                        QDir(info.path()).mkdir(m_settings->subfolderName);
+                        QDir(info.path()).mkdir(d->settings.subfolderName);
 
                     saveLocation.addPath(info.fileName());
                     break;
@@ -105,7 +121,7 @@ void WorkerThread::run()
                 case StorageSettingsBox::Prefix:
                 {
                     QString file = info.baseName();
-                    file.append(m_settings->prefixName);
+                    file.append(d->settings.prefixName);
                     file.append(".");
                     file.append(info.suffix());
                     saveLocation.addPath(file);
@@ -124,6 +140,35 @@ void WorkerThread::run()
 
         int eyes = loc.redEyes();
         emit calculationFinished(new WorkerThreadData(url, i, eyes));
+
+        if (d->cancel)
+            break;
     }
 }
+
+void WorkerThread::setRunType(int type)
+{
+    d->runtype = type;
+}
+
+int WorkerThread::runType() const
+{
+    return d->runtype;
+}
+
+void WorkerThread::cancel()
+{
+    d->cancel = true;
+}
+
+void WorkerThread::loadSettings(RemovalSettings newSettings)
+{
+    d->settings = newSettings;
+}
+
+void WorkerThread::setImagesList(const KUrl::List& list)
+{
+    d->urls = list;
+}
+
 } // namespace KIPIRemoveRedEyesPlugin

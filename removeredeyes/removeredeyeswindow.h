@@ -73,9 +73,6 @@ private slots:
     void foundRAWImages(bool);
     void imageListChanged(bool);
 
-    void progressBarChanged(int);
-    void progressBarTimedOut();
-
     void startCorrection();
     void cancelCorrection();
     void startTestrun();
@@ -83,6 +80,8 @@ private slots:
     // reimplement this slot from KDialog to avoid the call for close(),
     // we will do this on our own here.
     void slotButtonClicked(int);
+
+    void threadFinished();
 
 public slots:
 

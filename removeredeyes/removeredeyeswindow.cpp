@@ -27,7 +27,6 @@
 // Qt includes.
 
 #include <QProgressBar>
-#include <QTimer>
 #include <QVBoxLayout>
 
 // KDE includes.
@@ -69,15 +68,10 @@ public:
     {
         interface           = 0;
         about               = 0;
-
         progress            = 0;
-        progressTimer       = 0;
-
         tabWidget           = 0;
-
         imageList           = 0;
-        wth                 = 0;
-
+        thread              = 0;
         settingsTab         = 0;
     }
 
@@ -88,14 +82,13 @@ public:
     KIPIPlugins::KPAboutData*   about;
 
     QProgressBar*               progress;
-    QTimer*                     progressTimer;
 
     KTabWidget*                 tabWidget;
 
     ImagesList*                 imageList;
     RemovalSettings             settings;
     SettingsTab*                settingsTab;
-    WorkerThread*               wth;
+    WorkerThread*               thread;
 };
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent)
@@ -109,14 +102,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
     d->busy                 = false;
 
+    d->thread               = new WorkerThread(this);
     d->runtype              = WorkerThread::TestRun;
     d->interface            = interface;
     d->tabWidget            = new KTabWidget;
 
     d->imageList            = new ImagesList(interface);
-
-    d->progressTimer        = new QTimer(this);
-    d->progressTimer->setSingleShot(true);
 
     d->progress             = new QProgressBar;
     d->progress->setMaximumHeight(fontMetrics().height() + 2);
@@ -180,12 +171,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(helpClicked()));
 
-    connect(d->progressTimer, SIGNAL(timeout()),
-            this, SLOT(progressBarTimedOut()));
-
-    connect(d->progress, SIGNAL(valueChanged(int)),
-            this, SLOT(progressBarChanged(int)));
-
     connect(this, SIGNAL(testRunFinished()),
             this, SLOT(checkForUnprocessedImages()));
 
@@ -200,6 +185,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
     connect(this, SIGNAL(myCloseClicked()),
             this, SLOT(closeClicked()));
+
+    connect(d->thread, SIGNAL(finished()),
+            this, SLOT(threadFinished()));
 
     // ------------------------------------------------------------------
 
@@ -282,6 +270,8 @@ void RemoveRedEyesWindow::startTestrun()
 
 void RemoveRedEyesWindow::cancelCorrection()
 {
+    if (d->busy && d->thread->isRunning())
+        d->thread->cancel();
 }
 
 void RemoveRedEyesWindow::closeClicked()
@@ -304,15 +294,17 @@ void RemoveRedEyesWindow::startWorkerThread()
     if (d->busy)
         return;
 
-    // create the worker thread
-    d->wth = new WorkerThread(this, &d->settings, d->runtype, urls);
-
-    if (!d->wth)
+    if (!d->thread)
     {
         kError(51000) << "Creation of WorkerThread failed!" << endl;
         setBusy(false);
         return;
     }
+
+    d->thread->setImagesList(urls);
+    d->thread->setRunType(d->runtype);
+    d->thread->loadSettings(d->settings);
+
     setBusy(true);
 
     if (d->progress->isHidden())
@@ -321,11 +313,12 @@ void RemoveRedEyesWindow::startWorkerThread()
     d->progress->setRange(0, urls.count());
     d->progress->setValue(0);
 
-    connect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
+    connect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
             this, SLOT(calculationFinished(WorkerThreadData*)));
 
     // start image processing
-    d->wth->start();
+    if (!d->thread->isRunning())
+        d->thread->start();
 }
 
 void RemoveRedEyesWindow::setBusy(bool busy)
@@ -369,29 +362,6 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(closeClicked()));
     }
-}
-
-void RemoveRedEyesWindow::progressBarChanged(int v)
-{
-    int total = d->imageList->imageUrls().count();
-    if (v == total)
-        d->progressTimer->start(500);
-}
-
-void RemoveRedEyesWindow::progressBarTimedOut()
-{
-    d->progress->hide();
-    setBusy(false);
-
-    if (d->runtype == WorkerThread::TestRun)
-    {
-        emit testRunFinished();
-    }
-
-    disconnect(d->wth, SIGNAL(calculationFinished(WorkerThreadData*)),
-               this, SLOT(calculationFinished(WorkerThreadData*)));
-
-    delete d->wth;
 }
 
 void RemoveRedEyesWindow::checkForUnprocessedImages()
@@ -477,6 +447,20 @@ void RemoveRedEyesWindow::slotButtonClicked(int button)
             emit defaultClicked();
             break;
     }
+}
+
+void RemoveRedEyesWindow::threadFinished()
+{
+    d->progress->hide();
+    setBusy(false);
+
+    if (d->runtype == WorkerThread::TestRun)
+    {
+        emit testRunFinished();
+    }
+
+    disconnect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
+               this, SLOT(calculationFinished(WorkerThreadData*)));
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
