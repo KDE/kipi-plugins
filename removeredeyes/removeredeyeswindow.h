@@ -66,13 +66,16 @@ signals:
 
 private slots:
 
-    void checkForNoneCorrectedImages();
     void closeClicked();
     void helpClicked();
+
+    void checkForNoneCorrectedImages();
     void foundRAWImages(bool);
     void imageListChanged(bool);
+
     void progressBarChanged(int);
     void progressBarTimedOut();
+
     void startCorrection();
     void abortCorrection();
     void startTestrun();

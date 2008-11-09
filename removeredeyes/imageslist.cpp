@@ -50,7 +50,7 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// libkdcraw includes.
+// LibKDcraw includes.
 
 #include <libkdcraw/kdcraw.h>
 

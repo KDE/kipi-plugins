@@ -26,14 +26,7 @@
 
 // Qt includes.
 
-#include <QButtonGroup>
-#include <QCheckBox>
-#include <QCustomEvent>
-#include <QGroupBox>
-#include <QLabel>
 #include <QProgressBar>
-#include <QRadioButton>
-#include <QStackedWidget>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -41,18 +34,13 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdialog.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
-#include <klineedit.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
-#include <knuminput.h>
-#include <kseparator.h>
+#include <kpushbutton.h>
 #include <ktabwidget.h>
 #include <ktoolinvocation.h>
-#include <kurlrequester.h>
 
 // LibKIPI includes.
 
@@ -146,15 +134,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                               "andi dot clemens at gmx dot net");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(helpClicked()));
-
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
-
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(helpClicked()));
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setDelayedMenu(helpMenu->menu());
@@ -167,24 +149,36 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
     setButtonToolTip(Close, i18n("Exit"));
 
+    // ----------------------------------------------------------
+
+    d->settingsTab          = new SettingsTab;
+
+    // ----------------------------------------------------------
+
     QWidget* imagesTab           = new QWidget;
     QVBoxLayout* imagesTabLayout = new QVBoxLayout;
     imagesTabLayout->addWidget(d->imageList);
     imagesTabLayout->addWidget(d->progress);
     imagesTab->setLayout(imagesTabLayout);
 
-    d->settingsTab          = new SettingsTab;
+    // ----------------------------------------------------------
 
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
-    d->tabWidget->insertTab(FileList, imagesTab,   i18n("Files List"));
-    d->tabWidget->insertTab(Settings, d->settingsTab, i18n("Settings"));
+    d->tabWidget->insertTab(FileList, imagesTab,        i18n("Files List"));
+    d->tabWidget->insertTab(Settings, d->settingsTab,   i18n("Settings"));
 
     mainLayout->addWidget(d->tabWidget, 5);
     mainWidget->setLayout(mainLayout);
     setMainWidget(mainWidget);
 
     // connections ------------------------------------------------------------------
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(helpClicked()));
+
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(helpClicked()));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(progressBarTimedOut()));
@@ -250,10 +244,10 @@ void RemoveRedEyesWindow::writeSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("RemoveRedEyes Settings");
 
-    grp.writeEntry("Simple Mode",       d->settings.simpleMode);
-    grp.writeEntry("Storage Mode",      d->settings.storageMode);
-    grp.writeEntry("Subfolder Name",    d->settings.subfolderName);
-    grp.writeEntry("Filename Prefix",   d->settings.prefixName);
+    grp.writeEntry("Simple Mode",               d->settings.simpleMode);
+    grp.writeEntry("Storage Mode",              d->settings.storageMode);
+    grp.writeEntry("Subfolder Name",            d->settings.subfolderName);
+    grp.writeEntry("Filename Prefix",           d->settings.prefixName);
 
     grp.writeEntry("Minimum Blob Size",         d->settings.minBlobsize);
     grp.writeEntry("Minimum Roundness",         d->settings.minRoundness);
@@ -409,7 +403,7 @@ void RemoveRedEyesWindow::checkForNoneCorrectedImages()
                                             "contain any red-eyes at all.</p>"
                                             "<p><b>Would you like to remove those images "
                                             "from the list?</b></p>"),
-                                            i18n("Remove unprocessed images?")) == KMessageBox::Yes)
+                                       i18n("Remove unprocessed images?")) == KMessageBox::Yes)
         {
             d->imageList->removeNoneCorrectedImages();
         }
@@ -438,7 +432,7 @@ void RemoveRedEyesWindow::foundRAWImages(bool raw)
                                  i18n("<p>You tried to add <b>RAW images</b> to the red-eye batch removal plugin, "
                                       "but those filetypes are not supported.</p>"
                                       "<p><b>They were automatically removed from the list.</b></p>"),
-                                      i18n("RAW images found"));
+                                 i18n("RAW images found"));
     }
 }
 
@@ -447,8 +441,6 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     if (!data)
         return;
 
-    // to prevent memory leak, save the interesting parts
-    // of the event data in local vars and delete the data object
     int current     = data->current();
     const KUrl& url = data->url();
     int eyes        = data->eyes();
@@ -458,12 +450,12 @@ void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
     d->imageList->addEyeCounterByUrl(url, eyes);
 }
 
-void RemoveRedEyesWindow::slotButtonClicked( int button )
+void RemoveRedEyesWindow::slotButtonClicked(int button)
 {
-    emit buttonClicked( static_cast<KDialog::ButtonCode>(button) );
+    emit buttonClicked(static_cast<KDialog::ButtonCode> (button));
 
-    switch( button ) {
-            break;
+    switch (button)
+    {
         case User2:
             emit user2Clicked();
             break;

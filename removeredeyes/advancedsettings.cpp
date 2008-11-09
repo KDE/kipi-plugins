@@ -28,10 +28,6 @@
 
 #include <QGridLayout>
 
-// KDE includes.
-
-#include <kstandarddirs.h>
-
 // Local includes.
 
 #include "blobsettingsbox.h"

@@ -25,24 +25,15 @@
 #include "plugin_removeredeyes.h"
 #include "plugin_removeredeyes.moc"
 
-// C ANSI includes.
-
-extern "C"
-{
-#include <unistd.h>
-}
-
 // KDE includes.
 
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
 
 // LibKIPI includes.
 
