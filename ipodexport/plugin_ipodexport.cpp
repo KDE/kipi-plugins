@@ -1,26 +1,34 @@
-/***************************************************************************
- * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
- **************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-12-05
+ * Description : a tool to export image to an Ipod device.
+ *
+ * Copyright (C) 2006-2008 by Seb Ruiz <me at sebruiz dot net>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-
-extern "C" {
+extern "C" 
+{
 #include <glib-object.h> //g_type_init
 }
 
 #include "ipodexportdialog.h"
 #include "plugin_ipodexport.h"
 
-#include <libkipi/imagecollection.h>
 #include <KActionCollection>
-
 #include <kaction.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -29,6 +37,7 @@ extern "C" {
 #include <klibloader.h>
 #include <klocale.h>
 
+#include <libkipi/imagecollection.h>
 
 #define debug() kDebug( 51000 )
 
@@ -53,7 +62,7 @@ void Plugin_iPodExport::setup( QWidget* widget )
     //                                  SLOT( slotImageUpload() ), actionCollection(), "connectipod");
 
     m_actionImageUpload = new KAction(i18n( "Export to iPod..." ), actionCollection());
-    
+
     m_actionImageUpload->setIcon(KIcon("ipod_unmount"));
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));
@@ -62,19 +71,18 @@ void Plugin_iPodExport::setup( QWidget* widget )
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 }
 
+void Plugin_iPodExport::slotImageUpload()
+{
+    IpodExport::UploadDialog *dlg = new IpodExport::UploadDialog(m_interface, i18n("iPod Export"),
+                                                                 kapp->activeWindow());
+    dlg->setMinimumWidth( 460 );
+    dlg->show();
+}
+
 KIPI::Category Plugin_iPodExport::category( KAction* action ) const
 {
     if ( action == m_actionImageUpload )
         return KIPI::ExportPlugin;
 
     return KIPI::ImagesPlugin; // no warning from compiler, please
-}
-
-
-void Plugin_iPodExport::slotImageUpload()
-{
-    IpodExport::UploadDialog *dlg = new IpodExport::UploadDialog( m_interface, i18n("iPod Export"),
-                                                                  kapp->activeWindow() );
-    dlg->setMinimumWidth( 460 );
-    dlg->show();
 }

@@ -1,25 +1,33 @@
-/***************************************************************************
- * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
- * Originally based off Kipi plugins code, by Gilles Caulier               *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-12-05
+ * Description : a tool to export image to an Ipod device.
+ *
+ * Copyright (C) 2006-2008 by Seb Ruiz <me at sebruiz dot net>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+#include <q3dragobject.h>
+#include <q3simplerichtext.h>
+#include <Q3StrList>
 
 #include <qapplication.h>
 #include <qevent.h>
-#include <q3dragobject.h>
 #include <qfileinfo.h>
 #include <qpainter.h>
-#include <q3simplerichtext.h>
-//Added by qt3to4:
-#include <Q3StrList>
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QPaintEvent>

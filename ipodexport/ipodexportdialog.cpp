@@ -1,15 +1,24 @@
-/***************************************************************************
- * copyright            : (C) 2006 Seb Ruiz <me@sebruiz.net>               *
- **************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2006-12-05
+ * Description : a tool to export image to an Ipod device.
+ *
+ * Copyright (C) 2006-2008 by Seb Ruiz <me at sebruiz dot net>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #include "ipodheader.h"
 #include "imagelist.h"
@@ -17,23 +26,22 @@
 #include "ipodexportdialog.h"
 #include "ipodlistitem.h"
 
+#include <q3frame.h>
+#include <q3hgroupbox.h>
+#include <q3vgroupbox.h>
+#include <Q3HBoxLayout>
+#include <Q3PtrList>
+#include <Q3VBoxLayout>
+
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <q3frame.h>
-#include <q3hgroupbox.h>
 #include <qimage.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qpixmap.h>
 #include <qpushbutton.h>
-#include <q3vgroupbox.h>
-
 #include <qmatrix.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3PtrList>
-#include <Q3VBoxLayout>
 
 #include <kdebug.h>
 #include <kfileitem.h>
