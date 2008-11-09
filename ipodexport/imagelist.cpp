@@ -36,13 +36,11 @@
 
 #include "imagelist.h"
 
-using namespace IpodExport;
-
-/////////////////////////////////////////////////////////////////////////////////////////////
+namespace KIPIIpodExportPlugin
+{
 
 ImageList::ImageList( ListType type, QWidget *parent, const char *name )
-    : K3ListView( parent )
-    , m_type( type )
+         : K3ListView( parent ), m_type( type )
 {
     if( type == ImageList::UploadType )
     {
@@ -64,8 +62,7 @@ ImageList::ImageList( ListType type, QWidget *parent, const char *name )
     setAllColumnsShowFocus( true );
 }
 
-void
-ImageList::viewportPaintEvent( QPaintEvent *e )
+void ImageList::viewportPaintEvent( QPaintEvent *e )
 {
     if( e ) K3ListView::viewportPaintEvent( e );
 
@@ -156,3 +153,5 @@ void ImageList::droppedImagesItems( QDropEvent *e )
     if( !filesPath.isEmpty() )
        emit addedDropItems( filesPath );
 }
+
+} // namespace KIPIIpodExportPlugin

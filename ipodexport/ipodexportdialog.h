@@ -39,19 +39,22 @@ extern "C"
 #include <libkipi/interface.h>
 #endif
 
-class QCheckBox;
+class Q3ListViewItem;
 class Q3HGroupBox;
+
+class QCheckBox;
 class QLabel;
 class QPushButton;
+
+class K3ListView;
+class K3ListViewItem;
+
 class KComboBox;
 class KFileItem;
 class KLineEdit;
-class K3ListView;
-class K3ListViewItem;
 class KUrl;
-class Q3ListViewItem;
 
-namespace IpodExport
+namespace KIPIIpodExportPlugin
 {
 
 class ImageList;
@@ -61,90 +64,96 @@ class IpodHeader;
 
 class UploadDialog : public KDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
-    public:
-        UploadDialog(
-                        #if KIPI_PLUGIN
-                        KIPI::Interface* interface,
-                        #endif
-                        const QString& caption, QWidget *parent=0 );
+public:
 
-        ~UploadDialog()
-        {
-            if( m_itdb )
-                itdb_photodb_free( m_itdb );
-        }
+    UploadDialog(
+#if KIPI_PLUGIN
+                 KIPI::Interface* interface,
+#endif
+                 const QString& caption, QWidget *parent=0 );
 
-        static UploadDialog *instance() { return s_instance; }
+    ~UploadDialog()
+    {
+        if( m_itdb )
+            itdb_photodb_free( m_itdb );
+    }
 
-        QString ipodModel() const;
-        QString mountPoint() { return m_mountPoint; }
-        QString deviceNode() { return m_deviceNode; }
+    static UploadDialog *instance() { return s_instance; }
 
-    private slots:
-        void startTransfer();
+    QString ipodModel() const;
+    QString mountPoint() { return m_mountPoint; }
+    QString deviceNode() { return m_deviceNode; }
 
-        void addDropItems( QStringList filesPath );
+private slots:
 
-        void imageSelected( Q3ListViewItem *item );
-        void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
+    void startTransfer();
 
-        void ipodItemSelected( Q3ListViewItem *item );
-        void ipodShowContextMenu( Q3ListViewItem * ) { }
+    void addDropItems( QStringList filesPath );
 
-        void imagesFilesButtonAdd();
-        void imagesFilesButtonRem();
+    void imageSelected( Q3ListViewItem *item );
+    void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
 
-        void createIpodAlbum();
-        void deleteIpodAlbum();
-        void renameIpodAlbum();
+    void ipodItemSelected( Q3ListViewItem *item );
+    void ipodShowContextMenu( Q3ListViewItem * ) { }
 
-        void refreshDevices();
-        void updateSysInfo();
+    void imagesFilesButtonAdd();
+    void imagesFilesButtonRem();
 
-    private:
-        void addUrlToList( QString file );
-        bool deleteIpodAlbum( IpodAlbumItem *album );
-        bool deleteIpodPhoto( IpodPhotoItem *photo );
-        void enableButtons();
-        void getIpodAlbums();
-        void getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
-        Itdb_Artwork *photoFromId( const uint id );
-        void reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+    void createIpodAlbum();
+    void deleteIpodAlbum();
+    void renameIpodAlbum();
 
-        bool openDevice(); // connect to the ipod
+    void refreshDevices();
+    void updateSysInfo();
+
+private:
+
+    void addUrlToList( QString file );
+    bool deleteIpodAlbum( IpodAlbumItem *album );
+    bool deleteIpodPhoto( IpodPhotoItem *photo );
+    void enableButtons();
+    void getIpodAlbums();
+    void getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+    Itdb_Artwork *photoFromId( const uint id );
+    void reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+
+    bool openDevice(); // connect to the ipod
 
 #if KIPI_PLUGIN
-        KIPI::Interface *m_interface;
+    KIPI::Interface *m_interface;
 #endif
-        Itdb_PhotoDB    *m_itdb;
-        Itdb_IpodInfo   *m_ipodInfo;
-        IpodHeader      *m_ipodHeader;
-        bool             m_transferring;
+    Itdb_PhotoDB    *m_itdb;
+    Itdb_IpodInfo   *m_ipodInfo;
+    IpodHeader      *m_ipodHeader;
+    bool             m_transferring;
 
-        Q3ListViewItem   *m_destinationAlbum;
+    Q3ListViewItem   *m_destinationAlbum;
 
-        QPushButton     *m_createAlbumButton;
-        QPushButton     *m_removeAlbumButton;
-        QPushButton     *m_renameAlbumButton;
-        QPushButton     *m_addImagesButton;
-        QPushButton     *m_remImagesButton;
-        QPushButton     *m_transferImagesButton;
-        ImageList       *m_uploadList;
-        K3ListView       *m_ipodAlbumList;
-        QLabel          *m_imagePreview;
-        QLabel          *m_ipodPreview;
+    Q3HGroupBox      *m_destinationBox;
+    Q3HGroupBox      *m_urlListBox;
 
-        Q3HGroupBox      *m_destinationBox;
-        Q3HGroupBox      *m_urlListBox;
+    QPushButton     *m_createAlbumButton;
+    QPushButton     *m_removeAlbumButton;
+    QPushButton     *m_renameAlbumButton;
+    QPushButton     *m_addImagesButton;
+    QPushButton     *m_remImagesButton;
+    QPushButton     *m_transferImagesButton;
 
-        QString          m_mountPoint;
-        QString          m_deviceNode;
+    QLabel          *m_imagePreview;
+    QLabel          *m_ipodPreview;
 
-        static UploadDialog *s_instance;
+    QString          m_mountPoint;
+    QString          m_deviceNode;
+
+    K3ListView       *m_ipodAlbumList;
+
+    ImageList       *m_uploadList;
+
+    static UploadDialog *s_instance;
 };
 
-}
+} // namespace KIPIIpodExportPlugin
 
 #endif // IPOD_EXPORTDIALOG_H

@@ -30,37 +30,43 @@ extern "C"
 
 #include <k3listview.h>
 
-namespace IpodExport
+namespace KIPIIpodExportPlugin
 {
 
-    class IpodAlbumItem : public K3ListViewItem
-    {
-        public:
-            IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa );
+class IpodAlbumItem : public K3ListViewItem
+{
 
-            QString          name()       const { return m_name;       }
-            Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
+public:
 
-            void setPhotoAlbum( Itdb_PhotoAlbum *pa );
-            void setName( const QString & name );
+    IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa );
 
-        private:
-            QString          m_name;
-            Itdb_PhotoAlbum *m_photoAlbum;
-    };
+    QString          name()       const { return m_name;       }
+    Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
 
-    class IpodPhotoItem : public K3ListViewItem
-    {
-        public:
-            IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after, Itdb_Artwork *art );
+    void setPhotoAlbum( Itdb_PhotoAlbum *pa );
+    void setName( const QString & name );
 
-            Itdb_Artwork *artwork() const { return m_artwork; }
-            void          setArtwork( Itdb_Artwork *art );
+private:
 
-        private:
-            Itdb_Artwork *m_artwork;
-    };
+    QString          m_name;
+    Itdb_PhotoAlbum *m_photoAlbum;
+};
 
-}
+class IpodPhotoItem : public K3ListViewItem
+{
+
+public:
+
+    IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after, Itdb_Artwork *art );
+
+    Itdb_Artwork *artwork() const { return m_artwork; }
+    void          setArtwork( Itdb_Artwork *art );
+
+private:
+
+    Itdb_Artwork *m_artwork;
+};
+
+} // namespace KIPIIpodExportPlugin
 
 #endif  // IPODLISTITEM_H

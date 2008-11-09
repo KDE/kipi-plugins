@@ -33,10 +33,11 @@
 #include "qlabel.h"
 #include "qlayout.h"
 
-using namespace IpodExport;
+namespace KIPIIpodExportPlugin
+{
 
 IpodHeader::IpodHeader( QWidget *parent, const char *name, Qt::WFlags f )
-    : Q3Frame( parent, name, f )
+          : Q3Frame( parent, name, f )
 {
     Q3VBoxLayout *layout = new Q3VBoxLayout( this, 10/*margin*/, 5/*spacing*/ );
 
@@ -92,7 +93,9 @@ void IpodHeader::setNoIpod()
     m_button->show();
 
     m_button->disconnect();
-    connect( m_button, SIGNAL( clicked() ), SIGNAL( refreshDevices() ) );
+
+    connect(m_button, SIGNAL( clicked() ),
+            this, SIGNAL( refreshDevices() ));
 }
 
 void IpodHeader::setIncompatibleIpod()
@@ -110,7 +113,9 @@ void IpodHeader::setIncompatibleIpod()
     m_button->hide(); // FIXME its not implemented!
 
     m_button->disconnect();
-    connect( m_button, SIGNAL( clicked() ), SIGNAL( updateSysInfo() ) );
+
+    connect(m_button, SIGNAL( clicked() ), 
+            this, SIGNAL( updateSysInfo() ));
 }
 
 void IpodHeader::setValidIpod()
@@ -134,3 +139,5 @@ void IpodHeader::setValidIpod()
 
     m_button->hide();
 }
+
+} // namespace KIPIIpodExportPlugin

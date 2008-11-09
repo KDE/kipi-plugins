@@ -33,26 +33,28 @@ extern "C"
 #include <k3listview.h>
 #include <klocale.h>
 
-namespace IpodExport
+namespace KIPIIpodExportPlugin
 {
 
-    class ImageListItem : public K3ListViewItem
+class ImageListItem : public K3ListViewItem
+{
+
+public:
+
+    ImageListItem(Q3ListView *parent, QString const& pathSrc, QString const& name)
+        : K3ListViewItem( parent, QString::null/*set below*/, name )
+        , m_pathSrc( pathSrc )
     {
-    public:
+        setText( 0, pathSrc.section('/', -2, -2) );
+    }
 
-        ImageListItem( Q3ListView *parent, QString const & pathSrc, QString const & name )
-            : K3ListViewItem( parent, QString::null/*set below*/, name )
-            , m_pathSrc( pathSrc )
-        {
-            setText( 0, pathSrc.section('/', -2, -2) );
-        }
+    QString pathSrc()    const { return m_pathSrc;    }
 
-        QString          pathSrc()    const { return m_pathSrc;    }
+private:
 
-    private:
-        QString          m_pathSrc;
-    };
+    QString m_pathSrc;
+};
 
-}
+} // namespace KIPIIpodExportPlugin
 
 #endif  // IMAGELISTITEM_H

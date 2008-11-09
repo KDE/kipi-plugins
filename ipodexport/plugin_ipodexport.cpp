@@ -39,14 +39,13 @@ extern "C"
 
 #include <libkipi/imagecollection.h>
 
-#define debug() kDebug( 51000 )
+using namespace KIPIIpodExportPlugin;
 
 K_PLUGIN_FACTORY( IpodFactory, registerPlugin<Plugin_iPodExport>(); )
 K_EXPORT_PLUGIN ( IpodFactory("kipiplugin_ipodexport") )
 
-
 Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
-    : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
+                 : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
     kDebug( 51001 ) << "Plugin_iPodExport plugin loaded" << endl;
 
@@ -69,8 +68,8 @@ void Plugin_iPodExport::setup( QWidget* widget )
 
 void Plugin_iPodExport::slotImageUpload()
 {
-    IpodExport::UploadDialog *dlg = new IpodExport::UploadDialog(m_interface, i18n("iPod Export"),
-                                                                 kapp->activeWindow());
+    UploadDialog *dlg = new UploadDialog(m_interface, i18n("iPod Export"),
+                                         kapp->activeWindow());
     dlg->setMinimumWidth(460);
     dlg->show();
 }

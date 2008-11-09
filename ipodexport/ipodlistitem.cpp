@@ -24,15 +24,11 @@
 
 #include <klocale.h>
 
-using namespace IpodExport;
+namespace KIPIIpodExportPlugin
+{
 
-////////////////////////////////////////////
-/// Class IpodAlbumItem
-////////////////////////////////////////////
-
-IpodAlbumItem::IpodAlbumItem( Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa )
-    : K3ListViewItem( parent, after )
-    , m_photoAlbum( pa )
+IpodAlbumItem::IpodAlbumItem(Q3ListView *parent, Q3ListViewItem *after, Itdb_PhotoAlbum *pa)
+             : K3ListViewItem( parent, after ), m_photoAlbum( pa )
 {
     // don't use setName, as it writes to the ipod
     m_name = pa->name;
@@ -58,10 +54,7 @@ void IpodAlbumItem::setName( const QString & name )
     setText( 0, m_name );
 }
 
-
-////////////////////////////////////////////
-/// Class IpodPhotoItem
-////////////////////////////////////////////
+// ---------------------------------------------------------------------------
 
 IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *after,
                               Itdb_Artwork *art )
@@ -74,3 +67,5 @@ void IpodPhotoItem::setArtwork( Itdb_Artwork *art )
 {
     m_artwork = art;
 }
+
+} // namespace KIPIIpodExportPlugin
