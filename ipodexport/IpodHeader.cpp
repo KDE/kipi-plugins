@@ -23,30 +23,29 @@
 #include "IpodHeader.h"
 #include "IpodExportDialog.h"
 
-#include "klocale.h"
-#include "kpushbutton.h"
+#include <KLocale>
+#include <KPushButton>
 
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
-#include <Q3Frame>
-
-#include "qlabel.h"
-#include "qlayout.h"
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFrame>
 
 namespace KIPIIpodExportPlugin
 {
 
-IpodHeader::IpodHeader( QWidget *parent, const char *name, Qt::WFlags f )
-          : Q3Frame( parent, name, f )
+IpodHeader::IpodHeader( QWidget *parent, Qt::WFlags f )
+          : QFrame( parent, f )
 {
-    Q3VBoxLayout *layout = new Q3VBoxLayout( this, 10/*margin*/, 5/*spacing*/ );
+    QVBoxLayout *layout = new QVBoxLayout( this );
+    layout->setContentsMargins( 10, 10, 10, 10 );
+    layout->setSpacing( 5 );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
-    m_messageLabel = new QLabel( QString::null, this );
+    m_messageLabel = new QLabel( QString(), this );
     m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
 
-    Q3HBoxLayout *buttonLayout = new Q3HBoxLayout;
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
     m_button = new KPushButton( this );
     m_button->hide();
 
@@ -85,9 +84,10 @@ void IpodHeader::setNoIpod()
 {
     m_messageLabel->setText( i18n("<p align=\"center\"><b>No iPod was detected</b></p>" ) );
 
-    setPaletteBackgroundColor( QColor(147,18,18) );
-    m_messageLabel->setPaletteBackgroundColor( QColor(147,18,18) );
-    m_messageLabel->setPaletteForegroundColor( Qt::white );
+    QPalette p = palette();
+    p.setColor( QPalette::Window, QColor(147,18,18) );
+    p.setColor( QPalette::WindowText, Qt::white );
+    setPalette( p );
 
     m_button->setText( i18n( "Refresh" ) );
     m_button->show();
@@ -104,12 +104,12 @@ void IpodHeader::setIncompatibleIpod()
 
     m_messageLabel->setText( i18n("<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></p>" , modelType ) );
 
-    setPaletteBackgroundColor( QColor(225,150,0) );
-    m_messageLabel->setPaletteBackgroundColor( QColor(225,150,0)  );
-    m_messageLabel->setPaletteForegroundColor( Qt::white );
+    QPalette p = palette();
+    p.setColor( QPalette::Window, QColor(225,150,0) );
+    p.setColor( QPalette::WindowText, Qt::white );
+    setPalette( p );
 
     m_button->setText( i18n( "Set iPod Model" ) );
-//     m_button->show();
     m_button->hide(); // FIXME its not implemented!
 
     m_button->disconnect();
@@ -133,9 +133,10 @@ void IpodHeader::setValidIpod()
         m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected</b></p>" )
                                 .arg( modelType ) );
     }
-    setPaletteBackgroundColor( QColor(0,98,0) );
-    m_messageLabel->setPaletteBackgroundColor( QColor(0,98,0) );
-    m_messageLabel->setPaletteForegroundColor( Qt::white );
+    QPalette p = palette();
+    p.setColor( QPalette::Window, QColor(0,98,0) );
+    p.setColor( QPalette::WindowText, Qt::white );
+    setPalette( p );
 
     m_button->hide();
 }

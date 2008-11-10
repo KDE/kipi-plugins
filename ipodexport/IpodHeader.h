@@ -23,52 +23,46 @@
 #ifndef IPOD_HEADER_H
 #define IPOD_HEADER_H
 
-#include <q3frame.h>
-
+#include <QFrame> //Baseclass
 #include <QLabel>
 
-class QLabel;
 class KPushButton;
 
 namespace KIPIIpodExportPlugin
 {
 
-class IpodHeader : public Q3Frame
+class IpodHeader : public QFrame
 {
     Q_OBJECT
 
-public:
+    public:
+        IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
+        ~IpodHeader() {};
 
-    IpodHeader(QWidget *parent=0, const char *name=0, Qt::WFlags f=0);
-    ~IpodHeader() {};
+        enum ViewType 
+        {
+            NoIpod, 
+            IncompatibleIpod, 
+            ValidIpod
+        };
 
-    enum ViewType 
-    {
-        NoIpod, 
-        IncompatibleIpod, 
-        ValidIpod
-    };
+        void setViewType( ViewType view );
+        ViewType viewType() const { return m_viewType; };
 
-    void setViewType( ViewType view );
-    ViewType viewType() const { return m_viewType; };
+    signals:
+        void refreshDevices();
+        void updateSysInfo();
 
-signals:
+    private:
+        void setNoIpod();
+        void setIncompatibleIpod();
+        void setValidIpod();
 
-    void refreshDevices();
-    void updateSysInfo();
+    private:
+        ViewType     m_viewType;
 
-private:
-
-    void setNoIpod();
-    void setIncompatibleIpod();
-    void setValidIpod();
-
-private:
-
-    ViewType     m_viewType;
-
-    KPushButton *m_button;
-    QLabel      *m_messageLabel;
+        KPushButton *m_button;
+        QLabel      *m_messageLabel;
 };
 
 } // namespace KIPIIpodExportPlugin
