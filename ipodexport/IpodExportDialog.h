@@ -45,7 +45,7 @@ extern "C"
 #include <libkipi/interface.h>
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "ImageDialog.h"
+#include "imagedialog.h"
 #endif
 
 class Q3ListViewItem;
