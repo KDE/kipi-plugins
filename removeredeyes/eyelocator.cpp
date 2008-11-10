@@ -28,63 +28,59 @@
 
 #include <BlobResult.h>
 
+#ifdef WIN32
+#include <cv.h>
+#include <highgui.h>
+#else
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
+#endif
+
 namespace KIPIRemoveRedEyesPlugin
 {
 
-EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
-                       double scaleFactor, int neighborGroups,
-                       double minRoundness, int minBlobsize)
+class EyeLocatorPriv
 {
-    m_scaleFactor       = scaleFactor;
-    m_neighborGroups    = neighborGroups;
-    m_minBlobsize       = minBlobsize;
-    m_minRoundness      = minRoundness;
+public:
 
-    // open the image
-    m_src               = cvLoadImage(filename);
+    EyeLocatorPriv()
+    {
+        aChannel          = 0;
+        gray              = 0;
+        lab               = 0;
+        redMask           = 0;
+        src               = 0;
+        minRoundness      = 0.0;
+        scaleFactor       = 0.0;
+        minBlobsize       = 0;
+        neighborGroups    = 0;
+        possible_eyes     = 0;
+        red_eyes          = 0;
+    };
 
-    // allocate all buffers
-    m_gray              = cvCreateImage(cvGetSize(m_src), IPL_DEPTH_8U, 1);
-    m_lab               = cvCreateImage(cvGetSize(m_src), IPL_DEPTH_8U, 3);
-    m_aChannel          = cvCreateImage(cvGetSize(m_src), IPL_DEPTH_8U, 1);
-    m_redMask           = cvCreateImage(cvGetSize(m_src), IPL_DEPTH_8U, 1);
+    int     findPossibleEyes(double csf, int ngf, const char* classifierFile);
 
-    // reset eye counter
-    m_red_eyes          = 0;
-    m_possible_eyes     = 0;
+    void    removeRedEyes();
+    void    findBlobs(IplImage* i_mask, int minsize);
+    void    generateMask(int i_v, CvSeq* i_eyes);
 
-    // convert color spaces
-    cvCvtColor(m_src, m_gray, CV_BGR2GRAY);
-    cvCvtColor(m_src, m_lab, CV_BGR2Lab);
+public:
 
-    // reset masks
-    cvFillImage(m_aChannel, 0);
-    cvFillImage(m_redMask, 0);
+    IplImage*       aChannel;
+    IplImage*       gray;
+    IplImage*       lab;
+    IplImage*       redMask;
+    IplImage*       src;
 
-    // create a-channel image
-    cvSplit(m_lab, 0, m_aChannel, 0, 0);
+    double          minRoundness;
+    double          scaleFactor;
+    int             minBlobsize;
+    int             neighborGroups;
+    int             possible_eyes;
+    int             red_eyes;
+};
 
-    // find possible eyes
-    m_possible_eyes = findPossibleEyes(m_scaleFactor, m_neighborGroups, classifierFile);
-
-    // remove red eyes effect
-    if (m_possible_eyes > 0)
-        removeRedEyes();
-
-}
-
-
-EyeLocator::~EyeLocator()
-{
-    cvReleaseImage(&m_aChannel);
-    cvReleaseImage(&m_gray);
-    cvReleaseImage(&m_lab);
-    cvReleaseImage(&m_redMask);
-    cvReleaseImage(&m_src);
-}
-
-
-int EyeLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile)
+int EyeLocatorPriv::findPossibleEyes(double csf, int ngf, const char* classifierFile)
 {
     // eyes sequence will reside in the storage
     CvMemStorage* storage=cvCreateMemStorage(0);
@@ -95,7 +91,7 @@ int EyeLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile
     CvHaarClassifierCascade* cascade = (CvHaarClassifierCascade*)cvLoad(classifierFile);
 
     // get the sequence of eyes rectangles
-    eyes = cvHaarDetectObjects(m_gray,
+    eyes = cvHaarDetectObjects(gray,
                                cascade, storage,
                                csf,
                                ngf,
@@ -114,65 +110,10 @@ int EyeLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile
     return numEyes;
 }
 
-void EyeLocator::generateMask(int i_v, CvSeq* i_eyes)
+void EyeLocatorPriv::removeRedEyes()
 {
-    // get ROI
-    CvRect* r = (CvRect*)cvGetSeqElem(i_eyes, i_v);
-    cvSetImageROI(m_aChannel, *r);
-    cvSetImageROI(m_redMask, *r);
-
-    // treshold on a channel
-    cvThreshold(m_aChannel, m_redMask, 150, 255, CV_THRESH_BINARY);
-
-    // reset ROI
-    cvResetImageROI(m_aChannel);
-    cvResetImageROI(m_redMask);
-
-    // close masks
-    cvDilate(m_redMask, m_redMask, 0, 1);
-    cvErode(m_redMask, m_redMask, 0, 1);
-
-    findBlobs(m_redMask, (m_minBlobsize * m_minBlobsize));
-}
-
-
-void EyeLocator::findBlobs(IplImage* i_mask, int minsize)
-{
-    CBlobResult blobs;
-    blobs = CBlobResult(i_mask,0,0,true);
-    blobs.Filter( blobs,
-                  B_INCLUDE,
-                  CBlobGetArea(),
-                  B_GREATER, minsize);
-    blobs.Filter( blobs,
-                  B_INCLUDE,
-                  CBlobGetCompactness(),
-                  B_LESS_OR_EQUAL,
-                  m_minRoundness);
-    blobs.Filter(blobs, B_INCLUDE, CBlobGetExterior(), B_EQUAL, 0);
-
-    // fill the mask
-    cvFillImage(i_mask, 0);
-    m_red_eyes = 0;
-    for (int i = 0; i < blobs.GetNumBlobs(); i++)
-    {
-        CBlob tmp = blobs.GetBlob(i);
-        tmp.FillBlob(i_mask, CV_RGB(255, 255, 255));
-        m_red_eyes++;
-    }
-}
-
-
-int EyeLocator::redEyes() const
-{
-    return m_red_eyes;
-}
-
-
-void EyeLocator::removeRedEyes()
-{
-    IplImage* removed_redchannel = cvCreateImage(cvGetSize(m_src), IPL_DEPTH_8U, 3);
-    cvCopy(m_src, removed_redchannel);
+    IplImage* removed_redchannel = cvCreateImage(cvGetSize(src), IPL_DEPTH_8U, 3);
+    cvCopy(src, removed_redchannel);
 
     // remove red channel
     uchar* c_data  = (uchar*) removed_redchannel->imageData;
@@ -188,19 +129,126 @@ void EyeLocator::removeRedEyes()
         }
     }
     // smooth the mask
-    cvSmooth(m_redMask, m_redMask, CV_GAUSSIAN);
+    cvSmooth(redMask, redMask, CV_GAUSSIAN);
 
     // copy corrected image over src image
-    cvCopy(removed_redchannel, m_src, m_redMask);
+    cvCopy(removed_redchannel, src, redMask);
 
     // release temp image again
     cvReleaseImage(&removed_redchannel);
 }
 
+void EyeLocatorPriv::generateMask(int i_v, CvSeq* i_eyes)
+{
+    // get ROI
+    CvRect* r = (CvRect*)cvGetSeqElem(i_eyes, i_v);
+    cvSetImageROI(aChannel, *r);
+    cvSetImageROI(redMask, *r);
+
+    // treshold on a channel
+    cvThreshold(aChannel, redMask, 150, 255, CV_THRESH_BINARY);
+
+    // reset ROI
+    cvResetImageROI(aChannel);
+    cvResetImageROI(redMask);
+
+    // close masks
+    cvDilate(redMask, redMask, 0, 1);
+    cvErode(redMask, redMask, 0, 1);
+
+    findBlobs(redMask, (minBlobsize * minBlobsize));
+}
+
+
+void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
+{
+    CBlobResult blobs;
+    blobs = CBlobResult(i_mask,0,0,true);
+    blobs.Filter( blobs,
+                  B_INCLUDE,
+                  CBlobGetArea(),
+                  B_GREATER, minsize);
+    blobs.Filter( blobs,
+                  B_INCLUDE,
+                  CBlobGetCompactness(),
+                  B_LESS_OR_EQUAL,
+                  minRoundness);
+    blobs.Filter(blobs, B_INCLUDE, CBlobGetExterior(), B_EQUAL, 0);
+
+    // fill the mask
+    cvFillImage(i_mask, 0);
+    red_eyes = 0;
+    for (int i = 0; i < blobs.GetNumBlobs(); i++)
+    {
+        CBlob tmp = blobs.GetBlob(i);
+        tmp.FillBlob(i_mask, CV_RGB(255, 255, 255));
+        red_eyes++;
+    }
+}
+
+// --------------------------------------------------------------------
+
+EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
+                       double scaleFactor, int neighborGroups,
+                       double minRoundness, int minBlobsize)
+          : d(new EyeLocatorPriv)
+{
+    d->scaleFactor       = scaleFactor;
+    d->neighborGroups    = neighborGroups;
+    d->minBlobsize       = minBlobsize;
+    d->minRoundness      = minRoundness;
+
+    // open the image
+    d->src               = cvLoadImage(filename);
+
+    // allocate all buffers
+    d->gray              = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
+    d->lab               = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 3);
+    d->aChannel          = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
+    d->redMask           = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
+
+    // reset eye counter
+    d->red_eyes          = 0;
+    d->possible_eyes     = 0;
+
+    // convert color spaces
+    cvCvtColor(d->src, d->gray, CV_BGR2GRAY);
+    cvCvtColor(d->src, d->lab, CV_BGR2Lab);
+
+    // reset masks
+    cvFillImage(d->aChannel, 0);
+    cvFillImage(d->redMask, 0);
+
+    // create a-channel image
+    cvSplit(d->lab, 0, d->aChannel, 0, 0);
+
+    // find possible eyes
+    d->possible_eyes = d->findPossibleEyes(d->scaleFactor, d->neighborGroups, classifierFile);
+
+    // remove red eyes effect
+    if (d->possible_eyes > 0)
+        d->removeRedEyes();
+
+}
+
+EyeLocator::~EyeLocator()
+{
+    cvReleaseImage(&d->aChannel);
+    cvReleaseImage(&d->gray);
+    cvReleaseImage(&d->lab);
+    cvReleaseImage(&d->redMask);
+    cvReleaseImage(&d->src);
+    delete d;
+}
+
+int EyeLocator::redEyes() const
+{
+    return d->red_eyes;
+}
 
 void EyeLocator::saveImage(const char * path)
 {
-    cvSaveImage(path, m_src);
+    cvSaveImage(path, d->src);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

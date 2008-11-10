@@ -25,20 +25,10 @@
 #ifndef EYELOCATOR_H
 #define EYELOCATOR_H
 
-// OpenCV includes.
-
-#ifdef WIN32 
-#include <cv.h> 
-#include <highgui.h>
-#else 	 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#endif
-
-class KUrl;
-
 namespace KIPIRemoveRedEyesPlugin
 {
+
+class EyeLocatorPriv;
 
 class EyeLocator
 {
@@ -54,31 +44,12 @@ public:
 
 public:
 
-    int             redEyes() const;
-    void            saveImage(const char* path);
+    int     redEyes() const;
+    void    saveImage(const char* path);
 
 private:
 
-    IplImage*       m_aChannel;
-    IplImage*       m_gray;
-    IplImage*       m_lab;
-    IplImage*       m_redMask;
-    IplImage*       m_src;
-
-    double          m_minRoundness;
-    double          m_scaleFactor;
-    int             m_minBlobsize;
-    int             m_neighborGroups;
-    int             m_possible_eyes;
-    int             m_red_eyes;
-
-private:
-
-    int             findPossibleEyes(double csf, int ngf, const char* classifierFile);
-
-    void            removeRedEyes();
-    void            findBlobs(IplImage* i_mask, int minsize);
-    void            generateMask(int i_v, CvSeq* i_eyes);
+    EyeLocatorPriv* const d;
 };
 } // namespace KIPIRemoveRedEyesPlugin
 
