@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "ipodlistitem.h"
+#include "IpodListItem.h"
 
 #include <klocale.h>
 

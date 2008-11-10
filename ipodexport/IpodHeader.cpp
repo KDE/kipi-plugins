@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#include "ipodheader.h"
-#include "ipodexportdialog.h"
+#include "IpodHeader.h"
+#include "IpodExportDialog.h"
 
 #include "klocale.h"
 #include "kpushbutton.h"

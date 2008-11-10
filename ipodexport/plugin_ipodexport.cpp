@@ -27,7 +27,7 @@ extern "C"
 
 // Local includes.
 
-#include "ipodexportdialog.h"
+#include "IpodExportDialog.h"
 #include "plugin_ipodexport.h"
 
 // KDE includes
