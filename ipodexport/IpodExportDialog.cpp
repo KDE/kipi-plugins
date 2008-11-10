@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <me at sebruiz dot net>
+ * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,11 +22,11 @@
 
 // Local includes.
 
-#include "ipodheader.h"
-#include "imagelist.h"
-#include "imagelistitem.h"
-#include "ipodexportdialog.h"
-#include "ipodlistitem.h"
+#include "IpodHeader.h"
+#include "ImageList.h"
+#include "ImageListItem.h"
+#include "IpodExportDialog.h"
+#include "IpodListItem.h"
 
 // Qt includes.
 
@@ -105,7 +105,7 @@ UploadDialog::UploadDialog(
                                            ki18n("(c) 2006-2008, Seb Ruiz"));
 
     m_about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
-                       "me at sebruiz dot net");
+                       "ruiz@kde.org");
 
     m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
