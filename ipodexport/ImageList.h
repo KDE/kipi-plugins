@@ -23,43 +23,35 @@
 #ifndef IMAGELIST_H
 #define IMAGELIST_H
 
-#include <QPaintEvent>
-#include <QDropEvent>
-#include <QDragEnterEvent>
-
-#include <k3listview.h>
+#include <QTreeWidget>
 
 namespace KIPIIpodExportPlugin
 {
 
-class ImageList : public K3ListView
+class ImageList : public QTreeWidget
 {
-Q_OBJECT
+        Q_OBJECT
+    
+    public:
+        enum ListType { UploadType, IpodType };
+        
+        ImageList( ListType = UploadType, QWidget *parent = 0 );
 
-public:
+        ListType getType() const { return m_type; }
 
-    enum ListType { UploadType, IpodType };
+    signals:
+        void addedDropItems( QStringList filesPath );
 
-    ImageList( ListType=UploadType, QWidget *parent=0, const char *name=0 );
+    protected:
+        //bool acceptDrag( QDropEvent *e ) const;
+        //void contentsDropEvent( QDropEvent *e );
+        //void dragEnterEvent( QDragEnterEvent *e );
+        //void dropEvent( QDropEvent *e );
+        //void droppedImagesItems( QDropEvent *e );
+        //void viewportPaintEvent( QPaintEvent *e );
 
-    ListType getType() const { return m_type; }
-
-signals:
-
-    void addedDropItems( QStringList filesPath );
-
-protected:
-
-    bool acceptDrag( QDropEvent *e ) const;
-    void contentsDropEvent( QDropEvent *e );
-    void dragEnterEvent( QDragEnterEvent *e );
-    void dropEvent( QDropEvent *e );
-    void droppedImagesItems( QDropEvent *e );
-    void viewportPaintEvent( QPaintEvent *e );
-
-private:
-
-    ListType m_type;
+    private:
+        ListType m_type;
 };
 
 } // namespace KIPIIpodExportPlugin

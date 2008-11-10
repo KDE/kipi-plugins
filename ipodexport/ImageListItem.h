@@ -28,31 +28,27 @@ extern "C"
 #include <gpod/itdb.h>
 }
 
-#include <qstring.h>
-
-#include <k3listview.h>
-#include <klocale.h>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 
 namespace KIPIIpodExportPlugin
 {
 
-class ImageListItem : public K3ListViewItem
+class ImageListItem : public QTreeWidgetItem
 {
+    public:
+        ImageListItem( QTreeWidget *parent, const QString &pathSrc, const QString &name )
+            : QTreeWidgetItem( parent )
+            , m_pathSrc( pathSrc )
+        {
+            setText( 0, pathSrc.section('/', -2, -2) );
+            setText( 1, name );
+        }
 
-public:
+        QString pathSrc() const { return m_pathSrc; }
 
-    ImageListItem(Q3ListView *parent, QString const& pathSrc, QString const& name)
-        : K3ListViewItem( parent, QString::null/*set below*/, name )
-        , m_pathSrc( pathSrc )
-    {
-        setText( 0, pathSrc.section('/', -2, -2) );
-    }
-
-    QString pathSrc()    const { return m_pathSrc;    }
-
-private:
-
-    QString m_pathSrc;
+    private:
+        QString m_pathSrc;
 };
 
 } // namespace KIPIIpodExportPlugin

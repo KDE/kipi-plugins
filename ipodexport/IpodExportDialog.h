@@ -48,15 +48,11 @@ extern "C"
 #include "imagedialog.h"
 #endif
 
-class Q3ListViewItem;
-class Q3HGroupBox;
-
 class QCheckBox;
+class QGroupBox;
 class QLabel;
 class QPushButton;
-
-class K3ListView;
-class K3ListViewItem;
+class QTreeWidgetItem;
 
 class KComboBox;
 class KFileItem;
@@ -100,11 +96,10 @@ private slots:
 
     void addDropItems( QStringList filesPath );
 
-    void imageSelected( Q3ListViewItem *item );
+    void imageSelected( QTreeWidgetItem *item );
     void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
 
-    void ipodItemSelected( Q3ListViewItem *item );
-    void ipodShowContextMenu( Q3ListViewItem * ) {};
+    void ipodItemSelected( QTreeWidgetItem *item );
 
     void imagesFilesButtonAdd();
     void imagesFilesButtonRem();
@@ -141,10 +136,8 @@ private:
     IpodHeader      *m_ipodHeader;
     bool             m_transferring;
 
-    Q3ListViewItem  *m_destinationAlbum;
-
-    Q3HGroupBox     *m_destinationBox;
-    Q3HGroupBox     *m_urlListBox;
+    QGroupBox       *m_destinationBox;
+    QGroupBox       *m_urlListBox;
 
     QPushButton     *m_createAlbumButton;
     QPushButton     *m_removeAlbumButton;
@@ -159,7 +152,7 @@ private:
     QString          m_mountPoint;
     QString          m_deviceNode;
 
-    K3ListView      *m_ipodAlbumList;
+    ImageList       *m_ipodAlbumList;
 
     ImageList       *m_uploadList;
 
