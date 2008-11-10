@@ -96,7 +96,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
                    : KDialog(parent),
                      d(new RedEyesWindowPriv)
 {
-    setWindowTitle(i18n("Remove Red-Eyes From Your Photos"));
+    setWindowTitle(i18n("Automatically remove red-eyes"));
     setButtons(Help|User1|User2|Close);
     setDefaultButton(Close);
     setModal(false);
