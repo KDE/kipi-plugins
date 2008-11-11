@@ -2,6 +2,8 @@
 Encoding=UTF-8
 Name=iPodExport
 Comment=KIPI iPod Export Plugin
+Comment[ja]=Kipi iPod エクスポートプラグイン
+Comment[uk]=Додаток KIPI для експорту до iPod
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_ipodexport
