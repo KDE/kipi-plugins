@@ -198,18 +198,13 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     d->minBlobsize       = minBlobsize;
     d->minRoundness      = minRoundness;
 
-    // open the image
     d->src               = cvLoadImage(filename);
 
     // allocate all buffers
-    d->gray              = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
     d->lab               = cvCreateImage(cvGetSize(d->src), d->src->depth, 3);
+    d->gray              = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
     d->aChannel          = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
     d->redMask           = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
-
-    // reset eye counter
-    d->red_eyes          = 0;
-    d->possible_eyes     = 0;
 
     // convert color spaces
     cvCvtColor(d->src, d->gray, CV_BGR2GRAY);
@@ -219,7 +214,7 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     cvFillImage(d->aChannel, 0);
     cvFillImage(d->redMask, 0);
 
-    // create a-channel image
+    // create aChannel image
     cvSplit(d->lab, 0, d->aChannel, 0, 0);
 
     // find possible eyes
