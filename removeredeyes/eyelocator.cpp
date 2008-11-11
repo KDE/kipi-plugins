@@ -202,10 +202,10 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     d->src               = cvLoadImage(filename);
 
     // allocate all buffers
-    d->gray              = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
-    d->lab               = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 3);
-    d->aChannel          = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
-    d->redMask           = cvCreateImage(cvGetSize(d->src), IPL_DEPTH_8U, 1);
+    d->gray              = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
+    d->lab               = cvCreateImage(cvGetSize(d->src), d->src->depth, 3);
+    d->aChannel          = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
+    d->redMask           = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
 
     // reset eye counter
     d->red_eyes          = 0;
