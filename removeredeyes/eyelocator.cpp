@@ -91,6 +91,7 @@ int EyeLocatorPriv::findPossibleEyes(double csf, int ngf, const char* classifier
     CvHaarClassifierCascade* cascade = (CvHaarClassifierCascade*)cvLoad(classifierFile);
 
     // get the sequence of eyes rectangles
+    cvCvtColor(src, gray, CV_BGR2GRAY);
     eyes = cvHaarDetectObjects(gray,
                                cascade, storage,
                                csf,
@@ -100,9 +101,17 @@ int EyeLocatorPriv::findPossibleEyes(double csf, int ngf, const char* classifier
 
     // extract each region as a new image
     numEyes = eyes ? eyes->total : 0;
+    if (numEyes > 0)
+    {
+        // generate LAB color space image
+        cvCvtColor(src, lab, CV_BGR2Lab);
 
-    for (int v=0; v < numEyes; v++)
-        generateMask(v, eyes);
+        // create aChannel image
+        cvSplit(lab, 0, aChannel, 0, 0);
+
+        for (int v = 0; v < numEyes; v++)
+            generateMask(v, eyes);
+    }
 
     cvReleaseMemStorage(&storage);
     cvReleaseHaarClassifierCascade(&cascade);
@@ -207,16 +216,9 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     d->aChannel          = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
     d->redMask           = cvCreateImage(cvGetSize(d->src), d->src->depth, 1);
 
-    // convert color spaces
-    cvCvtColor(d->src, d->gray, CV_BGR2GRAY);
-    cvCvtColor(d->src, d->lab, CV_BGR2Lab);
-
     // reset masks
     cvFillImage(d->aChannel, 0);
     cvFillImage(d->redMask, 0);
-
-    // create aChannel image
-    cvSplit(d->lab, 0, d->aChannel, 0, 0);
 
     // find possible eyes
     d->possible_eyes = d->findPossibleEyes(d->scaleFactor, d->neighborGroups, classifierFile);
