@@ -112,7 +112,7 @@ int EyeLocatorPriv::findPossibleEyes(double csf, int ngf, const char* classifier
 
 void EyeLocatorPriv::removeRedEyes()
 {
-    IplImage* removed_redchannel = cvCreateImage(cvGetSize(src), IPL_DEPTH_8U, 3);
+    IplImage* removed_redchannel = cvCreateImage(cvGetSize(src), src->depth, 3);
     cvCopy(src, removed_redchannel);
 
     // remove red channel
