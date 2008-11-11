@@ -206,6 +206,9 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   connect(d->mPhotoPage->EditCopies, SIGNAL(valueChanged(int)), 
           this, SLOT( EditCopies_valueChanged(int) ) );
+  
+  connect (d->mPhotoPage->ListPhotoSizes, SIGNAL(  currentRowChanged(int)),
+          this, SLOT(ListPhotoSizes_selected()));
 
   // Default is A4
   d->mInfoPage->CmbPaperSize->setCurrentIndex(A4);
@@ -1693,8 +1696,6 @@ void Wizard::ListPhotoOrder_highlighted ( int index )
   manageBtnPrintOrder();
 }
 
-
-
 void Wizard::ListPrintOrder_selected()
 {
   int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
@@ -1703,6 +1704,11 @@ void Wizard::ListPrintOrder_selected()
   d->mPhotoPage->EditCopies->blockSignals(false);
 
   manageBtnPrintOrder();
+}
+
+void Wizard::ListPhotoSizes_selected( )
+{
+  previewPhotos();
 }
 
 void Wizard::BtnPrintOrderDown_clicked() {

@@ -77,6 +77,7 @@ typedef struct _TPhotoSize {
       virtual void ListPrintOrder_selected();
       virtual void ListPhotoOrder_highlighted (int );
       virtual void EditCopies_valueChanged(int);
+      virtual void ListPhotoSizes_selected();
 
       //private slots:
       //	void updateFinishButton();
