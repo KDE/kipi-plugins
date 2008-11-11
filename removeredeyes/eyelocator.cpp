@@ -119,6 +119,7 @@ void EyeLocatorPriv::removeRedEyes()
     uchar* c_data  = (uchar*) removed_redchannel->imageData;
     int c_step     = removed_redchannel->widthStep / sizeof(uchar);
     int c_channels = removed_redchannel->nChannels;
+
     for (int i = 0; i < removed_redchannel->height - 1; i++)
     {
         for (int j=0; j<removed_redchannel->width-1; j++)
@@ -128,10 +129,11 @@ void EyeLocatorPriv::removeRedEyes()
                                                     uchar(c_data[i*c_step+j*c_channels+0])*0.3);
         }
     }
+
     // smooth the mask
     cvSmooth(redMask, redMask, CV_GAUSSIAN);
 
-    // copy corrected image over src image
+    // copy corrected image over src image using the mask
     cvCopy(removed_redchannel, src, redMask);
 
     // release temp image again
@@ -145,7 +147,7 @@ void EyeLocatorPriv::generateMask(int i_v, CvSeq* i_eyes)
     cvSetImageROI(aChannel, *r);
     cvSetImageROI(redMask, *r);
 
-    // treshold on a channel
+    // treshold on aChannel
     cvThreshold(aChannel, redMask, 150, 255, CV_THRESH_BINARY);
 
     // reset ROI
@@ -158,7 +160,6 @@ void EyeLocatorPriv::generateMask(int i_v, CvSeq* i_eyes)
 
     findBlobs(redMask, (minBlobsize * minBlobsize));
 }
-
 
 void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
 {
@@ -220,7 +221,7 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     // find possible eyes
     d->possible_eyes = d->findPossibleEyes(d->scaleFactor, d->neighborGroups, classifierFile);
 
-    // remove red eyes effect
+    // remove red-eye effect
     if (d->possible_eyes > 0)
         d->removeRedEyes();
 
