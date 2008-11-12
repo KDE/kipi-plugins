@@ -148,8 +148,8 @@ void SimpleSettings::simpleModeChanged(int value)
 
         case Fast:
             d->settings.minRoundness   = 3.2;
-            d->settings.scaleFactor    = 3.6;
-            d->settings.minBlobsize    = 20;
+            d->settings.scaleFactor    = 8.02;
+            d->settings.minBlobsize    = 10;
             d->settings.neighborGroups = 1;
             break;
 
