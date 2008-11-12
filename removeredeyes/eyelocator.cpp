@@ -167,7 +167,8 @@ void EyeLocatorPriv::generateMask(int i_v, CvSeq* i_eyes)
     cvDilate(redMask, redMask, 0, 1);
     cvErode(redMask, redMask, 0, 1);
 
-    findBlobs(redMask, (minBlobsize * minBlobsize));
+    int minSize = minBlobsize * minBlobsize;
+    findBlobs(redMask, minSize);
 }
 
 void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
