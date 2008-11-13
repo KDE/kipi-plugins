@@ -24,21 +24,26 @@
 #define COMMON_H
 
 // Qt includes.
+
 #include <QString>
 #include <QFont>
 
 // KDE includes.
+
 #include <kurl.h>
 #include <kpagedialog.h>
 #include <kpagewidgetmodel.h>
 
 // Phonon includes
+
 #include <Phonon/VolumeSlider>
 
 // LibKIPI includes.
+
 #include <libkipi/interface.h>
 
 // Local includes.
+
 #include "maindialog.h"
 #include "captiondialog.h"
 #include "soundtrackdialog.h"
@@ -62,6 +67,7 @@ class SharedData
 {
 
 public:
+
     SharedData();
     ~SharedData();
 
@@ -123,11 +129,10 @@ class VolumeSlider : public Phonon::VolumeSlider
 {
 
 public:
+
     VolumeSlider(QWidget* parent);
 };
 
+} // namespace KIPISlideShowPlugin
 
-
-}
-
-#endif
+#endif // COMMON_H

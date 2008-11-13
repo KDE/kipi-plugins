@@ -27,44 +27,44 @@ namespace KIPISlideShowPlugin
 
 SharedData::SharedData()
 {
-    interface = 0;
-    delayMsMaxValue = 0;
-    delayMsMinValue = 0;
-    delayMsLineStep = 0;
+    interface         = 0;
+    delayMsMaxValue   = 0;
+    delayMsMinValue   = 0;
+    delayMsLineStep   = 0;
     ImagesHasComments = false;
-    urlList = 0;
-    mainPage = 0;
-    captionPage = 0;
-    advancedPage = 0;
-    soundtrackPage = 0;
+    urlList           = 0;
+    mainPage          = 0;
+    captionPage       = 0;
+    advancedPage      = 0;
+    soundtrackPage    = 0;
 
-    opengl = false;
-    delay = 0;
-    printFileName = false;
-    printProgress = false;
-    printFileComments = false;
-    loop = false;
-    shuffle = false;
+    opengl                = false;
+    delay                 = 0;
+    printFileName         = false;
+    printProgress         = false;
+    printFileComments     = false;
+    loop                  = false;
+    shuffle               = false;
     showSelectedFilesOnly = false;
-    commentsFontColor = 0;
-    commentsBgColor = 0;
-    transparentBg = false;
-    commentsLinesLength = 0;
-    captionFont = 0;
+    commentsFontColor     = 0;
+    commentsBgColor       = 0;
+    transparentBg         = false;
+    commentsLinesLength   = 0;
+    captionFont           = 0;
 
     soundtrackLoop = false;
 
-    useMilliseconds = false;
-    enableMouseWheel = false;
-    enableCache = false;
+    useMilliseconds    = false;
+    enableMouseWheel   = false;
+    enableCache        = false;
     kbDisableFadeInOut = false;
     kbDisableCrossFade = false;
-    cacheSize = 0;
+    cacheSize          = 0;
 
-    page_main = 0;
-    page_caption = 0;
+    page_main       = 0;
+    page_caption    = 0;
     page_soundtrack = 0;
-    page_advanced = 0;
+    page_advanced   = 0;
 }
 
 SharedData::~SharedData()
@@ -82,10 +82,9 @@ SharedData::~SharedData()
 //    if ( captionFont ) delete captionFont;
 }
 
-
 VolumeSlider::VolumeSlider(QWidget* parent)
             : Phonon::VolumeSlider(parent)
 {
 }
 
-}
+} // namespace KIPISlideShowPlugin
