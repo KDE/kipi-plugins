@@ -39,7 +39,8 @@ public:
                double scaleFactor,
                int neighborGroups,
                double minRoundness,
-               int minBlobsize);
+               int minBlobsize,
+               bool scaleDown = false);
     ~EyeLocator();
 
 public:

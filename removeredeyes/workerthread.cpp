@@ -35,6 +35,7 @@
 
 #include "eyelocator.h"
 #include "removalsettings.h"
+#include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthreaddata.h"
 
@@ -91,13 +92,18 @@ void WorkerThread::run()
         QByteArray src = QFile::encodeName(url.path());
         QByteArray cls = QFile::encodeName(d->settings.classifierFile);
 
-        // find and remove red eyes
+        bool scaleDown = false;
+
+        if (d->settings.simpleMode == SimpleSettings::Fast)
+            scaleDown = true;
+
         EyeLocator loc(src.data(),
                        cls.data(),
                        d->settings.scaleFactor,
                        d->settings.neighborGroups,
                        d->settings.minRoundness,
-                       d->settings.minBlobsize);
+                       d->settings.minBlobsize,
+                       scaleDown);
 
         // save image to specified location
         if ((d->runtype == Correction) && (loc.redEyes() > 0))
