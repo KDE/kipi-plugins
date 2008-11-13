@@ -91,12 +91,12 @@ void BlobSettingsBox::setMinBlobSize(int value)
 
 double BlobSettingsBox::minRoundness() const
 {
-    return d->minRoundnessNumInput->value();
+    return ((double)(d->minRoundnessNumInput->value()));
 }
 
 void BlobSettingsBox::setMinRoundness(double value)
 {
-    d->minRoundnessNumInput->setValue(value);
+    d->minRoundnessNumInput->setValue((int)value);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

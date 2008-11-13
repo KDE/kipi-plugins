@@ -99,8 +99,8 @@ IplImage* EyeLocatorPriv::scaleDownImage(IplImage* src)
     int minimum = getMinimumSize(src);
     float factor = minSize / (float) minimum;
 
-    IplImage* out = cvCreateImage(cvSize((int) src->width  * factor,
-                                         (int) src->height * factor),
+    IplImage* out = cvCreateImage(cvSize((int)(src->width  * factor),
+                                         (int)(src->height * factor)),
                                   src->depth,
                                   src->nChannels);
     cvResize(src, out);
