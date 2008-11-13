@@ -94,7 +94,7 @@ void WorkerThread::run()
 
         bool scaleDown = false;
 
-        if (d->settings.simpleMode == SimpleSettings::Fast)
+        if (d->settings.simpleMode == SimpleSettings::Fast && d->settings.useSimpleMode)
             scaleDown = true;
 
         EyeLocator loc(src.data(),

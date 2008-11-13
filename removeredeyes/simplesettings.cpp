@@ -166,6 +166,7 @@ void SimpleSettings::simpleModeChanged(int value)
 void SimpleSettings::prepareSettings()
 {
     d->settings.useStandardClassifier  = true;
+    d->settings.useSimpleMode          = true;
     d->settings.simpleMode             = d->settingsSlider->value();
     d->settings.classifierFile         = STANDARD_CLASSIFIER;
 }

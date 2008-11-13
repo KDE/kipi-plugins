@@ -47,6 +47,7 @@ class RemovalSettings
         {
 
             useStandardClassifier   = true;
+            useSimpleMode           = true;
             minRoundness            = 0.0;
             scaleFactor             = 0.0;
 
@@ -74,6 +75,7 @@ class RemovalSettings
         };
 
         bool        useStandardClassifier;
+        bool        useSimpleMode;
 
         double      minRoundness;
         double      scaleFactor;

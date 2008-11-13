@@ -80,6 +80,7 @@ AdvancedSettings::~AdvancedSettings()
 void AdvancedSettings::prepareSettings()
 {
     d->settings.useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
+    d->settings.useSimpleMode          = false;
     if (d->classifierSettingsBox->useStandardClassifier())
         d->settings.classifierFile = STANDARD_CLASSIFIER;
     else
