@@ -140,21 +140,21 @@ void SimpleSettings::simpleModeChanged(int value)
     switch (value)
     {
         case Standard:
-            d->settings.minRoundness   = 3.2;
+            d->settings.minRoundness   = 31;
             d->settings.scaleFactor    = 1.2;
             d->settings.minBlobsize    = 10;
             d->settings.neighborGroups = 2;
             break;
 
         case Fast:
-            d->settings.minRoundness   = 3.2;
-            d->settings.scaleFactor    = 8.02;
-            d->settings.minBlobsize    = 10;
-            d->settings.neighborGroups = 1;
+            d->settings.minRoundness   = 50;
+            d->settings.scaleFactor    = 1.2;
+            d->settings.minBlobsize    = 3;
+            d->settings.neighborGroups = 2;
             break;
 
         case Slow:
-            d->settings.minRoundness   = 3.2;
+            d->settings.minRoundness   = 31;
             d->settings.scaleFactor    = 1.05;
             d->settings.minBlobsize    = 6;
             d->settings.neighborGroups = 2;

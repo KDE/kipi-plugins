@@ -207,7 +207,7 @@ EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
     d->scaleFactor       = scaleFactor;
     d->neighborGroups    = neighborGroups;
     d->minBlobsize       = minBlobsize;
-    d->minRoundness      = minRoundness;
+    d->minRoundness      = double(1) / (double(minRoundness) / 100.0);
 
     d->src               = cvLoadImage(filename);
 

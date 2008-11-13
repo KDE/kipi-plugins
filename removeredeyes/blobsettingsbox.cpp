@@ -47,7 +47,7 @@ public:
     }
 
     KIntNumInput*       minBlobSizeNumInput;
-    KDoubleNumInput*    minRoundnessNumInput;
+    KIntNumInput*       minRoundnessNumInput;
 };
 
 BlobSettingsBox::BlobSettingsBox(QWidget* parent)
@@ -61,13 +61,15 @@ BlobSettingsBox::BlobSettingsBox(QWidget* parent)
     d->minBlobSizeNumInput->setRange(1, 100, 1);
     d->minBlobSizeNumInput->setSliderEnabled(true);
 
-    d->minRoundnessNumInput = new KDoubleNumInput;
+    d->minRoundnessNumInput = new KIntNumInput;
     d->minRoundnessNumInput->setLabel(i18n("Minimum roundness:"));
-    d->minRoundnessNumInput->setRange(1.0, 5.0, 0.01);
+    d->minRoundnessNumInput->setRange(0, 100, 1);
+    d->minRoundnessNumInput->setSliderEnabled(true);
+    d->minRoundnessNumInput->setSuffix("%");
 
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addWidget(d->minBlobSizeNumInput,  0, 0, 1,-1);
-    mainLayout->addWidget(d->minRoundnessNumInput, 1, 0, 1,-1);
+    mainLayout->addWidget(d->minBlobSizeNumInput,  0, 0, 1, 2);
+    mainLayout->addWidget(d->minRoundnessNumInput, 1, 0, 1, 2);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
 }
