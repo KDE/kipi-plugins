@@ -161,18 +161,22 @@ UploadDialog::UploadDialog(
     buttonLayout->setMargin(0);
     buttonLayout->setMargin(spacingHint());
 
-    m_urlListBox            = new QGroupBox( i18n("Hard Disk"), box );
-    QWidget* urlBox         = new QWidget( m_urlListBox );
-    QHBoxLayout* urlLayout  = new QHBoxLayout( urlBox );
-    m_uploadList = new ImageList( ImageList::UploadType, urlBox );
+    m_urlListBox           = new QGroupBox( i18n("Hard Disk"), box );
+    QWidget* urlBox        = new QWidget( m_urlListBox );
+    QHBoxLayout* urlLayout = new QHBoxLayout( urlBox );
+    m_uploadList           = new ImageList( ImageList::UploadType, urlBox );
     m_uploadList->setMinimumHeight( 80 );
-    urlLayout->addWidget( m_uploadList );
 
     m_uploadList->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
 
-    QVBoxLayout* uploadPaneLayout = new QVBoxLayout( urlLayout );
+    QVBoxLayout* uploadPaneLayout = new QVBoxLayout();
     m_addImagesButton             = new QPushButton( i18n("&Add..."), urlBox );
     m_addImagesButton->setWhatsThis(i18n("Add images to be queued for the iPod."));
+
+    urlLayout->addWidget( m_uploadList );
+    urlLayout->addLayout( uploadPaneLayout );
+    urlLayout->setMargin(0);
+    urlLayout->setMargin(0);
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), urlBox );
     m_remImagesButton->setWhatsThis( i18n("Remove selected image from the list.") );
@@ -284,7 +288,7 @@ void UploadDialog::getIpodAlbums()
         Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum *) it->data;
 
         kDebug(51000) << " found album: " << ipodAlbum->name << endl;
-        
+
         IpodAlbumItem *albumItem = new IpodAlbumItem( m_ipodAlbumList, ipodAlbum );
 
         m_ipodAlbumList->addTopLevelItem( albumItem );
