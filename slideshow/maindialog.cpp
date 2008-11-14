@@ -603,7 +603,7 @@ void MainDialog::SlotPortfolioDurationChanged ( int )
     emit totalTimeChanged( m_totalTime );
 }
 
-void MainDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void MainDialog::slotThumbnail(const KUrl& /*url*/, const QPixmap& pix)
 { 
     if (pix.isNull())
         m_previewLabel->setPixmap(SmallIcon("image-x-generic", ICONSIZE, KIconLoader::DisabledState));
