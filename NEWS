@@ -5,6 +5,7 @@ Kipi-plugins NEW FEATURES:
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
+001 ==> 175033 : GPSSync            : gpssync does not get any map just a grey square.
 
 v 0.1.6
 ---------------------------------------------------------------------------
