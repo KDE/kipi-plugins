@@ -626,6 +626,8 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
             }
         }
     }
+#else
+    Q_UNUSED(photo);
 #endif
     return true;
 }
@@ -696,6 +698,8 @@ void UploadDialog::addDropItems( QStringList filesPath )
     }
 
     enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
+#else
+    Q_UNUSED(filesPath);
 #endif
 }
 
