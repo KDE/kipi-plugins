@@ -48,6 +48,7 @@ private slots:
 	void updateCollectionSelectorPageValidity();
 	void updateFinishPageValidity();
 	void slotThemeSelectionChanged();
+    void slotHelp();
 
 private:
 	struct Private;

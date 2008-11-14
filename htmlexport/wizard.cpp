@@ -42,6 +42,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <kmenu.h>
 #include <ktextbrowser.h>
 #include <kurlrequester.h>
+#include <ktoolinvocation.h>
+#include <kpushbutton.h>
+#include <khelpmenu.h>
 
 // KIPI includes.
 
@@ -203,7 +206,11 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 	d=new Private;
 	d->mInfo=info;
 
-	// About data
+    setCaption(i18n("Export image collections to HTML pages"));
+
+    // ---------------------------------------------------------------
+    // About data and help button.
+
 	d->mAbout = new KIPIPlugins::KPAboutData(
 		ki18n("HTML Export"),
 		QByteArray(),
@@ -215,6 +222,19 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 		ki18n("Aurelien Gateau"),
 		ki18n("Author and Maintainer"),
 		"aurelien.gateau@free.fr");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setDelayedMenu( helpMenu->menu() );
+
+    // ---------------------------------------------------------------
 
 	d->mCollectionSelector = interface->imageCollectionSelector(this);
 	d->mCollectionSelectorPage = addPage(d->mCollectionSelector, i18n("Collection Selection"));
@@ -252,6 +272,9 @@ Wizard::~Wizard() {
 	delete d;
 }
 
+void Wizard::slotHelp() {
+    KToolInvocation::invokeHelp("htmlexport", "kipi-plugins");
+}
 
 void Wizard::updateFinishPageValidity() {
 	setValid(d->mOutputPage->page(), !d->mOutputPage->kcfg_destUrl->url().isEmpty());
