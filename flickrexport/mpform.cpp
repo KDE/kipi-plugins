@@ -66,7 +66,6 @@ void MPForm::finish()
     str += "--";
     str += m_boundary;
     str += "--";
-
     m_buffer.append(str);
 }
 
@@ -79,12 +78,14 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += m_boundary;
     str += "\r\n";
 
-    if (!name.isEmpty()) { 
+    if (!name.isEmpty()) 
+    { 
       	str += "Content-Disposition: form-data; name=\"";
     	str += name.toAscii();
     	str += "\"\r\n";
     }
-    if (!contentType.isEmpty()) {
+    if (!contentType.isEmpty()) 
+    {
         str += "Content-Type: " + QByteArray(contentType.toAscii());
         str += "\r\n";
     	str += "Mime-version: 1.0 ";
@@ -100,7 +101,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     return true;
 }
 
-bool MPForm::addFile(const QString& name,const QString& path)
+bool MPForm::addFile(const QString& name, const QString& path)
 {
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
@@ -138,7 +139,7 @@ bool MPForm::addFile(const QString& name,const QString& path)
     str += "\r\n\r\n";
 
     m_buffer.append(str);
-    int oldSize = m_buffer.size();
+    //int oldSize = m_buffer.size();
     m_buffer.append(imageData);
     m_buffer.append("\r\n");
 
