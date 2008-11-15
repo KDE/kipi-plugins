@@ -65,7 +65,6 @@ typedef struct _TPhotoSize {
       virtual void outputSettingsClicked(int);
       virtual void btnBrowseOutputPathClicked(void);
       virtual void paperSizeChanged(int);
-      virtual void printOrderDownClicked(void);
       virtual void BtnPrintOrderUp_clicked();
       virtual void BtnPrintOrderDown_clicked();
 

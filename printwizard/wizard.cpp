@@ -179,7 +179,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   // Print order (down)
   connect(d->mPhotoPage->BtnPrintOrderDown, SIGNAL(clicked(void)),
-          this, SLOT(printOrderDownClicked(void)));
+          this, SLOT(BtnPrintOrderDown_clicked(void)));
 
   // Print order (up)
   connect(d->mPhotoPage->BtnPrintOrderUp, SIGNAL(clicked(void)),
@@ -1373,31 +1373,6 @@ void Wizard::manageBtnPrintOrder()
 void Wizard::slotHelp()
 {
   KToolInvocation::invokeHelp("printwizard","kipi-plugins");
-}
-
-
-void Wizard::printOrderDownClicked()
-{
-  int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
-
-  if (currentIndex == (signed int)d->mPhotoPage->ListPrintOrder->count() - 1)
-    return;
-
-  QString item1 = d->mPhotoPage->ListPrintOrder->currentItem()->text();
-  QString item2 = d->mPhotoPage->ListPrintOrder->item(currentIndex + 1)->text();
-
-  // swap these items
-  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex, item2);
-  d->mPhotoPage->ListPrintOrder->insertItem(currentIndex + 1, item1);
-
-  // the list box items are swapped, now swap the items in the photo list
-  TPhoto *photo1 = d->m_photos.at(currentIndex);
-  TPhoto *photo2 = d->m_photos.at(currentIndex + 1);
-  d->m_photos.removeAt(currentIndex);
-  d->m_photos.removeAt(currentIndex);
-  d->m_photos.insert(currentIndex, photo1);
-  d->m_photos.insert(currentIndex, photo2);
-  previewPhotos();
 }
 
 
