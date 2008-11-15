@@ -158,8 +158,8 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
         return ;
     }
 
-    m_username    = username_edit;
-    username_edit = username;
+    m_username          = username_edit;
+    //username_edit = username;
     QString accountType = "GOOGLE";
 
     if (!(username_edit.endsWith("@gmail.com")))
