@@ -181,7 +181,10 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collection to remote Gallery server."),
-                                           ki18n("(c) 2003-2005, Renchi Raju"));
+                                           ki18n("(c) 2003-2005, Renchi Raju\n"
+                                                    "(c) 2006-2007, Colin Guthrie\n"
+                                                    "(c) 2008, Andrea Diamantini\n")
+    );
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                        "renchi at pooh dot tam dot uiuc dot edu");
