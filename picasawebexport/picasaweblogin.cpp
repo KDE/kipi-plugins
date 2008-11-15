@@ -66,7 +66,8 @@ PicasawebLogin::PicasawebLogin(QWidget* parent, const QString& header,
     m_passwdEdit->setEchoMode(KLineEdit::Password);
 
     QLabel* nameLabel = new QLabel(this);
-    nameLabel->setText(i18n("Username:"));
+    nameLabel->setText(i18n( "Google Login:" ));
+    // centerLayout->addWidget(nameLabel, 0, 0);
 
     QLabel* passwdLabel = new QLabel(this);
     passwdLabel->setText(i18n("Password:"));
