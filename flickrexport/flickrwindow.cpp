@@ -70,7 +70,7 @@
 #include "flickritem.h"
 #include "flickrviewitem.h"
 #include "flickrwidget.h"
-#include "flickralbumdialog.h"
+#include "ui_flickralbumdialog.h"
 
 namespace KIPIFlickrExportPlugin
 {
