@@ -8,27 +8,28 @@ SET(kipiplugin_slideshow_PART_SRCS common.cpp
                                    slideshowkb.cpp 
                                    imageloadthread.cpp
                                    listimageitems.cpp
-				   maindialog.cpp
-				   captiondialog.cpp
-				   soundtrackdialog.cpp
-				   advanceddialog.cpp 
-				   playbackwidget.cpp
-				   slideplaybackwidget.cpp
+                                   maindialog.cpp
+                                   captiondialog.cpp
+                                   soundtrackdialog.cpp
+                                   advanceddialog.cpp 
+                                   playbackwidget.cpp
+                                   slideplaybackwidget.cpp
                                    slideshow.cpp 
                                    slideshowconfig.cpp 
                                    slideshowgl.cpp 
                                    slideshowloader.cpp
-				   listsounditems.cpp
+                                   listsounditems.cpp
                                    plugin_slideshow.cpp 
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS maindialog.ui 
-						 captiondialog.ui 
-						 advanceddialog.ui
-						 soundtrackdialog.ui
-						 slideplaybackwidget.ui
-						 playbackwidget.ui
-		 )
+KDE4_ADD_UI_FILES(kipiplugin_slideshow_PART_SRCS 
+                  maindialog.ui 
+                  captiondialog.ui 
+                  advanceddialog.ui
+                  soundtrackdialog.ui
+                  slideplaybackwidget.ui
+                  playbackwidget.ui
+                 )
 
 KDE4_ADD_PLUGIN(kipiplugin_slideshow ${kipiplugin_slideshow_PART_SRCS})
 
@@ -41,9 +42,9 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
                       ${KDE4_KDE3SUPPORT_LIBS}
-		      ${KDE4_PHONON_LIBRARY}
-		      
-		      # For Linux only.
+                      ${KDE4_PHONON_LIBRARY}
+
+                      # For Linux only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
                       
@@ -51,8 +52,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_slideshow
                      )
 
 KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-INSTALL(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}//kipiplugin_slideshow/)
 
+INSTALL(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_slideshow)
 INSTALL(TARGETS kipiplugin_slideshow DESTINATION ${PLUGIN_INSTALL_DIR})
-
 INSTALL(FILES kipiplugin_slideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
