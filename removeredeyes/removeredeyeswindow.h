@@ -95,6 +95,7 @@ private:
     void setBusy(bool);
 
     void checkForUnprocessedImages();
+    void showSummary();
 
 private:
 

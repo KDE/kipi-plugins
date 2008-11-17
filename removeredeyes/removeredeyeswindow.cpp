@@ -367,7 +367,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
 
 void RemoveRedEyesWindow::checkForUnprocessedImages()
 {
-    if (d->imageList->hasUnprocessedImages() && d->runtype == WorkerThread::TestRun)
+    if (d->imageList->hasUnprocessedImages())
     {
         if (KMessageBox::questionYesNo(this,
                                        i18n("<p>Some of the images could not be analyzed "
@@ -455,10 +455,50 @@ void RemoveRedEyesWindow::threadFinished()
     setBusy(false);
     KApplication::restoreOverrideCursor();
 
-    checkForUnprocessedImages();
+    if (d->runtype == WorkerThread::TestRun)
+        checkForUnprocessedImages();
+    else
+        showSummary();
 
     disconnect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
                this, SLOT(calculationFinished(WorkerThreadData*)));
+}
+
+void RemoveRedEyesWindow::showSummary()
+{
+    QString storageMode = i18n("Your images were saved ");
+    switch (d->settings.storageMode)
+    {
+        case StorageSettingsBox::Subfolder:
+            storageMode.append(i18n("in the subfolder <span style='color: red; font-weight:bold;'>%1</span>.",
+                               d->settings.subfolderName));
+            break;
+        case StorageSettingsBox::Prefix:
+            storageMode.append(i18n("by adding <span style='color: red; font-weight:bold;'>%1</span> as a prefix.",
+                               d->settings.prefixName));
+            break;
+        case StorageSettingsBox::Overwrite:
+            storageMode.append(i18n("by overwriting the original files."));
+            break;
+    }
+
+    QString message = i18n(
+                           "<p>%4</p>"
+                           "<p><table>"
+                               "<tr><td><b>Total images:\t\t\t</b></td><td>%1</td></tr>"
+                               "<tr><td><b>Processed:</b></td><td>%2</td></tr>"
+                               "<tr><td><b>Failed:</b></td><td>%3</td></tr>"
+                           "</table></p>"
+                           "<p style='text-align:center;'><b>Correction complete!</b></p>",
+                      d->imageList->imageUrls().count(),
+                      d->imageList->processed(),
+                      d->imageList->failed(),
+                      storageMode);
+
+    KMessageBox::information(this,
+                             message,
+                             i18n("Correction Complete"));
+    closeClicked();
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

@@ -152,6 +152,9 @@ public:
         removeButton = 0;
     }
 
+    int             total;
+    int             processed;
+    int             failed;
     QLabel*         totalLabel;
     QLabel*         processedLabel;
     QLabel*         failedLabel;
@@ -398,6 +401,16 @@ KUrl::List ImagesList::imageUrls() const
     return list;
 }
 
+int ImagesList::processed() const
+{
+    return d->processed;
+}
+
+int ImagesList::failed() const
+{
+    return d->failed;
+}
+
 void ImagesList::resetEyeCounterColumn()
 {
     QTreeWidgetItemIterator it(d->listView);
@@ -468,9 +481,9 @@ bool ImagesList::isRAWFile(const QString & filePath)
 
 void ImagesList::updateSummary()
 {
-    int total       = imageUrls().count();
-    int processed   = 0;
-    int failed      = 0;
+    d->total       = imageUrls().count();
+    d->processed   = 0;
+    d->failed      = 0;
 
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
@@ -479,16 +492,16 @@ void ImagesList::updateSummary()
         if (!item->text(1).isEmpty())
         {
             if (item->text(1).toInt() > 0)
-                processed++;
+                d->processed++;
             else
-                failed++;
+                d->failed++;
         }
         ++it;
     }
 
-    d->totalLabel->setText(QString("%1").arg(total));
-    d->processedLabel->setText(QString("%1").arg(processed));
-    d->failedLabel->setText(QString("%1").arg(failed));
+    d->totalLabel->setText(QString("%1").arg(d->total));
+    d->processedLabel->setText(QString("%1").arg(d->processed));
+    d->failedLabel->setText(QString("%1").arg(d->failed));
 }
 
 }  // namespace KIPIRemoveRedEyesPlugin

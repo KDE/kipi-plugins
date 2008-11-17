@@ -95,6 +95,8 @@ public:
     ~ImagesList();
 
     KUrl::List imageUrls() const;
+    int processed()        const;
+    int failed()           const;
 
     bool hasUnprocessedImages();
 
