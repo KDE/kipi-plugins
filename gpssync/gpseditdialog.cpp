@@ -241,8 +241,14 @@ void GPSEditDialog::readSettings()
     config.setGroup("GPS Sync Settings");
     resize(configDialogSize(config, QString("GPS Edit Dialog")));
 
+    QString mapType = config.readEntry("Map Type", QString("G_NORMAL_MAP"));
+
+    if (mapType == QString("G_SATELLITE_TYPE"))   mapType = QString("G_SATELLITE_MAP");
+    else if (mapType == QString("G_MAP_TYPE"))    mapType = QString("G_NORMAL_MAP");
+    else if (mapType == QString("G_HYBRID_TYPE")) mapType = QString("G_HYBRID_MAP");
+
+    d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(config.readNumEntry("Zoom Level", 8));
-    d->worldMap->setMapType(config.readEntry("Map Type", QString("G_NORMAL_MAP")));
 
     d->altitudeInput->blockSignals(true);
     d->latitudeInput->blockSignals(true);
