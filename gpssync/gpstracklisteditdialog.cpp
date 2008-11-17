@@ -259,9 +259,14 @@ void GPSTrackListEditDialog::readSettings()
     KConfigGroup group2 = config.group(QString("GPS Track List Edit Dialog"));
     restoreDialogSize(group2);
 
-    d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
-    d->worldMap->setMapType(group.readEntry("Track List Map Type", QString("G_NORMAL_MAP")));
+    QString mapType = group.readEntry("Track List Map Type", QString("G_NORMAL_MAP"));
 
+    if (mapType == QString("G_SATELLITE_TYPE"))   mapType = QString("G_SATELLITE_MAP");
+    else if (mapType == QString("G_MAP_TYPE"))    mapType = QString("G_NORMAL_MAP");
+    else if (mapType == QString("G_HYBRID_TYPE")) mapType = QString("G_HYBRID_MAP");
+
+    d->worldMap->setMapType(mapType);
+    d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
     d->worldMap->setTrackList(d->gpsTrackList);
     d->worldMap->resized();
 }

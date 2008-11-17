@@ -253,8 +253,14 @@ void GPSEditDialog::readSettings()
     KConfigGroup group2 = config.group(QString("GPS Edit Dialog"));
     restoreDialogSize(group2);
 
+    QString mapType = group.readEntry("Map Type", QString("G_NORMAL_MAP"));
+
+    if (mapType == QString("G_SATELLITE_TYPE"))   mapType = QString("G_SATELLITE_MAP");
+    else if (mapType == QString("G_MAP_TYPE"))    mapType = QString("G_NORMAL_MAP");
+    else if (mapType == QString("G_HYBRID_TYPE")) mapType = QString("G_HYBRID_MAP");
+
+    d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 8));
-    d->worldMap->setMapType(group.readEntry("Map Type", QString("G_NORMAL_MAP")));
 
     d->altitudeInput->blockSignals(true);
     d->latitudeInput->blockSignals(true);
