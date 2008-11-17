@@ -490,14 +490,12 @@ void RemoveRedEyesWindow::showSummary()
                                "<tr><td><b>Failed:</b></td><td>%3</td></tr>"
                            "</table></p>"
                            "<p style='text-align:center;'><b>Correction complete!</b></p>",
-                      d->imageList->imageUrls().count(),
-                      d->imageList->processed(),
-                      d->imageList->failed(),
+                      d->imageList->totalImages(),
+                      d->imageList->processedImages(),
+                      d->imageList->failedImages(),
                       storageMode);
 
-    KMessageBox::information(this,
-                             message,
-                             i18n("Correction Complete"));
+    KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
 }
 

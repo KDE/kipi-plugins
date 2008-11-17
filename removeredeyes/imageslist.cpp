@@ -401,12 +401,17 @@ KUrl::List ImagesList::imageUrls() const
     return list;
 }
 
-int ImagesList::processed() const
+int ImagesList::totalImages() const
+{
+    return d->total;
+}
+
+int ImagesList::processedImages() const
 {
     return d->processed;
 }
 
-int ImagesList::failed() const
+int ImagesList::failedImages() const
 {
     return d->failed;
 }

@@ -94,9 +94,10 @@ public:
     explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0);
     ~ImagesList();
 
-    KUrl::List imageUrls() const;
-    int processed()        const;
-    int failed()           const;
+    KUrl::List imageUrls()  const;
+    int totalImages()       const;
+    int processedImages()   const;
+    int failedImages()      const;
 
     bool hasUnprocessedImages();
 
