@@ -126,11 +126,10 @@ void Plugin_SlideShow::slotActivate()
 
     m_sharedData->showSelectedFilesOnly = true;
 
-    m_sharedData->interface = m_interface;
+    m_sharedData->interface         = m_interface;
     m_sharedData->ImagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-    m_sharedData->urlList = m_urlList;
-
-    KIPI::ImageCollection currSel = m_interface->currentSelection();
+    m_sharedData->urlList           = m_urlList;
+    KIPI::ImageCollection currSel   = m_interface->currentSelection();
 
     if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
