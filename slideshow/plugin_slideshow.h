@@ -25,21 +25,23 @@
 #define PLUGIN_SLIDESHOW_H
 
 // KDE includes.
+
 #include <kurl.h>
 
 // LibKIPI includes.
+
 #include <libkipi/plugin.h>
 #include <libkipi/interface.h>
 
 // Local includes.
+
 #include "common.h"
 
 class KAction;
 
 namespace KIPISlideShowPlugin
 {
-
-class SharedData;
+    class SharedData;
 }
 
 class Plugin_SlideShow : public KIPI::Plugin

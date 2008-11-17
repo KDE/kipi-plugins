@@ -66,18 +66,18 @@ extern "C"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
 
+using namespace KIPISlideShowPlugin;
 
 K_PLUGIN_FACTORY( SlideShowFactory, registerPlugin<Plugin_SlideShow>(); )
 K_EXPORT_PLUGIN ( SlideShowFactory("kipiplugin_slideshow") )
 
 Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const QVariantList &args)
-        : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
+                : KIPI::Plugin( SlideShowFactory::componentData(), parent, "SlideShow")
 {
     // Useless: to please the compiler
     QVariantList argsList = args;
 
-    kDebug( 51001 ) << "Plugin_SlideShow plugin loaded"
-    << endl;
+    kDebug( 51001 ) << "Plugin_SlideShow plugin loaded" << endl;
 
     m_sharedData = 0;
 }
@@ -106,7 +106,6 @@ void Plugin_SlideShow::setup( QWidget* widget )
             this, SLOT( slotAlbumChanged( bool )));
 
     addAction( m_actionSlideShow );
-
 }
 
 Plugin_SlideShow::~Plugin_SlideShow()
@@ -123,7 +122,7 @@ void Plugin_SlideShow::slotActivate()
         return;
     }
 
-    m_sharedData = new KIPISlideShowPlugin::SharedData();
+    m_sharedData = new SharedData();
 
     m_sharedData->showSelectedFilesOnly = true;
 
@@ -138,9 +137,7 @@ void Plugin_SlideShow::slotActivate()
         m_sharedData->showSelectedFilesOnly = false;
     }
 
-    KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-
-    = new KIPISlideShowPlugin::SlideShowConfig( kapp->activeWindow(), m_sharedData );
+    SlideShowConfig *slideShowConfig = new SlideShowConfig( kapp->activeWindow(), m_sharedData );
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
@@ -246,8 +243,7 @@ void Plugin_SlideShow::slotSlideShow()
 
     if (!opengl)
     {
-        KIPISlideShowPlugin::SlideShow* slideShow = new KIPISlideShowPlugin::SlideShow(fileList,
-                commentsList, m_sharedData);
+        SlideShow* slideShow = new SlideShow(fileList, commentsList, m_sharedData);
         slideShow->show();
     }
     else
@@ -259,14 +255,12 @@ void Plugin_SlideShow::slotSlideShow()
         {
             if (wantKB)
             {
-                KIPISlideShowPlugin::SlideShowKB* slideShow = new KIPISlideShowPlugin::SlideShowKB(fileList,
-                        commentsList, m_sharedData);
+                SlideShowKB* slideShow = new SlideShowKB(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
             else
             {
-                KIPISlideShowPlugin::SlideShowGL* slideShow = new KIPISlideShowPlugin::SlideShowGL(fileList,
-                        commentsList, m_sharedData);
+                SlideShowGL* slideShow = new SlideShowGL(fileList, commentsList, m_sharedData);
                 slideShow->show();
             }
         }
