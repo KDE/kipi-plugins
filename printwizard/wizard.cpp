@@ -699,6 +699,7 @@ void Wizard::initPhotoSizes(PageSize pageSize)
   };
 
   // load the photo sizes into the listbox
+  d->mPhotoPage->ListPhotoSizes->blockSignals(true);
   d->mPhotoPage->ListPhotoSizes->clear();
   QList<TPhotoSize*>::iterator it;
   for (it = d->m_photoSizes.begin(); it != d->m_photoSizes.end(); ++it)
@@ -706,7 +707,10 @@ void Wizard::initPhotoSizes(PageSize pageSize)
     TPhotoSize *s = static_cast<TPhotoSize*>(*it);
     if (s) d->mPhotoPage->ListPhotoSizes->addItem(s->label);
   }
+  d->mPhotoPage->ListPhotoSizes->blockSignals(false);
+  
   d->mPhotoPage->ListPhotoSizes->setCurrentRow (0, QItemSelectionModel::Select);
+  
 //   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
 double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current)
@@ -1274,7 +1278,8 @@ void Wizard::updateCropFrame(TPhoto *photo, int photoIndex)
 void Wizard::previewPhotos()
 {
   // get the selected layout
-  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+  int curr = d->mPhotoPage->ListPhotoSizes->currentRow();
+  TPhotoSize *s = d->m_photoSizes.at(curr);
 
   int photoCount  =  d->m_photos.count();
   // how many pages?  Recall that the first layout item is the paper size
@@ -1435,7 +1440,8 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
   }
   else if (current->name() == i18n("Crop photos"))
   {
-    TPhoto *photo = d->m_photos[0];
+    d->m_currentCropPhoto = 0;
+    TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
     setBtnCropEnabled();
     updateCropFrame(photo, d->m_currentCropPhoto);
   }
@@ -1681,7 +1687,7 @@ void Wizard::ListPrintOrder_selected()
   manageBtnPrintOrder();
 }
 
-void Wizard::ListPhotoSizes_selected( )
+void Wizard::ListPhotoSizes_selected()
 {
   previewPhotos();
 }
