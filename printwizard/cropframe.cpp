@@ -62,7 +62,7 @@ CropFrame::~CropFrame()
 void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool paint)
 {
   m_photo = photo;
-  QImage scaledImg = m_photo->thumbnail().toImage();
+  QImage scaledImg = m_photo->loadPhoto();//thumbnail().toImage();
 
   // has the cropRegion been set yet?
   bool resetCropRegion = (m_photo->cropRegion == QRect(-1, -1, -1, -1));
@@ -93,8 +93,8 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
 
   scaledImg = scaledImg.scaled(this->width(), this->height(), Qt::KeepAspectRatio);
   //TODO check for cropping Qt::KeepAspectRatioByExpanding);
-
-  m_pixmap = new QPixmap();
+  //m_pixmap = new QPixmap();
+  m_pixmap = new QPixmap(scaledImg.width(), scaledImg.height());
   m_pixmap->fromImage(scaledImg);
   m_pixmapX = (this->width() / 2) - (m_pixmap->width() / 2);
   m_pixmapY = (this->height() / 2) - (m_pixmap->height() / 2);
@@ -131,8 +131,10 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
   else
     m_cropRegion = _photoToScreenRect(m_photo->cropRegion);
 
+  // TODO check if update() is better
   if (paint)
     repaint(m_cropRegion);
+    //update(m_cropRegion);
 }
 
 QRect CropFrame::_screenToPhotoRect(QRect r)
