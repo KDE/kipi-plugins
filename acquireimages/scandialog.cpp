@@ -77,11 +77,10 @@ public:
 
     KIPIPlugins::KPAboutData *about;
 
-    KSaneIface::KSaneWidget   *saneWidget;
+    KSaneIface::KSaneWidget  *saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget,
-                       QWidget *parent)
+ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget, QWidget *parent)
           : KDialog(parent)
 {
     d = new ScanDialogPriv;
@@ -92,7 +91,6 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
     setCaption(i18n("Scan Image"));
     setModal(true);
 
-//    d->saneWidget->setParent(main);
     setMainWidget(d->saneWidget);
 
     // -- About data and help button ----------------------------------------
@@ -100,20 +98,21 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
     d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to acquire images using a flat bed scanner"),
-                   ki18n("(c) 2003-2008, Gilles Caulier"));
+                   ki18n("A Kipi plugin to acquire images using a flat scanner"),
+                   ki18n("(c) 2003-2008, Gilles Caulier\n"
+                         "(c) 2007-2008, Kare Sars"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Author"),
                         "caulier dot gilles at gmail dot com");
 
-    d->about->addAuthor(ki18n("Angelo Naselli"),
-                        ki18n("Developer"),
-                        "anaselli at linux dot it");
-
     d->about->addAuthor(ki18n("Kare Sars"),
                         ki18n("Developer"),
                         "kare dot sars at kolumbus dot fi");
+
+    d->about->addAuthor(ki18n("Angelo Naselli"),
+                        ki18n("Developer"),
+                        "anaselli at linux dot it");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
