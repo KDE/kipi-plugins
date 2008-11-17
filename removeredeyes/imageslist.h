@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef IMAGES_LIST_H
-#define IMAGES_LIST_H
+#ifndef IMAGESLIST_H
+#define IMAGESLIST_H
 
 // Qt includes.
 
@@ -134,4 +134,4 @@ private:
 
 }  // namespace KIPIRemoveRedEyesPlugin
 
-#endif // IMAGES_LIST_H
+#endif // IMAGESLIST_H
