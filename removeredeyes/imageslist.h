@@ -115,7 +115,6 @@ public slots:
     void addImages(const KUrl::List& list);
     void addEyeCounterByUrl(const KUrl&, int);
 
-
 private slots:
 
     void addItems();
