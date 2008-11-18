@@ -11,7 +11,7 @@ to use a plugin architecture for additional functionalities.
 
 Notes:
 
-Most of the KipiPlugins have previously been DigikamPlugins.
+Most of the Kipi-plugins have previously been DigikamPlugins.
 kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Current plugins ported to Qt4/KDE4:
@@ -33,12 +33,12 @@ RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
 DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
 WallPaper          : A tool to set image to KDE Desktop.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
+Calendar           : A tool to create calendars.
 
 Porting under progress to Qt4/KDE4:
 
 IpodExport         : A tool to export pictures to an Ipod device.
 PrintWizard        : A wizard to print images in various format.
-Calendar           : A tool to create calendars.
 
 Not yet ported to Qt4/KDE4:
 
