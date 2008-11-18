@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "settingswidget.h"
+#include "settingswidget.moc"
+
 // Qt includes.
 
 #include <QButtonGroup>
@@ -46,8 +49,6 @@
 
 #include "dngwriter.h"
 #include "dnglogo.h"
-#include "settingswidget.h"
-#include "settingswidget.moc"
 
 using namespace DNGIface;
 using namespace KDcrawIface;

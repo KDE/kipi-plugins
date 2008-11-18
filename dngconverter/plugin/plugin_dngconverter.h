@@ -23,6 +23,10 @@
 #ifndef PLUGIN_DNGCONVERTER_H
 #define PLUGIN_DNGCONVERTER_H
 
+// Qt includes.
+
+#include <QVariant>
+
 // LibKIPI includes.
 
 #include <libkipi/plugin.h>

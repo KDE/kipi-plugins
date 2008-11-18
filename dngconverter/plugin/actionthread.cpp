@@ -20,13 +20,16 @@
  *
  * ============================================================ */
 
+#include "actionthread.h"
+#include "actionthread.moc"
+
 // Qt includes.
 
-#include <QtDebug>
-#include <QMutexLocker>
-#include <QMutex>
-#include <QWaitCondition>
 #include <QFileInfo>
+#include <QMutex>
+#include <QMutexLocker>
+#include <QWaitCondition>
+#include <QtDebug>
 
 // KDE includes.
 
@@ -43,8 +46,6 @@
 
 #include "actions.h"
 #include "dngwriter.h"
-#include "actionthread.h"
-#include "actionthread.moc"
 
 using namespace KDcrawIface;
 using namespace DNGIface;
@@ -64,7 +65,7 @@ public:
         previewMode           = DNGWriter::MEDIUM;
     }
 
-    class Task 
+    class Task
     {
         public:
 
@@ -136,7 +137,7 @@ void ActionThread::identifyRawFile(const KUrl& url, bool full)
 void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 {
     for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+         it != urlList.end(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -158,7 +159,7 @@ void ActionThread::thumbRawFile(const KUrl& url)
 void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 {
     for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+         it != urlList.end(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -173,7 +174,7 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
     for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+         it != urlList.end(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -210,7 +211,7 @@ void ActionThread::run()
 
         if (t)
         {
-            switch (t->action) 
+            switch (t->action)
             {
                 case IDENTIFY:
                 case IDENTIFY_FULL:
@@ -226,7 +227,7 @@ void ActionThread::run()
                             identify = info.make + QString("-") + info.model;
                         else
                         {
-                            identify = i18n("Make: %1\n", info.make); 
+                            identify = i18n("Make: %1\n", info.make);
                             identify.append(i18n("Model: %1\n", info.model));
 
                             if (info.dateTime.isValid())
@@ -291,7 +292,7 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QFileInfo fi(t->fileUrl.path());
-                    QString destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" 
+                    QString destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-"
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
                     d->dngProcessor.reset();
@@ -311,7 +312,7 @@ void ActionThread::run()
                     break;
                 }
 
-                default: 
+                default:
                 {
                     kError(51000) << "KIPIDNGConverterPlugin:ActionThread: "
                                   << "Unknown action specified"

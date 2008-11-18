@@ -20,26 +20,29 @@
  *
  * ============================================================ */
 
+#include "plugin_dngconverter.h"
+#include "plugin_dngconverter.moc"
+
 // Qt includes.
 
 #include <QFileInfo>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 
 // LibKDcraw includes.
 
-#include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
+#include <libkdcraw/version.h>
 
 // LibKIPI includes.
 
@@ -48,8 +51,6 @@
 // Local includes.
 
 #include "batchdialog.h"
-#include "plugin_dngconverter.h"
-#include "plugin_dngconverter.moc"
 
 using namespace KIPIDNGConverterPlugin;
 
