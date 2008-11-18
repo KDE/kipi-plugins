@@ -97,7 +97,7 @@ void Plugin_AcquireImages::slotActivate()
 {
 #ifdef WIN32
 
-    TwainController ctrl(m_interface, m_parentWidget);
+    TwainController *twainCtrl = new TwainController(m_interface);
 
 #else /* WIN32 */
 
