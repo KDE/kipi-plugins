@@ -520,56 +520,55 @@ void TimeAdjustDialog::slotOk()
             d->syncXMPDateCheck->isChecked())
         {
             bool ret = true;
-            if (!KExiv2Iface::KExiv2::isReadOnly(url.path()))
+
+            KExiv2Iface::KExiv2 exiv2Iface;
+
+            ret &= exiv2Iface.load(url.path());
+            if (ret)
             {
-                KExiv2Iface::KExiv2 exiv2Iface;
-
-                ret &= exiv2Iface.load(url.path());
-                if (ret)
+                if (d->syncEXIFDateCheck->isChecked() && exiv2Iface.canWriteExif(url.path()))
                 {
-                    if (d->syncEXIFDateCheck->isChecked())
-                    {
-                        ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                    }
-
-                    if (d->syncIPTCDateCheck->isChecked())
-                    {
-                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
-                            dateTime.date().toString(Qt::ISODate));
-                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
-                            dateTime.time().toString(Qt::ISODate));
-                    }
-
-                    if (exiv2Iface.supportXmp() && d->syncXMPDateCheck->isChecked())
-                    {
-                        ret &= exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
-                            dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                    }
-
-                    ret &= exiv2Iface.save(url.path());
-
-                    if (!ret)
-                    {
-                        kDebug( 51000 ) << "Failed to save metadata to file " << url.fileName();
-                    }
+                    ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                 }
-                else
+
+                if (d->syncIPTCDateCheck->isChecked() && exiv2Iface.canWriteIptc(url.path()))
                 {
-                    kDebug( 51000 ) << "Failed to load metadata from file " << url.fileName();
+                    ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                        dateTime.date().toString(Qt::ISODate));
+                    ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                        dateTime.time().toString(Qt::ISODate));
                 }
+
+                if (d->syncXMPDateCheck->isChecked() && exiv2Iface.supportXmp() &&
+                    exiv2Iface.canWriteXmp(url.path()))
+                {
+                    ret &= exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                    ret &= exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
+                        dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
+                }
+
+                ret &= exiv2Iface.save(url.path());
+
+                if (!ret)
+                {
+                    kDebug( 51000 ) << "Failed to save metadata to file " << url.fileName();
+                }
+            }
+            else
+            {
+                kDebug( 51000 ) << "Failed to load metadata from file " << url.fileName();
             }
 
             if (!ret)
