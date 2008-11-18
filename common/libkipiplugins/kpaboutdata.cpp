@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "kpaboutdata.h"
+
 // KDE includes.
 
 #include <kglobal.h>
@@ -30,7 +32,6 @@
 // Local includes.
 
 #include "pluginsversion.h"
-#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
@@ -39,12 +40,12 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const QByteArray& pluginVersion,
                          enum LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
-                         const KLocalizedString& copyrightStatement) 
-           : KAboutData (QByteArray("kipi-plugins"), 
-                         QByteArray(), 
+                         const KLocalizedString& copyrightStatement)
+           : KAboutData (QByteArray("kipi-plugins"),
+                         QByteArray(),
                          pluginName,
                          kipipluginsVersion().toAscii(),
-                         KLocalizedString(), 
+                         KLocalizedString(),
                          licenseType,
                          copyrightStatement,
                          pluginDescription,
@@ -62,7 +63,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     // set the plugin description into long text description
     setOtherText(pluginDescription);
 
-    // put the plugin name and version with kipi-plugins and kipi-plugins version 
+    // put the plugin name and version with kipi-plugins and kipi-plugins version
     KLocalizedString shortDesc = ki18n("%1 %2 - Kipi-plugins %3")
                                        .subs(pluginName.toString())
                                        .subs(QString(pluginVersion))

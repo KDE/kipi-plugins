@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef __KIPI_ABOUT_DATA__
-#define __KIPI_ABOUT_DATA__
+#ifndef KPABOUTDATA_H
+#define KPABOUTDATA_H
 
 // KDE includes.
 
@@ -48,4 +48,4 @@ class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
 
 } // namespace KIPIPlugins
 
-#endif //__KIPI_ABOUT_DATA__
+#endif //KPABOUTDATA_H

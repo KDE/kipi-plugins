@@ -23,6 +23,8 @@
 
 //#define ENABLE_DEBUG_MESSAGES 1
 
+#include "kpwriteimage.h"
+
 // C ANSI includes.
 
 extern "C"
@@ -51,7 +53,6 @@ extern "C"
 // Local includes.
 
 #include "pluginsversion.h"
-#include "kpwriteimage.h"
 
 namespace KIPIPlugins
 {
@@ -126,9 +127,9 @@ bool KPWriteImage::cancel() const
     return false;
 }
 
-void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height, 
+void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
                                 bool sixteenBit, bool hasAlpha,
-                                const QByteArray& iccProfile, 
+                                const QByteArray& iccProfile,
                                 const KExiv2Iface::KExiv2& metadata)
 {
     d->data       = data;
@@ -143,7 +144,7 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
 bool KPWriteImage::write2JPEG(const QString& destPath)
 {
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
-    if (!file) 
+    if (!file)
     {
         kDebug( 51000 ) << "Failed to open JPEG file for writing" << endl;
         return false;
@@ -162,9 +163,9 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     cinfo.in_color_space   = JCS_RGB;
     jpeg_set_defaults(&cinfo);
 
-    // B.K.O #149578: set encoder horizontal and vertical chroma subsampling 
+    // B.K.O #149578: set encoder horizontal and vertical chroma subsampling
     // factor to 2x1, 1x1, 1x1 (4:2:2) : Medium subsampling.
-    // See this page for details: http://en.wikipedia.org/wiki/Chroma_subsampling 
+    // See this page for details: http://en.wikipedia.org/wiki/Chroma_subsampling
     cinfo.comp_info[0].h_samp_factor = 2;
     cinfo.comp_info[0].v_samp_factor = 1;
     cinfo.comp_info[1].h_samp_factor = 1;
@@ -257,7 +258,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 bool KPWriteImage::write2PPM(const QString& destPath)
 {
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
-    if (!file) 
+    if (!file)
     {
         kDebug( 51000 ) << "Failed to open ppm file for writing" << endl;
         return false;
@@ -335,7 +336,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
-    if (!file) 
+    if (!file)
     {
         kDebug( 51000 ) << "Failed to open PNG file for writing" << endl;
         return false;
@@ -367,8 +368,8 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     }
     else
     {
-        png_set_IHDR(png_ptr, info_ptr, d->width, d->height, bitsDepth, 
-                     PNG_COLOR_TYPE_RGB,        PNG_INTERLACE_NONE, 
+        png_set_IHDR(png_ptr, info_ptr, d->width, d->height, bitsDepth,
+                     PNG_COLOR_TYPE_RGB,        PNG_INTERLACE_NONE,
                      PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
         if (d->sixteenBit)
@@ -387,7 +388,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     // Write ICC profil.
     if (!d->iccProfile.isEmpty())
     {
-        png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE, 
+        png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
                      d->iccProfile.data(), d->iccProfile.size());
     }
 
@@ -443,7 +444,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
                     data[j++] = ptr[x+1];  // Blue
                     data[j++] = ptr[ x ];
                     data[j++] = ptr[x+3];  // Green
-                    data[j++] = ptr[x+2];  
+                    data[j++] = ptr[x+2];
                     data[j++] = ptr[x+5];  // Red
                     data[j++] = ptr[x+4];
                     data[j++] = ptr[x+7];  // Alpha
@@ -454,7 +455,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
                     data[j++] = ptr[x+1];  // Blue
                     data[j++] = ptr[ x ];
                     data[j++] = ptr[x+3];  // Green
-                    data[j++] = ptr[x+2];  
+                    data[j++] = ptr[x+2];
                     data[j++] = ptr[x+5];  // Red
                     data[j++] = ptr[x+4];
                 }
@@ -499,16 +500,16 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     uint32 h    = d->height;
     uchar* data = (uchar*)d->data.data();
 
-    // TIFF error handling. If an errors/warnings occurs during reading, 
+    // TIFF error handling. If an errors/warnings occurs during reading,
     // libtiff will call these methods
 
     TIFFSetWarningHandler(kipi_tiff_warning);
     TIFFSetErrorHandler(kipi_tiff_error);
 
-    // Open target file 
+    // Open target file
 
     TIFF *tif = TIFFOpen(QFile::encodeName(destPath), "w");
-    if (!tif) 
+    if (!tif)
     {
         kDebug( 51000 ) << "Failed to open TIFF file for writing" << endl;
         return false;
@@ -530,7 +531,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     //        usually leads to better compression.
     //        See this url for more details:
     //        http://www.awaresystems.be/imaging/tiff/tifftags/predictor.html
-    TIFFSetField(tif, TIFFTAG_PREDICTOR,           2); 
+    TIFFSetField(tif, TIFFTAG_PREDICTOR,           2);
 
     if (d->hasAlpha)
     {
@@ -577,7 +578,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     if (!d->iccProfile.isEmpty())
     {
 #if defined(TIFFTAG_ICCPROFILE)
-        TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)d->iccProfile.size(), 
+        TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)d->iccProfile.size(),
                      (uchar *)d->iccProfile.data());
 #endif
     }
@@ -622,7 +623,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
                 if (d->hasAlpha)
                 {
-                    // TIFF makes you pre-mutiply the rgb components by alpha 
+                    // TIFF makes you pre-mutiply the rgb components by alpha
 
                     a16          = (uint16)(pixel[6]+256*pixel[7]);
                     alpha_factor = ((double)a16 / 65535.0);
@@ -631,7 +632,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
                     b16          = (uint16)(b16*alpha_factor);
                 }
 
-                // This might be endian dependent 
+                // This might be endian dependent
 
                 buf[i++] = (uint8)(r16);
                 buf[i++] = (uint8)(r16 >> 8);
@@ -654,7 +655,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
                 if (d->hasAlpha)
                 {
-                    // TIFF makes you pre-mutiply the rgb components by alpha 
+                    // TIFF makes you pre-mutiply the rgb components by alpha
 
                     a8           = (uint8)(pixel[3]);
                     alpha_factor = ((double)a8 / 255.0);
@@ -663,7 +664,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
                     b8           = (uint8)(b8*alpha_factor);
                 }
 
-                // This might be endian dependent 
+                // This might be endian dependent
 
                 buf[i++] = r8;
                 buf[i++] = g8;
@@ -721,7 +722,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
             {
                 pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
 
-                // This might be endian dependent 
+                // This might be endian dependent
                 bufThumb[i++] = (uint8)pixelThumb[2];
                 bufThumb[i++] = (uint8)pixelThumb[1];
                 bufThumb[i++] = (uint8)pixelThumb[0];
@@ -777,11 +778,11 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
             break;
     }
 
-    if ( filePath.isEmpty() ) 
+    if ( filePath.isEmpty() )
         return QByteArray();
 
     QFile file(filePath);
-    if ( !file.open(QIODevice::ReadOnly) ) 
+    if ( !file.open(QIODevice::ReadOnly) )
         return false;
 
     QByteArray data;
@@ -793,7 +794,7 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
     return data;
 }
 
-void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type, 
+void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type,
                                    char *profile_data, png_uint_32 length)
 {
     png_textp      text;
@@ -840,7 +841,7 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
             *dp++='\n';
 
         *(dp++)=(char) hex[((*sp >> 4) & 0x0f)];
-        *(dp++)=(char) hex[((*sp++ ) & 0x0f)]; 
+        *(dp++)=(char) hex[((*sp++ ) & 0x0f)];
     }
 
     *dp++='\n';
@@ -958,24 +959,24 @@ long KPWriteImage::formatStringList(char *string, const size_t length, const cha
     return((long) n);
 }
 
-void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, 
-                                       const KExiv2Iface::KExiv2& metadata, 
+void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
+                                       const KExiv2Iface::KExiv2& metadata,
                                        const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);
-    if (!tag.isEmpty()) 
+    if (!tag.isEmpty())
     {
         QByteArray str(tag.data(), tag.size());
         TIFFSetField(tif, tiffTag, (const char*)str);
     }
 }
 
-void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag, 
-                                      const KExiv2Iface::KExiv2 &metadata, 
+void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
+                                      const KExiv2Iface::KExiv2 &metadata,
                                       const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);
-    if (!tag.isEmpty()) 
+    if (!tag.isEmpty())
     {
         TIFFSetField (tif, tiffTag, (uint32)tag.size(), (char *)tag.data());
     }

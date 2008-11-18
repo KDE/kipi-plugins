@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPI_WRITE_IMAGE_H
-#define KIPI_WRITE_IMAGE_H
+#ifndef KPWRITEIMAGE_H
+#define KPWRITEIMAGE_H
 
 // C++ includes.
 
@@ -109,4 +109,4 @@ private:
 
 }  // namespace KIPIPlugins
 
-#endif /* KIPI_WRITE_IMAGE_H */
+#endif /* KPWRITEIMAGE_H */
