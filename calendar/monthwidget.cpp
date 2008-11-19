@@ -22,25 +22,28 @@
  *
  * ============================================================ */
 
+#include "monthwidget.h"
+#include "monthwidget.moc"
+
 // Qt includes.
 
-#include <QMatrix>
-#include <QPixmap>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QMouseEvent>
-#include <QImageReader>
 #include <QDragEnterEvent>
 #include <QFileInfo>
+#include <QImageReader>
+#include <QMatrix>
+#include <QMouseEvent>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QPixmap>
 
 // KDE includes.
 
-#include <KUrl>
-#include <KDebug>
-#include <KLocale>
-#include <KGlobal>
-#include <KIconLoader>
-#include <KCalendarSystem>
+#include <kcalendarsystem.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kurl.h>
 
 // LibKIPI includes.
 
@@ -57,10 +60,8 @@
 
 // Local includes.
 
-#include "imagedialog.h"
 #include "calsettings.h"
-#include "monthwidget.h"
-#include "monthwidget.moc"
+#include "imagedialog.h"
 
 namespace KIPICalendarPlugin
 {
@@ -176,7 +177,7 @@ void MonthWidget::gotThumbnail( const KUrl &url, const QPixmap &pix )
 
     QPixmap image = pix;
     int angle = interface_->info( url ).angle();
-    if ( angle != 0 ) 
+    if ( angle != 0 )
     {
         QMatrix matrix;
         matrix.rotate( angle );
@@ -195,7 +196,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
         KIPIPlugins::ImageDialog dlg( this, interface_, true );
         setImage(dlg.url());
     }
-    else if (event->button() == Qt::RightButton) 
+    else if (event->button() == Qt::RightButton)
     {
         imagePath_ = QString("");
         CalSettings::instance()->setImage(month_,imagePath_);

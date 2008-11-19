@@ -21,19 +21,18 @@
  *
  * ============================================================ */
 
+#include "calsettings.h"
+#include "calsettings.moc"
+
 // Qt includes.
 
 #include <QDate>
 
 // KDE includes.
 
-#include <KGlobal>
-#include <KLocale>
-#include <KCalendarSystem>
-
-// Local includes.
-
-#include "calsettings.h"
+#include <kglobal.h>
+#include <klocale.h>
+#include <kcalendarsystem.h>
 
 namespace KIPICalendarPlugin
 {

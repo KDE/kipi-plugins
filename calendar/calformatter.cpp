@@ -22,29 +22,26 @@
  *
  * ============================================================ */
 
+#include "calformatter.h"
+
 // Qt includes.
 
-#include <QMap>
-#include <QColor>
 #include <QDateTime>
+#include <QMap>
 
 // KDE includes.
 
-#include <KUrl>
-#include <KDebug>
-#include <KGlobal>
-#include <KLocale>
-#include <KCalendarSystem>
+#include <kcalendarsystem.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kurl.h>
 
 // LibKCAL includes.
 
 #include <kcal/calendarlocal.h>
 
-// Local includes.
-
-#include "calformatter.h"
-
-namespace KIPICalendarPlugin 
+namespace KIPICalendarPlugin
 {
 
 class CalFormatter::Data
@@ -52,7 +49,7 @@ class CalFormatter::Data
 
 public:
 
-    struct Day 
+    struct Day
     {
         Day() {}
         Day(QColor c, QString d): color(c), description(d) {}

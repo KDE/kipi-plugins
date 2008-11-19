@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef __CALWIZARD_H__
-#define __CALWIZARD_H__
+#ifndef CALWIZARD_H
+#define CALWIZARD_H
 
 // Qt includes.
 
@@ -31,7 +31,7 @@
 
 // KDE includes.
 
-#include <KAssistantDialog>
+#include <kassistantdialog.h>
 
 // UI includes.
 
@@ -41,8 +41,8 @@
 class QLabel;
 class QPainter;
 class QPrinter;
-class QPushButton;
 class QProgressBar;
+class QPushButton;
 
 namespace KIPI
 {
@@ -116,4 +116,4 @@ private:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __CALWIZARD_H__
+#endif // CALWIZARD_H

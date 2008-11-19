@@ -21,14 +21,17 @@
  *
  * ============================================================ */
 
+#include "plugin_calendar.h"
+#include "plugin_calendar.moc"
+
 // KDE includes.
 
-#include <KDebug>
-#include <KAction>
-#include <KLibLoader>
-#include <KApplication>
-#include <KGenericFactory>
-#include <KActionCollection>
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <kapplication.h>
+#include <kdebug.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
 
 // LibKIPI includes.
 
@@ -37,8 +40,6 @@
 // Local includes.
 
 #include "calwizard.h"
-#include "plugin_calendar.h"
-#include "plugin_calendar.moc"
 
 K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
 K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
@@ -57,7 +58,7 @@ void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionCalendar = new KAction(KIcon("view-pim-calendar"), 
+    m_actionCalendar = new KAction(KIcon("view-pim-calendar"),
                                    i18n("Create Calendar..."), actionCollection());
     m_actionCalendar->setObjectName("calendar");
     connect(m_actionCalendar, SIGNAL(triggered(bool)),

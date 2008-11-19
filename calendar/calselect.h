@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef __CALSELECT_H__
-#define __CALSELECT_H__
+#ifndef CALSELECT_H
+#define CALSELECT_H
 
 // Qt includes.
 
@@ -69,4 +69,4 @@ private:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __CALSELECT_H__
+#endif // CALSELECT_H

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef __CALSETTINGS_H__
-#define __CALSETTINGS_H__
+#ifndef CALSETTINGS_H
+#define CALSETTINGS_H
 
 // Qt includes.
 
@@ -35,7 +35,7 @@
 
 // KDE includes.
 
-#include <KUrl>
+#include <kurl.h>
 
 namespace KIPICalendarPlugin
 {
@@ -109,4 +109,4 @@ private:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __CALSETTINGS_H__
+#endif // CALSETTINGS_H

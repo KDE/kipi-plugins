@@ -22,24 +22,24 @@
  *
  * ============================================================ */
 
-#ifndef __MONTHWIDGET_H__
-#define __MONTHWIDGET_H__
+#ifndef MONTHWIDGET_H
+#define MONTHWIDGET_H
 
 // Qt includes.
 
-#include <QSize>
 #include <QPixmap>
 #include <QPushButton>
+#include <QSize>
 
 // KDE includes.
 
-#include <KUrl>
+#include <kurl.h>
 
-class QPainter;
+class QDragEnterEvent;
 class QDropEvent;
 class QMouseEvent;
 class QPaintEvent;
-class QDragEnterEvent;
+class QPainter;
 
 namespace KIPI
 {
@@ -89,4 +89,4 @@ private:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __MONTHWIDGET_H__
+#endif // MONTHWIDGET_H

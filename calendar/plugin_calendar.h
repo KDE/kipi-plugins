@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef __PLUGIN_CALENDAR_H__
-#define __PLUGIN_CALENDAR_H__
+#ifndef PLUGIN_CALENDAR_H
+#define PLUGIN_CALENDAR_H
 
 // Qt includes.
 
@@ -61,4 +61,4 @@ private:
     KIPI::Interface *m_interface;
 };
 
-#endif // __PLUGIN_CALENDAR_H__
+#endif // PLUGIN_CALENDAR_H

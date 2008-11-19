@@ -22,12 +22,13 @@
  *
  * ============================================================ */
 
+#include "calwidget.h"
+#include "calwidget.moc"
+
 // Local includes.
 
 #include "calpainter.h"
 #include "calsettings.h"
-#include "calwidget.h"
-#include "calwidget.moc"
 
 namespace KIPICalendarPlugin
 {

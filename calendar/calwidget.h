@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef __CALWIDGET_H__
-#define __CALWIDGET_H__
+#ifndef CALWIDGET_H
+#define CALWIDGET_H
 
 // Qt includes.
 
@@ -55,4 +55,4 @@ protected:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __CALWIDGET_H__
+#endif // CALWIDGET_H

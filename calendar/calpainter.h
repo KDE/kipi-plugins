@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef __CALPAINTER_H__
-#define __CALPAINTER_H__
+#ifndef CALPAINTER_H
+#define CALPAINTER_H
 
 // Qt includes.
 
@@ -32,7 +32,7 @@
 
 // KDE includes.
 
-#include <KUrl>
+#include <kurl.h>
 
 class QTimer;
 class QString;
@@ -80,5 +80,5 @@ private:
 
 }  // NameSpace KIPICalendarPlugin
 
-#endif // __CALPAINTER_H__
+#endif // CALPAINTER_H
 

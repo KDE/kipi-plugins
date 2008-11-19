@@ -22,11 +22,12 @@
  *
  * ============================================================ */
 
-#ifndef __CALFORMATTER_H__
-#define __CALFORMATTER_H__
+#ifndef CALFORMATTER_H
+#define CALFORMATTER_H
 
 // Qt includes.
 
+#include <QColor>
 #include <QObject>
 
 class KUrl;
@@ -64,4 +65,4 @@ protected:
 
 }
 
-#endif // __CALFORMATTER_H__
+#endif // CALFORMATTER_H

@@ -21,21 +21,23 @@
  *
  * ============================================================ */
 
+#include "calselect.h"
+#include "calselect.moc"
+
 // Qt includes.
 
-#include <QPixmap>
 #include <QDateTime>
+#include <QPixmap>
 
 // KDE includes.
 
-#include <KGlobal>
-#include <KLocale>
-#include <KStandardDirs>
-#include <KCalendarSystem>
+#include <kcalendarsystem.h>
+#include <kglobal.h>
+#include <klocale.h>
+#include <kstandarddirs.h>
 
 // Local includes.
 
-#include "calselect.h"
 #include "calsettings.h"
 #include "monthwidget.h"
 
@@ -77,7 +79,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
     int inRow = (months / 2) + ((months % 2) != 0);
     MonthWidget *w;
 
-    for (int i=0; i<MAX_MONTHS; ++i) 
+    for (int i=0; i<MAX_MONTHS; ++i)
     {
         w = new MonthWidget( interface, ui.monthBox, i+1 );
         if (i < urlList.count())
@@ -107,11 +109,11 @@ void CalSelect::yearChanged(int year)
         // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
         int inRow = (months / 2) + ((months % 2) != 0);
         // remove all the monthWidgets, then readd the needed ones
-        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); ++i) 
+        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); ++i)
         {
             ui.monthBoxLayout->removeWidget(mwVector_.at(i));
         }
-        for (i=0; (i<months) && (i<mwVector_.count()); ++i) 
+        for (i=0; (i<months) && (i<mwVector_.count()); ++i)
         {
             ui.monthBoxLayout->addWidget(mwVector_.at(i), i / inRow, i % inRow);
             if (mwVector_.at(i)->isHidden())

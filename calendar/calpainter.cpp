@@ -21,23 +21,26 @@
  *
  * ============================================================ */
 
+#include "calpainter.h"
+#include "calpainter.moc"
+
 // Qt includes.
 
 #include <QDate>
 #include <QFileInfo>
-#include <QRect>
 #include <QImage>
-#include <QTimer>
-#include <QString>
 #include <QMatrix>
 #include <QPaintDevice>
+#include <QRect>
+#include <QString>
+#include <QTimer>
 
 // KDE includes.
 
-#include <KDebug>
-#include <KGlobal>
-#include <KLocale>
-#include <KCalendarSystem>
+#include <kcalendarsystem.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <klocale.h>
 
 // LibKDcraw includes.
 
@@ -50,10 +53,8 @@
 
 // Local includes.
 
-#include "calsettings.h"
 #include "calformatter.h"
-#include "calpainter.h"
-#include "calpainter.moc"
+#include "calsettings.h"
 
 namespace KIPICalendarPlugin
 {
@@ -67,7 +68,7 @@ CalPainter::CalPainter(QPaintDevice *pd, CalFormatter *formatter)
     year_      = KGlobal::locale()->calendar()->year(QDate::currentDate());
     month_     = KGlobal::locale()->calendar()->month(QDate::currentDate());
 
-    connect(timer_, SIGNAL(timeout()), 
+    connect(timer_, SIGNAL(timeout()),
             this, SLOT(paintNextBlock()));
 }
 
@@ -112,7 +113,7 @@ void CalPainter::paint(bool isPreview)
     if (s+7-startDayOffset >= 7)
             s=s-7;
 
-    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); i++) 
+    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); i++)
     {
         days[i + (7-startDayOffset)] = i-s+1;
     }
@@ -127,7 +128,7 @@ void CalPainter::paint(bool isPreview)
     rCal       = QRect(0, 0, 0, 0);
     rCalHeader = QRect(0, 0, 0, 0);
 
-    switch (params.imgPos) 
+    switch (params.imgPos)
     {
         case(CalParams::Top):
         {
@@ -151,7 +152,7 @@ void CalPainter::paint(bool isPreview)
             break;
         }
 
-        case(CalParams::Left): 
+        case(CalParams::Left):
         {
             rImage.setHeight(height);
             rImage.setWidth((int)(width * (params.ratio)/(params.ratio + 100)));
@@ -173,7 +174,7 @@ void CalPainter::paint(bool isPreview)
             break;
         }
 
-        case(CalParams::Right): 
+        case(CalParams::Right):
         {
             rImage.setHeight(height);
             rImage.setWidth((int)(width * (params.ratio)/(params.ratio + 100)));
@@ -233,7 +234,7 @@ void CalPainter::paint(bool isPreview)
 
     setPen(Qt::red);
     sy = rCal.top();
-    for (int i=0; i<7; i++) 
+    for (int i=0; i<7; i++)
     {
         int dayname = i + startDayOffset;
         if (dayname > 7)
@@ -251,17 +252,17 @@ void CalPainter::paint(bool isPreview)
 
     restore();
 
-    for (int j=0; j<6; j++) 
+    for (int j=0; j<6; j++)
     {
         sy = cellSizeY * (j + 1) + rCal.top();
-        for (int i=0; i<7; i++) 
+        for (int i=0; i<7; i++)
         {
             sx = cellSizeX * i + rCal.left();
             r.moveTopLeft(QPoint(sx,sy));
             rsmall = r;
             rsmall.setWidth(r.width() - 2);
             rsmall.setHeight(r.height() - 2);
-            if (days[index] != -1) 
+            if (days[index] != -1)
             {
                 if (!isPreview && formatter_ && formatter_->isSpecial(month_, days[index]))
                 {

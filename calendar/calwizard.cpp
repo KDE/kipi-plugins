@@ -22,22 +22,25 @@
  *
  * ============================================================ */
 
+#include "calwizard.h"
+#include "calwizard.moc"
+
 // Qt includes.
 
 #include <QDate>
+#include <QPrintDialog>
 #include <QPrinter>
 #include <QStringList>
-#include <QPrintDialog>
 
 // KDE includes.
 
-#include <KMenu>
-#include <KDebug>
-#include <KGlobal>
-#include <KLocale>
-#include <KHelpMenu>
-#include <KToolInvocation>
-#include <KCalendarSystem>
+#include <kcalendarsystem.h>
+#include <kdebug.h>
+#include <kglobal.h>
+#include <khelpmenu.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // LibKIPI includes.
 
@@ -45,14 +48,12 @@
 
 // Local includes.
 
-#include "kpaboutdata.h"
-#include "caltemplate.h"
+#include "calformatter.h"
+#include "calpainter.h"
 #include "calselect.h"
 #include "calsettings.h"
-#include "calpainter.h"
-#include "calformatter.h"
-#include "calwizard.h"
-#include "calwizard.moc"
+#include "caltemplate.h"
+#include "kpaboutdata.h"
 
 namespace KIPICalendarPlugin
 {
@@ -160,7 +161,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
 {
     Q_UNUSED(before);
 
-    if (current == wPrintPage_) 
+    if (current == wPrintPage_)
     {
         months_.clear();
         KUrl image;
@@ -168,18 +169,18 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         QStringList printList;
         QDate d;
         KGlobal::locale()->calendar()->setYMD(d, cSettings_->year(), 1, 1);
-        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++) 
+        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++)
         {
             month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
             image = cSettings_->image(i);
-            if (!image.isEmpty()) 
+            if (!image.isEmpty())
             {
                 months_.insert(i, image);
                 printList.append(month);
             }
         }
 
-        if (months_.empty()) 
+        if (months_.empty())
         {
             wPrintLabel_->setText(i18n("No valid images selected for months<br>"
                     "Click Back to select images"));
@@ -206,7 +207,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         }
     }
 
-    else if (current == wFinishPage_) 
+    else if (current == wFinishPage_)
     {
         calProgressUI.finishLabel->clear();
         calProgressUI.currentProgress->reset();
@@ -225,9 +226,9 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         CalParams& params = cSettings_->params;
 
         // Orientation
-        switch (params.imgPos) 
+        switch (params.imgPos)
         {
-            case(CalParams::Top): 
+            case(CalParams::Top):
             {
                 printer_->setOrientation(QPrinter::Portrait);
                 break;
@@ -282,7 +283,7 @@ void CalWizard::print()
     connect(painter_, SIGNAL(signalProgress(int)),
             calProgressUI.currentProgress, SLOT(setValue(int)));
 
-    connect(painter_, SIGNAL(signalFinished()), 
+    connect(painter_, SIGNAL(signalFinished()),
             this, SLOT(paintNextPage()));
 
     paintNextPage();
