@@ -54,8 +54,5 @@ ELSE(WIN32)
                         )
 ENDIF(WIN32)
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-
 INSTALL(TARGETS kipiplugin_acquireimages DESTINATION ${PLUGIN_INSTALL_DIR})
-
 INSTALL(FILES kipiplugin_acquireimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
