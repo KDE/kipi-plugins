@@ -73,18 +73,18 @@ public:
 
             KUrl                   orgUrl;
             QString                destName;
-            EmailSettingsContainer settings;            
+            EmailSettingsContainer settings;
     };
 
-    bool             running;
-    
-    int              count;
+    bool           running;
 
-    QMutex           mutex;
+    int            count;
 
-    QWaitCondition   condVar;
+    QMutex         mutex;
 
-    QList<Task*>     todo;
+    QWaitCondition condVar;
+
+    QList<Task*>   todo;
 };
 
 ImageResize::ImageResize(QObject *parent)
@@ -165,7 +165,7 @@ void ImageResize::run()
             {
                 emit failedResize(t->orgUrl, errString, percent);
             }
-            
+
             if (t->settings.itemsList.count() == d->count)
             {
                 emit completeResize();
@@ -222,33 +222,33 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
             if( w > h )
             {
                 h = (int)( (double)( h * sizeFactor ) / w );
-    
+
                 if ( h == 0 ) h = 1;
-    
+
                 w = sizeFactor;
                 Q_ASSERT( h <= sizeFactor );
             }
             else
             {
                 w = (int)( (double)( w * sizeFactor ) / h );
-    
+
                 if ( w == 0 ) w = 1;
-    
+
                 h = sizeFactor;
                 Q_ASSERT( w <= sizeFactor );
             }
-    
+
             const QImage scaledImg(img.scaled(w, h));
-    
+
             if ( scaledImg.width() != w || scaledImg.height() != h )
             {
                 err = i18n("Cannot resizing image. Aborting.");
                 return false;
             }
-    
+
             img = scaledImg;
         }
-    
+
         QString destPath = emailSettings.tempPath + destName;
 
         KExiv2Iface::KExiv2 meta;
@@ -256,7 +256,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
         meta.load(orgUrl.path());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(img.size());
-        
+
         if (emailSettings.format() == QString("JPEG"))
         {
             if ( !img.save(destPath, emailSettings.format().toLatin1(), emailSettings.imageCompression) )
