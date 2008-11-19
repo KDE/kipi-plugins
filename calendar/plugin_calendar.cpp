@@ -38,6 +38,7 @@
 
 #include "calwizard.h"
 #include "plugin_calendar.h"
+#include "plugin_calendar.moc"
 
 K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
 K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
