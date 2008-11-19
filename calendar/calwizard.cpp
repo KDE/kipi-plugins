@@ -1,20 +1,19 @@
 /* ============================================================
- * File  : calwizard.cpp
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Tom Albers <tomalbers@kde.nl>
- *          Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: main dialog
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2006 by Tom Albers
- * Copyright 2008 by Orgad Shaneh
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : main dialog.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,17 +41,18 @@
 
 // LibKIPI includes.
 
-#include <kpaboutdata.h>
 #include <libkipi/interface.h>
 
 // Local includes.
 
+#include "kpaboutdata.h"
 #include "caltemplate.h"
 #include "calselect.h"
 #include "calsettings.h"
 #include "calpainter.h"
-#include "calwizard.h"
 #include "calformatter.h"
+#include "calwizard.h"
+#include "calwizard.moc"
 
 namespace KIPICalendarPlugin
 {
@@ -102,7 +102,9 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to create a calendar"),
-                                           ki18n("(c) 2003-2004, Renchi Raju, (c) 2006 Tom Albers, (c) 2008 Orgad Shaneh"));
+                                           ki18n("(c) 2003-2005, Renchi Raju\n"
+                                                 "(c) 2006 Tom Albers\n"
+                                                 "(c) 2007-2008 Orgad Shaneh"));
 
     m_about->addAuthor(ki18n("Orgad Shaneh"), ki18n("Author and maintainer"),
                        "orgads@gmail.com");
@@ -129,11 +131,11 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ------------------------------------------
 
-    printer_  = 0;
+    printer_   = 0;
     formatter_ = 0;
 
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem *, KPageWidgetItem *)),
-            SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));
+            this, SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));
 
     setCaption(i18n("Create Calendar"));
 }
@@ -158,29 +160,33 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
 {
     Q_UNUSED(before);
 
-    if (current == wPrintPage_) {
-
+    if (current == wPrintPage_) 
+    {
         months_.clear();
         KUrl image;
         QString month;
         QStringList printList;
         QDate d;
         KGlobal::locale()->calendar()->setYMD(d, cSettings_->year(), 1, 1);
-        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++) {
+        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++) 
+        {
             month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
             image = cSettings_->image(i);
-            if (!image.isEmpty()) {
+            if (!image.isEmpty()) 
+            {
                 months_.insert(i, image);
                 printList.append(month);
             }
         }
 
-        if (months_.empty()) {
+        if (months_.empty()) 
+        {
             wPrintLabel_->setText(i18n("No valid images selected for months<br>"
                     "Click Back to select images"));
             setValid(wFinishPage_, false);
         }
-        else {
+        else
+        {
             QString year = QString::number(cSettings_->year());
 
             QString extra;
@@ -200,8 +206,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         }
     }
 
-    else if (current == wFinishPage_) {
-
+    else if (current == wFinishPage_) 
+    {
         calProgressUI.finishLabel->clear();
         calProgressUI.currentProgress->reset();
         calProgressUI.totalProgress->reset();
@@ -219,13 +225,17 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         CalParams& params = cSettings_->params;
 
         // Orientation
-        switch (params.imgPos) {
-        case(CalParams::Top): {
-            printer_->setOrientation(QPrinter::Portrait);
-            break;
-        }
-        default:
-            printer_->setOrientation(QPrinter::Landscape);
+        switch (params.imgPos) 
+        {
+            case(CalParams::Top): 
+            {
+                printer_->setOrientation(QPrinter::Portrait);
+                break;
+            }
+            default:
+            {
+                printer_->setOrientation(QPrinter::Landscape);
+            }
         }
 
         kDebug(51000) << "printing...";
@@ -233,10 +243,12 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         printer_->setPageSize(params.pageSize);
         QPrintDialog printDialog( printer_, this );
 
-        if ( printDialog.exec() == QDialog::Accepted ) {
+        if ( printDialog.exec() == QDialog::Accepted )
+        {
             print();
         }
-        else {
+        else
+        {
             calProgressUI.finishLabel->setText(i18n( "Printing Cancelled" ));
             enableButton(KDialog::User3, false); // enable 'Back' button
         }
@@ -266,10 +278,13 @@ void CalWizard::print()
 
     connect(painter_, SIGNAL(signalTotal(int)),
             calProgressUI.currentProgress, SLOT(setMaximum(int)));
+
     connect(painter_, SIGNAL(signalProgress(int)),
             calProgressUI.currentProgress, SLOT(setValue(int)));
 
-    connect(painter_, SIGNAL(signalFinished()), SLOT(paintNextPage()));
+    connect(painter_, SIGNAL(signalFinished()), 
+            this, SLOT(paintNextPage()));
+
     paintNextPage();
 }
 

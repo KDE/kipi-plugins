@@ -1,20 +1,19 @@
 /* ============================================================
- * File  : calwizard.h
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Tom Albers <tomalbers@kde.nl>
- *          Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: main dialog
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2006 by Tom Albers
- * Copyright 2008 by Orgad Shaneh
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : main dialog.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -76,33 +75,6 @@ public:
 
 private:
 
-    CalSettings  *cSettings_;
-    CalTemplate  *wTemplate_;
-    CalSelect    *wSelect_;
-    QWidget      *wEvents_;
-    Ui::CalEvents calEventsUI;
-    Ui::CalProgress calProgressUI;
-
-    QLabel       *wPrintLabel_;
-    QWidget      *wFinish_;
-
-    KPageWidgetItem *wPrintPage_;
-    KPageWidgetItem *wFinishPage_;
-
-    int currPage_;
-
-    QPrinter     *printer_;
-
-    CalFormatter *formatter_;
-
-    CalPainter   *painter_;
-
-    QMap<int, KUrl>  months_;
-
-    KIPI::Interface* interface_;
-
-    KIPIPlugins::KPAboutData    *m_about;
-
     void print();
 
 private slots:
@@ -111,6 +83,35 @@ private slots:
     void slotHelp();
     void printComplete();
     void paintNextPage();
+
+private:
+
+    CalSettings              *cSettings_;
+    CalTemplate              *wTemplate_;
+    CalSelect                *wSelect_;
+    QWidget                  *wEvents_;
+    Ui::CalEvents             calEventsUI;
+    Ui::CalProgress           calProgressUI;
+
+    QLabel                   *wPrintLabel_;
+    QWidget                  *wFinish_;
+
+    KPageWidgetItem          *wPrintPage_;
+    KPageWidgetItem          *wFinishPage_;
+
+    int                       currPage_;
+
+    QPrinter                 *printer_;
+
+    CalFormatter             *formatter_;
+
+    CalPainter               *painter_;
+
+    QMap<int, KUrl>           months_;
+
+    KIPI::Interface          *interface_;
+
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPICalendarPlugin
