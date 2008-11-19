@@ -199,7 +199,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
                         "past.")+"</b>";
 
             wPrintLabel_->setText(i18n("Click Next to start Printing<br><br>"
-                    "Following months will be printed for year %1:<br>").arg(year)
+                    "Following months will be printed for year %1:<br>", year)
                     + printList.join(" - ") + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
@@ -302,9 +302,9 @@ void CalWizard::paintNextPage()
     }
     int month = months_.keys().at(currPage_);
 
-    calProgressUI.finishLabel->setText(i18n( "Printing Calendar Page for %1 of %2" )
-            .arg(KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName))
-            .arg(year));
+    calProgressUI.finishLabel->setText(i18n("Printing Calendar Page for %1 of %2",
+                                       KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
+                                       year));
 
     if (currPage_)
         printer_->newPage();
