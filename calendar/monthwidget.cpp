@@ -1,20 +1,19 @@
 /* ============================================================
- * File  : monthwidget.cpp
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Tom Albers <tomalbers@kde.nl>
- *          Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: month image selection widget
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2006 by Tom Albers
- * Copyright 2008 by Orgad Shaneh
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : month image selection widget.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,14 +48,15 @@
 
 // Local includes.
 
-#include "monthwidget.h"
 #include "calsettings.h"
+#include "monthwidget.h"
+#include "monthwidget.moc"
 
 namespace KIPICalendarPlugin
 {
 
 MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget *parent, int month )
-    : QPushButton(parent), thumbSize( 64, 64 ), interface_( interface )
+           : QPushButton(parent), thumbSize( 64, 64 ), interface_( interface )
 {
     setAcceptDrops(true);
     month_     = month;
@@ -66,8 +66,8 @@ MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget *parent, int month
                      KIconLoader::SizeMedium,
                      KIconLoader::DisabledState)));
 
-    connect(interface_, SIGNAL(gotThumbnail(const KUrl &, const QPixmap &)),
-            SLOT(gotThumbnail(const KUrl &, const QPixmap &)));
+    connect(interface_, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
+            this, SLOT(gotThumbnail(const KUrl&, const QPixmap&)));
 }
 
 MonthWidget::~MonthWidget()
@@ -153,7 +153,8 @@ void MonthWidget::gotThumbnail( const KUrl &url, const QPixmap &pix )
 
     QPixmap image = pix;
     int angle = interface_->info( url ).angle();
-    if ( angle != 0 ) {
+    if ( angle != 0 ) 
+    {
         QMatrix matrix;
         matrix.rotate( angle );
         image = image.transformed( matrix );
@@ -171,7 +172,8 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
         KIPIPlugins::ImageDialog dlg( this, interface_, true );
         setImage(dlg.url());
     }
-    else if (event->button() == Qt::RightButton) {
+    else if (event->button() == Qt::RightButton) 
+    {
         imagePath_ = QString("");
         CalSettings::instance()->setImage(month_,imagePath_);
         setThumb(QPixmap(SmallIcon("image-x-generic",
