@@ -24,6 +24,7 @@
 // Qt includes.
 
 #include <QDate>
+#include <QFileInfo>
 #include <QRect>
 #include <QImage>
 #include <QTimer>
@@ -37,6 +38,15 @@
 #include <KGlobal>
 #include <KLocale>
 #include <KCalendarSystem>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
 
 // Local includes.
 
@@ -236,7 +246,7 @@ void CalPainter::paint(bool isPreview)
         rsmall.setHeight(r.height() - 2);
         drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
                          KGlobal::locale()->calendar()->weekDayName(dayname,
-                             KCalendarSystem::ShortDayName));
+                         KCalendarSystem::ShortDayName));
     }
 
     restore();
@@ -258,7 +268,7 @@ void CalPainter::paint(bool isPreview)
                     save();
                     setPen( formatter_->getDayColor(month_, days[index]) );
                     drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                           QString::number(days[index]));
+                             QString::number(days[index]));
 
                     QString descr = formatter_->getDayDescr(month_, days[index]);
                     kDebug(51000) << "Painting special info: '" << descr
@@ -277,10 +287,10 @@ void CalPainter::paint(bool isPreview)
                 else
                 {
                     drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                           QString::number(days[index]));
+                             QString::number(days[index]));
                 }
                 drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                           QString::number(days[index]));
+                         QString::number(days[index]));
             }
             index++;
         }
@@ -303,10 +313,21 @@ void CalPainter::paint(bool isPreview)
             sx = cellSizeX * i + rCal.left();
             drawLine(sx,sy,sx,rCal.bottom());
         }
-
     }
 
-    image_ = QImage(imagePath_.path()); // PENDING(blackie) handle general URLS.
+    // Check if RAW file.
+    QFileInfo fi(imagePath_.path());
+
+#if KDCRAW_VERSION < 0x000400
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(image_, imagePath_.path());
+    else
+        image_.load(imagePath_.path());
+
     if (image_.isNull())
     {
         fillRect(rImage, Qt::blue);

@@ -21,6 +21,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_calendar
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
+                      ${KEXIV2_LIBRARIES} 
+                      ${KDCRAW_LIBRARIES} 
                       ${KDE4_KCAL_LIBS} 
                       kipiplugins
                      )

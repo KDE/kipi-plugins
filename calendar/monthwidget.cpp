@@ -31,6 +31,7 @@
 #include <QMouseEvent>
 #include <QImageReader>
 #include <QDragEnterEvent>
+#include <QFileInfo>
 
 // KDE includes.
 
@@ -43,11 +44,20 @@
 
 // LibKIPI includes.
 
-#include <imagedialog.h>
 #include <libkipi/interface.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
 
 // Local includes.
 
+#include "imagedialog.h"
 #include "calsettings.h"
 #include "monthwidget.h"
 #include "monthwidget.moc"
@@ -59,8 +69,8 @@ MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget *parent, int month
            : QPushButton(parent), thumbSize( 64, 64 ), interface_( interface )
 {
     setAcceptDrops(true);
-    month_     = month;
     setFixedSize(QSize(74, 94));
+    month_     = month;
     imagePath_ = QString("");
     setThumb(QPixmap(SmallIcon("image-x-generic",
                      KIconLoader::SizeMedium,
@@ -122,11 +132,24 @@ void MonthWidget::setImage( const KUrl &url )
         return;
 
     // check if the file is an image
-    if ( QImageReader::imageFormat( url.path() ).isEmpty() )
+    QFileInfo fi(url.path());
+
+#if KDCRAW_VERSION < 0x000400
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+
+    // Check if RAW image.
+    if (!rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
     {
-        kWarning( 51001 ) << "Unknown image format for: "
-                << url.prettyUrl() << endl;
-        return;
+        // Check if image can be loaded by native Qt loader.
+        if ( QImageReader::imageFormat( url.path() ).isEmpty() )
+        {
+            kWarning( 51001 ) << "Unknown image format for: "
+                              << url.prettyUrl() << endl;
+            return;
+        }
     }
 
     imagePath_ = url;
