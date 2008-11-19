@@ -23,6 +23,7 @@
  * ============================================================ */
 
 #include "calformatter.h"
+#include "calformatter.moc"
 
 // Qt includes.
 

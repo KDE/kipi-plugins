@@ -40,6 +40,7 @@ namespace KIPICalendarPlugin
 */
 class CalFormatter : public QObject
 {
+    Q_OBJECT
 
 public:
 
