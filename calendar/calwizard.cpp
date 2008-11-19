@@ -132,6 +132,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ------------------------------------------
 
+    painter_   = 0;
     printer_   = 0;
     formatter_ = 0;
 
