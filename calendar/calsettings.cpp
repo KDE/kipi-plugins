@@ -1,18 +1,18 @@
 /* ============================================================
- * File  : calsettings.cpp
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: calendar parameters
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2008 by Orgad Shaneh
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : calendar parameters.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -80,12 +80,14 @@ KUrl CalSettings::image(int month) const
 
 void CalSettings::setPaperSize(const QString &paperSize)
 {
-    if (paperSize == "A4") {
+    if (paperSize == "A4")
+    {
         params.paperWidth  = 210;
         params.paperHeight = 297;
         params.pageSize    = QPrinter::A4;
     }
-    else if (paperSize == "US Letter") {
+    else if (paperSize == "US Letter")
+    {
         params.paperWidth  = 216;
         params.paperHeight = 279;
         params.pageSize    = QPrinter::Letter;
@@ -99,32 +101,35 @@ void CalSettings::setImagePos(int pos)
 
     switch (pos)
     {
-    case CalParams::Top: {
-        float zoom = qMin((float)previewSize/params.paperWidth,
-                           (float)previewSize/params.paperHeight);
-        params.width  = (int)(params.paperWidth  * zoom);
-        params.height = (int)(params.paperHeight * zoom);
+        case CalParams::Top:
+        {
+            float zoom = qMin((float)previewSize/params.paperWidth,
+                            (float)previewSize/params.paperHeight);
+            params.width  = (int)(params.paperWidth  * zoom);
+            params.height = (int)(params.paperHeight * zoom);
 
-        params.imgPos = CalParams::Top;
-        break;
-    }
-    case CalParams::Left: {
-        float zoom = qMin((float)previewSize/params.paperWidth,
-                           (float)previewSize/params.paperHeight);
-        params.width  = (int)(params.paperHeight  * zoom);
-        params.height = (int)(params.paperWidth   * zoom);
+            params.imgPos = CalParams::Top;
+            break;
+        }
+        case CalParams::Left:
+        {
+            float zoom = qMin((float)previewSize/params.paperWidth,
+                            (float)previewSize/params.paperHeight);
+            params.width  = (int)(params.paperHeight  * zoom);
+            params.height = (int)(params.paperWidth   * zoom);
 
-        params.imgPos = CalParams::Left;
-        break;
-    }
-    default: {
-        float zoom = qMin((float)previewSize/params.paperWidth,
-                           (float)previewSize/params.paperHeight);
-        params.width  = (int)(params.paperHeight  * zoom);
-        params.height = (int)(params.paperWidth   * zoom);
+            params.imgPos = CalParams::Left;
+            break;
+        }
+        default:
+        {
+            float zoom = qMin((float)previewSize/params.paperWidth,
+                            (float)previewSize/params.paperHeight);
+            params.width  = (int)(params.paperHeight  * zoom);
+            params.height = (int)(params.paperWidth   * zoom);
 
-        params.imgPos = CalParams::Right;
-    }
+            params.imgPos = CalParams::Right;
+        }
     }
     emit settingsChanged();
 }
