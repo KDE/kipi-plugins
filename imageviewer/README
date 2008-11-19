@@ -2,7 +2,12 @@
 KIPI image viewer plugin
 -------------------------------
 
-This image viewer was designed with speed and ease of usage in mind as well as for mouseless setups (notebooks). A image is converted to a non-power-of two OpenGL texture. This means your video driver has to support the GL_ARB_texture_rectangle OpenGL extension. Please verify with the command glxinfo. Please keep in mind that you need alot of video memory: a 5MP image requires 20MB texture memory. If you run out texture ram, the downloading time of the texture can be increased up to several seconds. Next generation window managers like Beryl will require a massive amount of video memory to run this plugin.
+This image viewer was designed with speed and ease of usage in mind as well as for mouseless setups (notebooks). 
+A image is converted to a non-power-of two OpenGL texture. This means your video driver has to support the GL_ARB_texture_rectangle OpenGL extension. 
+Please verify with the command glxinfo. 
+Please keep in mind that you need alot of video memory: a 5MP image requires 20MB texture memory. 
+If you run out texture ram, the downloading time of the texture can be increased up to several seconds. 
+Next generation window managers like Beryl will require a massive amount of video memory to run this plugin.
 
 -------------------
 Handbook
@@ -57,7 +62,10 @@ On a PentiumM 1Ghz, slow 2.5 inch harddrive, I measured the following times for 
 - preload next image to cache 690ms
   only after preloading is done, the next image can be displayed. 
 
-The most expensive part is instanciating a QImage(myimage) object with 690ms, which includes reading the file from the harddrive. Downscaling to screensize and converting to GL format takes around 70ms. At least on my setup, downscaling by CPU is still faster than copying a 20Mb texture to video mem and downscaling by GPU. 
+The most expensive part is instanciating a QImage(myimage) object with 690ms, 
+which includes reading the file from the harddrive. 
+Downscaling to screensize and converting to GL format takes around 70ms. 
+At least on my setup, downscaling by CPU is still faster than copying a 20Mb texture to video mem and downscaling by GPU. 
 
 Other programs/libraries: time of loading and displaying an image
 SDL :                      750ms
@@ -65,5 +73,3 @@ Kuickshow: (imlib)         690ms (without smooth rendering)
 Kuickshow: (imlib)        1770ms (with smooth rendering)
 feh: (imlib2)              670ms 	
 this Image Viewer plugin:  720ms (implicit smooth rendering due to OGL)
-
-
