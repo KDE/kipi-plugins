@@ -41,7 +41,6 @@
 class QLabel;
 class QPainter;
 class QPrinter;
-class QProgressBar;
 class QPushButton;
 
 namespace KIPI
@@ -60,6 +59,7 @@ namespace KIPICalendarPlugin
 class CalSelect;
 class CalEvents;
 class CalPainter;
+class CalPrinter;
 class CalSettings;
 class CalTemplate;
 class CalFormatter;
@@ -82,7 +82,7 @@ private slots:
     void slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *before);
     void slotHelp();
     void printComplete();
-    void paintNextPage();
+    void updatePage(int page);
 
 private:
 
@@ -99,13 +99,10 @@ private:
     KPageWidgetItem          *wPrintPage_;
     KPageWidgetItem          *wFinishPage_;
 
-    int                       currPage_;
-
     QPrinter                 *printer_;
 
+    CalPrinter               *printThread_;
     CalFormatter             *formatter_;
-
-    CalPainter               *painter_;
 
     QMap<int, KUrl>           months_;
 

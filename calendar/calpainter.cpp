@@ -33,7 +33,6 @@
 #include <QPaintDevice>
 #include <QRect>
 #include <QString>
-#include <QTimer>
 
 // KDE includes.
 
@@ -63,18 +62,14 @@ CalPainter::CalPainter(QPaintDevice *pd, CalFormatter *formatter)
           : QPainter(pd)
 {
     angle_     = 0;
-    timer_     = new QTimer( this );
     formatter_ = formatter;
     year_      = KGlobal::locale()->calendar()->year(QDate::currentDate());
     month_     = KGlobal::locale()->calendar()->month(QDate::currentDate());
-
-    connect(timer_, SIGNAL(timeout()),
-            this, SLOT(paintNextBlock()));
+    cancelled_ = false;
 }
 
 CalPainter::~CalPainter()
 {
-    delete timer_;
 }
 
 void CalPainter::setYearMonth(int year, int month)
@@ -347,33 +342,21 @@ void CalPainter::paint(bool isPreview)
 
         emit signalTotal( image_.height() );
 
-        x_ = (rImage.width() - image_.width()) / 2;
-        y_ = (rImage.height() - image_.height()) / 2;
+        int h = image_.height();
+        int x = (rImage.width() - image_.width()) / 2;
+        int y = (rImage.height() - h) / 2;
 
-        block_ = 0;
-        timer_->start(10);
-    }
-}
-
-void CalPainter::paintNextBlock()
-{
-    const int h = image_.height();
-    const int blockSize = qMax(10, block_ - h);
-
-    if (!timer_->isActive())
-        return;
-
-    if (block_ >= h)
-    {
-        timer_->stop();
-        emit signalProgress( h );
+        int blockSize = 10;
+        int block = 0;
+        while (block<h && !cancelled_)
+        {
+            if (block + blockSize > h)
+                blockSize = h - block;
+            drawImage( x, y + block, image_, 0, block, image_.width(), blockSize );
+            block += blockSize;
+            emit signalProgress( block );
+        }
         emit signalFinished();
-    }
-    else
-    {
-        drawImage( x_, y_ + block_, image_, 0, block_, image_.width(), blockSize );
-        block_ += blockSize;
-        emit signalProgress( block_ );
     }
 }
 

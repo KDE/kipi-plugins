@@ -1,0 +1,91 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2008-11-13
+ * Description : printer thread.
+ *
+ * Copyright (C) 2008 by Orgad Shaneh <orgads at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#ifndef CALPRINTER_H
+#define CALPRINTER_H
+
+// Qt includes.
+
+#include <QMap>
+#include <QThread>
+#include <QPointer>
+
+// KDE includes.
+
+#include <kurl.h>
+
+class QPrinter;
+
+namespace KIPI
+{
+    class Interface;
+}
+
+namespace KIPICalendarPlugin
+{
+
+class CalPainter;
+class CalFormatter;
+
+class CalPrinter : public QThread
+{
+    Q_OBJECT
+
+public:
+
+    CalPrinter(QPrinter *printer,
+               CalFormatter *formatter,
+               int year,
+               QMap<int, KUrl> &months,
+               KIPI::Interface *interface,
+               QObject *parent);
+
+    virtual ~CalPrinter();
+
+
+protected:
+
+    void run();
+
+signals:
+
+    void pageChanged(int page);
+    void totalBlocks(int total);
+    void blocksFinished(int finished);
+
+public slots:
+
+    void cancel();
+
+private:
+
+    int year_;
+    QMap<int, KUrl> months_;
+    QPrinter *printer_;
+    CalPainter *painter_;
+    KIPI::Interface* interface_;
+    bool cancelled_;
+};
+
+}  // NameSpace KIPICalendarPlugin
+
+#endif // CALPRINTER_H

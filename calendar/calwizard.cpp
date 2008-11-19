@@ -50,6 +50,7 @@
 
 #include "calformatter.h"
 #include "calpainter.h"
+#include "calprinter.h"
 #include "calselect.h"
 #include "calsettings.h"
 #include "caltemplate.h"
@@ -132,9 +133,9 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ------------------------------------------
 
-    painter_   = 0;
-    printer_   = 0;
-    formatter_ = 0;
+    printThread_ = 0;
+    printer_       = 0;
+    formatter_     = 0;
 
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem *, KPageWidgetItem *)),
             this, SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));
@@ -144,7 +145,13 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
 CalWizard::~CalWizard()
 {
-    if (painter_) delete painter_;
+    if (printThread_)
+    {
+        printThread_->cancel();
+        printThread_->quit();
+        printThread_->wait();
+        delete printThread_;
+    }
 
     if (printer_) delete printer_;
 
@@ -189,12 +196,12 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         }
         else
         {
-            QString year = QString::number(cSettings_->year());
+            int year = cSettings_->year();
 
             QString extra;
             if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
-                 KGlobal::locale()->calendar()->year(QDate::currentDate()) == cSettings_->year()) ||
-                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > cSettings_->year())
+                 KGlobal::locale()->calendar()->year(QDate::currentDate()) == year) ||
+                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
                 extra = "<br/><br/><b>"+i18n("Please note that you are making a "
                         "calendar for<br/>the current year or a year in the "
                         "past.")+"</b>";
@@ -270,53 +277,43 @@ void CalWizard::print()
                                    calEventsUI.fhUrlRequester->url(),
                                    this );
 
-    if (painter_) delete painter_;
-    painter_ = new CalPainter( printer_, formatter_ );
+    printThread_ = new CalPrinter( printer_,
+                                   formatter_,
+                                   cSettings_->year(),
+                                   months_,
+                                   interface_,
+                                   this );
 
-    calProgressUI.totalProgress->setMaximum(months_.count());
-    calProgressUI.totalProgress->setValue( 0 );
+    connect(printThread_, SIGNAL(pageChanged(int)),
+            this,         SLOT(updatePage(int)));
 
-    currPage_ = 0;
+    connect(printThread_, SIGNAL(pageChanged(int)),
+            calProgressUI.totalProgress, SLOT(setValue(int)));
 
-    connect(painter_, SIGNAL(signalTotal(int)),
+    connect(printThread_, SIGNAL(totalBlocks(int)),
             calProgressUI.currentProgress, SLOT(setMaximum(int)));
 
-    connect(painter_, SIGNAL(signalProgress(int)),
+    connect(printThread_, SIGNAL(blocksFinished(int)),
             calProgressUI.currentProgress, SLOT(setValue(int)));
 
-    connect(painter_, SIGNAL(signalFinished()),
-            this, SLOT(paintNextPage()));
-
-    paintNextPage();
+    calProgressUI.totalProgress->setMaximum(months_.count());
+    printThread_->start();
 }
 
-void CalWizard::paintNextPage()
+void CalWizard::updatePage(int page)
 {
     const int year = cSettings_->year();
 
-    calProgressUI.totalProgress->setValue( currPage_ );
-
-    if (currPage_ >= months_.count())
+    if (page >= months_.count())
     {
         printComplete();
         return;
     }
-    int month = months_.keys().at(currPage_);
+    int month = months_.keys().at( page );
 
     calProgressUI.finishLabel->setText(i18n("Printing Calendar Page for %1 of %2",
                                        KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
                                        year));
-
-    if (currPage_)
-        printer_->newPage();
-    currPage_++;
-
-    int angle = interface_->info( months_.value(month) ).angle();
-
-    painter_->setYearMonth(year, month);
-    painter_->setImage(months_.value(month), angle);
-
-    painter_->paint( false );
 }
 
 void CalWizard::printComplete()

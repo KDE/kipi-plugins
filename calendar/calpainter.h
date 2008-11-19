@@ -34,7 +34,6 @@
 
 #include <kurl.h>
 
-class QTimer;
 class QString;
 class QPaintDevice;
 
@@ -64,21 +63,19 @@ signals:
 
 public slots:
 
-    void paintNextBlock();
+    void cancel() { cancelled_ = true; }
 
 private:
 
     QImage        image_;
-    int           block_, x_, y_;
     int           year_;
     int           month_;
     KUrl          imagePath_;
     int           angle_;
     CalFormatter *formatter_;
-    QTimer       *timer_;
+    bool          cancelled_;
 };
 
 }  // NameSpace KIPICalendarPlugin
 
 #endif // CALPAINTER_H
-

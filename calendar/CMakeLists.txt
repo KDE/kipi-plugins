@@ -1,6 +1,7 @@
 SET(kipiplugin_calendar_PART_SRCS plugin_calendar.cpp
                                   calformatter.cpp
                                   calpainter.cpp
+                                  calprinter.cpp
                                   calselect.cpp
                                   calsettings.cpp
                                   caltemplate.cpp
