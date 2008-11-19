@@ -49,14 +49,14 @@ public:
     virtual void setup( QWidget* widget );
     virtual KIPI::Category category( KAction* action ) const;
 
-protected:
-
-    KIPIviewer::ViewerWidget * widget;
-    KAction * actionViewer;
-
 public slots:
 
     void  slotActivate();
+
+protected:
+
+    KIPIviewer::ViewerWidget* widget;
+    KAction*                  actionViewer;
 };
 
 #endif /* PLUGIN_VIEWER_H */

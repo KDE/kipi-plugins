@@ -40,7 +40,6 @@
 // LibKIPI includes.
 
 #include <libkipi/imageinfo.h>
-//TODO new:necessary
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
@@ -63,12 +62,13 @@ void Plugin_viewer::setup( QWidget* widget )
 
     KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !pv_interface ) {
+    if ( !pv_interface ) 
+    {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
-    actionViewer = new KAction(i18n("OpenGL Image Viewer"), actionCollection());
+    actionViewer = new KAction(KIcon("ogl"), i18n("OpenGL Image Viewer"), actionCollection());
     actionViewer->setObjectName("oglviewer");
     connect(actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
@@ -78,18 +78,6 @@ void Plugin_viewer::setup( QWidget* widget )
     widget=0;
 }
 
-KIPI::Category Plugin_viewer::category( KAction* action ) const
-{
-    if ( action == actionViewer ) {
-        return KIPI::ToolsPlugin;
-    }
-    else {
-        kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-        return KIPI::ToolsPlugin; // no warning from compiler, please
-    }
-}
-
-
 /*!
     \fn Plugin_viewer::slotActivate()
  */
@@ -97,7 +85,8 @@ void  Plugin_viewer::slotActivate()
 {
     KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !pv_interface ) {
+    if ( !pv_interface ) 
+    {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
@@ -108,7 +97,8 @@ void  Plugin_viewer::slotActivate()
         delete widget;
         return;
     }
-    switch(widget->getOGLstate()) {
+    switch(widget->getOGLstate()) 
+    {
         case KIPIviewer::oglOK:
             widget->show();
             break;
@@ -123,5 +113,18 @@ void  Plugin_viewer::slotActivate()
             kError( 51000 ) << "no OpenGL context found" << endl;
             delete widget;
             QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("no OpenGL context found"));
+    }
+}
+
+KIPI::Category Plugin_viewer::category( KAction* action ) const
+{
+    if ( action == actionViewer ) 
+    {
+        return KIPI::ToolsPlugin;
+    }
+    else 
+    {
+        kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+        return KIPI::ToolsPlugin; // no warning from compiler, please
     }
 }
