@@ -1,16 +1,18 @@
 /* ============================================================
- * File  : plugin_calendar.cpp
- * Author: Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: plugin entry point
  *
- * Copyright 2008 by Orgad Shaneh
-
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : plugin entry point.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -34,13 +36,13 @@
 
 // Local includes.
 
-#include "plugin_calendar.h"
 #include "calwizard.h"
+#include "plugin_calendar.h"
 
 K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
 K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
 
-Plugin_Calendar::Plugin_Calendar(QObject *parent, const QVariantList &)
+Plugin_Calendar::Plugin_Calendar(QObject *parent, const QVariantList&)
                : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug( 51001 ) << "Plugin_Calendar plugin loaded";
@@ -54,9 +56,8 @@ void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionCalendar = new KAction(KIcon("calendar"),
-                                   i18n("Create Calendar..."),
-                                   actionCollection());
+    m_actionCalendar = new KAction(KIcon("view-pim-calendar"), 
+                                   i18n("Create Calendar..."), actionCollection());
     m_actionCalendar->setObjectName("calendar");
     connect(m_actionCalendar, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));

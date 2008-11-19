@@ -25,6 +25,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_calendar
                       kipiplugins
                      )
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
 INSTALL(TARGETS kipiplugin_calendar DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_calendar.desktop DESTINATION ${SERVICES_INSTALL_DIR})
