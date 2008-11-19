@@ -182,7 +182,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
 
         if (months_.empty())
         {
-            wPrintLabel_->setText(i18n("No valid images selected for months<br>"
+            wPrintLabel_->setText(i18n("No valid images selected for months<br/>"
                     "Click Back to select images"));
             setValid(wFinishPage_, false);
         }
@@ -194,12 +194,12 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
             if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
                  KGlobal::locale()->calendar()->year(QDate::currentDate()) == cSettings_->year()) ||
                  KGlobal::locale()->calendar()->year(QDate::currentDate()) > cSettings_->year())
-                extra = "<br><br><b>"+i18n("Please note that you are making a "
-                        "calendar for<br>the current year or a year in the "
+                extra = "<br/><br/><b>"+i18n("Please note that you are making a "
+                        "calendar for<br/>the current year or a year in the "
                         "past.")+"</b>";
 
-            wPrintLabel_->setText(i18n("Click Next to start Printing<br><br>"
-                    "Following months will be printed for year %1:<br>", year)
+            wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
+                    "Following months will be printed for year %1:<br/>", year)
                     + printList.join(" - ") + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
