@@ -16,35 +16,35 @@ kipi-plugins is based in part on the work of the Independent JPEG Group.
 
 Current plugins ported to Qt4/KDE4:
 
-SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
+AcquireImages      : A tool to acquire images using flat scanner.
+Calendar           : A tool to create calendars.
+DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
+FlickrExport       : A tool to export images to a remote Flickr web service (http://www.flickr.com).
+GalleryExport      : A tool to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net).
+GPSSync            : A tool to geolocalize pictures.
+HTMLExport         : A tool to export images collections into a static XHTML page.
 ImageViewer        : A tool to preview images using OpenGL.
 JpegLossLess       : A tool to rotate/flip images without losing quality.
-AcquireImages      : A tool to acquire images using flat scanner.
-SendImages         : A tool to send images by e-mail, allowing resizing and recompressing before sending.
-TimeAdjust         : A tool to adjust date and time.
-GalleryExport      : A tool to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net).
-FlickrExport       : A tool to export images to a remote Flickr web service (http://www.flickr.com).
-PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
-HTMLExport         : A tool to export images collections into a static XHTML page.
-SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
-GPSSync            : A tool to geolocalize pictures.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
+PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
 RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
-DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
-WallPaper          : A tool to set image to KDE Desktop.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
-Calendar           : A tool to create calendars.
+SendImages         : A tool to send images by e-mail.
+SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
+SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
+TimeAdjust         : A tool to adjust date and time.
 
 Porting under progress to Qt4/KDE4:
 
 IpodExport         : A tool to export pictures to an Ipod device.
 PrintWizard        : A tool to print images in various format.
+WallPaper          : A tool to set image as background on your desktop.
 
 Not yet ported to Qt4/KDE4:
 
 BatchProcess       : A collection of tools to batch process images (convert, resize, rename, etc.)
-MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 CDArchiving        : A tool to archive your image collections to a CD or DVD.
+MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 
 -- DEPENDENCIES -------------------------------------------------------
 

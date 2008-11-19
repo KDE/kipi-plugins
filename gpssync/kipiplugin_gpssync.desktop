@@ -1,5 +1,5 @@
 [Desktop Entry]
-Comment=KIPI plugin to Geolocalize pictures
+Comment=A tool to geolocalize pictures
 Comment[ca]=Connector del KIPI per a geolocalitzar fotografies
 Comment[de]=KIPI-Modul zur geographischen Zuordnung von Bildern
 Comment[el]=Πρόσθετο του KIPI για γεωτοποθέτηση εικόνων
@@ -22,7 +22,7 @@ Comment[sv]=KIPI-insticksprogram för att lokalisera bilder geografiskt
 Comment[th]=ปลั๊กอินกำหนดค่าพิกัดเชิงภูมิศาสตร์ให้กับภาพของ KIPI
 Comment[tr]=KIPI görüntülerin yerini belirtme eklentisi
 Comment[uk]=Додаток KIPI для геолокалізації зображень
-Comment[x-test]=xxKIPI plugin to Geolocalize picturesxx
+Comment[x-test]=xxA tool to geolocalize picturesxx
 Comment[zh_CN]=KIPI 图片地理化插件
 Encoding=UTF-8
 Icon=

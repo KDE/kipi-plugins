@@ -1,5 +1,5 @@
 [Desktop Entry]
-Comment=KIPI Pictures Metadata Editor
+Comment=A tool to edit EXIF, IPTC and XMP metadata
 Comment[ca]=Editor de metadades de fotografies del KIPI
 Comment[de]=KIPI-Bildmetadaten-Editor
 Comment[el]=Επεξεργαστής μεταπληροφοριών εικόνων του KIPI
@@ -23,7 +23,7 @@ Comment[sv]=KIPI-editor för metadata i bilder
 Comment[th]=ปลั๊กอินแก้ไขข้อมูลของภาพของ KIPI
 Comment[tr]=KIPI Resim Metadata Düzenleyicisi
 Comment[uk]=Редактор метаданих картинок KIPI
-Comment[x-test]=xxKIPI Pictures Metadata Editorxx
+Comment[x-test]=xxA tool to edit EXIF, IPTC and XMP metadataxx
 Comment[zh_CN]=KIPI 图片元数据编辑器
 Encoding=UTF-8
 Icon=
