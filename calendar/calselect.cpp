@@ -1,18 +1,18 @@
 /* ============================================================
- * File  : calselect.cpp
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- *          Orgad Shaneh <orgads@gmail.com>
- * Date  : 2008-11-13
- * Description: select year and images for months
  *
- * Copyright 2003 by Renchi Raju
- * Copyright 2008 by Orgad Shaneh
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2003-11-03
+ * Description : select year and images for months.
+ *
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -59,7 +59,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
     ui.setupUi( this );
 
     connect(ui.yearSpin, SIGNAL(valueChanged(int)),
-            SLOT(yearChanged(int)));
+            this, SLOT(yearChanged(int)));
 
     ui.yearSpin->setRange(KGlobal::locale()->calendar()->earliestValidDate().year() + 1,
                           KGlobal::locale()->calendar()->latestValidDate().year() - 1);
@@ -77,7 +77,8 @@ void CalSelect::setupView( KIPI::Interface* interface )
     int inRow = (months / 2) + ((months % 2) != 0);
     MonthWidget *w;
 
-    for (int i=0; i<MAX_MONTHS; ++i) {
+    for (int i=0; i<MAX_MONTHS; ++i) 
+    {
         w = new MonthWidget( interface, ui.monthBox, i+1 );
         if (i < urlList.count())
             w->setImage( urlList[i] );
@@ -106,10 +107,12 @@ void CalSelect::yearChanged(int year)
         // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
         int inRow = (months / 2) + ((months % 2) != 0);
         // remove all the monthWidgets, then readd the needed ones
-        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); ++i) {
+        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); ++i) 
+        {
             ui.monthBoxLayout->removeWidget(mwVector_.at(i));
         }
-        for (i=0; (i<months) && (i<mwVector_.count()); ++i) {
+        for (i=0; (i<months) && (i<mwVector_.count()); ++i) 
+        {
             ui.monthBoxLayout->addWidget(mwVector_.at(i), i / inRow, i % inRow);
             if (mwVector_.at(i)->isHidden())
                 mwVector_.at(i)->show();
