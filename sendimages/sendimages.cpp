@@ -118,7 +118,7 @@ void SendImages::sendImages()
     tmpDir.setAutoRemove(false);
     d->settings.tempPath = tmpDir.name();
 
-    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), 
+    d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                                       i18n("E-mail images"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -142,7 +142,7 @@ void SendImages::sendImages()
         // Add all original files to the attachments list.
 
         for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
-            it != d->settings.itemsList.end(); ++it) 
+            it != d->settings.itemsList.end(); ++it)
         {
             d->attachementFiles.append((*it).orgUrl);
             d->settings.setEmailUrl((*it).orgUrl, (*it).orgUrl);
@@ -218,7 +218,7 @@ void SendImages::buildPropertiesFile()
         QString propertiesText;
 
         for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
-            it != d->settings.itemsList.end(); ++it) 
+            it != d->settings.itemsList.end(); ++it)
         {
             EmailItem item    = *it;
             QString comments  = item.comments;
@@ -267,16 +267,16 @@ bool SendImages::showFailedResizedImages()
     {
         QStringList list;
         for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
-            it != d->failedResizedImages.end(); ++it) 
+            it != d->failedResizedImages.end(); ++it)
         {
             list.append((*it).fileName());
         }
 
-        int valRet = KMessageBox::warningYesNoCancelList(kapp->activeWindow(), 
+        int valRet = KMessageBox::warningYesNoCancelList(kapp->activeWindow(),
                                   i18n("The images listed below cannot be resized.\n"
                                        "Do you want them to be added as attachments "
-                                       "(without resizing)?"), 
-                                  list, 
+                                       "(without resizing)?"),
+                                  list,
                                   i18n("Failed to resize images"));
 
         switch (valRet)
@@ -285,7 +285,7 @@ bool SendImages::showFailedResizedImages()
             {
                 // Added source image files instead resized images...
                 for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
-                    it != d->failedResizedImages.end(); ++it) 
+                    it != d->failedResizedImages.end(); ++it)
                 {
                     d->attachementFiles.append(*it);
                     d->settings.setEmailUrl(*it, *it);
@@ -310,7 +310,7 @@ bool SendImages::showFailedResizedImages()
 }
 
 /** Returns a list of image urls, whose sum file-size is smaller than the quota set in dialog.
-    The returned list are images than we can send imediatly, and are removed from d->attachementFiles list. 
+    The returned list are images than we can send imediatly, and are removed from d->attachementFiles list.
     Files wich still in d->attachementFiles need to be send by another pass.
 */
 KUrl::List SendImages::divideEmails()
@@ -323,7 +323,7 @@ KUrl::List SendImages::divideEmails()
     kDebug( 51000 ) << "Attachment limit: " << d->settings.attachementLimitInBytes();
 
     for (KUrl::List::const_iterator it = d->attachementFiles.begin();
-        it != d->attachementFiles.end(); ++it) 
+        it != d->attachementFiles.end(); ++it)
     {
         QFile file((*it).path());
         kDebug( 51000 ) << "File: " << file.fileName() << " Size: " << file.size();
@@ -334,7 +334,7 @@ KUrl::List SendImages::divideEmails()
             processedNow.append(*it);
             kDebug( 51000 ) << "Current list size: " << myListSize;
         }
-        else 
+        else
         {
             kDebug( 51000 ) << "File \"" << file.fileName() << "\" is out of attachement limit!";
             todoAttachement.append(*it);
@@ -476,7 +476,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                // More info about command lines options with Mozilla & co: 
+                // More info about command lines options with Mozilla & co:
                 // http://www.mozilla.org/docs/command-line-args.html#Syntax_Rules
 
                 case EmailSettingsContainer::MOZILLA:

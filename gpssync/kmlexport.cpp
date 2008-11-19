@@ -377,8 +377,8 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
 
     if (m_gpxParser.numPoints() <= 0)
     {
-        logError(i18n("The %1 GPX file do not have a date-time track to use!")
-                 .arg(m_GPXFile));
+        logError(i18n("The %1 GPX file do not have a date-time track to use!",
+                      m_GPXFile));
         return;
     }
 

@@ -249,10 +249,10 @@ UploadDialog::UploadDialog(
     connect(m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ),
             this, SLOT( ipodItemSelected(Q3ListViewItem*) ));
 
-    connect(m_addImagesButton, SIGNAL( clicked() ), 
+    connect(m_addImagesButton, SIGNAL( clicked() ),
             this, SLOT( imagesFilesButtonAdd() ));
 
-    connect(m_remImagesButton, SIGNAL( clicked() ), 
+    connect(m_remImagesButton, SIGNAL( clicked() ),
             this, SLOT( imagesFilesButtonRem() ));
 
     connect(m_transferImagesButton, SIGNAL( clicked() ),
@@ -588,7 +588,7 @@ void UploadDialog::renameIpodAlbum()
         GError *err = 0;
         itdb_photodb_write( m_itdb, &err );
     }
-#endif 
+#endif
 }
 
 bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
@@ -795,7 +795,8 @@ bool UploadDialog::openDevice()
         kDebug(51000) << "could not find iTunesDB on device mounted at " << m_mountPoint << endl;
 
         QString msg = i18n( "An iPod photo database could not be found on device mounted at %1. "
-                "Should I try to initialize your iPod photo database?" ).arg( m_mountPoint );
+                            "Should I try to initialize your iPod photo database?",
+                            m_mountPoint);
 
         if( KMessageBox::warningContinueCancel( this, msg, i18n( "Initialize iPod Photo Database?" ),
                     KGuiItem(i18n("&Initialize"), "new") ) == KMessageBox::Continue )

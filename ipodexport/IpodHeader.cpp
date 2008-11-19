@@ -114,7 +114,7 @@ void IpodHeader::setIncompatibleIpod()
 
     m_button->disconnect();
 
-    connect(m_button, SIGNAL( clicked() ), 
+    connect(m_button, SIGNAL( clicked() ),
             this, SIGNAL( updateSysInfo() ));
 }
 
@@ -125,13 +125,13 @@ void IpodHeader::setValidIpod()
 
     if( !mountPoint.isEmpty() )
     {
-        m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected at: %2</b></p>" )
-                                 .arg( modelType, mountPoint ) );
+        m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected at: %2</b></p>",
+                                 modelType, mountPoint) );
     }
     else
     {
-        m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected</b></p>" )
-                                .arg( modelType ) );
+        m_messageLabel->setText( i18n("<p align=\"center\"><b>iPod %1 detected</b></p>",
+                                 modelType) );
     }
     QPalette p = palette();
     p.setColor( QPalette::Window, QColor(0,98,0) );

@@ -184,7 +184,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   // Print order (up)
   connect(d->mPhotoPage->BtnPrintOrderUp, SIGNAL(clicked(void)),
           this, SLOT(BtnPrintOrderUp_clicked(void)));
-  
+
   connect(d->mPhotoPage->BtnPreviewPageUp, SIGNAL(clicked(void)),
           this, SLOT(BtnPreviewPageUp_clicked(void)));
   connect(d->mPhotoPage->BtnPreviewPageDown, SIGNAL(clicked(void)),
@@ -197,16 +197,16 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   connect(d->mCropPage->BtnCropRotate, SIGNAL(clicked()),
           this, SLOT(BtnCropRotate_clicked()));
-  
+
   connect(d->mPhotoPage->ListPrintOrder, SIGNAL(itemSelectionChanged()),
           this, SLOT(ListPrintOrder_selected()));
-  
+
   connect(d->mPhotoPage->ListPrintOrder, SIGNAL(itemEntered(QListWidgetItem *)),
           this, SLOT(ListPrintOrder_selected()));
 
-  connect(d->mPhotoPage->EditCopies, SIGNAL(valueChanged(int)), 
+  connect(d->mPhotoPage->EditCopies, SIGNAL(valueChanged(int)),
           this, SLOT( EditCopies_valueChanged(int) ) );
-  
+
   connect (d->mPhotoPage->ListPhotoSizes, SIGNAL(  currentRowChanged(int)),
           this, SLOT(ListPhotoSizes_selected()));
 
@@ -230,7 +230,7 @@ Wizard::~Wizard() {
 
 // create a MxN grid of photos, fitting on the page
 TPhotoSize * createPhotoGrid(int pageWidth, int pageHeight, QString label, int rows, int columns) {
-  int MARGIN = (int)((pageWidth + pageHeight) / 2 * 0.04 + 0.5); 
+  int MARGIN = (int)((pageWidth + pageHeight) / 2 * 0.04 + 0.5);
   int GAP = MARGIN / 4;
   int photoWidth = (pageWidth - (MARGIN * 2) - ((columns-1) * GAP)) / columns;
   int photoHeight = (pageHeight - (MARGIN * 2) - ((rows-1) * GAP)) / rows;
@@ -413,7 +413,7 @@ void Wizard::initPhotoSizes(PageSize pageSize)
       d->m_photoSizes.append(p);
     } // letter
     break;
-                
+
                 // ====================== A4 SIZE =====================
     case A4:
     {
@@ -465,7 +465,7 @@ void Wizard::initPhotoSizes(PageSize pageSize)
       p->layouts.append(new QRect(1100, 1500, 900, 1300));
                         // add to the list
       d->m_photoSizes.append(p);
-                        
+
                           // ========== 10x13.33cm
       p = new TPhotoSize;
       p->dpi = 0;
@@ -619,20 +619,20 @@ void Wizard::initPhotoSizes(PageSize pageSize)
       p->layouts.append(new QRect( 50,  100, 900, 1300));
                         // add to the list
       d->m_photoSizes.append(p);
-                                                                                                                                
+
                         // thumbnails
       d->m_photoSizes.append(createPhotoGrid(1016, 1524, i18n("Thumbnails"), 5, 4));
-                
+
                         // small thumbnails
       d->m_photoSizes.append(createPhotoGrid(1016, 1524, i18n("Small Thumbnails"), 6, 5));
-                
-    } // 10x15 cm 
+
+    } // 10x15 cm
     break;
 
                 // ====================== 13x18cm SIZE =====================
     case P13X18:
     {
-                        // 10x18cm photo paper is 5x7" so the right conversion 
+                        // 10x18cm photo paper is 5x7" so the right conversion
                         // is 12.7 x 17.78 cm
       TPhotoSize *p;
                         // ========== 10x15cm
@@ -673,13 +673,13 @@ void Wizard::initPhotoSizes(PageSize pageSize)
 
                         // thumbnails
       d->m_photoSizes.append(createPhotoGrid(1270, 1778, i18n("Thumbnails"), 5, 4));
-                
+
                         // small thumbnails
       d->m_photoSizes.append(createPhotoGrid(1270, 1778, i18n("Small Thumbnails"), 6, 5));
-                
-    } // 13x18 cm 
+
+    } // 13x18 cm
     break;
-                        
+
     default:
     {
       kDebug() << "Initializing Unsupported page layouts\n";
@@ -708,9 +708,9 @@ void Wizard::initPhotoSizes(PageSize pageSize)
     if (s) d->mPhotoPage->ListPhotoSizes->addItem(s->label);
   }
   d->mPhotoPage->ListPhotoSizes->blockSignals(false);
-  
+
   d->mPhotoPage->ListPhotoSizes->setCurrentRow (0, QItemSelectionModel::Select);
-  
+
 //   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
 double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current)
@@ -759,7 +759,7 @@ int Wizard::getPageCount()
 {
   // get the selected layout
   TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
-  
+
   int photoCount  =  d->m_photos.count();
   // how many pages?  Recall that the first layout item is the paper size
   int photosPerPage = s->layouts.count() - 1;
@@ -1271,7 +1271,7 @@ void Wizard::updateCropFrame(TPhoto *photo, int photoIndex)
 {
   TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
   d->mCropPage->cropFrame->init(photo, getLayout(photoIndex)->width(), getLayout(photoIndex)->height(), s->autoRotate);
-  d->mCropPage->LblCropPhoto->setText(i18n("Photo %1 of %2").arg(photoIndex + 1).arg( QString::number(d->m_photos.count()) ));
+  d->mCropPage->LblCropPhoto->setText(i18n("Photo %1 of %2", photoIndex + 1, QString::number(d->m_photos.count()) ));
 }
 
 // update the pages to be printed and preview first/last pages
@@ -1302,7 +1302,7 @@ void Wizard::previewPhotos()
   int count = 0;
   int page = 0;
   unsigned int current = 0;
-  
+
   QList<TPhoto*>::iterator it;
   for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
   {
@@ -1336,7 +1336,7 @@ void Wizard::previewPhotos()
   p.end();
   d->mPhotoPage->BmpFirstPagePreview->setPixmap(img);
   d->mPhotoPage->LblPreview->setText(i18n("Page ") + QString::number(d->m_currentPreviewPage + 1) + i18n(" of ") + QString::number(getPageCount()));
-  d->mPhotoPage->LblPreview->setText(i18n("Page %1 of %2").arg(d->m_currentPreviewPage + 1).arg(getPageCount()));
+  d->mPhotoPage->LblPreview->setText(i18n("Page %1 of %2", d->m_currentPreviewPage + 1, getPageCount()));
 
   manageBtnPreviewPage();
   manageBtnPrintOrder();
@@ -1350,7 +1350,7 @@ void Wizard::manageBtnPreviewPage()
   {
     d->mPhotoPage->BtnPreviewPageDown->setEnabled(false);
   }
-  
+
   if ((d->m_currentPreviewPage + 1) == getPageCount())
   {
     d->mPhotoPage->BtnPreviewPageUp->setEnabled(false);
@@ -1383,7 +1383,7 @@ void Wizard::slotHelp()
 
 void Wizard::btnBrowseOutputPathClicked(void)
 {
-  QString newPath = KFileDialog::getExistingDirectory(d->mInfoPage->EditOutputPath->text(), this, 
+  QString newPath = KFileDialog::getExistingDirectory(d->mInfoPage->EditOutputPath->text(), this,
                                                       i18n("Select Output Folder"));
   if (newPath.isEmpty())
     return;
@@ -1399,8 +1399,8 @@ void Wizard::paperSizeChanged(int index)
 
   if (pageSize > A6)
   {
-    KMessageBox::information (this, 
-                              i18n("Don't forget to set up the correct page size according to your printer settings"), 
+    KMessageBox::information (this,
+                              i18n("Don't forget to set up the correct page size according to your printer settings"),
                                    i18n("Page size settings"), "pageSizeInfo");
   }
 }
@@ -1623,7 +1623,7 @@ void Wizard::EditCopies_valueChanged( int copies )
           delete (pPhoto);
           d->mPhotoPage->ListPrintOrder->takeItem(index);
           break;
-        } 
+        }
       }
     }
     d->mPhotoPage->ListPrintOrder->blockSignals(false);
@@ -1649,7 +1649,7 @@ void Wizard::EditCopies_valueChanged( int copies )
        ++index)
   {
     TPhoto *pPhoto = d->m_photos[index];
-    if (pPhoto == 0) 
+    if (pPhoto == 0)
       break;
     if (pPhoto->filename == fileName)
     {
