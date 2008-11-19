@@ -38,7 +38,7 @@ Calendar           : A tool to create calendars.
 Porting under progress to Qt4/KDE4:
 
 IpodExport         : A tool to export pictures to an Ipod device.
-PrintWizard        : A wizard to print images in various format.
+PrintWizard        : A tool to print images in various format.
 
 Not yet ported to Qt4/KDE4:
 
@@ -72,15 +72,17 @@ libgpod         >= 0.6.0                        http://www.gtkpod.org/libgpod.ht
 
 Plugin Specific Dependencies (for compiling and for running) :
 
-slideshow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-imageviewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
-dngconverter       : libexpat and libkdcraw 0.4.0
-acquireimages      : libksane
-htmlexport         : libxslt and libxml2
-jpeglossless       : imagemagick (runtime dependency)
-wallpaper          : kdebase (runtime dependency)
+SlideShow          : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
+ImageViewer        : X11 (Linux Only), Mesa3D, and OpenGL support for libqt
+DngConverter       : libexpat and libkdcraw 0.4.0
+AcquireImages      : libksane
+HtmlZxport         : libxslt and libxml2
+JpegLossless       : imagemagick (runtime dependency)
+WallPaper          : kdebase (runtime dependency)
 RemoveRedEyes      : libopencv.
-ipodexport         : libgpod.
+IpodExport         : libgpod.
+Calendar           : libkcal (kdepimlibs)
+
 
 -- CONTACT ------------------------------------------------------------
 
