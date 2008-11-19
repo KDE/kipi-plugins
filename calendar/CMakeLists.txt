@@ -16,7 +16,6 @@ KDE4_ADD_UI_FILES(kipiplugin_calendar_PART_SRCS caltemplate.ui
                  )
 
 KDE4_ADD_PLUGIN(kipiplugin_calendar ${kipiplugin_calendar_PART_SRCS})
-# KDE4_ADD_EXECUTABLE(kipiplugin_calendar ${kipiplugin_calendar_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_calendar 
                       ${KDE4_KPARTS_LIBS} 
