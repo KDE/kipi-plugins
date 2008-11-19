@@ -38,7 +38,7 @@ GAlbumViewItem::GAlbumViewItem(Q3ListView* parent, const QString& name, const GA
 }
 
 GAlbumViewItem::GAlbumViewItem(Q3ListViewItem* parent, const QString& name, const GAlbum& album)
-              : Q3ListViewItem(parent, name) 
+              : Q3ListViewItem(parent, name)
 {
     m_album = album;
 }
@@ -59,9 +59,9 @@ void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, i
     QFontMetrics fm(p->fontMetrics());
 
     if (isSelected())
-        p->fillRect(0, 0, width, height(), cg.highlight());
+        p->fillRect(0, 0, width, height(), cg.color(QColorGroup::Highlight));
     else
-        p->fillRect(0, 0, width, height(), cg.base());
+        p->fillRect(0, 0, width, height(), cg.color(QColorGroup::Base));
 
     const QPixmap* icon = pixmap(column);
 
@@ -75,9 +75,9 @@ void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, i
     }
 
     if (isSelected())
-        p->setPen( cg.highlightedText() );
+        p->setPen( cg.color(QColorGroup::HighlightedText) );
     else
-        p->setPen( cg.text() );
+        p->setPen( cg.color(QColorGroup::Text) );
 
     int r = lv->itemMargin() + iconWidth;
     int h = lv->fontMetrics().height() + 2;
@@ -87,7 +87,7 @@ void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, i
     fn.setPointSize(fn.pointSize()-2);
     fn.setItalic(true);
     p->setFont(fn);
-    p->setPen(isSelected() ? cg.highlightedText() : Qt::gray);
+    p->setPen(isSelected() ? cg.color(QColorGroup::HighlightedText) : Qt::gray);
     p->drawText(r, h, width-r, h, Qt::AlignVCenter, m_album.name);
 }
 
