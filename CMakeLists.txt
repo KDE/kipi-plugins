@@ -45,16 +45,16 @@ FIND_PACKAGE(TIFF REQUIRED)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)   # For DNGConverter: XMP SDK need Expat library to compile.
-MACRO_OPTIONAL_FIND_PACKAGE(Threads) # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2) # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt) # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)  # For Slideshow and ImageViewer.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)  # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(Gpod)    # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)   # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GObject) # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar
+MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)      # For DNGConverter: XMP SDK need Expat library to compile.
+MACRO_OPTIONAL_FIND_PACKAGE(Threads)    # For DNGConverter: DNG SDK need native threads support.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)    # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)    # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For Slideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(Gpod)       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -86,11 +86,6 @@ IF(NOT WIN32 AND NOT APPLE)
         SET(KSANE_FOUND FALSE)
     ENDIF(DEPEND_PACKAGE_KSane)
 ENDIF(NOT WIN32 AND NOT APPLE)
-
-# TODO: add others optional depencies to check when others plugins will be ported to KDE4
-#
-# ipodexport need Gpod library
-# calendar need Kcal library (KDEPIM)
 
 # ==================================================================================================
 # Log messages
@@ -201,10 +196,16 @@ ELSE(OPENCV_FOUND)
 ENDIF(OPENCV_FOUND)
 
 IF(GPOD_FOUND)
-    MESSAGE(STATUS " libgpod library found..  ........... YES (optional)")
+    MESSAGE(STATUS " libgpod library found............... YES (optional)")
 ELSE(GPOD_FOUND)
-    MESSAGE(STATUS " libgpod library found......  ....... NO  (optional)")
+    MESSAGE(STATUS " libgpod library found............... NO  (optional)")
 ENDIF(GPOD_FOUND)
+
+IF(KDEPIMLIBS_FOUND)
+    MESSAGE(STATUS " libkdepim library found............. YES (optional)")
+ELSE(KDEPIMLIBS_FOUND)
+    MESSAGE(STATUS " libkdepim library found............. NO  (optional)")
+ENDIF(KDEPIMLIBS_FOUND)
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -221,7 +222,9 @@ IF(NOT WIN32 AND NOT APPLE)
     ENDIF(KSANE_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-# Optional plugins results.
+# Optional plugins results ----------------------------------------------------------------------------
+
+MESSAGE(STATUS "")
 
 IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     MESSAGE(STATUS " kipi-plugins will be compiled....... YES")
@@ -283,6 +286,12 @@ ELSE(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
     MESSAGE(STATUS " IpodExport will be compiled......... NO  (optional - Look README file for more details about dependencies)")
 ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
 
+IF(KDEPIMLIBS_FOUND)
+    MESSAGE(STATUS " Calendar will be compiled........... YES (optional)")
+ELSE(KDEPIMLIBS_FOUND)
+    MESSAGE(STATUS " Calendar will be compiled........... NO  (optional - Look README file for more details about dependencies)")
+ENDIF(KDEPIMLIBS_FOUND)
+
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
 
@@ -339,11 +348,14 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(simpleviewerexport)
     ADD_SUBDIRECTORY(flickrexport)
     ADD_SUBDIRECTORY(galleryexport)
-    ADD_SUBDIRECTORY(calendar)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(printwizard)
 
     # Plugins which are optional depencies.
+
+    IF(KDEPIMLIBS_FOUND)
+       ADD_SUBDIRECTORY(calendar)
+    ENDIF(KDEPIMLIBS_FOUND)
 
     IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
        ADD_SUBDIRECTORY(ipodexport)
