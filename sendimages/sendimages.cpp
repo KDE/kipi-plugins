@@ -233,6 +233,7 @@ void SendImages::buildPropertiesFile()
             if (tags.isEmpty())
                 tags = i18n("no keywords");
 
+            // FIXME: isn't the argument list missing here?
             propertiesText.append(i18n("file \"%1\":\nOriginal images: %2\n"));
 
             if (d->iface->hasFeature(KIPI::ImagesHasComments))
