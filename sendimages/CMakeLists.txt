@@ -1,4 +1,5 @@
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
+
 SET(kipiplugin_sendimages_PART_SRCS plugin_sendimages.cpp 
                                     sendimagesdialog.cpp 
                                     imagespage.cpp
@@ -18,8 +19,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_sendimages
                       kipiplugins
                      )
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-
 INSTALL(TARGETS kipiplugin_sendimages DESTINATION ${PLUGIN_INSTALL_DIR})
-
 INSTALL(FILES kipiplugin_sendimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
