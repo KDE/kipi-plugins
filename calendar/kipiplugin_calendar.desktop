@@ -1,8 +1,20 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Calendar
+Name[el]=Ημερολόγιο
 Name[ga]=Féilire
+Name[nds]=Kalenner
+Name[pt]=Calendário
+Name[pt_BR]=Calendário
+Name[sv]=Kalender
+Name[uk]=Календар
 Comment=A tool to create calendars
+Comment[el]=Ένα εργαλείο δημιουργίας ημερολογίων
+Comment[nds]=En Warktüüch, mit dat sik Kalenners opstellen laat
+Comment[pt]=Uma ferramenta para criar calendários
+Comment[pt_BR]=Uma ferramenta para criar calendários
+Comment[sv]=Ett verktyg för att skapa kalendrar
+Comment[uk]=Інструмент для створення календарів
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar

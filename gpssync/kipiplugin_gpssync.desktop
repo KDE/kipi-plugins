@@ -1,5 +1,11 @@
 [Desktop Entry]
 Comment=A tool to geolocalize pictures
+Comment[el]=Ένα εργαλείο γεωτοποθέτησης εικόνων
+Comment[nds]=En Warktüüch, dat Biller Steden towiest
+Comment[pt]=Uma ferramenta de geo-localização das imagens
+Comment[pt_BR]=Uma ferramenta de geo-localização das imagens
+Comment[sv]=Ett verktyg för att lokalisera bilder geografiskt
+Comment[uk]=Інструмент для геолокалізації зображень
 Encoding=UTF-8
 Icon=
 Name=GPSSync

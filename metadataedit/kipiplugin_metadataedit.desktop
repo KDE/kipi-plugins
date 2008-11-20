@@ -1,5 +1,11 @@
 [Desktop Entry]
 Comment=A tool to edit EXIF, IPTC and XMP metadata
+Comment[el]=Ένα εργαλείο επεξεργασίας μεταδεδομένων EXIF, IPTC και XMP
+Comment[nds]=En Warktüüch, mit dat sik EXIF-, IPTC- un XMP-Metadaten bewerken laat
+Comment[pt]=Uma ferramenta para editar meta-dados EXIF, IPTC e XMP
+Comment[pt_BR]=Uma ferramenta para editar meta-dados EXIF, IPTC e XMP
+Comment[sv]=Ett verktyg för att redigera EXIF-, IPTC- och XMP-metadata
+Comment[uk]=Інструмент для редагування метаданих EXIF, IPTC і XMP
 Encoding=UTF-8
 Icon=
 Name=MetadataEdit
