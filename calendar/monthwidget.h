@@ -76,7 +76,7 @@ private:
 
     QPixmap thumb() const;
     void setThumb(const QPixmap &pic);
-    Q_PROPERTY(QPixmap thumb READ thumb WRITE setThumb);
+    Q_PROPERTY(QPixmap thumb READ thumb WRITE setThumb)
 
 private:
 
