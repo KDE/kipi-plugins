@@ -153,11 +153,11 @@ CalWizard::~CalWizard()
         delete printThread_;
     }
 
-    if (printer_) delete printer_;
+    delete printer_;
 
     delete m_about;
 
-    if ( formatter_ ) delete formatter_;
+    delete formatter_;
 }
 
 void CalWizard::slotHelp()
