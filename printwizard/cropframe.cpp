@@ -94,8 +94,11 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
   scaledImg = scaledImg.scaled(this->width(), this->height(), Qt::KeepAspectRatio);
   //TODO check for cropping Qt::KeepAspectRatioByExpanding);
   //m_pixmap = new QPixmap();
-  m_pixmap = new QPixmap(scaledImg.width(), scaledImg.height());
-  m_pixmap->fromImage(scaledImg);
+//   QPixmap pix(scaledImg.width(), scaledImg.height());
+  QPixmap pix(this->width(), this->height());
+  m_pixmap = new QPixmap(pix.fromImage(scaledImg));
+//   m_pixmap = new QPixmap(scaledImg.width(), scaledImg.height());
+//   m_pixmap->fromImage(scaledImg);
   m_pixmapX = (this->width() / 2) - (m_pixmap->width() / 2);
   m_pixmapY = (this->height() / 2) - (m_pixmap->height() / 2);
 
@@ -133,9 +136,9 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
 
   // TODO check if update() is better
   if (paint)
-    repaint(m_cropRegion);
-    //update(m_cropRegion);
-}
+    update(m_cropRegion);
+   //repaint(m_cropRegion);
+ }
 
 QRect CropFrame::_screenToPhotoRect(QRect r)
 {
@@ -276,7 +279,8 @@ void CropFrame::mouseMoveEvent(QMouseEvent *e)
 
     m_cropRegion.setRect(newX, newY, newW, newH);
     m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
-    repaint(m_cropRegion);
+    //repaint(m_cropRegion);
+    update(m_cropRegion);
   }
 }
 
@@ -308,14 +312,16 @@ void CropFrame::keyPressEvent(QKeyEvent *e)
 
   m_cropRegion.setRect(newX, newY, w, h);
   m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
-  repaint(m_cropRegion);
+  update(m_cropRegion);
+  //repaint(m_cropRegion);
 
 }
 
 void CropFrame::setColor(QColor c)
 {
   m_color = c;
-  repaint();
+  update();
+  //repaint();
 }
 
 QColor CropFrame::color()

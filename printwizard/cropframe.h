@@ -26,7 +26,7 @@
 
 // Qt includes.
 
-#include <QWidget>
+#include <QLabel>
 
 // Local includes.
 
@@ -64,11 +64,11 @@ class CropFrame : public QWidget
     QRect _photoToScreenRect(QRect r);
 
   protected:
-    void paintEvent (QPaintEvent *);
-    void mousePressEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void keyPressEvent(QKeyEvent *);
+    virtual void paintEvent (QPaintEvent *);
+    virtual void mousePressEvent(QMouseEvent *);
+    virtual void mouseReleaseEvent(QMouseEvent *);
+    virtual void mouseMoveEvent(QMouseEvent *);
+    virtual void keyPressEvent(QKeyEvent *);
 };
 
 }  // NameSpace KIPIPrintWizardPlugin
