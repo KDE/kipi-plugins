@@ -74,7 +74,7 @@ private:
 		int value=item->value();
 		QList<KConfigSkeleton::ItemEnum::Choice> lst=item->choices();
 		QList<KConfigSkeleton::ItemEnum::Choice>::ConstIterator
-			it=lst.begin(), end=lst.end();
+			it=lst.constBegin(), end=lst.constEnd();
 
 		for (int pos=0; it!=end; ++it, pos++) {
 			if (pos==value) {

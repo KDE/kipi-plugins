@@ -508,7 +508,7 @@ void TimeAdjustDialog::slotOk()
     KUrl::List  updatedURLs;
     QStringList errorFiles;
 
-    for( KUrl::List::ConstIterator it = d->images.begin(); it != d->images.end(); ++it )
+    for( KUrl::List::ConstIterator it = d->images.constBegin(); it != d->images.constEnd(); ++it )
     {
         KUrl url             = *it;
         KIPI::ImageInfo info = d->interface->info(url);

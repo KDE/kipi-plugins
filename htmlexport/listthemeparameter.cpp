@@ -66,8 +66,8 @@ QWidget* ListThemeParameter::createWidget(QWidget* parent, const QString& widget
 	KComboBox* comboBox = new KComboBox(parent);
 
 	QStringList::ConstIterator
-		it = d->mOrderedValueList.begin(),
-		end = d->mOrderedValueList.end();
+		it = d->mOrderedValueList.constBegin(),
+		end = d->mOrderedValueList.constEnd();
 	for (;it!=end; ++it) {
 		QString value = *it;
 		QString caption = d->mContentMap[value];

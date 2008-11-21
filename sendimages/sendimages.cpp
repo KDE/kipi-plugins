@@ -141,8 +141,8 @@ void SendImages::sendImages()
     {
         // Add all original files to the attachments list.
 
-        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
-            it != d->settings.itemsList.end(); ++it)
+        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.constBegin();
+            it != d->settings.itemsList.constEnd(); ++it)
         {
             d->attachementFiles.append((*it).orgUrl);
             d->settings.setEmailUrl((*it).orgUrl, (*it).orgUrl);
@@ -217,8 +217,8 @@ void SendImages::buildPropertiesFile()
 
         QString propertiesText;
 
-        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.begin();
-            it != d->settings.itemsList.end(); ++it)
+        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.constBegin();
+            it != d->settings.itemsList.constEnd(); ++it)
         {
             EmailItem item    = *it;
             QString comments  = item.comments;
@@ -266,8 +266,8 @@ bool SendImages::showFailedResizedImages()
     if (!d->failedResizedImages.isEmpty())
     {
         QStringList list;
-        for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
-            it != d->failedResizedImages.end(); ++it)
+        for (KUrl::List::const_iterator it = d->failedResizedImages.constBegin();
+            it != d->failedResizedImages.constEnd(); ++it)
         {
             list.append((*it).fileName());
         }
@@ -284,8 +284,8 @@ bool SendImages::showFailedResizedImages()
             case KMessageBox::Yes:
             {
                 // Added source image files instead resized images...
-                for (KUrl::List::const_iterator it = d->failedResizedImages.begin();
-                    it != d->failedResizedImages.end(); ++it)
+                for (KUrl::List::const_iterator it = d->failedResizedImages.constBegin();
+                    it != d->failedResizedImages.constEnd(); ++it)
                 {
                     d->attachementFiles.append(*it);
                     d->settings.setEmailUrl(*it, *it);
@@ -322,8 +322,8 @@ KUrl::List SendImages::divideEmails()
 
     kDebug( 51000 ) << "Attachment limit: " << d->settings.attachementLimitInBytes();
 
-    for (KUrl::List::const_iterator it = d->attachementFiles.begin();
-        it != d->attachementFiles.end(); ++it)
+    for (KUrl::List::const_iterator it = d->attachementFiles.constBegin();
+        it != d->attachementFiles.constEnd(); ++it)
     {
         QFile file((*it).path());
         kDebug( 51000 ) << "File: " << file.fileName() << " Size: " << file.size();
@@ -384,7 +384,7 @@ bool SendImages::invokeMailAgent()
                     QStringList args;
                     args.append("-m");
                     args.append("mailto:");
-                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("-a");
                         args.append(QFile::encodeName((*it).path()));
@@ -408,7 +408,7 @@ bool SendImages::invokeMailAgent()
                     QStringList args;
                     args.append("--compose");
                     args.append("--attach");
-                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append(QFile::encodeName((*it).path()));
                     }
@@ -437,7 +437,7 @@ bool SendImages::invokeMailAgent()
                     QString prog("evolution");
                     QStringList args;
                     QString tmp = "mailto:?subject=";
-                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append("&attach=");
                         tmp.append( QFile::encodeName((*it).path()) );
@@ -459,7 +459,7 @@ bool SendImages::invokeMailAgent()
                 {
                     QString prog("kmail");
                     QStringList args;
-                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("--attach");
                         args.append(QFile::encodeName((*it).path()));
@@ -497,7 +497,7 @@ bool SendImages::invokeMailAgent()
                     QStringList args;
                     args.append("-compose");
                     QString tmp = "attachment='";
-                    for (KUrl::List::Iterator it = fileList.begin() ; it != fileList.end() ; ++it )
+                    for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append( "file://" );
                         QString toencode=(*it).encodedPathAndQuery();

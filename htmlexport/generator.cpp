@@ -420,8 +420,8 @@ struct Generator::Private {
 		Theme::ParameterList parameterList = mTheme->parameterList();
 		QString themeInternalName = mTheme->internalName();
 		Theme::ParameterList::ConstIterator
-			it = parameterList.begin(),
-			end = parameterList.end();
+			it = parameterList.constBegin(),
+			end = parameterList.constEnd();
 		for (; it!=end; ++it) {
 			AbstractThemeParameter* themeParameter = *it;
 			QByteArray internalName = themeParameter->internalName();

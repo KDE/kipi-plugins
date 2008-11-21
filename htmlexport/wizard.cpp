@@ -131,7 +131,7 @@ struct Wizard::Private {
 	void initThemePage() {
 		KListWidget* listWidget=mThemePage->mThemeList;
 		Theme::List list=Theme::getList();
-		Theme::List::Iterator it=list.begin(), end=list.end();
+		Theme::List::ConstIterator it=list.constBegin(), end=list.constEnd();
 		for (; it!=end; ++it) {
 			Theme::Ptr theme = *it;
 			ThemeListBoxItem* item=new ThemeListBoxItem(listWidget, theme);
@@ -159,8 +159,8 @@ struct Wizard::Private {
 		Theme::ParameterList parameterList = theme->parameterList();
 		QString themeInternalName = theme->internalName();
 		Theme::ParameterList::ConstIterator
-			it = parameterList.begin(),
-			end = parameterList.end();
+			it = parameterList.constBegin(),
+			end = parameterList.constEnd();
 		for (; it!=end; ++it) {
 			AbstractThemeParameter* themeParameter = *it;
 			QByteArray internalName = themeParameter->internalName();
@@ -328,8 +328,8 @@ void Wizard::accept() {
 
 	Theme::ParameterList parameterList = theme->parameterList();
 	Theme::ParameterList::ConstIterator
-		it = parameterList.begin(),
-		   end = parameterList.end();
+		it = parameterList.constBegin(),
+		   end = parameterList.constEnd();
 	for (; it!=end; ++it) {
 		AbstractThemeParameter* themeParameter = *it;
 		QByteArray parameterInternalName = themeParameter->internalName();
