@@ -35,8 +35,6 @@ namespace KIPIPrintWizardPlugin
 {
 
 int NINT(double n);
-int MIN(int a, int b);
-int MAX(int a, int b);
 
 bool launchExternalApp(QString &program, QStringList &args);
 bool checkTempPath(QWidget *parent, QString tempPath);

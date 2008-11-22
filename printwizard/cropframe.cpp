@@ -32,12 +32,11 @@ extern "C"
 }
 
 // Qt includes.
-//
 #include <QPainter>
 #include <QMouseEvent>
+#include <QtGlobal>
 
 // Local includes.
-
 #include "utils.h"
 
 namespace KIPIPrintWizardPlugin
@@ -270,12 +269,12 @@ void CropFrame::mouseMoveEvent(QMouseEvent *e)
     int newH = m_cropRegion.height();
 
     int newX = e->x() - (newW / 2);
-    newX = MAX(m_pixmapX, newX);
-    newX = MIN(m_pixmapX + m_pixmap->width() - newW, newX);
+    newX = qMax(m_pixmapX, newX);
+    newX = qMin(m_pixmapX + m_pixmap->width() - newW, newX);
 
     int newY = e->y() - (newH / 2);
-    newY = MAX(m_pixmapY, newY);
-    newY = MIN(m_pixmapY + m_pixmap->height() - newH, newY);
+    newY = qMax(m_pixmapY, newY);
+    newY = qMin(m_pixmapY + m_pixmap->height() - newH, newY);
 
     m_cropRegion.setRect(newX, newY, newW, newH);
     m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
@@ -304,11 +303,11 @@ void CropFrame::keyPressEvent(QKeyEvent *e)
   int w = m_cropRegion.width();
   int h = m_cropRegion.height();
 
-  newX = MAX(m_pixmapX, newX);
-  newX = MIN(m_pixmapX + m_pixmap->width() - w, newX);
+  newX = qMax(m_pixmapX, newX);
+  newX = qMin(m_pixmapX + m_pixmap->width() - w, newX);
 
-  newY = MAX(m_pixmapY, newY);
-  newY = MIN(m_pixmapY + m_pixmap->height() - h, newY);
+  newY = qMax(m_pixmapY, newY);
+  newY = qMin(m_pixmapY + m_pixmap->height() - h, newY);
 
   m_cropRegion.setRect(newX, newY, w, h);
   m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);

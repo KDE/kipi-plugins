@@ -49,22 +49,6 @@ int NINT(double n)
   return (int)(n + 0.5);
 }
 
-int MIN(int a, int b)
-{
-  if (a < b)
-    return a;
-  else
-    return b;
-}
-
-int MAX(int a, int b)
-{
-  if (a > b)
-    return a;
-  else
-    return b;
-}
-
 // given a list of args, launch this app as a separate thread.
 // args[0] is the application to run.
 bool launchExternalApp(QString &program, QStringList &args)
