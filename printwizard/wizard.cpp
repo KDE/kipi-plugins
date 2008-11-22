@@ -84,8 +84,6 @@ typedef WizardPage<Ui_CropPage>  CropPage;
 
 
 struct Wizard::Private {
-  KConfigDialogManager* mConfigManager;
-
   IntroPage *mIntroPage;
   InfoPage  *mInfoPage;
   PhotoPage *mPhotoPage;
@@ -223,6 +221,10 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->m_helpButton->setDelayedMenu( helpMenu->menu() );
 
   readSettings();
+
+  if (d->mIntroPage->m_skipIntro->isChecked())
+    removePage(d->mIntroPage->page());
+  
 }
 
 Wizard::~Wizard() {
@@ -1746,37 +1748,29 @@ void Wizard::saveSettings()
     output = ToGimp;
   else
     output = ToPrinter;
-/*  if (d->mInfoPage->RdoOutputPrinter->isChecked())
-    output = d->m_outputSettings->id(d->mInfoPage->RdoOutputPrinter);
-  else
-    if (d->mInfoPage->RdoOutputFile->isChecked())
-      output = d->m_outputSettings->id(d->mInfoPage->RdoOutputFile);
-  else
-    if (d->mInfoPage->RdoOutputGimp->isChecked())
-      output = d->m_outputSettings->id(d->mInfoPage->RdoOutputGimp);
-  */
   group.writeEntry("PrintOutput", output);
 
-  kDebug()  << "output: " << int(output) << endl;
-#ifdef NOT_YET
-
   // image captions
-  config.writeEntry("ImageCaptions", m_captions->currentItem());
+  group.writeEntry("Captions", d->mInfoPage->m_captions->currentIndex());
   // caption color
-  config.writeEntry("CaptionColor", m_font_color->color());
+  group.writeEntry("CaptionColor", d->mInfoPage->m_font_color->color());
   // caption font
-  config.writeEntry ("CaptionFont", QFont(m_font_name->currentFont()));
+  group.writeEntry ("CaptionFont", QFont(d->mInfoPage->m_font_name->currentFont()));
   // caption size
-  config.writeEntry("CaptionSize", m_font_size->value());
+  group.writeEntry("CaptionSize", d->mInfoPage->m_font_size->value());
   // free caption
-  config.writeEntry("FreeCaption", m_FreeCaptionFormat->text());
+  group.writeEntry("FreeCaption", d->mInfoPage->m_FreeCaptionFormat->text());
 
   // output path
-  config.writePathEntry("OutputPath", EditOutputPath->text());
+  group.writePathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
 
   // photo size
-  config.writeEntry("PhotoSize", ListPhotoSizes->currentText());
+  group.writeEntry("PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text());
 
+  //skip intro
+  group.writeEntry("SkipIntro", d->mIntroPage->m_skipIntro->isChecked());
+
+#ifdef NOT_YET
   // kjobviewer
   config.writeEntry("KjobViewer", m_kjobviewer->isChecked());
 #endif //NOT_YET
@@ -1803,45 +1797,42 @@ void Wizard::readSettings()
     d->mInfoPage->RdoOutputGimp->setChecked(true);
   else
     d->mInfoPage->RdoOutputPrinter->setChecked(true);
-  //d->m_outputSettings->button(id)->setDown(true);
-  kDebug()  << "output: " << int(id) << endl;
-  
-#ifdef NOT_YET
 
-  // captions
-  int captions = config.readNumEntry("ImageCaptions", 0);
-  m_captions->setCurrentItem(captions);
+  // image captions
+  d->mInfoPage->m_captions->setCurrentIndex(group.readEntry("Captions", 0));
   // caption color
   QColor defColor(Qt::yellow);
-  QColor color = config.readColorEntry("CaptionColor", &defColor);
-  m_font_color->setColor(color);
+  QColor color = group.readEntry("CaptionColor", defColor);
+  d->mInfoPage->m_font_color->setColor(color);
   // caption font
   QFont defFont("Sans Serif");
-  QFont font = config.readFontEntry ( "CaptionFont", &defFont);
-  m_font_name->setCurrentFont(font.family());
+  QFont font = group.readEntry( "CaptionFont", defFont);
+  d->mInfoPage->m_font_name->setCurrentFont(font.family());
   // caption size
-  int fontSize = config.readNumEntry("CaptionSize", 4);
-  m_font_size->setValue(fontSize);
+  int fontSize = group.readEntry("CaptionSize", 4);
+  d->mInfoPage->m_font_size->setValue(fontSize);
   // free caption
-  QString captionTxt = config.readEntry("FreeCaption");
-  m_FreeCaptionFormat->setText(captionTxt);
+  QString captionTxt = group.readEntry("FreeCaption");
+  d->mInfoPage->m_FreeCaptionFormat->setText(captionTxt);
   //enable right caption stuff
-  CaptionChanged(captions);
+  captionChanged(d->mInfoPage->m_captions->currentText());
 
   // set the last output path
-  QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
-  EditOutputPath->setText(outputPath);
-
-
+  QString outputPath = group.readPathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
+  d->mInfoPage->EditOutputPath->setText(outputPath);
 
   // photo size
-  QString photoSize = config.readEntry("PhotoSize");
-  QListBoxItem *item = ListPhotoSizes->findItem(photoSize);
-  if (item)
-    ListPhotoSizes->setCurrentItem(item);
+  QString photoSize = group.readEntry("PhotoSize");
+  QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems(photoSize, Qt::MatchExactly);
+  if (list.count())
+    d->mPhotoPage->ListPhotoSizes->setCurrentItem(list[0]);
   else
-    ListPhotoSizes->setCurrentItem(0);
+    d->mPhotoPage->ListPhotoSizes->setCurrentRow(0);
 
+  //skip intro
+  d->mIntroPage->m_skipIntro->setChecked(group.readEntry("SkipIntro", false));
+
+#ifdef NOT_YET
   // kjobviewer
   m_kjobviewer->setChecked(config.readBoolEntry("KjobViewer", true));
 #endif //NOT_YET

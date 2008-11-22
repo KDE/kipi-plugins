@@ -24,20 +24,16 @@
 #include "tphoto.h"
 
 // Qt includes.
-
 #include <QPainter>
 #include <QFileInfo>
 
 // LibKExiv2 includes.
-
 #include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes.
-
 #include <libkdcraw/kdcraw.h>
 
 // Local includes.
-
 #include "utils.h"
 
 #define IMAGE_FILE_MASK "*"
