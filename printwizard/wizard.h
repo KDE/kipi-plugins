@@ -97,32 +97,38 @@ typedef struct _TPhotoSize {
         Comment,
         Free
       };
+      enum {
+        ToPrinter = 0,
+        ToGimp,
+        ToFile
+      };
       void initPhotoSizes(PageSize pageSize);
       void previewPhotos();
 
 
       void updateCropFrame(TPhoto *, int);
-  void setBtnCropEnabled();
-  void removeGimpFiles();
+      void setBtnCropEnabled();
+      void removeGimpFiles();
   //void printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, KPrinter &printer);
-  QStringList printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize *layouts);
-  void loadSettings();
-  void saveSettings();
+      QStringList printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize *layouts);
 
-  int getPageCount();
-  QRect *getLayout(int photoIndex);
-  QString captionFormatter(TPhoto *photo, const QString& format);
-  void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
+      int getPageCount();
+      QRect *getLayout(int photoIndex);
+      QString captionFormatter(TPhoto *photo, const QString& format);
+      void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
 
-  bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                    int captionType, unsigned int &current, bool useThumbnails = false);
+      bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                        int captionType, unsigned int &current, bool useThumbnails = false);
 
-  bool paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                    int captionType, unsigned int &current);
-  
-  void manageBtnPrintOrder();
-  void manageBtnPreviewPage();
+      bool paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
+                        int captionType, unsigned int &current);
 
+      void manageBtnPrintOrder();
+      void manageBtnPreviewPage();
+
+
+      void saveSettings();
+      void readSettings();
 
       struct Private;
       Private* d;

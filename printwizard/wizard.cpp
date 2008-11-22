@@ -120,6 +120,9 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d=new Private;
   d->mInterface = interface;
 
+  // Caption
+  setCaption(i18n("Print assistant"));
+
   // About data
   d->mAbout =new KIPIPlugins::KPAboutData(ki18n("Print Wizard"),
                                   QByteArray(),
@@ -219,8 +222,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
   d->m_helpButton->setDelayedMenu( helpMenu->menu() );
 
-  //TODO
-	//updateFinishButton();
+  readSettings();
 }
 
 Wizard::~Wizard() {
@@ -1724,14 +1726,133 @@ void Wizard::BtnPreviewPageUp_clicked() {
   previewPhotos();
 }
 
+void Wizard::saveSettings()
+{
+  // Save the current settings
+  KConfig config("kipirc");
+  KConfigGroup group = config.group(QString("PrintAssistant"));
 
+  // Page size
+  group.writeEntry("PageSize", (int)d->m_pageSize);
+
+  // Margins
+  group.writeEntry("NoMargins", d->mInfoPage->m_fullbleed->isChecked());
+
+  // output
+  int output = d->m_outputSettings->checkedId();
+  if (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputFile))
+    output = ToFile;
+  else if  (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputGimp))
+    output = ToGimp;
+  else
+    output = ToPrinter;
+/*  if (d->mInfoPage->RdoOutputPrinter->isChecked())
+    output = d->m_outputSettings->id(d->mInfoPage->RdoOutputPrinter);
+  else
+    if (d->mInfoPage->RdoOutputFile->isChecked())
+      output = d->m_outputSettings->id(d->mInfoPage->RdoOutputFile);
+  else
+    if (d->mInfoPage->RdoOutputGimp->isChecked())
+      output = d->m_outputSettings->id(d->mInfoPage->RdoOutputGimp);
+  */
+  group.writeEntry("PrintOutput", output);
+
+  kDebug()  << "output: " << int(output) << endl;
+#ifdef NOT_YET
+
+  // image captions
+  config.writeEntry("ImageCaptions", m_captions->currentItem());
+  // caption color
+  config.writeEntry("CaptionColor", m_font_color->color());
+  // caption font
+  config.writeEntry ("CaptionFont", QFont(m_font_name->currentFont()));
+  // caption size
+  config.writeEntry("CaptionSize", m_font_size->value());
+  // free caption
+  config.writeEntry("FreeCaption", m_FreeCaptionFormat->text());
+
+  // output path
+  config.writePathEntry("OutputPath", EditOutputPath->text());
+
+  // photo size
+  config.writeEntry("PhotoSize", ListPhotoSizes->currentText());
+
+  // kjobviewer
+  config.writeEntry("KjobViewer", m_kjobviewer->isChecked());
+#endif //NOT_YET
+}
+
+void Wizard::readSettings()
+{
+  KConfig config("kipirc");
+  KConfigGroup group = config.group(QString("PrintAssistant"));
+
+    //internal PageSize  - default A4
+  PageSize pageSize = (PageSize)group.readEntry("PageSize", (int)A4);
+  initPhotoSizes(pageSize);
+  d->mInfoPage->CmbPaperSize->setCurrentIndex(pageSize);
+
+  // No Margins - default false
+  d->mInfoPage->m_fullbleed->setChecked(group.readEntry("NoMargins", false));
+
+  // set the output
+  int id = group.readEntry("PrintOutput", d->m_outputSettings->id(d->mInfoPage->RdoOutputPrinter));
+  if (id == ToFile)
+    d->mInfoPage->RdoOutputFile->setChecked(true);
+  else if (id == ToGimp)
+    d->mInfoPage->RdoOutputGimp->setChecked(true);
+  else
+    d->mInfoPage->RdoOutputPrinter->setChecked(true);
+  //d->m_outputSettings->button(id)->setDown(true);
+  kDebug()  << "output: " << int(id) << endl;
+  
+#ifdef NOT_YET
+
+  // captions
+  int captions = config.readNumEntry("ImageCaptions", 0);
+  m_captions->setCurrentItem(captions);
+  // caption color
+  QColor defColor(Qt::yellow);
+  QColor color = config.readColorEntry("CaptionColor", &defColor);
+  m_font_color->setColor(color);
+  // caption font
+  QFont defFont("Sans Serif");
+  QFont font = config.readFontEntry ( "CaptionFont", &defFont);
+  m_font_name->setCurrentFont(font.family());
+  // caption size
+  int fontSize = config.readNumEntry("CaptionSize", 4);
+  m_font_size->setValue(fontSize);
+  // free caption
+  QString captionTxt = config.readEntry("FreeCaption");
+  m_FreeCaptionFormat->setText(captionTxt);
+  //enable right caption stuff
+  CaptionChanged(captions);
+
+  // set the last output path
+  QString outputPath = config.readPathEntry("OutputPath", EditOutputPath->text());
+  EditOutputPath->setText(outputPath);
+
+
+
+  // photo size
+  QString photoSize = config.readEntry("PhotoSize");
+  QListBoxItem *item = ListPhotoSizes->findItem(photoSize);
+  if (item)
+    ListPhotoSizes->setCurrentItem(item);
+  else
+    ListPhotoSizes->setCurrentItem(0);
+
+  // kjobviewer
+  m_kjobviewer->setChecked(config.readBoolEntry("KjobViewer", true));
+#endif //NOT_YET
+}
 
 
 /**
  *
  */
 void Wizard::accept() {
-  KDialog();
+  saveSettings();
 	KAssistantDialog::accept();
 }
 
