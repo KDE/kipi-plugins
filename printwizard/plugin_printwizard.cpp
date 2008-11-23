@@ -32,9 +32,11 @@ extern "C"
 }
 
 // Qt includes.
+
 #include <QWidget>
 
 // KDE includes.
+
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -48,12 +50,13 @@ extern "C"
 #include <libkipi/plugin.h>
 
 // Local includes
+
 #include "wizard.h"
 
 K_PLUGIN_FACTORY( PrintAssistantFactory, registerPlugin<Plugin_PrintWizard>(); )
 K_EXPORT_PLUGIN( PrintAssistantFactory("kipiplugin_printwizard") )
 
-Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const QVariantList &args)
+Plugin_PrintWizard::Plugin_PrintWizard(QObject *parent, const QVariantList& /*args*/)
                   : KIPI::Plugin(PrintAssistantFactory::componentData(), parent, "PrintWizard")
 {
     kDebug(51001) << "Plugin_PrintWizard plugin loaded" << endl;
