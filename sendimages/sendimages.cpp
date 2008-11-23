@@ -141,11 +141,12 @@ void SendImages::sendImages()
     {
         // Add all original files to the attachments list.
 
-        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.constBegin();
-            it != d->settings.itemsList.constEnd(); ++it)
+        for (QList<EmailItem>::iterator it = d->settings.itemsList.begin();
+            it != d->settings.itemsList.end(); ++it)
         {
-            d->attachementFiles.append((*it).orgUrl);
-            d->settings.setEmailUrl((*it).orgUrl, (*it).orgUrl);
+            EmailItem item = *it;
+            d->attachementFiles.append(item.orgUrl);
+            d->settings.setEmailUrl(item.orgUrl, item.orgUrl);
         }
         d->progressDlg->setProgress(50, 100);
         secondStage();
