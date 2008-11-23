@@ -21,12 +21,16 @@
  * ============================================================ */
 
 #include "wizard.moc"
+// STD
+#include <memory>
 
 // Qt includes
 #include <QFileInfo>
 #include <QPainter>
 #include <QPalette>
 #include <QtGlobal>
+#include <QPrinter>
+#include <QPrintDialog>
 
 // KDE includes
 #include <kapplication.h>
@@ -37,6 +41,7 @@
 #include <ktoolinvocation.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <kdeprintdialog.h>
 #include <kdebug.h>
 
 // libkipi includes
@@ -97,19 +102,14 @@ struct Wizard::Private {
 
   KIPIPlugins::KPAboutData* mAbout;
 
-  PageSize m_pageSize;
-  QList<TPhoto*> m_photos;
+  PageSize           m_pageSize;
+  QList<TPhoto*>     m_photos;
   QList<TPhotoSize*> m_photoSizes;
-  int m_currentPreviewPage;
-  int m_currentCropPhoto;
-  QString      m_tempPath;
-};
-
-enum OutputIDs
-{
-  RDO_BTN_PRINTER,
-  RDO_BTN_FILE,
-  RDO_BTN_GIMP
+  int                m_currentPreviewPage;
+  int                m_currentCropPhoto;
+  bool               m_cancelPrinting;
+  QString            m_tempPath;
+  QStringList        m_gimpFiles;
 };
 
 Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
@@ -147,9 +147,9 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   // create a QButtonGroup to manage button ids
   d->m_outputSettings = new QButtonGroup(this);
-  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputPrinter, RDO_BTN_PRINTER);
-  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputGimp,    RDO_BTN_GIMP);
-  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputFile,    RDO_BTN_FILE);
+  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputPrinter, ToPrinter);
+  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputGimp,    ToGimp);
+  d->m_outputSettings->addButton(d->mInfoPage->RdoOutputFile,    ToFile);
 
   d->m_pageSize = Unknown; // select a different page to force a refresh in initPhotoSizes.
 
@@ -161,6 +161,10 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   // selected page
   connect(this, SIGNAL(currentPageChanged (KPageWidgetItem *, KPageWidgetItem *)),
           this, SLOT(pageChanged(KPageWidgetItem *)));
+
+  // cancel button
+  connect(this, SIGNAL(cancelClicked()),
+          this, SLOT(reject()));
 
   // caption information
   connect(d->mInfoPage->m_captions, SIGNAL(activated(const QString & )),
@@ -216,6 +220,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   initPhotoSizes(A4);   // default to A4 for now.
   d->m_currentPreviewPage = 0;
   d->m_currentCropPhoto   = 0;
+  d->m_cancelPrinting     = false;
 
   helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
   d->m_helpButton->setDelayedMenu( helpMenu->menu() );
@@ -224,7 +229,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   if (d->mIntroPage->m_skipIntro->isChecked())
     removePage(d->mIntroPage->page());
-  
+
 }
 
 Wizard::~Wizard() {
@@ -717,6 +722,7 @@ void Wizard::initPhotoSizes(PageSize pageSize)
 
 //   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
+
 double getMaxDPI(QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current)
 {
   Q_ASSERT(layouts.count() > 1);
@@ -1483,6 +1489,8 @@ void Wizard::outputSettingsClicked(int id)
       QFileInfo fileInfo(d->mInfoPage->EditOutputPath->text());
       if (!(fileInfo.exists() && fileInfo.isDir()))
         this->setValid(d->mCropPage->page(), false);
+      else
+        this->setValid(d->mCropPage->page(), true);
     }
     else
       this->setValid(d->mCropPage->page(), false);
@@ -1838,13 +1846,252 @@ void Wizard::readSettings()
 #endif //NOT_YET
 }
 
+void Wizard::printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, QPrinter &printer)
+{
+  d->m_cancelPrinting = false;
+#ifdef NOT_YET
+  LblPrintProgress->setText("");
+  PrgPrintProgress->setProgress(0);
+  PrgPrintProgress->setTotalSteps(photos.count());
+#endif
+  KApplication::kApplication()->processEvents();
+
+  QPainter p;
+  p.begin(&printer);
+
+  unsigned int current = 0;
+
+  bool printing = true;
+  while(printing)
+  {
+    printing = paintOnePage(p, photos, layouts, d->mInfoPage->m_captions->currentIndex(), current);
+    if (printing)
+      printer.newPage();
+#ifdef NOT_YET
+    PrgPrintProgress->setProgress(current);
+#endif
+    KApplication::kApplication()->processEvents();
+    if (d->m_cancelPrinting)
+    {
+      printer.abort();
+      return;
+    }
+  }
+  p.end();
+
+#ifdef NOT_YET
+  if (m_kjobviewer->isChecked())
+    if ( !m_Proc->start() )
+      kdDebug( 51000 ) << "Error running kjobviewr\n";
+  LblPrintProgress->setText(i18n("Complete.  Click Finish to exit the Print Wizard."));
+#endif
+}
+
+QStringList Wizard::printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize* layouts)
+{
+  Q_ASSERT(layouts->layouts.count() > 1);
+
+  d->m_cancelPrinting = false;
+#ifdef NOT_YET
+  LblPrintProgress->setText("");
+  PrgPrintProgress->setProgress(0);
+  PrgPrintProgress->setTotalSteps(photos.count());
+#endif
+  KApplication::kApplication()->processEvents();
+
+  unsigned int current = 0;
+  int pageCount = 1;
+  bool printing = true;
+  QStringList files;
+
+  QRect *srcPage = layouts->layouts.at(0);
+
+  while (printing)
+  {
+    // make a pixmap to save to file.  Make it just big enough to show the
+    // highest-dpi image on the page without losing data.
+    double dpi = layouts->dpi;
+    if (dpi == 0.0)
+      dpi = getMaxDPI(photos, layouts->layouts, current) * 1.1;
+    int w = NINT(srcPage->width() / 1000.0 * dpi);
+    int h = NINT(srcPage->height()  / 1000.0 * dpi);
+    QImage *img = new QImage(w, h, QImage::Format_RGB32);
+    if (!img)
+      break;
+
+    // save this page out to file
+    QString filename = baseFilename + QString::number(pageCount) + ".jpeg";
+    bool saveFile = true;
+    if (QFile::exists(filename))
+    {
+      int result = KMessageBox::warningYesNoCancel( this,
+          i18n("The following file will be overwritten. Do you want to overwrite this file?") +
+              "\n\n" + filename);
+      if (result == KMessageBox::No)
+        saveFile = false;
+      else if (result == KMessageBox::Cancel)
+      {
+        delete img;
+        break;
+      }
+    }
+
+    // paint this page, even if we aren't saving it to keep the page
+    // count accurate.
+    printing = paintOnePage(*img, photos, layouts->layouts, d->mInfoPage->m_captions->currentIndex(), current);
+
+    if (saveFile)
+    {
+      files.append(filename);
+      img->save(filename, "JPEG");
+    }
+    delete img;
+    pageCount++;
+
+#ifdef NOT_YET
+    PrgPrintProgress->setProgress(current);
+#endif
+    KApplication::kApplication()->processEvents();
+    if (d->m_cancelPrinting)
+      break;
+  }
+
+#ifdef NOT_YET
+  // did we cancel?
+  if (printing)
+    LblPrintProgress->setText(i18n("Printing Canceled."));
+  else
+  {
+    if (m_kjobviewer->isChecked())
+      if ( !m_Proc->start() )
+        kdDebug( 51000 ) << "Error launching kjobviewr\n";
+    LblPrintProgress->setText(i18n("Complete.  Click Finish to exit the Print Wizard."));
+  }
+#endif
+  return files;
+}
+
+void Wizard::removeGimpFiles()
+{
+  for(QStringList::Iterator it = d->m_gimpFiles.begin(); it != d->m_gimpFiles.end(); ++it)
+  {
+    if (QFile::exists(*it))
+    {
+      if (QFile::remove(*it) == false)
+      {
+        KMessageBox::sorry(this, i18n("Could not remove the Gimp's temporary files."));
+        break;
+      }
+    }
+  }
+}
+
+
+// this is called when Cancel is clicked.
+void Wizard::reject()
+{
+  d->m_cancelPrinting = true;
+  if (d->m_gimpFiles.count() > 0)
+    removeGimpFiles();
+  QDialog::reject();
+}
 
 /**
  *
  */
-void Wizard::accept() {
+void Wizard::accept()
+{
   saveSettings();
-	KAssistantDialog::accept();
+  kDebug() << endl;
+
+   // set the default crop regions if not already set
+  TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
+  QList<TPhoto*>::iterator it;
+  int i = 0;
+  for (it = d->m_photos.begin(); it != d->m_photos.end(); ++it)
+  {
+    TPhoto *photo = static_cast<TPhoto*>(*it);
+    if (photo && photo->cropRegion == QRect(-1, -1, -1, -1))
+      d->mCropPage->cropFrame->init(photo, getLayout(i)->width(),
+                                    getLayout(i)->height(), s->autoRotate);
+    i++;
+  }
+
+  if (d->mInfoPage->RdoOutputPrinter->isChecked())
+  {
+    QPrinter printer;
+    switch(d->m_pageSize)
+    {
+      case Letter :
+        printer.setPaperSize(QPrinter::Letter);
+      break;
+      case A4 :
+        printer.setPaperSize(QPrinter::A4);
+      break;
+      case A6 :
+        printer.setPaperSize(QPrinter::A6);
+      break;
+      default:
+        break;
+    }
+    
+//     kDebug() << " page size " << d->m_pageSize 
+//         << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 << endl;
+
+    if (d->mInfoPage->m_fullbleed->isChecked())
+    {
+      printer.setFullPage(true);
+      printer.setPageMargins (0, 0, 0, 0, QPrinter::Millimeter);
+    }
+
+    std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer,
+                                       this));
+    dialog->setWindowTitle(i18n("Print Image"));
+    bool wantToPrint = dialog->exec();
+
+    if (!wantToPrint) {
+      return;
+    }
+
+    printPhotos(d->m_photos, s->layouts, printer);
+  }
+  else if (d->mInfoPage->RdoOutputFile->isChecked())
+  {
+    // now output the items
+    QString path = d->mInfoPage->EditOutputPath->text();
+    if (path.right(1) != "/")
+      path = path + "/";
+    path = path + "kipi_printwizard_";
+    printPhotosToFile(d->m_photos, path, s);
+  }
+  else if (d->mInfoPage->RdoOutputGimp->isChecked())
+  {
+    // now output the items
+    QString path = d->m_tempPath;
+    if (!checkTempPath(this, path))
+      return;
+    path = path + "kipi_tmp_";
+    if (d->m_gimpFiles.count() > 0)
+      removeGimpFiles();
+
+    d->m_gimpFiles = printPhotosToFile(d->m_photos, path, s);
+    QStringList args;
+    QString prog = "gimp-remote";
+    for(QStringList::Iterator it = d->m_gimpFiles.begin(); it != d->m_gimpFiles.end(); ++it)
+      args << (*it);
+    if (!launchExternalApp(prog, args))
+    {
+      KMessageBox::sorry(this,
+                         i18n("There was an error launching the Gimp. Please make sure it is properly installed."),
+                         i18n("KIPI"));
+      return;
+    }
+  }
+
+//   if (d->m_gimpFiles.count() > 0)
+//     removeGimpFiles();
+
+  KAssistantDialog::accept();
 }
 
 

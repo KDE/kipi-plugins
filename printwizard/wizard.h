@@ -78,6 +78,8 @@ typedef struct _TPhotoSize {
       virtual void EditCopies_valueChanged(int);
       virtual void ListPhotoSizes_selected();
 
+      virtual void reject();
+
       //private slots:
       //	void updateFinishButton();
 
@@ -109,7 +111,7 @@ typedef struct _TPhotoSize {
       void updateCropFrame(TPhoto *, int);
       void setBtnCropEnabled();
       void removeGimpFiles();
-  //void printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, KPrinter &printer);
+      void printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, QPrinter &printer);
       QStringList printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize *layouts);
 
       int getPageCount();

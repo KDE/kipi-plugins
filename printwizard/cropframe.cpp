@@ -133,9 +133,8 @@ void CropFrame::init(TPhoto *photo, int width, int height, bool autoRotate, bool
   else
     m_cropRegion = _photoToScreenRect(m_photo->cropRegion);
 
-  // TODO check if update() is better
   if (paint)
-    update(m_cropRegion);
+    update();
    //repaint(m_cropRegion);
  }
 
@@ -279,7 +278,7 @@ void CropFrame::mouseMoveEvent(QMouseEvent *e)
     m_cropRegion.setRect(newX, newY, newW, newH);
     m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
     //repaint(m_cropRegion);
-    update(m_cropRegion);
+    update();
   }
 }
 
@@ -311,7 +310,7 @@ void CropFrame::keyPressEvent(QKeyEvent *e)
 
   m_cropRegion.setRect(newX, newY, w, h);
   m_photo->cropRegion = _screenToPhotoRect(m_cropRegion);
-  update(m_cropRegion);
+  update();
   //repaint(m_cropRegion);
 
 }
