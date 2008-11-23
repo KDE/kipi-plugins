@@ -466,34 +466,39 @@ void RemoveRedEyesWindow::threadFinished()
 
 void RemoveRedEyesWindow::showSummary()
 {
-    QString storageMode = i18n("Your images were saved ");
-    switch (d->settings.storageMode)
-    {
-        case StorageSettingsBox::Subfolder:
-            storageMode.append(i18n("in the subfolder <span style='color: red; font-weight:bold;'>%1</span>.",
-                               d->settings.subfolderName));
-            break;
-        case StorageSettingsBox::Prefix:
-            storageMode.append(i18n("by adding <span style='color: red; font-weight:bold;'>%1</span> as a prefix.",
-                               d->settings.prefixName));
-            break;
-        case StorageSettingsBox::Overwrite:
-            storageMode.append(i18n("by overwriting the original files."));
-            break;
-    }
+    // TODO: This messagebox looks terrible, how to make it nicer?
+    // For now just tell the user that the images have been processed.
 
-    QString message = i18n(
-                           "<p>%4</p>"
-                           "<p><table>"
-                               "<tr><td><b>Total images:\t\t\t</b></td><td>%1</td></tr>"
-                               "<tr><td><b>Processed:</b></td><td>%2</td></tr>"
-                               "<tr><td><b>Failed:</b></td><td>%3</td></tr>"
-                           "</table></p>"
-                           "<p style='text-align:center;'><b>Correction complete!</b></p>",
-                      d->imageList->totalImages(),
-                      d->imageList->processedImages(),
-                      d->imageList->failedImages(),
-                      storageMode);
+    //    QString storageMode;
+    //    switch (d->settings.storageMode)
+    //    {
+    //        case StorageSettingsBox::Subfolder:
+    //            storageMode.append(i18n("Subfolder (<span style='color: red; font-weight:bold;'>%1</span>)",
+    //                               d->settings.subfolderName));
+    //            break;
+    //        case StorageSettingsBox::Prefix:
+    //            storageMode.append(i18n("Prefix (<span style='color: red; font-weight:bold;'>%1</span>)",
+    //                               d->settings.prefixName));
+    //            break;
+    //        case StorageSettingsBox::Overwrite:
+    //            storageMode.append(i18n("Replace"));
+    //            break;
+    //    }
+    //
+    //    QString message = i18n("<p><table>"
+    //                               "<tr><td><b>Storage Mode:</b></td><td></td><td>%4</td></tr>"
+    //                               "<tr><td><b>Total images:</b></td><td></td><td>%1</td></tr>"
+    //                               "<tr><td><b>Processed:</b></td><td></td><td>%2</td></tr>"
+    //                               "<tr><td><b>Failed:</b></td><td></td><td>%3</td></tr>"
+    //                           "</table></p>"
+    //                           "<p style='text-align:center;'><b>Correction complete!</b></p>",
+    //                      d->imageList->totalImages(),
+    //                      d->imageList->processedImages(),
+    //                      d->imageList->failedImages(),
+    //                      storageMode);
+
+    QString message(i18n("<p>%1 images have been successfully processed.</p>"
+                         "<h2>Correction Complete!</h2>", d->imageList->processedImages()));
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
