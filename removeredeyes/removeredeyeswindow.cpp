@@ -369,13 +369,14 @@ void RemoveRedEyesWindow::checkForUnprocessedImages()
 {
     if (d->imageList->hasUnprocessedImages())
     {
-        if (KMessageBox::questionYesNo(this,
-                                       i18n("<p>Some of the images could not be analyzed "
-                                            "with the current settings or they do not "
-                                            "contain any red-eyes at all.</p>"
-                                            "<p><b>Would you like to remove those images "
-                                            "from the list?</b></p>"),
-                                       i18n("Remove unprocessed images?")) == KMessageBox::Yes)
+        QString message = i18n("<p>Some of the images could not be analyzed "
+                               "with the current settings or they do not "
+                               "contain any red-eyes at all.</p>"
+                               "<p><b>Would you like to remove those images "
+                               "from the list?</b></p>");
+
+        if (KMessageBox::questionYesNo(this, message, i18n("Remove unprocessed images?"))
+            == KMessageBox::Yes)
         {
             d->imageList->removeUnprocessedImages();
         }
@@ -400,11 +401,11 @@ void RemoveRedEyesWindow::foundRAWImages(bool raw)
 {
     if (raw)
     {
-        KMessageBox::information(this,
-                                 i18n("<p>You tried to add <b>RAW images</b> to the plugin,<br/>"
-                                      "but those filetypes are not supported.</p>"
-                                      "<p><b>They were automatically removed from the list.</b></p>"),
-                                 i18n("RAW images found"));
+        QString message = i18n("<p>You tried to add <b>RAW images</b> to the plugin,<br/>"
+                               "but those filetypes are not supported.</p>"
+                               "<p><b>They were automatically removed from the list.</b></p>");
+
+        KMessageBox::information(this, message, i18n("RAW images found"));
     }
 }
 
@@ -497,8 +498,9 @@ void RemoveRedEyesWindow::showSummary()
     //                      d->imageList->failedImages(),
     //                      storageMode);
 
-    QString message(i18n("<p>%1 images have been successfully processed.</p>"
-                         "<h2>Correction Complete!</h2>", d->imageList->processedImages()));
+    QString message = i18n("<p>%1 images have been successfully processed.</p>"
+                           "<h2>Correction Complete!</h2>",
+                           d->imageList->processedImages());
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
