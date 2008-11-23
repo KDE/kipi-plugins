@@ -64,7 +64,7 @@
             </item>
             <item>
              <property name="text" >
-              <string>13x15cm</string>
+              <string>10x15cm</string>
              </property>
             </item>
             <item>
@@ -379,7 +379,7 @@ filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
   <customwidget>
    <class>KColorButton</class>
    <extends>QPushButton</extends>
-   <header location="global" >kcolorbutton.h</header>
+   <header>kcolorbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
