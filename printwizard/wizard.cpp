@@ -71,14 +71,19 @@ class WizardPage : public QWidget, public Ui_Class {
         setupUi(this);
         layout()->setMargin(0);
         mPage = dialog->addPage(this, title);
+        active = true;
     }
 
     KPageWidgetItem* page() const {
         return mPage;
     }
 
+    void disable(bool dis=true) {active = !dis;}
+    bool isActive() {return active;}
+
   private:
     KPageWidgetItem* mPage;
+    bool active;
 };
 
 
@@ -215,6 +220,14 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   connect (d->mPhotoPage->ListPhotoSizes, SIGNAL(  currentRowChanged(int)),
           this, SLOT(ListPhotoSizes_selected()));
 
+  // don't crop
+  connect (d->mCropPage->m_disableCrop, SIGNAL(stateChanged(int)),
+           this, SLOT(crop_selection(int)));
+
+  // remove a page
+  connect (this, SIGNAL(pageRemoved(KPageWidgetItem *)),
+           this, SLOT(PageRemoved(KPageWidgetItem *)));
+
   // Default is A4
   d->mInfoPage->CmbPaperSize->setCurrentIndex(A4);
   initPhotoSizes(A4);   // default to A4 for now.
@@ -228,8 +241,11 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   readSettings();
 
   if (d->mIntroPage->m_skipIntro->isChecked())
+  {
+    // sometimes it does not disable iteself in time
+    d->mIntroPage->disable();
     removePage(d->mIntroPage->page());
-
+  }
 }
 
 Wizard::~Wizard() {
@@ -982,8 +998,14 @@ bool Wizard::paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layo
 
       img = img.copy(QRect(x1, y1, w, h));
     }
+    else if (d->mCropPage->m_disableCrop->isChecked())
+    {
+      img = img.scaled (photo->cropRegion.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
     else
+    {
       img = img.copy(photo->cropRegion);
+    }
 
     int x1 = NINT((double)layout->left() * xRatio);
     int y1 = NINT((double)layout->top()  * yRatio);
@@ -1776,7 +1798,8 @@ void Wizard::saveSettings()
   group.writeEntry("PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text());
 
   //skip intro
-  group.writeEntry("SkipIntro", d->mIntroPage->m_skipIntro->isChecked());
+  if (d->mIntroPage->isActive())
+    group.writeEntry("SkipIntro", d->mIntroPage->m_skipIntro->isChecked());
 
 #ifdef NOT_YET
   // kjobviewer
@@ -1986,6 +2009,33 @@ void Wizard::removeGimpFiles()
   }
 }
 
+void Wizard::PageRemoved(KPageWidgetItem *page)
+{
+  kDebug();
+  if (page == d->mIntroPage->page())
+  {
+    d->mIntroPage->disable();
+  }
+  else if (page == d->mInfoPage->page())
+  {
+    d->mInfoPage->disable();
+  }
+  else if (page == d->mPhotoPage->page())
+  {
+    d->mPhotoPage->disable();
+  }
+  else if (page == d->mCropPage->page())
+  {
+    d->mCropPage->disable();
+  }
+
+}
+
+void Wizard::crop_selection(int)
+{
+  d->mCropPage->cropFrame->drawCropRectangle(!d->mCropPage->m_disableCrop->isChecked());
+  update();
+}
 
 // this is called when Cancel is clicked.
 void Wizard::reject()
@@ -2001,10 +2051,7 @@ void Wizard::reject()
  */
 void Wizard::accept()
 {
-  saveSettings();
-  kDebug() << endl;
-
-   // set the default crop regions if not already set
+  // set the default crop regions if not already set
   TPhotoSize *s = d->m_photoSizes.at(d->mPhotoPage->ListPhotoSizes->currentRow());
   QList<TPhoto*>::iterator it;
   int i = 0;
@@ -2049,6 +2096,7 @@ void Wizard::accept()
     dialog->setWindowTitle(i18n("Print Image"));
     bool wantToPrint = dialog->exec();
 
+    kDebug() << "full page " << printer.fullPage() ;
     if (!wantToPrint) {
       return;
     }
@@ -2090,6 +2138,8 @@ void Wizard::accept()
 
 //   if (d->m_gimpFiles.count() > 0)
 //     removeGimpFiles();
+
+  saveSettings();
 
   KAssistantDialog::accept();
 }

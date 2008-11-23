@@ -47,6 +47,7 @@ class CropFrame : public QWidget
     void init(TPhoto *photo, int width, int height, bool autoRotate, bool paint = true);
     void setColor(QColor);
     QColor color();
+    void drawCropRectangle(bool draw=true) {m_drawRec=draw; };
 
   private:
     TPhoto *m_photo;
@@ -58,6 +59,7 @@ class CropFrame : public QWidget
     QColor m_color;
 
     QRect m_cropRegion;
+    bool m_drawRec;
 
 
     QRect _screenToPhotoRect(QRect r);

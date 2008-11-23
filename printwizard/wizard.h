@@ -79,6 +79,8 @@ typedef struct _TPhotoSize {
       virtual void ListPhotoSizes_selected();
 
       virtual void reject();
+      virtual void crop_selection(int);
+      virtual void PageRemoved(KPageWidgetItem *page);
 
       //private slots:
       //	void updateFinishButton();

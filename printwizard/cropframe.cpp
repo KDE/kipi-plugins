@@ -46,6 +46,8 @@ CropFrame::CropFrame(QWidget *parent=0)
          : QWidget(parent)
 {
   m_mouseDown = false;
+  m_drawRec = true;
+  m_pixmap = NULL;
 }
 
 
@@ -229,14 +231,17 @@ void CropFrame::paintEvent (QPaintEvent *)
   // draw the background pixmap
   p.drawPixmap(m_pixmapX, m_pixmapY, *m_pixmap);
 
-  // draw the rectangle
-  p.setPen(QPen(m_color, 2));
-  p.drawRect(m_cropRegion);
-  // draw the crosshairs
-  int midX = m_cropRegion.left() + m_cropRegion.width() / 2;
-  int midY = m_cropRegion.top()  + m_cropRegion.height() / 2;
-  p.drawLine(midX - 10, midY, midX + 10, midY);
-  p.drawLine(midX, midY - 10, midX, midY + 10);
+  if (m_drawRec)
+  {
+    // draw the rectangle
+    p.setPen(QPen(m_color, 2));
+    p.drawRect(m_cropRegion);
+    // draw the crosshairs
+    int midX = m_cropRegion.left() + m_cropRegion.width() / 2;
+    int midY = m_cropRegion.top()  + m_cropRegion.height() / 2;
+    p.drawLine(midX - 10, midY, midX + 10, midY);
+    p.drawLine(midX, midY - 10, midX, midY + 10);
+  }
   p.end();
 
   QPainter newp(this);
