@@ -23,8 +23,6 @@
 
 //#define ENABLE_DEBUG_MESSAGES 1
 
-#include "kpwriteimage.h"
-
 // C ANSI includes.
 
 extern "C"
@@ -51,7 +49,7 @@ extern "C"
 #include <kstandarddirs.h>
 
 // Local includes.
-
+#include "kpwriteimage.h"
 #include "pluginsversion.h"
 
 namespace KIPIPlugins
