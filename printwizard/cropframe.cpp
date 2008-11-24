@@ -25,11 +25,15 @@
 
 // C ANSI includes.
 
+#ifndef _WIN32
 extern "C"
 {
+#endif
 #include <math.h>
 #include <stdio.h>
+#ifndef _WIN32
 }
+#endif
 
 // Qt includes.
 #include <QPainter>
