@@ -127,7 +127,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   setCaption(i18n("Print assistant"));
 
   // About data
-  d->mAbout =new KIPIPlugins::KPAboutData(ki18n("Print Wizard"),
+  d->mAbout =new KIPIPlugins::KPAboutData(ki18n("Print assistant"),
                                   QByteArray(),
                                     KAboutData::License_GPL,
                                     ki18n("A KIPI plugin to print images"),
@@ -2109,7 +2109,7 @@ void Wizard::accept()
     QString path = d->mInfoPage->EditOutputPath->text();
     if (path.right(1) != "/")
       path = path + "/";
-    path = path + "kipi_printwizard_";
+    path = path + "kipi_printassistant_";
     printPhotosToFile(d->m_photos, path, s);
   }
   else if (d->mInfoPage->RdoOutputGimp->isChecked())

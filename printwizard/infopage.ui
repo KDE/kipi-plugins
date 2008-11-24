@@ -342,8 +342,7 @@
            <bool>false</bool>
           </property>
           <property name="text" >
-           <string>This wizard will output each page to this folder with the 
-filename kipi_printwizard_1, kipi_printwizard_2, etc.</string>
+           <string>Each page is named kipi_printassistant_N.jpeg (N=1,2,etc) and saved to this folder.</string>
           </property>
          </widget>
         </item>

@@ -19,7 +19,10 @@
       </size>
      </property>
      <property name="whatsThis" >
-      <string>Move the box below to tell this wizard how to crop the photos to fit inside the photo sizes you have given.  You can crop each image differently, or just click 'Next' to use the default center cropping for each photo.</string>
+      <string>Move the box to crop photos to fit inside the photo sizes you have given.  
+You can crop each image differently, or just click 'Next' button to use the default crop 
+setting for each photo.
+Enable "Don't crop" to avoid cropping all the photos.</string>
      </property>
     </widget>
    </item>
