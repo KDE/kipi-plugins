@@ -467,9 +467,10 @@ void RemoveRedEyesWindow::threadFinished()
 
 void RemoveRedEyesWindow::showSummary()
 {
-    QString message = i18n("<p>%1 images have been successfully processed.</p>"
-                           "<h2>Correction Complete!</h2>",
-                           d->imageList->processedImages());
+    QString message = i18np("<p>%1 image has been successfully processed.</p>",
+                            "<p>%1 images have been successfully processed.</p>",
+                            d->imageList->processedImages());
+    message.append(i18n("<h2>Correction Complete!</h2>"));
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
