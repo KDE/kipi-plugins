@@ -1,9 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Calendar
+Name[de]=Kalender
 Name[el]=Ημερολόγιο
 Name[ga]=Féilire
-Name[he]=לוח שנה
+Name[it]=Calendario
 Name[ja]=カレンダー
 Name[nds]=Kalenner
 Name[nl]=Kalender
@@ -14,8 +15,9 @@ Name[sv]=Kalender
 Name[uk]=Календар
 Name[zh_CN]=日历
 Comment=A tool to create calendars
+Comment[de]=Ein Werkzeug, um Kalender zu erstellen.
 Comment[el]=Ένα εργαλείο δημιουργίας ημερολογίων
-Comment[he]=כלי ליצירת לוח שנה
+Comment[it]=Uno strumento per creare calendari
 Comment[ja]=カレンダーを作成するツール
 Comment[nds]=En Warktüüch, mit dat sik Kalenners opstellen laat
 Comment[nl]=Een hulpmiddel om kalenders aan te maken
