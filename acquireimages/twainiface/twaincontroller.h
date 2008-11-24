@@ -53,7 +53,7 @@ class TwainController : public QWidget, public TwainIface
 
 public:
 
-    TwainController(KIPI::Interface* interface=0, QWidget* parent=0);
+    TwainController(KIPI::Interface* iface=0, QWidget* parent=0);
     virtual ~TwainController();
 
     /**

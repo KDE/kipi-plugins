@@ -58,10 +58,10 @@
 namespace KIPIAcquireImagesPlugin
 {
 
-TwainController::TwainController(KIPI::Interface* interface, QWidget* parent)
+TwainController::TwainController(KIPI::Interface* iface, QWidget* parent)
                : QWidget(parent), TwainIface()
 {
-    m_interface = interface;
+    m_interface = iface;
     setParent(this);
 
     // This is a dumy widget not visible. We use Qwidget to dispatch Windows event to 
