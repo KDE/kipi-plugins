@@ -77,7 +77,7 @@ public:
     {
         KCal::CalendarLocal calendar("UTC");
 
-        if (not(url.isEmpty()))
+        if (!(url.isEmpty()))
         {
             kDebug(51000) << "Loading calendar from file " << url.fileName();
             if (calendar.load(url.fileName()))
