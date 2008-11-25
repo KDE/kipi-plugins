@@ -669,7 +669,7 @@ void UploadDialog::addDropItems( QStringList filesPath )
         addUrlToList( dropFile );
     }
 
-    enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
+    enableButton( KDialog::User1, m_uploadList->model()->hasChildren() > 0 );
 }
 
 void UploadDialog::addUrlToList( QString file )
