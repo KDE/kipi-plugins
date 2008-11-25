@@ -81,7 +81,7 @@ FIND_PATH(OpenCV_ROOT_DIR
           PATHS ${OpenCV_POSSIBLE_ROOT_DIRS}
          )
 
-MESSAGE("-- OpenCV root directory: ${OpenCV_ROOT_DIR}")
+MESSAGE(STATUS "-- OpenCV root directory: ${OpenCV_ROOT_DIR}")
 
 # Header include dir suffixes appended to OpenCV_ROOT_DIR
 #
@@ -211,7 +211,7 @@ FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
 
     ELSE(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
-        MESSAGE("OpenCV component NAME=${NAME} not found!"
+        MESSAGE(STATUS "OpenCV component NAME=${NAME} not found!"
                 "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR}"
                 "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY}")
         SET(OpenCV_FOUND OFF)
@@ -220,8 +220,8 @@ FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
 
 ENDFOREACH(NAME)
 
-MESSAGE("-- OpenCV Include Directory: ${OpenCV_INCLUDE_DIRS}")
-MESSAGE("-- OpenCV Libraries: ${OpenCV_LIBRARIES}")
+MESSAGE(STATUS "-- OpenCV Include Directory: ${OpenCV_INCLUDE_DIRS}")
+MESSAGE(STATUS "-- OpenCV Libraries: ${OpenCV_LIBRARIES}")
 
 # Get the link directory for rpath to be used with LINK_DIRECTORIES: 
 #
