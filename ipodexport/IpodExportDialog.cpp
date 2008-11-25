@@ -46,7 +46,6 @@
 
 #include <kdebug.h>
 #include <kfileitem.h>
-#include <kiconloader.h>
 #include <kinputdialog.h>
 #include <kio/previewjob.h>
 #include <klocale.h>
@@ -239,16 +238,14 @@ UploadDialog::UploadDialog(
     enableButtons();
 
     /// connect the signals & slots
+    connect( m_createAlbumButton, SIGNAL( clicked() ), this, SLOT( createIpodAlbum() ) );
+    connect( m_removeAlbumButton, SIGNAL( clicked() ), this, SLOT( deleteIpodAlbum() ) );
+    connect( m_renameAlbumButton, SIGNAL( clicked() ), this, SLOT( renameIpodAlbum() ) );
+
+    connect( m_addImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonAdd() ) );
+    connect( m_remImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonRem() ) );
+    connect( m_transferImagesButton, SIGNAL( clicked() ), this, SLOT( startTransfer() ) );
 #if 0
-    connect(m_createAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( createIpodAlbum() ));
-
-    connect(m_removeAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( deleteIpodAlbum() ));
-
-    connect(m_renameAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( renameIpodAlbum() ));
-
     connect(m_uploadList, SIGNAL( addedDropItems(QStringList) ),
             this, SLOT( addDropItems(QStringList) ));
 
@@ -257,15 +254,6 @@ UploadDialog::UploadDialog(
 
     connect(m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ),
             this, SLOT( ipodItemSelected(Q3ListViewItem*) ));
-
-    connect(m_addImagesButton, SIGNAL( clicked() ),
-            this, SLOT( imagesFilesButtonAdd() ));
-
-    connect(m_remImagesButton, SIGNAL( clicked() ),
-            this, SLOT( imagesFilesButtonRem() ));
-
-    connect(m_transferImagesButton, SIGNAL( clicked() ),
-            this, SLOT( startTransfer() ));
 #endif
 }
 
@@ -302,7 +290,6 @@ void UploadDialog::getIpodAlbums()
 
         m_ipodAlbumList->addTopLevelItem( albumItem );
 
-        albumItem->setIcon( 0, KIcon("folder") );
         getIpodAlbumPhotos( albumItem, ipodAlbum );
     }
 }
@@ -319,7 +306,6 @@ void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem *item, Itdb_PhotoAlbum *albu
         gint photo_id = photo->id;
         last = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
-        last->setIcon( 0, KIcon("image-jp2") );
     }
 }
 
@@ -345,25 +331,27 @@ void UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album 
 
 void UploadDialog::enableButtons()
 {
-#if 0
     // enable the start button only if there are albums to transfer to, items to transfer
     // and a database to add to!
-    const bool transfer = m_uploadList->childCount()     > 0 && // we have items to transfer
-                          m_ipodAlbumList->childCount() > 0  && // the ipod has albums
-                          !m_transferring                    && // we aren't transferring
-                          m_ipodAlbumList->selectedItem()    && // selected a destination album
+    const bool transfer = m_uploadList->model()->hasChildren()    && // we have items to transfer
+                          m_ipodAlbumList->model()->hasChildren() && // the ipod has albums
+                          !m_transferring                         && // we aren't transferring
+                          m_ipodAlbumList->currentItem()          && // selected a destination album
                           m_itdb;
 
-    m_transferImagesButton->setEnabled(transfer);
+    m_transferImagesButton->setEnabled( transfer );
 
-    enableButton(KDialog::Close, !m_transferring);
+    enableButton( KDialog::Close, !m_transferring );
 
-    const Q3ListViewItem *ipodSelection = m_ipodAlbumList->selectedItem();
-    const bool isMasterLibrary = (ipodSelection == m_ipodAlbumList->firstChild());
+    const QList<QTreeWidgetItem*> ipodSelection = m_ipodAlbumList->selectedItems();
 
-    m_removeAlbumButton->setEnabled(ipodSelection && !isMasterLibrary);
-    m_renameAlbumButton->setEnabled(ipodSelection && !isMasterLibrary && ipodSelection->depth() == 0);
-#endif
+    const bool hasSelection = ipodSelection.count() == 1;
+
+    const bool isMasterLibrary = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
+    const bool isAlbum = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
+
+    m_removeAlbumButton->setEnabled( hasSelection && !isMasterLibrary );
+    m_renameAlbumButton->setEnabled( hasSelection && !isMasterLibrary && isAlbum );
 }
 
 void UploadDialog::startTransfer()
@@ -531,20 +519,14 @@ void UploadDialog::imagesFilesButtonAdd()
 
 void UploadDialog::imagesFilesButtonRem()
 {
-#if 0
-    QList<Q3ListViewItem*> selected = m_uploadList->selectedItems();
+    QList<QTreeWidgetItem*> selected = m_uploadList->selectedItems();
+    qDeleteAll( selected );
 
-    Q3ListViewItem *it;
-    foreach(it, selected)
-        delete it;
-
-    enableButton(KDialog::User1, m_uploadList->childCount() > 0);
-#endif
+    enableButton( KDialog::User1, m_uploadList->model()->hasChildren() );
 }
 
 void UploadDialog::createIpodAlbum()
 {
-#if 0
     QString helper;
 
 #if KIPI_PLUGIN
@@ -561,29 +543,29 @@ void UploadDialog::createIpodAlbum()
     {
         kDebug(51000) << "creating album " << newAlbum << endl;
 
-        IpodAlbumItem *last = static_cast<IpodAlbumItem*>(m_ipodAlbumList->lastItem()); // FIXME?? O(n)
-
         Itdb_PhotoAlbum *photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
         // add the new album to the list view
-        IpodAlbumItem *i = new IpodAlbumItem( m_ipodAlbumList, last, photoAlbum );
-        i->setPixmap( 0, KIconLoader::global()->loadIcon( "folder", KIconLoader::Toolbar, KIconLoader::SizeSmall ) );
+        new IpodAlbumItem( m_ipodAlbumList, photoAlbum );
         m_ipodAlbumList->clearSelection();
-        m_ipodAlbumList->setSelected( i, true );
 
         // commit the changes to the iPod
         GError *err = 0;
         itdb_photodb_write( m_itdb, &err );
     }
-#endif
 }
 
 void UploadDialog::renameIpodAlbum()
 {
-#if 0
-    IpodAlbumItem *selected = dynamic_cast<IpodAlbumItem*>(m_ipodAlbumList->selectedItem());
+    QList<QTreeWidgetItem*> selectedItems = m_ipodAlbumList->selectedItems();
 
-    // only allow renaming of album items
-    if( !selected || selected->depth() != 0 ) return;
+    // only allow renaming of 1 album item
+    if( selectedItems.size() != 1 )
+        return;
+
+    IpodAlbumItem *selected = dynamic_cast<IpodAlbumItem*>( selectedItems.first() );
+    if( !selected )
+        return;
+
 
     bool ok = false;
     QString newName = KInputDialog::getText( i18n("Rename iPod Photo Album"),
@@ -597,12 +579,10 @@ void UploadDialog::renameIpodAlbum()
         GError *err = 0;
         itdb_photodb_write( m_itdb, &err );
     }
-#endif
 }
 
 bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
 {
-#if 0
     if( !photo )
         return false;
 
@@ -625,23 +605,22 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
     // if we remove from the library, remove from all sub albums too
     if( photo_album->album_type == 0x01 ) // master album
     {
-        for( Q3ListViewItem *albumIt = m_ipodAlbumList->firstChild()->nextSibling(); //skip library
-             albumIt; albumIt = albumIt->nextSibling() )
+        for( int i = 1; // skip library
+             i < m_ipodAlbumList->topLevelItemCount(); ++ i )
         {
-            for( Q3ListViewItem *photoIt = albumIt->firstChild();
-                 photoIt; photoIt = photoIt->nextSibling() )
+            QTreeWidgetItem *albumItem = m_ipodAlbumList->topLevelItem( i );
+            for( int j = 0; j < albumItem->childCount(); ++j )
             {
-                if( photoIt->text(0) == photo->text(0) )
+                QTreeWidgetItem *photoItem = albumItem->child( j );
+                if( photoItem->text(0) == photo->text(0) ) // FIXME
                 {
-                    kDebug(51000) << "removing reference to photo from album " << albumIt->text(0) << endl;
-                    delete photoIt;
+                    kDebug(51000) << "removing reference to photo from album " << albumItem->text(0) << endl;
+                    delete photoItem;
+                    break; // Items can't be duplicated in the same album
                 }
             }
         }
     }
-#else
-    Q_UNUSED(photo);
-#endif
     return true;
 }
 
@@ -655,65 +634,42 @@ bool UploadDialog::deleteIpodAlbum( IpodAlbumItem *album )
 
 void UploadDialog::deleteIpodAlbum()
 {
-#if 0
-    Q3ListViewItem *selected = m_ipodAlbumList->selectedItem();
-    if( !selected ) return;
+    QList<QTreeWidgetItem*> selected = m_ipodAlbumList->selectedItems();
 
-    bool result = false;
-    switch( selected->depth() )
+    foreach( QTreeWidgetItem *item, selected )
     {
-        case 0: //album
-            result = deleteIpodAlbum( dynamic_cast<IpodAlbumItem*>( selected ) );
-            break;
+        IpodAlbumItem *album = dynamic_cast<IpodAlbumItem*>( item );
+        if( album )
+        {
+            if( deleteIpodAlbum( album ) )
+               delete album;
+            continue;
+        }
 
-        case 1: //image
-            result = deleteIpodPhoto( dynamic_cast<IpodPhotoItem*>( selected ) );
-            break;
+        IpodPhotoItem *photo = dynamic_cast<IpodPhotoItem*>( item );
+        if( photo )
+        {
+            if( deleteIpodPhoto( photo ) )
+                delete photo;
+            continue;
+        }
     }
-
-    if( result ) //selected item may have been deleted by deleteIpodPhoto
-        delete selected;
 
     GError *err = 0;
     itdb_photodb_write( m_itdb, &err );
-#endif
 }
 
 void UploadDialog::addDropItems( QStringList filesPath )
 {
-#if 0
     if( filesPath.isEmpty() ) return;
 
-    for( QStringList::Iterator it = filesPath.begin() ; it != filesPath.end() ; ++it )
+    foreach( QString dropFile, filesPath )
     {
-        QString currentDropFile = *it;
-
-        // Check if the new item already exist in the list.
-
-        bool itemExists = false;
-
-        Q3ListViewItemIterator it2( m_uploadList );
-
-        while( it2.current() )
-        {
-            ImageListItem *item = static_cast<ImageListItem*>(it2.current());
-
-            if( item->pathSrc() == currentDropFile.section('/', 0, -1) )
-            {
-                itemExists = true;
-                break;
-            }
-            ++it2;
-        }
-
-        if( !itemExists )
-            addUrlToList( currentDropFile );
+        // TODO: Check if the new item already exist in the list.
+        addUrlToList( dropFile );
     }
 
     enableButton( KDialog::User1, m_uploadList->childCount() > 0 );
-#else
-    Q_UNUSED(filesPath);
-#endif
 }
 
 void UploadDialog::addUrlToList( QString file )
