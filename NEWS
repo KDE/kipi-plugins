@@ -20,7 +20,7 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 001 ==> 172910 : GalleryExport      : Gallery crash (letting crash digiKam) with valid data and url.
 002 ==> 161855 : GalleryExport      : Remote Gallery Sync loses password.
 003 ==> 154752 : GalleryExport      : Export to Gallery2 seems to fail, but in fact works.
-004 ==> 157285 : SlideShow          : digikam advanced slideshow not working with Canon RAWs 
+004 ==> 157285 : SlideShow          : digiKam advanced slideshow not working with Canon RAWs.
 005 ==> 175316 : GPSSync            : digiKam crashes when trying to enter gps data.
 006 ==>
 
