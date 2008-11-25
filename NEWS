@@ -24,12 +24,6 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 005 ==> 175316 : GPSSync            : digiKam crashes when trying to enter gps data.
 006 ==>
 
-Known problems:
-PrintWizard    : Disabling first page can make application crashing
-PrintWizard    : Print to gimp seems not to work here, temporary files are removed too early
-PrintWizard    : On my hp printer i cannot print bordless (worked in kde3)
-PrintWizard    : "Don't crop" option is not saved at the moment
-
 v 0.2.0 - beta3
 ------------------------------------------------------------------------
 
