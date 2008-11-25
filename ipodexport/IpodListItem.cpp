@@ -22,6 +22,7 @@
 
 #include "IpodListItem.h"
 
+#include <KIcon>
 #include <KLocale>
 
 namespace KIPIIpodExportPlugin
@@ -36,6 +37,7 @@ IpodAlbumItem::IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa )
     if( m_name.isEmpty() )
         m_name = i18n( "Unnamed" );
     setText( 0, m_name );
+    setIcon( 0, KIcon("folder") );
 }
 
 void
@@ -63,6 +65,7 @@ IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_A
     : QTreeWidgetItem( parent, prev )
     , m_artwork(art)
 {
+    setIcon( 0, KIcon("image-jp2") );
 }
 
 void IpodPhotoItem::setArtwork( Itdb_Artwork *art )
