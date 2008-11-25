@@ -33,7 +33,6 @@ ImageList::ImageList( ListType type, QWidget *parent )
 {
     if( type == ImageList::UploadType )
     {
-        setColumnCount( 2 );
         setAcceptDrops( true );
         //addColumn( i18n("Image") );
     }

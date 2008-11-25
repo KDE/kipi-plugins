@@ -41,8 +41,7 @@ class ImageListItem : public QTreeWidgetItem
             : QTreeWidgetItem( parent )
             , m_pathSrc( pathSrc )
         {
-            setText( 0, pathSrc.section('/', -2, -2) );
-            setText( 1, name );
+            setText( 0, name );
         }
 
         QString pathSrc() const { return m_pathSrc; }
