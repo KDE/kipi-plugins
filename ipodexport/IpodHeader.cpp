@@ -36,14 +36,16 @@ namespace KIPIIpodExportPlugin
 IpodHeader::IpodHeader( QWidget *parent, Qt::WFlags f )
           : QFrame( parent, f )
 {
+    setAutoFillBackground( true );
+
     QVBoxLayout *layout = new QVBoxLayout( this );
     layout->setContentsMargins( 10, 10, 10, 10 );
     layout->setSpacing( 5 );
 
-    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
     m_messageLabel = new QLabel( QString(), this );
-    m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
+    m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     m_button = new KPushButton( this );
