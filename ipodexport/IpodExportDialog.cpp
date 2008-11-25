@@ -124,49 +124,6 @@ UploadDialog::UploadDialog(
     QGridLayout *grid = new QGridLayout(box);
     m_ipodHeader      = new IpodHeader(box);
 
-    // Setup widgets and layout for the iPod (destination)
-    m_destinationBox = new QGroupBox( i18n("iPod"), box );
-    QHBoxLayout *destinationBoxLayout = new QHBoxLayout( m_destinationBox );
-
-    m_ipodAlbumList = new ImageList( ImageList::IpodType, this );
-    m_ipodAlbumList->setMinimumHeight( 80 );
-
-    QVBoxLayout *ipodButtonLayout = new QVBoxLayout;
-
-    m_createAlbumButton = new QPushButton( i18n("&New..."), this );
-    m_createAlbumButton->setWhatsThis( i18n( "Create a new photo album on the iPod." ) );
-
-    m_removeAlbumButton = new QPushButton( i18n("&Remove"), this );
-    m_renameAlbumButton = new QPushButton( i18n("R&ename..."), this );
-
-    m_removeAlbumButton->setEnabled( false );
-    m_renameAlbumButton->setEnabled( false );
-
-    m_removeAlbumButton->setWhatsThis( i18n("Remove the selected photos or albums from the iPod.") );
-    m_renameAlbumButton->setWhatsThis( i18n("Rename the selected photo album on the iPod.") );
-
-    QLabel *ipod_icon = new QLabel;
-    ipod_icon->setPixmap(KIconLoader::global()->loadIcon( "multimedia-player-apple-ipod",
-                                                         KIconLoader::Desktop,
-                                                         KIconLoader::SizeHuge ) );
-
-    m_ipodPreview = new QLabel;
-    m_ipodPreview->setFixedHeight( 80 );
-    m_ipodPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    m_ipodPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
-
-    ipodButtonLayout->addWidget( m_createAlbumButton );
-    ipodButtonLayout->addWidget( m_removeAlbumButton );
-    ipodButtonLayout->addWidget( m_renameAlbumButton );
-    ipodButtonLayout->addWidget( m_ipodPreview );
-    ipodButtonLayout->addStretch( 1 );
-    ipodButtonLayout->addWidget( ipod_icon );
-
-    destinationBoxLayout->addWidget( m_ipodAlbumList );
-    destinationBoxLayout->addLayout( ipodButtonLayout );
-
-    m_destinationBox->setLayout( destinationBoxLayout );
-
     // Setup widgets and layout for the source
     m_urlListBox = new QGroupBox( i18n("Hard Disk"), box );
     
@@ -210,6 +167,49 @@ UploadDialog::UploadDialog(
     urlLayout->addLayout( uploadUrlLayout );
 
     m_urlListBox->setLayout( urlLayout );
+
+    // Setup widgets and layout for the iPod (destination)
+    m_destinationBox = new QGroupBox( i18n("iPod"), box );
+    QHBoxLayout *destinationBoxLayout = new QHBoxLayout( m_destinationBox );
+
+    m_ipodAlbumList = new ImageList( ImageList::IpodType, this );
+    m_ipodAlbumList->setMinimumHeight( 80 );
+
+    QVBoxLayout *ipodButtonLayout = new QVBoxLayout;
+
+    m_createAlbumButton = new QPushButton( i18n("&New..."), this );
+    m_createAlbumButton->setWhatsThis( i18n( "Create a new photo album on the iPod." ) );
+
+    m_removeAlbumButton = new QPushButton( i18n("&Remove"), this );
+    m_renameAlbumButton = new QPushButton( i18n("R&ename..."), this );
+
+    m_removeAlbumButton->setEnabled( false );
+    m_renameAlbumButton->setEnabled( false );
+
+    m_removeAlbumButton->setWhatsThis( i18n("Remove the selected photos or albums from the iPod.") );
+    m_renameAlbumButton->setWhatsThis( i18n("Rename the selected photo album on the iPod.") );
+
+    QLabel *ipod_icon = new QLabel;
+    ipod_icon->setPixmap(KIconLoader::global()->loadIcon( "multimedia-player-apple-ipod",
+                                                         KIconLoader::Desktop,
+                                                         KIconLoader::SizeHuge ) );
+
+    m_ipodPreview = new QLabel;
+    m_ipodPreview->setFixedHeight( 80 );
+    m_ipodPreview->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+    m_ipodPreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
+
+    ipodButtonLayout->addWidget( m_createAlbumButton );
+    ipodButtonLayout->addWidget( m_removeAlbumButton );
+    ipodButtonLayout->addWidget( m_renameAlbumButton );
+    ipodButtonLayout->addWidget( m_ipodPreview );
+    ipodButtonLayout->addStretch( 1 );
+    ipodButtonLayout->addWidget( ipod_icon );
+
+    destinationBoxLayout->addWidget( m_ipodAlbumList );
+    destinationBoxLayout->addLayout( ipodButtonLayout );
+
+    m_destinationBox->setLayout( destinationBoxLayout );
 
 
     // Add sub-layouts to the main layout
