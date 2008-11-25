@@ -20,9 +20,10 @@
  *
  * ============================================================ */
 
-#include <KLocale>
-
 #include "ImageList.h"
+
+#include <KLocale>
+#include <QHeaderView>
 
 namespace KIPIIpodExportPlugin
 {
@@ -42,6 +43,9 @@ ImageList::ImageList( ListType type, QWidget *parent )
         setRootIsDecorated( true ); // show expand icons
         setSortingEnabled( false );
     }
+
+    // Remove the header
+    header()->hide();
 }
 
 // TODO: Port to KDE4
