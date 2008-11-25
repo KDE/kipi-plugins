@@ -29,6 +29,7 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QStringList>
 #include <QTextCodec>
 #include <QProcess>
 
@@ -141,10 +142,8 @@ void SendImages::sendImages()
     {
         // Add all original files to the attachments list.
 
-        for (QList<EmailItem>::iterator it = d->settings.itemsList.begin();
-            it != d->settings.itemsList.end(); ++it)
+        foreach (const EmailItem& item, d->settings.itemsList)
         {
-            EmailItem item = *it;
             d->attachementFiles.append(item.orgUrl);
             d->settings.setEmailUrl(item.orgUrl, item.orgUrl);
         }
@@ -218,10 +217,8 @@ void SendImages::buildPropertiesFile()
 
         QString propertiesText;
 
-        for (QList<EmailItem>::const_iterator it = d->settings.itemsList.constBegin();
-            it != d->settings.itemsList.constEnd(); ++it)
+        foreach (const EmailItem& item, d->settings.itemsList)
         {
-            EmailItem item    = *it;
             QString comments  = item.comments;
             QString tags      = item.tags.join(", ");
             QString rating    = QString::number(item.rating);
@@ -353,13 +350,18 @@ bool SendImages::invokeMailAgent()
 {
     bool       agentInvoked = false;
     KUrl::List fileList;
-
     do
     {
         fileList = divideEmails();
 
         if (!fileList.isEmpty())
         {
+            QStringList stringFileList;
+            foreach( const KUrl& file, fileList)
+            {
+                stringFileList << file.path();
+            }
+            
             switch ((int)d->settings.emailProgram)
             {
                 case EmailSettingsContainer::DEFAULT:
@@ -371,7 +373,7 @@ bool SendImages::invokeMailAgent()
                         QString::null,                     // Message Subject.
                         QString::null,                     // Message Body.
                         QString::null,                     // Message Body File.
-                        fileList.toStringList());          // Images attachments (+ image properties file).
+                        stringFileList);          // Images attachments (+ image properties file).
 
                     d->progressDlg->addedAction(i18n("Starting default KDE e-mail program..."), KIPIPlugins::StartingMessage);
 
