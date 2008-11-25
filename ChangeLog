@@ -1,3 +1,2876 @@
+0.2.0-beta4 2008-11-25
+--------------------------------------------------------------------------------
+
+2008-11-25 13:14  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-25 11:40  cgilles
+
+    * AUTHORS: remove unported plugins
+
+2008-11-25 11:37  cgilles
+
+    * NEWS: update
+
+2008-11-25 11:31  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: use STATUS for messages
+
+2008-11-25 11:29  cgilles
+
+    * NEWS: polish
+
+2008-11-25 11:29  cgilles
+
+    * printwizard/TODO: add TODO list
+
+2008-11-25 11:09  seb
+
+    * ipodexport/IpodExportDialog.cpp: fix compilation
+
+2008-11-25 11:01  seb
+
+    * ipodexport/IpodExportDialog.cpp: Port a number of methods to
+      KDE4. Adding/removing images, adding ipod photo albums.
+
+2008-11-25 11:00  seb
+
+    * ipodexport/IpodListItem.cpp: Set icons in the ctor
+
+2008-11-25 10:16  seb
+
+    * ipodexport/IpodExportDialog.cpp: Reorder code to be more logical.
+
+2008-11-25 10:15  seb
+
+    * ipodexport/ImageList.cpp: hide the tree widget headers
+
+2008-11-25 10:12  seb
+
+    * ipodexport/ImageList.cpp, ipodexport/ImageListItem.h: Only show
+      one column for the source images - the file name
+
+2008-11-25 10:07  seb
+
+    * ipodexport/IpodExportDialog.cpp: Fix the layout to show the
+      source/destination boxes correctly.
+
+2008-11-25 09:38  seb
+
+    * ipodexport/IpodHeader.cpp: Don't expand the header needlessly
+      Paint the background colour
+
+2008-11-25 09:28  seb
+
+    * ipodexport/IpodExportDialog.cpp,
+      ipodexport/plugin_ipodexport.cpp, ipodexport/plugin_ipodexport.h:
+      fix butchered style
+
+2008-11-25 08:26  cgilles
+
+    * README: update
+
+2008-11-25 07:43  cgilles
+
+    * AUTHORS: update
+
+2008-11-25 00:54  sengels
+
+    * sendimages/sendimages.cpp: solve it the "gordian" way:
+      use foreach
+
+2008-11-24 23:18  sengels
+
+    * calendar/calformatter.cpp: minor fix
+
+2008-11-24 23:17  sengels
+
+    * acquireimages/twainiface/twaincontroller.cpp,
+      acquireimages/twainiface/twaincontroller.h: do not call something
+      interface as this is a reserved keyword on windows
+
+2008-11-24 22:36  sengels
+
+    * printwizard/cropframe.cpp: more compile fixing
+
+2008-11-24 22:30  sengels
+
+    * common/libkipiplugins/kpwriteimage.cpp: put local includes
+      together (compilefix for msvc)
+
+2008-11-24 18:13  anaselli
+
+    * printwizard/croppage.ui, printwizard/infopage.ui,
+      printwizard/wizard.cpp: Changed Wizard with Assistant... new
+      generation :)
+      NOTE help is still printwizard... this has to be clarified
+
+2008-11-24 12:51  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-24 09:39  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: add singular / plural
+      message strings to summarybox
+
+2008-11-23 23:32  anaselli
+
+    * NEWS: SVN_SILENT: updated
+
+2008-11-23 23:30  anaselli
+
+    * printwizard/cropframe.cpp, printwizard/cropframe.h,
+      printwizard/croppage.ui, printwizard/wizard.cpp,
+      printwizard/wizard.h: Added new option "don't crop" to skip
+      cropping and scale instead.
+      Please test, it seems i cannot be sure it works since my printer
+      does not care my settings :/
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-11-23 23:27  anaselli
+
+    * printwizard/infopage.ui: Fixed 10x15 cm size
+
+2008-11-23 20:53  orgads
+
+    * calendar/kipiplugin_calendar.desktop: Re-added Hebrew translation
+      in desktop file (why was it deleted?)
+
+2008-11-23 19:59  cgilles
+
+    * sendimages/sendimages.cpp: using a const iterator crash plugin.
+
+2008-11-23 12:21  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-23 09:17  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: remove the old commented
+      code... I will keep the messagebox the way it is.
+
+2008-11-23 08:56  cgilles
+
+    * printwizard/plugin_printwizard.cpp: fix warning
+
+2008-11-23 08:53  cgilles
+
+    * common/libkipiplugins/iccjpeg.h: fix warning
+
+2008-11-23 01:06  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: polish
+
+2008-11-23 00:51  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: change the look of the
+      summary-messagebox to something simpler right now
+
+2008-11-23 00:00  anaselli
+
+    * printwizard/cropframe.cpp, printwizard/wizard.cpp,
+      printwizard/wizard.h: Added print interface, now printwizard
+      could be usable
+      NOTE: print to gimp does not work
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-11-22 21:05  orgads
+
+    * calendar/kipiplugin_calendar.desktop: Added Hebrew translation
+      for desktop file, and replaced author.
+
+2008-11-22 15:04  anaselli
+
+    * printwizard/intropage.ui, printwizard/tphoto.cpp,
+      printwizard/utils.cpp, printwizard/wizard.cpp: Configuration is
+      saved and restored now.
+      Added skip intro page option.
+
+2008-11-22 14:41  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-22 00:23  anaselli
+
+    * printwizard/wizard.cpp, printwizard/wizard.h: Start
+      saving/retrieving configuration
+
+2008-11-22 00:21  anaselli
+
+    * printwizard/cropframe.cpp, printwizard/utils.cpp,
+      printwizard/utils.h: SVN_SILENT: clean up
+
+2008-11-21 15:30  anaselli
+
+    * printwizard/cropframe.cpp, printwizard/cropframe.h: Fix image on
+      crop dialog, thanks Gilles
+
+2008-11-21 13:26  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-21 12:42  mlaurent
+
+    * htmlexport/galleryinfo.h, htmlexport/generator.cpp,
+      htmlexport/listthemeparameter.cpp, htmlexport/wizard.cpp,
+      sendimages/sendimages.cpp, timeadjust/timeadjustdialog.cpp: Fix
+      iterator
+
+2008-11-21 10:37  cgilles
+
+    * common/libkipiplugins/imagedialog.cpp: center image info
+
+2008-11-20 14:07  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-20 08:09  mlaurent
+
+    * calendar/monthwidget.h: Fix pedantic
+
+2008-11-20 08:03  mlaurent
+
+    * calendar/calwizard.cpp: Not necessary to test it
+
+2008-11-19 21:40  orgads
+
+    * calendar/CMakeLists.txt, calendar/calpainter.cpp,
+      calendar/calpainter.h, calendar/calprinter.cpp,
+      calendar/calprinter.h, calendar/calwizard.cpp,
+      calendar/calwizard.h: Moved actual printing to a separate thread
+      (instead of using a timer inside CalPainter)
+
+2008-11-19 19:55  orgads
+
+    * calendar/calwizard.cpp: Initialize painter in CalWizard.
+
+2008-11-19 16:17  cgilles
+
+    * sendimages/sendimages.cpp: missing arguments
+
+2008-11-19 15:33  aclemens
+
+    * sendimages/sendimages.cpp: isn't something missing here?
+
+2008-11-19 15:33  aclemens
+
+    * gpssync/kmlexport.cpp, ipodexport/IpodExportDialog.cpp,
+      ipodexport/IpodHeader.cpp, printwizard/wizard.cpp,
+      sendimages/sendimages.cpp: when using i18n(), the additional
+      arguments need to be passed to the i18n method itself, not via
+      .arg()
+
+2008-11-19 14:28  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-19 13:42  aclemens
+
+    * calendar/calwizard.cpp: fix <br> tags, should be <br/>
+
+2008-11-19 13:42  aclemens
+
+    * calendar/calwizard.cpp: when using i18n(), the additional
+      arguments need to be passed to the i18n method itself, not via
+      .arg()
+
+2008-11-19 13:31  aclemens
+
+    * calendar/calformatter.cpp, calendar/calformatter.h: classes
+      derived from QObject should use the Q_OBJECT macro
+
+2008-11-19 13:07  aclemens
+
+    * calendar/calformatter.cpp, calendar/calformatter.h,
+      calendar/calpainter.cpp, calendar/calpainter.h,
+      calendar/calselect.cpp, calendar/calselect.h,
+      calendar/calsettings.cpp, calendar/calsettings.h,
+      calendar/caltemplate.cpp, calendar/caltemplate.h,
+      calendar/calwidget.cpp, calendar/calwidget.h,
+      calendar/calwizard.cpp, calendar/calwizard.h,
+      calendar/monthwidget.cpp, calendar/monthwidget.h,
+      calendar/plugin_calendar.cpp, calendar/plugin_calendar.h: fix
+      include issues (missing / wrong include guard, first header
+      first, missing MOC files)
+
+2008-11-19 12:37  aclemens
+
+    * flickrexport/flickrviewitem.cpp: fix deprecate warnings: Actually
+      QColorGroup is not used in Qt4 anymore, so this still isn't the
+      best solution. This code will be replaced when switching to a
+      fully Qt4 implementation.
+
+2008-11-19 11:12  cgilles
+
+    * NEWS: update
+
+2008-11-19 10:58  cgilles
+
+    * calendar/CMakeLists.txt, calendar/calpainter.cpp,
+      calendar/monthwidget.cpp: add RAW image format support
+
+2008-11-19 10:19  cgilles
+
+    * sendimages/CMakeLists.txt, sendimages/plugin_sendimages.cpp,
+      sendimages/plugin_sendimages.h: there is no icon to install
+
+2008-11-19 10:16  cgilles
+
+    * sendimages/imageresize.cpp, sendimages/imageresize.h: polish
+
+2008-11-19 10:15  cgilles
+
+    * sendimages/imageresize.cpp: polish
+
+2008-11-19 08:59  cgilles
+
+    * README, acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: Fix plugin descriptions
+
+2008-11-19 08:39  cgilles
+
+    * CMakeLists.txt: make calendar kipi-plugins optional. Depency is
+      libkcal from KDEPimLibs
+
+2008-11-19 08:29  cgilles
+
+    * README: update depencies
+
+2008-11-19 08:15  cgilles
+
+    * NEWS: update
+
+2008-11-19 08:14  cgilles
+
+    * imageviewer/README: polish
+
+2008-11-19 08:12  cgilles
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/plugin_viewer.h: use
+      icon
+
+2008-11-19 08:07  cgilles
+
+    * calendar/calformatter.cpp, calendar/calformatter.h: fix header
+
+2008-11-19 08:01  cgilles
+
+    * calendar/calpainter.cpp, calendar/calpainter.h: fix header
+
+2008-11-19 07:54  cgilles
+
+    * calendar/calselect.cpp, calendar/calselect.h: fix header
+
+2008-11-19 07:51  cgilles
+
+    * calendar/calsettings.cpp, calendar/calsettings.h: fix header
+
+2008-11-19 07:48  cgilles
+
+    * calendar/caltemplate.cpp, calendar/caltemplate.h: fix header
+
+2008-11-19 07:46  cgilles
+
+    * calendar/calwidget.cpp, calendar/calwidget.h: fix header
+      missing moc file
+
+2008-11-19 07:44  cgilles
+
+    * calendar/calwizard.cpp, calendar/calwizard.h: missing moc file
+      fix header
+
+2008-11-19 07:32  cgilles
+
+    * calendar/monthwidget.cpp, calendar/monthwidget.h: missing moc
+      file
+      fix source code header
+
+2008-11-19 07:25  cgilles
+
+    * calendar/plugin_calendar.cpp: missing moc file
+
+2008-11-19 07:23  cgilles
+
+    * calendar/CMakeLists.txt, calendar/hi32-action-calendar.png,
+      calendar/plugin_calendar.cpp, calendar/plugin_calendar.h: use
+      Oxygen icon.
+      set source code header accordingly with Debian rules.
+
+2008-11-19 06:56  cgilles
+
+    * acquireimages/CMakeLists.txt: no icon to install here
+
+2008-11-19 06:45  cgilles
+
+    * calendar/CMakeLists.txt, calendar/Messages.sh: add translations
+      extraction for Calendar plugin
+
+2008-11-18 20:28  cgilles
+
+    * README: update
+
+2008-11-18 20:00  orgads
+
+    * CMakeLists.txt: Commited commented dngconverter and rawconverter
+      by mistake...
+
+2008-11-18 19:57  orgads
+
+    * CMakeLists.txt, calendar, calendar/CMakeLists.txt,
+      calendar/calevents.ui, calendar/calformatter.cpp,
+      calendar/calformatter.h, calendar/calpainter.cpp,
+      calendar/calpainter.h, calendar/calprogress.ui,
+      calendar/calselect.cpp, calendar/calselect.h,
+      calendar/calselect.ui, calendar/calsettings.cpp,
+      calendar/calsettings.h, calendar/caltemplate.cpp,
+      calendar/caltemplate.h, calendar/caltemplate.ui,
+      calendar/calwidget.cpp, calendar/calwidget.h,
+      calendar/calwizard.cpp, calendar/calwizard.h,
+      calendar/hi32-action-calendar.png,
+      calendar/kipiplugin_calendar.desktop, calendar/monthwidget.cpp,
+      calendar/monthwidget.h, calendar/plugin_calendar.cpp,
+      calendar/plugin_calendar.h: Added calendar plugin.
+
+2008-11-18 17:37  cgilles
+
+    * timeadjust/timeadjustdialog.cpp: fix deprecated
+
+2008-11-18 12:31  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp: Twain interface must be
+      created on the heap
+
+2008-11-18 10:28  aclemens
+
+    * dngconverter/plugin/actionthread.cpp,
+      dngconverter/plugin/batchdialog.cpp,
+      dngconverter/plugin/plugin_dngconverter.cpp,
+      dngconverter/plugin/plugin_dngconverter.h,
+      dngconverter/plugin/settingswidget.cpp: some more include fixes
+
+2008-11-18 10:15  aclemens
+
+    * common/libkipiplugins/batchprogressdialog.cpp,
+      common/libkipiplugins/iccjpeg.h,
+      common/libkipiplugins/imagedialog.cpp,
+      common/libkipiplugins/kpaboutdata.cpp,
+      common/libkipiplugins/kpaboutdata.h,
+      common/libkipiplugins/kpwriteimage.cpp,
+      common/libkipiplugins/kpwriteimage.h: * fixing include issues
+      (wrong or missing include guards, own header first etc)
+      * converting tabs to spaces
+
+2008-11-17 23:39  anaselli
+
+    * printwizard/cropframe.cpp: SVN_SILENT: going on, time to crop
+
+2008-11-17 23:34  anaselli
+
+    * printwizard/wizard.cpp: Fix crash selecting page size
+
+2008-11-17 19:27  cgilles
+
+    * slideshow/CMakeLists.txt: remove tabs
+
+2008-11-17 19:24  cgilles
+
+    * slideshow/plugin_slideshow.cpp: polish
+
+2008-11-17 19:23  cgilles
+
+    * slideshow/plugin_slideshow.cpp, slideshow/plugin_slideshow.h:
+      code simpilification using namespace post declaration
+
+2008-11-17 13:26  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-17 12:35  cgilles
+
+    * CMakeLists.txt, README: fix urls
+
+2008-11-17 09:34  cgilles
+
+    * gpssync/gpseditdialog.cpp, gpssync/gpstracklisteditdialog.cpp:
+      more test to prevent kipirc file removal.
+
+2008-11-17 09:24  cgilles
+
+    * NEWS: update
+
+2008-11-17 08:59  aclemens
+
+    * removeredeyes/imageslist.h: polish
+
+2008-11-17 08:38  aclemens
+
+    * removeredeyes/imageslist.h: polish
+
+2008-11-17 08:35  aclemens
+
+    * removeredeyes/imageslist.cpp, removeredeyes/imageslist.h,
+      removeredeyes/removeredeyeswindow.cpp: added new method
+      totalImages() to ImagesList, renamed the other similar methods
+      accordingly.
+
+2008-11-17 08:25  aclemens
+
+    * removeredeyes/imageslist.cpp, removeredeyes/imageslist.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: Display a summary messagebox
+      dialog when correction is finished. After confirming the dialog,
+      the plugin will be closed.
+
+2008-11-17 06:53  cgilles
+
+    * acquireimages/scandialog.cpp: update credits
+
+2008-11-16 17:33  cgilles
+
+    * flickrexport/flickrwindow.cpp: compile
+
+2008-11-16 16:09  cgilles
+
+    * flickrexport/CMakeLists.txt, flickrexport/flickralbumdialog.ui:
+      port UI file to Qt4
+
+2008-11-15 19:01  jaiva
+
+    * picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp: Fixing the bug with
+      non-gmail.com user names. Earlier the code used to append
+      @gmail.com to a username if not already present. As I learned
+      from others Google login doesn't need to be a gmail.com id. Now
+      the user name field needs to be complete Google Login.
+      This change has been made in the LoginWindow code to show "Google
+      Login" instead of "Username:" but it will need translation
+      changes to show up.
+
+2008-11-15 19:01  scripty
+
+    * ipodexport/kipiplugin_ipodexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-15 16:05  anaselli
+
+    * printwizard/wizard.cpp, printwizard/wizard.h: SVN_SILENT: removed
+      duplicated method
+
+2008-11-15 11:08  adjam
+
+    * galleryexport/gallerywindow.cpp: Adjusted author names.
+
+2008-11-14 13:48  scripty
+
+    * htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/snow/snow.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-14 09:45  cgilles
+
+    * ipodexport/IpodExportDialog.cpp: fix compilation warnings
+
+2008-11-14 09:24  cgilles
+
+    * htmlexport/wizard.cpp, htmlexport/wizard.h: set dialog caption
+      assign about data to Help button
+
+2008-11-14 09:21  cgilles
+
+    * ipodexport/IpodExportDialog.cpp: fix compilation warning
+
+2008-11-14 09:15  cgilles
+
+    * slideshow/maindialog.cpp: fix warnings
+
+2008-11-14 07:08  cgilles
+
+    * flickrexport/mpform.cpp: fix compilation warnings
+
+2008-11-13 20:25  cgilles
+
+    * removeredeyes/blobsettingsbox.cpp, removeredeyes/eyelocator.cpp:
+      Fix compilation warnings under win32
+      
+      Andi, it can be rounding problem here between double => int cast
+
+2008-11-13 14:44  aclemens
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/removalsettings.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/workerthread.cpp:
+      only scale image when in simpleMode, advanced mode will not do it
+      by now
+
+2008-11-13 13:28  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-13 11:53  cgilles
+
+    * slideshow/common.cpp, slideshow/common.h: just polish
+
+2008-11-13 11:38  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/workerthread.cpp: scale down images in "Fast" mode,
+      to reduce computation time for very high-res images. This might
+      increase false negatives, so new / additional methods for
+      detecting the eyes are required.
+
+2008-11-13 11:37  aclemens
+
+    * removeredeyes/blobsettingsbox.cpp, removeredeyes/eyelocator.cpp,
+      removeredeyes/simplesettings.cpp: use percent values for minimum
+      roundness to make it more clear in the user interface
+
+2008-11-12 22:08  aclemens
+
+    * removeredeyes/simplesettings.cpp: tweaking parameters
+
+2008-11-12 13:47  scripty
+
+    * ipodexport/kipiplugin_ipodexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-12 08:03  aclemens
+
+    * removeredeyes/eyelocator.cpp: polish
+
+2008-11-11 17:38  aclemens
+
+    * removeredeyes/eyelocator.cpp: No need to convert the src image to
+      LAB colormode if no eyes where found.
+      This should save some computation time.
+
+2008-11-11 14:33  anaselli
+
+    * printwizard/wizard.cpp, printwizard/wizard.h: SVN_SILENT: fixed
+      preview on paper size changing
+
+2008-11-11 13:40  aclemens
+
+    * removeredeyes/eyelocator.cpp: polish
+
+2008-11-11 13:28  aclemens
+
+    * removeredeyes/eyelocator.cpp: use depth information from original
+      image
+
+2008-11-11 13:28  aclemens
+
+    * removeredeyes/eyelocator.cpp: cleanup
+
+2008-11-11 13:10  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-11 12:56  aclemens
+
+    * removeredeyes/eyelocator.cpp: use depth information from original
+      image, so that 16bit images are
+      treated the way they should
+
+2008-11-10 21:27  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-10 12:19  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h: create
+      EyeLocatorPriv class and move all private methods into it. I keep
+      on changing those quite often, so it is better to move them out
+      of the
+      API.
+
+2008-11-10 12:19  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: change window title
+
+2008-11-10 11:06  seb
+
+    * ipodexport/ImageList.cpp, ipodexport/ImageList.h,
+      ipodexport/ImageListItem.h, ipodexport/IpodExportDialog.cpp,
+      ipodexport/IpodExportDialog.h, ipodexport/IpodListItem.cpp,
+      ipodexport/IpodListItem.h: Start work on porting to Qt4/KDE4
+      classes. It's totally screwed up, especially the layouting but
+      it's a start.
+
+2008-11-10 09:20  seb
+
+    * ipodexport/IpodHeader.cpp, ipodexport/IpodHeader.h: Port to Qt4.
+      Fix some style. Please don't mess around with my coding style.
+
+2008-11-10 09:00  seb
+
+    * ipodexport/IpodExportDialog.h: fix broken include
+
+2008-11-10 08:56  seb
+
+    * ipodexport/CMakeLists.txt: And update cmakebuild file
+
+2008-11-10 08:56  seb
+
+    * ipodexport/IpodHeader.cpp, ipodexport/IpodListItem.cpp,
+      ipodexport/plugin_ipodexport.cpp: update includes
+
+2008-11-10 08:54  seb
+
+    * ipodexport/ImageListItem.h, ipodexport/IpodHeader.cpp,
+      ipodexport/IpodHeader.h, ipodexport/IpodListItem.cpp,
+      ipodexport/IpodListItem.h, ipodexport/imagelistitem.h,
+      ipodexport/ipodheader.cpp, ipodexport/ipodheader.h,
+      ipodexport/ipodlistitem.cpp, ipodexport/ipodlistitem.h: CamelCase
+      files
+
+2008-11-10 08:53  seb
+
+    * ipodexport/ImageList.cpp, ipodexport/ImageList.h,
+      ipodexport/IpodExportDialog.cpp, ipodexport/IpodExportDialog.h,
+      ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+      ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h,
+      ipodexport/ipodheader.cpp, ipodexport/ipodheader.h,
+      ipodexport/ipodlistitem.cpp, ipodexport/ipodlistitem.h,
+      ipodexport/plugin_ipodexport.cpp, ipodexport/plugin_ipodexport.h:
+      * New email address
+      * Camel case some files
+
+2008-11-09 23:48  adjam
+
+    * galleryexport/gallerywindow.cpp: Added a "cleaning step" to
+      slotPhotos function to avoid duplications
+      in photo listing.
+      Photo string name modified to avoid strange characters in it
+      eg: &amp; --> &
+
+2008-11-09 22:39  adjam
+
+    * galleryexport/galleryitem.h, galleryexport/gallerympform.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerytalker.h,
+      galleryexport/gallerywindow.h: SVN_SILENT: header files
+      adjustments
+
+2008-11-09 21:02  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: shorten infobox text
+
+2008-11-09 21:02  aclemens
+
+    * removeredeyes/imageslist.cpp: now that we have a cancel action,
+      make sure not to remove images from
+      the imageslist if the eyecounter column is empty
+
+2008-11-09 20:38  aclemens
+
+    * AUTHORS: polish
+
+2008-11-09 20:36  aclemens
+
+    * AUTHORS: update
+
+2008-11-09 20:30  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: this signal is not needed,
+      we already have a variable that saves the
+      execution state, so why emit a signal for a finished testrun...
+
+2008-11-09 20:22  aclemens
+
+    * removeredeyes/TODO: update
+
+2008-11-09 20:18  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: set overwriteCursor to
+      signal the canceling of the process
+
+2008-11-09 20:10  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h:
+      cancel action implemented
+
+2008-11-09 20:00  cgilles
+
+    * ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+      add about data
+
+2008-11-09 19:35  cgilles
+
+    * ipodexport/ipodexportdialog.cpp: port ++
+
+2008-11-09 18:44  cgilles
+
+    * ipodexport/ipodexportdialog.cpp,
+      ipodexport/plugin_ipodexport.cpp: port ++
+
+2008-11-09 18:29  cgilles
+
+    * ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h,
+      ipodexport/plugin_ipodexport.cpp, ipodexport/plugin_ipodexport.h:
+      using an horizontal layout it's better adapted to computer screen
+
+2008-11-09 17:05  cgilles
+
+    * ipodexport/ipodexportdialog.cpp: use Oxygen icon
+
+2008-11-09 17:00  cgilles
+
+    * ipodexport/ipodexportdialog.cpp: use Oxygen icon
+
+2008-11-09 16:58  cgilles
+
+    * ipodexport/ipodexportdialog.cpp, ipodexport/ipodlistitem.cpp:
+      polish
+
+2008-11-09 16:50  cgilles
+
+    * ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+      ipodexport/imagelistitem.h, ipodexport/ipodexportdialog.cpp,
+      ipodexport/ipodexportdialog.h, ipodexport/ipodheader.cpp,
+      ipodexport/ipodheader.h, ipodexport/ipodlistitem.cpp,
+      ipodexport/ipodlistitem.h, ipodexport/plugin_ipodexport.cpp: use
+      same namespace everywhere.
+      coding style fix.
+      port++
+
+2008-11-09 15:52  cgilles
+
+    * ipodexport/plugin_ipodexport.cpp: use Oxygen icon
+
+2008-11-09 15:46  cgilles
+
+    * ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+      ipodexport/imagelistitem.h, ipodexport/ipodexportdialog.cpp,
+      ipodexport/ipodexportdialog.h, ipodexport/ipodheader.cpp,
+      ipodexport/ipodheader.h, ipodexport/ipodlistitem.cpp,
+      ipodexport/ipodlistitem.h, ipodexport/plugin_ipodexport.cpp,
+      ipodexport/plugin_ipodexport.h: fix header
+
+2008-11-09 15:34  cgilles
+
+    * ipodexport/CMakeLists.txt: polish
+
+2008-11-09 15:30  cgilles
+
+    * CMakeLists.txt: add Ipod Export plugins depencies results to
+      config pannel
+
+2008-11-09 15:30  cgilles
+
+    * README: add IpodExport
+
+2008-11-09 14:41  aclemens
+
+    * removeredeyes/simplesettings.cpp, removeredeyes/workerthread.cpp:
+      fix correct loading of settings when settingstab has not been
+      manually
+      changed. I guess I will just keep the debug() method in
+      RemovalSettings
+      class...
+
+2008-11-09 14:29  aclemens
+
+    * removeredeyes/removalsettings.h, removeredeyes/workerthread.cpp:
+      add debug() method for now, somehow the settings are not
+      correctly
+      loaded when starting the plugin the first time and just hitting
+      "Test
+      run" or "Correct photos" without touching the settings in the
+      dialog. When the problem has been solved, this method
+      will be removed again
+
+2008-11-09 14:09  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: API change: rename method to
+      a more meaningful name
+
+2008-11-09 13:51  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: API change: use d->runtype
+      variable to start workerthread, only display
+      'unprocessed images' warning when in TestRun mode
+
+2008-11-09 13:51  aclemens
+
+    * removeredeyes/imageslist.cpp, removeredeyes/imageslist.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: API change: rename methods
+      to a more meaningful name
+
+2008-11-09 13:42  mlaurent
+
+    * ipodexport/CMakeLists.txt: Fix install
+
+2008-11-09 13:41  mlaurent
+
+    * CMakeLists.txt, ipodexport/CMakeLists.txt: Fix link
+
+2008-11-09 12:25  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/workerthreaddata.cpp,
+      removeredeyes/workerthreaddata.h: this is just a simple container
+      class, no need to have getters here.
+
+2008-11-09 12:19  aclemens
+
+    * removeredeyes/workerthreaddata.h: make cstor explicit
+
+2008-11-09 12:10  aclemens
+
+    * removeredeyes/advancedsettings.cpp, removeredeyes/imageslist.cpp,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: code cleanup
+
+2008-11-09 11:29  mlaurent
+
+    * ipodexport/CMakeLists.txt: Add link
+
+2008-11-09 11:27  mlaurent
+
+    * ipodexport/ipodheader.cpp: Fix i18n
+
+2008-11-09 11:19  mlaurent
+
+    * ipodexport/CMakeLists.txt, ipodexport/imagelist.cpp,
+      ipodexport/ipodexportdialog.cpp: Now it compiles (need to fix two
+      "port it" and qt3support)
+
+2008-11-09 11:11  mlaurent
+
+    * ipodexport/ipodexportdialog.cpp,
+      ipodexport/plugin_ipodexport.cpp: Minor fix
+
+2008-11-09 11:06  mlaurent
+
+    * ipodexport/plugin_ipodexport.cpp, ipodexport/plugin_ipodexport.h:
+      Port++
+
+2008-11-09 10:56  mlaurent
+
+    * ipodexport/plugin_ipodexport.h: Add forward declaration
+
+2008-11-09 10:47  mlaurent
+
+    * CMakeLists.txt, ipodexport/CMakeLists.txt: needs glib
+
+2008-11-09 10:40  mlaurent
+
+    * ipodexport/ipodexportdialog.cpp, ipodexport/ipodexportdialog.h:
+      Port++
+
+2008-11-09 10:36  mlaurent
+
+    * CMakeLists.txt, ipodexport/CMakeLists.txt: Add check for gpod
+
+2008-11-09 10:30  mlaurent
+
+    * cmake/modules/FindGpod.cmake: Add cmake file to search gpod
+
+2008-11-09 10:11  mlaurent
+
+    * ipodexport/Makefile.am, ipodexport/Messages.sh: Extract messages
+      Remove Makefile.am
+
+2008-11-09 10:10  mlaurent
+
+    * ipodexport/ipodexportdialog.cpp: Convert some line
+
+2008-11-09 10:08  mlaurent
+
+    * ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+      ipodexport/imagelistitem.h, ipodexport/ipodexportdialog.cpp,
+      ipodexport/ipodexportdialog.h, ipodexport/ipodheader.cpp,
+      ipodexport/ipodheader.h, ipodexport/ipodlistitem.cpp,
+      ipodexport/ipodlistitem.h, ipodexport/plugin_ipodexport.cpp:
+      Adapt to qt4/kde4 api
+
+2008-11-09 10:07  mlaurent
+
+    * ipodexport/imagelist.cpp, ipodexport/imagelist.h,
+      ipodexport/imagelistitem.h, ipodexport/ipodexportdialog.cpp,
+      ipodexport/ipodexportdialog.h, ipodexport/ipodheader.cpp,
+      ipodexport/ipodheader.h, ipodexport/ipodlistitem.cpp,
+      ipodexport/ipodlistitem.h: qt3to4
+
+2008-11-09 10:07  mlaurent
+
+    * ipodexport/CMakeLists.txt: Add CMakefile
+
+2008-11-09 10:03  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: define an own signal when
+      closeButton is clicked.
+      I was not able to re-map the connection of the closeButton, since
+      KDialog uses the emitted signal internally and closes the dialog,
+      which
+      is not what I want. The close button will become a cancel button
+      while
+      correction, so I need a workaround for this.
+      Now closeButton emits the signal 'myCloseClicked()' to avoid this
+      behavior. Next step will be to implement a cancel action for the
+      red-eye correction.
+
+2008-11-09 09:22  cgilles
+
+    * ipodexport: start
+
+2008-11-08 23:51  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-08 23:22  anaselli
+
+    * printwizard/wizard.cpp: SVN_SILENT: fixed some crashes
+
+2008-11-08 22:54  anaselli
+
+    * printwizard/plugin_printwizard.cpp, printwizard/wizard.cpp,
+      printwizard/wizard.h: SVN_SILENT: another little step on
+
+2008-11-08 21:02  cgilles
+
+    * galleryexport/albumdlg.cpp, galleryexport/albumdlg.h,
+      galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerympform.h, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: just fix header
+
+2008-11-08 20:34  cgilles
+
+    * metadataedit/altlangstringedit.cpp,
+      metadataedit/altlangstringedit.h,
+      metadataedit/commenteditdialog.h,
+      metadataedit/commentremovedialog.h, metadataedit/exifadjust.cpp,
+      metadataedit/exifadjust.h, metadataedit/exifcaption.cpp,
+      metadataedit/exifcaption.h, metadataedit/exifdatetime.cpp,
+      metadataedit/exifdatetime.h, metadataedit/exifdevice.cpp,
+      metadataedit/exifdevice.h, metadataedit/exifeditdialog.h,
+      metadataedit/exiflens.cpp, metadataedit/exiflens.h,
+      metadataedit/exiflight.cpp, metadataedit/exiflight.h,
+      metadataedit/iptccategories.cpp, metadataedit/iptccategories.h,
+      metadataedit/iptccontent.cpp, metadataedit/iptccontent.h,
+      metadataedit/iptccredits.cpp, metadataedit/iptccredits.h,
+      metadataedit/iptceditdialog.h, metadataedit/iptcenvelope.cpp,
+      metadataedit/iptcenvelope.h, metadataedit/iptckeywords.cpp,
+      metadataedit/iptckeywords.h, metadataedit/iptcorigin.cpp,
+      metadataedit/iptcorigin.h, metadataedit/iptcproperties.cpp,
+      metadataedit/iptcproperties.h, metadataedit/iptcstatus.cpp,
+      metadataedit/iptcstatus.h, metadataedit/iptcsubjects.cpp,
+      metadataedit/iptcsubjects.h, metadataedit/metadatacheckbox.cpp,
+      metadataedit/metadatacheckbox.h,
+      metadataedit/multistringsedit.cpp,
+      metadataedit/multistringsedit.h,
+      metadataedit/multivaluesedit.cpp, metadataedit/multivaluesedit.h,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/objectattributesedit.h,
+      metadataedit/xmpcategories.cpp, metadataedit/xmpcategories.h,
+      metadataedit/xmpcontent.cpp, metadataedit/xmpcontent.h,
+      metadataedit/xmpcredits.cpp, metadataedit/xmpcredits.h,
+      metadataedit/xmpeditdialog.h, metadataedit/xmpkeywords.cpp,
+      metadataedit/xmpkeywords.h, metadataedit/xmporigin.cpp,
+      metadataedit/xmporigin.h, metadataedit/xmpproperties.cpp,
+      metadataedit/xmpproperties.h, metadataedit/xmpstatus.cpp,
+      metadataedit/xmpstatus.h, metadataedit/xmpsubjects.cpp,
+      metadataedit/xmpsubjects.h: Fix compilation warnings
+
+2008-11-08 17:19  anaselli
+
+    * printwizard/wizard.cpp, printwizard/wizard.h: SVN_SILENT: going
+      on... (don't bother with warning yet...)
+
+2008-11-08 17:18  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/plugin_acquireimages.h: use parent widget from
+      setup plugin
+
+2008-11-08 17:11  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp: polish
+
+2008-11-08 17:06  cgilles
+
+    * acquireimages/twainiface/dib.cpp, acquireimages/twainiface/dib.h,
+      acquireimages/twainiface/dibapi.h,
+      acquireimages/twainiface/dibfile.c,
+      acquireimages/twainiface/dibutil.c,
+      acquireimages/twainiface/dibutil.h: not used
+
+2008-11-08 16:56  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: use KStandardGuiItem here
+
+2008-11-08 16:35  cgilles
+
+    * removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: tab -> spc
+
+2008-11-08 16:32  cgilles
+
+    * removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.h: tab -> spc
+
+2008-11-08 16:28  cgilles
+
+    * removeredeyes/libcvblobs/Blob.h: tab -> spc
+
+2008-11-08 16:27  cgilles
+
+    * removeredeyes/libcvblobs/Blob.cpp: tab -> spc
+
+2008-11-08 16:23  cgilles
+
+    * removeredeyes/libcvblobs/BlobExtraction.cpp: fix warnings
+
+2008-11-08 16:22  cgilles
+
+    * removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h: fix warnings
+
+2008-11-08 16:20  cgilles
+
+    * removeredeyes/libcvblobs/BlobResult.h: fix compilation warning
+
+2008-11-08 14:28  cgilles
+
+    * removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: to prevent conflict with
+      OpenCV core library, use plugin namespace here.
+
+2008-11-08 14:22  cgilles
+
+    * removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.h,
+      removeredeyes/libcvblobs/BlobLibraryConfiguration.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: fix header
+
+2008-11-08 14:10  cgilles
+
+    * printwizard/wizard.cpp: kdDebug and kdWarning are depreciated.
+      Use kDebug and kWarning instead
+
+2008-11-08 14:07  cgilles
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/advancedsettings.h,
+      removeredeyes/blobsettingsbox.cpp,
+      removeredeyes/blobsettingsbox.h,
+      removeredeyes/classifiersettingsbox.cpp,
+      removeredeyes/classifiersettingsbox.h,
+      removeredeyes/settingstab.cpp, removeredeyes/settingstab.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/simplesettings.h,
+      removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/storagesettingsbox.h: digiKam => kipi-plugins
+
+2008-11-08 13:48  cgilles
+
+    * removeredeyes/eyelocator.cpp: fix compilation warning
+
+2008-11-08 13:43  cgilles
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/eyelocator.h,
+      removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobResult.h: revert last changes. it
+      doesn't work in MSVC.
+
+2008-11-08 13:39  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: polish
+
+2008-11-08 12:10  cgilles
+
+    * cmake/modules/FindOpenCV.cmake, removeredeyes/CMakeLists.txt,
+      removeredeyes/eyelocator.h, removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: under win32, use OpenCv
+      root dir as include path
+
+2008-11-08 11:53  vkrause
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/removalsettings.h: build with -pedantic
+
+2008-11-08 01:45  vfuoglio
+
+    * slideshow/plugin_slideshow.cpp: Fixed memory leak.
+      
+      Patch by Andi Clemens.
+      
+      CCMAIL: andi.clemens@gmx.net
+
+2008-11-08 00:54  anaselli
+
+    * printwizard/croppage.ui, printwizard/photopage.ui,
+      printwizard/wizard.cpp, printwizard/wizard.h: SVN_SILENT: another
+      little porting BEWARE it crashes by now
+
+2008-11-07 22:09  aclemens
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/advancedsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/settingstab.cpp, removeredeyes/settingstab.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/simplesettings.h,
+      removeredeyes/workerthread.cpp: don't use pointers for passing
+      settings around, normal objects are just
+      good enough here and will finally remove all memory leaks.
+
+2008-11-07 21:19  cgilles
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/eyelocator.cpp,
+      removeredeyes/eyelocator.h, removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobResult.h: compile and link under
+      Win32 using MinGW
+      For MSVC, libcvblobs need to be fixed about non ascii char
+      included in source code
+
+2008-11-07 21:00  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: delete about-data again
+
+2008-11-07 20:56  cgilles
+
+    * cmake/modules/FindOpenCV.cmake, removeredeyes/CMakeLists.txt: fix
+      doc
+      typo
+
+2008-11-07 20:52  cgilles
+
+    * removeredeyes/CMakeLists.txt: missing to pass OpenCV include dir
+
+2008-11-07 20:42  cgilles
+
+    * removeredeyes/CMakeLists.txt: change order to compile under win32
+
+2008-11-07 20:35  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: Now OpenCV library is found
+      properly under win32
+
+2008-11-07 19:51  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: polish again
+
+2008-11-07 18:34  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: more debug messages to hack this
+      script under win32
+
+2008-11-07 12:50  scripty
+
+    * dngconverter/plugin/dngconverter.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-07 11:29  cgilles
+
+    * common/libkipiplugins/kpaboutdata.cpp,
+      common/libkipiplugins/kpaboutdata.h: fix crash if KGlobal
+      compoent is not initialized
+
+2008-11-07 11:01  cgilles
+
+    * dngconverter/plugin/batchdialog.cpp: missing constructor
+
+2008-11-07 10:41  aclemens
+
+    * removeredeyes/libcvblobs/BlobExtraction.cpp: fix wrong usage of
+      delete (detected with memcheck/valgrind)
+
+2008-11-07 10:36  cgilles
+
+    * dngconverter/plugin/aboutdata.h,
+      dngconverter/plugin/batchdialog.cpp,
+      dngconverter/plugin/dngconverter.cpp: factorize about data
+      between plugin and stand alone tool
+
+2008-11-07 07:46  cgilles
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: fix warings. use right
+      kDebug namespace for kipi-plugins
+
+2008-11-06 19:25  cgilles
+
+    * picasawebexport/CMakeLists.txt: Et voilà: now PicasaWebExport
+      kipi-plugins is now a pure QT4/KDE4 implementation
+
+2008-11-06 19:19  cgilles
+
+    * picasawebexport/picasaweblogin.cpp: port ++
+
+2008-11-06 16:02  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: delete workerthread when
+      processing is finished
+
+2008-11-06 15:18  cgilles
+
+    * dngconverter/plugin/CMakeLists.txt,
+      dngconverter/plugin/dngconverter.desktop: Missing to install
+      stand alone dngconverter program.
+      add desktop file dedicated
+
+2008-11-06 13:59  aclemens
+
+    * removeredeyes/simplesettings.cpp: parameter tuning
+
+2008-11-06 13:59  aclemens
+
+    * removeredeyes/settingstab.cpp: polish
+
+2008-11-06 12:25  scripty
+
+    * removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-06 11:20  aclemens
+
+    * removeredeyes/TODO: update
+
+2008-11-06 11:20  aclemens
+
+    * removeredeyes/classifiersettingsbox.cpp,
+      removeredeyes/classifiersettingsbox.h,
+      removeredeyes/imageslist.cpp, removeredeyes/imageslist.h,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: personally I don't like
+      calling signals and slots as 'signalXXX()' or
+      'slotXXX()', so at least in this plugin I will change the naming
+      scheme.
+
+2008-11-06 11:20  aclemens
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/advancedsettings.cpp,
+      removeredeyes/advancedsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/settingstab.cpp, removeredeyes/settingstab.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/simplesettings.h:
+      move storageSettingsBox into the new widget settingsTab.
+      settingsTab
+      handles the correct use of the config files now. Before that
+      values from
+      simple and advanced mode mixed up, now they should be treated
+      correctly.
+
+2008-11-06 10:03  cgilles
+
+    * metadataedit/iptceditdialog.cpp, metadataedit/xmpeditdialog.cpp:
+      Qt4 require stylesheet tags here
+
+2008-11-05 23:15  vfuoglio
+
+    * NEWS, slideshow/slideshow.cpp, slideshow/slideshow.h: New effect
+      "Mosaic".
+      
+      CCMAIL: kde-imaging@kde.org
+      GUI:
+
+2008-11-05 19:42  cgilles
+
+    * NEWS: update
+
+2008-11-05 13:37  scripty
+
+    * printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-04 23:37  vfuoglio
+
+    * slideshow/slideshow.cpp: Moved out code from paintEvent.
+
+2008-11-04 22:59  vfuoglio
+
+    * slideshow/listimageitems.cpp: Fixed distance between preview
+      items.
+
+2008-11-04 22:39  vfuoglio
+
+    * slideshow/slideshow.cpp, slideshow/slideshowgl.cpp: Inserted KIPI
+      logo into "End of show" message.
+
+2008-11-04 22:06  aclemens
+
+    * removeredeyes/simplesettings.cpp,
+      removeredeyes/storagesettingsbox.cpp: polish
+
+2008-11-04 20:44  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: re-connect user1 button
+
+2008-11-04 20:37  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: added method setBusy() to
+      prepare the dialog for a cancel action. Next
+      step is to implement a mechanism to abort red-eye correction.
+
+2008-11-04 20:37  aclemens
+
+    * removeredeyes/imageslist.cpp, removeredeyes/imageslist.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h,
+      removeredeyes/workerthreaddata.cpp,
+      removeredeyes/workerthreaddata.h: polish
+
+2008-11-04 20:35  vfuoglio
+
+    * NEWS, slideshow/CMakeLists.txt, slideshow/imageloadthread.cpp,
+      slideshow/slideshowloader.cpp: Added RAW images support to
+      SlideShow.
+      
+      CCMAIL: kde-imaging@kde.org
+      BUG: 157285
+
+2008-11-04 19:37  cgilles
+
+    * gpssync/gpseditdialog.cpp, gpssync/gpsmapwidget.cpp,
+      gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklistwidget.cpp: kipi-plugins from trunk : GPSSync
+      : Google API has changed. now to change map type, values to pass
+      in url are differents, especially for normal map.
+      Using old values can crash KHTML embeded in the plugin. So, this
+      commit fix the problem.
+      More info here:
+      http://groups.google.it/group/Google-Maps-API/browse_thread/thread/eec00441339c0a52/ed984365b8a3b18e?lnk=raot
+      CCMAIL: fzellini@gmail.com
+      CCBUGS: 159570
+      CCBUGS: 165370
+
+2008-11-04 18:06  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: set progressbar value to 0
+      so that it is actually displayed
+
+2008-11-04 18:06  aclemens
+
+    * removeredeyes/CMakeLists.txt,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h,
+      removeredeyes/workerthreaddata.cpp,
+      removeredeyes/workerthreaddata.h, removeredeyes/wteventdata.cpp,
+      removeredeyes/wteventdata.h: rename WTEventData
+
+2008-11-04 17:33  aclemens
+
+    * removeredeyes/workerthread.cpp: cleanup: no kdebug needed
+      anymore, use switch statement for better
+      readability
+
+2008-11-04 17:33  aclemens
+
+    * removeredeyes/TODO, removeredeyes/workerthread.cpp,
+      removeredeyes/wteventdata.cpp, removeredeyes/wteventdata.h: keep
+      WTEventData for now, maybe more data needs to be sent in the
+      future
+
+2008-11-04 17:30  cgilles
+
+    * AUTHORS: update
+
+2008-11-04 16:34  cgilles
+
+    * slideshow/slideshow.cpp: fix warning
+
+2008-11-04 16:15  vfuoglio
+
+    * slideshow/maindialog.cpp: Removed useless kDebug() calls.
+
+2008-11-04 16:12  vfuoglio
+
+    * NEWS, slideshow/slideshow.cpp, slideshow/slideshow.h: New effect
+      "Cubism".
+      
+      GUI:
+
+2008-11-04 15:06  aclemens
+
+    * removeredeyes/TODO: update
+
+2008-11-04 15:00  aclemens
+
+    * removeredeyes/TODO: add TODO
+
+2008-11-04 14:18  aclemens
+
+    * removeredeyes/blobsettingsbox.cpp,
+      removeredeyes/classifiersettingsbox.cpp,
+      removeredeyes/eyelocator.cpp, removeredeyes/simplesettings.cpp,
+      removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/workerthread.cpp: polish
+
+2008-11-04 14:05  aclemens
+
+    * removeredeyes/storagesettingsbox.cpp: don't set lineedit
+      invisible, this will resize the storagebox if both
+      lineedit widgets are hidden
+
+2008-11-04 14:05  aclemens
+
+    * removeredeyes/advancedsettings.cpp: layout change
+
+2008-11-04 13:53  anaselli
+
+    * printwizard/wizard.cpp: SVN_SILENT: removed useless wizard.h it's
+      already in moc
+
+2008-11-04 13:36  aclemens
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp, removeredeyes/settings.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/workerthread.cpp:
+      rename the file so it fits the class name
+
+2008-11-04 13:28  cgilles
+
+    * sendimages/sendimagesdialog.cpp: use Oxygen icon
+
+2008-11-04 13:26  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: when renaming the files,
+      also rename the actual class :-)
+
+2008-11-04 13:26  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: reset progress bar
+
+2008-11-04 13:20  cgilles
+
+    * removeredeyes/plugin_removeredeyes.cpp: use Oxygen icon
+
+2008-11-04 13:19  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: polish
+
+2008-11-04 13:15  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: add help button
+
+2008-11-04 12:51  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: typo
+
+2008-11-04 12:46  aclemens
+
+    * removeredeyes/simplesettings.cpp: missing include
+
+2008-11-04 12:46  aclemens
+
+    * removeredeyes/imageslist.cpp,
+      removeredeyes/removeredeyeswindow.cpp: load currently selected
+      images from within mainwindow, not when creating imagesList
+      widget, otherwise the signalFoundRAWImages() will not be received
+      on first startup
+
+2008-11-04 12:40  mlaurent
+
+    * removeredeyes/simplesettings.cpp: Add missing i18n
+
+2008-11-04 12:38  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-04 12:37  mlaurent
+
+    * removeredeyes/Messages.sh: Extract messages
+
+2008-11-04 12:16  cgilles
+
+    * NEWS: update
+
+2008-11-04 11:47  aclemens
+
+    * removeredeyes/CMakeLists.txt,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/redeyeswindow.cpp, removeredeyes/redeyeswindow.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/storagesettingsbox.cpp: rename main window file
+
+2008-11-04 11:19  cgilles
+
+    * removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: compile
+
+2008-11-04 11:04  cgilles
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/eyelocator.cpp,
+      removeredeyes/libcvblobs, removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.h,
+      removeredeyes/libcvblobs/BlobLibraryConfiguration.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: add libcvblobs
+
+2008-11-04 09:54  cgilles
+
+    * CMakeLists.txt: missing path to optional cmake scripts
+
+2008-11-04 09:12  aclemens
+
+    * removeredeyes/simplesettings.cpp: it's not 'very fast', just
+      faster...
+
+2008-11-04 09:05  aclemens
+
+    * removeredeyes/simplesettings.cpp: tuning some parameters
+
+2008-11-04 08:40  cgilles
+
+    * README: update
+
+2008-11-04 08:33  cgilles
+
+    * removeredeyes/cmake: obsolete
+
+2008-11-04 08:33  cgilles
+
+    * CMakeLists.txt, cmake/modules/FindOpenCV.cmake,
+      removeredeyes/CMakeLists.txt,
+      removeredeyes/cmake/modules/FindOpenCV.cmake: full intergration
+      of RemoveRedEyes plugin with kipi-plugins... + some polish in
+      cmake files
+
+2008-11-04 01:56  adjam
+
+    * galleryexport/gallerywindow.cpp: Fixed a problem in photo
+      listing.
+
+2008-11-04 01:34  vfuoglio
+
+    * slideshow/maindialog.cpp: Fixed include.
+
+2008-11-04 01:06  vfuoglio
+
+    * slideshow/CMakeLists.txt, slideshow/imageviewer.cpp,
+      slideshow/imageviewer.h, slideshow/listimageitems.cpp,
+      slideshow/listimageitems.h, slideshow/maindialog.cpp,
+      slideshow/maindialog.h, slideshow/maindialog.ui: Using libkipi to
+      retrieve thumbnails.
+      
+      CCMAIL: caulier.gilles@gmail.com
+
+2008-11-04 00:21  anaselli
+
+    * printwizard/wizard.cpp, printwizard/wizard.h: - ported browse
+      file button
+      - ported page layout selection
+
+2008-11-03 23:39  aclemens
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/simplesettings.cpp: Comment these lines for now,
+      the crash the host application on exit.
+      But I really don't understand why, since it works in the
+      mainwindow,
+      too. It also works when only commenting the line from
+      simplesettings.cpp and keep the advancedsettings.cpp untouched,
+      but when
+      both widgets delete their settings object, it crashes.
+
+2008-11-03 20:13  aclemens
+
+    * printwizard/cropframe.cpp, printwizard/plugin_printwizard.cpp,
+      printwizard/tphoto.cpp, printwizard/tphoto.h,
+      printwizard/utils.cpp, printwizard/utils.h,
+      printwizard/wizard.cpp: finished include cleanup. I have removed
+      a lot and it still works, this
+      is programming I like :-)
+
+2008-11-03 19:51  aclemens
+
+    * printwizard/cropframe.cpp, printwizard/cropframe.h,
+      printwizard/plugin_printwizard.cpp,
+      printwizard/plugin_printwizard.h, printwizard/tphoto.cpp,
+      printwizard/tphoto.h, printwizard/utils.cpp,
+      printwizard/wizard.cpp, printwizard/wizard.h: beginning includes
+      cleanup. In the next step unneeded libs will be
+      removed...
+
+2008-11-03 19:26  cgilles
+
+    * printwizard/plugin_printwizard.cpp,
+      printwizard/plugin_printwizard.h, printwizard/tphoto.cpp,
+      printwizard/tphoto.h, printwizard/utils.cpp, printwizard/utils.h,
+      printwizard/wizard.cpp, printwizard/wizard.h: polish
+
+2008-11-03 19:06  cgilles
+
+    * CMakeLists.txt, printwizard/cropframe.cpp,
+      printwizard/cropframe.h, printwizard/plugin_printwizard.cpp,
+      printwizard/plugin_printwizard.h, printwizard/tphoto.cpp,
+      printwizard/tphoto.h, printwizard/utils.cpp, printwizard/utils.h,
+      printwizard/wizard.cpp, printwizard/wizard.h: PrintWizzard : use
+      Oxygen icon + std file header for kipi...
+
+2008-11-03 18:57  aclemens
+
+    * CMakeLists.txt: register removeredeyes batch plugin. Right now
+      I'm not sure if the Cmake
+      config is correct (openCV, openCV blob library detection), at
+      least on
+      my machine it works.
+
+2008-11-03 18:46  aclemens
+
+    * removeredeyes: initial commit into KIPI trunk
+
+2008-11-03 15:56  cgilles
+
+    * printwizard/tphoto.cpp, printwizard/tphoto.h: fix coding style
+      fix indent
+      compile with libkdcraw from trunk
+      compile under windows
+
+2008-11-03 15:47  cgilles
+
+    * printwizard/CMakeLists.txt: polish
+
+2008-11-03 12:54  scripty
+
+    * printwizard/kipiplugin_printwizard.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-03 08:00  mlaurent
+
+    * acquireimages/Messages.sh: Fix extract
+
+2008-11-03 07:48  mlaurent
+
+    * printwizard/wizard.cpp: Fix error
+
+2008-11-03 07:48  mlaurent
+
+    * printwizard/tphoto.cpp: Not necessary to test it
+
+2008-11-03 07:39  mlaurent
+
+    * printwizard/cropframe.cpp: Fix mem leak
+
+2008-11-03 07:18  mlaurent
+
+    * printwizard/Messages.sh, printwizard/croppage.ui,
+      printwizard/infopage.ui, printwizard/photopage.ui: Extract
+      messages
+      Fix ui files
+
+2008-11-02 15:05  anaselli
+
+    * CMakeLists.txt, printwizard, printwizard/CMakeLists.txt,
+      printwizard/cropframe.cpp, printwizard/cropframe.h,
+      printwizard/croppage.ui, printwizard/infopage.ui,
+      printwizard/intropage.ui,
+      printwizard/kipiplugin_printwizard.desktop,
+      printwizard/photopage.ui, printwizard/plugin_printwizard.cpp,
+      printwizard/plugin_printwizard.h, printwizard/tphoto.cpp,
+      printwizard/tphoto.h, printwizard/utils.cpp, printwizard/utils.h,
+      printwizard/wizard.cpp, printwizard/wizard.h: start printwizard
+      kde4 porting
+
+2008-11-02 14:59  jaiva
+
+    * flickrexport/flickrtalker.cpp, flickrexport/mpform.cpp,
+      flickrexport/mpform.h: Fixing the mpform removing use of the
+      TextStream replacing it with simply QByteArray everywhere.
+      Checked the uploader to be working fine again.
+
+2008-11-02 14:54  gateau
+
+    * htmlexport/wizard.cpp: Fix double margins.
+
+2008-11-02 12:38  jaiva
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h: Fixes in the way the Checking
+      of Token was handled, now the token will be stored properly for
+      resuse. One optimization which still can be done is to use the
+      list of albums fetched by checktoken method instead of
+      re-requesting the same.
+
+2008-11-01 19:14  vfuoglio
+
+    * slideshow/slideshow.cpp: Fixed SlidePlaybackWidget background.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-11-01 19:11  gateau
+
+    * htmlexport/generator.cpp, htmlexport/generator.h: Clean up. No
+      need for Generator::emitWarning.
+
+2008-11-01 19:11  gateau
+
+    * htmlexport/generator.h: Doc
+
+2008-11-01 19:11  gateau
+
+    * htmlexport/generator.cpp, htmlexport/generator.h: Declare
+      ImageGenerationFunctor in header file.
+
+2008-11-01 19:11  gateau
+
+    * htmlexport/generator.cpp, htmlexport/uniquenamehelper.h: Moved
+      UniqueNameHelper to its own file.
+
+2008-11-01 19:11  gateau
+
+    * htmlexport/generator.cpp, htmlexport/generator.h: Generate
+      thumbnails using QtConcurrent.
+
+2008-11-01 19:10  gateau
+
+    * common/libkipiplugins/batchprogressdialog.cpp,
+      common/libkipiplugins/batchprogressdialog.h: New properties:
+      progress and total.
+
+2008-11-01 19:10  gateau
+
+    * htmlexport/generator.cpp: Generate xml separately
+
+2008-11-01 18:57  vfuoglio
+
+    * slideshow/slideshow.cpp: Cleared warnings
+
+2008-11-01 18:53  vfuoglio
+
+    * slideshow/slideshow.cpp: Fixed progress indicator background.
+      
+      CCMAIL: kde-imaging@kde.org
+
+2008-11-01 18:45  vfuoglio
+
+    * NEWS, slideshow/maindialog.cpp, slideshow/slideshow.cpp,
+      slideshow/slideshow.h: Normal effects are back!!!
+      
+      I want to thank Aurélien Gâteau for his precious help :)
+      
+      CCMAIL: kde-imaging@kde.org
+      GUI:
+
+2008-11-01 18:44  jaiva
+
+    * picasawebexport/picasawebviewitem.cpp,
+      picasawebexport/picasawebviewitem.h: Removing the unused class
+      from the code base.
+
+2008-11-01 18:42  jaiva
+
+    * picasawebexport/CMakeLists.txt, picasawebexport/mpform.cpp,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebnewalbumdialog.ui,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h: More changes to remove
+      Q3Support dependencies and the warnings because of the deprecated
+      methods. The checktoken method is currently not functional and
+      user has to enter the password everytime he lauanches the plugin.
+      Will be fixing that soon.
+      
+
+2008-11-01 16:24  adjam
+
+    * galleryexport/albumdlg.h: Fix typo
+
+2008-11-01 16:20  cgilles
+
+    * NEWS: update
+
+2008-11-01 16:12  adjam
+
+    * NEWS: update bug fixing
+
+2008-11-01 16:02  adjam
+
+    * galleryexport/albumdlg.cpp: QDialog in albumDlg
+
+2008-11-01 15:23  adjam
+
+    * galleryexport/albumdlg.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerytalker.cpp: GalleryExport now seems work
+      properly!!
+      Thank you jain (I don't know you, but seeing your last commit
+      helps me a lot!!)
+
+2008-11-01 14:25  gateau
+
+    * htmlexport/generator.cpp: Use Q_FOREACH
+
+2008-11-01 14:24  gateau
+
+    * htmlexport/generator.cpp, htmlexport/generator.h: Use signal to
+      notify about warnings. Preparing for threaded generation.
+
+2008-11-01 14:24  gateau
+
+    * htmlexport/generator.cpp: Separated XML and image generation.
+
+2008-11-01 14:23  gateau
+
+    * htmlexport/generator.cpp: appendImageElementToXML no longer needs
+      a QImage reference.
+
+2008-11-01 11:32  jaiva
+
+    * picasawebexport/mpform.cpp, picasawebexport/picasawebitem.h,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h: Changes to fix the problem
+      with QTextStream replacing the use by simple QByteArrays. Also
+      porting some more of QT3 code to QT4 removing some use of
+      Q3Support depdencies.
+
+2008-11-01 10:22  adjam
+
+    * galleryexport/galleries.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp: Config file name:
+      galleryrc -> kipirc
+
+2008-10-31 23:26  gateau
+
+    * htmlexport/themeparameterspage.ui, htmlexport/wizard.cpp: Show a
+      scrollbar if there is too many parameters.
+
+2008-10-31 23:26  gateau
+
+    * htmlexport/generator.cpp, htmlexport/theme.cpp: URL -> Url
+
+2008-10-31 22:32  gateau
+
+    * htmlexport/imagesettingspage.ui, htmlexport/wizard.cpp: Polish
+      ImageSettings ui.
+
+2008-10-31 22:32  gateau
+
+    * htmlexport/CMakeLists.txt, htmlexport/invisiblebuttongroup.cpp,
+      htmlexport/invisiblebuttongroup.h, htmlexport/wizard.cpp:
+      Integrate InvisibleButtonGroup from Gwenview.
+      Maybe a candidate for kdelibs?
+
+2008-10-31 22:32  gateau
+
+    * htmlexport/wizard.cpp, htmlexport/wizard.h: Cleanup
+
+2008-10-31 22:30  adjam
+
+    * galleryexport/albumdlg.cpp, galleryexport/albumdlg.h,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.h:
+      Some EBN Krazy issues fixing..
+
+2008-10-31 20:38  adjam
+
+    * galleryexport/galleryalbumwidget.ui,
+      galleryexport/gallerympform.cpp, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerywindow.cpp:
+
+2008-10-31 18:14  gateau
+
+    * htmlexport/wizard.cpp, htmlexport/wizard.h: Make sure the "next"
+      button of the collection selector page is disabled
+      until a collection is selected.
+
+2008-10-31 12:30  scripty
+
+    * dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-10-30 17:37  cgilles
+
+    * acquireimages/twainiface/twaincontroller.cpp: polish
+
+2008-10-30 17:36  cgilles
+
+    * acquireimages/twainiface/twaincontroller.cpp,
+      acquireimages/twainiface/twaincontroller.h: polish
+
+2008-10-30 16:01  cgilles
+
+    * NEWS: update
+
+2008-10-30 15:53  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twaindialog.cpp,
+      acquireimages/twainiface/twaindialog.h: These class are now
+      obsolete
+
+2008-10-30 15:52  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/plugin_acquireimages.cpp: acquireimage plugin now
+      use twaincontroller instead twain dialog
+
+2008-10-30 15:36  cgilles
+
+    * acquireimages/twainiface/twaincontroller.cpp: polish
+
+2008-10-30 15:28  cgilles
+
+    * acquireimages/twainiface/twaincontroller.cpp,
+      acquireimages/twainiface/twaincontroller.h: use twaincontroller
+      in twainiface test program
+
+2008-10-30 13:46  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/twaincontroller.cpp,
+      acquireimages/twainiface/twaincontroller.h: compile
+
+2008-10-30 13:33  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/twaincontroller.h: compile
+
+2008-10-30 13:31  cgilles
+
+    * acquireimages/CMakeLists.txt: new build using twain ctrl
+
+2008-10-30 13:30  cgilles
+
+    * acquireimages/twainiface/twaincontroller.cpp,
+      acquireimages/twainiface/twaincontroller.h: new twain controller
+      based on QWidget
+
+2008-10-30 09:12  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/plugin_acquireimages.cpp,
+      acquireimages/plugin_acquireimages.h: now acquireimage plugin use
+      twain dialog
+
+2008-10-30 09:05  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/plugin_acquireimages.h: fix header
+
+2008-10-30 09:03  cgilles
+
+    * acquireimages/twainiface/twaindialog.cpp: compile
+
+2008-10-30 09:01  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h,
+      acquireimages/twainiface/twaindialog.cpp: obsolete
+
+2008-10-30 08:58  cgilles
+
+    * acquireimages/twainiface/twaindialog.cpp: Patrick: Look this
+      commit. there is a bug in KDElibs i think... This is the code of
+      a stand alone version of acquire image kipi-plugin using TWAIN
+      interface (twainiface.exe)
+      
+      Why when i uncomment this line, we have an eternal loop ?
+      
+      This problem is reproductible in showfoto. Load an image and try
+      to save it. the code is the same in showfoto...
+      
+      CCMAIL: ps_ml@gmx.de
+      CCMAIL: digikam-devel@kde.org
+      CCMAIL: kde-imaging@kde.org
+
+2008-10-30 08:35  cgilles
+
+    * project/NEWS.KDE3: NEWS about KDE3 (archive)
+
+2008-10-30 08:26  cgilles
+
+    * NEWS: only include KDE4 NEWS here
+
+2008-10-30 08:20  cgilles
+
+    * NEWS: update
+
+2008-10-30 08:19  cgilles
+
+    * CMakeLists.txt: bumg version
+
+2008-10-30 08:18  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twaindialog.cpp,
+      acquireimages/twainiface/twainiface.h: port ++
+
+2008-10-29 16:13  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/twaindialog.cpp,
+      acquireimages/twainiface/twaindialog.h: polish
+
+2008-10-29 15:36  cgilles
+
+    * acquireimages/CMakeLists.txt: polish
+
+2008-10-29 15:33  cgilles
+
+    * acquireimages/CMakeLists.txt, acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/twaindialog.cpp,
+      acquireimages/twainiface/twaindialog.h: new twain dialog
+
+2008-10-29 14:14  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/plugin_acquireimages.h,
+      acquireimages/twainiface/qtwain.cpp: polish
+
+2008-10-29 13:39  cgilles
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/twainiface/qtwain.cpp: polish
+
+2008-10-29 13:38  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: no need to delete
+      Qt based widget in destructor
+
+2008-10-29 12:57  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/plugin_acquireimages.cpp: compile
+
+2008-10-29 12:40  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/plugin_acquireimages.cpp,
+      acquireimages/plugin_acquireimages.h: start to interface
+      AcquireImage plugin with Twain interface (Win32 only of course)
+
+2008-10-29 11:05  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: now it's work. Win32 DIB to
+      QImage conversion run properlly
+
+2008-10-29 07:50  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: try to add a BMP header
+
+2008-10-29 07:22  cgilles
+
+    * acquireimages/twainiface/qtwaininterface.cpp,
+      acquireimages/twainiface/qtwaininterface.h: obsolete
+
+2008-10-28 18:31  cgilles
+
+    * acquireimages/CMakeLists.txt: compile under linux
+
+2008-10-28 16:01  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: use stream
+
+2008-10-28 15:46  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwainmainwindow.cpp: polish
+
+2008-10-28 14:10  aclemens
+
+    * picasawebexport/ui_picasawebnewalbumdialog.h: we don't need this
+      file under version control
+
+2008-10-28 14:06  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: debug
+
+2008-10-28 13:59  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: compile
+
+2008-10-28 13:58  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: port ++
+
+2008-10-28 13:57  cgilles
+
+    * acquireimages/twainiface/qtwain.h: polish
+
+2008-10-28 13:39  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: port ++
+
+2008-10-28 13:39  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.h: port ++
+
+2008-10-28 13:28  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h: port ++
+
+2008-10-28 13:18  cgilles
+
+    * acquireimages/twainiface/twainiface.cpp: compile
+
+2008-10-28 13:17  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: compile
+
+2008-10-28 13:14  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twainiface.cpp,
+      acquireimages/twainiface/twainiface.h: port ++
+
+2008-10-28 13:03  aclemens
+
+    * imageviewer/helpdialog.ui: text in help viewer was broken due to
+      the change from Q3TextBrowser to QTextBrowser
+
+2008-10-28 13:02  aclemens
+
+    * dngconverter/plugin/settingswidget.cpp,
+      flickrexport/flickralbumdialog.ui, flickrexport/flickrtalker.cpp,
+      flickrexport/login.cpp, flickrexport/login.h,
+      galleryexport/galleryalbumwidget.ui,
+      galleryexport/galleryconfig.cpp, gpssync/gpssyncdialog.cpp,
+      gpssync/kmlexportconfig.cpp, gpssync/kmlexportconfig.h,
+      htmlexport/imagesettingspage.ui,
+      htmlexport/listthemeparameter.cpp,
+      htmlexport/listthemeparameter.h,
+      htmlexport/stringthemeparameter.cpp,
+      htmlexport/stringthemeparameter.h, htmlexport/wizard.cpp,
+      metadataedit/exifadjust.cpp, metadataedit/exifdevice.cpp,
+      metadataedit/exiflens.cpp, metadataedit/exiflight.cpp,
+      metadataedit/iptcenvelope.cpp, metadataedit/iptcorigin.cpp,
+      metadataedit/iptcproperties.cpp, metadataedit/iptcsubjects.cpp,
+      metadataedit/multivaluesedit.cpp,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+      metadataedit/xmpsubjects.cpp, picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasaweblogin.h,
+      picasawebexport/picasawebnewalbumdialog.ui,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h,
+      picasawebexport/ui_picasawebnewalbumdialog.h,
+      picasawebexport/uploadwidget.ui,
+      rawconverter/savesettingswidget.cpp, sendimages/emailpage.cpp,
+      simpleviewerexport/lookpage.cpp, slideshow/maindialog.ui: use KDE
+      classes instead of the Qt ones (if possible) to provide a
+      consistent look throughout the KDE applications.
+
+2008-10-28 09:23  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: compile
+
+2008-10-28 09:17  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h: compile
+
+2008-10-28 09:11  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h: compile
+
+2008-10-28 09:09  cgilles
+
+    * acquireimages/twainiface/qtwain.h: compile
+
+2008-10-28 08:57  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h: port ++
+
+2008-10-28 08:32  aclemens
+
+    * slideshow/maindialog.cpp, slideshow/slideshow.cpp,
+      slideshow/slideshowgl.cpp: the TRUE and FALSE macros are obsolete
+      and should be replaced by the lower case versions
+
+2008-10-28 08:07  cgilles
+
+    * acquireimages/twainiface/twainiface.cpp: polish
+
+2008-10-28 07:48  cgilles
+
+    * acquireimages/twainiface/twain.h,
+      acquireimages/twainiface/twainiface.cpp: polish
+
+2008-10-28 07:14  cgilles
+
+    * acquireimages/twainiface/twainiface.cpp: port ++
+
+2008-10-28 07:04  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h,
+      acquireimages/twainiface/twainiface.h: port++
+
+2008-10-28 06:51  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.h: port++
+
+2008-10-28 06:51  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: port ++
+
+2008-10-27 22:22  aclemens
+
+    * simpleviewerexport/firstrundlg.cpp,
+      simpleviewerexport/generalpage.cpp,
+      simpleviewerexport/lookpage.cpp,
+      simpleviewerexport/plugin_simpleviewer.cpp,
+      simpleviewerexport/plugin_simpleviewer.h,
+      simpleviewerexport/selectionpage.cpp,
+      simpleviewerexport/simpleviewerexport.cpp,
+      simpleviewerexport/svedialog.cpp: include own header first (if
+      possible) and other include fixes: simpleviewerexport plugin
+
+2008-10-27 22:21  aclemens
+
+    * metadataedit/altlangstringedit.cpp,
+      metadataedit/altlangstringedit.h,
+      metadataedit/commenteditdialog.cpp,
+      metadataedit/commentremovedialog.cpp,
+      metadataedit/exifadjust.cpp, metadataedit/exifcaption.cpp,
+      metadataedit/exifdatetime.cpp, metadataedit/exifdevice.cpp,
+      metadataedit/exifeditdialog.cpp, metadataedit/exiflens.cpp,
+      metadataedit/exiflight.cpp, metadataedit/iptccategories.cpp,
+      metadataedit/iptccontent.cpp, metadataedit/iptccredits.cpp,
+      metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+      metadataedit/iptcenvelope.cpp, metadataedit/iptckeywords.cpp,
+      metadataedit/iptcorigin.cpp, metadataedit/iptcproperties.cpp,
+      metadataedit/iptcstatus.cpp, metadataedit/iptcsubjects.cpp,
+      metadataedit/metadatacheckbox.cpp,
+      metadataedit/multistringsedit.cpp,
+      metadataedit/multivaluesedit.cpp,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      metadataedit/plugin_metadataedit.h,
+      metadataedit/xmpcategories.cpp, metadataedit/xmpcontent.cpp,
+      metadataedit/xmpcredits.cpp, metadataedit/xmpeditdialog.cpp,
+      metadataedit/xmpeditdialog.h, metadataedit/xmpkeywords.cpp,
+      metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+      metadataedit/xmpstatus.cpp, metadataedit/xmpsubjects.cpp: include
+      own header first (if possible) and other include fixes:
+      metadataedit plugin
+
+2008-10-27 22:21  aclemens
+
+    * imageviewer/plugin_viewer.cpp, imageviewer/texture.cpp,
+      imageviewer/texture.h, imageviewer/timer.cpp,
+      imageviewer/timer.h, imageviewer/viewerwidget.cpp,
+      imageviewer/viewerwidget.h: include own header first (if
+      possible) and other include fixes: imageviewer plugin
+
+2008-10-27 22:21  aclemens
+
+    * common/libkipiplugins/kpwriteimage.h,
+      dngconverter/dngwriter/dngwriterprivate.h,
+      dngconverter/dngwriter/extra/dng_sdk/dng_ifd.cpp,
+      htmlexport/wizard.cpp, jpeglossless/plugin_jpeglossless.cpp,
+      simpleviewerexport/firstrundlg.cpp: remove duplicate includes
+
+2008-10-27 22:21  aclemens
+
+    * galleryexport/albumdlg.cpp, galleryexport/albumdlg.h,
+      galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/galleryconfig.h,
+      galleryexport/galleryitem.h, galleryexport/gallerympform.cpp,
+      galleryexport/gallerympform.h, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h, galleryexport/gallerywindow.cpp,
+      galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: include own header first
+      (if possible) and other include fixes: galleryexport plugin
+
+2008-10-27 22:21  aclemens
+
+    * gpssync/gpsbabelbinary.cpp, gpssync/gpsdataparser.cpp,
+      gpssync/gpseditdialog.cpp, gpssync/gpslistviewitem.cpp,
+      gpssync/gpsmapwidget.cpp, gpssync/gpssyncdialog.cpp,
+      gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklistviewitem.cpp, gpssync/gpstracklistwidget.cpp,
+      gpssync/kmlexport.cpp, gpssync/kmlexportconfig.cpp,
+      gpssync/kmlgpsdataparser.cpp, gpssync/plugin_gpssync.cpp,
+      gpssync/plugin_gpssync.h: include own header first (if possible)
+      and other include fixes: gpssync plugin
+
+2008-10-27 20:09  cgilles
+
+    * acquireimages/twainiface/qtwaininterface.cpp,
+      acquireimages/twainiface/qtwaininterface.h,
+      acquireimages/twainiface/twainiface.h: polish
+
+2008-10-27 20:06  cgilles
+
+    * acquireimages/twainiface/twainiface.cpp,
+      acquireimages/twainiface/twainiface.h: polish
+
+2008-10-27 19:58  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: compile
+
+2008-10-27 19:56  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h: polish
+
+2008-10-27 19:25  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twainiface.cpp,
+      acquireimages/twainiface/twainiface.h: polish
+
+2008-10-27 19:20  cgilles
+
+    * acquireimages/twainiface/qtwaininterface.cpp,
+      acquireimages/twainiface/qtwaininterface.h: polish
+
+2008-10-27 18:55  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h: polish
+
+2008-10-27 18:30  cgilles
+
+    * CMakeLists.txt: add rules for acquireimages plugin
+
+2008-10-27 18:24  cgilles
+
+    * acquireimages/twainiface/qtwainsubstitute.cpp,
+      acquireimages/twainiface/qtwainsubstitute.h: obsolete
+
+2008-10-27 18:23  cgilles
+
+    * acquireimages/CMakeLists.txt,
+      acquireimages/twainiface/qtwaininterface.h,
+      acquireimages/twainiface/qtwainsubstitute.cpp,
+      acquireimages/twainiface/qtwainsubstitute.h: polish
+
+2008-10-27 14:47  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp: fix warning
+
+2008-10-27 14:44  cgilles
+
+    * acquireimages/CMakeLists.txt, acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twaincpp.cpp,
+      acquireimages/twainiface/twaincpp.h,
+      acquireimages/twainiface/twainiface.cpp,
+      acquireimages/twainiface/twainiface.h: polish
+
+2008-10-27 14:41  cgilles
+
+    * acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/twaincpp.cpp,
+      acquireimages/twainiface/twaincpp.h: polish
+
+2008-10-27 14:31  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp: polish
+
+2008-10-27 14:25  cgilles
+
+    * acquireimages/twainiface/twaincpp.h: polish
+
+2008-10-27 14:22  cgilles
+
+    * acquireimages/twainiface/twaincpp.cpp: polish
+
+2008-10-27 14:20  cgilles
+
+    * acquireimages/twainiface/qtwaininterface.cpp: polish
+
+2008-10-27 14:17  cgilles
+
+    * acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h: polish
+
+2008-10-27 14:09  cgilles
+
+    * acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/qtwaininterface.cpp,
+      acquireimages/twainiface/qtwaininterface.h,
+      acquireimages/twainiface/qtwainsubstitute.cpp,
+      acquireimages/twainiface/qtwainsubstitute.h,
+      acquireimages/twainiface/twaincpp.cpp,
+      acquireimages/twainiface/twaincpp.h: polish
+
+2008-10-27 13:36  aclemens
+
+    * picasawebexport/mpform.cpp, picasawebexport/mpform.h,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h: replace some Q3support classes
+      (that should be safe to change) by their Qt4 counterparts
+
+2008-10-27 13:15  cgilles
+
+    * acquireimages/CMakeLists.txt, acquireimages/twainiface,
+      acquireimages/twainiface/dib.cpp, acquireimages/twainiface/dib.h,
+      acquireimages/twainiface/dibapi.h,
+      acquireimages/twainiface/dibfile.c,
+      acquireimages/twainiface/dibutil.c,
+      acquireimages/twainiface/dibutil.h,
+      acquireimages/twainiface/main.cpp,
+      acquireimages/twainiface/qtwain.cpp,
+      acquireimages/twainiface/qtwain.h,
+      acquireimages/twainiface/qtwaininterface.cpp,
+      acquireimages/twainiface/qtwaininterface.h,
+      acquireimages/twainiface/qtwainmainwindow.cpp,
+      acquireimages/twainiface/qtwainmainwindow.h,
+      acquireimages/twainiface/qtwainsubstitute.cpp,
+      acquireimages/twainiface/qtwainsubstitute.h,
+      acquireimages/twainiface/twain.h,
+      acquireimages/twainiface/twaincpp.cpp,
+      acquireimages/twainiface/twaincpp.h: experimental code to make an
+      acquire image interface based on TWAIN under win32. Not yet
+      suitable
+      CCMAIL: ps_ml@gmx.de
+
+2008-10-27 13:07  aclemens
+
+    * picasawebexport/picasawebwindow.cpp: duplicate include
+
+2008-10-27 13:02  aclemens
+
+    * picasawebexport/mpform.cpp, picasawebexport/mpform.h,
+      picasawebexport/picasawebitem.h,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebviewitem.cpp,
+      picasawebexport/picasawebviewitem.h,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h,
+      picasawebexport/plugin_picasawebexport.cpp,
+      picasawebexport/ui_picasawebnewalbumdialog.h: cleanup includes,
+      use new header names from Qt4 (qwidget.h => QWidget)
+
+2008-10-27 12:27  cgilles
+
+    * CMakeLists.txt: Now Picasawebexport plugin compile fine under
+      win32
+
+2008-10-27 11:54  aclemens
+
+    * picasawebexport/CMakeLists.txt,
+      picasawebexport/PicasawebNewAlbumDialog.ui,
+      picasawebexport/mpform.cpp, picasawebexport/newalbumdialog.h,
+      picasawebexport/picasawebitem.h,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebnewalbumdialog.ui,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/ui_picasawebnewalbumdialog.h,
+      picasawebexport/uploadwidget.ui: first attempt to port the picasa
+      export plugin to Qt4
+      
+      - both ui files have been ported
+      * some widgets have been replaced by their KDE counterpart
+      * there still is some Qt3 stuff in them, I don't know what this
+      is:
+      '#include <Qt3Support/Q3MimeSourceFactory>'
+      It seems to be generated by designer all the time
+      
+      - new headerfile 'newalbumdialog.h'
+      
+      Unfortunately I'm not able if the plugin works, I have no picasa
+      web account. So please test it, maybe everything is broken now
+      :-)
+      (Have I mentioned that I hate ui files? Guess not...)
+      
+      Andi
+
+2008-10-27 09:25  cgilles
+
+    * dngconverter/plugin/CMakeLists.txt,
+      dngconverter/plugin/dngconverter.cpp,
+      dngconverter/test/CMakeLists.txt,
+      dngconverter/test/dngconverter.cpp: kipi-plugins from trunk:
+      DNGConverter : set dngconverter test program as officially
+      available as stand alone program. This version do not use kipi
+      interface)
+
+2008-10-27 08:25  cgilles
+
+    * CMakeLists.txt: only compile acquire images under linux. do not
+      display any messages relevant under win32 from cmake config
+      panel.
+
+2008-10-26 18:47  uwolfer
+
+    * dngconverter/plugin/hi32-action-dngconverter.png,
+      galleryexport/gallery.png, gpssync/hi16-action-gpsimagetag.png,
+      gpssync/hi32-action-gpsimagetag.png,
+      htmlexport/themes/classic/gohome.png,
+      htmlexport/themes/classic/up.png,
+      htmlexport/themes/cleanframes/star.png,
+      htmlexport/themes/matrix/bg.png, htmlexport/themes/s0/next.png,
+      htmlexport/themes/s0/next_disabled.png,
+      htmlexport/themes/s0/previous.png,
+      htmlexport/themes/s0/previous_disabled.png,
+      htmlexport/themes/s0/up.png, htmlexport/themes/snow/next.png,
+      htmlexport/themes/snow/next_disabled.png,
+      htmlexport/themes/snow/previous.png,
+      htmlexport/themes/snow/previous_disabled.png,
+      imageviewer/cursors/hand.png, imageviewer/cursors/nullImage.png,
+      imageviewer/cursors/zoom.png, imageviewer/hi16-action-ogl.png,
+      imageviewer/hi32-action-ogl.png,
+      jpeglossless/pics/hi32-action-flip-horizontal.png,
+      jpeglossless/pics/hi32-action-grayscaleconvert.png,
+      metadataedit/hi64-action-metadataedit.png,
+      rawconverter/pics/hi128-action-rawconverterbatch.png,
+      rawconverter/pics/hi128-action-rawconvertersingle.png,
+      simpleviewerexport/space.png,
+      slideshow/hi22-action-slideshow.png,
+      timeadjust/hi32-action-timeadjust.png: optimizegraphics:
+      Losslessly optimized PNG and SVGZ files with "optipng -o5" and
+      "advdef -z -4".
+      Reduced disk space: 2468KB (2MB)
+
+2008-10-26 18:40  cgilles
+
+    * ChangeLog: update changelog for 0.2.0-beta3 release
+
 0.2.0-beta3 2008-10-26
 --------------------------------------------------------------------------------
 
