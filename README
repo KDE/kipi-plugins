@@ -33,11 +33,11 @@ SendImages         : A tool to send images by e-mail.
 SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 TimeAdjust         : A tool to adjust date and time.
+PrintWizard        : A tool to print images in various format.
 
 Porting under progress to Qt4/KDE4:
 
 IpodExport         : A tool to export pictures to an Ipod device.
-PrintWizard        : A tool to print images in various format.
 WallPaper          : A tool to set image as background on your desktop.
 
 Not yet ported to Qt4/KDE4:
