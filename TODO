@@ -1,21 +1,8 @@
 ----------------------------------------------------------------------------
-* General
-
- - All dialog less plugins which modify images should only use currentSelection().
- - All dialog less plugins which do not modify images should use either current* methods.
- 
-----------------------------------------------------------------------------
 * SLIDESHOW PLUGIN 
 
  - Add preview Slideshow effects in dialogbox similar Kcontrol screensavers settings.
  - Auto-rotate according to EXIF orientation tag
-
-----------------------------------------------------------------------------
-* MPEGENCODER PLUGIN
-
- - Add DIVX support using mencoder program.
- - Using new C++ implementation with MJPEGTools and IMLIB from Renchi instead images2mpg bash script.
- - Add file name or image comment in MPEG flux.
 
 ----------------------------------------------------------------------------
 
