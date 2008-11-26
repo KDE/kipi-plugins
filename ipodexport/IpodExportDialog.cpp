@@ -245,10 +245,9 @@ UploadDialog::UploadDialog(
     connect( m_addImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonAdd() ) );
     connect( m_remImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonRem() ) );
     connect( m_transferImagesButton, SIGNAL( clicked() ), this, SLOT( startTransfer() ) );
+    
+    connect( m_uploadList, SIGNAL( addedDropItems(QStringList) ), this, SLOT( addDropItems(QStringList) ) );
 #if 0
-    connect(m_uploadList, SIGNAL( addedDropItems(QStringList) ),
-            this, SLOT( addDropItems(QStringList) ));
-
     connect(m_uploadList, SIGNAL( currentChanged(Q3ListViewItem*) ),
             this, SLOT( imageSelected(Q3ListViewItem*) ));
 
@@ -356,26 +355,24 @@ void UploadDialog::enableButtons()
 
 void UploadDialog::startTransfer()
 {
-#if 0
-    if( !m_itdb || !m_uploadList->childCount() )
+    if( !m_itdb || !m_uploadList->model()->hasChildren() )
         return;
 
-    Q3ListViewItem *selected = m_ipodAlbumList->selectedItem();
-    if( !selected || selected->depth() != 0 /*not album*/)
+    QTreeWidgetItem *selected = m_ipodAlbumList->currentItem();
+    IpodAlbumItem *ipodAlbum = dynamic_cast<IpodAlbumItem*>( selected );
+    if( !selected || !ipodAlbum )
         return;
 
     m_transferring = true;
 
-#define selected static_cast<IpodAlbumItem*>( selected )
-
-    Itdb_PhotoAlbum *album = selected->photoAlbum();
+    Itdb_PhotoAlbum *album = ipodAlbum->photoAlbum();
 
     enableButton(KDialog::User1, false);
     enableButton(KDialog::Close, false);
 
     GError *err = 0;
 
-    while( Q3ListViewItem *item = m_uploadList->firstChild() )
+    while( QTreeWidgetItem *item = m_uploadList->takeTopLevelItem(0) )
     {
 #define item static_cast<ImageListItem*>(item)
         kDebug(51000) << "Uploading "      << item->pathSrc()
@@ -401,16 +398,14 @@ void UploadDialog::startTransfer()
     itdb_photodb_write( m_itdb, &err );
     if( err ) kDebug(51000) << "Failed with error: " << err->message << endl;
 
-    reloadIpodAlbum( selected, album );
+    reloadIpodAlbum( ipodAlbum, album );
 
-    IpodAlbumItem *library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->firstChild() );
+    IpodAlbumItem *library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->topLevelItem(0) );
     reloadIpodAlbum( library, library->photoAlbum() );
 
     m_transferring = false;
 
     enableButtons();
-#undef selected
-#endif
 }
 
 void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
