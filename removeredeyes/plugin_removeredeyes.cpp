@@ -84,8 +84,9 @@ void Plugin_RemoveRedEyes::activate()
         return;
     }
 
-    m_dlg = new KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow(interface, kapp->activeWindow());
-    m_dlg->show();
+    KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow* window =
+        new KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow(interface, kapp->activeWindow());
+    window->show();
 }
 
 KIPI::Category Plugin_RemoveRedEyes::category( KAction* action ) const
