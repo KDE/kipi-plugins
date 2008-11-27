@@ -7,6 +7,7 @@ Name[es]=Nieve
 Name[et]=Lumi
 Name[ga]=Sneachta
 Name[gl]=Neve
+Name[he]=שלג
 Name[it]=Neve
 Name[ja]=雪 (Snow)
 Name[km]=ព្រិល
@@ -30,6 +31,7 @@ Comment[es]=Perfect para sus vacaciones en la montaña
 Comment[et]=Sobib suurepäraselt mägipuhkuse piltidele
 Comment[fr]=Parfait pour vos vacances à la montagne
 Comment[gl]=Unha escolla perfeita para as vacacións na montaña
+Comment[he]=התאמה מושלמת לחופשה בהרים
 Comment[it]=Perfetto per le settimane bianche
 Comment[ja]=冬山での休日にぴったりのテーマ
 Comment[km]=កា​រផ្គូផ្គង​ឥតខ្ចោះ​សម្រាប់​ថ្ងៃ​ឈប់​សម្រាក​របស់​អ្នក
@@ -47,5 +49,6 @@ Comment[zh_CN]=完美呈现您的游山玩水
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[he]=אורליאן גאטו
 Name[x-test]=xxAurélien Gâteauxx
 Url=mailto:aurelien.gateau@free.fr

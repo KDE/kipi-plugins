@@ -7,6 +7,7 @@ Comment[es]=Otro bonito tema. De aspecto limpio y simple con iconos «calligraph
 Comment[et]=Veel üks kena teema. Väga lihtne ja puhas välimust "kalligraafiliste" ikoonidega.
 Comment[fr]=Encore un autre thème agréable. Apparence très simple et propre avec des icônes calligraphiques.
 Comment[gl]=Outro tema bonito. Ten un aspeito moi simples e elegante con ícones "caligráficos".
+Comment[he]=עוד ערכה נחמדה. מראה מאד פשוט ונקי עם סמלוני "calligraphics".
 Comment[it]=Un altro bel tema. Aspetto semplice e pulito con icone «calligrafiche».
 Comment[ja]=もう一つの素晴しいテーマ。書道のアイコンを使った非常にシンプルですっきりしたテーマ。
 Comment[km]=មាន​ស្បែក​ដ៏​ស្អាត​ផ្សេង​ទៀត ។ មើល​ទៅ​ធម្មតា និង​ស្អាត​​បំផុត​ជាមួយ​រូបតំណាង "calligraphics"
@@ -27,5 +28,6 @@ Name[x-test]=xxS0xx
 
 [X-HTMLExport Author]
 Name=Petr Vaněk
+Name[he]=פטר וניק
 Name[x-test]=xxPetr Vaněkxx
 Url=mailto:petr@scribus.info
