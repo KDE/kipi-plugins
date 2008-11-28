@@ -90,13 +90,12 @@ private:
     void readSettings();
     void writeSettings();
     void updateSettings();
+
     bool acceptStorageSettings();
-
-    void startWorkerThread();
-    void setBusy(bool);
-
     void handleUnprocessedImages();
+    void setBusy(bool);
     void showSummary();
+    void startWorkerThread();
 
 private:
 

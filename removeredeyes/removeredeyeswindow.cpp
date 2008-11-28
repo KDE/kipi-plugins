@@ -80,9 +80,6 @@ public:
     bool                        busy;
     int                         runtype;
 
-    KIPI::Interface*            interface;
-    KIPIPlugins::KPAboutData*   about;
-
     QProgressBar*               progress;
 
     KTabWidget*                 tabWidget;
@@ -91,6 +88,9 @@ public:
     RemovalSettings             settings;
     SettingsTab*                settingsTab;
     WorkerThread*               thread;
+
+    KIPI::Interface*            interface;
+    KIPIPlugins::KPAboutData*   about;
 };
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent)
