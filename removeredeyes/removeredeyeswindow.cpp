@@ -419,9 +419,9 @@ void RemoveRedEyesWindow::handleUnprocessedImages()
 
 void RemoveRedEyesWindow::imageListChanged(bool)
 {
-    bool empty = d->imageList->imageUrls().isEmpty();
-    enableButton(User1, !empty);
-    enableButton(User2, !empty);
+    bool isEmpty = d->imageList->imageUrls().isEmpty();
+    enableButton(User1, !isEmpty);
+    enableButton(User2, !isEmpty);
 }
 
 void RemoveRedEyesWindow::foundRAWImages(bool raw)
