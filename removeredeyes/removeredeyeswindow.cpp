@@ -252,9 +252,27 @@ void RemoveRedEyesWindow::updateSettings()
     d->settings = d->settingsTab->readSettings();
 }
 
+bool RemoveRedEyesWindow::acceptStorageSettings()
+{
+    if (d->settings.storageMode == StorageSettingsBox::Overwrite)
+    {
+        QString message = i18n("<p>You choose the <b>'overwrite' correction mode</b>!<br/>"
+                               "Are you sure you want to loose your original image files?</p>");
+
+        if (KMessageBox::questionYesNo(this, message, i18n("Overwrite mode"))
+            == KMessageBox::No)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void RemoveRedEyesWindow::startCorrection()
 {
     updateSettings();
+    if (!acceptStorageSettings())
+        return;
     d->runtype = WorkerThread::Correction;
     startWorkerThread();
 }

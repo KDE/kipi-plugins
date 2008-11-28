@@ -90,6 +90,7 @@ private:
     void readSettings();
     void writeSettings();
     void updateSettings();
+    bool acceptStorageSettings();
 
     void startWorkerThread();
     void setBusy(bool);
