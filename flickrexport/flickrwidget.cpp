@@ -80,7 +80,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     // -------------------------------------------------------------------
 
-    m_imglst                       = new ImagesList(m_tab, iface);
+    m_imglst                       = new KIPIPlugins::ImagesList(iface, true, true, m_tab);
+    m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload on your Flickr account."));
+
     QWidget* settingsBox           = new QWidget(m_tab);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 

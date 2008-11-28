@@ -18,7 +18,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     advancedsettings.cpp
     blobsettingsbox.cpp
     classifiersettingsbox.cpp
-    imageslist.cpp
+    myimageslist.cpp
     plugin_removeredeyes.cpp
     removeredeyeswindow.cpp
     settingstab.cpp
@@ -34,7 +34,6 @@ SET(kipiplugin_removeredeyes_PART_SRCS
 KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
-                      kipiplugins
                       ${KIPI_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
@@ -45,6 +44,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${OpenCV_CXCORE_LIBRARY}
                       ${OpenCV_CVAUX_LIBRARY}
                       ${OpenCV_HIGHGUI_LIBRARY}
+                      kipiplugins
                      )
 
 INSTALL(TARGETS kipiplugin_removeredeyes DESTINATION ${PLUGIN_INSTALL_DIR})

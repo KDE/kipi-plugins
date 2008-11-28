@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2006-10-18
- * Description : images list settings page.
+ * Date        : 2008-05-21
+ * Description : widget to display an imagelist
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,32 +28,37 @@
 
 // Qt includes.
 
-#include <QPushButton>
-#include <QPainter>
 #include <QDragEnterEvent>
-#include <QUrl>
 #include <QFileInfo>
 #include <QGridLayout>
+#include <QGroupBox>
 #include <QHeaderView>
+#include <QLabel>
+#include <QPainter>
+#include <QPushButton>
+#include <QUrl>
 
 // KDE includes.
 
-#include <klocale.h>
 #include <kdialog.h>
-#include <knuminput.h>
 #include <kiconloader.h>
-#include <kdebug.h>
+#include <klocale.h>
+#include <knuminput.h>
 
 // LibKIPI includes.
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
+// LibKDcraw includes.
+
+#include <libkdcraw/kdcraw.h>
+
 // Local includes.
 
 #include "imagedialog.h"
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIPlugins
 {
 
 ImagesListViewItem::ImagesListViewItem(QTreeWidget *view, const KUrl& url)
@@ -69,7 +75,7 @@ ImagesListViewItem::~ImagesListViewItem()
 void ImagesListViewItem::setUrl(const KUrl& url)
 {
     m_url = url;
-    setText(1, m_url.fileName());
+    setText(ImagesListView::Filename, m_url.fileName());
 }
 
 KUrl ImagesListViewItem::url() const
@@ -77,13 +83,13 @@ KUrl ImagesListViewItem::url() const
     return m_url;
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix) 
+void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
     pixmap.fill(Qt::color0);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    setIcon(0, QIcon(pixmap));
+    setIcon(ImagesListView::Thumbnail, QIcon(pixmap));
 }
 
 // ---------------------------------------------------------------------------
@@ -93,33 +99,69 @@ ImagesListView::ImagesListView(QWidget *parent)
 {
     setIconSize(QSize(ICONSIZE, ICONSIZE));
     setSelectionMode(QAbstractItemView::MultiSelection);
-    setWhatsThis(i18n("This is the list of images to upload on your Flickr account."));
+
     setAcceptDrops(true);
+    viewport()->setAcceptDrops(true);
+    setDropIndicatorShown(true);
+
     setSortingEnabled(false);
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setColumnCount(2);
-    setHeaderLabels(QStringList() << i18n("Thumbnail") << i18n("File Name"));
-    header()->setResizeMode(QHeaderView::Stretch);
+
+    setColumnCount(5);
+    setHeaderLabels(QStringList() << i18n("Thumbnail")
+                                  << i18n("File Name")
+                                  << i18n("User1")
+                                  << i18n("User2")
+                                  << i18n("User3"));
+    hideColumn(User1);
+    hideColumn(User2);
+    hideColumn(User3);
+    header()->setResizeMode(QHeaderView::ResizeToContents);
 }
 
 ImagesListView::~ImagesListView()
 {
 }
 
+void ImagesListView::setColumnLabel(ColumnType column, const QString &label)
+{
+    headerItem()->setText(column, label);
+}
+
+void ImagesListView::setColumnEnabled(ColumnType column, bool enable)
+{
+    if (enable)
+        showColumn(column);
+    else
+        hideColumn(column);
+}
+
+void ImagesListView::setColumn(ColumnType column, const QString &label, bool enable)
+{
+    setColumnLabel(column, label);
+    setColumnEnabled(column, enable);
+}
+
 void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
 {
-     if (e->mimeData()->hasUrls())
-         e->acceptProposedAction();
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+}
+
+void ImagesListView::dragMoveEvent(QDragMoveEvent *e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
 }
 
 void ImagesListView::dropEvent(QDropEvent *e)
 {
     QList<QUrl> list = e->mimeData()->urls();
-    KUrl::List  urls;
+    KUrl::List urls;
 
-    foreach (QUrl url, list)
+    foreach (const QUrl &url, list)
     {
         QFileInfo fi(url.path());
         if (fi.isFile() && fi.exists())
@@ -129,7 +171,7 @@ void ImagesListView::dropEvent(QDropEvent *e)
     e->acceptProposedAction();
 
     if (!urls.isEmpty())
-       emit addedDropedItems(urls);
+        emit addedDropedItems(urls);
 }
 
 // ---------------------------------------------------------------------------
@@ -140,49 +182,57 @@ public:
 
     ImagesListPriv()
     {
-        listView     = 0;
-        iface        = 0;
-        addButton    = 0;
-        removeButton = 0;
+        listView        = 0;
+        iface           = 0;
+        addButton       = 0;
+        removeButton    = 0;
+        plainPage       = 0;
     }
 
-    QPushButton     *addButton;
-    QPushButton     *removeButton;
+    bool                allowRAW;
 
-    ImagesListView  *listView;
+    QPushButton*        addButton;
+    QPushButton*        removeButton;
 
-    KIPI::Interface *iface;
+    QWidget*            plainPage;
+
+    ImagesListView*     listView;
+
+    KIPI::Interface*    iface;
 };
 
-ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
-          : QWidget(parent)
+ImagesList::ImagesList(KIPI::Interface *iface, bool allowRAW, bool autoLoad, QWidget* parent)
+          : QWidget(parent),
+            d(new ImagesListPriv)
 {
-    d = new ImagesListPriv;
-    d->iface = iface;
+    d->iface    = iface;
+    d->allowRAW = allowRAW;
 
     // --------------------------------------------------------
 
-    QGridLayout* grid = new QGridLayout(this);
-    d->listView       = new ImagesListView(this);
+    QGridLayout* mainLayout = new QGridLayout;
+    d->listView             = new ImagesListView;
+    d->plainPage            = new QWidget;
 
     // --------------------------------------------------------
 
-    d->addButton    = new QPushButton(this);
-    d->removeButton = new QPushButton(this);
-    d->addButton->setText( i18n( "&Add" ) );
+    d->addButton    = new QPushButton;
+    d->removeButton = new QPushButton;
+    d->addButton->setText(i18n("&Add"));
     d->addButton->setIcon(SmallIcon("list-add"));
-    d->removeButton->setText( i18n( "&Remove" ) );
+    d->removeButton->setText(i18n("&Remove"));
     d->removeButton->setIcon(SmallIcon("list-remove"));
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->listView,     0, 0, 3, 1);
-    grid->addWidget(d->addButton,    0, 1, 1, 1);
-    grid->addWidget(d->removeButton, 1, 1, 1, 1);
-    grid->setColumnStretch(0, 10);
-    grid->setRowStretch(2, 10);
-    grid->setMargin(KDialog::spacingHint());
-    grid->setSpacing(KDialog::spacingHint());
+    mainLayout->addWidget(d->listView,      0, 0, 5, 1);
+    mainLayout->addWidget(d->addButton,     0, 1, 1, 1);
+    mainLayout->addWidget(d->removeButton,  1, 1, 1, 1);
+    mainLayout->addWidget(d->plainPage,     2, 1, 1, 1);
+    mainLayout->setRowStretch(3, 10);
+    mainLayout->setMargin(KDialog::spacingHint());
+    mainLayout->setSpacing(KDialog::spacingHint());
+    setLayout(mainLayout);
 
     // --------------------------------------------------------
 
@@ -200,10 +250,13 @@ ImagesList::ImagesList(QWidget* parent, KIPI::Interface *iface)
 
     // --------------------------------------------------------
 
-    KIPI::ImageCollection images = d->iface->currentSelection();
+    if (autoLoad)
+    {
+        KIPI::ImageCollection images = d->iface->currentSelection();
 
-    if (images.isValid())
-        slotAddImages(images.images());
+        if (images.isValid())
+            slotAddImages(images.images());
+    }
 }
 
 ImagesList::~ImagesList()
@@ -213,37 +266,48 @@ ImagesList::~ImagesList()
 
 void ImagesList::slotAddImages(const KUrl::List& list)
 {
-    if ( list.count() == 0 ) return;
+    if (list.count() == 0) return;
 
     KUrl::List urls;
 
-    for( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    bool raw = false;
+
+    for ( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
         KUrl imageUrl = *it;
 
         // Check if the new item already exist in the list.
 
-        bool find = false;
+        bool found = false;
 
-        QTreeWidgetItemIterator iter(d->listView);
-        while (*iter)
+        QTreeWidgetItemIterator it(d->listView);
+        while (*it)
         {
-            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*iter);
+            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
 
             if (item->url() == imageUrl)
-                find = true;
+                found = true;
 
-            ++iter;
+            ++it;
         }
 
-        if (!find)
+        if (!found)
         {
-            new ImagesListViewItem(d->listView, imageUrl);
+            // if RAW files are not allowed, skip the image
+            if (!d->allowRAW && isRAWFile(imageUrl.path()))
+            {
+                raw = true;
+                continue;
+            }
+            new ImagesListViewItem(listView(), imageUrl);
             urls.append(imageUrl);
         }
     }
 
     d->iface->thumbnails(urls, ICONSIZE);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalFoundRAWImages(raw);
 }
 
 void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
@@ -271,36 +335,28 @@ void ImagesList::slotAddItems()
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
         slotAddImages(urls);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::slotRemoveItems()
 {
-    bool find;
-    do
+    QTreeWidgetItemIterator it(d->listView, QTreeWidgetItemIterator::Selected);
+    while (*it)
     {
-        find = false;
-        QTreeWidgetItemIterator it(d->listView);
-        while (*it)
-        {
-            ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-            if (item->isSelected())
-            {
-                delete item;
-                find = true;
-                break;
-            }
-            ++it;
-        }
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        ++it;
+        delete item;
     }
-    while(find);
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
 {
-    bool find;
+    bool found;
     do
     {
-        find = false;
+        found = false;
         QTreeWidgetItemIterator it(d->listView);
         while (*it)
         {
@@ -308,13 +364,13 @@ void ImagesList::removeItemByUrl(const KUrl& url)
             if (item->url() == url)
             {
                 delete item;
-                find = true;
+                found = true;
                 break;
             }
             ++it;
         }
     }
-    while(find);
+    while (found);
 
     emit signalImageListChanged(imageUrls().isEmpty());
 }
@@ -332,4 +388,25 @@ KUrl::List ImagesList::imageUrls() const
     return list;
 }
 
-}  // namespace KIPIFlickrExportPlugin
+QWidget* ImagesList::plainPage() const
+{
+    return d->plainPage;
+}
+
+ImagesListView* ImagesList::listView() const
+{
+    return d->listView;
+}
+
+bool ImagesList::isRAWFile(const QString & filePath)
+{
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+
+    QFileInfo fileInfo(filePath);
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+        return true;
+
+    return false;
+}
+
+}  // namespace KIPIPlugins

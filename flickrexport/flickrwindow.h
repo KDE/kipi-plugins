@@ -39,10 +39,6 @@
 
 #include <libkipi/interface.h>
 
-// Local includes.
-
-#include "kpaboutdata.h"
-
 class QProgressDialog;
 class QPushButton;
 class QSpinBox;
@@ -55,6 +51,12 @@ class KUrl;
 namespace KIPI
 {
 class Interface;
+}
+
+namespace KIPIPlugins
+{
+class KPAboutData;
+class ImagesList;
 }
 
 namespace KWallet
@@ -155,11 +157,10 @@ private:
     FlickrWidget                          *m_widget;
     FlickrTalker                          *m_talker;
 
-    ImagesList                            *m_imglst;
-
     KIPI::Interface                       *m_interface;
 
     KIPIPlugins::KPAboutData              *m_about;
+    KIPIPlugins::ImagesList               *m_imglst;
 };
 
 } // namespace KIPIFlickrExportPlugin

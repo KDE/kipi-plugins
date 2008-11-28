@@ -62,10 +62,10 @@
 
 // Local includes.
 
+#include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "login.h"
-#include "imageslist.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrviewitem.h"

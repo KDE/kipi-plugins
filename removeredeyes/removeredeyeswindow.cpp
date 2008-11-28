@@ -48,7 +48,7 @@
 
 // Local includes.
 
-#include "imageslist.h"
+#include "myimageslist.h"
 #include "kpaboutdata.h"
 #include "removalsettings.h"
 #include "settingstab.h"
@@ -84,7 +84,7 @@ public:
 
     KTabWidget*                 tabWidget;
 
-    ImagesList*                 imageList;
+    MyImagesList*               imageList;
     RemovalSettings             settings;
     SettingsTab*                settingsTab;
     WorkerThread*               thread;
@@ -109,7 +109,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     d->interface            = interface;
     d->tabWidget            = new KTabWidget;
 
-    d->imageList            = new ImagesList(interface);
+    d->imageList            = new MyImagesList(interface);
 
     d->progress             = new QProgressBar;
     d->progress->setMaximumHeight(fontMetrics().height() + 2);
@@ -173,7 +173,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(helpClicked()));
 
-    connect(d->imageList, SIGNAL(foundRAWImages(bool)),
+    connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
 
     connect(this, SIGNAL(user1Clicked()),
@@ -193,7 +193,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
-        d->imageList->addImages(images.images());
+        d->imageList->slotAddImages(images.images());
 
     readSettings();
     setBusy(false);
@@ -351,7 +351,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // disable connection to make sure that the "test run" and "correct photos"
         // buttons are not enabled again on ImageListChange
-        disconnect(d->imageList, SIGNAL(imageListChanged(bool)),
+        disconnect(d->imageList, SIGNAL(signalImageListChanged(bool)),
                 this, SLOT(imageListChanged(bool)));
 
         disconnect(this, SIGNAL(myCloseClicked()),
@@ -371,7 +371,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // enable connection again to make sure that an empty image list will
         // disable the "test run" and "correct photos" buttons
-        connect(d->imageList, SIGNAL(imageListChanged(bool)),
+        connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
                 this, SLOT(imageListChanged(bool)));
 
         disconnect(this, SIGNAL(myCloseClicked()),

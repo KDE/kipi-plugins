@@ -1,8 +1,13 @@
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/pluginsversion.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/pluginsversion.h)
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 
-SET(kipiplugins_LIB_SRCS kpaboutdata.cpp kpwriteimage.cpp iccjpeg.c
-                         batchprogressdialog.cpp imagedialog.cpp)
+SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
+                         kpwriteimage.cpp
+                         iccjpeg.c
+                         batchprogressdialog.cpp
+                         imageslist.cpp
+                         imagedialog.cpp
+                         )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 

@@ -3,10 +3,11 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2006-10-18
- * Description : images list settings page.
+ * Date        : 2008-05-21
+ * Description : widget to display an imagelist
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,30 +21,33 @@
  *
  * ============================================================ */
 
-#ifndef IMAGES_LIST_H
-#define IMAGES_LIST_H
+#ifndef IMAGESLIST_H
+#define IMAGESLIST_H
 
 // Qt includes.
 
 #include <QTreeWidget>
 #include <QWidget>
-#include <QPixmap>
 
 // KDE includes.
 
 #include <kurl.h>
 
+// LibKIPI includes.
+
+#include "kipiplugins_export.h"
+
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
-namespace KIPIFlickrExportPlugin
+namespace KIPIPlugins
 {
 
 class ImagesListPriv;
 
-class ImagesListViewItem : public QTreeWidgetItem
+class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
 {
 
 public:
@@ -63,15 +67,27 @@ private:
 
 // -------------------------------------------------------------------------
 
-class ImagesListView : public QTreeWidget
+class KIPIPLUGINS_EXPORT ImagesListView : public QTreeWidget
 {
-
     Q_OBJECT
 
 public:
 
-    ImagesListView(QWidget *parent);
+    enum ColumnType
+    {
+        Thumbnail = 0,
+        Filename,
+        User1,
+        User2,
+        User3
+    };
+
+    ImagesListView(QWidget *parent = 0);
     ~ImagesListView();
+
+    void setColumnLabel(ColumnType column, const QString &label);
+    void setColumnEnabled(ColumnType column, bool enable);
+    void setColumn(ColumnType column, const QString &label, bool enable);
 
 signals:
 
@@ -80,43 +96,55 @@ signals:
 private:
 
     void dragEnterEvent(QDragEnterEvent *e);
+    void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
+
 };
 
 // -------------------------------------------------------------------------
 
-class ImagesList : public QWidget
+class KIPIPLUGINS_EXPORT ImagesList : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    ImagesList(QWidget* parent, KIPI::Interface *iface);
-    ~ImagesList();
+    explicit ImagesList(KIPI::Interface *iface, bool allowRAW = true, bool autoLoad = true, QWidget* parent = 0);
+    virtual ~ImagesList();
 
-    KUrl::List imageUrls() const;
-    void removeItemByUrl(const KUrl& url);
+    ImagesListView* listView() const;
+
+    virtual KUrl::List imageUrls()  const;
+    virtual void removeItemByUrl(const KUrl& url);
 
 signals:
 
     void signalImageListChanged(bool);
+    void signalFoundRAWImages(bool);
 
 public slots:
 
-    void slotAddImages(const KUrl::List& list);
+    virtual void slotAddImages(const KUrl::List& list);
 
-private slots:
+protected:
 
+    QWidget* plainPage() const;
 
-    void slotAddItems();
-    void slotRemoveItems();
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+protected slots:
+
+    virtual void slotAddItems();
+    virtual void slotRemoveItems();
+    virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
 
-    ImagesListPriv* d;
+    bool isRAWFile(const QString& filePath);
+
+private:
+
+    ImagesListPriv* const d;
 };
 
-}  // namespace KIPIFlickrExportPlugin
+}  // namespace KIPIPlugins
 
-#endif // IMAGES_LIST_H 
+#endif // IMAGESLIST_H

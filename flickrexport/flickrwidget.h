@@ -42,10 +42,14 @@ namespace KIPI
     class Interface;
 }
 
+namespace KIPIPlugins
+{
+    class ImagesList;
+}
+
 namespace KIPIFlickrExportPlugin
 {
 
-class ImagesList;
 
 class FlickrWidget : public QWidget
 {
@@ -92,7 +96,7 @@ private:
 
     KHTMLPart*    m_photoView;
 
-    ImagesList*   m_imglst;
+    KIPIPlugins::ImagesList*   m_imglst;
 
     friend class FlickrWindow;
 };

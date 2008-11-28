@@ -2,7 +2,6 @@ ADD_DEFINITIONS (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 SET(kipiplugin_flickrexport_PART_SRCS
     plugin_flickrexport.cpp
-    imageslist.cpp
     flickrwindow.cpp
     login.cpp
     flickrtalker.cpp
