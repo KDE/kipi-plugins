@@ -6,7 +6,7 @@ Kipi-plugins NEW FEATURES:
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 169637 : EXIF Data Editing Error.
-002 ==> 
+002 ==> 174954 : HTMLExport         : Support for remote urls.
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------

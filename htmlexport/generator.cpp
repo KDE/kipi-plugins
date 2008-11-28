@@ -34,8 +34,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>
+#include <ktemporaryfile.h>
 #include <kurl.h>
 
 // KIPI
@@ -155,6 +157,56 @@ struct Generator::Private {
 		return true;
 	}
 
+
+	// Url => local temp path
+	typedef QHash<KUrl, QString> RemoteUrlHash;
+
+	bool downloadRemoteUrls(const QString& collectionName, const KUrl::List& _list, RemoteUrlHash* hash) {
+		Q_ASSERT(hash);
+		KUrl::List list;
+		Q_FOREACH(const KUrl& url, _list) {
+			if (!url.isLocalFile()) {
+				list << url;
+			}
+		}
+
+		if (list.count() == 0) {
+			return true;
+		}
+
+		logInfo( i18n("Downloading remote files for \"%1\"", collectionName) );
+
+		mProgressDialog->setTotal(list.count());
+		int count = 0;
+		Q_FOREACH(const KUrl& url, list) {
+			if (mProgressDialog->isHidden()) {
+				return false;
+			}
+			KTemporaryFile* tempFile = new KTemporaryFile;
+			// Ensure the tempFile gets deleted when mProgressDialog is closed
+			tempFile->setParent(mProgressDialog);
+			tempFile->setPrefix("htmlexport-");
+
+			if (!tempFile->open()) {
+				logError(i18n("Could not open temporary file"));
+				return false;
+			}
+			const QString tempPath = KStandardDirs::locate("tmp", tempFile->fileName());
+			KIO::Job* job = KIO::file_copy(url, KUrl::fromPath(tempPath), -1 /* permissions */, KIO::Overwrite);
+			if (KIO::NetAccess::synchronousRun(job, mProgressDialog)) {
+				hash->insert(url, tempFile->fileName());
+			} else {
+				logWarning(i18n("Could not download %1", url.prettyUrl()));
+				hash->insert(url, QString());
+			}
+
+			++count;
+			mProgressDialog->setProgress(count);
+		}
+
+		return true;
+	}
+
 	bool generateImagesAndXML() {
 		QString baseDestDir=mInfo->destUrl().path();
 		if (!createDir(baseDestDir)) return false;
@@ -173,7 +225,6 @@ struct Generator::Private {
 		QList<KIPI::ImageCollection>::Iterator collectionEnd=mInfo->mCollectionList.end();
 		for (; collectionIt!=collectionEnd; ++collectionIt) {
 			KIPI::ImageCollection collection=*collectionIt;
-			logInfo( i18n("Generating files for \"%1\"", collection.name()) );
 
 			QString collectionFileName = webifyFileName(collection.name());
 			QString destDir = baseDestDir + "/" + collectionFileName;
@@ -183,15 +234,26 @@ struct Generator::Private {
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
 
-			// Generate images
-			ImageGenerationFunctor functor(that, mInfo, destDir);
-
+			// Gather image element list
+			KUrl::List imageList = collection.images();
+			RemoteUrlHash remoteUrlHash;
+			if (!downloadRemoteUrls(collection.name(), imageList, &remoteUrlHash)) {
+				return false;
+			}
 			QList<ImageElement> imageElementList;
-			Q_FOREACH(const KUrl& url, collection.images()) {
+			Q_FOREACH(const KUrl& url, imageList) {
+				const QString path = remoteUrlHash.value(url, url.path());
+				if (path.isEmpty()) {
+					continue;
+				}
 				ImageElement element = ImageElement(mInterface->info(url));
-				element.mPath = url.path();
+				element.mPath = remoteUrlHash.value(url, url.path());
 				imageElementList << element;
 			}
+
+			// Generate images
+			logInfo( i18n("Generating files for \"%1\"", collection.name()) );
+			ImageGenerationFunctor functor(that, mInfo, destDir);
 			QFuture<void> future = QtConcurrent::map(imageElementList, functor);
 			QFutureWatcher<void> watcher;
 			watcher.setFuture(future);
