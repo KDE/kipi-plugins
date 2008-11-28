@@ -3,6 +3,7 @@ set(kipiplugin_htmlexport_SRCS
 	colorthemeparameter.cpp
 	galleryinfo.cpp
 	generator.cpp
+	imagegenerationfunctor.cpp
 	intthemeparameter.cpp
 	invisiblebuttongroup.cpp
 	listthemeparameter.cpp
