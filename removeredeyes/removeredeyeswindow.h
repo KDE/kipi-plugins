@@ -95,7 +95,7 @@ private:
     void startWorkerThread();
     void setBusy(bool);
 
-    void checkForUnprocessedImages();
+    void handleUnprocessedImages();
     void showSummary();
 
 private:

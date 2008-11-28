@@ -24,6 +24,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     settingstab.cpp
     simplesettings.cpp
     storagesettingsbox.cpp
+    unprocessedsettingsbox.cpp
     workerthreaddata.cpp
     workerthread.cpp
     eyelocator.cpp

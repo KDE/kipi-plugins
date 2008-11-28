@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-11-01
- * Description : a widget that holds all storage settings
+ * Date        : 2008-11-28
+ * Description : a widget that holds unprocessed image settings
  *
  * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef STORAGESETTINGSBOX_H
-#define STORAGESETTINGSBOX_H
+#ifndef UNPROCESSEDSETTINGSBOX_H
+#define UNPROCESSEDSETTINGSBOX_H
 
 // Qt includes.
 
@@ -31,46 +31,36 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class StorageSettingsBoxPriv;
+class UnprocessedSettingsBoxPriv;
 
-class StorageSettingsBox : public QGroupBox
+class UnprocessedSettingsBox : public QGroupBox
 {
     Q_OBJECT
 
 public:
 
-    enum StorageMode
+    enum HandleMode
     {
-        Subfolder=0,
-        Prefix,
-        Overwrite
+        Ask=0,
+        Keep,
+        Remove
     };
 
-    StorageSettingsBox(QWidget* parent = 0);
-    virtual ~StorageSettingsBox();
+    UnprocessedSettingsBox(QWidget* parent = 0);
+    virtual ~UnprocessedSettingsBox();
 
-    int storageMode() const;
-    void setStorageMode(int mode);
-
-    QString prefix() const;
-    void setPrefix(const QString& prefix);
-
-    QString subfolder() const;
-    void setSubfolder(const QString& subfolder);
+    int handleMode() const;
+    void setHandleMode(int mode);
 
 signals:
 
     void settingsChanged();
 
-private slots:
-
-    void buttonClicked(int);
-
 private:
 
-    StorageSettingsBoxPriv* const d;
+    UnprocessedSettingsBoxPriv* const d;
 };
 
 }
 
-#endif /* STORAGESETTINGSBOX_H */
+#endif /* UNPROCESSEDSETTINGSBOX_H */

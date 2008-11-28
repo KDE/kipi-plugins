@@ -54,6 +54,7 @@
 #include "settingstab.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
+#include "unprocessedsettingsbox.h"
 #include "workerthread.h"
 #include "workerthreaddata.h"
 
@@ -210,6 +211,7 @@ void RemoveRedEyesWindow::readSettings()
     KConfigGroup group = config.group("RemoveRedEyes Settings");
 
     d->settings.storageMode            = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
+    d->settings.unprocessedMode        = group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask);
     d->settings.subfolderName          = group.readEntry("Subfolder Name", "corrected");
     d->settings.simpleMode             = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
     d->settings.prefixName             = group.readEntry("Filename Prefix", "_corr");
@@ -232,6 +234,7 @@ void RemoveRedEyesWindow::writeSettings()
 
     grp.writeEntry("Simple Mode",               d->settings.simpleMode);
     grp.writeEntry("Storage Mode",              d->settings.storageMode);
+    grp.writeEntry("Unprocessed Mode",          d->settings.unprocessedMode);
     grp.writeEntry("Subfolder Name",            d->settings.subfolderName);
     grp.writeEntry("Filename Prefix",           d->settings.prefixName);
 
@@ -383,20 +386,33 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     }
 }
 
-void RemoveRedEyesWindow::checkForUnprocessedImages()
+void RemoveRedEyesWindow::handleUnprocessedImages()
 {
     if (d->imageList->hasUnprocessedImages())
     {
-        QString message = i18n("<p>Some of the images could not be analyzed "
-                               "with the current settings or they do not "
-                               "contain any red-eyes at all.</p>"
-                               "<p><b>Would you like to remove those images "
-                               "from the list?</b></p>");
+        updateSettings();
 
-        if (KMessageBox::questionYesNo(this, message, i18n("Remove unprocessed images?"))
-            == KMessageBox::Yes)
+        switch (d->settings.unprocessedMode)
         {
-            d->imageList->removeUnprocessedImages();
+            case UnprocessedSettingsBox::Ask:
+            {
+                QString message = i18n("<p>Some of the images could not be analyzed "
+                                       "with the current settings or they do not "
+                                       "contain any red-eyes at all.</p>"
+                                       "<p><b>Would you like to remove those images "
+                                       "from the list?</b></p>");
+
+                if (KMessageBox::questionYesNo(this, message, i18n("Remove unprocessed images?"))
+                        == KMessageBox::Yes)
+                {
+                    d->imageList->removeUnprocessedImages();
+                }
+                break;
+            }
+
+            case UnprocessedSettingsBox::Remove:
+                d->imageList->removeUnprocessedImages();
+                break;
         }
     }
 }
@@ -475,7 +491,7 @@ void RemoveRedEyesWindow::threadFinished()
     KApplication::restoreOverrideCursor();
 
     if (d->runtype == WorkerThread::TestRun)
-        checkForUnprocessedImages();
+        handleUnprocessedImages();
     else
         showSummary();
 

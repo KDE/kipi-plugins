@@ -40,6 +40,7 @@
 #include "simplesettings.h"
 #include "removalsettings.h"
 #include "storagesettingsbox.h"
+#include "unprocessedsettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -69,15 +70,17 @@ public:
     RemovalSettings             settings;
     SimpleSettings*             simpleSettings;
     StorageSettingsBox*         storageSettingsBox;
+    UnprocessedSettingsBox*     unprocessedSettingsBox;
 };
 
 SettingsTab::SettingsTab(QWidget* parent)
               : QWidget(parent),
                 d(new SettingsTabPriv)
 {
-    d->simpleCorrectionMode = true;
-    d->settingsSwitcherBtn  = new QPushButton;
-    d->storageSettingsBox = new StorageSettingsBox;
+    d->simpleCorrectionMode     = true;
+    d->settingsSwitcherBtn      = new QPushButton;
+    d->storageSettingsBox       = new StorageSettingsBox;
+    d->unprocessedSettingsBox   = new UnprocessedSettingsBox;
 
     // settings stack widget ----------------------------------------------------------
 
@@ -96,8 +99,9 @@ SettingsTab::SettingsTab(QWidget* parent)
     settingsTabLayout->setRowStretch(1, 10);
 
     QGridLayout* storageLayout = new QGridLayout;
-    storageLayout->addWidget(d->storageSettingsBox, 0, 0, 1, 1);
-    storageLayout->setRowStretch(1, 10);
+    storageLayout->addWidget(d->storageSettingsBox,     0, 0, 1, 1);
+    storageLayout->addWidget(d->unprocessedSettingsBox, 1, 0, 1, 1);
+    storageLayout->setRowStretch(2, 10);
 
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addLayout(settingsTabLayout,        0, 0, 1, 2);
@@ -118,6 +122,7 @@ SettingsTab::~SettingsTab()
 void SettingsTab::prepareSettings()
 {
     d->settings.storageMode            = d->storageSettingsBox->storageMode();
+    d->settings.unprocessedMode        = d->unprocessedSettingsBox->handleMode();
     d->settings.subfolderName          = d->storageSettingsBox->subfolder();
     d->settings.prefixName             = d->storageSettingsBox->prefix();
 }
@@ -136,6 +141,7 @@ void SettingsTab::applySettings()
     d->storageSettingsBox->setPrefix(d->settings.prefixName);
     d->storageSettingsBox->setSubfolder(d->settings.subfolderName);
     d->storageSettingsBox->setStorageMode(d->settings.storageMode);
+    d->unprocessedSettingsBox->setHandleMode(d->settings.unprocessedMode);
 }
 
 RemovalSettings SettingsTab::readSettings()

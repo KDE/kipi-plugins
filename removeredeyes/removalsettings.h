@@ -54,6 +54,7 @@ class RemovalSettings
             minBlobsize             = 0;
             neighborGroups          = 0;
             storageMode             = 0;
+            unprocessedMode         = 0;
             simpleMode              = 0;
         };
 
@@ -68,6 +69,7 @@ class RemovalSettings
             kDebug(50001) << "minBlobsize           = " << minBlobsize << endl;
             kDebug(50001) << "neighborGroups        = " << neighborGroups << endl;
             kDebug(50001) << "storageMode           = " << storageMode << endl;
+            kDebug(50001) << "unprocessedMode       = " << unprocessedMode << endl;
             kDebug(50001) << "simpleMode            = " << simpleMode << endl;
             kDebug(50001) << "classifierFile        = " << classifierFile << endl;
             kDebug(50001) << "subfolderName         = " << subfolderName << endl;
@@ -83,6 +85,7 @@ class RemovalSettings
         int         minBlobsize;
         int         neighborGroups;
         int         storageMode;
+        int         unprocessedMode;
         int         simpleMode;
 
         QString     classifierFile;
