@@ -367,8 +367,6 @@ struct Generator::Private {
 			xmlWriter.writeElement("fileName", collectionFileName);
 
 			// Generate images
-			QTime chrono;
-			chrono.start();
 			ImageGenerationFunctor functor(that, mInterface, mInfo, destDir);
 
 			KUrl::List imageList = collection.images();
@@ -388,13 +386,10 @@ struct Generator::Private {
 				}
 			}
 
-			kDebug() << chrono.restart();
-
 			// Generate xml
 			Q_FOREACH(const ImageElement& element, future.results()) {
 				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
 			}
-			kDebug() << chrono.restart();
 
 		}
 		return true;
