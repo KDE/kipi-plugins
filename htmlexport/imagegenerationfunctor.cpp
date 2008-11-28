@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <klocale.h>
 
 // KIPI
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
 // Local
@@ -60,32 +59,26 @@ static QImage generateSquareThumbnail(const QImage& fullImage, int size) {
 }
 
 
-ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir)
+ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, GalleryInfo* info, const QString& destDir)
 : mGenerator(generator)
-, mInterface(iface)
 , mInfo(info)
 , mDestDir(destDir)
 {}
 
 
-ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
-	KIPI::ImageInfo info=mInterface->info(imageUrl);
-	ImageElement element;
-	element.mTitle = info.title();
-	element.mDescription = info.description();
-
+void ImageGenerationFunctor::operator()(ImageElement& element) {
 	// Load image
-	QString path=imageUrl.path();
+	QString path = element.mPath;
 	QFile imageFile(path);
 	if (!imageFile.open(QIODevice::ReadOnly)) {
 		emitWarning(i18n("Could not read image '%1'", path));
-		return element;
+		return;
 	}
 
 	QString imageFormat = QImageReader::imageFormat(&imageFile);
 	if (imageFormat.isEmpty()) {
 		emitWarning(i18n("Format of image '%1' is unknown", path));
-		return element;
+		return;
 	}
 	imageFile.close();
 	imageFile.open(QIODevice::ReadOnly);
@@ -94,7 +87,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QImage originalImage;
 	if (!originalImage.loadFromData(imageData) ) {
 		emitWarning(i18n("Error loading image '%1'", path));
-		return element;
+		return;
 	}
 
 	// Process images
@@ -104,9 +97,9 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 			int size = mInfo->fullSize();
 			fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 		}
-		if (info.angle() != 0) {
+		if (element.mAngle != 0) {
 			QMatrix matrix;
-			matrix.rotate(info.angle());
+			matrix.rotate(element.mAngle);
 			fullImage = fullImage.transformed(matrix);
 		}
 	}
@@ -114,7 +107,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
 
 	// Save images
-	QString baseFileName = Generator::webifyFileName(info.title());
+	QString baseFileName = Generator::webifyFileName(element.mTitle);
 	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
 
 	// Save full
@@ -122,7 +115,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	if (mInfo->useOriginalImageAsFullImage()) {
 		fullFileName = baseFileName + "." + imageFormat.toLower();
 		if (!writeDataToFile(imageData, mDestDir + "/" + fullFileName)) {
-			return element;
+			return;
 		}
 
 	} else {
@@ -130,7 +123,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 		QString destPath = mDestDir + "/" + fullFileName;
 		if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
 			emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
-			return element;
+			return;
 		}
 	}
 	element.mFullFileName = fullFileName;
@@ -140,7 +133,7 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	if (mInfo->copyOriginalImage()) {
 		QString originalFileName = "original_" + fullFileName;
 		if (!writeDataToFile(imageData, mDestDir + "/" + originalFileName)) {
-			return element;
+			return;
 		}
 		element.mOriginalFileName = originalFileName;
 		element.mOriginalSize = originalImage.size();
@@ -151,12 +144,11 @@ ImageElement ImageGenerationFunctor::operator()(const KUrl& imageUrl) {
 	QString destPath = mDestDir + "/" + thumbnailFileName;
 	if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
 		mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
-		return element;
+		return;
 	}
 	element.mThumbnailFileName = thumbnailFileName;
 	element.mThumbnailSize = thumbnail.size();
 	element.mValid = true;
-	return element;
 }
 
 

@@ -25,10 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class KUrl;
 
-namespace KIPI {
-class Interface;
-}
-
 namespace KIPIHTMLExport {
 
 class GalleryInfo;
@@ -44,13 +40,12 @@ class ImageGenerationFunctor {
 public:
 	typedef ImageElement result_type;
 
-	ImageGenerationFunctor(Generator* generator, KIPI::Interface* iface, GalleryInfo* info, const QString& destDir);
+	ImageGenerationFunctor(Generator* generator, GalleryInfo* info, const QString& destDir);
 
-	ImageElement operator()(const KUrl& imageUrl);
+	void operator()(ImageElement& element);
 
 private:
 	Generator* mGenerator;
-	KIPI::Interface* mInterface;
 	GalleryInfo* mInfo;
 	QString mDestDir;
 

@@ -184,16 +184,21 @@ struct Generator::Private {
 			xmlWriter.writeElement("fileName", collectionFileName);
 
 			// Generate images
-			ImageGenerationFunctor functor(that, mInterface, mInfo, destDir);
+			ImageGenerationFunctor functor(that, mInfo, destDir);
 
-			KUrl::List imageList = collection.images();
-			QFuture<ImageElement> future = QtConcurrent::mapped(imageList, functor);
-			QFutureWatcher<ImageElement> watcher;
+			QList<ImageElement> imageElementList;
+			Q_FOREACH(const KUrl& url, collection.images()) {
+				ImageElement element = ImageElement(mInterface->info(url));
+				element.mPath = url.path();
+				imageElementList << element;
+			}
+			QFuture<void> future = QtConcurrent::map(imageElementList, functor);
+			QFutureWatcher<void> watcher;
 			watcher.setFuture(future);
 			connect(&watcher, SIGNAL(progressValueChanged(int)),
 				mProgressDialog, SLOT(setProgress(int)));
 
-			mProgressDialog->setTotal(imageList.count());
+			mProgressDialog->setTotal(imageElementList.count());
 			while (!future.isFinished()) {
 				qApp->processEvents();
 				if (mProgressDialog->isHidden()) {
@@ -204,7 +209,7 @@ struct Generator::Private {
 			}
 
 			// Generate xml
-			Q_FOREACH(const ImageElement& element, future.results()) {
+			Q_FOREACH(const ImageElement& element, imageElementList) {
 				element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
 			}
 

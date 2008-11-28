@@ -25,6 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QSize>
 #include <QString>
 
+// KIPI
+#include <libkipi/imageinfo.h>
+
 // Local
 #include "xmlutils.h"
 
@@ -35,10 +38,22 @@ namespace KIPIHTMLExport {
  * description of an image
  */
 struct ImageElement {
+	ImageElement(const KIPI::ImageInfo& info)
+	: mValid(false)
+	, mTitle(info.title())
+	, mDescription(info.description())
+	, mAngle(info.angle())
+	{}
+
 	ImageElement() : mValid(false) {}
+
 	bool mValid;
 	QString mTitle;
 	QString mDescription;
+	int mAngle;
+
+	QString mPath;
+
 	QString mThumbnailFileName;
 	QSize mThumbnailSize;
 	QString mFullFileName;
