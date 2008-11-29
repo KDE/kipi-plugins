@@ -98,7 +98,7 @@ ImagesListView::ImagesListView(QWidget *parent)
               : QTreeWidget(parent)
 {
     setIconSize(QSize(ICONSIZE, ICONSIZE));
-    setSelectionMode(QAbstractItemView::MultiSelection);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     setAcceptDrops(true);
     viewport()->setAcceptDrops(true);
