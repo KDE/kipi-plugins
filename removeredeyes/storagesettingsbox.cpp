@@ -75,8 +75,8 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
                                    "in a subfolder under the current image album path."));
     d->storageGroup->addButton(subfolderMode, Subfolder);
 
-    QRadioButton* suffixMode = new QRadioButton(i18n("Append string to files"));
-    suffixMode->setToolTip(i18n("If checked, a custom string will be added " "to the corrected file."));
+    QRadioButton* suffixMode = new QRadioButton(i18n("Add suffix to filename"));
+    suffixMode->setToolTip(i18n("If checked, a custom suffix will be added to the corrected file."));
     d->storageGroup->addButton(suffixMode, Suffix);
 
     QRadioButton* overwriteMode = new QRadioButton(i18n("Overwrite original files"));
