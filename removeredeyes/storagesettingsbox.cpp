@@ -49,13 +49,13 @@ public:
     StorageSettingsBoxPriv()
     {
         storageGroup                = 0;
-        prefixLineEdit              = 0;
+        suffixLineEdit              = 0;
         subfolderLineEdit           = 0;
     }
 
     QButtonGroup*       storageGroup;
 
-    KLineEdit*          prefixLineEdit;
+    KLineEdit*          suffixLineEdit;
     KLineEdit*          subfolderLineEdit;
 };
 
@@ -75,26 +75,26 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
                                    "in a subfolder under the current image album path."));
     d->storageGroup->addButton(subfolderMode, Subfolder);
 
-    QRadioButton* prefixMode = new QRadioButton(i18n("Append string to files"));
-    prefixMode->setToolTip(i18n("If checked, a custom string will be added " "to the corrected file."));
-    d->storageGroup->addButton(prefixMode, Prefix);
+    QRadioButton* suffixMode = new QRadioButton(i18n("Append string to files"));
+    suffixMode->setToolTip(i18n("If checked, a custom string will be added " "to the corrected file."));
+    d->storageGroup->addButton(suffixMode, Suffix);
 
     QRadioButton* overwriteMode = new QRadioButton(i18n("Overwrite original files"));
     overwriteMode->setToolTip(i18n("If checked, all original images will be replaced."));
     d->storageGroup->addButton(overwriteMode, Overwrite);
 
-    d->prefixLineEdit = new KLineEdit;
-    d->prefixLineEdit->setToolTip(i18n("Enter the name of the prefix here..."));
+    d->suffixLineEdit = new KLineEdit;
+    d->suffixLineEdit->setToolTip(i18n("Enter the name of the suffix here..."));
 
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->subfolderLineEdit,  0, 2, 1, 1);
-    correctionGroupLayout->addWidget(prefixMode,            1, 0, 1, 1);
-    correctionGroupLayout->addWidget(d->prefixLineEdit,     1, 2, 1, 1);
+    correctionGroupLayout->addWidget(suffixMode,            1, 0, 1, 1);
+    correctionGroupLayout->addWidget(d->suffixLineEdit,     1, 2, 1, 1);
     correctionGroupLayout->addWidget(overwriteMode,         2, 0, 1,-1);
     setLayout(correctionGroupLayout);
 
-    setStorageMode(Prefix);
+    setStorageMode(Suffix);
 
     connect(d->storageGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(buttonClicked(int)));
@@ -111,17 +111,17 @@ void StorageSettingsBox::buttonClicked(int mode)
     {
         case Subfolder:
             d->subfolderLineEdit->setEnabled(true);
-            d->prefixLineEdit->setEnabled(false);
+            d->suffixLineEdit->setEnabled(false);
             break;
 
-        case Prefix:
-            d->prefixLineEdit->setEnabled(true);
+        case Suffix:
+            d->suffixLineEdit->setEnabled(true);
             d->subfolderLineEdit->setEnabled(false);
             break;
 
         case Overwrite:
             d->subfolderLineEdit->setEnabled(false);
-            d->prefixLineEdit->setEnabled(false);
+            d->suffixLineEdit->setEnabled(false);
             break;
     }
 
@@ -139,14 +139,14 @@ void StorageSettingsBox::setStorageMode(int mode)
     buttonClicked(mode);
 }
 
-QString StorageSettingsBox::prefix() const
+QString StorageSettingsBox::suffix() const
 {
-    return d->prefixLineEdit->text();
+    return d->suffixLineEdit->text();
 }
 
-void StorageSettingsBox::setPrefix(const QString& prefix)
+void StorageSettingsBox::setSuffix(const QString& suffix)
 {
-    d->prefixLineEdit->setText(prefix);
+    d->suffixLineEdit->setText(suffix);
 }
 
 QString StorageSettingsBox::subfolder() const

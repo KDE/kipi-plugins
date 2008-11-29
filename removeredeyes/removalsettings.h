@@ -73,7 +73,7 @@ class RemovalSettings
             kDebug(50001) << "simpleMode            = " << simpleMode << endl;
             kDebug(50001) << "classifierFile        = " << classifierFile << endl;
             kDebug(50001) << "subfolderName         = " << subfolderName << endl;
-            kDebug(50001) << "prefixName            = " << prefixName << endl;
+            kDebug(50001) << "suffixName            = " << suffixName << endl;
         };
 
         bool        useStandardClassifier;
@@ -90,7 +90,7 @@ class RemovalSettings
 
         QString     classifierFile;
         QString     subfolderName;
-        QString     prefixName;
+        QString     suffixName;
     };
 
 } // namespace KIPIRemoveRedEyesPlugin

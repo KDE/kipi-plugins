@@ -124,10 +124,10 @@ void WorkerThread::run()
                     saveLocation.addPath(info.fileName());
                     break;
                 }
-                case StorageSettingsBox::Prefix:
+                case StorageSettingsBox::Suffix:
                 {
                     QString file = info.baseName();
-                    file.append(d->settings.prefixName);
+                    file.append(d->settings.suffixName);
                     file.append(".");
                     file.append(info.suffix());
                     saveLocation.addPath(file);

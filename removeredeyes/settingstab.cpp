@@ -124,7 +124,7 @@ void SettingsTab::prepareSettings()
     d->settings.storageMode            = d->storageSettingsBox->storageMode();
     d->settings.unprocessedMode        = d->unprocessedSettingsBox->handleMode();
     d->settings.subfolderName          = d->storageSettingsBox->subfolder();
-    d->settings.prefixName             = d->storageSettingsBox->prefix();
+    d->settings.suffixName             = d->storageSettingsBox->suffix();
 }
 
 void SettingsTab::loadSettings(RemovalSettings newSettings)
@@ -138,7 +138,7 @@ void SettingsTab::loadSettings(RemovalSettings newSettings)
 
 void SettingsTab::applySettings()
 {
-    d->storageSettingsBox->setPrefix(d->settings.prefixName);
+    d->storageSettingsBox->setSuffix(d->settings.suffixName);
     d->storageSettingsBox->setSubfolder(d->settings.subfolderName);
     d->storageSettingsBox->setStorageMode(d->settings.storageMode);
     d->unprocessedSettingsBox->setHandleMode(d->settings.unprocessedMode);
