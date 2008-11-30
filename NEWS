@@ -3,6 +3,8 @@ v 0.2.0 - beta5
 
 Kipi-plugins NEW FEATURES:
 
+RemoveRedEyes  : Added an option to preview the correction of the currently selected image.
+
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 169637 : EXIF Data Editing Error.

@@ -18,15 +18,17 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     advancedsettings.cpp
     blobsettingsbox.cpp
     classifiersettingsbox.cpp
+    infomessagewidget.cpp
     myimageslist.cpp
     plugin_removeredeyes.cpp
+    previewwidget.cpp
     removeredeyeswindow.cpp
     settingstab.cpp
     simplesettings.cpp
     storagesettingsbox.cpp
     unprocessedsettingsbox.cpp
-    workerthreaddata.cpp
     workerthread.cpp
+    workerthreaddata.cpp
     eyelocator.cpp
     ${libcvblobs_SRCS}
    )

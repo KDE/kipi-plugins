@@ -39,7 +39,10 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 // size to scale down to
-const int minSize = 600;
+const int MINSIZE = 600;
+
+// size to use for preview
+const int PREVIEWMINSIZE = 400;
 
 class EyeLocatorPriv
 {
@@ -69,6 +72,7 @@ public:
     void    generateMask(int i_v, CvSeq* i_eyes);
 
     IplImage* scaleDownImage(IplImage* src);
+    IplImage* previewImage(IplImage* src);
 
 public:
 
@@ -86,6 +90,7 @@ public:
     int             neighborGroups;
     int             possible_eyes;
     int             red_eyes;
+    const char*     classifierFile;
 };
 
 int EyeLocatorPriv::getMinimumSize(IplImage* src)
@@ -97,7 +102,20 @@ int EyeLocatorPriv::getMinimumSize(IplImage* src)
 IplImage* EyeLocatorPriv::scaleDownImage(IplImage* src)
 {
     int minimum = getMinimumSize(src);
-    float factor = minSize / (float) minimum;
+    float factor = MINSIZE / (float) minimum;
+
+    IplImage* out = cvCreateImage(cvSize((int)(src->width  * factor),
+                                         (int)(src->height * factor)),
+                                  src->depth,
+                                  src->nChannels);
+    cvResize(src, out);
+    return out;
+}
+
+IplImage* EyeLocatorPriv::previewImage(IplImage* src)
+{
+    int minimum = getMinimumSize(src);
+    float factor = PREVIEWMINSIZE / (float) minimum;
 
     IplImage* out = cvCreateImage(cvSize((int)(src->width  * factor),
                                          (int)(src->height * factor)),
@@ -236,45 +254,18 @@ void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
 
 EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
                        double scaleFactor, int neighborGroups,
-                       double minRoundness, int minBlobsize, bool scaleDown)
+                       double minRoundness, int minBlobsize,
+                       bool scaleDown)
           : d(new EyeLocatorPriv)
 {
-    d->scaleFactor       = scaleFactor;
-    d->neighborGroups    = neighborGroups;
-    d->minBlobsize       = minBlobsize;
-    d->minRoundness      = double(1) / (double(minRoundness) / 100.0);
+    d->scaleFactor          = scaleFactor;
+    d->neighborGroups       = neighborGroups;
+    d->minBlobsize          = minBlobsize;
+    d->minRoundness         = double(1) / (double(minRoundness) / 100.0);
+    d->classifierFile       = classifierFile;
+    d->original             = cvLoadImage(filename);
 
-    d->original           = cvLoadImage(filename);
-
-    if (scaleDown && minSize < d->getMinimumSize(d->original))
-    {
-        d->scaleDown         = true;
-        d->temporary         = d->scaleDownImage(d->original);
-    }
-    else
-    {
-        d->scaleDown         = false;
-        d->temporary         = cvCreateImage(cvGetSize(d->original), d->original->depth, d->original->nChannels);
-        cvCopy(d->original, d->temporary);
-    }
-
-    // allocate all buffers
-    d->lab               = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 3);
-    d->gray              = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-    d->aChannel          = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-    d->redMask           = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-
-    // reset masks
-    cvFillImage(d->aChannel, 0);
-    cvFillImage(d->redMask, 0);
-
-    // find possible eyes
-    d->possible_eyes = d->findPossibleEyes(d->scaleFactor, d->neighborGroups, classifierFile);
-
-    // remove red-eye effect
-    if (d->possible_eyes > 0)
-        d->removeRedEyes();
-
+    doCorrection(scaleDown);
 }
 
 EyeLocator::~EyeLocator()
@@ -293,9 +284,81 @@ int EyeLocator::redEyes() const
     return d->red_eyes;
 }
 
-void EyeLocator::saveImage(const char * path)
+void EyeLocator::saveImage(const char * path, FileType type)
 {
-    cvSaveImage(path, d->original);
+    switch (type)
+    {
+        case Final:
+        {
+            cvSaveImage(path, d->original);
+            break;
+        }
+
+        case OriginalPreview:
+        {
+            IplImage* tmp = d->previewImage(d->temporary);
+            cvSaveImage(path, tmp);
+            cvReleaseImage(&tmp);
+            break;
+        }
+
+        case CorrectedPreview:
+        {
+            IplImage* tmp = d->previewImage(d->original);
+            cvSaveImage(path, tmp);
+            cvReleaseImage(&tmp);
+            break;
+        }
+
+        case MaskPreview:
+        {
+            IplImage* tmp = d->previewImage(d->redMask);
+            cvSaveImage(path, tmp);
+            cvReleaseImage(&tmp);
+            break;
+        }
+    } // switch
+}
+
+void EyeLocator::doCorrection(bool scaleDown)
+{
+    if (scaleDown && MINSIZE < d->getMinimumSize(d->original))
+    {
+        d->scaleDown         = true;
+        d->temporary         = d->scaleDownImage(d->original);
+    }
+    else
+    {
+        d->scaleDown         = false;
+        d->temporary         = cvCreateImage(cvGetSize(d->original),
+                                             d->original->depth,
+                                             d->original->nChannels);
+        cvCopy(d->original, d->temporary);
+    }
+
+    allocateBuffers();
+
+    // find possible eyes
+    d->possible_eyes = d->findPossibleEyes(d->scaleFactor,
+                                           d->neighborGroups,
+                                           d->classifierFile);
+
+    // remove red-eye effect
+    if (d->possible_eyes > 0)
+        d->removeRedEyes();
+}
+
+void EyeLocator::allocateBuffers()
+{
+    // allocate all buffers
+    d->lab      = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 3);
+    d->gray     = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
+    d->aChannel = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
+    d->redMask  = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
+
+    // reset masks
+    cvFillImage(d->aChannel, 0);
+    cvFillImage(d->redMask, 0);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

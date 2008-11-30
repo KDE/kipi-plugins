@@ -26,6 +26,7 @@
 
 // Qt includes.
 
+#include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
 
@@ -40,6 +41,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktabwidget.h>
+#include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
 
 // LibKIPI includes.
@@ -48,8 +50,9 @@
 
 // Local includes.
 
-#include "myimageslist.h"
 #include "kpaboutdata.h"
+#include "myimageslist.h"
+#include "previewwidget.h"
 #include "removalsettings.h"
 #include "settingstab.h"
 #include "simplesettings.h"
@@ -75,6 +78,7 @@ public:
         imageList           = 0;
         thread              = 0;
         settingsTab         = 0;
+        previewWidget       = 0;
     }
 
     bool                        busy;
@@ -84,7 +88,12 @@ public:
 
     KTabWidget*                 tabWidget;
 
+    KTemporaryFile              originalImageTempFile;
+    KTemporaryFile              correctedImageTempFile;
+    KTemporaryFile              maskImageTempFile;
+
     MyImagesList*               imageList;
+    PreviewWidget*              previewWidget;
     RemovalSettings             settings;
     SettingsTab*                settingsTab;
     WorkerThread*               thread;
@@ -105,15 +114,20 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     d->busy                 = false;
 
     d->thread               = new WorkerThread(this);
-    d->runtype              = WorkerThread::TestRun;
+    d->runtype              = WorkerThread::Testrun;
     d->interface            = interface;
     d->tabWidget            = new KTabWidget;
 
     d->imageList            = new MyImagesList(interface);
+    d->previewWidget        = new PreviewWidget;
 
     d->progress             = new QProgressBar;
     d->progress->setMaximumHeight(fontMetrics().height() + 2);
     d->progress->hide();
+
+    d->originalImageTempFile.setSuffix(".jpg");
+    d->correctedImageTempFile.setSuffix(".jpg");
+    d->maskImageTempFile.setSuffix(".jpg");
 
     // about & help ----------------------------------------------------------
 
@@ -144,24 +158,33 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
     // ----------------------------------------------------------
 
-    d->settingsTab          = new SettingsTab;
+    d->settingsTab = new SettingsTab;
 
     // ----------------------------------------------------------
 
     QWidget* imagesTab           = new QWidget;
     QVBoxLayout* imagesTabLayout = new QVBoxLayout;
     imagesTabLayout->addWidget(d->imageList);
-    imagesTabLayout->addWidget(d->progress);
     imagesTab->setLayout(imagesTabLayout);
+
+    // ----------------------------------------------------------
+
+    QWidget* previewTab           = new QWidget;
+    QVBoxLayout* previewTabLayout = new QVBoxLayout;
+    previewTabLayout->addWidget(d->previewWidget);
+    previewTab->setLayout(previewTabLayout);
 
     // ----------------------------------------------------------
 
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
+
     d->tabWidget->insertTab(FileList, imagesTab,        i18n("Files List"));
     d->tabWidget->insertTab(Settings, d->settingsTab,   i18n("Settings"));
+    d->tabWidget->insertTab(Preview,  previewTab,       i18n("Preview"));
 
     mainLayout->addWidget(d->tabWidget, 5);
+    mainLayout->addWidget(d->progress);
     mainWidget->setLayout(mainLayout);
     setMainWidget(mainWidget);
 
@@ -187,6 +210,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
 
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(threadFinished()));
+
+    connect(d->tabWidget, SIGNAL(currentChanged(int)),
+            this, SLOT(tabwidgetChanged(int)));
 
     // ------------------------------------------------------------------
 
@@ -277,14 +303,52 @@ void RemoveRedEyesWindow::startCorrection()
     if (!acceptStorageSettings())
         return;
     d->runtype = WorkerThread::Correction;
-    startWorkerThread();
+
+    d->imageList->resetEyeCounterColumn();
+    d->tabWidget->setCurrentIndex(FileList);
+
+    KUrl::List urls = d->imageList->imageUrls();
+    startWorkerThread(urls);
 }
 
 void RemoveRedEyesWindow::startTestrun()
 {
     updateSettings();
-    d->runtype = WorkerThread::TestRun;
-    startWorkerThread();
+    d->runtype = WorkerThread::Testrun;
+
+    d->imageList->resetEyeCounterColumn();
+    d->tabWidget->setCurrentIndex(FileList);
+
+    KUrl::List urls = d->imageList->imageUrls();
+    startWorkerThread(urls);
+}
+
+void RemoveRedEyesWindow::startPreview()
+{
+    KIPIPlugins::ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(
+                                            d->imageList->listView()->currentItem());
+    if (!item)
+    {
+        d->previewWidget->reset();
+        return;
+    }
+
+    if (!d->originalImageTempFile.open()  ||
+        !d->correctedImageTempFile.open() ||
+        !d->maskImageTempFile.open())
+    {
+        kDebug(50001) << "unable to create temp file for image preview!" << endl;
+    }
+
+    updateSettings();
+
+    d->runtype = WorkerThread::Preview;
+    d->previewWidget->setCurrentImage(item->url());
+    d->previewWidget->setBusy(true);
+
+    KUrl::List oneFile;
+    oneFile.append(item->url());
+    startWorkerThread(oneFile);
 }
 
 void RemoveRedEyesWindow::cancelCorrection()
@@ -307,9 +371,8 @@ void RemoveRedEyesWindow::helpClicked()
     KToolInvocation::invokeHelp("removeredeyes", "kipi-plugins");
 }
 
-void RemoveRedEyesWindow::startWorkerThread()
+void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
 {
-    KUrl::List urls = d->imageList->imageUrls();
     if (urls.isEmpty())
         return;
 
@@ -327,13 +390,18 @@ void RemoveRedEyesWindow::startWorkerThread()
     d->thread->setRunType(d->runtype);
     d->thread->loadSettings(d->settings);
 
+    d->thread->setTempFile(d->originalImageTempFile.fileName(),
+                           WorkerThread::OriginalImage);
+    d->thread->setTempFile(d->correctedImageTempFile.fileName(),
+                           WorkerThread::CorrectedImage);
+    d->thread->setTempFile(d->maskImageTempFile.fileName(),
+                           WorkerThread::MaskImage);
+
     setBusy(true);
 
+    initProgressBar(urls.count());
     if (d->progress->isHidden())
         d->progress->show();
-    d->progress->reset();
-    d->progress->setRange(0, urls.count());
-    d->progress->setValue(0);
 
     connect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
             this, SLOT(calculationFinished(WorkerThreadData*)));
@@ -356,9 +424,6 @@ void RemoveRedEyesWindow::setBusy(bool busy)
 
         disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(closeClicked()));
-
-        d->imageList->resetEyeCounterColumn();
-        d->tabWidget->setCurrentIndex(FileList);
 
         setButtonGuiItem(Close, KStandardGuiItem::cancel());
         enableButton(User1, false);
@@ -424,6 +489,12 @@ void RemoveRedEyesWindow::imageListChanged(bool)
     enableButton(User2, !isEmpty);
 }
 
+void RemoveRedEyesWindow::tabwidgetChanged(int tab)
+{
+    if (tab == Preview)
+        startPreview();
+}
+
 void RemoveRedEyesWindow::foundRAWImages(bool raw)
 {
     if (raw)
@@ -483,10 +554,27 @@ void RemoveRedEyesWindow::threadFinished()
     setBusy(false);
     KApplication::restoreOverrideCursor();
 
-    if (d->runtype == WorkerThread::TestRun)
-        handleUnprocessedImages();
-    else
-        showSummary();
+    switch (d->runtype)
+    {
+        case WorkerThread::Testrun:
+            handleUnprocessedImages();
+            break;
+
+        case WorkerThread::Correction:
+            // show summary and close the plugin
+            showSummary();
+            break;
+        case WorkerThread::Preview:
+            // load generated preview images
+            d->previewWidget->setPreviewImage(d->originalImageTempFile.fileName(),
+                                              PreviewWidget::OriginalImage);
+            d->previewWidget->setPreviewImage(d->correctedImageTempFile.fileName(),
+                                              PreviewWidget::CorrectedImage);
+            d->previewWidget->setPreviewImage(d->maskImageTempFile.fileName(),
+                                              PreviewWidget::MaskImage);
+            d->previewWidget->setBusy(false);
+            break;
+    }
 
     disconnect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
                this, SLOT(calculationFinished(WorkerThreadData*)));
@@ -501,6 +589,20 @@ void RemoveRedEyesWindow::showSummary()
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
+}
+
+void RemoveRedEyesWindow::initProgressBar(int max)
+{
+    d->progress->reset();
+    d->progress->setRange(0, max);
+    d->progress->setFormat("%p%");
+
+    if (d->runtype == WorkerThread::Preview)
+    {
+        // create a busy indicator progressbar
+        d->progress->setRange(0, 0);
+    }
+    d->progress->setValue(0);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

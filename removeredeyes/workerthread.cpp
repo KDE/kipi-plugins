@@ -48,14 +48,18 @@ public:
 
     WorkerThreadPriv()
     {
-        runtype = WorkerThread::TestRun;
+        runtype = WorkerThread::Testrun;
         cancel  = false;
     }
 
     int                     runtype;
     bool                    cancel;
     RemovalSettings         settings;
+
     KUrl::List              urls;
+    QString                 maskPreviewFile;
+    QString                 correctedPreviewFile;
+    QString                 originalPreviewFile;
 };
 
 WorkerThread::WorkerThread(QObject* parent)
@@ -141,7 +145,18 @@ void WorkerThread::run()
             }
 
             QByteArray dest = QFile::encodeName(saveLocation.path());
-            loc.saveImage(dest.data());
+            loc.saveImage(dest.data(), EyeLocator::Final);
+        }
+
+        if (d->runtype == Preview)
+        {
+            QByteArray tmpOriginal  = QFile::encodeName(d->originalPreviewFile);
+            QByteArray tmpCorrected = QFile::encodeName(d->correctedPreviewFile);
+            QByteArray tmpMask      = QFile::encodeName(d->maskPreviewFile);
+
+            loc.saveImage(tmpOriginal.data(),   EyeLocator::OriginalPreview);
+            loc.saveImage(tmpCorrected.data(),  EyeLocator::CorrectedPreview);
+            loc.saveImage(tmpMask.data(),       EyeLocator::MaskPreview);
         }
 
         int eyes = loc.redEyes();
@@ -175,6 +190,24 @@ void WorkerThread::loadSettings(RemovalSettings newSettings)
 void WorkerThread::setImagesList(const KUrl::List& list)
 {
     d->urls = list;
+}
+
+void WorkerThread::setTempFile(const QString& temp, ImageType type)
+{
+    switch (type)
+    {
+        case OriginalImage:
+            d->originalPreviewFile = temp;
+            break;
+
+        case CorrectedImage:
+            d->correctedPreviewFile = temp;
+            break;
+
+        case MaskImage:
+            d->maskPreviewFile = temp;
+            break;
+    }
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

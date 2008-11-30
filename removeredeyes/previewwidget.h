@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-06-08
- * Description : the calculation thread for red-eye removal
+ * Date        : 2008-11-29
+ * Description : a preview widget to display correction results
  *
  * Copyright 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -21,36 +21,37 @@
  *
  * ============================================================ */
 
-#ifndef WORKERTHREAD_H
-#define WORKERTHREAD_H
+#ifndef PREVIEWWIDGET_H
+#define PREVIEWWIDGET_H
 
 // Qt includes.
 
-#include <QThread>
+#include <QStackedWidget>
+#include <QPixmap>
+#include <QLabel>
 
-// KDE includes.
+class QWidget;
 
-#include <kurl.h>
+class KUrl;
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class WorkerThreadPriv;
-class WorkerThreadData;
-class RemovalSettings;
+class PreviewWidgetPriv;
 
-class WorkerThread : public QThread
+class PreviewWidget : public QStackedWidget
 {
-
     Q_OBJECT
 
 public:
 
-    enum RunType
+    enum PreviewMode
     {
-        Testrun = 0,
-        Correction,
-        Preview
+        BusyMode = 0,
+        NoSelectionMode,
+        OriginalMode,
+        CorrectedMode,
+        MaskMode
     };
 
     enum ImageType
@@ -60,29 +61,33 @@ public:
         MaskImage
     };
 
-signals:
-
-    void calculationFinished(WorkerThreadData*);
-
 public:
 
-    WorkerThread(QObject* parent);
-    ~WorkerThread();
+    PreviewWidget(QWidget* parent = 0);
+    virtual ~PreviewWidget();
 
-    void setRunType(int);
-    int runType() const;
+    void setPreviewImage(const QString& filename, ImageType type);
+    void setCurrentImage(const KUrl& url);
 
-    void loadSettings(RemovalSettings);
-    void setImagesList(const KUrl::List&);
-    void setTempFile(const QString&, ImageType);
+    void setBusy(bool busy);
+    void reset();
 
-    void cancel();
-    virtual void run();
+protected:
+
+    void enterEvent(QEvent* e);
+    void leaveEvent(QEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
 
 private:
 
-    WorkerThreadPriv* const d;
+    void setMode(PreviewMode mode);
+    QPixmap openFile(const QString& filename);
+
+private:
+
+    PreviewWidgetPriv* const d;
 };
+
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif
+#endif /* PREVIEWWIDGET_H */

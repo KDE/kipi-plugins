@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-06-08
- * Description : the eyelocator detects and removes red eyes
- *               from images
+ * Date        : 2008-11-30
+ * Description : a widget to display an info message
  *
+ * Copyright 2004-2005 by Enrico Ros <eros.kde@email.it>
  * Copyright 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
@@ -22,53 +22,49 @@
  *
  * ============================================================ */
 
-#ifndef EYELOCATOR_H
-#define EYELOCATOR_H
+#ifndef INFOMESSAGEWIDGET_H
+#define INFOMESSAGEWIDGET_H
+
+// Qt includes.
+
+#include <QWidget>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class EyeLocatorPriv;
+class InfoMessageWidgetPriv;
 
-class EyeLocator
+class InfoMessageWidget : public QWidget
 {
+    Q_OBJECT
 
 public:
 
-    enum FileType
+    enum Icon
     {
-        Final = 0,
-        OriginalPreview,
-        CorrectedPreview,
-        MaskPreview
+        None = 0,
+        Info,
+        Warning
     };
 
 public:
 
-    EyeLocator(const char* filename,
-               const char* classifierFile,
-               double scaleFactor,
-               int neighborGroups,
-               double minRoundness,
-               int minBlobsize,
-               bool scaleDown = false);
-    ~EyeLocator();
+    InfoMessageWidget(QWidget* parent = 0);
+    virtual ~InfoMessageWidget();
 
-public:
+    void display(const QString & message, Icon icon = Info, int durationMs = 0);
+    void reset();
 
-    int     redEyes() const;
-    void    saveImage(const char* path, FileType type);
+protected:
+
+    void paintEvent(QPaintEvent* e);
+    void mousePressEvent(QMouseEvent* e);
 
 private:
 
-    void    doCorrection(bool scaleDown);
-    void    allocateBuffers();
-
-private:
-
-    EyeLocatorPriv* const d;
+    InfoMessageWidgetPriv* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif
+#endif /* INFOMESSAGEWIDGET_H */

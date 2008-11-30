@@ -51,7 +51,8 @@ public:
     enum TabStyle
     {
         FileList = 0,
-        Settings
+        Settings,
+        Preview
     };
 
 public:
@@ -67,18 +68,16 @@ private slots:
 
     void closeClicked();
     void helpClicked();
+    void slotButtonClicked(int);
 
     void foundRAWImages(bool);
     void imageListChanged(bool);
+    void tabwidgetChanged(int);
 
+    void startPreview();
+    void startTestrun();
     void startCorrection();
     void cancelCorrection();
-    void startTestrun();
-
-    // reimplement this slot from KDialog to avoid the call for close(),
-    // we will do this on our own here.
-    void slotButtonClicked(int);
-
     void threadFinished();
 
 public slots:
@@ -95,7 +94,8 @@ private:
     void handleUnprocessedImages();
     void setBusy(bool);
     void showSummary();
-    void startWorkerThread();
+    void startWorkerThread(const KUrl::List& urls);
+    void initProgressBar(int max);
 
 private:
 
