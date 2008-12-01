@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF device settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-20087 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -162,7 +162,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                                      "take the picture."));
 
     KActiveLabel *warning = new KActiveLabel(i18n("<b>Warning: EXIF <b><a href="
-                 "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_Information'>"
+                 "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_data'>"
                  "Makernotes</a></b> can be unreadable if you set "
                  "wrong device manufacturer/model description.</b>"), parent);
 
