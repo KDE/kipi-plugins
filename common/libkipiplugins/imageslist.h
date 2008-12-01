@@ -26,6 +26,7 @@
 
 // Qt includes.
 
+#include <QStringList>
 #include <QTreeWidget>
 #include <QWidget>
 
@@ -34,6 +35,9 @@
 #include <kurl.h>
 
 // LibKIPI includes.
+
+#include <libkipi/imageinfo.h>
+
 
 #include "kipiplugins_export.h"
 
@@ -45,6 +49,8 @@ class Interface;
 namespace KIPIPlugins
 {
 
+class ImagesList;
+class ImagesListView;
 class ImagesListPriv;
 
 class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
@@ -52,17 +58,32 @@ class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
 
 public:
 
-    ImagesListViewItem(QTreeWidget *view, const KUrl& url);
+    ImagesListViewItem(ImagesListView *view, const KUrl& url);
     ~ImagesListViewItem();
 
     void setUrl(const KUrl& url);
     KUrl url() const;
 
+    void setComments(const QString& comments);
+    QString comments();
+
+    void setTags(const QStringList& tags);
+    QStringList tags();
+
+    void setRating(int rating);
+    int rating();
+
     void setThumb(const QPixmap& pix);
 
 private:
 
-    KUrl m_url;
+    int         m_rating;         // Image Rating from Kipi host.
+
+    QString     m_comments;       // Image comments from Kipi host.
+
+    QStringList m_tags;           // List of keywords from Kipi host.
+
+    KUrl        m_url;            // Image url provided by Kipi host.
 };
 
 // -------------------------------------------------------------------------
@@ -82,12 +103,14 @@ public:
         User3
     };
 
-    ImagesListView(QWidget *parent = 0);
+    ImagesListView(ImagesList *parent = 0);
     ~ImagesListView();
 
     void setColumnLabel(ColumnType column, const QString &label);
     void setColumnEnabled(ColumnType column, bool enable);
     void setColumn(ColumnType column, const QString &label, bool enable);
+
+    KIPI::Interface* iface() const;
 
 signals:
 
@@ -98,7 +121,6 @@ private:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
-
 };
 
 // -------------------------------------------------------------------------
@@ -112,9 +134,10 @@ public:
     explicit ImagesList(KIPI::Interface *iface, bool allowRAW = true, bool autoLoad = true, QWidget* parent = 0);
     virtual ~ImagesList();
 
-    ImagesListView* listView() const;
+    ImagesListView*  listView() const;
+    KIPI::Interface* iface() const;
 
-    virtual KUrl::List imageUrls()  const;
+    virtual KUrl::List imageUrls() const;
     virtual void removeItemByUrl(const KUrl& url);
 
 signals:

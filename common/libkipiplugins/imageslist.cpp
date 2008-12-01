@@ -58,14 +58,38 @@
 
 #include "imagedialog.h"
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIPlugins
 {
 
-ImagesListViewItem::ImagesListViewItem(QTreeWidget *view, const KUrl& url)
+ImagesListViewItem::ImagesListViewItem(ImagesListView *view, const KUrl& url)
                   : QTreeWidgetItem(view)
 {
     setThumb(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
     setUrl(url);
+    setRating(-1);
+    Interface *iface = view->iface();
+    if (iface)
+    {
+        ImageInfo info = iface->info(url);
+
+        setComments(info.description());
+
+        setTags(QStringList());
+        if (view->iface()->hasFeature(HostSupportsTags))
+        {
+            QMap<QString, QVariant> attribs = info.attributes();
+            setTags(attribs["tags"].toStringList());
+        }
+
+        if (view->iface()->hasFeature(HostSupportsRating))
+        {
+            QMap<QString, QVariant> attribs = info.attributes();
+            setRating(attribs["rating"].toInt());
+        }
+    }
 }
 
 ImagesListViewItem::~ImagesListViewItem()
@@ -83,6 +107,36 @@ KUrl ImagesListViewItem::url() const
     return m_url;
 }
 
+void ImagesListViewItem::setComments(const QString& comments)
+{
+    m_comments = comments;
+}
+
+QString ImagesListViewItem::comments()
+{
+    return m_comments;
+}
+
+void ImagesListViewItem::setTags(const QStringList& tags)
+{
+    m_tags = tags;
+}
+
+QStringList ImagesListViewItem::tags()
+{
+    return m_tags;
+}
+
+void ImagesListViewItem::setRating(int rating)
+{
+    m_rating = rating;
+}
+
+int ImagesListViewItem::rating()
+{
+    return m_rating;
+}
+
 void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
@@ -94,7 +148,7 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
 
 // ---------------------------------------------------------------------------
 
-ImagesListView::ImagesListView(QWidget *parent)
+ImagesListView::ImagesListView(ImagesList *parent)
               : QTreeWidget(parent)
 {
     setIconSize(QSize(ICONSIZE, ICONSIZE));
@@ -174,6 +228,15 @@ void ImagesListView::dropEvent(QDropEvent *e)
         emit addedDropedItems(urls);
 }
 
+KIPI::Interface* ImagesListView::iface() const
+{
+    ImagesList *p = dynamic_cast<ImagesList*>(parent());
+    if (p)
+        return p->iface();
+
+    return 0;
+}
+
 // ---------------------------------------------------------------------------
 
 class ImagesListPriv
@@ -198,10 +261,10 @@ public:
 
     ImagesListView*     listView;
 
-    KIPI::Interface*    iface;
+    Interface*          iface;
 };
 
-ImagesList::ImagesList(KIPI::Interface *iface, bool allowRAW, bool autoLoad, QWidget* parent)
+ImagesList::ImagesList(Interface *iface, bool allowRAW, bool autoLoad, QWidget* parent)
           : QWidget(parent),
             d(new ImagesListPriv)
 {
@@ -252,7 +315,7 @@ ImagesList::ImagesList(KIPI::Interface *iface, bool allowRAW, bool autoLoad, QWi
 
     if (autoLoad)
     {
-        KIPI::ImageCollection images = d->iface->currentSelection();
+        ImageCollection images = d->iface->currentSelection();
 
         if (images.isValid())
             slotAddImages(images.images());
@@ -331,7 +394,7 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
 
 void ImagesList::slotAddItems()
 {
-    KIPIPlugins::ImageDialog dlg(this, d->iface, false);
+    ImageDialog dlg(this, d->iface, false);
     KUrl::List urls = dlg.urls();
     if (!urls.isEmpty())
         slotAddImages(urls);
@@ -396,6 +459,11 @@ QWidget* ImagesList::plainPage() const
 ImagesListView* ImagesList::listView() const
 {
     return d->listView;
+}
+
+KIPI::Interface* ImagesList::iface() const
+{
+    return d->iface;
 }
 
 bool ImagesList::isRAWFile(const QString & filePath)

@@ -23,18 +23,9 @@
 #ifndef IMAGES_PAGE_H
 #define IMAGES_PAGE_H
 
-// Qt includes.
-
-#include <QListWidget>
-#include <QWidget>
-#include <QPixmap>
-
-// KDE includes.
-
-#include <kurl.h>
-
 // Local includes.
 
+#include "imageslist.h"
 #include "emailsettingscontainer.h"
 
 namespace KIPI
@@ -45,62 +36,7 @@ namespace KIPI
 namespace KIPISendimagesPlugin
 {
 
-class ImagesPagePriv;
-
-class ImagesListViewItem : public QListWidgetItem
-{
-
-public:
-
-    ImagesListViewItem(QListWidget *view, KIPI::Interface *iface, const KUrl& url);
-    ~ImagesListViewItem();
-
-    void setUrl(const KUrl& url);
-    KUrl url();
-
-    void setComments(const QString& comments);
-    QString comments();
-
-    void setTags(const QStringList& tags);
-    QStringList tags();
-
-    void setRating(int rating);
-    int rating();
-
-    void setThumb(const QPixmap& pix);
-
-    EmailItem emailItem();
-
-private:
-
-    EmailItem m_item;
-};
-
-// -------------------------------------------------------------------------
-
-class ImagesListView : public QListWidget
-{
-
-    Q_OBJECT
-
-public:
-
-    ImagesListView(QWidget *parent);
-    ~ImagesListView();
-
-signals:
-
-    void addedDropedItems(const KUrl::List& urls);
-
-private:
-
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dropEvent(QDropEvent *e);
-};
-
-// -------------------------------------------------------------------------
-
-class ImagesPage : public QWidget
+class ImagesPage : public KIPIPlugins::ImagesList
 {
     Q_OBJECT
 
@@ -110,23 +46,8 @@ public:
     ~ImagesPage();
 
     QList<EmailItem> imagesList();
-
-public slots:
-
-    void slotAddImages(const KUrl::List& list);
-
-private slots:
-
-
-    void slotAddItems();
-    void slotRemoveItems();
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
-
-private:
-
-    ImagesPagePriv* d;
 };
 
 }  // namespace KIPISendimagesPlugin
 
-#endif // IMAGES_PAGE_H 
+#endif // IMAGES_PAGE_H
