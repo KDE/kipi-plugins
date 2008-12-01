@@ -264,7 +264,7 @@ public:
     Interface*          iface;
 };
 
-ImagesList::ImagesList(Interface *iface, bool allowRAW, bool autoLoad, QWidget* parent)
+ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool autoLoad)
           : QWidget(parent),
             d(new ImagesListPriv)
 {

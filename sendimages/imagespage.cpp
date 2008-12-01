@@ -32,7 +32,7 @@ namespace KIPISendimagesPlugin
 {
 
 ImagesPage::ImagesPage(QWidget* parent, Interface *iface)
-          : ImagesList(iface, true, true, parent)
+          : ImagesList(iface, parent)
 {
 }
 
