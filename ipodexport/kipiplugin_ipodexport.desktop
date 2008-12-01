@@ -23,6 +23,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para um dispositivo iPod
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um dispositivo iPod
 Comment[sv]=Ett verktyg för att exportera bilder till en iPod
 Comment[uk]=Інструмент для експорту зображень на пристрій Ipod
+Comment[x-test]=xxA tool to export pictures to an Ipod devicexx
 Comment[zh_CN]=一个将图片导出到 Ipod 设备的工具
 Type=Service
 ServiceTypes=KIPI/Plugin

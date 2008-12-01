@@ -37,6 +37,7 @@ Comment[pt_BR]=Uma ferramenta para ajustar a data e a hora
 Comment[sv]=Ett verktyg för att justera datum och tid
 Comment[tr]=Tarihi ve saati ayarlamak için bir araç
 Comment[uk]=Інструмент для налаштування дати і часу
+Comment[x-test]=xxA tool to adjust date and timexx
 Comment[zh_CN]=一个调整日期和时间的工具
 Type=Service
 ServiceTypes=KIPI/Plugin

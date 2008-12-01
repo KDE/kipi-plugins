@@ -36,6 +36,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do P
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço Web remoto do Picasa
 Comment[sv]=Ett verktyg för att exportera bilder till en Picasa fjärrwebbtjänst
 Comment[uk]=Інструмент для експорту зображень до віддаленої веб-службу Picasa
+Comment[x-test]=xxA tool to export images to a remote Picasa web servicexx
 Comment[zh_CN]=一个将图像导出到远程 Picasa 网络服务的工具
 Type=Service
 ServiceTypes=KIPI/Plugin

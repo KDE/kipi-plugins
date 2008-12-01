@@ -33,6 +33,7 @@ Comment[pt_BR]=Uma ferramenta de conversão em lote de imagens RAW em JPEG/PNG/T
 Comment[sv]=Ett verktyg för att konvertera obehandlade bilder till JPEG, PNG eller TIFF
 Comment[tr]=Ham dosyaları  JPEG/PNG/TIFF biçimlerine dönüştürmek için bir araç
 Comment[uk]=Інструмент для перетворення зображень цифрових негативів на JPEG/PNG/TIFF
+Comment[x-test]=xxA tool to convert Raw Image to JPEG/PNG/TIFFxx
 Comment[zh_CN]=一个转换 RAW 图像为 JPEG/PNG/TIFF 的工具
 Type=Service
 ServiceTypes=KIPI/Plugin

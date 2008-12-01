@@ -36,6 +36,7 @@ Comment[pt_BR]=Uma ferramenta para enviar imagens por e-mail
 Comment[sv]=Ett verktyg för att skicka bilder via e-post
 Comment[tr]=Dosyaları e-posta ile göndermek için bir araç
 Comment[uk]=Інструмент для надсилання зображень електронною поштою
+Comment[x-test]=xxA tool to send images by e-mailxx
 Comment[zh_CN]=一个通过电子邮件发送图像的工具
 Icon=
 ServiceTypes=KIPI/Plugin

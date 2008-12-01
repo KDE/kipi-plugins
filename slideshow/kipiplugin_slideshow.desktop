@@ -38,6 +38,7 @@ Comment[pt]=Uma ferramenta para apresentar imagens com efeitos do OpenGL em 2D e
 Comment[pt_BR]=Uma ferramenta para apresentar imagens com efeitos do OpenGL em 2D e 3D
 Comment[sv]=Ett verktyg för bildspel med två- och tredimensionella effekter som använder OpenGL
 Comment[uk]=Інструмент для створення показу слайдів з ефектами 2D і 3D за допомогою OpenGL
+Comment[x-test]=xxA tool to Slide images with 2D and 3D effects using OpenGLxx
 Comment[zh_CN]=一个使用 OpenGL 2D 和 3D 效果幻灯播放图像的工具
 Type=Service
 ServiceTypes=KIPI/Plugin

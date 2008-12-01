@@ -29,6 +29,7 @@ Comment[pt]=Uma ferramenta para exportar imagens para Flash
 Comment[pt_BR]=Uma ferramenta para exportar imagens para Flash
 Comment[sv]=Ett verktyg för att exportera bilder till Flash
 Comment[uk]=Інструмент для експортування зображень до Flash
+Comment[x-test]=xxA tool to export images to Flashxx
 Comment[zh_CN]=一个将图像导出为 Flash 的工具
 Type=Service
 ServiceTypes=KIPI/Plugin
