@@ -7,8 +7,10 @@ RemoveRedEyes  : Added an option to preview the correction of the currently sele
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 169637 : EXIF Data Editing Error.
+001 ==> 169637 : MetadataEdit       : EXIF Data Editing Error.
 002 ==> 174954 : HTMLExport         : Support for remote urls.
+003 ==> 176640 : MetadataEdit       : Wrong reference to website.
+004 ==> 
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------
