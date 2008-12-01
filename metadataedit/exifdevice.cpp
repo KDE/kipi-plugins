@@ -157,7 +157,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                                        "take the picture."));
 
     QLabel *warning = new QLabel(i18n("<b>Warning: EXIF <b><a href="
-                 "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_Information'>"
+                 "'http://en.wikipedia.org/wiki/Exchangeable_image_file_format#MakerNote_data'>"
                  "Makernotes</a></b> can be unreadable if you set "
                  "wrong device manufacturer/model description.</b>"), this);
     warning->setOpenExternalLinks(true);
