@@ -270,7 +270,7 @@ public:
     Interface*          iface;
 };
 
-ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool autoLoad)
+ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool autoLoad, bool showListOnly)
           : QWidget(parent),
             d(new ImagesListPriv)
 {
@@ -282,15 +282,20 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool au
     QGridLayout* mainLayout = new QGridLayout;
     d->listView             = new ImagesListView;
     d->plainPage            = new QWidget;
+    d->plainPage->hide();
 
     // --------------------------------------------------------
 
     d->addButton    = new QPushButton;
     d->removeButton = new QPushButton;
+
     d->addButton->setText(i18n("&Add"));
     d->addButton->setIcon(SmallIcon("list-add"));
+    d->addButton->hide();
+
     d->removeButton->setText(i18n("&Remove"));
     d->removeButton->setIcon(SmallIcon("list-remove"));
+    d->removeButton->hide();
 
     // --------------------------------------------------------
 
@@ -308,14 +313,23 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool au
     connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
             this, SLOT(slotAddImages(const KUrl::List&)));
 
-    connect(d->addButton, SIGNAL(clicked()),
-            this, SLOT(slotAddItems()));
-
-    connect(d->removeButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveItems()));
-
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
+    // --------------------------------------------------------
+
+    if (!showListOnly)
+    {
+        connect(d->addButton, SIGNAL(clicked()),
+                this, SLOT(slotAddItems()));
+
+        connect(d->removeButton, SIGNAL(clicked()),
+                this, SLOT(slotRemoveItems()));
+
+        d->addButton->show();
+        d->removeButton->show();
+        d->plainPage->show();
+    }
 
     // --------------------------------------------------------
 
