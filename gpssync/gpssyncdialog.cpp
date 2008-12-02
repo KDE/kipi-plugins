@@ -134,7 +134,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     // --------------------------------------------------------------
 
-    d->imagesList = new KIPIPlugins::ImagesList(d->interface, this, false);
+    d->imagesList = new KIPIPlugins::ImagesList(d->interface, this, true, true, false);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
                                        i18n("Date"), true);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User2,
