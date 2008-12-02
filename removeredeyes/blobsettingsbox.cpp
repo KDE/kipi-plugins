@@ -72,6 +72,12 @@ BlobSettingsBox::BlobSettingsBox(QWidget* parent)
     mainLayout->addWidget(d->minRoundnessNumInput, 1, 0, 1, 2);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
+
+    connect(d->minBlobSizeNumInput, SIGNAL(valueChanged(int)),
+            this, SIGNAL(settingsChanged()));
+
+    connect(d->minRoundnessNumInput, SIGNAL(valueChanged(int)),
+            this, SIGNAL(settingsChanged()));
 }
 
 BlobSettingsBox::~BlobSettingsBox()

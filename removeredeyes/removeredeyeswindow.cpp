@@ -214,6 +214,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(d->tabWidget, SIGNAL(currentChanged(int)),
             this, SLOT(tabwidgetChanged(int)));
 
+    connect(d->settingsTab, SIGNAL(settingsChanged()),
+            d->previewWidget, SLOT(reset()));
+
     // ------------------------------------------------------------------
 
     KIPI::ImageCollection images = interface->currentSelection();
@@ -281,6 +284,12 @@ void RemoveRedEyesWindow::updateSettings()
     d->settings = d->settingsTab->readSettings();
 }
 
+bool RemoveRedEyesWindow::previewNeedsUpdate()
+{
+//    if (item->url().equals(d->previewWidget->currentImage()))
+//        return;
+}
+
 bool RemoveRedEyesWindow::acceptStorageSettings()
 {
     if (d->settings.storageMode == StorageSettingsBox::Overwrite)
@@ -343,8 +352,12 @@ void RemoveRedEyesWindow::startPreview()
     updateSettings();
 
     d->runtype = WorkerThread::Preview;
-    d->previewWidget->setCurrentImage(item->url());
-    d->previewWidget->setBusy(true);
+
+    if (item->url().path() == d->previewWidget->image())
+        return;
+
+    d->previewWidget->reset();
+    d->previewWidget->setImage(item->url().path());
 
     KUrl::List oneFile;
     oneFile.append(item->url());
@@ -566,13 +579,12 @@ void RemoveRedEyesWindow::threadFinished()
             break;
         case WorkerThread::Preview:
             // load generated preview images
-            d->previewWidget->setPreviewImage(d->originalImageTempFile.fileName(),
-                                              PreviewWidget::OriginalImage);
-            d->previewWidget->setPreviewImage(d->correctedImageTempFile.fileName(),
-                                              PreviewWidget::CorrectedImage);
-            d->previewWidget->setPreviewImage(d->maskImageTempFile.fileName(),
-                                              PreviewWidget::MaskImage);
-            d->previewWidget->setBusy(false);
+            d->previewWidget->setPreview(PreviewWidget::OriginalImage,
+                    d->originalImageTempFile.fileName());
+            d->previewWidget->setPreview(PreviewWidget::CorrectedImage,
+                    d->correctedImageTempFile.fileName());
+            d->previewWidget->setPreview(PreviewWidget::MaskImage,
+                    d->maskImageTempFile.fileName());
             break;
     }
 

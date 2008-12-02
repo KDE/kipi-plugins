@@ -185,6 +185,7 @@ void InfoMessageWidget::mousePressEvent(QMouseEvent *)
 void InfoMessageWidget::reset()
 {
     d->hidden = false;
+    hide();
     d->message.clear();
 }
 

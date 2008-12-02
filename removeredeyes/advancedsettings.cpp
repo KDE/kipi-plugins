@@ -70,6 +70,12 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
     mainLayout->addLayout(advLayout,     0, 0, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
+
+    connect(d->blobSettingsBox, SIGNAL(settingsChanged()),
+            this, SIGNAL(settingsChanged()));
+
+    connect(d->classifierSettingsBox, SIGNAL(settingsChanged()),
+            this, SIGNAL(settingsChanged()));
 }
 
 AdvancedSettings::~AdvancedSettings()

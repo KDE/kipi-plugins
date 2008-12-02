@@ -55,6 +55,10 @@ public:
 
     int simpleMode() const;
 
+signals:
+
+    void settingsChanged();
+
 private slots:
 
     void simpleModeChanged(int);

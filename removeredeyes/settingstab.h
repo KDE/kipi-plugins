@@ -53,6 +53,10 @@ public:
     RemovalSettings readSettings();
     RemovalSettings readSettingsForSave();
 
+signals:
+
+    void settingsChanged();
+
 private slots:
 
     void prepareSettings();

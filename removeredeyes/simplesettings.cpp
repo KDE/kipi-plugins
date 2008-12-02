@@ -128,6 +128,9 @@ SimpleSettings::SimpleSettings(QWidget* parent)
 
     connect(d->settingsSlider, SIGNAL(valueChanged(int)),
             this, SLOT(simpleModeChanged(int)));
+
+    connect(d->settingsSlider, SIGNAL(valueChanged(int)),
+            this, SIGNAL(settingsChanged()));
 }
 
 SimpleSettings::~SimpleSettings()

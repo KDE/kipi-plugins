@@ -57,7 +57,7 @@ public:
         modeInfo            = 0;
     }
 
-    bool                busy;
+    bool                locked;
 
     QLabel*             busyLabel;
     QLabel*             noSelectionLabel;
@@ -66,7 +66,7 @@ public:
     QLabel*             correctedLabel;
     QLabel*             maskLabel;
 
-    KUrl                currentImage;
+    QString             image;
 
     InfoMessageWidget*  modeInfo;
 };
@@ -87,7 +87,8 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->busy                 = false;
+    d->locked               = true;
+
     d->busyLabel            = new QLabel;
     d->noSelectionLabel     = new QLabel;
     d->originalLabel        = new QLabel;
@@ -107,7 +108,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     d->busyLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     insertWidget(BusyMode,          d->busyLabel);
-    insertWidget(NoSelectionMode,   d->noSelectionLabel);
+    insertWidget(LockedMode,        d->noSelectionLabel);
     insertWidget(OriginalMode,      d->originalLabel);
     insertWidget(CorrectedMode,     d->correctedLabel);
     insertWidget(MaskMode,          d->maskLabel);
@@ -115,6 +116,12 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     // --------------------------------------------------------
 
     d->modeInfo     = new InfoMessageWidget(this);
+    reset();
+
+    // --------------------------------------------------------
+
+    connect(this, SIGNAL(settingsChanged()),
+            this, SLOT(updateSettings()));
 }
 
 PreviewWidget::~PreviewWidget()
@@ -122,7 +129,18 @@ PreviewWidget::~PreviewWidget()
     delete d;
 }
 
-void PreviewWidget::setPreviewImage(const QString& filename, ImageType type)
+QString& PreviewWidget::image() const
+{
+    return d->image;
+}
+
+void PreviewWidget::setImage(const QString& image)
+{
+    d->image = image;
+    emit settingsChanged();
+}
+
+void PreviewWidget::setPreview(PreviewType type, const QString& filename)
 {
     switch (type)
     {
@@ -138,6 +156,7 @@ void PreviewWidget::setPreviewImage(const QString& filename, ImageType type)
             d->maskLabel->setPixmap(openFile(filename));
             break;
     }
+    emit settingsChanged();
 }
 
 QPixmap PreviewWidget::openFile(const QString& filename)
@@ -162,64 +181,34 @@ QPixmap PreviewWidget::openFile(const QString& filename)
     return image;
 }
 
-void PreviewWidget::setBusy(bool busy)
-{
-    d->busy = busy;
-
-    if (busy)
-        setMode(BusyMode);
-    else
-        setMode(CorrectedMode);
-}
-
 void PreviewWidget::enterEvent (QEvent*)
 {
-    if (d->currentImage.isEmpty())
-    {
-        setMode(NoSelectionMode);
+    if (d->locked)
         return;
-    }
 
-    if (!d->busy)
-        setMode(OriginalMode);
+    setMode(OriginalMode);
 }
 
 void PreviewWidget::leaveEvent (QEvent*)
 {
-    if (d->currentImage.isEmpty())
-    {
-        setMode(NoSelectionMode);
+    if (d->locked)
         return;
-    }
 
-    if (!d->busy)
-        setMode(CorrectedMode);
+    setMode(CorrectedMode);
 }
 
 void PreviewWidget::mouseReleaseEvent(QMouseEvent*)
 {
-    if (d->currentImage.isEmpty())
-    {
-        setMode(NoSelectionMode);
+    if (d->locked)
         return;
-    }
 
-    if (!d->busy)
-    {
-        if (currentIndex() == MaskMode)
-            setMode(OriginalMode);
-        else
-            setMode(MaskMode);
-    }
+    if (currentIndex() == MaskMode)
+        setMode(OriginalMode);
+    else
+        setMode(MaskMode);
 }
 
-void PreviewWidget::setCurrentImage(const KUrl& url)
-{
-    d->currentImage = url;
-    d->modeInfo->reset();
-}
-
-void PreviewWidget::setMode(PreviewMode mode)
+void PreviewWidget::setMode(DisplayMode mode)
 {
     setCurrentIndex(mode);
 
@@ -247,9 +236,43 @@ void PreviewWidget::setMode(PreviewMode mode)
 
 void PreviewWidget::reset()
 {
-    d->currentImage.clear();
     d->modeInfo->reset();
-    setMode(NoSelectionMode);
+    d->image.clear();
+    d->originalLabel->setPixmap(0);
+    d->correctedLabel->setPixmap(0);
+    d->maskLabel->setPixmap(0);
+    updateSettings();
+}
+
+bool PreviewWidget::previewsLoaded()
+{
+    if (d->originalLabel->pixmap()->isNull()  ||
+        d->correctedLabel->pixmap()->isNull() ||
+        d->maskLabel->pixmap()->isNull())
+    {
+        return false;
+    }
+    return true;
+}
+
+void PreviewWidget::updateSettings()
+{
+    if (d->image.isEmpty())
+    {
+        d->locked = true;
+        setMode(LockedMode);
+        return;
+    }
+
+    if (!previewsLoaded())
+    {
+        d->locked = true;
+        setMode(BusyMode);
+        return;
+    }
+
+    d->locked = false;
+    setMode(CorrectedMode);
 }
 
 } // namspace KIPIRemoveRedEyesPlugin

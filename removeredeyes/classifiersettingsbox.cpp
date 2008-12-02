@@ -92,6 +92,15 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
 
     connect(d->standardClassifierCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(standardClassifierChecked()));
+
+    connect(d->standardClassifierCheckBox, SIGNAL(stateChanged(int)),
+            this, SIGNAL(settingsChanged()));
+
+    connect(d->neighborGroupsNumInput, SIGNAL(valueChanged(int)),
+            this, SIGNAL(settingsChanged()));
+
+    connect(d->scalingFactorNumInput, SIGNAL(valueChanged(double)),
+            this, SIGNAL(settingsChanged()));
 }
 
 ClassifierSettingsBox::~ClassifierSettingsBox()

@@ -46,6 +46,10 @@ public:
     void loadSettings(RemovalSettings);
     RemovalSettings readSettings();
 
+signals:
+
+    void settingsChanged();
+
 private slots:
 
     void prepareSettings();

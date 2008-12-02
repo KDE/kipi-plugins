@@ -45,16 +45,16 @@ class PreviewWidget : public QStackedWidget
 
 public:
 
-    enum PreviewMode
+    enum DisplayMode
     {
         BusyMode = 0,
-        NoSelectionMode,
+        LockedMode,
         OriginalMode,
         CorrectedMode,
         MaskMode
     };
 
-    enum ImageType
+    enum PreviewType
     {
         OriginalImage = 0,
         CorrectedImage,
@@ -66,11 +66,18 @@ public:
     PreviewWidget(QWidget* parent = 0);
     virtual ~PreviewWidget();
 
-    void setPreviewImage(const QString& filename, ImageType type);
-    void setCurrentImage(const KUrl& url);
+    QString& image() const;
+    void setImage(const QString& image);
 
-    void setBusy(bool busy);
+    void setPreview(PreviewType type, const QString& filename);
+
+public slots:
+
     void reset();
+
+signals:
+
+    void settingsChanged();
 
 protected:
 
@@ -78,9 +85,14 @@ protected:
     void leaveEvent(QEvent* e);
     void mouseReleaseEvent(QMouseEvent* e);
 
+private slots:
+
+    void updateSettings();
+
 private:
 
-    void setMode(PreviewMode mode);
+    bool previewsLoaded();
+    void setMode(DisplayMode mode);
     QPixmap openFile(const QString& filename);
 
 private:

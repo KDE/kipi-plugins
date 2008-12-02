@@ -50,6 +50,10 @@ public:
     double minRoundness() const;
     void setMinRoundness(double);
 
+signals:
+
+    void settingsChanged();
+
 private:
 
     BlobSettingsBoxPriv* const d;
