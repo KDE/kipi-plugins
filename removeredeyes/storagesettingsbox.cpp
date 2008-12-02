@@ -28,6 +28,7 @@
 
 #include <QButtonGroup>
 #include <QGridLayout>
+#include <QLabel>
 #include <QRadioButton>
 
 // KDE includes.
@@ -86,12 +87,19 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     d->suffixLineEdit = new KLineEdit;
     d->suffixLineEdit->setToolTip(i18n("Enter the name of the suffix here..."));
 
+    QLabel* note      = new QLabel(i18n("<p><i>Note: At the moment this plugin will not keep "
+                                        "any metadata (EXIF, IPTC).<br/>"
+                                        "DON'T USE OVERWRITE MODE, YOU WILL LOSE ALL INFORMATION!</i></p>"));
+
+    note->setWordWrap(true);
+
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->subfolderLineEdit,  0, 2, 1, 1);
     correctionGroupLayout->addWidget(suffixMode,            1, 0, 1, 1);
     correctionGroupLayout->addWidget(d->suffixLineEdit,     1, 2, 1, 1);
     correctionGroupLayout->addWidget(overwriteMode,         2, 0, 1,-1);
+    correctionGroupLayout->addWidget(note,                  3, 0, 1,-1);
     setLayout(correctionGroupLayout);
 
     setStorageMode(Suffix);
