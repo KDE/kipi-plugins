@@ -92,7 +92,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     setMainWidget( page );
 
     QVBoxLayout* vlay = new QVBoxLayout(page);
-    d->imagesList     = new KIPIPlugins::ImagesList(d->interface, this, true, false, true);
+    d->imagesList     = new KIPIPlugins::ImagesList(d->interface, this, false);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
                                        i18n("Id"), true);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User2,

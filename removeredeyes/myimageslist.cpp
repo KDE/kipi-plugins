@@ -76,7 +76,7 @@ public:
 };
 
 MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
-            : ImagesList(iface, parent, false, false),
+            : ImagesList(iface, parent, false, false, false),
               d(new MyImagesListPriv)
 {
     d->iface = iface;

@@ -270,7 +270,8 @@ public:
     Interface*          iface;
 };
 
-ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool autoLoad, bool showListOnly)
+ImagesList::ImagesList(Interface *iface, QWidget* parent, bool listViewOnly,
+                       bool allowRAW, bool autoLoad)
           : QWidget(parent),
             d(new ImagesListPriv)
 {
@@ -318,7 +319,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool allowRAW, bool au
 
     // --------------------------------------------------------
 
-    if (!showListOnly)
+    if (!listViewOnly)
     {
         connect(d->addButton, SIGNAL(clicked()),
                 this, SLOT(slotAddItems()));

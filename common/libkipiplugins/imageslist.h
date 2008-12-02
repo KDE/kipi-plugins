@@ -134,8 +134,8 @@ class KIPIPLUGINS_EXPORT ImagesList : public QWidget
 
 public:
 
-    explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0,
-                        bool allowRAW = true, bool autoLoad = true, bool showListOnly = false);
+    explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0, bool listViewOnly = false,
+                        bool allowRAW = true, bool autoLoad = true);
     virtual ~ImagesList();
 
     ImagesListView*  listView() const;
