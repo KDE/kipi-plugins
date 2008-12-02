@@ -66,16 +66,17 @@ public:
     GPSDataContainer gpsData;
 };
 
-GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, QTreeWidget *view, const KUrl& url)
-               : QTreeWidgetItem(view)
+GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, KIPIPlugins::ImagesListView *view, const KUrl& url)
+               : KIPIPlugins::ImagesListViewItem(view, url)
 {
     d = new GPSListViewItemPriv;
     d->interface = interface;
     d->url       = url;
 
     setEnabled(false);
-    setIcon(0, SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
-    setText(1, d->url.fileName());
+    setIcon(KIPIPlugins::ImagesListView::Thumbnail,
+            SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    setText(KIPIPlugins::ImagesListView::Filename, d->url.fileName());
 
     double alt, lat, lng;
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -121,9 +122,9 @@ void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bo
     d->gpsData    = gpsData;
     d->erase      = false;
     d->hasGPSInfo = true;
-    setText(3, QString::number(d->gpsData.latitude(),  'g', 12));
-    setText(4, QString::number(d->gpsData.longitude(), 'g', 12));
-    setText(5, QString::number(d->gpsData.altitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User2, QString::number(d->gpsData.latitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User3, QString::number(d->gpsData.longitude(), 'g', 12));
+    setText(KIPIPlugins::ImagesListView::User4, QString::number(d->gpsData.altitude(),  'g', 12));
 
     if (isDirty())
     {
@@ -139,7 +140,7 @@ void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bo
                 status = i18n("Found");
         }
 
-        setText(6, status);
+        setText(KIPIPlugins::ImagesListView::User5, status);
     }
 }
 
@@ -152,7 +153,7 @@ void GPSListViewItem::eraseGPSInfo()
 {
     d->erase = true;
     d->dirty = true;
-    setText(6, i18n("Deleted!"));
+    setText(KIPIPlugins::ImagesListView::User5, i18n("Deleted!"));
 }
 
 void GPSListViewItem::setDateTime(const QDateTime& date)
@@ -160,11 +161,11 @@ void GPSListViewItem::setDateTime(const QDateTime& date)
     if (date.isValid())
     {
         d->date = date;
-        setText(2, date.toString(Qt::LocalDate));
+        setText(KIPIPlugins::ImagesListView::User1, date.toString(Qt::LocalDate));
     }
     else
     {
-        setText(2, i18n("Not available"));
+        setText(KIPIPlugins::ImagesListView::User1, i18n("Not available"));
     }
 }
 
@@ -246,7 +247,8 @@ bool GPSListViewItem::isDirty()
 
 void GPSListViewItem::setThumbnail(const QPixmap& pix)
 {
-    setIcon(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
+    setIcon(KIPIPlugins::ImagesListView::Thumbnail,
+            pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
 } // namespace KIPIGPSSyncPlugin

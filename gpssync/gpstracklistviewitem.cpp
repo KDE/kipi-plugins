@@ -49,8 +49,8 @@ public:
     GPSTrackListItem data;
 };
 
-GPSTrackListViewItem::GPSTrackListViewItem(QTreeWidget *view)
-                    : QTreeWidgetItem(view)
+GPSTrackListViewItem::GPSTrackListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url)
+                    : KIPIPlugins::ImagesListViewItem(view, url)
 {
     d = new GPSTrackListViewItemPriv;
     setIcon(0, SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
@@ -70,13 +70,13 @@ void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListIte
 {
     d->dateTime = dt;
     d->data     = data;
-    setText(1, QString::number(d->data.id()));
-    setText(2, d->data.fileName());
-    setText(3, d->dateTime.toString(Qt::LocalDate));
-    setText(4, QString::number(d->data.gpsData().latitude(),  'g', 12));
-    setText(5, QString::number(d->data.gpsData().longitude(), 'g', 12));
-    setText(6, QString::number(d->data.gpsData().altitude(),  'g', 12));
-    setText(7, isDirty() ? i18n("Yes") : i18n("No"));
+    setText(KIPIPlugins::ImagesListView::User1, QString::number(d->data.id()));
+    setText(KIPIPlugins::ImagesListView::Filename, d->data.fileName());
+    setText(KIPIPlugins::ImagesListView::User2, d->dateTime.toString(Qt::LocalDate));
+    setText(KIPIPlugins::ImagesListView::User3, QString::number(d->data.gpsData().latitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User4, QString::number(d->data.gpsData().longitude(), 'g', 12));
+    setText(KIPIPlugins::ImagesListView::User5, QString::number(d->data.gpsData().altitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User6, isDirty() ? i18n("Yes") : i18n("No"));
 }
 
 GPSTrackListItem GPSTrackListViewItem::gpsInfo() const

@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with 
+ * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
  * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -32,8 +32,6 @@
 // LibKIPI includes.
 
 #include <libkipi/interface.h>
-
-
 
 namespace KIPIGPSSyncPlugin
 {
@@ -66,8 +64,7 @@ protected slots:
 
 private slots:
 
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
-    void slotLoadGPXFile(); 
+    void slotLoadGPXFile();
 
 private:
 

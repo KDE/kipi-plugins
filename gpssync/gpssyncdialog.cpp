@@ -34,7 +34,6 @@
 #include <QLayout>
 #include <QPainter>
 #include <QPushButton>
-#include <QTreeWidget>
 
 // KDE includes.
 
@@ -61,6 +60,7 @@
 #include "gpsdataparser.h"
 #include "gpseditdialog.h"
 #include "gpslistviewitem.h"
+#include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
@@ -73,7 +73,7 @@ public:
 
     GPSSyncDialogPriv()
     {
-        listView       = 0;
+        imagesList       = 0;
         interface      = 0;
         maxGapInput    = 0;
         gpxFileName    = 0;
@@ -92,8 +92,6 @@ public:
 
     QCheckBox                *interpolateBox;
 
-    QTreeWidget              *listView;
-
     KIntSpinBox              *maxGapInput;
     KIntSpinBox              *maxTimeInput;
 
@@ -102,6 +100,7 @@ public:
     KIPI::Interface          *interface;
 
     KIPIPlugins::KPAboutData *about;
+    KIPIPlugins::ImagesList  *imagesList;
 
     GPSDataParser             gpxParser;
 };
@@ -135,26 +134,20 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     // --------------------------------------------------------------
 
-    d->listView = new QTreeWidget(page);
-    d->listView->setColumnCount(7);
-    d->listView->setMinimumWidth(450);
-    d->listView->setIconSize(QSize(64, 64));
-    d->listView->setColumnWidth(0, 70);
-    d->listView->setSortingEnabled(false);
-    d->listView->setRootIsDecorated(false);
-    d->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setAllColumnsShowFocus(true);
-
-    QStringList labels;
-    labels.append( i18n("Thumbnail") );
-    labels.append( i18n("File Name") );
-    labels.append( i18n("Date") );
-    labels.append( i18n("Latitude") );
-    labels.append( i18n("Longitude") );
-    labels.append( i18n("Altitude") );
-    labels.append( i18n("Status") );
-    d->listView->setHeaderLabels(labels);
+    d->imagesList = new KIPIPlugins::ImagesList(d->interface, this, true, false, true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
+                                       i18n("Date"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User2,
+                                       i18n("Latitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User3,
+                                       i18n("Longitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User4,
+                                       i18n("Altitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User5,
+                                       i18n("Status"), true);
+    d->imagesList->setMinimumWidth(450);
+//    d->listView->setIconSize(QSize(64, 64));
+//    d->listView->setColumnWidth(0, 70);
 
     // ---------------------------------------------------------------
 
@@ -177,9 +170,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
     d->timeZoneCB         = new KComboBox(settingsBox);
 
-    // See list of time zomes over the world :
+    // See list of time zones over the world :
     // http://en.wikipedia.org/wiki/List_of_time_zones
-    // NOTE: Combo box strings are not i18n.
+    // NOTE: Combobox strings are not i18n.
     d->timeZoneCB->addItem("GMT-12:00");
     d->timeZoneCB->addItem("GMT-11:00");
     d->timeZoneCB->addItem("GMT-10:00");
@@ -252,7 +245,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    mainLayout->addWidget(d->listView, 0, 0, 3, 2);
+    mainLayout->addWidget(d->imagesList, 0, 0, 3, 2);
     mainLayout->addWidget(settingsBox, 0, 2, 2, 1);
     mainLayout->setColumnStretch(1, 10);
     mainLayout->setRowStretch(2, 10);
@@ -300,9 +293,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(this, SIGNAL(user3Clicked()),
             this, SLOT(slotUser3()));
 
-    connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-
     connect(loadGPXButton, SIGNAL(released()),
             this, SLOT(slotLoadGPXFile()));
 
@@ -329,30 +319,9 @@ void GPSSyncDialog::slotHelp()
 void GPSSyncDialog::setImages( const KUrl::List& images )
 {
     for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
-        new GPSListViewItem(d->interface, d->listView, *it);
+        new GPSListViewItem(d->interface, d->imagesList->listView(), *it);
 
     d->interface->thumbnails(images, 64);
-}
-
-void GPSSyncDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
-    {
-        item = d->listView->topLevelItem(i);
-        GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
-        if (lvItem)
-        {
-            if (lvItem->url() == url)
-            {
-                lvItem->setThumbnail(pix);
-                return;
-            }
-        }
-        i++;
-    }
-    while (item);
 }
 
 void GPSSyncDialog::slotLoadGPXFile()
@@ -417,7 +386,7 @@ bool GPSSyncDialog::promptUserClose()
     QTreeWidgetItem *item = 0;
     do
     {
-        item = d->listView->topLevelItem(i);
+        item = d->imagesList->listView()->topLevelItem(i);
         GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
         if (lvItem)
         {
@@ -482,7 +451,7 @@ void GPSSyncDialog::slotUser1()
     QTreeWidgetItem *item = 0;
     do
     {
-        item = d->listView->topLevelItem(i);
+        item = d->imagesList->listView()->topLevelItem(i);
         GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
         if (lvItem)
         {
@@ -529,14 +498,14 @@ void GPSSyncDialog::slotUser1()
 // Start the GPS coordinates editor dialog.
 void GPSSyncDialog::slotUser2()
 {
-    if (!d->listView->currentItem())
+    if (!d->imagesList->listView()->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one image from "
                      "the list to edit GPS coordinates manually."), i18n("GPS Sync"));
         return;
     }
 
-    GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->listView->currentItem());
+    GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->imagesList->listView()->currentItem());
 
     GPSEditDialog dlg(this, item->GPSInfo(),
                       item->url().fileName(),
@@ -548,7 +517,7 @@ void GPSSyncDialog::slotUser2()
         QTreeWidgetItem *item = 0;
         do
         {
-            item = d->listView->topLevelItem(i);
+            item = d->imagesList->listView()->topLevelItem(i);
             GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
             if (lvItem)
             {
@@ -564,7 +533,7 @@ void GPSSyncDialog::slotUser2()
 // Remove GPS coordinates from pictures.
 void GPSSyncDialog::slotUser3()
 {
-    if (!d->listView->currentItem())
+    if (!d->imagesList->listView()->currentItem())
     {
         KMessageBox::information(this, i18n("Please, select at least one image from "
                      "the list to remove GPS coordinates."), i18n("GPS Sync"));
@@ -575,7 +544,7 @@ void GPSSyncDialog::slotUser3()
     QTreeWidgetItem *item = 0;
     do
     {
-        item = d->listView->topLevelItem(i);
+        item = d->imagesList->listView()->topLevelItem(i);
         GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
         if (lvItem)
             lvItem->eraseGPSInfo();
@@ -590,12 +559,12 @@ void GPSSyncDialog::slotApply()
     QTreeWidgetItem *item = 0;
     do
     {
-        item = d->listView->topLevelItem(i);
+        item = d->imagesList->listView()->topLevelItem(i);
         GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
         if (lvItem)
         {
-            d->listView->setCurrentItem(lvItem);
-            d->listView->scrollToItem(lvItem);
+            d->imagesList->listView()->setCurrentItem(lvItem);
+            d->imagesList->listView()->scrollToItem(lvItem);
             lvItem->writeGPSInfoToFile();
         }
         kapp->processEvents();

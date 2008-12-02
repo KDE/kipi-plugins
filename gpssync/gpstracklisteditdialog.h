@@ -48,7 +48,7 @@ public:
 
     GPSTrackListEditDialog(KIPI::Interface *interface, QWidget *parent, const GPSTrackList& gpsTrackList);
     ~GPSTrackListEditDialog();
-    
+
     GPSTrackList trackList() const;
 
 protected slots:
@@ -57,7 +57,6 @@ protected slots:
     void slotCancel();
     void slotUpdateWorldMap();
     void slotHelp();
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void slotNewGPSLocationFromMap(int id, double lat, double lng, double alt);
     void slotMarkerSelectedFromMap(int id);
 

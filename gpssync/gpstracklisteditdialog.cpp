@@ -28,7 +28,6 @@
 #include <QHeaderView>
 #include <QLayout>
 #include <QTimer>
-#include <QTreeWidget>
 #include <QTreeWidgetItemIterator>
 
 // KDE includes.
@@ -48,45 +47,12 @@
 
 #include "gpstracklistviewitem.h"
 #include "gpstracklistwidget.h"
+#include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
 namespace KIPIGPSSyncPlugin
 {
-
-class GPSTrackListView : public QTreeWidget
-{
-public :
-
-    GPSTrackListView(QWidget *parent)
-        : QTreeWidget(parent)
-    {
-        setColumnCount(8);
-        setIconSize(QSize(64, 64));
-        setRootIsDecorated(false);
-        setSortingEnabled(false);
-        setSelectionMode(QAbstractItemView::SingleSelection);
-        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        setAllColumnsShowFocus(true);
-
-        QStringList labels;
-        labels.append( i18n("Thumbnail") );
-        labels.append( i18n("Id") );
-        labels.append( i18n("File Name") );
-        labels.append( i18n("Date") );
-        labels.append( i18n("Latitude") );
-        labels.append( i18n("Longitude") );
-        labels.append( i18n("Altitude") );
-        labels.append( i18n("Changed") );
-        setHeaderLabels(labels);
-
-        header()->setResizeMode(QHeaderView::Stretch);
-    }
-
-    ~GPSTrackListView()
-    {
-    }
-};
 
 class GPSTrackListEditDialogPrivate
 {
@@ -97,12 +63,11 @@ public:
     {
         worldMap = 0;
         about    = 0;
-        listView = 0;
+        imagesList = 0;
     }
 
-    GPSTrackListView         *listView;
-
     KIPIPlugins::KPAboutData *about;
+    KIPIPlugins::ImagesList  *imagesList;
 
     GPSTrackList              gpsTrackList;
 
@@ -127,14 +92,27 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     setMainWidget( page );
 
     QVBoxLayout* vlay = new QVBoxLayout(page);
-    d->listView       = new GPSTrackListView(page);
+    d->imagesList     = new KIPIPlugins::ImagesList(d->interface, this, true, false, true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
+                                       i18n("Id"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User2,
+                                       i18n("Date"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User3,
+                                       i18n("Latitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User4,
+                                       i18n("Longitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User5,
+                                       i18n("Altitude"), true);
+    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User6,
+                                       i18n("Changed"), true);
+
     d->worldMap       = new GPSTrackListWidget(page);
     d->worldMap->show();
 
     // ---------------------------------------------------------------
 
     vlay->addWidget(d->worldMap->view(), 10);
-    vlay->addWidget(d->listView, 4);
+    vlay->addWidget(d->imagesList, 4);
     vlay->setSpacing(spacingHint());
     vlay->setMargin(0);
 
@@ -174,8 +152,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     connect(d->worldMap, SIGNAL(signalMarkerSelectedFromMap(int)),
             this, SLOT(slotMarkerSelectedFromMap(int)));
 
-    connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+//    connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+//            d->imagesList, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
     // ---------------------------------------------------------------
 
@@ -183,7 +161,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     for( GPSTrackList::iterator it = d->gpsTrackList.begin() ;
          it != d->gpsTrackList.end() ; ++it)
     {
-        GPSTrackListViewItem *item = new GPSTrackListViewItem(d->listView);
+        GPSTrackListViewItem *item = new GPSTrackListViewItem(d->imagesList->listView(),
+                                                              it.value().url());
         item->setGPSInfo(it.key(), it.value());
         urls.append(it.value().url());
     }
@@ -199,23 +178,23 @@ GPSTrackListEditDialog::~GPSTrackListEditDialog()
     delete d;
 }
 
-void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    QTreeWidgetItemIterator it(d->listView);
-    while (*it)
-    {
-        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
-        if (lvItem)
-        {
-            if (lvItem->url() == url)
-            {
-                lvItem->setThumbnail(pix);
-                return;
-            }
-        }
-        ++it;
-    }
-}
+//void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
+//{
+//    QTreeWidgetItemIterator it(d->imagesList->listView());
+//    while (*it)
+//    {
+//        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
+//        if (lvItem)
+//        {
+//            if (lvItem->url() == url)
+//            {
+//                lvItem->setThumbnail(pix);
+//                return;
+//            }
+//        }
+//        ++it;
+//    }
+//}
 
 void GPSTrackListEditDialog::slotHelp()
 {
@@ -292,7 +271,7 @@ void GPSTrackListEditDialog::slotOk()
 
 void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
 {
-    QTreeWidgetItemIterator it(d->listView);
+    QTreeWidgetItemIterator it(d->imagesList->listView());
     while (*it)
     {
         GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
@@ -300,8 +279,8 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
         {
             if (lvItem->id() == id)
             {
-                d->listView->setCurrentItem(lvItem);
-                d->listView->scrollToItem(lvItem);
+                d->imagesList->listView()->setCurrentItem(lvItem);
+                d->imagesList->listView()->scrollToItem(lvItem);
                 return;
             }
         }
@@ -311,7 +290,7 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
 
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng, double alt)
 {
-    QTreeWidgetItemIterator it(d->listView);
+    QTreeWidgetItemIterator it(d->imagesList->listView());
     while (*it)
     {
         GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
@@ -332,8 +311,8 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
                 d->gpsTrackList.remove(lvItem->dateTime());
                 d->gpsTrackList.insert(lvItem->dateTime(), info);
 
-                d->listView->setCurrentItem(lvItem);
-                d->listView->scrollToItem(lvItem);
+                d->imagesList->listView()->setCurrentItem(lvItem);
+                d->imagesList->listView()->scrollToItem(lvItem);
                 return;
             }
         }

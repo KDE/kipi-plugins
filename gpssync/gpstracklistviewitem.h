@@ -27,7 +27,6 @@
 
 #include <QDateTime>
 #include <QString>
-#include <QTreeWidgetItem>
 
 // KDE includes.
 
@@ -36,17 +35,18 @@
 // Local includes.
 
 #include "gpstracklistcontainer.h"
+#include "imageslist.h"
 
 namespace KIPIGPSSyncPlugin
 {
 class GPSTrackListViewItemPriv;
 
-class GPSTrackListViewItem : public QTreeWidgetItem
+class GPSTrackListViewItem : public KIPIPlugins::ImagesListViewItem
 {
 
 public:
 
-    GPSTrackListViewItem(QTreeWidget *view);
+    GPSTrackListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url);
     ~GPSTrackListViewItem();
 
     void setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data);
@@ -62,7 +62,7 @@ public:
     QString          fileName() const;
     KUrl             url() const;
 
-private: 
+private:
 
     GPSTrackListViewItemPriv *d;
 };
