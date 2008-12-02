@@ -100,7 +100,10 @@ public:
         Filename,
         User1,
         User2,
-        User3
+        User3,
+        User4,
+        User5,
+        User6
     };
 
     ImagesListView(ImagesList *parent = 0);

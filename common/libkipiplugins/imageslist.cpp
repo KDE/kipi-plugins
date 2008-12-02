@@ -163,15 +163,21 @@ ImagesListView::ImagesListView(ImagesList *parent)
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    setColumnCount(5);
+    setColumnCount(8);
     setHeaderLabels(QStringList() << i18n("Thumbnail")
                                   << i18n("File Name")
                                   << i18n("User1")
                                   << i18n("User2")
-                                  << i18n("User3"));
+                                  << i18n("User3")
+                                  << i18n("User4")
+                                  << i18n("User5")
+                                  << i18n("User6"));
     hideColumn(User1);
     hideColumn(User2);
     hideColumn(User3);
+    hideColumn(User4);
+    hideColumn(User5);
+    hideColumn(User6);
     header()->setResizeMode(QHeaderView::ResizeToContents);
 }
 
