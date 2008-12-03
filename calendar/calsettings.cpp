@@ -24,15 +24,16 @@
 #include "calsettings.h"
 #include "calsettings.moc"
 
-// Qt includes.
-
-#include <QDate>
-
 // KDE includes.
 
+#include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcalendarsystem.h>
+
+// LibKCAL includes.
+
+#include <kcal/calendarlocal.h>
 
 namespace KIPICalendarPlugin
 {
@@ -41,7 +42,7 @@ QPointer<CalSettings> CalSettings::instance_;
 
 CalSettings::CalSettings()
 {
-    year_ = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
+    params.year = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
     setPaperSize("A4");
     setImagePos(0);
 }
@@ -59,12 +60,12 @@ CalSettings* CalSettings::instance()
 
 void CalSettings::setYear(int year)
 {
-    year_ = year;
+    params.year = year;
 }
 
 int CalSettings::year() const
 {
-    return year_;
+    return params.year;
 }
 
 void CalSettings::setImage(int month, const KUrl& path)
@@ -158,6 +159,120 @@ void CalSettings::setFont(const QString &font)
         params.baseFont = QFont(font);
         emit settingsChanged();
     }
+}
+
+void CalSettings::clearSpecial()
+{
+    special.clear();
+}
+
+void CalSettings::addSpecial(const QDate &date, const Day &info)
+{
+    if (special.contains(date))
+        special[date].second.append("; ").append(info.second);
+    else
+        special[date] = info;
+}
+
+void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
+{
+    KCal::CalendarLocal calendar("UTC");
+
+    if (!(url.isEmpty()))
+    {
+        kDebug(51000) << "Loading calendar from file " << url.path();
+        if (!calendar.load(url.path()))
+        {
+            kDebug(51000) << "Failed!";
+        }
+        else
+        {
+            QDate qFirst, qLast;
+            KGlobal::locale()->calendar()->setYMD(qFirst, params.year, 1, 1);
+            KGlobal::locale()->calendar()->setYMD(qLast, params.year + 1, 1, 1);
+            qLast = qLast.addDays(-1);
+            KDateTime dtFirst(qFirst);
+            KDateTime dtLast(qLast);
+            KDateTime dtCurrent;
+
+            int counter = 0;
+            KCal::Event::List list = calendar.rawEvents(qFirst, qLast);
+            foreach ( KCal::Event *event, list )
+            {
+                kDebug(51000) << event->summary() << endl << "--------" << endl;
+                counter++;
+                if (event->recurs())
+                {
+                    KCal::Recurrence *recur = event->recurrence();
+                    for (dtCurrent = recur->getNextDateTime(dtFirst.addDays(-1));
+                         (dtCurrent <= dtLast) && dtCurrent.isValid();
+                         dtCurrent = recur->getNextDateTime(dtCurrent))
+                    {
+                        addSpecial(dtCurrent.date(), Day(color, event->summary()));
+                    }
+                }
+                else
+                {
+                    addSpecial(event->dtStart().date(), Day(color, event->summary()));
+                }
+            }
+            kDebug(51000) << "Loaded " << counter << " events";
+            calendar.close();
+        }
+    }
+}
+
+bool CalSettings::isPrayDay(const QDate &date) const
+{
+    return (date.dayOfWeek() == KGlobal::locale()->calendar()->weekDayOfPray());
+}
+
+/*!
+    \returns true if special formatting is to be applied to the particular day
+ */
+bool CalSettings::isSpecial(int month, int day) const
+{
+    QDate dt;
+    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+
+    return (isPrayDay(dt) || special.contains(dt));
+}
+
+
+/*!
+    \returns the color to be used for painting of the day info
+ */
+QColor CalSettings::getDayColor(int month, int day) const
+{
+    QDate dt;
+    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+
+    if (isPrayDay(dt))
+        return Qt::red;
+
+    if (special.contains(dt))
+        return special[dt].first;
+
+    //default
+    return Qt::black;
+}
+
+
+/*!
+    \returns the description of the day to be painted on the calendar.
+ */
+QString CalSettings::getDayDescr(int month, int day) const
+{
+    QDate dt;
+    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+
+    return special[dt].second;
+    QString ret;
+
+    if (special.contains(dt))
+        ret = special[dt].second;
+
+    return ret;
 }
 
 }  // NameSpace KIPICalendarPlugin

@@ -52,30 +52,20 @@
 
 // Local includes.
 
-#include "calformatter.h"
 #include "calsettings.h"
 
 namespace KIPICalendarPlugin
 {
 
-CalPainter::CalPainter(QPaintDevice *pd, CalFormatter *formatter)
+CalPainter::CalPainter(QPaintDevice *pd)
           : QPainter(pd)
 {
     angle_     = 0;
-    formatter_ = formatter;
-    year_      = KGlobal::locale()->calendar()->year(QDate::currentDate());
-    month_     = KGlobal::locale()->calendar()->month(QDate::currentDate());
     cancelled_ = false;
 }
 
 CalPainter::~CalPainter()
 {
-}
-
-void CalPainter::setYearMonth(int year, int month)
-{
-    year_  = year;
-    month_ = month;
 }
 
 void CalPainter::setImage(const KUrl &imagePath, int angle)
@@ -84,13 +74,14 @@ void CalPainter::setImage(const KUrl &imagePath, int angle)
     angle_     = angle;
 }
 
-void CalPainter::paint(bool isPreview)
+void CalPainter::paint(int month)
 {
     if (!device()) return;
 
     int width  = device()->width();
     int height = device()->height();
 
+    CalSettings *settings = CalSettings::instance();
     CalParams& params = CalSettings::instance()->params;
 
     // --------------------------------------------------
@@ -102,7 +93,7 @@ void CalPainter::paint(bool isPreview)
         days[i] = -1;
 
     QDate d;
-    KGlobal::locale()->calendar()->setYMD(d, year_, month_, 1);
+    KGlobal::locale()->calendar()->setYMD(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
     if (s+7-startDayOffset >= 7)
@@ -210,9 +201,9 @@ void CalPainter::paint(bool isPreview)
     f.setBold(true);
     f.setPixelSize(f.pixelSize() + 5);
     setFont(f);
-    drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter, QString::number(year_));
+    drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter, QString::number(params.year));
     drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
-             KGlobal::locale()->calendar()->monthName(month_, year_));
+             KGlobal::locale()->calendar()->monthName(month, params.year));
     restore();
 
     // ---------------------------------------------------------------
@@ -259,17 +250,17 @@ void CalPainter::paint(bool isPreview)
             rsmall.setHeight(r.height() - 2);
             if (days[index] != -1)
             {
-                if (!isPreview && formatter_ && formatter_->isSpecial(month_, days[index]))
+                if (settings->isSpecial(month, days[index]))
                 {
                     save();
-                    setPen( formatter_->getDayColor(month_, days[index]) );
+                    setPen( settings->getDayColor(month, days[index]) );
                     drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
                              QString::number(days[index]));
 
-                    QString descr = formatter_->getDayDescr(month_, days[index]);
+                    QString descr = settings->getDayDescr(month, days[index]);
                     kDebug(51000) << "Painting special info: '" << descr
                                   << "' for date " << days[index] << "/"
-                                  << month_ << endl;
+                                  << month;
                     rSpecial = rsmall;
                     rSpecial.translate(2,0);
                     QFont f(params.baseFont);
@@ -285,8 +276,6 @@ void CalPainter::paint(bool isPreview)
                     drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
                              QString::number(days[index]));
                 }
-                drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                         QString::number(days[index]));
             }
             index++;
         }

@@ -34,22 +34,18 @@
 // Local includes.
 
 #include "calpainter.h"
-#include "calformatter.h"
 
 namespace KIPICalendarPlugin
 {
 
 CalPrinter::CalPrinter(QPrinter *printer,
-                       CalFormatter *formatter,
-                       int year,
                        QMap<int, KUrl> &months,
                        KIPI::Interface *interface,
                        QObject *parent)
     : QThread(parent)
 {
     printer_ = printer;
-    painter_ = new CalPainter( printer_, formatter );
-    year_ = year;
+    painter_ = new CalPainter( printer_ );
     months_ = months;
     interface_ = interface;
     cancelled_ = false;
@@ -75,10 +71,9 @@ void CalPrinter::run()
 
         int angle = interface_->info( months_.value(month) ).angle();
 
-        painter_->setYearMonth(year_, month);
         painter_->setImage(months_.value(month), angle);
 
-        painter_->paint( false );
+        painter_->paint( month );
         if (cancelled_)
             break;
     }

@@ -48,8 +48,6 @@
 
 // Local includes.
 
-#include "calformatter.h"
-#include "calpainter.h"
 #include "calprinter.h"
 #include "calselect.h"
 #include "calsettings.h"
@@ -135,7 +133,6 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     printThread_   = 0;
     printer_       = 0;
-    formatter_     = 0;
 
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem *, KPageWidgetItem *)),
             this, SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));
@@ -155,8 +152,6 @@ CalWizard::~CalWizard()
     delete printer_;
 
     delete m_about;
-
-    delete formatter_;
 }
 
 void CalWizard::slotHelp()
@@ -226,7 +221,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         // Set printer settings ---------------------------------------
 
         if (!printer_)
-            printer_ = new QPrinter( QPrinter::HighResolution );
+            printer_ = new QPrinter( /*QPrinter::HighResolution*/ );
 
         // TODO: Let user choose resolutions
 
@@ -258,7 +253,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         else
         {
             calProgressUI.finishLabel->setText(i18n( "Printing Cancelled" ));
-            enableButton(KDialog::User3, false); // enable 'Back' button
+            enableButton(KDialog::User3, true); // enable 'Back' button
         }
 
     }
@@ -269,8 +264,6 @@ void CalWizard::print()
     calProgressUI.totalProgress->setMaximum( months_.count() );
     calProgressUI.totalProgress->setValue( 0 );
 
-    delete formatter_;
-
     if (printThread_)
     {
         printThread_->cancel();
@@ -278,14 +271,11 @@ void CalWizard::print()
         delete printThread_;
     }
 
-    formatter_ = new CalFormatter( cSettings_->year(),
-                                   calEventsUI.ohUrlRequester->url(),
-                                   calEventsUI.fhUrlRequester->url(),
-                                   this );
+    cSettings_->clearSpecial();
+    cSettings_->loadSpecial( calEventsUI.ohUrlRequester->url(), Qt::red );
+    cSettings_->loadSpecial( calEventsUI.fhUrlRequester->url(), Qt::darkGreen );
 
     printThread_ = new CalPrinter( printer_,
-                                   formatter_,
-                                   cSettings_->year(),
                                    months_,
                                    interface_,
                                    this );

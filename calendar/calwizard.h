@@ -62,7 +62,6 @@ class CalPainter;
 class CalPrinter;
 class CalSettings;
 class CalTemplate;
-class CalFormatter;
 
 class CalWizard : public KAssistantDialog
 {
@@ -102,7 +101,6 @@ private:
     QPrinter                 *printer_;
 
     CalPrinter               *printThread_;
-    CalFormatter             *formatter_;
 
     QMap<int, KUrl>           months_;
 

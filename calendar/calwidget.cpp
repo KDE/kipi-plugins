@@ -47,7 +47,7 @@ CalWidget::~CalWidget()
 void CalWidget::paintEvent(QPaintEvent *e)
 {
     CalPainter painter( this );
-    painter.paint( true );
+    painter.paint( 1 );
     Q_UNUSED(e);
 }
 

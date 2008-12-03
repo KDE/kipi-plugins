@@ -40,20 +40,17 @@ class QPaintDevice;
 namespace KIPICalendarPlugin
 {
 
-class CalFormatter;
-
 class CalPainter : public QObject, public QPainter
 {
     Q_OBJECT
 
 public:
 
-    CalPainter(QPaintDevice *pd, CalFormatter *formatter = 0);
+    CalPainter(QPaintDevice *pd);
     virtual ~CalPainter();
 
-    void setYearMonth(int year, int month);
     void setImage(const KUrl &imagePath, int angle);
-    void paint(bool isPreview = false);
+    void paint(int month);
 
 signals:
 
@@ -68,11 +65,8 @@ public slots:
 private:
 
     QImage        image_;
-    int           year_;
-    int           month_;
     KUrl          imagePath_;
     int           angle_;
-    CalFormatter *formatter_;
     bool          cancelled_;
 };
 

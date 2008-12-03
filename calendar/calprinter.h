@@ -44,7 +44,6 @@ namespace KIPICalendarPlugin
 {
 
 class CalPainter;
-class CalFormatter;
 
 class CalPrinter : public QThread
 {
@@ -53,8 +52,6 @@ class CalPrinter : public QThread
 public:
 
     CalPrinter(QPrinter *printer,
-               CalFormatter *formatter,
-               int year,
                QMap<int, KUrl> &months,
                KIPI::Interface *interface,
                QObject *parent);
@@ -78,7 +75,6 @@ public slots:
 
 private:
 
-    int year_;
     QMap<int, KUrl> months_;
     QPrinter *printer_;
     CalPainter *painter_;

@@ -27,7 +27,10 @@
 // Qt includes.
 
 #include <QMap>
+#include <QDate>
 #include <QFont>
+#include <QPair>
+#include <QColor>
 #include <QObject>
 #include <QString>
 #include <QPointer>
@@ -39,6 +42,8 @@
 
 namespace KIPICalendarPlugin
 {
+
+typedef QPair<QColor, QString> Day;
 
 struct CalParams
 {
@@ -60,6 +65,7 @@ public:
     float              ratio;
     ImagePosition      imgPos;
     QFont              baseFont;
+    int                year;
 };
 
 class CalSettings : public QObject
@@ -68,10 +74,17 @@ class CalSettings : public QObject
 
 public:
 
-    void    setYear(int year);
-    int     year() const;
-    void    setImage(int month, const KUrl& url);
-    KUrl    image(int month) const;
+    void setYear(int year);
+    int  year() const;
+    void setImage(int month, const KUrl& url);
+    KUrl image(int month) const;
+    void clearSpecial();
+    void addSpecial(const QDate &date, const Day &info);
+    void loadSpecial(const KUrl &url, const QColor &color);
+    bool isSpecial(int month, int day) const;
+
+    QColor getDayColor(int month, int day) const;
+    QString getDayDescr(int month, int day) const;
 
     static CalSettings* instance();
 
@@ -93,6 +106,10 @@ public slots:
     void setRatio(int ratio);
     void setFont(const QString &font);
 
+protected:
+
+    bool isPrayDay(const QDate &date) const;
+
 private:
 
     CalSettings();
@@ -104,7 +121,7 @@ private:
     static QPointer<CalSettings> instance_;
 
     QMap<int, KUrl>              monthMap_;
-    int                          year_;
+    QMap<QDate, Day>             special;
 };
 
 }  // NameSpace KIPICalendarPlugin
