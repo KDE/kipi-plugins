@@ -136,6 +136,9 @@ QString& PreviewWidget::image() const
 
 void PreviewWidget::setImage(const QString& image)
 {
+    if (d->image == image)
+            return;
+
     d->image = image;
     resetPreviews();
     emit settingsChanged();
