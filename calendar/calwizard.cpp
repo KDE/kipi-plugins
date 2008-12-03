@@ -133,7 +133,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ------------------------------------------
 
-    printThread_ = 0;
+    printThread_   = 0;
     printer_       = 0;
     formatter_     = 0;
 
@@ -148,7 +148,6 @@ CalWizard::~CalWizard()
     if (printThread_)
     {
         printThread_->cancel();
-        printThread_->quit();
         printThread_->wait();
         delete printThread_;
     }
@@ -270,8 +269,15 @@ void CalWizard::print()
     calProgressUI.totalProgress->setMaximum( months_.count() );
     calProgressUI.totalProgress->setValue( 0 );
 
-    if ( formatter_ )
-        delete formatter_;
+    delete formatter_;
+
+    if (printThread_)
+    {
+        printThread_->cancel();
+        printThread_->wait();
+        delete printThread_;
+    }
+
     formatter_ = new CalFormatter( cSettings_->year(),
                                    calEventsUI.ohUrlRequester->url(),
                                    calEventsUI.fhUrlRequester->url(),
