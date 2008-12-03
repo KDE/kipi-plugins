@@ -351,13 +351,10 @@ void RemoveRedEyesWindow::startPreview()
 
     updateSettings();
 
-    d->runtype = WorkerThread::Preview;
-
     if (item->url().path() == d->previewWidget->image())
         return;
-
-    d->previewWidget->reset();
     d->previewWidget->setImage(item->url().path());
+    d->runtype = WorkerThread::Preview;
 
     KUrl::List oneFile;
     oneFile.append(item->url());

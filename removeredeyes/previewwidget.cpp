@@ -137,6 +137,7 @@ QString& PreviewWidget::image() const
 void PreviewWidget::setImage(const QString& image)
 {
     d->image = image;
+    resetPreviews();
     emit settingsChanged();
 }
 
@@ -236,8 +237,12 @@ void PreviewWidget::setMode(DisplayMode mode)
 
 void PreviewWidget::reset()
 {
-    d->modeInfo->reset();
     d->image.clear();
+    resetPreviews();
+}
+
+void PreviewWidget::resetPreviews()
+{
     d->originalLabel->setPixmap(0);
     d->correctedLabel->setPixmap(0);
     d->maskLabel->setPixmap(0);
@@ -261,6 +266,7 @@ void PreviewWidget::updateSettings()
     {
         d->locked = true;
         setMode(LockedMode);
+        d->modeInfo->reset();
         return;
     }
 
@@ -268,6 +274,7 @@ void PreviewWidget::updateSettings()
     {
         d->locked = true;
         setMode(BusyMode);
+        d->modeInfo->reset();
         return;
     }
 

@@ -92,6 +92,7 @@ private slots:
 private:
 
     bool previewsLoaded();
+    void resetPreviews();
     void setMode(DisplayMode mode);
     QPixmap openFile(const QString& filename);
 
