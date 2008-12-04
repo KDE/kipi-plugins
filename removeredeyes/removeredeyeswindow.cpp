@@ -287,7 +287,7 @@ void RemoveRedEyesWindow::updateSettings()
 bool RemoveRedEyesWindow::previewNeedsUpdate()
 {
 //    if (item->url().equals(d->previewWidget->currentImage()))
-//        return;
+          return false;
 }
 
 bool RemoveRedEyesWindow::acceptStorageSettings()
