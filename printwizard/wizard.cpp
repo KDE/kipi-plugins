@@ -71,21 +71,20 @@ class WizardPage : public QWidget, public Ui_Class {
         setupUi(this);
         layout()->setMargin(0);
         mPage = dialog->addPage(this, title);
-        active = true;
     }
 
     KPageWidgetItem* page() const {
         return mPage;
     }
 
-    void disable(bool dis=true) {active = !dis;}
-    bool isActive() {return active;}
-
   private:
     KPageWidgetItem* mPage;
-    bool active;
 };
 
+const char* introPageName="Introduction";
+const char* infoPageName="Select printing information";
+const char* photoPageName="Photo information";
+const char* cropPageName="Crop photos";
 
 typedef WizardPage<Ui_IntroPage> IntroPage;
 typedef WizardPage<Ui_InfoPage>  InfoPage;
@@ -93,6 +92,7 @@ typedef WizardPage<Ui_PhotoPage> PhotoPage;
 typedef WizardPage<Ui_CropPage>  CropPage;
 
 
+// Wizard implementation
 struct Wizard::Private {
   IntroPage *mIntroPage;
   InfoPage  *mInfoPage;
@@ -140,10 +140,10 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->mAbout->addAuthor(ki18n("Valerio Fuoglio"), ki18n("Contributor"),
                      "valerio.fuoglio@gmail.com");
 
-  d->mIntroPage = new IntroPage(this, i18n("Introduction"));
-  d->mInfoPage  = new InfoPage(this, i18n("Select printing information"));
-  d->mPhotoPage = new PhotoPage(this, i18n("Photo information"));
-  d->mCropPage  = new CropPage(this, i18n("Crop photos")) ;
+  d->mIntroPage = new IntroPage(this, i18n(introPageName));
+  d->mInfoPage  = new InfoPage(this, i18n(infoPageName));
+  d->mPhotoPage = new PhotoPage(this, i18n(photoPageName));
+  d->mCropPage  = new CropPage(this, i18n(cropPageName)) ;
 
   d->m_helpButton = button (Help);
   KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
@@ -165,7 +165,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   // selected page
   connect(this, SIGNAL(currentPageChanged (KPageWidgetItem *, KPageWidgetItem *)),
-          this, SLOT(pageChanged(KPageWidgetItem *)));
+          this, SLOT(pageChanged(KPageWidgetItem *, KPageWidgetItem *)));
 
   // cancel button
   connect(this, SIGNAL(cancelClicked()),
@@ -242,8 +242,6 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
   if (d->mIntroPage->m_skipIntro->isChecked())
   {
-    // sometimes it does not disable iteself in time
-    d->mIntroPage->disable();
     removePage(d->mIntroPage->page());
   }
 }
@@ -308,7 +306,7 @@ void Wizard::print( KUrl::List fileList, QString tempPath)
 // TODO page layout configurable (using XML?)
 void Wizard::initPhotoSizes(PageSize pageSize)
 {
-        // don't refresh anything if we haven't changed page sizes.
+  // don't refresh anything if we haven't changed page sizes.
   if (pageSize == d->m_pageSize)
     return;
 
@@ -1437,12 +1435,22 @@ void Wizard::paperSizeChanged(int index)
   }
 }
 
-void  Wizard::pageChanged (KPageWidgetItem *current)
+void  Wizard::pageChanged (KPageWidgetItem *current, KPageWidgetItem *before)
 {
-  if (current->name() == i18n("Introduction"))
+  if (before)
+  {
+    saveSettings(before->name());
+    kDebug() << " before " << before->name();
+  }
+  if (current)
+  {
+    readSettings(current->name());
+    kDebug() << " current " << current->name();
+  }
+  if (current->name() == i18n(introPageName))
   {
   }
-  else if (current->name() == i18n("Select printing information"))
+  else if (current->name() == i18n(infoPageName))
   {
 #ifdef NOT_YET
     if (d->mInfoPage->GrpOutputSettings->id(RdoOutputPrinter))
@@ -1464,13 +1472,13 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
     kDebug() << "CCCC" << endl;
 #endif
   }
-  else if (current->name() == i18n("Photo information"))
+  else if (current->name() == i18n(photoPageName))
   {
     // create our photo sizes list
     initPhotoSizes(d->m_pageSize);
     previewPhotos();
   }
-  else if (current->name() == i18n("Crop photos"))
+  else if (current->name() == i18n(cropPageName))
   {
     d->m_currentCropPhoto = 0;
     TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
@@ -1478,25 +1486,6 @@ void  Wizard::pageChanged (KPageWidgetItem *current)
     updateCropFrame(photo, d->m_currentCropPhoto);
   }
 
-
-  /*d->mIntroPage = new IntroPage(this, i18n("Introduction"));
-  d->mInfoPage  = new InfoPage(this, i18n("Select printing information"));
-  d->mPhotoPage nt id= new PhotoPage(this, i18n("Photo information"));
-  d->mCropPage  = new CropPage(this, i18n("Crop photos")) ;
-   */
-//   if (current ==   static_cast<KPageWidgetItem>(d->mIntroPage))
-//   {
-//     KDebug << "CCCCCCCCCCC" << endl;
-//   }
-//   else if (current == static_cast<KPageWidgetItem>(d->mInfoPage))
-//   {
-//   }
-//   else if (current == d->mPhotoPage)
-//   {
-//   }
-//   else if (current == d->mCropPage)
-//   {
-//   }
 }
 
 
@@ -1758,48 +1747,65 @@ void Wizard::BtnPreviewPageUp_clicked() {
   previewPhotos();
 }
 
-void Wizard::saveSettings()
+void Wizard::saveSettings(QString pageName)
 {
   // Save the current settings
   KConfig config("kipirc");
   KConfigGroup group = config.group(QString("PrintAssistant"));
 
-  // Page size
-  group.writeEntry("PageSize", (int)d->m_pageSize);
 
-  // Margins
-  group.writeEntry("NoMargins", d->mInfoPage->m_fullbleed->isChecked());
-
-  // output
-  int output = d->m_outputSettings->checkedId();
-  if (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputFile))
-    output = ToFile;
-  else if  (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputGimp))
-    output = ToGimp;
-  else
-    output = ToPrinter;
-  group.writeEntry("PrintOutput", output);
-
-  // image captions
-  group.writeEntry("Captions", d->mInfoPage->m_captions->currentIndex());
-  // caption color
-  group.writeEntry("CaptionColor", d->mInfoPage->m_font_color->color());
-  // caption font
-  group.writeEntry ("CaptionFont", QFont(d->mInfoPage->m_font_name->currentFont()));
-  // caption size
-  group.writeEntry("CaptionSize", d->mInfoPage->m_font_size->value());
-  // free caption
-  group.writeEntry("FreeCaption", d->mInfoPage->m_FreeCaptionFormat->text());
-
-  // output path
-  group.writePathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
-
-  // photo size
-  group.writeEntry("PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text());
-
-  //skip intro
-  if (d->mIntroPage->isActive())
+  if (pageName == i18n(introPageName))
+  {
+    // IntroPage
+    //skip intro
     group.writeEntry("SkipIntro", d->mIntroPage->m_skipIntro->isChecked());
+  }
+  else if (pageName == i18n(infoPageName))
+  {
+    // InfoPage
+
+    // Page size
+    group.writeEntry("PageSize", (int)d->m_pageSize);
+
+    // Margins
+    group.writeEntry("NoMargins", d->mInfoPage->m_fullbleed->isChecked());
+
+    // output
+    int output = d->m_outputSettings->checkedId();
+    if (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputFile))
+      output = ToFile;
+    else if  (output == d->m_outputSettings->id(d->mInfoPage->RdoOutputGimp))
+      output = ToGimp;
+    else
+      output = ToPrinter;
+    group.writeEntry("PrintOutput", output);
+
+    // image captions
+    group.writeEntry("Captions", d->mInfoPage->m_captions->currentIndex());
+    // caption color
+    group.writeEntry("CaptionColor", d->mInfoPage->m_font_color->color());
+    // caption font
+    group.writeEntry ("CaptionFont", QFont(d->mInfoPage->m_font_name->currentFont()));
+    // caption size
+    group.writeEntry("CaptionSize", d->mInfoPage->m_font_size->value());
+    // free caption
+    group.writeEntry("FreeCaption", d->mInfoPage->m_FreeCaptionFormat->text());
+
+    // output path
+    group.writePathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
+
+  }
+  else if (pageName == i18n(photoPageName))
+  {
+    // PhotoPage
+    // photo size
+    group.writeEntry("PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text());
+  }
+  else if (pageName == i18n(cropPageName))
+  {
+    // CropPage
+  }
+
 
 #ifdef NOT_YET
   // kjobviewer
@@ -1807,61 +1813,87 @@ void Wizard::saveSettings()
 #endif //NOT_YET
 }
 
+// global settings
 void Wizard::readSettings()
 {
   KConfig config("kipirc");
   KConfigGroup group = config.group(QString("PrintAssistant"));
 
-    //internal PageSize  - default A4
-  PageSize pageSize = (PageSize)group.readEntry("PageSize", (int)A4);
-  initPhotoSizes(pageSize);
-  d->mInfoPage->CmbPaperSize->setCurrentIndex(pageSize);
-
-  // No Margins - default false
-  d->mInfoPage->m_fullbleed->setChecked(group.readEntry("NoMargins", false));
-
-  // set the output
-  int id = group.readEntry("PrintOutput", d->m_outputSettings->id(d->mInfoPage->RdoOutputPrinter));
-  if (id == ToFile)
-    d->mInfoPage->RdoOutputFile->setChecked(true);
-  else if (id == ToGimp)
-    d->mInfoPage->RdoOutputGimp->setChecked(true);
-  else
-    d->mInfoPage->RdoOutputPrinter->setChecked(true);
-
-  // image captions
-  d->mInfoPage->m_captions->setCurrentIndex(group.readEntry("Captions", 0));
-  // caption color
-  QColor defColor(Qt::yellow);
-  QColor color = group.readEntry("CaptionColor", defColor);
-  d->mInfoPage->m_font_color->setColor(color);
-  // caption font
-  QFont defFont("Sans Serif");
-  QFont font = group.readEntry( "CaptionFont", defFont);
-  d->mInfoPage->m_font_name->setCurrentFont(font.family());
-  // caption size
-  int fontSize = group.readEntry("CaptionSize", 4);
-  d->mInfoPage->m_font_size->setValue(fontSize);
-  // free caption
-  QString captionTxt = group.readEntry("FreeCaption");
-  d->mInfoPage->m_FreeCaptionFormat->setText(captionTxt);
-  //enable right caption stuff
-  captionChanged(d->mInfoPage->m_captions->currentText());
-
-  // set the last output path
-  QString outputPath = group.readPathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
-  d->mInfoPage->EditOutputPath->setText(outputPath);
-
-  // photo size
-  QString photoSize = group.readEntry("PhotoSize");
-  QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems(photoSize, Qt::MatchExactly);
-  if (list.count())
-    d->mPhotoPage->ListPhotoSizes->setCurrentItem(list[0]);
-  else
-    d->mPhotoPage->ListPhotoSizes->setCurrentRow(0);
-
   //skip intro
   d->mIntroPage->m_skipIntro->setChecked(group.readEntry("SkipIntro", false));
+}
+
+void Wizard::readSettings(QString pageName)
+{
+  KConfig config("kipirc");
+  KConfigGroup group = config.group(QString("PrintAssistant"));
+
+
+  if (pageName == i18n(introPageName))
+  {
+    // IntroPage
+    //skip intro
+    d->mIntroPage->m_skipIntro->setChecked(group.readEntry("SkipIntro", false));
+  }
+  else if (pageName == i18n(infoPageName))
+  {
+    // InfoPage
+      //internal PageSize  - default A4
+    PageSize pageSize = (PageSize)group.readEntry("PageSize", (int)A4);
+    initPhotoSizes(pageSize);
+    d->mInfoPage->CmbPaperSize->setCurrentIndex(pageSize);
+
+  // No Margins - default false
+    d->mInfoPage->m_fullbleed->setChecked(group.readEntry("NoMargins", false));
+
+  // set the output
+    int id = group.readEntry("PrintOutput", d->m_outputSettings->id(d->mInfoPage->RdoOutputPrinter));
+    if (id == ToFile)
+      d->mInfoPage->RdoOutputFile->setChecked(true);
+    else if (id == ToGimp)
+      d->mInfoPage->RdoOutputGimp->setChecked(true);
+    else
+      d->mInfoPage->RdoOutputPrinter->setChecked(true);
+
+    // image captions
+    d->mInfoPage->m_captions->setCurrentIndex(group.readEntry("Captions", 0));
+    // caption color
+    QColor defColor(Qt::yellow);
+    QColor color = group.readEntry("CaptionColor", defColor);
+    d->mInfoPage->m_font_color->setColor(color);
+    // caption font
+    QFont defFont("Sans Serif");
+    QFont font = group.readEntry( "CaptionFont", defFont);
+    d->mInfoPage->m_font_name->setCurrentFont(font.family());
+    // caption size
+    int fontSize = group.readEntry("CaptionSize", 4);
+    d->mInfoPage->m_font_size->setValue(fontSize);
+    // free caption
+    QString captionTxt = group.readEntry("FreeCaption");
+    d->mInfoPage->m_FreeCaptionFormat->setText(captionTxt);
+    //enable right caption stuff
+    captionChanged(d->mInfoPage->m_captions->currentText());
+
+    // set the last output path
+    QString outputPath = group.readPathEntry("OutputPath", d->mInfoPage->EditOutputPath->text());
+    d->mInfoPage->EditOutputPath->setText(outputPath);
+  }
+  else if (pageName == i18n(photoPageName))
+  {
+    // PhotoPage
+      // photo size
+    QString photoSize = group.readEntry("PhotoSize");
+    QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems(photoSize, Qt::MatchExactly);
+    if (list.count())
+      d->mPhotoPage->ListPhotoSizes->setCurrentItem(list[0]);
+    else
+      d->mPhotoPage->ListPhotoSizes->setCurrentRow(0);
+  }
+  else if (pageName == i18n(cropPageName))
+  {
+    // CropPage
+  }
+
 
 #ifdef NOT_YET
   // kjobviewer
@@ -2009,26 +2041,10 @@ void Wizard::removeGimpFiles()
   }
 }
 
+//TODO not needed at the moment maybe we can remove it
 void Wizard::PageRemoved(KPageWidgetItem *page)
 {
-  kDebug();
-  if (page == d->mIntroPage->page())
-  {
-    d->mIntroPage->disable();
-  }
-  else if (page == d->mInfoPage->page())
-  {
-    d->mInfoPage->disable();
-  }
-  else if (page == d->mPhotoPage->page())
-  {
-    d->mPhotoPage->disable();
-  }
-  else if (page == d->mCropPage->page())
-  {
-    d->mCropPage->disable();
-  }
-
+  kDebug() << page->name();
 }
 
 void Wizard::crop_selection(int)
@@ -2081,9 +2097,9 @@ void Wizard::accept()
       default:
         break;
     }
-    
-//     kDebug() << " page size " << d->m_pageSize 
-//         << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 << endl;
+
+     kDebug() << " page size " << d->m_pageSize
+              << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 << endl;
 
     if (d->mInfoPage->m_fullbleed->isChecked())
     {
@@ -2091,17 +2107,17 @@ void Wizard::accept()
       printer.setPageMargins (0, 0, 0, 0, QPrinter::Millimeter);
     }
 
-    std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer,
-                                       this));
+    std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer, this));
     dialog->setWindowTitle(i18n("Print Image"));
     bool wantToPrint = dialog->exec();
-
     kDebug() << "full page " << printer.fullPage() ;
+
     if (!wantToPrint) {
       return;
     }
 
     printPhotos(d->m_photos, s->layouts, printer);
+    kDebug() << "paper page " << dialog->printer()->paperSize() ;
   }
   else if (d->mInfoPage->RdoOutputFile->isChecked())
   {
@@ -2139,7 +2155,7 @@ void Wizard::accept()
 //   if (d->m_gimpFiles.count() > 0)
 //     removeGimpFiles();
 
-  saveSettings();
+  saveSettings(currentPage ()->name());
 
   KAssistantDialog::accept();
 }

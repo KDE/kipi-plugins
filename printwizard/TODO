@@ -1,4 +1,3 @@
-- Disabling first page can make application crashing
 - Print to gimp seems not to work here, temporary files are removed too early
 - On my hp printer i cannot print bordless (worked in kde3)                  
 - "Don't crop" option is not saved at the moment  

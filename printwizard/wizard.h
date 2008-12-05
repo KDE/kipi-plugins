@@ -60,7 +60,7 @@ typedef struct _TPhotoSize {
     protected slots:
       virtual void accept();
       virtual void slotHelp();
-      virtual void pageChanged(KPageWidgetItem *);
+      virtual void pageChanged(KPageWidgetItem *, KPageWidgetItem *);
       virtual void captionChanged(const QString & text);
       virtual void outputSettingsClicked(int);
       virtual void btnBrowseOutputPathClicked(void);
@@ -131,7 +131,8 @@ typedef struct _TPhotoSize {
       void manageBtnPreviewPage();
 
 
-      void saveSettings();
+      void saveSettings(QString pageName);
+      void readSettings(QString pageName);
       void readSettings();
 
       struct Private;
