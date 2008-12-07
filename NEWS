@@ -11,7 +11,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 174954 : HTMLExport         : Support for remote urls.
 003 ==> 176640 : MetadataEdit       : Wrong reference to website.
 004 ==> 176749 : TimeAdjust         : Incorrect time/date setting with digiKam.
-005 ==> 
+005 ==> 165370 : GPSSync            : crash when saving geocoordinates.
+006 ==> 
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------
