@@ -7,7 +7,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
 001 ==> 175033 : GPSSync            : gpssync does not get any map just a grey square.
 002 ==> 175304 : MetadataEdit       : db does replicate to iptc or exif.
-003 ==> 
+003 ==> 137359 : MetadataEdit       : Unclear wording in kipiplugin_metadataedit.
+004 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
