@@ -16,7 +16,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 009 ==> 146293 : MetadataEdit       : Plugins/Images/metadata: untranslated.
 010 ==> 140345 : BatchProcess       : kipiplugins do not work due to trying to save the result into the root directory.
 011 ==> 163395 : SendImages         : digiKam and encoding errors in flickr export and mail attachments.
-012 ==> 
+012 ==> 136941 : BatchProcess       : Graphical picture ordering and renaming.
+013 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
