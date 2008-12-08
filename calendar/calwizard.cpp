@@ -221,7 +221,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         // Set printer settings ---------------------------------------
 
         if (!printer_)
-            printer_ = new QPrinter( /*QPrinter::HighResolution*/ );
+            printer_ = new QPrinter( QPrinter::HighResolution );
 
         // TODO: Let user choose resolutions
 
