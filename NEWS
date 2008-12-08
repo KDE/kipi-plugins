@@ -9,7 +9,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 002 ==> 175304 : MetadataEdit       : db does replicate to iptc or exif.
 003 ==> 137359 : MetadataEdit       : Unclear wording in kipiplugin_metadataedit.
 004 ==> 146381 : JPEGLossLess       : Image rotation splits the image with a small strip appearing on the wrong side.
-005 ==> 
+005 ==> 155023 : SendImages         : Crashs when trying to send images via digiKam.
+006 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
