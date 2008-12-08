@@ -21,7 +21,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 014 ==> 162441 : PicasaWebExport    : Unable to create an album.
 015 ==> 162993 : PicasaWebExport    : Picasa album list not refreshed.
 016 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
-017 ==> 
+017 ==> 174353 : GPSSync            : Kipi-plugin geolocation does not work anymore.
+018 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
