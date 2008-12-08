@@ -17,7 +17,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 010 ==> 140345 : BatchProcess       : kipiplugins do not work due to trying to save the result into the root directory.
 011 ==> 163395 : SendImages         : digiKam and encoding errors in flickr export and mail attachments.
 012 ==> 136941 : BatchProcess       : Graphical picture ordering and renaming.
-013 ==> 
+013 ==> 149394 : General            : Recover lost/deleted images from flash memory/camera.
+014 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
