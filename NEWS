@@ -15,7 +15,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 006 ==> 165486 : GPSSync            : Next and Previous photo button for editing geolocalization coordinates.
 007 ==> 175296 : GPSSync            : Geolocalization a handy gui to manage all about geotagging.
 008 ==> 152520 : MetadataEdit       : Unified entry of metadata.
-009 ==> 
+009 ==> 135320 : Calendar           : Calendar year do not match locale.
+010 ==> 
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------
