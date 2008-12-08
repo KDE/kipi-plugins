@@ -20,7 +20,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 013 ==> 149394 : General            : Recover lost/deleted images from flash memory/camera.
 014 ==> 162441 : PicasaWebExport    : Unable to create an album.
 015 ==> 162993 : PicasaWebExport    : Picasa album list not refreshed.
-016 ==> 
+016 ==> 162994 : PicasaWebExport    : Picasa album list does not contain "not listed" albums, contains only "public" albums.
+017 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
