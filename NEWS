@@ -11,7 +11,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 004 ==> 146381 : JPEGLossLess       : Image rotation splits the image with a small strip appearing on the wrong side.
 005 ==> 155023 : SendImages         : Crashs when trying to send images via digiKam.
 006 ==> 170272 : FlickrExport       : Undefined signature problem prevents uploading to flickr.
-007 ==> 
+007 ==> 161114 : SendImages         : Resizing and emailing from digikam results in no-more readable files.
+008 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
