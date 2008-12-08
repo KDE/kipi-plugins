@@ -10,7 +10,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 137359 : MetadataEdit       : Unclear wording in kipiplugin_metadataedit.
 004 ==> 146381 : JPEGLossLess       : Image rotation splits the image with a small strip appearing on the wrong side.
 005 ==> 155023 : SendImages         : Crashs when trying to send images via digiKam.
-006 ==> 
+006 ==> 170272 : FlickrExport       : Undefined signature problem prevents uploading to flickr.
+007 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
