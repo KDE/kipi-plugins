@@ -5,7 +5,7 @@ Kipi-plugins NEW FEATURES:
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
-001 ==> 175033 : GPSSync            : gpssync does not get any map just a grey square.
+001 ==> 175033 : GPSSync            : GPSSync does not get any map just a grey square.
 002 ==> 175304 : MetadataEdit       : db does replicate to iptc or exif.
 003 ==> 137359 : MetadataEdit       : Unclear wording in kipiplugin_metadataedit.
 004 ==> 146381 : JPEGLossLess       : Image rotation splits the image with a small strip appearing on the wrong side.
@@ -19,7 +19,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 012 ==> 136941 : BatchProcess       : Graphical picture ordering and renaming.
 013 ==> 149394 : General            : Recover lost/deleted images from flash memory/camera.
 014 ==> 162441 : PicasaWebExport    : Unable to create an album.
-015 ==> 
+015 ==> 162993 : PicasaWebExport    : Picasa album list not refreshed.
+016 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
