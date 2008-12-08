@@ -18,7 +18,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 011 ==> 163395 : SendImages         : digiKam and encoding errors in flickr export and mail attachments.
 012 ==> 136941 : BatchProcess       : Graphical picture ordering and renaming.
 013 ==> 149394 : General            : Recover lost/deleted images from flash memory/camera.
-014 ==> 
+014 ==> 162441 : PicasaWebExport    : Unable to create an album.
+015 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
