@@ -13,7 +13,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 006 ==> 170272 : FlickrExport       : Undefined signature problem prevents uploading to flickr.
 007 ==> 161114 : SendImages         : Resizing and emailing from digikam results in no-more readable files.
 008 ==> 147685 : General            : Errors in error and "what's this" messages -- No way to select text in an error box.
-009 ==> 
+009 ==> 146293 : MetadataEdit       : Plugins/Images/metadata: untranslated.
+010 ==> 
 
 v 0.1.6
 ---------------------------------------------------------------------------
