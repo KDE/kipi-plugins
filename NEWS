@@ -12,7 +12,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 003 ==> 176640 : MetadataEdit       : Wrong reference to website.
 004 ==> 176749 : TimeAdjust         : Incorrect time/date setting with digiKam.
 005 ==> 165370 : GPSSync            : crash when saving geocoordinates.
-006 ==> 
+006 ==> 165486 : GPSSync            : Next and Previous photo button for editing geolocalization coordinates.
+007 ==> 
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------
