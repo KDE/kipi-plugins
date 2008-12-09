@@ -16,7 +16,8 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 007 ==> 175296 : GPSSync            : Geolocalization a handy gui to manage all about geotagging.
 008 ==> 152520 : MetadataEdit       : Unified entry of metadata.
 009 ==> 135320 : Calendar           : Calendar year do not match locale.
-010 ==> 
+010 ==> 116970 : Calendar           : New calendar generator plugin features.
+011 ==> 
 
 v 0.2.0 - beta4
 ------------------------------------------------------------------------
