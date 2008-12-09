@@ -1,0 +1,14 @@
+SmugMug plugin
+----------------------------------------------------------------------------
+Short term:
+ - Fix button enable/disable when image list is empty
+ - Fix button enable/disable on new album dialog
+ - Check FileSizeLimit before upload
+ - Caption, Keywords, GPS coordinates support
+ - Implement validators for email and password
+
+Long term:
+ - Synchronize with local album (upload/download)
+ - Virtual albums (needs support in KIPI and Host application)
+ - Support for adding categories/subcategories (is this needed?)
+ - SmugVault support?

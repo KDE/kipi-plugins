@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SmugMug Exporter
+Comment=A tool to export images to a remote SmugMug web service
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_smugmug
+author=Luka Renko, lure@kubuntu.org
