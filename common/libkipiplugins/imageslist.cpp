@@ -270,25 +270,26 @@ public:
     Interface*          iface;
 };
 
-ImagesList::ImagesList(Interface *iface, QWidget* parent, bool listViewOnly,
-                       bool allowRAW, bool autoLoad)
+ImagesList::ImagesList(Interface *iface, QWidget* parent,
+                       ControlButtonPlacement btnPlace)
           : QWidget(parent),
             d(new ImagesListPriv)
 {
     d->iface    = iface;
-    d->allowRAW = allowRAW;
+
+    d->allowRAW = true; // default, use setAllowRAW() to change
 
     // --------------------------------------------------------
 
     QGridLayout* mainLayout = new QGridLayout;
     d->listView             = new ImagesListView;
-    d->plainPage            = new QWidget;
+    d->plainPage            = new QWidget(this);
     d->plainPage->hide();
 
     // --------------------------------------------------------
 
-    d->addButton    = new QPushButton;
-    d->removeButton = new QPushButton;
+    d->addButton    = new QPushButton(this);
+    d->removeButton = new QPushButton(this);
 
     d->addButton->setText(i18n("&Add"));
     d->addButton->setIcon(SmallIcon("list-add"));
@@ -300,11 +301,22 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool listViewOnly,
 
     // --------------------------------------------------------
 
-    mainLayout->addWidget(d->listView,      0, 0, 5, 1);
-    mainLayout->addWidget(d->addButton,     0, 1, 1, 1);
-    mainLayout->addWidget(d->removeButton,  1, 1, 1, 1);
-    mainLayout->addWidget(d->plainPage,     2, 1, 1, 1);
-    mainLayout->setRowStretch(3, 10);
+    mainLayout->addWidget(d->listView,      0, 0, 5, 5);
+    switch (btnPlace)
+    {
+        case ControlButtonsBelow:
+            mainLayout->addWidget(d->addButton,     5, 0, 1, 1);
+            mainLayout->addWidget(d->removeButton,  5, 1, 1, 1);
+            mainLayout->addWidget(d->plainPage,     5, 2, 1, 1);
+            break;
+        case ControlButtonsRight:
+            mainLayout->addWidget(d->addButton,     0, 5, 1, 1);
+            mainLayout->addWidget(d->removeButton,  1, 5, 1, 1);
+            mainLayout->addWidget(d->plainPage,     2, 5, 1, 1);
+            break;
+        case NoControlButtons:
+            break;
+    }
     mainLayout->setMargin(KDialog::spacingHint());
     mainLayout->setSpacing(KDialog::spacingHint());
     setLayout(mainLayout);
@@ -319,7 +331,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool listViewOnly,
 
     // --------------------------------------------------------
 
-    if (!listViewOnly)
+    if (btnPlace != NoControlButtons)
     {
         connect(d->addButton, SIGNAL(clicked()),
                 this, SLOT(slotAddItems()));
@@ -331,21 +343,24 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, bool listViewOnly,
         d->removeButton->show();
         d->plainPage->show();
     }
-
-    // --------------------------------------------------------
-
-    if (autoLoad)
-    {
-        ImageCollection images = d->iface->currentSelection();
-
-        if (images.isValid())
-            slotAddImages(images.images());
-    }
 }
 
 ImagesList::~ImagesList()
 {
     delete d;
+}
+
+void ImagesList::setAllowRAW(bool allow)
+{
+    d->allowRAW = allow;
+}
+
+void ImagesList::loadImagesFromCurrentSelection()
+{
+    ImageCollection images = d->iface->currentSelection();
+
+    if (images.isValid())
+        slotAddImages(images.images());
 }
 
 void ImagesList::slotAddImages(const KUrl::List& list)

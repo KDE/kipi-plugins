@@ -134,9 +134,19 @@ class KIPIPLUGINS_EXPORT ImagesList : public QWidget
 
 public:
 
-    explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0, bool listViewOnly = false,
-                        bool allowRAW = true, bool autoLoad = true);
+    enum ControlButtonPlacement
+    {
+        NoControlButtons = 0,
+        ControlButtonsRight,
+        ControlButtonsBelow
+    };
+
+    explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0, 
+                        ControlButtonPlacement btnPlace = ControlButtonsRight);
     virtual ~ImagesList();
+
+    void setAllowRAW(bool allow);
+    void loadImagesFromCurrentSelection();
 
     ImagesListView*  listView() const;
     KIPI::Interface* iface() const;
