@@ -62,12 +62,20 @@
                         <string>Add original file name</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+                <widget class="QCheckBox" row="3" column="0">
                     <property name="name">
                         <cstring>m_addFileDateCheck</cstring>
                     </property>
                     <property name="text">
                         <string>Add file date</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="1">
+                    <property name="name">
+                        <cstring>m_useExtraSymbolsCheck</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use extra [X*] symbols in date format field</string>
                     </property>
                 </widget>
                 <widget class="QLineEdit" row="4" column="1">

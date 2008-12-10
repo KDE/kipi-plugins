@@ -50,6 +50,9 @@ extern "C"
 #include <qprogressdialog.h>
 #include <qgroupbox.h>
 #include <qpopupmenu.h>
+#include <qregexp.h>
+#include <qdir.h>
+#include <qtooltip.h>
 
 // KDE includes.
 
@@ -97,6 +100,22 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
     m_sortButton->setPopup(sortMenu);
 
+    QToolTip::add(m_useExtraSymbolsCheck,
+            "[e] - extension (small one - after last '.')\n"
+            "[e-] - extension lower case\n"
+            "[e+] extension upper case\n"
+            "[i] - sequence number - no leading zeros\n"
+            "[i:4] - sequence number in 4 digit with leading zeros format\n"
+            "[n] - original file name\n"
+            "[n+] - original file name upper case\n"
+            "[n-] - original file name lower case\n"
+            "[n:5..-2] - substring of original filename from char 5 to second from the end\n"
+            "[n+:..5] - whole name (base + extension, characters from 1 to 5)\n"
+            "[a] - album name\n"
+            "[p+] - absolute path (uppercase)\n"
+            "[B:4..-2] - base name (big one - all before last ',', from 4-th to one before last characters)\n"
+            "[b-:-3..] - base name (small one - all before first '.', last 3 characters)");
+
     connect(m_listView, SIGNAL(doubleClicked(QListViewItem*)),
             SLOT(slotListViewDoubleClicked(QListViewItem*)));
     connect(m_listView, SIGNAL(selectionChanged(QListViewItem*)),
@@ -107,6 +126,8 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     connect(m_seqSpin, SIGNAL(valueChanged(int)),
             SLOT(slotOptionsChanged()));
     connect(m_addFileNameCheck, SIGNAL(toggled(bool)),
+            SLOT(slotOptionsChanged()));
+    connect(m_useExtraSymbolsCheck, SIGNAL(toggled(bool)),
             SLOT(slotOptionsChanged()));
     connect(m_addFileDateCheck, SIGNAL(toggled(bool)),
             SLOT(slotOptionsChanged()));
@@ -169,6 +190,7 @@ void RenameImagesWidget::readSettings()
     m_seqSpin->setValue(config.readNumEntry("FirstRenameValue", 1));
 
     m_addFileNameCheck->setChecked(config.readBoolEntry("AddOriginalFileName", false));
+    m_useExtraSymbolsCheck->setChecked(config.readBoolEntry("UseExtraSymbolsCheck", false));
     m_addFileDateCheck->setChecked(config.readBoolEntry("AddImageFileDate", false));
     m_formatDateCheck->setChecked(config.readBoolEntry("FormatDate", false));
     m_formatDateEdit->setText(config.readEntry("FormatDateString", "%Y-%m-%d"));
@@ -185,6 +207,7 @@ void RenameImagesWidget::saveSettings()
     config.writeEntry("FirstRenameValue", m_seqSpin->value());
 
     config.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
+    config.writeEntry("UseExtraSymbolsCheck", m_useExtraSymbolsCheck->isChecked());
     config.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
     config.writeEntry("FormatDate", m_formatDateCheck->isChecked());
     config.writeEntry("FormatDateString", m_formatDateEdit->text());
@@ -195,6 +218,7 @@ void RenameImagesWidget::saveSettings()
 void RenameImagesWidget::slotOptionsChanged()
 {
     m_formatDateCheck->setEnabled(m_addFileDateCheck->isChecked());
+    m_useExtraSymbolsCheck->setEnabled(m_addFileDateCheck->isChecked());
     m_formatDateEdit->setEnabled(m_formatDateCheck->isEnabled() &&
                                  m_formatDateCheck->isChecked());
 
@@ -337,6 +361,9 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
 
     KIPI::ImageInfo info = m_interface->info(url);
     
+    bool useExtraSymbols = m_addFileDateCheck->isChecked() && 
+        m_useExtraSymbolsCheck->isChecked();
+
     QString newName = m_prefixEdit->text();
     
     if (m_addFileNameCheck->isChecked())
@@ -345,13 +372,74 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
         newName += "_";
     }
 
+    int seqNumber = itemPosition + m_seqSpin->value();
     if (m_addFileDateCheck->isChecked())
     {
         QString format = m_formatDateEdit->text();
         format = format.simplifyWhiteSpace();
+        if (useExtraSymbols)
+        {
+            QRegExp rxI("\\[i(:(\\d+))?\\]");
+            QRegExp rxN("\\[([anbBeEp])([-+]?)(:(\\d*|-\\d+)\\.\\.(\\d*|-\\d+))?\\]");
+
+            for(int watchDog = 0; watchDog < 100; watchDog++)
+            {
+                QString to;
+                int j, i = rxI.search(format);
+                if (i != -1)
+                {
+                    j = rxI.matchedLength();
+                    QString digits = rxI.cap(2);
+                    int k = (!digits || !digits.length()) ? 0 : digits.toInt();
+                    if (k < 2)
+                    {
+                        to = QString::number(seqNumber);
+                    }
+                    else
+                    {
+                        QString fmt;
+                        fmt.sprintf("0%dd", (k > 10 ? 10 : k));
+                        fmt = "%" + fmt;
+                        to.sprintf(fmt.latin1(), seqNumber);
+                    }
+                }
+                else
+                {
+                    if ((i = rxN.search(format)) == -1)
+                    { 
+                        break; 
+                    }
+                    j = rxN.matchedLength();
+                    QString from = rxN.cap(1);
+                    from = (from == "e") ? fi.extension(/*complete=*/FALSE) :
+                           (from == "E") ? fi.extension(/*complete=*/TRUE) :
+                           (from == "b") ? fi.baseName(/*complete=*/FALSE) :
+                           (from == "B") ? fi.baseName(/*complete=*/TRUE) :
+                           (from == "n") ? fi.fileName() :
+                           (from == "a") ? fi.dir(/*absPath=*/TRUE).dirName() :
+                           (from == "p") ? fi.dirPath(/*absPath=*/TRUE) :
+                           "";
+                    int len = from.length();
+                    QString start = rxN.cap(4);
+                    QString end = rxN.cap(5);
+                    int k = (!start || !start.length()) ? 1 : start.toInt();
+                    int l = (!end || !end.length()) ? len : end.toInt();
+                    k = (k < -len) ? 0 : (k < 0) ? (len + k) : (k > 0) ? (k - 1) : 0;
+                    l = (l < -len) ? -1 : (l < 0) ? (len + l) : (l > 0) ? (l - 1) : 0;
+                    to = l < k ? "" : from.mid(k, l - k + 1);
+                    QString changeCase = rxN.cap(2);
+                    if (!!changeCase && changeCase.length())
+                    {
+                        to = (changeCase == "+") ? to.upper() : to.lower();
+                    }
+                }
+                format.replace(i, j, to);
+            }
+        }
         format.replace("%%","%");
         format.replace("%s","");
-        format.replace("/", "");
+        format.replace("/", "!");
+        format.replace("%[","% [");
 
         time_t time = info.time().toTime_t();
         struct tm* time_tm = ::localtime(&time);
@@ -359,26 +447,32 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
         ::strftime(s, 100, QFile::encodeName(format), time_tm);
 
         newName += QString::fromLatin1(s);
-        newName += "_";
+        if (!useExtraSymbols)
+        {
+            newName += "_";
+        }
     }
 
-    int count = m_listView->childCount();
-    int numDigits = 1;
-    while (count > 0)
+    if (!useExtraSymbols)
     {
-        numDigits++;
-        count = count / 10;
+        int numDigits = 1;
+        int count = m_listView->childCount();
+        while (count > 0)
+        {
+            numDigits++;
+            count = count / 10;
+        }
+
+        QString format;
+        format.sprintf("0%dd", numDigits);
+        format = "%" + format;
+
+        QString seq;
+        seq.sprintf(format.latin1(), seqNumber);
+        newName += seq;
+
+        newName += QString::fromLatin1(".") + fi.extension();
     }
-
-    QString format;
-    format.sprintf("0%dd", numDigits);
-    format = "%" + format;
-
-    QString seq;
-    seq.sprintf(format.latin1(), itemPosition + m_seqSpin->value());
-    newName += seq;
-
-    newName += QString::fromLatin1(".") + fi.extension();
     
     return newName;
 }
