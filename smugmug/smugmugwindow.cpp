@@ -137,7 +137,8 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
     // ------------------------------------------------------------------------
 
     m_loginDlg  = new KPasswordDialog(this, KPasswordDialog::ShowUsernameLine);
-    m_loginDlg->setPrompt(i18n("Enter an e-mail and a password of your SmugMug account"));
+    m_loginDlg->setPrompt(i18n("<qt>Enter an <b>e-mail</b> and a <b>password</b> of your "
+                               "<a href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"));
 
     // ------------------------------------------------------------------------
 
