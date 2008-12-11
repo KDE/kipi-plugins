@@ -24,8 +24,9 @@
 #include "smugmugalbum.moc"
 
 // Qt includes.
-#include <QGridLayout>
+#include <QFormLayout>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
@@ -63,46 +64,31 @@ SmugMugNewAlbum::SmugMugNewAlbum(QWidget* parent)
     QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for new SmugMug album."));
-    QGridLayout* albumBoxLayout = new QGridLayout(albumBox);
 
-    QLabel *titleLbl    = new QLabel(i18n("Title:"), albumBox);
+    QFormLayout* albumBoxLayout = new QFormLayout(albumBox);
     m_titleEdt          = new KLineEdit(albumBox);
-    titleLbl->setWhatsThis(
-        i18n("Title of the album that will be created (required)."));
     m_titleEdt->setWhatsThis(
         i18n("Title of the album that will be created (required)."));
 
-    QLabel *categLbl    = new QLabel(i18n("Category:"), albumBox);
     m_categCoB          = new QComboBox(albumBox);
     m_categCoB->setEditable(false);
-    categLbl->setWhatsThis(
-        i18n("Category of the album that will be created (required)."));
     m_categCoB->setWhatsThis(
         i18n("Category of the album that will be created (required)."));
 
-    QLabel *subCategLbl = new QLabel(i18n("Subcategory:"), albumBox);
     m_subCategCoB       = new QComboBox(albumBox);
     m_subCategCoB->setEditable(false);
-    subCategLbl->setWhatsThis(
-        i18n("Subcategory of the album that will be created (optional)."));
     m_subCategCoB->setWhatsThis(
         i18n("Subcategory of the album that will be created (optional)."));
 
-    QLabel *descLbl     = new QLabel(i18n("Description:"), albumBox);
     m_descEdt           = new KTextEdit(albumBox);
-    descLbl->setWhatsThis(
-        i18n("Description of the album that will be created (optional)."));
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    albumBoxLayout->addWidget(titleLbl,         0, 0, 1, 1);
-    albumBoxLayout->addWidget(m_titleEdt,       0, 1, 1, 1);
-    albumBoxLayout->addWidget(categLbl,         1, 0, 1, 1);
-    albumBoxLayout->addWidget(m_categCoB,       1, 1, 1, 1);
-    albumBoxLayout->addWidget(subCategLbl,      2, 0, 1, 1);
-    albumBoxLayout->addWidget(m_subCategCoB,    2, 1, 1, 1);
-    albumBoxLayout->addWidget(descLbl,          3, 0, 1, 1);
-    albumBoxLayout->addWidget(m_descEdt,        3, 1, 1, 2);
+    albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
+    albumBoxLayout->addRow(i18n("Category:"), m_categCoB);
+    albumBoxLayout->addRow(i18n("Subcategory:"), m_subCategCoB);
+    albumBoxLayout->addRow(i18n("Description:"), m_descEdt);
+    albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -110,11 +96,9 @@ SmugMugNewAlbum::SmugMugNewAlbum(QWidget* parent)
     QGroupBox* privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
     privBox->setWhatsThis(
         i18n("These are security and privacy settings for new SmugMug album."));
-    QGridLayout* privBoxLayout = new QGridLayout(privBox);
+    QFormLayout* privBoxLayout = new QFormLayout(privBox);
 
-    QLabel *privacyLbl  = new QLabel(i18n("Privacy:"), privBox);
-    privacyLbl->setWhatsThis(
-        i18n("Privacy of the new SmugMug album (required)."));
+    QHBoxLayout* radioLayout = new QHBoxLayout(privBox);
     m_publicRBtn        = new QRadioButton(i18n("Public"), privBox);
     m_publicRBtn->setChecked(true);
     m_publicRBtn->setWhatsThis(
@@ -122,28 +106,20 @@ SmugMugNewAlbum::SmugMugNewAlbum(QWidget* parent)
     m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"), privBox);
     m_unlistedRBtn->setWhatsThis(
         i18n("Unlisted album is only accessible via URL."));
-
-    QLabel *passwdLbl   = new QLabel(i18n("Password:"), privBox);
+    radioLayout->addWidget(m_publicRBtn);
+    radioLayout->addWidget(m_unlistedRBtn);
+    
     m_passwdEdt         = new KLineEdit(privBox);
-    passwdLbl->setWhatsThis(
-        i18n("Require password to access the album (optional)."));
     m_passwdEdt->setWhatsThis(
         i18n("Require password to access the album (optional)."));
 
-    QLabel *hintLbl     = new QLabel(i18n("Password Hint:"), privBox);
     m_hintEdt           = new KLineEdit(privBox);
-    hintLbl->setWhatsThis(
-        i18n("Password hint to present to users on the password prompt (optional)."));
     m_hintEdt->setWhatsThis(
         i18n("Password hint to present to users on the password prompt (optional)."));
 
-    privBoxLayout->addWidget(privacyLbl,        0, 0, 1, 1);
-    privBoxLayout->addWidget(m_publicRBtn,      0, 1, 1, 1);
-    privBoxLayout->addWidget(m_unlistedRBtn,    0, 2, 1, 1);
-    privBoxLayout->addWidget(passwdLbl,         1, 0, 1, 1);
-    privBoxLayout->addWidget(m_passwdEdt,       1, 1, 1, 2);
-    privBoxLayout->addWidget(hintLbl,           2, 0, 1, 1);
-    privBoxLayout->addWidget(m_hintEdt,         2, 1, 1, 2);
+    privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
+    privBoxLayout->addRow(i18n("Password:"), m_passwdEdt);
+    privBoxLayout->addRow(i18n("Password Hint:"), m_hintEdt);
     privBoxLayout->setSpacing(KDialog::spacingHint());
     privBoxLayout->setMargin(KDialog::spacingHint());
 
