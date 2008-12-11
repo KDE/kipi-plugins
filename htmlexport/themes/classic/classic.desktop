@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Classic
 Name[ca]=Clàssic
+Name[cs]=Klasický
 Name[de]=Klassisch
 Name[el]=Κλασικό
 Name[es]=Clásico
@@ -24,6 +25,7 @@ Name[x-test]=xxClassicxx
 Name[zh_CN]=经典
 Comment=A port of the old HTML Export plugin theme
 Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
+Comment[cs]=Port starého motivu pro modul HTML export
 Comment[de]=Eine Portierung des alten Designs des HTML-Export-Moduls
 Comment[el]=Μια μεταφορά του παλιού θέματος εξαγωγής σε HTML
 Comment[es]=Un portado del antiguo tema del complemento de exportación a HTML
@@ -55,6 +57,7 @@ Url=mailto:aurelien.gateau@free.fr
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
 Name[ca]=Miniatures per fila
+Name[cs]=Miniatury na řádek
 Name[de]=Vorschaubilder pro Reihe
 Name[el]=Επισκοπήσεις ανά γραμμή
 Name[es]=Miniaturas por fila
@@ -86,6 +89,7 @@ Max=100
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
 Name[ca]=Color de fons
+Name[cs]=Barva pozadí
 Name[de]=Hintergrundfarbe
 Name[el]=Χρώμα φόντου
 Name[es]=Color del fondo
@@ -116,6 +120,7 @@ Default=#333333
 [X-HTMLExport Parameter fgColor]
 Name=Foreground Color
 Name[ca]=Color de primer pla
+Name[cs]=Barva popředí
 Name[de]=Vordergrundfarbe
 Name[el]=Χρώμα προσκηνίου
 Name[es]=Color del primer plano
@@ -145,6 +150,7 @@ Default=#d0ffd0
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
 Name[ca]=Mida del tipus de lletra
+Name[cs]=Velikost písma
 Name[de]=Schriftgröße
 Name[el]=Μέγεθος γραμματοσειράς
 Name[es]=Tamaño de letra
@@ -178,6 +184,7 @@ Max=100
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
 Name[ca]=Mida de la vora de la imatge
+Name[cs]=Velikost rámečku obrázku
 Name[de]=Größe des Bildrahmens
 Name[el]=Μέγεθος περιθωρίου εικόνας
 Name[es]=Tamaño del borde de la imagen
@@ -208,6 +215,7 @@ Max=50
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
 Name[ca]=Color de la vora de la imatge
+Name[cs]=Barva rámečku obrázku
 Name[de]=Farbe des Bildrahmens
 Name[el]=Χρώμα περιθωρίου εικόνας
 Name[es]=Color del borde de la imagen
@@ -236,6 +244,7 @@ Default=#d0ffd0
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
 Name[ca]=Color d'enllaç
+Name[cs]=Barva odkazu
 Name[de]=Farbe von Verknüpfungen
 Name[el]=Χρώμα δεσμού
 Name[es]=Color del enlace
@@ -265,6 +274,7 @@ Default=#b3b3b3
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
 Name[ca]=Color d'enllaç visitat
+Name[cs]=Barva navštíveného odkazu
 Name[de]=Farbe von besuchten Verknüpfungen
 Name[el]=Χρώμα ακολουθημένου δεσμού
 Name[es]=Color de los enlaces visitados

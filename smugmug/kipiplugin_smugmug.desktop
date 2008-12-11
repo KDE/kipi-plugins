@@ -1,7 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SmugMug Exporter
+Name[gl]=Exportador a SmugMug
+Name[km]=កម្មវិធី​នាំចូល SmugMug
+Name[nds]=SmugMug-Exporteren
+Name[sv]=Export till SmugMug
+Name[uk]=Інструмент експорту до SmugMug
 Comment=A tool to export images to a remote SmugMug web service
+Comment[gl]=Unha utilidade para exportar imaxes a un servizo web SmugMug remoto
+Comment[km]=ឧបករណ៍​ត្រូវ​នាំចេញ​រូបភាព​ទៅ​សេវា​បណ្ដាញ SmugMug ពី​ចម្ងាយ
+Comment[nds]=En Warktüüch, mit dat sik Biller na en SmugMug-Nettdeenst exporteren laat
+Comment[sv]=Ett verktyg för att exportera bilder till en SmugMug fjärrwebbtjänst
+Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби SmugMug
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_smugmug
