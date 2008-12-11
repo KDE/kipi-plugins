@@ -75,6 +75,17 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
                                 "the images list after test-run."));
     d->unprocessedGroup->addButton(removeMode, Remove);
 
+    QString whatsThis = i18n("<p>These settings control the handling of unprocessed images when "
+            "running in testmode. To speed up the final correction, unprocessed images can be "
+            "removed from the list, so that they don't get analyzed again. There are three modes "
+            "to choose from:</p>"
+            "<p><ul>"
+            "<li><b>Ask the user:</b> A popup window will appear to ask for further actions.</li>"
+            "<li><b>Keep:</b> All unprocessed images will be kept in the list.</li>"
+            "<li><b>Remove:</b> All unprocessed images are removed after testrun.</li>"
+            "</ul></p>");
+    setWhatsThis(whatsThis);
+
     QGridLayout* unprocessedGroupLayout = new QGridLayout;
     unprocessedGroupLayout->addWidget(askMode,       0, 0, 1, 1);
     unprocessedGroupLayout->addWidget(keepMode,      1, 0, 1, 1);

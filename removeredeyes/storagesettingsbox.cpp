@@ -93,6 +93,17 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     note->setWordWrap(true);
 
+    QString whatsThis = i18n("<p>These settings control the storage of the corrected images. "
+                             "There are three modes to choose from:</p>"
+                             "<p><ul>"
+                             "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
+                                     "under the current album path."
+                             "</li>"
+                             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
+                             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
+                             "</ul></p>");
+    setWhatsThis(whatsThis);
+
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->subfolderLineEdit,  0, 2, 1, 1);
