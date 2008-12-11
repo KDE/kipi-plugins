@@ -109,7 +109,6 @@ private:
     QString                     m_tmpDir;
     QString                     m_tmpPath;
 
-    bool                        m_loggedIn;
     QString                     m_email;
     QString                     m_password;
     int                         m_currentAlbumID;

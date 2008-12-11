@@ -53,8 +53,10 @@ public:
     QString getAccountType();
     int     getFileSizeLimit();
 
+    bool    loggedIn();
     void    cancel();
     void    login(const QString& email, const QString& password);
+    void    logout();
 
     void    listAlbums();
     void    listCategories();
@@ -84,6 +86,7 @@ private:
     enum State 
     {
         SM_LOGIN = 0,
+        SM_LOGOUT,
         SM_LISTALBUMS,
         SM_LISTCATEGORIES,
         SM_LISTSUBCATEGORIES,
@@ -93,6 +96,7 @@ private:
 
     QString errorToText(int errCode, const QString& errMsg);
     void parseResponseLogin(const QByteArray& data);
+    void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);

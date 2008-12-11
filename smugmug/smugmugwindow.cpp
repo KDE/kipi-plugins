@@ -199,8 +199,7 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
     readSettings();
 
     kDebug(51000) << "Calling Login method";
-    m_loggedIn = false;
-    buttonStateChange(m_loggedIn);
+    buttonStateChange(m_talker->loggedIn());
     if (!m_email.isEmpty())
         m_talker->login(m_email, m_password);
     else
@@ -265,20 +264,25 @@ void SmugMugWindow::slotHelp()
 
 void SmugMugWindow::slotClose()
 {
+    if (m_talker->loggedIn())
+        m_talker->logout();
+
     writeSettings();
+
+    delete m_talker;
+
     done(Close);
 }
 
 void SmugMugWindow::slotLoginDone(int errCode, const QString &errMsg)
 {
-    m_loggedIn = (errCode == 0);
-    buttonStateChange(m_loggedIn);
+    buttonStateChange(m_talker->loggedIn());
     m_widget->updateLabels(m_talker->getEmail(),
                            m_talker->getDisplayName(),
                            m_talker->getNickName());
     m_widget->m_albumsCoB->clear();
 
-    if (m_loggedIn)
+    if (errCode == 0 && m_talker->loggedIn())
     {
         m_talker->listAlbums(); // get albums to fill combo box
     }
@@ -378,7 +382,7 @@ void SmugMugWindow::slotBusy(bool val)
     {
         setCursor(Qt::ArrowCursor);
         m_widget->m_changeUserBtn->setEnabled(true);
-        buttonStateChange(m_loggedIn);
+        buttonStateChange(m_talker->loggedIn());
     }
 }
 
@@ -392,6 +396,9 @@ void SmugMugWindow::slotUserChangeRequest()
 
     if (m_loginDlg->exec())
     {
+        if (m_talker->loggedIn())
+            m_talker->logout();
+
         m_email = m_loginDlg->username();
         m_password = m_loginDlg->password();
         kDebug(51000) << "Calling Login method";

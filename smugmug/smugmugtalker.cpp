@@ -57,8 +57,16 @@ SmugMugTalker::SmugMugTalker(QWidget* parent)
 
 SmugMugTalker::~SmugMugTalker()
 {
+    if (loggedIn())
+        logout();
+
     if (m_job)
         m_job->kill();
+}
+
+bool SmugMugTalker::loggedIn()
+{
+    return !m_sessionID.isEmpty();
 }
 
 QString SmugMugTalker::getEmail()
@@ -135,6 +143,40 @@ void SmugMugTalker::login(const QString& email, const QString& password)
     m_authProgressDlg->setValue(2);
 
     m_email = email;
+}
+
+void SmugMugTalker::logout()
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    KUrl url(m_apiURL);
+    url.addQueryItem("method", "smugmug.logout");
+    url.addQueryItem("SessionID", m_sessionID);
+
+    QByteArray tmp;
+    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    //connect(job, SIGNAL(result(KJob*)),
+    //        this, SLOT(slotResult(KJob*)));
+
+    m_state = SM_LOGOUT;
+    m_job   = job;
+    m_buffer.resize(0);
+
+    // logout is synchronous call
+    job->exec();
+    slotResult(job);
 }
 
 void SmugMugTalker::listAlbums()
@@ -380,6 +422,9 @@ void SmugMugTalker::slotResult(KJob *kjob)
         case(SM_LOGIN):
             parseResponseLogin(m_buffer);
             break;
+        case(SM_LOGOUT):
+            parseResponseLogout(m_buffer);
+            break;
         case(SM_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
@@ -472,6 +517,52 @@ void SmugMugTalker::parseResponseLogin(const QByteArray& data)
     emit signalLoginDone(errCode, errorToText(errCode, errMsg));
     emit signalBusy(false);
     m_authProgressDlg->hide();
+}
+
+void SmugMugTalker::parseResponseLogout(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+
+    QDomDocument doc("logout");
+    if (!doc.setContent(data))
+        return;
+
+    QDomElement docElem = doc.documentElement();
+    QDomNode node       = docElem.firstChild();
+
+    kDebug(51000) << "Parse Logout response:" << endl << data;
+
+    QDomElement e;
+    while(!node.isNull())
+    {
+        if (node.isElement() && node.nodeName() == "Logout")
+        {
+            e = node.toElement();
+            errCode = 0;
+        }
+        else if (node.isElement() && node.nodeName() == "err")
+        {
+            e  = node.toElement();
+            errCode = e.attribute("code").toInt();
+            errMsg = e.attribute("msg");
+            kDebug(51000) << "Error:" << errCode << errMsg;
+        }
+
+        node = node.nextSibling();
+    }
+
+    // consider we are logged out in any case
+    m_email.clear();
+    m_nickName.clear();
+    m_displayName.clear();
+    m_sessionID.clear();
+    m_accountType.clear();
+    m_fileSizeLimit = 0;
+
+    kDebug(51000) << "Logout finished";
+
+    emit signalBusy(false);
 }
 
 void SmugMugTalker::parseResponseAddPhoto(const QByteArray& data)
