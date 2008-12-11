@@ -75,13 +75,15 @@ PreviewWidget::PreviewWidget(QWidget* parent)
              : QStackedWidget(parent),
                d(new PreviewWidgetPriv)
 {
-    QString whatsThis = i18n("<p>This widget will display a correction preview for the currently selected image</p>"
-                             "<p><ul>"
-                             "<li>Move the mouse <b>over</b> the preview to display the original image</li>"
-                             "<li>Move the mouse <b>out of</b> the preview to display the corrected image</li>"
-                             "<li><b>Click on</b> the preview to display the correction mask</li>"
-                             "</ul></p>"
-                             "<p>If the info widget hides important image parts, click on it to make it disappear.</p>");
+    QString whatsThis = i18n("<p>This widget will display a correction "
+            "preview for the currently selected image</p>"
+            "<p><ul>"
+            "<li>Move the mouse <b>over</b> the preview to display the original image</li>"
+            "<li>Move the mouse <b>out of</b> the preview to display the corrected image</li>"
+            "<li><b>Click on</b> the preview to display the correction mask</li>"
+            "</ul></p>"
+            "<p>If the info widget hides important image parts, click on it to "
+            "make it disappear.</p>");
 
     setWhatsThis(whatsThis);
 

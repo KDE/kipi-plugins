@@ -49,15 +49,15 @@ public:
 
     StorageSettingsBoxPriv()
     {
-        storageGroup                = 0;
-        suffixLineEdit              = 0;
-        subfolderLineEdit           = 0;
+        storageGroup        = 0;
+        suffixLineEdit      = 0;
+        subfolderLineEdit   = 0;
     }
 
-    QButtonGroup*       storageGroup;
+    QButtonGroup*   storageGroup;
 
-    KLineEdit*          suffixLineEdit;
-    KLineEdit*          subfolderLineEdit;
+    KLineEdit*      suffixLineEdit;
+    KLineEdit*      subfolderLineEdit;
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* parent)
@@ -65,11 +65,26 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
                     d(new StorageSettingsBoxPriv)
 {
     setTitle(i18n("Storage Settings"));
+
+    QString whatsThis = i18n("<p>These settings control the storage of the corrected images. "
+            "There are three modes to choose from:</p>"
+            "<p><ul>"
+            "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
+            "under the current album path.</li>"
+            "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
+            "<li><b>Overwrite:</b> All original images will be replaced.</li>"
+            "</ul></p>");
+    setWhatsThis(whatsThis);
+
+    // ----------------------------------------------------------------
+
     d->storageGroup = new QButtonGroup(this);
     d->storageGroup->setExclusive(true);
 
     d->subfolderLineEdit = new KLineEdit;
     d->subfolderLineEdit->setToolTip(i18n("Enter the name of the subfolder here."));
+
+    // ----------------------------------------------------------------
 
     QRadioButton* subfolderMode = new QRadioButton(i18n("Save files in a subfolder"));
     subfolderMode->setToolTip(i18n("If checked, the corrected files will be saved "
@@ -87,22 +102,15 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     d->suffixLineEdit = new KLineEdit;
     d->suffixLineEdit->setToolTip(i18n("Enter the name of the suffix here..."));
 
+    // ----------------------------------------------------------------
+
     QLabel* note      = new QLabel(i18n("<p><i>Note: At the moment this plugin will not keep "
                                         "any metadata (EXIF, IPTC).<br/>"
                                         "DON'T USE OVERWRITE MODE, YOU WILL LOSE ALL INFORMATION!</i></p>"));
 
     note->setWordWrap(true);
 
-    QString whatsThis = i18n("<p>These settings control the storage of the corrected images. "
-                             "There are three modes to choose from:</p>"
-                             "<p><ul>"
-                             "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
-                                     "under the current album path."
-                             "</li>"
-                             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
-                             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
-                             "</ul></p>");
-    setWhatsThis(whatsThis);
+    // ----------------------------------------------------------------
 
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
@@ -113,10 +121,12 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     correctionGroupLayout->addWidget(note,                  3, 0, 1,-1);
     setLayout(correctionGroupLayout);
 
-    setStorageMode(Suffix);
+    // ----------------------------------------------------------------
 
     connect(d->storageGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(buttonClicked(int)));
+
+    setStorageMode(Suffix);
 }
 
 StorageSettingsBox::~StorageSettingsBox()
