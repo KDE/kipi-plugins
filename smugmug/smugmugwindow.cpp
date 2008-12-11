@@ -210,8 +210,9 @@ SmugMugWindow::~SmugMugWindow()
 {
     delete m_progressDlg;
     delete m_authProgressDlg;
-    delete m_talker;
+    delete m_albumDlg;
     delete m_widget;
+    delete m_talker;
     delete m_about;
 }
 
