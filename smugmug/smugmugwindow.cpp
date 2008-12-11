@@ -269,8 +269,6 @@ void SmugMugWindow::slotClose()
 
     writeSettings();
 
-    delete m_talker;
-
     done(Close);
 }
 
