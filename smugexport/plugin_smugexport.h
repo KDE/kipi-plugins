@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_SMUGMUG_H
-#define PLUGIN_SMUGMUG_H
+#ifndef PLUGIN_SMUGEXPORT_H
+#define PLUGIN_SMUGEXPORT_H
 
 // Qt includes.
 #include <QVariant>
@@ -33,19 +33,19 @@
 
 class KAction;
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
-    class SmugMugWindow;
+    class SmugWindow;
 }
 
-class Plugin_SmugMug : public KIPI::Plugin
+class Plugin_SmugExport : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_SmugMug(QObject *parent, const QVariantList &args);
-    ~Plugin_SmugMug();
+    Plugin_SmugExport(QObject *parent, const QVariantList &args);
+    ~Plugin_SmugExport();
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
@@ -57,7 +57,7 @@ public slots:
 private:
 
     KAction                                 *m_action;
-    KIPISmugMugPlugin::SmugMugWindow        *m_dlg;
+    KIPISmugExportPlugin::SmugWindow        *m_dlg;
 };
 
-#endif // PLUGIN_SMUGMUG_H
+#endif // PLUGIN_SMUGEXPORT_H

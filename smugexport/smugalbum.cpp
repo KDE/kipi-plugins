@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#include "smugmugalbum.h"
-#include "smugmugalbum.moc"
+#include "smugalbum.h"
+#include "smugalbum.moc"
 
 // Qt includes.
 #include <QFormLayout>
@@ -40,12 +40,12 @@
 #include <ktextedit.h>
 
 // local includes
-#include <smugmugitem.h>
+#include <smugitem.h>
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-SmugMugNewAlbum::SmugMugNewAlbum(QWidget* parent)
+SmugNewAlbum::SmugNewAlbum(QWidget* parent)
            : KDialog(parent)
 {
     QString header(i18n("SmugMug New Album"));
@@ -132,11 +132,11 @@ SmugMugNewAlbum::SmugMugNewAlbum(QWidget* parent)
     // ------------------------------------------------------------------------
 }
 
-SmugMugNewAlbum::~SmugMugNewAlbum()
+SmugNewAlbum::~SmugNewAlbum()
 {
 }
 
-void SmugMugNewAlbum::getAlbumProperties(SMAlbum &album)
+void SmugNewAlbum::getAlbumProperties(SmugAlbum &album)
 {
     album.title = m_titleEdt->text();
 
@@ -154,4 +154,4 @@ void SmugMugNewAlbum::getAlbumProperties(SMAlbum &album)
     album.passwordHint = m_hintEdt->text();
 }
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin

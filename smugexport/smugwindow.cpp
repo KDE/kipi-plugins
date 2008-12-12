@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#include "smugmugwindow.h"
-#include "smugmugwindow.moc"
+#include "smugwindow.h"
+#include "smugwindow.moc"
 
 // Qt includes.
 #include <QFileInfo>
@@ -65,15 +65,15 @@
 #include "pluginsversion.h"
 
 // Local includes.
-#include "smugmugitem.h"
-#include "smugmugtalker.h"
-#include "smugmugwidget.h"
-#include "smugmugalbum.h"
+#include "smugitem.h"
+#include "smugtalker.h"
+#include "smugwidget.h"
+#include "smugalbum.h"
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
+SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
             : KDialog(parent)
 {
     setWindowTitle(i18n("Export to SmugMug Web Service"));
@@ -86,7 +86,7 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
     m_interface              = interface;
     m_uploadCount            = 0;
     m_uploadTotal            = 0;
-    m_widget                 = new SmugMugWidget(this, interface);
+    m_widget                 = new SmugWidget(this, interface);
 
     setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), KIcon("network-workgroup")));
     setMainWidget(m_widget);
@@ -111,7 +111,7 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
             this, SLOT( slotStartUpload()) );
 
     // ------------------------------------------------------------------------
-    m_about = new KIPIPlugins::KPAboutData(ki18n("SmugMug Export"), 0,
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Smug Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to export image collection to "
                             "SmugMug web service."),
@@ -142,14 +142,14 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
 
     // ------------------------------------------------------------------------
 
-    m_albumDlg  = new SmugMugNewAlbum(this);
+    m_albumDlg  = new SmugNewAlbum(this);
 
     connect(m_albumDlg->m_categCoB, SIGNAL( currentIndexChanged(int) ),
             this, SLOT( slotCategorySelectionChanged(int)) );
 
     // ------------------------------------------------------------------------
 
-    m_talker = new SmugMugTalker(this);
+    m_talker = new SmugTalker(this);
 
     connect(m_talker, SIGNAL( signalBusy(bool) ),
             this, SLOT( slotBusy(bool) ));
@@ -163,14 +163,14 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
     connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, int) ),
             this, SLOT( slotCreateAlbumDone(int, const QString&, int) ));
 
-    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <SMAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <SMAlbum>&) ));
+    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ),
+            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ));
 
-    connect(m_talker, SIGNAL( signalListCategoriesDone(int, const QString&, const QList <SMCategory>&) ),
-            this, SLOT( slotListCategoriesDone(int, const QString&, const QList <SMCategory>&) ));
+    connect(m_talker, SIGNAL( signalListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ),
+            this, SLOT( slotListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ));
 
-    connect(m_talker, SIGNAL( signalListSubCategoriesDone(int, const QString&, const QList <SMCategory>&) ),
-            this, SLOT( slotListSubCategoriesDone(int, const QString&, const QList <SMCategory>&) ));
+    connect(m_talker, SIGNAL( signalListSubCategoriesDone(int, const QString&, const QList <SmugCategory>&) ),
+            this, SLOT( slotListSubCategoriesDone(int, const QString&, const QList <SmugCategory>&) ));
 
     // ------------------------------------------------------------------------
 
@@ -206,7 +206,7 @@ SmugMugWindow::SmugMugWindow(KIPI::Interface* interface, const QString &tmpFolde
         slotUserChangeRequest();  // pop-up login window
 }
 
-SmugMugWindow::~SmugMugWindow()
+SmugWindow::~SmugWindow()
 {
     delete m_progressDlg;
     delete m_authProgressDlg;
@@ -216,10 +216,10 @@ SmugMugWindow::~SmugMugWindow()
     delete m_about;
 }
 
-void SmugMugWindow::readSettings()
+void SmugWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("SmugMug Settings");
+    KConfigGroup grp = config.group("SmugExport Settings");
     m_email = grp.readEntry("Email");
     m_password = grp.readEntry("Password");
     m_currentAlbumID = grp.readEntry("Current Album", -1);
@@ -239,31 +239,31 @@ void SmugMugWindow::readSettings()
 
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width", 1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 85));
-    KConfigGroup dialogGroup = config.group("SmugMug Dialog");
+    KConfigGroup dialogGroup = config.group("SmugExport Dialog");
     restoreDialogSize(dialogGroup);
 }
 
-void SmugMugWindow::writeSettings()
+void SmugWindow::writeSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("SmugMug Settings");
+    KConfigGroup grp = config.group("SmugExport Settings");
     grp.writeEntry("Email", m_email);
     grp.writeEntry("Password", m_password);
     grp.writeEntry("Current Album", m_currentAlbumID);
     grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width",  m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality",  m_widget->m_imageQualitySpB->value());
-    KConfigGroup dialogGroup = config.group("SmugMug Dialog");
+    KConfigGroup dialogGroup = config.group("SmugExport Dialog");
     saveDialogSize(dialogGroup);
     config.sync();
 }
 
-void SmugMugWindow::slotHelp()
+void SmugWindow::slotHelp()
 {
-    KToolInvocation::invokeHelp("smugmug", "kipi-plugins");
+    KToolInvocation::invokeHelp("smugexport", "kipi-plugins");
 }
 
-void SmugMugWindow::slotClose()
+void SmugWindow::slotClose()
 {
     if (m_talker->loggedIn())
         m_talker->logout();
@@ -273,7 +273,7 @@ void SmugMugWindow::slotClose()
     done(Close);
 }
 
-void SmugMugWindow::slotLoginDone(int errCode, const QString &errMsg)
+void SmugWindow::slotLoginDone(int errCode, const QString &errMsg)
 {
     buttonStateChange(m_talker->loggedIn());
     m_widget->updateLabels(m_talker->getEmail(),
@@ -291,8 +291,8 @@ void SmugMugWindow::slotLoginDone(int errCode, const QString &errMsg)
     }
 }
 
-void SmugMugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
-                                       const QList <SMAlbum>& albumsList)
+void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
+                                       const QList <SmugAlbum>& albumsList)
 {
     if (errCode != 0)
     {
@@ -311,8 +311,8 @@ void SmugMugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
-void SmugMugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
-                                           const QList <SMCategory>& categoriesList)
+void SmugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
+                                           const QList <SmugCategory>& categoriesList)
 {
     if (errCode != 0) 
     {
@@ -334,8 +334,8 @@ void SmugMugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
     m_talker->listSubCategories(m_currentCategoryID);
 }
 
-void SmugMugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
-                                              const QList <SMCategory>& categoriesList)
+void SmugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
+                                              const QList <SmugCategory>& categoriesList)
 {
     // always put at least default <none> subcategory
     m_albumDlg->m_subCategCoB->clear();
@@ -355,21 +355,21 @@ void SmugMugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg
     }
 }
 
-void SmugMugWindow::slotCategorySelectionChanged(int index)
+void SmugWindow::slotCategorySelectionChanged(int index)
 {
     // subcategories are per category -> reload
     m_currentCategoryID = m_albumDlg->m_categCoB->itemData(index).toInt();
     m_talker->listSubCategories(m_currentCategoryID);
 }
 
-void SmugMugWindow::buttonStateChange(bool state)
+void SmugWindow::buttonStateChange(bool state)
 {
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
     enableButton(User1, state);
 }
 
-void SmugMugWindow::slotBusy(bool val)
+void SmugWindow::slotBusy(bool val)
 {
     if (val)
     {
@@ -385,7 +385,7 @@ void SmugMugWindow::slotBusy(bool val)
     }
 }
 
-void SmugMugWindow::slotUserChangeRequest()
+void SmugWindow::slotUserChangeRequest()
 {
     kDebug(51000) << "Slot Change User Request";
 
@@ -405,13 +405,13 @@ void SmugMugWindow::slotUserChangeRequest()
     }
 }
 
-void SmugMugWindow::slotReloadAlbumsRequest()
+void SmugWindow::slotReloadAlbumsRequest()
 {
     kDebug(51000) << "Slot Reload Albums Request";
     m_talker->listAlbums(); // re-get albums
 }
 
-void SmugMugWindow::slotNewAlbumRequest()
+void SmugWindow::slotNewAlbumRequest()
 {
     kDebug(51000) << "Slot New Album Request";
 
@@ -424,19 +424,19 @@ void SmugMugWindow::slotNewAlbumRequest()
         m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
                         m_albumDlg->m_categCoB->currentIndex()).toInt();
 
-        SMAlbum newAlbum;
+        SmugAlbum newAlbum;
         m_albumDlg->getAlbumProperties(newAlbum);
         m_talker->createAlbum(newAlbum);
     }
 }
 
-void SmugMugWindow::slotLoginCancel()
+void SmugWindow::slotLoginCancel()
 {
     m_talker->cancel();
     m_authProgressDlg->hide();
 }
 
-void SmugMugWindow::slotStartUpload()
+void SmugWindow::slotStartUpload()
 {
     kDebug(51000) << "slotStartUpload invoked";
 
@@ -455,7 +455,7 @@ void SmugMugWindow::slotStartUpload()
     kDebug(51000) << "slotStartUpload done";
 }
 
-bool SmugMugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
+bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
 {
     QImage image;
     if (isRAW)
@@ -495,7 +495,7 @@ bool SmugMugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     return true;
 }
 
-void SmugMugWindow::uploadNextPhoto()
+void SmugWindow::uploadNextPhoto()
 {
     if (m_uploadQueue.isEmpty())
     {
@@ -541,7 +541,7 @@ void SmugMugWindow::uploadNextPhoto()
         m_progressDlg->show();
 }
 
-void SmugMugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
+void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
 {
     // Remove temporary file if it was used
     if (!m_tmpPath.isEmpty()) 
@@ -577,7 +577,7 @@ void SmugMugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     uploadNextPhoto();
 }
 
-void SmugMugWindow::slotAddPhotoCancel()
+void SmugWindow::slotAddPhotoCancel()
 {
     m_uploadQueue.clear();
     m_progressDlg->reset();
@@ -586,7 +586,7 @@ void SmugMugWindow::slotAddPhotoCancel()
     m_talker->cancel();
 }
 
-void SmugMugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
+void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
                                         int newAlbumID)
 {
     if (errCode != 0) 
@@ -600,9 +600,9 @@ void SmugMugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
     m_talker->listAlbums();
 }
 
-void SmugMugWindow::slotImageListChanged(bool state)
+void SmugWindow::slotImageListChanged(bool state)
 {
     enableButton(User1, !state);
 }
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin

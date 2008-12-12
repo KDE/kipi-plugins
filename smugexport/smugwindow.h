@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef SMUGMUGWINDOW_H
-#define SMUGMUGWINDOW_H
+#ifndef SMUGWINDOW_H
+#define SMUGWINDOW_H
 
 // Qt includes.
 #include <QList>
@@ -51,23 +51,23 @@ class KPAboutData;
 class ImagesList;
 }
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-class SmugMugTalker;
-class SmugMugWidget;
-class SmugMugNewAlbum;
-class SMAlbum;
-class SMCategory;
+class SmugTalker;
+class SmugWidget;
+class SmugNewAlbum;
+class SmugAlbum;
+class SmugCategory;
 
-class SmugMugWindow : public KDialog
+class SmugWindow : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    SmugMugWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
-    ~SmugMugWindow();
+    SmugWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
+    ~SmugWindow();
 
 private slots:
 
@@ -77,11 +77,11 @@ private slots:
     void slotCreateAlbumDone(int errCode, const QString& errMsg, 
                              int newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
-                            const QList <SMAlbum>& albumsList);
+                            const QList <SmugAlbum>& albumsList);
     void slotListCategoriesDone(int errCode, const QString& errMsg,
-                                const QList <SMCategory>& categoriesList);
+                                const QList <SmugCategory>& categoriesList);
     void slotListSubCategoriesDone(int errCode, const QString& errMsg,
-                                   const QList <SMCategory>& categoriesList);
+                                   const QList <SmugCategory>& categoriesList);
 
     void slotUserChangeRequest();
     void slotReloadAlbumsRequest();
@@ -120,15 +120,15 @@ private:
 
     KUrl::List                  m_uploadQueue;
 
-    SmugMugTalker              *m_talker;
-    SmugMugWidget              *m_widget;
-    SmugMugNewAlbum            *m_albumDlg;
+    SmugTalker                 *m_talker;
+    SmugWidget                 *m_widget;
+    SmugNewAlbum               *m_albumDlg;
 
     KIPI::Interface            *m_interface;
 
     KIPIPlugins::KPAboutData   *m_about;
 };
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin
 
-#endif /* SMUGMUGWINDOW_H */
+#endif /* SMUGWINDOW_H */

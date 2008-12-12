@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#include "smugmugtalker.h"
-#include "smugmugtalker.moc"
+#include "smugtalker.h"
+#include "smugtalker.moc"
 
 // Qt includes.
 #include <QByteArray>
@@ -39,23 +39,23 @@
 
 // Local includes.
 #include "pluginsversion.h"
-#include "smugmugitem.h"
+#include "smugitem.h"
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-SmugMugTalker::SmugMugTalker(QWidget* parent)
+SmugTalker::SmugTalker(QWidget* parent)
 {
     m_parent = parent;
     m_job    = 0;
 
-    m_userAgent  = QString("KIPI-Plugin-SmugMug/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
+    m_userAgent  = QString("KIPI-Plugin-SmugExport/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.2.0";
     m_apiURL     = QString("https://api.smugmug.com/hack/rest/%1/").arg(m_apiVersion);
     m_apiKey     = "R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi";
 }
 
-SmugMugTalker::~SmugMugTalker()
+SmugTalker::~SmugTalker()
 {
     if (loggedIn())
         logout();
@@ -64,37 +64,37 @@ SmugMugTalker::~SmugMugTalker()
         m_job->kill();
 }
 
-bool SmugMugTalker::loggedIn()
+bool SmugTalker::loggedIn()
 {
     return !m_sessionID.isEmpty();
 }
 
-QString SmugMugTalker::getEmail()
+QString SmugTalker::getEmail()
 {
     return m_email;
 }
 
-QString SmugMugTalker::getDisplayName()
+QString SmugTalker::getDisplayName()
 {
     return m_displayName;
 }
 
-QString SmugMugTalker::getNickName()
+QString SmugTalker::getNickName()
 {
     return m_nickName;
 }
 
-QString SmugMugTalker::getAccountType()
+QString SmugTalker::getAccountType()
 {
     return m_accountType;
 }
 
-int SmugMugTalker::getFileSizeLimit()
+int SmugTalker::getFileSizeLimit()
 {
     return m_fileSizeLimit;
 }
 
-void SmugMugTalker::cancel()
+void SmugTalker::cancel()
 {
     if (m_job)
     {
@@ -106,7 +106,7 @@ void SmugMugTalker::cancel()
         m_authProgressDlg->hide();
 }
 
-void SmugMugTalker::login(const QString& email, const QString& password)
+void SmugTalker::login(const QString& email, const QString& password)
 {
     if (m_job)
     {
@@ -137,7 +137,7 @@ void SmugMugTalker::login(const QString& email, const QString& password)
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_LOGIN;
+    m_state = SMUG_LOGIN;
     m_job   = job;
     m_buffer.resize(0);
     m_authProgressDlg->setValue(2);
@@ -145,7 +145,7 @@ void SmugMugTalker::login(const QString& email, const QString& password)
     m_email = email;
 }
 
-void SmugMugTalker::logout()
+void SmugTalker::logout()
 {
     if (m_job)
     {
@@ -170,7 +170,7 @@ void SmugMugTalker::logout()
     //connect(job, SIGNAL(result(KJob*)),
     //        this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_LOGOUT;
+    m_state = SMUG_LOGOUT;
     m_job   = job;
     m_buffer.resize(0);
 
@@ -179,7 +179,7 @@ void SmugMugTalker::logout()
     slotResult(job);
 }
 
-void SmugMugTalker::listAlbums()
+void SmugTalker::listAlbums()
 {
     if (m_job)
     {
@@ -204,12 +204,12 @@ void SmugMugTalker::listAlbums()
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_LISTALBUMS;
+    m_state = SMUG_LISTALBUMS;
     m_job   = job;
     m_buffer.resize(0);
 }
 
-void SmugMugTalker::listCategories()
+void SmugTalker::listCategories()
 {
     if (m_job)
     {
@@ -234,12 +234,12 @@ void SmugMugTalker::listCategories()
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_LISTCATEGORIES;
+    m_state = SMUG_LISTCATEGORIES;
     m_job   = job;
     m_buffer.resize(0);
 }
 
-void SmugMugTalker::listSubCategories(int categoryID)
+void SmugTalker::listSubCategories(int categoryID)
 {
     if (m_job)
     {
@@ -265,12 +265,12 @@ void SmugMugTalker::listSubCategories(int categoryID)
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_LISTSUBCATEGORIES;
+    m_state = SMUG_LISTSUBCATEGORIES;
     m_job   = job;
     m_buffer.resize(0);
 }
 
-void SmugMugTalker::createAlbum(const SMAlbum& album)
+void SmugTalker::createAlbum(const SmugAlbum& album)
 {
     if (m_job)
     {
@@ -311,12 +311,12 @@ void SmugMugTalker::createAlbum(const SMAlbum& album)
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = SM_CREATEALBUM;
+    m_state = SMUG_CREATEALBUM;
     m_job   = job;
     m_buffer.resize(0);
 }
 
-bool SmugMugTalker::addPhoto(const QString& imgPath, int albumID)
+bool SmugTalker::addPhoto(const QString& imgPath, int albumID)
 {
     if (m_job)
     {
@@ -357,13 +357,13 @@ bool SmugMugTalker::addPhoto(const QString& imgPath, int albumID)
     connect(job, SIGNAL(result(KJob *)),
             this, SLOT(slotResult(KJob *)));
 
-    m_state = SM_ADDPHOTO;
+    m_state = SMUG_ADDPHOTO;
     m_job   = job;
     m_buffer.resize(0);
     return true;
 }
 
-void SmugMugTalker::data(KIO::Job*, const QByteArray& data)
+void SmugTalker::data(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
         return;
@@ -373,7 +373,7 @@ void SmugMugTalker::data(KIO::Job*, const QByteArray& data)
     memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
-QString SmugMugTalker::errorToText(int errCode, const QString &errMsg)
+QString SmugTalker::errorToText(int errCode, const QString &errMsg)
 {
     QString transError;
     kDebug(51000) << "errorToText: " << errCode << ": " << errMsg;
@@ -396,14 +396,14 @@ QString SmugMugTalker::errorToText(int errCode, const QString &errMsg)
     return transError;
 }
 
-void SmugMugTalker::slotResult(KJob *kjob)
+void SmugTalker::slotResult(KJob *kjob)
 {
     m_job = 0;
     KIO::Job *job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
-        if (m_state == SM_ADDPHOTO)
+        if (m_state == SMUG_ADDPHOTO)
         {
             // TODO: should we implement similar for all?
             //emit signalAddPhotoFailed(job->errorString());
@@ -419,31 +419,31 @@ void SmugMugTalker::slotResult(KJob *kjob)
 
     switch(m_state)
     {
-        case(SM_LOGIN):
+        case(SMUG_LOGIN):
             parseResponseLogin(m_buffer);
             break;
-        case(SM_LOGOUT):
+        case(SMUG_LOGOUT):
             parseResponseLogout(m_buffer);
             break;
-        case(SM_LISTALBUMS):
+        case(SMUG_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
-        case(SM_LISTCATEGORIES):
+        case(SMUG_LISTCATEGORIES):
             parseResponseListCategories(m_buffer);
             break;
-        case(SM_LISTSUBCATEGORIES):
+        case(SMUG_LISTSUBCATEGORIES):
             parseResponseListSubCategories(m_buffer);
             break;
-        case(SM_CREATEALBUM):
+        case(SMUG_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
-        case(SM_ADDPHOTO):
+        case(SMUG_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
             break;
     }
 }
 
-void SmugMugTalker::parseResponseLogin(const QByteArray& data)
+void SmugTalker::parseResponseLogin(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -519,7 +519,7 @@ void SmugMugTalker::parseResponseLogin(const QByteArray& data)
     m_authProgressDlg->hide();
 }
 
-void SmugMugTalker::parseResponseLogout(const QByteArray& data)
+void SmugTalker::parseResponseLogout(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -565,7 +565,7 @@ void SmugMugTalker::parseResponseLogout(const QByteArray& data)
     emit signalBusy(false);
 }
 
-void SmugMugTalker::parseResponseAddPhoto(const QByteArray& data)
+void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -607,7 +607,7 @@ void SmugMugTalker::parseResponseAddPhoto(const QByteArray& data)
     emit signalBusy(false);
 }
 
-void SmugMugTalker::parseResponseCreateAlbum(const QByteArray& data)
+void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -651,7 +651,7 @@ void SmugMugTalker::parseResponseCreateAlbum(const QByteArray& data)
     emit signalBusy(false);
 }
 
-void SmugMugTalker::parseResponseListAlbums(const QByteArray& data)
+void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -665,7 +665,7 @@ void SmugMugTalker::parseResponseListAlbums(const QByteArray& data)
     kDebug(51000) << "Parse Albums response:" << endl << data;
 
     QDomElement e;
-    QList <SMAlbum> albumsList;
+    QList <SmugAlbum> albumsList;
     while(!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "Albums")
@@ -677,7 +677,7 @@ void SmugMugTalker::parseResponseListAlbums(const QByteArray& data)
             {
                 if (nodeA.isElement() && nodeA.nodeName() == "Album")
                 {
-                    SMAlbum album;
+                    SmugAlbum album;
                     e = nodeA.toElement();
                     album.id = e.attribute("id").toInt();
                     album.key = e.attribute("Key");
@@ -727,7 +727,7 @@ void SmugMugTalker::parseResponseListAlbums(const QByteArray& data)
     emit signalBusy(false);
 }
 
-void SmugMugTalker::parseResponseListCategories(const QByteArray& data)
+void SmugTalker::parseResponseListCategories(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -741,7 +741,7 @@ void SmugMugTalker::parseResponseListCategories(const QByteArray& data)
     kDebug(51000) << "Parse Categories response:" << endl << data;
 
     QDomElement e;
-    QList <SMCategory> categoriesList;
+    QList <SmugCategory> categoriesList;
     while(!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "Categories")
@@ -753,7 +753,7 @@ void SmugMugTalker::parseResponseListCategories(const QByteArray& data)
             {
                 if (nodeC.isElement() && nodeC.nodeName() == "Category")
                 {
-                    SMCategory category;
+                    SmugCategory category;
                     e = nodeC.toElement();
                     category.id = e.attribute("id").toInt();
                     category.name = e.attribute("Title"); // Name in 1.2.1
@@ -785,7 +785,7 @@ void SmugMugTalker::parseResponseListCategories(const QByteArray& data)
     emit signalBusy(false);
 }
 
-void SmugMugTalker::parseResponseListSubCategories(const QByteArray& data)
+void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 {
     int errCode = -1;
     QString errMsg;
@@ -799,7 +799,7 @@ void SmugMugTalker::parseResponseListSubCategories(const QByteArray& data)
     kDebug(51000) << "Parse SubCategories response:" << endl << data;
 
     QDomElement e;
-    QList <SMCategory> categoriesList;
+    QList <SmugCategory> categoriesList;
     while(!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "SubCategories")
@@ -811,7 +811,7 @@ void SmugMugTalker::parseResponseListSubCategories(const QByteArray& data)
             {
                 if (nodeC.isElement() && nodeC.nodeName() == "SubCategory")
                 {
-                    SMCategory category;
+                    SmugCategory category;
                     e = nodeC.toElement();
                     category.id = e.attribute("id").toInt();
                     category.name = e.attribute("Title"); // Name in 1.2.1
@@ -843,4 +843,4 @@ void SmugMugTalker::parseResponseListSubCategories(const QByteArray& data)
     emit signalBusy(false);
 }
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin

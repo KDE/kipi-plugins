@@ -14,5 +14,5 @@ Comment[sv]=Ett verktyg för att exportera bilder till en SmugMug fjärrwebbtjä
 Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби SmugMug
 Type=Service
 ServiceTypes=KIPI/Plugin
-X-KDE-Library=kipiplugin_smugmug
+X-KDE-Library=kipiplugin_smugexport
 author=Luka Renko, lure@kubuntu.org

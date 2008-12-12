@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#include "smugmugwidget.h"
-#include "smugmugwidget.moc"
+#include "smugwidget.h"
+#include "smugwidget.moc"
 
 // Qt includes.
 #include <QLabel>
@@ -45,13 +45,13 @@
 // Local includes.
 #include "imageslist.h"
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-SmugMugWidget::SmugMugWidget(QWidget* parent, KIPI::Interface *iface)
+SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface)
             : QWidget(parent)
 {
-    setObjectName("SmugMugWidget");
+    setObjectName("SmugWidget");
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
@@ -177,11 +177,11 @@ SmugMugWidget::SmugMugWidget(QWidget* parent, KIPI::Interface *iface)
             this, SLOT(slotResizeChecked()));
 }
 
-SmugMugWidget::~SmugMugWidget()
+SmugWidget::~SmugWidget()
 {
 }
 
-void SmugMugWidget::updateLabels(const QString& email, const QString& name, const QString& nick)
+void SmugWidget::updateLabels(const QString& email, const QString& name, const QString& nick)
 {
     m_emailLbl->setText(email);
     m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
@@ -193,10 +193,10 @@ void SmugMugWidget::updateLabels(const QString& email, const QString& name, cons
                                    "</a></h2></b>").arg(web));
 }
 
-void SmugMugWidget::slotResizeChecked()
+void SmugWidget::slotResizeChecked()
 {
     m_dimensionSpB->setEnabled(m_resizeChB->isChecked());
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin

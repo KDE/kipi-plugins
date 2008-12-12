@@ -4,7 +4,7 @@ v 0.2.0 - beta5
 Kipi-plugins NEW FEATURES:
 
 RemoveRedEyes  : Added an option to preview the correction of the currently selected image.
-SmugMug        : New plugin to export images to a remote SmugMug web service (http://www.smugmug.com)
+SmugExport     : New plugin to export images to a remote SmugMug web service (http://www.smugmug.com)
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 

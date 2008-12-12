@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef SMUGMUGWIDGET_H
-#define SMUGMUGWIDGET_H
+#ifndef SMUGWIDGET_H
+#define SMUGWIDGET_H
 
 // Qt includes.
 #include <QWidget>
@@ -42,16 +42,16 @@ namespace KIPIPlugins
     class ImagesList;
 }
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-class SmugMugWidget : public QWidget
+class SmugWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    SmugMugWidget(QWidget* parent, KIPI::Interface *iface);
-    ~SmugMugWidget();
+    SmugWidget(QWidget* parent, KIPI::Interface *iface);
+    ~SmugWidget();
 
     void updateLabels(const QString& email, const QString& name, const QString& nick);
 
@@ -75,9 +75,9 @@ private:
     QSpinBox*     m_dimensionSpB;
     QSpinBox*     m_imageQualitySpB;
 
-    friend class SmugMugWindow;
+    friend class SmugWindow;
 };
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin
 
-#endif // SMUGMUGWIDGET_H
+#endif // SMUGWIDGET_H

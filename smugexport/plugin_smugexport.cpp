@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#include "plugin_smugmug.h"
-#include "plugin_smugmug.moc"
+#include "plugin_smugexport.h"
+#include "plugin_smugexport.moc"
 
 // C ANSI includes.
 extern "C"
@@ -45,26 +45,27 @@ extern "C"
 #include <libkipi/interface.h>
 
 // Local includes.
-#include "smugmugwindow.h"
+#include "smugwindow.h"
 
-K_PLUGIN_FACTORY( SmugMugFactory, registerPlugin<Plugin_SmugMug>(); )
-K_EXPORT_PLUGIN ( SmugMugFactory("kipiplugin_smugmug") )
+K_PLUGIN_FACTORY( SmugExportFactory, registerPlugin<Plugin_SmugExport>(); )
+K_EXPORT_PLUGIN ( SmugExportFactory("kipiplugin_smugexport") )
 
-Plugin_SmugMug::Plugin_SmugMug(QObject *parent, const QVariantList &/*args*/)
-                   : KIPI::Plugin(SmugMugFactory::componentData(),
-                                  parent, "SmugMug")
+Plugin_SmugExport::Plugin_SmugExport(QObject *parent, 
+                                     const QVariantList &/*args*/)
+                   : KIPI::Plugin(SmugExportFactory::componentData(),
+                                  parent, "SmugExport")
 {
-    kDebug(51001) << "Plugin_SmugMug plugin loaded";
+    kDebug(51001) << "Plugin_SmugExport plugin loaded";
 }
 
-void Plugin_SmugMug::setup(QWidget* widget)
+void Plugin_SmugExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
     m_action = new KAction(KIcon("applications-internet"), 
                                  i18n("Export to SmugMug..."),
                                  actionCollection());
-    m_action->setObjectName("smugmugexport");
+    m_action->setObjectName("smugexport");
     connect(m_action, SIGNAL( triggered(bool) ),
             this, SLOT( slotActivate()) );
 
@@ -80,11 +81,11 @@ void Plugin_SmugMug::setup(QWidget* widget)
     addAction(m_action);
 }
 
-Plugin_SmugMug::~Plugin_SmugMug()
+Plugin_SmugExport::~Plugin_SmugExport()
 {
 }
 
-void Plugin_SmugMug::slotActivate()
+void Plugin_SmugExport::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -94,16 +95,16 @@ void Plugin_SmugMug::slotActivate()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-smugmugplugin-"
+    QString tmp = dir.saveLocation("tmp", "kipi-smugexport-"
                                            + QString::number(getpid()) + "/");
 
     // We clean it up in the close button
-    m_dlg = new KIPISmugMugPlugin::SmugMugWindow(interface, tmp,
+    m_dlg = new KIPISmugExportPlugin::SmugWindow(interface, tmp,
                                                  kapp->activeWindow());
     m_dlg->show();
 }
 
-KIPI::Category Plugin_SmugMug::category( KAction* action ) const
+KIPI::Category Plugin_SmugExport::category( KAction* action ) const
 {
     if (action == m_action)
         return KIPI::ExportPlugin;

@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-12-01
+ * Date        : 2008-12-07
  * Description : a kipi plugin to export images to SmugMug web service
  *
  * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
@@ -20,56 +20,51 @@
  *
  * ============================================================ */
 
-#ifndef SMUGMUGITEM_H
-#define SMUGMUGITEM_H
+#ifndef SMUGALBUM_H
+#define SMUGALBUM_H
 
 // Qt includes.
 #include <QString>
 
-namespace KIPISmugMugPlugin
+// KDE includes.
+#include <kdialog.h>
+
+class QRadioButton;
+class QComboBox;
+class KLineEdit;
+class KTextEdit;
+
+namespace KIPISmugExportPlugin
 {
 
-class SMAlbum
+class SmugAlbum;
+
+class SmugNewAlbum : public KDialog
 {
+    Q_OBJECT
+
 public:
-    SMAlbum()
-    {
-        id = -1;
-        categoryID = -1;
-        subCategoryID = -1;
-        isPublic = true;
-    }
 
-    int     id;
+    SmugNewAlbum(QWidget* parent);
+    ~SmugNewAlbum();
 
-    QString key;
-    QString title;
+    void getAlbumProperties(SmugAlbum &album);
 
-    int     categoryID;
-    QString category;
+private:
 
-    int     subCategoryID;
-    QString subCategory;
+    KLineEdit       *m_titleEdt;
+    KTextEdit       *m_descEdt;
+    QComboBox       *m_categCoB;
+    QComboBox       *m_subCategCoB;
 
-    // below fields only used by createAlbum (and not by listAlbums)
-    QString description;
-    bool    isPublic;
-    QString password;
-    QString passwordHint;
+    KLineEdit       *m_passwdEdt;
+    KLineEdit       *m_hintEdt;
+    QRadioButton    *m_publicRBtn;
+    QRadioButton    *m_unlistedRBtn;
+
+    friend class SmugWindow;
 };
 
-class SMCategory
-{
-public:
-    SMCategory()
-    {
-        id = -1;
-    }
+} // namespace KIPISmugExportPlugin
 
-    int     id;
-    QString name;
-};
-
-} // namespace KIPISmugMugPlugin
-
-#endif /* SMUGMUGITEM_H */
+#endif // SMUGALBUM_H

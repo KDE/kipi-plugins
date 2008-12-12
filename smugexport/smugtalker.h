@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef SMUGMUGTALKER_H
-#define SMUGMUGTALKER_H
+#ifndef SMUGTALKER_H
+#define SMUGTALKER_H
 
 // Qt includes.
 #include <QList>
@@ -33,19 +33,19 @@
 
 class QProgressDialog;
 
-namespace KIPISmugMugPlugin
+namespace KIPISmugExportPlugin
 {
 
-class SMAlbum;
-class SMCategory;
+class SmugAlbum;
+class SmugCategory;
 
-class SmugMugTalker : public QObject
+class SmugTalker : public QObject
 {
     Q_OBJECT
 
 public:
-    SmugMugTalker(QWidget* parent);
-    ~SmugMugTalker();
+    SmugTalker(QWidget* parent);
+    ~SmugTalker();
 
     QString getEmail();
     QString getNickName();
@@ -62,7 +62,7 @@ public:
     void    listCategories();
     void    listSubCategories(int categoryID);
 
-    void    createAlbum(const SMAlbum& album);
+    void    createAlbum(const SmugAlbum& album);
 
     bool    addPhoto(const QString& imgPath, int albumID);
 
@@ -76,22 +76,22 @@ signals:
     void signalCreateAlbumDone(int errCode, const QString& errMsg, 
                                int newAlbumID);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
-                              const QList <SMAlbum>& albumsList);
+                              const QList <SmugAlbum>& albumsList);
     void signalListCategoriesDone(int errCode, const QString& errMsg,
-                                  const QList <SMCategory>& categoriesList);
+                                  const QList <SmugCategory>& categoriesList);
     void signalListSubCategoriesDone(int errCode, const QString& errMsg,
-                                     const QList <SMCategory>& categoriesList);
+                                     const QList <SmugCategory>& categoriesList);
 
 private:
     enum State 
     {
-        SM_LOGIN = 0,
-        SM_LOGOUT,
-        SM_LISTALBUMS,
-        SM_LISTCATEGORIES,
-        SM_LISTSUBCATEGORIES,
-        SM_CREATEALBUM,
-        SM_ADDPHOTO
+        SMUG_LOGIN = 0,
+        SMUG_LOGOUT,
+        SMUG_LISTALBUMS,
+        SMUG_LISTCATEGORIES,
+        SMUG_LISTSUBCATEGORIES,
+        SMUG_CREATEALBUM,
+        SMUG_ADDPHOTO
     };
 
     QString errorToText(int errCode, const QString& errMsg);
@@ -129,6 +129,6 @@ private:
     State      m_state;
 };
 
-} // namespace KIPISmugMugPlugin
+} // namespace KIPISmugExportPlugin
 
-#endif /* SMUGMUGTALKER_H */
+#endif /* SMUGTALKER_H */
