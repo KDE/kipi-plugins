@@ -75,6 +75,10 @@ void Plugin_RemoveRedEyes::setup( QWidget* widget )
     addAction(m_action);
 }
 
+Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
+{
+}
+
 void Plugin_RemoveRedEyes::activate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
@@ -85,7 +89,7 @@ void Plugin_RemoveRedEyes::activate()
     }
 
     KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow* window =
-        new KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow(interface, kapp->activeWindow());
+        new KIPIRemoveRedEyesPlugin::RemoveRedEyesWindow(interface);
     window->show();
 }
 

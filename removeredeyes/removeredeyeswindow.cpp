@@ -102,8 +102,8 @@ public:
     KIPIPlugins::KPAboutData*   about;
 };
 
-RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent)
-                   : KDialog(parent),
+RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
+                   : KDialog(0),
                      d(new RedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatically remove red-eyes"));
@@ -129,7 +129,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     d->correctedImageTempFile.setSuffix(".jpg");
     d->maskImageTempFile.setSuffix(".jpg");
 
-    // about & help ----------------------------------------------------------
+    // ----------------------------------------------------------
 
     d->about = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eyes"),
                                             0,
@@ -151,8 +151,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     // ----------------------------------------------------------
 
     setButtonGuiItem(User1, KGuiItem(i18n("Correct Photos"), KIcon("dialog-ok-apply")));
-    setButtonGuiItem(User2, KGuiItem(i18n("Test Run"), KIcon("dialog-information")));
     setButtonToolTip(User1, i18n("Start correcting the listed images"));
+
+    setButtonGuiItem(User2, KGuiItem(i18n("Test Run"), KIcon("dialog-information")));
     setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
 
     // ----------------------------------------------------------
@@ -187,10 +188,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     mainWidget->setLayout(mainLayout);
     setMainWidget(mainWidget);
 
-    // connections ------------------------------------------------------------------
+    // ----------------------------------------------------------
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(helpClicked()));
+
+    // ----------------------------------------------------------
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(helpClicked()));
@@ -216,12 +219,14 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     connect(d->settingsTab, SIGNAL(settingsChanged()),
             d->previewWidget, SLOT(reset()));
 
-    // ------------------------------------------------------------------
+    // ----------------------------------------------------------
 
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
         d->imageList->slotAddImages(images.images());
+
+    // ----------------------------------------------------------
 
     readSettings();
     setBusy(false);
@@ -352,6 +357,7 @@ void RemoveRedEyesWindow::startPreview()
 
     if (item->url().path() == d->previewWidget->image())
         return;
+
     d->previewWidget->setImage(item->url().path());
     d->runtype = WorkerThread::Preview;
 
@@ -573,6 +579,7 @@ void RemoveRedEyesWindow::threadFinished()
             // show summary and close the plugin
             showSummary();
             break;
+
         case WorkerThread::Preview:
             // load generated preview images
             d->previewWidget->setPreview(PreviewWidget::OriginalImage,
@@ -610,6 +617,7 @@ void RemoveRedEyesWindow::initProgressBar(int max)
         // create a busy indicator progressbar
         d->progress->setRange(0, 0);
     }
+
     d->progress->setValue(0);
 }
 

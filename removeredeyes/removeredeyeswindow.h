@@ -57,7 +57,7 @@ public:
 
 public:
 
-    RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *parent);
+    RemoveRedEyesWindow(KIPI::Interface *interface);
     ~RemoveRedEyesWindow();
 
 signals:

@@ -42,9 +42,10 @@ class Plugin_RemoveRedEyes : public KIPI::Plugin
 public:
 
     Plugin_RemoveRedEyes( QObject *parent, const QVariantList &args);
+    ~Plugin_RemoveRedEyes();
 
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* widget );
+    KIPI::Category category( KAction* action ) const;
+    void setup( QWidget* widget );
 
 private slots:
 
