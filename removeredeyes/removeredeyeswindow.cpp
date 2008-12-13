@@ -154,7 +154,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface, QWidget *pa
     setButtonGuiItem(User2, KGuiItem(i18n("Test Run"), KIcon("dialog-information")));
     setButtonToolTip(User1, i18n("Start correcting the listed images"));
     setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
-    setButtonToolTip(Close, i18n("Exit"));
 
     // ----------------------------------------------------------
 
