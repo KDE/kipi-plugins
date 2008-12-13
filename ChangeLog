@@ -1,3 +1,129 @@
+V 0.1.7 - 2008-12-13
+----------------------------------------------------------------------------
+
+2008-12-11 04:42  cgilles
+
+    * NEWS: update
+
+2008-12-10 22:30  gateau
+
+    * batchprocessimages/renameimagesbase.ui,
+      batchprocessimages/renameimageswidget.cpp: Applied patches from
+      Piotr Tarnowski and tomas to provide more formating
+      options to the batch renamer.
+      BUG:132982
+
+2008-12-08 15:07  cgilles
+
+    * NEWS: update
+
+2008-12-08 15:04  cgilles
+
+    * NEWS: update
+
+2008-12-08 15:03  cgilles
+
+    * NEWS: update
+
+2008-12-08 15:01  cgilles
+
+    * NEWS: update
+
+2008-12-08 09:49  cgilles
+
+    * NEWS: update
+
+2008-12-08 08:34  cgilles
+
+    * NEWS: update
+
+2008-12-08 08:16  cgilles
+
+    * NEWS: update
+
+2008-12-08 08:08  cgilles
+
+    * NEWS: update
+
+2008-12-08 07:51  cgilles
+
+    * NEWS: update
+
+2008-12-08 07:49  cgilles
+
+    * NEWS: update
+
+2008-12-08 05:03  cgilles
+
+    * NEWS: update
+
+2008-12-08 05:02  cgilles
+
+    * NEWS: update
+
+2008-12-08 05:00  cgilles
+
+    * NEWS: update
+
+2008-12-08 04:59  cgilles
+
+    * NEWS: update
+
+2008-12-07 19:49  cgilles
+
+    * NEWS: update
+
+2008-12-01 17:19  cgilles
+
+    * metadataedit/exifdevice.cpp, metadataedit/exifdevice.h: fix url
+      BUG: 176640
+
+2008-11-17 09:45  cgilles
+
+    * gpssync/gpseditdialog.cpp: backport commit #885395 from trunk
+
+2008-11-16 18:44  cgilles
+
+    * NEWS: update
+
+2008-11-15 21:26  cgilles
+
+    * picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp: backport commit #884771 from
+      trunk
+
+2008-11-14 04:58  cgilles
+
+    * NEWS: update
+
+2008-11-05 17:43  cgilles
+
+    * NEWS, common/include/kpaboutdata.h,
+      common/include/pluginsversion.h,
+      common/libkipiplugins/kpaboutdata.cpp, kipi-plugins.lsm: dump
+      version
+
+2008-11-04 19:41  cgilles
+
+    * gpssync/gpseditdialog.cpp, gpssync/gpsmapwidget.cpp: sync with
+      trunk : fix crash about new Google API
+
+2008-10-11 12:36  cgilles
+
+    * common/include/pluginsversion.h: prepare 0.1.6
+
+2008-10-11 12:36  cgilles
+
+    * README, kipi-plugins.lsm: prepare 0.1.6
+
+2008-10-11 12:34  cgilles
+
+    * ChangeLog: prepare 0.1.6
+
+2008-10-11 12:27  cgilles
+
+    * NEWS: prepare 0.1.6
+
 V 0.1.6 - 2008-10-11
 ----------------------------------------------------------------------------
 
