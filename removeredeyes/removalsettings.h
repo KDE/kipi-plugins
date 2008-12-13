@@ -60,20 +60,20 @@ class RemovalSettings
 
         void debug()
         {
-            kDebug(50001) << "***************" << endl;
-            kDebug(50001) << "RemovalSettings" << endl;
-            kDebug(50001) << "***************" << endl;
-            kDebug(50001) << "useStandardClassifier = " << useStandardClassifier << endl;
-            kDebug(50001) << "minRoundness          = " << minRoundness << endl;
-            kDebug(50001) << "scaleFactor           = " << scaleFactor << endl;
-            kDebug(50001) << "minBlobsize           = " << minBlobsize << endl;
-            kDebug(50001) << "neighborGroups        = " << neighborGroups << endl;
-            kDebug(50001) << "storageMode           = " << storageMode << endl;
-            kDebug(50001) << "unprocessedMode       = " << unprocessedMode << endl;
-            kDebug(50001) << "simpleMode            = " << simpleMode << endl;
-            kDebug(50001) << "classifierFile        = " << classifierFile << endl;
-            kDebug(50001) << "subfolderName         = " << subfolderName << endl;
-            kDebug(50001) << "suffixName            = " << suffixName << endl;
+            kDebug(51000) << "***************" << endl;
+            kDebug(51000) << "RemovalSettings" << endl;
+            kDebug(51000) << "***************" << endl;
+            kDebug(51000) << "useStandardClassifier = " << useStandardClassifier << endl;
+            kDebug(51000) << "minRoundness          = " << minRoundness << endl;
+            kDebug(51000) << "scaleFactor           = " << scaleFactor << endl;
+            kDebug(51000) << "minBlobsize           = " << minBlobsize << endl;
+            kDebug(51000) << "neighborGroups        = " << neighborGroups << endl;
+            kDebug(51000) << "storageMode           = " << storageMode << endl;
+            kDebug(51000) << "unprocessedMode       = " << unprocessedMode << endl;
+            kDebug(51000) << "simpleMode            = " << simpleMode << endl;
+            kDebug(51000) << "classifierFile        = " << classifierFile << endl;
+            kDebug(51000) << "subfolderName         = " << subfolderName << endl;
+            kDebug(51000) << "suffixName            = " << suffixName << endl;
         };
 
         bool        useStandardClassifier;

@@ -345,7 +345,7 @@ void RemoveRedEyesWindow::startPreview()
         !d->correctedImageTempFile.open() ||
         !d->maskImageTempFile.open())
     {
-        kDebug(50001) << "unable to create temp file for image preview!" << endl;
+        kDebug(51000) << "unable to create temp file for image preview!" << endl;
     }
 
     updateSettings();
