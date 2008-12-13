@@ -35,17 +35,17 @@
 
 class KAction;
 
-class Plugin_RemoveRedEyes : public KIPI::Plugin
+class Plugin_RemoveRedEyes: public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_RemoveRedEyes( QObject *parent, const QVariantList &args);
+    Plugin_RemoveRedEyes(QObject *parent, const QVariantList &args);
     ~Plugin_RemoveRedEyes();
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* widget );
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget* widget);
 
 private slots:
 

@@ -49,10 +49,10 @@ public:
         hidden = false;
     }
 
-    bool        hidden;
-    QString     message;
-    QPixmap     symbol;
-    QTimer*     timer;
+    bool    hidden;
+    QString message;
+    QPixmap symbol;
+    QTimer* timer;
 };
 
 InfoMessageWidget::InfoMessageWidget(QWidget* parent)
@@ -63,7 +63,8 @@ InfoMessageWidget::InfoMessageWidget(QWidget* parent)
 
     QPalette pal = palette();
     pal.setColor(QPalette::Active, QPalette::Window,
-                 KApplication::palette().color(QPalette::Active, QPalette::Window));
+                 KApplication::palette().color(QPalette::Active,
+                 QPalette::Window));
     setPalette(pal);
 
     move(10, 10);
@@ -107,7 +108,7 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
     }
 
     // resize widget
-    resize(QRect(0, 0, width + 10, height + fontMetrics().height()/2).size());
+    resize(QRect(0, 0, width + 10, height + fontMetrics().height() / 2).size());
 
     // if the layout is RtL, we can move it to the right place only after we
     // know how much size it will take
@@ -117,6 +118,7 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
     // show widget and schedule a repaint
     if (!d->hidden)
         show();
+
     update();
 
     // close the message window after given mS
@@ -126,15 +128,18 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
         {
             d->timer = new QTimer(this);
             d->timer->setSingleShot(true);
-            connect(d->timer, SIGNAL( timeout() ), SLOT( hide() ) );
+            connect(d->timer, SIGNAL(timeout()),
+                    SLOT(hide()));
         }
-        d->timer->start( durationMs );
+        d->timer->start(durationMs);
     }
-    else if ( d->timer )
+    else if (d->timer)
+    {
         d->timer->stop();
+    }
 }
 
-void InfoMessageWidget::paintEvent( QPaintEvent * /* e */ )
+void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
 {
     QRect textRect = fontMetrics().boundingRect( d->message );
     textRect.translate( -textRect.left(), -textRect.top() );

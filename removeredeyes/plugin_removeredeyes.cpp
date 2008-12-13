@@ -48,25 +48,28 @@ K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); 
 K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )
 
 Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject *parent, const QVariantList &/*args*/)
-                    : KIPI::Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes")
+                    : KIPI::Plugin(RemoveRedEyesFactory::componentData(),
+                                   parent, "RemoveRedEyes")
 {
+
     kDebug(51001) << "Plugin_RemoveRedEyes plugin loaded" << endl;
 }
 
-void Plugin_RemoveRedEyes::setup( QWidget* widget )
+void Plugin_RemoveRedEyes::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
     m_action = new KAction(KIcon("draw-eraser"), i18n("Remove Red-Eyes..."), actionCollection());
     m_action->setObjectName("removeredeyes");
+
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(activate()));
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*> (parent());
 
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!" << endl;
         m_action->setEnabled(false);
         return;
     }
@@ -81,10 +84,10 @@ Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
 
 void Plugin_RemoveRedEyes::activate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
 
@@ -93,11 +96,11 @@ void Plugin_RemoveRedEyes::activate()
     window->show();
 }
 
-KIPI::Category Plugin_RemoveRedEyes::category( KAction* action ) const
+KIPI::Category Plugin_RemoveRedEyes::category(KAction* action) const
 {
-    if ( action == m_action )
+    if (action == m_action)
         return KIPI::BatchPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::BatchPlugin; // no warning from compiler, please
 }
