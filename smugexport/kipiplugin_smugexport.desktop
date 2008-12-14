@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SmugMug Exporter
+Name[de]=SmugMug-Export
 Name[gl]=Exportador a SmugMug
 Name[it]=Esportazione a SmugMug
 Name[km]=កម្មវិធី​នាំចូល SmugMug
@@ -12,6 +13,7 @@ Name[sv]=Export till SmugMug
 Name[uk]=Інструмент експорту до SmugMug
 Name[x-test]=xxSmugMug Exporterxx
 Comment=A tool to export images to a remote SmugMug web service
+Comment[de]=Ein Werkzeug, um Bilder zu einem SmugMug-Web-Service zu exportieren.
 Comment[gl]=Unha utilidade para exportar imaxes a un servizo web SmugMug remoto
 Comment[it]=Uno strumento per esportare immagini al servizio Web SmugMug
 Comment[km]=ឧបករណ៍​ត្រូវ​នាំចេញ​រូបភាព​ទៅ​សេវា​បណ្ដាញ SmugMug ពី​ចម្ងាយ
