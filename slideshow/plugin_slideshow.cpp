@@ -23,7 +23,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <sys/time.h>
 }
@@ -40,7 +40,7 @@ extern "C"
 #include <qstringlist.h>
 
  // KDE includes.
- 
+
 #include <klocale.h>
 #include <kaction.h>
 #include <kapplication.h>
@@ -51,7 +51,7 @@ extern "C"
 #include <kmessagebox.h>
 
 // Lib KIPI includes.
- 
+
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
@@ -79,8 +79,8 @@ Plugin_SlideShow::Plugin_SlideShow(QObject *parent, const char*,
 void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
-    
-    m_actionSlideShow = new KAction (i18n("Advanced SlideShow..."),
+
+    m_actionSlideShow = new KAction (i18n("Advanced Slideshow..."),
                                      "slideshow",
                                      0,
                                      this,
@@ -89,17 +89,17 @@ void Plugin_SlideShow::setup( QWidget* widget )
                                      "slideshow");
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    
+
     m_urlList = new KURL::List();
 
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
        kdError( 51000 ) << "Kipi m_interface is null!" << endl;
        return;
     }
 
     m_actionSlideShow->setEnabled( false );
-    
+
     connect( m_interface, SIGNAL( currentAlbumChanged( bool ) ),
              SLOT( slotAlbumChanged( bool ) ) );
 
@@ -114,7 +114,7 @@ Plugin_SlideShow::~Plugin_SlideShow()
 
 void Plugin_SlideShow::slotActivate()
 {
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
         kdError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
@@ -129,9 +129,9 @@ void Plugin_SlideShow::slotActivate()
     }
 
     m_imagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-    
+
     KIPISlideShowPlugin::SlideShowConfig *slideShowConfig
-            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(), 
+            = new KIPISlideShowPlugin::SlideShowConfig( allowSelectedOnly, m_interface,kapp->activeWindow(),
                                                         i18n("Slide Show").ascii(), m_imagesHasComments,
                                                         m_urlList);
 
@@ -150,7 +150,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
     }
 
     KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
         kdError( 51000 ) << "Kipi m_interface is null!" << endl;
         m_actionSlideShow->setEnabled( false );
@@ -170,23 +170,23 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
 
 void Plugin_SlideShow::slotSlideShow()
 {
-    if ( !m_interface ) 
+    if ( !m_interface )
     {
            kdError( 51000 ) << "Kipi m_interface is null!" << endl;
            return;
     }
 
     KConfig config("kipirc");
-     
+
     bool    opengl;
     bool    shuffle;
     bool    wantKB;
-    
+
     config.setGroup("SlideShow Settings");
     opengl                = config.readBoolEntry("OpenGL");
     shuffle               = config.readBoolEntry("Shuffle");
     wantKB                = config.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
-    
+
     if ( m_urlList->isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
@@ -206,7 +206,7 @@ void Plugin_SlideShow::slotSlideShow()
     }
 
     m_urlList->clear();
-    
+
     if (shuffle)
     {
         struct timeval tv;
@@ -244,12 +244,12 @@ void Plugin_SlideShow::slotSlideShow()
                                i18n("Sorry. OpenGL support not available on your system"));
         else {
           if (wantKB) {
-            KIPISlideShowPlugin::SlideShowKB* slideShow = 
+            KIPISlideShowPlugin::SlideShowKB* slideShow =
                 new KIPISlideShowPlugin::SlideShowKB(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
           }
           else {
-            KIPISlideShowPlugin::SlideShowGL * slideShow = 
+            KIPISlideShowPlugin::SlideShowGL * slideShow =
                 new KIPISlideShowPlugin::SlideShowGL(fileList, commentsList, m_imagesHasComments);
             slideShow->show();
           }
@@ -261,7 +261,7 @@ KIPI::Category Plugin_SlideShow::category( KAction* action ) const
 {
     if ( action == m_actionSlideShow )
        return KIPI::TOOLSPLUGIN;
-    
+
     kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::TOOLSPLUGIN; // no warning from compiler, please
 }
