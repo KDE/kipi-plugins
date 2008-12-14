@@ -1,3 +1,785 @@
+0.2.0-beta5 2008-12-14
+--------------------------------------------------------------------------------
+
+2008-12-14 12:42  scripty
+
+    * smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-14 01:38  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      slideshow/plugin_slideshow.cpp, slideshow/slideshowconfig.cpp:
+      adapt button and action name to KDE HIG style guide
+
+2008-12-13 18:04  aclemens
+
+    * removeredeyes/infomessagewidget.cpp,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h: more code polish
+
+2008-12-13 17:28  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: code cleanup and
+      simplification
+
+2008-12-13 17:28  aclemens
+
+    * removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp: fix usage of wrong kdebug
+      area codes
+
+2008-12-13 17:28  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: this tooltip is never
+      used, the KDE standard tooltip is displayed instead, so I remove
+      it.
+
+2008-12-13 15:36  scripty
+
+    * smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-12 10:22  lure
+
+    * AUTHORS, CMakeLists.txt, NEWS, README, smugexport,
+      smugexport/CMakeLists.txt, smugexport/Messages.sh,
+      smugexport/TODO, smugexport/kipiplugin_smugexport.desktop,
+      smugexport/kipiplugin_smugmug.desktop,
+      smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/plugin_smugmug.cpp, smugexport/plugin_smugmug.h,
+      smugexport/smugalbum.cpp, smugexport/smugalbum.h,
+      smugexport/smugitem.h, smugexport/smugmugalbum.cpp,
+      smugexport/smugmugalbum.h, smugexport/smugmugitem.h,
+      smugexport/smugmugtalker.cpp, smugexport/smugmugtalker.h,
+      smugexport/smugmugwidget.cpp, smugexport/smugmugwidget.h,
+      smugexport/smugmugwindow.cpp, smugexport/smugmugwindow.h,
+      smugexport/smugtalker.cpp, smugexport/smugtalker.h,
+      smugexport/smugwidget.cpp, smugexport/smugwidget.h,
+      smugexport/smugwindow.cpp, smugexport/smugwindow.h, smugmug:
+      Comply with SmugMug trademark policy (can only use Smug in name
+      of product)
+      - plugin name: SmugExport (to match others for Flickr, PicasaWeb,
+      Gallery...)
+      - move sources to smugexport directory
+      - use Smug for class prefixes
+
+2008-12-11 21:42  lure
+
+    * smugmug/smugmugwindow.cpp: Fix memory leak
+
+2008-12-11 21:21  lure
+
+    * smugmug/smugmugwindow.cpp: fix accidental double delete
+
+2008-12-11 21:19  lure
+
+    * smugmug/smugmugtalker.cpp, smugmug/smugmugtalker.h,
+      smugmug/smugmugwindow.cpp, smugmug/smugmugwindow.h: Implement
+      proper logout from SmugMug
+      - do logout on account change before login
+      - do logout on close to notify SmugMug that session is ended
+
+2008-12-11 20:31  lure
+
+    * smugmug/smugmugalbum.cpp: Simplify code of New Album dialog by
+      using QFormLayout instead of QGridLayout
+
+2008-12-11 13:57  aclemens
+
+    * removeredeyes/previewwidget.cpp,
+      removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/unprocessedsettingsbox.cpp: polish
+
+2008-12-11 13:57  aclemens
+
+    * removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/unprocessedsettingsbox.cpp: add WhatsThis messages
+
+2008-12-11 13:08  scripty
+
+    * calendar/kipiplugin_calendar.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      smugmug/kipiplugin_smugmug.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-10 11:24  cgilles
+
+    * smugmug/smugmugwindow.cpp: use stylesheet here
+
+2008-12-09 21:05  lure
+
+    * AUTHORS, CMakeLists.txt, NEWS, README, smugmug,
+      smugmug/CMakeLists.txt, smugmug/Messages.sh, smugmug/TODO,
+      smugmug/kipiplugin_smugmug.desktop, smugmug/plugin_smugmug.cpp,
+      smugmug/plugin_smugmug.h, smugmug/smugmugalbum.cpp,
+      smugmug/smugmugalbum.h, smugmug/smugmugitem.h,
+      smugmug/smugmugtalker.cpp, smugmug/smugmugtalker.h,
+      smugmug/smugmugwidget.cpp, smugmug/smugmugwidget.h,
+      smugmug/smugmugwindow.cpp, smugmug/smugmugwindow.h: New KIPI
+      Plugin: SmugMug exporter - http://www.smugmug.com
+      
+      Now you can upload your photos to SmugMug service from your
+      favorite
+      KDE photo application! You will need your SmugMug login and will
+      be able
+      to specify to which album/gallery to upload photos. You can also
+      create
+      new album/galery with various settings (category, privacy,
+      password...).
+      
+      Screenshots:
+      - main window:
+      http://img371.imageshack.us/img371/5453/smugmugmainlz0.png
+      - new album dialog:
+      http://img252.imageshack.us/img252/3407/smugmugloginrd4.png
+
+2008-12-09 10:05  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h,
+      flickrexport/flickrwidget.cpp, gpssync/gpseditdialog.h,
+      gpssync/gpssyncdialog.cpp, gpssync/gpstracklisteditdialog.cpp,
+      removeredeyes/myimageslist.cpp: patch by Luka Renko: add the
+      ability to set the position of the control buttons of
+      KIPIPlugins::ImagesList widget.
+
+2008-12-09 05:01  cgilles
+
+    * NEWS: update
+
+2008-12-09 03:05  schwarzer
+
+    * slideshow/maindialog.ui, slideshow/soundtrackdialog.ui: hide
+      placeholder strings from translators
+      
+      Revert my earlier commit 894593 and add
+      KDE::DoNotExtract comments to avoid extraction.
+
+2008-12-08 22:22  schwarzer
+
+    * slideshow/soundtrackdialog.ui: remove placeholder texts from ui
+      file
+
+2008-12-08 17:39  cgilles
+
+    * NEWS: update
+
+2008-12-08 17:05  orgads
+
+    * calendar/calwizard.cpp: My mistake, changed to screen resolution
+      for testing...
+
+2008-12-08 09:13  cgilles
+
+    * NEWS: update
+
+2008-12-08 08:52  cgilles
+
+    * NEWS: update
+
+2008-12-08 08:50  cgilles
+
+    * NEWS: update
+
+2008-12-07 20:23  cgilles
+
+    * NEWS: update
+
+2008-12-05 22:01  anaselli
+
+    * printwizard/TODO, printwizard/wizard.cpp, printwizard/wizard.h:
+      Settings are now saved/restored page by page, that should fix
+      random crashes if intro page is disabled.
+
+2008-12-04 14:20  scripty
+
+    * slideshow/kipiplugin_slideshow.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-04 06:50  cgilles
+
+    * removeredeyes/removeredeyeswindow.cpp: fix warnings. at least
+      return false to please compiler.
+
+2008-12-03 20:43  orgads
+
+    * calendar/CMakeLists.txt, calendar/calevents.ui,
+      calendar/calformatter.cpp, calendar/calformatter.h,
+      calendar/calpainter.cpp, calendar/calpainter.h,
+      calendar/calprinter.cpp, calendar/calprinter.h,
+      calendar/calsettings.cpp, calendar/calsettings.h,
+      calendar/calwidget.cpp, calendar/calwizard.cpp,
+      calendar/calwizard.h: * Moved special days into CalSettings.
+      * Fixed color of day on special days.
+
+2008-12-03 19:16  orgads
+
+    * calendar/calwizard.cpp: Delete thread before creating a new one.
+
+2008-12-03 14:54  cgilles
+
+    * NEWS: update
+
+2008-12-03 14:40  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-03 09:03  aclemens
+
+    * removeredeyes/previewwidget.cpp: add little check before setting
+      new image
+
+2008-12-03 08:27  aclemens
+
+    * removeredeyes/previewwidget.cpp, removeredeyes/previewwidget.h,
+      removeredeyes/removeredeyeswindow.cpp: automatically reset
+      previews when new image is selected
+
+2008-12-02 19:50  aclemens
+
+    * removeredeyes/storagesettingsbox.cpp: metadata (Exif, IPTC etc)
+      is not kept at the moment, adding a warning to storage settings
+      box
+
+2008-12-02 19:28  aclemens
+
+    * removeredeyes/advancedsettings.cpp,
+      removeredeyes/advancedsettings.h,
+      removeredeyes/blobsettingsbox.cpp,
+      removeredeyes/blobsettingsbox.h,
+      removeredeyes/classifiersettingsbox.cpp,
+      removeredeyes/classifiersettingsbox.h,
+      removeredeyes/infomessagewidget.cpp,
+      removeredeyes/previewwidget.cpp, removeredeyes/previewwidget.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/settingstab.cpp, removeredeyes/settingstab.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/simplesettings.h:
+      do not reload the preview if the selected image or the settings
+      have not changed
+
+2008-12-02 15:16  aclemens
+
+    * gpssync/gpssyncdialog.cpp, gpssync/gpstracklisteditdialog.cpp:
+      wrong parameter order
+
+2008-12-02 15:07  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h, gpssync/gpssyncdialog.cpp,
+      gpssync/gpstracklisteditdialog.cpp,
+      removeredeyes/myimageslist.cpp: assuming that listViewOnly
+      parameter will be used more often, I change the order of the
+      parameter list
+
+2008-12-02 14:56  aclemens
+
+    * gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+      gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+      gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklisteditdialog.h,
+      gpssync/gpstracklistviewitem.cpp, gpssync/gpstracklistviewitem.h:
+      GPSsync plugin uses common ImagesList widget now
+      
+      Right now the plugin only uses the widget as it is, but I think
+      this is
+      not good, it really doesn't help to maintain the plugin code.
+      It would be much better to merge gpslistviewitem and
+      gpstracklistviewitem into one common item (GPSListViewItem) and
+      derive a
+      common ListView widget from ImagesList (GPSImageList), that can
+      be used
+      in gpssyncdialog and gpstracklisteditdialog.
+      
+      Since I'm not the author of the plugin, I might get things wrong
+      here,
+      but for me those views and listitems are nearly the same.
+      
+      For now I will leave it this way, if we want to merge these
+      widgets, we
+      can do it later.
+      
+      Andi
+      
+      CCMAIL:digikam-devel@kde.org
+      CCMAIL:kde-imaging-@kde.org
+
+2008-12-02 14:56  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: new parameter to hide add /
+      remove buttons and the plainPage widget
+
+2008-12-02 14:55  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: added more user columns
+
+2008-12-02 13:44  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-01 17:22  cgilles
+
+    * NEWS: update
+
+2008-12-01 17:20  cgilles
+
+    * metadataedit/exifdevice.cpp: fix url
+      CCBUG: 176640
+
+2008-12-01 14:14  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h,
+      flickrexport/flickrwidget.cpp, removeredeyes/myimageslist.cpp,
+      sendimages/imagespage.cpp: change the order of the parameters of
+      ImagesList cstor, so that you don't have to provide the default
+      values for allowRAW and autoLoad all the time
+
+2008-12-01 13:55  cgilles
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h, sendimages/imagespage.cpp,
+      sendimages/imagespage.h: kipi-plugins from trunk: SendImages tool
+      : code factoring
+      - plugin use ImageList class to display list of items to e-mail.
+      - ImageList now howt more kipi host information has Rating,
+      Comments, Tags (if available)
+      CCMAIL: kde-imageing@kde.org
+
+2008-12-01 13:11  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-30 22:55  aclemens
+
+    * NEWS, removeredeyes/CMakeLists.txt, removeredeyes/eyelocator.cpp,
+      removeredeyes/eyelocator.h, removeredeyes/infomessagewidget.cpp,
+      removeredeyes/infomessagewidget.h,
+      removeredeyes/previewwidget.cpp, removeredeyes/previewwidget.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h:
+      added a simple preview mode for the currently selected image
+      
+      In preview mode, you are able to see the results of the
+      correction for
+      the currently selected image. This is useful when you want to
+      tweak the
+      settings in advanced mode.
+      There are three display modes:
+      
+      Corrected image - the result of the correction
+      Original image - the original image with the red-eyes
+      Correction mask - displays the mask used to correct the red-eye
+      effect
+      
+      You can switch between those modes by hovering over the image
+      preview.
+      Clicking on the preview image will display the mask.
+      This information is also displayed as a WhatsThis message.
+      
+      The preview is not yet complete, right now it will scale the
+      image
+      without keeping aspect ratio, this will be fixed later.
+
+2008-11-30 12:51  scripty
+
+    * calendar/kipiplugin_calendar.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-29 22:11  aclemens
+
+    * removeredeyes/storagesettingsbox.cpp: use the term "suffix" in
+      the storagesettingsbox
+
+2008-11-29 22:06  aclemens
+
+    * removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/settingstab.cpp,
+      removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/storagesettingsbox.h,
+      removeredeyes/workerthread.cpp: a string appended to the end of
+      the filename is called a suffix, not prefix :-)
+
+2008-11-29 14:26  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      printwizard/kipiplugin_printwizard.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-29 12:43  aclemens
+
+    * common/libkipiplugins/imageslist.cpp: use ExtendedSelection mode
+
+2008-11-28 22:37  gateau
+
+    * NEWS, htmlexport/generator.cpp: Added support for remote urls.
+      BUG:174954
+
+2008-11-28 22:37  gateau
+
+    * htmlexport/generator.cpp, htmlexport/imageelement.h,
+      htmlexport/imagegenerationfunctor.cpp,
+      htmlexport/imagegenerationfunctor.h: Refactor: no more access to
+      KIPI::Interface from ImageGenerationFunctor.
+      We can't assume it's thread safe.
+
+2008-11-28 18:23  aclemens
+
+    * common/libkipiplugins/CMakeLists.txt,
+      common/libkipiplugins/imagedialog.h,
+      common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h, flickrexport/CMakeLists.txt,
+      flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h,
+      flickrexport/imageslist.cpp, flickrexport/imageslist.h,
+      removeredeyes/CMakeLists.txt, removeredeyes/imageslist.cpp,
+      removeredeyes/imageslist.h, removeredeyes/myimageslist.cpp,
+      removeredeyes/myimageslist.h,
+      removeredeyes/removeredeyeswindow.cpp: The imageslist widget used
+      in IPod, Flickr, SendImages and RemoveRedEyes has
+      been refactorized to be a common kipiplugins widget. Flickr and
+      RemoveRedEyes
+      have already been ported.
+      
+      The widget can be used "as it is", if no special features or
+      columns are
+      required. It will display "Thumbnail" and "Filename" column by
+      default.
+      It also provides 3 User Columns, as shown here:
+      http://www.flickr.com/photos/26732399@N05/3066278002/
+      
+      Also a plainPage widget is added, where a plugin can add
+      additional widgets if
+      needed, like the summarybox in RemoveRedEyes plugin.
+      If you need additional methods, just derive your own class from
+      the common
+      imageslist.
+      
+      The cstor of the ImagesList widget takes two additional
+      parameters:
+      
+      allowRAW:
+      ---------
+      allow RAW files to be added [default: true]
+      If false, don't load RAW files and send a signal so that the
+      plugin
+      can react in this case
+                 
+      autoLoad:
+      ---------
+      load images from interface directly when ImagesList widget is
+      created [default: true]
+      I needed to provide this for RemoveRedEyes because I need to load
+      the images later, otherwise some signals will not work
+      
+      To change the column setup, you can use the widget as follows:
+      
+      m_imglst = new KIPIPlugins::ImagesList(iface, true, true,
+      parent);
+      m_imglst->listView()->setWhatsThis(i18n("This is the list of
+      images "
+      "to upload on your Flickr account."));
+      
+      // set additional column
+      m_imglst->listView()->setColumnEnabled(KIPIPlugins::ImagesListView::User1,
+      true);
+      m_imglst->listView()->setColumnLabel(KIPIPlugins::ImagesListView::User1,
+      i18n("blabla"));
+      
+      // or use this wrapper method instead
+      m_imglst->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
+      i18n("blabla"),
+      true);
+      
+      For additional information, take a look at the already ported
+      plugins (Flickr
+      and RemoveRedEyes).
+      
+      Andi
+      
+      CCMAIL: kde-imaging@kde.org
+      CCMAIL: digikam-devel@kde.org
+
+2008-11-28 16:03  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: use a more meaningful var
+      name
+
+2008-11-28 15:45  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: shorten method
+
+2008-11-28 15:45  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: polish
+
+2008-11-28 14:39  aclemens
+
+    * removeredeyes/TODO: ...and again, deleting the TODO list... :-)
+      damn this was complicated
+
+2008-11-28 14:38  aclemens
+
+    * TODO, removeredeyes/TODO: something went totally wrong with GIT,
+      trying SVN now to revert the commit
+
+2008-11-28 14:21  aclemens
+
+    * removeredeyes/TODO: obsolete
+
+2008-11-28 14:21  aclemens
+
+    * TODO: oops, wrong folder
+      Revert "obsolete"
+      
+      This reverts commit b2e0a0db310f30de7140e568c402244497bb3689.
+
+2008-11-28 14:15  aclemens
+
+    * TODO: obsolete
+
+2008-11-28 13:33  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-11-28 13:14  cgilles
+
+    * NEWS: update
+
+2008-11-28 12:04  aclemens
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/settingstab.cpp,
+      removeredeyes/storagesettingsbox.h,
+      removeredeyes/unprocessedsettingsbox.cpp,
+      removeredeyes/unprocessedsettingsbox.h: added new options to set
+      the behavior if unprocessed images are found.
+      
+      Right now a popup window will appear all the time if unprocessed
+      images
+      are found. This is annoying after a while, even for me :-)
+      The new settings will control the way the plugin handles those
+      images:
+      
+      Ask the user - same behavior as before
+      Keep - do not remove unprocessed images
+      Remove - well, this would remove unprocessed images :-)
+      
+      This is really helpful when playing with the advanced settings
+      and you
+      don't want to be bothered by the popup window all the time.
+
+2008-11-28 10:38  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h: added an extra check and
+      warning when overwrite mode is set
+
+2008-11-28 08:51  gateau
+
+    * htmlexport/CMakeLists.txt, htmlexport/generator.cpp,
+      htmlexport/generator.h, htmlexport/imageelement.h,
+      htmlexport/imagegenerationfunctor.cpp,
+      htmlexport/imagegenerationfunctor.h: Unbloat generator.cpp
+      Moved ImageElement and ImageGenerationFunctor to their own files.
+
+2008-11-28 08:51  gateau
+
+    * htmlexport/generator.cpp: Forgot to remove my chrono.
+
+2008-11-28 08:51  gateau
+
+    * htmlexport/wizard.cpp: Fix background color of theme parameter
+      page,
+      using Sebastien Trueg trick.
+      CCMAIL:trueg@kde.org
+
+2008-11-27 12:35  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h: polish
+
+2008-11-27 12:32  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-11-27 06:38  cgilles
+
+    * NEWS: update
+
+2008-11-26 11:43  seb
+
+    * ipodexport/IpodExportDialog.cpp: Reimplement transfers
+
+2008-11-25 16:42  cgilles
+
+    * cmake/modules/FindOpenCV.cmake: polish
+
+2008-11-25 16:39  cgilles
+
+    * NEWS: update
+
+2008-11-25 16:38  cgilles
+
+    * CMakeLists.txt: beta5
+
+2008-11-25 13:51  cgilles
+
+    * README: update
+
+2008-11-25 13:50  cgilles
+
+    * ChangeLog: update
+
+2008-11-25 13:27  cgilles
+
+    * TODO: update
+
+2008-11-25 13:26  cgilles
+
+    * NEWS: update
+
 0.2.0-beta4 2008-11-25
 --------------------------------------------------------------------------------
 
