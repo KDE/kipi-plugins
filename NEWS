@@ -1,12 +1,12 @@
-v 0.2.0 - beta5
+Kipi-plugins 0.2.0-beta5 - Release date: 14/12/2008
 ------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES:
+NEW FEATURES:
 
 RemoveRedEyes  : Added an option to preview the correction of the currently selected image.
 SmugExport     : New plugin to export images to a remote SmugMug web service (http://www.smugmug.com)
 
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 169637 : MetadataEdit       : EXIF Data Editing Error.
 002 ==> 174954 : HTMLExport         : Support for remote urls.
@@ -18,12 +18,11 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 008 ==> 152520 : MetadataEdit       : Unified entry of metadata.
 009 ==> 135320 : Calendar           : Calendar year do not match locale.
 010 ==> 116970 : Calendar           : New calendar generator plugin features.
-011 ==> 
 
-v 0.2.0 - beta4
+Kipi-plugins 0.2.0-beta4 - Release date: 28/11/2008
 ------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES:
+NEW FEATURES:
 
 RemoveRedEyes  : New plugin to remove red eyes in batch. Tool is based on OpenCV library.
 Calendar       : Ported to QT4/KDE4.
@@ -37,7 +36,7 @@ SlideShow      : New effect "Mosaic"
 PrintWizard    : Ported to QT4/KDE4
 PrintWizard    : Added a new option to skip cropping, the image is scaled automatically.
 
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 172910 : GalleryExport      : Gallery crash (letting crash digiKam) with valid data and url.
 002 ==> 161855 : GalleryExport      : Remote Gallery Sync loses password.
@@ -45,32 +44,32 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 004 ==> 157285 : SlideShow          : digiKam advanced slideshow not working with Canon RAWs.
 005 ==> 175316 : GPSSync            : digiKam crashes when trying to enter gps data.
 
-v 0.2.0 - beta3
+Kipi-plugins 0.2.0-beta3 - Release date: 03/11/2008
 ------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES:
+NEW FEATURES:
 
 General        : all plugins can be compiled natively under Microsoft Windows.
 
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 172283 : SlideShow          : SlideShow crashes host application 
 002 ==> 172337 : SlideShow          : Slideshow enhancements by ken-burns effects.
 003 ==> 173276 : SlideShow	        : digikam crashs after closing 
 
-v 0.2.0 - beta2
+Kipi-plugins 0.2.0-beta2 - Release date: 06/10/2008
 ------------------------------------------------------------------------
 
-Kipi-plugins NEW FEATURES:
+NEW FEATURES:
 
 DNGConverter   : New plugin to convert RAW camera image to Digital NeGative (DNG)
 SlideShow      : Now you can play your favourite music during slideshow.
 
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 150076 : SlideShow          : Playing music during a slideshow  
 
-v 0.2.0 - beta1
+Kipi-plugins 0.2.0-beta1 - Release date: 20/09/2008
 ------------------------------------------------------------------------
 
 Kipi-plugins NEW FEATURES:
@@ -90,7 +89,7 @@ SlideShow      : Now filenames, captions and progress indicators can have transp
                  backgrounds with OpenGL SlideShow as well.
 SlideShow      : Added thumbnails into image list.
 
-Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 135451 : GPSSync            : Improve the gui of the gpssync plugin.
 002 ==> 135386 : GPSSync            : Show track on the google map.
@@ -100,4 +99,3 @@ Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 006 ==> 158792 : GPSsync            : Plugin do not working with Canon RAW CR2.
 007 ==> 165078 : GPSSync            : GPS correlator does not show thumbnails.
 008 ==> 165278 : GPSSync            : Geotagging dialog doesn't display all thumbnails.
-
