@@ -77,7 +77,7 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
     setButtons(Help | Close | User1);
     setDefaultButton(User1);
     setButtonIcon(User1, KIcon("system-run"));
-    setButtonText(User1, i18n("Start SlideShow"));
+    setButtonText(User1, i18n("Start Slideshow"));
     setFaceType(List);
     setModal(true);
 

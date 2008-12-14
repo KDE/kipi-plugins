@@ -86,7 +86,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced SlideShow..."), actionCollection());
+    m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced Slideshow..."), actionCollection());
     m_actionSlideShow->setObjectName("slideshow");
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
