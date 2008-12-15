@@ -72,10 +72,6 @@ public:
 
 private:
 
-    void allocateBuffers();
-
-private:
-
     EyeLocatorPriv* const d;
 };
 

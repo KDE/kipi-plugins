@@ -64,12 +64,13 @@ public:
         red_eyes          = 0;
     };
 
-    int     getMinimumSize(IplImage* src);
-    int     findPossibleEyes(double csf, int ngf, const char* classifierFile);
+    int  getMinimumSize(IplImage* src);
+    int  findPossibleEyes(double csf, int ngf, const char* classifierFile);
 
-    void    removeRedEyes();
-    void    findBlobs(IplImage* i_mask, int minsize);
-    void    generateMask(int i_v, CvSeq* i_eyes);
+    void removeRedEyes();
+    void findBlobs(IplImage* i_mask, int minsize);
+    void generateMask(int i_v, CvSeq* i_eyes);
+    void allocateBuffers();
 
     IplImage* scaleDownImage(IplImage* src);
     IplImage* previewImage(IplImage* src);
@@ -250,6 +251,19 @@ void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
     }
 }
 
+void EyeLocatorPriv::allocateBuffers()
+{
+    // allocate all buffers
+    lab      = cvCreateImage(cvGetSize(temporary), temporary->depth, 3);
+    gray     = cvCreateImage(cvGetSize(temporary), temporary->depth, 1);
+    aChannel = cvCreateImage(cvGetSize(temporary), temporary->depth, 1);
+    redMask  = cvCreateImage(cvGetSize(temporary), temporary->depth, 1);
+
+    // reset masks
+    cvFillImage(aChannel, 0);
+    cvFillImage(redMask, 0);
+}
+
 // --------------------------------------------------------------------
 
 EyeLocator::EyeLocator(const char* filename)
@@ -376,7 +390,7 @@ void EyeLocator::startCorrection(bool scaleDown)
         cvCopy(d->original, d->temporary);
     }
 
-    allocateBuffers();
+    d->allocateBuffers();
 
     // find possible eyes
     d->possible_eyes = d->findPossibleEyes(d->scaleFactor,
@@ -386,19 +400,6 @@ void EyeLocator::startCorrection(bool scaleDown)
     // remove red-eye effect
     if (d->possible_eyes > 0)
         d->removeRedEyes();
-}
-
-void EyeLocator::allocateBuffers()
-{
-    // allocate all buffers
-    d->lab      = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 3);
-    d->gray     = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-    d->aChannel = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-    d->redMask  = cvCreateImage(cvGetSize(d->temporary), d->temporary->depth, 1);
-
-    // reset masks
-    cvFillImage(d->aChannel, 0);
-    cvFillImage(d->redMask, 0);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
