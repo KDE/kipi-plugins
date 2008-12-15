@@ -582,11 +582,11 @@ void RemoveRedEyesWindow::threadFinished()
 
         case WorkerThread::Preview:
             // load generated preview images
-            d->previewWidget->setPreview(PreviewWidget::OriginalImage,
+            d->previewWidget->setPreviewImage(PreviewWidget::OriginalImage,
                     d->originalImageTempFile.fileName());
-            d->previewWidget->setPreview(PreviewWidget::CorrectedImage,
+            d->previewWidget->setPreviewImage(PreviewWidget::CorrectedImage,
                     d->correctedImageTempFile.fileName());
-            d->previewWidget->setPreview(PreviewWidget::MaskImage,
+            d->previewWidget->setPreviewImage(PreviewWidget::MaskImage,
                     d->maskImageTempFile.fileName());
             break;
     }

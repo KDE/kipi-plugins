@@ -91,6 +91,8 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     d->locked               = true;
 
+    // --------------------------------------------------------
+
     d->busyLabel            = new QLabel;
     d->noSelectionLabel     = new QLabel;
     d->originalLabel        = new QLabel;
@@ -117,7 +119,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->modeInfo     = new InfoMessageWidget(this);
+    d->modeInfo = new InfoMessageWidget(this);
     reset();
 
     // --------------------------------------------------------
@@ -146,7 +148,7 @@ void PreviewWidget::setImage(const QString& image)
     emit settingsChanged();
 }
 
-void PreviewWidget::setPreview(PreviewType type, const QString& filename)
+void PreviewWidget::setPreviewImage(ImageType type, const QString& filename)
 {
     switch (type)
     {
@@ -254,7 +256,7 @@ void PreviewWidget::resetPreviews()
     updateSettings();
 }
 
-bool PreviewWidget::previewsLoaded()
+bool PreviewWidget::previewsComplete()
 {
     if (d->originalLabel->pixmap()->isNull()  ||
         d->correctedLabel->pixmap()->isNull() ||
@@ -275,7 +277,7 @@ void PreviewWidget::updateSettings()
         return;
     }
 
-    if (!previewsLoaded())
+    if (!previewsComplete())
     {
         d->locked = true;
         setMode(BusyMode);

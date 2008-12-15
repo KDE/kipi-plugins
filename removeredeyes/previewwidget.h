@@ -26,9 +26,9 @@
 
 // Qt includes.
 
-#include <QStackedWidget>
-#include <QPixmap>
 #include <QLabel>
+#include <QPixmap>
+#include <QStackedWidget>
 
 class QWidget;
 
@@ -54,7 +54,7 @@ public:
         MaskMode
     };
 
-    enum PreviewType
+    enum ImageType
     {
         OriginalImage = 0,
         CorrectedImage,
@@ -69,7 +69,7 @@ public:
     QString& image() const;
     void setImage(const QString& image);
 
-    void setPreview(PreviewType type, const QString& filename);
+    void setPreviewImage(ImageType type, const QString& filename);
 
 public slots:
 
@@ -91,9 +91,11 @@ private slots:
 
 private:
 
-    bool previewsLoaded();
+    bool previewsComplete();
     void resetPreviews();
+
     void setMode(DisplayMode mode);
+
     QPixmap openFile(const QString& filename);
 
 private:
