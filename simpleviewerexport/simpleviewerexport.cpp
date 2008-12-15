@@ -216,8 +216,8 @@ void SimpleViewerExport::startExport()
     d->progressDlg->addedAction(i18n("Initialising..."), KIPIPlugins::StartingMessage);
     d->collectionsList = d->configDlg->settings().collections;
     d->totalActions    = 0;
-    for( QList<KIPI::ImageCollection>::Iterator it = d->collectionsList.begin() ;
-         !d->canceled && (it != d->collectionsList.end()) ; ++it )
+    for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
+         !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
     {
         d->totalActions += (*it).images().count();
     }
@@ -385,13 +385,13 @@ bool SimpleViewerExport::exportImages()
     bool resizeImages   = d->configDlg->settings().resizeExportImages;
     bool fixOrientation = d->configDlg->settings().fixOrientation;
 
-    for( QList<KIPI::ImageCollection>::Iterator it = d->collectionsList.begin() ;
-         !d->canceled && (it != d->collectionsList.end()) ; ++it )
+    for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
+         !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
     {
-        KUrl::List images = (*it).images();
+        const KUrl::List images = (*it).images();
 
-        for(KUrl::List::Iterator it = images.begin();
-            !d->canceled && (it != images.end()) ; ++it)
+        for(KUrl::List::ConstIterator it = images.constBegin();
+            !d->canceled && (it != images.constEnd()) ; ++it)
         {
             kapp->processEvents();
             KUrl url = *it;
@@ -714,8 +714,8 @@ bool SimpleViewerExport::extractArchive(KZip &zip)
     const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
 
     // extract the needed files from SimpleViewer archive
-    for(QStringList::Iterator it = d->simpleViewerFiles.begin();
-        it != d->simpleViewerFiles.end(); ++it )
+    for(QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
+        it != d->simpleViewerFiles.constEnd(); ++it )
     {
         const KArchiveEntry *entry = dir->entry(*it);
         if(!extractFile(entry))
