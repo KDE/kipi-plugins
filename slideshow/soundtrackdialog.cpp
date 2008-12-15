@@ -137,7 +137,7 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
 
     KUrl::List Files = fileList;
 
-    for ( KUrl::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
+    for ( KUrl::List::ConstIterator it = Files.constBegin() ; it != Files.constEnd() ; ++it )
     {
         KUrl currentFile = *it;
         KUrl path = KUrl(currentFile.path().section('/', 0, -1));

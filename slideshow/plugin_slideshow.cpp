@@ -203,7 +203,7 @@ void Plugin_SlideShow::slotSlideShow()
     FileList fileList;
     QStringList commentsList;
 
-    for ( KUrl::List::Iterator urlIt = m_urlList->begin(); urlIt != m_urlList->end(); ++urlIt )
+    for ( KUrl::List::ConstIterator urlIt = m_urlList->constBegin(); urlIt != m_urlList->constEnd(); ++urlIt )
     {
         KIPI::ImageInfo info = m_interface->info( *urlIt );
         fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );

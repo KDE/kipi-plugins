@@ -177,9 +177,9 @@ void MainDialog::saveSettings()
 
         QString effect;
         QMap<QString, QString> effectNames = SlideShow::effectNamesI18N();
-        QMap<QString, QString>::Iterator it;
+        QMap<QString, QString>::ConstIterator it;
 
-        for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
         {
             if (it.value() == m_effectsComboBox->currentText())
             {
@@ -194,23 +194,23 @@ void MainDialog::saveSettings()
     {
         QMap<QString, QString> effects;
         QMap<QString, QString> effectNames;
-        QMap<QString, QString>::Iterator it;
+        QMap<QString, QString>::ConstIterator it;
 
         // Load slideshowgl effects
         effectNames = SlideShowGL::effectNamesI18N();
 
-        for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
             effects.insert(it.key(), it.value());
 
         // Load Ken Burns effect
         effectNames = SlideShowKB::effectNamesI18N();
 
-        for (it = effectNames.begin(); it != effectNames.end(); ++it)
+        for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
             effects.insert(it.key(), it.value());
 
         QString effect;
 
-        for (it = effects.begin(); it != effects.end(); ++it)
+        for (it = effects.constBegin(); it != effects.constEnd(); ++it)
         {
             if ( it.value() == m_effectsComboBox->currentText())
             {
