@@ -244,7 +244,7 @@ GalleryWindow::~GalleryWindow()
     group.writeEntry("Set title", d->captTitleCheckBox->isChecked());
     group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
     group.writeEntry("Maximum Width",  d->dimensionSpinBox->value());
-
+    delete mpUploadList;
     delete d;
     delete m_about;
 }
