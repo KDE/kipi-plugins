@@ -87,7 +87,7 @@ namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebTalker::PicasawebTalker( QWidget* parent )
-               : m_parent( parent ),  m_job( 0 )
+               : m_albumsList(0), m_parent( parent ),  m_job( 0 )
     {
         m_apikey="49d585bafa0758cb5c58ab67198bf632";
         m_secret="34b39925e6273ffd";
@@ -102,6 +102,7 @@ PicasawebTalker::~PicasawebTalker()
 {
     if (m_job)
         m_job->kill();
+    delete m_albumsList;
 }
 
 QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
