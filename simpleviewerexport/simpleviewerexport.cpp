@@ -609,18 +609,18 @@ bool SimpleViewerExport::copySimpleViewer()
 
     dir.setPath(dataDir);
     entries = dir.entryList(QDir::Files);
-    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
+    for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(KUrl(dir.absolutePath() + "/" + *it));
+        files.append(KUrl(dir.absolutePath() + '/' + *it));
     }
 
     // files distributed with the plugin are installed in $KDEDIRS
     dataDir = KStandardDirs::locate("data", "kipiplugin_simpleviewerexport/simpleviewer_html/");
     dir.setPath(dataDir);
     entries = dir.entryList(QDir::Files);
-    for(QStringList::Iterator it = entries.begin(); it != entries.end(); ++it)
+    for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(dir.absolutePath() + "/" + *it);
+        files.append(dir.absolutePath() + '/' + *it);
     }
     // TODO: catch errors
     /*KIO::CopyJob *copyJob = */KIO::copy(files, d->configDlg->settings().exportUrl, KIO::HideProgressInfo);
