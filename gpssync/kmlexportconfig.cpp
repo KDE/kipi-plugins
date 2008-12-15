@@ -468,15 +468,15 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("iconSize", IconSizeInput_->value());
     group.writeEntry("size", ImageSizeInput_->value());
     QString destination = DestinationDirectory_->url().path();
-    if (!destination.endsWith("/"))
+    if (!destination.endsWith('/'))
     {
-        destination.append("/");
+        destination.append('/');
     }
     group.writeEntry("baseDestDir", destination);
     QString url = DestinationUrl_->text();
-    if (!url.endsWith("/"))
+    if (!url.endsWith('/'))
     {
-        url.append("/");
+        url.append('/');
     }
     group.writeEntry("UrlDestDir",url);
     group.writeEntry("KMLFileName",FileName_->text());
