@@ -24,13 +24,6 @@
 #include "plugin_slideshow.h"
 #include "plugin_slideshow.moc"
 
-// C ANSI includes.
-
-extern "C"
-{
-#include <sys/time.h>
-}
-
 // C++ includes.
 
 #include <ctime>
@@ -88,6 +81,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
     m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced Slideshow..."), actionCollection());
     m_actionSlideShow->setObjectName("slideshow");
+    m_actionSlideShow->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F9);
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
@@ -125,11 +119,10 @@ void Plugin_SlideShow::slotActivate()
     m_sharedData = new SharedData();
 
     m_sharedData->showSelectedFilesOnly = true;
-
-    m_sharedData->interface         = m_interface;
-    m_sharedData->ImagesHasComments = m_interface->hasFeature(KIPI::ImagesHasComments);
-    m_sharedData->urlList           = m_urlList;
-    KIPI::ImageCollection currSel   = m_interface->currentSelection();
+    m_sharedData->interface             = m_interface;
+    m_sharedData->ImagesHasComments     = m_interface->hasFeature(KIPI::ImagesHasComments);
+    m_sharedData->urlList               = m_urlList;
+    KIPI::ImageCollection currSel       = m_interface->currentSelection();
 
     if ( !currSel.isValid() || currSel.images().isEmpty() )
     {
