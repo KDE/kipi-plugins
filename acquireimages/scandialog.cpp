@@ -209,7 +209,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
 
     // Check if target image format have been selected from Combo List of dialog.
 
-    QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
+    const QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
     if (!mimes.isEmpty())
     {
         format = mimes.first().toUpper();
