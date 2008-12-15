@@ -2028,7 +2028,7 @@ QStringList Wizard::printPhotosToFile(QList<TPhoto*> photos, QString &baseFilena
 
 void Wizard::removeGimpFiles()
 {
-  for(QStringList::Iterator it = d->m_gimpFiles.begin(); it != d->m_gimpFiles.end(); ++it)
+  for(QStringList::ConstIterator it = d->m_gimpFiles.constBegin(); it != d->m_gimpFiles.constEnd(); ++it)
   {
     if (QFile::exists(*it))
     {
@@ -2141,7 +2141,7 @@ void Wizard::accept()
     d->m_gimpFiles = printPhotosToFile(d->m_photos, path, s);
     QStringList args;
     QString prog = "gimp-remote";
-    for(QStringList::Iterator it = d->m_gimpFiles.begin(); it != d->m_gimpFiles.end(); ++it)
+    for(QStringList::ConstIterator it = d->m_gimpFiles.constBegin(); it != d->m_gimpFiles.constEnd(); ++it)
       args << (*it);
     if (!launchExternalApp(prog, args))
     {
