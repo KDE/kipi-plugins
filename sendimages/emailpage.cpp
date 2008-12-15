@@ -107,7 +107,7 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
-    d->addComments = new QCheckBox(i18n("Attach a file with image proterties from %1",
+    d->addComments = new QCheckBox(i18n("Attach a file with image properties from %1",
                                    KGlobal::mainComponent().aboutData()->programName()),
                                    this);
     d->addComments->setWhatsThis(i18n("If you enable this option, all image properties set by %1 "
