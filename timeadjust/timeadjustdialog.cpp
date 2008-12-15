@@ -430,7 +430,7 @@ void TimeAdjustDialog::setImages(const KUrl::List& images)
     int exactCount   = 0;
     int inexactCount = 0;
 
-    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
+    for( KUrl::List::ConstIterator it = images.constBegin(); it != images.constEnd(); ++it )
     {
         KIPI::ImageInfo info = d->interface->info( *it );
         if (info.isTimeExact())
