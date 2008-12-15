@@ -100,9 +100,9 @@ QByteArray makeXsltParam(const QString& txt) {
 		
 	} else {
 		// Forth case: both apos and quote :-(
-		QStringList lst = txt.split(apos, QString::KeepEmptyParts);
+		const QStringList lst = txt.split(apos, QString::KeepEmptyParts);
 
-		QStringList::Iterator it=lst.begin(), end=lst.end();
+		QStringList::ConstIterator it=lst.constBegin(), end=lst.constEnd();
 		param= "concat(";
 		param+= apos + *it + apos;
 		++it;
@@ -188,6 +188,7 @@ struct Generator::Private {
 			tempFile->setPrefix("htmlexport-");
 
 			if (!tempFile->open()) {
+                                delete tempFile;
 				logError(i18n("Could not open temporary file"));
 				return false;
 			}
@@ -221,8 +222,8 @@ struct Generator::Private {
 		XMLElement collectionsX(xmlWriter, "collections");
 
 		// Loop on collections
-		QList<KIPI::ImageCollection>::Iterator collectionIt=mInfo->mCollectionList.begin();
-		QList<KIPI::ImageCollection>::Iterator collectionEnd=mInfo->mCollectionList.end();
+		QList<KIPI::ImageCollection>::ConstIterator collectionIt=mInfo->mCollectionList.constBegin();
+		QList<KIPI::ImageCollection>::ConstIterator collectionEnd=mInfo->mCollectionList.constEnd();
 		for (; collectionIt!=collectionEnd; ++collectionIt) {
 			KIPI::ImageCollection collection=*collectionIt;
 

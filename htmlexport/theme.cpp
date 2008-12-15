@@ -100,7 +100,7 @@ struct Theme::Private {
 	}
 
 	void readParameters(const QStringList& list) {
-		QStringList::ConstIterator it=list.begin(), end=list.end();
+		QStringList::ConstIterator it=list.constBegin(), end=list.constEnd();
 		for (;it!=end; ++it) {
 			QString groupName = PARAMETER_GROUP_PREFIX + *it;
 			QByteArray internalName = it->toUtf8();
@@ -141,8 +141,8 @@ Theme::~Theme() {
 const Theme::List& Theme::getList() {
 	if (sList.isEmpty()) {
 		QStringList internalNameList;
-		QStringList list=KGlobal::dirs()->findAllResources("data", "kipiplugin_htmlexport/themes/*/*.desktop");
-		QStringList::Iterator it=list.begin(), end=list.end();
+		const QStringList list=KGlobal::dirs()->findAllResources("data", "kipiplugin_htmlexport/themes/*/*.desktop");
+		QStringList::ConstIterator it=list.constBegin(), end=list.constEnd();
 		for (;it!=end; ++it) {
 			Theme* theme=new Theme;
 			theme->d->init(*it);
@@ -159,7 +159,7 @@ const Theme::List& Theme::getList() {
 
 Theme::Ptr Theme::findByInternalName(const QString& internalName) {
 	const Theme::List& lst=getList();
-	Theme::List::ConstIterator it=lst.begin(), end=lst.end();
+	Theme::List::ConstIterator it=lst.constBegin(), end=lst.constEnd();
 	for (; it!=end; ++it) {
 		Theme::Ptr theme = *it;
 		if (theme->internalName() == internalName) {
