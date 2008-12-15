@@ -74,8 +74,8 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
     int nbSecItem = maxGapTime;
     int nbSecs;
 
-    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
-         it != m_GPSDataMap.end(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
+         it != m_GPSDataMap.constEnd(); ++it )
     {
         // Here we check a possible accuracy in seconds between the
         // Camera GMT time and the GPS device GMT time.
@@ -139,8 +139,8 @@ QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
     QDateTime itemFound = dateTime.addSecs(secs);
     bool found = false;
 
-    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
-        it != m_GPSDataMap.end(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
+        it != m_GPSDataMap.constEnd(); ++it )
     {
         if (it.key() > dateTime)
         {
@@ -165,8 +165,8 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
     QDateTime itemFound = dateTime.addSecs((-1)*secs);
     bool found = false;
 
-    for (GPSDataMap::Iterator it = m_GPSDataMap.begin();
-        it != m_GPSDataMap.end(); ++it )
+    for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
+        it != m_GPSDataMap.constEnd(); ++it )
     {
         if (it.key() < dateTime)
         {
