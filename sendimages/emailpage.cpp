@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : e-mail settings page.
  *
- * Copyright (C) 2006-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,6 +33,8 @@
 
 // KDE includes.
 
+#include <kaboutdata.h>
+#include <kcomponentdata.h>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kiconloader.h>
@@ -48,31 +50,31 @@ public:
 
     EmailPagePriv()
     {
-        labelMailAgent          = 0;
-        mailAgentName           = 0;
-        imagesResize            = 0;
-        addComments             = 0;
-        changeImagesProp        = 0;
-        imageCompression        = 0;
-        labelImagesResize       = 0;
-        imagesFormat            = 0;
-        labelImagesFormat       = 0;
-        attachmentlimit         = 0;
+        labelMailAgent    = 0;
+        mailAgentName     = 0;
+        imagesResize      = 0;
+        addComments       = 0;
+        changeImagesProp  = 0;
+        imageCompression  = 0;
+        labelImagesResize = 0;
+        imagesFormat      = 0;
+        labelImagesFormat = 0;
+        attachmentlimit   = 0;
     }
 
-    QLabel        *labelMailAgent;
-    QLabel        *labelImagesResize;
-    QLabel        *labelImagesFormat;
+    QLabel       *labelMailAgent;
+    QLabel       *labelImagesResize;
+    QLabel       *labelImagesFormat;
 
-    KComboBox     *mailAgentName;
-    KComboBox     *imagesResize;
-    KComboBox     *imagesFormat;
+    KComboBox    *mailAgentName;
+    KComboBox    *imagesResize;
+    KComboBox    *imagesFormat;
 
-    QCheckBox     *changeImagesProp;
-    QCheckBox     *addComments;
+    QCheckBox    *changeImagesProp;
+    QCheckBox    *addComments;
 
-    KIntNumInput  *imageCompression;
-    KIntNumInput  *attachmentlimit;
+    KIntNumInput *imageCompression;
+    KIntNumInput *attachmentlimit;
 };
 
 EmailPage::EmailPage(QWidget* parent)
@@ -105,9 +107,12 @@ EmailPage::EmailPage(QWidget* parent)
 
     //---------------------------------------------
 
-    d->addComments = new QCheckBox(i18n("Attach a file with caption and tags"), this);
-    d->addComments->setWhatsThis(i18n("If you enable this option, all image captions and tags "
-                                      "will be added as an attached file."));
+    d->addComments = new QCheckBox(i18n("Attach a file with image proterties from %1",
+                                   KGlobal::mainComponent().aboutData()->programName()),
+                                   this);
+    d->addComments->setWhatsThis(i18n("If you enable this option, all image properties set by %1 "
+                                      "as Comments, Rating, or Tags, will be added as an attached file.",
+                                      KGlobal::mainComponent().aboutData()->programName()));
 
     // --------------------------------------------------------
 
