@@ -102,8 +102,7 @@ void WorkerThread::run()
             scaleDown = true;
 
         // The EyeLocator object will detect and remove the red-eye effect
-        EyeLocator loc(src.data());
-        loc.setClassifierFile(cls.data());
+        EyeLocator loc(src.data(), cls.data());
         loc.setScaleFactor(d->settings.scaleFactor);
         loc.setNeighborGroups(d->settings.neighborGroups);
         loc.setMinRoundness(d->settings.minRoundness);

@@ -36,6 +36,10 @@
 #include <opencv/highgui.h>
 #endif
 
+// Local includes.
+
+#include "removalsettings.h"
+
 namespace KIPIRemoveRedEyesPlugin
 {
 // size to scale down to
@@ -277,10 +281,11 @@ void EyeLocatorPriv::allocateBuffers()
 
 // --------------------------------------------------------------------
 
-EyeLocator::EyeLocator(const char* filename)
+EyeLocator::EyeLocator(const char* filename, const char* clsFilename)
           : d(new EyeLocatorPriv)
 {
     d->original = cvLoadImage(filename);
+    d->classifierFile = clsFilename;
 }
 
 EyeLocator::~EyeLocator()
@@ -292,16 +297,6 @@ EyeLocator::~EyeLocator()
     cvReleaseImage(&d->temporary);
     cvReleaseImage(&d->original);
     delete d;
-}
-
-void EyeLocator::setClassifierFile(const char* file)
-{
-    d->classifierFile = file;
-}
-
-const char* EyeLocator::classifierFile() const
-{
-    return d->classifierFile;
 }
 
 void EyeLocator::setScaleFactor(double value)

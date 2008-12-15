@@ -45,7 +45,7 @@ public:
 
 public:
 
-    EyeLocator(const char* filename);
+    EyeLocator(const char* filename, const char* clsFilename);
     ~EyeLocator();
 
 public:
@@ -54,9 +54,6 @@ public:
 
     int  redEyes() const;
     void saveImage(const char* path, FileType type);
-
-    void setClassifierFile(const char*);
-    const char* classifierFile() const;
 
     void setScaleFactor(double);
     double scaleFactor() const;
