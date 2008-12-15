@@ -92,7 +92,7 @@ void WorkerThread::run()
         if (!url.isLocalFile())
             break;
 
-        // we need to convert the QString to const char* for openCV to work
+        // we need to convert the QString to const char* for OpenCV to work
         QByteArray src = QFile::encodeName(url.path());
         QByteArray cls = QFile::encodeName(d->settings.classifierFile);
 
@@ -101,6 +101,7 @@ void WorkerThread::run()
         if (d->settings.simpleMode == SimpleSettings::Fast && d->settings.useSimpleMode)
             scaleDown = true;
 
+        // The EyeLocator object will detect and remove the red-eye effect
         EyeLocator loc(src.data());
         loc.setClassifierFile(cls.data());
         loc.setScaleFactor(d->settings.scaleFactor);
@@ -111,7 +112,7 @@ void WorkerThread::run()
         // start correction
         loc.startCorrection(scaleDown);
 
-        // save image to specified location
+        // save image to the specified location
         if ((d->runtype == Correction) && (loc.redEyes() > 0))
         {
             QFileInfo info(url.path());
@@ -156,6 +157,7 @@ void WorkerThread::run()
             QByteArray tmpCorrected = QFile::encodeName(d->correctedPreviewFile);
             QByteArray tmpMask      = QFile::encodeName(d->maskPreviewFile);
 
+            // save preview files in KDE temp dir
             loc.saveImage(tmpOriginal.data(),   EyeLocator::OriginalPreview);
             loc.saveImage(tmpCorrected.data(),  EyeLocator::CorrectedPreview);
             loc.saveImage(tmpMask.data(),       EyeLocator::MaskPreview);

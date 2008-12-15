@@ -229,20 +229,31 @@ void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
 {
     CBlobResult blobs;
     blobs = CBlobResult(i_mask,0,0,true);
+
+    // filter out mask regions with a minimum size
     blobs.Filter( blobs,
                   B_INCLUDE,
                   CBlobGetArea(),
                   B_GREATER, minsize);
+
+    // filter out mask regions with a minimum roundness
     blobs.Filter( blobs,
                   B_INCLUDE,
                   CBlobGetCompactness(),
                   B_LESS_OR_EQUAL,
                   minRoundness);
-    blobs.Filter(blobs, B_INCLUDE, CBlobGetExterior(), B_EQUAL, 0);
+
+    // filter out mask background object
+    blobs.Filter(blobs,
+                 B_INCLUDE,
+                 CBlobGetExterior(),
+                 B_EQUAL,
+                 0);
 
     // fill the mask
     cvFillImage(i_mask, 0);
     red_eyes = 0;
+
     for (int i = 0; i < blobs.GetNumBlobs(); i++)
     {
         CBlob tmp = blobs.GetBlob(i);
@@ -378,15 +389,15 @@ void EyeLocator::startCorrection(bool scaleDown)
 {
     if (scaleDown && MINSIZE < d->getMinimumSize(d->original))
     {
-        d->scaleDown         = true;
-        d->temporary         = d->scaleDownImage(d->original);
+        d->scaleDown = true;
+        d->temporary = d->scaleDownImage(d->original);
     }
     else
     {
-        d->scaleDown         = false;
-        d->temporary         = cvCreateImage(cvGetSize(d->original),
-                                             d->original->depth,
-                                             d->original->nChannels);
+        d->scaleDown = false;
+        d->temporary = cvCreateImage(cvGetSize(d->original),
+                                     d->original->depth,
+                                     d->original->nChannels);
         cvCopy(d->original, d->temporary);
     }
 
