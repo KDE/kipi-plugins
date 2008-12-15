@@ -325,19 +325,19 @@ void GalleryTalker::slotResult(KJob *job)
 
     if (m_state == GE_LOGIN && m_loggedIn)
     {
-        QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
+        const QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
         m_cookie = "Cookie:";
 
 
         if(!cookielist.isEmpty())
         {
             QRegExp rx("^GALLERYSID=.+");
-            QString str, app;
-            foreach(str, cookielist)
+            QString app;
+            foreach(const QString &str, cookielist)
             {
                 if(str.contains("Set-Cookie: "))
                 {
-                    QStringList cl = str.split(' ');
+                    const QStringList cl = str.split(' ');
                     int n = cl.lastIndexOf(rx);
                     if(n!= -1)
                     {
@@ -356,8 +356,8 @@ void GalleryTalker::slotResult(KJob *job)
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
-    QString *str = new QString(data);
-    QTextStream ts(str, QIODevice::ReadOnly);
+    QString str(data);
+    QTextStream ts(&str, QIODevice::ReadOnly);
     ts.setCodec("UTF-8");
     QString line;
     bool foundResponse = false;
