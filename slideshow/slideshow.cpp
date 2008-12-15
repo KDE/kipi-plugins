@@ -167,13 +167,14 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
 SlideShow::~SlideShow()
 {
     m_timer->stop();
+    delete m_timer;
     m_mouseMoveTimer->stop();
+    delete m_mouseMoveTimer;
 
     if ( m_intArray )
         delete [] m_intArray;
 
-    if ( m_imageLoader )
-        delete m_imageLoader;
+    delete m_imageLoader;
 }
 
 void SlideShow::readSettings()

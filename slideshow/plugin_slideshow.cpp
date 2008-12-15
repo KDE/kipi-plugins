@@ -92,13 +92,14 @@ void Plugin_SlideShow::setup( QWidget* widget )
             this, SLOT(slotActivate()));
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    m_urlList   = new KUrl::List();
 
     if ( !m_interface )
     {
         kError( 51000 ) << "Kipi m_interface is null!" << endl;
         return;
     }
+
+    m_urlList   = new KUrl::List();
 
     m_actionSlideShow->setEnabled( false );
 
@@ -110,8 +111,7 @@ void Plugin_SlideShow::setup( QWidget* widget )
 
 Plugin_SlideShow::~Plugin_SlideShow()
 {
-    if (m_urlList)
-        delete m_urlList;
+    delete m_urlList;
 }
 
 void Plugin_SlideShow::slotActivate()
@@ -156,7 +156,7 @@ void Plugin_SlideShow::slotAlbumChanged(bool anyAlbum)
 
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!";
         m_actionSlideShow->setEnabled( false );
         return;
     }
