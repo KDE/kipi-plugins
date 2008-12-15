@@ -109,7 +109,7 @@ QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
 {
     QStringList compressed ;//= new List<string>(headers.Length);
 
-    for ( QStringList::Iterator it = headers.begin(); it != headers.end(); ++it ) {
+    for ( QStringList::ConstIterator it = headers.constBegin(); it != headers.constEnd(); ++it ) {
 	QString str = (*it);
         QStringList strList = str.split("=");
         compressed.append(strList[0].trimmed()+strList[1].trimmed());
@@ -910,7 +910,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
         if (tags.count() == 0)
             emit signalAddPhotoSucceeded();
 
-        for ( QStringList::Iterator it = tags.begin(); it != tags.end(); ++it )
+        for ( QStringList::ConstIterator it = tags.constBegin(); it != tags.constEnd(); ++it )
         {
             QString photoURI= QString("http://picasaweb.google.com/data/feed/api/user/"
                     "%1/albumid/%2/photoid/%3").arg(m_username).arg(album_id).arg(photo_id);
