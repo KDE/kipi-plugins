@@ -145,9 +145,11 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     {
         username_edit = loginDialog->username();
         password_edit = loginDialog->password();
+        delete loginDialog;
     }
     else
     {
+        delete loginDialog;
         //Return something which say authentication needed.
         return ;
     }

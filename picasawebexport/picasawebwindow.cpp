@@ -282,10 +282,12 @@ void PicasawebWindow::getToken(QString& username, QString& password)
     {
         username_edit = loginDialog->username();
         password_edit = loginDialog->password();
+        delete loginDialog;
     }
     else
     {
         //Return something which say authentication needed.
+        delete loginDialog;
         return ;
     }
 }
