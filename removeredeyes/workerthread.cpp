@@ -120,6 +120,10 @@ void WorkerThread::run()
 
             switch (d->settings.storageMode)
             {
+                // for now Overwrite Mode is disabled. But maybe the config value
+                // is still set to Overwrite. To avoid overwriting the images,
+                // assume that Overwrite Mode behaves like Subfolder Mode.
+                case StorageSettingsBox::Overwrite:
                 case StorageSettingsBox::Subfolder:
                 {
                     saveLocation.addPath(d->settings.subfolderName);
@@ -140,11 +144,11 @@ void WorkerThread::run()
                     saveLocation.addPath(file);
                     break;
                 }
-                case StorageSettingsBox::Overwrite:
-                {
-                    saveLocation.addPath(info.fileName());
-                    break;
-                }
+//                case StorageSettingsBox::Overwrite:
+//                {
+//                    saveLocation.addPath(info.fileName());
+//                    break;
+//                }
             }
 
             QByteArray dest = QFile::encodeName(saveLocation.path());

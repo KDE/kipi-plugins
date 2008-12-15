@@ -98,6 +98,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     QRadioButton* overwriteMode = new QRadioButton(i18n("Overwrite original files"));
     overwriteMode->setToolTip(i18n("If checked, all original images will be replaced."));
     d->storageGroup->addButton(overwriteMode, Overwrite);
+    overwriteMode->setEnabled(false);
 
     d->suffixLineEdit = new KLineEdit;
     d->suffixLineEdit->setToolTip(i18n("Enter the name of the suffix here..."));
@@ -106,7 +107,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     QLabel* note      = new QLabel(i18n("<p><i>Note: At the moment this plugin will not keep "
                                         "any metadata (EXIF, IPTC).<br/>"
-                                        "DON'T USE OVERWRITE MODE, YOU WILL LOSE ALL INFORMATION!</i></p>"));
+                                        "To prevent data loss, overwrite mode has been diabled for now.</i></p>"));
 
     note->setWordWrap(true);
 
