@@ -365,6 +365,7 @@ void PicasawebWindow::slotCreateNewAlbum()
 
     if(t == QDialog::Accepted)
     {
+        //TODO : need to translate "public" or "unlisted" ?
         if (dlg->m_isPublicRadioButton->isChecked())
             test = QString("public");
         else
