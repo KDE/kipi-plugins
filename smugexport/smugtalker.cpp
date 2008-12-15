@@ -69,27 +69,27 @@ bool SmugTalker::loggedIn()
     return !m_sessionID.isEmpty();
 }
 
-QString SmugTalker::getEmail()
+QString SmugTalker::getEmail() const
 {
     return m_email;
 }
 
-QString SmugTalker::getDisplayName()
+QString SmugTalker::getDisplayName() const
 {
     return m_displayName;
 }
 
-QString SmugTalker::getNickName()
+QString SmugTalker::getNickName() const
 {
     return m_nickName;
 }
 
-QString SmugTalker::getAccountType()
+QString SmugTalker::getAccountType() const
 {
     return m_accountType;
 }
 
-int SmugTalker::getFileSizeLimit()
+int SmugTalker::getFileSizeLimit()const
 {
     return m_fileSizeLimit;
 }
@@ -646,7 +646,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     kDebug(51000) << "Create Album finished";
 
-    emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg), 
+    emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID);
     emit signalBusy(false);
 }

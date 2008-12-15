@@ -47,11 +47,11 @@ public:
     SmugTalker(QWidget* parent);
     ~SmugTalker();
 
-    QString getEmail();
-    QString getNickName();
-    QString getDisplayName();
-    QString getAccountType();
-    int     getFileSizeLimit();
+    QString getEmail() const;
+    QString getNickName() const;
+    QString getDisplayName() const;
+    QString getAccountType() const;
+    int     getFileSizeLimit() const;
 
     bool    loggedIn();
     void    cancel();
@@ -73,7 +73,7 @@ signals:
     void signalBusy(bool val);
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
-    void signalCreateAlbumDone(int errCode, const QString& errMsg, 
+    void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                int newAlbumID);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <SmugAlbum>& albumsList);
@@ -83,7 +83,7 @@ signals:
                                      const QList <SmugCategory>& categoriesList);
 
 private:
-    enum State 
+    enum State
     {
         SMUG_LOGIN = 0,
         SMUG_LOGOUT,
