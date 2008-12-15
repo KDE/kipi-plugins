@@ -270,7 +270,7 @@ PicasawebWindow::~PicasawebWindow()
 
 void PicasawebWindow::getToken(QString& username, QString& password)
 {
-    PicasawebLogin *loginDialog = new PicasawebLogin(this, QString("LoginWindow"), username, password);
+    PicasawebLogin *loginDialog = new PicasawebLogin(this, i18n("Login"), username, password);
     if (!loginDialog)
     {
         return;

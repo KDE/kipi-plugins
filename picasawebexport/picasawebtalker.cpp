@@ -132,7 +132,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     QString url = "https://www.google.com/accounts/ClientLogin";
 
-    PicasawebLogin *loginDialog = new PicasawebLogin(kapp->activeWindow(), QString("LoginWindow"), username, password);
+    PicasawebLogin *loginDialog = new PicasawebLogin(kapp->activeWindow(), i18n("Login"), username, password);
 
     QString username_edit, password_edit;
 
