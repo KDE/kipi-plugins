@@ -86,7 +86,7 @@ void WorkerThread::run()
     int i = 1;
     d->cancel = false;
 
-    for (KUrl::List::iterator it = d->urls.begin(); it != d->urls.end(); ++it, ++i)
+    for (KUrl::List::const_iterator it = d->urls.constBegin(); it != d->urls.constEnd(); ++it, ++i)
     {
         KUrl& url = (KUrl&)(*it);
         if (!url.isLocalFile())
