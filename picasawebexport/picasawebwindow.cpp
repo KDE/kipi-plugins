@@ -257,8 +257,7 @@ void PicasawebWindow::saveSettings()
 PicasawebWindow::~PicasawebWindow()
 {
     // write config
-    if(m_urls!=NULL)
-        delete m_urls;
+    delete m_urls;
 
     delete m_progressDlg;
     delete m_authProgressDlg;
@@ -410,6 +409,7 @@ void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
     KIPIPlugins::ImageDialog dlg(this, m_interface, false, true);
+    delete m_urls;
     m_urls = new KUrl::List( dlg.urls() );
 }
 
@@ -417,8 +417,7 @@ void PicasawebWindow::slotUploadImages()
 {
    if(m_widget->m_currentSelectionButton->isChecked())
    {
-        if (m_urls!=NULL)
-            delete m_urls;
+        delete m_urls;
 
         m_urls=new KUrl::List(m_interface->currentSelection().images());
    }
@@ -430,7 +429,7 @@ void PicasawebWindow::slotUploadImages()
 
     m_uploadQueue.clear();
 
-    for (KUrl::List::iterator it = m_urls->begin(); it != m_urls->end(); ++it)
+    for (KUrl::List::ConstIterator it = m_urls->constBegin(); it != m_urls->constEnd(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
         FPhotoInfo temp;
