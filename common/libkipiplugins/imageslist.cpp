@@ -371,7 +371,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
     bool raw = false;
 
-    for ( KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it )
+    for ( KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
     {
         KUrl imageUrl = *it;
 
