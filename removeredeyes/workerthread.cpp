@@ -101,13 +101,15 @@ void WorkerThread::run()
         if (d->settings.simpleMode == SimpleSettings::Fast && d->settings.useSimpleMode)
             scaleDown = true;
 
-        EyeLocator loc(src.data(),
-                       cls.data(),
-                       d->settings.scaleFactor,
-                       d->settings.neighborGroups,
-                       d->settings.minRoundness,
-                       d->settings.minBlobsize,
-                       scaleDown);
+        EyeLocator loc(src.data());
+        loc.setClassifierFile(cls.data());
+        loc.setScaleFactor(d->settings.scaleFactor);
+        loc.setNeighborGroups(d->settings.neighborGroups);
+        loc.setMinRoundness(d->settings.minRoundness);
+        loc.setMinBlobsize(d->settings.minBlobsize);
+
+        // start correction
+        loc.startCorrection(scaleDown);
 
         // save image to specified location
         if ((d->runtype == Correction) && (loc.redEyes() > 0))

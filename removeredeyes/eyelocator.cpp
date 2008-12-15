@@ -252,20 +252,10 @@ void EyeLocatorPriv::findBlobs(IplImage* i_mask, int minsize)
 
 // --------------------------------------------------------------------
 
-EyeLocator::EyeLocator(const char* filename, const char* classifierFile,
-                       double scaleFactor, int neighborGroups,
-                       double minRoundness, int minBlobsize,
-                       bool scaleDown)
+EyeLocator::EyeLocator(const char* filename)
           : d(new EyeLocatorPriv)
 {
-    d->scaleFactor          = scaleFactor;
-    d->neighborGroups       = neighborGroups;
-    d->minBlobsize          = minBlobsize;
-    d->minRoundness         = double(1) / (double(minRoundness) / 100.0);
-    d->classifierFile       = classifierFile;
-    d->original             = cvLoadImage(filename);
-
-    doCorrection(scaleDown);
+    d->original = cvLoadImage(filename);
 }
 
 EyeLocator::~EyeLocator()
@@ -277,6 +267,56 @@ EyeLocator::~EyeLocator()
     cvReleaseImage(&d->temporary);
     cvReleaseImage(&d->original);
     delete d;
+}
+
+void EyeLocator::setClassifierFile(const char* file)
+{
+    d->classifierFile = file;
+}
+
+const char* EyeLocator::classifierFile() const
+{
+    return d->classifierFile;
+}
+
+void EyeLocator::setScaleFactor(double value)
+{
+    d->scaleFactor = value;
+}
+
+double EyeLocator::scaleFactor() const
+{
+    return d->scaleFactor;
+}
+
+void EyeLocator::setMinRoundness(double value)
+{
+    d->minRoundness = double(1) / (double(value) / 100.0);
+}
+
+double EyeLocator::minRoundness() const
+{
+    return d->minRoundness;
+}
+
+void EyeLocator::setNeighborGroups(int value)
+{
+    d->neighborGroups = value;
+}
+
+int EyeLocator::neighborGroups() const
+{
+    return d->neighborGroups;
+}
+
+void EyeLocator::setMinBlobsize(int value)
+{
+    d->minBlobsize = value;
+}
+
+int EyeLocator::minBlobsize() const
+{
+    return d->minBlobsize;
 }
 
 int EyeLocator::redEyes() const
@@ -320,7 +360,7 @@ void EyeLocator::saveImage(const char * path, FileType type)
     } // switch
 }
 
-void EyeLocator::doCorrection(bool scaleDown)
+void EyeLocator::startCorrection(bool scaleDown)
 {
     if (scaleDown && MINSIZE < d->getMinimumSize(d->original))
     {

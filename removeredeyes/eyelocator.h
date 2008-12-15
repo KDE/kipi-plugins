@@ -45,24 +45,34 @@ public:
 
 public:
 
-    EyeLocator(const char* filename,
-               const char* classifierFile,
-               double scaleFactor,
-               int neighborGroups,
-               double minRoundness,
-               int minBlobsize,
-               bool scaleDown = false);
+    EyeLocator(const char* filename);
     ~EyeLocator();
 
 public:
 
-    int     redEyes() const;
-    void    saveImage(const char* path, FileType type);
+    void startCorrection(bool scaleDown);
+
+    int  redEyes() const;
+    void saveImage(const char* path, FileType type);
+
+    void setClassifierFile(const char*);
+    const char* classifierFile() const;
+
+    void setScaleFactor(double);
+    double scaleFactor() const;
+
+    void setMinRoundness(double);
+    double minRoundness() const;
+
+    void setNeighborGroups(int);
+    int neighborGroups() const;
+
+    void setMinBlobsize(int);
+    int minBlobsize() const;
 
 private:
 
-    void    doCorrection(bool scaleDown);
-    void    allocateBuffers();
+    void allocateBuffers();
 
 private:
 
