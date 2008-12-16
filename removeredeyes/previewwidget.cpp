@@ -26,9 +26,8 @@
 
 // Qt includes.
 
-#include <QScrollArea>
+#include <QGraphicsScene>
 #include <QStackedWidget>
-#include <QVBoxLayout>
 
 // KDE includes.
 
@@ -70,9 +69,6 @@ public:
 
     QStackedWidget*     stack;
 
-
-    QScrollArea*        scrollArea;
-
     QString             image;
 
     InfoMessageWidget*  modeInfo;
@@ -81,7 +77,7 @@ public:
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)
-             : QWidget(parent),
+             : QGraphicsView(parent),
                d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
@@ -98,10 +94,12 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->locked               = true;
-    setBackgroundRole(QPalette::Dark);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
     // --------------------------------------------------------
+
+    d->locked               = true;
 
     d->busyLabel            = new QLabel;
     d->noSelectionLabel     = new QLabel;
@@ -120,34 +118,35 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     d->busyLabel->setText(i18n("<h2>generating preview...</h2>"));
     d->busyLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    d->stack      = new QStackedWidget;
+    d->stack = new QStackedWidget;
     d->stack->insertWidget(BusyMode,          d->busyLabel);
     d->stack->insertWidget(LockedMode,        d->noSelectionLabel);
     d->stack->insertWidget(OriginalMode,      d->originalLabel);
     d->stack->insertWidget(CorrectedMode,     d->correctedLabel);
     d->stack->insertWidget(MaskMode,          d->maskLabel);
 
-    d->scrollArea = new QScrollArea;
-    d->scrollArea->setWidget(d->stack);
-    d->scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    d->scrollArea->setWidgetResizable(true);
-
     // --------------------------------------------------------
 
-    QVBoxLayout* layout = new QVBoxLayout;
-    layout->addWidget(d->scrollArea);
-    setLayout(layout);
+    QGraphicsScene* scene = new QGraphicsScene;
+    scene->addWidget(d->stack);
+    setScene(scene);
+//    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     // --------------------------------------------------------
 
     // floating widgets
-    d->modeInfo = new InfoMessageWidget(d->scrollArea);
-    d->zoomBar  = new PreviewZoomBar(d->scrollArea);
-
+    d->modeInfo = new InfoMessageWidget(this);
+    d->zoomBar  = new PreviewZoomBar(this);
     // --------------------------------------------------------
 
     connect(this, SIGNAL(settingsChanged()),
             this, SLOT(updateSettings()));
+
+    connect(d->zoomBar, SIGNAL(zoomInClicked()),
+            this, SLOT(zoomIn()));
+
+    connect(d->zoomBar, SIGNAL(zoomOutClicked()),
+            this, SLOT(zoomOut()));
 
     // --------------------------------------------------------
 
@@ -246,9 +245,9 @@ void PreviewWidget::resizeEvent(QResizeEvent* e)
 {
     QWidget::resizeEvent(e);
 
-    int y = d->scrollArea->viewport()->height() - d->zoomBar->height() - 10;
+    int y = viewport()->height() - d->zoomBar->height() - 10;
 
-    d->zoomBar->setMinMaxWidth(d->scrollArea->viewport()->width());
+    d->zoomBar->setMinMaxWidth(viewport()->width());
     d->zoomBar->move(0, y);
 }
 
@@ -344,28 +343,13 @@ void PreviewWidget::updateSettings()
 
 void PreviewWidget::zoomIn()
 {
-//    scaleImage(1.25);
+    scale(1.5, 1.5);
 }
 
 void PreviewWidget::zoomOut()
 {
-//    scaleImage(0.8);
-}
+    scale(1.0 / 1.5, 1.0 / 1.5);
 
-void PreviewWidget::normalSize()
-{
-//    imageLabel->adjustSize();
-//    scaleFactor = 1.0;
-}
-
-void PreviewWidget::fitToWindow()
-{
-//    bool fitToWindow = fitToWindowAct->isChecked();
-//    scrollArea->setWidgetResizable(fitToWindow);
-//    if (!fitToWindow) {
-//        normalSize();
-//    }
-//    updateActions();
 }
 
 } // namspace KIPIRemoveRedEyesPlugin

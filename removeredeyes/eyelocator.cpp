@@ -45,9 +45,6 @@ namespace KIPIRemoveRedEyesPlugin
 // size to scale down to
 const int MINSIZE = 600;
 
-// size to use for preview
-const int PREVIEWMINSIZE = 400;
-
 class EyeLocatorPriv
 {
 public:
@@ -77,7 +74,6 @@ public:
     void allocateBuffers();
 
     IplImage* scaleDownImage(IplImage* src);
-    IplImage* previewImage(IplImage* src);
 
 public:
 
@@ -108,19 +104,6 @@ IplImage* EyeLocatorPriv::scaleDownImage(IplImage* src)
 {
     int minimum = getMinimumSize(src);
     float factor = MINSIZE / (float) minimum;
-
-    IplImage* out = cvCreateImage(cvSize((int)(src->width  * factor),
-                                         (int)(src->height * factor)),
-                                  src->depth,
-                                  src->nChannels);
-    cvResize(src, out);
-    return out;
-}
-
-IplImage* EyeLocatorPriv::previewImage(IplImage* src)
-{
-    int minimum = getMinimumSize(src);
-    float factor = PREVIEWMINSIZE / (float) minimum;
 
     IplImage* out = cvCreateImage(cvSize((int)(src->width  * factor),
                                          (int)(src->height * factor)),
@@ -356,25 +339,19 @@ void EyeLocator::saveImage(const char * path, FileType type)
 
         case OriginalPreview:
         {
-            IplImage* tmp = d->previewImage(d->temporary);
-            cvSaveImage(path, tmp);
-            cvReleaseImage(&tmp);
+            cvSaveImage(path, d->temporary);
             break;
         }
 
         case CorrectedPreview:
         {
-            IplImage* tmp = d->previewImage(d->original);
-            cvSaveImage(path, tmp);
-            cvReleaseImage(&tmp);
+            cvSaveImage(path, d->original);
             break;
         }
 
         case MaskPreview:
         {
-            IplImage* tmp = d->previewImage(d->redMask);
-            cvSaveImage(path, tmp);
-            cvReleaseImage(&tmp);
+            cvSaveImage(path, d->redMask);
             break;
         }
     } // switch

@@ -26,9 +26,9 @@
 
 // Qt includes.
 
+#include <QGraphicsView>
 #include <QLabel>
 #include <QPixmap>
-#include <QWidget>
 
 class QWidget;
 
@@ -39,7 +39,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 class PreviewWidgetPriv;
 
-class PreviewWidget : public QWidget
+class PreviewWidget : public QGraphicsView
 {
     Q_OBJECT
 
@@ -71,12 +71,6 @@ public:
 
     void setPreviewImage(ImageType type, const QString& filename);
 
-
-    void fitToWindow();
-    void zoomIn();
-    void zoomOut();
-    void normalSize();
-
 public slots:
 
     void reset();
@@ -95,6 +89,9 @@ protected:
 private slots:
 
     void updateSettings();
+
+    void zoomIn();
+    void zoomOut();
 
 private:
 
