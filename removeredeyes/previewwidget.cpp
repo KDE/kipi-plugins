@@ -115,8 +115,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->noSelectionLabel->setText(i18n("<h2>no image selected!</h2>"));
-    d->noSelectionLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    d->noSelectionLabel->clear();
 
     d->busyLabel->setText(i18n("<h2>generating preview...</h2>"));
     d->busyLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -280,7 +279,14 @@ void PreviewWidget::setMode(DisplayMode mode)
             d->zoomBar->raise();
             break;
 
-        default:
+        case LockedMode:
+            d->modeInfo->display(i18n("No image selected!"), InfoMessageWidget::Warning);
+            d->modeInfo->raise();
+            d->zoomBar->hide();
+            d->zoomBar->lower();
+            break;
+
+        case BusyMode:
             d->modeInfo->lower();
             d->zoomBar->hide();
             d->zoomBar->lower();
@@ -321,7 +327,6 @@ void PreviewWidget::updateSettings()
     {
         d->locked = true;
         setMode(LockedMode);
-        d->modeInfo->reset();
         return;
     }
 
