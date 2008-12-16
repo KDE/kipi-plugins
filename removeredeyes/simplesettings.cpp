@@ -67,18 +67,24 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     d->settingsSlider->setTickPosition(QSlider::TicksRight);
 
     QString sliderStyle("QSlider::groove:vertical {"
-                        "border: 1px solid #999999;"
-                        "background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ff0000, stop:0.5 #ffff00 stop:1 #00ff00);"
-                        "width:4px;"
-                        "margin: 2px 0;"
+                        "   border: 1px solid #999999;"
+                        "   background: qlineargradient(x1:0, y1:0, x2:0, y2:1,"
+                        "               stop:0 #ff0000, stop:0.5 #ffff00 stop:1 #00ff00);"
+                        "   width:4px;"
+                        "   margin: 2px 0;"
                         "}"
 
                         "QSlider::handle:vertical {"
-                        "height: 8px;"
-                        "border: 1px solid #999999;"
-                        "border-radius: 4px;"
-                        "background: #cccccc;"
-                        "margin: 0 -8px; /* expand outside the groove */"
+                        "    height: 10px;"
+                        "    border: 1px solid #999999;"
+                        "    border-radius: 4px;"
+                        "   background: #dddddd;"
+                        "   margin: 0 -8px; /* expand outside the groove */"
+                        "}"
+
+                        "QSlider::handle:vertical::hover {"
+                        "   background: #cccccc;"
+                        "   margin: 0 -8px; /* expand outside the groove */"
                         "}"
     );
     d->settingsSlider->setStyleSheet(sliderStyle);
