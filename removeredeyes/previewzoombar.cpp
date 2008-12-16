@@ -100,8 +100,8 @@ PreviewZoomBar::PreviewZoomBar(QWidget* parent)
                 d(new PreviewZoomBarPriv)
 {
     QString mainStyle("background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
-                      "            stop:0 rgba(156, 156, 156, 0)"
-                      "            stop:0.3 rgba(156, 156, 156, 0)"
+                      "            stop:0 rgba(156, 156, 156, 35)"
+                      "            stop:0.3 rgba(156, 156, 156, 35)"
                       "            stop:1 rgb(156, 156, 156));"
     );
     setStyleSheet(mainStyle);
