@@ -57,17 +57,20 @@ PreviewZoomBar::PreviewZoomBar(QWidget* parent)
     QString toolBtnStyle("QToolButton {"
                          "    border: 1px solid #333333;"
                          "    border-radius: 6px;"
-                         "    background-color: rgba(230, 230, 230, 175);"
+                         "    background-color: rgb(230, 230, 230);"
+                         "    font-size: 16px;"
+                         "    color: #000000;"
                          "}"
 
                          "QToolButton:hover {"
-                         "    border-color: red;"
+                         "    border: 2px solid #870000;"
+                         "    color: #870000;"
                          "}"
 
                          "QToolButton:pressed {"
-                         "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,"
-                         "                stop:0 rgb(156, 156, 156)"
-                         "                stop:1 rgba(230, 230, 230, 175));"
+                         "    border: 2px solid #870000;"
+                         "    color: rgb(230, 230, 230);"
+                         "    background-color: #870000;"
                          "}"
     );
 
