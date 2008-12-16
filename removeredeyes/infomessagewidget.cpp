@@ -178,15 +178,6 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
     painter.drawText( 5 + textXOffset, textYOffset, d->message );
 }
 
-void InfoMessageWidget::mousePressEvent(QMouseEvent *)
-{
-    d->hidden = true;
-
-    if (d->timer)
-        d->timer->stop();
-    hide();
-}
-
 void InfoMessageWidget::reset()
 {
     d->hidden = false;

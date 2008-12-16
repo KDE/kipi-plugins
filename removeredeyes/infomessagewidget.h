@@ -58,7 +58,6 @@ public:
 protected:
 
     void paintEvent(QPaintEvent* e);
-    void mousePressEvent(QMouseEvent* e);
 
 private:
 

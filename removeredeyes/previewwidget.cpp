@@ -91,8 +91,8 @@ PreviewWidget::PreviewWidget(QWidget* parent)
             "<li>Move the mouse <b>out of</b> the preview to display the corrected image</li>"
             "<li><b>Click on</b> the preview to display the correction mask</li>"
             "</ul></p>"
-            "<p>If the info widget hides important image parts, click on it to "
-            "make it disappear.</p>");
+            "<p>The zoom buttons and panning widget allow you to view certain parts of the image "
+            "more closely.</p>");
 
     setWhatsThis(whatsThis);
 
