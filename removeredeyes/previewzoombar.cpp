@@ -28,31 +28,12 @@
 // Qt includes.
 
 #include <QGridLayout>
-#include <QToolButton>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class PreviewZoomBarPriv
-{
-public:
-
-    PreviewZoomBarPriv()
-    {
-        btnSize    = 22;
-        btnZoomIn  = 0;
-        btnZoomOut = 0;
-    }
-
-    int          btnSize;
-
-    QToolButton* btnZoomIn;
-    QToolButton* btnZoomOut;
-};
-
-PreviewZoomBar::PreviewZoomBar(QWidget* parent)
-              : QFrame(parent),
-                d(new PreviewZoomBarPriv)
+PreviewZoomBarButton::PreviewZoomBarButton(ButtonType type, int size, QWidget* parent)
+                    : QToolButton(parent)
 {
     QString toolBtnStyle("QToolButton {"
                          "    border: 1px solid #333333;"
@@ -73,28 +54,64 @@ PreviewZoomBar::PreviewZoomBar(QWidget* parent)
                          "    background-color: #870000;"
                          "}"
     );
+    setStyleSheet(toolBtnStyle);
 
+    switch (type)
+    {
+        case ZoomIn:
+            setText("+");
+            break;
+
+        case ZoomOut:
+            setText("-");
+            break;
+    }
+
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setMinimumSize(size, size);
+    setMaximumSize(size, size);
+}
+
+PreviewZoomBarButton::~PreviewZoomBarButton()
+{
+}
+
+// ------------------------------------------------
+
+class PreviewZoomBarPriv
+{
+public:
+
+    PreviewZoomBarPriv()
+    {
+        btnSize    = 22;
+        btnZoomIn  = 0;
+        btnZoomOut = 0;
+    }
+
+    int                   btnSize;
+
+    PreviewZoomBarButton* btnZoomIn;
+    PreviewZoomBarButton* btnZoomOut;
+};
+
+PreviewZoomBar::PreviewZoomBar(QWidget* parent)
+              : QFrame(parent),
+                d(new PreviewZoomBarPriv)
+{
     QString mainStyle("background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
                       "            stop:0 rgba(156, 156, 156, 0)"
                       "            stop:0.3 rgba(156, 156, 156, 0)"
                       "            stop:1 rgb(156, 156, 156));"
     );
-
     setStyleSheet(mainStyle);
 
-    d->btnZoomIn = new QToolButton;
-    d->btnZoomIn->setText("+");
-    d->btnZoomIn->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    d->btnZoomIn->setMinimumSize(d->btnSize, d->btnSize);
-    d->btnZoomIn->setMaximumSize(d->btnSize, d->btnSize);
-    d->btnZoomIn->setStyleSheet(toolBtnStyle);
+    // ------------------------------------------------
 
-    d->btnZoomOut = new QToolButton;
-    d->btnZoomOut->setText("-");
-    d->btnZoomOut->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    d->btnZoomOut->setMinimumSize(d->btnSize, d->btnSize);
-    d->btnZoomOut->setMaximumSize(d->btnSize, d->btnSize);
-    d->btnZoomOut->setStyleSheet(toolBtnStyle);
+    d->btnZoomIn  = new PreviewZoomBarButton(PreviewZoomBarButton::ZoomIn);
+    d->btnZoomOut = new PreviewZoomBarButton(PreviewZoomBarButton::ZoomOut);
+
+    // ------------------------------------------------
 
     QGridLayout* layout = new QGridLayout;
     layout->addWidget(d->btnZoomOut, 0, 1, 1, 1);
@@ -102,6 +119,14 @@ PreviewZoomBar::PreviewZoomBar(QWidget* parent)
     layout->setSpacing(5);
     layout->setColumnStretch(0, 10);
     setLayout(layout);
+
+    // ------------------------------------------------
+
+    connect(d->btnZoomIn, SIGNAL(clicked()),
+            this, SIGNAL(zoomInClicked()));
+
+    connect(d->btnZoomOut, SIGNAL(clicked()),
+            this, SIGNAL(zoomOutClicked()));
 }
 
 PreviewZoomBar::~PreviewZoomBar()
@@ -112,6 +137,12 @@ PreviewZoomBar::~PreviewZoomBar()
 void PreviewZoomBar::setButtonSize(int size)
 {
     d->btnSize = size;
+
+    d->btnZoomIn->setMinimumSize(d->btnSize, d->btnSize);
+    d->btnZoomIn->setMaximumSize(d->btnSize, d->btnSize);
+
+    d->btnZoomOut->setMinimumSize(d->btnSize, d->btnSize);
+    d->btnZoomOut->setMaximumSize(d->btnSize, d->btnSize);
 }
 
 int PreviewZoomBar::buttonSize() const

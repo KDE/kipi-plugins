@@ -28,11 +28,32 @@
 // Qt includes.
 
 #include <QFrame>
+#include <QToolButton>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
 class PreviewZoomBarPriv;
+
+class PreviewZoomBarButton : public QToolButton
+{
+    Q_OBJECT
+
+public:
+
+    enum ButtonType
+    {
+        ZoomIn = 0,
+        ZoomOut
+    };
+
+public:
+
+    PreviewZoomBarButton(ButtonType type, int size = 22, QWidget* parent = 0);
+    ~PreviewZoomBarButton();
+};
+
+// ---------------------------------------------
 
 class PreviewZoomBar : public QFrame
 {
