@@ -19,6 +19,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       ${KDE4_KDEUI_LIBS}
                       ${GPOD_LIBRARIES}
                       kipiplugins
+                      kipi
                       kio
                      )
 
