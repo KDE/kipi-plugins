@@ -22,6 +22,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     myimageslist.cpp
     plugin_removeredeyes.cpp
     previewwidget.cpp
+    previewzoombar.cpp
     removeredeyeswindow.cpp
     settingstab.cpp
     simplesettings.cpp

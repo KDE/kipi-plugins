@@ -26,9 +26,9 @@
 
 // Qt includes.
 
-#include <QString>
+#include <QScrollArea>
+#include <QStackedWidget>
 #include <QVBoxLayout>
-#include <QWidget>
 
 // KDE includes.
 
@@ -39,6 +39,7 @@
 // Local includes.
 
 #include "infomessagewidget.h"
+#include "previewzoombar.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -55,6 +56,7 @@ public:
         correctedLabel      = 0;
         maskLabel           = 0;
         modeInfo            = 0;
+        zoomBar             = 0;
     }
 
     bool                locked;
@@ -66,13 +68,20 @@ public:
     QLabel*             correctedLabel;
     QLabel*             maskLabel;
 
+    QStackedWidget*     stack;
+
+
+    QScrollArea*        scrollArea;
+
     QString             image;
 
     InfoMessageWidget*  modeInfo;
+
+    PreviewZoomBar*     zoomBar;
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)
-             : QStackedWidget(parent),
+             : QWidget(parent),
                d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
@@ -90,6 +99,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     // --------------------------------------------------------
 
     d->locked               = true;
+    setBackgroundRole(QPalette::Dark);
 
     // --------------------------------------------------------
 
@@ -111,21 +121,38 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     d->busyLabel->setText(i18n("<h2>generating preview...</h2>"));
     d->busyLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    insertWidget(BusyMode,          d->busyLabel);
-    insertWidget(LockedMode,        d->noSelectionLabel);
-    insertWidget(OriginalMode,      d->originalLabel);
-    insertWidget(CorrectedMode,     d->correctedLabel);
-    insertWidget(MaskMode,          d->maskLabel);
+    d->stack      = new QStackedWidget;
+    d->stack->insertWidget(BusyMode,          d->busyLabel);
+    d->stack->insertWidget(LockedMode,        d->noSelectionLabel);
+    d->stack->insertWidget(OriginalMode,      d->originalLabel);
+    d->stack->insertWidget(CorrectedMode,     d->correctedLabel);
+    d->stack->insertWidget(MaskMode,          d->maskLabel);
+
+    d->scrollArea = new QScrollArea;
+    d->scrollArea->setWidget(d->stack);
+    d->scrollArea->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    d->scrollArea->setWidgetResizable(true);
 
     // --------------------------------------------------------
 
-    d->modeInfo = new InfoMessageWidget(this);
-    reset();
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(d->scrollArea);
+    setLayout(layout);
+
+    // --------------------------------------------------------
+
+    // floating widgets
+    d->modeInfo = new InfoMessageWidget(d->scrollArea);
+    d->zoomBar  = new PreviewZoomBar(d->scrollArea);
 
     // --------------------------------------------------------
 
     connect(this, SIGNAL(settingsChanged()),
             this, SLOT(updateSettings()));
+
+    // --------------------------------------------------------
+
+    reset();
 }
 
 PreviewWidget::~PreviewWidget()
@@ -210,36 +237,57 @@ void PreviewWidget::mouseReleaseEvent(QMouseEvent*)
     if (d->locked)
         return;
 
-    if (currentIndex() == MaskMode)
+    if (d->stack->currentIndex() == MaskMode)
         setMode(OriginalMode);
     else
         setMode(MaskMode);
 }
 
+void PreviewWidget::resizeEvent(QResizeEvent* e)
+{
+    QWidget::resizeEvent(e);
+
+    int y = d->scrollArea->viewport()->height() - d->zoomBar->height() - 10;
+
+    d->zoomBar->setMinMaxWidth(d->scrollArea->viewport()->width());
+    d->zoomBar->move(0, y);
+}
+
 void PreviewWidget::setMode(DisplayMode mode)
 {
-    setCurrentIndex(mode);
+    d->stack->setCurrentIndex(mode);
 
     switch (mode)
     {
         case OriginalMode:
             d->modeInfo->display(i18n("Original Image"));
             d->modeInfo->raise();
+            d->zoomBar->show();
+            d->zoomBar->raise();
             break;
 
         case CorrectedMode:
             d->modeInfo->display(i18n("Corrected Image"));
             d->modeInfo->raise();
+            d->zoomBar->show();
+            d->zoomBar->raise();
             break;
 
         case MaskMode:
             d->modeInfo->display(i18n("Correction Mask"));
             d->modeInfo->raise();
+            d->zoomBar->show();
+            d->zoomBar->raise();
             break;
 
         default:
             d->modeInfo->lower();
+            d->zoomBar->hide();
+            d->zoomBar->lower();
+            break;
     }
+
+    d->stack->adjustSize();
 }
 
 void PreviewWidget::reset()
@@ -287,6 +335,32 @@ void PreviewWidget::updateSettings()
 
     d->locked = false;
     setMode(CorrectedMode);
+}
+
+void PreviewWidget::zoomIn()
+{
+//    scaleImage(1.25);
+}
+
+void PreviewWidget::zoomOut()
+{
+//    scaleImage(0.8);
+}
+
+void PreviewWidget::normalSize()
+{
+//    imageLabel->adjustSize();
+//    scaleFactor = 1.0;
+}
+
+void PreviewWidget::fitToWindow()
+{
+//    bool fitToWindow = fitToWindowAct->isChecked();
+//    scrollArea->setWidgetResizable(fitToWindow);
+//    if (!fitToWindow) {
+//        normalSize();
+//    }
+//    updateActions();
 }
 
 } // namspace KIPIRemoveRedEyesPlugin

@@ -28,7 +28,7 @@
 
 #include <QLabel>
 #include <QPixmap>
-#include <QStackedWidget>
+#include <QWidget>
 
 class QWidget;
 
@@ -39,7 +39,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 class PreviewWidgetPriv;
 
-class PreviewWidget : public QStackedWidget
+class PreviewWidget : public QWidget
 {
     Q_OBJECT
 
@@ -71,6 +71,12 @@ public:
 
     void setPreviewImage(ImageType type, const QString& filename);
 
+
+    void fitToWindow();
+    void zoomIn();
+    void zoomOut();
+    void normalSize();
+
 public slots:
 
     void reset();
@@ -84,6 +90,7 @@ protected:
     void enterEvent(QEvent* e);
     void leaveEvent(QEvent* e);
     void mouseReleaseEvent(QMouseEvent* e);
+    void resizeEvent(QResizeEvent* e);
 
 private slots:
 
