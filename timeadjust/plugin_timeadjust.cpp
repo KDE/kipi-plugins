@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include "plugin_timeadjust.h"
@@ -62,10 +62,13 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionTimeAjust = new KAction(KIcon("timeadjust"), i18n("Adjust Time && Date..."), actionCollection());
-    m_actionTimeAjust->setObjectName("timeadjust");
-    connect(m_actionTimeAjust, SIGNAL(triggered(bool)), 
+    m_actionTimeAjust = actionCollection()->addAction("timeadjust");
+    m_actionTimeAjust->setText(i18n("Adjust Time && Date..."));
+    m_actionTimeAjust->setIcon(KIcon("timeadjust"));
+
+    connect(m_actionTimeAjust, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
     addAction(m_actionTimeAjust);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
