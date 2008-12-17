@@ -64,15 +64,15 @@ public:
         failedLabel     = 0;
     }
 
-    int                 total;
-    int                 processed;
-    int                 failed;
+    int              total;
+    int              processed;
+    int              failed;
 
-    QLabel*             totalLabel;
-    QLabel*             processedLabel;
-    QLabel*             failedLabel;
+    QLabel*          totalLabel;
+    QLabel*          processedLabel;
+    QLabel*          failedLabel;
 
-    KIPI::Interface*    iface;
+    KIPI::Interface* iface;
 };
 
 MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
@@ -90,15 +90,16 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
 
     // --------------------------------------------------------
 
-    QGridLayout* mainLayout     = new QGridLayout(plainPage());
+    QGridLayout* mainLayout = new QGridLayout(plainPage());
 
     // --------------------------------------------------------
 
-    QGroupBox* summaryGroupBox  = new QGroupBox(i18n("Summary"));
+    QGroupBox* summaryGroupBox = new QGroupBox(i18n("Summary"));
 
-    d->totalLabel               = new QLabel;
-    d->processedLabel           = new QLabel;
-    d->failedLabel              = new QLabel;
+    d->totalLabel     = new QLabel;
+    d->processedLabel = new QLabel;
+    d->failedLabel    = new QLabel;
+
     d->totalLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
     d->processedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
     d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);

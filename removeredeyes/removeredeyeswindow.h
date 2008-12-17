@@ -38,9 +38,9 @@ class Interface;
 namespace KIPIRemoveRedEyesPlugin
 {
 
+class RedEyesWindowPriv;
 class RemovalSettings;
 class WorkerThreadData;
-class RedEyesWindowPriv;
 
 class RemoveRedEyesWindow : public KDialog
 {
