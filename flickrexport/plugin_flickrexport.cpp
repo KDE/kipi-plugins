@@ -64,22 +64,24 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(KIcon("applications-internet"), i18n("Export to Flickr..."), actionCollection());
-    m_action->setObjectName("flickrexport");
+    m_action = actionCollection()->addAction("flickrexport");
+    m_action->setText(i18n("Export to Flickr..."));
+    m_action->setIcon(KIcon("applications-internet"));
+    m_action->setEnabled(false);
+
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
+    addAction(m_action);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
     if (!interface)
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
-        m_action->setEnabled(false);
         return;
     }
-
     m_action->setEnabled(true);
-    addAction(m_action);
 }
 
 Plugin_FlickrExport::~Plugin_FlickrExport()
