@@ -4,10 +4,10 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-08-08
- * Description : Blob analysis package 
+ * Description : Blob analysis package
  *               http://opencvlibrary.sourceforge.net/cvBlobsLib
  *               Input: IplImage* binary image
- *               Output: attributes of each connected region 
+ *               Output: attributes of each connected region
  *
  * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
  *
@@ -24,8 +24,8 @@
  *
  * ============================================================ */
 
-#if !defined(_CLASSE_BLOBEXTRACTION_INCLUDED)
-#define _CLASSE_BLOBEXTRACTION_INCLUDED
+#ifndef BLOBEXTRACTION_H
+#define BLOBEXTRACTION_H
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -45,4 +45,4 @@ double GetExternPerimeter( int start, int end, int row, int width, int height, I
 
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif //_CLASSE_BLOBEXTRACTION_INCLUDED
+#endif //BLOBEXTRACTION_H

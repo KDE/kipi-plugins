@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-08-08
- * Description : Blob analysis package 
+ * Description : Blob analysis package
  *               CBlobResult class implementation.
  *
  * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
@@ -22,11 +22,11 @@
  *
  * ============================================================ */
 
-#if !defined(_CLASSE_BLOBRESULT_INCLUDED)
-#define _CLASSE_BLOBRESULT_INCLUDED
+#ifndef BLOBRESULT_H
+#define BLOBRESULT_H
 
-#ifdef WIN32 
-#if _MSC_VER > 1000 
+#ifdef WIN32
+#if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
 #endif // WIN32
@@ -92,9 +92,9 @@ namespace KIPIRemoveRedEyesPlugin
 typedef std::vector<CBlob*>    blob_vector;
 
 /**
-    Classe que cont� un conjunt de blobs i permet extreure'n propietats 
+    Classe que cont� un conjunt de blobs i permet extreure'n propietats
     o filtrar-los segons determinats criteris.
-    Class to calculate the blobs of an image and calculate some properties 
+    Class to calculate the blobs of an image and calculate some properties
     on them. Also, the class provides functions to filter the blobs using
     some criteria.
 */
@@ -138,10 +138,10 @@ public:
     //! Computes some property on one blob of the class
     double GetNumber( int indexblob, funcio_calculBlob *evaluador ) const;
 
-    //! Retorna aquells blobs que compleixen les condicions del filtre en el destination 
+    //! Retorna aquells blobs que compleixen les condicions del filtre en el destination
     //! Filters the blobs of the class using some property
     void Filter(CBlobResult &dst,
-                int filterAction, funcio_calculBlob *evaluador, 
+                int filterAction, funcio_calculBlob *evaluador,
                 int condition, double lowLimit, double highLimit = 0 );
 
     //! Retorna l'en�ssim blob segons un determinat criteri
@@ -166,7 +166,7 @@ public:
 
     //! Retorna el total de blobs
     //! Gets the total number of blobs
-    int GetNumBlobs() const 
+    int GetNumBlobs() const
     {
         return(m_blobs.size());
     }
@@ -186,4 +186,4 @@ protected:
 
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif // !defined(_CLASSE_BLOBRESULT_INCLUDED)
+#endif // BLOBRESULT_H

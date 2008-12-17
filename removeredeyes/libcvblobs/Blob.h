@@ -4,9 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-08-08
- * Description : Blob analysis package 
+ * Description : Blob analysis package
  *               http://opencvlibrary.sourceforge.net/cvBlobsLib
- *               Implementation of the CBlob class and some helper classes 
+ *               Implementation of the CBlob class and some helper classes
  *               to perform some calculations on it.
  *
  * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
@@ -29,8 +29,8 @@
 #pragma warning( disable : 4786 )
 #endif // WIN32
 
-#ifndef CBLOB_INSPECTA_INCLUDED
-#define CBLOB_INSPECTA_INCLUDED
+#ifndef BLOB_H
+#define BLOB_H
 
 #ifdef WIN32
 #include <cxcore.h>
@@ -57,7 +57,7 @@ namespace KIPIRemoveRedEyesPlugin
 {
 
 /**
-    Classe que representa un blob, ent�s com un conjunt de pixels del 
+    Classe que representa un blob, ent�s com un conjunt de pixels del
     mateix color contigus en una imatge binaritzada.
 
     Class to represent a blob, a group of connected pixels in a binary image
@@ -175,15 +175,15 @@ public:
     typedef std::vector<CvPoint> vectorPunts;
 
     //! Helper class to compare two CvPoints (for sorting in FillBlob)
-    struct comparaCvPoint : public std::binary_function<CvPoint, CvPoint, bool> 
+    struct comparaCvPoint : public std::binary_function<CvPoint, CvPoint, bool>
     {
         //! Definim que un punt �s menor com m�s amunt a la dreta estigui
-        bool operator()(CvPoint a, CvPoint b) 
-        { 
-            if( a.y == b.y ) 
+        bool operator()(CvPoint a, CvPoint b)
+        {
+            if( a.y == b.y )
                 return a.x < b.x;
-            else 
-                return a.y < b.y; 
+            else
+                return a.y < b.y;
         }
     };
 };
@@ -243,8 +243,8 @@ class CBlobGetArea : public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-    { 
-        return blob.Area(); 
+    {
+        return blob.Area();
     }
     const char *GetNom() const
     {
@@ -258,8 +258,8 @@ class CBlobGetPerimeter: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-    { 
-        return blob.Perimeter(); 
+    {
+        return blob.Perimeter();
     }
     const char *GetNom() const
     {
@@ -273,8 +273,8 @@ class CBlobGetExterior: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-    { 
-        return blob.Exterior(); 
+    {
+        return blob.Exterior();
     }
     const char *GetNom() const
     {
@@ -288,8 +288,8 @@ class CBlobGetMean: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-    { 
-        return blob.Mean(); 
+    {
+        return blob.Mean();
     }
     const char *GetNom() const
     {
@@ -303,8 +303,8 @@ class CBlobGetStdDev: public COperadorBlob
 {
 public:
     double operator()(const CBlob &blob) const
-    { 
-        return blob.StdDev(); 
+    {
+        return blob.StdDev();
     }
     const char *GetNom() const
     {
@@ -696,7 +696,7 @@ public:
 };
 
 //! Classe per calcular el ratio entre l'area de la elipse i la de la taca
-//! Class 
+//! Class
 class CBlobGetAreaElipseRatio: public COperadorBlob
 {
 public:
@@ -825,4 +825,4 @@ private:
 
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif //CBLOB_INSPECTA_INCLUDED
+#endif //BLOB_H
