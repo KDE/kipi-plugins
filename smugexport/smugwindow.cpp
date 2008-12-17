@@ -28,7 +28,6 @@
 // Qt includes.
 #include <QFileInfo>
 #include <QPushButton>
-#include <QCursor>
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QComboBox>

@@ -27,7 +27,6 @@
 
 // Qt includes.
 #include <QList>
-#include <QLabel>
 
 // KDE includes.
 #include <kdialog.h>

@@ -29,7 +29,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QGroupBox>
-#include <QLayout>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>

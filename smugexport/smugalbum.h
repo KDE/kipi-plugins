@@ -24,7 +24,6 @@
 #define SMUGALBUM_H
 
 // Qt includes.
-#include <QString>
 
 // KDE includes.
 #include <kdialog.h>

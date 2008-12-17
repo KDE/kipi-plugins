@@ -28,8 +28,6 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
-#include <QLabel>
-#include <QLayout>
 #include <QComboBox>
 #include <QRadioButton>
 
