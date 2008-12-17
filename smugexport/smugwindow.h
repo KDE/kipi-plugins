@@ -47,7 +47,6 @@ class Interface;
 namespace KIPIPlugins
 {
 class KPAboutData;
-class ImagesList;
 }
 
 namespace KIPISmugExportPlugin
