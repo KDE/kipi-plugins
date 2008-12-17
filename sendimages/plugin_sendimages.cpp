@@ -78,10 +78,13 @@ void Plugin_SendImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    d->action_sendimages = new KAction(KIcon("mail-send"), i18n("Email Images..."), actionCollection());
-    d->action_sendimages->setObjectName("send_images");
-    connect(d->action_sendimages, SIGNAL(triggered(bool)), 
+    d->action_sendimages = actionCollection()->addAction("sendimages");
+    d->action_sendimages->setText(i18n("Email Images..."));
+    d->action_sendimages->setIcon(KIcon("mail-send"));
+
+    connect(d->action_sendimages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
     addAction(d->action_sendimages);
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
