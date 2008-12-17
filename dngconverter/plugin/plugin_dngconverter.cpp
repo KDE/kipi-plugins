@@ -67,10 +67,13 @@ void Plugin_DNGConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action = new KAction(KIcon("dngconverter"), i18n("DNG Converter..."), actionCollection());
-    m_action->setObjectName("dng_converter");
+    m_action = actionCollection()->addAction("dngconverter");
+    m_action->setText(i18n("DNG Converter..."));
+    m_action->setIcon(KIcon("dngconverter"));
+
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
     addAction(m_action);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
