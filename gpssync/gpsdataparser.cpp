@@ -33,8 +33,6 @@
 #include <QDomDocument>
 #include <QFile>
 #include <QString>
-#include <QStringList>
-#include <QTextStream>
 
 // KDE includes.
 

@@ -24,8 +24,6 @@
 
 // Qt includes.
 
-#include <QPainter>
-#include <QFileInfo>
 
 // KDE includes.
 

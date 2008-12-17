@@ -25,10 +25,9 @@
 
 // Qt includes.
 
-#include <QHeaderView>
-#include <QLayout>
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
+#include <QVBoxLayout>
 
 // KDE includes.
 

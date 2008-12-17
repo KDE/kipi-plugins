@@ -29,11 +29,9 @@
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QGroupBox>
-#include <QHeaderView>
 #include <QLabel>
-#include <QLayout>
-#include <QPainter>
 #include <QPushButton>
+#include <QGridLayout>
 
 // KDE includes.
 

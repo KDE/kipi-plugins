@@ -26,7 +26,6 @@
 // Qt includes.
 
 #include <QDateTime>
-#include <QString>
 
 // KDE includes.
 
