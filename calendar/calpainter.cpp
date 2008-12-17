@@ -119,7 +119,7 @@ void CalPainter::paint(int month)
         case(CalParams::Top):
         {
             rImage.setWidth(width);
-            rImage.setHeight((int)(height * (params.ratio)/(params.ratio + 100)));
+            rImage.setHeight((int)(height * params.ratio / (params.ratio + 100)));
 
             int remainingHeight = height - rImage.height();
             cellSizeX           = (width - 20)/7;
@@ -141,11 +141,11 @@ void CalPainter::paint(int month)
         case(CalParams::Left):
         {
             rImage.setHeight(height);
-            rImage.setWidth((int)(width * (params.ratio)/(params.ratio + 100)));
+            rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
 
             int remainingWidth = width - rImage.width();
-            cellSizeX          = remainingWidth/8;
-            cellSizeY          = (height - 40)/7;
+            cellSizeX          = (remainingWidth - 20)/8;
+            cellSizeY          = height/8;
 
             rCal.setWidth(cellSizeX*7);
             rCal.setHeight(cellSizeY*7);
@@ -153,7 +153,6 @@ void CalPainter::paint(int month)
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
             rCalHeader.moveLeft(rImage.right() + cellSizeX);
-            rCalHeader.moveTop(height/2 - (rCalHeader.height()+rCal.height()/2));
 
             rCal.moveTopLeft(rCalHeader.bottomLeft());
 
@@ -163,18 +162,17 @@ void CalPainter::paint(int month)
         case(CalParams::Right):
         {
             rImage.setHeight(height);
-            rImage.setWidth((int)(width * (params.ratio)/(params.ratio + 100)));
+            rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
 
             int remainingWidth = width - rImage.width();
-            cellSizeX          = remainingWidth/8;
-            cellSizeY          = (height - 40)/7;
+            cellSizeX          = (remainingWidth - 20)/8;
+            cellSizeY          = height/8;
 
             rCal.setWidth(cellSizeX*7);
             rCal.setHeight(cellSizeY*7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
-            rCalHeader.moveTop(height/2 - (rCalHeader.height()+rCal.height()/2));
             rCal.moveTop(rCalHeader.bottom());
 
             rImage.moveLeft(width - rImage.width());

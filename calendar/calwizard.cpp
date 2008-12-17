@@ -36,6 +36,7 @@
 
 #include <kcalendarsystem.h>
 #include <kdebug.h>
+#include <kdeprintdialog.h>
 #include <kglobal.h>
 #include <khelpmenu.h>
 #include <klocale.h>
@@ -244,9 +245,9 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         kDebug(51000) << "printing...";
         // PageSize
         printer_->setPageSize(params.pageSize);
-        QPrintDialog printDialog( printer_, this );
+        QPrintDialog *printDialog = KdePrint::createPrintDialog( printer_, this );
 
-        if ( printDialog.exec() == QDialog::Accepted )
+        if ( printDialog->exec() == QDialog::Accepted )
         {
             print();
         }
@@ -255,6 +256,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
             calProgressUI.finishLabel->setText(i18n( "Printing Cancelled" ));
             enableButton(KDialog::User3, true); // enable 'Back' button
         }
+        delete printDialog;
 
     }
 }
