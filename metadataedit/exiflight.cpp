@@ -29,10 +29,8 @@
 
 // Qt includes.
 
-#include <QLabel>
-#include <QLayout>
 #include <QMap>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kcombobox.h>

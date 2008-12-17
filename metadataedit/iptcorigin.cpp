@@ -27,12 +27,11 @@
 
 #include <QCheckBox>
 #include <QLabel>
-#include <QLayout>
 #include <QMap>
 #include <QPushButton>
 #include <QTimeEdit>
 #include <QValidator>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kaboutdata.h>

@@ -26,14 +26,12 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QDateTime>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 #include <QTimeEdit>
 #include <QValidator>
 #include <QtCore/QtDebug>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kcombobox.h>

@@ -27,9 +27,8 @@
 
 #include <QCheckBox>
 #include <QLabel>
-#include <QLayout>
 #include <QValidator>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kdialog.h>

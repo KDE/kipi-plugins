@@ -26,10 +26,7 @@
 // Qt includes.
 
 #include <QCloseEvent>
-#include <QFrame>
 #include <QKeyEvent>
-#include <QLayout>
-#include <QTimer>
 
 // KDE includes.
 

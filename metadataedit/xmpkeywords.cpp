@@ -26,11 +26,8 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QLabel>
-#include <QLayout>
 #include <QPushButton>
-#include <QValidator>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kdialog.h>

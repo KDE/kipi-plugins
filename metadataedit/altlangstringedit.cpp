@@ -28,9 +28,9 @@
 
 #include <QCheckBox>
 #include <QLabel>
-#include <QLayout>
 #include <QMap>
 #include <QPushButton>
+#include <QGridLayout>
 
 // KDE includes.
 

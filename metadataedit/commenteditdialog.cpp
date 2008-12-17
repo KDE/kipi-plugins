@@ -27,10 +27,8 @@
 
 #include <QCheckBox>
 #include <QCloseEvent>
-#include <QFrame>
 #include <QLabel>
-#include <QLayout>
-
+#include <QVBoxLayout>
 // KDE includes.
 
 #include <kcomponentdata.h>

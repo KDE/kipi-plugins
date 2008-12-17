@@ -28,9 +28,7 @@
 #include <cmath>
 
 // Qt includes.
-
-#include <QLayout>
-#include <QLabel>
+#include <QGridLayout>
 
 // KDE includes.
 

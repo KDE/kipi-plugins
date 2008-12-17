@@ -27,10 +27,7 @@
 
 #include <QCheckBox>
 #include <QGroupBox>
-#include <QLabel>
-#include <QLayout>
-#include <QValidator>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kaboutdata.h>

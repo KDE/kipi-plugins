@@ -31,12 +31,11 @@
 #include <QDomElement>
 #include <QFile>
 #include <QLabel>
-#include <QLayout>
 #include <QMap>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QValidator>
-
+#include <QGridLayout>
 // KDE includes.
 
 #include <kcombobox.h>

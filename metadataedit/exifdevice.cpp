@@ -30,8 +30,8 @@
 // Qt includes.
 
 #include <QLabel>
-#include <QLayout>
 #include <QValidator>
+#include <QGridLayout>
 
 // KDE includes.
 
