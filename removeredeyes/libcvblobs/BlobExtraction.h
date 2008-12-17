@@ -27,8 +27,20 @@
 #ifndef BLOBEXTRACTION_H
 #define BLOBEXTRACTION_H
 
+#ifdef WIN32
+#include <cv.h>
+#else
+#include <opencv/cv.h>
+#endif
+
+// Local includes.
+
+#include "BlobResult.h"
+
 namespace KIPIRemoveRedEyesPlugin
 {
+
+class CBlob;
 
 //! Extreu els blobs d'una imatge
 bool BlobAnalysis(IplImage* inputImage, uchar threshold, IplImage* maskImage,

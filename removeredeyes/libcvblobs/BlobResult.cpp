@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-08-08
- * Description : Blob analysis package 
+ * Description : Blob analysis package
  *               CBlobResult class implementation.
  *
  * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
@@ -22,18 +22,24 @@
  *
  * ============================================================ */
 
+#include "BlobResult.h"
+
+// C++ includes.
+
 #include <climits>
 #include <cstdio>
 #include <functional>
 #include <algorithm>
 
-#include "BlobResult.h"
-#include "BlobExtraction.h"
 
 #ifdef _DEBUG
     #include <afx.h>            //suport per a CStrings
     #include <afxwin.h>            //suport per a AfxMessageBox
 #endif
+
+// Local includes.
+
+#include "BlobExtraction.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -71,12 +77,12 @@ CBlobResult::CBlobResult()
 
 /**
 - FUNCI�: CBlobResult
-- FUNCIONALITAT: Constructor a partir d'una imatge. Inicialitza la seq��ncia de blobs 
+- FUNCIONALITAT: Constructor a partir d'una imatge. Inicialitza la seq��ncia de blobs
                amb els blobs resultants de l'an�lisi de blobs de la imatge.
 - PAR�METRES:
     - source: imatge d'on s'extreuran els blobs
-    - mask: m�scara a aplicar. Nom�s es calcularan els blobs on la m�scara sigui 
-            diferent de 0. Els blobs que toquin a un pixel 0 de la m�scara seran 
+    - mask: m�scara a aplicar. Nom�s es calcularan els blobs on la m�scara sigui
+            diferent de 0. Els blobs que toquin a un pixel 0 de la m�scara seran
             considerats exteriors.
     - threshold: llindar que s'aplicar� a la imatge source abans de calcular els blobs
     - findmoments: indica si s'han de calcular els moments de cada blob
@@ -124,7 +130,7 @@ CBlobResult::CBlobResult(IplImage *source, IplImage *mask, int threshold, bool f
 
 /**
 - FUNCI�: CBlobResult
-- FUNCIONALITAT: Constructor de c�pia. Inicialitza la seq��ncia de blobs 
+- FUNCIONALITAT: Constructor de c�pia. Inicialitza la seq��ncia de blobs
                amb els blobs del par�metre.
 - PAR�METRES:
     - source: objecte que es copiar�
@@ -158,7 +164,7 @@ CBlobResult::CBlobResult( const CBlobResult &source )
 
     while( pBlobsSrc != source.m_blobs.end() )
     {
-        // no podem cridar a l'operador = ja que blob_vector �s un 
+        // no podem cridar a l'operador = ja que blob_vector �s un
         // vector de CBlob*. Per tant, creem un blob nou a partir del
         // blob original
         *pBlobsDst = new CBlob(**pBlobsSrc);
@@ -214,7 +220,7 @@ CBlobResult::~CBlobResult()
 */
 /**
 - FUNCTION: Assigment operator
-- FUNCTIONALITY: 
+- FUNCTIONALITY:
 - PARAMETERS:
 - RESULT:
 - RESTRICTIONS:
@@ -241,7 +247,7 @@ CBlobResult& CBlobResult::operator=(const CBlobResult& source)
 
         while( pBlobsSrc != source.m_blobs.end() )
         {
-            // no podem cridar a l'operador = ja que blob_vector �s un 
+            // no podem cridar a l'operador = ja que blob_vector �s un
             // vector de CBlob*. Per tant, creem un blob nou a partir del
             // blob original
             *pBlobsDst = new CBlob(**pBlobsSrc);
@@ -343,7 +349,7 @@ void CBlobResult::AddBlob( CBlob *blob )
 - FUNCTIONALITY: Computes the function evaluador on all the blobs of the class
                  and returns a vector with the result
 - PARAMETERS:
-    - evaluador: function to apply to each blob (any object derived from the 
+    - evaluador: function to apply to each blob (any object derived from the
                  COperadorBlob class )
 - RESULT:
     - vector with all the results in the same order as the blobs
@@ -393,7 +399,7 @@ double_vector CBlobResult::GetResult( funcio_calculBlob *evaluador ) const
 - FUNCTIONALITY: Computes the function evaluador on all the blobs of the class
                  and returns a vector with the result
 - PARAMETERS:
-    - evaluador: function to apply to each blob (any object derived from the 
+    - evaluador: function to apply to each blob (any object derived from the
                  COperadorBlob class )
 - RESULT:
     - vector with all the results in the same order as the blobs
@@ -443,7 +449,7 @@ double_stl_vector CBlobResult::GetSTLResult( funcio_calculBlob *evaluador ) cons
 - FUNCTIONALITY: Computes the function evaluador on a blob of the class
 - PARAMETERS:
     - indexBlob: index of the blob to compute the function
-    - evaluador: function to apply to each blob (any object derived from the 
+    - evaluador: function to apply to each blob (any object derived from the
                  COperadorBlob class )
 - RESULT:
 - RESTRICTIONS:
@@ -462,7 +468,7 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 
 /**
 - FUNCI�: Filter
-- FUNCIONALITAT: Filtra els blobs de la classe i deixa el resultat amb nom�s 
+- FUNCIONALITAT: Filtra els blobs de la classe i deixa el resultat amb nom�s
                els blobs que han passat el filtre.
                El filtrat es basa en especificar condicions sobre un resultat dels blobs
                i seleccionar (o excloure) aquells blobs que no compleixen una determinada
@@ -472,13 +478,13 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
     - filterAction:    acci� de filtrat. Incloure els blobs trobats (B_INCLUDE),
                     o excloure els blobs trobats (B_EXCLUDE)
     - evaluador: Funci� per evaluar els blobs (qualsevol objecte derivat de COperadorBlob
-    - Condition: tipus de condici� que ha de superar la mesura (FilterType) 
+    - Condition: tipus de condici� que ha de superar la mesura (FilterType)
                  sobre cada blob per a ser considerat.
                     B_EQUAL,B_NOT_EQUAL,B_GREATER,B_LESS,B_GREATER_OR_EQUAL,
                     B_LESS_OR_EQUAL,B_INSIDE,B_OUTSIDE
     - LowLimit:  valor num�ric per a la comparaci� (Condition) de la mesura (FilterType)
     - HighLimit: valor num�ric per a la comparaci� (Condition) de la mesura (FilterType)
-                 (nom�s t� sentit per a aquelles condicions que tenen dos valors 
+                 (nom�s t� sentit per a aquelles condicions que tenen dos valors
                  (B_INSIDE, per exemple).
 - RESULTAT:
     - Deixa els blobs resultants del filtrat a destination
@@ -490,11 +496,11 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 /**
 - FUNCTION: Filter
 - FUNCTIONALITY: Get some blobs from the class based on conditions on measures
-                 of the blobs. 
+                 of the blobs.
 - PARAMETERS:
     - dst: where to store the selected blobs
-    - filterAction:    B_INCLUDE: include the blobs which pass the filter in the result 
-                    B_EXCLUDE: exclude the blobs which pass the filter in the result 
+    - filterAction:    B_INCLUDE: include the blobs which pass the filter in the result
+                    B_EXCLUDE: exclude the blobs which pass the filter in the result
     - evaluador: Object to evaluate the blob
     - Condition: How to decide if  the result returned by evaluador on each blob
                  is included or not. It can be:
@@ -511,10 +517,10 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlobResult::Filter(CBlobResult &dst, 
-                         int filterAction, 
-                         funcio_calculBlob *evaluador, 
-                         int condition, 
+void CBlobResult::Filter(CBlobResult &dst,
+                         int filterAction,
+                         funcio_calculBlob *evaluador,
+                         int condition,
                          double lowLimit, double highLimit /*=0*/)
 {
     int i, numBlobs;
@@ -524,7 +530,7 @@ void CBlobResult::Filter(CBlobResult &dst,
 
     if( GetNumBlobs() <= 0 ) return;
     if( !evaluador ) return;
-    //avaluem els blobs amb la funci� pertinent    
+    //avaluem els blobs amb la funci� pertinent
     avaluacioBlobs = GetSTLResult(evaluador);
     itavaluacioBlobs = avaluacioBlobs.begin();
     numBlobs = GetNumBlobs();
@@ -599,7 +605,7 @@ void CBlobResult::Filter(CBlobResult &dst,
         case B_INSIDE:
             for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
             {
-                resultavaluacio=( *itavaluacioBlobs >= lowLimit) && ( *itavaluacioBlobs <= highLimit); 
+                resultavaluacio=( *itavaluacioBlobs >= lowLimit) && ( *itavaluacioBlobs <= highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
@@ -610,7 +616,7 @@ void CBlobResult::Filter(CBlobResult &dst,
         case B_OUTSIDE:
             for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
             {
-                resultavaluacio=( *itavaluacioBlobs < lowLimit) || ( *itavaluacioBlobs > highLimit); 
+                resultavaluacio=( *itavaluacioBlobs < lowLimit) || ( *itavaluacioBlobs > highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
@@ -622,7 +628,7 @@ void CBlobResult::Filter(CBlobResult &dst,
 
     // en cas de voler filtrar un CBlobResult i deixar-ho en el mateix CBlobResult
     // ( operacio inline )
-    if( &dst == this ) 
+    if( &dst == this )
     {
         // esborrem els primers blobs ( que s�n els originals )
         // ja que els tindrem replicats al final si passen el filtre
@@ -718,15 +724,15 @@ void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst 
     double_stl_vector avaluacioBlobs, avaluacioBlobsOrdenat;
     double valorEnessim;
 
-    //avaluem els blobs amb la funci� pertinent    
+    //avaluem els blobs amb la funci� pertinent
     avaluacioBlobs = GetSTLResult(criteri);
 
     avaluacioBlobsOrdenat = double_stl_vector( GetNumBlobs() );
 
     // obtenim els nBlob primers resultats (en ordre descendent)
-    std::partial_sort_copy( avaluacioBlobs.begin(), 
+    std::partial_sort_copy( avaluacioBlobs.begin(),
                             avaluacioBlobs.end(),
-                            avaluacioBlobsOrdenat.begin(), 
+                            avaluacioBlobsOrdenat.begin(),
                             avaluacioBlobsOrdenat.end(),
                             std::greater<double>() );
 
@@ -753,7 +759,7 @@ void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst 
 - FUNCI�: ClearBlobs
 - FUNCIONALITAT: Elimina tots els blobs de l'objecte
 - PAR�METRES:
-- RESULTAT: 
+- RESULTAT:
     - Allibera tota la mem�ria dels blobs
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s Navarra
@@ -792,7 +798,7 @@ void CBlobResult::ClearBlobs()
                les excepcions
 - PAR�METRES:
     - errorCode: codi d'error
-- RESULTAT: 
+- RESULTAT:
     - Ensenya un missatge a l'usuari (en debug) i llen�a una excepci�
 - RESTRICCIONS:
 - AUTOR: Ricard Borr�s Navarra
@@ -843,7 +849,7 @@ void CBlobResult::RaiseError(const int errorCode) const
 
 /**
 - FUNCI�: PrintBlobs
-- FUNCIONALITAT: Escriu els par�metres (�rea, per�metre, exterior, mitjana) 
+- FUNCIONALITAT: Escriu els par�metres (�rea, per�metre, exterior, mitjana)
                de tots els blobs a un fitxer.
 - PAR�METRES:
     - nom_fitxer: path complet del fitxer amb el resultat
@@ -866,7 +872,7 @@ void CBlobResult::RaiseError(const int errorCode) const
 */
 void CBlobResult::PrintBlobs( char *nom_fitxer ) const
 {
-    double_stl_vector area, /*perimetre,*/ exterior, mitjana, compacitat, longitud, 
+    double_stl_vector area, /*perimetre,*/ exterior, mitjana, compacitat, longitud,
                       externPerimeter, perimetreConvex, perimetre;
     int i;
     FILE *fitxer_sortida;

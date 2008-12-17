@@ -31,8 +31,13 @@
 #endif // _MSC_VER > 1000
 #endif // WIN32
 
-#include "BlobLibraryConfiguration.h"
+// C++ includes.
+
 #include <cmath>
+#include <vector>        // vectors de la STL
+#include <functional>
+
+// OpenCV includes.
 
 #ifdef WIN32
 #include <cxcore.h>
@@ -41,20 +46,17 @@
 #endif // WIN32
 
 #ifdef MATRIXCV_ACTIU
-
 #include <opencv/matrixCV.h>
-
 #else
-
 // llibreria STL
 #include <vector>
 //! Vector de doubles
 typedef std::vector<double> double_stl_vector;
-
 #endif // MATRIXCV_ACTIU
 
-#include <vector>        // vectors de la STL
-#include <functional>
+// Local includes.
+
+#include "BlobLibraryConfiguration.h"
 #include "Blob.h"
 
 /**************************************************************************
@@ -89,7 +91,7 @@ namespace KIPIRemoveRedEyesPlugin
 {
 
 //! definici� de que es un vector de blobs
-typedef std::vector<CBlob*>    blob_vector;
+typedef std::vector<CBlob*> blob_vector;
 
 /**
     Classe que cont� un conjunt de blobs i permet extreure'n propietats

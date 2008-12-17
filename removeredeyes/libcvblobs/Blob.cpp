@@ -4,9 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-08-08
- * Description : Blob analysis package 
+ * Description : Blob analysis package
  *               http://opencvlibrary.sourceforge.net/cvBlobsLib
- *               Implementation of the CBlob class and some helper classes 
+ *               Implementation of the CBlob class and some helper classes
  *               to perform some calculations on it.
  *
  * Copyright (C) 2003 by Dave Grossman <dgrossman@cdr.stanford.edu>
@@ -24,8 +24,13 @@
  *
  * ============================================================ */
 
-#include <climits>
 #include "Blob.h"
+
+// C++ includes.
+
+#include <climits>
+
+// OpenCV includes.
 
 #ifdef WIN32
 #include <cv.h>
@@ -38,7 +43,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 /**
 - FUNCI�: CBlob
-- FUNCIONALITAT: Constructor est�ndard 
+- FUNCIONALITAT: Constructor est�ndard
 - PAR�METRES:
 - RESULTAT:
     - inicialitzaci� de totes les variables internes i de l'storage i la sequencia
@@ -87,7 +92,7 @@ CBlob::CBlob()
 
 /**
 - FUNCI�: CBlob
-- FUNCIONALITAT: Constructor de c�pia 
+- FUNCIONALITAT: Constructor de c�pia
 - PAR�METRES:
 - RESULTAT:
 - RESTRICCIONS:
@@ -194,7 +199,7 @@ CBlob::CBlob( const CBlob *src )
 
 /**
 - FUNCI�: ~CBlob
-- FUNCIONALITAT: Destructor est�ndard 
+- FUNCIONALITAT: Destructor est�ndard
 - PAR�METRES:
 - RESULTAT:
 - RESTRICCIONS:
@@ -214,7 +219,7 @@ CBlob::CBlob( const CBlob *src )
 */
 CBlob::~CBlob()
 {
-    // Eliminar v�rtexs del blob 
+    // Eliminar v�rtexs del blob
     cvClearSeq(edges);
     // i la zona de mem�ria on s�n
     cvReleaseMemStorage( &m_storage );
@@ -234,7 +239,7 @@ CBlob::~CBlob()
 */
 /**
 - FUNCTION: Assigment operator
-- FUNCTIONALITY: Assigns a blob to the current 
+- FUNCTIONALITY: Assigns a blob to the current
 - PARAMETERS:
     - src: blob to assign
 - RESULT:
@@ -249,7 +254,7 @@ CBlob& CBlob::operator=(const CBlob &src )
     // si ja s�n el mateix, no cal fer res
     if (this != &src)
     {
-        // Eliminar v�rtexs del blob 
+        // Eliminar v�rtexs del blob
         cvClearSeq(edges);
         // i la zona de mem�ria on s�n
         cvReleaseMemStorage( &m_storage );
@@ -307,14 +312,14 @@ CBlob& CBlob::operator=(const CBlob &src )
 - RESULTAT:
     - retorna la imatge d'entrada amb el blob pintat
 - RESTRICCIONS:
-- AUTOR: 
+- AUTOR:
 - Ricard Borr�s
 - DATA DE CREACI�: 25-05-2005.
 - MODIFICACI�: Data. Autor. Descripci�.
 */
 /**
 - FUNCTION: FillBlob
-- FUNCTIONALITY: 
+- FUNCTIONALITY:
     - Fills the blob with a specified colour
 - PARAMETERS:
     - imatge: where to paint
@@ -326,7 +331,7 @@ CBlob& CBlob::operator=(const CBlob &src )
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const                      
+void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const
 {
     //verifiquem que existeixi el blob i que tingui cantonades
     if( edges == NULL || edges->total == 0 ) return;
@@ -583,7 +588,7 @@ double CBlobGetMoment::operator()(const CBlob &blob) const
 /**
 - FUNCI�: HullPerimeter
 - FUNCIONALITAT: Calcula la longitud del perimetre convex del blob.
-               Fa servir la funci� d'OpenCV cvConvexHull2 per a 
+               Fa servir la funci� d'OpenCV cvConvexHull2 per a
                calcular el perimetre convex.
 
 - PAR�METRES:
@@ -600,7 +605,7 @@ double CBlobGetMoment::operator()(const CBlob &blob) const
 - FUNCTIONALITY: Calculates the convex hull perimeter of the blob
 - PARAMETERS:
 - RESULT:
-    - returns the convex hull perimeter of the blob or the perimeter if the 
+    - returns the convex hull perimeter of the blob or the perimeter if the
     blob edges could not be retrieved
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
@@ -832,7 +837,7 @@ double CBlobGetElongation::operator()(const CBlob &blob) const
 */
 /**
 - FUNCTION: CBlobGetCompactness
-- FUNCTIONALITY: Calculates the compactness of the blob 
+- FUNCTIONALITY: Calculates the compactness of the blob
                 ( maximum for circle shaped blobs, minimum for the rest)
 - PARAMETERS:
 - RESULT:
@@ -854,7 +859,7 @@ double CBlobGetCompactness::operator()(const CBlob &blob) const
 */
 /**
 - FUNCTION: CBlobGetRoughness
-- FUNCTIONALITY: Calculates the roughness of the blob 
+- FUNCTIONALITY: Calculates the roughness of the blob
                 ( ratio between perimeter and convex hull perimeter)
 - PARAMETERS:
 - RESULT:
@@ -898,7 +903,7 @@ double CBlobGetLength::operator()(const CBlob &blob) const
 
     if( tmp > 0.0 )
         ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
-    // error intr�nsec en els c�lculs de l'�rea i el per�metre 
+    // error intr�nsec en els c�lculs de l'�rea i el per�metre
     else
         ampladaC = (double) (blob.Perimeter())/4;
 
@@ -931,7 +936,7 @@ double CBlobGetBreadth::operator()(const CBlob &blob) const
 
     if( tmp > 0.0 )
         ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
-    // error intr�nsec en els c�lculs de l'�rea i el per�metre 
+    // error intr�nsec en els c�lculs de l'�rea i el per�metre
     else
         ampladaC = (double) (blob.Perimeter())/4;
 
@@ -946,7 +951,7 @@ double CBlobGetBreadth::operator()(const CBlob &blob) const
 */
 /**
 - FUNCTION: CBlobGetDistanceFromPoint
-- FUNCTIONALITY: Calculates the euclidean distance between the blob center and 
+- FUNCTIONALITY: Calculates the euclidean distance between the blob center and
                  the point specified in the constructor
 - PARAMETERS:
 - RESULT:
@@ -1050,7 +1055,7 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
 - RESULTAT:
     - Modifica l'objecte fabricaOperadorsBlob
 - RESTRICCIONS:
-    - Nom�s es registraran els operadors de blob.h. Si se'n volen afegir, cal afegir-los amb 
+    - Nom�s es registraran els operadors de blob.h. Si se'n volen afegir, cal afegir-los amb
       el m�tode Register de la f�brica.
 - AUTOR: rborras
 - DATA DE CREACI�: 2006/05/18
@@ -1073,7 +1078,7 @@ void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob )
     fabricaOperadorsBlob.Register( CBlobGetExternHullPerimeterRatio().GetNom(), Type2Type<CBlobGetExternHullPerimeterRatio>());
     fabricaOperadorsBlob.Register( CBlobGetExternPerimeter().GetNom(), Type2Type<CBlobGetExternPerimeter>());
 
-    // hull 
+    // hull
     fabricaOperadorsBlob.Register( CBlobGetHullPerimeter().GetNom(), Type2Type<CBlobGetHullPerimeter>());
     fabricaOperadorsBlob.Register( CBlobGetHullArea().GetNom(), Type2Type<CBlobGetHullArea>());
 
