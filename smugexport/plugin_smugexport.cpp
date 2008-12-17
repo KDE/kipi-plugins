@@ -50,7 +50,7 @@ extern "C"
 K_PLUGIN_FACTORY( SmugExportFactory, registerPlugin<Plugin_SmugExport>(); )
 K_EXPORT_PLUGIN ( SmugExportFactory("kipiplugin_smugexport") )
 
-Plugin_SmugExport::Plugin_SmugExport(QObject *parent, 
+Plugin_SmugExport::Plugin_SmugExport(QObject *parent,
                                      const QVariantList &/*args*/)
                    : KIPI::Plugin(SmugExportFactory::componentData(),
                                   parent, "SmugExport")
@@ -62,12 +62,14 @@ void Plugin_SmugExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(KIcon("applications-internet"), 
-                                 i18n("Export to SmugMug..."),
-                                 actionCollection());
-    m_action->setObjectName("smugexport");
+    m_action = actionCollection()->addAction("smugexport");
+    m_action->setText(i18n("Export to SmugMug..."));
+    m_action->setIcon(KIcon("applications-internet"));
+
     connect(m_action, SIGNAL( triggered(bool) ),
             this, SLOT( slotActivate()) );
+
+    addAction(m_action);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -78,7 +80,6 @@ void Plugin_SmugExport::setup(QWidget* widget)
     }
 
     m_action->setEnabled(true);
-    addAction(m_action);
 }
 
 Plugin_SmugExport::~Plugin_SmugExport()
