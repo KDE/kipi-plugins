@@ -49,7 +49,7 @@ public:
 
 public:
 
-    PreviewZoomBarButton(ButtonType type, int size = 22, QWidget* parent = 0);
+    explicit PreviewZoomBarButton(ButtonType type, int size = 22, QWidget* parent = 0);
     ~PreviewZoomBarButton();
 };
 
