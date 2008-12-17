@@ -5,6 +5,9 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
+001 ==> 177999 : General            : Kipi-plugins Shortcuts are not listed in the shortcuts editor from Kipi host application.
+002 ==>
+
 Kipi-plugins 0.2.0-beta5 - Release date: 14/12/2008
 ------------------------------------------------------------------------
 
