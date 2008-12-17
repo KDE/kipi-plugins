@@ -57,10 +57,13 @@ void Plugin_SimpleViewer::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionSimpleViewer = new KAction(KIcon("applications-internet"), i18n("Flash Export..."), actionCollection());
-    m_actionSimpleViewer->setObjectName("simpleviewer");
+    m_actionSimpleViewer = actionCollection()->addAction("simpleviewer");
+    m_actionSimpleViewer->setText(i18n("Flash Export..."));
+    m_actionSimpleViewer->setIcon(KIcon("applications-internet"));
+
     connect(m_actionSimpleViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
     addAction(m_actionSimpleViewer);
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
