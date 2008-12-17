@@ -66,8 +66,10 @@ void Plugin_PrintWizard::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_printAction = new KAction (KIcon("document-print"), i18n("Print Assistant..."), actionCollection());
-    m_printAction->setObjectName("printwizard");
+    m_printAction = actionCollection()->addAction("printwizard");
+    m_printAction->setText(i18n("Print Assistant..."));
+    m_printAction->setIcon(KIcon("document-print"));
+
     connect(m_printAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
