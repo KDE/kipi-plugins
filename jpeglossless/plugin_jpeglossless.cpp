@@ -108,8 +108,8 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    d->action_AutoExif = new KAction(i18n("Auto Rotate/Flip Using Exif Information"), actionCollection());
-    d->action_AutoExif->setObjectName("rotate_exif");
+    d->action_AutoExif = actionCollection()->addAction("rotate_exif");
+    d->action_AutoExif->setText("Auto Rotate/Flip Using Exif Information");
     connect(d->action_AutoExif, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateExif()));
     addAction(d->action_AutoExif);
@@ -118,16 +118,16 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     d->action_RotateImage->setObjectName("jpeglossless_rotate");
     addAction(d->action_RotateImage);
 
-    KAction *left = new KAction(i18n("Left"), actionCollection());
-    left->setObjectName("rotate_ccw");
+    KAction *left = actionCollection()->addAction("rotate_ccw");
+    left->setText("Left");
     left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
     connect(left, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateLeft()));
     d->action_RotateImage->addAction(left);
 
-    KAction *right = new KAction(i18n("Right"), actionCollection());
+    KAction *right = actionCollection()->addAction("rotate_cw");
+    right->setText("Right");
     right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
-    right->setObjectName("rotate_cw");
     connect(right, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateRight()));
     d->action_RotateImage->addAction(right);
@@ -135,22 +135,23 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     d->action_FlipImage = new KActionMenu(KIcon("flip-horizontal"), i18n("Flip"), actionCollection());
     addAction(d->action_FlipImage);
 
-    KAction *hori = new KAction(i18n("Horizontally"), actionCollection());
+    KAction *hori = actionCollection()->addAction("flip_horizontal");
+    hori->setText("Horizontally");
     hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
-    hori->setObjectName("flip_horizontal");
     connect(hori, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipHorizontally()));
     d->action_FlipImage->addAction(hori);
 
-    KAction *verti = new KAction(i18n("Vertically"), actionCollection());
+    KAction *verti = actionCollection()->addAction("flip_vertical");
+    verti->setText("Vertically");
     verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
-    verti->setObjectName("flip_vertical");
     connect(verti, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipVertically()));
     d->action_FlipImage->addAction(verti);
 
-    d->action_Convert2GrayScale = new KAction(KIcon("grayscaleconvert"), i18n("Convert to Black && White"), actionCollection());
-    d->action_Convert2GrayScale->setObjectName("jpeglossless_convert2grayscale");
+    d->action_Convert2GrayScale = actionCollection()->addAction("jpeglossless_convert2grayscale");
+    d->action_Convert2GrayScale->setText("Convert to Black && White");
+    d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
     connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
             this, SLOT(slotConvert2GrayScale()));
     addAction(d->action_Convert2GrayScale);
