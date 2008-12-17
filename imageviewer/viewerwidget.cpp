@@ -28,9 +28,7 @@
 
 // Qt includes.
 
-#include <QBitmap>
 #include <QDesktopWidget>
-#include <QLabel>
 
 // KDE includes.
 

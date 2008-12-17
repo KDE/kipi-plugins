@@ -71,7 +71,6 @@ class GAlbum;
 // class GPhoto;
 class FPhotoInfo;
 class FPhotoSet;
-class GAlbumViewItem;
 
 class PicasawebWindow : public KDialog
 {

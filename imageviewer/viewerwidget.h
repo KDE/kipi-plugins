@@ -31,12 +31,9 @@
 // Qt includes.
 
 #include <QCursor>
-#include <QDateTime>
 #include <QDir>
-#include <QImage>
 #include <QKeyEvent>
 #include <QMouseEvent>
-#include <QRegExp>
 #include <QTimer>
 #include <QWheelEvent>
 

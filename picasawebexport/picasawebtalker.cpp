@@ -41,7 +41,6 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QLinkedList>
-#include <QMessageBox>
 #include <QStringList>
 #include <QUrl>
 

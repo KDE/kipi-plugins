@@ -32,7 +32,6 @@
 
 #include <QByteArray>
 #include <QFile>
-#include <QFileInfo>
 
 // KDE includes.
 
