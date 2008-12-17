@@ -62,12 +62,14 @@ void Plugin_iPodExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionImageUpload = new KAction(i18n( "Export to iPod..." ), actionCollection());
-
+    m_actionImageUpload = actionCollection()->addAction("ipodexport");
+    m_actionImageUpload->setText(i18n("Export to iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
+
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));
-    addAction( m_actionImageUpload );
+
+    addAction(m_actionImageUpload);
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 }
