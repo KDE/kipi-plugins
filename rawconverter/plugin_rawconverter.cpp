@@ -85,18 +85,22 @@ void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_singleAction = new KAction(KIcon("rawconvertersingle"), i18n("Raw Image Converter..."),
-                                 actionCollection());
-    m_singleAction->setObjectName("raw_converter_single");
+    m_singleAction = actionCollection()->addAction("rawconvertersingle");
+    m_singleAction->setText(i18n("Raw Image Converter..."));
+    m_singleAction->setIcon(KIcon("rawconvertersingle"));
+
     connect(m_singleAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateSingle()));
+
     addAction(m_singleAction);
 
-    m_batchAction = new KAction(KIcon("rawconverterbatch"), i18n("Batch Raw Converter..."),
-                                 actionCollection());
-    m_batchAction->setObjectName("raw_converter_batch");
+    m_batchAction = actionCollection()->addAction("rawconverterbatch");
+    m_batchAction->setText(i18n("Batch Raw Converter..."));
+    m_batchAction->setIcon(KIcon("rawconverterbatch"));
+
     connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
+
     addAction(m_batchAction);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
