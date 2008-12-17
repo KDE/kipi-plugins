@@ -96,6 +96,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    setCacheMode(QGraphicsView::CacheBackground);
 
     // --------------------------------------------------------
 
