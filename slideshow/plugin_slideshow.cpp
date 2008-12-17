@@ -79,11 +79,16 @@ void Plugin_SlideShow::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_actionSlideShow = new KAction(KIcon("slideshow"), i18n("Advanced Slideshow..."), actionCollection());
-    m_actionSlideShow->setObjectName("slideshow");
+    m_actionSlideShow = actionCollection()->addAction("slideshow");
+    m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
+    m_actionSlideShow->setIcon(KIcon("slideshow"));
     m_actionSlideShow->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F9);
+    m_actionSlideShow->setEnabled(false);
+
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
+    addAction(m_actionSlideShow);
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
 
@@ -93,14 +98,10 @@ void Plugin_SlideShow::setup( QWidget* widget )
         return;
     }
 
-    m_urlList   = new KUrl::List();
-
-    m_actionSlideShow->setEnabled( false );
+    m_urlList = new KUrl::List();
 
     connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
             this, SLOT( slotAlbumChanged( bool )));
-
-    addAction( m_actionSlideShow );
 }
 
 Plugin_SlideShow::~Plugin_SlideShow()
