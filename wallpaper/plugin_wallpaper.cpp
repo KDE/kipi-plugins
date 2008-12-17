@@ -13,12 +13,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #include "plugin_wallpaper.h"
@@ -64,45 +64,45 @@ void Plugin_WallPaper::setup( QWidget* widget )
                          actionCollection());
     m_actionBackground->setObjectName("images2desktop");
 
-    KAction *centered = new KAction(i18n("Centered"), actionCollection());
-    centered->setObjectName("images2desktop_center");
-    connect(centered, SIGNAL(triggered(bool)), 
+    KAction *centered = actionCollection()->addAction("images2desktop_center");
+    centered->setText(i18n("Centered"));
+    connect(centered, SIGNAL(triggered(bool)),
             this, SLOT(slotSetCenter()));
     m_actionBackground->addAction(centered);
 
-    KAction *centeredTiled = new KAction(i18n("Centered Tiled"), actionCollection());
-    centeredTiled->setObjectName("images2desktop_center_tiled");
-    connect(centeredTiled, SIGNAL(triggered(bool)), 
+    KAction *centeredTiled = actionCollection()->addAction("images2desktop_center_tiled");
+    centeredTiled->setText(i18n("Centered Tiled"));
+    connect(centeredTiled, SIGNAL(triggered(bool)),
             this, SLOT(slotSetCenterTiled()));
     m_actionBackground->addAction(centeredTiled);
 
-    KAction *centeredMax = new KAction(i18n("Centered Max-Aspect"), actionCollection());
-    centeredMax->setObjectName("images2desktop_center_maxpect");
-    connect(centeredMax, SIGNAL(triggered(bool)), 
+    KAction *centeredMax = actionCollection()->addAction("images2desktop_center_maxpect");
+    centeredMax->setText(i18n("Centered Max-Aspect"));
+    connect(centeredMax, SIGNAL(triggered(bool)),
             this, SLOT(slotSetCenteredMaxpect()));
     m_actionBackground->addAction(centeredMax);
 
-    KAction *tiledMax = new KAction(i18n("Tiled Max-Aspect"), actionCollection());
-    tiledMax->setObjectName("images2desktop_tiled_maxpect");
-    connect(tiledMax, SIGNAL(triggered(bool)), 
+    KAction *tiledMax = actionCollection()->addAction("images2desktop_tiled_maxpect");
+    tiledMax->setText(i18n("Tiled Max-Aspect"));
+    connect(tiledMax, SIGNAL(triggered(bool)),
             this, SLOT(slotSetTiledMaxpect()));
     m_actionBackground->addAction(tiledMax);
 
-    KAction *scaled = new KAction(i18n("Scaled"), actionCollection());
-    scaled->setObjectName("images2desktop_scaled");
-    connect(scaled, SIGNAL(triggered(bool)), 
+    KAction *scaled = actionCollection()->addAction("images2desktop_scaled");
+    scaled->setText(i18n("Scaled"));
+    connect(scaled, SIGNAL(triggered(bool)),
             this, SLOT(slotSetScaled()));
     m_actionBackground->addAction(scaled);
 
-    KAction *centeredAutoFit = new KAction(i18n("Centered Auto Fit"), actionCollection());
-    centeredAutoFit->setObjectName("images2desktop_centered_auto_fit");
-    connect(centeredAutoFit, SIGNAL(triggered(bool)), 
+    KAction *centeredAutoFit = actionCollection()->addAction("images2desktop_centered_auto_fit");
+    centeredAutoFit->setText(i18n("Centered Auto Fit"));
+    connect(centeredAutoFit, SIGNAL(triggered(bool)),
             this, SLOT(slotSetCenteredAutoFit()));
     m_actionBackground->addAction(centeredAutoFit);
 
-    KAction *scaleCrop = new KAction(i18n("Scale && Crop"), actionCollection());
-    scaleCrop->setObjectName("images2desktop_scale_and_crop");
-    connect(scaleCrop, SIGNAL(triggered(bool)), 
+    KAction *scaleCrop = actionCollection()->addAction("images2desktop_scale_and_crop");
+    scaleCrop->setText(i18n("Scale && Crop"));
+    connect(scaleCrop, SIGNAL(triggered(bool)),
             this, SLOT(slotSetScaleAndCrop()));
     m_actionBackground->addAction(scaleCrop);
 
@@ -211,7 +211,7 @@ KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
     if ( action == m_actionBackground )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" 
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification"
                       << endl;
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }
