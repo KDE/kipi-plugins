@@ -31,8 +31,6 @@
 // Qt includes.
 
 #include <QFile>
-#include <QFileInfo>
-#include <QTextStream>
 
 // KDE includes.
 

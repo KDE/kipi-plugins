@@ -31,10 +31,8 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
-#include <QRadioButton>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QLayout>
 
 // KDE includes.
 

@@ -28,13 +28,10 @@
 
 #include <QProgressDialog>
 #include <QPushButton>
-#include <QTimer>
 #include <QPixmap>
-#include <QCursor>
-#include <QSpinBox>
 #include <QCheckBox>
 #include <QStringList>
-#include <QRadioButton>
+#include <QSpinBox>
 
 // KDE includes.
 

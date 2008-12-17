@@ -26,9 +26,7 @@
 // Qt includes.
 
 #include <QGridLayout>
-#include <QHBoxLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 #include <QVBoxLayout>
 

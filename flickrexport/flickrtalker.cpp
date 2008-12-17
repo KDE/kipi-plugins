@@ -40,9 +40,8 @@
 #include <QFileInfo>
 #include <QImage>
 #include <QMap>
-#include <QMessageBox>
-#include <QProgressDialog>
 #include <QStringList>
+#include <QProgressDialog>
 
 // KDE includes.
 
