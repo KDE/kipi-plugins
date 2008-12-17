@@ -28,17 +28,13 @@
 // Qt includes.
 
 #include <QCheckBox>
-#include <QCursor>
 #include <QDialog>
 #include <QFileInfo>
 #include <QGroupBox>
-#include <QInputDialog>
-#include <QListWidgetItem>
-#include <QPixmap>
 #include <QPushButton>
 #include <QSpinBox>
 #include <Qt>
-
+#include <QTreeWidgetItem>
 // KDE includes.
 
 #include <kaboutdata.h>

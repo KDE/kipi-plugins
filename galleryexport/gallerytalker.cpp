@@ -34,9 +34,7 @@
 // Qt includes.
 
 #include <QByteArray>
-#include <QFile>
 #include <QImage>
-#include <QImageReader>
 #include <QRegExp>
 #include <QTextStream>
 

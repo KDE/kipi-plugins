@@ -29,9 +29,7 @@
 
 #include <QFrame>
 #include <QGridLayout>
-#include <QHBoxLayout>
 #include <QPushButton>
-#include <QVBoxLayout>
 
 // KDE includes.
 
