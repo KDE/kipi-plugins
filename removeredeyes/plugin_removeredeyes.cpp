@@ -59,23 +59,24 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = new KAction(KIcon("draw-eraser"), i18n("Remove Red-Eyes..."), actionCollection());
-    m_action->setObjectName("removeredeyes");
+    m_action = actionCollection()->addAction("removeredeyes");
+    m_action->setText(i18n("Remove Red-Eyes..."));
+    m_action->setIcon(KIcon("draw-eraser"));
+    m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(activate()));
+
+    addAction(m_action);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*> (parent());
 
     if (!interface)
     {
         kError(51000) << "Kipi interface is null!" << endl;
-        m_action->setEnabled(false);
         return;
     }
-
     m_action->setEnabled(true);
-    addAction(m_action);
 }
 
 Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
