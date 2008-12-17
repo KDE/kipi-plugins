@@ -58,11 +58,13 @@ void Plugin_Calendar::setup( QWidget* widget )
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionCalendar = new KAction(KIcon("view-pim-calendar"),
-                                   i18n("Create Calendar..."), actionCollection());
-    m_actionCalendar->setObjectName("calendar");
+    m_actionCalendar = actionCollection()->addAction("calendar");
+    m_actionCalendar->setText(i18n("Create Calendar..."));
+    m_actionCalendar->setIcon(KIcon("view-pim-calendar"));
+
     connect(m_actionCalendar, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
+
     addAction(m_actionCalendar);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
