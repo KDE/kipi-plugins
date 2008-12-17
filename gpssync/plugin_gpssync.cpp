@@ -74,37 +74,37 @@ void Plugin_GPSSync::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     m_action_geolocation = new KActionMenu(KIcon("applications-internet"), i18n("Geolocation"), actionCollection());
-    m_action_geolocation->setObjectName("geolocation");
-    addAction(m_action_geolocation);
 
-    KAction *gpssync = new KAction(KIcon("gpsimagetag"), i18n("Correlator"), actionCollection());
-    gpssync->setObjectName("gpssync");
+    KAction *gpssync = actionCollection()->addAction("gpssync");
+    gpssync->setText(i18n("Correlator"));
+    gpssync->setIcon(KIcon("gpsimagetag"));
     connect(gpssync, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSSync()));
     m_action_geolocation->addAction(gpssync);
 
-    KAction *gpsedit = new KAction(i18n("Edit Coordinates..."), actionCollection());
-    gpsedit->setObjectName("gpsedit");
+    KAction *gpsedit = actionCollection()->addAction("gpsedit");
+    gpsedit->setText(i18n("Edit Coordinates..."));
     connect(gpsedit, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSEdit()));
     m_action_geolocation->addAction(gpsedit);
 
-    KAction *gpstracklistedit = new KAction(i18n("Track List Editor..."), actionCollection());
-    gpstracklistedit->setObjectName("gpstracklistedit");
+    KAction *gpstracklistedit = actionCollection()->addAction("gpstracklistedit");
+    gpstracklistedit->setText(i18n("Track List Editor..."));
     connect(gpstracklistedit, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSTrackListEdit()));
     m_action_geolocation->addAction(gpstracklistedit);
 
-    KAction *gpsremove = new KAction(i18n("Remove Coordinates..."), actionCollection());
-    gpsremove->setObjectName("gpsremove");
+    KAction *gpsremove = actionCollection()->addAction("gpsremove");
+    gpsremove->setText(i18n("Remove Coordinates..."));
     connect(gpsremove, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSRemove()));
     m_action_geolocation->addAction(gpsremove);
 
     addAction( m_action_geolocation );
 
-    m_actionKMLExport = new KAction(KIcon("applications-internet"), i18n("KML Export..."), actionCollection());
-    m_actionKMLExport->setObjectName("kmlexport");
+    KAction *m_actionKMLExport = actionCollection()->addAction("kmlexport");
+    m_actionKMLExport->setText(i18n("KML Export..."));
+    m_actionKMLExport->setIcon(KIcon("applications-internet"));
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
