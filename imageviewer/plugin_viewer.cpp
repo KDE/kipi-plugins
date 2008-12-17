@@ -62,14 +62,16 @@ void Plugin_viewer::setup( QWidget* widget )
 
     KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !pv_interface ) 
+    if ( !pv_interface )
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
 
-    actionViewer = new KAction(KIcon("ogl"), i18n("OpenGL Image Viewer"), actionCollection());
-    actionViewer->setObjectName("oglviewer");
+    actionViewer = actionCollection()->addAction("oglimageviewer");
+    actionViewer->setText(i18n("OpenGL Image Viewer..."));
+    actionViewer->setIcon(KIcon("ogl"));
+
     connect(actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
@@ -85,7 +87,7 @@ void  Plugin_viewer::slotActivate()
 {
     KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
-    if ( !pv_interface ) 
+    if ( !pv_interface )
     {
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
@@ -97,7 +99,7 @@ void  Plugin_viewer::slotActivate()
         delete widget;
         return;
     }
-    switch(widget->getOGLstate()) 
+    switch(widget->getOGLstate())
     {
         case KIPIviewer::oglOK:
             widget->show();
@@ -118,11 +120,11 @@ void  Plugin_viewer::slotActivate()
 
 KIPI::Category Plugin_viewer::category( KAction* action ) const
 {
-    if ( action == actionViewer ) 
+    if ( action == actionViewer )
     {
         return KIPI::ToolsPlugin;
     }
-    else 
+    else
     {
         kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
         return KIPI::ToolsPlugin; // no warning from compiler, please
