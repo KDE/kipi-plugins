@@ -62,7 +62,6 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
     m_action = actionCollection()->addAction("removeredeyes");
     m_action->setText(i18n("Remove Red-Eyes..."));
     m_action->setIcon(KIcon("draw-eraser"));
-    m_action->setEnabled(false);
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(activate()));
@@ -76,7 +75,6 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
         kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
-    m_action->setEnabled(true);
 }
 
 Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
