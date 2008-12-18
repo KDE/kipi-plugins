@@ -75,6 +75,9 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
         kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
+
+    connect(interface, SIGNAL(selectionChanged(bool)),
+            m_action, SLOT(setEnabled(bool)));
 }
 
 Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
