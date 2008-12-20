@@ -2,6 +2,7 @@
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
+                    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${OpenCV_CV_INCLUDE_DIR}
                     ${OpenCV_CXCORE_INCLUDE_DIR}
                     ${OpenCV_CVAUX_INCLUDE_DIR}
@@ -14,24 +15,28 @@ SET(libcvblobs_SRCS
     libcvblobs/BlobExtraction.cpp
    )
 
+SET(widgets_SRCS
+    widgets/advancedsettings.cpp
+    widgets/blobsettingsbox.cpp
+    widgets/classifiersettingsbox.cpp
+    widgets/infomessagewidget.cpp
+    widgets/myimageslist.cpp
+    widgets/previewwidget.cpp
+    widgets/previewzoombar.cpp
+    widgets/settingstab.cpp
+    widgets/simplesettings.cpp
+    widgets/storagesettingsbox.cpp
+    widgets/unprocessedsettingsbox.cpp
+   )
+   
 SET(kipiplugin_removeredeyes_PART_SRCS
-    advancedsettings.cpp
-    blobsettingsbox.cpp
-    classifiersettingsbox.cpp
-    infomessagewidget.cpp
-    myimageslist.cpp
     plugin_removeredeyes.cpp
-    previewwidget.cpp
-    previewzoombar.cpp
     removeredeyeswindow.cpp
-    settingstab.cpp
-    simplesettings.cpp
-    storagesettingsbox.cpp
-    unprocessedsettingsbox.cpp
     workerthread.cpp
     workerthreaddata.cpp
     eyelocator.cpp
     ${libcvblobs_SRCS}
+    ${widgets_SRCS}
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
