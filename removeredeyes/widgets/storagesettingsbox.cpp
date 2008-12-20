@@ -107,7 +107,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     QLabel* note      = new QLabel(i18n("<p><i>Note: At the moment this plugin will not keep "
                                         "any metadata (EXIF, IPTC).<br/>"
-                                        "To prevent data loss, overwrite mode has been diabled for now.</i></p>"));
+                                        "To prevent data loss, overwrite mode has been disabled for now.</i></p>"));
 
     note->setWordWrap(true);
 
