@@ -1,12 +1,12 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
  *
- * Date        : Dec 21, 2008
- * Description : XXXXXXXXXXXXXXXXXXXXXXXx
+ * Date        : 2008-12-22
+ * Description : a widget to control the preview modes
  *
- * Copyright (C) 2008 by andi <xxxxxxxxxxxxx>
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
