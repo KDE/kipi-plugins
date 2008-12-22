@@ -81,17 +81,18 @@ signals:
 
 protected:
 
-    void enterEvent(QEvent* e);
-    void leaveEvent(QEvent* e);
-    void mouseReleaseEvent(QMouseEvent* e);
     void resizeEvent(QResizeEvent* e);
+    void enterEvent (QEvent* e);
 
 private slots:
 
     void updateSettings();
 
-    void zoomIn();
-    void zoomOut();
+    void zoomInClicked();
+    void zoomOutClicked();
+    void originalClicked();
+    void correctedClicked();
+    void maskClicked();
 
 private:
 

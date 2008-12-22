@@ -38,7 +38,7 @@
 // Local includes.
 
 #include "infomessagewidget.h"
-#include "previewzoombar.h"
+#include "controlwidget.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -55,7 +55,7 @@ public:
         correctedLabel      = 0;
         maskLabel           = 0;
         modeInfo            = 0;
-        zoomBar             = 0;
+        controller          = 0;
     }
 
     bool                locked;
@@ -73,7 +73,7 @@ public:
 
     InfoMessageWidget*  modeInfo;
 
-    PreviewZoomBar*     zoomBar;
+    ControlWidget*      controller;
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)
@@ -131,23 +131,31 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     QGraphicsScene* scene = new QGraphicsScene;
     scene->addWidget(d->stack);
     setScene(scene);
-//    setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     // --------------------------------------------------------
 
     // floating widgets
     d->modeInfo = new InfoMessageWidget(this);
-    d->zoomBar  = new PreviewZoomBar(this);
+    d->controller = new ControlWidget(this);
     // --------------------------------------------------------
 
     connect(this, SIGNAL(settingsChanged()),
             this, SLOT(updateSettings()));
 
-    connect(d->zoomBar, SIGNAL(zoomInClicked()),
-            this, SLOT(zoomIn()));
+    connect(d->controller, SIGNAL(zoomInClicked()),
+            this, SLOT(zoomInClicked()));
 
-    connect(d->zoomBar, SIGNAL(zoomOutClicked()),
-            this, SLOT(zoomOut()));
+    connect(d->controller, SIGNAL(zoomOutClicked()),
+            this, SLOT(zoomOutClicked()));
+
+    connect(d->controller, SIGNAL(originalClicked()),
+            this, SLOT(originalClicked()));
+
+    connect(d->controller, SIGNAL(correctedClicked()),
+            this, SLOT(correctedClicked()));
+
+    connect(d->controller, SIGNAL(maskClicked()),
+            this, SLOT(maskClicked()));
 
     // --------------------------------------------------------
 
@@ -215,7 +223,7 @@ QPixmap PreviewWidget::openFile(const QString& filename)
     return image;
 }
 
-void PreviewWidget::enterEvent (QEvent*)
+void PreviewWidget::originalClicked()
 {
     if (d->locked)
         return;
@@ -223,7 +231,7 @@ void PreviewWidget::enterEvent (QEvent*)
     setMode(OriginalMode);
 }
 
-void PreviewWidget::leaveEvent (QEvent*)
+void PreviewWidget::correctedClicked()
 {
     if (d->locked)
         return;
@@ -231,7 +239,7 @@ void PreviewWidget::leaveEvent (QEvent*)
     setMode(CorrectedMode);
 }
 
-void PreviewWidget::mouseReleaseEvent(QMouseEvent*)
+void PreviewWidget::maskClicked()
 {
     if (d->locked)
         return;
@@ -246,10 +254,8 @@ void PreviewWidget::resizeEvent(QResizeEvent* e)
 {
     QWidget::resizeEvent(e);
 
-    int y = viewport()->height() - d->zoomBar->height() - 10;
-
-    d->zoomBar->setMinMaxWidth(viewport()->width());
-    d->zoomBar->move(0, y);
+    d->controller->move((width()/2) - (d->controller->width()/2),
+                        (height()/2) - (d->controller->width()/2));
 }
 
 void PreviewWidget::setMode(DisplayMode mode)
@@ -261,35 +267,35 @@ void PreviewWidget::setMode(DisplayMode mode)
         case OriginalMode:
             d->modeInfo->display(i18n("Original Image"));
             d->modeInfo->raise();
-            d->zoomBar->show();
-            d->zoomBar->raise();
+//            d->controller->show();
+            d->controller->raise();
             break;
 
         case CorrectedMode:
             d->modeInfo->display(i18n("Corrected Image"));
             d->modeInfo->raise();
-            d->zoomBar->show();
-            d->zoomBar->raise();
+//            d->controller->show();
+            d->controller->raise();
             break;
 
         case MaskMode:
             d->modeInfo->display(i18n("Correction Mask"));
             d->modeInfo->raise();
-            d->zoomBar->show();
-            d->zoomBar->raise();
+//            d->controller->show();
+            d->controller->raise();
             break;
 
         case LockedMode:
             d->modeInfo->display(i18n("No image selected!"), InfoMessageWidget::Warning);
             d->modeInfo->raise();
-            d->zoomBar->hide();
-            d->zoomBar->lower();
+            d->controller->hide();
+            d->controller->lower();
             break;
 
         case BusyMode:
             d->modeInfo->lower();
-            d->zoomBar->hide();
-            d->zoomBar->lower();
+            d->controller->hide();
+            d->controller->lower();
             break;
     }
 
@@ -342,15 +348,19 @@ void PreviewWidget::updateSettings()
     setMode(CorrectedMode);
 }
 
-void PreviewWidget::zoomIn()
+void PreviewWidget::zoomInClicked()
 {
     scale(1.5, 1.5);
 }
 
-void PreviewWidget::zoomOut()
+void PreviewWidget::zoomOutClicked()
 {
     scale(1.0 / 1.5, 1.0 / 1.5);
+}
 
+void PreviewWidget::enterEvent(QEvent*)
+{
+    d->controller->triggerShow();
 }
 
 } // namspace KIPIRemoveRedEyesPlugin

@@ -18,11 +18,11 @@ SET(libcvblobs_SRCS
 SET(widgets_SRCS
     widgets/advancedsettings.cpp
     widgets/blobsettingsbox.cpp
+    widgets/controlwidget.cpp
     widgets/classifiersettingsbox.cpp
     widgets/infomessagewidget.cpp
     widgets/myimageslist.cpp
     widgets/previewwidget.cpp
-    widgets/previewzoombar.cpp
     widgets/settingstab.cpp
     widgets/simplesettings.cpp
     widgets/storagesettingsbox.cpp
@@ -56,5 +56,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                      )
 
 INSTALL(TARGETS kipiplugin_removeredeyes DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES removeredeyes_classifier_eye_20_20.xml DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
+INSTALL(FILES widgets/controlwidget.svg removeredeyes_classifier_eye_20_20.xml 
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
 INSTALL(FILES kipiplugin_removeredeyes.desktop DESTINATION ${SERVICES_INSTALL_DIR})
