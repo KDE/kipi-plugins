@@ -18,22 +18,25 @@ endif ( GPOD_INCLUDE_DIR AND GPOD_LIBRARIES )
 # use pkg-config to get the directories and then use these values
 # in the FIND_PATH() and FIND_LIBRARY() calls
 if( NOT WIN32 )
-  INCLUDE(UsePkgConfig)
+  find_package(PkgConfig)
 
-  PKGCONFIG(gpod-1.0 _GpodIncDir _GpodLinkDir _GpodLinkFlags _GpodCflags)
+  pkg_check_modules(PC_GPOD libgpod-1.0)
 
-  SET(GPOD_DEFINITIONS ${_GpodCflags})
+  set(BLUEZ_DEFINITIONS ${PC_GPOD_CFLAGS_OTHER})
+
 endif( NOT WIN32 )
 
 FIND_PATH(GPOD_INCLUDE_DIR NAMES gpod/itdb.h
   PATHS
-  ${_GpodIncDir}
+  ${PC_GPOD_INCLUDEDIR}
+  ${PC_GPOD_INCLUDE_DIRS}
   PATH_SUFFIXES gpod-1.0
 )
 
 FIND_LIBRARY(GPOD_LIBRARIES NAMES gpod
   PATHS
-  ${_GpodLinkDir}
+  ${PC_GPOD_LIBDIR}
+  ${PC_GPOD_LIBRARY_DIRS}
 )
 
 include(FindPackageHandleStandardArgs)
