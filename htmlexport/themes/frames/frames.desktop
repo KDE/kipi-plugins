@@ -2,6 +2,7 @@
 Name=Frames
 Name[ca]=Marcs
 Name[cs]=Rámce
+Name[da]=Rammer
 Name[de]=Rahmen
 Name[el]=Πλαίσια
 Name[es]=Marcos
@@ -26,6 +27,7 @@ Name[x-test]=xxFramesxx
 Name[zh_CN]=相框
 Comment=A frame theme
 Comment[ca]=Un tema de marcs
+Comment[da]=Et ramme-tema
 Comment[de]=Ein Rahmendesign
 Comment[el]=Ένα θέμα πλαισίων
 Comment[es]=Un tema con marcos

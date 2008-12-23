@@ -20,6 +20,7 @@ Name[tr]=Resim Tara
 Name[x-test]=xxAcquireImagesxx
 Name[zh_CN]=图像捕获
 Comment=A tool to acquire images using flat scanner
+Comment[da]=Et værktøj til at hente billeder med en scanner
 Comment[de]=Ein Werkzeug, um Bilder mit einem Flachbrettscanner einzulesen.
 Comment[el]=Ένα εργαλείο για την ανάκτηση εικόνων από έναν επιτραπέζιο σαρωτή
 Comment[gl]=Unha utilidade para adquirir imaxes mediante un escáner

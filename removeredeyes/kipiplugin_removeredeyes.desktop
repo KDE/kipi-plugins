@@ -16,6 +16,7 @@ Name[x-test]=xxRemoveRedEyesxx
 Name[zh_CN]=去除红眼
 Comment=A tool to remove red eyes on image automatically
 Comment[cs]=Nástroj pro automatické odstranění červených očí
+Comment[da]=Et værktøj til automatisk at fjerne røde øjne på billeder
 Comment[de]=Ein Werkzeug, um rote Augen von einem Bild automatisch zu entfernen.
 Comment[el]=Ένα εργαλείο αυτόματης αφαίρεσης κόκκινων ματιών από εικόνες
 Comment[gl]=Unha utilidade para eliminar automaticamente os ollos vermellos da imaxe

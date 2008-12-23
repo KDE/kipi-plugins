@@ -27,6 +27,7 @@ Name[tr]=Slayt Gösterisi
 Name[x-test]=xxSlideShowxx
 Name[zh_CN]=幻灯片
 Comment=A tool to Slide images with 2D and 3D effects using OpenGL
+Comment[da]=Et værktøj til at lave et diasshow med 2D- og 3D-effekter vha. OpenGL
 Comment[de]=Ein Werkzeug, um Bilder in einer Diaschau mit 2D- und 3D-Effekten anzuzeigen.
 Comment[el]=Ένα εργαλείο προβολής σλάιντ εικόνων με 2Δ και 3Δ εφέ με χρήση του OpenGL
 Comment[gl]=Unha utilidade para presentar imaxes con efeitos 2D e 3D empregando OpenGL

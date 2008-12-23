@@ -24,6 +24,7 @@ Name[uk]=Експорт до віддаленої галереї
 Name[x-test]=xxRemote Gallery Exportxx
 Name[zh_CN]=远程 Gallery 导出
 Comment=A tool to export images to a remote Gallery
+Comment[da]=Et værktøj til at eksportere billeder til et eksternt galleri
 Comment[de]=Ein Werkzeug, um Bilder in eine entfernte Galerie zu exportieren.
 Comment[el]=Ένα εργαλείο εξαγωγής εικόνων σε μια απομακρυσμένη συλλογή
 Comment[gl]=Unha utilidadde para exportar imaxes a unha galería remota

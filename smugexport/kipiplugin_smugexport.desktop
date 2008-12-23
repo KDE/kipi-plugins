@@ -15,6 +15,7 @@ Name[uk]=Інструмент експорту до SmugMug
 Name[x-test]=xxSmugMug Exporterxx
 Name[zh_CN]=SmugMug 导出
 Comment=A tool to export images to a remote SmugMug web service
+Comment[da]=Et værktøj til at eksportere billeder til en ekstern SmugMug-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu einem SmugMug-Web-Service zu exportieren.
 Comment[el]=Ένα εργαλείο για την εξαγωγή εικόνων σε μια υπηρεσία ιστού SmugMug
 Comment[gl]=Unha utilidade para exportar imaxes a un servizo web SmugMug remoto

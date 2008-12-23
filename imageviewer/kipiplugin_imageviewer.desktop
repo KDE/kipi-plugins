@@ -23,6 +23,7 @@ Name[x-test]=xxImageviewerxx
 Name[zh_CN]=图像查看器
 Comment=A tool to preview images using OpenGL
 Comment[cs]=Nástroj na prohlížení obrázků pomocí OpenGL
+Comment[da]=Et værktøj til at forhåndsvise med OpenGL
 Comment[de]=Ein Werkzeug, um Vorschaubilder mittels OpenGL zu betrachten.
 Comment[el]=Ένα εργαλείο προεπισκόπησης εικόνων με χρήση του OpenGL
 Comment[gl]=Unha utilidade para antever imaxes empregando OpenGL

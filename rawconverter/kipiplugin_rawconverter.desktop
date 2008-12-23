@@ -20,6 +20,7 @@ Name[tr]=HamDönüştürücü
 Name[x-test]=xxRawConverterxx
 Name[zh_CN]=Raw 转换器
 Comment=A tool to convert Raw Image to JPEG/PNG/TIFF
+Comment[da]=Et værktøj til at konvertere RAW-billeder til JPEG/PNG/TIFF
 Comment[de]=Ein Werkzeug, um Kamerarohbilder nach JPEG/PNG/TIFF zu konvertieren.
 Comment[el]=Ένα εργαλείο για τη μετατροπή RAW εικόνων σε JPEG/PNG/TIFF
 Comment[gl]=Unha utilidade para converter imaxes Raw en JPEG/PNG/TIFF
