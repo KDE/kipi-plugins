@@ -42,7 +42,7 @@ class ControlWidget : public QWidget
 
 public:
 
-    enum ButtonCode
+    enum ControllerState
     {
         Normal = 0,
         ZoomIn,
