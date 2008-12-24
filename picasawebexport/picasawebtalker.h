@@ -89,7 +89,7 @@ public:
     void listAllAlbums();
     void listPhotos( const QString& albumName );
     void createAlbum( const QString& albumTitle, const QString& albumDesc, const QString& location,
-                      uint timestamp, const QString& access, const QString& media_keywords, bool isCommentEnabled=true);
+                      long long timestamp, const QString& access, const QString& media_keywords, bool isCommentEnabled=true);
     bool addPhoto( const QString& photoPath,
                    FPhotoInfo& info, const QString& albumname,
 			       bool rescale=false, int maxDim=600 , int imageQuality=85 );

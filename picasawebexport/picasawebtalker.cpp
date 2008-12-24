@@ -343,7 +343,7 @@ void PicasawebTalker::listPhotos(const QString& /*albumName*/)
 }
 
 void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albumDesc,
-                                  const QString& location, uint  timestamp, const QString& access,
+                                  const QString& location, long long timestamp, const QString& access,
                                   const QString& media_keywords, bool isCommentsEnabled)
 {
     if (m_job)
@@ -384,8 +384,7 @@ void PicasawebTalker::createAlbum(const QString& albumTitle, const QString& albu
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
     job->addMetaData("content-length", QString("Content-Length: %1").arg(newAlbumXML.length()));
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
-
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string ); 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 

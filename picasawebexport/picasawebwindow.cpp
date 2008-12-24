@@ -359,21 +359,21 @@ void PicasawebWindow::slotAuthCancel()
 void PicasawebWindow::slotCreateNewAlbum()
 {
     NewAlbumDialog *dlg = new NewAlbumDialog(kapp->activeWindow());
-    dlg->m_dateAndTimeEdit->setDateTime(QDateTime::currentDateTime());
-    QString test;
+    dlg->m_dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+    QString access;
     int t = dlg->exec();
 
     if(t == QDialog::Accepted)
     {
-        //TODO : need to translate "public" or "unlisted" ?
         if (dlg->m_isPublicRadioButton->isChecked())
-            test = QString("public");
+            access = QString("public");
         else
-            test = QString("unlisted");
+            access = QString("private");
 
+	long long timestamp = dlg->m_dateTimeEdit->dateTime().toTime_t();
         m_talker->createAlbum(dlg->m_titleLineEdit->text(), dlg->m_descriptionTextBox->toPlainText(),
-                              dlg->m_locationLineEdit->text(), dlg->m_dateAndTimeEdit->dateTime().toTime_t(),
-                              test, QString(), true);
+                              dlg->m_locationLineEdit->text(), timestamp * 1000,
+                              access, QString(), true);
     }
     else
     {
