@@ -85,7 +85,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_singleAction = actionCollection()->addAction("rawconvertersingle");
+    m_singleAction = actionCollection()->addAction("raw_converter_single");
     m_singleAction->setText(i18n("Raw Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconvertersingle"));
 
@@ -94,7 +94,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
 
     addAction(m_singleAction);
 
-    m_batchAction = actionCollection()->addAction("rawconverterbatch");
+    m_batchAction = actionCollection()->addAction("raw_converter_batch");
     m_batchAction->setText(i18n("Batch Raw Converter..."));
     m_batchAction->setIcon(KIcon("rawconverterbatch"));
 
