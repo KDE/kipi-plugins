@@ -31,6 +31,10 @@
 #include <QFile>
 #include <QFileInfo>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes.
 
 #include "eyelocator.h"
@@ -150,8 +154,21 @@ void WorkerThread::run()
 //                }
             }
 
+            // --------------------------------------------------
+            // save image
+            // --------------------------------------------------
+
+            // backup metatdata
+            KExiv2Iface::KExiv2 meta;
+            meta.load(url.path());
+
             QByteArray dest = QFile::encodeName(saveLocation.path());
             loc.saveImage(dest.data(), EyeLocator::Final);
+
+            // restore metadata
+            meta.save(saveLocation.path());
+
+            // --------------------------------------------------
         }
 
         if (d->runtype == Preview)
