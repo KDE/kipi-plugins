@@ -115,7 +115,7 @@ void WorkerThread::run()
         // start correction
         loc.startCorrection(scaleDown);
 
-        // save image to the specified location
+        // generate save-location path
         if ((d->runtype == Correction) && (loc.redEyes() > 0))
         {
             QFileInfo info(url.path());
@@ -123,10 +123,6 @@ void WorkerThread::run()
 
             switch (d->settings.storageMode)
             {
-                // for now Overwrite Mode is disabled. But maybe the config value
-                // is still set to Overwrite. To avoid overwriting the images,
-                // assume that Overwrite Mode behaves like Subfolder Mode.
-                case StorageSettingsBox::Overwrite:
                 case StorageSettingsBox::Subfolder:
                 {
                     saveLocation.addPath(d->settings.subfolderName);
@@ -147,28 +143,23 @@ void WorkerThread::run()
                     saveLocation.addPath(file);
                     break;
                 }
-//                case StorageSettingsBox::Overwrite:
-//                {
-//                    saveLocation.addPath(info.fileName());
-//                    break;
-//                }
+                case StorageSettingsBox::Overwrite:
+                {
+                    saveLocation.addPath(info.fileName());
+                    break;
+                }
             }
-
-            // --------------------------------------------------
-            // save image
-            // --------------------------------------------------
 
             // backup metatdata
             KExiv2Iface::KExiv2 meta;
             meta.load(url.path());
 
+            // save image
             QByteArray dest = QFile::encodeName(saveLocation.path());
             loc.saveImage(dest.data(), EyeLocator::Final);
 
             // restore metadata
             meta.save(saveLocation.path());
-
-            // --------------------------------------------------
         }
 
         if (d->runtype == Preview)
