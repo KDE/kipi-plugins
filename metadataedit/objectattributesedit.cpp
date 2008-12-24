@@ -132,7 +132,7 @@ ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size
     d->dataList->addSqueezedItem(QString("008 - ") + i18n("Obituary"));
     d->dataList->addSqueezedItem(QString("009 - ") + i18n("Opinion"));
     d->dataList->addSqueezedItem(QString("010 - ") + i18n("Polls & Surveys"));
-    d->dataList->addSqueezedItem(QString("011 - ") + i18n("Profile"));
+    d->dataList->addSqueezedItem(QString("011 - ") + i18nc("Content type", "Profile"));
     d->dataList->addSqueezedItem(QString("012 - ") + i18n("Results Listings & Table"));
     d->dataList->addSqueezedItem(QString("013 - ") + i18n("Side bar & Supporting information"));
     d->dataList->addSqueezedItem(QString("014 - ") + i18n("Summary"));

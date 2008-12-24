@@ -171,7 +171,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->page_light->setIcon(KIcon("image-x-generic"));
 
     d->adjustPage    = new EXIFAdjust(this);
-    d->page_adjust   = addPage(d->adjustPage, i18n("Adjustments"));
+    d->page_adjust   = addPage(d->adjustPage, i18nc("Picture adjustments", "Adjustments"));
     d->page_adjust->setHeader(i18n("Pictures Adjustments"));
     d->page_adjust->setIcon(KIcon("fill-color"));
 

@@ -81,7 +81,7 @@ public:
         sceneCodeMap.insert( "010100", i18n("Headshot") );
         sceneCodeMap.insert( "010200", i18n("Half-length") );
         sceneCodeMap.insert( "010300", i18n("Full-length") );
-        sceneCodeMap.insert( "010400", i18n("Profile") );
+        sceneCodeMap.insert( "010400", i18nc("Side view of a person", "Profile") );
         sceneCodeMap.insert( "010500", i18n("Rear view") );
         sceneCodeMap.insert( "010600", i18n("Single") );
         sceneCodeMap.insert( "010700", i18n("Couple") );
@@ -222,7 +222,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     d->objectAttributeCB->addSqueezedItem(QString("008 - ") + i18n("Obituary"));
     d->objectAttributeCB->addSqueezedItem(QString("009 - ") + i18n("Opinion"));
     d->objectAttributeCB->addSqueezedItem(QString("010 - ") + i18n("Polls & Surveys"));
-    d->objectAttributeCB->addSqueezedItem(QString("011 - ") + i18n("Profile"));
+    d->objectAttributeCB->addSqueezedItem(QString("011 - ") + i18nc("Content type", "Profile"));
     d->objectAttributeCB->addSqueezedItem(QString("012 - ") + i18n("Results Listings & Table"));
     d->objectAttributeCB->addSqueezedItem(QString("013 - ") + i18n("Side bar & Supporting information"));
     d->objectAttributeCB->addSqueezedItem(QString("014 - ") + i18n("Summary"));

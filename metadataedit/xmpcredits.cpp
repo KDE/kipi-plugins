@@ -144,7 +144,7 @@ XMPCredits::XMPCredits(QWidget* parent)
     d->phoneEdit->setClearButtonShown(true);
     d->phoneEdit->setWhatsThis(i18n("Set here the contact phone."));
 
-    d->addressCheck = new QCheckBox(i18n("Address:"), contactBox);
+    d->addressCheck = new QCheckBox(i18nc("Street address", "Address:"), contactBox);
     d->addressEdit  = new KLineEdit(contactBox);
     d->addressEdit->setClearButtonShown(true);
     d->addressEdit->setWhatsThis(i18n("Set here the contact address."));
