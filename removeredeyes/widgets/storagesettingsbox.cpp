@@ -76,8 +76,9 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
             "under the current album path.</li>"
             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
-            "<li><b>Keyword:</b> Add a custom keyword to the corrected image.</li>"
-            "</ul></p>");
+            "</ul></p>"
+            "<p>Each of the three modes allows you to add an optional keyword to the image "
+            "metadata.</p>");
     setWhatsThis(whatsThis);
 
     // ----------------------------------------------------------------
