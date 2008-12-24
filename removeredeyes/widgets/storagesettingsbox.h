@@ -58,6 +58,11 @@ public:
     QString subfolder() const;
     void setSubfolder(const QString& subfolder);
 
+    QString keyword() const;
+    void setKeyword(const QString& keyword);
+    bool addKeyword() const;
+    void setAddKeyword(bool checked);
+
 signals:
 
     void settingsChanged();
@@ -65,6 +70,7 @@ signals:
 private slots:
 
     void buttonClicked(int);
+    void keywordToggled(bool);
 
 private:
 

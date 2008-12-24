@@ -254,6 +254,8 @@ void RemoveRedEyesWindow::readSettings()
     d->settings.scaleFactor            = group.readEntry("Scaling Factor", 1.2);
     d->settings.useStandardClassifier  = group.readEntry("Use Standard Classifier", true);
     d->settings.classifierFile         = group.readEntry("Classifier", STANDARD_CLASSIFIER);
+    d->settings.addKeyword             = group.readEntry("Add keyword", false);
+    d->settings.keywordName            = group.readEntry("Keyword Name", "removed_redeyes");
 
     d->settingsTab->loadSettings(d->settings);
 }
@@ -277,6 +279,9 @@ void RemoveRedEyesWindow::writeSettings()
     grp.writeEntry("Scaling Factor",            d->settings.scaleFactor);
     grp.writeEntry("Use Standard Classifier",   d->settings.useStandardClassifier);
     grp.writeEntry("Classifier",                d->settings.classifierFile);
+
+    grp.writeEntry("Add keyword",               d->settings.addKeyword);
+    grp.writeEntry("Keyword Name",              d->settings.keywordName);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
     saveDialogSize(dialogGroup);

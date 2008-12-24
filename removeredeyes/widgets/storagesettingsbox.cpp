@@ -29,6 +29,7 @@
 #include <QButtonGroup>
 #include <QGridLayout>
 #include <QRadioButton>
+#include <QCheckBox>
 
 // KDE includes.
 
@@ -55,6 +56,9 @@ public:
 
     QButtonGroup*   storageGroup;
 
+    QCheckBox*      keywordCB;
+
+    KLineEdit*      keywordLineEdit;
     KLineEdit*      suffixLineEdit;
     KLineEdit*      subfolderLineEdit;
 };
@@ -72,6 +76,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
             "under the current album path.</li>"
             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
+            "<li><b>Keyword:</b> Add a custom keyword to the corrected image.</li>"
             "</ul></p>");
     setWhatsThis(whatsThis);
 
@@ -103,12 +108,23 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     // ----------------------------------------------------------------
 
+    d->keywordCB       = new QCheckBox(i18n("Add metadata keyword"));
+    d->keywordCB->setChecked(false);
+    d->keywordCB->setToolTip(i18n("If checked, a custom keyword will be applied to the image metadata."));
+
+    d->keywordLineEdit = new KLineEdit;
+    d->keywordLineEdit->setToolTip(i18n("Enter the name of the custom keyword here..."));
+
+    // ----------------------------------------------------------------
+
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->subfolderLineEdit,  0, 2, 1, 1);
     correctionGroupLayout->addWidget(suffixMode,            1, 0, 1, 1);
     correctionGroupLayout->addWidget(d->suffixLineEdit,     1, 2, 1, 1);
     correctionGroupLayout->addWidget(overwriteMode,         2, 0, 1,-1);
+    correctionGroupLayout->addWidget(d->keywordCB,          3, 0, 1, 1);
+    correctionGroupLayout->addWidget(d->keywordLineEdit,    3, 2, 1, 1);
     setLayout(correctionGroupLayout);
 
     // ----------------------------------------------------------------
@@ -116,7 +132,13 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     connect(d->storageGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(buttonClicked(int)));
 
+    connect(d->keywordCB, SIGNAL(toggled(bool)),
+            this, SLOT(keywordToggled(bool)));
+
+    // ----------------------------------------------------------------
+
     setStorageMode(Suffix);
+    keywordToggled(false);
 }
 
 StorageSettingsBox::~StorageSettingsBox()
@@ -176,6 +198,32 @@ QString StorageSettingsBox::subfolder() const
 void StorageSettingsBox::setSubfolder(const QString& subfolder)
 {
     d->subfolderLineEdit->setText(subfolder);
+}
+
+void StorageSettingsBox::keywordToggled(bool checked)
+{
+    d->keywordLineEdit->setEnabled(checked);
+}
+
+QString StorageSettingsBox::keyword() const
+{
+    return d->keywordLineEdit->text();
+}
+
+void StorageSettingsBox::setKeyword(const QString& keyword)
+{
+    d->keywordLineEdit->setText(keyword);
+}
+
+bool StorageSettingsBox::addKeyword() const
+{
+    return d->keywordCB->isChecked();
+}
+
+void StorageSettingsBox::setAddKeyword(bool checked)
+{
+    d->keywordCB->setChecked(checked);
+    d->keywordLineEdit->setEnabled(checked);
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

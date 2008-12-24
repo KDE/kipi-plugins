@@ -48,6 +48,7 @@ class RemovalSettings
 
             useStandardClassifier   = true;
             useSimpleMode           = true;
+            addKeyword              = false;
             minRoundness            = 0.0;
             scaleFactor             = 0.0;
 
@@ -74,10 +75,12 @@ class RemovalSettings
             kDebug(51000) << "classifierFile        = " << classifierFile << endl;
             kDebug(51000) << "subfolderName         = " << subfolderName << endl;
             kDebug(51000) << "suffixName            = " << suffixName << endl;
+            kDebug(51000) << "keywordName           = " << keywordName << endl;
         };
 
         bool        useStandardClassifier;
         bool        useSimpleMode;
+        bool        addKeyword;
 
         double      minRoundness;
         double      scaleFactor;
@@ -91,6 +94,7 @@ class RemovalSettings
         QString     classifierFile;
         QString     subfolderName;
         QString     suffixName;
+        QString     keywordName;
     };
 
 } // namespace KIPIRemoveRedEyesPlugin

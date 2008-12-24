@@ -154,6 +154,15 @@ void WorkerThread::run()
             KExiv2Iface::KExiv2 meta;
             meta.load(url.path());
 
+            // check if custom keyword should be added
+            if (d->settings.addKeyword)
+            {
+                QStringList oldKeywords = meta.getIptcKeywords();
+                QStringList newKeywords = meta.getIptcKeywords();
+                newKeywords.append(d->settings.keywordName);
+                meta.setIptcKeywords(oldKeywords, newKeywords);
+            }
+
             // save image
             QByteArray dest = QFile::encodeName(saveLocation.path());
             loc.saveImage(dest.data(), EyeLocator::Final);
