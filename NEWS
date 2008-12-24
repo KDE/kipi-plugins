@@ -10,7 +10,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 144183 : RawConverter       : Path in RAW-converter broken with the letter "ß"
 004 ==> 178495 : MetadataEdit       : Problem with metadata editor.
 005 ==> 175219 : PicasaWebExport    : Album creating wrong date in picasaweb.
-006 ==> 
+006 ==> 175222 : PicasaWebExport    : Unable to create non listed album.
+007 ==> 
 
 Kipi-plugins 0.2.0-beta5 - Release date: 14/12/2008
 ------------------------------------------------------------------------
