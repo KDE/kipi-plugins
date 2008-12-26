@@ -85,6 +85,8 @@ void Plugin_RawConverter::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
+    KGlobal::locale()->insertCatalog("libkdcraw");
+
     m_singleAction = actionCollection()->addAction("raw_converter_single");
     m_singleAction->setText(i18n("Raw Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconvertersingle"));
