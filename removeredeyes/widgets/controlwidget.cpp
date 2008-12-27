@@ -47,6 +47,7 @@ public:
     ControlWidgetPriv()
     {
         renderer     = 0;
+
         timerFadeIn  = 0;
         timerFadeOut = 0;
     }
@@ -55,11 +56,11 @@ public:
 
     QSvgRenderer* renderer;
 
-    QRectF        original;
     QRectF        corrected;
+    QRectF        mask;
+    QRectF        original;
     QRectF        zoomIn;
     QRectF        zoomOut;
-    QRectF        mask;
 
     QTimer*       timerFadeIn;
     QTimer*       timerFadeOut;
@@ -76,9 +77,11 @@ ControlWidget::ControlWidget(QWidget* parent, int w, int h)
 
     d->mode = Normal;
 
-    d->renderer = new QSvgRenderer(KGlobal::dirs()->findResource( "data",
-                                       "kipiplugin_removeredeyes/controlwidget.svg"),
+    d->renderer = new QSvgRenderer(KGlobal::dirs()->findResource("data",
+                                   "kipiplugin_removeredeyes/controlwidget.svg"),
                                    this);
+
+    // ------------------------------------------
 
     d->original  = d->renderer->boundsOnElement("n_original");
     d->corrected = d->renderer->boundsOnElement("n_corrected");
@@ -86,14 +89,18 @@ ControlWidget::ControlWidget(QWidget* parent, int w, int h)
     d->zoomOut   = d->renderer->boundsOnElement("n_zoomout");
     d->mask      = d->renderer->boundsOnElement("n_mask");
 
+    // ------------------------------------------
+
     d->timerFadeIn = new QTimer(this);
     d->timerFadeIn->setSingleShot(true);
 
-    connect(d->timerFadeIn, SIGNAL(timeout()),
-            this, SLOT(fadeIn()));
-
     d->timerFadeOut = new QTimer(this);
     d->timerFadeOut->setSingleShot(true);
+
+    // ------------------------------------------
+
+    connect(d->timerFadeIn, SIGNAL(timeout()),
+            this, SLOT(fadeIn()));
 
     connect(d->timerFadeOut, SIGNAL(timeout()),
             this, SLOT(fadeOut()));
@@ -107,8 +114,8 @@ ControlWidget::~ControlWidget()
 void ControlWidget::renderElement(const QString& element, QPainter* p)
 {
     d->renderer->render(p, element, d->renderer->boundsOnElement(element));
-
 }
+
 void ControlWidget::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
@@ -241,11 +248,13 @@ void ControlWidget::setMode(int mode)
 
 void ControlWidget::fadeIn()
 {
+    // TODO: fade in effect
     show();
 }
 
 void ControlWidget::fadeOut()
 {
+    // TODO: fade out effect
     hide();
 }
 

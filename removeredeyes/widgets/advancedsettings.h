@@ -41,7 +41,7 @@ class AdvancedSettings : public QWidget
 public:
 
     AdvancedSettings(QWidget* parent = 0);
-    virtual ~AdvancedSettings();
+    ~AdvancedSettings();
 
     void loadSettings(RemovalSettings);
     RemovalSettings readSettings();

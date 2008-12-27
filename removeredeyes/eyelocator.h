@@ -52,8 +52,9 @@ public:
 
     void startCorrection(bool scaleDown);
 
-    int  redEyes() const;
     void saveImage(const char* path, FileType type);
+
+    int  redEyes() const;
 
     void setScaleFactor(double);
     double scaleFactor() const;

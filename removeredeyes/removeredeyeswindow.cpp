@@ -81,25 +81,25 @@ public:
         previewWidget       = 0;
     }
 
-    bool                        busy;
-    int                         runtype;
+    bool                      busy;
+    int                       runtype;
 
-    QProgressBar*               progress;
+    QProgressBar*             progress;
 
-    KTabWidget*                 tabWidget;
+    KTabWidget*               tabWidget;
 
-    KTemporaryFile              originalImageTempFile;
-    KTemporaryFile              correctedImageTempFile;
-    KTemporaryFile              maskImageTempFile;
+    KTemporaryFile            originalImageTempFile;
+    KTemporaryFile            correctedImageTempFile;
+    KTemporaryFile            maskImageTempFile;
 
-    MyImagesList*               imageList;
-    PreviewWidget*              previewWidget;
-    RemovalSettings             settings;
-    SettingsTab*                settingsTab;
-    WorkerThread*               thread;
+    MyImagesList*             imageList;
+    PreviewWidget*            previewWidget;
+    RemovalSettings           settings;
+    SettingsTab*              settingsTab;
+    WorkerThread*             thread;
 
-    KIPI::Interface*            interface;
-    KIPIPlugins::KPAboutData*   about;
+    KIPI::Interface*          interface;
+    KIPIPlugins::KPAboutData* about;
 };
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
@@ -111,23 +111,25 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     setDefaultButton(Close);
     setModal(false);
 
-    d->busy                 = false;
+    d->busy          = false;
 
-    d->thread               = new WorkerThread(this);
-    d->runtype              = WorkerThread::Testrun;
-    d->interface            = interface;
-    d->tabWidget            = new KTabWidget;
+    d->thread        = new WorkerThread(this);
+    d->runtype       = WorkerThread::Testrun;
+    d->interface     = interface;
+    d->tabWidget     = new KTabWidget;
 
-    d->imageList            = new MyImagesList(interface);
-    d->previewWidget        = new PreviewWidget;
+    d->imageList     = new MyImagesList(interface);
+    d->previewWidget = new PreviewWidget;
 
-    d->progress             = new QProgressBar;
-    d->progress->setMaximumHeight(fontMetrics().height() + 2);
+    d->progress      = new QProgressBar;
     d->progress->hide();
 
-    d->originalImageTempFile.setSuffix(".jpg");
-    d->correctedImageTempFile.setSuffix(".jpg");
-    d->maskImageTempFile.setSuffix(".jpg");
+    // ----------------------------------------------------------
+
+    QString suffix(".jpg");
+    d->originalImageTempFile.setSuffix(suffix);
+    d->correctedImageTempFile.setSuffix(suffix);
+    d->maskImageTempFile.setSuffix(suffix);
 
     // ----------------------------------------------------------
 
@@ -243,19 +245,19 @@ void RemoveRedEyesWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("RemoveRedEyes Settings");
 
-    d->settings.storageMode            = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
-    d->settings.unprocessedMode        = group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask);
-    d->settings.subfolderName          = group.readEntry("Subfolder Name", "corrected");
-    d->settings.simpleMode             = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
-    d->settings.suffixName             = group.readEntry("Filename Suffix", "_corr");
-    d->settings.minBlobsize            = group.readEntry("Minimum Blob Size", 10);
-    d->settings.minRoundness           = group.readEntry("Minimum Roundness", 3.2);
-    d->settings.neighborGroups         = group.readEntry("Neighbor Groups", 2);
-    d->settings.scaleFactor            = group.readEntry("Scaling Factor", 1.2);
-    d->settings.useStandardClassifier  = group.readEntry("Use Standard Classifier", true);
-    d->settings.classifierFile         = group.readEntry("Classifier", STANDARD_CLASSIFIER);
-    d->settings.addKeyword             = group.readEntry("Add keyword", false);
-    d->settings.keywordName            = group.readEntry("Keyword Name", "removed_redeyes");
+    d->settings.storageMode           = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
+    d->settings.unprocessedMode       = group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask);
+    d->settings.subfolderName         = group.readEntry("Subfolder Name", "corrected");
+    d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
+    d->settings.suffixName            = group.readEntry("Filename Suffix", "_corr");
+    d->settings.minBlobsize           = group.readEntry("Minimum Blob Size", 10);
+    d->settings.minRoundness          = group.readEntry("Minimum Roundness", 3.2);
+    d->settings.neighborGroups        = group.readEntry("Neighbor Groups", 2);
+    d->settings.scaleFactor           = group.readEntry("Scaling Factor", 1.2);
+    d->settings.useStandardClassifier = group.readEntry("Use Standard Classifier", true);
+    d->settings.classifierFile        = group.readEntry("Classifier", STANDARD_CLASSIFIER);
+    d->settings.addKeyword            = group.readEntry("Add keyword", false);
+    d->settings.keywordName           = group.readEntry("Keyword Name", "removed_redeyes");
 
     d->settingsTab->loadSettings(d->settings);
 }
@@ -291,12 +293,6 @@ void RemoveRedEyesWindow::writeSettings()
 void RemoveRedEyesWindow::updateSettings()
 {
     d->settings = d->settingsTab->readSettings();
-}
-
-bool RemoveRedEyesWindow::previewNeedsUpdate()
-{
-//    if (item->url().equals(d->previewWidget->currentImage()))
-          return false;
 }
 
 bool RemoveRedEyesWindow::acceptStorageSettings()
@@ -360,10 +356,10 @@ void RemoveRedEyesWindow::startPreview()
 
     updateSettings();
 
-    if (item->url().path() == d->previewWidget->image())
+    if (item->url().path() == d->previewWidget->currentImage())
         return;
 
-    d->previewWidget->setImage(item->url().path());
+    d->previewWidget->setCurrentImage(item->url().path());
     d->runtype = WorkerThread::Preview;
 
     KUrl::List oneFile;
@@ -615,7 +611,6 @@ void RemoveRedEyesWindow::initProgressBar(int max)
 {
     d->progress->reset();
     d->progress->setRange(0, max);
-    d->progress->setFormat("%p%");
 
     if (d->runtype == WorkerThread::Preview)
     {

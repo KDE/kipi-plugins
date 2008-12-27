@@ -47,7 +47,7 @@ public:
     };
 
     UnprocessedSettingsBox(QWidget* parent = 0);
-    virtual ~UnprocessedSettingsBox();
+    ~UnprocessedSettingsBox();
 
     int handleMode() const;
     void setHandleMode(int mode);

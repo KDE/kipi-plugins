@@ -64,10 +64,10 @@ public:
 public:
 
     PreviewWidget(QWidget* parent = 0);
-    virtual ~PreviewWidget();
+    ~PreviewWidget();
 
-    QString& image() const;
-    void setImage(const QString& image);
+    QString& currentImage() const;
+    void setCurrentImage(const QString& image);
 
     void setPreviewImage(ImageType type, const QString& filename);
 
@@ -81,18 +81,18 @@ signals:
 
 protected:
 
-    void resizeEvent(QResizeEvent* e);
     void enterEvent (QEvent* e);
+    void resizeEvent(QResizeEvent* e);
 
 private slots:
 
     void updateSettings();
 
-    void zoomInClicked();
-    void zoomOutClicked();
-    void originalClicked();
     void correctedClicked();
     void maskClicked();
+    void originalClicked();
+    void zoomInClicked();
+    void zoomOutClicked();
 
 private:
 

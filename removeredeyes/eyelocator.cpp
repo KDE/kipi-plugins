@@ -354,7 +354,7 @@ void EyeLocator::saveImage(const char * path, FileType type)
             cvSaveImage(path, d->redMask);
             break;
         }
-    } // switch
+    }
 }
 
 void EyeLocator::startCorrection(bool scaleDown)

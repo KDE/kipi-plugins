@@ -36,7 +36,6 @@ WorkerThreadData::WorkerThreadData(const KUrl& url, int current, int eyes): urls
     this->eyes    = eyes;
 }
 
-
 WorkerThreadData::~WorkerThreadData()
 {
 }

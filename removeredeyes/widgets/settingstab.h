@@ -47,7 +47,7 @@ public:
     };
 
     SettingsTab(QWidget* parent = 0);
-    virtual ~SettingsTab();
+    ~SettingsTab();
 
     void loadSettings(RemovalSettings);
     RemovalSettings readSettings();

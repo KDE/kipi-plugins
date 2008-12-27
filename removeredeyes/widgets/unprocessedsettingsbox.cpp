@@ -103,8 +103,6 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
 
     connect(d->unprocessedGroup, SIGNAL(buttonClicked(int)),
             this, SIGNAL(settingsChanged()));
-
-    setHandleMode(Ask);
 }
 
 UnprocessedSettingsBox::~UnprocessedSettingsBox()

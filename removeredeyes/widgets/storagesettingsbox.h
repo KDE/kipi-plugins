@@ -47,7 +47,7 @@ public:
     };
 
     StorageSettingsBox(QWidget* parent = 0);
-    virtual ~StorageSettingsBox();
+    ~StorageSettingsBox();
 
     int storageMode() const;
     void setStorageMode(int mode);

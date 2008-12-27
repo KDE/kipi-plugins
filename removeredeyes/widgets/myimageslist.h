@@ -44,11 +44,11 @@ class MyImagesList : public KIPIPlugins::ImagesList
 public:
 
     explicit MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
-    virtual ~MyImagesList();
+    ~MyImagesList();
 
-    int totalImages()       const;
-    int processedImages()   const;
-    int failedImages()      const;
+    int totalImages() const;
+    int processedImages() const;
+    int failedImages() const;
 
     bool hasUnprocessedImages();
 

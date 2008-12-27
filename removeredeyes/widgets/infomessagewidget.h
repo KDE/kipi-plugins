@@ -50,7 +50,7 @@ public:
 public:
 
     InfoMessageWidget(QWidget* parent = 0);
-    virtual ~InfoMessageWidget();
+    ~InfoMessageWidget();
 
     void display(const QString & message, Icon icon = Info, int durationMs = 0);
     void reset();

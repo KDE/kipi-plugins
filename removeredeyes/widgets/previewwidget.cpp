@@ -37,8 +37,8 @@
 
 // Local includes.
 
-#include "infomessagewidget.h"
 #include "controlwidget.h"
+#include "infomessagewidget.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -103,21 +103,21 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     d->locked               = true;
 
     d->busyLabel            = new QLabel;
-    d->noSelectionLabel     = new QLabel;
-    d->originalLabel        = new QLabel;
     d->correctedLabel       = new QLabel;
     d->maskLabel            = new QLabel;
+    d->noSelectionLabel     = new QLabel;
+    d->originalLabel        = new QLabel;
 
-    d->originalLabel->setScaledContents(true);
     d->correctedLabel->setScaledContents(true);
     d->maskLabel->setScaledContents(true);
-
-    // --------------------------------------------------------
+    d->originalLabel->setScaledContents(true);
 
     d->noSelectionLabel->clear();
 
     d->busyLabel->setText(i18n("<h2>generating preview...</h2>"));
     d->busyLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
+    // --------------------------------------------------------
 
     d->stack = new QStackedWidget;
     d->stack->insertWidget(BusyMode,          d->busyLabel);
@@ -137,6 +137,7 @@ PreviewWidget::PreviewWidget(QWidget* parent)
     // floating widgets
     d->modeInfo = new InfoMessageWidget(this);
     d->controller = new ControlWidget(this);
+
     // --------------------------------------------------------
 
     connect(this, SIGNAL(settingsChanged()),
@@ -167,12 +168,12 @@ PreviewWidget::~PreviewWidget()
     delete d;
 }
 
-QString& PreviewWidget::image() const
+QString& PreviewWidget::currentImage() const
 {
     return d->image;
 }
 
-void PreviewWidget::setImage(const QString& image)
+void PreviewWidget::setCurrentImage(const QString& image)
 {
     if (d->image == image)
             return;
@@ -211,12 +212,9 @@ QPixmap PreviewWidget::openFile(const QString& filename)
 
         if (image.isNull())
         {
-            QString message = i18n("<p>Can not open preview image<br/>'%1'</p>.",
-                                   filename);
+            QString message = i18n("<p>Can not open preview image<br/>'%1'</p>.", filename);
 
-            KMessageBox::information(this, message,
-                                     i18n("Error loading preview file"));
-
+            KMessageBox::information(this, message, i18n("Error loading preview file"));
             return QPixmap();
         }
     }
@@ -267,21 +265,18 @@ void PreviewWidget::setMode(DisplayMode mode)
         case OriginalMode:
             d->modeInfo->display(i18n("Original Image"));
             d->modeInfo->raise();
-//            d->controller->show();
             d->controller->raise();
             break;
 
         case CorrectedMode:
             d->modeInfo->display(i18n("Corrected Image"));
             d->modeInfo->raise();
-//            d->controller->show();
             d->controller->raise();
             break;
 
         case MaskMode:
             d->modeInfo->display(i18n("Correction Mask"));
             d->modeInfo->raise();
-//            d->controller->show();
             d->controller->raise();
             break;
 

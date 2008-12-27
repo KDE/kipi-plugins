@@ -90,10 +90,6 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
 
     // --------------------------------------------------------
 
-    QGridLayout* mainLayout = new QGridLayout(plainPage());
-
-    // --------------------------------------------------------
-
     QGroupBox* summaryGroupBox = new QGroupBox(i18n("Summary"));
 
     d->totalLabel     = new QLabel;
@@ -122,6 +118,7 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
 
     // --------------------------------------------------------
 
+    QGridLayout* mainLayout = new QGridLayout(plainPage());
     mainLayout->addWidget(summaryGroupBox, 0, 0, 1, 1);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -224,6 +221,7 @@ void MyImagesList::resetCounters()
     d->processed   = 0;
     d->failed      = 0;
 }
+
 void MyImagesList::updateSummary()
 {
     resetCounters();

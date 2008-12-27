@@ -60,16 +60,21 @@ AdvancedSettings::AdvancedSettings(QWidget* parent)
     d->blobSettingsBox          = new BlobSettingsBox;
     d->classifierSettingsBox    = new ClassifierSettingsBox;
 
+    // -----------------------------------------------------
 
     QGridLayout* advLayout = new QGridLayout;
     advLayout->addWidget(d->classifierSettingsBox,  0, 0, 1, 1);
     advLayout->addWidget(d->blobSettingsBox,        1, 0, 1, 1);
     advLayout->setRowStretch(2, 10);
 
+    // -----------------------------------------------------
+
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addLayout(advLayout,     0, 0, 1, 1);
+    mainLayout->addLayout(advLayout, 0, 0, 1, 1);
     mainLayout->setRowStretch(2, 10);
     setLayout(mainLayout);
+
+    // -----------------------------------------------------
 
     connect(d->blobSettingsBox, SIGNAL(settingsChanged()),
             this, SIGNAL(settingsChanged()));
@@ -87,10 +92,12 @@ void AdvancedSettings::prepareSettings()
 {
     d->settings.useStandardClassifier  = d->classifierSettingsBox->useStandardClassifier();
     d->settings.useSimpleMode          = false;
+
     if (d->classifierSettingsBox->useStandardClassifier())
         d->settings.classifierFile = STANDARD_CLASSIFIER;
     else
         d->settings.classifierFile = d->classifierSettingsBox->classifierUrl();
+
     d->settings.neighborGroups         = d->classifierSettingsBox->neighborGroups();
     d->settings.scaleFactor            = d->classifierSettingsBox->scalingFactor();
 

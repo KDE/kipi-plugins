@@ -90,8 +90,6 @@ private:
     void writeSettings();
     void updateSettings();
 
-    bool previewNeedsUpdate();
-
     bool acceptStorageSettings();
     void handleUnprocessedImages();
     void setBusy(bool);

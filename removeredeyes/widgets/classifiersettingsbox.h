@@ -42,7 +42,7 @@ class ClassifierSettingsBox : public QGroupBox
 public:
 
     ClassifierSettingsBox(QWidget* parent = 0);
-    virtual ~ClassifierSettingsBox();
+    ~ClassifierSettingsBox();
 
     bool useStandardClassifier() const;
     void setUseStandardClassifier(bool);

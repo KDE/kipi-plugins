@@ -56,14 +56,14 @@ public:
         cancel  = false;
     }
 
-    int                     runtype;
-    bool                    cancel;
-    RemovalSettings         settings;
+    int             runtype;
+    bool            cancel;
+    RemovalSettings settings;
 
-    KUrl::List              urls;
-    QString                 maskPreviewFile;
-    QString                 correctedPreviewFile;
-    QString                 originalPreviewFile;
+    KUrl::List      urls;
+    QString         maskPreviewFile;
+    QString         correctedPreviewFile;
+    QString         originalPreviewFile;
 };
 
 WorkerThread::WorkerThread(QObject* parent)

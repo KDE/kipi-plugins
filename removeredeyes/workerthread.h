@@ -77,7 +77,7 @@ public:
     void setTempFile(const QString&, ImageType);
 
     void cancel();
-    virtual void run();
+    void run();
 
 private:
 

@@ -48,7 +48,7 @@ public:
     };
 
     SimpleSettings(QWidget* parent = 0);
-    virtual ~SimpleSettings();
+    ~SimpleSettings();
 
     void loadSettings(RemovalSettings);
     RemovalSettings readSettings();

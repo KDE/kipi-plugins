@@ -86,6 +86,7 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
     QRect textRect = fontMetrics().boundingRect(d->message);
     textRect.translate(-textRect.left(), -textRect.top());
     textRect.adjust(0, 0, 2, 2);
+
     int width = textRect.width(), height = textRect.height();
 
     // load icon (if set) and update geometry
@@ -148,8 +149,8 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
     int textXOffset = 0,
     textYOffset = geometry().height() - textRect.height() / 2,
     iconXOffset = 0,
-    iconYOffset = !d->symbol.isNull() ? ( geometry().height() - d->symbol.height() ) / 2 : 0,
-            shadowOffset = 1;
+    iconYOffset = !d->symbol.isNull() ? ( geometry().height() - d->symbol.height() ) / 2
+                                      : 0, shadowOffset = 1;
 
     if ( layoutDirection() == Qt::RightToLeft )
         iconXOffset = 2 + textRect.width();
@@ -160,8 +161,10 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
     QPainter painter( this );
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setPen( Qt::black );
+
     QColor semiTransBg = palette().color(QPalette::Window);
     semiTransBg.setAlpha(190);
+
     painter.setBrush(semiTransBg);
     painter.setBackgroundMode(Qt::TransparentMode);
     painter.translate( 0.5, 0.5 );
@@ -169,7 +172,7 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
 
     // draw icon if present
     if ( !d->symbol.isNull() )
-        painter.drawPixmap( 5 + iconXOffset, iconYOffset, d->symbol, 0, 0, d->symbol.width(), d->symbol.height() );
+        painter.drawPixmap(5 + iconXOffset, iconYOffset, d->symbol, 0, 0, d->symbol.width(), d->symbol.height());
 
     // draw shadow and text
     painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );

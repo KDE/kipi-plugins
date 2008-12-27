@@ -42,7 +42,7 @@ class BlobSettingsBox : public QGroupBox
 public:
 
     BlobSettingsBox(QWidget* parent = 0);
-    virtual ~BlobSettingsBox();
+    ~BlobSettingsBox();
 
     int minBlobSize() const;
     void setMinBlobSize(int);

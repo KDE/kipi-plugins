@@ -42,7 +42,7 @@ class ControlWidget : public QWidget
 
 public:
 
-    enum ControllerState
+    enum ControllerMode
     {
         Normal = 0,
         ZoomIn,
@@ -59,7 +59,7 @@ public:
 
 public:
 
-    ControlWidget(QWidget* parent = 0, int w = 150, int h = 150);
+    explicit ControlWidget(QWidget* parent = 0, int w = 150, int h = 150);
     ~ControlWidget();
 
     void triggerShow(int ms = 0);
@@ -67,19 +67,19 @@ public:
 
 signals:
 
-    void zoomInClicked();
-    void zoomOutClicked();
-    void originalClicked();
     void correctedClicked();
     void maskClicked();
+    void originalClicked();
+    void zoomInClicked();
+    void zoomOutClicked();
 
 protected:
 
-    void paintEvent(QPaintEvent* e);
+    void leaveEvent (QEvent * e);
     void mouseMoveEvent (QMouseEvent* e);
     void mouseReleaseEvent (QMouseEvent* e);
     void mousePressEvent (QMouseEvent* e);
-    void leaveEvent (QEvent * e);
+    void paintEvent(QPaintEvent* e);
 
 private slots:
 
@@ -88,8 +88,8 @@ private slots:
 
 private:
 
-    void setMode(int mode);
     void renderElement(const QString& element, QPainter* p);
+    void setMode(int mode);
 
 private:
 
