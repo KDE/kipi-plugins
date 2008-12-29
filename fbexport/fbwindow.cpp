@@ -502,7 +502,7 @@ void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
 {
     if (errCode != 0) 
     {
-        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
+        KMessageBox::error(this, i18n("Facebook Call Failed: %1", errMsg));
         return;
     }
 
