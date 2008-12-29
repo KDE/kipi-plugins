@@ -68,7 +68,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(
-        i18n("This is clickable link to open Facebook home page in web browser."));
+        i18n("This is a clickable link to open Facebook home page in web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
