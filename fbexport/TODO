@@ -1,0 +1,10 @@
+Facebook export plugin
+----------------------------------------------------------------------------
+Short term:
+- add support for caption
+- retain sessionKey until it expires (no need to relogin for multiple runs)
+- add extended permission support (at least as button to link to following URL):
+  http://www.facebook.com/authorize.php?api_key=bf430ad869b88aba5c0c17ea6707022b&v=1.0&ext_perm=photo_upload
+
+Long term:
+- virtual albums in digikam?

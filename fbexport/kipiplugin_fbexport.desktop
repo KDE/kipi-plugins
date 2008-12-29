@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Facebook Exporter
+Comment=A tool to export images to a remote Facebook web service
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_fbexport
+author=Luka Renko, lure@kubuntu.org

@@ -2,6 +2,8 @@ Kipi-plugins 0.2.0-beta6 - Release date: xx/01/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
+FbExport       : New plugin to export images to a remote Facebook web service (http://www.facebook.com)
+
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
