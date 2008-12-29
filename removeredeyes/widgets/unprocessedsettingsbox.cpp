@@ -94,9 +94,9 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
     // ----------------------------------------------------------------
 
     QGridLayout* unprocessedGroupLayout = new QGridLayout;
-    unprocessedGroupLayout->addWidget(askMode,       0, 0, 1, 1);
-    unprocessedGroupLayout->addWidget(keepMode,      1, 0, 1, 1);
-    unprocessedGroupLayout->addWidget(removeMode,    2, 0, 1, 1);
+    unprocessedGroupLayout->addWidget(askMode,      0, 0, 1, 1);
+    unprocessedGroupLayout->addWidget(keepMode,     1, 0, 1, 1);
+    unprocessedGroupLayout->addWidget(removeMode,   2, 0, 1, 1);
     setLayout(unprocessedGroupLayout);
 
     // ----------------------------------------------------------------

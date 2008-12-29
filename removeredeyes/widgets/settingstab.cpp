@@ -84,8 +84,8 @@ SettingsTab::SettingsTab(QWidget* parent)
 
     // settings stack widget ----------------------------------------------------------
 
-    d->simpleSettings       = new SimpleSettings;
-    d->advancedSettings     = new AdvancedSettings;
+    d->simpleSettings   = new SimpleSettings;
+    d->advancedSettings = new AdvancedSettings;
 
     d->settingsStack = new QStackedWidget;
     d->settingsStack->insertWidget(Simple, d->simpleSettings);
@@ -95,7 +95,7 @@ SettingsTab::SettingsTab(QWidget* parent)
     // Set layouts --------------------------------------------------------------
 
     QGridLayout* settingsTabLayout = new QGridLayout;
-    settingsTabLayout->addWidget(d->settingsStack,          0, 0, 1, 1);
+    settingsTabLayout->addWidget(d->settingsStack, 0, 0, 1, 1);
     settingsTabLayout->setRowStretch(1, 10);
 
     QGridLayout* storageLayout = new QGridLayout;
@@ -104,9 +104,9 @@ SettingsTab::SettingsTab(QWidget* parent)
     storageLayout->setRowStretch(2, 10);
 
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addLayout(settingsTabLayout,        0, 0, 1, 2);
-    mainLayout->addLayout(storageLayout,            0, 2, 1, 2);
-    mainLayout->addWidget(d->settingsSwitcherBtn,   2, 0, 1, 1);
+    mainLayout->addLayout(settingsTabLayout,      0, 0, 1, 2);
+    mainLayout->addLayout(storageLayout,          0, 2, 1, 2);
+    mainLayout->addWidget(d->settingsSwitcherBtn, 2, 0, 1, 1);
     mainLayout->setRowStretch(1, 10);
     setLayout(mainLayout);
 

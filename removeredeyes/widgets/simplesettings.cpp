@@ -50,7 +50,7 @@ public:
 
     SimpleSettingsPriv()
     {
-        settingsSlider      = 0;
+        settingsSlider = 0;
     }
 
     QSlider*            settingsSlider;
