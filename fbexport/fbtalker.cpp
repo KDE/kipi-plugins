@@ -580,7 +580,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     KToolInvocation::invokeBrowser(url.url());
 
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
-                  i18n("Please follow the instructions in the browser window."
+                  i18n("Please follow the instructions in the browser window. "
                        "Press Yes if you have authenticated and No if you failed."),
                   i18n("Facebook Service Web Authorization"));
 
