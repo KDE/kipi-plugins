@@ -28,7 +28,6 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
-#include <QFileInfo>
 #include <QProgressDialog>
 
 // KDE includes.

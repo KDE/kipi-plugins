@@ -35,7 +35,6 @@
 #include <libkipi/interface.h>
 
 class QProgressDialog;
-class KPasswordDialog;
 
 class KUrl;
 
