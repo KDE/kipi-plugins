@@ -394,8 +394,8 @@ bool FbTalker::addPhoto(const QString& imgPath, long long albumID)
     args["sig"]         =  md5;
 
     MPForm  form;
-    for (QMap<QString, QString>::const_iterator it = args.begin(); 
-         it != args.end(); 
+    for (QMap<QString, QString>::const_iterator it = args.constBegin(); 
+         it != args.constEnd(); 
          ++it)
     {
         form.addPair(it.key(), it.value());

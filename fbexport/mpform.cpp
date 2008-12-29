@@ -54,8 +54,7 @@ MPForm::~MPForm()
 void MPForm::reset()
 {
     m_buffer.resize(0);
-    QByteArray str;
-    str += contentType();
+    QByteArray str(contentType().toLatin1());
     str += "\r\n";
     str += "MIME-version: 1.0";
     str += "\r\n\r\n";
