@@ -61,8 +61,7 @@ FbTalker::FbTalker(QWidget* parent)
 
 FbTalker::~FbTalker()
 {
-    if (loggedIn())
-        logout();
+    // do not logout - may reuse session for next upload
 
     if (m_job)
         m_job->kill();
@@ -71,6 +70,16 @@ FbTalker::~FbTalker()
 bool FbTalker::loggedIn()
 {
     return !m_sessionKey.isEmpty();
+}
+
+QString FbTalker::getSessionKey() const
+{
+    return m_sessionKey;
+}
+
+unsigned int FbTalker::getSessionExpires() const
+{
+    return m_sessionExpires;
 }
 
 QString FbTalker::getDisplayName() const
@@ -134,8 +143,30 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
     return concat;
 }
 
+void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpires)
+{
+    if (!sessionKey.isEmpty() && sessionExpires > time(0) + 900)
+    {
+        // sessionKey seems to be still valid for at least 15 minutes
+        // - check if it still works
+        m_sessionKey     = sessionKey;
+        m_sessionExpires = sessionExpires;
 
-void FbTalker::authenticate()
+        m_authProgressDlg->setLabelText(i18n("Validate previous session..."));
+        m_authProgressDlg->setMaximum(6);
+        m_authProgressDlg->setValue(1);
+
+        // get logged in user - this will check if session is still valid
+        getLoggedInUser();
+    }
+    else
+    {
+        // session expired -> get new authorization token and session
+        createToken();
+    }
+}
+
+void FbTalker::createToken()
 {
     if (m_job)
     {
@@ -201,6 +232,41 @@ void FbTalker::getSession()
             this, SLOT(slotResult(KJob*)));
 
     m_state = FB_GETSESSION;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
+void FbTalker::getLoggedInUser()
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+    m_authProgressDlg->setValue(2);
+
+    QMap<QString, QString> args;
+    args["method"]      = "facebook.users.getLoggedInUser";
+    args["api_key"]     = m_apiKey;
+    args["v"]           = m_apiVersion;
+    args["call_id"]     = QString::number(m_callID.elapsed());
+    args["session_key"] = m_sessionKey;
+    args["sig"]         = getApiSig(args);
+
+    QByteArray tmp(getCallString(args).toUtf8());
+    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = FB_GETLOGGEDINUSER;
     m_job   = job;
     m_buffer.resize(0);
 }
@@ -485,6 +551,9 @@ void FbTalker::slotResult(KJob *kjob)
         case(FB_GETSESSION):
             parseResponseGetSession(m_buffer);
             break;
+        case(FB_GETLOGGEDINUSER):
+            parseResponseGetLoggedInUser(m_buffer);
+            break;
         case(FB_GETUSERINFO):
             parseResponseGetUserInfo(m_buffer);
             break;
@@ -634,6 +703,46 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
     m_callID.start();
 
     getUserInfo();
+}
+
+void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+
+    QDomDocument doc("getLoggedInUser");
+    if (!doc.setContent(data))
+        return;
+
+    m_authProgressDlg->setValue(3);
+
+    kDebug(51000) << "Parse GetLoggedInUser response:" << endl << data;
+
+    QDomElement docElem = doc.documentElement();
+    if (docElem.tagName() == "users_getLoggedInUser_response") 
+    {
+        m_uid = docElem.text().toInt();
+        errCode = 0;
+    }
+    else if (docElem.tagName() == "error_response")
+        errCode = parseErrorResponse(docElem, errMsg);
+
+    if (errCode == 0)
+    {
+        // session is still valid -> get full user info
+        getUserInfo();
+    }
+    else
+    {
+        // it seems that session expired -> create new token and session
+        m_sessionKey.clear();
+        m_sessionExpires = 0;
+        m_uid = 0;
+        m_userName.clear();
+        m_userURL.clear();
+
+        createToken();
+    }
 }
 
 void FbTalker::parseResponseGetUserInfo(const QByteArray& data)

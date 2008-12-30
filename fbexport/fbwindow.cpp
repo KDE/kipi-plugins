@@ -183,7 +183,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
 
     kDebug(51000) << "Calling Login method";
     buttonStateChange(m_talker->loggedIn());
-    m_talker->authenticate(); 
+    m_talker->authenticate(m_sessionKey, m_sessionExpires); 
 }
 
 FbWindow::~FbWindow()
@@ -200,7 +200,9 @@ void FbWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("FbExport Settings");
-    m_currentAlbumID = grp.readEntry("Current Album", -1);
+    m_sessionKey = grp.readEntry("Session Key");
+    m_sessionExpires = grp.readEntry("Session Expires", 0);
+    m_currentAlbumID = grp.readEntry("Current Album", -1LL);
 
     if (grp.readEntry("Resize", false))
     {
@@ -225,6 +227,8 @@ void FbWindow::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("FbExport Settings");
+    grp.writeEntry("Session Key", m_sessionKey);
+    grp.writeEntry("Session Expires", m_sessionExpires);
     grp.writeEntry("Current Album", m_currentAlbumID);
     grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width",  m_widget->m_dimensionSpB->value());
@@ -241,9 +245,6 @@ void FbWindow::slotHelp()
 
 void FbWindow::slotClose()
 {
-    if (m_talker->loggedIn())
-        m_talker->logout();
-
     writeSettings();
 
     done(Close);
@@ -259,6 +260,9 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
 
     if (errCode == 0 && m_talker->loggedIn())
     {
+        m_sessionKey = m_talker->getSessionKey();
+        m_sessionExpires = m_talker->getSessionExpires();
+
         m_talker->listAlbums(); // get albums to fill combo box
     }
     else
@@ -316,10 +320,14 @@ void FbWindow::slotUserChangeRequest()
     kDebug(51000) << "Slot Change User Request";
 
     if (m_talker->loggedIn())
+    {
         m_talker->logout();
+        m_sessionKey.clear();
+        m_sessionExpires = 0;
+    }
 
     kDebug(51000) << "Calling Login method";
-    m_talker->authenticate();
+    m_talker->authenticate(m_sessionKey, m_sessionExpires);
 }
 
 void FbWindow::slotReloadAlbumsRequest()
@@ -360,7 +368,7 @@ void FbWindow::slotStartUpload()
     m_uploadCount = 0;
     m_progressDlg->reset();
     m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                m_widget->m_albumsCoB->currentIndex()).toInt();
+                               m_widget->m_albumsCoB->currentIndex()).toLongLong();
     kDebug(51000) << "m_currentAlbumID" << m_currentAlbumID;
     uploadNextPhoto();
     kDebug(51000) << "slotStartUpload done";

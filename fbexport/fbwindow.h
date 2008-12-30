@@ -101,6 +101,8 @@ private:
     QString                     m_tmpPath;
 
     long long                   m_currentAlbumID;
+    QString                     m_sessionKey;
+    unsigned int                m_sessionExpires;
 
     QProgressDialog            *m_progressDlg;
     QProgressDialog            *m_authProgressDlg;

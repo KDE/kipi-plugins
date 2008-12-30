@@ -48,16 +48,15 @@ public:
     FbTalker(QWidget* parent);
     ~FbTalker();
 
+    QString         getSessionKey() const;
+    unsigned int    getSessionExpires() const;
+
     QString getDisplayName() const;
     QString getProfileURL() const;
 
     bool    loggedIn();
     void    cancel();
-    QString getApiSig(const QMap<QString, QString>& args);
-    QString getCallString(const QMap<QString, QString>& args);
-    void    authenticate();
-    void    getSession();
-    void    getUserInfo();
+    void    authenticate(const QString& sessionKey, unsigned int sessionExpires);
     void    logout(); //rename
 
     void    listAlbums();
@@ -83,6 +82,7 @@ private:
     {
         FB_CREATETOKEN = 0,
         FB_GETSESSION,
+        FB_GETLOGGEDINUSER,
         FB_GETUSERINFO,
         FB_LOGOUT,
         FB_LISTALBUMS,
@@ -90,10 +90,18 @@ private:
         FB_ADDPHOTO
     };
 
+    QString getApiSig(const QMap<QString, QString>& args);
+    QString getCallString(const QMap<QString, QString>& args);
+    void    createToken();
+    void    getSession();
+    void    getLoggedInUser();
+    void    getUserInfo();
+
     QString errorToText(int errCode, const QString& errMsg);
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
     void parseResponseCreateToken(const QByteArray& data);
     void parseResponseGetSession(const QByteArray& data);
+    void parseResponseGetLoggedInUser(const QByteArray& data);
     void parseResponseGetUserInfo(const QByteArray& data);
     void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
