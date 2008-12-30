@@ -27,7 +27,6 @@
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QFile>
 #include <QProgressDialog>
 
 // KDE includes.
@@ -153,8 +152,7 @@ void FbTalker::authenticate()
     args["method"]  = "facebook.auth.createToken";
     args["api_key"] = m_apiKey;
     args["v"]       = m_apiVersion;
-    QString md5 = getApiSig(args);
-    args["sig"]     =  md5;
+    args["sig"]     = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -188,8 +186,7 @@ void FbTalker::getSession()
     args["api_key"]     = m_apiKey;
     args["v"]           = m_apiVersion;
     args["auth_token"]  = m_authToken;
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -225,8 +222,7 @@ void FbTalker::getUserInfo()
     args["call_id"]     = QString::number(m_callID.elapsed());
     args["uids"]        = QString::number(m_uid);
     args["fields"]      = "name, profile_url";
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -259,8 +255,7 @@ void FbTalker::logout()
     args["api_key"]     = m_apiKey;
     args["v"]           = m_apiVersion;
     args["session_key"] = m_sessionKey;
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -296,8 +291,7 @@ void FbTalker::listAlbums()
     args["session_key"] = m_sessionKey;
     args["call_id"]     = QString::number(m_callID.elapsed());
     args["uid"]         = QString::number(m_uid);
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -351,8 +345,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
             args["visible"] = "everyone";
             break;
     }
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
@@ -389,8 +382,7 @@ bool FbTalker::addPhoto(const QString& imgPath, long long albumID)
     args["name"]        = KUrl(imgPath).fileName();
     if (albumID != -1)
         args["aid"]     = QString::number(albumID);
-    QString md5 = getApiSig(args);
-    args["sig"]         =  md5;
+    args["sig"]         = getApiSig(args);
 
     MPForm  form;
     for (QMap<QString, QString>::const_iterator it = args.constBegin(); 
@@ -556,8 +548,6 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
-    kDebug(51000) << "CreateToken finished";
-
     if (errCode != 0) // if login failed, reset user properties
     {
         m_authToken.clear();
@@ -579,6 +569,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     kDebug( 51000 ) << "Login URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
+    emit signalBusy(false);
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                   i18n("Please follow the instructions in the browser window. "
                        "Press \"Yes\" if you have authenticated and \"No\" if you failed."),
@@ -586,8 +577,8 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
 
     if (valueOk == KMessageBox::Yes)
     {
-        getSession();
         emit signalBusy(true);
+        getSession();
     }
     else
     {
@@ -628,8 +619,6 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
-    kDebug(51000) << "GetSession finished";
-
     if (errCode != 0) // if login failed, reset user properties
     {
         m_authToken.clear();
@@ -669,7 +658,6 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
                 continue;
             if (node.nodeName() == "standard_user_info")
             {
-                FbAlbum album;
                 for (QDomNode nodeU = node.toElement().firstChild();
                      !nodeU.isNull();
                      nodeU = nodeU.nextSibling())
@@ -687,8 +675,6 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
     }
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
-
-    kDebug(51000) << "GetUserInfo finished";
 
     emit signalLoginDone(errCode, errorToText(errCode, errMsg));
     emit signalBusy(false);
@@ -721,8 +707,6 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
     m_userName.clear();
     m_userURL.clear();
 
-    kDebug(51000) << "Logout finished";
-
     emit signalBusy(false);
 }
 
@@ -754,8 +738,6 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
     }
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
-
-    kDebug(51000) << "Add Photo finished";
 
     emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
     emit signalBusy(false);
@@ -791,8 +773,6 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
     }
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
-
-    kDebug(51000) << "Create Album finished";
 
     emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID);
@@ -858,8 +838,6 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
     }
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
-
-    kDebug(51000) << "List Albums finished";
 
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
