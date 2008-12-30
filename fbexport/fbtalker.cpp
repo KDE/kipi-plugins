@@ -430,7 +430,9 @@ void FbTalker::createAlbum(const FbAlbum& album)
     m_buffer.resize(0);
 }
 
-bool FbTalker::addPhoto(const QString& imgPath, long long albumID)
+bool FbTalker::addPhoto(const QString& imgPath, 
+                        long long albumID, 
+                        const QString& caption)
 {
     if (m_job)
     {
@@ -448,6 +450,8 @@ bool FbTalker::addPhoto(const QString& imgPath, long long albumID)
     args["name"]        = KUrl(imgPath).fileName();
     if (albumID != -1)
         args["aid"]     = QString::number(albumID);
+    if (!caption.isEmpty())
+        args["caption"] = caption;
     args["sig"]         = getApiSig(args);
 
     MPForm  form;

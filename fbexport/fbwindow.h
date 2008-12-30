@@ -34,6 +34,9 @@
 // LibKIPI includes.
 #include <libkipi/interface.h>
 
+// LibKExiv2 includes.
+#include <libkexiv2/kexiv2.h>
+
 class QProgressDialog;
 
 class KUrl;
@@ -86,7 +89,9 @@ private slots:
     void slotImageListChanged(bool);
 
 private:
-    bool prepareImageForUpload(const QString& imgPath, bool isRAW);
+    QString getImageCaption(const KExiv2Iface::KExiv2& ev);
+    bool prepareImageForUpload(const QString& imgPath, bool isRAW,
+                               QString& caption);
     void uploadNextPhoto();
 
     void readSettings();

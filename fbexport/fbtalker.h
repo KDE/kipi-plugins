@@ -63,7 +63,8 @@ public:
 
     void    createAlbum(const FbAlbum& album);
 
-    bool    addPhoto(const QString& imgPath, long long albumID);
+    bool    addPhoto(const QString& imgPath, long long albumID, 
+                     const QString& caption);
 
 public:
     QProgressDialog *m_authProgressDlg; // TODO: move to method?

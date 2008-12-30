@@ -374,7 +374,46 @@ void FbWindow::slotStartUpload()
     kDebug(51000) << "slotStartUpload done";
 }
 
-bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
+QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
+{
+    QString caption = ev.getCommentsDecoded();
+    if (!caption.isEmpty())
+        return caption;
+
+    if (ev.hasExif())
+    {
+        caption = ev.getExifComment();
+        if (!caption.isEmpty())
+            return caption;
+    }
+
+    if (ev.hasXmp())
+    {
+        caption = ev.getXmpTagStringLangAlt("Xmp.dc.description", QString(), false);
+        if (!caption.isEmpty())
+            return caption;
+
+        caption = ev.getXmpTagStringLangAlt("Xmp.exif.UserComment", QString(), false);
+        if (!caption.isEmpty())
+            return caption;
+
+        caption = ev.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
+        if (!caption.isEmpty())
+            return caption;
+}
+
+    if (ev.hasIptc())
+    {
+        caption = ev.getIptcTagString("Iptc.Application2.Caption", false);
+        if (!caption.isEmpty() && !caption.trimmed().isEmpty())
+            return caption;
+    }
+
+    return caption;
+}
+
+bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, 
+                                     QString &caption)
 {
     QImage image;
     if (isRAW)
@@ -407,10 +446,14 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     KExiv2Iface::KExiv2 exiv2Iface;
     if (exiv2Iface.load(imgPath))
     {
+        caption = getImageCaption(exiv2Iface);
         exiv2Iface.setImageDimensions(image.size());
         exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
         exiv2Iface.save(m_tmpPath);
     }
+    else
+        caption.clear();
+
     return true;
 }
 
@@ -431,21 +474,27 @@ void FbWindow::uploadNextPhoto()
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fileInfo(imgPath);
+    QString caption;
     bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
     bool res;
     if (isRAW || m_widget->m_resizeChB->isChecked()) 
     {
-        if (!prepareImageForUpload(imgPath, isRAW))
+        if (!prepareImageForUpload(imgPath, isRAW, caption))
         {
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;
         }
-        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID);
+        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID, caption);
     }
     else
     {
+        KExiv2Iface::KExiv2 exiv2Iface;
+        if (exiv2Iface.load(imgPath))
+            caption = getImageCaption(exiv2Iface);
+        else
+            caption.clear();
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, m_currentAlbumID);
+        res = m_talker->addPhoto(imgPath, m_currentAlbumID, caption);
     }
     if (!res)
     {
