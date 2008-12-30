@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=iPodExport
 Name[el]=Εξαγωγή iPod
+Name[et]=iPodi eksport
 Name[he]=יצוא ל-iPod
 Name[it]=Esportazione a iPod
 Name[lv]=iPodEksports
@@ -15,6 +16,7 @@ Comment[cs]=Nástroj pro export obrázků na iPod
 Comment[da]=Et værktøj til at eksportere billeder til en iPod-enhed
 Comment[de]=Ein Werkzeug, um Bilder auf einen iPod zu exportieren.
 Comment[el]=Ένα εργαλείο εξαγωγής εικόνων σε μια συσκευή Ipod
+Comment[et]=Tööriist piltide eksportimiseks iPodi seadmele
 Comment[gl]=Unha utilidade para exportar imaxes a un dispositivo Ipod
 Comment[he]=כלי ליצוא תמונות להתקן iPod
 Comment[it]=Uno strumento per esportare immagini a un dispositivo iPod

@@ -1,7 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Facebook Exporter
+Name[et]=Facebooki eksport
+Name[gl]=Exportador a Facebook
+Name[pt]=Exportação para o Facebook
+Name[pt_BR]=Exportar para o Facebook
+Name[uk]=Експорт до Facebook
 Comment=A tool to export images to a remote Facebook web service
+Comment[et]=Tööriist piltide eksportimiseks Facebooki veebiteenusesse
+Comment[gl]=Unha utilidade para exportar imaxe a un servizo web Facebook
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Facebook
+Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço da Internet remoto Facebook
+Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби Facebook
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_fbexport
