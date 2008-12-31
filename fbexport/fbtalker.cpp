@@ -23,6 +23,8 @@
 #include "fbtalker.h"
 #include "fbtalker.moc"
 
+#include <time.h>
+
 // Qt includes.
 #include <QByteArray>
 #include <QDomDocument>
@@ -37,7 +39,6 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
-
 
 // Local includes.
 #include "pluginsversion.h"
