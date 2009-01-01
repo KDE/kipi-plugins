@@ -6,8 +6,8 @@
  * Date        : 2008-11-30
  * Description : a widget to display an info message
  *
- * Copyright 2004-2005 by Enrico Ros <eros.kde@email.it>
- * Copyright 2008 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>
+ * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
