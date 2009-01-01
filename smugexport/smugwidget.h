@@ -6,7 +6,7 @@
  * Date        : 2008-12-01
  * Description : a kipi plugin to export images to SmugMug web service
  *
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -53,7 +53,8 @@ public:
     SmugWidget(QWidget* parent, KIPI::Interface *iface);
     ~SmugWidget();
 
-    void updateLabels(const QString& email, const QString& name, const QString& nick);
+    void updateLabels(const QString& email = "", const QString& name = "", 
+                      const QString& nick = "");
 
 private slots:
     void slotResizeChecked();

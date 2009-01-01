@@ -6,7 +6,7 @@
  * Date        : 2008-12-01
  * Description : a kipi plugin to export images to SmugMug web service
  *
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -168,7 +168,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface)
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
-    updateLabels("", "", "");  // use empty labels until login
+    updateLabels();  // use empty labels until login
 
     // ------------------------------------------------------------------------
 
