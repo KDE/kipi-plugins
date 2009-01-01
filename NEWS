@@ -2,8 +2,9 @@ Kipi-plugins 0.2.0-beta6 - Release date: xx/01/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
-FbExport       : New plugin to export images to a remote Facebook web service (http://www.facebook.com)
 
+FbExport       : New plugin to export images to a remote Facebook web service (http://www.facebook.com)
+FlickrExport   : Add support of Photosets.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -14,7 +15,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 175219 : PicasaWebExport    : Album creating wrong date in picasaweb.
 006 ==> 175222 : PicasaWebExport    : Unable to create non listed album.
 007 ==> 166672 : FbExport           : Export to Facebook.
-008 ==> 
+008 ==> 129623 : FlickrExport       : Option to upload to specific photoset.
+009 ==> 
 
 Kipi-plugins 0.2.0-beta5 - Release date: 14/12/2008
 ------------------------------------------------------------------------
