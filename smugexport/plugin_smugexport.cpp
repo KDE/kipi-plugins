@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -97,7 +97,7 @@ void Plugin_SmugExport::slotActivate()
 
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", "kipi-smugexport-"
-                                           + QString::number(getpid()) + "/");
+                                           + QString::number(getpid()) + '/');
 
     // We clean it up in the close button
     m_dlg = new KIPISmugExportPlugin::SmugWindow(interface, tmp,

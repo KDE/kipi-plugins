@@ -591,7 +591,7 @@ void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
         return;
     }
 
-    // reload album list and automaticaly select new album
+    // reload album list and automatically select new album
     m_currentAlbumID = newAlbumID;
     m_talker->listAlbums();
 }
