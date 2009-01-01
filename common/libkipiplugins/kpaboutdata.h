@@ -6,7 +6,7 @@
  * Date        : 2006-14-09
  * Description : Kipi-Plugins shared library.
  *
- * Copyright (C) 2006-2008 Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2006-2009 Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,10 +40,10 @@ class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
     public:
 
       KPAboutData(const KLocalizedString& pluginName,
-                  const QByteArray& pluginVersion=QByteArray(),
-                  enum LicenseKey licenseType=License_Unknown,
-                  const KLocalizedString& pluginDescription=KLocalizedString(),
-                  const KLocalizedString& copyrightStatement=ki18n("Copyright 2003-2008, kipi-plugins team"));
+                  const QByteArray& pluginVersion            = QByteArray(),
+                  enum LicenseKey licenseType                = License_Unknown,
+                  const KLocalizedString& pluginDescription  = KLocalizedString(),
+                  const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2009, kipi-plugins team"));
 };
 
 } // namespace KIPIPlugins
