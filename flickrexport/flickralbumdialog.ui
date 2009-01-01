@@ -155,7 +155,7 @@
     <item row="1" column="0" >
      <widget class="QLabel" name="titleLabel" >
       <property name="text" >
-       <string>Title (optional):</string>
+       <string>Title (required):</string>
       </property>
       <property name="wordWrap" >
        <bool>false</bool>
