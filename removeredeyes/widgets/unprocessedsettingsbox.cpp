@@ -66,7 +66,7 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
             "<p><ul>"
             "<li><b>Ask the user:</b> A popup window will appear to ask for further actions.</li>"
             "<li><b>Keep:</b> All unprocessed images will be kept in the list.</li>"
-            "<li><b>Remove:</b> All unprocessed images are removed after testrun.</li>"
+            "<li><b>Remove:</b> All unprocessed images are removed after the test run.</li>"
             "</ul></p>");
     setWhatsThis(whatsThis);
 
@@ -83,12 +83,12 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
     d->unprocessedGroup->addButton(askMode, Ask);
 
     QRadioButton* keepMode = new QRadioButton(i18n("Keep"));
-    keepMode->setToolTip(i18n("If checked, unprocessed images will be kept after test-run."));
+    keepMode->setToolTip(i18n("If checked, unprocessed images will be kept after the test run."));
     d->unprocessedGroup->addButton(keepMode, Keep);
 
     QRadioButton* removeMode = new QRadioButton(i18n("Remove"));
     removeMode->setToolTip(i18n("If checked, unprocessed images will be removed from "
-                                "the images list after test-run."));
+                                "the images list after the test run."));
     d->unprocessedGroup->addButton(removeMode, Remove);
 
     // ----------------------------------------------------------------
