@@ -84,7 +84,7 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
 
     // --------------------------------------------------------
 
-    listView()->setColumn(ImagesListView::User1, i18n("Corrected eyes"), true);
+    listView()->setColumn(ImagesListView::User1, i18n("Corrected Eyes"), true);
     listView()->header()->setResizeMode(QHeaderView::Stretch);
     listView()->setWhatsThis(i18n("This is the list of images to remove red eyes from."));
 
