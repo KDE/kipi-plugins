@@ -152,11 +152,15 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     // ----------------------------------------------------------
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Correct Photos"), KIcon("dialog-ok-apply")));
-    setButtonToolTip(User1, i18n("Start correcting the listed images"));
+    KGuiItem correctBtn = KStandardGuiItem::ok();
+    correctBtn.setText(i18n("Correct Photos"));
+    correctBtn.setToolTip(i18n("Start correcting the listed images"));
+    setButtonGuiItem(User1, correctBtn);
 
-    setButtonGuiItem(User2, KGuiItem(i18n("Testrun"), KIcon("dialog-information")));
-    setButtonToolTip(User2, i18n("Simulate the correction process, without saving the results."));
+    KGuiItem testrunBtn = KStandardGuiItem::apply();
+    testrunBtn.setText(i18n("Testrun"));
+    testrunBtn.setToolTip(i18n("Simulate the correction process, without saving the results."));
+    setButtonGuiItem(User2, testrunBtn);
 
     // ----------------------------------------------------------
 
