@@ -23,6 +23,7 @@
 
 #include "flickrwindow.h"
 #include "flickrwindow.moc"
+#include "flickrnewphotosetdialog.h"
 
 // Qt includes.
 
@@ -35,6 +36,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <klineedit.h>
 #include <khelpmenu.h>
 #include <kmenu.h>
@@ -87,7 +89,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 //  m_wallet                 = 0;
     m_widget                 = new FlickrWidget(this, interface);
     m_photoView              = m_widget->m_photoView;
-//  m_newAlbumBtn            = m_widget->m_newAlbumBtn;
+    m_albumsListComboBox     = m_widget->m_albumsListComboBox;
+    m_newAlbumBtn            = m_widget->m_newAlbumBtn;
     m_resizeCheckBox         = m_widget->m_resizeCheckBox;
     m_publicCheckBox         = m_widget->m_publicCheckBox;
     m_familyCheckBox         = m_widget->m_familyCheckBox;
@@ -109,8 +112,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
             this, SLOT(slotImageListChanged(bool)));
 
     //m_startUploadButton->setEnabled(false);
-    //m_albumView->setRootIsDecorated(true);
-    //m_newAlbumBtn->setEnabled(false);
 
     // --------------------------------------------------------------------------
     // About data and help button.
@@ -157,8 +158,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
             this, SLOT( slotAddPhotoFailed( const QString& ) ));
 
-    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded( const QList<FPhotoSet>& ) ),
-            this, SLOT( slotListPhotoSetsResponse( const QList<FPhotoSet>& ) ));
+    connect(m_newAlbumBtn, SIGNAL( clicked() ),
+            this, SLOT( slotCreateNewPhotoSet() ));
+
+    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded() ),
+            this, SLOT( slotListPhotoSetsSucceeded() ));
+
+    connect(m_talker, SIGNAL( signalListPhotoSetsFailed(const QString&) ),
+            this, SLOT( slotListPhotoSetsFailed(const QString&) ));
 
     //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
     //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
@@ -312,7 +319,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_userId   = m_talker->getUserId();
     kDebug( 51000 ) << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
-    m_widget->setEnabled(true);
+    m_talker->listPhotoSets();
 }
 
 void FlickrWindow::slotBusy(bool val)
@@ -344,73 +351,18 @@ void FlickrWindow::slotUserChangeRequest()
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
-/*
-void FlickrWindow::slotAlbums( const QValueList<GAlbum>& albumList )
-{
-    m_albumDict.clear();
-    m_tagView->clear();
-    //m_photoView->begin();
-    //m_photoView->write( "<html></html>" );
-    //m_photoView->end();
-
-    KIconLoader* iconLoader = KApplication::kApplication()->iconLoader();
-    QPixmap pix = iconLoader->loadIcon( "folder", KIconLoader::NoGroup, 32 );
-
-    typedef QValueList<GAlbum> GAlbumList;
-    GAlbumList::const_iterator iter;
-    for ( iter = albumList.begin(); iter != albumList.end(); ++iter )
-    {
-        const GAlbum& album = *iter;
-
-        if ( album.parent_ref_num == 0 )
-        {
-            GAlbumViewItem* item = new GAlbumViewItem( m_tagView, album.name,
-                                                       album );
-            item->setPixmap( 0, pix );
-            m_albumDict.insert( album.ref_num, item );
-        }
-        else
-        {
-            QListViewItem* parent = m_albumDict.find( album.parent_ref_num );
-            if ( parent )
-            {
-                GAlbumViewItem* item = new GAlbumViewItem( parent, album.name,
-                                                           album);
-                item->setPixmap( 0, pix );
-                m_albumDict.insert( album.ref_num, item );
-            }
-            else
-            {
-                kWarning( 51000 ) << "Failed to find parent for album "
-                            << album.name
-                            << "with id " << album.ref_num;
-            }
-        }
-    }
-
-
-    // find and select the last selected album
-    int lastSelectedID = 0;
-    for ( iter = albumList.begin(); iter != albumList.end(); ++iter )
-    {
-        if ((*iter).name == m_lastSelectedAlbum)
-        {
-            lastSelectedID = (*iter).ref_num;
-            break;
-        }
-    }
-
-    if (lastSelectedID > 0)
-    {
-        GAlbumViewItem* lastSelectedItem = m_albumDict.find( lastSelectedID );
-        if (lastSelectedItem)
-        {
-            m_tagView->setSelected( lastSelectedItem, true );
-            m_tagView->ensureItemVisible( lastSelectedItem );
-        }
-    }
+void FlickrWindow::slotCreateNewPhotoSet() {
+   FlickrNewPhotoSetDialog *dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
+   int resp = dlg->exec();
+   if (resp == QDialog::Accepted) { 
+      m_talker->createPhotoSet(dlg->nameEdit->text(), 
+			       dlg->titleEdit->text(), 
+                               dlg->descriptionEdit->text(), 
+                               dlg->primaryPhotoIdEdit->text());
+   } else {
+     kdDebug() << "New Photoset creation aborted " << endl;
+   } 
 }
-*/
 
 void FlickrWindow::slotAuthCancel()
 {
@@ -434,16 +386,26 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 }
 */
 
-void FlickrWindow::slotListPhotoSetsResponse(const QList <FPhotoSet>& /*photoSetList*/)
+void FlickrWindow::slotListPhotoSetsSucceeded()
 {
     kDebug( 51000 ) << "SlotListPhotoSetsResponse invoked" << endl;
-    // TODO
+    if (m_talker && m_talker->m_photoSetsList)
+    {
+        QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
+        m_albumsListComboBox->clear();
+        QLinkedList<FPhotoSet>::iterator it = list->begin();
+	    int index = 0;
+        while(it != list->end())
+        {
+            FPhotoSet photoSet=*it;
+            QString name = photoSet.title;
+            m_albumsListComboBox->insertItem(index++, name);
+            it++;
+        }
+    }
+    m_widget->setEnabled(true);
 }
 
-void FlickrWindow::slotNewPhotoSet()
-{
-    // TODO
-}
 
 /** This slot is call when 'Start Uploading' button is pressed.
 */
@@ -539,11 +501,25 @@ void FlickrWindow::slotAddPhotoNext()
     typedef QPair<KUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
+    QString selectedPhotoSetName = m_albumsListComboBox->currentText();
+    QString selectedPhotoSetId = "";
+    QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
+    while(it != m_talker->m_photoSetsList->end()) {
+      FPhotoSet fps = *it;
+      QString name = fps.title;
+      if (name == selectedPhotoSetName) {
+        selectedPhotoSetId = fps.id;
+        break;
+      }
+      it++;
+    } 
+    m_talker->m_selectedPhotoSetId = selectedPhotoSetId;
     bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path
-                                           info,
+					   info,
                                            m_resizeCheckBox->isChecked(),
                                            m_dimensionSpinBox->value(),
-                                           m_imageQualitySpinBox->value());
+                                           m_imageQualitySpinBox->value()
+					   );
     if (!res)
     {
         slotAddPhotoFailed("");
@@ -567,6 +543,10 @@ void FlickrWindow::slotAddPhotoSucceeded()
     slotAddPhotoNext();
 }
 
+void FlickrWindow::slotListPhotoSetsFailed(const QString& msg) {
+    KMessageBox::error(this,
+                 i18n("Failed to Fetch Photosets information from Flickr. %1\n", msg));
+}
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,

@@ -61,7 +61,9 @@ public:
         FE_GETFROB,
         FE_CHECKTOKEN,
         FE_GETTOKEN,
-        FE_GETAUTHORIZED
+        FE_GETAUTHORIZED,
+        FE_CREATEPHOTOSET,
+        FE_ADDPHOTOTOPHOTOSET
     };
 
 public:
@@ -79,17 +81,20 @@ public:
 
     void    listPhotoSets();
     void    listPhotos(const QString& albumName);
-    void    createAlbum(const QString& parentAlbumName,
-                        const QString& albumName,
-                        const QString& albumTitle,
-                        const QString& albumCaption);
+    void    createPhotoSet(const QString& name,
+                           const QString& title,
+                           const QString& desc,
+                           const QString& primaryPhotoId);
 
+    void addPhotoToPhotoSet(const QString& photoId, const QString& photoSetId);
     bool    addPhoto(const QString& photoPath, const FPhotoInfo& info,
                      bool rescale=false, int maxDim=600, int imageQuality=85);
 
 public:
 
     QProgressDialog *m_authProgressDlg;
+    QLinkedList <FPhotoSet>* m_photoSetsList;
+    QString    m_selectedPhotoSetId;
 
 signals:
 
@@ -99,7 +104,8 @@ signals:
     void signalAlbums(const QList<GAlbum>& albumList);
     void signalPhotos(const QList<GPhoto>& photoList);
     void signalAddPhotoSucceeded();
-    void signalListPhotoSetsSucceeded(const QList <FPhotoSet>& photoSetList);
+    void signalListPhotoSetsSucceeded();
+    void signalListPhotoSetsFailed(QString& msg);
     void signalAddPhotoFailed(const QString& msg);
     void signalListPhotoSetsFailed(const QString& msg);
     void signalAuthenticate();
@@ -116,6 +122,8 @@ private:
     void parseResponseGetToken(const QByteArray& data);
     void parseResponseCheckToken(const QByteArray& data);
     void parseResponsePhotoProperty(const QByteArray& data);
+    void parseResponseCreatePhotoSet(const QByteArray& data);
+    void parseResponseAddPhotoToPhotoSet(const QByteArray& data);
 
     QString getApiSig(const QString& secret, const KUrl& url);
 
@@ -129,7 +137,6 @@ private slots:
 private:
 
     QWidget*   m_parent;
-
 //  QString    m_cookie;
     QByteArray m_buffer;
 
@@ -139,7 +146,6 @@ private:
     QString    m_token;
     QString    m_username;
     QString    m_userId;
-
     KIO::Job*  m_job;
 
     State      m_state;

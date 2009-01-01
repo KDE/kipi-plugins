@@ -33,6 +33,7 @@ class QSpinBox;
 class QCheckBox;
 class QLabel;
 
+class KComboBox;
 class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
@@ -75,7 +76,7 @@ private slots:
 
 private:
 
-//  QPushButton*  m_newAlbumBtn;
+    QPushButton*  m_newAlbumBtn;
     QPushButton*  m_changeUserButton;
 
     QCheckBox*    m_resizeCheckBox;
@@ -90,6 +91,7 @@ private:
 
     QLabel*       m_userNameDisplayLabel;
 
+    KComboBox*    m_albumsListComboBox;
     KLineEdit*    m_tagsLineEdit;
 
     KTabWidget*   m_tab;

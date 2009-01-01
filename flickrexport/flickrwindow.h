@@ -47,6 +47,7 @@ class QCheckBox;
 class KLineEdit;
 class KHTMLPart;
 class KUrl;
+class KComboBox;
 
 namespace KIPI
 {
@@ -98,12 +99,13 @@ private slots:
 //  void slotTagSelected();
 //  void slotOpenPhoto( const KUrl& url );
 
-    void slotNewPhotoSet();
+    void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QList <FPhotoSet>& photoSetList);
+    void slotListPhotoSetsSucceeded();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
+    void slotListPhotoSetsFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotAuthCancel();
     void slotHelp();
@@ -121,9 +123,10 @@ private:
     unsigned int                           m_uploadCount;
     unsigned int                           m_uploadTotal;
 
-//  QPushButton                           *m_newAlbumBtn;
+    QPushButton                           *m_newAlbumBtn;
     QPushButton                           *m_changeUserButton;
 
+    KComboBox                             *m_albumsListComboBox;
     QCheckBox                             *m_resizeCheckBox;
     QCheckBox                             *m_publicCheckBox;
     QCheckBox                             *m_familyCheckBox;

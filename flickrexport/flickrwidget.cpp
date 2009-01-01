@@ -36,6 +36,7 @@
 
 // KDE includes.
 
+#include <kcombobox.h>
 #include <ktabwidget.h>
 #include <klineedit.h>
 #include <kdialog.h>
@@ -86,10 +87,17 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     QWidget* settingsBox           = new QWidget(m_tab);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    //m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
-    //m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    //m_newAlbumBtn->setText(i18n("&New Album"));
-
+    QGridLayout* albumsSettingsLayout = new QGridLayout();
+    QLabel* albumLabel = new QLabel(i18n("PhotoSet:"), settingsBox);
+    m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
+    m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_newAlbumBtn->setText(i18n("&New PhotoSet"));
+    m_albumsListComboBox = new KComboBox(settingsBox);
+    albumsSettingsLayout->addWidget(albumLabel, 0, 0, 1, 1);
+    albumsSettingsLayout->addWidget(m_albumsListComboBox, 0, 1, 1, 1);
+    albumsSettingsLayout->addWidget(m_newAlbumBtn, 0, 2, 1, 1);
+    albumsSettingsLayout->setColumnStretch(1, 10);
+	
     QGridLayout* tagsLayout  = new QGridLayout();
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), settingsBox);
     m_tagsLineEdit           = new KLineEdit(settingsBox);
@@ -173,6 +181,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
+    settingsBoxLayout->addLayout(albumsSettingsLayout);
     settingsBoxLayout->addLayout(tagsLayout);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(accountBox);
