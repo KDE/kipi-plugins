@@ -60,6 +60,7 @@ public:
         id = -1;
         categoryID = -1;
         subCategoryID = -1;
+        tmplID = -1;
         isPublic = true;
     }
 
@@ -76,6 +77,25 @@ public:
 
     // below fields only used by createAlbum (and not by listAlbums)
     QString description;
+    int     tmplID;
+    QString tmpl;
+    bool    isPublic;
+    QString password;
+    QString passwordHint;
+};
+
+class SmugAlbumTmpl
+{
+public:
+    SmugAlbumTmpl()
+    {
+        id = -1;
+        isPublic = true;
+    }
+
+    int     id;
+    QString name;
+
     bool    isPublic;
     QString password;
     QString passwordHint;

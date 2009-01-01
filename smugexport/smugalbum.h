@@ -28,6 +28,7 @@
 // KDE includes.
 #include <kdialog.h>
 
+class QGroupBox;
 class QRadioButton;
 class QComboBox;
 class KLineEdit;
@@ -55,7 +56,9 @@ private:
     KTextEdit       *m_descEdt;
     QComboBox       *m_categCoB;
     QComboBox       *m_subCategCoB;
+    QComboBox       *m_templateCoB;
 
+    QGroupBox       *m_privBox;
     KLineEdit       *m_passwdEdt;
     KLineEdit       *m_hintEdt;
     QRadioButton    *m_publicRBtn;

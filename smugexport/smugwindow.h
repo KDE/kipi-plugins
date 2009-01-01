@@ -34,6 +34,9 @@
 // LibKIPI includes.
 #include <libkipi/interface.h>
 
+// local includes.
+#include "smugitem.h"
+
 class QProgressDialog;
 class KPasswordDialog;
 
@@ -55,8 +58,6 @@ namespace KIPISmugExportPlugin
 class SmugTalker;
 class SmugWidget;
 class SmugNewAlbum;
-class SmugAlbum;
-class SmugCategory;
 
 class SmugWindow : public KDialog
 {
@@ -76,6 +77,8 @@ private slots:
                              int newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <SmugAlbum>& albumsList);
+    void slotListAlbumTmplDone(int errCode, const QString& errMsg,
+                               const QList <SmugAlbumTmpl>& albumTList);
     void slotListCategoriesDone(int errCode, const QString& errMsg,
                                 const QList <SmugCategory>& categoriesList);
     void slotListSubCategoriesDone(int errCode, const QString& errMsg,
@@ -90,6 +93,7 @@ private slots:
     void slotClose();
     void slotStartUpload();
     void slotImageListChanged(bool);
+    void slotTemplateSelectionChanged(int index);
     void slotCategorySelectionChanged(int index);
 
 private:
@@ -110,6 +114,7 @@ private:
     QString                     m_email;
     QString                     m_password;
     int                         m_currentAlbumID;
+    int                         m_currentTmplID;
     int                         m_currentCategoryID;
 
     QProgressDialog            *m_progressDlg;

@@ -186,6 +186,36 @@ void SmugTalker::listAlbums()
     m_buffer.resize(0);
 }
 
+void SmugTalker::listAlbumTmpl()
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    KUrl url(m_apiURL);
+    url.addQueryItem("method", "smugmug.albumtemplates.get");
+    url.addQueryItem("SessionID", m_sessionID);
+
+    QByteArray tmp;
+    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = SMUG_LISTALBUMTEMPLATES;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
 void SmugTalker::listCategories()
 {
     if (m_job)
@@ -265,16 +295,22 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
         url.addQueryItem("SubCategoryID", QString::number(album.subCategoryID));
     if (!album.description.isEmpty())
         url.addQueryItem("Description", album.description);
-    if (!album.description.isEmpty())
-        url.addQueryItem("Description", album.description);
-    if (!album.password.isEmpty())
-        url.addQueryItem("Password", album.password);
-    if (!album.passwordHint.isEmpty())
-        url.addQueryItem("PasswordHint", album.passwordHint);
-    if (album.isPublic)
-        url.addQueryItem("Public", "1");
+    if (album.tmplID > 0)
+    {
+        // template will also define privacy settings
+        url.addQueryItem("AlbumTemplateID", QString::number(album.tmplID));
+    }
     else
-        url.addQueryItem("Public", "0");
+    {
+        if (!album.password.isEmpty())
+            url.addQueryItem("Password", album.password);
+        if (!album.passwordHint.isEmpty())
+            url.addQueryItem("PasswordHint", album.passwordHint);
+        if (album.isPublic)
+            url.addQueryItem("Public", "1");
+        else
+            url.addQueryItem("Public", "0");
+    }
 
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
@@ -404,6 +440,9 @@ void SmugTalker::slotResult(KJob *kjob)
             break;
         case(SMUG_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
+            break;
+        case(SMUG_LISTALBUMTEMPLATES):
+            parseResponseListAlbumTmpl(m_buffer);
             break;
         case(SMUG_LISTCATEGORIES):
             parseResponseListCategories(m_buffer);
@@ -669,6 +708,62 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
         errCode = 0;
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
+    emit signalBusy(false);
+}
+
+void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+    QDomDocument doc("albumtemplates.get");
+    if (!doc.setContent(data))
+        return;
+
+    kDebug(51000) << "Parse AlbumTemplates response:" << endl << data;
+
+    QList<SmugAlbumTmpl> albumTList;
+    QDomElement e = doc.documentElement();
+    for (QDomNode node = e.firstChild();
+         !node.isNull();
+         node = node.nextSibling())
+    {
+        if (!node.isElement())
+            continue;
+        e = node.toElement();
+        if (e.tagName() == "AlbumTemplates")
+        {
+            for (QDomNode nodeT = e.firstChild();
+                 !nodeT.isNull();
+                 nodeT = nodeT.nextSibling())
+            {
+                if (!nodeT.isElement())
+                    continue;
+                QDomElement e = nodeT.toElement();
+                if (e.tagName() == "AlbumTemplate")
+                {
+                    SmugAlbumTmpl tmpl;
+                    tmpl.id = e.attribute("id").toInt();
+                    tmpl.name = e.attribute("AlbumTemplateName");
+                    tmpl.isPublic = e.attribute("Public") == "1";
+                    tmpl.password = e.attribute("Password");
+                    tmpl.passwordHint = e.attribute("PasswordHint");
+                    albumTList.append(tmpl);
+                }
+            }
+            errCode = 0;
+        }
+        else if (e.tagName() == "err")
+        {
+            errCode = e.attribute("code").toInt();
+            errMsg = e.attribute("msg");
+            kDebug(51000) << "Error:" << errCode << errMsg;
+        }
+    }
+
+    if (errCode == 15)  // 15: empty list
+        errCode = 0;
+    emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg),
+                                      albumTList);
     emit signalBusy(false);
 }
 

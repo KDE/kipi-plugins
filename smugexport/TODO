@@ -1,7 +1,7 @@
 Smug export plugin
 ----------------------------------------------------------------------------
 Short term:
- - Fix button enable/disable when image list is empty
+ - Fix button enable/disable when image list is empty (ImagesList)
  - Fix button enable/disable on new album dialog
  - Check FileSizeLimit before upload
  - Caption, Keywords, GPS coordinates support

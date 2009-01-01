@@ -82,39 +82,45 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
+    m_templateCoB      = new QComboBox(albumBox);
+    m_templateCoB->setEditable(false);
+    m_templateCoB->setWhatsThis(
+        i18n("Album template for new album (optional)."));
+
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18n("Category:"), m_categCoB);
     albumBoxLayout->addRow(i18n("Subcategory:"), m_subCategCoB);
     albumBoxLayout->addRow(i18n("Description:"), m_descEdt);
+    albumBoxLayout->addRow(i18n("Template:"), m_templateCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
-    QGroupBox* privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
-    privBox->setWhatsThis(
-        i18n("These are security and privacy settings for new SmugMug album."));
-    QFormLayout* privBoxLayout = new QFormLayout(privBox);
 
-    QHBoxLayout* radioLayout = new QHBoxLayout(privBox);
-    m_publicRBtn        = new QRadioButton(i18n("Public"), privBox);
+    m_privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
+    m_privBox->setWhatsThis(
+        i18n("These are security and privacy settings for new SmugMug album."));
+    QFormLayout* privBoxLayout = new QFormLayout(m_privBox);
+
+    QHBoxLayout* radioLayout = new QHBoxLayout(m_privBox);
+    m_publicRBtn        = new QRadioButton(i18n("Public"), m_privBox);
     m_publicRBtn->setChecked(true);
     m_publicRBtn->setWhatsThis(
         i18n("Public album is listed on your public SmugMug page."));
-    m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"), privBox);
+    m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"), m_privBox);
     m_unlistedRBtn->setWhatsThis(
         i18n("Unlisted album is only accessible via URL."));
     radioLayout->addWidget(m_publicRBtn);
     radioLayout->addWidget(m_unlistedRBtn);
     
-    m_passwdEdt         = new KLineEdit(privBox);
+    m_passwdEdt         = new KLineEdit(m_privBox);
     m_passwdEdt->setWhatsThis(
         i18n("Require password to access the album (optional)."));
 
-    m_hintEdt           = new KLineEdit(privBox);
+    m_hintEdt           = new KLineEdit(m_privBox);
     m_hintEdt->setWhatsThis(
         i18n("Password hint to present to users on the password prompt (optional)."));
-
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
     privBoxLayout->addRow(i18n("Password:"), m_passwdEdt);
     privBoxLayout->addRow(i18n("Password Hint:"), m_hintEdt);
@@ -123,7 +129,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
 
     // ------------------------------------------------------------------------
     mainLayout->addWidget(albumBox);
-    mainLayout->addWidget(privBox);
+    mainLayout->addWidget(m_privBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
@@ -146,6 +152,10 @@ void SmugNewAlbum::getAlbumProperties(SmugAlbum &album)
                                          m_subCategCoB->currentIndex()).toInt();
 
     album.description = m_descEdt->toPlainText();
+
+    album.tmpl = m_templateCoB->currentText();
+    album.tmplID = m_templateCoB->itemData(
+                                         m_templateCoB->currentIndex()).toInt();
 
     album.isPublic = m_publicRBtn->isChecked();
     album.password = m_passwdEdt->text();

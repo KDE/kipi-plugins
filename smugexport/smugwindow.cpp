@@ -31,6 +31,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QGroupBox>
 #include <QProgressDialog>
 
 // KDE includes.
@@ -116,7 +117,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWi
                             "SmugMug web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
                             "(c) 2008, Gilles Caulier\n"
-                            "(c) 2008, Luka Renko"));
+                            "(c) 2008-2009, Luka Renko"));
 
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                        "lure at kubuntu dot org");
@@ -146,6 +147,9 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWi
     connect(m_albumDlg->m_categCoB, SIGNAL( currentIndexChanged(int) ),
             this, SLOT( slotCategorySelectionChanged(int)) );
 
+    connect(m_albumDlg->m_templateCoB, SIGNAL( currentIndexChanged(int) ),
+            this, SLOT( slotTemplateSelectionChanged(int)) );
+
     // ------------------------------------------------------------------------
 
     m_talker = new SmugTalker(this);
@@ -164,6 +168,9 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWi
 
     connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ),
             this, SLOT( slotListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ));
+
+    connect(m_talker, SIGNAL( signalListAlbumTmplDone(int, const QString&, const QList <SmugAlbumTmpl>&) ),
+            this, SLOT( slotListAlbumTmplDone(int, const QString&, const QList <SmugAlbumTmpl>&) ));
 
     connect(m_talker, SIGNAL( signalListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ),
             this, SLOT( slotListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ));
@@ -309,8 +316,36 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
+void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
+                                       const QList <SmugAlbumTmpl>& albumTList)
+{
+    // always put at least default <none> subcategory
+    m_albumDlg->m_templateCoB->clear();
+    m_albumDlg->m_templateCoB->addItem(i18n("<none>"), 0);
+
+    if (errCode != 0) 
+    {
+        KMessageBox::error(this, i18n("SmugMug Call Failed: %1\n", errMsg));
+        return;
+    }
+
+    for (int i = 0; i < albumTList.size(); ++i)
+    {
+        m_albumDlg->m_templateCoB->addItem(
+            albumTList.at(i).name,
+            albumTList.at(i).id);
+       if (m_currentTmplID == albumTList.at(i).id)
+           m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
+    }
+    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
+                          m_albumDlg->m_templateCoB->currentIndex()).toInt();
+
+    // now fill in categories
+    m_talker->listCategories();
+}
+
 void SmugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
-                                           const QList <SmugCategory>& categoriesList)
+                                        const QList <SmugCategory>& categoriesList)
 {
     if (errCode != 0) 
     {
@@ -337,7 +372,7 @@ void SmugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
 {
     // always put at least default <none> subcategory
     m_albumDlg->m_subCategCoB->clear();
-    m_albumDlg->m_subCategCoB->addItem(i18n("<none>"));
+    m_albumDlg->m_subCategCoB->addItem(i18n("<none>"), 0);
 
     if (errCode != 0) 
     {
@@ -353,8 +388,22 @@ void SmugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
     }
 }
 
+void SmugWindow::slotTemplateSelectionChanged(int index)
+{
+    if (index < 0)
+        return;
+
+    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(index).toInt();
+
+    // if template is selected, then disable Security & Privacy
+    m_albumDlg->m_privBox->setEnabled(m_currentTmplID == 0);
+}
+
 void SmugWindow::slotCategorySelectionChanged(int index)
 {
+    if (index < 0)
+        return;
+
     // subcategories are per category -> reload
     m_currentCategoryID = m_albumDlg->m_categCoB->itemData(index).toInt();
     m_talker->listSubCategories(m_currentCategoryID);
@@ -413,12 +462,14 @@ void SmugWindow::slotNewAlbumRequest()
 {
     kDebug(51000) << "Slot New Album Request";
 
-    // get list of Categories from SmugMug to fill in dialog
-    m_talker->listCategories();
+    // get list of album templates from SmugMug to fill in dialog
+    m_talker->listAlbumTmpl();
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
         kDebug(51000) << "Calling New Album method";
+        m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
+                        m_albumDlg->m_templateCoB->currentIndex()).toInt();
         m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
                         m_albumDlg->m_categCoB->currentIndex()).toInt();
 

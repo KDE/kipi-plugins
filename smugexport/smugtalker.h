@@ -55,6 +55,7 @@ public:
     void    logout();
 
     void    listAlbums();
+    void    listAlbumTmpl();
     void    listCategories();
     void    listSubCategories(int categoryID);
 
@@ -71,6 +72,8 @@ signals:
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                int newAlbumID);
+    void signalListAlbumTmplDone(int errCode, const QString& errMsg,
+                                      const QList <SmugAlbumTmpl>& albumTList);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <SmugAlbum>& albumsList);
     void signalListCategoriesDone(int errCode, const QString& errMsg,
@@ -84,6 +87,7 @@ private:
         SMUG_LOGIN = 0,
         SMUG_LOGOUT,
         SMUG_LISTALBUMS,
+        SMUG_LISTALBUMTEMPLATES,
         SMUG_LISTCATEGORIES,
         SMUG_LISTSUBCATEGORIES,
         SMUG_CREATEALBUM,
@@ -96,6 +100,7 @@ private:
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
+    void parseResponseListAlbumTmpl(const QByteArray& data);
     void parseResponseListCategories(const QByteArray& data);
     void parseResponseListSubCategories(const QByteArray& data);
 
