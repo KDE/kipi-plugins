@@ -6,7 +6,7 @@
  * Date        : 2008-12-01
  * Description : a kipi plugin to export images to SmugMug web service
  *
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,13 +31,13 @@
 // KDE includes.
 #include <kio/job.h>
 
+// local includes.
+#include "smugitem.h"
+
 class QProgressDialog;
 
 namespace KIPISmugExportPlugin
 {
-
-class SmugAlbum;
-class SmugCategory;
 
 class SmugTalker : public QObject
 {
@@ -47,11 +47,7 @@ public:
     SmugTalker(QWidget* parent);
     ~SmugTalker();
 
-    QString getEmail() const;
-    QString getNickName() const;
-    QString getDisplayName() const;
-    QString getAccountType() const;
-    int     getFileSizeLimit() const;
+    SmugUser    getUser() const;
 
     bool    loggedIn();
     void    cancel();
@@ -118,11 +114,7 @@ private:
     QString    m_apiKey;
     QString    m_sessionID;
 
-    QString    m_email;
-    QString    m_nickName;
-    QString    m_displayName;
-    QString    m_accountType;
-    int        m_fileSizeLimit;
+    SmugUser   m_user;
 
     KIO::Job*  m_job;
 
