@@ -32,13 +32,14 @@
 // KDE includes.
 #include <kio/job.h>
 
+// local includes.
+#include "fbitem.h"
+
 class QProgressDialog;
 class QDomElement;
 
 namespace KIPIFbExportPlugin
 {
-
-class FbAlbum;
 
 class FbTalker : public QObject
 {
@@ -51,13 +52,13 @@ public:
     QString         getSessionKey() const;
     unsigned int    getSessionExpires() const;
 
-    QString getDisplayName() const;
-    QString getProfileURL() const;
+    FbUser  getUser() const;
 
     bool    loggedIn();
     void    cancel();
     void    authenticate(const QString& sessionKey, unsigned int sessionExpires);
-    void    logout(); //rename
+    void    changePerm();
+    void    logout();
 
     void    listAlbums();
 
@@ -72,6 +73,7 @@ public:
 signals:
     void signalBusy(bool val);
     void signalLoginDone(int errCode, const QString& errMsg);
+    void signalChangePermDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                long long newAlbumID);
@@ -85,6 +87,7 @@ private:
         FB_GETSESSION,
         FB_GETLOGGEDINUSER,
         FB_GETUSERINFO,
+        FB_GETUPLOADPERM,
         FB_LOGOUT,
         FB_LISTALBUMS,
         FB_CREATEALBUM,
@@ -93,10 +96,12 @@ private:
 
     QString getApiSig(const QMap<QString, QString>& args);
     QString getCallString(const QMap<QString, QString>& args);
+    void    authenticationDone(int errCode, const QString& errMsg);
     void    createToken();
     void    getSession();
     void    getLoggedInUser();
     void    getUserInfo();
+    void    getUploadPermission();
 
     QString errorToText(int errCode, const QString& errMsg);
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
@@ -104,6 +109,7 @@ private:
     void parseResponseGetSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
     void parseResponseGetUserInfo(const QByteArray& data);
+    void parseResponseGetUploadPermission(const QByteArray& data);
     void parseResponseLogout(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
@@ -123,14 +129,14 @@ private:
     QString    m_apiVersion;
     QString    m_apiKey;
     QString    m_secretKey;
+
+    bool       m_loginInProgress;
     QString    m_authToken;
     QString    m_sessionKey;
     long       m_sessionExpires;
-    long       m_uid;
     QTime      m_callID;
 
-    QString    m_userName;
-    QString    m_userURL;
+    FbUser     m_user;
 
     KIO::Job*  m_job;
 

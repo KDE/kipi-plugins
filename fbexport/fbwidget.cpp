@@ -79,15 +79,25 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
         i18n("This is the Facebook account that will be used for upload."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLbl     = new QLabel(i18n("Name: "), accountBox);
+    QLabel *userNameLbl     = new QLabel(i18n("Name:"), accountBox);
     m_userNameDisplayLbl    = new QLabel(accountBox);
+    QLabel *permissionLbl   = new QLabel(i18n("Permission:"), accountBox);
+    permissionLbl->setWhatsThis(
+        i18n("Permission of KIPI Plugin application to upload photos directly. If not, user will need to manually approve uploaded photos in Facebook."));
+    m_permissionLbl         = new QLabel(accountBox);
     m_changeUserBtn         = new QPushButton(accountBox);
     m_changeUserBtn->setText(i18n("Change Account"));
     m_changeUserBtn->setIcon(SmallIcon("system-switch-user"));
+    m_changePermBtn         = new QPushButton(accountBox);
+    m_changePermBtn->setText(i18n("Change Permission"));
+    m_changePermBtn->setIcon(SmallIcon("security-high"));
 
-    accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 1);
-    accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 1, 1, 1);
-    accountBoxLayout->addWidget(m_changeUserBtn,        2, 1, 1, 1);
+    accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
+    accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
+    accountBoxLayout->addWidget(permissionLbl,          1, 0, 1, 2);
+    accountBoxLayout->addWidget(m_permissionLbl,        1, 2, 1, 2);
+    accountBoxLayout->addWidget(m_changeUserBtn,        2, 0, 1, 2);
+    accountBoxLayout->addWidget(m_changePermBtn,        2, 2, 1, 2);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -164,7 +174,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
-    updateLabels("", "");  // use empty labels until login
+    updateLabels();  // use empty labels until login
 
     // ------------------------------------------------------------------------
 
@@ -176,15 +186,35 @@ FbWidget::~FbWidget()
 {
 }
 
-void FbWidget::updateLabels(const QString& name, const QString& url)
+void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)
 {
-    m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
     QString web("http://www.facebook.com");
     if (!url.isEmpty())
         web = url;
     m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                   "<font color=\"#3B5998\">Facebook</font>"
+                                   "<font color=\"#3B5998\">facebook</font>"
                                    "</a></h2></b>").arg(web));
+    if (name.isEmpty())
+    {
+        m_userNameDisplayLbl->clear();
+        m_permissionLbl->clear();
+    }
+    else 
+    {
+        m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
+        if (uplPerm)
+        {
+            m_permissionLbl->setText(i18n("Direct upload"));
+            m_permissionLbl->setWhatsThis(
+                i18n("Uploaded photos will not need manual approval by user."));
+        }
+        else
+        {
+            m_permissionLbl->setText(i18n("Manual upload approval"));
+            m_permissionLbl->setWhatsThis(
+                i18n("Uploaded photos will wait in pending state until manually approved by user."));
+        }
+    }
 }
 
 void FbWidget::slotResizeChecked()

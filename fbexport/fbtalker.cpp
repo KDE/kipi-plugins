@@ -23,7 +23,7 @@
 #include "fbtalker.h"
 #include "fbtalker.moc"
 
-#include <time.h>
+#include <ctime>
 
 // Qt includes.
 #include <QByteArray>
@@ -83,14 +83,9 @@ unsigned int FbTalker::getSessionExpires() const
     return m_sessionExpires;
 }
 
-QString FbTalker::getDisplayName() const
+FbUser FbTalker::getUser() const
 {
-    return m_userName;
-}
-
-QString FbTalker::getProfileURL() const
-{
-    return m_userURL;
+    return m_user;
 }
 
 void FbTalker::cancel()
@@ -146,6 +141,8 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
 
 void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpires)
 {
+    m_loginInProgress = true;
+
     if (!sessionKey.isEmpty() && sessionExpires > time(0) + 900)
     {
         // sessionKey seems to be still valid for at least 15 minutes
@@ -154,7 +151,7 @@ void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpir
         m_sessionExpires = sessionExpires;
 
         m_authProgressDlg->setLabelText(i18n("Validate previous session..."));
-        m_authProgressDlg->setMaximum(6);
+        m_authProgressDlg->setMaximum(8);
         m_authProgressDlg->setValue(1);
 
         // get logged in user - this will check if session is still valid
@@ -177,7 +174,7 @@ void FbTalker::createToken()
     emit signalBusy(true);
 
     m_authProgressDlg->setLabelText(i18n("Logging to Facebook service..."));
-    m_authProgressDlg->setMaximum(6);
+    m_authProgressDlg->setMaximum(8);
     m_authProgressDlg->setValue(1);
 
     QMap<QString, QString> args;
@@ -287,7 +284,7 @@ void FbTalker::getUserInfo()
     args["api_key"]     = m_apiKey;
     args["v"]           = m_apiVersion;
     args["call_id"]     = QString::number(m_callID.elapsed());
-    args["uids"]        = QString::number(m_uid);
+    args["uids"]        = QString::number(m_user.id);
     args["fields"]      = "name, profile_url";
     args["sig"]         = getApiSig(args);
 
@@ -306,6 +303,66 @@ void FbTalker::getUserInfo()
     m_state = FB_GETUSERINFO;
     m_job   = job;
     m_buffer.resize(0);
+}
+
+void FbTalker::getUploadPermission()
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+    if (m_loginInProgress)
+        m_authProgressDlg->setValue(7);
+
+    QMap<QString, QString> args;
+    args["method"]      = "facebook.users.hasAppPermission";
+    args["api_key"]     = m_apiKey;
+    args["v"]           = m_apiVersion;
+    args["call_id"]     = QString::number(m_callID.elapsed());
+    args["session_key"] = m_sessionKey;
+    args["ext_perm"]    = "photo_upload";
+    args["sig"]         = getApiSig(args);
+
+    QByteArray tmp(getCallString(args).toUtf8());
+    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = FB_GETUPLOADPERM;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
+void FbTalker::changePerm()
+{
+    m_loginInProgress = false; // just in case
+
+    emit signalBusy(true);
+
+    KUrl url("https://www.facebook.com/authorize.php");
+    url.addQueryItem("api_key", m_apiKey);
+    url.addQueryItem("v", m_apiVersion);
+    url.addQueryItem("ext_perm", "photo_upload");
+    kDebug( 51000 ) << "Change Perm URL: " << url;
+    KToolInvocation::invokeBrowser(url.url());
+
+    emit signalBusy(false);
+    KMessageBox::information(kapp->activeWindow(),
+                  i18n("Please follow the instructions in the browser window. "
+                       "Press \"OK\" when done."),
+                  i18n("Facebook Application Authorization"));
+
+    emit signalBusy(true);
+    getUploadPermission();
 }
 
 void FbTalker::logout()
@@ -357,7 +414,7 @@ void FbTalker::listAlbums()
     args["v"]           = m_apiVersion;
     args["session_key"] = m_sessionKey;
     args["call_id"]     = QString::number(m_callID.elapsed());
-    args["uid"]         = QString::number(m_uid);
+    args["uid"]         = QString::number(m_user.id);
     args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
@@ -509,11 +566,26 @@ QString FbTalker::errorToText(int errCode, const QString &errMsg)
         case 0:
             transError = "";
             break;
-        case 1:
-            transError = i18n("Login failed");
+        case 2:
+            transError = i18n("The service is not available at this time.");
             break;
-        case 18:
-            transError = i18n("Invalid API key");
+        case 4:
+            transError = i18n("The application has reached maximum number of requests allowed.");
+            break;
+        case 102:
+            transError = i18n("Invalid session key or session expired. Try to log in again.");
+            break;
+        case 120:
+            transError = i18n("Invalid album ID.");
+            break;
+        case 321:
+            transError = i18n("Album is full.");
+            break;
+        case 324:
+            transError = i18n("Missing or invalid file.");
+            break;
+        case 325:
+            transError = i18n("Too many unapproved photos pending.");
             break;
         default:
             transError = errMsg;
@@ -529,15 +601,9 @@ void FbTalker::slotResult(KJob *kjob)
 
     if (job->error())
     {
-        if (m_state == FB_CREATETOKEN)
+        if (m_loginInProgress)
         {
-            m_authProgressDlg->hide();
-        }
-
-        if (m_state == FB_ADDPHOTO)
-        {
-            // TODO: should we implement similar for all?
-            //emit signalAddPhotoFailed(job->errorString());
+            authenticationDone(job->error(), job->errorText());
         }
         else
         {
@@ -562,6 +628,9 @@ void FbTalker::slotResult(KJob *kjob)
         case(FB_GETUSERINFO):
             parseResponseGetUserInfo(m_buffer);
             break;
+        case(FB_GETUPLOADPERM):
+            parseResponseGetUploadPermission(m_buffer);
+            break;
         case(FB_LOGOUT):
             parseResponseLogout(m_buffer);
             break;
@@ -575,6 +644,22 @@ void FbTalker::slotResult(KJob *kjob)
             parseResponseAddPhoto(m_buffer);
             break;
     }
+}
+
+void FbTalker::authenticationDone(int errCode, const QString &errMsg)
+{
+    if (errCode != 0)
+    {
+        m_authToken.clear();
+        m_sessionKey.clear();
+        m_sessionExpires = 0;
+        m_user.clear();
+    }
+
+    emit signalLoginDone(errCode, errMsg);
+    emit signalBusy(false);
+    m_authProgressDlg->hide();
+    m_loginInProgress = false;
 }
 
 int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
@@ -624,15 +709,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
 
     if (errCode != 0) // if login failed, reset user properties
     {
-        m_authToken.clear();
-        m_sessionKey.clear();
-        m_sessionExpires = 0;
-        m_uid = 0;
-        m_userName.clear();
-        m_userURL.clear();
-        emit signalLoginDone(errCode, errorToText(errCode, errMsg));
-        emit signalBusy(false);
-        m_authProgressDlg->hide();
+        authenticationDone(errCode, errorToText(errCode, errMsg));
         return;
     }
 
@@ -656,7 +733,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     }
     else
     {
-        cancel();
+        authenticationDone(-1, i18n("Canceled by user."));
     }
 }
 
@@ -684,7 +761,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
             if (node.nodeName() == "session_key")
                 m_sessionKey = node.toElement().text();
             else if (node.nodeName() == "uid")
-                m_uid = node.toElement().text().toInt();
+                m_user.id = node.toElement().text().toLongLong();
             else if (node.nodeName() == "expires")
                 m_sessionExpires = node.toElement().text().toInt();
         }
@@ -695,12 +772,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
 
     if (errCode != 0) // if login failed, reset user properties
     {
-        m_authToken.clear();
-        m_sessionKey.clear();
-        m_sessionExpires = 0;
-        m_uid = 0;
-        m_userName.clear();
-        m_userURL.clear();
+        authenticationDone(errCode, errorToText(errCode, errMsg));
         return;
     }
 
@@ -726,7 +798,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "users_getLoggedInUser_response") 
     {
-        m_uid = docElem.text().toInt();
+        m_user.id = docElem.text().toLongLong();
         errCode = 0;
     }
     else if (docElem.tagName() == "error_response")
@@ -740,11 +812,10 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     else
     {
         // it seems that session expired -> create new token and session
+        m_authToken.clear();
         m_sessionKey.clear();
         m_sessionExpires = 0;
-        m_uid = 0;
-        m_userName.clear();
-        m_userURL.clear();
+        m_user.clear();
 
         createToken();
     }
@@ -779,9 +850,9 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
                     if (!nodeU.isElement())
                         continue;
                     if (nodeU.nodeName() == "name")
-                        m_userName = nodeU.toElement().text();
+                        m_user.name = nodeU.toElement().text();
                     else if (nodeU.nodeName() == "profile_url")
-                        m_userURL = nodeU.toElement().text();
+                        m_user.profileURL = nodeU.toElement().text();
                 }
             }
         }
@@ -790,9 +861,44 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
-    emit signalLoginDone(errCode, errorToText(errCode, errMsg));
-    emit signalBusy(false);
-    m_authProgressDlg->hide();
+    if (errCode != 0)
+    {
+        authenticationDone(errCode, errorToText(errCode, errMsg));
+        return;
+    }
+
+    getUploadPermission();
+}
+
+void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+
+    QDomDocument doc("getUploadPerm");
+    if (!doc.setContent(data))
+        return;
+
+    if (m_loginInProgress)
+        m_authProgressDlg->setValue(8);
+    kDebug(51000) << "Parse HasAppPermission response:" << endl << data;
+
+    QDomElement docElem = doc.documentElement();
+    if (docElem.tagName() == "users_hasAppPermission_response") 
+    {
+        m_user.uploadPerm = docElem.text().toInt();
+        errCode = 0;
+    }
+    else if (docElem.tagName() == "error_response")
+        errCode = parseErrorResponse(docElem, errMsg);
+
+    if (m_loginInProgress)
+        authenticationDone(errCode, errorToText(errCode, errMsg));
+    else
+    {
+        emit signalChangePermDone(errCode, errorToText(errCode, errMsg));
+        emit signalBusy(false);
+    }
 }
 
 void FbTalker::parseResponseLogout(const QByteArray& data)
@@ -817,9 +923,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
     // consider we are logged out in any case
     m_sessionKey.clear();
     m_sessionExpires = 0;
-    m_uid = 0;
-    m_userName.clear();
-    m_userURL.clear();
+    m_user.clear();
 
     emit signalBusy(false);
 }

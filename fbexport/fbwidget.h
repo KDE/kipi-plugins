@@ -53,7 +53,8 @@ public:
     FbWidget(QWidget* parent, KIPI::Interface *iface);
     ~FbWidget();
 
-    void updateLabels(const QString& name, const QString& url);
+    void updateLabels(const QString& name = "", const QString& url = "",
+                      bool uplPerm = false);
 
 private slots:
     void slotResizeChecked();
@@ -64,7 +65,9 @@ private:
 
     QLabel*       m_headerLbl;
     QLabel*       m_userNameDisplayLbl;
+    QLabel*       m_permissionLbl;
     QPushButton*  m_changeUserBtn;
+    QPushButton*  m_changePermBtn;
 
     QComboBox*    m_albumsCoB;
     QPushButton*  m_newAlbumBtn;

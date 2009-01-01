@@ -72,6 +72,7 @@ private slots:
 
     void slotBusy(bool val);
     void slotLoginDone(int errCode, const QString& errMsg);
+    void slotChangePermDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, 
                              long long newAlbumID);
@@ -79,6 +80,7 @@ private slots:
                             const QList <FbAlbum>& albumsList);
 
     void slotUserChangeRequest();
+    void slotPermChangeRequest();
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
     void slotAddPhotoCancel();

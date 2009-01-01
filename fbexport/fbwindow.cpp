@@ -96,6 +96,9 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
     connect(m_widget->m_changeUserBtn, SIGNAL( clicked() ),
             this, SLOT( slotUserChangeRequest()) );
 
+    connect(m_widget->m_changePermBtn, SIGNAL( clicked() ),
+            this, SLOT( slotPermChangeRequest()) );
+
     connect(m_widget->m_reloadAlbumsBtn, SIGNAL( clicked() ),
             this, SLOT( slotReloadAlbumsRequest()) );
 
@@ -145,6 +148,9 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
 
     connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
             this, SLOT( slotLoginDone(int, const QString&) ));
+
+    connect(m_talker, SIGNAL( signalChangePermDone(int, const QString&) ),
+            this, SLOT( slotChangePermDone(int, const QString&) ));
 
     connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
             this, SLOT( slotAddPhotoDone(int, const QString&) ));
@@ -253,17 +259,30 @@ void FbWindow::slotClose()
 void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
 {
     buttonStateChange(m_talker->loggedIn());
-    m_widget->updateLabels(m_talker->getDisplayName(),
-                           m_talker->getProfileURL());
+    FbUser user = m_talker->getUser();
+    m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
     m_widget->m_albumsCoB->addItem(i18n("<none>"), 0);
 
+    m_sessionKey = m_talker->getSessionKey();
+    m_sessionExpires = m_talker->getSessionExpires();
+
     if (errCode == 0 && m_talker->loggedIn())
     {
-        m_sessionKey = m_talker->getSessionKey();
-        m_sessionExpires = m_talker->getSessionExpires();
-
         m_talker->listAlbums(); // get albums to fill combo box
+    }
+    else
+    {
+        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
+    }
+}
+
+void FbWindow::slotChangePermDone(int errCode, const QString &errMsg)
+{
+    if (errCode == 0)
+    {
+        FbUser user = m_talker->getUser();
+        m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     }
     else
     {
@@ -294,6 +313,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
 
 void FbWindow::buttonStateChange(bool state)
 {
+    m_widget->m_changePermBtn->setEnabled(state);
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
     enableButton(User1, state);
@@ -328,6 +348,14 @@ void FbWindow::slotUserChangeRequest()
 
     kDebug(51000) << "Calling Login method";
     m_talker->authenticate(m_sessionKey, m_sessionExpires);
+}
+
+void FbWindow::slotPermChangeRequest()
+{
+    kDebug(51000) << "Slot Change Permission Request";
+
+    kDebug(51000) << "Calling Login method";
+    m_talker->changePerm();
 }
 
 void FbWindow::slotReloadAlbumsRequest()

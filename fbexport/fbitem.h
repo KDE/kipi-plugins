@@ -29,6 +29,30 @@
 namespace KIPIFbExportPlugin
 {
 
+class FbUser
+{
+public:
+    FbUser()
+    {
+        id = 0;
+        uploadPerm = false;
+    }
+
+    void clear()
+    {
+        id = 0;
+        name.clear();
+        profileURL.clear();
+        uploadPerm = false;
+    }
+
+    long long   id;
+
+    QString     name;
+    QString     profileURL;
+    bool        uploadPerm;
+};
+
 enum FbPrivacy
 {
     FB_FRIENDS = 0,
@@ -54,6 +78,7 @@ public:
     FbPrivacy   privacy;
     QString     url;
 };
+
 
 } // namespace KIPIFbExportPlugin
 
