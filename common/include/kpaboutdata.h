@@ -41,7 +41,7 @@ namespace KIPIPlugins
                   const char *pluginVersion=0,
                   int licenseType=License_Unknown,
                   const char *pluginDescription=0,
-                  const char *copyrightStatement="Copyright 2003-2008, kipi-plugins team");
+                  const char *copyrightStatement="Copyright 2003-2009, kipi-plugins team");
 
   };
 
