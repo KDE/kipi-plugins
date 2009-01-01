@@ -106,7 +106,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
                    : KDialog(0),
                      d(new RedEyesWindowPriv)
 {
-    setWindowTitle(i18n("Automatically remove red-eyes"));
+    setWindowTitle(i18n("Automatic Red Eyes Removal"));
     setButtons(Help|User1|User2|Close);
     setDefaultButton(Close);
     setModal(false);

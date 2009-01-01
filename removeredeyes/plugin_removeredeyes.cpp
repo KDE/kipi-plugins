@@ -60,7 +60,7 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_action = actionCollection()->addAction("removeredeyes");
-    m_action->setText(i18n("Remove Red-Eyes..."));
+    m_action->setText(i18n("Red Eyes Removal..."));
     m_action->setIcon(KIcon("draw-eraser"));
 
     connect(m_action, SIGNAL(triggered(bool)),
