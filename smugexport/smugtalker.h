@@ -29,7 +29,7 @@
 #include <QObject>
 
 // KDE includes.
-#include <kio/job.h>
+#include <KIO/Job>
 
 // local includes.
 #include "smugitem.h"

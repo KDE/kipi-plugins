@@ -23,14 +23,12 @@
 #ifndef SMUGALBUM_H
 #define SMUGALBUM_H
 
-// Qt includes.
-
 // KDE includes.
-#include <kdialog.h>
+#include <KDialog>
 
 class QGroupBox;
 class QRadioButton;
-class QComboBox;
+class KComboBox;
 class KLineEdit;
 class KTextEdit;
 
@@ -54,9 +52,9 @@ private:
 
     KLineEdit       *m_titleEdt;
     KTextEdit       *m_descEdt;
-    QComboBox       *m_categCoB;
-    QComboBox       *m_subCategCoB;
-    QComboBox       *m_templateCoB;
+    KComboBox       *m_categCoB;
+    KComboBox       *m_subCategCoB;
+    KComboBox       *m_templateCoB;
 
     QGroupBox       *m_privBox;
     KLineEdit       *m_passwdEdt;

@@ -28,14 +28,14 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
-#include <QComboBox>
 #include <QRadioButton>
 
 // KDE includes.
-#include <klocale.h>
-#include <kdialog.h>
-#include <klineedit.h>
-#include <ktextedit.h>
+#include <KLocale>
+#include <KDialog>
+#include <KComboBox>
+#include <KLineEdit>
+#include <KTextEdit>
 
 // local includes
 #include <smugitem.h>
@@ -68,12 +68,12 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_titleEdt->setWhatsThis(
         i18n("Title of the album that will be created (required)."));
 
-    m_categCoB          = new QComboBox(albumBox);
+    m_categCoB          = new KComboBox(albumBox);
     m_categCoB->setEditable(false);
     m_categCoB->setWhatsThis(
         i18n("Category of the album that will be created (required)."));
 
-    m_subCategCoB       = new QComboBox(albumBox);
+    m_subCategCoB       = new KComboBox(albumBox);
     m_subCategCoB->setEditable(false);
     m_subCategCoB->setWhatsThis(
         i18n("Subcategory of the album that will be created (optional)."));
@@ -82,7 +82,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    m_templateCoB      = new QComboBox(albumBox);
+    m_templateCoB      = new KComboBox(albumBox);
     m_templateCoB->setEditable(false);
     m_templateCoB->setWhatsThis(
         i18n("Album template for new album (optional)."));

@@ -27,16 +27,16 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QGroupBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
 
 // KDE includes.
-#include <klocale.h>
-#include <kdialog.h>
+#include <KLocale>
+#include <KDialog>
+#include <KComboBox>
+#include <KPushButton>
 
 // LibKIPI includes.
 #include <libkipi/interface.h>
@@ -83,9 +83,9 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface)
     m_userNameDisplayLbl    = new QLabel(accountBox);
     QLabel *emailLbl        = new QLabel(i18n("E-mail: "), accountBox);
     m_emailLbl              = new QLabel(accountBox);
-    m_changeUserBtn         = new QPushButton(accountBox);
-    m_changeUserBtn->setText(i18n("Change Account"));
-    m_changeUserBtn->setIcon(SmallIcon("system-switch-user"));
+    m_changeUserBtn         = new KPushButton(
+        KGuiItem(i18n("Change Account"), "system-switch-user",
+                 i18n("Change SmugMug Account used for upload")), accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 1);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 1, 1, 1);
@@ -102,14 +102,14 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface)
         i18n("This is the SmugMug album where selected photos will be uploaded."));
     QGridLayout* albumsBoxLayout  = new QGridLayout(albumsBox);
 
-    m_albumsCoB         = new QComboBox(albumsBox);
+    m_albumsCoB         = new KComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
-    m_newAlbumBtn       = new QPushButton(accountBox);
-    m_newAlbumBtn->setText(i18n("New Album"));
-    m_newAlbumBtn->setIcon(SmallIcon("list-add"));
-    m_reloadAlbumsBtn   = new QPushButton(accountBox);
-    m_reloadAlbumsBtn->setText(i18n("Reload"));
-    m_reloadAlbumsBtn->setIcon(SmallIcon("view-refresh"));
+    m_newAlbumBtn       = new KPushButton(
+            KGuiItem(i18n("New Album"), "list-add",
+                     i18n("Create new SmugMug album")), accountBox);
+    m_reloadAlbumsBtn   = new KPushButton(
+            KGuiItem(i18n("Reload"), "view-refresh", 
+                     i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_newAlbumBtn,       1, 3, 1, 1);

@@ -27,24 +27,23 @@
 
 // Qt includes.
 #include <QFileInfo>
-#include <QPushButton>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QGroupBox>
 #include <QProgressDialog>
 
 // KDE includes.
-#include <kdeversion.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
-#include <klineedit.h>
-#include <kmessagebox.h>
-#include <kpushbutton.h>
-#include <kpassworddialog.h>
+#include <KDebug>
+#include <KConfig>
+#include <KLocale>
+#include <KMenu>
+#include <KHelpMenu>
+#include <KComboBox>
+#include <KLineEdit>
+#include <KMessageBox>
+#include <KPushButton>
+#include <KPasswordDialog>
+#include <KToolInvocation>
 
 // LibKExiv2 includes.
 #include <libkexiv2/kexiv2.h>
@@ -59,7 +58,6 @@
 
 // LibKIPI includes.
 #include <libkipi/interface.h>
-#include <ktoolinvocation.h>
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
@@ -88,7 +86,8 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder, QWi
     m_uploadTotal            = 0;
     m_widget                 = new SmugWidget(this, interface);
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), KIcon("network-workgroup")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                     i18n("Start upload to SmugMug web service")));
     setMainWidget(m_widget);
     m_widget->setMinimumSize(700, 500);
 

@@ -32,14 +32,14 @@ extern "C"
 }
 
 // KDE includes.
-#include <kdebug.h>
-#include <kconfig.h>
-#include <kapplication.h>
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <kgenericfactory.h>
-#include <klibloader.h>
-#include <kstandarddirs.h>
+#include <KDebug>
+#include <KConfig>
+#include <KApplication>
+#include <KAction>
+#include <KActionCollection>
+#include <KGenericFactory>
+#include <KLibLoader>
+#include <KStandardDirs>
 
 // LibKIPI includes.
 #include <libkipi/interface.h>

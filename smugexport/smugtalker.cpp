@@ -32,10 +32,10 @@
 #include <QProgressDialog>
 
 // KDE includes.
-#include <kcodecs.h>
-#include <kdebug.h>
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
+#include <KCodecs>
+#include <KDebug>
+#include <KIO/Job>
+#include <KIO/JobUiDelegate>
 
 // Local includes.
 #include "pluginsversion.h"

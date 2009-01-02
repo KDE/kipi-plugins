@@ -29,7 +29,7 @@
 #include <QList>
 
 // KDE includes.
-#include <kdialog.h>
+#include <KDialog>
 
 // LibKIPI includes.
 #include <libkipi/interface.h>
