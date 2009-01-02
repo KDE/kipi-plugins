@@ -752,7 +752,7 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         if (syncEXIFDateIsChecked())
         {
-            exiv2Iface.setXmpTagString("Exif.Image.DateTime",
+            exiv2Iface.setExifTagString("Exif.Image.DateTime",
                     getXMPCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
         }
     }
