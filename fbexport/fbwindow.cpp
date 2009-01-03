@@ -118,7 +118,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
                             "Facebook web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
                             "(c) 2008, Gilles Caulier\n"
-                            "(c) 2008, Luka Renko"));
+                            "(c) 2008-2009, Luka Renko"));
 
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                        "lure at kubuntu dot org");
@@ -300,7 +300,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_widget->m_albumsCoB->clear();
-    m_widget->m_albumsCoB->addItem(i18n("<none>"), -1);
+    m_widget->m_albumsCoB->addItem(i18n("<none>"), 0);
     for (int i = 0; i < albumsList.size(); ++i)
     {
         m_widget->m_albumsCoB->addItem(

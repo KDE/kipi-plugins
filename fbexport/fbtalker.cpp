@@ -506,7 +506,7 @@ bool FbTalker::addPhoto(const QString& imgPath,
     args["call_id"]     = QString::number(m_callID.elapsed());
     args["session_key"] = m_sessionKey;
     args["name"]        = KUrl(imgPath).fileName();
-    if (albumID != -1)
+    if (albumID > 0)
         args["aid"]     = QString::number(albumID);
     if (!caption.isEmpty())
         args["caption"] = caption;
