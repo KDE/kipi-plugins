@@ -351,17 +351,21 @@ void FlickrWindow::slotUserChangeRequest()
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
-void FlickrWindow::slotCreateNewPhotoSet() {
+void FlickrWindow::slotCreateNewPhotoSet() 
+{
    FlickrNewPhotoSetDialog *dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
    int resp = dlg->exec();
-   if (resp == QDialog::Accepted) { 
-      m_talker->createPhotoSet(dlg->nameEdit->text(), 
-			       dlg->titleEdit->text(), 
-                               dlg->descriptionEdit->text(), 
+   if (resp == QDialog::Accepted) 
+   {
+      m_talker->createPhotoSet(dlg->nameEdit->text(),
+                               dlg->titleEdit->text(),
+                               dlg->descriptionEdit->text(),
                                dlg->primaryPhotoIdEdit->text());
-   } else {
-     kdDebug() << "New Photoset creation aborted " << endl;
-   } 
+   }
+   else
+   {
+     kDebug() << "New Photoset creation aborted " << endl;
+   }
 }
 
 void FlickrWindow::slotAuthCancel()
