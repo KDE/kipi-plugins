@@ -187,7 +187,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     d->tabWidget->insertTab(FileList, imagesTab,        i18n("Files List"));
     d->tabWidget->insertTab(Settings, d->settingsTab,   i18n("Settings"));
-    d->tabWidget->insertTab(Preview,  previewTab,       i18n("Preview"));
+//    d->tabWidget->insertTab(Preview,  previewTab,       i18n("Preview"));
 
     mainLayout->addWidget(d->tabWidget, 5);
     mainLayout->addWidget(d->progress);
