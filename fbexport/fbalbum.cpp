@@ -25,13 +25,13 @@
 
 // Qt includes.
 #include <QFormLayout>
-#include <QComboBox>
 
 // KDE includes.
-#include <klocale.h>
-#include <kdialog.h>
-#include <klineedit.h>
-#include <ktextedit.h>
+#include <KLocale>
+#include <KDialog>
+#include <KLineEdit>
+#include <KTextEdit>
+#include <KComboBox>
 
 // local includes
 #include <fbitem.h>
@@ -66,7 +66,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    m_privacyCoB        = new QComboBox(mainWidget);
+    m_privacyCoB        = new KComboBox(mainWidget);
     m_privacyCoB->setEditable(false);
     m_privacyCoB->setWhatsThis(
         i18n("Privacy setting of the album that will be created (required)."));

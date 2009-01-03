@@ -23,6 +23,7 @@
 #include "fbtalker.h"
 #include "fbtalker.moc"
 
+// C++ includes.
 #include <ctime>
 
 // Qt includes.
@@ -32,13 +33,13 @@
 #include <QProgressDialog>
 
 // KDE includes.
-#include <kcodecs.h>
-#include <kdebug.h>
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <ktoolinvocation.h>
+#include <KCodecs>
+#include <KDebug>
+#include <KIO/Job>
+#include <KIO/JobUiDelegate>
+#include <KApplication>
+#include <KMessageBox>
+#include <KToolInvocation>
 
 // Local includes.
 #include "pluginsversion.h"
@@ -948,9 +949,6 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
         {
             if (!node.isElement())
                 continue;
-            
-            kDebug(51000) << "NEW: " << node.nodeName() 
-                          << "=" << node.toElement().text();
         }
         errCode = 0;
     }

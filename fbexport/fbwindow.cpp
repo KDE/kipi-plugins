@@ -27,22 +27,21 @@
 
 // Qt includes.
 #include <QFileInfo>
-#include <QPushButton>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QProgressDialog>
 
 // KDE includes.
-#include <kdeversion.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
-#include <klineedit.h>
-#include <kmessagebox.h>
-#include <kpushbutton.h>
+#include <KDebug>
+#include <KConfig>
+#include <KLocale>
+#include <KMenu>
+#include <KHelpMenu>
+#include <KLineEdit>
+#include <KComboBox>
+#include <KPushButton>
+#include <KMessageBox>
+#include <KToolInvocation>
 
 // LibKExiv2 includes.
 #include <libkexiv2/kexiv2.h>
@@ -57,7 +56,6 @@
 
 // LibKIPI includes.
 #include <libkipi/interface.h>
-#include <ktoolinvocation.h>
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
@@ -86,7 +84,9 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
     m_uploadTotal            = 0;
     m_widget                 = new FbWidget(this, interface);
 
-    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), KIcon("network-workgroup")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                     i18n("Start upload to Facebook web service")));
+
     setMainWidget(m_widget);
     m_widget->setMinimumSize(700, 500);
 
@@ -262,7 +262,7 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
     FbUser user = m_talker->getUser();
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
-    m_widget->m_albumsCoB->addItem(i18n("<none>"), 0);
+    m_widget->m_albumsCoB->addItem(i18n("<autocreate>"), 0);
 
     m_sessionKey = m_talker->getSessionKey();
     m_sessionExpires = m_talker->getSessionExpires();
@@ -300,7 +300,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_widget->m_albumsCoB->clear();
-    m_widget->m_albumsCoB->addItem(i18n("<none>"), 0);
+    m_widget->m_albumsCoB->addItem(i18n("<autocreate>"), 0);
     for (int i = 0; i < albumsList.size(); ++i)
     {
         m_widget->m_albumsCoB->addItem(
