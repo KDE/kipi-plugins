@@ -168,6 +168,7 @@ void SmugTalker::listAlbums()
     KUrl url(m_apiURL);
     url.addQueryItem("method", "smugmug.albums.get");
     url.addQueryItem("SessionID", m_sessionID);
+    url.addQueryItem("Heavy", "1");
 
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
@@ -672,6 +673,10 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                     album.id = e.attribute("id").toInt();
                     album.key = e.attribute("Key");
                     album.title = e.attribute("Title");
+                    album.description = e.attribute("Description");
+                    album.isPublic = e.attribute("Public") == "1";
+                    album.password = e.attribute("Password");
+                    album.passwordHint = e.attribute("PasswordHint");
 
                     for (QDomNode nodeC = e.firstChild();
                          !nodeC.isNull();

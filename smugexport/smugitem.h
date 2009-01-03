@@ -68,6 +68,7 @@ public:
 
     QString key;
     QString title;
+    QString description;
 
     int     categoryID;
     QString category;
@@ -75,13 +76,13 @@ public:
     int     subCategoryID;
     QString subCategory;
 
-    // below fields only used by createAlbum (and not by listAlbums)
-    QString description;
-    int     tmplID;
-    QString tmpl;
     bool    isPublic;
     QString password;
     QString passwordHint;
+
+    // below fields only used by createAlbum (and not by listAlbums)
+    int     tmplID;
+    QString tmpl;
 };
 
 class SmugAlbumTmpl

@@ -307,7 +307,16 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     m_widget->m_albumsCoB->clear();
     for (int i = 0; i < albumsList.size(); ++i)
     {
+        QString albumIcon;
+        if (!albumsList.at(i).password.isEmpty())
+            albumIcon = "folder-locked";
+        else if (albumsList.at(i).isPublic)
+            albumIcon = "folder-image";
+        else 
+            albumIcon = "folder";
+
         m_widget->m_albumsCoB->addItem(
+            SmallIcon(albumIcon),
             albumsList.at(i).title,
             albumsList.at(i).id);
        if (m_currentAlbumID == albumsList.at(i).id)
@@ -330,7 +339,16 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
 
     for (int i = 0; i < albumTList.size(); ++i)
     {
+        QString albumIcon;
+        if (!albumTList.at(i).password.isEmpty())
+            albumIcon = "folder-locked";
+        else if (albumTList.at(i).isPublic)
+            albumIcon = "folder-image";
+        else 
+            albumIcon = "folder";
+
         m_albumDlg->m_templateCoB->addItem(
+            SmallIcon(albumIcon),
             albumTList.at(i).name,
             albumTList.at(i).id);
        if (m_currentTmplID == albumTList.at(i).id)
