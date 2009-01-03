@@ -101,11 +101,11 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
     d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
 
     QLabel* l1 = new QLabel(i18nc("The total number of images in the list",
-                                  "total:"));
+                                  "Total:"));
     QLabel* l2 = new QLabel(i18nc("number of images successfully processed",
-                                  "success:"));
+                                  "Success:"));
     QLabel* l3 = new QLabel(i18nc("number of images failed to process",
-                                  "failed:"));
+                                  "Failed:"));
 
     QGridLayout* summaryGroupBoxLayout = new QGridLayout;
     summaryGroupBoxLayout->addWidget(l1,                0, 0, 1, 1);
