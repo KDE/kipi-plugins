@@ -316,7 +316,7 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
             albumIcon = "folder";
 
         m_widget->m_albumsCoB->addItem(
-            SmallIcon(albumIcon),
+            KIcon(albumIcon),
             albumsList.at(i).title,
             albumsList.at(i).id);
        if (m_currentAlbumID == albumsList.at(i).id)
@@ -348,7 +348,7 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
             albumIcon = "folder";
 
         m_albumDlg->m_templateCoB->addItem(
-            SmallIcon(albumIcon),
+            KIcon(albumIcon),
             albumTList.at(i).name,
             albumTList.at(i).id);
        if (m_currentTmplID == albumTList.at(i).id)
