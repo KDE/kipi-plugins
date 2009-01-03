@@ -262,7 +262,7 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
     FbUser user = m_talker->getUser();
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
-    m_widget->m_albumsCoB->addItem(i18n("<autocreate>"), 0);
+    m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
 
     m_sessionKey = m_talker->getSessionKey();
     m_sessionExpires = m_talker->getSessionExpires();
@@ -300,7 +300,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_widget->m_albumsCoB->clear();
-    m_widget->m_albumsCoB->addItem(i18n("<autocreate>"), 0);
+    m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
     for (int i = 0; i < albumsList.size(); ++i)
     {
         m_widget->m_albumsCoB->addItem(
