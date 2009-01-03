@@ -144,7 +144,7 @@ void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpir
 {
     m_loginInProgress = true;
 
-    if (!sessionKey.isEmpty() && sessionExpires > time(0) + 900)
+    if (!sessionKey.isEmpty() && sessionExpires > (unsigned int)(time(0) + 900))
     {
         // sessionKey seems to be still valid for at least 15 minutes
         // - check if it still works
