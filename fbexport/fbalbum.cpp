@@ -70,10 +70,14 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     m_privacyCoB->setEditable(false);
     m_privacyCoB->setWhatsThis(
         i18n("Privacy setting of the album that will be created (required)."));
-    m_privacyCoB->addItem(i18n("Only Friends"), FB_FRIENDS);
-    m_privacyCoB->addItem(i18n("Friends of Friends"), FB_FRIENDS_OF_FRIENDS);
-    m_privacyCoB->addItem(i18n("My Networks and Friends"), FB_NETWORKS);
-    m_privacyCoB->addItem(i18n("Everyone"), FB_EVERYONE);
+    m_privacyCoB->addItem(KIcon("user-identity"), 
+                          i18n("Only Friends"), FB_FRIENDS);
+    m_privacyCoB->addItem(KIcon("system-users"), 
+                          i18n("Friends of Friends"), FB_FRIENDS_OF_FRIENDS);
+    m_privacyCoB->addItem(KIcon("network-workgroup"),
+                          i18n("My Networks and Friends"), FB_NETWORKS);
+    m_privacyCoB->addItem(KIcon("applications-internet"),
+                          i18n("Everyone"), FB_EVERYONE);
 
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18n("Location:"), m_locEdt);

@@ -303,7 +303,24 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
     for (int i = 0; i < albumsList.size(); ++i)
     {
+        QString albumIcon;
+        switch (albumsList.at(i).privacy)
+        {
+            case FB_FRIENDS:
+                albumIcon = "user-identity";
+                break;
+            case FB_FRIENDS_OF_FRIENDS:
+                albumIcon = "system-users";
+                break;
+            case FB_NETWORKS:
+                albumIcon = "network-workgroup";
+                break;
+            case FB_EVERYONE:
+                albumIcon = "applications-internet";
+                break;
+        }
         m_widget->m_albumsCoB->addItem(
+            KIcon(albumIcon),
             albumsList.at(i).title,
             albumsList.at(i).id);
        if (m_currentAlbumID == albumsList.at(i).id)
