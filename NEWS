@@ -5,6 +5,7 @@ NEW FEATURES:
 
 FbExport       : New plugin to export images to a remote Facebook web service (http://www.facebook.com)
 FlickrExport   : Add support of Photosets.
+SmugExport     : Add support for Album Templates
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
