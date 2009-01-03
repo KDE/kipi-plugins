@@ -154,6 +154,7 @@ void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpir
         m_authProgressDlg->setLabelText(i18n("Validate previous session..."));
         m_authProgressDlg->setMaximum(8);
         m_authProgressDlg->setValue(1);
+        m_authProgressDlg->show();
 
         // get logged in user - this will check if session is still valid
         getLoggedInUser();
@@ -177,6 +178,7 @@ void FbTalker::createToken()
     m_authProgressDlg->setLabelText(i18n("Logging to Facebook service..."));
     m_authProgressDlg->setMaximum(8);
     m_authProgressDlg->setValue(1);
+    m_authProgressDlg->show();
 
     QMap<QString, QString> args;
     args["method"]  = "facebook.auth.createToken";
@@ -608,10 +610,10 @@ void FbTalker::slotResult(KJob *kjob)
         }
         else
         {
+            emit signalBusy(false);
             job->ui()->setWindow(m_parent);
             job->ui()->showErrorMessage();
         }
-        emit signalBusy(false);
         return;
     }
 
@@ -657,9 +659,9 @@ void FbTalker::authenticationDone(int errCode, const QString &errMsg)
         m_user.clear();
     }
 
-    emit signalLoginDone(errCode, errMsg);
-    emit signalBusy(false);
     m_authProgressDlg->hide();
+    emit signalBusy(false);
+    emit signalLoginDone(errCode, errMsg);
     m_loginInProgress = false;
 }
 
@@ -897,8 +899,8 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
         authenticationDone(errCode, errorToText(errCode, errMsg));
     else
     {
-        emit signalChangePermDone(errCode, errorToText(errCode, errMsg));
         emit signalBusy(false);
+        emit signalChangePermDone(errCode, errorToText(errCode, errMsg));
     }
 }
 
@@ -955,8 +957,8 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
-    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
     emit signalBusy(false);
+    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
 }
 
 void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -990,9 +992,9 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
+    emit signalBusy(false);
     emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID);
-    emit signalBusy(false);
 }
 
 void FbTalker::parseResponseListAlbums(const QByteArray& data)
@@ -1055,9 +1057,9 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
+    emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
-    emit signalBusy(false);
 }
 
 } // namespace KIPIFbExportPlugin
