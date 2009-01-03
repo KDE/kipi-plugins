@@ -417,17 +417,21 @@ void SmugTalker::slotResult(KJob *kjob)
 
     if (job->error())
     {
-        if (m_state == SMUG_ADDPHOTO)
+        if (m_state == SMUG_LOGIN)
         {
-            // TODO: should we implement similar for all?
-            //emit signalAddPhotoFailed(job->errorString());
+            m_sessionID.clear();
+            m_user.clear();
+
+            m_authProgressDlg->hide();
+            emit signalBusy(false);
+            emit signalLoginDone(job->error(), job->errorText());
         }
         else
         {
+            emit signalBusy(false);
             job->ui()->setWindow(m_parent);
             job->ui()->showErrorMessage();
         }
-        emit signalBusy(false);
         return;
     }
 
@@ -519,9 +523,9 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         m_user.clear();
     }
 
-    emit signalLoginDone(errCode, errorToText(errCode, errMsg));
-    emit signalBusy(false);
     m_authProgressDlg->hide();
+    emit signalBusy(false);
+    emit signalLoginDone(errCode, errorToText(errCode, errMsg));
 }
 
 void SmugTalker::parseResponseLogout(const QByteArray& data)
@@ -595,8 +599,8 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
     emit signalBusy(false);
+    emit signalAddPhotoDone(errCode, errorToText(errCode, errMsg));
 }
 
 void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -634,9 +638,9 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         }
     }
 
+    emit signalBusy(false);
     emit signalCreateAlbumDone(errCode, errorToText(errCode, errMsg),
                                newAlbumID);
-    emit signalBusy(false);
 }
 
 void SmugTalker::parseResponseListAlbums(const QByteArray& data)
@@ -711,9 +715,9 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+    emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
-    emit signalBusy(false);
 }
 
 void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
@@ -767,9 +771,9 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+    emit signalBusy(false);
     emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg),
                                       albumTList);
-    emit signalBusy(false);
 }
 
 void SmugTalker::parseResponseListCategories(const QByteArray& data)
@@ -820,9 +824,9 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+    emit signalBusy(false);
     emit signalListCategoriesDone(errCode, errorToText(errCode, errMsg),
                                   categoriesList);
-    emit signalBusy(false);
 }
 
 void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
@@ -873,9 +877,9 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+    emit signalBusy(false);
     emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg),
                                      categoriesList);
-    emit signalBusy(false);
 }
 
 } // namespace KIPISmugExportPlugin
