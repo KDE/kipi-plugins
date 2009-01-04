@@ -22,7 +22,7 @@ if( NOT WIN32 )
 
   pkg_check_modules(PC_GPOD libgpod-1.0)
 
-  set(BLUEZ_DEFINITIONS ${PC_GPOD_CFLAGS_OTHER})
+  set(GPOD_DEFINITIONS ${PC_GPOD_CFLAGS_OTHER})
 
 endif( NOT WIN32 )
 
