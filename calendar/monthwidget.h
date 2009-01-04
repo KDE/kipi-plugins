@@ -39,7 +39,6 @@ class QDragEnterEvent;
 class QDropEvent;
 class QMouseEvent;
 class QPaintEvent;
-class QPainter;
 
 namespace KIPI
 {

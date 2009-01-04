@@ -34,7 +34,6 @@
 
 #include <kurl.h>
 
-class QString;
 class QPaintDevice;
 
 namespace KIPICalendarPlugin

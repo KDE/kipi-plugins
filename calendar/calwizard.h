@@ -39,9 +39,7 @@
 #include "ui_calprogress.h"
 
 class QLabel;
-class QPainter;
 class QPrinter;
-class QPushButton;
 
 namespace KIPI
 {
@@ -58,7 +56,6 @@ namespace KIPICalendarPlugin
 
 class CalSelect;
 class CalEvents;
-class CalPainter;
 class CalPrinter;
 class CalSettings;
 class CalTemplate;

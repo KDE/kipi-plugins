@@ -30,7 +30,6 @@
 #include <QWidget>
 
 class QPaintEvent;
-class QPixmap;
 
 namespace KIPICalendarPlugin
 {
