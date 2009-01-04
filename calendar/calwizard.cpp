@@ -185,8 +185,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
 
         if (months_.empty())
         {
-            wPrintLabel_->setText(i18n("No valid images selected for months<br/>"
-                    "Click Back to select images"));
+            wPrintLabel_->setText("<qt>" +i18n("No valid images selected for months<br/>"
+                    "Click Back to select images")+"</qt>");
             setValid(wFinishPage_, false);
         }
         else
