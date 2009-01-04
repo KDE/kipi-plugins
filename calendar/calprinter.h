@@ -27,7 +27,6 @@
 
 #include <QMap>
 #include <QThread>
-#include <QPointer>
 
 // KDE includes.
 

@@ -28,7 +28,6 @@
 
 #include <QDate>
 #include <QFileInfo>
-#include <QImage>
 #include <QMatrix>
 #include <QPaintDevice>
 #include <QRect>
