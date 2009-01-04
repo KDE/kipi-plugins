@@ -289,6 +289,8 @@ void SoundtrackDialog::slotSoundFilesButtonAdd( void )
 void SoundtrackDialog::slotSoundFilesButtonDelete( void )
 {
     int Index = m_SoundFilesListBox->currentRow();
+    if( Index < 0 )
+       return;
     SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
     m_urlList.removeAll(pitem->url());
     m_soundItems->remove(pitem->url());
