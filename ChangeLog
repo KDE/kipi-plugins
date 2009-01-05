@@ -1,3 +1,1196 @@
+0.2.0-beta6 2009-01-04
+--------------------------------------------------------------------------------
+
+2009-01-04 12:49  mlaurent
+
+    * cmake/modules/FindGpod.cmake: Fix typo
+
+2009-01-04 12:44  mlaurent
+
+    * calendar/calpainter.cpp, calendar/calprinter.h,
+      calendar/calselect.cpp: Fix include
+
+2009-01-04 12:44  mlaurent
+
+    * calendar/calpainter.h, calendar/calwidget.h,
+      calendar/calwizard.h, calendar/monthwidget.h: Fix forward
+      declaration
+
+2009-01-04 11:53  mlaurent
+
+    * calendar/calwizard.cpp: Fix <br>
+
+2009-01-04 11:46  mlaurent
+
+    * slideshow/soundtrackdialog.cpp: Fix crash when item is null
+
+2009-01-03 20:46  lure
+
+    * smugexport/smugtalker.cpp: Improve error handling during login
+      (e.g. network not available)
+      Remove busy indicator before showing failed dialog
+
+2009-01-03 20:43  lure
+
+    * fbexport/fbtalker.cpp: Improve error handling during login (e.g.
+      network not available)
+      Remove busy indicator before showing failed dialog
+
+2009-01-03 20:09  aclemens
+
+    * removeredeyes/widgets/myimageslist.cpp: Use uppercase labels
+
+2009-01-03 20:09  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: Disable preview widget, I
+      am not happy with it, it is too slow and I don't know how to
+      speed it up right now.
+
+2009-01-03 20:01  cgilles
+
+    * fbexport/fbtalker.cpp: fix warning.
+
+2009-01-03 19:51  cgilles
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrwindow.cpp: fix
+      depreciates
+      fix indent
+      fix warnings
+
+2009-01-03 19:41  cgilles
+
+    * NEWS: update
+
+2009-01-03 17:55  lure
+
+    * smugexport/smugwindow.cpp: SmallIcon (deprecated) -> KIcon
+
+2009-01-03 17:54  lure
+
+    * fbexport/fbalbum.cpp, fbexport/fbwindow.cpp: Show icon (in
+      KComboBox) to indicate type of Facebook album privacy /
+      visibility:
+      - Friends (icon with person)
+      - Friends of Friends (icon with two persons)
+      - Networks (icon with connected world)
+      - Everyone (icon with world)
+
+2009-01-03 17:15  lure
+
+    * fbexport/fbwindow.cpp: Better to use <auto create>
+
+2009-01-03 17:07  lure
+
+    * fbexport/fbalbum.cpp, fbexport/fbalbum.h, fbexport/fbtalker.cpp,
+      fbexport/fbtalker.h, fbexport/fbwidget.cpp, fbexport/fbwidget.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h, fbexport/mpform.cpp,
+      fbexport/mpform.h, fbexport/plugin_fbexport.cpp,
+      fbexport/plugin_fbexport.h: QComboBox -> KComboBox
+      QPushButton -> KPushButton
+      Add tooltips to pushbuttons
+      Use new style for KDE includes
+
+2009-01-03 16:28  lure
+
+    * NEWS: Document new SmugExport feature
+
+2009-01-03 16:28  lure
+
+    * fbexport/TODO, fbexport/fbtalker.cpp, fbexport/fbwindow.cpp:
+      Minor cleanup + copyright update
+
+2009-01-03 12:43  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-01-03 12:41  cgilles
+
+    * NEWS: update
+
+2009-01-03 00:16  lure
+
+    * smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugwindow.cpp: Show icon (in KComboBox) to indicate
+      type of album / album template:
+      - Password protected albums (folder icon with lock)
+      - Public albums (folder icon with photo)
+      - Unlisted albums (folder icon)
+
+2009-01-02 23:44  lure
+
+    * smugexport/plugin_smugexport.cpp, smugexport/smugalbum.cpp,
+      smugexport/smugalbum.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h, smugexport/smugwidget.cpp,
+      smugexport/smugwidget.h, smugexport/smugwindow.cpp,
+      smugexport/smugwindow.h: QComboBox -> KComboBox
+      QPushButton -> KPushButton
+      Add tooltips to pushbuttons
+      Use new style for KDE includes
+
+2009-01-02 19:36  cgilles
+
+    * metadataedit/xmporigin.cpp: this is an Exif tag here, not XMP
+
+2009-01-02 13:33  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-01 23:35  lure
+
+    * smugexport/TODO, smugexport/smugalbum.cpp,
+      smugexport/smugalbum.h, smugexport/smugitem.h,
+      smugexport/smugtalker.cpp, smugexport/smugtalker.h,
+      smugexport/smugwindow.cpp, smugexport/smugwindow.h: Added support
+      for Album templates:
+      - when album is created, user can select appropriate album
+      template (optional)
+      - album template defines privacy/security settings as well as
+      look & feel
+
+2009-01-01 21:16  lure
+
+    * smugexport/smugwidget.cpp, smugexport/smugwidget.h: Minor polish
+
+2009-01-01 20:57  lure
+
+    * fbexport/fbwindow.cpp, fbexport/plugin_fbexport.cpp,
+      smugexport/plugin_smugexport.cpp, smugexport/smugwindow.cpp:
+      krazy--
+
+2009-01-01 20:46  lure
+
+    * smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h, smugexport/smugwindow.cpp: Refactoring:
+      improve XML parsing and introduce SmugUser class
+
+2009-01-01 20:08  jaiva
+
+    * flickrexport/flickrnewphotosetdialog.h: Adding the missing file,
+      which cause compilations error because of previous checkin.
+
+2009-01-01 18:50  cgilles
+
+    * NEWS: update
+
+2009-01-01 18:24  jaiva
+
+    * flickrexport/flickralbumdialog.ui: Changing the UI label for
+      Create Photo Set dialog setting title as required instead of
+      optional.
+
+2009-01-01 18:14  jaiva
+
+    * flickrexport/flickralbumdialog.ui, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrtalker.h, flickrexport/flickrwidget.cpp,
+      flickrexport/flickrwidget.h, flickrexport/flickrwindow.cpp,
+      flickrexport/flickrwindow.h: Adding support for PhotoSets. User
+      can now select which of his photosets the photo should go to. A
+      new photo set can be created from the plugin too. If there is no
+      photoset in the users flickr account the behaviour of upload is
+      same as earlier.
+      
+      BUGS:129623
+
+2009-01-01 17:52  aclemens
+
+    * wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h:
+      damn it... :-) this regex sucked big time! sorry for spamming
+      here right now!
+      
+      This reverts commit cdac912c7a878a753885d1ab96c1f8336eae7a62.
+
+2009-01-01 17:51  aclemens
+
+    * smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/smugwindow.cpp, smugexport/smugwindow.h: ahh.... this
+      one too
+      
+      This reverts commit 19506dabf0c889e749b1a52b87f733e2726aebfa.
+
+2009-01-01 17:51  aclemens
+
+    * sendimages/emailpage.cpp, sendimages/emailpage.h,
+      sendimages/emailsettingscontainer.h, sendimages/imageresize.cpp,
+      sendimages/imageresize.h, sendimages/imagespage.cpp,
+      sendimages/imagespage.h, sendimages/plugin_sendimages.cpp,
+      sendimages/plugin_sendimages.h, sendimages/sendimages.cpp,
+      sendimages/sendimages.h, sendimages/sendimagesdialog.cpp,
+      sendimages/sendimagesdialog.h: same here, too... something went
+      wrong with sed
+      
+      This reverts commit 559c928c414cbf6199b88fb21f67aeac8cff576f.
+
+2009-01-01 17:48  aclemens
+
+    * smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/smugalbum.cpp, smugexport/smugalbum.h,
+      smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h, smugexport/smugwidget.cpp,
+      smugexport/smugwidget.h, smugexport/smugwindow.cpp,
+      smugexport/smugwindow.h: oh I didn't want to commit this,
+      something went wrong here... sorry!
+      
+      This reverts commit 37a2bfa99e5363a583fa75d761ce431d538bc46e.
+
+2009-01-01 17:41  aclemens
+
+    * smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/smugalbum.cpp, smugexport/smugalbum.h,
+      smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h, smugexport/smugwidget.cpp,
+      smugexport/smugwidget.h, smugexport/smugwindow.cpp,
+      smugexport/smugwindow.h: a new year
+
+2009-01-01 17:31  aclemens
+
+    * sendimages/emailpage.cpp, sendimages/emailpage.h,
+      sendimages/emailsettingscontainer.h, sendimages/imageresize.cpp,
+      sendimages/imageresize.h, sendimages/imagespage.cpp,
+      sendimages/imagespage.h, sendimages/plugin_sendimages.cpp,
+      sendimages/plugin_sendimages.h, sendimages/sendimages.cpp,
+      sendimages/sendimages.h, sendimages/sendimagesdialog.cpp,
+      sendimages/sendimagesdialog.h: a new year
+
+2009-01-01 17:31  aclemens
+
+    * smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/smugwindow.cpp, smugexport/smugwindow.h: a new year
+
+2009-01-01 17:24  aclemens
+
+    * wallpaper/plugin_wallpaper.cpp, wallpaper/plugin_wallpaper.h: a
+      new year
+
+2009-01-01 17:20  lure
+
+    * fbexport/fbitem.h, fbexport/fbtalker.cpp, fbexport/fbtalker.h,
+      fbexport/fbwidget.cpp, fbexport/fbwidget.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h: Almost forgot it is
+      new year - fix copyright date. ;-)
+
+2009-01-01 17:11  lure
+
+    * fbexport/TODO, fbexport/fbitem.h, fbexport/fbtalker.cpp,
+      fbexport/fbtalker.h, fbexport/fbwidget.cpp, fbexport/fbwidget.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h: Added support for
+      Facebook extended permissions (photo_upload):
+      - Show current permission: "direct upload" or "manual upload
+      approval"
+      - "Change Permission" button provides way to authorize KIPI for
+      direct upload
+      - User can now decide if he want direct upload or manual
+      authorization of photos
+      uploaded through KIPI Plugin
+      
+      Added i18n messages for most common (expected) error messages
+      returned by Facebook.
+      
+      Improved login/authentication error handling.
+
+2009-01-01 17:09  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/plugin_removeredeyes.h,
+      removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/widgets/advancedsettings.cpp,
+      removeredeyes/widgets/advancedsettings.h,
+      removeredeyes/widgets/blobsettingsbox.cpp,
+      removeredeyes/widgets/blobsettingsbox.h,
+      removeredeyes/widgets/classifiersettingsbox.cpp,
+      removeredeyes/widgets/classifiersettingsbox.h,
+      removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/controlwidget.h,
+      removeredeyes/widgets/infomessagewidget.cpp,
+      removeredeyes/widgets/infomessagewidget.h,
+      removeredeyes/widgets/myimageslist.cpp,
+      removeredeyes/widgets/myimageslist.h,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/previewwidget.h,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/settingstab.h,
+      removeredeyes/widgets/simplesettings.cpp,
+      removeredeyes/widgets/simplesettings.h,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/storagesettingsbox.h,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h,
+      removeredeyes/workerthreaddata.cpp,
+      removeredeyes/workerthreaddata.h: a new year
+
+2009-01-01 16:54  cgilles
+
+    * common/libkipiplugins/kpaboutdata.cpp,
+      common/libkipiplugins/kpaboutdata.h: a new year
+
+2009-01-01 13:00  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-01 12:15  aclemens
+
+    * removeredeyes/widgets/unprocessedsettingsbox.cpp: fix typos
+
+2009-01-01 12:15  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: use KStandardGuiItem for
+      dialog buttons
+
+2009-01-01 12:14  aclemens
+
+    * removeredeyes/widgets/myimageslist.cpp: use Book Title Cap here
+
+2009-01-01 12:13  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/removeredeyeswindow.cpp: use Book Title
+      Capitalization for window title, rename action for removeredeyes
+      plugin
+
+2008-12-31 14:43  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-31 13:12  lure
+
+    * fbexport/fbtalker.cpp: Add missing include - fix compile on some
+      systems
+
+2008-12-31 11:39  cgilles
+
+    * NEWS: update
+
+2008-12-30 18:06  lure
+
+    * fbexport/TODO, fbexport/fbtalker.cpp, fbexport/fbtalker.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h: Added support for
+      photo caption: Facebook does not read Exif/XMP/IPTC,
+      so we extract it and send it via API
+
+2008-12-30 17:30  lure
+
+    * fbexport/fbtalker.cpp, fbexport/fbtalker.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h: Save Facebook session
+      key in config file for next session:
+      - if session is still valid, it will be reused for next export
+      job
+      (no need to go to browser)
+      - if expired or does not work, it will go through regular login
+      
+      Fix storing of current album (setting is kept between runs).
+
+2008-12-30 14:51  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      fbexport/kipiplugin_fbexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      smugexport/kipiplugin_smugexport.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-30 14:24  lure
+
+    * fbexport/fbtalker.cpp: minor cleanups
+
+2008-12-29 22:51  aacid
+
+    * fbexport/fbtalker.cpp: Add quotes, also suggested by Yuri
+      Chornoivan
+
+2008-12-29 21:53  aacid
+
+    * fbexport/fbwidget.cpp: Better wording, found by Marce Villarino
+
+2008-12-29 20:06  aclemens
+
+    * removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/simplesettings.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp: polish
+
+2008-12-29 20:05  aacid
+
+    * fbexport/fbtalker.cpp: Missing space after dot found by Yuri
+      Chornoivan
+
+2008-12-29 08:17  mlaurent
+
+    * fbexport/fbwindow.cpp: Not necessary
+
+2008-12-29 08:09  mlaurent
+
+    * fbexport/fbalbum.cpp, fbexport/fbtalker.cpp, fbexport/fbwindow.h:
+      Fix include/fix forward declaration
+
+2008-12-29 08:07  mlaurent
+
+    * fbexport/fbtalker.cpp, fbexport/mpform.cpp: Fix compile
+
+2008-12-29 00:25  lure
+
+    * AUTHORS, CMakeLists.txt, NEWS, README, fbexport,
+      fbexport/CMakeLists.txt, fbexport/Messages.sh, fbexport/TODO,
+      fbexport/fbalbum.cpp, fbexport/fbalbum.h, fbexport/fbitem.h,
+      fbexport/fbtalker.cpp, fbexport/fbtalker.h,
+      fbexport/fbwidget.cpp, fbexport/fbwidget.h,
+      fbexport/fbwindow.cpp, fbexport/fbwindow.h,
+      fbexport/kipiplugin_fbexport.desktop, fbexport/mpform.cpp,
+      fbexport/mpform.h, fbexport/plugin_fbexport.cpp,
+      fbexport/plugin_fbexport.h: New KIPI Plugin: Facebook exporter -
+      http://www.facebook.com
+      
+      Now you can upload your photos to Facebook service from your
+      favorite
+      KDE photo application! You will need to give access to KIPI
+      Plugin
+      application from your Facebook account.
+      You will be able to specify to which album to upload photos. You
+      can also
+      create new album with various settings (name, location, privacy).
+      Currently you need to manually approve uploaded photos on you
+      Facebook
+      home page, but you can change this by visiting this page:
+      http://www.facebook.com/authorize.php?api_key=bf430ad869b88aba5c0c17ea6707022b&v=1.0&ext_perm=photo_upload
+      
+      Screenshots:
+      - main window:
+      http://img522.imageshack.us/img522/2729/fbexportxu0.png
+      - new album dialog:
+      http://img522.imageshack.us/img522/9964/fbexportnewalbumio6.png
+      
+      FEATURE: 166672
+
+2008-12-28 17:10  aclemens
+
+    * removeredeyes/CMakeLists.txt: fix linking to KExiv2
+
+2008-12-27 14:07  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/widgets/advancedsettings.cpp,
+      removeredeyes/widgets/advancedsettings.h,
+      removeredeyes/widgets/blobsettingsbox.h,
+      removeredeyes/widgets/classifiersettingsbox.h,
+      removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/controlwidget.h,
+      removeredeyes/widgets/infomessagewidget.cpp,
+      removeredeyes/widgets/infomessagewidget.h,
+      removeredeyes/widgets/myimageslist.cpp,
+      removeredeyes/widgets/myimageslist.h,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/previewwidget.h,
+      removeredeyes/widgets/settingstab.h,
+      removeredeyes/widgets/simplesettings.h,
+      removeredeyes/widgets/storagesettingsbox.h,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h,
+      removeredeyes/workerthreaddata.cpp: polish
+
+2008-12-26 21:39  aacid
+
+    * rawconverter/plugin_rawconverter.cpp: the rawconverter plugin
+      uses libkdcraw so be sure its translation catalog is loaded
+      Approved by cgilles
+
+2008-12-26 13:35  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-24 21:23  cgilles
+
+    * rawconverter/plugin_rawconverter.cpp: Andi, I restore raw
+      converter action name. This one is used to digikamapp.cpp to
+      organize menus.
+      NOTE: MetadataEdit plugin action is broken. look message from the
+      console when plugin is loaded. Also, plugin action disapear from
+      digiKam
+      image menu. Something is broken since KAction have been
+      redesigned to be loaded by keyboard shorcuts editor.
+      CCMAIL: andi.clemens@gmx.net
+
+2008-12-24 17:29  ilic
+
+    * metadataedit/exifeditdialog.cpp,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/xmpcredits.cpp, metadataedit/xmpproperties.cpp:
+      i18n: disambiguation contexts.
+
+2008-12-24 12:00  cgilles
+
+    * NEWS: update
+
+2008-12-24 07:31  cgilles
+
+    * NEWS: update
+
+2008-12-24 06:03  jaiva
+
+    * picasawebexport/picasawebnewalbumdialog.ui,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwindow.cpp: Fixing the Album creation
+      bugs. The timestamp will be correct now and the "unlisted" albums
+      creation possible.
+      
+      BUGS: 175219, 175222
+
+2008-12-24 02:07  aclemens
+
+    * removeredeyes/widgets/controlwidget.svg: revert last control
+      widget change
+
+2008-12-24 02:03  aclemens
+
+    * removeredeyes/widgets/storagesettingsbox.cpp: fix i18n
+
+2008-12-24 02:03  aclemens
+
+    * removeredeyes/widgets/controlwidget.svg: aa
+
+2008-12-24 01:56  aclemens
+
+    * removeredeyes/removalsettings.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/storagesettingsbox.h,
+      removeredeyes/workerthread.cpp: new storage option: add metadata
+      keyword
+      
+      You can optionally add a keyword to label images that have been
+      corrected, so you can easily find those in digiKam's tagview or
+      by doing
+      a metadata search in the host application.
+
+2008-12-24 01:55  aclemens
+
+    * removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/workerthread.cpp: enable overwrite mode again, it
+      is save to use now
+
+2008-12-24 01:55  aclemens
+
+    * removeredeyes/workerthread.cpp: restore metadata when the
+      corrected image has been saved
+
+2008-12-23 13:01  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      smugexport/kipiplugin_smugexport.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2008-12-23 12:43  mlaurent
+
+    * cmake/modules/FindGpod.cmake: Use find_package(PkgConfig)
+
+2008-12-23 09:25  aclemens
+
+    * removeredeyes/widgets/controlwidget.h: more meaningful enum name
+
+2008-12-22 19:07  cgilles
+
+    * NEWS: update
+
+2008-12-22 14:20  scripty
+
+    * htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-22 11:07  aclemens
+
+    * removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/controlwidget.h: fix headers
+
+2008-12-22 11:03  aclemens
+
+    * removeredeyes/CMakeLists.txt,
+      removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/controlwidget.h,
+      removeredeyes/widgets/controlwidget.svg,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/previewwidget.h,
+      removeredeyes/widgets/previewzoombar.cpp,
+      removeredeyes/widgets/previewzoombar.h: Added a new control
+      widget instead of the zoombar. It basically works,
+      but looks not that good at the moment and has a strange fade in /
+      fade
+      out behavior. Needs to be polished later on.
+
+2008-12-22 05:40  cgilles
+
+    * NEWS: update
+
+2008-12-22 05:37  cgilles
+
+    * NEWS: update
+
+2008-12-20 14:45  scripty
+
+    * smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-20 12:05  aclemens
+
+    * removeredeyes/widgets/storagesettingsbox.cpp: typo
+
+2008-12-20 11:50  aclemens
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/advancedsettings.cpp,
+      removeredeyes/advancedsettings.h,
+      removeredeyes/blobsettingsbox.cpp,
+      removeredeyes/blobsettingsbox.h,
+      removeredeyes/classifiersettingsbox.cpp,
+      removeredeyes/classifiersettingsbox.h,
+      removeredeyes/infomessagewidget.cpp,
+      removeredeyes/infomessagewidget.h,
+      removeredeyes/myimageslist.cpp, removeredeyes/myimageslist.h,
+      removeredeyes/previewwidget.cpp, removeredeyes/previewwidget.h,
+      removeredeyes/previewzoombar.cpp, removeredeyes/previewzoombar.h,
+      removeredeyes/settingstab.cpp, removeredeyes/settingstab.h,
+      removeredeyes/simplesettings.cpp, removeredeyes/simplesettings.h,
+      removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/storagesettingsbox.h,
+      removeredeyes/unprocessedsettingsbox.cpp,
+      removeredeyes/unprocessedsettingsbox.h, removeredeyes/widgets,
+      removeredeyes/widgets/advancedsettings.cpp,
+      removeredeyes/widgets/advancedsettings.h,
+      removeredeyes/widgets/blobsettingsbox.cpp,
+      removeredeyes/widgets/blobsettingsbox.h,
+      removeredeyes/widgets/classifiersettingsbox.cpp,
+      removeredeyes/widgets/classifiersettingsbox.h,
+      removeredeyes/widgets/infomessagewidget.cpp,
+      removeredeyes/widgets/infomessagewidget.h,
+      removeredeyes/widgets/myimageslist.cpp,
+      removeredeyes/widgets/myimageslist.h,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/previewwidget.h,
+      removeredeyes/widgets/previewzoombar.cpp,
+      removeredeyes/widgets/previewzoombar.h,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/settingstab.h,
+      removeredeyes/widgets/simplesettings.cpp,
+      removeredeyes/widgets/simplesettings.h,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/storagesettingsbox.h,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.h: move widgets in
+      their own directory
+
+2008-12-18 12:52  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-18 08:02  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp: add connection to disable
+      the plugin in host application if no image has
+      been selected
+
+2008-12-18 07:48  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp: remove those lines to
+      match other plugins, but still the plugin is
+      enabled when no images are selected...
+
+2008-12-17 21:49  aclemens
+
+    * NEWS: update
+
+2008-12-17 21:41  aclemens
+
+    * jpeglossless/plugin_jpeglossless.cpp: JPEGLossLess kipi-plugin:
+      fix registration in ActionCollection
+      
+      BUG:177999
+
+2008-12-17 21:41  aclemens
+
+    * metadataedit/plugin_metadataedit.cpp: MetadataEdit kipi-plugin:
+      fix registration in ActionCollection
+
+2008-12-17 21:41  aclemens
+
+    * wallpaper/plugin_wallpaper.cpp: Wallpaper kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 21:04  aclemens
+
+    * gpssync/plugin_gpssync.cpp: GPSsync kipi-plugin: fix registration
+      in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * timeadjust/plugin_timeadjust.cpp: TimeAdjust kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * smugexport/plugin_smugexport.cpp: SmugMugExport kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * simpleviewerexport/plugin_simpleviewer.cpp: SimpleViewer
+      kipi-plugin: fix registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * sendimages/plugin_sendimages.cpp: SendImages kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * rawconverter/plugin_rawconverter.cpp: RawConverter kipi-plugin:
+      fix registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * printwizard/plugin_printwizard.cpp: PrintWizard kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:51  aclemens
+
+    * picasawebexport/plugin_picasawebexport.cpp: PicasaWebExport
+      kipi-plugin: fix registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * imageviewer/plugin_viewer.cpp: ImageViewer kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * galleryexport/plugin_galleryexport.cpp: GalleryExport
+      kipi-plugin: fix registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * dngconverter/plugin/plugin_dngconverter.cpp: DNGConverter
+      kipi-plugin: fix registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * calendar/plugin_calendar.cpp: Calendar kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * acquireimages/plugin_acquireimages.cpp: AquireImages kipi-plugin:
+      fix registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * flickrexport/plugin_flickrexport.cpp: FlickrExport kipi-plugin:
+      fix registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * ipodexport/plugin_ipodexport.cpp: iPodExport kipi-plugin: fix
+      registration in ActionCollection
+
+2008-12-17 20:50  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp: RemoveRedEyes
+      kipi-plugin: fix registration in ActionCollection
+
+2008-12-17 19:25  orgads
+
+    * calendar/calpainter.cpp, calendar/calwizard.cpp: * Replaced local
+      QPrintDialog with KdePrint::createPrintDialog. Some
+      features are added in the "Options" button.
+      * Fixed horizontal layout (image to the left or to the right of
+      the calendar)
+
+2008-12-17 19:23  cgilles
+
+    * slideshow/plugin_slideshow.cpp: SlideShow kipi-plugin: fix
+      registration in ActionCollection
+      CCBUG: 177999
+
+2008-12-17 13:23  aclemens
+
+    * removeredeyes/myimageslist.cpp,
+      removeredeyes/removeredeyeswindow.h: code polish
+
+2008-12-17 12:51  aclemens
+
+    * removeredeyes/previewwidget.cpp: use caching
+
+2008-12-17 12:12  mlaurent
+
+    * gpssync/gpsdataparser.cpp, gpssync/gpslistviewitem.cpp,
+      gpssync/gpslistviewitem.h, gpssync/gpssyncdialog.cpp,
+      gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklistviewitem.cpp, gpssync/plugin_gpssync.cpp: Fix
+      include
+
+2008-12-17 09:30  aclemens
+
+    * removeredeyes/libcvblobs/Blob.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.cpp,
+      removeredeyes/libcvblobs/BlobExtraction.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/libcvblobs/BlobResult.h: fix includes
+
+2008-12-17 09:30  aclemens
+
+    * removeredeyes/libcvblobs/Blob.h,
+      removeredeyes/libcvblobs/BlobExtraction.h,
+      removeredeyes/libcvblobs/BlobLibraryConfiguration.h,
+      removeredeyes/libcvblobs/BlobResult.h: fix include guards
+
+2008-12-17 09:30  aclemens
+
+    * removeredeyes/previewzoombar.h: use explicit ctor
+
+2008-12-17 08:55  mlaurent
+
+    * flickrexport/flickrtalker.cpp, flickrexport/flickrwidget.cpp,
+      flickrexport/flickrwindow.cpp, flickrexport/login.cpp,
+      flickrexport/mpform.cpp: Fix include
+
+2008-12-17 08:54  mlaurent
+
+    * metadataedit/altlangstringedit.cpp,
+      metadataedit/commenteditdialog.cpp,
+      metadataedit/commenteditdialog.h,
+      metadataedit/commentremovedialog.cpp,
+      metadataedit/exifadjust.cpp, metadataedit/exifcaption.cpp,
+      metadataedit/exifdatetime.cpp, metadataedit/exifdevice.cpp,
+      metadataedit/exifeditdialog.cpp, metadataedit/exifeditdialog.h,
+      metadataedit/exiflens.cpp, metadataedit/exiflight.cpp,
+      metadataedit/iptccategories.cpp, metadataedit/iptccontent.cpp,
+      metadataedit/iptccredits.cpp, metadataedit/iptceditdialog.cpp,
+      metadataedit/iptceditdialog.h, metadataedit/iptcenvelope.cpp,
+      metadataedit/iptckeywords.cpp, metadataedit/iptcorigin.cpp,
+      metadataedit/iptcproperties.cpp, metadataedit/iptcstatus.cpp,
+      metadataedit/iptcsubjects.cpp, metadataedit/multistringsedit.cpp,
+      metadataedit/multivaluesedit.cpp,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/xmpcategories.cpp, metadataedit/xmpcontent.cpp,
+      metadataedit/xmpcredits.cpp, metadataedit/xmpeditdialog.cpp,
+      metadataedit/xmpeditdialog.h, metadataedit/xmpkeywords.cpp,
+      metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+      metadataedit/xmpstatus.cpp, metadataedit/xmpsubjects.cpp: Fix
+      include
+
+2008-12-17 08:36  mlaurent
+
+    * htmlexport/imagegenerationfunctor.h, htmlexport/wizard.cpp,
+      imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h,
+      picasawebexport/mpform.cpp, picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.h: Fix include/fix forward
+      declaration
+
+2008-12-17 08:31  mlaurent
+
+    * galleryexport/galleries.cpp, galleryexport/galleries.h,
+      galleryexport/galleryconfig.cpp, galleryexport/gallerympform.cpp,
+      galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+      Fix include
+
+2008-12-17 08:27  mlaurent
+
+    * smugexport/smugwindow.h: Fix forward declaration
+
+2008-12-17 08:25  mlaurent
+
+    * smugexport/smugalbum.cpp, smugexport/smugalbum.h,
+      smugexport/smugwidget.cpp, smugexport/smugwindow.cpp,
+      smugexport/smugwindow.h: Fix include
+
+2008-12-16 12:58  scripty
+
+    * smugexport/kipiplugin_smugexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2008-12-16 12:46  aclemens
+
+    * removeredeyes/simplesettings.cpp: add little hover effect for
+      slider handle
+
+2008-12-16 12:46  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/previewwidget.cpp,
+      removeredeyes/previewwidget.h: use QGraphicsView for
+      PreviewWidget
+
+2008-12-16 12:33  mlaurent
+
+    * ipodexport/CMakeLists.txt: Link
+
+2008-12-16 09:16  aclemens
+
+    * removeredeyes/previewwidget.cpp: Use infowidget to display that
+      no image has been selected.
+
+2008-12-16 09:15  aclemens
+
+    * removeredeyes/infomessagewidget.cpp,
+      removeredeyes/infomessagewidget.h,
+      removeredeyes/previewwidget.cpp: no need to hide the infowidget,
+      with zooming capabilities the user will be able to change the
+      view so that the infowidget will not be in the way, if ever.
+
+2008-12-16 08:51  aclemens
+
+    * removeredeyes/previewzoombar.cpp: don't make the zoombar
+      completely transparent on the left side
+
+2008-12-16 08:51  aclemens
+
+    * removeredeyes/previewzoombar.cpp, removeredeyes/previewzoombar.h:
+      move zoom buttons (QToolButton) into its own class
+
+2008-12-16 00:58  aclemens
+
+    * removeredeyes/previewzoombar.cpp: change zoom button style
+
+2008-12-16 00:08  aclemens
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/previewwidget.cpp,
+      removeredeyes/previewwidget.h, removeredeyes/previewzoombar.cpp,
+      removeredeyes/previewzoombar.h: Prepare the plugin for zooming
+      capability.
+      
+      A semi-transparent zoombar is added to the preview widget to host
+      the zoom
+      buttons.
+
+2008-12-15 22:31  aacid
+
+    * sendimages/emailpage.cpp: fix typo discovered by mvillarino
+
+2008-12-15 20:23  mlaurent
+
+    * acquireimages/scandialog.cpp: const'ify
+
+2008-12-15 16:36  aclemens
+
+    * removeredeyes/previewwidget.cpp, removeredeyes/previewwidget.h,
+      removeredeyes/removeredeyeswindow.cpp: code polish, semantic
+      changes
+
+2008-12-15 16:15  aclemens
+
+    * removeredeyes/workerthread.cpp: use const iterator
+
+2008-12-15 16:11  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/workerthread.cpp: The ctor is too simple now. We
+      need to provide a classifier file all the
+      time, otherwise the plugin will crash if you forget to set one.
+      Remove getters / setters and make classifier file a needed
+      parameter.
+
+2008-12-15 15:57  aclemens
+
+    * removeredeyes/storagesettingsbox.cpp,
+      removeredeyes/workerthread.cpp: disable overwrite mode for now,
+      it is really not advisable at the moment
+      because metadata is not saved. It is better to prevent the user
+      from wrong usage then
+      hearing complaints afterwards :-)
+
+2008-12-15 15:57  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/workerthread.cpp:
+      added some more comments + code polish
+
+2008-12-15 15:56  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h: move
+      allocateBuffers() method into EyeLocatorPriv
+
+2008-12-15 15:56  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/workerthread.cpp: simplify EyeLocator ctor. Use
+      getters / setters to configure the class
+
+2008-12-15 13:25  cgilles
+
+    * slideshow/plugin_slideshow.cpp: assign shorcut
+
+2008-12-15 12:40  mlaurent
+
+    * htmlexport/generator.cpp, htmlexport/theme.cpp: Fix iterator
+      Fix mem leak
+
+2008-12-15 12:35  mlaurent
+
+    * timeadjust/timeadjustdialog.cpp: Fix iterator
+
+2008-12-15 12:33  mlaurent
+
+    * smugexport/smugtalker.cpp, smugexport/smugtalker.h: Const'ify
+
+2008-12-15 12:25  mlaurent
+
+    * slideshow/plugin_slideshow.cpp, slideshow/slideshow.cpp: Minor
+      fix
+
+2008-12-15 12:21  mlaurent
+
+    * slideshow/maindialog.cpp, slideshow/plugin_slideshow.cpp,
+      slideshow/soundtrackdialog.cpp: Const'ify
+
+2008-12-15 12:18  mlaurent
+
+    * simpleviewerexport/simpleviewerexport.cpp: Const'ify
+
+2008-12-15 12:16  mlaurent
+
+    * simpleviewerexport/simpleviewerexport.cpp: const'ify
+
+2008-12-15 08:56  cgilles
+
+    * sendimages/emailpage.cpp, sendimages/emailpage.h,
+      sendimages/emailsettingscontainer.h,
+      sendimages/sendimagesdialog.cpp, sendimages/sendimagesdialog.h:
+      fix i18n
+
+2008-12-15 08:55  cgilles
+
+    * CMakeLists.txt, NEWS: upadte release version
+
+2008-12-15 08:38  mlaurent
+
+    * printwizard/wizard.cpp: Const'ify
+
+2008-12-15 08:35  mlaurent
+
+    * gpssync/kmlexportconfig.cpp: Minor fix
+
+2008-12-15 08:31  mlaurent
+
+    * gpssync/gpsdataparser.cpp: Const'ify
+
+2008-12-15 08:27  mlaurent
+
+    * galleryexport/gallerywindow.cpp: Fix mem leak
+
+2008-12-15 08:24  mlaurent
+
+    * galleryexport/gallerytalker.cpp: const'ify
+      Fix mem leak
+
+2008-12-15 08:18  mlaurent
+
+    * common/libkipiplugins/imageslist.cpp: Fix iterator
+
+2008-12-15 08:15  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp: Const'ify
+
+2008-12-15 08:13  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp: Fix potential mem leak
+
+2008-12-15 08:08  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Add comment
+
+2008-12-15 08:06  mlaurent
+
+    * picasawebexport/picasawebwindow.cpp: Fix potential mem leak
+      Add const.
+      Not necessary to test if pointer is null before to remove it
+
+2008-12-15 08:04  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Fix mem leak
+
+2008-12-15 08:02  mlaurent
+
+    * picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp: Fix label
+
+2008-12-15 05:12  vfuoglio
+
+    * AUTHORS: Updated my mail address.
+
+2008-12-14 19:19  cgilles
+
+    * ChangeLog: update
+
+2008-12-14 18:27  cgilles
+
+    * NEWS: prepare kipi-plugins 0.2.0-beta5 for KDE4
+
 0.2.0-beta5 2008-12-14
 --------------------------------------------------------------------------------
 
