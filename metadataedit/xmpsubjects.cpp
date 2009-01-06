@@ -22,7 +22,7 @@
 
 #include "xmpsubjects.h"
 #include "xmpsubjects.moc"
-
+#include "metadataedit_global.h"
 // Qt includes.
 
 #include <QButtonGroup>
@@ -55,22 +55,6 @@
 
 namespace KIPIMetadataEditPlugin
 {
-
-class SubjectData
-{
-public:
-
-    SubjectData(const QString& n, const QString& m, const QString& d)
-    {
-        name        = n;
-        matter      = m;
-        detail      = d;
-    }
-
-    QString name;         // English and Ascii Name of subject.
-    QString matter;       // English and Ascii Matter Name of subject.
-    QString detail;       // English and Ascii Detail Name of subject.
-};
 
 class XMPSubjectsPriv
 {
