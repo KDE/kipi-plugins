@@ -22,7 +22,7 @@
 
 #include "soundtrackdialog.h"
 #include "soundtrackdialog.moc"
-
+#include <fixx11h.h>
 // Phonon includes
 
 #include <Phonon/BackendCapabilities>
