@@ -5,6 +5,7 @@ ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 # =======================================================
 # XMP SDK source code.
+KDE4_NO_ENABLE_FINAL(kipiplugin_dngwriter)
 
 INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5
