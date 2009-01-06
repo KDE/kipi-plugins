@@ -89,7 +89,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     QGridLayout* albumsSettingsLayout = new QGridLayout();
     QLabel* albumLabel = new QLabel(i18n("PhotoSet:"), settingsBox);
-    m_newAlbumBtn = new QPushButton(settingsBox, "m_newAlbumBtn");
+    m_newAlbumBtn = new QPushButton(settingsBox);
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_albumsListComboBox = new KComboBox(settingsBox);
