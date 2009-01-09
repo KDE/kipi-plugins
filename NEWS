@@ -5,7 +5,8 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 179439 : Rotation or flip do not update internal thumbnail.
+002 ==> 
 
 Kipi-plugins 0.2.0-beta6 - Release date: 04/01/2009
 ------------------------------------------------------------------------
