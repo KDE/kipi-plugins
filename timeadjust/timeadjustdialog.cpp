@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -70,6 +70,7 @@ extern "C"
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
@@ -522,6 +523,11 @@ void TimeAdjustDialog::slotOk()
             bool ret = true;
 
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
 
             ret &= exiv2Iface.load(url.path());
             if (ret)
@@ -576,12 +582,6 @@ void TimeAdjustDialog::slotOk()
             else
                 updatedURLs.append(url);
         }
-
-        // See B.K.O #138880: set the file acess and modification time (after than Exiv2 play with metadata).
-        struct utimbuf ut;
-        ut.modtime = dateTime.toTime_t();
-        ut.actime  = dateTime.toTime_t();
-        ::utime(QFile::encodeName(url.path()), &ut);
     }
 
     // We use kipi interface refreshImages() method to tell to host than
