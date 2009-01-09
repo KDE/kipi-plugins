@@ -181,13 +181,13 @@ void SettingsTab::setSettingsMode(SettingsMode mode)
     switch (mode)
     {
         case Simple:
-            d->settingsSwitcherBtn->setText(i18n("Advanced Mode"));
+            d->settingsSwitcherBtn->setText(i18n("&Advanced Mode"));
             d->settingsStack->setCurrentIndex(Simple);
             d->simpleCorrectionMode = true;
             break;
 
         case Advanced:
-            d->settingsSwitcherBtn->setText(i18n("Simple Mode"));
+            d->settingsSwitcherBtn->setText(i18n("&Simple Mode"));
             d->settingsStack->setCurrentIndex(Advanced);
             d->simpleCorrectionMode = false;
             break;

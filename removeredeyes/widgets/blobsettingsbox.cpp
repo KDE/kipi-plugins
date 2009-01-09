@@ -57,12 +57,12 @@ BlobSettingsBox::BlobSettingsBox(QWidget* parent)
     setTitle(i18n("Blob Extraction Settings"));
 
     d->minBlobSizeNumInput = new KIntNumInput;
-    d->minBlobSizeNumInput->setLabel(i18n("Minimum blob size:"));
+    d->minBlobSizeNumInput->setLabel(i18n("Minimum &blob size:"));
     d->minBlobSizeNumInput->setRange(1, 100, 1);
     d->minBlobSizeNumInput->setSliderEnabled(true);
 
     d->minRoundnessNumInput = new KIntNumInput;
-    d->minRoundnessNumInput->setLabel(i18n("Minimum roundness:"));
+    d->minRoundnessNumInput->setLabel(i18n("Minimum &roundness:"));
     d->minRoundnessNumInput->setRange(0, 100, 1);
     d->minRoundnessNumInput->setSliderEnabled(true);
     d->minRoundnessNumInput->setSuffix("%");

@@ -91,16 +91,16 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     // ----------------------------------------------------------------
 
-    QRadioButton* subfolderMode = new QRadioButton(i18n("Save files in a subfolder"));
+    QRadioButton* subfolderMode = new QRadioButton(i18n("Save files in a sub&folder"));
     subfolderMode->setToolTip(i18n("If checked, the corrected files will be saved "
                                    "in a subfolder under the current image album path."));
     d->storageGroup->addButton(subfolderMode, Subfolder);
 
-    QRadioButton* suffixMode = new QRadioButton(i18n("Add suffix to filename"));
+    QRadioButton* suffixMode = new QRadioButton(i18n("Add s&uffix to filename"));
     suffixMode->setToolTip(i18n("If checked, a custom suffix will be added to the corrected file."));
     d->storageGroup->addButton(suffixMode, Suffix);
 
-    QRadioButton* overwriteMode = new QRadioButton(i18n("Overwrite original files"));
+    QRadioButton* overwriteMode = new QRadioButton(i18n("&Overwrite original files"));
     overwriteMode->setToolTip(i18n("If checked, all original images will be replaced."));
     d->storageGroup->addButton(overwriteMode, Overwrite);
 
@@ -109,7 +109,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     // ----------------------------------------------------------------
 
-    d->keywordCB       = new QCheckBox(i18n("Add metadata keyword"));
+    d->keywordCB       = new QCheckBox(i18n("Add &metadata keyword"));
     d->keywordCB->setChecked(false);
     d->keywordCB->setToolTip(i18n("If checked, a custom keyword will be applied to the image metadata."));
 

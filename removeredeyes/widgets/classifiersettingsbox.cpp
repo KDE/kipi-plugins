@@ -66,7 +66,7 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
 {
     setTitle(i18n("Classifier Settings"));
 
-    d->standardClassifierCheckBox    = new QCheckBox(i18n("Use standard classifier"));
+    d->standardClassifierCheckBox    = new QCheckBox(i18n("Use &standard classifier"));
     d->classifierUrlRequester        = new KUrlRequester;
     d->classifierUrlRequester->setFilter("*.xml");
     d->standardClassifierCheckBox->setToolTip(i18n("If checked, the standard classifier "
@@ -74,12 +74,12 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     d->classifierUrlRequester->setToolTip(i18n("Enter the location of the classifier here."));
 
     d->neighborGroupsNumInput    = new KIntNumInput;
-    d->neighborGroupsNumInput->setLabel(i18n("Neighbor groups:"));
+    d->neighborGroupsNumInput->setLabel(i18n("&Neighbor groups:"));
     d->neighborGroupsNumInput->setRange(1, 10, 1);
     d->neighborGroupsNumInput->setSliderEnabled(true);
 
     d->scalingFactorNumInput    = new KDoubleNumInput;
-    d->scalingFactorNumInput->setLabel(i18n("Scaling factor:"));
+    d->scalingFactorNumInput->setLabel(i18n("&Scaling factor:"));
     d->scalingFactorNumInput->setRange(1.05, 10.0, 0.01);
 
     QGridLayout* mainLayout = new QGridLayout;
