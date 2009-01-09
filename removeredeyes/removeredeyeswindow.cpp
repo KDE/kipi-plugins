@@ -446,8 +446,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
                    this, SLOT(closeClicked()));
 
         setButtonGuiItem(Close, KStandardGuiItem::cancel());
-        enableButton(User1, false);
-        enableButton(User2, false);
+        enableButton(User1, false); // correction button
+        enableButton(User2, false); // testrun button
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(cancelCorrection()));
@@ -463,8 +463,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
                    this, SLOT(cancelCorrection()));
 
         setButtonGuiItem(Close, KStandardGuiItem::close());
-        enableButton(User1, true);
-        enableButton(User2, true);
+        enableButton(User1, true);  // correction button
+        enableButton(User2, true);  // testrun button
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(closeClicked()));
@@ -505,8 +505,8 @@ void RemoveRedEyesWindow::handleUnprocessedImages()
 void RemoveRedEyesWindow::imageListChanged(bool)
 {
     bool isEmpty = d->imageList->imageUrls().isEmpty();
-    enableButton(User1, !isEmpty);
-    enableButton(User2, !isEmpty);
+    enableButton(User1, !isEmpty);  // correction button
+    enableButton(User2, !isEmpty);  // testrun button
 }
 
 void RemoveRedEyesWindow::tabwidgetChanged(int tab)
@@ -547,10 +547,10 @@ void RemoveRedEyesWindow::slotButtonClicked(int button)
 
     switch (button)
     {
-        case User2:
+        case User2:                 // testrun
             emit user2Clicked();
             break;
-        case User1:
+        case User1:                 // correction
             emit user1Clicked();
             break;
         case Cancel:
