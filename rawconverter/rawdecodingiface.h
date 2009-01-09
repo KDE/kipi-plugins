@@ -6,8 +6,8 @@
  * Date        : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,6 +45,8 @@ public:
     RawDecodingIface();
     ~RawDecodingIface();
 
+    void setUpdateFileTimeStamp(bool b);
+
 public:
 
     /** Extract a small size of decode RAW data in 8 bits/color/pixels 
@@ -67,6 +69,10 @@ private:
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                          const QByteArray& imageData, int width, int height, int rgbmax,
                          const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
+
+private:
+
+    bool m_updateFileTimeStamp;
 };
 
 }  // namespace KIPIRawConverterPlugin

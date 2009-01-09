@@ -7,7 +7,7 @@
  * Description : Raw converter single dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -213,7 +213,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     d->blinkPreviewTimer = new QTimer(this);
     d->blinkConvertTimer = new QTimer(this);
-    d->thread            = new ActionThread(this);
+    d->thread            = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 
     // ---------------------------------------------------------------
 

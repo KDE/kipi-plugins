@@ -6,8 +6,8 @@
  * Date        : 2006-12-09
  * Description : RAW decoding interface
  *
- * Copyright (C) 2006-2008 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Marcel Wiesweg <marcel.wiesweg@gmx.de>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,6 +40,10 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/version.h>
+
 // LibKDcraw includes.
 
 #include <libkdcraw/version.h>
@@ -55,10 +59,16 @@ namespace KIPIRawConverterPlugin
 RawDecodingIface::RawDecodingIface()
                 : KDcrawIface::KDcraw()
 {
+    m_updateFileTimeStamp = false;
 }
 
 RawDecodingIface::~RawDecodingIface()
 {
+}
+
+void RawDecodingIface::setUpdateFileTimeStamp(bool b)
+{
+    m_updateFileTimeStamp = b;
 }
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
@@ -118,9 +128,16 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         else                // 16 bits color depth image.
         {
             // Swap Red and Blue and re-ajust color component values
+
+#if KDCRAW_VERSION < 0x000400
             tmp16[0] = (unsigned short)((sptr[4]*256 + sptr[5]) * factor);      // Blue
             tmp16[1] = (unsigned short)((sptr[2]*256 + sptr[3]) * factor);      // Green
             tmp16[2] = (unsigned short)((sptr[0]*256 + sptr[1]) * factor);      // Red
+#else
+            tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
+            tmp16[1] = (unsigned short)((sptr[3]*256 + sptr[2]) * factor);      // Green
+            tmp16[2] = (unsigned short)((sptr[1]*256 + sptr[0]) * factor);      // Red
+#endif
 
             memcpy(&sptr[0], &tmp16[0], 6);
 
@@ -232,6 +249,11 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     // Metadata restoration and update.
     KExiv2Iface::KExiv2 meta;
+
+#if KEXIV2_VERSION >= 0x000600
+    meta.setUpdateFileTimeStamp(m_updateFileTimeStamp);
+#endif
+
     meta.load(filePath);
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(QSize(width, height));
