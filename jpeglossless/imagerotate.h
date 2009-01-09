@@ -7,8 +7,8 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,11 +49,12 @@ public:
     ImageRotate();
     ~ImageRotate();
 
-    bool rotate(const QString& src, RotateAction angle, QString& err);
+    bool rotate(const QString& src, RotateAction angle, QString& err, bool updateFileTimeStamp);
 
 private:
 
-    bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err);
+    bool rotateJPEG(const QString& src, const QString& dest, RotateAction angle, 
+                    QString& err, bool updateFileTimeStamp);
     bool rotateImageMagick(const QString& src, const QString& dest, RotateAction angle, QString& err);
 
 private:

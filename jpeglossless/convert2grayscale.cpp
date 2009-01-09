@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,9 +48,15 @@ extern "C"
 #include <kurl.h>
 #include <kdebug.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/version.h>
+#include <libkexiv2/kexiv2.h>
+
 // Local includes.
 
 #include "utils.h"
+#include "pluginsversion.h"
 #include "transupp.h"
 #include "convert2grayscale.h"
 #include "convert2grayscale.moc"
@@ -69,7 +75,7 @@ ImageGrayScale::~ImageGrayScale()
 {
 }
 
-bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
+bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool updateFileTimeStamp)
 {
     QFileInfo fi(src);
 
@@ -94,7 +100,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
     }
     else if (Utils::isJPEG(src))
     {
-        if (!image2GrayScaleJPEG(src, tmp, err))
+        if (!image2GrayScaleJPEG(src, tmp, err, updateFileTimeStamp))
             return false;
     }
     else
@@ -120,12 +126,13 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err)
     return true;
 }
 
-bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err)
+bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, 
+                                         QString& err, bool updateFileTimeStamp)
 {
     JCOPY_OPTION copyoption = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
 
-    transformoption.transform = JXFORM_NONE;
+    transformoption.transform       = JXFORM_NONE;
     transformoption.force_grayscale = true;
     transformoption.trim            = false;
 
@@ -208,6 +215,22 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     fclose(input_file);
     fclose(output_file);
+
+    // And set finaly update the metadata to target file.
+
+    KExiv2Iface::KExiv2 exiv2Iface;
+
+#if KEXIV2_VERSION >= 0x000600
+    exiv2Iface.setUpdateFileTimeStamp(updateFileTimeStamp);
+#endif
+
+    exiv2Iface.load(dest);
+
+    QImage img(dest);
+    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio);
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    exiv2Iface.setExifThumbnail(exifThumbnail);
+    exiv2Iface.save(dest);
 
     return true;
 }

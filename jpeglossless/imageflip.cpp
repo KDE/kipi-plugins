@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch image flip
  *
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,7 +69,7 @@ ImageFlip::~ImageFlip()
 {
 }
 
-bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
+bool ImageFlip::flip(const QString& src, FlipAction action, QString& err, bool updateFileTimeStamp)
 {
     QFileInfo fi(src);
 
@@ -94,7 +94,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
     }
     else if (Utils::isJPEG(src))
     {
-        if (!flipJPEG(src, tmp, action, err))
+        if (!flipJPEG(src, tmp, action, err, updateFileTimeStamp))
             return false;
     }
     else
@@ -111,7 +111,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
     }
 
     // Move back to original file
-    if (!Utils::MoveFile(tmp, src)) 
+    if (!Utils::MoveFile(tmp, src))
     {
         err = i18n("Cannot update source image");
         return false;
@@ -120,7 +120,8 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err)
     return true;
 }
 
-bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err)
+bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction action, 
+                         QString& err, bool updateFileTimeStamp)
 {
     Matrix transform=Matrix::none;
 
@@ -144,7 +145,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
         }
     }
 
-    return transformJPEG(src, dest, transform, err);
+    return transformJPEG(src, dest, transform, err, updateFileTimeStamp);
 }
 
 bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)

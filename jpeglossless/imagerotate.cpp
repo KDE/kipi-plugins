@@ -7,8 +7,8 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -70,7 +70,7 @@ ImageRotate::~ImageRotate()
 {
 }
 
-bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
+bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, bool updateFileTimeStamp)
 {
     QFileInfo fi(src);
 
@@ -95,7 +95,8 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
     }
     else if (Utils::isJPEG(src))
     {
-        if (!rotateJPEG(src, tmp, angle, err)) {
+        if (!rotateJPEG(src, tmp, angle, err, updateFileTimeStamp))
+        {
             if (err == "nothing to do") { err=QString::null; return true; }
             return false;
         }
@@ -123,7 +124,8 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err)
     return true;
 }
 
-bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle, QString& err)
+bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle,
+                             QString& err, bool updateFileTimeStamp)
 {
     Matrix transform=Matrix::none;
 
@@ -157,7 +159,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
     }
 
-    return transformJPEG(src, dest, transform, err);
+    return transformJPEG(src, dest, transform, err, updateFileTimeStamp);
 }
 
 bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 

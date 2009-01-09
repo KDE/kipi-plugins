@@ -8,8 +8,8 @@
  *               actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,8 +62,9 @@ public:
 
     ActionThreadPriv()
     {
-        interface = 0;
-        running   = false;
+        interface           = 0;
+        running             = false;
+        updateFileTimeStamp = false;
     }
 
     class Task
@@ -77,6 +78,7 @@ public:
     };
 
     bool             running;
+    bool             updateFileTimeStamp;
 
     QMutex           mutex;
 
@@ -92,6 +94,7 @@ ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
 {
     d = new ActionThreadPriv;
     d->interface = interface;
+    d->updateFileTimeStamp = d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool();
 }
 
 ActionThread::~ActionThread()
@@ -110,43 +113,6 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
          it != urlList.end(); ++it ) 
     {
         KIPI::ImageInfo info = d->interface->info( *it );
-
-        /*
-        Removing this code:
-         - for JPEGs, jpegtransform is using the Exiv2Iface and matrix multiplication
-           to compute the mathematically correct rotation (taking flip operations into account,
-           the code below only angles). Metadata tag is reset.
-         - For ImageMagick, no metadata is taken into account, and no metadata is changed!
-           Angle from host application still applies.
-        // Don't use the host angle in case of auto-rotation (Rot0)
-        if (val != Rot0)
-        {
-            // If the image is being displayed rotaed in the host application, then rotate that
-            // angle too.
-            int angle = (info.angle() + 360) % 360;
-
-            // When the image has been rotated on the disk we can assume that it
-            // does not need to be rotated before being displayed.
-            info.setAngle( 0 );
-
-            if ( val == Rot90 )
-                angle += 90;
-            else if ( val == Rot180 )
-                angle += 180;
-            else if ( val == Rot270 )
-                angle += 270;
-
-            angle = (angle+360) % 360;
-            if ( (90-45) <= angle && angle < (90+45) )
-                val = Rot90;
-            else if ( (180-45) <= angle && angle < (180+45) )
-                val = Rot180;
-            else if ( (270-45) <= angle && angle < (270+45) )
-                val = Rot270;
-            else
-                val = Rot0;
-        }
-        */
 
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->filePath               = (*it).path();
@@ -236,7 +202,7 @@ void ActionThread::run()
 
                     bool result = true;
                     ImageRotate imageRotate;
-                    result = imageRotate.rotate(t->filePath, t->rotAction, errString);
+                    result = imageRotate.rotate(t->filePath, t->rotAction, errString, d->updateFileTimeStamp);
 
                     if (result)
                         emit finished(t->filePath, Rotate);
@@ -249,7 +215,7 @@ void ActionThread::run()
                     emit starting(t->filePath, Flip);
 
                     ImageFlip imageFlip;
-                    bool result = imageFlip.flip(t->filePath, t->flipAction, errString);
+                    bool result = imageFlip.flip(t->filePath, t->flipAction, errString, d->updateFileTimeStamp);
 
                     if (result)
                         emit finished(t->filePath, Flip);
@@ -262,7 +228,7 @@ void ActionThread::run()
                     emit starting(t->filePath, GrayScale);
 
                     ImageGrayScale imageGrayScale;
-                    bool result = imageGrayScale.image2GrayScale(t->filePath, errString);
+                    bool result = imageGrayScale.image2GrayScale(t->filePath, errString, d->updateFileTimeStamp);
 
                     if (result)
                         emit finished(t->filePath, GrayScale);

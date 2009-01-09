@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch image flip
  *
- * Copyright (C) 2004-2008 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,11 +50,12 @@ public:
     ImageFlip();
     ~ImageFlip();
 
-    bool flip(const QString& src, FlipAction action, QString& err);
+    bool flip(const QString& src, FlipAction action, QString& err, bool updateFileTimeStamp);
 
 private:
 
-    bool flipJPEG(const QString& src, const QString& dest, FlipAction action, QString& err);
+    bool flipJPEG(const QString& src, const QString& dest, FlipAction action, 
+                  QString& err, bool updateFileTimeStamp);
     bool flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err);
 
 private:
