@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright (C) 2004-2007 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * NOTE: Do not use kdDebug() in this implementation because 
  *       it will be multithreaded. Use qDebug() instead. 
@@ -17,12 +17,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #define XMD_H
@@ -33,7 +33,7 @@
 
 // C Ansi includes.
 
-extern "C" 
+extern "C"
 {
 #include <sys/types.h>
 #include <unistd.h>
@@ -55,9 +55,14 @@ extern "C"
 #include <kurl.h>
 #include <ktempfile.h>
 
+// LibKExiv2 includes.
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes.
 
 #include "utils.h"
+#include "pluginsversion.h"
 #include "transupp.h"
 #include "convert2grayscale.h"
 #include "convert2grayscale.moc"
@@ -171,7 +176,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
         err = i18n("Error in opening output file");
         return false;
     }
-    
+
     // Open jpeglib stream
     jpeg_stdio_src(&srcinfo, input_file);
 
@@ -195,7 +200,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     // Specify data destination for compression
     jpeg_stdio_dest(&dstinfo, output_file);
-    
+
     // Do not write a JFIF header if previously the image did not contain it
     dstinfo.write_JFIF_header = false;
 
@@ -216,6 +221,16 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     fclose(input_file);
     fclose(output_file);
+
+    // And set finaly update the metadata to target file.
+
+    KExiv2Iface::KExiv2 exiv2Iface;
+    exiv2Iface.load(dest);
+    QImage img(dest);
+    QImage exifThumbnail = img.scale(160, 120, QImage::ScaleMin);
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    exiv2Iface.setExifThumbnail(exifThumbnail);
+    exiv2Iface.save(dest);
 
     return true;
 }
