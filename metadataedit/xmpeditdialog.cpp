@@ -6,7 +6,7 @@
  * Date        : 2007-10-11
  * Description : a dialog to edit XMP metadata
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,6 +51,7 @@
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
@@ -394,6 +395,12 @@ void XMPEditDialog::slotApply()
         d->propertiesPage->applyMetadata(d->xmpData);
 
         KExiv2Iface::KExiv2 exiv2Iface;
+        exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+        exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
         exiv2Iface.load((*d->currItem).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);

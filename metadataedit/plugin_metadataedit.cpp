@@ -6,7 +6,7 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,6 +46,7 @@
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
@@ -206,6 +207,12 @@ void Plugin_MetadataEdit::slotRemoveExif()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearExif();
             ret &= exiv2Iface.save(url.path());
@@ -285,6 +292,12 @@ void Plugin_MetadataEdit::slotImportExif()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setExif(exifData);
             ret &= exiv2Iface.save(url.path());
@@ -351,6 +364,12 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearIptc();
             ret &= exiv2Iface.save(url.path());
@@ -430,6 +449,12 @@ void Plugin_MetadataEdit::slotImportIptc()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setIptc(iptcData);
             ret &= exiv2Iface.save(url.path());
@@ -496,6 +521,12 @@ void Plugin_MetadataEdit::slotRemoveXmp()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.clearXmp();
             ret &= exiv2Iface.save(url.path());
@@ -575,6 +606,12 @@ void Plugin_MetadataEdit::slotImportXmp()
         {
             ret = true;
             KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
             ret &= exiv2Iface.load(url.path());
             ret &= exiv2Iface.setXmp(xmpData);
             ret &= exiv2Iface.save(url.path());
@@ -627,6 +664,12 @@ void Plugin_MetadataEdit::slotEditComments()
         info.setDescription(dlg.getComments());
 
         KExiv2Iface::KExiv2 exiv2Iface;
+        exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+        exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
         ret &= exiv2Iface.load(url.path());
 
         if (ret)
@@ -702,6 +745,12 @@ void Plugin_MetadataEdit::slotRemoveComments()
         }
 
         KExiv2Iface::KExiv2 exiv2Iface;
+        exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+        exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
         ret &= exiv2Iface.load(url.path());
         if (ret)
         {
