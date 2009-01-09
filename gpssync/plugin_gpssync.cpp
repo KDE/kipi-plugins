@@ -7,7 +7,7 @@
  * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,9 +24,6 @@
 
 #include "plugin_gpssync.h"
 #include "plugin_gpssync.moc"
-
-// Qt includes.
-
 
 // KDE includes.
 
@@ -47,6 +44,7 @@
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
@@ -206,6 +204,12 @@ void Plugin_GPSSync::slotGPSEdit()
     KIPI::ImageInfo info = m_interface->info(img);
     attributes = info.attributes();
 
+    exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+    exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
     if (attributes.contains("latitude") &&
         attributes.contains("longitude") &&
         attributes.contains("altitude"))
@@ -273,6 +277,12 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
     KExiv2Iface::KExiv2 exiv2Iface;
     KIPIGPSSyncPlugin::GPSTrackList trackList;
     KUrl::List urls = images.images();
+
+    exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+    exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
 
     for( KUrl::List::iterator it = urls.begin() ;
         it != urls.end() ; ++it)
@@ -378,6 +388,12 @@ void Plugin_GPSSync::slotGPSRemove()
     KUrl::List  imageURLs = images.images();
     QStringList errorFiles;
     KExiv2Iface::KExiv2 exiv2Iface;
+
+    exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+    exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
 
     for( KUrl::List::iterator it = imageURLs.begin() ;
          it != imageURLs.end(); ++it)

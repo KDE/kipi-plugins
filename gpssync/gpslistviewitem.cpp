@@ -6,7 +6,7 @@
  * Date        : 2006-09-19
  * Description : GPS file list view item.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,9 +22,6 @@
 
 #include "gpslistviewitem.h"
 
-// Qt includes.
-
-
 // KDE includes.
 
 #include <klocale.h>
@@ -32,6 +29,7 @@
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 namespace KIPIGPSSyncPlugin
@@ -195,6 +193,12 @@ void GPSListViewItem::writeGPSInfoToFile()
     {
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.load(d->url.path());
+        exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+        exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
         KIPI::ImageInfo info = d->interface->info(url());
 
         if (d->erase)
