@@ -7,8 +7,9 @@ General        : plugins now use metadata settings shared with kipi host applica
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 179439 : Rotation or flip do not update internal thumbnail.
-002 ==> 
+001 ==> 179439 : JPEGLossLess       : Rotation or flip do not update internal thumbnail.
+002 ==> 180245 : TimeAdjust         : Timeadjust is not building on mac os x leopard.
+003 ==> 
 
 Kipi-plugins 0.2.0-beta6 - Release date: 04/01/2009
 ------------------------------------------------------------------------
