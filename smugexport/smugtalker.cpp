@@ -100,10 +100,18 @@ void SmugTalker::login(const QString& email, const QString& password)
     m_authProgressDlg->setValue(1);
 
     KUrl url(m_apiURL);
-    url.addQueryItem("method", "smugmug.login.withPassword");
-    url.addQueryItem("APIKey", m_apiKey);
-    url.addQueryItem("EmailAddress", email);
-    url.addQueryItem("Password", password);
+    if (email.isEmpty()) 
+    {
+        url.addQueryItem("method", "smugmug.login.anonymously");
+        url.addQueryItem("APIKey", m_apiKey);
+    }
+    else
+    {
+        url.addQueryItem("method", "smugmug.login.withPassword");
+        url.addQueryItem("APIKey", m_apiKey);
+        url.addQueryItem("EmailAddress", email);
+        url.addQueryItem("Password", password);
+    }
 
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
@@ -156,7 +164,7 @@ void SmugTalker::logout()
     slotResult(job);
 }
 
-void SmugTalker::listAlbums()
+void SmugTalker::listAlbums(const QString& nickName)
 {
     if (m_job)
     {
@@ -169,6 +177,8 @@ void SmugTalker::listAlbums()
     url.addQueryItem("method", "smugmug.albums.get");
     url.addQueryItem("SessionID", m_sessionID);
     url.addQueryItem("Heavy", "1");
+    if (!nickName.isEmpty())
+        url.addQueryItem("NickName", nickName);
 
     QByteArray tmp;
     KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
