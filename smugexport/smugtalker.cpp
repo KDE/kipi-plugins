@@ -197,6 +197,44 @@ void SmugTalker::listAlbums(const QString& nickName)
     m_buffer.resize(0);
 }
 
+void SmugTalker::listPhotos(int albumID, 
+                            const QString& albumPassword, 
+                            const QString& sitePassword)
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    KUrl url(m_apiURL);
+    url.addQueryItem("method", "smugmug.images.get");
+    url.addQueryItem("SessionID", m_sessionID);
+    url.addQueryItem("AlbumID", QString::number(albumID));
+    url.addQueryItem("Heavy", "1");
+    if (!albumPassword.isEmpty())
+        url.addQueryItem("Password", albumPassword);
+    if (!sitePassword.isEmpty())
+        url.addQueryItem("SitePassword", sitePassword);
+
+    QByteArray tmp;
+    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = SMUG_LISTPHOTOS;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
 void SmugTalker::listAlbumTmpl()
 {
     if (m_job)
@@ -455,6 +493,9 @@ void SmugTalker::slotResult(KJob *kjob)
             break;
         case(SMUG_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
+            break;
+        case(SMUG_LISTPHOTOS):
+            parseResponseListPhotos(m_buffer);
             break;
         case(SMUG_LISTALBUMTEMPLATES):
             parseResponseListAlbumTmpl(m_buffer);
@@ -728,6 +769,63 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
+}
+
+void SmugTalker::parseResponseListPhotos(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+    QDomDocument doc("images.get");
+    if (!doc.setContent(data))
+        return;
+
+    kDebug(51000) << "Parse Photos response:" << endl << data;
+
+    QList <SmugPhoto> photosList;
+    QDomElement e = doc.documentElement();
+    for (QDomNode node = e.firstChild();
+         !node.isNull();
+         node = node.nextSibling())
+    {
+        if (!node.isElement())
+            continue;
+        e = node.toElement();
+        if (e.tagName() == "Images")
+        {
+            for (QDomNode nodeP = e.firstChild();
+                 !nodeP.isNull();
+                 nodeP = nodeP.nextSibling())
+            {
+                if (!nodeP.isElement())
+                    continue;
+                e = nodeP.toElement();
+                if (e.tagName() == "Image")
+                {
+                    SmugPhoto photo;
+                    photo.id = e.attribute("id").toInt();
+                    photo.key = e.attribute("Key");
+                    photo.caption = e.attribute("Caption");
+                    photo.keywords = e.attribute("Keywords");
+                    photo.thumbURL = e.attribute("ThumbURL");
+                    photo.originalURL = e.attribute("OriginalURL");
+                    photosList.append(photo);
+                }
+            }
+            errCode = 0;
+        }
+        else if (e.tagName() == "err")
+        {
+            errCode = e.attribute("code").toInt();
+            errMsg = e.attribute("msg");
+            kDebug(51000) << "Error:" << errCode << errMsg;
+        }
+    }
+
+    if (errCode == 15)  // 15: empty list
+        errCode = 0;
+    emit signalBusy(false);
+    emit signalListPhotosDone(errCode, errorToText(errCode, errMsg),
+                              photosList);
 }
 
 void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)

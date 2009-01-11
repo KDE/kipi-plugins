@@ -85,6 +85,24 @@ public:
     QString tmpl;
 };
 
+class SmugPhoto
+{
+public:
+    SmugPhoto()
+    {
+        id = -1;
+    }
+
+    int     id;
+
+    QString key;
+    QString caption;
+    QString keywords;
+
+    QString thumbURL;
+    QString originalURL;
+};
+
 class SmugAlbumTmpl
 {
 public:

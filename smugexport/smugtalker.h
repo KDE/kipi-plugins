@@ -55,6 +55,9 @@ public:
     void    logout();
 
     void    listAlbums(const QString& nickName = "");
+    void    listPhotos(int albumID, 
+                       const QString& albumPassword = "", 
+                       const QString& sitePassword = "");
     void    listAlbumTmpl();
     void    listCategories();
     void    listSubCategories(int categoryID);
@@ -72,10 +75,12 @@ signals:
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                int newAlbumID);
-    void signalListAlbumTmplDone(int errCode, const QString& errMsg,
-                                      const QList <SmugAlbumTmpl>& albumTList);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <SmugAlbum>& albumsList);
+    void signalListPhotosDone(int errCode, const QString& errMsg,
+                              const QList <SmugPhoto>& photosList);
+    void signalListAlbumTmplDone(int errCode, const QString& errMsg,
+                                 const QList <SmugAlbumTmpl>& albumTList);
     void signalListCategoriesDone(int errCode, const QString& errMsg,
                                   const QList <SmugCategory>& categoriesList);
     void signalListSubCategoriesDone(int errCode, const QString& errMsg,
@@ -87,6 +92,7 @@ private:
         SMUG_LOGIN = 0,
         SMUG_LOGOUT,
         SMUG_LISTALBUMS,
+        SMUG_LISTPHOTOS,
         SMUG_LISTALBUMTEMPLATES,
         SMUG_LISTCATEGORIES,
         SMUG_LISTSUBCATEGORIES,
@@ -100,6 +106,7 @@ private:
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
+    void parseResponseListPhotos(const QByteArray& data);
     void parseResponseListAlbumTmpl(const QByteArray& data);
     void parseResponseListCategories(const QByteArray& data);
     void parseResponseListSubCategories(const QByteArray& data);
