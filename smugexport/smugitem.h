@@ -69,6 +69,7 @@ public:
     QString key;
     QString title;
     QString description;
+    QString keywords;
 
     int     categoryID;
     QString category;
@@ -79,6 +80,8 @@ public:
     bool    isPublic;
     QString password;
     QString passwordHint;
+
+    int     imageCount;
 
     // below fields only used by createAlbum (and not by listAlbums)
     int     tmplID;

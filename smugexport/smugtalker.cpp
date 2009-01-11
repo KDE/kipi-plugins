@@ -729,9 +729,11 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                     album.key = e.attribute("Key");
                     album.title = e.attribute("Title");
                     album.description = e.attribute("Description");
+                    album.keywords = e.attribute("Keywords");
                     album.isPublic = e.attribute("Public") == "1";
                     album.password = e.attribute("Password");
                     album.passwordHint = e.attribute("PasswordHint");
+                    album.imageCount = e.attribute("ImageCount").toInt();
 
                     for (QDomNode nodeC = e.firstChild();
                          !nodeC.isNull();
