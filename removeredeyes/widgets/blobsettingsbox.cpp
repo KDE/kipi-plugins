@@ -36,14 +36,12 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class BlobSettingsBoxPriv
+struct BlobSettingsBoxPriv
 {
-public:
-
     BlobSettingsBoxPriv()
     {
-        minBlobSizeNumInput     = 0;
-        minRoundnessNumInput    = 0;
+        minBlobSizeNumInput  = 0;
+        minRoundnessNumInput = 0;
     }
 
     KIntNumInput*       minBlobSizeNumInput;

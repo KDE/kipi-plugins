@@ -45,18 +45,13 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SettingsTabPriv
+struct SettingsTabPriv
 {
-
-public:
-
     SettingsTabPriv()
     {
         storageSettingsBox  = 0;
-
         advancedSettings    = 0;
         simpleSettings      = 0;
-
         settingsSwitcherBtn = 0;
         settingsStack       = 0;
     }

@@ -38,11 +38,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class ClassifierSettingsBoxPriv
+struct ClassifierSettingsBoxPriv
 {
-
-public:
-
     ClassifierSettingsBoxPriv()
     {
         standardClassifierCheckBox  = 0;
@@ -54,9 +51,7 @@ public:
     QCheckBox*          standardClassifierCheckBox;
 
     KIntNumInput*       neighborGroupsNumInput;
-
     KDoubleNumInput*    scalingFactorNumInput;
-
     KUrlRequester*      classifierUrlRequester;
 };
 

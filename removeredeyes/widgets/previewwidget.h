@@ -37,7 +37,7 @@ class KUrl;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class PreviewWidgetPriv;
+struct PreviewWidgetPriv;
 
 class PreviewWidget : public QGraphicsView
 {

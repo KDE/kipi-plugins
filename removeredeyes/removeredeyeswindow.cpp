@@ -64,11 +64,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class RedEyesWindowPriv
+struct RedEyesWindowPriv
 {
-
-public:
-
     RedEyesWindowPriv()
     {
         interface           = 0;

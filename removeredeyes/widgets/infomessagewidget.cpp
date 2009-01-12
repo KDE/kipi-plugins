@@ -39,10 +39,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class InfoMessageWidgetPriv
+struct InfoMessageWidgetPriv
 {
-public:
-
     InfoMessageWidgetPriv()
     {
         timer  = 0;

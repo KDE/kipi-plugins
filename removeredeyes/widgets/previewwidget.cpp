@@ -43,10 +43,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class PreviewWidgetPriv
+struct PreviewWidgetPriv
 {
-public:
-
     PreviewWidgetPriv()
     {
         busyLabel           = 0;
@@ -62,7 +60,6 @@ public:
 
     QLabel*             busyLabel;
     QLabel*             noSelectionLabel;
-
     QLabel*             originalLabel;
     QLabel*             correctedLabel;
     QLabel*             maskLabel;
@@ -71,9 +68,9 @@ public:
 
     QString             image;
 
-    InfoMessageWidget*  modeInfo;
-
     ControlWidget*      controller;
+
+    InfoMessageWidget*  modeInfo;
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)

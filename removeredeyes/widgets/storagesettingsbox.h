@@ -31,7 +31,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class StorageSettingsBoxPriv;
+struct StorageSettingsBoxPriv;
 
 class StorageSettingsBox : public QGroupBox
 {

@@ -34,7 +34,7 @@ class QPainter;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class ControlWidgetPriv;
+struct ControlWidgetPriv;
 
 class ControlWidget : public QWidget
 {

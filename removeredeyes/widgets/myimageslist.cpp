@@ -52,10 +52,8 @@ using namespace KIPIPlugins;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class MyImagesListPriv
+struct MyImagesListPriv
 {
-public:
-
     MyImagesListPriv()
     {
         iface           = 0;

@@ -35,7 +35,7 @@ class Interface;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class MyImagesListPriv;
+struct MyImagesListPriv;
 
 class MyImagesList : public KIPIPlugins::ImagesList
 {

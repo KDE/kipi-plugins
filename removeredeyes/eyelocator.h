@@ -28,7 +28,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class EyeLocatorPriv;
+struct EyeLocatorPriv;
 
 class EyeLocator
 {

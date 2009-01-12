@@ -41,10 +41,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class UnprocessedSettingsBoxPriv
+struct UnprocessedSettingsBoxPriv
 {
-public:
-
     UnprocessedSettingsBoxPriv()
     {
         unprocessedGroup = 0;

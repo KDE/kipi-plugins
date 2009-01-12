@@ -43,10 +43,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class StorageSettingsBoxPriv
+struct StorageSettingsBoxPriv
 {
-public:
-
     StorageSettingsBoxPriv()
     {
         storageGroup        = 0;

@@ -33,7 +33,7 @@ class QWidget;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class BlobSettingsBoxPriv;
+struct BlobSettingsBoxPriv;
 
 class BlobSettingsBox : public QGroupBox
 {

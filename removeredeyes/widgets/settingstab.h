@@ -31,7 +31,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SettingsTabPriv;
+struct SettingsTabPriv;
 class RemovalSettings;
 
 class SettingsTab : public QWidget

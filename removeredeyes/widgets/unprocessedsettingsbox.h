@@ -31,7 +31,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class UnprocessedSettingsBoxPriv;
+struct UnprocessedSettingsBoxPriv;
 
 class UnprocessedSettingsBox : public QGroupBox
 {

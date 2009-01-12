@@ -32,7 +32,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class InfoMessageWidgetPriv;
+struct InfoMessageWidgetPriv;
 
 class InfoMessageWidget : public QWidget
 {

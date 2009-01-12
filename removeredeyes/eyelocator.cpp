@@ -45,10 +45,8 @@ namespace KIPIRemoveRedEyesPlugin
 // size to scale down to
 const int MINSIZE = 600;
 
-class EyeLocatorPriv
+struct EyeLocatorPriv
 {
-public:
-
     EyeLocatorPriv()
     {
         aChannel          = 0;
@@ -74,8 +72,6 @@ public:
     void allocateBuffers();
 
     IplImage* scaleDownImage(IplImage* src);
-
-public:
 
     IplImage*       aChannel;
     IplImage*       gray;

@@ -46,10 +46,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class WorkerThreadPriv
+struct WorkerThreadPriv
 {
-public:
-
     WorkerThreadPriv()
     {
         runtype = WorkerThread::Testrun;

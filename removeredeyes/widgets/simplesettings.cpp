@@ -43,11 +43,8 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SimpleSettingsPriv
+struct SimpleSettingsPriv
 {
-
-public:
-
     SimpleSettingsPriv()
     {
         settingsSlider = 0;

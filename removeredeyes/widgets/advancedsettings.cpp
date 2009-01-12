@@ -37,15 +37,12 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class AdvancedSettingsPriv
+struct AdvancedSettingsPriv
 {
-
-public:
-
     AdvancedSettingsPriv()
     {
-        blobSettingsBox         = 0;
-        classifierSettingsBox   = 0;
+        blobSettingsBox       = 0;
+        classifierSettingsBox = 0;
     }
 
     BlobSettingsBox*        blobSettingsBox;

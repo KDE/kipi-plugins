@@ -38,7 +38,7 @@ class Interface;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class RedEyesWindowPriv;
+struct RedEyesWindowPriv;
 class RemovalSettings;
 class WorkerThreadData;
 
