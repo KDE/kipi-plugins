@@ -25,8 +25,6 @@ INSTALL(TARGETS kipiplugin_dngconverter DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-
 # =======================================================
 # Stand alone version of dngconverter plugin
 

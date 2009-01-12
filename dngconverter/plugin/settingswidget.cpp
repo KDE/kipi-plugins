@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : save settings widgets
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,6 +40,7 @@
 #include <kseparator.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
+#include <kiconloader.h>
 
 // Libkdcraw includes.
 
@@ -48,7 +49,6 @@
 // Local includes.
 
 #include "dngwriter.h"
-#include "dnglogo.h"
 
 using namespace DNGIface;
 using namespace KDcrawIface;
@@ -87,9 +87,8 @@ public:
 };
 
 SettingsWidget::SettingsWidget(QWidget *parent)
-                  : QWidget(parent)
+              : QWidget(parent), d(new SettingsWidgetPriv)
 {
-    d = new SettingsWidgetPriv;
     setAttribute(Qt::WA_DeleteOnClose);
 
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
@@ -97,8 +96,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     KUrlLabel *dngLogoLabel = new KUrlLabel(this);
     dngLogoLabel->setText(QString());
     dngLogoLabel->setUrl("http://en.wikipedia.org/wiki/Digital_Negative_(file_format)");
-    QImage logo(DNGLOGO_pixel_data, 96, 65, QImage::Format_ARGB32);
-    dngLogoLabel->setPixmap(QPixmap::fromImage(logo));
+    dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("dngconverter", KIconLoader::NoGroup, 96));
     dngLogoLabel->setAlignment(Qt::AlignRight);
 
     // ------------------------------------------------------------------------

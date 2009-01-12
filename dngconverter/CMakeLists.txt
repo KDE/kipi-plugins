@@ -205,5 +205,6 @@ SET(kipiplugin_dngconverter_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_
                                       ${libdngwriter_SRCS}
    )
 
+ADD_SUBDIRECTORY(icons)
 ADD_SUBDIRECTORY(plugin)
 ADD_SUBDIRECTORY(test)
