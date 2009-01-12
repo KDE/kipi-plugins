@@ -55,8 +55,7 @@ struct SimpleSettingsPriv
 };
 
 SimpleSettings::SimpleSettings(QWidget* parent)
-              : QWidget(parent),
-                d(new SimpleSettingsPriv)
+              : QWidget(parent), d(new SimpleSettingsPriv)
 {
     d->settingsSlider = new QSlider(Qt::Vertical);
     d->settingsSlider->setRange(0, 2);

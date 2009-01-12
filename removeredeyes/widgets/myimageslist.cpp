@@ -74,8 +74,7 @@ struct MyImagesListPriv
 };
 
 MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
-            : ImagesList(iface, parent),
-              d(new MyImagesListPriv)
+            : ImagesList(iface, parent), d(new MyImagesListPriv)
 {
     d->iface = iface;
     setAllowRAW(false);

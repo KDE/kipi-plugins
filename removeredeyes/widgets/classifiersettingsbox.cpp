@@ -56,8 +56,7 @@ struct ClassifierSettingsBoxPriv
 };
 
 ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
-                     : QGroupBox(parent),
-                       d(new ClassifierSettingsBoxPriv)
+                     : QGroupBox(parent), d(new ClassifierSettingsBoxPriv)
 {
     setTitle(i18n("Classifier Settings"));
 

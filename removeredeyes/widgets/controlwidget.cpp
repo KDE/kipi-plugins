@@ -64,8 +64,7 @@ struct ControlWidgetPriv
 };
 
 ControlWidget::ControlWidget(QWidget* parent, int w, int h)
-             : QWidget(parent),
-               d(new ControlWidgetPriv)
+             : QWidget(parent), d(new ControlWidgetPriv)
 {
     setMinimumSize(w, h);
     setMaximumSize(w, h);

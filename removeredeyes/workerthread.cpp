@@ -65,8 +65,7 @@ struct WorkerThreadPriv
 };
 
 WorkerThread::WorkerThread(QObject* parent)
-            : QThread(parent),
-              d(new WorkerThreadPriv)
+            : QThread(parent), d(new WorkerThreadPriv)
 {
 }
 

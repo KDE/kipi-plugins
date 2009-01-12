@@ -74,8 +74,7 @@ struct PreviewWidgetPriv
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)
-             : QGraphicsView(parent),
-               d(new PreviewWidgetPriv)
+             : QGraphicsView(parent), d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
             "preview for the currently selected image</p>"

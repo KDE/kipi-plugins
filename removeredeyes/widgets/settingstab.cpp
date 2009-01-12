@@ -69,8 +69,7 @@ struct SettingsTabPriv
 };
 
 SettingsTab::SettingsTab(QWidget* parent)
-              : QWidget(parent),
-                d(new SettingsTabPriv)
+              : QWidget(parent), d(new SettingsTabPriv)
 {
     d->simpleCorrectionMode     = true;
     d->settingsSwitcherBtn      = new QPushButton;

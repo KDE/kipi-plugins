@@ -62,8 +62,7 @@ struct StorageSettingsBoxPriv
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* parent)
-                  : QGroupBox(parent),
-                    d(new StorageSettingsBoxPriv)
+                  : QGroupBox(parent), d(new StorageSettingsBoxPriv)
 {
     setTitle(i18n("Storage Settings"));
 

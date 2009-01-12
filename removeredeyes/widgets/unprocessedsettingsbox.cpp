@@ -52,8 +52,7 @@ struct UnprocessedSettingsBoxPriv
 };
 
 UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
-                  : QGroupBox(parent),
-                    d(new UnprocessedSettingsBoxPriv)
+                  : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
 {
     setTitle(i18n("Unprocessed Images Settings"));
 

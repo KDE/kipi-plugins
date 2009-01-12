@@ -54,8 +54,7 @@ struct InfoMessageWidgetPriv
 };
 
 InfoMessageWidget::InfoMessageWidget(QWidget* parent)
-                 : QWidget(parent),
-                   d(new InfoMessageWidgetPriv)
+                 : QWidget(parent), d(new InfoMessageWidgetPriv)
 {
     setFocusPolicy(Qt::NoFocus);
 

@@ -51,8 +51,7 @@ struct AdvancedSettingsPriv
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
-                : QWidget(parent),
-                  d(new AdvancedSettingsPriv)
+                : QWidget(parent), d(new AdvancedSettingsPriv)
 {
     d->blobSettingsBox          = new BlobSettingsBox;
     d->classifierSettingsBox    = new ClassifierSettingsBox;
