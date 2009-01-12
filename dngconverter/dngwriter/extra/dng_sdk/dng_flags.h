@@ -70,6 +70,12 @@
 #if defined(qDNGLittleEndian)
 #define qDNGBigEndian !qDNGLittleEndian
 
+#elif defined(__hppa__)
+#define qDNGBigEndian 1
+
+#elif defined(__sparc__)
+#define qDNGBigEndian 1
+
 #elif defined(__POWERPC__)
 #define qDNGBigEndian 1
 
