@@ -8,7 +8,7 @@
  *               or batch mode.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -89,7 +89,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
 
     m_singleAction = actionCollection()->addAction("raw_converter_single");
     m_singleAction->setText(i18n("Raw Image Converter..."));
-    m_singleAction->setIcon(KIcon("rawconvertersingle"));
+    m_singleAction->setIcon(KIcon("rawconverter"));
 
     connect(m_singleAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateSingle()));
@@ -98,7 +98,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
 
     m_batchAction = actionCollection()->addAction("raw_converter_batch");
     m_batchAction->setText(i18n("Batch Raw Converter..."));
-    m_batchAction->setIcon(KIcon("rawconverterbatch"));
+    m_batchAction->setIcon(KIcon("rawconverter"));
 
     connect(m_batchAction, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateBatch()));
