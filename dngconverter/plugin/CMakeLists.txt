@@ -12,7 +12,6 @@ KDE4_ADD_PLUGIN(kipiplugin_dngconverter ${kipiplugin_dngconverter_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_dngconverter 
                       ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
@@ -36,9 +35,8 @@ KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
 
 TARGET_LINK_LIBRARIES(dngconverter
                       ${EXPAT_LIBRARY}
-                      ${KDE4_KDEUI_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${QT_LIBRARIES}
+                      ${KDE4_KIO_LIBS}
+                      ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${CMAKE_THREAD_LIBS_INIT}
