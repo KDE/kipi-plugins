@@ -109,7 +109,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::Plugin::setup( widget );
 
     d->action_AutoExif = actionCollection()->addAction("rotate_exif");
-    d->action_AutoExif->setText("Auto Rotate/Flip Using Exif Information");
+    d->action_AutoExif->setText(i18n("Auto Rotate/Flip Using Exif Information"));
     connect(d->action_AutoExif, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateExif()));
     addAction(d->action_AutoExif);
@@ -150,7 +150,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     d->action_FlipImage->addAction(verti);
 
     d->action_Convert2GrayScale = actionCollection()->addAction("jpeglossless_convert2grayscale");
-    d->action_Convert2GrayScale->setText("Convert to Black && White");
+    d->action_Convert2GrayScale->setText(i18n("Convert to Black && White"));
     d->action_Convert2GrayScale->setIcon(KIcon("grayscaleconvert"));
     connect(d->action_Convert2GrayScale, SIGNAL(triggered(bool)),
             this, SLOT(slotConvert2GrayScale()));
