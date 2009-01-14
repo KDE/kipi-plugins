@@ -74,19 +74,19 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     m_actionMetadataEdit->setObjectName("metadataedit");
 
     KAction *editEXIF = actionCollection()->addAction("editexif");
-    editEXIF->setText("Edit EXIF...");
+    editEXIF->setText(i18n("Edit EXIF..."));
     connect(editEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotEditExif()));
     m_actionMetadataEdit->addAction(editEXIF);
 
     KAction *removeEXIF = actionCollection()->addAction("removeexif");
-    removeEXIF->setText("Remove EXIF...");
+    removeEXIF->setText(i18n("Remove EXIF..."));
     connect(removeEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveExif()));
     m_actionMetadataEdit->addAction(removeEXIF);
 
     KAction *importEXIF = actionCollection()->addAction("importexif");
-    importEXIF->setText("Import EXIF...");
+    importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
     m_actionMetadataEdit->addAction(importEXIF);
@@ -96,19 +96,19 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     m_actionMetadataEdit->menu()->addSeparator();
 
     KAction *editIPTC = actionCollection()->addAction("editiptc");
-    editIPTC->setText("Edit IPTC...");
+    editIPTC->setText(i18n("Edit IPTC..."));
     connect(editIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotEditIptc()));
     m_actionMetadataEdit->addAction(editIPTC);
 
     KAction *removeIPTC = actionCollection()->addAction("removeiptc");
-    removeIPTC->setText("Remove IPTC...");
+    removeIPTC->setText(i18n("Remove IPTC..."));
     connect(removeIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveIptc()));
     m_actionMetadataEdit->addAction(removeIPTC);
 
     KAction *importIPTC = actionCollection()->addAction("importiptc");
-    importIPTC->setText("Import IPTC...");
+    importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
     m_actionMetadataEdit->addAction(importIPTC);
@@ -118,19 +118,19 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     m_actionMetadataEdit->menu()->addSeparator();
 
     KAction *editXMP = actionCollection()->addAction("editxmp");
-    editXMP->setText("Edit XMP...");
+    editXMP->setText(i18n("Edit XMP..."));
     connect(editXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotEditXmp()));
     m_actionMetadataEdit->addAction(editXMP);
 
     KAction *removeXMP = actionCollection()->addAction("removexmp");
-    removeXMP->setText("Remove XMP...");
+    removeXMP->setText(i18n("Remove XMP..."));
     connect(removeXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveXmp()));
     m_actionMetadataEdit->addAction(removeXMP);
 
     KAction *importXMP = actionCollection()->addAction("importxmp");
-    importXMP->setText("Import XMP...");
+    importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
     m_actionMetadataEdit->addAction(importXMP);
@@ -140,13 +140,13 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     m_actionMetadataEdit->menu()->addSeparator();
 
     KAction *editComments = actionCollection()->addAction("editcomments");
-    editComments->setText("Edit Captions...");
+    editComments->setText(i18n("Edit Captions..."));
     connect(editComments, SIGNAL(triggered(bool)),
             this, SLOT(slotEditComments()));
     m_actionMetadataEdit->addAction(editComments);
 
     KAction *removeComments = actionCollection()->addAction("removecomments");
-    removeComments->setText("Remove Captions...");
+    removeComments->setText(i18n("Remove Captions..."));
     connect(removeComments, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveComments()));
     m_actionMetadataEdit->addAction(removeComments);
