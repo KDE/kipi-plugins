@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -110,8 +110,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collection to "
                                                  "Picasaweb web service."),
-                                           ki18n( "(c) 2007-2008, Vardhman Jain\n"
-                                           "(c) 2008, Gilles Caulier" ));
+                                           ki18n( "(c) 2007-2009, Vardhman Jain\n"
+                                           "(c) 2008-2009, Gilles Caulier" ));
 
     m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");
@@ -125,7 +125,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setDelayedMenu(helpMenu->menu());
-    
+
     // ------------------------------------------------------------
 
     m_talker = new PicasawebTalker(this);
@@ -236,7 +236,7 @@ void PicasawebWindow::slotClose()
 void PicasawebWindow::closeEvent(QCloseEvent *e) 
 {
     if (!e) return;
-    
+
     kDebug (51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
     saveSettings();
     e->accept();
@@ -303,7 +303,7 @@ void PicasawebWindow::slotGetAlbumsListSucceeded()
         QLinkedList <PicasaWebAlbum> *list = m_talker->m_albumsList;
         m_albumsListComboBox->clear();
         QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
-	    int index = 0;
+        int index = 0;
         while(it != list->end())
         {
             PicasaWebAlbum pwa=*it;
@@ -370,7 +370,7 @@ void PicasawebWindow::slotCreateNewAlbum()
         else
             access = QString("private");
 
-	long long timestamp = dlg->m_dateTimeEdit->dateTime().toTime_t();
+        long long timestamp = dlg->m_dateTimeEdit->dateTime().toTime_t();
         m_talker->createAlbum(dlg->m_titleLineEdit->text(), dlg->m_descriptionTextBox->toPlainText(),
                               dlg->m_locationLineEdit->text(), timestamp * 1000,
                               access, QString(), true);
@@ -409,7 +409,7 @@ void PicasawebWindow::slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& /
 void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
-    KIPIPlugins::ImageDialog dlg(this, m_interface, false, true);
+    KIPIPlugins::ImageDialog dlg(this, m_interface);
     delete m_urls;
     m_urls = new KUrl::List( dlg.urls() );
 }
@@ -549,8 +549,8 @@ void PicasawebWindow::slotAddPhotoSucceeded()
 void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
 {
     if ( KMessageBox::warningContinueCancel(this,
-           i18n("Failed to upload photo into Picasaweb. %1\nDo you want to continue?"
-                , msg )) != KMessageBox::Continue)
+           i18n("Failed to upload photo into Picasaweb. %1\nDo you want to continue?",
+                msg )) != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
         m_progressDlg->reset();
@@ -561,7 +561,7 @@ void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
     else
     {
         m_uploadTotal--;
-	m_progressDlg->setMaximum( m_uploadTotal);
+        m_progressDlg->setMaximum( m_uploadTotal);
         m_progressDlg->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
