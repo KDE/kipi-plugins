@@ -11,8 +11,10 @@ IF(WIN32)
 
     TARGET_LINK_LIBRARIES(twainiface
                           ${KDE4_KDEUI_LIBS}
+                          ${KDE4_KIO_LIBS}
                           ${QT_AND_KDECORE_LIBS}
                           ${QT_LIBRARIES}
+                          ${KIPI_LIBRARIES}
                           ${KEXIV2_LIBRARIES}
                           ${KDCRAW_LIBRARIES}
                           kipiplugins
