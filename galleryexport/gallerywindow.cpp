@@ -401,13 +401,19 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             int n = ref_num_vect.indexOf( parentRefNum );
             const GAlbum& parentAlbum = albumList.at(n);    // ERROR
             QString parentTitle = parentAlbum.title;
-            QTreeWidgetItem *parentItem = ( d->albumView->findItems(parentTitle, Qt::MatchExactly) ).at(0);
+            QList<QTreeWidgetItem*> parentItemList = d->albumView->findItems(parentTitle, Qt::MatchExactly);
 
-            QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
-            item->setText(0, album.title );
-            item->setIcon(0, KIcon("inode-directory") );
+            // This is done to try fixing bug 175928
+            if( parentItemList.size() > 0 )
+            {
+                QTreeWidgetItem *parentItem = parentItemList.at(0);
+ 
+               QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+                item->setText(0, album.title );
+                item->setIcon(0, KIcon("inode-directory") );
 
-            d->albumDict.insert(album.title, album);
+                d->albumDict.insert(album.title, album);
+            }
         }
     }
 }
