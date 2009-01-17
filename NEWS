@@ -3,7 +3,8 @@ Kipi-plugins 0.2.0-rc1 - Release date: xx/01/2009
 
 NEW FEATURES:
 
-General        : plugins now use metadata settings shared with kipi host application.
+General        : Plugins now use metadata settings shared with kipi host application.
+Smug           : Import (download) of images from SmugMug web service.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 

@@ -26,7 +26,7 @@
 // Qt includes.
 #include <QString>
 
-namespace KIPISmugExportPlugin
+namespace KIPISmugPlugin
 {
 
 class SmugUser
@@ -135,6 +135,6 @@ public:
     QString name;
 };
 
-} // namespace KIPISmugExportPlugin
+} // namespace KIPISmugPlugin
 
 #endif /* SMUGITEM_H */

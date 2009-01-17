@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ namespace KIPIPlugins
 class KPAboutData;
 }
 
-namespace KIPISmugExportPlugin
+namespace KIPISmugPlugin
 {
 
 class SmugTalker;
@@ -65,7 +65,8 @@ class SmugWindow : public KDialog
 
 public:
 
-    SmugWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
+    SmugWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+               bool import, QWidget *parent);
     ~SmugWindow();
 
 private slots:
@@ -73,10 +74,14 @@ private slots:
     void slotBusy(bool val);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotGetPhotoDone(int errCode, const QString& errMsg,
+                          const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, 
                              int newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <SmugAlbum>& albumsList);
+    void slotListPhotosDone(int errCode, const QString& errMsg,
+                            const QList <SmugPhoto>& photosList);
     void slotListAlbumTmplDone(int errCode, const QString& errMsg,
                                const QList <SmugAlbumTmpl>& albumTList);
     void slotListCategoriesDone(int errCode, const QString& errMsg,
@@ -84,14 +89,14 @@ private slots:
     void slotListSubCategoriesDone(int errCode, const QString& errMsg,
                                    const QList <SmugCategory>& categoriesList);
 
-    void slotUserChangeRequest();
+    void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
-    void slotAddPhotoCancel();
+    void slotTransferCancel();
     void slotLoginCancel();
     void slotHelp();
     void slotClose();
-    void slotStartUpload();
+    void slotStartTransfer();
     void slotImageListChanged(bool);
     void slotTemplateSelectionChanged(int index);
     void slotCategorySelectionChanged(int index);
@@ -99,6 +104,7 @@ private slots:
 private:
     bool prepareImageForUpload(const QString& imgPath, bool isRAW);
     void uploadNextPhoto();
+    void downloadNextPhoto();
 
     void readSettings();
     void writeSettings();
@@ -106,11 +112,14 @@ private:
 
 private:
 
-    unsigned int                m_uploadCount;
-    unsigned int                m_uploadTotal;
+    bool                        m_import;
+    unsigned int                m_imagesCount;
+    unsigned int                m_imagesTotal;
     QString                     m_tmpDir;
     QString                     m_tmpPath;
 
+    bool                        m_anonymousImport;
+    QString                     m_anonymousNick;
     QString                     m_email;
     QString                     m_password;
     int                         m_currentAlbumID;
@@ -121,7 +130,7 @@ private:
     QProgressDialog            *m_authProgressDlg;
     KPasswordDialog            *m_loginDlg;
 
-    KUrl::List                  m_uploadQueue;
+    KUrl::List                  m_transferQueue;
 
     SmugTalker                 *m_talker;
     SmugWidget                 *m_widget;
@@ -132,6 +141,6 @@ private:
     KIPIPlugins::KPAboutData   *m_about;
 };
 
-} // namespace KIPISmugExportPlugin
+} // namespace KIPISmugPlugin
 
 #endif /* SMUGWINDOW_H */

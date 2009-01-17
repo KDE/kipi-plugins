@@ -1,11 +1,14 @@
-Smug export plugin
+Smug import/export plugin
 ----------------------------------------------------------------------------
-Short term:
+Minor improvements:
  - Fix button enable/disable when image list is empty (ImagesList)
  - Fix button enable/disable on new album dialog
  - Check FileSizeLimit before upload
  - Caption, Keywords, GPS coordinates support
  - Implement validators for email and password
+
+Short term:
+ - download largest photo available (original may not be available)
 
 Long term:
  - Synchronize with local album (upload/download)

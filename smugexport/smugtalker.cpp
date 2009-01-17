@@ -41,7 +41,7 @@
 #include "pluginsversion.h"
 #include "smugitem.h"
 
-namespace KIPISmugExportPlugin
+namespace KIPISmugPlugin
 {
 
 SmugTalker::SmugTalker(QWidget* parent)
@@ -49,7 +49,7 @@ SmugTalker::SmugTalker(QWidget* parent)
     m_parent = parent;
     m_job    = 0;
 
-    m_userAgent  = QString("KIPI-Plugin-SmugExport/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
+    m_userAgent  = QString("KIPI-Plugin-Smug/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.2.0";
     m_apiURL     = QString("https://api.smugmug.com/hack/rest/%1/").arg(m_apiVersion);
     m_apiKey     = "R83lTcD4TvMsIiXqpdrA9OdIJ22uA4Wi";
@@ -84,6 +84,8 @@ void SmugTalker::cancel()
 
     if (m_authProgressDlg && !m_authProgressDlg->isHidden())
         m_authProgressDlg->hide();
+
+    emit signalBusy(false);
 }
 
 void SmugTalker::login(const QString& email, const QString& password)
@@ -425,6 +427,29 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID)
     return true;
 }
 
+void SmugTalker::getPhoto(const QString& imgPath)
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    KIO::TransferJob* job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = SMUG_GETPHOTO;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
 void SmugTalker::data(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
@@ -447,6 +472,9 @@ QString SmugTalker::errorToText(int errCode, const QString &errMsg)
             break;
         case 1:
             transError = i18n("Login failed");
+            break;
+        case 4:
+            transError = i18n("Invalid user/nick/password");
             break;
         case 18:
             transError = i18n("Invalid API key");
@@ -473,6 +501,16 @@ void SmugTalker::slotResult(KJob *kjob)
             m_authProgressDlg->hide();
             emit signalBusy(false);
             emit signalLoginDone(job->error(), job->errorText());
+        }
+        else if (m_state == SMUG_ADDPHOTO)
+        {
+            emit signalBusy(false);
+            emit signalAddPhotoDone(job->error(), job->errorText());
+        }
+        else if (m_state == SMUG_GETPHOTO)
+        {
+            emit signalBusy(false);
+            emit signalGetPhotoDone(job->error(), job->errorText(), QByteArray());
         }
         else
         {
@@ -511,6 +549,11 @@ void SmugTalker::slotResult(KJob *kjob)
             break;
         case(SMUG_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
+            break;
+        case(SMUG_GETPHOTO):
+            // all we get is data of the image
+            emit signalBusy(false);
+            emit signalGetPhotoDone(0, QString(), m_buffer);
             break;
     }
 }
@@ -992,4 +1035,4 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
                                      categoriesList);
 }
 
-} // namespace KIPISmugExportPlugin
+} // namespace KIPISmugPlugin

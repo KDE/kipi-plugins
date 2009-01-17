@@ -47,46 +47,57 @@ extern "C"
 // Local includes.
 #include "smugwindow.h"
 
-K_PLUGIN_FACTORY( SmugExportFactory, registerPlugin<Plugin_SmugExport>(); )
-K_EXPORT_PLUGIN ( SmugExportFactory("kipiplugin_smugexport") )
+K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )
+K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smugexport") )
 
-Plugin_SmugExport::Plugin_SmugExport(QObject *parent,
+Plugin_Smug::Plugin_Smug(QObject *parent,
                                      const QVariantList &/*args*/)
-                   : KIPI::Plugin(SmugExportFactory::componentData(),
-                                  parent, "SmugExport")
+                   : KIPI::Plugin(SmugFactory::componentData(),
+                                  parent, "Smug")
 {
-    kDebug(51001) << "Plugin_SmugExport plugin loaded";
+    kDebug(51001) << "Plugin_Smug plugin loaded";
 }
 
-void Plugin_SmugExport::setup(QWidget* widget)
+void Plugin_Smug::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = actionCollection()->addAction("smugexport");
-    m_action->setText(i18n("Export to SmugMug..."));
-    m_action->setIcon(KIcon("applications-internet"));
+    m_actionExport = actionCollection()->addAction("smugexport");
+    m_actionExport->setText(i18n("Export to SmugMug..."));
+    m_actionExport->setIcon(KIcon("applications-internet"));
 
-    connect(m_action, SIGNAL( triggered(bool) ),
-            this, SLOT( slotActivate()) );
+    connect(m_actionExport, SIGNAL( triggered(bool) ),
+            this, SLOT( slotExport()) );
 
-    addAction(m_action);
+    addAction(m_actionExport);
+
+    m_actionImport = actionCollection()->addAction("smugimport");
+    m_actionImport->setText(i18n("Import from SmugMug..."));
+    m_actionImport->setIcon(KIcon("applications-internet"));
+
+    connect(m_actionImport, SIGNAL( triggered(bool) ),
+            this, SLOT( slotImport()) );
+
+    addAction(m_actionImport);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
         kError(51000) << "Kipi interface is null!";
-        m_action->setEnabled(false);
+        m_actionImport->setEnabled(false);
+        m_actionExport->setEnabled(false);
         return;
     }
 
-    m_action->setEnabled(true);
+    m_actionImport->setEnabled(true);
+    m_actionExport->setEnabled(true);
 }
 
-Plugin_SmugExport::~Plugin_SmugExport()
+Plugin_Smug::~Plugin_Smug()
 {
 }
 
-void Plugin_SmugExport::slotActivate()
+void Plugin_Smug::slotExport()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -96,19 +107,40 @@ void Plugin_SmugExport::slotActivate()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-smugexport-"
+    QString tmp = dir.saveLocation("tmp", "kipi-smug-"
                                            + QString::number(getpid()) + '/');
 
     // We clean it up in the close button
-    m_dlg = new KIPISmugExportPlugin::SmugWindow(interface, tmp,
-                                                 kapp->activeWindow());
+    m_dlg = new KIPISmugPlugin::SmugWindow(interface, tmp, false,
+                                           kapp->activeWindow());
     m_dlg->show();
 }
 
-KIPI::Category Plugin_SmugExport::category( KAction* action ) const
+void Plugin_Smug::slotImport()
 {
-    if (action == m_action)
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    if (!interface)
+    {
+        kError(51000) << "Kipi interface is null!";
+        return;
+    }
+
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp", "kipi-smug-"
+                                           + QString::number(getpid()) + '/');
+
+    // We clean it up in the close button
+    m_dlg = new KIPISmugPlugin::SmugWindow(interface, tmp, true,
+                                           kapp->activeWindow());
+    m_dlg->show();
+}
+
+KIPI::Category Plugin_Smug::category( KAction* action ) const
+{
+    if (action == m_actionExport)
         return KIPI::ExportPlugin;
+    else if (action == m_actionImport)
+        return KIPI::ImportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;

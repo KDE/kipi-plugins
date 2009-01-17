@@ -32,7 +32,7 @@ RemoveRedEyes      : A tool to remove red eyes on image automatically.
 SendImages         : A tool to send images by e-mail.
 SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http://www.airtightinteractive.com/simpleviewer).
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
-SmugExport         : A tool to export images to a remote SmugMug web service (http://www.smugmug.com).
+Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 FbExport           : A tool to export images to a remote Facebook web service (http://www.facebook.com).
 TimeAdjust         : A tool to adjust date and time.
 PrintWizard        : A tool to print images in various format.

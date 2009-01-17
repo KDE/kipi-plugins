@@ -36,7 +36,7 @@
 
 class QProgressDialog;
 
-namespace KIPISmugExportPlugin
+namespace KIPISmugPlugin
 {
 
 class SmugTalker : public QObject
@@ -51,7 +51,7 @@ public:
 
     bool    loggedIn();
     void    cancel();
-    void    login(const QString& email, const QString& password);
+    void    login(const QString& email = "", const QString& password = "");
     void    logout();
 
     void    listAlbums(const QString& nickName = "");
@@ -65,6 +65,7 @@ public:
     void    createAlbum(const SmugAlbum& album);
 
     bool    addPhoto(const QString& imgPath, int albumID);
+    void    getPhoto(const QString& imgPath);
 
 public:
     QProgressDialog *m_authProgressDlg; // TODO: move to method?
@@ -73,6 +74,8 @@ signals:
     void signalBusy(bool val);
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
+    void signalGetPhotoDone(int errCode, const QString& errMsg,
+                            const QByteArray& photoData);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                int newAlbumID);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
@@ -97,7 +100,8 @@ private:
         SMUG_LISTCATEGORIES,
         SMUG_LISTSUBCATEGORIES,
         SMUG_CREATEALBUM,
-        SMUG_ADDPHOTO
+        SMUG_ADDPHOTO,
+        SMUG_GETPHOTO
     };
 
     QString errorToText(int errCode, const QString& errMsg);
@@ -133,6 +137,6 @@ private:
     State      m_state;
 };
 
-} // namespace KIPISmugExportPlugin
+} // namespace KIPISmugPlugin
 
 #endif /* SMUGTALKER_H */

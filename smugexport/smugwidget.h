@@ -29,12 +29,15 @@
 class QLabel;
 class QSpinBox;
 class QCheckBox;
+class QRadioButton;
 class KPushButton;
 class KComboBox;
+class KLineEdit;
 
 namespace KIPI
 {
     class Interface;
+    class UploadWidget;
 }
 
 namespace KIPIPlugins
@@ -42,7 +45,7 @@ namespace KIPIPlugins
     class ImagesList;
 }
 
-namespace KIPISmugExportPlugin
+namespace KIPISmugPlugin
 {
 
 class SmugWidget : public QWidget
@@ -50,27 +53,53 @@ class SmugWidget : public QWidget
     Q_OBJECT
 
 public:
-    SmugWidget(QWidget* parent, KIPI::Interface *iface);
+    SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~SmugWidget();
 
     void updateLabels(const QString& email = "", const QString& name = "", 
                       const QString& nick = "");
 
+    bool isAnonymous();
+    void setAnonymous(bool checked);
+
+    QString getNickName();
+    void setNickName(const QString& nick);
+
+    QString getSitePassword();
+    QString getAlbumPassword();
+
+    QString getDestinationPath();
+
+signals:
+    void signalUserChangeRequest(bool anonymous);
+
 private slots:
+    void slotAnonymousToggled(bool checked);
+    void slotChangeUserClicked();
     void slotResizeChecked();
 
 private:
-
     KIPIPlugins::ImagesList*   m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
     QLabel*       m_headerLbl;
-    QLabel*       m_userNameDisplayLbl;
+    QRadioButton* m_anonymousRBtn;
+    QRadioButton* m_accountRBtn;
+    QLabel*       m_userNameLbl;
+    QLabel*       m_userName;
     QLabel*       m_emailLbl;
+    QLabel*       m_email;
     KPushButton*  m_changeUserBtn;
 
     KComboBox*    m_albumsCoB;
     KPushButton*  m_newAlbumBtn;
     KPushButton*  m_reloadAlbumsBtn;
+    QLabel*       m_nickNameLbl;
+    KLineEdit*    m_nickNameEdt;
+    QLabel*       m_sitePasswordLbl;
+    KLineEdit*    m_sitePasswordEdt;
+    QLabel*       m_albumPasswordLbl;
+    KLineEdit*    m_albumPasswordEdt;
 
     QCheckBox*    m_resizeChB;
     QSpinBox*     m_dimensionSpB;
@@ -79,6 +108,6 @@ private:
     friend class SmugWindow;
 };
 
-} // namespace KIPISmugExportPlugin
+} // namespace KIPISmugPlugin
 
 #endif // SMUGWIDGET_H
