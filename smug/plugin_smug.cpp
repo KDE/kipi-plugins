@@ -49,7 +49,7 @@ extern "C"
 #include "smugwindow.h"
 
 K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )
-K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smugexport") )
+K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smug") )
 
 Plugin_Smug::Plugin_Smug(QObject *parent,
                                      const QVariantList &/*args*/)
