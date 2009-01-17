@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,9 +80,8 @@ public:
 };
 
 ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
-                  : KPreviewWidgetBase(parent)
+                  : KPreviewWidgetBase(parent), d(new ImageDialogPreviewPrivate)
 {
-    d = new ImageDialogPreviewPrivate;
     d->iface = iface;
 
     QVBoxLayout *vlay = new QVBoxLayout(this);
@@ -264,13 +263,13 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         QString cellEnd("</font></nobr></td></tr>");
 
         identify += "<table cellspacing=0 cellpadding=0>";
-        identify += cellBeg + i18n("Make:")        + cellMid + make         + cellEnd;
-        identify += cellBeg + i18n("Model:")       + cellMid + model        + cellEnd;
-        identify += cellBeg + i18n("Created:")     + cellMid + dateTime     + cellEnd;
-        identify += cellBeg + i18n("Aperture:")    + cellMid + aperture     + cellEnd;
-        identify += cellBeg + i18n("Focal:")       + cellMid + focalLength  + cellEnd;
-        identify += cellBeg + i18n("Exposure:")    + cellMid + exposureTime + cellEnd;
-        identify += cellBeg + i18n("Sensitivity:") + cellMid + sensitivity  + cellEnd;
+        identify += cellBeg + i18n("<i>Make:</i>")        + cellMid + make         + cellEnd;
+        identify += cellBeg + i18n("<i>Model:</i>")       + cellMid + model        + cellEnd;
+        identify += cellBeg + i18n("<i>Created:</i>")     + cellMid + dateTime     + cellEnd;
+        identify += cellBeg + i18n("<i>Aperture:</i>")    + cellMid + aperture     + cellEnd;
+        identify += cellBeg + i18n("<i>Focal:</i>")       + cellMid + focalLength  + cellEnd;
+        identify += cellBeg + i18n("<i>Exposure:</i>")    + cellMid + exposureTime + cellEnd;
+        identify += cellBeg + i18n("<i>Sensitivity:</i>") + cellMid + sensitivity  + cellEnd;
         identify += "</table></center></qt>";
 
         d->infoLabel->setText(identify);
@@ -332,8 +331,8 @@ public:
 };
 
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect, bool onlyRaw)
+           : d(new ImageDialogPrivate)
 {
-    d = new ImageDialogPrivate;
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;
     d->iface        = iface;
