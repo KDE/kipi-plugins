@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#include "plugin_smugexport.h"
-#include "plugin_smugexport.moc"
+#include "plugin_smug.h"
+#include "plugin_smug.moc"
 
 // C ANSI includes.
 extern "C"

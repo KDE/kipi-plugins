@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_smugexport.pot
+$XGETTEXT *.cpp -o $podir/kipiplugin_smug.pot
 

@@ -322,7 +322,7 @@ void SmugWindow::writeSettings()
 
 void SmugWindow::slotHelp()
 {
-    KToolInvocation::invokeHelp("smugexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("smug", "kipi-plugins");
 }
 
 void SmugWindow::slotClose()

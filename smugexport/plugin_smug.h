@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_SMUGEXPORT_H
-#define PLUGIN_SMUGEXPORT_H
+#ifndef PLUGIN_SMUG_H
+#define PLUGIN_SMUG_H
 
 // Qt includes.
 #include <QVariant>
@@ -62,4 +62,4 @@ private:
     KIPISmugPlugin::SmugWindow  *m_dlg;
 };
 
-#endif // PLUGIN_SMUGEXPORT_H
+#endif // PLUGIN_SMUG_H
