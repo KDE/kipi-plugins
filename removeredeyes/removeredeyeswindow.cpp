@@ -449,6 +449,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(cancelCorrection()));
+
+        d->settingsTab->setEnabled(false);
     }
     else
     {
@@ -466,6 +468,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
 
         connect(this, SIGNAL(myCloseClicked()),
                 this, SLOT(closeClicked()));
+
+        d->settingsTab->setEnabled(true);
     }
 }
 
