@@ -1,12 +1,12 @@
 /* ============================================================
  *
- * This file is a part of digiKam project
- * http://www.digikam.org
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
  *
- * Date        : Jan 18, 2009
- * Description : XXXXXXXXXXXXXXXXXXXXXXXx
+ * Date        : 2009-01-18
+ * Description : different save methods for red eye correction
  *
- * Copyright (C) 2009 by andi <xxxxxxxxxxxxx>
+ * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
