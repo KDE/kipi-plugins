@@ -2,6 +2,7 @@
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
+                    ${CMAKE_CURRENT_SOURCE_DIR}/detection/savemethods
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
                     ${OpenCV_CV_INCLUDE_DIR}
                     ${OpenCV_CXCORE_INCLUDE_DIR}
@@ -13,6 +14,11 @@ SET(libcvblobs_SRCS
     libcvblobs/Blob.cpp
     libcvblobs/BlobResult.cpp
     libcvblobs/BlobExtraction.cpp
+   )
+
+SET(savemethods_SRCS
+    detection/savemethods/SaveMethods.cpp
+    detection/savemethods/SaveMethodFactory.cpp
    )
 
 SET(widgets_SRCS
@@ -35,6 +41,7 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     workerthread.cpp
     workerthreaddata.cpp
     eyelocator.cpp
+    ${savemethods_SRCS}
     ${libcvblobs_SRCS}
     ${widgets_SRCS}
    )

@@ -43,6 +43,9 @@
 #include "storagesettingsbox.h"
 #include "workerthreaddata.h"
 
+#include "SaveMethodFactory.h"
+#include "SaveMethods.h"
+
 namespace KIPIRemoveRedEyesPlugin
 {
 
@@ -50,18 +53,21 @@ struct WorkerThreadPriv
 {
     WorkerThreadPriv()
     {
-        runtype = WorkerThread::Testrun;
-        cancel  = false;
+        runtype    = WorkerThread::Testrun;
+        cancel     = false;
+        saveMethod = 0;
     }
 
-    int             runtype;
-    bool            cancel;
-    RemovalSettings settings;
+    int                 runtype;
+    bool                cancel;
 
-    KUrl::List      urls;
-    QString         maskPreviewFile;
-    QString         correctedPreviewFile;
-    QString         originalPreviewFile;
+    RemovalSettings     settings;
+    SaveMethodAbstract* saveMethod;
+
+    KUrl::List          urls;
+    QString             maskPreviewFile;
+    QString             correctedPreviewFile;
+    QString             originalPreviewFile;
 };
 
 WorkerThread::WorkerThread(QObject* parent)
@@ -74,6 +80,8 @@ WorkerThread::~ WorkerThread()
     // wait for the thread to finish
     wait();
 
+    if (d->saveMethod)
+        delete d->saveMethod;
     delete d;
 }
 
@@ -82,6 +90,9 @@ void WorkerThread::run()
     int total = d->urls.count();
 
     if (total <= 0)
+        return;
+
+    if (!d->saveMethod)
         return;
 
     int i = 1;
@@ -115,38 +126,6 @@ void WorkerThread::run()
         // generate save-location path
         if ((d->runtype == Correction) && (loc.redEyes() > 0))
         {
-            QFileInfo info(url.path());
-            KUrl saveLocation = KUrl(info.path());
-
-            switch (d->settings.storageMode)
-            {
-                case StorageSettingsBox::Subfolder:
-                {
-                    saveLocation.addPath(d->settings.subfolderName);
-
-                    // check if subfolder exists
-                    if (!QDir(saveLocation.path()).exists())
-                        QDir(info.path()).mkdir(d->settings.subfolderName);
-
-                    saveLocation.addPath(info.fileName());
-                    break;
-                }
-                case StorageSettingsBox::Suffix:
-                {
-                    QString file = info.baseName();
-                    file.append(d->settings.suffixName);
-                    file.append(".");
-                    file.append(info.suffix());
-                    saveLocation.addPath(file);
-                    break;
-                }
-                case StorageSettingsBox::Overwrite:
-                {
-                    saveLocation.addPath(info.fileName());
-                    break;
-                }
-            }
-
             // backup metatdata
             KExiv2Iface::KExiv2 meta;
             meta.load(url.path());
@@ -161,11 +140,11 @@ void WorkerThread::run()
             }
 
             // save image
-            QByteArray dest = QFile::encodeName(saveLocation.path());
+            QByteArray dest = QFile::encodeName(d->saveMethod->savePath(url.path()));
             loc.saveImage(dest.data(), EyeLocator::Final);
 
             // restore metadata
-            meta.save(saveLocation.path());
+            meta.save(d->saveMethod->savePath(url.path()));
         }
 
         if (d->runtype == Preview)
@@ -229,6 +208,16 @@ void WorkerThread::setTempFile(const QString& temp, ImageType type)
             d->maskPreviewFile = temp;
             break;
     }
+}
+
+void WorkerThread::setSaveMethod(SaveMethodAbstract* method)
+{
+    if (!method)
+        return;
+
+    if (d->saveMethod)
+        delete d->saveMethod;
+    d->saveMethod = method;
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

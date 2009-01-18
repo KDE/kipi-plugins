@@ -1,0 +1,54 @@
+/* ============================================================
+ *
+ * This file is a part of digiKam project
+ * http://www.digikam.org
+ *
+ * Date        : Jan 18, 2009
+ * Description : XXXXXXXXXXXXXXXXXXXXXXXx
+ *
+ * Copyright (C) 2009 by andi <xxxxxxxxxxxxx>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#include "SaveMethodFactory.h"
+
+// Local includes.
+
+#include "SaveMethods.h"
+#include "storagesettingsbox.h"
+
+namespace KIPIRemoveRedEyesPlugin
+{
+
+SaveMethodAbstract* SaveMethodFactory::factory(int type)
+{
+    SaveMethodAbstract* saveMethod = 0;
+
+    switch (type)
+    {
+        case StorageSettingsBox::Subfolder:
+            saveMethod = new SaveSubfolder();
+            break;
+        case StorageSettingsBox::Suffix:
+            saveMethod = new SaveSuffix();
+            break;
+        case StorageSettingsBox::Overwrite:
+            saveMethod = new SaveOverwrite();
+            break;
+    }
+
+    return saveMethod;
+}
+
+}

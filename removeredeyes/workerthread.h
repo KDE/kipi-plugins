@@ -38,6 +38,7 @@ namespace KIPIRemoveRedEyesPlugin
 struct WorkerThreadPriv;
 class WorkerThreadData;
 class RemovalSettings;
+class SaveMethodAbstract;
 
 class WorkerThread : public QThread
 {
@@ -71,6 +72,8 @@ public:
 
     void setRunType(int);
     int runType() const;
+
+    void setSaveMethod(SaveMethodAbstract* method);
 
     void loadSettings(RemovalSettings);
     void setImagesList(const KUrl::List&);

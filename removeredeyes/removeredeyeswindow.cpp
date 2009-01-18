@@ -61,6 +61,10 @@
 #include "workerthread.h"
 #include "workerthreaddata.h"
 
+#include "SaveMethodAbstract.h"
+#include "SaveMethodFactory.h"
+#include "SaveMethods.h"
+
 namespace KIPIRemoveRedEyesPlugin
 {
 
@@ -260,6 +264,9 @@ void RemoveRedEyesWindow::readSettings()
     d->settings.keywordName           = group.readEntry("Keyword Name", "removed_redeyes");
 
     d->settingsTab->loadSettings(d->settings);
+
+    SaveMethodAbstract* save = SaveMethodFactory::factory(StorageSettingsBox::Subfolder);
+    save->savePath("/home/andi/dings/aaa.jpg");
 }
 
 void RemoveRedEyesWindow::writeSettings()
@@ -405,6 +412,7 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
     d->thread->setImagesList(urls);
     d->thread->setRunType(d->runtype);
     d->thread->loadSettings(d->settings);
+    d->thread->setSaveMethod(SaveMethodFactory::factory(d->settings.storageMode));
 
     d->thread->setTempFile(d->originalImageTempFile.fileName(),
                            WorkerThread::OriginalImage);
