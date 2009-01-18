@@ -50,6 +50,7 @@
 
 // Local includes.
 
+#include "SaveMethodFactory.h"
 #include "kpaboutdata.h"
 #include "myimageslist.h"
 #include "previewwidget.h"
@@ -60,10 +61,6 @@
 #include "unprocessedsettingsbox.h"
 #include "workerthread.h"
 #include "workerthreaddata.h"
-
-#include "SaveMethodAbstract.h"
-#include "SaveMethodFactory.h"
-#include "SaveMethods.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -264,9 +261,6 @@ void RemoveRedEyesWindow::readSettings()
     d->settings.keywordName           = group.readEntry("Keyword Name", "removed_redeyes");
 
     d->settingsTab->loadSettings(d->settings);
-
-    SaveMethodAbstract* save = SaveMethodFactory::factory(StorageSettingsBox::Subfolder);
-    save->savePath("/home/andi/dings/aaa.jpg");
 }
 
 void RemoveRedEyesWindow::writeSettings()
