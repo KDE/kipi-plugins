@@ -5,6 +5,9 @@ Kipi-plugins NEW FEATURES:
 
 Kipi-plugins BUG FIXING from B.K.O (http://bugs.kde.org):
 
+001 ==> 144713 : utf8 not supported in "rename images" plugin.
+002 ==> 
+
 v 0.1.7
 ---------------------------------------------------------------------------
 
