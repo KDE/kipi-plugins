@@ -302,8 +302,6 @@ QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem 
           *proc << m_TGACompressionAlgo;
        }
     }
-   
-    *proc << "-verbose";
 
     *proc << item->pathSrc() + "[0]";
 
