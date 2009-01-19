@@ -446,7 +446,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
         char s[100];
         ::strftime(s, 100, QFile::encodeName(format), time_tm);
 
-        newName += QString::fromLatin1(s);
+        newName += QString::fromLocal8Bit(s);
         if (!useExtraSymbols)
         {
             newName += "_";
