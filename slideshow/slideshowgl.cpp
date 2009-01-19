@@ -134,7 +134,7 @@ SlideShowGL::SlideShowGL(const QValueList<QPair<QString, int> >& fileList,
 
     // --------------------------------------------------
 
-    m_timer = new QTimer();
+    m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()),
             SLOT(slotTimeOut()));
     m_timer->start(m_timeout, true);

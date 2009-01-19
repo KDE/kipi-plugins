@@ -110,7 +110,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_intArray      = 0;
     m_endOfShow     = false;
 
-    m_timer = new QTimer();
+    m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), 
             this, SLOT(slotTimeOut()));
 
