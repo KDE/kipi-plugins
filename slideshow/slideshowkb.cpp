@@ -164,19 +164,11 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
     setWindowFlags(Qt::X11BypassWindowManagerHint |
                    Qt::WindowStaysOnTopHint | Qt::Popup);
 
-#if KDE_IS_VERSION(3,2,0)
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
     m_deskX      = deskRect.x();
     m_deskY      = deskRect.y();
     m_deskWidth  = deskRect.width();
     m_deskHeight = deskRect.height();
-#else
-    QRect deskRect = QApplication::desktop()->screenGeometry(this);
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
-#endif
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
