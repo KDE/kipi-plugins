@@ -99,6 +99,8 @@ void FbTalker::cancel()
 
     if (m_authProgressDlg && !m_authProgressDlg->isHidden())
         m_authProgressDlg->hide();
+
+    emit signalBusy(false);
 }
 
 /** Compute MD5 signature using url queries keys and values:
