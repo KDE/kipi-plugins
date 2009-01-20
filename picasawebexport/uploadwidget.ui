@@ -64,6 +64,12 @@
         </item>
         <item>
          <widget class="KComboBox" name="m_albumsListComboBox" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="editable" >
            <bool>false</bool>
           </property>
@@ -71,6 +77,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_reloadAlbumsListButton" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
            <string>Reload</string>
           </property>
@@ -78,6 +90,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="m_newAlbumButton" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
            <string>New &amp;Album</string>
           </property>
@@ -136,6 +154,12 @@
            </item>
            <item>
             <widget class="QSpinBox" name="m_dimensionSpinBox" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="maximum" >
               <number>3200</number>
              </property>
@@ -152,7 +176,14 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="m_imageQualitySpinBox" />
+            <widget class="QSpinBox" name="m_imageQualitySpinBox" >
+             <property name="sizePolicy" >
+              <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -247,6 +278,18 @@
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
