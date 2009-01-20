@@ -8,7 +8,7 @@ Minor improvements:
  - Implement validators for email and password
 
 Short term:
- - download largest photo available (original may not be available)
+ - video file upload - do not perform resize
 
 Long term:
  - Synchronize with local album (upload/download)

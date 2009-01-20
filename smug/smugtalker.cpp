@@ -853,7 +853,29 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
                     photo.caption = e.attribute("Caption");
                     photo.keywords = e.attribute("Keywords");
                     photo.thumbURL = e.attribute("ThumbURL");
-                    photo.originalURL = e.attribute("OriginalURL");
+                    // try to get largest size available
+                    if (e.hasAttribute("Video1280URL"))
+                        photo.originalURL = e.attribute("Video1280URL");
+                    else if (e.hasAttribute("Video960URL"))
+                        photo.originalURL = e.attribute("Video960URL");
+                    else if (e.hasAttribute("Video640URL"))
+                        photo.originalURL = e.attribute("Video640URL");
+                    else if (e.hasAttribute("Video320URL"))
+                        photo.originalURL = e.attribute("Video320URL");
+                    else if (e.hasAttribute("OriginalURL"))
+                        photo.originalURL = e.attribute("OriginalURL");
+                    else if (e.hasAttribute("X3LargeURL"))
+                        photo.originalURL = e.attribute("X3LargeURL");
+                    else if (e.hasAttribute("X2LargeURL"))
+                        photo.originalURL = e.attribute("X2LargeURL");
+                    else if (e.hasAttribute("XLargeURL"))
+                        photo.originalURL = e.attribute("XLargeURL");
+                    else if (e.hasAttribute("LargeURL"))
+                        photo.originalURL = e.attribute("LargeURL");
+                    else if (e.hasAttribute("MediumURL"))
+                        photo.originalURL = e.attribute("MediumURL");
+                    else if (e.hasAttribute("SmallURL"))
+                        photo.originalURL = e.attribute("SmallURL");
                     photosList.append(photo);
                 }
             }
