@@ -1,3 +1,584 @@
+0.2.0-rc1 2009-01-21
+--------------------------------------------------------------------------------
+
+2009-01-20 23:41  lure
+
+    * fbexport/fbtalker.cpp: If upload is cancelled, set busy to false
+      to restore buttons (enable them)
+
+2009-01-20 23:05  lure
+
+    * smug/TODO, smug/smugtalker.cpp: Always try to download largest
+      size of photo/video available
+
+2009-01-20 22:11  jriddell
+
+    * COPYING-ADOBE: Add missing licence file for DNG files from Adobe.
+      
+      Developers, if you are going to break the licence policy and
+      introduce
+      a new licence please check with kde-licencing and packagers
+      first.
+      http://techbase.kde.org/Policies/Licensing_Policy
+      
+      CCMAIL:kde-packager@kde.org
+      CCMAIL:kde-licensing@kde.org
+
+2009-01-20 13:25  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop,
+      smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-01-20 00:30  adjam
+
+    * picasawebexport/uploadwidget.ui: I played a little bit with
+      PicasaWeb uploadwidget.
+      In fact, when I upload my photos in my gallery I couldn't
+      properly read gallery titles.
+      Hope no-one dislike thie little change..
+
+2009-01-19 14:15  scripty
+
+    * smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-01-19 14:08  aclemens
+
+    * slideshow/slideshow.cpp, slideshow/slideshowgl.cpp: fix memory
+      leak
+
+2009-01-19 12:38  mlaurent
+
+    * flickrexport/flickrwindow.cpp: now we use kde 4
+
+2009-01-19 12:36  mlaurent
+
+    * slideshow/slideshowkb.cpp: not we use kde4
+
+2009-01-18 16:46  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: Disable settingsTab widget
+      during correction
+
+2009-01-18 16:38  aclemens
+
+    * removeredeyes/detection/savemethods/SaveMethodAbstract.h,
+      removeredeyes/detection/savemethods/SaveMethodFactory.cpp,
+      removeredeyes/detection/savemethods/SaveMethodFactory.h,
+      removeredeyes/detection/savemethods/SaveMethods.cpp,
+      removeredeyes/detection/savemethods/SaveMethods.h: fix headers
+
+2009-01-18 16:13  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: remove debugging tests
+
+2009-01-18 16:06  aclemens
+
+    * removeredeyes/CMakeLists.txt, removeredeyes/detection,
+      removeredeyes/detection/savemethods,
+      removeredeyes/detection/savemethods/SaveMethodAbstract.h,
+      removeredeyes/detection/savemethods/SaveMethodFactory.cpp,
+      removeredeyes/detection/savemethods/SaveMethodFactory.h,
+      removeredeyes/detection/savemethods/SaveMethods.cpp,
+      removeredeyes/detection/savemethods/SaveMethods.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h:
+      Extract the save methods into their own classes, this way it will
+      be
+      easier to add new correction modes.
+      
+      The API will also be changed to have more then one detection /
+      correction method. Right now a HaarClassifier is used, which
+      depends on
+      OpenCV. I am not too happy with the classifier so there is a
+      chance that
+      a new detection method will be introduced someday. To make it
+      exchangeable, the plugin needs to be factorized a lot.
+      Since we will not be able to know anymore which libraries will be
+      used
+      in the different detection methods, we need to unify the saving
+      of the
+      results and let the appropriate detection methods take care of
+      it.
+      
+      This commit will prepare the plugin to have exchangeable save
+      methods.
+      The SaveMethodFactory will generate a SaveMethod depending on the
+      user
+      settings (read from the UI).
+      You provide the current image path to such a SaveMethod and it
+      simply
+      returns the new path, depending on the methods used.
+      This path can than later be passed to the save method of the
+      detection
+      system.
+      
+      Right now the settings are static, so the subfolder and suffix
+      name are
+      NOT read from the user settings.
+      For this to work, the next step will be to make RemovalSettings
+      class a
+      singleton, to provide global access.
+
+2009-01-18 13:27  scripty
+
+    * smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-01-17 23:23  lure
+
+    * AUTHORS: Smug import/export
+
+2009-01-17 23:18  lure
+
+    * smug/plugin_smug.cpp: smugexport -> smug
+
+2009-01-17 22:45  lure
+
+    * CMakeLists.txt, smug, smug/CMakeLists.txt, smug/Messages.sh,
+      smug/TODO, smug/kipiplugin_smug.desktop,
+      smug/kipiplugin_smugexport.desktop, smug/plugin_smug.cpp,
+      smug/plugin_smug.h, smug/plugin_smugexport.cpp,
+      smug/plugin_smugexport.h, smug/smugalbum.cpp, smug/smugalbum.h,
+      smug/smugitem.h, smug/smugtalker.cpp, smug/smugtalker.h,
+      smug/smugwidget.cpp, smug/smugwidget.h, smug/smugwindow.cpp,
+      smug/smugwindow.h, smugexport: Rename directory (smugexport ->
+      smug)
+
+2009-01-17 22:41  lure
+
+    * smugexport/plugin_smug.cpp, smugexport/plugin_smug.h,
+      smugexport/smugalbum.cpp, smugexport/smugalbum.h,
+      smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h, smugexport/smugwidget.cpp,
+      smugexport/smugwidget.h, smugexport/smugwindow.cpp,
+      smugexport/smugwindow.h: smugexport -> smug in comments
+
+2009-01-17 22:38  lure
+
+    * smugexport/CMakeLists.txt, smugexport/Messages.sh,
+      smugexport/kipiplugin_smug.desktop,
+      smugexport/kipiplugin_smugexport.desktop,
+      smugexport/plugin_smug.cpp, smugexport/plugin_smug.h,
+      smugexport/plugin_smugexport.cpp, smugexport/plugin_smugexport.h,
+      smugexport/smugwindow.cpp: smugexport -> smug (now provides
+      import/export)
+
+2009-01-17 22:33  lure
+
+    * NEWS, README, smugexport/TODO, smugexport/plugin_smugexport.cpp,
+      smugexport/plugin_smugexport.h, smugexport/smugalbum.cpp,
+      smugexport/smugalbum.h, smugexport/smugitem.h,
+      smugexport/smugtalker.cpp, smugexport/smugtalker.h,
+      smugexport/smugwidget.cpp, smugexport/smugwidget.h,
+      smugexport/smugwindow.cpp, smugexport/smugwindow.h: SmugMug KIPI
+      Plugin: plugin now also provides also import feature
+      - you can download your SmugMug albums to local disk
+      - you can download albums of other SmugMug users (public, album
+      or site password)
+      - you can also download albums without SmugMug username
+      (anonymous)
+
+2009-01-17 10:11  cgilles
+
+    * common/libkipiplugins/batchprogressdialog.cpp,
+      common/libkipiplugins/batchprogressdialog.h: use const d
+
+2009-01-17 10:08  cgilles
+
+    * common/libkipiplugins/imagedialog.cpp,
+      common/libkipiplugins/imagedialog.h: use const d
+      use italic char for photo info titles
+
+2009-01-15 09:07  adjam
+
+    * galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.h: CCBUG:175928
+      
+      I really cannot reproduce this bug in my system.
+      Anyway, I hope this little change could fix it..
+      Please, let me know if it's so.
+
+2009-01-14 18:33  sengels
+
+    * acquireimages/CMakeLists.txt: fix linkage on win32
+
+2009-01-14 18:21  sengels
+
+    * slideshow/soundtrackdialog.cpp: restrict X11 headers to their
+      platform
+      please do that whereever this fix needs to be applied
+      
+      CCMAIL:montel@kde.org
+
+2009-01-14 12:46  cgilles
+
+    * NEWS: update
+
+2009-01-14 12:45  cgilles
+
+    * picasawebexport/picasawebwindow.cpp,
+      picasawebexport/picasawebwindow.h: do not limit image dialog to
+      Raw files
+      BUG: 180656
+
+2009-01-14 08:42  mlaurent
+
+    * metadataedit/plugin_metadataedit.cpp: Add missing i18n
+
+2009-01-14 08:40  mlaurent
+
+    * jpeglossless/plugin_jpeglossless.cpp: Add missing i18n
+
+2009-01-13 21:18  woebbe
+
+    * dngconverter/plugin/CMakeLists.txt: link with gold
+
+2009-01-13 13:00  mlaurent
+
+    * jpeglossless/plugin_jpeglossless.cpp: Add missing i18n
+
+2009-01-13 10:21  cgilles
+
+    * rawconverter/icons, rawconverter/icons/CMakeLists.txt,
+      rawconverter/icons/oxygen, rawconverter/icons/oxygen/128x128,
+      rawconverter/icons/oxygen/128x128/apps,
+      rawconverter/icons/oxygen/128x128/apps/rawconverter.png,
+      rawconverter/icons/oxygen/16x16,
+      rawconverter/icons/oxygen/16x16/apps,
+      rawconverter/icons/oxygen/16x16/apps/rawconverter.png,
+      rawconverter/icons/oxygen/22x22,
+      rawconverter/icons/oxygen/22x22/apps,
+      rawconverter/icons/oxygen/22x22/apps/rawconverter.png,
+      rawconverter/icons/oxygen/32x32,
+      rawconverter/icons/oxygen/32x32/apps,
+      rawconverter/icons/oxygen/32x32/apps/rawconverter.png,
+      rawconverter/icons/oxygen/48x48,
+      rawconverter/icons/oxygen/48x48/apps,
+      rawconverter/icons/oxygen/48x48/apps/rawconverter.png,
+      rawconverter/icons/oxygen/64x64,
+      rawconverter/icons/oxygen/64x64/apps,
+      rawconverter/icons/oxygen/64x64/apps/rawconverter.png,
+      rawconverter/icons/oxygen/CMakeLists.txt,
+      rawconverter/icons/oxygen/scalable,
+      rawconverter/icons/oxygen/scalable/apps,
+      rawconverter/icons/oxygen/scalable/apps/rawconverter.svgz:
+      missing files
+
+2009-01-13 10:21  cgilles
+
+    * rawconverter/CMakeLists.txt, rawconverter/pics,
+      rawconverter/plugin_rawconverter.cpp: use new icons from Risto
+
+2009-01-13 10:03  cgilles
+
+    * dngconverter/icons/oxygen/128x128/apps,
+      dngconverter/icons/oxygen/128x128/apps/dngconverter.png,
+      dngconverter/icons/oxygen/128x128/dngconverter.png,
+      dngconverter/icons/oxygen/16x16/apps,
+      dngconverter/icons/oxygen/16x16/apps/dngconverter.png,
+      dngconverter/icons/oxygen/16x16/dngconverter.png,
+      dngconverter/icons/oxygen/22x22/apps,
+      dngconverter/icons/oxygen/22x22/apps/dngconverter.png,
+      dngconverter/icons/oxygen/22x22/dngconverter.png,
+      dngconverter/icons/oxygen/32x32/apps,
+      dngconverter/icons/oxygen/32x32/apps/dngconverter.png,
+      dngconverter/icons/oxygen/32x32/dngconverter.png,
+      dngconverter/icons/oxygen/48x48/apps,
+      dngconverter/icons/oxygen/48x48/apps/dngconverter.png,
+      dngconverter/icons/oxygen/48x48/dngconverter.png,
+      dngconverter/icons/oxygen/64x64/apps,
+      dngconverter/icons/oxygen/64x64/apps/dngconverter.png,
+      dngconverter/icons/oxygen/64x64/dngconverter.png,
+      dngconverter/icons/oxygen/scalable/apps,
+      dngconverter/icons/oxygen/scalable/apps/dngconverter.svgz,
+      dngconverter/icons/oxygen/scalable/dngconverter.svg: fix paths
+
+2009-01-12 22:15  cgilles
+
+    * dngconverter/CMakeLists.txt, dngconverter/icons,
+      dngconverter/icons/CMakeLists.txt, dngconverter/icons/oxygen,
+      dngconverter/icons/oxygen/128x128,
+      dngconverter/icons/oxygen/128x128/dngconverter.png,
+      dngconverter/icons/oxygen/16x16,
+      dngconverter/icons/oxygen/16x16/dngconverter.png,
+      dngconverter/icons/oxygen/22x22,
+      dngconverter/icons/oxygen/22x22/dngconverter.png,
+      dngconverter/icons/oxygen/32x32,
+      dngconverter/icons/oxygen/32x32/dngconverter.png,
+      dngconverter/icons/oxygen/48x48,
+      dngconverter/icons/oxygen/48x48/dngconverter.png,
+      dngconverter/icons/oxygen/64x64,
+      dngconverter/icons/oxygen/64x64/dngconverter.png,
+      dngconverter/icons/oxygen/CMakeLists.txt,
+      dngconverter/icons/oxygen/scalable,
+      dngconverter/icons/oxygen/scalable/dngconverter.svg,
+      dngconverter/plugin/CMakeLists.txt,
+      dngconverter/plugin/dnglogo.h,
+      dngconverter/plugin/hi32-action-dngconverter.png,
+      dngconverter/plugin/settingswidget.cpp,
+      dngconverter/plugin/settingswidget.h: use new icon from Risto
+
+2009-01-12 14:44  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      fbexport/kipiplugin_fbexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printwizard/kipiplugin_printwizard.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      smugexport/kipiplugin_smugexport.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-12 09:54  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/widgets/advancedsettings.cpp,
+      removeredeyes/widgets/blobsettingsbox.cpp,
+      removeredeyes/widgets/classifiersettingsbox.cpp,
+      removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/infomessagewidget.cpp,
+      removeredeyes/widgets/myimageslist.cpp,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/simplesettings.cpp,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp,
+      removeredeyes/workerthread.cpp: polish
+
+2009-01-12 09:54  aclemens
+
+    * removeredeyes/eyelocator.cpp, removeredeyes/eyelocator.h,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/removeredeyeswindow.h,
+      removeredeyes/widgets/advancedsettings.cpp,
+      removeredeyes/widgets/advancedsettings.h,
+      removeredeyes/widgets/blobsettingsbox.cpp,
+      removeredeyes/widgets/blobsettingsbox.h,
+      removeredeyes/widgets/classifiersettingsbox.cpp,
+      removeredeyes/widgets/classifiersettingsbox.h,
+      removeredeyes/widgets/controlwidget.cpp,
+      removeredeyes/widgets/controlwidget.h,
+      removeredeyes/widgets/infomessagewidget.cpp,
+      removeredeyes/widgets/infomessagewidget.h,
+      removeredeyes/widgets/myimageslist.cpp,
+      removeredeyes/widgets/myimageslist.h,
+      removeredeyes/widgets/previewwidget.cpp,
+      removeredeyes/widgets/previewwidget.h,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/settingstab.h,
+      removeredeyes/widgets/simplesettings.cpp,
+      removeredeyes/widgets/simplesettings.h,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/storagesettingsbox.h,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.h,
+      removeredeyes/workerthread.cpp, removeredeyes/workerthread.h: Use
+      struct as classpriv member
+      
+      In C++ a struct is identical to a class except that the members
+      of a struct have public visibility by default and the members of
+      a class have private visibility by default.
+      To save me from typing "public:" all the time for class privs, I
+      will use struct from now on in this plugin.
+
+2009-01-12 08:18  lure
+
+    * dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: Fix Linux build
+      on HP PARISC and Sparc (from Ubuntu)
+
+2009-01-11 21:15  lure
+
+    * smugexport/smugitem.h, smugexport/smugtalker.cpp: Store album
+      keywords & image count
+
+2009-01-11 20:08  lure
+
+    * smugexport/smugitem.h, smugexport/smugtalker.cpp,
+      smugexport/smugtalker.h: Added method for listing of photos in
+      SmugMug album
+
+2009-01-11 19:40  lure
+
+    * smugexport/smugtalker.cpp, smugexport/smugtalker.h: Prepare for
+      Import feature
+      - add possibility to login anonymously
+      - possibility to specify nickName when listing albums (required
+      for anonymous)
+
+2009-01-10 16:13  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      fbexport/kipiplugin_fbexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      slideshow/kipiplugin_slideshow.desktop,
+      smugexport/kipiplugin_smugexport.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-10 13:13  cgilles
+
+    * NEWS: update
+
+2009-01-09 22:11  aclemens
+
+    * removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/widgets/blobsettingsbox.cpp,
+      removeredeyes/widgets/classifiersettingsbox.cpp,
+      removeredeyes/widgets/settingstab.cpp,
+      removeredeyes/widgets/storagesettingsbox.cpp,
+      removeredeyes/widgets/unprocessedsettingsbox.cpp: add more
+      ampersand characters to set possible accelerators for translators
+
+2009-01-09 18:40  cgilles
+
+    * NEWS: update
+
+2009-01-09 18:40  cgilles
+
+    * gpssync/gpslistviewitem.cpp, gpssync/gpslistviewitem.h,
+      gpssync/plugin_gpssync.cpp, gpssync/plugin_gpssync.h: GPSSync
+      kipi-plugin from trunk:
+      use metadata settings from kipi host
+      CCBUG: 155593
+
+2009-01-09 18:29  cgilles
+
+    * metadataedit/exifeditdialog.cpp, metadataedit/exifeditdialog.h,
+      metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+      metadataedit/plugin_metadataedit.cpp,
+      metadataedit/plugin_metadataedit.h,
+      metadataedit/xmpeditdialog.cpp, metadataedit/xmpeditdialog.h:
+      MetadataEdit kipi-plugin from trunk:
+      use metadata settings from kipi host
+      CCBUG: 155593
+
+2009-01-09 14:27  cgilles
+
+    * NEWS: update
+
+2009-01-09 14:21  cgilles
+
+    * jpeglossless/actionthread.cpp, jpeglossless/actionthread.h,
+      jpeglossless/convert2grayscale.cpp,
+      jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+      jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+      jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+      jpeglossless/jpegtransform.h: JPEGLossLess kipi-plugin from
+      trunk:
+      use metadata settings from kipi host
+      fix Exif thumbnail update with Convert to grayscale
+      CCBUG: 155593
+      BUG: 179439
+
+2009-01-09 14:12  aclemens
+
+    * removeredeyes/removeredeyeswindow.cpp: code polish
+
+2009-01-09 12:51  cgilles
+
+    * rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+      rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+      rawconverter/rawdecodingiface.cpp,
+      rawconverter/rawdecodingiface.h, rawconverter/singledialog.cpp,
+      rawconverter/singledialog.h: Raw converter kipi-plugins from
+      trunk:
+      use metadata settings from kipi host
+      fix swap Red and blue color with libkdcraw based on LibRaw
+      CCBUG: 155593
+
+2009-01-09 12:03  cgilles
+
+    * timeadjust/timeadjustdialog.cpp, timeadjust/timeadjustdialog.h:
+      use metadat settings from kipi host
+      BUG: 155593
+
+2009-01-07 14:22  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-07 10:57  cgilles
+
+    * NEWS: update
+
+2009-01-06 12:55  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-06 12:36  mlaurent
+
+    * dngconverter/CMakeLists.txt: Not compile as enable final
+
+2009-01-06 12:31  mlaurent
+
+    * slideshow/soundtrackdialog.cpp: Fix enable final
+
+2009-01-06 12:27  mlaurent
+
+    * flickrexport/flickrwidget.cpp: Fix deprecated
+
+2009-01-06 12:26  mlaurent
+
+    * metadataedit/iptcsubjects.cpp,
+      metadataedit/metadataedit_global.h, metadataedit/xmpsubjects.cpp:
+      Fix compile enable final
+
+2009-01-06 11:57  cgilles
+
+    * CMakeLists.txt: update version
+
+2009-01-05 13:08  scripty
+
+    * fbexport/kipiplugin_fbexport.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-01-05 08:25  cgilles
+
+    * NEWS: update
+
+2009-01-05 08:24  cgilles
+
+    * ChangeLog: prepare beta6
+
 0.2.0-beta6 2009-01-04
 --------------------------------------------------------------------------------
 
