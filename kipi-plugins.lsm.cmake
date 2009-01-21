@@ -1,7 +1,7 @@
 Begin4
 Title: kipi-plugins
 Version: ${KIPIPLUGINS_VERSION_STRING}
-Entered-date: 2009-01-04
+Entered-date: 2009-01-21
 Description: Plugins for KIPI, the KDE Image Plugin Interface
 Keywords: kde image plugins, digiKam, photo management
 Author: caulier dot gilles at gmail dot com (Gilles Caulier)
@@ -13,6 +13,6 @@ Maintained-by:
 Primary-site: http://www.kipi-plugins.org
 Alternate-site: http://www.digikam.org
 Original-site:
-Platforms:
+Platforms: Linux, MacOS-X, Windows
 Copying-policy: GPL
 End
