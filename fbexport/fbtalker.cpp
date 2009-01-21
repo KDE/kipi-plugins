@@ -610,6 +610,11 @@ void FbTalker::slotResult(KJob *kjob)
         {
             authenticationDone(job->error(), job->errorText());
         }
+        else if (m_state == FB_ADDPHOTO)
+        {
+            emit signalBusy(false);
+            emit signalAddPhotoDone(job->error(), job->errorText());
+        }
         else
         {
             emit signalBusy(false);
