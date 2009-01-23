@@ -276,7 +276,8 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     KExiv2Iface::KExiv2 meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(img.size());
-    meta.setImagePreview(prev);
+    if (format != QString("JPEG"))
+        meta.setImagePreview(prev);
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
     meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
