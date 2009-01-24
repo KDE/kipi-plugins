@@ -6,7 +6,7 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> digiKam crashing when trying to export to gallery2 web service.
+001 ==> 175928 : GalleryExport      : digiKam crashing when trying to export to gallery2 web service.
 002 ==> 
 
 Kipi-plugins 0.2.0-rc1 - Release date: 21/01/2009
