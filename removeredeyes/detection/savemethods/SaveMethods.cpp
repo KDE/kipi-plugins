@@ -37,29 +37,42 @@ namespace KIPIRemoveRedEyesPlugin
 
 QString SaveSubfolder::savePath(const QString& path)
 {
+    // FIXME: use settings instance later on to set the folder name
+    QString subfolder("corrected");
+    return savePath(path, subfolder);
+}
+
+QString SaveSubfolder::savePath(const QString& path, const QString& extra)
+{
     QFileInfo info(path);
     KUrl savePath(info.path());
 
-    QString subfolder("corrected");
-    savePath.addPath(subfolder);
+    savePath.addPath(extra);
 
     // check if subfolder exists
     if (!QDir(savePath.path()).exists())
-        QDir(info.path()).mkdir(subfolder);
+        QDir(info.path()).mkdir(extra);
 
     savePath.addPath(info.fileName());
     return savePath.path();
 }
 
+// -------------------------------------------------------
+
 QString SaveSuffix::savePath(const QString& path)
+{
+    // FIXME: use settings instance later on to set the suffix name
+    QString suffix("_rre");
+    return savePath(path, suffix);
+}
+
+QString SaveSuffix::savePath(const QString& path, const QString& extra)
 {
     QFileInfo info(path);
     KUrl savePath(info.path());
 
-    QString suffix("_rre");
-
     QString file = info.baseName();
-    file.append(suffix);
+    file.append(extra);
     file.append(".");
     file.append(info.suffix());
 
@@ -67,8 +80,16 @@ QString SaveSuffix::savePath(const QString& path)
     return savePath.path();
 }
 
+// -------------------------------------------------------
+
 QString SaveOverwrite::savePath(const QString& path)
 {
+    return path;
+}
+
+QString SaveOverwrite::savePath(const QString& path, const QString& extra)
+{
+    Q_UNUSED(extra);
     return path;
 }
 
