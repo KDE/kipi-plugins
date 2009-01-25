@@ -6,7 +6,7 @@
  * Date        : 2006-11-20
  * Description : a dialog to batch edit comments
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,11 +80,9 @@ public:
     KIPIPlugins::KPAboutData *about;
 };
 
-CommentEditDialog::CommentEditDialog(QWidget* parent)
-                 : KDialog(parent)
+CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
+                 : KDialog(parent), d(new CommentEditDialogDialogPrivate)
 {
-    d = new CommentEditDialogDialogPrivate;
-
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setCaption(i18n("Edit Image Caption"));
@@ -126,7 +124,8 @@ CommentEditDialog::CommentEditDialog(QWidget* parent)
                                mainWidget());
     title->setWordWrap(true);
 
-    d->userCommentEdit  = new KTextEdit(mainWidget());
+    d->userCommentEdit = new KTextEdit(mainWidget());
+    d->userCommentEdit->setText(comment);
 
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), mainWidget());
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), mainWidget());

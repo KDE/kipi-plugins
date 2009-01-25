@@ -645,7 +645,14 @@ void Plugin_MetadataEdit::slotEditComments()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::CommentEditDialog dlg(kapp->activeWindow());
+    QString comment;
+    if  (images.images().count() == 1)
+    {
+        KIPI::ImageInfo info = m_interface->info(images.images().first());
+        comment              = info.description();
+    }
+
+    KIPIMetadataEditPlugin::CommentEditDialog dlg(comment, kapp->activeWindow());
 
     if (dlg.exec() != KMessageBox::Ok)
         return;
