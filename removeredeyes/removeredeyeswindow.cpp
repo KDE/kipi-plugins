@@ -406,7 +406,7 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
     d->thread->setImagesList(urls);
     d->thread->setRunType(d->runtype);
     d->thread->loadSettings(d->settings);
-    d->thread->setSaveMethod(SaveMethodFactory::factory(d->settings.storageMode));
+    d->thread->setSaveMethod(SaveMethodFactory::create(d->settings.storageMode));
 
     d->thread->setTempFile(d->originalImageTempFile.fileName(),
                            WorkerThread::OriginalImage);

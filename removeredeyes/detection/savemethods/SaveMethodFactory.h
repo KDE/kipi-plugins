@@ -34,7 +34,7 @@ class SaveMethodFactory
 
 public:
 
-    static SaveMethodAbstract* factory(int type);
+    static SaveMethodAbstract* create(int type);
 
 private:
 
