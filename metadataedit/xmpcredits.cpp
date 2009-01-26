@@ -196,7 +196,6 @@ XMPCredits::XMPCredits(QWidget* parent)
     d->sourceEdit->setClearButtonShown(true);
     d->sourceEdit->setWhatsThis(i18n("Set here the original owner of content."));
 
-
     // --------------------------------------------------------
 
     d->copyrightCheck = new QCheckBox(i18n("Copyright:"), this);

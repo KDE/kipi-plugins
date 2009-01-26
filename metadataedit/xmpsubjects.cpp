@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : XMP subjects settings page.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,6 +23,7 @@
 #include "xmpsubjects.h"
 #include "xmpsubjects.moc"
 #include "metadataedit_global.h"
+
 // Qt includes.
 
 #include <QButtonGroup>
@@ -36,6 +37,7 @@
 #include <QRadioButton>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kcombobox.h>
@@ -127,9 +129,8 @@ public:
 };
 
 XMPSubjects::XMPSubjects(QWidget* parent)
-           : QWidget(parent)
+           : QWidget(parent), d(new XMPSubjectsPriv)
 {
-    d = new XMPSubjectsPriv;
     QGridLayout *grid = new QGridLayout(this);
 
     // --------------------------------------------------------
@@ -165,7 +166,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     QGridLayout *grid2 = new QGridLayout(d->optionsBox);
     d->btnGroup        = new QButtonGroup(d->optionsBox);
     KHBox *hbox        = new KHBox(d->optionsBox);
-    d->stdBtn          = new QRadioButton(i18n("Use standard"), hbox);
+    d->stdBtn          = new QRadioButton(i18n("Use standard "), hbox);
     QLabel *codeLink   = new QLabel("<b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>", hbox);
     d->refCB           = new KComboBox(d->optionsBox);
     d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
