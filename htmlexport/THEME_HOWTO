@@ -136,7 +136,7 @@ a theme which would only contains one HTML file and uses Javascript to show the
 different images, there is already one theme using frames, you can even
 generate CSS files on the fly if you want to.
 
-[1]: http://www.w3schools/xsl
+[1]: http://www.w3schools.com/xsl
 [2]: http://www.exslt.org
 [3]: http://www.exslt.org/exsl/elements/document
 
