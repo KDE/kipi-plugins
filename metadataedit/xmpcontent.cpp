@@ -74,10 +74,10 @@ public:
     QCheckBox          *writerCheck;
 
     KLineEdit          *headlineEdit;
+    KLineEdit          *writerEdit;
 
     AltLangStringsEdit *captionEdit;
-
-    KLineEdit          *writerEdit;
+    AltLangStringsEdit *copyrightEdit;
 };
 
 XMPContent::XMPContent(QWidget* parent)
@@ -119,16 +119,20 @@ XMPContent::XMPContent(QWidget* parent)
     d->writerEdit->setClearButtonShown(true);
     d->writerEdit->setWhatsThis(i18n("Enter the name of the caption author."));
 
+    d->copyrightEdit = new AltLangStringsEdit(this, i18n("Copyright:"),
+                                              i18n("Enter the necessary copyright notice."));
+
     // --------------------------------------------------------
 
-    grid->addWidget(d->headlineCheck,                       0, 0, 1, 1);
-    grid->addWidget(d->headlineEdit,                        0, 1, 1, 2);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),   1, 0, 1, 3);
-    grid->addWidget(d->captionEdit,                         2, 0, 1, 3);
-    grid->addWidget(syncOptions,                            3, 0, 1, 3);
-    grid->addWidget(d->writerCheck,                         4, 0, 1, 1);
-    grid->addWidget(d->writerEdit,                          4, 1, 1, 2);
-    grid->setRowStretch(5, 10);
+    grid->addWidget(d->headlineCheck,                     0, 0, 1, 1);
+    grid->addWidget(d->headlineEdit,                      0, 1, 1, 2);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this), 1, 0, 1, 3);
+    grid->addWidget(d->captionEdit,                       2, 0, 1, 3);
+    grid->addWidget(syncOptions,                          3, 0, 1, 3);
+    grid->addWidget(d->writerCheck,                       4, 0, 1, 1);
+    grid->addWidget(d->writerEdit,                        4, 1, 1, 2);
+    grid->addWidget(d->copyrightEdit,                     5, 0, 1, 3);
+    grid->setRowStretch(6, 10);
     grid->setColumnStretch(2, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -149,6 +153,9 @@ XMPContent::XMPContent(QWidget* parent)
     connect(d->captionEdit, SIGNAL(signalToggled(bool)),
             this, SIGNAL(signalModified()));
 
+    connect(d->copyrightEdit, SIGNAL(signalToggled(bool)),
+            this, SIGNAL(signalModified()));
+
     connect(d->writerCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
@@ -158,6 +165,9 @@ XMPContent::XMPContent(QWidget* parent)
     // --------------------------------------------------------
 
     connect(d->captionEdit, SIGNAL(signalModified()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->copyrightEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
@@ -239,6 +249,11 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     }
     d->writerEdit->setEnabled(d->writerCheck->isChecked());
 
+    d->copyrightEdit->setValid(false);
+    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.rights", false);
+    if (!map.isEmpty())
+        d->copyrightEdit->setValues(map);
+
     blockSignals(false);
 }
 
@@ -271,6 +286,11 @@ void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
         exiv2Iface.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());
     else
         exiv2Iface.removeXmpTag("Xmp.photoshop.CaptionWriter");
+
+    if (d->copyrightEdit->getValues(oldAltLangMap, newAltLangMap))
+        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.rights", newAltLangMap, false);
+    else if (d->copyrightEdit->isValid())
+        exiv2Iface.removeXmpTag("Xmp.dc.rights");
 
     exifData = exiv2Iface.getExif();
     xmpData  = exiv2Iface.getXmp();

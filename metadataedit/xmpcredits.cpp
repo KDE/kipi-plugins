@@ -53,7 +53,6 @@ public:
 
     XMPCreditsPriv()
     {
-        copyrightEdit    = 0;
         bylineEdit       = 0;
         bylineTitleEdit  = 0;
         creditEdit       = 0;
@@ -65,7 +64,6 @@ public:
         postalCodeEdit   = 0;
         cityEdit         = 0;
         countryEdit      = 0;
-        copyrightCheck   = 0;
         bylineTitleCheck = 0;
         creditCheck      = 0;
         sourceCheck      = 0;
@@ -78,7 +76,6 @@ public:
         countryCheck     = 0;
     }
 
-    QCheckBox        *copyrightCheck;
     QCheckBox        *bylineTitleCheck;
     QCheckBox        *creditCheck;
     QCheckBox        *sourceCheck;
@@ -92,7 +89,6 @@ public:
     QCheckBox        *countryCheck;
 
     KLineEdit        *bylineTitleEdit;
-    KLineEdit        *copyrightEdit;
     KLineEdit        *creditEdit;
     KLineEdit        *sourceEdit;
     KLineEdit        *emailEdit;
@@ -197,13 +193,6 @@ XMPCredits::XMPCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->copyrightCheck = new QCheckBox(i18n("Copyright:"), this);
-    d->copyrightEdit  = new KLineEdit(this);
-    d->copyrightEdit->setClearButtonShown(true);
-    d->copyrightEdit->setWhatsThis(i18n("Set here the necessary copyright notice."));
-
-    // --------------------------------------------------------
-
     grid->addWidget(d->bylineEdit,          0, 0, 1, 3);
     grid->addWidget(d->bylineTitleCheck,    1, 0, 1, 1);
     grid->addWidget(d->bylineTitleEdit,     1, 1, 1, 2);
@@ -212,9 +201,7 @@ XMPCredits::XMPCredits(QWidget* parent)
     grid->addWidget(d->creditEdit,          3, 1, 1, 2);
     grid->addWidget(d->sourceCheck,         4, 0, 1, 1);
     grid->addWidget(d->sourceEdit,          4, 1, 1, 2);
-    grid->addWidget(d->copyrightCheck,      5, 0, 1, 1);
-    grid->addWidget(d->copyrightEdit,       5, 1, 1, 2);
-    grid->setRowStretch(6, 10);
+    grid->setRowStretch(5, 10);
     grid->setColumnStretch(2, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -244,9 +231,6 @@ XMPCredits::XMPCredits(QWidget* parent)
 
     connect(d->countryCheck, SIGNAL(toggled(bool)),
             d->countryEdit, SLOT(setEnabled(bool)));
-
-    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
-            d->copyrightEdit, SLOT(setEnabled(bool)));
 
     connect(d->creditCheck, SIGNAL(toggled(bool)),
             d->creditEdit, SLOT(setEnabled(bool)));
@@ -289,9 +273,6 @@ XMPCredits::XMPCredits(QWidget* parent)
     connect(d->sourceCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
-    connect(d->copyrightCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
     // --------------------------------------------------------
 
     connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString &)),
@@ -322,9 +303,6 @@ XMPCredits::XMPCredits(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->sourceEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -447,16 +425,6 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     }
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
-    d->copyrightEdit->clear();
-    d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.dc.rights", false);
-    if (!data.isNull())
-    {
-        d->copyrightEdit->setText(data);
-        d->copyrightCheck->setChecked(true);
-    }
-    d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
-
     blockSignals(false);
 }
 
@@ -526,11 +494,6 @@ void XMPCredits::applyMetadata(QByteArray& xmpData)
         exiv2Iface.removeXmpTag("Xmp.photoshop.Source");
         exiv2Iface.removeXmpTag("Xmp.dc.source");
     }
-
-    if (d->copyrightCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.dc.rights", d->copyrightEdit->text());
-    else
-        exiv2Iface.removeXmpTag("Xmp.dc.rights");
 
     xmpData = exiv2Iface.getXmp();
 }
