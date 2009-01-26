@@ -6,7 +6,7 @@
  * Date        : 2007-10-18
  * Description : XMP content settings page.
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +28,7 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kaboutdata.h>
@@ -56,14 +57,14 @@ public:
 
     XMPContentPriv()
     {
-        writerCheck             = 0;
-        headlineCheck           = 0;
-        captionEdit             = 0;
-        writerEdit              = 0;
-        headlineEdit            = 0;
-        syncJFIFCommentCheck    = 0;
-        syncHOSTCommentCheck    = 0;
-        syncEXIFCommentCheck    = 0;
+        writerCheck          = 0;
+        headlineCheck        = 0;
+        captionEdit          = 0;
+        writerEdit           = 0;
+        headlineEdit         = 0;
+        syncJFIFCommentCheck = 0;
+        syncHOSTCommentCheck = 0;
+        syncEXIFCommentCheck = 0;
     }
 
     QCheckBox          *headlineCheck;
@@ -80,10 +81,8 @@ public:
 };
 
 XMPContent::XMPContent(QWidget* parent)
-          : QWidget(parent)
+          : QWidget(parent), d(new XMPContentPriv)
 {
-    d = new XMPContentPriv;
-
     QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
