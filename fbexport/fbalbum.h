@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -32,7 +32,7 @@ class KLineEdit;
 class KTextEdit;
 class KComboBox;
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 class FbAlbum;
@@ -56,6 +56,6 @@ private:
     friend class FbWindow;
 };
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin
 
 #endif // FBALBUM_H

@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -40,14 +40,15 @@
 
 // LibKIPI includes.
 #include <libkipi/interface.h>
+#include <libkipi/uploadwidget.h>
 
 // Local includes.
 #include "imageslist.h"
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
-FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
+FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
             : QWidget(parent)
 {
     setObjectName("FbWidget");
@@ -125,6 +126,15 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
 
     // ------------------------------------------------------------------------
 
+    QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
+    uploadBox->setWhatsThis(
+        i18n("This is the location where Facebook images will be downloaded to."));
+    QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
+    m_uploadWidget = iface->uploadWidget(uploadBox);
+    uploadBoxLayout->addWidget(m_uploadWidget);
+
+    // ------------------------------------------------------------------------
+
     QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(
         i18n("These are options that will be applied to photos before upload."));
@@ -165,6 +175,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(albumsBox);
+    settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
@@ -182,10 +193,33 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface)
 
     connect(m_resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
+
+    // ------------------------------------------------------------------------
+
+    if (import) 
+    {
+        m_imgList->hide();
+
+        permissionLbl->hide();
+        m_permissionLbl->hide();
+        m_changePermBtn->hide();
+        m_newAlbumBtn->hide();
+
+        optionsBox->hide();
+    }
+    else
+    {
+        uploadBox->hide();
+    }
 }
 
 FbWidget::~FbWidget()
 {
+}
+
+QString FbWidget::getDestinationPath()
+{
+    return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
 
 void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)
@@ -225,4 +259,4 @@ void FbWidget::slotResizeChecked()
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin

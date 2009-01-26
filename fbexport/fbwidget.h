@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -35,6 +35,7 @@ class KPushButton;
 namespace KIPI
 {
     class Interface;
+    class UploadWidget;
 }
 
 namespace KIPIPlugins
@@ -42,7 +43,7 @@ namespace KIPIPlugins
     class ImagesList;
 }
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 class FbWidget : public QWidget
@@ -50,8 +51,10 @@ class FbWidget : public QWidget
     Q_OBJECT
 
 public:
-    FbWidget(QWidget* parent, KIPI::Interface *iface);
+    FbWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~FbWidget();
+
+    QString getDestinationPath();
 
     void updateLabels(const QString& name = "", const QString& url = "",
                       bool uplPerm = false);
@@ -62,6 +65,7 @@ private slots:
 private:
 
     KIPIPlugins::ImagesList*   m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
     QLabel*       m_headerLbl;
     QLabel*       m_userNameDisplayLbl;
@@ -80,6 +84,6 @@ private:
     friend class FbWindow;
 };
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin
 
 #endif // FBWIDGET_H

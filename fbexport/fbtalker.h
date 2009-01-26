@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -38,7 +38,7 @@
 class QProgressDialog;
 class QDomElement;
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 class FbTalker : public QObject
@@ -61,11 +61,13 @@ public:
     void    logout();
 
     void    listAlbums();
+    void    listPhotos(long long albumID);
 
     void    createAlbum(const FbAlbum& album);
 
     bool    addPhoto(const QString& imgPath, long long albumID, 
                      const QString& caption);
+    void    getPhoto(const QString& imgPath);
 
 public:
     QProgressDialog *m_authProgressDlg; // TODO: move to method?
@@ -75,10 +77,14 @@ signals:
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalChangePermDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
+    void signalGetPhotoDone(int errCode, const QString& errMsg,
+                            const QByteArray& photoData);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
                                long long newAlbumID);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <FbAlbum>& albumsList);
+    void signalListPhotosDone(int errCode, const QString& errMsg,
+                              const QList <FbPhoto>& photosList);
 
 private:
     enum State
@@ -90,8 +96,10 @@ private:
         FB_GETUPLOADPERM,
         FB_LOGOUT,
         FB_LISTALBUMS,
+        FB_LISTPHOTOS,
         FB_CREATEALBUM,
-        FB_ADDPHOTO
+        FB_ADDPHOTO,
+        FB_GETPHOTO
     };
 
     QString getApiSig(const QMap<QString, QString>& args);
@@ -114,6 +122,7 @@ private:
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
+    void parseResponseListPhotos(const QByteArray& data);
 
 private slots:
     void data(KIO::Job *job, const QByteArray& data);
@@ -143,6 +152,6 @@ private:
     State      m_state;
 };
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin
 
 #endif /* FBTALKER_H */

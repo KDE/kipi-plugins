@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_FBEXPORT_H
-#define PLUGIN_FBEXPORT_H
+#ifndef PLUGIN_FB_H
+#define PLUGIN_FB_H
 
 // Qt includes.
 #include <QVariant>
@@ -33,31 +33,33 @@
 
 class KAction;
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
     class FbWindow;
 }
 
-class Plugin_FbExport : public KIPI::Plugin
+class Plugin_Fb : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_FbExport(QObject *parent, const QVariantList &args);
-    ~Plugin_FbExport();
+    Plugin_Fb(QObject *parent, const QVariantList &args);
+    ~Plugin_Fb();
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 public slots:
 
-    void slotActivate();
+    void slotImport();
+    void slotExport();
 
 private:
 
-    KAction                         *m_action;
-    KIPIFbExportPlugin::FbWindow    *m_dlg;
+    KAction                 *m_actionImport;
+    KAction                 *m_actionExport;
+    KIPIFbPlugin::FbWindow  *m_dlg;
 };
 
-#endif // PLUGIN_FBEXPORT_H
+#endif // PLUGIN_FB_H

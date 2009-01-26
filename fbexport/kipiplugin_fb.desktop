@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Facebook Exporter
+Name=Facebook Import/Export
 Name[de]=Facebook-Export
 Name[el]=Εξαγωγέας Facebook
 Name[et]=Facebooki eksport
@@ -19,7 +19,7 @@ Name[th]=เครื่องมือส่งออกไปยังบร�
 Name[tr]=Facebook Aktarıcısı
 Name[uk]=Експорт до Facebook
 Name[zh_CN]=Facebook 导出
-Comment=A tool to export images to a remote Facebook web service
+Comment=A tool to import/export images to/from a remote Facebook web service
 Comment[ca]=Una eina per a exportar imatges a un servei web remot Facebook
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Facebook-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu dem Facebook-Web-Service zu exportieren.
@@ -42,5 +42,5 @@ Comment[uk]=Інструмент для експорту зображень до
 Comment[zh_CN]=一个将图像导出到远程 Facebook 网络服务的工具
 Type=Service
 ServiceTypes=KIPI/Plugin
-X-KDE-Library=kipiplugin_fbexport
+X-KDE-Library=kipiplugin_fb
 author=Luka Renko, lure@kubuntu.org

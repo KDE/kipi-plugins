@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -46,7 +46,7 @@
 #include "fbitem.h"
 #include "mpform.h"
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 FbTalker::FbTalker(QWidget* parent)
@@ -440,6 +440,41 @@ void FbTalker::listAlbums()
 }
 
 
+void FbTalker::listPhotos(long long albumID)
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    QMap<QString, QString> args;
+    args["method"]      = "facebook.photos.get";
+    args["api_key"]     = m_apiKey;
+    args["v"]           = m_apiVersion;
+    args["session_key"] = m_sessionKey;
+    args["call_id"]     = QString::number(m_callID.elapsed());
+    args["aid"]         = QString::number(albumID);
+    args["sig"]         = getApiSig(args);
+
+    QByteArray tmp(getCallString(args).toUtf8());
+    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("content-type",
+                     "Content-Type: application/x-www-form-urlencoded");
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = FB_LISTPHOTOS;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
 void FbTalker::createAlbum(const FbAlbum& album)
 {
     if (m_job)
@@ -551,6 +586,29 @@ bool FbTalker::addPhoto(const QString& imgPath,
     return true;
 }
 
+void FbTalker::getPhoto(const QString& imgPath)
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+    emit signalBusy(true);
+
+    KIO::TransferJob* job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
+    job->addMetaData("UserAgent", m_userAgent);
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
+
+    m_state = FB_GETPHOTO;
+    m_job   = job;
+    m_buffer.resize(0);
+}
+
 void FbTalker::data(KIO::Job*, const QByteArray& data)
 {
     if (data.isEmpty())
@@ -615,6 +673,11 @@ void FbTalker::slotResult(KJob *kjob)
             emit signalBusy(false);
             emit signalAddPhotoDone(job->error(), job->errorText());
         }
+        else if (m_state == FB_GETPHOTO)
+        {
+            emit signalBusy(false);
+            emit signalGetPhotoDone(job->error(), job->errorText(), QByteArray());
+        }
         else
         {
             emit signalBusy(false);
@@ -647,11 +710,19 @@ void FbTalker::slotResult(KJob *kjob)
         case(FB_LISTALBUMS):
             parseResponseListAlbums(m_buffer);
             break;
+        case(FB_LISTPHOTOS):
+            parseResponseListPhotos(m_buffer);
+            break;
         case(FB_CREATEALBUM):
             parseResponseCreateAlbum(m_buffer);
             break;
         case(FB_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
+            break;
+        case(FB_GETPHOTO):
+            // all we get is data of the image
+            emit signalBusy(false);
+            emit signalGetPhotoDone(0, QString(), m_buffer);
             break;
     }
 }
@@ -1069,4 +1140,58 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                               albumsList);
 }
 
-} // namespace KIPIFbExportPlugin
+void FbTalker::parseResponseListPhotos(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+    QDomDocument doc("getPhotos");
+    if (!doc.setContent(data))
+        return;
+
+    kDebug(51000) << "Parse Photos response:" << endl << data;
+
+    QDomElement docElem = doc.documentElement();
+    QList <FbPhoto> photosList;
+    if (docElem.tagName() == "photos_get_response") 
+    {
+        for (QDomNode node = docElem.firstChild();
+             !node.isNull();
+             node = node.nextSibling())
+        {
+            if (!node.isElement())
+                continue;
+            if (node.nodeName() == "photo")
+            {
+                FbPhoto photo;
+                for (QDomNode nodeP = node.toElement().firstChild();
+                     !nodeP.isNull();
+                     nodeP = nodeP.nextSibling())
+                {
+                    if (!nodeP.isElement())
+                        continue;
+                    if (nodeP.nodeName() == "pid")
+                        photo.id = nodeP.toElement().text().toLongLong();
+                    else if (nodeP.nodeName() == "caption")
+                        photo.caption = nodeP.toElement().text();
+                    else if (nodeP.nodeName() == "src_small")
+                        photo.thumbURL = nodeP.toElement().text();
+                    else if (nodeP.nodeName() == "src_big")
+                        photo.originalURL = nodeP.toElement().text();
+                    else if (nodeP.nodeName() == "src" 
+                             && photo.originalURL.isEmpty())
+                        photo.originalURL = nodeP.toElement().text();
+                }
+                photosList.append(photo);
+            }
+        }
+        errCode = 0;
+    }
+    else if (docElem.tagName() == "error_response")
+        errCode = parseErrorResponse(docElem, errMsg);
+
+    emit signalBusy(false);
+    emit signalListPhotosDone(errCode, errorToText(errCode, errMsg),
+                              photosList);
+}
+
+} // namespace KIPIFbPlugin

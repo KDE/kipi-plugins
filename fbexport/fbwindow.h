@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -51,13 +51,14 @@ namespace KIPIPlugins
 class KPAboutData;
 }
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 class FbTalker;
 class FbWidget;
 class FbNewAlbum;
 class FbAlbum;
+class FbPhoto;
 
 class FbWindow : public KDialog
 {
@@ -65,7 +66,8 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
+    FbWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+             bool import, QWidget *parent);
     ~FbWindow();
 
 private slots:
@@ -74,20 +76,24 @@ private slots:
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotChangePermDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotGetPhotoDone(int errCode, const QString& errMsg,
+                          const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, 
                              long long newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <FbAlbum>& albumsList);
+    void slotListPhotosDone(int errCode, const QString& errMsg,
+                            const QList <FbPhoto>& photosList);
 
     void slotUserChangeRequest();
     void slotPermChangeRequest();
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
-    void slotAddPhotoCancel();
+    void slotTransferCancel();
     void slotLoginCancel();
     void slotHelp();
     void slotClose();
-    void slotStartUpload();
+    void slotStartTransfer();
     void slotImageListChanged(bool);
 
 private:
@@ -95,6 +101,7 @@ private:
     bool prepareImageForUpload(const QString& imgPath, bool isRAW,
                                QString& caption);
     void uploadNextPhoto();
+    void downloadNextPhoto();
 
     void readSettings();
     void writeSettings();
@@ -102,8 +109,9 @@ private:
 
 private:
 
-    unsigned int                m_uploadCount;
-    unsigned int                m_uploadTotal;
+    bool                        m_import;
+    unsigned int                m_imagesCount;
+    unsigned int                m_imagesTotal;
     QString                     m_tmpDir;
     QString                     m_tmpPath;
 
@@ -114,7 +122,7 @@ private:
     QProgressDialog            *m_progressDlg;
     QProgressDialog            *m_authProgressDlg;
 
-    KUrl::List                  m_uploadQueue;
+    KUrl::List                  m_transferQueue;
 
     FbTalker                   *m_talker;
     FbWidget                   *m_widget;
@@ -125,6 +133,6 @@ private:
     KIPIPlugins::KPAboutData   *m_about;
 };
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin
 
 #endif /* FBWINDOW_H */

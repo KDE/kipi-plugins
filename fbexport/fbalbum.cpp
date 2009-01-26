@@ -4,9 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
- * Copyright (C) 2008 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,7 +36,7 @@
 // local includes
 #include <fbitem.h>
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 FbNewAlbum::FbNewAlbum(QWidget* parent)
@@ -99,7 +99,7 @@ void FbNewAlbum::getAlbumProperties(FbAlbum &album)
     album.title = m_titleEdt->text();
     album.location = m_locEdt->text();
     album.description = m_descEdt->toPlainText();
-    album.privacy = static_cast<KIPIFbExportPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
+    album.privacy = static_cast<KIPIFbPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
 }
 
-} // namespace KIPIFbExportPlugin
+} // namespace KIPIFbPlugin

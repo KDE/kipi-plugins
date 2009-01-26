@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-26
- * Description : a kipi plugin to export images to Facebook web service
+ * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
@@ -26,7 +26,7 @@
 // Qt includes.
 #include <QString>
 
-namespace KIPIFbExportPlugin
+namespace KIPIFbPlugin
 {
 
 class FbUser
@@ -79,7 +79,21 @@ public:
     QString     url;
 };
 
+class FbPhoto
+{
+public:
+    FbPhoto()
+    {
+        id = -1;
+    }
 
-} // namespace KIPIFbExportPlugin
+    long long   id;
+
+    QString     caption;
+    QString     thumbURL;
+    QString     originalURL;
+};
+
+} // namespace KIPIFbPlugin
 
 #endif /* FBITEM_H */
