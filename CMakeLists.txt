@@ -350,7 +350,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(galleryexport)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(smug)
-    ADD_SUBDIRECTORY(fbexport)
+    ADD_SUBDIRECTORY(fb)
     ADD_SUBDIRECTORY(printwizard)
 
     # Plugins which are optional depencies.
