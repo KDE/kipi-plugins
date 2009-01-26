@@ -151,7 +151,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     // ------------------------------------------------------------------------
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
-    albumsBox->setWhatsThis(
+    uploadBox->setWhatsThis(
         i18n("This is the location where SmugMug images will be downloaded to."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
@@ -282,6 +282,7 @@ QString SmugWidget::getDestinationPath()
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
+
 void SmugWidget::setNickName(const QString& nick)
 {
     m_nickNameEdt->setText(nick);

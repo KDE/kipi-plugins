@@ -772,7 +772,7 @@ void SmugWindow::downloadNextPhoto()
         return;
     }
 
-    QString imgPath = "http://www.smugmug.com" + m_transferQueue.first().path();
+    QString imgPath = m_transferQueue.first().url();
 
     m_talker->getPhoto(imgPath);
 
