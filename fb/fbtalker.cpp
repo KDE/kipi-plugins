@@ -54,7 +54,7 @@ FbTalker::FbTalker(QWidget* parent)
     m_parent = parent;
     m_job    = 0;
 
-    m_userAgent  = QString("KIPI-Plugin-FbExport/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
+    m_userAgent  = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.0";
     m_apiURL     = "https://api.facebook.com/restserver.php";
     m_apiKey     = "bf430ad869b88aba5c0c17ea6707022b";
