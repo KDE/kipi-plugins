@@ -3,6 +3,7 @@ Kipi-plugins 0.2.0-rc2 - Release date: xx/02/2009
 
 NEW FEATURES:
 
+Facebook       : Facebook plugin now support also import (download) of photos
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 

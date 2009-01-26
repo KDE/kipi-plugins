@@ -12,6 +12,7 @@ Kare Sars            <kare dot sars at kolumbus dot fi>
 Andrea Diamantini    <adjam7 at gmail dot com>
 Andi Clemens         <andi dot clemens at gmx dot net>
 Patrick Spendrin     <patrick_spendrin at gmx dot de>
+Luka Renko           <lure at kubuntu dot org>
 
 CONTRIBUTORS:
 Gerhard Kulzer       <gerhard at kulzer dot net>
@@ -23,7 +24,6 @@ Ruediger Bente       <ruediger dot bente at gmx dot de>
 Beth Marmorstein     <purplegamba at cox dot net>
 Robert Marmorstein   <rmmarm at sdf dot lonestar dot org>
 Jesper K. Pedersen   <blackie at kde dot org>
-Luka Renko           <lure at kubuntu dot org>
 
 OLD CONTRIBUTORS:
 Tudor Calin          <tudor at 1xtech dot com>
@@ -33,27 +33,28 @@ Gregory Kokanosky    <gregory dot kokanosky at free dot fr>
 Richard Groult       <Richard dot Groult at jalix.org>
 
 PLUGINS MAINTAINERS
-Acquire images      : Gilles Caulier and Kare Sars
-Jpeglossless        : Gilles Caulier and Marcel Wiesweg
-Raw converter       : Gilles Caulier and Marcel Wiesweg
-GPSSync             : Gilles Caulier
-MetadataEdit        : Gilles Caulier
-Time adjust         : Gilles Caulier
-Flickr export       : Vardhman jain and Gilles Caulier
-PicasaWeb export    : Vardhman jain and Gilles Caulier
-Gallery export      : Colin Guthrie and Andrea Diamantini
-Print wizard        : Angelo Naselli
-Slideshow           : Valerio Fuoglio
-HTML export         : Aurelien Gateau
-Ipod export         : Seb Ruiz
-Calendar            : Orgad Shaneh
-Image viewer        : Markus Leuthold
-Sendimages          : Michael Hoechstetter
-Simpleviewer export : Gilles Caulier
-Wallpaper           : Jesper K. Pedersen
-RemoveRedEyes       : Andi Clemens
-Smug import/export  : Luka Renko
-Facebook export     : Luka Renko
+Acquire images          : Gilles Caulier and Kare Sars
+Calendar                : Orgad Shaneh
+DngConverter            : Gilles Caulier
+Facebook import/export  : Luka Renko
+Flickr export           : Vardhman jain and Gilles Caulier
+Gallery export          : Colin Guthrie and Andrea Diamantini
+GPSSync                 : Gilles Caulier
+HTML export             : Aurelien Gateau
+Image viewer            : Markus Leuthold
+Ipod export             : Seb Ruiz
+Jpeglossless            : Gilles Caulier and Marcel Wiesweg
+MetadataEdit            : Gilles Caulier
+PicasaWeb export        : Vardhman jain and Gilles Caulier
+Print wizard            : Angelo Naselli
+Raw converter           : Gilles Caulier and Marcel Wiesweg
+RemoveRedEyes           : Andi Clemens
+Sendimages              : Michael Hoechstetter
+Simpleviewer export     : Gilles Caulier
+Slideshow               : Valerio Fuoglio
+Smug import/export      : Luka Renko
+Time adjust             : Gilles Caulier
+Wallpaper               : Jesper K. Pedersen
 
 PROJECT COORDINATOR:
 Angelo Naselli      <anaselli at linux dot it>
