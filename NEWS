@@ -8,7 +8,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 175928 : GalleryExport      : digiKam crashing when trying to export to gallery2 web service.
 002 ==> 181694 : MetadataEdit       : Edit caption should present current caption for easier modification.
-003 ==> 
+003 ==> 181973 : RAWConverter       : Raw batch converter loses exif information.
+004 ==> 
 
 Kipi-plugins 0.2.0-rc1 - Release date: 21/01/2009
 ------------------------------------------------------------------------
