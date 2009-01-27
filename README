@@ -51,7 +51,7 @@ MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 -- DEPENDENCIES -------------------------------------------------------
 
 CMake           >= 2.4.5                        http://www.cmake.org
-libqt           >= 4.3.x                        http://www.trolltech.com
+libqt           >= 4.3.x                        http://www.qtsoftware.com
 libkde          >= 4.0.x                        http://www.kde.org
 libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
