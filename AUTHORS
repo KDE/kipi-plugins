@@ -13,17 +13,16 @@ Andrea Diamantini    <adjam7 at gmail dot com>
 Andi Clemens         <andi dot clemens at gmx dot net>
 Patrick Spendrin     <patrick_spendrin at gmx dot de>
 Luka Renko           <lure at kubuntu dot org>
+Laurent Montel       <montel at kde dot org>
 
 CONTRIBUTORS:
 Gerhard Kulzer       <gerhard at kulzer dot net>
 Orgad Shaneh         <orgads at gmail dot com>
-Seb Ruiz             <me at sebruiz dot net>
+Seb Ruiz             <ruiz at kde dot org>
 Achim Bohnet         <ach at mpe dot mpg dot de>
-Michael Hoechstetter <michael dot hoechstetter at gmx dot de> 
 Ruediger Bente       <ruediger dot bente at gmx dot de>
 Beth Marmorstein     <purplegamba at cox dot net>
 Robert Marmorstein   <rmmarm at sdf dot lonestar dot org>
-Jesper K. Pedersen   <blackie at kde dot org>
 
 OLD CONTRIBUTORS:
 Tudor Calin          <tudor at 1xtech dot com>
@@ -31,6 +30,7 @@ Owen Hirst           <n8rider at sbcglobal dot net>
 Todd Shoemaker       <todd at theshoemakers dot net>
 Gregory Kokanosky    <gregory dot kokanosky at free dot fr>
 Richard Groult       <Richard dot Groult at jalix.org>
+Michael Hoechstetter <michael dot hoechstetter at gmx dot de> 
 
 PLUGINS MAINTAINERS
 Acquire images          : Gilles Caulier and Kare Sars
@@ -49,12 +49,12 @@ PicasaWeb export        : Vardhman jain and Gilles Caulier
 Print wizard            : Angelo Naselli
 Raw converter           : Gilles Caulier and Marcel Wiesweg
 RemoveRedEyes           : Andi Clemens
-Sendimages              : Michael Hoechstetter
+Sendimages              : Gilles Caulier
 Simpleviewer export     : Gilles Caulier
 Slideshow               : Valerio Fuoglio
 Smug import/export      : Luka Renko
 Time adjust             : Gilles Caulier
-Wallpaper               : Jesper K. Pedersen
+Wallpaper               : Laurent Montel
 
 PROJECT COORDINATOR:
 Angelo Naselli      <anaselli at linux dot it>
@@ -64,4 +64,4 @@ Renchi Raju         <renchi at pooh.tam.uiuc.edu>
 Tom Albers          <tomalbers at kde.nl>
 Ralf Hoelzer        <kde at ralfhoelzer dot com>
 Joern Ahrens        <joern dot ahrens at kdemail dot net>
-
+Jesper K. Pedersen  <blackie at kde dot org>
