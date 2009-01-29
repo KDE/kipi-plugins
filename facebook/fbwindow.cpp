@@ -92,7 +92,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
         setButtonGuiItem(User1, 
                          KGuiItem(i18n("Start Download"), "network-workgroup",
                                   i18n("Start download from Facebook web service")));
-        m_widget->setMinimumSize(300, 400);
+        m_widget->setMinimumSize(400, 600);
     }
     else
     {
@@ -113,11 +113,11 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_widget->m_changePermBtn, SIGNAL( clicked() ),
             this, SLOT( slotPermChangeRequest()) );
 
-    connect(m_widget->m_reloadAlbumsBtn, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest()) );
-
     connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
             this, SLOT( slotNewAlbumRequest()) );
+
+    connect(m_widget, SIGNAL( reloadAlbums(long long) ),
+            this, SLOT( slotReloadAlbumsRequest(long long)) );
 
     connect(this, SIGNAL( closeClicked() ),
             this, SLOT( slotClose()) );
@@ -180,6 +180,10 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList <FbPhoto>&) ),
             this, SLOT( slotListPhotosDone(int, const QString&, const QList <FbPhoto>&) ));
+
+    connect(m_talker, SIGNAL( signalListFriendsDone(int, const QString&, const QList <FbUser>&) ),
+            this, SLOT( slotListFriendsDone(int, const QString&, const QList <FbUser>&) ));
+
 
     // ------------------------------------------------------------------------
 
@@ -306,7 +310,10 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
 
     if (errCode == 0 && m_talker->loggedIn())
     {
-        m_talker->listAlbums(); // get albums to fill combo box
+        if (m_import)
+            m_talker->listFriends();
+        else
+            m_talker->listAlbums(); // get albums to fill combo box
     }
     else
     {
@@ -328,7 +335,7 @@ void FbWindow::slotChangePermDone(int errCode, const QString &errMsg)
 }
 
 void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
-                                       const QList <FbAlbum>& albumsList)
+                                  const QList <FbAlbum>& albumsList)
 {
     if (errCode != 0)
     {
@@ -392,6 +399,26 @@ void FbWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     downloadNextPhoto();
 }
 
+void FbWindow::slotListFriendsDone(int errCode, const QString &errMsg,
+                                   const QList <FbUser>& friendsList)
+{
+    if (errCode != 0)
+    {
+        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
+        return;
+    }
+ 
+    m_widget->m_friendsCoB->clear();
+    for (int i = 0; i < friendsList.size(); ++i)
+    {
+        m_widget->m_friendsCoB->addItem(
+            friendsList.at(i).name,
+            friendsList.at(i).id);
+    }
+    m_widget->m_friendsCoB->setCurrentIndex(-1); // no friend selected
+    m_talker->listAlbums(); // now fill up albums list with user's albums
+}
+
 void FbWindow::buttonStateChange(bool state)
 {
     m_widget->m_changePermBtn->setEnabled(state);
@@ -439,10 +466,10 @@ void FbWindow::slotPermChangeRequest()
     m_talker->changePerm();
 }
 
-void FbWindow::slotReloadAlbumsRequest()
+void FbWindow::slotReloadAlbumsRequest(long long userID)
 {
-    kDebug(51000) << "Slot Reload Albums Request";
-    m_talker->listAlbums(); // re-get albums
+    kDebug(51000) << "Reload Albums Request for UID:" << userID;
+    m_talker->listAlbums(userID); // re-get albums
 }
 
 void FbWindow::slotNewAlbumRequest()
@@ -470,9 +497,7 @@ void FbWindow::slotStartTransfer()
 
     if (m_import)
     {
-        // list photos of the album, then start download
-        m_talker->listPhotos(m_widget->m_albumsCoB->itemData(
-                             m_widget->m_albumsCoB->currentIndex()).toLongLong());
+        m_talker->listPhotos(m_widget->getFriendID(), m_widget->getAlbumID());
     }
     else
     {

@@ -57,6 +57,7 @@ namespace KIPIFbPlugin
 class FbTalker;
 class FbWidget;
 class FbNewAlbum;
+class FbUser;
 class FbAlbum;
 class FbPhoto;
 
@@ -84,10 +85,12 @@ private slots:
                             const QList <FbAlbum>& albumsList);
     void slotListPhotosDone(int errCode, const QString& errMsg,
                             const QList <FbPhoto>& photosList);
+    void slotListFriendsDone(int errCode, const QString& errMsg,
+                             const QList <FbUser>& friendsList);
 
     void slotUserChangeRequest();
     void slotPermChangeRequest();
-    void slotReloadAlbumsRequest();
+    void slotReloadAlbumsRequest(long long userID);
     void slotNewAlbumRequest();
     void slotTransferCancel();
     void slotLoginCancel();

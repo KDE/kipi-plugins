@@ -29,6 +29,7 @@
 class QLabel;
 class QSpinBox;
 class QCheckBox;
+class QButtonGroup;
 class KComboBox;
 class KPushButton;
 
@@ -46,6 +47,14 @@ namespace KIPIPlugins
 namespace KIPIFbPlugin
 {
 
+enum FbDownloadType
+{
+    FbMyAlbum = 0,
+    FbFriendAlbum,
+    FbPhotosMe,
+    FbPhotosFriend
+};
+
 class FbWidget : public QWidget
 {
     Q_OBJECT
@@ -59,11 +68,19 @@ public:
     void updateLabels(const QString& name = "", const QString& url = "",
                       bool uplPerm = false);
 
+    long long getFriendID();
+    long long getAlbumID();
+
+signals:
+    void reloadAlbums(long long userID);
+
 private slots:
+    void slotReloadAlbumsRequest();
+    void slotDownloadTypeChanged(int dlType);
+    void slotFriendsIndexChanged(int index);
     void slotResizeChecked();
 
 private:
-
     KIPIPlugins::ImagesList*   m_imgList;
     KIPI::UploadWidget*        m_uploadWidget;
 
@@ -73,6 +90,8 @@ private:
     KPushButton*  m_changeUserBtn;
     KPushButton*  m_changePermBtn;
 
+    QButtonGroup* m_dlGrp;
+    KComboBox*    m_friendsCoB;
     KComboBox*    m_albumsCoB;
     KPushButton*  m_newAlbumBtn;
     KPushButton*  m_reloadAlbumsBtn;

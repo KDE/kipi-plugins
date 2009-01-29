@@ -60,8 +60,10 @@ public:
     void    changePerm();
     void    logout();
 
-    void    listAlbums();
-    void    listPhotos(long long albumID);
+    void    listFriends();
+
+    void    listAlbums(long long userID = 0);
+    void    listPhotos(long long userID, long long albumID);
 
     void    createAlbum(const FbAlbum& album);
 
@@ -85,6 +87,8 @@ signals:
                               const QList <FbAlbum>& albumsList);
     void signalListPhotosDone(int errCode, const QString& errMsg,
                               const QList <FbPhoto>& photosList);
+    void signalListFriendsDone(int errCode, const QString& errMsg,
+                               const QList <FbUser>& friendsList);
 
 private:
     enum State
@@ -93,8 +97,10 @@ private:
         FB_GETSESSION,
         FB_GETLOGGEDINUSER,
         FB_GETUSERINFO,
+        FB_GETUSERINFO_FRIENDS,
         FB_GETUPLOADPERM,
         FB_LOGOUT,
+        FB_LISTFRIENDS,
         FB_LISTALBUMS,
         FB_LISTPHOTOS,
         FB_CREATEALBUM,
@@ -108,7 +114,7 @@ private:
     void    createToken();
     void    getSession();
     void    getLoggedInUser();
-    void    getUserInfo();
+    void    getUserInfo(const QString& userIDs = "");
     void    getUploadPermission();
 
     QString errorToText(int errCode, const QString& errMsg);
@@ -123,6 +129,7 @@ private:
     void parseResponseCreateAlbum(const QByteArray& data);
     void parseResponseListAlbums(const QByteArray& data);
     void parseResponseListPhotos(const QByteArray& data);
+    void parseResponseListFriends(const QByteArray& data);
 
 private slots:
     void data(KIO::Job *job, const QByteArray& data);
