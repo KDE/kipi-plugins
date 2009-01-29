@@ -52,6 +52,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)    # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For Slideshow and ImageViewer.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(Gpod)       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
@@ -201,6 +202,12 @@ ELSE(GPOD_FOUND)
     MESSAGE(STATUS " libgpod library found............... NO  (optional)")
 ENDIF(GPOD_FOUND)
 
+IF(GDK_FOUND)
+    MESSAGE(STATUS " Gdk library found................... YES (optional)")
+ELSE(GDK_FOUND)
+    MESSAGE(STATUS " Gdk library found................... NO  (optional)")
+ENDIF(GDK_FOUND)
+
 IF(KDEPIMLIBS_FOUND)
     MESSAGE(STATUS " libkdepim library found............. YES (optional)")
 ELSE(KDEPIMLIBS_FOUND)
@@ -280,11 +287,11 @@ ELSE(OPENCV_FOUND)
     MESSAGE(STATUS " RemoveRedEyes will be compiled...... NO  (optional - Look README file for more details about dependencies)")
 ENDIF(OPENCV_FOUND)
 
-IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
     MESSAGE(STATUS " IpodExport will be compiled......... YES (optional)")
-ELSE(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+ELSE(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
     MESSAGE(STATUS " IpodExport will be compiled......... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 
 IF(KDEPIMLIBS_FOUND)
     MESSAGE(STATUS " Calendar will be compiled........... YES (optional)")
@@ -359,9 +366,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
        ADD_SUBDIRECTORY(calendar)
     ENDIF(KDEPIMLIBS_FOUND)
 
-    IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+    IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
        ADD_SUBDIRECTORY(ipodexport)
-    ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND)
+    ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 
     IF(OPENCV_FOUND)
         ADD_SUBDIRECTORY(removeredeyes)

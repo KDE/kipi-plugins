@@ -20,6 +20,11 @@
  *
  * ============================================================ */
 
+// System Includes
+extern "C" {
+#include <gdk-pixbuf/gdk-pixbuf.h>
+}
+
 // Local includes.
 
 #include "IpodHeader.h"
@@ -422,9 +427,13 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
         return;
 
     Itdb_Artwork *artwork = item->artwork();
-    Itdb_Thumb *thumb = itdb_artwork_get_thumb_by_type( artwork, ITDB_THUMB_PHOTO_SMALL );
+    GdkPixbuf *gpixbuf = NULL;
+    
+    // First arg in itdb_artwork_get_pixbuf(...) is pointer to Itdb_Device struct,
+    // in kipiplugin-ipodexport it is m_itdb->device. i hope it _is_ initialiezed
+    gpixbuf = (GdkPixbuf*) itdb_artwork_get_pixbuf( m_itdb->device, artwork, -1, -1 );
 
-    if( !thumb )
+    if( !gpixbuf )
     {
         kDebug(51000) << "no thumb was found" << endl;
         return;
@@ -439,6 +448,9 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
 //     QPixmap pix;
 //     pix.convertFromImage( image );
 //     m_ipodPreview->setPixmap( pix );
+    
+    // memory release
+    gdk_pixbuf_unref ( gpixbuf );
 }
 
 void UploadDialog::imageSelected( QTreeWidgetItem *item )

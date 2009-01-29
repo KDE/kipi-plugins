@@ -1,6 +1,6 @@
 ADD_DEFINITIONS(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
-INCLUDE_DIRECTORIES(${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR} ${GDK_INCLUDE_DIR})
 
 SET(kipiplugin_ipodexport_PART_SRCS
     plugin_ipodexport.cpp
@@ -18,6 +18,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       ${KDE4_KDE3SUPPORT_LIBS}
                       ${KDE4_KDEUI_LIBS}
                       ${GPOD_LIBRARIES}
+                      ${GDK_LIBRARIES}
                       kipiplugins
                       kipi
                       kio
