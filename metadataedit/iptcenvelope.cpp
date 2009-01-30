@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC envelope settings page.
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,6 +31,7 @@
 #include <QTimeEdit>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kcombobox.h>
@@ -160,10 +161,8 @@ public:
 };
 
 IPTCEnvelope::IPTCEnvelope(QWidget* parent)
-            : QWidget(parent)
+            : QWidget(parent), d(new IPTCEnvelopePriv)
 {
-    d = new IPTCEnvelopePriv;
-
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.

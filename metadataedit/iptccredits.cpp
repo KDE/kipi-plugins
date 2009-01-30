@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC credits settings page.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,6 +30,7 @@
 #include <QPushButton>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kdialog.h>
@@ -84,10 +85,8 @@ public:
 };
 
 IPTCCredits::IPTCCredits(QWidget* parent)
-           : QWidget(parent)
+           : QWidget(parent), d(new IPTCCreditsPriv)
 {
-    d = new IPTCCreditsPriv;
-
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.

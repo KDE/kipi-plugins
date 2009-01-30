@@ -6,7 +6,7 @@
  * Date        : 2007-10-08
  * Description : a widget to edit a tag with multiple string entries.
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,6 +29,7 @@
 #include <QPushButton>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kdialog.h>
@@ -73,10 +74,8 @@ public:
 
 MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
                                    const QString& desc, bool ascii, int size)
-                : QWidget(parent)
+                : QWidget(parent), d(new MultiStringsEditPriv)
 {
-    d = new MultiStringsEditPriv;
-
     QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.

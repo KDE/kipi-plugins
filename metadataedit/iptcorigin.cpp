@@ -6,7 +6,7 @@
  * Date        : 2006-10-13
  * Description : IPTC origin settings page.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,6 +32,7 @@
 #include <QTimeEdit>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kaboutdata.h>
@@ -392,10 +393,8 @@ public:
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent)
-          : QWidget(parent)
+          : QWidget(parent), d(new IPTCOriginPriv)
 {
-    d = new IPTCOriginPriv;
-
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
