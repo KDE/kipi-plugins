@@ -300,6 +300,7 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
 {
     buttonStateChange(m_talker->loggedIn());
     FbUser user = m_talker->getUser();
+    setProfileAID(user.id);
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
     if (!m_import)
@@ -344,8 +345,17 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_widget->m_albumsCoB->clear();
-    if (!m_import)
+    if (m_import)
+    {
+        m_widget->m_albumsCoB->addItem(
+            i18nc("name of special Facebook album for profile pictures", 
+                  "Profile Pictures"),
+            m_profileAID);
+    }
+    else
+    {
         m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
+    }
     for (int i = 0; i < albumsList.size(); ++i)
     {
         QString albumIcon;
@@ -469,7 +479,17 @@ void FbWindow::slotPermChangeRequest()
 void FbWindow::slotReloadAlbumsRequest(long long userID)
 {
     kDebug(51000) << "Reload Albums Request for UID:" << userID;
-    m_talker->listAlbums(userID); // re-get albums
+    if (userID == 0) 
+    {
+        FbUser user = m_talker->getUser();
+        setProfileAID(user.id);
+        m_talker->listAlbums(); // re-get albums from current user
+    }
+    else
+    {
+        setProfileAID(userID);
+        m_talker->listAlbums(userID); // re-get albums for friend
+    }
 }
 
 void FbWindow::slotNewAlbumRequest()
@@ -513,6 +533,13 @@ void FbWindow::slotStartTransfer()
                                    m_widget->m_albumsCoB->currentIndex()).toLongLong();
         uploadNextPhoto();
     }
+}
+
+void FbWindow::setProfileAID(long long userID)
+{
+    // store AID of Profile Photos album
+    // http://wiki.developers.facebook.com/index.php/Profile_archive_album
+    m_profileAID    = (userID << 32) + (-3 & 0xFFFFFFFF);
 }
 
 QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)

@@ -79,7 +79,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     accountBox->setWhatsThis(
-        i18n("This is the Facebook account that will be used for upload."));
+        i18n("This is the Facebook account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel *userNameLbl     = new QLabel(i18n("Name:"), accountBox);
@@ -90,7 +90,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_permissionLbl         = new QLabel(accountBox);
     m_changeUserBtn         = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Logout and change Facebook Account used for upload")), 
+                 i18n("Logout and change Facebook Account used for transfer")), 
         accountBox);
     m_changePermBtn         = new KPushButton(
         KGuiItem(i18n("Change Permission"), "security-high",
@@ -108,35 +108,46 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albumsBox    = new QGroupBox(i18n("Album"), settingsBox);
-    albumsBox->setWhatsThis(
-        i18n("This is the Facebook album where selected photos will be uploaded."));
-    QGridLayout* albumsBoxLayout  = new QGridLayout(albumsBox);
+    QGroupBox* albBox    = new QGroupBox(settingsBox);
+    if (import)
+    {
+        albBox->setTitle(i18n("Download Selection"));
+        albBox->setWhatsThis(
+            i18n("This is the selection of Facebook albums/photos to download."));
+    }
+    else
+    {
+        albBox->setTitle(i18n("Destination"));
+        albBox->setWhatsThis(
+            i18n("This is the Facebook album where selected photos will be uploaded."));
+    }
+    QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
 
-    QRadioButton* albMeRBtn = new QRadioButton(i18n("My &Album"), albumsBox);
-    albMeRBtn->setChecked(true);
+    QRadioButton* albMeRBtn = new QRadioButton(i18n("My &Album"), albBox);
     albMeRBtn->setWhatsThis(
         i18n("Download complete album of currently logged in user."));
-    QRadioButton* albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albumsBox);
+    QRadioButton* albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albBox);
     albFrRBtn->setWhatsThis(
         i18n("Download complete album of selected friend."));
-    QRadioButton* phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albumsBox);
+    QRadioButton* phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albBox);
     phMeRBtn->setWhatsThis(
         i18n("Download all photos of currently logged in user."));
-    QRadioButton* phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albumsBox);
+    QRadioButton* phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albBox);
     phFrRBtn->setWhatsThis(
         i18n("Download all photos of selected friend."));
 
-    m_dlGrp = new QButtonGroup(albumsBox);
+    m_dlGrp = new QButtonGroup(albBox);
     m_dlGrp->addButton(albMeRBtn, FbMyAlbum);
     m_dlGrp->addButton(albFrRBtn, FbFriendAlbum);
     m_dlGrp->addButton(phMeRBtn, FbPhotosMe);
     m_dlGrp->addButton(phFrRBtn, FbPhotosFriend);
 
-    m_friendsCoB    = new KComboBox(albumsBox);
+    QLabel* frLbl   = new QLabel(i18n("Friend:"), albBox);
+    m_friendsCoB    = new KComboBox(albBox);
     m_friendsCoB->setEditable(false);
 
-    m_albumsCoB     = new KComboBox(albumsBox);
+    QLabel* albLbl  = new QLabel(i18n("Album:"), albBox);
+    m_albumsCoB     = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn       = new KPushButton(
@@ -150,8 +161,10 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     albumsBoxLayout->addWidget(albFrRBtn,           1, 0, 1, 2);
     albumsBoxLayout->addWidget(phMeRBtn,            0, 3, 1, 2);
     albumsBoxLayout->addWidget(phFrRBtn,            1, 3, 1, 2);
-    albumsBoxLayout->addWidget(m_friendsCoB,        2, 0, 1, 5);
-    albumsBoxLayout->addWidget(m_albumsCoB,         3, 0, 1, 5);
+    albumsBoxLayout->addWidget(frLbl,               2, 0, 1, 1);
+    albumsBoxLayout->addWidget(m_friendsCoB,        2, 1, 1, 4);
+    albumsBoxLayout->addWidget(albLbl,              3, 0, 1, 1);
+    albumsBoxLayout->addWidget(m_albumsCoB,         3, 1, 1, 4);
     albumsBoxLayout->addWidget(m_newAlbumBtn,       4, 3, 1, 1);
     albumsBoxLayout->addWidget(m_reloadAlbumsBtn,   4, 4, 1, 1);
 
@@ -205,7 +218,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
-    settingsBoxLayout->addWidget(albumsBox);
+    settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -246,6 +259,10 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
         m_newAlbumBtn->hide();
 
         optionsBox->hide();
+
+        // set My Albums as default selection
+        albMeRBtn->setChecked(true);
+        m_friendsCoB->setEnabled(false);
     }
     else
     {
@@ -253,6 +270,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
         phFrRBtn->hide();
         albMeRBtn->hide();
         albFrRBtn->hide();
+        frLbl->hide();
         m_friendsCoB->hide();
 
         uploadBox->hide();

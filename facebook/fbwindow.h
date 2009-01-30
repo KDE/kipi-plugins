@@ -100,6 +100,7 @@ private slots:
     void slotImageListChanged(bool);
 
 private:
+    void setProfileAID(long long userID);
     QString getImageCaption(const KExiv2Iface::KExiv2& ev);
     bool prepareImageForUpload(const QString& imgPath, bool isRAW,
                                QString& caption);
@@ -118,6 +119,7 @@ private:
     QString                     m_tmpDir;
     QString                     m_tmpPath;
 
+    long long                   m_profileAID;
     long long                   m_currentAlbumID;
     QString                     m_sessionKey;
     unsigned int                m_sessionExpires;
