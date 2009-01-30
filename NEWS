@@ -11,7 +11,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 181694 : MetadataEdit       : Edit caption should present current caption for easier modification.
 003 ==> 181973 : RAWConverter       : Raw batch converter loses exif information.
 004 ==> 181334 : IpodExort          : The artwork API in libgpod-0.7.0 has changed slightly, IpodExport plugin needs updated.
-005 ==> 
+005 ==> 181853 : MetadataEdit       : Entring new xmp meta data removes old one from the image file.
+006 ==> 
 
 Kipi-plugins 0.2.0-rc1 - Release date: 21/01/2009
 ------------------------------------------------------------------------
