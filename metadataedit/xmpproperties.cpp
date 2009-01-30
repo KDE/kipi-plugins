@@ -159,10 +159,8 @@ public:
 };
 
 XMPProperties::XMPProperties(QWidget* parent)
-             : QWidget(parent)
+             : QWidget(parent), d(new XMPPropertiesPriv)
 {
-    d = new XMPPropertiesPriv;
-
     QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------

@@ -36,7 +36,7 @@ class XMPPropertiesPriv;
 class XMPProperties : public QWidget
 {
     Q_OBJECT
-    
+
 public:
 
     XMPProperties(QWidget* parent);
@@ -51,7 +51,7 @@ signals:
 
 private:
 
-    XMPPropertiesPriv* d;
+    XMPPropertiesPriv* const d;
 };
 
 }  // namespace KIPIMetadataEditPlugin
