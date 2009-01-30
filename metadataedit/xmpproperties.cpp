@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status properties settings page.
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,17 +28,19 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QGridLayout>
+
 // KDE includes.
 
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <klanguagebutton.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kseparator.h>
 #include <ktextedit.h>
+#include <kdebug.h>
+#include <kconfiggroup.h>
 
 // LibKExiv2 includes.
 
@@ -69,14 +71,13 @@ public:
     {
         priorityCB           = 0;
         objectTypeCB         = 0;
-        languageBtn          = 0;
         priorityCheck        = 0;
-        languageCheck        = 0;
         objectAttributeCheck = 0;
         sceneEdit            = 0;
         objectTypeEdit       = 0;
         objectAttributeEdit  = 0;
         objectAttributeCB    = 0;
+        languageEdit         = 0;
 
         sceneCodeMap.insert( "010100", i18n("Headshot") );
         sceneCodeMap.insert( "010200", i18n("Half-length") );
@@ -116,27 +117,43 @@ public:
         typeCodeMap.insert( "Schema",             i18n("Schema") );
         typeCodeMap.insert( "Topic",              i18n("Topic") );
         typeCodeMap.insert( "TopicSet",           i18n("Topic Set") );
+
+        // Fill language code map. inspired from KLanguageButton::loadAllLanguages()
+        QStringList list = KGlobal::locale()->allLanguagesList();
+        list.sort();
+        for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
+        {
+            QString code = *it;
+
+            // Only get all ISO 639 language code based on 2 characters
+            // http://xml.coverpages.org/iso639a.html
+            if (code.size() == 2 )
+            {
+                QString name = KGlobal::locale()->languageCodeToName(code);
+                languageCodeMap.insert(code, name);
+            }
+        }
     }
 
     typedef QMap<QString, QString>  SceneCodeMap;
     typedef QMap<QString, QString>  TypeCodeMap;
+    typedef QMap<QString, QString>  LanguageCodeMap;
 
     SceneCodeMap                    sceneCodeMap;
     TypeCodeMap                     typeCodeMap;
+    LanguageCodeMap                 languageCodeMap;
 
     KComboBox                      *priorityCB;
     KComboBox                      *objectTypeCB;
 
-    KLanguageButton                *languageBtn;
-
     KLineEdit                      *objectAttributeEdit;
 
     MetadataCheckBox               *priorityCheck;
-    MetadataCheckBox               *languageCheck;
     MetadataCheckBox               *objectAttributeCheck;
 
     MultiValuesEdit                *sceneEdit;
     MultiValuesEdit                *objectTypeEdit;
+    MultiValuesEdit                *languageEdit;
 
     SqueezedComboBox               *objectAttributeCB;
 };
@@ -150,19 +167,15 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->languageCheck = new MetadataCheckBox(i18n("Language:"), this);
-    d->languageBtn   = new KLanguageButton(this);
+    d->languageEdit = new MultiValuesEdit(this, i18n("Language:"),
+                          i18n("Select here the language of content."));
 
-    QStringList list = KGlobal::locale()->allLanguagesList();
-    for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-    {
-        // Only get all ISO 639 language code based on 2 characters
-        // http://xml.coverpages.org/iso639a.html
-        if ((*it).size() == 2 )
-            d->languageBtn->insertLanguage(*it);
-    }
+    QStringList list;
+    for (XMPPropertiesPriv::LanguageCodeMap::Iterator it = d->languageCodeMap.begin();
+         it != d->languageCodeMap.end(); ++it)
+        list.append(QString("%1 - %2").arg(it.key()).arg(it.value()));
 
-    d->languageBtn->setWhatsThis(i18n("Select here the language of content."));
+    d->languageEdit->setData(list);
 
     // --------------------------------------------------------
 
@@ -237,8 +250,7 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->addWidget(d->languageCheck,                       0, 0, 1, 1);
-    grid->addWidget(d->languageBtn,                         0, 1, 1, 1);
+    grid->addWidget(d->languageEdit,                        0, 0, 1, 5);
     grid->addWidget(d->priorityCheck,                       1, 0, 1, 1);
     grid->addWidget(d->priorityCB,                          1, 1, 1, 1);
     grid->addWidget(d->sceneEdit,                           2, 0, 1, 5);
@@ -254,9 +266,6 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->languageCheck, SIGNAL(toggled(bool)),
-            d->languageBtn, SLOT(setEnabled(bool)));
-
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
             d->priorityCB, SLOT(setEnabled(bool)));
 
@@ -268,7 +277,7 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->languageCheck, SIGNAL(toggled(bool)),
+    connect(d->languageEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCheck, SIGNAL(toggled(bool)),
@@ -284,9 +293,6 @@ XMPProperties::XMPProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
-
-    connect(d->languageBtn, SIGNAL(activated(const QString&)),
-            this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
@@ -315,19 +321,27 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     QString     dateStr, timeStr;
     KExiv2Iface::KExiv2::AltLangMap map;
 
-    d->languageCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.dc.language", false);
-    if (!data.isNull())
+    // ---------------------------------------------------------------
+
+    code = exiv2Iface.getXmpTagStringBag("Xmp.dc.language", false);
+    for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
     {
-        if (d->languageBtn->contains(data))
+        QStringList data = d->languageEdit->getData();
+        QStringList::Iterator it2;
+        for (it2 = data.begin(); it2 != data.end(); ++it2)
         {
-            d->languageBtn->setCurrentItem(data);
-            d->languageCheck->setChecked(true);
+            if ((*it2).left(2) == (*it))
+            {
+                list.append(*it2);
+                break;
+            }
         }
-        else
-            d->languageCheck->setValid(false);
+        if (it2 == data.end())
+            d->languageEdit->setValid(false);
     }
-    d->languageBtn->setEnabled(d->languageCheck->isChecked());
+    d->languageEdit->setValues(list);
+
+    // ---------------------------------------------------------------
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
@@ -344,6 +358,8 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
             d->priorityCheck->setValid(false);
     }
     d->priorityCB->setEnabled(d->priorityCheck->isChecked());
+
+    // ---------------------------------------------------------------
 
     code = exiv2Iface.getXmpTagStringBag("Xmp.iptc.Scene", false);
     for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
@@ -363,6 +379,8 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     }
     d->sceneEdit->setValues(list);
 
+    // ---------------------------------------------------------------
+
     code = exiv2Iface.getXmpTagStringBag("Xmp.dc.Type", false);
     for (QStringList::Iterator it3 = code.begin(); it3 != code.end(); ++it3)
     {
@@ -380,6 +398,8 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
             d->objectTypeEdit->setValid(false);
     }
     d->objectTypeEdit->setValues(list2);
+
+    // ---------------------------------------------------------------
 
     d->objectAttributeCB->setCurrentIndex(0);
     d->objectAttributeEdit->clear();
@@ -404,6 +424,8 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     d->objectAttributeCB->setEnabled(d->objectAttributeCheck->isChecked());
     d->objectAttributeEdit->setEnabled(d->objectAttributeCheck->isChecked());
 
+    // ---------------------------------------------------------------
+
     blockSignals(false);
 }
 
@@ -413,15 +435,30 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
-    if (d->languageCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.dc.language", d->languageBtn->current());
-    else if (d->languageCheck->isValid())
+    // ---------------------------------------------------------------
+
+    if (d->languageEdit->getValues(oldList, newList))
+    {
+        QStringList newCode;
+
+        for (QStringList::Iterator it2 = newList.begin(); it2 != newList.end(); ++it2)
+            newCode.append((*it2).left(2));
+
+        exiv2Iface.setXmpTagStringBag("Xmp.dc.language", newCode, false);
+    }
+    else
+    {
         exiv2Iface.removeXmpTag("Xmp.dc.language");
+    }
+
+    // ---------------------------------------------------------------
 
     if (d->priorityCheck->isChecked())
         exiv2Iface.setXmpTagString("Xmp.photoshop.Urgency", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
         exiv2Iface.removeXmpTag("Xmp.photoshop.Urgency");
+
+    // ---------------------------------------------------------------
 
     if (d->sceneEdit->getValues(oldList, newList))
     {
@@ -437,10 +474,14 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
         exiv2Iface.removeXmpTag("Xmp.iptc.Scene");
     }
 
+    // ---------------------------------------------------------------
+
     if (d->objectTypeEdit->getValues(oldList, newList))
         exiv2Iface.setXmpTagStringBag("Xmp.dc.Type", newList, false);
     else
         exiv2Iface.removeXmpTag("Xmp.dc.Type");
+
+    // ---------------------------------------------------------------
 
     if (d->objectAttributeCheck->isChecked())
     {
@@ -450,7 +491,11 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
         exiv2Iface.setXmpTagString("Xmp.iptc.IntellectualGenre", objectAttribute);
     }
     else if (d->objectAttributeCheck->isValid())
+    {
         exiv2Iface.removeXmpTag("Xmp.iptc.IntellectualGenre");
+    }
+
+    // ---------------------------------------------------------------
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 

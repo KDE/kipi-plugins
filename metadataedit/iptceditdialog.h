@@ -23,9 +23,6 @@
 #ifndef IPTCEDITDIALOG_H
 #define IPTCEDITDIALOG_H
 
-// Qt includes.
-
-
 // KDE includes.
 
 #include <kpagedialog.h>
@@ -38,7 +35,7 @@ class QObject;
 namespace KIPI
 {
 class Interface;
-} // namespace KIPI
+}
 
 namespace KIPIMetadataEditPlugin
 {
@@ -86,7 +83,7 @@ private:
 
 private:
 
-    IPTCEditDialogPrivate *d;
+    IPTCEditDialogPrivate* const d;
 };
 
 }  // namespace KIPIMetadataEditPlugin

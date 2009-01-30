@@ -6,7 +6,7 @@
  * Date        : 2006-11-20
  * Description : a dialog to batch remove comments
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,10 +80,8 @@ public:
 };
 
 CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
-                   : KDialog(parent)
+                   : KDialog(parent), d(new CommentRemoveDialogDialogPrivate)
 {
-    d = new CommentRemoveDialogDialogPrivate;
-
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setCaption(i18n("Remove Image Caption"));
@@ -96,7 +94,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to edit pictures metadata"),
-                                            ki18n("(c) 2006-2008, Gilles Caulier"));
+                                            ki18n("(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -123,7 +121,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
                                     mainWidget());
     d->removeJFIFCommentCheck = new QCheckBox(i18n("Remove JFIF Comment section"), mainWidget());
     d->removeEXIFCommentCheck = new QCheckBox(i18n("Remove EXIF Comment"), mainWidget());
-    d->removeXMPCaptionCheck = new QCheckBox(i18n("Remove XMP Caption"), mainWidget());
+    d->removeXMPCaptionCheck  = new QCheckBox(i18n("Remove XMP Caption"), mainWidget());
     d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC Caption"), mainWidget());
 
     if (!KExiv2Iface::KExiv2::supportXmp())
