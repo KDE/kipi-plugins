@@ -71,6 +71,7 @@ libqtopengl     >= 4.3.x                        http://www.trolltech.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libopencv       >= 1.0                          http://opencv.willowgarage.com
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
+libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -82,7 +83,7 @@ HtmlZxport         : libxslt and libxml2
 JpegLossless       : imagemagick (runtime dependency)
 WallPaper          : kdebase (runtime dependency)
 RemoveRedEyes      : libopencv.
-IpodExport         : libgpod.
+IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs)
 
 
