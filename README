@@ -114,7 +114,8 @@ libkipi     >= 0.1.5                        http://www.kipi-plugins.org
 libkexiv2   >= 0.1.5                        http://www.kipi-plugins.org
 libkdcraw   >= 0.1.6                        http://www.kipi-plugins.org
 libxslt     >= 1.1                          http://xmlsoft.org/XSLT
-libgpod     >= 0.4.2                        http://www.gtkpod.org/libgpod
+libgpod     >= 0.7.0                        http://www.gtkpod.org/libgpod
+libgdk      >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libkcal     >= 3.4.x                        http://pim.kde.org
 ImageMagick >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 MJPEGTools  >= 1.6.0 (runtime dependency)   http://mjpeg.sourceforge.net
@@ -135,5 +136,5 @@ wallpaper          : kdebase (runtime dependency)
 rawconverter       : libtiff 
 acquireimages      : libtiff
 htmlexport         : libxslt
-ipodexport         : libgpod
+ipodexport         : libgpod, libgdk
 calendar           : libkcal

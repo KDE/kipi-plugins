@@ -124,7 +124,7 @@ if test "x$build_libgpod" != "xno"; then
   if test "x$have_libgpod" != "xyes"; then
     echo "-- libgpod found.................. NO"
     echo ""
-    echo "iPodExport plugin needs the libgpod library, version 0.4.2 or greater. This plugin will not be compiled!"
+    echo "iPodExport plugin needs the libgpod library, version 0.7.0 or greater. This plugin will not be compiled!"
     echo "To complile this plugin, please install libgpod development package."
     echo "libgpod website is at http://gtkpod.org/libgpod.html"
     echo ""
@@ -132,8 +132,18 @@ if test "x$build_libgpod" != "xno"; then
   else
     echo "-- libgpod found.................. YES"
   fi
+  if test "x$have_gdk" != "xyes"; then
+    echo "-- gdk found...................... NO"
+    echo ""
+    echo "iPodExport plugin needs the GDK (GTK+ Drawing Kit) library, the part of GTK2. This plugin will not be compiled!"
+    echo "To complile this plugin, please install GDK development package."
+    echo ""
+    all_tests=bad
+  else
+    echo "-- GDK found...................... YES"
+  fi
 else
-  echo "-- libgpod library......... NOT NEEDED"
+  echo "-- libgpod and gdk library......... NOT NEEDED"
 fi
 
 echo ""
