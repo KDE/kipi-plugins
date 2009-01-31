@@ -1,9 +1,16 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Facebook Import/Export
+Name[ga]=Iompórtáil/Easpórtáil Facebook
+Name[gl]=Importación/Exportación a Facebook
 Name[nl]=Facebook-import/export
+Name[pt_BR]=Importar/exportar para o Facebook
+Name[uk]=Імпорт/Експорт до Facebook
 Comment=A tool to import/export images to/from a remote Facebook web service
+Comment[gl]=Un útil para importar ou exportar imaxes a un servizo web Facebook
 Comment[nl]=Een hulpmiddel om afbeeldingen van/naar een Facebook-webservice te im/exporteren
+Comment[pt_BR]=Uma ferramenta para importar/exportar imagens para um serviço da Internet remoto Facebook
+Comment[uk]=Інструмент для імпорту/експорту зображень до/з віддаленої веб-служби Facebook
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_fb
