@@ -129,9 +129,8 @@ public:
 };
 
 SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
-            : KDialog(0)
+            : KDialog(0), d(new SingleDialogPriv)
 {
-    d = new SingleDialogPriv;
     d->iface         = iface;
     d->inputFile     = file;
     d->inputFileName = QFileInfo(file).fileName();
@@ -176,7 +175,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to convert a Raw image"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2008, Gilles Caulier"));
+                         "(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),

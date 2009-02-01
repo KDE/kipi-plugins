@@ -100,7 +100,7 @@ private slots:
 
 private:
 
-    SingleDialogPriv* d;
+    SingleDialogPriv* const d;
 };
 
 } // namespace KIPIRawConverterPlugin

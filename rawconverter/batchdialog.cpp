@@ -139,9 +139,8 @@ public:
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)
-           : KDialog(0)
+           : KDialog(0), d(new BatchDialogPriv)
 {
-    d = new BatchDialogPriv;
     d->iface = iface;
 
     setButtons(Help | Default | Apply | Close | User1 | User2);
@@ -211,7 +210,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert Raw images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2008, Gilles Caulier"));
+                         "(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),

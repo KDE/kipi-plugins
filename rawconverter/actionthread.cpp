@@ -83,9 +83,8 @@ public:
 };
 
 ActionThread::ActionThread(QObject *parent, bool updateFileTimeStamp)
-            : QThread(parent)
+            : QThread(parent), d(new ActionThreadPriv)
 {
-    d = new ActionThreadPriv;
     qRegisterMetaType<ActionData>("ActionData");
     d->dcrawIface.setUpdateFileTimeStamp(updateFileTimeStamp);
 }

@@ -83,7 +83,7 @@ protected:
 
 private:
 
-    ActionThreadPriv *d;
+    ActionThreadPriv* const d;
 };
 
 }  // namespace KIPIRawConverterPlugin

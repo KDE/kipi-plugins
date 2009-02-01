@@ -98,7 +98,7 @@ private slots:
 
 private:
 
-    BatchDialogPriv* d;
+    BatchDialogPriv* const d;
 };
 
 } // namespace KIPIRawConverterPlugin
