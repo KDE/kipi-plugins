@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -81,9 +81,8 @@ public:
 };
 
 ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget, QWidget *parent)
-          : KDialog(parent)
+          : KDialog(parent), d(new ScanDialogPriv)
 {
-    d = new ScanDialogPriv;
     d->saneWidget = saneWidget;
     d->interface  = interface;
 
@@ -99,8 +98,8 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to acquire images using a flat scanner"),
-                   ki18n("(c) 2003-2008, Gilles Caulier\n"
-                         "(c) 2007-2008, Kare Sars"));
+                   ki18n("(c) 2003-2009, Gilles Caulier\n"
+                         "(c) 2007-2009, Kare Sars"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Author"),

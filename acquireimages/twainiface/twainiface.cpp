@@ -7,7 +7,7 @@
  * Description : Twain interface
  *
  * Copyright (C) 2002-2003 Stephan Stapel <stephan dot stapel at web dot de>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -64,7 +64,7 @@ bool TwainIface::InitTwain(HWND hWnd)
 {
     char libName[512];
 
-    if(IsValidDriver()) 
+    if(IsValidDriver())
     {
         return true;
     }
