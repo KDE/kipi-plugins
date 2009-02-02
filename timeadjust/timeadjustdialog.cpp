@@ -152,9 +152,8 @@ public:
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
-                : KDialog(parent)
+                : KDialog(parent), d(new TimeAdjustDialogPrivate)
 {
-    d = new TimeAdjustDialogPrivate;
     d->interface = interface;
 
     setButtons(Help | Ok | Cancel);
@@ -172,7 +171,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for adjusting time stamp of picture files"),
                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                         "(c) 2006-2008, Gilles Caulier"));
+                         "(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Jesper K. Pedersen"),
                         ki18n("Author"),
