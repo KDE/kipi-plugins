@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -85,9 +85,8 @@ public:
 };
 
 SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
-         : KPageDialog(parent)
+         : KPageDialog(parent), d(new SVEDialogPriv)
 {
-    d = new SVEDialogPriv;
     d->interface = interface;
 
     setCaption(i18n("Flash Export"));
@@ -121,7 +120,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images to Flash using Simple Viewer component"),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
-                         "(c) 2008, Gilles Caulier"));
+                         "(c) 2008-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Joern Ahrens"),
                        ki18n("Author"),

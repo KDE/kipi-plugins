@@ -6,7 +6,7 @@
  * Date        : 2008-02-21
  * Description : look settings page.
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Look
@@ -72,10 +72,8 @@ public:
 };
 
 LookPage::LookPage(QWidget* parent)
-        : QWidget(parent)
+        : QWidget(parent), d(new LookPagePriv)
 {
-    d = new LookPagePriv;
-
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     // ------------------------------------------------------------------------
