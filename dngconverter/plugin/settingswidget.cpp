@@ -93,7 +93,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
 
-    KUrlLabel *dngLogoLabel = new KUrlLabel(this);
+    KUrlLabel *dngLogoLabel        = new KUrlLabel(this);
     dngLogoLabel->setText(QString());
     dngLogoLabel->setUrl("http://en.wikipedia.org/wiki/Digital_Negative_(file_format)");
     dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("dngconverter", KIconLoader::NoGroup, 96));
@@ -103,10 +103,10 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     d->backupOriginalRawFile = new QCheckBox(i18n("Embed Original File"), this);
 
-    d->compressLossLess = new QCheckBox(i18n("Lossless Compression"), this);
+    d->compressLossLess      = new QCheckBox(i18n("Lossless Compression"), this);
 
-    d->previewModeLabel = new QLabel(i18n("JPEG Preview:"), this);
-    d->previewModeCB    = new RComboBox(this);
+    d->previewModeLabel      = new QLabel(i18n("JPEG Preview:"), this);
+    d->previewModeCB         = new RComboBox(this);
     d->previewModeCB->insertItem(DNGWriter::NONE,     i18n("None"));
     d->previewModeCB->insertItem(DNGWriter::MEDIUM,   i18n("Medium"));
     d->previewModeCB->insertItem(DNGWriter::FULLSIZE, i18n("Full size"));

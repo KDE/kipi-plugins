@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : DNG converter batch dialog
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -118,9 +118,8 @@ public:
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)
-           : KDialog(0)
+           : KDialog(0), d(new BatchDialogPriv)
 {
-    d = new BatchDialogPriv;
     d->iface = iface;
 
     setButtons(Help | Default | Apply | Close | User1 | User2);
