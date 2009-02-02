@@ -72,7 +72,7 @@ public:
 
 private:
 
-    GPSListViewItemPriv *d;
+    GPSListViewItemPriv* const d;
 };
 
 } // namespace KIPIGPSSyncPlugin

@@ -7,7 +7,7 @@
  * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -104,9 +104,8 @@ public:
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
-             : KDialog(parent)
+             : KDialog(parent), d(new GPSSyncDialogPriv)
 {
-    d = new GPSSyncDialogPriv;
     d->interface = interface;
 
     setButtons(Help|User1|User2|User3|Apply|Close);

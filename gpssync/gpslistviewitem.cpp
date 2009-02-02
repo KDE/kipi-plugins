@@ -63,9 +63,9 @@ public:
 };
 
 GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, KIPIPlugins::ImagesListView *view, const KUrl& url)
-               : KIPIPlugins::ImagesListViewItem(view, url)
+               : KIPIPlugins::ImagesListViewItem(view, url), 
+                 d(new GPSListViewItemPriv)
 {
-    d = new GPSListViewItemPriv;
     d->interface = interface;
     d->url       = url;
 

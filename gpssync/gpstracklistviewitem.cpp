@@ -6,7 +6,7 @@
  * Date        : 2008-02-07
  * Description : GPS track list view item.
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,9 +48,9 @@ public:
 };
 
 GPSTrackListViewItem::GPSTrackListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url)
-                    : KIPIPlugins::ImagesListViewItem(view, url)
+                    : KIPIPlugins::ImagesListViewItem(view, url),
+                      d(new GPSTrackListViewItemPriv)
 {
-    d = new GPSTrackListViewItemPriv;
     setIcon(0, SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 }
 
