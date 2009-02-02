@@ -6,7 +6,7 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -81,9 +81,8 @@ public:
 };
 
 SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent, KIPI::Interface *iface)
-          : QObject(parent)
+          : QObject(parent), d(new SendImagesPriv)
 {
-    d = new SendImagesPriv;
     d->settings = settings;
     d->iface    = iface;
     d->threadImgResize = new KIPISendimagesPlugin::ImageResize(this);
