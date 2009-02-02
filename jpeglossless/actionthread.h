@@ -69,7 +69,7 @@ signals:
 
 private:
 
-    ActionThreadPriv *d;
+    ActionThreadPriv* const d;
 };
 
 }  // namespace KIPIJPEGLossLessPlugin

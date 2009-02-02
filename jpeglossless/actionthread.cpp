@@ -90,9 +90,8 @@ public:
 };
 
 ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
-            : QThread(parent)
+            : QThread(parent), d(new ActionThreadPriv)
 {
-    d = new ActionThreadPriv;
     d->interface = interface;
     d->updateFileTimeStamp = d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool();
 }
