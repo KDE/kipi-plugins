@@ -145,10 +145,10 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->mPhotoPage = new PhotoPage(this, i18n(photoPageName));
   d->mCropPage  = new CropPage(this, i18n(cropPageName)) ;
 
-  d->m_helpButton = button (Help);
+  d->m_helpButton = button(Help);
   KHelpMenu* helpMenu = new KHelpMenu(this, d->mAbout, false);
   helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-  QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+  QAction *handbook   = new QAction(i18n("Handbook"), this);
 
   // create a QButtonGroup to manage button ids
   d->m_outputSettings = new QButtonGroup(this);
@@ -236,7 +236,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
   d->m_cancelPrinting     = false;
 
   helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-  d->m_helpButton->setDelayedMenu( helpMenu->menu() );
+  d->m_helpButton->setMenu( helpMenu->menu() );
 
   readSettings();
 

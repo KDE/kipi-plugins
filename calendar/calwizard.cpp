@@ -119,21 +119,18 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
-    KPushButton *helpButton = button( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Plugin Handbook"), this);
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered()),
             this, SLOT(slotHelp()));
-    connect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setDelayedMenu( helpMenu->menu() );
+    button(Help)->setMenu(helpMenu->menu());
 
     // ------------------------------------------
 
-    printThread_   = 0;
-    printer_       = 0;
+    printThread_ = 0;
+    printer_     = 0;
 
     connect(this, SIGNAL(currentPageChanged(KPageWidgetItem *, KPageWidgetItem *)),
             this, SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));

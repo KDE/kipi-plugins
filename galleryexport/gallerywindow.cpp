@@ -194,19 +194,20 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     // help button
     disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
 
-    KPushButton *helpButton = button( Help );
     KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)), 
+            this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setDelayedMenu( helpMenu->menu() );
+    button(Help)->setMenu(helpMenu->menu());
 
     // User1 Button : to conf gallery settings
     KPushButton *confButton = button( User1 );
     confButton->setText( i18n("settings") );
     confButton->setIcon( KIcon("applications-system") );
-    connect(confButton, SIGNAL(clicked()), this, SLOT(slotSettings() ) );
+    connect(confButton, SIGNAL(clicked()), 
+            this, SLOT(slotSettings() ) );
 
     // we need to let m_talker work..
     m_talker = new GalleryTalker(d->widget);

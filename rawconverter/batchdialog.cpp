@@ -223,14 +223,13 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
-    KPushButton *helpButton = button( Help );
-    KHelpMenu* helpMenu     = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook       = new QAction(i18n("Plugin Handbook"), this);
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setDelayedMenu( helpMenu->menu() );
+    button(Help)->setMenu(helpMenu->menu());
 
     // ---------------------------------------------------------------
 

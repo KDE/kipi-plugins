@@ -121,10 +121,11 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook = new QAction(i18n("Plugin Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)), 
+            this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setDelayedMenu(helpMenu->menu());
+    button(Help)->setMenu(helpMenu->menu());
 
     // ------------------------------------------------------------
 
