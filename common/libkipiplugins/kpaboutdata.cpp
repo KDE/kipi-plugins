@@ -69,7 +69,8 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                                        .subs(QString(pluginVersion))
                                        .subs(QString(kipiplugins_version));
 
-    kDebug( 51001 ) << shortDesc.toString();
+    if (KGlobal::hasMainComponent())
+        kDebug( 51001 ) << shortDesc.toString().constData() << endl;
 
     // and set the string into the short description
     setShortDescription(shortDesc);
