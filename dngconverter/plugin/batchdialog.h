@@ -41,6 +41,7 @@ namespace KIPIDNGConverterPlugin
 class ActionData;
 class BatchDialogPriv;
 class CListViewItem;
+class DNGConverterAboutData;
 
 class BatchDialog : public KDialog
 {
@@ -49,7 +50,7 @@ Q_OBJECT
 
 public:
 
-    BatchDialog(KIPI::Interface* iface);
+    BatchDialog(KIPI::Interface* iface, DNGConverterAboutData *about);
     ~BatchDialog();
 
     void addItems(const KUrl::List& itemList);

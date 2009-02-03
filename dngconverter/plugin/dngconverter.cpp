@@ -26,6 +26,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
+#include <kicon.h>
 #include <kconfig.h>
 #include <kglobal.h>
 
@@ -60,7 +61,8 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    BatchDialog *converter = new BatchDialog(0);
+    aboutData.setProgramLogo(KIcon("dngconverter"));
+    BatchDialog *converter = new BatchDialog(0, &aboutData);
     app.setTopWidget(converter);
 
     KUrl::List urls;

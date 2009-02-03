@@ -117,10 +117,11 @@ public:
     DNGConverterAboutData *about;
 };
 
-BatchDialog::BatchDialog(KIPI::Interface* iface)
+BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData *about)
            : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
+    d->about = about;
 
     setButtons(Help | Default | Apply | Close | User1 | User2);
     setDefaultButton(KDialog::Close);
@@ -176,8 +177,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
     // About data and help button.
-
-    d->about = new DNGConverterAboutData;
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));

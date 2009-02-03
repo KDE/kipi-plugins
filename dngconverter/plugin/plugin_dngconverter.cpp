@@ -50,6 +50,7 @@
 
 // Local includes.
 
+#include "aboutdata.h"
 #include "batchdialog.h"
 
 using namespace KIPIDNGConverterPlugin;
@@ -120,7 +121,7 @@ void Plugin_DNGConverter::slotActivate()
     if (!images.isValid())
         return;
 
-    BatchDialog *converter = new BatchDialog(interface);
+    BatchDialog *converter = new BatchDialog(interface, new DNGConverterAboutData);
 
     KUrl::List urls = images.images();
     KUrl::List items;
