@@ -734,7 +734,7 @@ void SlideShowGL::showEndOfShow()
     QPainter p(&pix);
     p.setPen(Qt::white);
     p.setFont(fn);
-    p.drawText(20, 50, i18n("SlideShow Completed."));
+    p.drawText(20, 50, i18n("Slideshow Completed."));
     p.drawText(20, 100, i18n("Click To Exit..."));
 
     QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_advancedslideshow/KIPIicon.svg") );

@@ -146,7 +146,7 @@ SlideShowConfig::~SlideShowConfig ()
 
 void SlideShowConfig::readSettings()
 {
-    KConfigGroup grp = d->config->group("SlideShow Settings");
+    KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
 
     d->sharedData->opengl                = grp.readEntry("OpenGL", false);
     d->sharedData->delay                 = grp.readEntry("Delay", 1500);
@@ -214,7 +214,7 @@ void SlideShowConfig::saveSettings()
 
     d->sharedData->advancedPage->saveSettings();
 
-    KConfigGroup grp = d->config->group("SlideShow Settings");
+    KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
 
     grp.writeEntry("OpenGL", d->sharedData->opengl);
 

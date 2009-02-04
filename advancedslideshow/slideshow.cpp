@@ -1306,7 +1306,7 @@ void SlideShow::paintEvent( QPaintEvent * )
 
         p.setFont( fn );
         p.setPen( Qt::white );
-        p.drawText( 100, 100, i18n( "SlideShow Completed." ) );
+        p.drawText( 100, 100, i18n( "Slideshow Completed." ) );
         p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click To Exit..." ) );
 
         QSvgRenderer svgRenderer( KStandardDirs::locate( "data", "kipiplugin_advancedslideshow/KIPIicon.svg" ) );
