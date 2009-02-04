@@ -67,7 +67,7 @@ public:
 SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
         : KPageDialog(parent)
 {
-    setWindowTitle(i18n("SlideShow"));
+    setWindowTitle(i18n("Advanced Slideshow"));
 
     d = new SlideShowConfigPrivate();
     d->config = new KConfig("kipirc");
