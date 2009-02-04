@@ -49,7 +49,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)      # For DNGConverter: XMP SDK need Expat l
 MACRO_OPTIONAL_FIND_PACKAGE(Threads)    # For DNGConverter: DNG SDK need native threads support.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)    # For Htmlexport.
 MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)    # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For Slideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For AdvancedSlideshow and ImageViewer.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(Gpod)       # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
@@ -60,7 +60,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     MACRO_OPTIONAL_FIND_PACKAGE(Sane)  # For AcquireImages.
-    MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For Slideshow and ImageViewer.
+    MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(NOT WIN32)
@@ -250,10 +250,10 @@ ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
 IF(NOT WIN32 AND NOT APPLE)
 
     IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " SlideShow will be compiled.......... YES (optional)")
+        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. YES (optional)")
         MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
     ELSE(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " SlideShow will be compiled.......... NO  (optional - Look README file for more details about dependencies)")
+        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. NO  (optional - Look README file for more details about dependencies)")
         MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
@@ -266,10 +266,10 @@ IF(NOT WIN32 AND NOT APPLE)
 ELSE(NOT WIN32 AND NOT APPLE)
 
     IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " SlideShow will be compiled.......... YES (optional)")
+        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. YES (optional)")
         MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
     ELSE(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " SlideShow will be compiled.......... NO  (optional - Look README file for more details about dependencies)")
+        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. NO  (optional - Look README file for more details about dependencies)")
         MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
     ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
@@ -383,7 +383,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         # Plugins which depend on OpenGL
         IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
             # Under LINUX we need X11 library with OpenGL.
-            ADD_SUBDIRECTORY(slideshow)
+            ADD_SUBDIRECTORY(advancedslideshow)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
@@ -396,7 +396,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
         # Plugins which depend on OpenGL
         IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-            ADD_SUBDIRECTORY(slideshow)
+            ADD_SUBDIRECTORY(advancedslideshow)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
