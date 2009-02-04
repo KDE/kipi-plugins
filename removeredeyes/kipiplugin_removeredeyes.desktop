@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=RemoveRedEyes
+Name=Remove Red Eyes
 Name[de]=RoteAugenEntfernen
 Name[el]=Αφαίρεση κόκκινων ματιών
 Name[et]=Punasilmsuse eemaldamine
@@ -18,7 +18,7 @@ Name[th]=ปรับแก้ตาแดง
 Name[tr]=Kırmızı Gözleri Düzelt
 Name[x-test]=xxRemoveRedEyesxx
 Name[zh_CN]=去除红眼
-Comment=A tool to remove red eyes on image automatically
+Comment=A tool to remove red eyes automatically from images
 Comment[ca]=Una eina per a eliminar automàticament els ulls vermells de les imatges
 Comment[cs]=Nástroj pro automatické odstranění červených očí
 Comment[da]=Et værktøj til automatisk at fjerne røde øjne på billeder
