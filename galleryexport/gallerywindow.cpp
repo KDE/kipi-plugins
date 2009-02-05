@@ -379,14 +379,20 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     d->albumDict.clear();
     d->albumView->clear();
 
-//     typedef QList<GAlbum> GAlbumList;
-    QVector<int> ref_num_vect( albumList.size() );
+    int albumListSize = albumList.size();
+    QVector<int> ref_num_vect( albumListSize, 0 );
 
-    for (int i = 0; i < albumList.size(); ++i)
+    // fill ref_num_vect
+    for (int i = 0; i < albumListSize; ++i)
     {
         const GAlbum& album = albumList.at(i);
         ref_num_vect.insert( i, album.name.toInt() );
+    }
 
+    // fill QTreeWidget
+    for (int i = 0; i < albumListSize; ++i)
+    {
+        const GAlbum& album = albumList.at(i);
         int parentRefNum = album.parent_ref_num;
         if ( parentRefNum == 0 )
         {
@@ -400,19 +406,32 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         else
         {
             int n = ref_num_vect.indexOf( parentRefNum );
-            const GAlbum& parentAlbum = albumList.at(n);    // ERROR
-            QString parentTitle = parentAlbum.title;
-            QList<QTreeWidgetItem*> parentItemList = d->albumView->findItems(parentTitle, Qt::MatchExactly);
-
-            // This is done to try fixing bug 175928
-            if( parentItemList.size() > 0 )
+            if ( n != -1 )  // obviously it is not, anyway..
             {
-                QTreeWidgetItem *parentItem = parentItemList.at(0);
- 
-               QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+                const GAlbum& parentAlbum = albumList.at(n);
+                QString parentTitle = parentAlbum.title;
+                QList<QTreeWidgetItem*> parentItemList = d->albumView->findItems(parentTitle, Qt::MatchExactly);
+
+                if( parentItemList.size() > 0 )
+                {
+                    QTreeWidgetItem *parentItem = parentItemList.at(0);
+
+                    QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
+                    item->setText(0, album.title );
+                    item->setIcon(0, KIcon("inode-directory") );
+
+                    d->albumDict.insert(album.title, album);
+                }
+            }
+            else    
+            {
+                // this is the "impossible" case in which an album exists WITHOUT a parent..
+                // we store this album in Top Level Position..
+                QTreeWidgetItem *item = new QTreeWidgetItem();
                 item->setText(0, album.title );
                 item->setIcon(0, KIcon("inode-directory") );
 
+                d->albumView->addTopLevelItem(item);
                 d->albumDict.insert(album.title, album);
             }
         }

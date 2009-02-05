@@ -65,10 +65,12 @@ public:
         create_sub     = false;
     }
 
-    bool operator<(const GAlbum& rhs) const {
+    bool operator<(const GAlbum& rhs) const 
+    {
         if (parent_ref_num == rhs.parent_ref_num)
+        {
             return ref_num < rhs.ref_num;
-
+        }
         return parent_ref_num < rhs.parent_ref_num;
     }
 
