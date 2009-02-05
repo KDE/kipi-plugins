@@ -34,6 +34,7 @@ Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
 
 PLUGINS MAINTAINERS
 Acquire images          : Gilles Caulier and Kare Sars
+Advanced Slideshow      : Valerio Fuoglio
 Calendar                : Orgad Shaneh
 DngConverter            : Gilles Caulier
 Facebook import/export  : Luka Renko
@@ -51,7 +52,6 @@ Raw converter           : Gilles Caulier and Marcel Wiesweg
 RemoveRedEyes           : Andi Clemens
 Sendimages              : Gilles Caulier
 Simpleviewer export     : Gilles Caulier
-Slideshow               : Valerio Fuoglio
 Smug import/export      : Luka Renko
 Time adjust             : Gilles Caulier
 Wallpaper               : Laurent Montel
