@@ -1,7 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Remove Red Eyes
+Name[ja]=赤目修正
+Name[pt]=Remoção de Olhos Vermelhos
+Name[pt_BR]=Remover olhos vermelhos
+Name[uk]=Вилучення «Червоних очей»
+Name[x-test]=xxRemove Red Eyesxx
 Comment=A tool to remove red eyes automatically from images
+Comment[ja]=画像の赤目を自動的に修正するツール
+Comment[pt]=Uma ferramenta para remover automaticamente os olhos vermelhos das imagens
+Comment[pt_BR]=Uma ferramenta para remover automaticamente os olhos vermelhos de imagens
+Comment[uk]=Інструмент для автоматичного вилучення наслідків ефекту «червоних очей» з зображень
+Comment[x-test]=xxA tool to remove red eyes automatically from imagesxx
 
 Icon=
 ServiceTypes=KIPI/Plugin
