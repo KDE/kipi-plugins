@@ -67,7 +67,7 @@ signals:
 
 public:
 
-    WorkerThread(QObject* parent);
+    WorkerThread(QObject* parent, bool updateFileTimeStamp);
     ~WorkerThread();
 
     void setRunType(int);

@@ -33,6 +33,7 @@
 
 // LibKExiv2 includes.
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes.
@@ -53,26 +54,30 @@ struct WorkerThreadPriv
 {
     WorkerThreadPriv()
     {
-        runtype    = WorkerThread::Testrun;
-        cancel     = false;
-        saveMethod = 0;
+        runtype             = WorkerThread::Testrun;
+        cancel              = false;
+        updateFileTimeStamp = false;
+        saveMethod          = 0;
     }
 
-    int                 runtype;
+    bool                updateFileTimeStamp;
     bool                cancel;
+    int                 runtype;
 
-    RemovalSettings     settings;
-    SaveMethodAbstract* saveMethod;
-
-    KUrl::List          urls;
     QString             maskPreviewFile;
     QString             correctedPreviewFile;
     QString             originalPreviewFile;
+
+    KUrl::List          urls;
+
+    RemovalSettings     settings;
+    SaveMethodAbstract* saveMethod;
 };
 
-WorkerThread::WorkerThread(QObject* parent)
+WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
             : QThread(parent), d(new WorkerThreadPriv)
 {
+    d->updateFileTimeStamp = updateFileTimeStamp;
 }
 
 WorkerThread::~ WorkerThread()
@@ -128,6 +133,9 @@ void WorkerThread::run()
         {
             // backup metatdata
             KExiv2Iface::KExiv2 meta;
+#if KEXIV2_VERSION >= 0x000600
+            meta.setUpdateFileTimeStamp(d->updateFileTimeStamp);
+#endif
             meta.load(url.path());
 
             // check if custom keyword should be added

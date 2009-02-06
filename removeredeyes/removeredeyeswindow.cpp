@@ -108,11 +108,11 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     setDefaultButton(Close);
     setModal(false);
 
-    d->busy          = false;
-
-    d->thread        = new WorkerThread(this);
-    d->runtype       = WorkerThread::Testrun;
     d->interface     = interface;
+    d->busy          = false;
+    d->thread        = new WorkerThread(this,
+                                        d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    d->runtype       = WorkerThread::Testrun;
     d->tabWidget     = new KTabWidget;
 
     d->imageList     = new MyImagesList(interface);
@@ -135,7 +135,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
                                             KAboutData::License_GPL,
                                             ki18n("A plugin to automatically "
                                                   "detect and remove red-eyes"),
-                                            ki18n("(c) 2008, Andi Clemens"));
+                                            ki18n("(c) 2008-2009, Andi Clemens"));
 
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                               "andi dot clemens at gmx dot net");
