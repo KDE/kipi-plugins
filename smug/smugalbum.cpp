@@ -57,37 +57,35 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 400);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
-
     // ------------------------------------------------------------------------
     QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for new SmugMug album."));
 
-    QFormLayout* albumBoxLayout = new QFormLayout(albumBox);
-    m_titleEdt          = new KLineEdit(albumBox);
+    m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(
         i18n("Title of the album that will be created (required)."));
 
-    m_categCoB          = new KComboBox(albumBox);
+    m_categCoB          = new KComboBox;
     m_categCoB->setEditable(false);
     m_categCoB->setWhatsThis(
         i18n("Category of the album that will be created (required)."));
 
-    m_subCategCoB       = new KComboBox(albumBox);
+    m_subCategCoB       = new KComboBox;
     m_subCategCoB->setEditable(false);
     m_subCategCoB->setWhatsThis(
         i18n("Subcategory of the album that will be created (optional)."));
 
-    m_descEdt           = new KTextEdit(albumBox);
+    m_descEdt           = new KTextEdit;
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    m_templateCoB      = new KComboBox(albumBox);
+    m_templateCoB      = new KComboBox;
     m_templateCoB->setEditable(false);
     m_templateCoB->setWhatsThis(
         i18n("Album template for new album (optional)."));
 
+    QFormLayout* albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18n("Category:"), m_categCoB);
     albumBoxLayout->addRow(i18n("Subcategory:"), m_subCategCoB);
@@ -96,43 +94,49 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
+    albumBox->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
 
     m_privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
     m_privBox->setWhatsThis(
         i18n("These are security and privacy settings for new SmugMug album."));
-    QFormLayout* privBoxLayout = new QFormLayout(m_privBox);
 
-    QHBoxLayout* radioLayout = new QHBoxLayout(m_privBox);
-    m_publicRBtn        = new QRadioButton(i18n("Public"), m_privBox);
+    m_publicRBtn        = new QRadioButton(i18n("Public"));
     m_publicRBtn->setChecked(true);
     m_publicRBtn->setWhatsThis(
         i18n("Public album is listed on your public SmugMug page."));
-    m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"), m_privBox);
+    m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"));
     m_unlistedRBtn->setWhatsThis(
         i18n("Unlisted album is only accessible via URL."));
+
+    QHBoxLayout* radioLayout = new QHBoxLayout;
     radioLayout->addWidget(m_publicRBtn);
     radioLayout->addWidget(m_unlistedRBtn);
     
-    m_passwdEdt         = new KLineEdit(m_privBox);
+    m_passwdEdt         = new KLineEdit;
     m_passwdEdt->setWhatsThis(
         i18n("Require password to access the album (optional)."));
 
-    m_hintEdt           = new KLineEdit(m_privBox);
+    m_hintEdt           = new KLineEdit;
     m_hintEdt->setWhatsThis(
         i18n("Password hint to present to users on the password prompt (optional)."));
+
+    QFormLayout* privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
     privBoxLayout->addRow(i18n("Password:"), m_passwdEdt);
     privBoxLayout->addRow(i18n("Password Hint:"), m_hintEdt);
     privBoxLayout->setSpacing(KDialog::spacingHint());
     privBoxLayout->setMargin(KDialog::spacingHint());
+    m_privBox->setLayout(privBoxLayout);
 
     // ------------------------------------------------------------------------
+    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->addWidget(albumBox);
     mainLayout->addWidget(m_privBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
+    mainWidget->setLayout(mainLayout);
 
     // ------------------------------------------------------------------------
 }
