@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Facebook Import/Export
 Name[de]=Facebook-Import/Export
+Name[el]=Εισαγωγέας/εξαγωγέας Facebook
 Name[et]=Facebooki import/eksport
 Name[ga]=Iompórtáil/Easpórtáil Facebook
 Name[gl]=Importación/Exportación a Facebook
@@ -15,6 +16,7 @@ Name[x-test]=xxFacebook Import/Exportxx
 Name[zh_CN]=Facebook 导入/导出
 Comment=A tool to import/export images to/from a remote Facebook web service
 Comment[de]=Ein Werkzeug, um Bilder zu dem Facebook-Web-Service zu im bzw. exportieren.
+Comment[el]=Ένα εργαλείο για την εισαγωγή/εξαγωγή εικόνων από/σε μια υπηρεσία ιστού Facebook
 Comment[et]=Tööriist piltide importimiseks/eksportimiseks Facebooki veebiteenusest/veebiteenusesse
 Comment[gl]=Un útil para importar ou exportar imaxes a un servizo web Facebook
 Comment[it]=Uno strumento per importare ed esportare immagini da e al servizio Web remoto Facebook
