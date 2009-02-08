@@ -53,20 +53,19 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     mainWidget->setMinimumSize(400, 300);
 
     // ------------------------------------------------------------------------
-    QFormLayout* albumBoxLayout = new QFormLayout(mainWidget);
-    m_titleEdt          = new KLineEdit(mainWidget);
+    m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(
         i18n("Title of the album that will be created (required)."));
 
-    m_locEdt            = new KLineEdit(mainWidget);
+    m_locEdt            = new KLineEdit;
     m_locEdt->setWhatsThis(
         i18n("Location of the album that will be created (optional)."));
 
-    m_descEdt           = new KTextEdit(mainWidget);
+    m_descEdt           = new KTextEdit;
     m_descEdt->setWhatsThis(
         i18n("Description of the album that will be created (optional)."));
 
-    m_privacyCoB        = new KComboBox(mainWidget);
+    m_privacyCoB        = new KComboBox;
     m_privacyCoB->setEditable(false);
     m_privacyCoB->setWhatsThis(
         i18n("Privacy setting of the album that will be created (required)."));
@@ -79,6 +78,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     m_privacyCoB->addItem(KIcon("applications-internet"),
                           i18n("Everyone"), FB_EVERYONE);
 
+    QFormLayout* albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
     albumBoxLayout->addRow(i18n("Location:"), m_locEdt);
     albumBoxLayout->addRow(i18n("Description:"), m_descEdt);
@@ -86,6 +86,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
+    mainWidget->setLayout(albumBoxLayout);
 
     // ------------------------------------------------------------------------
 }
