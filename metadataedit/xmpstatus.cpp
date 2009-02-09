@@ -92,7 +92,7 @@ XMPStatus::XMPStatus(QWidget* parent)
     d->nicknameCheck = new QCheckBox(i18n("Nickname:"), this);
     d->nicknameEdit  = new KLineEdit(this);
     d->nicknameEdit->setClearButtonShown(true);
-    d->nicknameEdit->setWhatsThis(i18n("A short informal name for the ressource."));
+    d->nicknameEdit->setWhatsThis(i18n("A short informal name for the resource."));
 
     // --------------------------------------------------------
 
