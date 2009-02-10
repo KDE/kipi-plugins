@@ -42,6 +42,7 @@ public:
     enum StorageMode
     {
         Subfolder=0,
+        Prefix,
         Suffix,
         Overwrite
     };
@@ -51,6 +52,9 @@ public:
 
     int storageMode() const;
     void setStorageMode(int mode);
+
+    QString prefix() const;
+    void setPrefix(const QString& prefix);
 
     QString suffix() const;
     void setSuffix(const QString& suffix);

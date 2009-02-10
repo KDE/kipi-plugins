@@ -48,6 +48,7 @@ struct StorageSettingsBoxPriv
     StorageSettingsBoxPriv()
     {
         storageGroup        = 0;
+        prefixLineEdit      = 0;
         suffixLineEdit      = 0;
         subfolderLineEdit   = 0;
     }
@@ -57,6 +58,7 @@ struct StorageSettingsBoxPriv
     QCheckBox*      keywordCB;
 
     KLineEdit*      keywordLineEdit;
+    KLineEdit*      prefixLineEdit;
     KLineEdit*      suffixLineEdit;
     KLineEdit*      subfolderLineEdit;
 };
@@ -71,6 +73,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
             "<p><ul>"
             "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
             "under the current album path.</li>"
+            "<li><b>Prefix:</b> A custom prefix will be added to the corrected image.</li>"
             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
             "</ul></p>"
@@ -93,13 +96,20 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
                                    "in a subfolder under the current image album path."));
     d->storageGroup->addButton(subfolderMode, Subfolder);
 
-    QRadioButton* suffixMode = new QRadioButton(i18n("Add s&uffix to filename"));
+    QRadioButton* prefixMode = new QRadioButton(i18n("Add &prefix"));
+    prefixMode->setToolTip(i18n("If checked, a custom prefix will be added to the corrected file."));
+    d->storageGroup->addButton(prefixMode, Prefix);
+
+    QRadioButton* suffixMode = new QRadioButton(i18n("Add s&uffix"));
     suffixMode->setToolTip(i18n("If checked, a custom suffix will be added to the corrected file."));
     d->storageGroup->addButton(suffixMode, Suffix);
 
     QRadioButton* overwriteMode = new QRadioButton(i18n("&Overwrite original files"));
     overwriteMode->setToolTip(i18n("If checked, all original images will be replaced."));
     d->storageGroup->addButton(overwriteMode, Overwrite);
+
+    d->prefixLineEdit = new KLineEdit;
+    d->prefixLineEdit->setToolTip(i18n("Enter the name of the prefix here..."));
 
     d->suffixLineEdit = new KLineEdit;
     d->suffixLineEdit->setToolTip(i18n("Enter the name of the suffix here..."));
@@ -118,11 +128,13 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     QGridLayout* correctionGroupLayout = new QGridLayout;
     correctionGroupLayout->addWidget(subfolderMode,         0, 0, 1, 1);
     correctionGroupLayout->addWidget(d->subfolderLineEdit,  0, 2, 1, 1);
-    correctionGroupLayout->addWidget(suffixMode,            1, 0, 1, 1);
-    correctionGroupLayout->addWidget(d->suffixLineEdit,     1, 2, 1, 1);
-    correctionGroupLayout->addWidget(overwriteMode,         2, 0, 1,-1);
-    correctionGroupLayout->addWidget(d->keywordCB,          3, 0, 1, 1);
-    correctionGroupLayout->addWidget(d->keywordLineEdit,    3, 2, 1, 1);
+    correctionGroupLayout->addWidget(prefixMode,            1, 0, 1, 1);
+    correctionGroupLayout->addWidget(d->prefixLineEdit,     1, 2, 1, 1);
+    correctionGroupLayout->addWidget(suffixMode,            2, 0, 1, 1);
+    correctionGroupLayout->addWidget(d->suffixLineEdit,     2, 2, 1, 1);
+    correctionGroupLayout->addWidget(overwriteMode,         3, 0, 1,-1);
+    correctionGroupLayout->addWidget(d->keywordCB,          4, 0, 1, 1);
+    correctionGroupLayout->addWidget(d->keywordLineEdit,    4, 2, 1, 1);
     setLayout(correctionGroupLayout);
 
     // ----------------------------------------------------------------
@@ -135,7 +147,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     // ----------------------------------------------------------------
 
-    setStorageMode(Suffix);
+    setStorageMode(Subfolder);
     keywordToggled(false);
 }
 
@@ -146,24 +158,25 @@ StorageSettingsBox::~StorageSettingsBox()
 
 void StorageSettingsBox::buttonClicked(int mode)
 {
+    d->subfolderLineEdit->setEnabled(false);
+    d->prefixLineEdit->setEnabled(false);
+    d->suffixLineEdit->setEnabled(false);
+
     switch (mode)
     {
+
         case Subfolder:
             d->subfolderLineEdit->setEnabled(true);
-            d->suffixLineEdit->setEnabled(false);
+            break;
+
+        case Prefix:
+            d->prefixLineEdit->setEnabled(true);
             break;
 
         case Suffix:
             d->suffixLineEdit->setEnabled(true);
-            d->subfolderLineEdit->setEnabled(false);
-            break;
-
-        case Overwrite:
-            d->subfolderLineEdit->setEnabled(false);
-            d->suffixLineEdit->setEnabled(false);
             break;
     }
-
     emit settingsChanged();
 }
 
@@ -176,6 +189,16 @@ void StorageSettingsBox::setStorageMode(int mode)
 {
     d->storageGroup->button(mode)->setChecked(true);
     buttonClicked(mode);
+}
+
+QString StorageSettingsBox::prefix() const
+{
+    return d->prefixLineEdit->text();
+}
+
+void StorageSettingsBox::setPrefix(const QString& prefix)
+{
+    d->prefixLineEdit->setText(prefix);
 }
 
 QString StorageSettingsBox::suffix() const

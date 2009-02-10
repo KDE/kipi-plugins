@@ -40,6 +40,9 @@ SaveMethodAbstract* SaveMethodFactory::create(int type)
         case StorageSettingsBox::Subfolder:
             saveMethod = new SaveSubfolder();
             break;
+        case StorageSettingsBox::Prefix:
+            saveMethod = new SavePrefix();
+            break;
         case StorageSettingsBox::Suffix:
             saveMethod = new SaveSuffix();
             break;
