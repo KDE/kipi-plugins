@@ -39,7 +39,7 @@ class SaveSubfolder : public SaveMethodAbstract
 {
 public:
 
-    QString savePath(const QString& path, const QString& extra);
+    QString savePath(const QString& path, const QString& extra) const;
 };
 
 // -----------------------------------------------
@@ -48,7 +48,7 @@ class SavePrefix : public SaveMethodAbstract
 {
 public:
 
-    QString savePath(const QString& path, const QString& extra);
+    QString savePath(const QString& path, const QString& extra) const;
 };
 
 // -----------------------------------------------
@@ -57,7 +57,7 @@ class SaveSuffix : public SaveMethodAbstract
 {
 public:
 
-    QString savePath(const QString& path, const QString& extra);
+    QString savePath(const QString& path, const QString& extra) const;
 };
 
 // -----------------------------------------------
@@ -66,7 +66,7 @@ class SaveOverwrite : public SaveMethodAbstract
 {
 public:
 
-    QString savePath(const QString& path, const QString& extra);
+    QString savePath(const QString& path, const QString& extra) const;
 };
 
 // -----------------------------------------------
