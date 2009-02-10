@@ -58,17 +58,17 @@ public:
 
     int  redEyes() const;
 
-    void setScaleFactor(double);
     double scaleFactor() const;
+    void   setScaleFactor(double);
 
-    void setMinRoundness(double);
     double minRoundness() const;
+    void   setMinRoundness(double);
 
+    int  neighborGroups() const;
     void setNeighborGroups(int);
-    int neighborGroups() const;
 
+    int  minBlobsize() const;
     void setMinBlobsize(int);
-    int minBlobsize() const;
 
 private:
 
