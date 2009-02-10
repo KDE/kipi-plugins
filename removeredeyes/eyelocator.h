@@ -25,6 +25,8 @@
 #ifndef EYELOCATOR_H
 #define EYELOCATOR_H
 
+class QString;
+
 namespace KIPIRemoveRedEyesPlugin
 {
 
@@ -35,7 +37,7 @@ class EyeLocator
 
 public:
 
-    enum FileType
+    enum PreviewFileType
     {
         Final = 0,
         OriginalPreview,
@@ -45,14 +47,14 @@ public:
 
 public:
 
-    EyeLocator(const char* filename, const char* clsFilename);
+    EyeLocator(const QString& filename, const QString& clsFilename);
     ~EyeLocator();
 
 public:
 
     void startCorrection(bool scaleDown);
 
-    void saveImage(const char* path, FileType type);
+    void saveImage(const QString& path, PreviewFileType type);
 
     int  redEyes() const;
 

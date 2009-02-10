@@ -107,9 +107,8 @@ void WorkerThread::run()
         if (!url.isLocalFile())
             break;
 
-        // we need to convert the QString to const char* for OpenCV to work
-        QByteArray src = QFile::encodeName(url.path());
-        QByteArray cls = QFile::encodeName(d->settings.classifierFile);
+        QString src = url.path();
+        QString cls = d->settings.classifierFile;
 
         bool scaleDown = false;
 
@@ -117,7 +116,7 @@ void WorkerThread::run()
             scaleDown = true;
 
         // The EyeLocator object will detect and remove the red-eye effect
-        EyeLocator loc(src.data(), cls.data());
+        EyeLocator loc(src, cls);
         loc.setScaleFactor(d->settings.scaleFactor);
         loc.setNeighborGroups(d->settings.neighborGroups);
         loc.setMinRoundness(d->settings.minRoundness);
@@ -146,8 +145,8 @@ void WorkerThread::run()
             }
 
             // save image
-            QByteArray dest = QFile::encodeName(d->saveMethod->savePath(url.path(), d->settings.extraName));
-            loc.saveImage(dest.data(), EyeLocator::Final);
+            QString dest = d->saveMethod->savePath(url.path(), d->settings.extraName);
+            loc.saveImage(dest, EyeLocator::Final);
 
             // restore metadata
             meta.save(d->saveMethod->savePath(url.path(), d->settings.extraName));
@@ -155,14 +154,10 @@ void WorkerThread::run()
 
         if (d->runtype == Preview)
         {
-            QByteArray tmpOriginal  = QFile::encodeName(d->originalPreviewFile);
-            QByteArray tmpCorrected = QFile::encodeName(d->correctedPreviewFile);
-            QByteArray tmpMask      = QFile::encodeName(d->maskPreviewFile);
-
             // save preview files in KDE temp dir
-            loc.saveImage(tmpOriginal.data(),   EyeLocator::OriginalPreview);
-            loc.saveImage(tmpCorrected.data(),  EyeLocator::CorrectedPreview);
-            loc.saveImage(tmpMask.data(),       EyeLocator::MaskPreview);
+            loc.saveImage(d->originalPreviewFile,  EyeLocator::OriginalPreview);
+            loc.saveImage(d->correctedPreviewFile, EyeLocator::CorrectedPreview);
+            loc.saveImage(d->maskPreviewFile,      EyeLocator::MaskPreview);
         }
 
         int eyes = loc.redEyes();

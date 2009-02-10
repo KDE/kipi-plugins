@@ -24,6 +24,12 @@
 
 #include "eyelocator.h"
 
+// Qt includes.
+
+#include <QByteArray>
+#include <QFile>
+#include <QString>
+
 // OpenCV includes.
 
 #include <BlobResult.h>
@@ -260,11 +266,15 @@ void EyeLocatorPriv::allocateBuffers()
 
 // --------------------------------------------------------------------
 
-EyeLocator::EyeLocator(const char* filename, const char* clsFilename)
+EyeLocator::EyeLocator(const QString& filename, const QString& clsFilename)
           : d(new EyeLocatorPriv)
 {
-    d->original = cvLoadImage(filename);
-    d->classifierFile = clsFilename;
+    // convert QString to const char*
+    QByteArray fileName    = QFile::encodeName(filename);
+    QByteArray clsFileName = QFile::encodeName(clsFilename);
+
+    d->original            = cvLoadImage(fileName.data());
+    d->classifierFile      = clsFileName.data();
 }
 
 EyeLocator::~EyeLocator()
@@ -323,31 +333,34 @@ int EyeLocator::redEyes() const
     return d->red_eyes;
 }
 
-void EyeLocator::saveImage(const char * path, FileType type)
+void EyeLocator::saveImage(const QString& path, PreviewFileType type)
 {
+    QByteArray dest      = QFile::encodeName(path);
+    const char* savePath = dest.data();
+
     switch (type)
     {
         case Final:
         {
-            cvSaveImage(path, d->original);
+            cvSaveImage(savePath, d->original);
             break;
         }
 
         case OriginalPreview:
         {
-            cvSaveImage(path, d->temporary);
+            cvSaveImage(savePath, d->temporary);
             break;
         }
 
         case CorrectedPreview:
         {
-            cvSaveImage(path, d->original);
+            cvSaveImage(savePath, d->original);
             break;
         }
 
         case MaskPreview:
         {
-            cvSaveImage(path, d->redMask);
+            cvSaveImage(savePath, d->redMask);
             break;
         }
     }
