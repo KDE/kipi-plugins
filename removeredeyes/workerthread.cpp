@@ -33,19 +33,17 @@
 
 // LibKExiv2 includes.
 
-#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
+#include <libkexiv2/version.h>
 
 // Local includes.
 
+#include "SaveMethods.h"
 #include "eyelocator.h"
 #include "removalsettings.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthreaddata.h"
-
-#include "SaveMethodFactory.h"
-#include "SaveMethods.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
