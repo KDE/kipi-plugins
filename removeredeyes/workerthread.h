@@ -32,6 +32,8 @@
 
 #include <kurl.h>
 
+class QString;
+
 namespace KIPIRemoveRedEyesPlugin
 {
 

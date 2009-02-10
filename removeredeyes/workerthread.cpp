@@ -26,10 +26,7 @@
 
 // Qt includes.
 
-#include <QByteArray>
-#include <QDir>
-#include <QFile>
-#include <QFileInfo>
+#include <QString>
 
 // LibKExiv2 includes.
 
