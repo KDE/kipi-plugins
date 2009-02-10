@@ -248,9 +248,8 @@ void RemoveRedEyesWindow::readSettings()
 
     d->settings.storageMode           = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
     d->settings.unprocessedMode       = group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask);
-    d->settings.subfolderName         = group.readEntry("Subfolder Name", "corrected");
+    d->settings.extraName             = group.readEntry("Extra Name", "corrected");
     d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
-    d->settings.suffixName            = group.readEntry("Filename Suffix", "_corr");
     d->settings.minBlobsize           = group.readEntry("Minimum Blob Size", 10);
     d->settings.minRoundness          = group.readEntry("Minimum Roundness", 3.2);
     d->settings.neighborGroups        = group.readEntry("Neighbor Groups", 2);
@@ -273,8 +272,7 @@ void RemoveRedEyesWindow::writeSettings()
     grp.writeEntry("Simple Mode",               d->settings.simpleMode);
     grp.writeEntry("Storage Mode",              d->settings.storageMode);
     grp.writeEntry("Unprocessed Mode",          d->settings.unprocessedMode);
-    grp.writeEntry("Subfolder Name",            d->settings.subfolderName);
-    grp.writeEntry("Filename Suffix",           d->settings.suffixName);
+    grp.writeEntry("Extra Name",                d->settings.extraName);
 
     grp.writeEntry("Minimum Blob Size",         d->settings.minBlobsize);
     grp.writeEntry("Minimum Roundness",         d->settings.minRoundness);

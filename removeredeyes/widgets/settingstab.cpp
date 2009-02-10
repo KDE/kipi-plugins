@@ -126,8 +126,7 @@ void SettingsTab::prepareSettings()
 {
     d->settings.storageMode            = d->storageSettingsBox->storageMode();
     d->settings.unprocessedMode        = d->unprocessedSettingsBox->handleMode();
-    d->settings.subfolderName          = d->storageSettingsBox->subfolder();
-    d->settings.suffixName             = d->storageSettingsBox->suffix();
+    d->settings.extraName              = d->storageSettingsBox->extra();
     d->settings.addKeyword             = d->storageSettingsBox->addKeyword();
     d->settings.keywordName            = d->storageSettingsBox->keyword();
 }
@@ -143,8 +142,7 @@ void SettingsTab::loadSettings(RemovalSettings newSettings)
 
 void SettingsTab::applySettings()
 {
-    d->storageSettingsBox->setSuffix(d->settings.suffixName);
-    d->storageSettingsBox->setSubfolder(d->settings.subfolderName);
+    d->storageSettingsBox->setExtra(d->settings.extraName);
     d->storageSettingsBox->setStorageMode(d->settings.storageMode);
     d->storageSettingsBox->setAddKeyword(d->settings.addKeyword);
     d->storageSettingsBox->setKeyword(d->settings.keywordName);

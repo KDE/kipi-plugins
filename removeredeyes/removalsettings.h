@@ -73,8 +73,7 @@ class RemovalSettings
             kDebug(51000) << "unprocessedMode       = " << unprocessedMode << endl;
             kDebug(51000) << "simpleMode            = " << simpleMode << endl;
             kDebug(51000) << "classifierFile        = " << classifierFile << endl;
-            kDebug(51000) << "subfolderName         = " << subfolderName << endl;
-            kDebug(51000) << "suffixName            = " << suffixName << endl;
+            kDebug(51000) << "extraName             = " << extraName << endl;
             kDebug(51000) << "keywordName           = " << keywordName << endl;
         };
 
@@ -92,8 +91,7 @@ class RemovalSettings
         int         simpleMode;
 
         QString     classifierFile;
-        QString     subfolderName;
-        QString     suffixName;
+        QString     extraName;
         QString     keywordName;
     };
 

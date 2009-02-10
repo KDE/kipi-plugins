@@ -39,7 +39,6 @@ public:
     SaveMethodAbstract() {};
     virtual ~SaveMethodAbstract() {};
 
-    virtual QString savePath(const QString& path) = 0;
     virtual QString savePath(const QString& path, const QString& extra) = 0;
 };
 

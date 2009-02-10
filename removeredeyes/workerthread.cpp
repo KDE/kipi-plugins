@@ -148,11 +148,11 @@ void WorkerThread::run()
             }
 
             // save image
-            QByteArray dest = QFile::encodeName(d->saveMethod->savePath(url.path()));
+            QByteArray dest = QFile::encodeName(d->saveMethod->savePath(url.path(), d->settings.extraName));
             loc.saveImage(dest.data(), EyeLocator::Final);
 
             // restore metadata
-            meta.save(d->saveMethod->savePath(url.path()));
+            meta.save(d->saveMethod->savePath(url.path(), d->settings.extraName));
         }
 
         if (d->runtype == Preview)

@@ -53,14 +53,8 @@ public:
     int storageMode() const;
     void setStorageMode(int mode);
 
-    QString prefix() const;
-    void setPrefix(const QString& prefix);
-
-    QString suffix() const;
-    void setSuffix(const QString& suffix);
-
-    QString subfolder() const;
-    void setSubfolder(const QString& subfolder);
+    QString extra() const;
+    void setExtra(const QString& extra);
 
     QString keyword() const;
     void setKeyword(const QString& keyword);
