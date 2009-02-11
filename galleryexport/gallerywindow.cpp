@@ -100,7 +100,9 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     // 1st. QListWidget albumView
     albumView = new QTreeWidget;
-    albumView->setHeaderLabel(i18n("albums"));
+    QStringList labels;
+    labels << i18n("albums") << i18n("ID");
+    albumView->setHeaderLabels(labels);
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. GroupBox optionBox
@@ -294,7 +296,6 @@ void GalleryWindow::readSettings()
 }
 
 
-
 void GalleryWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
@@ -327,7 +328,6 @@ void GalleryWindow::slotDoLogin()
 }
 
 
-
 void GalleryWindow::slotLoginFailed(const QString& msg)
 {
     if (KMessageBox::warningYesNo(this,
@@ -348,7 +348,6 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
 }
 
 
-
 void GalleryWindow::slotBusy(bool val)
 {
     if (val)
@@ -366,6 +365,7 @@ void GalleryWindow::slotBusy(bool val)
     }
 }
 
+
 void GalleryWindow::slotError(const QString& msg)
 {
     m_progressDlg->hide();
@@ -373,71 +373,67 @@ void GalleryWindow::slotError(const QString& msg)
 }
 
 
-
+// FIXME
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 {
     d->albumDict.clear();
     d->albumView->clear();
 
-    int albumListSize = albumList.size();
-    QVector<int> ref_num_vect( albumListSize, 0 );
-
-    // fill ref_num_vect
-    for (int i = 0; i < albumListSize; ++i)
-    {
-        const GAlbum& album = albumList.at(i);
-        ref_num_vect.insert( i, album.name.toInt() );
-    }
+    // album work list
+    QList<GAlbum> workList(albumList);
+    QList<QTreeWidgetItem *> parentItemList;
 
     // fill QTreeWidget
-    for (int i = 0; i < albumListSize; ++i)
+    while( !workList.isEmpty() ) 
     {
-        const GAlbum& album = albumList.at(i);
+        // the album to work on
+        GAlbum album = workList.takeFirst();
+
         int parentRefNum = album.parent_ref_num;
-        if ( parentRefNum == 0 )
+        if ( parentRefNum == 0 ) 
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, album.title );
             item->setIcon(0, KIcon("inode-directory") );
+            item->setText(1, album.name );
+//             kWarning() << "adding album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ;
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
-        }
-        else
+            parentItemList << item;
+        } 
+        else 
         {
-            int n = ref_num_vect.indexOf( parentRefNum );
-            if ( n != -1 )  // obviously it is not, anyway..
+            QTreeWidgetItem *parentItem;
+            bool found = false;
+            int i = 0;
+
+            while( !found && i < parentItemList.size() )
             {
-                const GAlbum& parentAlbum = albumList.at(n);
-                QString parentTitle = parentAlbum.title;
-                QList<QTreeWidgetItem*> parentItemList = d->albumView->findItems(parentTitle, Qt::MatchExactly);
-
-                if( parentItemList.size() > 0 )
+                parentItem = parentItemList.at(i);
+                if( parentItem->text(1) == QString::number(parentRefNum) )
                 {
-                    QTreeWidgetItem *parentItem = parentItemList.at(0);
-
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, album.title );
                     item->setIcon(0, KIcon("inode-directory") );
+                    item->setText(1, album.name );
+//                     kWarning() << "adding album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ; 
 
                     d->albumDict.insert(album.title, album);
+                    parentItemList << item;
+                    found = true;
                 }
+                i++;
             }
-            else    
-            {
-                // this is the "impossible" case in which an album exists WITHOUT a parent..
-                // we store this album in Top Level Position..
-                QTreeWidgetItem *item = new QTreeWidgetItem();
-                item->setText(0, album.title );
-                item->setIcon(0, KIcon("inode-directory") );
 
-                d->albumView->addTopLevelItem(item);
-                d->albumDict.insert(album.title, album);
+            if ( i == parentItemList.size() )
+            {
+                workList.append(album);
+//                 kWarning() << "WARNING: Appending album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ; 
             }
         }
     }
 }
-
 
 
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
@@ -466,7 +462,6 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 }
 
 
-
 void GalleryWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
@@ -493,14 +488,6 @@ void GalleryWindow::slotAlbumSelected()
         }
     }
 }
-
-
-// FIXME reenable me! yeah..
-// void GalleryWindow::slotOpenPhoto(const KUrl& url)
-// {
-//     new KRun(url, this);
-// }
-
 
 
 void GalleryWindow::slotNewAlbum()
@@ -595,7 +582,6 @@ void GalleryWindow::slotNewAlbum()
 }
 
 
-
 void GalleryWindow::slotAddPhoto()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
@@ -660,13 +646,13 @@ void GalleryWindow::slotAddPhotoNext()
         m_progressDlg->show();
 }
 
+
 void GalleryWindow::slotAddPhotoSucceeded()
 {
     m_uploadCount++;
     m_progressDlg->setValue(m_uploadCount);
     slotAddPhotoNext();
 }
-
 
 
 void GalleryWindow::slotAddPhotoFailed(const QString& msg)
@@ -686,7 +672,6 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 }
 
 
-
 void GalleryWindow::slotAddPhotoCancel()
 {
     m_progressDlg->reset();
@@ -694,6 +679,7 @@ void GalleryWindow::slotAddPhotoCancel()
 
     m_talker->cancel();
 }
+
 
 void GalleryWindow::slotEnableSpinBox(int n)
 {
@@ -712,8 +698,10 @@ void GalleryWindow::slotEnableSpinBox(int n)
     d->dimensionSpinBox->setEnabled(b);
 }
 
+
 void GalleryWindow::slotSettings()
 {
+    // TODO: reload albumlist if OK slot used.
     GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
     dlg.exec();
 }
