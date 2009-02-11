@@ -74,14 +74,15 @@ public:
         return parent_ref_num < rhs.parent_ref_num;
     }
 
-    int                ref_num;
-    int                parent_ref_num;
-    QString            name;
-    QString            parentName;
-    QString            title;
-    QString            summary;
-    QString            baseurl;
+    int                ref_num;         // album reference number
+    int                parent_ref_num;  // parent's album reference number
+    QString            name;            // ?
+    QString            parentName;      // ?
+    QString            title;           // album title
+    QString            summary;         // album summary
+    QString            baseurl;         // album partial (gallery) URL
 
+    // permissions
     bool               add;
     bool               write;
     bool               del_item;
