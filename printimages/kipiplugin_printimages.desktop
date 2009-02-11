@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Print images
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_printimages
+X-KIPI-MergeMenu=true
+author=Angelo Naselli, anaselli@linux.it
