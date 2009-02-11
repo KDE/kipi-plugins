@@ -221,6 +221,7 @@ namespace KIPIPrintImagesPlugin
       // trying to fix size at the moment
       // QImage::scaled bug? i can't see what manual says for Qt::KeepAspectRatio,
       // calculating new viewportSize
+#ifdef not_def
       int iW=image.size().width();
       int iH=image.size().height();
       int vW=rect.size().width();
@@ -239,7 +240,22 @@ namespace KIPIPrintImagesPlugin
         kDebug() << " w x h " << vW <<"x" << h;
         painter.setViewport ( 0, 0, vW, h );
       }
+#endif //not_def
+
+      QSize size = image.size();
+      size.scale(rect.size(), Qt::KeepAspectRatio);
+      painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+      
 #if 0
+      
+      QPainter painter(&printer);
+      QRect rect = painter.viewport();
+      QSize size = imageLabel->pixmap()->size();
+      size.scale(rect.size(), Qt::KeepAspectRatio);
+      painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+      painter.setWindow(imageLabel->pixmap()->rect());
+      painter.drawPixmap(0, 0, *imageLabel->pixmap());
+      
       if (image.size().height() >  image.size().width())
       {
         image = image.scaledToHeight(rect.size().height(), Qt::SmoothTransformation);
