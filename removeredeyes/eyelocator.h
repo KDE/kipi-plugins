@@ -47,7 +47,7 @@ public:
 
 public:
 
-    EyeLocator(const QString& filename, const QString& clsFilename);
+    EyeLocator(const QString& file, const QString& cls);
     ~EyeLocator();
 
 public:

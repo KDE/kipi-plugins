@@ -72,8 +72,8 @@ public:
     WorkerThread(QObject* parent, bool updateFileTimeStamp);
     ~WorkerThread();
 
+    int  runType() const;
     void setRunType(int);
-    int runType() const;
 
     void setSaveMethod(SaveMethodAbstract* method);
 

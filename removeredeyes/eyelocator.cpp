@@ -266,12 +266,12 @@ void EyeLocatorPriv::allocateBuffers()
 
 // --------------------------------------------------------------------
 
-EyeLocator::EyeLocator(const QString& filename, const QString& clsFilename)
+EyeLocator::EyeLocator(const QString& file, const QString& cls)
           : d(new EyeLocatorPriv)
 {
     // convert QString to const char*
-    QByteArray fileName    = QFile::encodeName(filename);
-    QByteArray clsFileName = QFile::encodeName(clsFilename);
+    QByteArray fileName    = QFile::encodeName(file);
+    QByteArray clsFileName = QFile::encodeName(cls);
 
     d->original            = cvLoadImage(fileName.data());
     d->classifierFile      = clsFileName.data();
