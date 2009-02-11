@@ -93,7 +93,7 @@ struct EyeLocatorPriv
     int             neighborGroups;
     int             possible_eyes;
     int             red_eyes;
-    const char*     classifierFile;
+    QString         classifierFile;
 };
 
 int EyeLocatorPriv::getMinimumSize(IplImage* src)
@@ -271,10 +271,9 @@ EyeLocator::EyeLocator(const QString& file, const QString& cls)
 {
     // convert QString to const char*
     QByteArray fileName    = QFile::encodeName(file);
-    QByteArray clsFileName = QFile::encodeName(cls);
 
     d->original            = cvLoadImage(fileName.data());
-    d->classifierFile      = clsFileName.data();
+    d->classifierFile      = cls;
 }
 
 EyeLocator::~EyeLocator()
@@ -385,9 +384,10 @@ void EyeLocator::startCorrection(bool scaleDown)
     d->allocateBuffers();
 
     // find possible eyes
+    QByteArray clsFile = QFile::encodeName(d->classifierFile);
     d->possible_eyes = d->findPossibleEyes(d->scaleFactor,
                                            d->neighborGroups,
-                                           d->classifierFile);
+                                           clsFile.data());
 
     // remove red-eye effect
     if (d->possible_eyes > 0)
