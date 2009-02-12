@@ -31,9 +31,9 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-SaveMethodAbstract* SaveMethodFactory::create(int type)
+SaveMethod* SaveMethodFactory::create(int type)
 {
-    SaveMethodAbstract* saveMethod = 0;
+    SaveMethod* saveMethod = 0;
 
     switch (type)
     {

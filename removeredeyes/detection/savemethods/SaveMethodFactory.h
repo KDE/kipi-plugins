@@ -27,14 +27,14 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SaveMethodAbstract;
+class SaveMethod;
 
 class SaveMethodFactory
 {
 
 public:
 
-    static SaveMethodAbstract* create(int type);
+    static SaveMethod* create(int type);
 
 private:
 

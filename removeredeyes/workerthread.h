@@ -41,7 +41,7 @@ struct WorkerThreadPriv;
 
 class CommonSettings;
 class Locator;
-class SaveMethodAbstract;
+class SaveMethod;
 class WorkerThreadData;
 
 class WorkerThread : public QThread
@@ -77,7 +77,7 @@ public:
     int  runType() const;
     void setRunType(int);
 
-    void setSaveMethod(SaveMethodAbstract* method);
+    void setSaveMethod(SaveMethod* method);
     void setLocator(Locator* locator);
 
     void loadSettings(const CommonSettings&);

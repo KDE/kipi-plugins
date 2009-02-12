@@ -28,14 +28,22 @@
 
 #include <QString>
 
-#include "SaveMethodAbstract.h"
-
 namespace KIPIRemoveRedEyesPlugin
 {
 
+class SaveMethod
+{
+public:
+
+    SaveMethod() {};
+    virtual ~SaveMethod() {};
+
+    virtual QString savePath(const QString& path, const QString& extra) const = 0;
+};
+
 // -----------------------------------------------
 
-class SaveSubfolder : public SaveMethodAbstract
+class SaveSubfolder : public SaveMethod
 {
 public:
 
@@ -44,7 +52,7 @@ public:
 
 // -----------------------------------------------
 
-class SavePrefix : public SaveMethodAbstract
+class SavePrefix : public SaveMethod
 {
 public:
 
@@ -53,7 +61,7 @@ public:
 
 // -----------------------------------------------
 
-class SaveSuffix : public SaveMethodAbstract
+class SaveSuffix : public SaveMethod
 {
 public:
 
@@ -62,7 +70,7 @@ public:
 
 // -----------------------------------------------
 
-class SaveOverwrite : public SaveMethodAbstract
+class SaveOverwrite : public SaveMethod
 {
 public:
 

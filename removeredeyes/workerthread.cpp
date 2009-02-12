@@ -67,7 +67,7 @@ struct WorkerThreadPriv
     int                 runtype;
 
     CommonSettings      settings;
-    SaveMethodAbstract* saveMethod;
+    SaveMethod*         saveMethod;
     Locator*            locator;
 
     KUrl::List          urls;
@@ -204,7 +204,7 @@ void WorkerThread::setTempFile(const QString& temp, ImageType type)
     }
 }
 
-void WorkerThread::setSaveMethod(SaveMethodAbstract* method)
+void WorkerThread::setSaveMethod(SaveMethod* method)
 {
     if (!method)
         return;

@@ -112,7 +112,7 @@ struct RedEyesWindowPriv
     StorageSettingsBox*       storageSettingsBox;
 
     Locator*                  locator;
-    SaveMethodAbstract*       saveMethod;
+    SaveMethod*               saveMethod;
 
     KIPI::Interface*          interface;
     KIPIPlugins::KPAboutData* about;
