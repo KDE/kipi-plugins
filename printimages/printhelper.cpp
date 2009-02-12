@@ -241,10 +241,6 @@ namespace KIPIPrintImagesPlugin
         painter.setViewport ( 0, 0, vW, h );
       }
 #endif //not_def
-
-      QSize size = image.size();
-      size.scale(rect.size(), Qt::KeepAspectRatio);
-      painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
       
 #if 0
       
@@ -266,7 +262,9 @@ namespace KIPIPrintImagesPlugin
       }
 #endif
 
-//       image = image.scaled(rect.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+      QSize size = image.size();
+      size.scale(rect.size(), Qt::KeepAspectRatio);
+      painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
       painter.setWindow ( image.rect() );
       painter.drawImage ( 0, 0, image );
       if ((i+1) < fileList.count())
