@@ -251,7 +251,7 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::connectSignals()
 {
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT(slotAlbumSelected()));
+    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT( slotAlbumSelected() ) );
     connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
     connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhoto()));
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotEnableSpinBox(int)));
@@ -393,10 +393,9 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         if ( parentRefNum == 0 ) 
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, album.title );
+            item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
-//             kWarning() << "adding album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ;
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
@@ -414,10 +413,9 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
                 if( parentItem->text(1) == QString::number(parentRefNum) )
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
-                    item->setText(0, album.title );
+                    item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
-//                     kWarning() << "adding album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ; 
 
                     d->albumDict.insert(album.title, album);
                     parentItemList << item;
@@ -429,7 +427,6 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             if ( i == parentItemList.size() )
             {
                 workList.append(album);
-//                 kWarning() << "WARNING: Appending album " << album.title << ", ID = " << album.name << ", Parent ID = " << album.parent_ref_num ; 
             }
         }
     }
@@ -443,21 +440,20 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
     // clean item to avoid duplications
     QList<QTreeWidgetItem *> childrenList = parentItem->takeChildren();
     foreach( QTreeWidgetItem *child, childrenList )
-        parentItem->removeChild( child );
+    {
+        if( child->text(1).isEmpty() )
+            parentItem->removeChild( child );
+    }
 
     typedef QList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iterator;
     for (iterator = photoList.begin(); iterator != photoList.end(); ++iterator)
     {
         QString plain = (*iterator).caption;
-        plain.replace("&lt;", "<");
-        plain.replace("&gt;", ">");
-        plain.replace("&quot;", "\"");
-        plain.replace("&amp;", "&");
-
         QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
-        item->setText(0, plain );
+        item->setText(0, cleanName(plain) );
         item->setIcon(0, KIcon("image-x-generic") );
+        item->setText(1, (*iterator).name);
     }
 }
 
@@ -465,26 +461,21 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 void GalleryWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
-    int column = d->albumView->currentColumn();
+    QString albumName = item->text(1);
     if (!item)
     {
         d->addPhotoBtn->setEnabled(false);
     }
     else
     {
-        if (m_talker->loggedIn())
+        if (m_talker->loggedIn() && !albumName.isEmpty() )
         {
-                QString title = item->text(column);
-                const GAlbum& album = d->albumDict.value(title);
-                if ( album.name != "" )
-                {
-                    d->addPhotoBtn->setEnabled(true);
-                    m_talker->listPhotos(album.name);
-                }
-                else
-                {
-                    d->addPhotoBtn->setEnabled(false);
-                }
+            d->addPhotoBtn->setEnabled(true);
+            m_talker->listPhotos(albumName);
+        }
+        else
+        {
+            d->addPhotoBtn->setEnabled(false);
         }
     }
 }
@@ -705,6 +696,18 @@ void GalleryWindow::slotSettings()
     GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
     dlg.exec();
 }
+
+
+QString GalleryWindow::cleanName(QString str)
+{
+    QString plain = str;
+    plain.replace("&lt;", "<");
+    plain.replace("&gt;", ">");
+    plain.replace("&quot;", "\"");
+    plain.replace("&amp;", "&");
+    return plain;
+}
+
 
 
 #include "gallerywindow.moc"

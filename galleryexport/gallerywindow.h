@@ -65,6 +65,7 @@ private:
 
     void connectSignals();
     void readSettings();
+    QString cleanName(QString);
 
 private slots:
 
