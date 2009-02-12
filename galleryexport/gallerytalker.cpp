@@ -278,7 +278,6 @@ void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
 
 void GalleryTalker::slotResult(KJob *job)
 {
-    emit signalBusy(false);
     KIO::Job *tempjob = static_cast<KIO::Job*>(job);
 
     if (tempjob->error())
@@ -299,6 +298,7 @@ void GalleryTalker::slotResult(KJob *job)
                 tempjob->ui()->showErrorMessage();
             }
         }
+        emit signalBusy(false);
         return;
     }
 
@@ -349,6 +349,7 @@ void GalleryTalker::slotResult(KJob *job)
         tempjob->kill();
         listAlbums();
     }
+    emit signalBusy(false);
 }
 
 
