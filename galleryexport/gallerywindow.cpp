@@ -101,7 +101,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     // 1st. QListWidget albumView
     albumView = new QTreeWidget;
     QStringList labels;
-    labels << i18n("albums") << i18n("ID");
+    labels << i18n("albums"); // << i18n("ID");
     albumView->setHeaderLabels(labels);
     galleryWidgetLayout->addWidget(albumView);
 
@@ -396,6 +396,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
+            item->setText(2, QString("Album") );
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
@@ -416,6 +417,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
                     item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
+                    item->setText(2, QString("Album") );
 
                     d->albumDict.insert(album.title, album);
                     parentItemList << item;
@@ -433,17 +435,10 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
 }
 
 
+// FIXME: avoid duplications
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
     QTreeWidgetItem* parentItem = d->albumView->currentItem();
-
-    // clean item to avoid duplications
-    QList<QTreeWidgetItem *> childrenList = parentItem->takeChildren();
-    foreach( QTreeWidgetItem *child, childrenList )
-    {
-        if( child->text(1).isEmpty() )
-            parentItem->removeChild( child );
-    }
 
     typedef QList<GPhoto> GPhotoList;
     GPhotoList::const_iterator iterator;
@@ -454,6 +449,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
         item->setText(0, cleanName(plain) );
         item->setIcon(0, KIcon("image-x-generic") );
         item->setText(1, (*iterator).name);
+        item->setText(2, QString("Image") );
     }
 }
 
@@ -461,6 +457,11 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 void GalleryWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
+
+    // stop loading if user clicked an image
+    if( item->text(2) == QString("Image") )
+        return;
+
     QString albumName = item->text(1);
     if (!item)
     {
