@@ -2083,6 +2083,10 @@ void Wizard::accept()
   if (d->mInfoPage->RdoOutputPrinter->isChecked())
   {
     QPrinter printer;
+    std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer, this));
+    dialog->setWindowTitle(i18n("Print Image"));
+    dialog->setEnabledOptions(QAbstractPrintDialog::PrintShowPageSize);
+
     switch(d->m_pageSize)
     {
       case Letter :
@@ -2107,8 +2111,6 @@ void Wizard::accept()
       printer.setPageMargins (0, 0, 0, 0, QPrinter::Millimeter);
     }
 
-    std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(&printer, this));
-    dialog->setWindowTitle(i18n("Print Image"));
     bool wantToPrint = dialog->exec();
     kDebug() << "full page " << printer.fullPage() ;
 
