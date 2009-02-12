@@ -21,29 +21,32 @@
  *
  * ============================================================ */
 
-#ifndef EYELOCATORFACTORY_H
-#define EYELOCATORFACTORY_H
+#include "LocatorFactory.h"
 
-class QString;
+// Qt includes.
+
+#include <QString>
+
+// Local includes.
+
+#include "Locator.h"
+#include "HaarClassifierLocator.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class EyeLocatorAbstract;
-
-class EyeLocatorFactory
+Locator* LocatorFactory::create(const QString& type)
 {
+    if (type.isEmpty())
+        return 0;
 
-public:
+    Locator* locator = 0;
 
-    static EyeLocatorAbstract* create(const QString& type);
+    if (type.contains("HaarClassifierLocator"))
+        locator = new HaarClassifierLocator;
 
-private:
-
-    EyeLocatorFactory() {};
-    virtual ~EyeLocatorFactory() {};
-};
-
+    return locator;
 }
 
-#endif /* EYELOCATORFACTORY_H */
+
+} // namespace KIPIRemoveRedEyesPlugin

@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2009-01-18
- * Description : factory to create save method objects
+ * Date        : 2009-02-12
+ * Description : locator abstract class
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -21,32 +21,44 @@
  *
  * ============================================================ */
 
-#include "EyeLocatorFactory.h"
+#ifndef LOCATOR_H
+#define LOCATOR_H
 
 // Qt includes.
 
 #include <QString>
-
-// Local includes.
-
-#include "EyeLocatorAbstract.h"
-#include "HaarClassifierLocator.h"
+#include <QWidget>
+#include <QObject>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-EyeLocatorAbstract* EyeLocatorFactory::create(const QString& type)
+class Locator: public QObject
 {
-    if (type.isEmpty())
-        return 0;
+public:
 
-    EyeLocatorAbstract* locator = 0;
+    enum SaveResult
+    {
+        Final = 0,
+        OriginalPreview,
+        CorrectedPreview,
+        MaskPreview
+    };
 
-    if (type.contains("HaarClassifierLocator"))
-        locator = new HaarClassifierLocator;
+public:
 
-    return locator;
+    Locator() {};
+    virtual ~Locator() {};
+
+    virtual int      startCorrection(const QString& src, const QString& dest) = 0;
+    virtual int      startTestrun(const QString& src) = 0;
+    virtual int      startPreview(const QString& src) = 0;
+    virtual QWidget* settingsWidget() = 0;
+
+    virtual void readSettings()  = 0;
+    virtual void writeSettings() = 0;
+};
+
 }
 
-
-} // namespace KIPIRemoveRedEyesPlugin
+#endif /* LOCATOR_H */

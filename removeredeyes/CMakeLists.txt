@@ -29,7 +29,7 @@ SET(locators_haarclassifier_SRCS
    )
 
 SET(locators_SRCS
-    detection/locators/EyeLocatorFactory.cpp
+    detection/locators/LocatorFactory.cpp
    )
 
 SET(savemethods_SRCS

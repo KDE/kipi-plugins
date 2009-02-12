@@ -39,7 +39,7 @@
 
 // Local includes.
 
-#include "HaarClassifierLocator.h"
+#include "Locator.h"
 #include "SaveMethodFactory.h"
 #include "SaveMethods.h"
 #include "commonsettings.h"
@@ -68,7 +68,7 @@ struct WorkerThreadPriv
 
     CommonSettings      settings;
     SaveMethodAbstract* saveMethod;
-    EyeLocatorAbstract* locator;
+    Locator*            locator;
 
     KUrl::List          urls;
     QString             maskPreviewFile;
@@ -212,7 +212,7 @@ void WorkerThread::setSaveMethod(SaveMethodAbstract* method)
     d->saveMethod = method;
 }
 
-void WorkerThread::setLocator(EyeLocatorAbstract* locator)
+void WorkerThread::setLocator(Locator* locator)
 {
     if (!locator)
         return;

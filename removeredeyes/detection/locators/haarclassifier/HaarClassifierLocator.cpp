@@ -227,7 +227,7 @@ void HaarClassifierLocator::clearBuffers()
 // --------------------------------------------------------------------
 
 HaarClassifierLocator::HaarClassifierLocator()
-                     : EyeLocatorAbstract(), d(new HaarClassifierLocatorPriv)
+                     : Locator(), d(new HaarClassifierLocatorPriv)
 {
     setObjectName("HaarClassifierLocator");
     d->settingsWidget = new HaarSettingsWidget;

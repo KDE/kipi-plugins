@@ -52,8 +52,8 @@
 
 // Local includes.
 
-#include "EyeLocatorAbstract.h"
-#include "EyeLocatorFactory.h"
+#include "Locator.h"
+#include "LocatorFactory.h"
 #include "SaveMethodFactory.h"
 #include "commonsettings.h"
 #include "haarsettingswidget.h"
@@ -111,7 +111,7 @@ struct RedEyesWindowPriv
     UnprocessedSettingsBox*   unprocessedSettingsBox;
     StorageSettingsBox*       storageSettingsBox;
 
-    EyeLocatorAbstract*       locator;
+    Locator*                  locator;
     SaveMethodAbstract*       saveMethod;
 
     KIPI::Interface*          interface;
@@ -675,7 +675,7 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
 
     unloadLocator();
 
-    d->locator                     = EyeLocatorFactory::create(locator);
+    d->locator                     = LocatorFactory::create(locator);
     QGridLayout* settingsTabLayout = qobject_cast<QGridLayout*>(d->settingsTab->layout());
 
     if (d->locator)

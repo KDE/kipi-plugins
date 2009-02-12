@@ -36,7 +36,7 @@
 
 // Local includes.
 
-#include "EyeLocatorAbstract.h"
+#include "Locator.h"
 
 class QString;
 
@@ -45,7 +45,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 struct HaarClassifierLocatorPriv;
 
-class HaarClassifierLocator : public EyeLocatorAbstract
+class HaarClassifierLocator : public Locator
 {
     Q_OBJECT
 
