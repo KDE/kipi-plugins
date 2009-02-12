@@ -695,7 +695,10 @@ void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
     GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
-    dlg.exec();
+    if( dlg.exec() == QDialog::Accepted )
+    {
+        slotDoLogin();
+    }
 }
 
 
