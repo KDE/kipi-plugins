@@ -32,7 +32,7 @@
 
 #include "blobsettingsbox.h"
 #include "classifiersettingsbox.h"
-#include "removalsettings.h"
+#include "haarsettings.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -47,20 +47,20 @@ struct AdvancedSettingsPriv
 
     BlobSettingsBox*        blobSettingsBox;
     ClassifierSettingsBox*  classifierSettingsBox;
-    RemovalSettings         settings;
+    HaarSettings            settings;
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
                 : QWidget(parent), d(new AdvancedSettingsPriv)
 {
-    d->blobSettingsBox          = new BlobSettingsBox;
-    d->classifierSettingsBox    = new ClassifierSettingsBox;
+    d->blobSettingsBox       = new BlobSettingsBox;
+    d->classifierSettingsBox = new ClassifierSettingsBox;
 
     // -----------------------------------------------------
 
     QGridLayout* advLayout = new QGridLayout;
-    advLayout->addWidget(d->classifierSettingsBox,  0, 0, 1, 1);
-    advLayout->addWidget(d->blobSettingsBox,        1, 0, 1, 1);
+    advLayout->addWidget(d->classifierSettingsBox, 0, 0, 1, 1);
+    advLayout->addWidget(d->blobSettingsBox,       1, 0, 1, 1);
     advLayout->setRowStretch(2, 10);
 
     // -----------------------------------------------------
@@ -94,14 +94,14 @@ void AdvancedSettings::prepareSettings()
     else
         d->settings.classifierFile = d->classifierSettingsBox->classifierUrl();
 
-    d->settings.neighborGroups         = d->classifierSettingsBox->neighborGroups();
-    d->settings.scaleFactor            = d->classifierSettingsBox->scalingFactor();
+    d->settings.neighborGroups = d->classifierSettingsBox->neighborGroups();
+    d->settings.scaleFactor    = d->classifierSettingsBox->scalingFactor();
 
-    d->settings.minBlobsize            = d->blobSettingsBox->minBlobSize();
-    d->settings.minRoundness           = d->blobSettingsBox->minRoundness();
+    d->settings.minBlobsize    = d->blobSettingsBox->minBlobSize();
+    d->settings.minRoundness   = d->blobSettingsBox->minRoundness();
 }
 
-void AdvancedSettings::loadSettings(RemovalSettings newSettings)
+void AdvancedSettings::loadSettings(HaarSettings& newSettings)
 {
     d->settings = newSettings;
     applySettings();
@@ -118,7 +118,7 @@ void AdvancedSettings::applySettings()
     d->classifierSettingsBox->setClassifierUrl(d->settings.classifierFile);
 }
 
-RemovalSettings AdvancedSettings::readSettings()
+HaarSettings AdvancedSettings::readSettings()
 {
     prepareSettings();
     return d->settings;

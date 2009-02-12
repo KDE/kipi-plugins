@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SIMPLESETTINGS_H
-#define SIMPLESETTINGS_H
+#ifndef HAARSETTINGSWIDGET_H
+#define HAARSETTINGSWIDGET_H
 
 // Qt includes.
 
@@ -31,44 +31,42 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SimpleSettingsPriv;
-class RemovalSettings;
+struct SettingsTabPriv;
+class HaarSettings;
 
-class SimpleSettings : public QWidget
+class HaarSettingsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    enum SettingsType
+    enum SettingsMode
     {
-        Fast = 0,
-        Standard,
-        Slow
+        Simple = 0,
+        Advanced
     };
 
-    SimpleSettings(QWidget* parent = 0);
-    ~SimpleSettings();
+    HaarSettingsWidget(QWidget* parent = 0);
+    ~HaarSettingsWidget();
 
-    void loadSettings(RemovalSettings);
-    RemovalSettings readSettings();
-
-    int simpleMode() const;
-
-signals:
-
-    void settingsChanged();
+    void         loadSettings(HaarSettings&);
+    HaarSettings readSettings();
+    HaarSettings readSettingsForSave();
 
 private slots:
 
-    void simpleModeChanged(int);
-    void prepareSettings();
+    void settingsModeChanged();
 
 private:
 
-    SimpleSettingsPriv* const d;
+    void updateSettings();
+    void setSettingsMode(SettingsMode mode);
+
+private:
+
+    SettingsTabPriv* const d;
 };
 
 }
 
-#endif /* SIMPLESETTINGS_H */
+#endif // HAARSETTINGSWIDGET_H

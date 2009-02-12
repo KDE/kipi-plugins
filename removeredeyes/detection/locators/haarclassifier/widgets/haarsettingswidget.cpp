@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#include "settingstab.h"
-#include "settingstab.moc"
+#include "haarsettingswidget.h"
+#include "haarsettingswidget.moc"
 
 // Qt includes.
 
@@ -38,7 +38,7 @@
 
 #include "advancedsettings.h"
 #include "simplesettings.h"
-#include "removalsettings.h"
+#include "haarsettings.h"
 #include "storagesettingsbox.h"
 #include "unprocessedsettingsbox.h"
 
@@ -49,7 +49,6 @@ struct SettingsTabPriv
 {
     SettingsTabPriv()
     {
-        storageSettingsBox  = 0;
         advancedSettings    = 0;
         simpleSettings      = 0;
         settingsSwitcherBtn = 0;
@@ -62,19 +61,15 @@ struct SettingsTabPriv
     QStackedWidget*             settingsStack;
 
     AdvancedSettings*           advancedSettings;
-    RemovalSettings             settings;
+    HaarSettings                settings;
     SimpleSettings*             simpleSettings;
-    StorageSettingsBox*         storageSettingsBox;
-    UnprocessedSettingsBox*     unprocessedSettingsBox;
 };
 
-SettingsTab::SettingsTab(QWidget* parent)
+HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
               : QWidget(parent), d(new SettingsTabPriv)
 {
     d->simpleCorrectionMode     = true;
     d->settingsSwitcherBtn      = new QPushButton;
-    d->storageSettingsBox       = new StorageSettingsBox;
-    d->unprocessedSettingsBox   = new UnprocessedSettingsBox;
 
     // settings stack widget ----------------------------------------------------------
 
@@ -88,18 +83,8 @@ SettingsTab::SettingsTab(QWidget* parent)
 
     // Set layouts --------------------------------------------------------------
 
-    QGridLayout* settingsTabLayout = new QGridLayout;
-    settingsTabLayout->addWidget(d->settingsStack, 0, 0, 1, 1);
-    settingsTabLayout->setRowStretch(1, 10);
-
-    QGridLayout* storageLayout = new QGridLayout;
-    storageLayout->addWidget(d->storageSettingsBox,     0, 0, 1, 1);
-    storageLayout->addWidget(d->unprocessedSettingsBox, 1, 0, 1, 1);
-    storageLayout->setRowStretch(2, 10);
-
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addLayout(settingsTabLayout,      0, 0, 1, 2);
-    mainLayout->addLayout(storageLayout,          0, 2, 1, 2);
+    mainLayout->addWidget(d->settingsStack,       0, 0, 1, 1);
     mainLayout->addWidget(d->settingsSwitcherBtn, 2, 0, 1, 1);
     mainLayout->setRowStretch(1, 10);
     setLayout(mainLayout);
@@ -117,58 +102,33 @@ SettingsTab::SettingsTab(QWidget* parent)
             this, SIGNAL(settingsChanged()));
 }
 
-SettingsTab::~SettingsTab()
+HaarSettingsWidget::~HaarSettingsWidget()
 {
     delete d;
 }
 
-void SettingsTab::prepareSettings()
-{
-    d->settings.storageMode            = d->storageSettingsBox->storageMode();
-    d->settings.unprocessedMode        = d->unprocessedSettingsBox->handleMode();
-    d->settings.extraName              = d->storageSettingsBox->extra();
-    d->settings.addKeyword             = d->storageSettingsBox->addKeyword();
-    d->settings.keywordName            = d->storageSettingsBox->keyword();
-}
-
-void SettingsTab::loadSettings(RemovalSettings newSettings)
+void HaarSettingsWidget::loadSettings(HaarSettings& newSettings)
 {
     d->settings = newSettings;
     d->simpleSettings->loadSettings(d->settings);
     d->advancedSettings->loadSettings(d->settings);
-    applySettings();
     setSettingsMode(Simple);
 }
 
-void SettingsTab::applySettings()
+HaarSettings HaarSettingsWidget::readSettings()
 {
-    d->storageSettingsBox->setExtra(d->settings.extraName);
-    d->storageSettingsBox->setStorageMode(d->settings.storageMode);
-    d->storageSettingsBox->setAddKeyword(d->settings.addKeyword);
-    d->storageSettingsBox->setKeyword(d->settings.keywordName);
-    d->unprocessedSettingsBox->setHandleMode(d->settings.unprocessedMode);
-}
-
-RemovalSettings SettingsTab::readSettings()
-{
-    if (d->simpleCorrectionMode)
-        d->settings = d->simpleSettings->readSettings();
-    else
-        d->settings = d->advancedSettings->readSettings();
-
-    prepareSettings();
+    updateSettings();
     return d->settings;
 }
 
-RemovalSettings SettingsTab::readSettingsForSave()
+HaarSettings HaarSettingsWidget::readSettingsForSave()
 {
     d->settings = d->advancedSettings->readSettings();
     d->settings.simpleMode = d->simpleSettings->simpleMode();
-    prepareSettings();
     return d->settings;
 }
 
-void SettingsTab::setSettingsMode(SettingsMode mode)
+void HaarSettingsWidget::setSettingsMode(SettingsMode mode)
 {
     switch (mode)
     {
@@ -186,7 +146,7 @@ void SettingsTab::setSettingsMode(SettingsMode mode)
     }
 }
 
-void SettingsTab::settingsModeChanged()
+void HaarSettingsWidget::settingsModeChanged()
 {
     switch (d->settingsStack->currentIndex())
     {
@@ -200,7 +160,7 @@ void SettingsTab::settingsModeChanged()
     }
 }
 
-void SettingsTab::updateSettings()
+void HaarSettingsWidget::updateSettings()
 {
     if (d->simpleCorrectionMode)
         d->settings = d->simpleSettings->readSettings();

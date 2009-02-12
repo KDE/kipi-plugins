@@ -39,7 +39,6 @@ namespace KIPIRemoveRedEyesPlugin
 {
 
 struct RedEyesWindowPriv;
-class RemovalSettings;
 class WorkerThreadData;
 
 class RemoveRedEyesWindow : public KDialog
@@ -63,6 +62,7 @@ public:
 signals:
 
     void myCloseClicked();
+    void locatorUpdated();
 
 private slots:
 
@@ -80,6 +80,8 @@ private slots:
     void cancelCorrection();
     void threadFinished();
 
+    void locatorChanged();
+
 public slots:
 
     void calculationFinished(WorkerThreadData*);
@@ -96,6 +98,9 @@ private:
     void showSummary();
     void startWorkerThread(const KUrl::List& urls);
     void initProgressBar(int max);
+
+    void loadLocator(const QString& locator);
+    void unloadLocator();
 
 private:
 

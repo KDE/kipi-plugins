@@ -28,6 +28,10 @@
 
 #include <QString>
 
+// KDE includes.
+
+#include <kdebug.h>
+
 // LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
@@ -35,9 +39,11 @@
 
 // Local includes.
 
+#include "HaarClassifierLocator.h"
+#include "SaveMethodFactory.h"
 #include "SaveMethods.h"
-#include "eyelocator.h"
-#include "removalsettings.h"
+#include "commonsettings.h"
+#include "haarsettings.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "workerthreaddata.h"
@@ -53,20 +59,21 @@ struct WorkerThreadPriv
         cancel              = false;
         updateFileTimeStamp = false;
         saveMethod          = 0;
+        locator             = 0;
     }
 
     bool                updateFileTimeStamp;
     bool                cancel;
     int                 runtype;
 
+    CommonSettings      settings;
+    SaveMethodAbstract* saveMethod;
+    EyeLocatorAbstract* locator;
+
+    KUrl::List          urls;
     QString             maskPreviewFile;
     QString             correctedPreviewFile;
     QString             originalPreviewFile;
-
-    KUrl::List          urls;
-
-    RemovalSettings     settings;
-    SaveMethodAbstract* saveMethod;
 };
 
 WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
@@ -87,15 +94,18 @@ WorkerThread::~ WorkerThread()
 
 void WorkerThread::run()
 {
-    int total = d->urls.count();
-
-    if (total <= 0)
+    if (!d->locator)
+    {
+        kDebug(51000) << "no locator has been defined" << endl;
         return;
+    }
+    if (d->urls.count() <= 0) return;
+    if (!d->saveMethod) return;
 
-    if (!d->saveMethod)
-        return;
 
-    int i = 1;
+    // --------------------------------------------------------
+
+    int i     = 1;
     d->cancel = false;
 
     for (KUrl::List::const_iterator it = d->urls.constBegin(); it != d->urls.constEnd(); ++it, ++i)
@@ -104,60 +114,41 @@ void WorkerThread::run()
         if (!url.isLocalFile())
             break;
 
-        QString src = url.path();
-        QString cls = d->settings.classifierFile;
+        QString src  = url.path();
+        int eyes     = 0;
 
-        bool scaleDown = false;
-
-        if (d->settings.simpleMode == SimpleSettings::Fast && d->settings.useSimpleMode)
-            scaleDown = true;
-
-        // The EyeLocator object will detect and remove the red-eye effect
-        EyeLocator loc(src, cls);
-        loc.setScaleFactor(d->settings.scaleFactor);
-        loc.setNeighborGroups(d->settings.neighborGroups);
-        loc.setMinRoundness(d->settings.minRoundness);
-        loc.setMinBlobsize(d->settings.minBlobsize);
-
-        // start correction
-        loc.startCorrection(scaleDown);
-
-        // generate save-location path
-        if ((d->runtype == Correction) && (loc.redEyes() > 0))
+        switch (d->runtype)
         {
-            // backup metatdata
-            KExiv2Iface::KExiv2 meta;
-#if KEXIV2_VERSION >= 0x000600
-            meta.setUpdateFileTimeStamp(d->updateFileTimeStamp);
-#endif
-            meta.load(url.path());
-
-            // check if custom keyword should be added
-            if (d->settings.addKeyword)
+            case Correction:
             {
-                QStringList oldKeywords = meta.getIptcKeywords();
-                QStringList newKeywords = meta.getIptcKeywords();
-                newKeywords.append(d->settings.keywordName);
-                meta.setIptcKeywords(oldKeywords, newKeywords);
+                // backup metatdata
+                KExiv2Iface::KExiv2 meta;
+#if KEXIV2_VERSION >= 0x000600
+                meta.setUpdateFileTimeStamp(d->updateFileTimeStamp);
+#endif
+                meta.load(src);
+
+                // check if custom keyword should be added
+                if (d->settings.addKeyword)
+                {
+                    QStringList oldKeywords = meta.getIptcKeywords();
+                    QStringList newKeywords = meta.getIptcKeywords();
+                    newKeywords.append(d->settings.keywordName);
+                    meta.setIptcKeywords(oldKeywords, newKeywords);
+                }
+
+                // start correction
+                QString dest = d->saveMethod->savePath(src, d->settings.extraName);
+                eyes = d->locator->startCorrection(src, dest);
+
+                // restore metadata
+                meta.save(dest);
+                break;
             }
-
-            // save image
-            QString dest = d->saveMethod->savePath(url.path(), d->settings.extraName);
-            loc.saveImage(dest, EyeLocator::Final);
-
-            // restore metadata
-            meta.save(d->saveMethod->savePath(url.path(), d->settings.extraName));
+            case Testrun: eyes = d->locator->startTestrun(src); break;
+            case Preview: eyes = d->locator->startPreview(src); break;
         }
 
-        if (d->runtype == Preview)
-        {
-            // save preview files in KDE temp dir
-            loc.saveImage(d->originalPreviewFile,  EyeLocator::OriginalPreview);
-            loc.saveImage(d->correctedPreviewFile, EyeLocator::CorrectedPreview);
-            loc.saveImage(d->maskPreviewFile,      EyeLocator::MaskPreview);
-        }
-
-        int eyes = loc.redEyes();
         emit calculationFinished(new WorkerThreadData(url, i, eyes));
 
         if (d->cancel)
@@ -180,9 +171,14 @@ void WorkerThread::cancel()
     d->cancel = true;
 }
 
-void WorkerThread::loadSettings(RemovalSettings newSettings)
+void WorkerThread::loadSettings(const CommonSettings& newSettings)
 {
     d->settings = newSettings;
+//    d->settings.addKeyword      = newSettings.addKeyword;
+//    d->settings.storageMode     = newSettings.storageMode;
+//    d->settings.unprocessedMode = newSettings.unprocessedMode;
+//    d->settings.extraName       = newSettings.extraName;
+//    d->settings.keywordName     = newSettings.keywordName;
 }
 
 void WorkerThread::setImagesList(const KUrl::List& list)
@@ -213,9 +209,15 @@ void WorkerThread::setSaveMethod(SaveMethodAbstract* method)
     if (!method)
         return;
 
-    if (d->saveMethod)
-        delete d->saveMethod;
     d->saveMethod = method;
+}
+
+void WorkerThread::setLocator(EyeLocatorAbstract* locator)
+{
+    if (!locator)
+        return;
+
+    d->locator = locator;
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

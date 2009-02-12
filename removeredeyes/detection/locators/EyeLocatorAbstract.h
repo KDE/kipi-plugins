@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-10-31
- * Description : a widget to display simple settings
+ * Date        : 2009-02-12
+ * Description : locator abstract class
  *
- * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,58 +21,44 @@
  *
  * ============================================================ */
 
-#ifndef SETTINGSTAB_H
-#define SETTINGSTAB_H
+#ifndef EYELOCATORABSTRACT_H
+#define EYELOCATORABSTRACT_H
 
 // Qt includes.
 
+#include <QString>
 #include <QWidget>
+#include <QObject>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SettingsTabPriv;
-class RemovalSettings;
-
-class SettingsTab : public QWidget
+class EyeLocatorAbstract: public QObject
 {
-    Q_OBJECT
+public:
+
+    enum SaveResult
+    {
+        Final = 0,
+        OriginalPreview,
+        CorrectedPreview,
+        MaskPreview
+    };
 
 public:
 
-    enum SettingsMode
-    {
-        Simple = 0,
-        Advanced
-    };
+    EyeLocatorAbstract() {};
+    virtual ~EyeLocatorAbstract() {};
 
-    SettingsTab(QWidget* parent = 0);
-    ~SettingsTab();
+    virtual int      startCorrection(const QString& src, const QString& dest) = 0;
+    virtual int      startTestrun(const QString& src) = 0;
+    virtual int      startPreview(const QString& src) = 0;
+    virtual QWidget* settingsWidget() = 0;
 
-    void loadSettings(RemovalSettings);
-    RemovalSettings readSettings();
-    RemovalSettings readSettingsForSave();
-
-signals:
-
-    void settingsChanged();
-
-private slots:
-
-    void prepareSettings();
-    void settingsModeChanged();
-
-private:
-
-    void applySettings();
-    void updateSettings();
-    void setSettingsMode(SettingsMode mode);
-
-private:
-
-    SettingsTabPriv* const d;
+    virtual void readSettings()  = 0;
+    virtual void writeSettings() = 0;
 };
 
 }
 
-#endif // SETTINGSTAB_H
+#endif /* EYELOCATORABSTRACT_H */

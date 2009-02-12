@@ -26,6 +26,8 @@
 
 // Qt includes.
 
+#include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
@@ -50,12 +52,14 @@
 
 // Local includes.
 
+#include "EyeLocatorAbstract.h"
+#include "EyeLocatorFactory.h"
 #include "SaveMethodFactory.h"
+#include "commonsettings.h"
+#include "haarsettingswidget.h"
 #include "kpaboutdata.h"
 #include "myimageslist.h"
 #include "previewwidget.h"
-#include "removalsettings.h"
-#include "settingstab.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
 #include "unprocessedsettingsbox.h"
@@ -69,20 +73,29 @@ struct RedEyesWindowPriv
 {
     RedEyesWindowPriv()
     {
-        interface           = 0;
-        about               = 0;
-        progress            = 0;
-        tabWidget           = 0;
-        imageList           = 0;
-        thread              = 0;
-        settingsTab         = 0;
-        previewWidget       = 0;
+        interface               = 0;
+        about                   = 0;
+        progress                = 0;
+        tabWidget               = 0;
+        imageList               = 0;
+        thread                  = 0;
+        settingsTab             = 0;
+        previewWidget           = 0;
+        locator                 = 0;
+        locatorSettingsWidget   = 0;
+        saveMethod              = 0;
+        unprocessedSettingsBox  = 0;
+        storageSettingsBox      = 0;
     }
 
     bool                      busy;
+    bool                      hasLocator;
     int                       runtype;
 
     QProgressBar*             progress;
+
+    QWidget*                  settingsTab;
+    QWidget*                  locatorSettingsWidget;
 
     KTabWidget*               tabWidget;
 
@@ -92,9 +105,14 @@ struct RedEyesWindowPriv
 
     MyImagesList*             imageList;
     PreviewWidget*            previewWidget;
-    RemovalSettings           settings;
-    SettingsTab*              settingsTab;
+    CommonSettings            settings;
     WorkerThread*             thread;
+
+    UnprocessedSettingsBox*   unprocessedSettingsBox;
+    StorageSettingsBox*       storageSettingsBox;
+
+    EyeLocatorAbstract*       locator;
+    SaveMethodAbstract*       saveMethod;
 
     KIPI::Interface*          interface;
     KIPIPlugins::KPAboutData* about;
@@ -110,6 +128,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     d->interface     = interface;
     d->busy          = false;
+    d->hasLocator    = false;
     d->thread        = new WorkerThread(this,
                                         d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
     d->runtype       = WorkerThread::Testrun;
@@ -161,7 +180,20 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     // ----------------------------------------------------------
 
-    d->settingsTab = new SettingsTab;
+    d->settingsTab           = new QWidget;
+    d->locatorSettingsWidget = new QWidget;
+
+    QVBoxLayout* mainSettingsLayout = new QVBoxLayout;
+    d->unprocessedSettingsBox = new UnprocessedSettingsBox;
+    d->storageSettingsBox     = new StorageSettingsBox;
+    mainSettingsLayout->addWidget(d->storageSettingsBox);
+    mainSettingsLayout->addWidget(d->unprocessedSettingsBox);
+    mainSettingsLayout->addStretch(10);
+
+    QGridLayout* settingsTabLayout = new QGridLayout;
+    settingsTabLayout->addWidget(d->locatorSettingsWidget, 0, 0, 1, 1);
+    settingsTabLayout->addLayout(mainSettingsLayout,       0, 1, 1, 1);
+    d->settingsTab->setLayout(settingsTabLayout);
 
     // ----------------------------------------------------------
 
@@ -219,8 +251,11 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     connect(d->tabWidget, SIGNAL(currentChanged(int)),
             this, SLOT(tabwidgetChanged(int)));
 
-    connect(d->settingsTab, SIGNAL(settingsChanged()),
-            d->previewWidget, SLOT(reset()));
+    connect(this, SIGNAL(locatorUpdated()),
+            this, SLOT(locatorChanged()));
+
+//    connect(d->settingsTab, SIGNAL(settingsChanged()),
+//            d->previewWidget, SLOT(reset()));
 
     // ----------------------------------------------------------
 
@@ -232,12 +267,13 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     // ----------------------------------------------------------
 
     readSettings();
-    setBusy(false);
 }
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
 {
     delete d->about;
+    delete d->locator;
+    delete d->saveMethod;
     delete d;
 }
 
@@ -246,43 +282,37 @@ void RemoveRedEyesWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("RemoveRedEyes Settings");
 
-    d->settings.storageMode           = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
-    d->settings.unprocessedMode       = group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask);
-    d->settings.extraName             = group.readEntry("Extra Name", "corrected");
-    d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
-    d->settings.minBlobsize           = group.readEntry("Minimum Blob Size", 10);
-    d->settings.minRoundness          = group.readEntry("Minimum Roundness", 3.2);
-    d->settings.neighborGroups        = group.readEntry("Neighbor Groups", 2);
-    d->settings.scaleFactor           = group.readEntry("Scaling Factor", 1.2);
-    d->settings.useStandardClassifier = group.readEntry("Use Standard Classifier", true);
-    d->settings.classifierFile        = group.readEntry("Classifier", STANDARD_CLASSIFIER);
-    d->settings.addKeyword            = group.readEntry("Add keyword", false);
-    d->settings.keywordName           = group.readEntry("Keyword Name", "removed_redeyes");
+    int storageMode = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
+    d->storageSettingsBox->setStorageMode(storageMode);
+    d->storageSettingsBox->setExtra(group.readEntry("Extra Name", "corrected"));
+    d->storageSettingsBox->setAddKeyword(group.readEntry("Add keyword", false));
+    d->storageSettingsBox->setKeyword(group.readEntry("Keyword Name", "removed_redeyes"));
+    d->unprocessedSettingsBox->setHandleMode(group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask));
 
-    d->settingsTab->loadSettings(d->settings);
+    // set save method
+    d->saveMethod = SaveMethodFactory::create(storageMode);
+
+    // load locator
+    QString locatorType = group.readEntry("Locator Type", "HaarClassifierLocator");
+    loadLocator(locatorType);
+
+    updateSettings();
 }
 
 void RemoveRedEyesWindow::writeSettings()
 {
-    d->settings = d->settingsTab->readSettingsForSave();
+    updateSettings();
 
     KConfig config("kipirc");
     KConfigGroup grp = config.group("RemoveRedEyes Settings");
 
-    grp.writeEntry("Simple Mode",               d->settings.simpleMode);
-    grp.writeEntry("Storage Mode",              d->settings.storageMode);
-    grp.writeEntry("Unprocessed Mode",          d->settings.unprocessedMode);
-    grp.writeEntry("Extra Name",                d->settings.extraName);
-
-    grp.writeEntry("Minimum Blob Size",         d->settings.minBlobsize);
-    grp.writeEntry("Minimum Roundness",         d->settings.minRoundness);
-    grp.writeEntry("Neighbor Groups",           d->settings.neighborGroups);
-    grp.writeEntry("Scaling Factor",            d->settings.scaleFactor);
-    grp.writeEntry("Use Standard Classifier",   d->settings.useStandardClassifier);
-    grp.writeEntry("Classifier",                d->settings.classifierFile);
-
-    grp.writeEntry("Add keyword",               d->settings.addKeyword);
-    grp.writeEntry("Keyword Name",              d->settings.keywordName);
+    if (d->hasLocator)
+        grp.writeEntry("Locator Type", d->locator->objectName());
+    grp.writeEntry("Storage Mode",     d->settings.storageMode);
+    grp.writeEntry("Unprocessed Mode", d->settings.unprocessedMode);
+    grp.writeEntry("Extra Name",       d->settings.extraName);
+    grp.writeEntry("Add keyword",      d->settings.addKeyword);
+    grp.writeEntry("Keyword Name",     d->settings.keywordName);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
     saveDialogSize(dialogGroup);
@@ -291,7 +321,15 @@ void RemoveRedEyesWindow::writeSettings()
 
 void RemoveRedEyesWindow::updateSettings()
 {
-    d->settings = d->settingsTab->readSettings();
+    d->settings.addKeyword      = d->storageSettingsBox->addKeyword();
+    d->settings.extraName       = d->storageSettingsBox->extra();
+    d->settings.keywordName     = d->storageSettingsBox->keyword();
+    d->settings.storageMode     = d->storageSettingsBox->storageMode();
+    d->settings.unprocessedMode = d->unprocessedSettingsBox->handleMode();
+
+    // reset save method
+    if (d->saveMethod) delete d->saveMethod;
+    d->saveMethod = SaveMethodFactory::create(d->settings.storageMode);
 }
 
 bool RemoveRedEyesWindow::acceptStorageSettings()
@@ -378,6 +416,8 @@ void RemoveRedEyesWindow::cancelCorrection()
 void RemoveRedEyesWindow::closeClicked()
 {
     writeSettings();
+    if (d->locator)
+        d->locator->writeSettings();
     done(Close);
 }
 
@@ -388,11 +428,9 @@ void RemoveRedEyesWindow::helpClicked()
 
 void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
 {
-    if (urls.isEmpty())
-        return;
-
-    if (d->busy)
-        return;
+    if (urls.isEmpty()) return;
+    if (d->busy) return;
+    if (!d->locator || !d->saveMethod) return;
 
     if (!d->thread)
     {
@@ -401,10 +439,13 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
         return;
     }
 
+    // --------------------------------------------------------
+
     d->thread->setImagesList(urls);
     d->thread->setRunType(d->runtype);
     d->thread->loadSettings(d->settings);
-    d->thread->setSaveMethod(SaveMethodFactory::create(d->settings.storageMode));
+    d->thread->setSaveMethod(d->saveMethod);
+    d->thread->setLocator(d->locator);
 
     d->thread->setTempFile(d->originalImageTempFile.fileName(),
                            WorkerThread::OriginalImage);
@@ -412,6 +453,8 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
                            WorkerThread::CorrectedImage);
     d->thread->setTempFile(d->maskImageTempFile.fileName(),
                            WorkerThread::MaskImage);
+
+    // --------------------------------------------------------
 
     setBusy(true);
 
@@ -623,6 +666,63 @@ void RemoveRedEyesWindow::initProgressBar(int max)
     }
 
     d->progress->setValue(0);
+}
+
+void RemoveRedEyesWindow::loadLocator(const QString& locator)
+{
+    if (locator.isEmpty())
+        return;
+
+    unloadLocator();
+
+    d->locator                     = EyeLocatorFactory::create(locator);
+    QGridLayout* settingsTabLayout = qobject_cast<QGridLayout*>(d->settingsTab->layout());
+
+    if (d->locator)
+    {
+        d->locatorSettingsWidget = d->locator->settingsWidget();
+        d->hasLocator            = true;
+    }
+    else
+    {
+        QString noLocatorMsg     = i18n("<h2>No locator has been loaded.<br/>"
+                                        "The plugin will is not executable.</h2>");
+        d->locatorSettingsWidget = new QLabel(noLocatorMsg);
+        d->hasLocator            = false;
+        kDebug(51000) << "Invalid locator: '" << locator << "'" << endl;
+    }
+
+    settingsTabLayout->addWidget(d->locatorSettingsWidget, 0, 0, 1, 1);
+    emit locatorUpdated();
+}
+
+void RemoveRedEyesWindow::unloadLocator()
+{
+    if (d->locator)
+        delete d->locator;
+
+    if (d->locatorSettingsWidget)
+    {
+        d->settingsTab->layout()->removeWidget(d->locatorSettingsWidget);
+        delete d->locatorSettingsWidget;
+    }
+
+    d->hasLocator = false;
+    emit locatorUpdated();
+}
+
+void RemoveRedEyesWindow::locatorChanged()
+{
+    if (d->hasLocator)
+    {
+        enableButton(User1, true); // correction button
+        enableButton(User2, true); // testrun button
+    }
+    else
+    {
+        enableButton(User1, false); // correction button
+        enableButton(User2, false); // testrun button
+    }
 }
 
 } // namespace KIPIRemoveRedEyesPlugin

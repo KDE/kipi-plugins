@@ -38,7 +38,7 @@
 
 // Local includes.
 
-#include "removalsettings.h"
+#include "haarsettings.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -50,8 +50,8 @@ struct SimpleSettingsPriv
         settingsSlider = 0;
     }
 
-    QSlider*            settingsSlider;
-    RemovalSettings     settings;
+    QSlider*     settingsSlider;
+    HaarSettings settings;
 };
 
 SimpleSettings::SimpleSettings(QWidget* parent)
@@ -85,7 +85,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     );
     d->settingsSlider->setStyleSheet(sliderStyle);
 
-    QLabel* lSlow = new QLabel(i18n("<p><b>Slow<br/>(low-res / slightly blurred images)</b></p>"
+    QLabel* lSlow = new QLabel(i18n("<p><b>Slower<br/>(low-res / slightly blurred images)</b></p>"
                                     "<p>In this mode the automatic detection and correction of the "
                                     "red eyes is the most reliable. The drawback "
                                     "of the higher detection rate is a much slower computation.</p>"));
@@ -94,7 +94,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
                                    "<p>This mode is adequate for most image resolutions. Always try "
                                    "this mode first.</p>"));
 
-    QLabel* lFast = new QLabel(i18n("<p><b>Fast<br/>(high-res images)</b></p>"
+    QLabel* lFast = new QLabel(i18n("<p><b>Faster<br/>(high-res images)</b></p>"
                                     "<p>In this mode the automatic detection will be faster, but more "
                                     "false positives may occur. Use this mode only for very high-resolution "
                                     "and sharp images.</p>"));
@@ -176,14 +176,14 @@ void SimpleSettings::prepareSettings()
     d->settings.classifierFile         = STANDARD_CLASSIFIER;
 }
 
-void SimpleSettings::loadSettings(RemovalSettings newSettings)
+void SimpleSettings::loadSettings(HaarSettings& newSettings)
 {
     d->settings = newSettings;
     d->settingsSlider->setValue(d->settings.simpleMode);
     simpleModeChanged(d->settings.simpleMode);
 }
 
-RemovalSettings SimpleSettings::readSettings()
+HaarSettings SimpleSettings::readSettings()
 {
     prepareSettings();
     return d->settings;

@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-10-31
- * Description : a widget to display advanced settings
+ * Date        : 2009-02-12
+ * Description : common settings for redeyes removal
  *
- * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,48 +21,29 @@
  *
  * ============================================================ */
 
-#ifndef ADVANCEDSETTINGS_H
-#define ADVANCEDSETTINGS_H
+#ifndef COMMONSETTINGS_H
+#define COMMONSETTINGS_H
 
 // Qt includes.
 
-#include <QWidget>
+#include <QString>
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct AdvancedSettingsPriv;
-class RemovalSettings;
-
-class AdvancedSettings : public QWidget
+class CommonSettings
 {
-    Q_OBJECT
-
 public:
 
-    AdvancedSettings(QWidget* parent = 0);
-    ~AdvancedSettings();
+    CommonSettings() {};
 
-    void loadSettings(RemovalSettings);
-    RemovalSettings readSettings();
-
-signals:
-
-    void settingsChanged();
-
-private slots:
-
-    void prepareSettings();
-
-private:
-
-    void applySettings();
-
-private:
-
-    AdvancedSettingsPriv* const d;
+    bool    addKeyword;
+    int     storageMode;
+    int     unprocessedMode;
+    QString extraName;
+    QString keywordName;
 };
 
 }
 
-#endif /* ADVANCEDSETTINGS_H */
+#endif /* COMMONSETTINGS_H */
