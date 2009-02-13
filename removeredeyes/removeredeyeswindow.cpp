@@ -688,7 +688,7 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
     else
     {
         QString noLocatorMsg     = i18n("<h2>No locator has been loaded.<br/>"
-                                        "The plugin will is not executable.</h2>");
+                                        "The plugin is not executable.</h2>");
         d->locatorSettingsWidget = new QLabel(noLocatorMsg);
         d->hasLocator            = false;
         kDebug(51000) << "Invalid locator: '" << locator << "'" << endl;
