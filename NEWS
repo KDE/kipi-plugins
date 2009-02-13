@@ -12,7 +12,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 181973 : RAWConverter       : Raw batch converter loses exif information.
 004 ==> 181334 : IpodExort          : The artwork API in libgpod-0.7.0 has changed slightly, IpodExport plugin needs updated.
 005 ==> 181853 : MetadataEdit       : Entring new xmp meta data removes old one from the image file.
-006 ==> 
+006 ==> 133649 : Print Wizard       : Scale images in stead of cropping.
+007 ==> 
 
 Kipi-plugins 0.2.0-rc1 - Release date: 21/01/2009
 ------------------------------------------------------------------------
