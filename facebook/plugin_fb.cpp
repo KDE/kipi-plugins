@@ -62,7 +62,7 @@ void Plugin_Fb::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_actionExport = actionCollection()->addAction("fbexport");
-    m_actionExport->setText(i18n("Export to Facebook..."));
+    m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("applications-internet"));
     m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F);
 
@@ -72,7 +72,7 @@ void Plugin_Fb::setup(QWidget* widget)
     addAction(m_actionExport);
 
     m_actionImport = actionCollection()->addAction("fbimport");
-    m_actionImport->setText(i18n("Import from Facebook..."));
+    m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("applications-internet"));
     m_actionImport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F);
 

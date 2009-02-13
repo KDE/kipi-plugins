@@ -58,8 +58,9 @@ void Plugin_SimpleViewer::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_actionSimpleViewer = actionCollection()->addAction("simpleviewer");
-    m_actionSimpleViewer->setText(i18n("Export to Flash..."));
+    m_actionSimpleViewer->setText(i18n("Export to F&lash..."));
     m_actionSimpleViewer->setIcon(KIcon("applications-internet"));
+    m_actionSimpleViewer->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L);
 
     connect(m_actionSimpleViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
