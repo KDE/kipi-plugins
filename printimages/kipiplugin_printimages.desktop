@@ -1,6 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Print images
+Name[el]=Εκτύπωση εικόνων
+Name[ga]=Priontáil íomhánna
+Name[it]=Stampa immagini
+Name[pt]=Imprimir as imagens
+Name[pt_BR]=Imprimir imagens
+Name[sv]=Skriv ut bilder
+Name[uk]=Друк зображень
+Name[zh_CN]=打印图像
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_printimages
