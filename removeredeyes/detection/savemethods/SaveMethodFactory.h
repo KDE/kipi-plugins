@@ -24,6 +24,10 @@
 #ifndef SAVEMETHODFACTORY_H
 #define SAVEMETHODFACTORY_H
 
+// Local includes.
+
+#include "SaveMethods.h"
+
 namespace KIPIRemoveRedEyesPlugin
 {
 

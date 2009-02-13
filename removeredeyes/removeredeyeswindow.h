@@ -38,7 +38,7 @@ class Interface;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct RedEyesWindowPriv;
+class RemoveRedEyesWindowPriv;
 class WorkerThreadData;
 
 class RemoveRedEyesWindow : public KDialog
@@ -104,7 +104,7 @@ private:
 
 private:
 
-    RedEyesWindowPriv* const d;
+    RemoveRedEyesWindowPriv* const d;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

@@ -69,9 +69,11 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct RedEyesWindowPriv
+class RemoveRedEyesWindowPriv
 {
-    RedEyesWindowPriv()
+public:
+
+    RemoveRedEyesWindowPriv()
     {
         interface               = 0;
         about                   = 0;
@@ -119,7 +121,7 @@ struct RedEyesWindowPriv
 };
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
-                   : KDialog(0), d(new RedEyesWindowPriv)
+                   : KDialog(0), d(new RemoveRedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatic Red Eyes Removal"));
     setButtons(Help|User1|User2|Close);

@@ -25,7 +25,6 @@
 
 // Local includes.
 
-#include "SaveMethods.h"
 #include "storagesettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin
