@@ -54,7 +54,7 @@ struct UnprocessedSettingsBoxPriv
 UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
                   : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
 {
-    setTitle(i18n("Unprocessed Images Settings"));
+    setTitle(i18n("Unprocessed Images Handling"));
 
     QString whatsThis = i18n("<p>These settings control the handling of unprocessed images when "
             "running in testmode. To speed up the final correction, unprocessed images can be "
@@ -62,8 +62,8 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
             "to choose from:</p>"
             "<p><ul>"
             "<li><b>Ask the user:</b> A popup window will appear to ask for further actions.</li>"
-            "<li><b>Keep:</b> All unprocessed images will be kept in the list.</li>"
-            "<li><b>Remove:</b> All unprocessed images are removed after the test run.</li>"
+            "<li><b>Keep in file list:</b> All unprocessed images will be kept in the list.</li>"
+            "<li><b>Remove from file list:</b> All unprocessed images are removed after the test run.</li>"
             "</ul></p>");
     setWhatsThis(whatsThis);
 
@@ -79,13 +79,14 @@ UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
                              "remove unprocessed images."));
     d->unprocessedGroup->addButton(askMode, Ask);
 
-    QRadioButton* keepMode = new QRadioButton(i18n("&Keep"));
-    keepMode->setToolTip(i18n("If checked, unprocessed images will be kept after the test run."));
+    QRadioButton* keepMode = new QRadioButton(i18n("&Keep in file list"));
+    keepMode->setToolTip(i18n("If checked, unprocessed images will be kept in the "
+                              "file list after the testrun."));
     d->unprocessedGroup->addButton(keepMode, Keep);
 
-    QRadioButton* removeMode = new QRadioButton(i18n("&Remove"));
+    QRadioButton* removeMode = new QRadioButton(i18n("&Remove from file list"));
     removeMode->setToolTip(i18n("If checked, unprocessed images will be removed from "
-                                "the images list after the test run."));
+                                "the file list after the testrun."));
     d->unprocessedGroup->addButton(removeMode, Remove);
 
     // ----------------------------------------------------------------
