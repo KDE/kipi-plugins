@@ -122,6 +122,7 @@ private:
     long long                   m_profileAID;
     long long                   m_currentAlbumID;
     QString                     m_sessionKey;
+    QString                     m_sessionSecret;
     unsigned int                m_sessionExpires;
 
     QProgressDialog            *m_progressDlg;

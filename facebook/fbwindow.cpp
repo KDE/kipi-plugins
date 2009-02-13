@@ -212,7 +212,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     kDebug(51000) << "Calling Login method";
     buttonStateChange(m_talker->loggedIn());
-    m_talker->authenticate(m_sessionKey, m_sessionExpires); 
+    m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires); 
 }
 
 FbWindow::~FbWindow()
@@ -230,6 +230,7 @@ void FbWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
     m_sessionKey = grp.readEntry("Session Key");
+    m_sessionSecret = grp.readEntry("Session Secret");
     m_sessionExpires = grp.readEntry("Session Expires", 0);
     m_currentAlbumID = grp.readEntry("Current Album", -1LL);
 
@@ -265,6 +266,7 @@ void FbWindow::writeSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
     grp.writeEntry("Session Key", m_sessionKey);
+    grp.writeEntry("Session Secret", m_sessionSecret);
     grp.writeEntry("Session Expires", m_sessionExpires);
     grp.writeEntry("Current Album", m_currentAlbumID);
     grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
@@ -306,6 +308,7 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
         m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
 
     m_sessionKey = m_talker->getSessionKey();
+    m_sessionSecret = m_talker->getSessionSecret();
     m_sessionExpires = m_talker->getSessionExpires();
 
     if (errCode == 0 && m_talker->loggedIn())
@@ -460,11 +463,12 @@ void FbWindow::slotUserChangeRequest()
     {
         m_talker->logout();
         m_sessionKey.clear();
+        m_sessionSecret.clear();
         m_sessionExpires = 0;
     }
 
     kDebug(51000) << "Calling Login method";
-    m_talker->authenticate(m_sessionKey, m_sessionExpires);
+    m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires);
 }
 
 void FbWindow::slotPermChangeRequest()

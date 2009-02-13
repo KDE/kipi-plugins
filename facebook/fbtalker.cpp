@@ -80,7 +80,7 @@ FbTalker::~FbTalker()
         m_job->kill();
 }
 
-bool FbTalker::loggedIn()
+bool FbTalker::loggedIn() const
 {
     return !m_sessionKey.isEmpty();
 }
@@ -88,6 +88,11 @@ bool FbTalker::loggedIn()
 QString FbTalker::getSessionKey() const
 {
     return m_sessionKey;
+}
+
+QString FbTalker::getSessionSecret() const
+{
+    return m_sessionSecret;
 }
 
 unsigned int FbTalker::getSessionExpires() const
@@ -129,7 +134,10 @@ QString FbTalker::getApiSig(const QMap<QString, QString>& args)
         concat.append("=");
         concat.append(it.value());
     }
-    concat.append(m_secretKey);
+    if (args["session_key"].isEmpty())
+        concat.append(m_secretKey);
+    else
+        concat.append(m_sessionSecret);
 
     KMD5 md5(concat.toUtf8());
     return md5.hexDigest().data();
@@ -155,15 +163,20 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
     return concat;
 }
 
-void FbTalker::authenticate(const QString &sessionKey, unsigned int sessionExpires)
+void FbTalker::authenticate(const QString &sessionKey, 
+                            const QString &sessionSecret,
+                            unsigned int sessionExpires)
 {
     m_loginInProgress = true;
 
-    if (!sessionKey.isEmpty() && sessionExpires > (unsigned int)(time(0) + 900))
+    if (!sessionKey.isEmpty() 
+        && !sessionSecret.isEmpty()
+        && sessionExpires > (unsigned int)(time(0) + 900))
     {
         // sessionKey seems to be still valid for at least 15 minutes
         // - check if it still works
         m_sessionKey     = sessionKey;
+        m_sessionSecret  = sessionSecret;
         m_sessionExpires = sessionExpires;
 
         m_authProgressDlg->setLabelText(i18n("Validate previous session..."));
@@ -800,6 +813,7 @@ void FbTalker::authenticationDone(int errCode, const QString &errMsg)
     {
         m_authToken.clear();
         m_sessionKey.clear();
+        m_sessionSecret.clear();
         m_sessionExpires = 0;
         m_user.clear();
     }
@@ -908,6 +922,8 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
                 continue;
             if (node.nodeName() == "session_key")
                 m_sessionKey = node.toElement().text();
+            else if (node.nodeName() == "secret")
+                m_sessionSecret = node.toElement().text();
             else if (node.nodeName() == "uid")
                 m_user.id = node.toElement().text().toLongLong();
             else if (node.nodeName() == "expires")
@@ -962,6 +978,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
         // it seems that session expired -> create new token and session
         m_authToken.clear();
         m_sessionKey.clear();
+        m_sessionSecret.clear();
         m_sessionExpires = 0;
         m_user.clear();
 
@@ -1094,6 +1111,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
 
     // consider we are logged out in any case
     m_sessionKey.clear();
+    m_sessionSecret.clear();
     m_sessionExpires = 0;
     m_user.clear();
 

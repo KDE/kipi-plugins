@@ -50,13 +50,16 @@ public:
     ~FbTalker();
 
     QString         getSessionKey() const;
+    QString         getSessionSecret() const;
     unsigned int    getSessionExpires() const;
 
     FbUser  getUser() const;
 
-    bool    loggedIn();
+    bool    loggedIn() const;
     void    cancel();
-    void    authenticate(const QString& sessionKey, unsigned int sessionExpires);
+    void    authenticate(const QString& sessionKey, 
+                         const QString& sessionSecret,
+                         unsigned int sessionExpires);
     void    changePerm();
     void    logout();
 
@@ -136,27 +139,28 @@ private slots:
     void slotResult(KJob *job);
 
 private:
-    QWidget*   m_parent;
+    QWidget*        m_parent;
 
-    QByteArray m_buffer;
+    QByteArray      m_buffer;
 
-    QString    m_userAgent;
-    QString    m_apiURL;
-    QString    m_apiVersion;
-    QString    m_apiKey;
-    QString    m_secretKey;
+    QString         m_userAgent;
+    QString         m_apiURL;
+    QString         m_apiVersion;
+    QString         m_apiKey;
+    QString         m_secretKey;
 
-    bool       m_loginInProgress;
-    QString    m_authToken;
-    QString    m_sessionKey;
-    long       m_sessionExpires;
-    QTime      m_callID;
+    bool            m_loginInProgress;
+    QString         m_authToken;
+    QString         m_sessionKey;
+    QString         m_sessionSecret;
+    unsigned int    m_sessionExpires;
+    QTime           m_callID;
 
-    FbUser     m_user;
+    FbUser          m_user;
 
-    KIO::Job*  m_job;
+    KIO::Job*       m_job;
 
-    State      m_state;
+    State           m_state;
 };
 
 } // namespace KIPIFbPlugin
