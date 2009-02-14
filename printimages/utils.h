@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2002-12-09
+ * Date        : 2003-31-01
  * Description : a kipi plugin to print images
  *
- * Copyright 2002-2003 by Todd Shoemaker <todd@theshoemakers.net>
+ * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
  * Copyright 2007-2008 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
@@ -21,60 +21,25 @@
  *
  * ============================================================ */
 
-#ifndef TPHOTO_H
-#define TPHOTO_H
+#ifndef UTILS_H
+#define UTILS_H
 
 // Qt includes.
 
-#include <QRect>
+#include <QString>
 
-// KDE includes.
-
-#include <kurl.h>
-
-namespace KExiv2Iface
-{
-class KExiv2;
-}
+class QWidget;
+class QStringList;
 
 namespace KIPIPrintImagesPlugin
 {
 
-class TPhoto
-{
+int NINT(double n);
 
-public:
-
-    TPhoto(int thumbnailSize);
-    ~TPhoto();
-
-    KUrl filename; // full path
-
-    QPixmap & thumbnail();
-    QImage    loadPhoto();
-
-    int m_thumbnailSize;
-
-    int width();
-    int height();
-
-    QRect cropRegion;
-    int copies;
-    int rotation;
-    KExiv2Iface::KExiv2 *exiv2Iface();
-
-private:
-
-    void   loadCache();
-    QSize& size();
-
-private:
-
-    QPixmap             *m_thumbnail;
-    QSize               *m_size;
-    KExiv2Iface::KExiv2 *m_exiv2Iface;
-};
+bool launchExternalApp(QString &program, QStringList &args);
+bool checkTempPath(QWidget *parent, QString tempPath);
 
 }  // NameSpace KIPIPrintImagesPlugin
 
-#endif // TPHOTO_H
+#endif // UTILS_H
+

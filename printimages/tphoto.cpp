@@ -131,4 +131,4 @@ int TPhoto::height()
     return size().height();
 }
 
-}  // NameSpace KIPIPrintWizardPlugin
+}  // NameSpace KIPIPrintImagesPlugin

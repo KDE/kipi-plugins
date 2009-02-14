@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2009-02-08 
+ * Date        : 2009-02-08
  * Description : a kipi plugin to print images
  *
  * Copyright 2009 by Angelo Naselli <anaselli at linux dot it>
@@ -35,26 +35,28 @@ class KAction;
 
 namespace KIPI
 {
-class Interface;
+  class Interface;
 } // namespace KIPI
 
 class Plugin_PrintImages : public KIPI::Plugin
 {
     Q_OBJECT
 
-public:
-    Plugin_PrintImages(QObject *parent, const QVariantList &args);
+  public:
+    Plugin_PrintImages ( QObject *parent, const QVariantList &args );
 
     ~Plugin_PrintImages();
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* widget );
+    virtual KIPI::Category category ( KAction* action ) const;
+    virtual void setup ( QWidget* widget );
 
-public slots:
+  public slots:
 
-    void slotActivate();
+    void slotPrintImagesActivate();
+    void slotPrintAssistantActivate();
 
-private:
-    KAction         *m_printAction;
+  private:
+    KAction         *m_printImagesAction;
+    KAction         *m_printAssistantAction;
     KIPI::Interface *m_interface;
 };
 
