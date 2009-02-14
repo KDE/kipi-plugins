@@ -1,4 +1,4 @@
-Kipi-plugins 0.2.0-rc2 - Release date: xx/02/2009
+Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -15,7 +15,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 181853 : MetadataEdit       : Entering new xmp meta data removes old one from the image file.
 006 ==> 133649 : Print Wizard       : Scale images instead of cropping.
 007 ==> 182838 : Facebook           : Change API authentication to Desktop application type.
-008 ==> 
 
 Kipi-plugins 0.2.0-rc1 - Release date: 21/01/2009
 ------------------------------------------------------------------------
