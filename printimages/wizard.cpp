@@ -814,17 +814,17 @@ namespace KIPIPrintImagesPlugin
     // PENDING anaselli TPhoto*photo will be needed to add a per photo caption management
     QStringList captionByLines;
 
-    uint captionIndex = 0;
+    int captionIndex = 0;
 
     while ( captionIndex < caption.length() )
     {
       QString newLine;
       bool breakLine = false; // End Of Line found
-      uint currIndex; //  Caption QString current index
+      int currIndex; //  Caption QString current index
 
       // Check minimal lines dimension
       //TODO fix length, maybe useless
-      uint captionLineLocalLength = 40;
+      int captionLineLocalLength = 40;
 
       for ( currIndex = captionIndex; currIndex < caption.length() && !breakLine; currIndex++ )
         if ( caption[currIndex] == QChar ( '\n' ) || caption[currIndex].isSpace() )
@@ -920,7 +920,7 @@ namespace KIPIPrintImagesPlugin
   }
 
   bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                              int captionType, unsigned int &current, bool useThumbnails )
+                              int captionType, int &current, bool useThumbnails )
   {
     Q_ASSERT ( layouts.count() > 1 );
 
@@ -1144,7 +1144,7 @@ namespace KIPIPrintImagesPlugin
 // So someone with an 8-bit display would not be able to save 24-bit
 // images!
   bool Wizard::paintOnePage ( QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                              int captionType, unsigned int &current )
+                              int captionType, int &current )
   {
     Q_ASSERT ( layouts.count() > 1 );
 
@@ -1367,7 +1367,7 @@ namespace KIPIPrintImagesPlugin
     // find the first page of photos
     int count = 0;
     int page = 0;
-    unsigned int current = 0;
+    int current = 0;
 
     QList<TPhoto*>::iterator it;
     for ( it = d->m_photos.begin(); it != d->m_photos.end(); ++it )
@@ -1435,7 +1435,7 @@ namespace KIPIPrintImagesPlugin
     {
       d->mPhotoPage->BtnPrintOrderUp->setEnabled ( false );
     }
-    if ( uint ( d->mPhotoPage->ListPrintOrder->currentRow() + 1 ) == d->mPhotoPage->ListPrintOrder->count() )
+    if ( ( d->mPhotoPage->ListPrintOrder->currentRow() + 1 ) == d->mPhotoPage->ListPrintOrder->count() )
     {
       d->mPhotoPage->BtnPrintOrderDown->setEnabled ( false );
     }
@@ -1955,7 +1955,7 @@ namespace KIPIPrintImagesPlugin
     QPainter p;
     p.begin ( &printer );
 
-    unsigned int current = 0;
+    int current = 0;
 
     bool printing = true;
     while ( printing )
@@ -1995,7 +1995,7 @@ namespace KIPIPrintImagesPlugin
 #endif
     KApplication::kApplication()->processEvents();
 
-    unsigned int current = 0;
+    int current = 0;
     int pageCount = 1;
     bool printing = true;
     QStringList files;

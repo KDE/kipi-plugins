@@ -122,10 +122,10 @@ typedef struct _TPhotoSize {
       void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
 
       bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int captionType, unsigned int &current, bool useThumbnails = false);
+                        int captionType, int &current, bool useThumbnails = false);
 
       bool paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int captionType, unsigned int &current);
+                        int captionType, int &current);
 
       void manageBtnPrintOrder();
       void manageBtnPreviewPage();
