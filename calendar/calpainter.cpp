@@ -324,7 +324,7 @@ void CalPainter::paint(int month)
         }
 
         emit signalProgress( 0 );
-        image_ = image_.scaled( rImage.width(), rImage.height(), Qt::KeepAspectRatio );
+        image_ = image_.scaled( rImage.width(), rImage.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
 
         emit signalTotal( image_.height() );
 

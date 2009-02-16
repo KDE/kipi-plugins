@@ -196,7 +196,7 @@ bool ImageLoadThread::loadImage()
 
     float aspect = (float)image.width() / (float)image.height();
 
-    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio);
+    image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_imageLock.lock();
 

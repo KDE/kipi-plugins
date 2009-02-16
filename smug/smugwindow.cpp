@@ -663,7 +663,8 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
         && (image.width() > maxDim || image.width() > maxDim))
     {
         kDebug(51000) << "Resizing to " << maxDim;
-        image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio);
+        image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
+                                             Qt::SmoothTransformation);
     }
 
     kDebug(51000) << "Saving to temp file: " << m_tmpPath;

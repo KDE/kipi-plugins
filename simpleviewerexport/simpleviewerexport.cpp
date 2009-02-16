@@ -509,7 +509,8 @@ bool SimpleViewerExport::resizeImage(const QImage &image, int maxSize, QImage &r
             w = (w == 0) ? 1 : w;
             h = maxSize;
         }
-        resizedImage = image.scaled(w, h, Qt::KeepAspectRatio);
+        resizedImage = image.scaled(w, h, Qt::KeepAspectRatio,
+                                          Qt::SmoothTransformation);
     }
 
     return true;

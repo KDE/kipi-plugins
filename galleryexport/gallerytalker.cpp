@@ -217,7 +217,8 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     if (!image.isNull()) {
         // image file - see if we need to rescale it
         if (rescale && (image.width() > maxDim || image.height() > maxDim)) {
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio);
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
+                                                 Qt::SmoothTransformation);
         }
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
