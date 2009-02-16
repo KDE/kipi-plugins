@@ -1,6 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Print assistant
+Name[ja]=印刷ウィザード
+Name[pt]=Assistente de impressão
+Name[pt_BR]=Assistente de impressão
+Name[sv]=Utskriftsassistent
+Name[uk]=Помічник друку
 Comment=A tool to print images in various format
 Comment[ca]=Una eina per a imprimir imatges en diversos formats
 Comment[da]=Et værktøj til at udskrive billeder i forskellige formater
