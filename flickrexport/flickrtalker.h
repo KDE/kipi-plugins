@@ -68,7 +68,7 @@ public:
 
 public:
 
-    FlickrTalker(QWidget* parent);
+    FlickrTalker(QWidget* parent, const QString& serviceName);
     ~FlickrTalker();
 
     QString getUserName();
@@ -140,6 +140,10 @@ private:
 //  QString    m_cookie;
     QByteArray m_buffer;
 
+    QString    m_serviceName;
+    QString    m_apiUrl;
+    QString    m_authUrl;
+    QString    m_uploadUrl;
     QString    m_apikey;
     QString    m_secret;
     QString    m_frob;

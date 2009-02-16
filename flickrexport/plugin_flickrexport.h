@@ -54,10 +54,12 @@ public:
 public slots:
 
     void slotActivate();
+    void slotActivate23hq();
 
 private:
 
     KAction                                 *m_action;
+    KAction                                 *m_action23hq;
     KIPIFlickrExportPlugin::FlickrWindow    *m_dlg;
 };
 

@@ -83,7 +83,8 @@ class FlickrWindow : public KDialog
 
 public:
 
-    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
+    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+                 QWidget *parent, const QString& serviceName);
     ~FlickrWindow();
 
 private slots:
@@ -122,6 +123,8 @@ private:
 
     unsigned int                           m_uploadCount;
     unsigned int                           m_uploadTotal;
+
+    QString                                m_serviceName;
 
     QPushButton                           *m_newAlbumBtn;
     QPushButton                           *m_changeUserButton;

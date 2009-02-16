@@ -79,11 +79,25 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrTalker::FlickrTalker(QWidget* parent)
+FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
 {
     m_parent = parent;
     m_job    = 0;
     m_photoSetsList = 0;
+
+    m_serviceName = serviceName;
+    if (serviceName == "23hq") 
+    {
+        m_apiUrl = QString("http://www.23hq.com/services/rest/");
+        m_authUrl = QString("http://www.23hq.com/services/auth/");
+        m_uploadUrl = QString("http://www.23hq.com/services/upload/");
+    }
+    else
+    {
+        m_apiUrl = QString("http://www.flickr.com/services/rest/");
+        m_authUrl = QString("http://www.flickr.com/services/auth/");
+        m_uploadUrl = QString("http://api.flickr.com/services/upload/");
+    }
     m_apikey = "49d585bafa0758cb5c58ab67198bf632";
     m_secret = "34b39925e6273ffd";
 
@@ -146,7 +160,7 @@ void FlickrTalker::getFrob()
         m_job = 0;
     }
 
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("method", "flickr.auth.getFrob");
     url.addQueryItem("api_key", m_apikey);
     QString md5 = getApiSig(m_secret, url);
@@ -180,7 +194,7 @@ void FlickrTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("method", "flickr.auth.checkToken");
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("auth_token", token);
@@ -215,7 +229,7 @@ void FlickrTalker::slotAuthenticate()
         m_job = 0;
     }
 
-    KUrl url("http://www.flickr.com/services/auth/");
+    KUrl url(m_authUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("frob", m_frob);
     url.addQueryItem("perms", "write");
@@ -227,7 +241,7 @@ void FlickrTalker::slotAuthenticate()
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                   i18n("Please Follow through the instructions in the browser window and "
                        "return back to press ok if you are authenticated or press No"),
-                  i18n("Flickr Service Web Authorization"));
+                  i18n("%1 Service Web Authorization", m_serviceName));
 
     if( valueOk == KMessageBox::Yes)
     {
@@ -252,7 +266,7 @@ void FlickrTalker::getToken()
         m_job = 0;
     }
 
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.auth.getToken");
     url.addQueryItem("frob", m_frob);
@@ -281,7 +295,7 @@ void FlickrTalker::getToken()
 void FlickrTalker::listPhotoSets()
 {
     kDebug(51000) << "List photoset invoked" << endl;
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.photosets.getList");
     url.addQueryItem("user_id", m_userId);
@@ -312,7 +326,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
         m_job = 0;
     }
 
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", method);
     url.addQueryItem("frob", m_frob);
@@ -360,7 +374,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     }
 
     kDebug( 51000 ) << "create photoset invoked" << endl;
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
     url.addQueryItem("auth_token", m_token);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.photosets.create");
@@ -395,7 +409,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,  const QString& ph
     }
 
     kDebug( 51000 ) << "addPhotoToPhotoSet invoked" << endl;
-    KUrl url("http://www.flickr.com/services/rest/");
+    KUrl url(m_apiUrl);
 
     url.addQueryItem("auth_token", m_token);
 
@@ -436,7 +450,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         m_job = 0;
     }
 
-    KUrl    url("http://api.flickr.com/services/upload/");
+    KUrl    url(m_uploadUrl);
 
     // We dont' want to modify url as such, we just used the KURL object for storing the query items.
     KUrl  url2("");

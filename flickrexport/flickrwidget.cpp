@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,7 +59,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
+FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QString& serviceName)
             : QWidget(parent)
 {
     setObjectName("FlickrWidget");
@@ -71,11 +72,17 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
     QLabel *headerLabel = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
-    headerLabel->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
-                              "<font color=\"#0065DE\">flick</font>"
-                              "<font color=\"#FF0084\">r</font></a>"
-                              " Export"
-                              "</h2></b>"));
+    if (serviceName == "23hq")
+        headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
+                                  "<font color=\"#7CD164\">23hq</font>"
+                                  " Export"
+                                  "</h2></b>"));
+    else
+        headerLabel->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
+                                  "<font color=\"#0065DE\">flick</font>"
+                                  "<font color=\"#FF0084\">r</font></a>"
+                                  " Export"
+                                  "</h2></b>"));
 
     // -------------------------------------------------------------------
 
@@ -207,6 +214,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface)
 
     connect(m_exportHostTagsCheckBox, SIGNAL(clicked()),
             this, SLOT(slotExportHostTagsChecked()));
+
+    if (serviceName == "23hq")
+    {
+        // 23hq.com does not support Family/Friends concept, so hide it
+        m_familyCheckBox->hide();
+        m_friendsCheckBox->hide();
+    }
 }
 
 FlickrWidget::~FlickrWidget()

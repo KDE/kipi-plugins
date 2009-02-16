@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,10 +75,11 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
+FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent, const QString& serviceName)
             : KDialog(parent)
 {
-    setWindowTitle(i18n("Export to Flickr Web Service"));
+    m_serviceName = serviceName;
+    setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -87,7 +89,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_uploadCount            = 0;
     m_uploadTotal            = 0;
 //  m_wallet                 = 0;
-    m_widget                 = new FlickrWidget(this, interface);
+    m_widget                 = new FlickrWidget(this, interface, serviceName);
     m_photoView              = m_widget->m_photoView;
     m_albumsListComboBox     = m_widget->m_albumsListComboBox;
     m_newAlbumBtn            = m_widget->m_newAlbumBtn;
@@ -116,13 +118,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     // --------------------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr Export"),
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23hq Export"),
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collection to "
-                                                     "Flickr web service."),
+                                                     "Flickr/23hq web service."),
                                            ki18n( "(c) 2005-2008, Vardhman Jain\n"
-                                           "(c) 2008, Gilles Caulier" ));
+                                           "(c) 2008, Gilles Caulier\n"
+                                           "(c) 2009, Luka Renko" ));
 
     m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");
@@ -143,7 +146,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     // --------------------------------------------------------------------------
 
-    m_talker = new FlickrTalker(this);
+    m_talker = new FlickrTalker(this, serviceName);
 
     connect(m_talker, SIGNAL( signalError( const QString& ) ),
             m_talker, SLOT( slotError( const QString& ) ));
@@ -243,7 +246,7 @@ FlickrWindow::~FlickrWindow()
 void FlickrWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("FlickrExport Settings");
+    KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     m_token = grp.readEntry("token");
 
     if (grp.readEntry("Resize", false))
@@ -272,14 +275,14 @@ void FlickrWindow::readSettings()
     m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
-    KConfigGroup dialogGroup = config.group( "FlickrExport Dialog");
+    KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     restoreDialogSize(dialogGroup);
 }
 
 void FlickrWindow::writeSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("FlickrExport Settings");
+    KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     grp.writeEntry("token", m_token);
     grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
     grp.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
@@ -289,7 +292,7 @@ void FlickrWindow::writeSettings()
     grp.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
     grp.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
     grp.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
-    KConfigGroup dialogGroup = config.group( "FlickrExport Dialog");
+    KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     saveDialogSize(dialogGroup );
     config.sync();
 }
@@ -546,12 +549,12 @@ void FlickrWindow::slotAddPhotoSucceeded()
 
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg) {
     KMessageBox::error(this,
-                 i18n("Failed to Fetch Photosets information from Flickr. %1\n", msg));
+                 i18n("Failed to Fetch Photosets information from %1. %2\n", m_serviceName, msg));
 }
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload photo into Flickr. %1\nDo you want to continue?", msg))
+                     i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
                      != KMessageBox::Continue)
     {
         m_uploadQueue.clear();

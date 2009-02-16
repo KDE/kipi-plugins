@@ -2,6 +2,7 @@ Kipi-plugins 0.2.0 - Release date: xx/03/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
+FlickrExport   : Add support for 23hq.com service which uses Flickr API
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 

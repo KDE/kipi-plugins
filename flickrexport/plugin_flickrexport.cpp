@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -75,6 +76,17 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     addAction(m_action);
 
+    m_action23hq = actionCollection()->addAction("23hqexport");
+    m_action23hq->setText(i18n("Export to &23hq..."));
+    m_action23hq->setIcon(KIcon("applications-internet"));
+    m_action23hq->setEnabled(false);
+    m_action23hq->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2);
+
+    connect(m_action23hq, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate23hq()));
+
+    addAction(m_action23hq);
+
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
     if (!interface)
@@ -83,6 +95,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
         return;
     }
     m_action->setEnabled(true);
+    m_action23hq->setEnabled(true);
 }
 
 Plugin_FlickrExport::~Plugin_FlickrExport()
@@ -102,13 +115,30 @@ void Plugin_FlickrExport::slotActivate()
     QString tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
 
     // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow());
+    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
+    m_dlg->show();
+}
+
+void Plugin_FlickrExport::slotActivate23hq()
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    if (!interface)
+    {
+        kError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
+
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp", "kipi-23hqexportplugin-" + QString::number(getpid()) + "/");
+
+    // We clean it up in the close button
+    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23hq");
     m_dlg->show();
 }
 
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
 {
-    if (action == m_action)
+    if (action == m_action || action == m_action23hq)
         return KIPI::ExportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
