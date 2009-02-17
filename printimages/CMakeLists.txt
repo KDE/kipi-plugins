@@ -28,5 +28,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_printimages
 INSTALL(TARGETS kipiplugin_printimages
         DESTINATION ${PLUGIN_INSTALL_DIR})
 
-INSTALL(FILES kipiplugin_printimages.desktop kipiplugin_printassistant.desktop
+INSTALL(FILES kipiplugin_printimages.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
