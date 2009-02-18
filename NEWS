@@ -2,12 +2,14 @@ Kipi-plugins 0.2.0 - Release date: xx/03/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
+
 FlickrExport   : Add support for 23hq.com service which uses Flickr API
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 184312 : General            : Use SmoothTransform for scaling images for export, calendar and slideshow
-002 ==> 
+002 ==> 140438 : General            : 3 different viewers for diferents needs.
+003 ==> 
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
