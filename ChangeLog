@@ -16556,7 +16556,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598395] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: add Focal Lenght In 35mm Film settings
+	  informations editor: add Focal Length In 35mm Film settings
 	  
 	  CCBUGS: 103255
 

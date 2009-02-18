@@ -501,17 +501,17 @@ void SlideShow::printProgress()
 
     QString progress( QString::number( m_fileIndex + 1 ) + "/" + QString::number( m_fileList.count() ) );
 
-    int stringLenght = p.fontMetrics().width( progress ) * progress.length();
+    int stringLength = p.fontMetrics().width( progress ) * progress.length();
 
     p.setPen( QColor( Qt::black ) );
 
     for ( int x = 9; x <= 11; x++ )
         for ( int y = 21; y >= 19; y-- )
-            p.drawText( width() - stringLenght - x, y, progress );
+            p.drawText( width() - stringLength - x, y, progress );
 
     p.setPen( QColor( Qt::white ) );
 
-    p.drawText( width() - stringLenght - 10, 20, progress );
+    p.drawText( width() - stringLength - 10, 20, progress );
 }
 
 SlideShow::EffectMethod SlideShow::getRandomEffect()
