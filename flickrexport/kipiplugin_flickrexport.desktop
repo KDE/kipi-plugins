@@ -1,7 +1,22 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr/23hq Exporter
+Name[el]=Εξαγωγέας Flickr/23hq
+Name[ga]=Easpórtálaí Flickr/23hq
+Name[nds]=Flickr/23hq-Export
+Name[pt]=Exportação para o Flickr/23hq
+Name[pt_BR]=Exportação para o Flickr/23hq
+Name[sv]=Export till Flickr eller 23hq
+Name[uk]=Експорт до Flickr/23hq
 Comment=A tool to export images to a remote Flickr or 23hq web service
+Comment[ca]=Una eina per a exportar imatges a un servei web remot Flickr o 23hq
+Comment[el]=Ένα εργαλείο για την εξαγωγή εικόνων σε μια υπηρεσία ιστού Flickr ή 23hq
+Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin Flickr nó 23hq
+Comment[nds]=En Warktüüch, mit dat sik Biller na en Flickr- oder 23hq-Nettserver exporteren laat
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Flickr ou 23hq
+Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço Web remoto do Flickr ou 23hq
+Comment[sv]=Ett verktyg för att exportera bilder till en Flickr eller 23hq fjärrwebbtjänst
+Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби Flickr або 23hq
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
