@@ -494,6 +494,7 @@ void GalleryWindow::slotNewAlbum()
     QString name = dlg->nameEdit->text();
     QString title = dlg->titleEdit->text();
     QString caption = dlg->captionEdit->text();
+
     delete dlg;
 
     // check for prohibited chars in the album name
@@ -548,10 +549,10 @@ void GalleryWindow::slotNewAlbum()
         } else if (ch == ')') {
             clean = false;
             break;
-        } else if (ch == ' ') {
+        } /*else if (ch == ' ') {
             clean = false;
             break;
-        }
+        }*/
     }
 
     if (!clean) {
@@ -570,7 +571,7 @@ void GalleryWindow::slotNewAlbum()
         parentAlbumName = "0";
     }
 
-    m_talker->createAlbum(parentAlbumName, name, title, caption);
+    m_talker->createAlbum( parentAlbumName, name, title, caption);
 }
 
 
