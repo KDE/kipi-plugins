@@ -1,7 +1,7 @@
 PROJECT(kipi-plugins)
 
 # =======================================================
-# Informations to update before to release this package.
+# Information to update before to release this package.
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "0")

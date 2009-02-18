@@ -10438,7 +10438,7 @@ V 0.2.0-beta1 - 2008-09-20
 2007-10-24 12:14  cgilles
 
     * kipi-plugins from trunk (KDE4) : XMP metadata editor : add dialog
-      page to edit Credits informations.
+      page to edit Credits information.
       CCMAIL: digikam-devel@kde.org
       CCMAIL: kde-imaging@kde.org
 
@@ -10457,7 +10457,7 @@ V 0.2.0-beta1 - 2008-09-20
 2007-10-24 08:51  cgilles
 
     * kipi-plugins from trunk (KDE4) : XMP metadata editor : support of
-      Origin informations
+      Origin information
       CCMAIL: digikam-devel@kde.org
       CCMAIL: kde-imaging@kde.org
 
@@ -10825,7 +10825,7 @@ V 0.2.0-beta1 - 2008-09-20
 
     * kipi-plugins from trunk (KDE4) : the last part of IPTC/IMM not
       yet implemented been Envelope Record. A new panel have been added
-      to the dialog to support these informations
+      to the dialog to support these information
 
 2007-10-11 11:23  cgilles
 
@@ -14029,7 +14029,7 @@ V 0.1.4-beta1 - 2007-06-04
 	  
 	  With this library, you can extract preview image (used by camera
 	  to display picture on TV screen) as a QImage, and extract all
-	  informations given by dcraw to identify a RAW file. Of course,
+	  information given by dcraw to identify a RAW file. Of course,
 	  you can decode and extract the RAW pictures with a lot of
 	  settings. The image data (8 or 16 bits color depth) is returned
 	  in a QByteArray container. The library include a widget to
@@ -14416,7 +14416,7 @@ V 0.1.4-beta1 - 2007-06-04
 	  Slide pictures to screen, etc. The Preview image extraction is
 	  very fast and a QImage instance is returned. You can take a look
 	  into RAW Converter code to see how i use this library. If you
-	  want more informations, lets me hear on kde-imaging@kde.org
+	  want more information, lets me hear on kde-imaging@kde.org
 	  mailing list.
 	  
 	  Marcel, i will port digiKam core on my computer using current
@@ -16203,7 +16203,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/plugin_metadataedit.h:
 	  kipi-plugins from trunk : MetadataEdit plugin :
 	  - The main dialog is now removed. This one do not give
-	  susbtancial informations to user : the host application
+	  susbtancial information to user : the host application
 	  interface is now used intead and it enough for this plugin.
 	  - All user actions are encapsuled into Images/Metadata sub-menu.
 	  - Actions are : Edit IPTC, Edit EXIF, Remove IPTC, Remove EXIF.
@@ -16356,7 +16356,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598992] metadataedit/exifdevice.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
-	  informations editor: add Subject Distance Range settings
+	  information editor: add Subject Distance Range settings
 	  
 	  CCBUGS: 103255
 
@@ -16364,7 +16364,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598987] metadataedit/exifdevice.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
-	  informations editor: add Scene Capture Type settings
+	  information editor: add Scene Capture Type settings
 	  
 	  CCBUGS: 103255
 
@@ -16372,7 +16372,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598985] metadataedit/exifdevice.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Device
-	  informations editor: add File Source settings
+	  information editor: add File Source settings
 	  
 	  CCBUGS: 103255
 
@@ -16428,7 +16428,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598747] metadataedit/exifexposure.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: add Sensing Method settings
+	  information editor: add Sensing Method settings
 	  
 	  CCBUGS: 103255
 
@@ -16436,7 +16436,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598741] metadataedit/exifadjust.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
-	  Adjustments informations editor: add Custom Rendered settings
+	  Adjustments information editor: add Custom Rendered settings
 	  
 	  CCBUGS: 103255
 
@@ -16444,7 +16444,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598736] metadataedit/exifadjust.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
-	  Adjustments informations editor: add Sharpness settings
+	  Adjustments information editor: add Sharpness settings
 	  
 	  CCBUGS: 103255
 
@@ -16452,7 +16452,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598735] metadataedit/exifadjust.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
-	  Adjustments informations editor: add Saturation settings
+	  Adjustments information editor: add Saturation settings
 	  
 	  CCBUGS: 103255
 
@@ -16460,7 +16460,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598734] metadataedit/exifadjust.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Picture
-	  Adjustments informations editor: add Contrast settings
+	  Adjustments information editor: add Contrast settings
 	  
 	  CCBUGS: 103255
 
@@ -16469,7 +16469,7 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r598732] metadataedit/Makefile.am, metadataedit/exifadjust.cpp,
 	  metadataedit/exifadjust.h, metadataedit/exifeditdialog.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: add Exif Picture
-	  Adjustments informations editor
+	  Adjustments information editor
 	  
 	  CCBUGS: 103255
 
@@ -16477,7 +16477,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598657] metadataedit/exifexposure.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: handle Exposure Index settings accordinly
+	  information editor: handle Exposure Index settings accordinly
 	  with ISO Speed Rating settings
 	  
 	  CCBUGS: 103255
@@ -16492,7 +16492,7 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r598655] metadataedit/exifexposure.cpp,
 	  metadataedit/exiflens.cpp, metadataedit/exiflight.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: add Exposure Bias Value settings
+	  information editor: add Exposure Bias Value settings
 	  
 	  CCBUGS: 103255
 
@@ -16500,7 +16500,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598651] metadataedit/exiflens.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Lens
-	  informations editor: add Digital Zoom Ratio settings
+	  information editor: add Digital Zoom Ratio settings
 	  
 	  CCBUGS: 103255
 
@@ -16513,7 +16513,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/exiflight.h, metadataedit/exifphoto.cpp,
 	  metadataedit/exifphoto.h:
 	  kipiplugins from trunk : MetadataEdit plugin: separate Exif
-	  photo informations to 3 sub-categories : Lens, Exposure, and
+	  photo information to 3 sub-categories : Lens, Exposure, and
 	  Light
 	  
 	  CCBUGS: 103255
@@ -16548,7 +16548,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598407] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: add Flash Energy settings
+	  information editor: add Flash Energy settings
 	  
 	  CCBUGS: 103255
 
@@ -16556,7 +16556,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598395] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: add Focal Length In 35mm Film settings
+	  information editor: add Focal Length In 35mm Film settings
 	  
 	  CCBUGS: 103255
 
@@ -16564,7 +16564,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598385] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: add White Balance settings
+	  information editor: add White Balance settings
 	  
 	  CCBUGS: 103255
 
@@ -16572,7 +16572,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598380] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: control Aperture Value tag with FNumber tag
+	  information editor: control Aperture Value tag with FNumber tag
 	  
 	  CCBUGS: 103255
 
@@ -16580,7 +16580,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598367] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: control Shutter Speed Value tag with
+	  information editor: control Shutter Speed Value tag with
 	  Exposure Time tag
 	  
 	  CCBUGS: 103255
@@ -16594,7 +16594,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598331] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: added Max Aperture Value settings.
+	  information editor: added Max Aperture Value settings.
 	  
 	  CCBUGS: 103255
 
@@ -16602,7 +16602,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r598284] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif photo
-	  informations editor: Fix Aperture values controls again (ex.
+	  information editor: Fix Aperture values controls again (ex.
 	  F2.8 ==> f/2.8)
 
 2006-10-23 06:00  cgilles
@@ -16668,7 +16668,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r597484] metadataedit/exifphoto.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: Fix Aperture values controls
+	  information editor: Fix Aperture values controls
 
 2006-10-20 12:59  cgilles
 
@@ -16688,7 +16688,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r597460] metadataedit/exifexposure.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: added Flash Mode settings.
+	  information editor: added Flash Mode settings.
 	  
 	  CCBUGS: 103255
 
@@ -16696,7 +16696,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r597432] metadataedit/exifexposure.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: added lens Focal Length settings.
+	  information editor: added lens Focal Length settings.
 	  
 	  CCBUGS: 103255
 
@@ -16704,7 +16704,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r597411] metadataedit/exifexposure.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Exposure
-	  informations editor: added Aperture (F-number) settings.
+	  information editor: added Aperture (F-number) settings.
 	  
 	  CCBUGS: 103255
 
@@ -16802,7 +16802,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/exifeditdialog.cpp, metadataedit/exifexposure.cpp,
 	  metadataedit/exifexposure.h:
 	  kipiplugins from trunk : MetadataEdit plugin: started Exif
-	  Exposure informations editor. Not yet complete
+	  Exposure information editor. Not yet complete
 	  
 	  CCBUGS: 103255
 
@@ -16815,7 +16815,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r596732] metadataedit/exifdatetime.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Date & Time
-	  informations editor support now sub-seconds time values.
+	  information editor support now sub-seconds time values.
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 103255
@@ -16826,7 +16826,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/exifdatetime.cpp, metadataedit/exifdatetime.h,
 	  metadataedit/exifeditdialog.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Date & Time
-	  informations editor is fully implemented.
+	  information editor is fully implemented.
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 103255
@@ -16855,7 +16855,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r596688] metadataedit/exifcaption.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: Exif Caption
-	  informations editor is fully implemented.
+	  information editor is fully implemented.
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 103255
@@ -16946,7 +16946,7 @@ v 0.1.3-beta1 - 2006-11-29
 
 	* [r596354] metadataedit/iptcorigin.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin: IPTC Origin
-	  informations editor now support all country codes define by
+	  information editor now support all country codes define by
 	  ISO-3166 norm.
 	  
 	  CCMAIL: kde-imaging@kde.org
@@ -17087,7 +17087,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/iptceditdialog.cpp:
 	  kipiplugins from trunk : MetadataEdit plugin:
 	  
-	  Added IPTC Date & Time informations in IPTC Edit dialog
+	  Added IPTC Date & Time information in IPTC Edit dialog
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 91812, 133276, 103255
@@ -17099,7 +17099,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/iptcorigin.cpp, metadataedit/iptcorigin.h:
 	  kipiplugins from trunk : MetadataEdit plugin:
 	  
-	  Added IPTC Origin informations in IPTC Edit dialog
+	  Added IPTC Origin information in IPTC Edit dialog
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 91812, 133276, 103255
@@ -17111,7 +17111,7 @@ v 0.1.3-beta1 - 2006-11-29
 	  metadataedit/iptcstatus.cpp, metadataedit/iptcstatus.h:
 	  kipiplugins from trunk : MetadataEdit plugin:
 	  
-	  Added IPTC Status informations in IPTC Edit dialog
+	  Added IPTC Status information in IPTC Edit dialog
 	  
 	  CCMAIL: kde-imaging@kde.org
 	  CCBUGS: 91812, 133276, 103255
@@ -18430,7 +18430,7 @@ v 0.1.3-beta1 - 2006-11-29
 	* [r585900] rawconverter/dcrawiface.cpp,
 	  rawconverter/exiv2iface.cpp, rawconverter/exiv2iface.h:
 	  kipi-plugins from trunk : Raw Converter : More Exif/Iptc
-	  informations are updated during conversion
+	  information are updated during conversion
 
 2006-09-18 06:42  cgilles
 
@@ -21064,7 +21064,7 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* batchprocessimages/resizeimagesdialog.cpp: BugFix in
 	  BatchResizeImages kipi plugin: using ImageMagick "composite" do
-	  not preserve Exif informations per default.  Need to use
+	  not preserve Exif information per default.  Need to use
 	  "-profile" option for resolve this problem.  Note: ImageMagick
 	  "Convert" program preverve it! CCMAIL: kde-imaging@kde.org,
 	  digikam-devel@lists.sourceforge.net
@@ -21802,7 +21802,7 @@ v0.1.0-beta2                                                      2005-02-08
 
 	* sendimages/: Makefile.am, exifrestorer.cpp, exifrestorer.h,
 	  jpegsection.h, sendimages.cpp: KIPI sendimages plugin : now,
-	  resized JPEG images don't lost the EXIF informations ! CCMAIL:
+	  resized JPEG images don't lost the EXIF information ! CCMAIL:
 	  kde-imaging@kde.org, digikam-users@lists.sourceforge.net
 
 2004-09-24 15:50  cgilles
