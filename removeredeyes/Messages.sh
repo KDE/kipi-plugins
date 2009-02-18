@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_removeredeyes.pot
+$XGETTEXT `find . -name '*.cpp'` -o $podir/kipiplugin_removeredeyes.pot
 
