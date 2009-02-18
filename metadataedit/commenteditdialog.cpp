@@ -162,6 +162,7 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
 
     // ------------------------------------------------------------
 
+    d->userCommentEdit->setFocus();
     readSettings();
 }
 
