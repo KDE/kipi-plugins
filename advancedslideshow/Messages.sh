@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_slideshow.pot
+$XGETTEXT *.cpp -o $podir/kipiplugin_advancedslideshow.pot
 
