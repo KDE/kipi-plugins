@@ -9,7 +9,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 184312 : General            : Use SmoothTransform for scaling images for export, calendar and slideshow
 002 ==> 140438 : General            : 3 different viewers for diferents needs.
-003 ==> 
+003 ==> 184553 : GalleryExport      : Encoding issue with gallery2.
+004 ==> 
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
