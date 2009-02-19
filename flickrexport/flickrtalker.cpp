@@ -964,7 +964,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
             kDebug( 51000 ) << "Error code=" << code << endl;
             QString msg = node.toElement().attribute("msg");
             kDebug( 51000 ) << "Msg=" << msg << endl;
-            KMessageBox::error(kapp->activeWindow(), i18n("PhotoSet creation failed") + msg);
+            KMessageBox::error(kapp->activeWindow(), i18n("PhotoSet creation failed: ") + msg);
         }
 
         node = node.nextSibling();
