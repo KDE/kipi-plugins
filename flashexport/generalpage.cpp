@@ -92,7 +92,7 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     QGroupBox *box2    = new QGroupBox(i18n("Save Gallery To"), this);
     QVBoxLayout *vlay2 = new QVBoxLayout(box2);
-    d->exportUrl       = new KUrlRequester(KGlobalSettings::documentPath() + "simpleviewer", this);
+    d->exportUrl       = new KUrlRequester(KGlobalSettings::documentPath() + "/simpleviewer", this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
 
     vlay2->setMargin(KDialog::spacingHint());

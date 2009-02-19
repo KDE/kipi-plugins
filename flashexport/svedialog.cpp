@@ -245,7 +245,7 @@ void SVEDialog::readSettings()
     d->settings.frameWidth           = group.readEntry("FrameWidth", 1);
     d->settings.stagePadding         = group.readEntry("StagePadding", 20);
     d->settings.title                = group.readEntry("Title", QString());
-    d->settings.exportUrl            = group.readEntry("ExportUrl", KUrl(KGlobalSettings::documentPath() + "simpleviewer"));
+    d->settings.exportUrl            = group.readEntry("ExportUrl", KUrl(KGlobalSettings::documentPath() + "/simpleviewer"));
     d->settings.resizeExportImages   = group.readEntry("ResizeExportImages", true);
     d->settings.imagesExportSize     = group.readEntry("ImagesExportSize", 640);
     d->settings.maxImageDimension    = group.readEntry("MaxImageDimension", 640);
