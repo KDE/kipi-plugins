@@ -58,6 +58,7 @@
 namespace KIPIGalleryExportPlugin
 {
 
+
 GalleryTalker::GalleryTalker(QWidget* parent)
         : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
@@ -74,11 +75,11 @@ GalleryTalker::~GalleryTalker()
 bool GalleryTalker::s_using_gallery2 = true;
 QString GalleryTalker::s_authToken = "";
 
+
 bool GalleryTalker::loggedIn() const
 {
     return m_loggedIn;
 }
-
 
 
 void GalleryTalker::login(const KUrl& url, const QString& name,
@@ -107,7 +108,6 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
 }
 
 
-
 void GalleryTalker::listAlbums()
 {
     m_job = 0;
@@ -134,7 +134,6 @@ void GalleryTalker::listAlbums()
 }
 
 
-
 void GalleryTalker::listPhotos(const QString& albumName)
 {
     m_job = 0;
@@ -157,7 +156,6 @@ void GalleryTalker::listPhotos(const QString& albumName)
 
     emit signalBusy(true);
 }
-
 
 
 void GalleryTalker::createAlbum(const QString& parentAlbumName,
@@ -191,7 +189,6 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 
     emit signalBusy(true);
 }
-
 
 
 bool GalleryTalker::addPhoto(const QString& albumName,
@@ -255,7 +252,6 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 }
 
 
-
 void GalleryTalker::cancel()
 {
     if (m_job) {
@@ -263,7 +259,6 @@ void GalleryTalker::cancel()
         m_job = 0;
     }
 }
-
 
 
 void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
@@ -393,7 +388,6 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 }
 
 
-// -------------------------------------------------------------------------------------
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
     QString str(data);
@@ -474,8 +468,6 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 }
 
 
-// -------------------------------------------------------------------------------------------
-
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QString str(data);
@@ -536,7 +528,6 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
     emit signalPhotos(photoList);
 }
-
 
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
