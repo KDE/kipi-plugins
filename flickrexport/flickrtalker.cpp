@@ -296,9 +296,9 @@ void FlickrTalker::listPhotoSets()
 {
     kDebug(51000) << "List photoset invoked" << endl;
     KUrl url(m_apiUrl);
+    url.addQueryItem("auth_token", m_token);
     url.addQueryItem("api_key", m_apikey);
     url.addQueryItem("method", "flickr.photosets.getList");
-    url.addQueryItem("user_id", m_userId);
     QString md5 = getApiSig(m_secret, url);
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "List photoset URL" << url;
