@@ -98,6 +98,7 @@ private:
     unsigned int m_uploadCount;
     unsigned int m_uploadTotal;
     QStringList *mpUploadList;
+    QString firstAlbumName;
 
     class Private;
     Private* const d;

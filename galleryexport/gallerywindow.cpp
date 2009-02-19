@@ -26,7 +26,6 @@
 #include "gallerywindow.h"
 
 // Qt includes.
-
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
@@ -35,8 +34,8 @@
 #include <QSpinBox>
 #include <Qt>
 #include <QTreeWidgetItem>
-// KDE includes.
 
+// KDE includes.
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -51,11 +50,9 @@
 #include <ktoolinvocation.h>
 
 // LibKIPI includes.
-
 #include <libkipi/interface.h>
 
 // Local includes.
-
 #include "albumdlg.h"
 #include "galleries.h"
 #include "galleryconfig.h"
@@ -396,13 +393,14 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
+            firstAlbumName = album.name;
             item->setText(2, QString("Album") );
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
             parentItemList << item;
-        } 
-        else 
+        }
+        else
         {
             QTreeWidgetItem *parentItem;
             bool found = false;
@@ -564,14 +562,16 @@ void GalleryWindow::slotNewAlbum()
 
     QTreeWidgetItem* item = d->albumView->currentItem();
     int column = d->albumView->currentColumn();
-    if (item) {
+    if (item) 
+    {
         const GAlbum& album = d->albumDict.value( item->text(column) );
         parentAlbumName = album.name;
-    } else {
-        parentAlbumName = "0";
+        m_talker->createAlbum( parentAlbumName, name, title, caption);
+    } 
+    else 
+    {
+        m_talker->createAlbum( firstAlbumName, name, title, caption );
     }
-
-    m_talker->createAlbum( parentAlbumName, name, title, caption);
 }
 
 
@@ -710,6 +710,7 @@ QString GalleryWindow::cleanName(QString str)
     plain.replace("&gt;", ">");
     plain.replace("&quot;", "\"");
     plain.replace("&amp;", "&");
+
     return plain;
 }
 
