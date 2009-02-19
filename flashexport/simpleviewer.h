@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef SIMPLEVIEWEREXPORT_H
-#define SIMPLEVIEWEREXPORT_H
+#ifndef SIMPLEVIEWER_H
+#define SIMPLEVIEWER_H
 
 // Qt includes.
 
@@ -45,11 +45,11 @@
 
 #include <libkipi/interface.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
-class SimpleViewerExportPriv;
+class SimpleViewerPriv;
 
-class SimpleViewerExport : public QObject
+class SimpleViewer : public QObject
 {
     Q_OBJECT
 
@@ -59,8 +59,8 @@ public:
 
 private:
 
-    SimpleViewerExport(KIPI::Interface *interface, QObject *parent=0);
-    ~SimpleViewerExport();
+    SimpleViewer(KIPI::Interface *interface, QObject *parent=0);
+    ~SimpleViewer();
 
     bool configure();
     void startExport();
@@ -107,7 +107,7 @@ private:
      * @param url path to original image
      * @param newName new image file name used by gallery
      */
-    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem, 
+    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem,
                      const KUrl &url, const QString& newName);
 
     /**
@@ -126,7 +126,7 @@ private:
     bool checkSimpleViewer() const;
 
     /**
-     * Installs the SimpleViewer files for the later export 
+     * Installs the SimpleViewer files for the later export
      * on the users machine
      */
     bool installSimpleViewer();
@@ -148,9 +148,9 @@ public slots:
 
 private:
 
-    SimpleViewerExportPriv* const d;
+    SimpleViewerPriv* const d;
 };
 
-} // namespace KIPISimpleViewerExportPlugin
+} // namespace KIPIFlashExportPlugin
 
-#endif /* SIMPLEVIEWEREXPORT_H */
+#endif /* SIMPLEVIEWER_H */

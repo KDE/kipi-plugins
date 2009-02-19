@@ -32,7 +32,7 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 class SelectionPagePriv;
 
@@ -52,6 +52,6 @@ private:
     SelectionPagePriv* const d;
 };
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin
 
 #endif // SELECTION_PAGE_H

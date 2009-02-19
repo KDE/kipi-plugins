@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_SIMPLEVIEWER_H
-#define PLUGIN_SIMPLEVIEWER_H
+#ifndef PLUGIN_FLASHEXPORT_H
+#define PLUGIN_FLASHEXPORT_H
 
 // Qt includes.
 
@@ -39,13 +39,13 @@ class Interface;
 
 class KAction;
 
-class Plugin_SimpleViewer : public KIPI::Plugin
+class Plugin_FlashExport : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_SimpleViewer(QObject *parent, const QVariantList &args);
+    Plugin_FlashExport(QObject *parent, const QVariantList &args);
 
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
@@ -56,8 +56,8 @@ private slots:
 
 private:
 
-    KAction         *m_actionSimpleViewer;
+    KAction         *m_actionFlashExport;
     KIPI::Interface *m_interface;
 };
 
-#endif // PLUGIN_SIMPLEVIEWER_H
+#endif // PLUGIN_FLASHEXPORT_H

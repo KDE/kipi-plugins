@@ -38,7 +38,7 @@
 #include <knuminput.h>
 #include <kurlrequester.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class GeneralPagePriv
@@ -216,4 +216,4 @@ void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
     settings.openInKonqueror      = d->openInKonqueror->isChecked();
 }
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin

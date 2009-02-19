@@ -36,7 +36,7 @@
 
 #include <libkipi/imagecollectionselector.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class SelectionPagePriv
@@ -73,4 +73,4 @@ QList<KIPI::ImageCollection> SelectionPage::selection() const
     return d->imageCollectionSelector->selectedImageCollections();
 }
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin

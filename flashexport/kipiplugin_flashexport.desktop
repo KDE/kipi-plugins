@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=SimpleViewer
+Name=Flash Export
 Name[es]=Visor simple
 Name[fr]=Visionneuse simple d'images
 Name[ga]=AmharcánSimplí
@@ -45,5 +45,5 @@ Comment[x-test]=xxA tool to export images to Flashxx
 Comment[zh_CN]=一个将图像导出为 Flash 的工具
 Type=Service
 ServiceTypes=KIPI/Plugin
-X-KDE-Library=kipiplugin_simpleviewer
+X-KDE-Library=kipiplugin_flashexport
 author=Gilles Caulier, caulier dot gilles at gmail dot com

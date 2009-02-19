@@ -33,7 +33,7 @@
 
 #include <libkipi/interface.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class FirstRunDlgPriv;
@@ -78,6 +78,6 @@ private:
     FirstRunDlgPriv* const d;
 };
 
-} // namespace KIPISimpleViewerExportPlugin
+} // namespace KIPIFlashExportPlugin
 
 #endif /* FIRSTRUNDLG_H */

@@ -51,7 +51,7 @@
 #include "pluginsversion.h"
 #include "selectionpage.h"
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class SVEDialogPriv
@@ -202,7 +202,7 @@ int SVEDialog::activePageIndex()
 
 void SVEDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("simpleviewerexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
 
 void SVEDialog::closeEvent(QCloseEvent *e)
@@ -233,7 +233,7 @@ void SVEDialog::slotOk()
 void SVEDialog::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group("SimpleViewerExport Settings");
+    KConfigGroup group = config.group("FlashExport Settings");
 
     d->settings.thumbnailRows        = group.readEntry("ThumbnailRows", 3);
     d->settings.thumbnailColumns     = group.readEntry("ThumbnailColumns", 3);
@@ -257,8 +257,8 @@ void SVEDialog::readSettings()
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
 
-    KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
-    showPage(group2.readEntry("SimpleViewerExport Page", 0));
+    KConfigGroup group2 = config.group(QString("FlashExport Dialog"));
+    showPage(group2.readEntry("FlashExport Page", 0));
     restoreDialogSize(group2);
 }
 
@@ -269,7 +269,7 @@ void SVEDialog::saveSettings()
     d->lookPage->settings(d->settings);
 
     KConfig config("kipirc");
-    KConfigGroup group = config.group("SimpleViewerExport Settings");
+    KConfigGroup group = config.group("FlashExport Settings");
 
     group.writeEntry("ThumbnailRows", d->settings.thumbnailRows);
     group.writeEntry("ThumbnailColumns", d->settings.thumbnailColumns);
@@ -290,8 +290,8 @@ void SVEDialog::saveSettings()
     group.writeEntry("FixOrientation", d->settings.fixOrientation);
     group.writeEntry("OpenInKonqueror", d->settings.openInKonqueror);
 
-    KConfigGroup group2 = config.group(QString("SimpleViewerExport Dialog"));
-    group2.writeEntry("SimpleViewerExport Page", activePageIndex());
+    KConfigGroup group2 = config.group(QString("FlashExport Dialog"));
+    group2.writeEntry("FlashExport Page", activePageIndex());
     saveDialogSize(group2);
     config.sync();
 }
@@ -301,4 +301,4 @@ SimpleViewerSettingsContainer SVEDialog::settings() const
     return d->settings;
 }
 
-} //  namespace KIPISimpleViewerExportPlugin
+} //  namespace KIPIFlashExportPlugin

@@ -49,7 +49,7 @@
 
 #include "kpaboutdata.h"
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class FirstRunDlgPriv
@@ -168,7 +168,7 @@ FirstRunDlg::~FirstRunDlg()
 
 void FirstRunDlg::slotHelp()
 {
-    KToolInvocation::invokeHelp("simpleviewerexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
 
 void FirstRunDlg::slotDownload(const QString &url)
@@ -187,4 +187,4 @@ KUrl FirstRunDlg::getUrl()
     return d->url;
 }
 
-} // namespace KIPISimpleViewerExportPlugin
+} // namespace KIPIFlashExportPlugin

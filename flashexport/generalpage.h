@@ -31,7 +31,7 @@
 
 #include "simpleviewersettingscontainer.h"
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class GeneralPagePriv;
@@ -53,6 +53,6 @@ private:
     GeneralPagePriv* const d;
 };
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin
 
 #endif // GENERAL_PAGE_H 

@@ -38,7 +38,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class LookPagePriv
@@ -212,4 +212,4 @@ void LookPage::settings(SimpleViewerSettingsContainer& settings)
     settings.stagePadding      = d->stagePadding->value();
 }
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin

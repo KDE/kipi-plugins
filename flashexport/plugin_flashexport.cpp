@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#include "plugin_simpleviewer.h"
-#include "plugin_simpleviewer.moc"
+#include "plugin_flashexport.h"
+#include "plugin_flashexport.moc"
 
 // KDE includes.
 
@@ -42,30 +42,30 @@
 // Local includes.
 
 #include "svedialog.h"
-#include "simpleviewerexport.h"
+#include "simpleviewer.h"
 
-K_PLUGIN_FACTORY( SimpleViewerFactory, registerPlugin<Plugin_SimpleViewer>(); )
-K_EXPORT_PLUGIN ( SimpleViewerFactory("kipiplugin_simpleviewer") )
+K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
+K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
-Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const QVariantList&)
-                   : KIPI::Plugin(SimpleViewerFactory::componentData(), parent, "SimpleViewer")
+Plugin_FlashExport::Plugin_FlashExport(QObject *parent, const QVariantList&)
+                   : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
 {
-    kDebug( 51001 ) << "Plugin_SimpleViewer plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_FlashExport plugin loaded" << endl;
 }
 
-void Plugin_SimpleViewer::setup(QWidget* widget)
+void Plugin_FlashExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionSimpleViewer = actionCollection()->addAction("simpleviewer");
-    m_actionSimpleViewer->setText(i18n("Export to F&lash..."));
-    m_actionSimpleViewer->setIcon(KIcon("applications-internet"));
-    m_actionSimpleViewer->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L);
+    m_actionFlashExport = actionCollection()->addAction("flashexport");
+    m_actionFlashExport->setText(i18n("Export to F&lash..."));
+    m_actionFlashExport->setIcon(KIcon("applications-internet"));
+    m_actionFlashExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L);
 
-    connect(m_actionSimpleViewer, SIGNAL(triggered(bool)),
+    connect(m_actionFlashExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionSimpleViewer);
+    addAction(m_actionFlashExport);
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !m_interface )
@@ -75,16 +75,16 @@ void Plugin_SimpleViewer::setup(QWidget* widget)
     }
 }
 
-KIPI::Category Plugin_SimpleViewer::category( KAction* action ) const
+KIPI::Category Plugin_FlashExport::category( KAction* action ) const
 {
-    if ( action == m_actionSimpleViewer )
+    if ( action == m_actionFlashExport )
        return KIPI::ExportPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::ExportPlugin; // no warning from compiler, please
 }
 
-void Plugin_SimpleViewer::slotActivate()
+void Plugin_FlashExport::slotActivate()
 {
     if ( !m_interface )
     {
@@ -92,5 +92,5 @@ void Plugin_SimpleViewer::slotActivate()
         return;
     }
 
-    KIPISimpleViewerExportPlugin::SimpleViewerExport::run(m_interface, this);
+    KIPIFlashExportPlugin::SimpleViewer::run(m_interface, this);
 }

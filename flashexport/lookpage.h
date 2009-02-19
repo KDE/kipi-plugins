@@ -31,7 +31,7 @@
 
 #include "simpleviewersettingscontainer.h"
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 class LookPagePriv;
 
@@ -52,6 +52,6 @@ private:
     LookPagePriv* const d;
 };
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin
 
 #endif // LOOK_PAGE_H 

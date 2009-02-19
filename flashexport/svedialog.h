@@ -37,7 +37,7 @@
 
 #include "simpleviewersettingscontainer.h"
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 class SVEDialogPriv;
 
@@ -74,6 +74,6 @@ private:
     SVEDialogPriv* const d;
 };
 
-} // namespace KIPISimpleViewerExportPlugin
+} // namespace KIPIFlashExportPlugin
 
 #endif /* SVEDIALOG_H */

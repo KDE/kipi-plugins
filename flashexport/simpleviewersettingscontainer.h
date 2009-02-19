@@ -37,7 +37,7 @@
 
 #include <libkipi/imagecollection.h>
 
-namespace KIPISimpleViewerExportPlugin
+namespace KIPIFlashExportPlugin
 {
 
 class SimpleViewerSettingsContainer
@@ -140,6 +140,6 @@ public:
     QList<KIPI::ImageCollection> collections;
 };
 
-}  // namespace KIPISimpleViewerExportPlugin
+}  // namespace KIPIFlashExportPlugin
 
 #endif  // SIMPLEVIEWERSETTINGSCONTAINER_H
