@@ -351,9 +351,8 @@ void GalleryTalker::slotResult(KJob *job)
 
 void GalleryTalker::parseResponseLogin(const QByteArray &data)
 {
-    QString str(data);
+    QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
-    ts.setCodec("UTF-8");
     QString line;
     bool foundResponse = false;
 
@@ -390,9 +389,8 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 
 void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 {
-    QString str(data);
+    QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
-    ts.setCodec("UTF-8");
     QString line;
     bool foundResponse = false;
     bool success = false;
@@ -470,9 +468,8 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
 
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
-    QString str(data);
+    QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
-    ts.setCodec("UTF-8");   // FIXME think about that..
     QString line;
     bool foundResponse = false;
     bool success = false;
@@ -532,9 +529,8 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 {
-    QString str(data);
+    QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
-    ts.setCodec("UTF-8");
     QString line;
     bool foundResponse = false;
     bool success = false;
@@ -576,9 +572,8 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
 
 void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
 {
-    QString str(data);
+    QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
-    ts.setCodec("UTF-8");
     QString line;
     bool foundResponse = false;
     bool success = false;

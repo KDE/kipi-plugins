@@ -710,7 +710,7 @@ QString GalleryWindow::cleanName(QString str)
     plain.replace("&gt;", ">");
     plain.replace("&quot;", "\"");
     plain.replace("&amp;", "&");
-
+    
     return plain;
 }
 
