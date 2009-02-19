@@ -44,11 +44,11 @@
 #include "svedialog.h"
 #include "simpleviewerexport.h"
 
-K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SimpleViewer>(); )
-K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_simpleviewer") )
+K_PLUGIN_FACTORY( SimpleViewerFactory, registerPlugin<Plugin_SimpleViewer>(); )
+K_EXPORT_PLUGIN ( SimpleViewerFactory("kipiplugin_simpleviewer") )
 
 Plugin_SimpleViewer::Plugin_SimpleViewer(QObject *parent, const QVariantList&)
-                   : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SimpleViewer")
+                   : KIPI::Plugin(SimpleViewerFactory::componentData(), parent, "SimpleViewer")
 {
     kDebug( 51001 ) << "Plugin_SimpleViewer plugin loaded" << endl;
 }
