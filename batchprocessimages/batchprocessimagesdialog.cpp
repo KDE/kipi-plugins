@@ -198,7 +198,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 		}
         else
         {
-			url = QDir::homeDirPath();
+			url = QDir::homePath();
 		}
 		m_destinationURL->lineEdit()->setText(url);
 	}
@@ -353,7 +353,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixma
         QMatrix matrix;
 
         matrix.rotate( info.angle() );
-        img = img.xForm( matrix );
+        img = img.transformed( matrix );
         pix.convertFromImage( img );
     }
 

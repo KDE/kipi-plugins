@@ -368,7 +368,7 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
     else if ( Ext == "JPEG" || Ext == "jpeg" || Ext == "JPE" || Ext == "jpe" )
        return ("jpg");
     else
-       return (Ext.lower());
+       return (Ext.toLower());
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

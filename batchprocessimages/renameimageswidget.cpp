@@ -378,7 +378,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
     if (m_addFileDateCheck->isChecked())
     {
         QString format = m_formatDateEdit->text();
-        format = format.simplifyWhiteSpace();
+        format = format.simplified();
         if (useExtraSymbols)
         {
             QRegExp rxI("\\[i(:(\\d+))?\\]");
@@ -402,7 +402,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                         QString fmt;
                         fmt.sprintf("0%dd", (k > 10 ? 10 : k));
                         fmt = "%" + fmt;
-                        to.sprintf(fmt.latin1(), seqNumber);
+                        to.sprintf(fmt.toLatin1(), seqNumber);
                     }
                 }
                 else
@@ -419,7 +419,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                            (from == "B") ? fi.baseName(/*complete=*/TRUE) :
                            (from == "n") ? fi.fileName() :
                            (from == "a") ? fi.dir(/*absPath=*/TRUE).dirName() :
-                           (from == "p") ? fi.dirPath(/*absPath=*/TRUE) :
+                           (from == "p") ? fi.absolutePath() :
                            "";
                     int len = from.length();
                     QString start = rxN.cap(4);
@@ -432,7 +432,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                     QString changeCase = rxN.cap(2);
                     if (!!changeCase && changeCase.length())
                     {
-                        to = (changeCase == "+") ? to.upper() : to.lower();
+                        to = (changeCase == "+") ? to.toUpper() : to.toLower();
                     }
                 }
                 format.replace(i, j, to);
@@ -470,7 +470,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
         format = "%" + format;
 
         QString seq;
-        seq.sprintf(format.latin1(), seqNumber);
+        seq.sprintf(format.toLatin1(), seqNumber);
         newName += seq;
 
         newName += QString::fromLatin1(".") + fi.extension();
