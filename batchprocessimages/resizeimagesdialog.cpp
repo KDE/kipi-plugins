@@ -211,84 +211,76 @@ void ResizeImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    QColor *ColorWhite = new QColor( 255, 255, 255 );
-    QColor *ColorBlack = new QColor( 0, 0, 0 );
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ResizeImages Settings");
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("ResizeImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("ResiseType", 3)); // Prepare to print per default.
-    m_size = m_config->readNumEntry("Size", 640);
-    m_resizeFilter = m_config->readEntry("ResizeFilter", "Lanczos");
+    m_Type->setCurrentItem(group.readEntry("ResiseType", 3)); // Prepare to print per default.
+    m_size = group.readEntry("Size", 640);
+    m_resizeFilter = group.readEntry("ResizeFilter", "Lanczos");
 
-    m_paperSize = m_config->readEntry("PaperSize", "10x15");
-    m_printDpi = m_config->readEntry("PrintDpi", "300");
-    m_customXSize = m_config->readNumEntry("CustomXSize", 10);
-    m_customYSize = m_config->readNumEntry("CustomYSize", 15);
-    m_customDpi = m_config->readNumEntry("CustomDpi", 300);
-    m_backgroundColor = m_config->readColorEntry("BackgroundColor", ColorWhite);
-    m_marging = m_config->readNumEntry("MargingSize", 10);
+    m_paperSize = group.readEntry("PaperSize", "10x15");
+    m_printDpi = group.readEntry("PrintDpi", "300");
+    m_customXSize = group.readEntry("CustomXSize", 10);
+    m_customYSize = group.readEntry("CustomYSize", 15);
+    m_customDpi = group.readEntry("CustomDpi", 300);
+    m_backgroundColor = group.readEntry("BackgroundColor", Qt::white);
+    m_marging = group.readEntry("MargingSize", 10);
 
 
-    m_quality = m_config->readNumEntry("Quality", 75);
-    m_Width = m_config->readNumEntry("Width", 1024);
-    m_Height = m_config->readNumEntry("Height", 768);
-    m_Border = m_config->readNumEntry("Border", 100);
-    m_bgColor = m_config->readColorEntry("BgColor", ColorBlack);
+    m_quality = group.readEntry("Quality", 75);
+    m_Width = group.readEntry("Width", 1024);
+    m_Height = group.readEntry("Height", 768);
+    m_Border = group.readEntry("Border", 100);
+    m_bgColor = group.readEntry("BgColor", Qt::black);
 
-    m_fixedWidth = m_config->readNumEntry("FixedWidth", 640);
-    m_fixedHeight = m_config->readNumEntry("FixedHeight", 480);
+    m_fixedWidth = group.readEntry("FixedWidth", 640);
+    m_fixedHeight = group.readEntry("FixedHeight", 480);
 
-    if ( m_config->readEntry("CustomSettings", "false") == "true")
+    if ( group.readEntry("CustomSettings", "false") == "true")
        m_customSettings = true;
     else
        m_customSettings = false;
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
-
-    delete ColorWhite;
-    delete ColorBlack;
-    delete m_config;
 }
 
 void ResizeImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("ResizeImages Settings");
-    m_config->writeEntry("ResiseType", m_Type->currentItem());
-    m_config->writeEntry("Size", m_size);
-    m_config->writeEntry("ResizeFilter", m_resizeFilter);
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("ResizeImages Settings");
+    group.writeEntry("ResiseType", m_Type->currentItem());
+    group.writeEntry("Size", m_size);
+    group.writeEntry("ResizeFilter", m_resizeFilter);
 
-    m_config->writeEntry("PaperSize", m_paperSize);
-    m_config->writeEntry("PrintDpi", m_printDpi);
-    m_config->writeEntry("CustomXSize", m_customXSize);
-    m_config->writeEntry("CustomYSize", m_customYSize);
-    m_config->writeEntry("CustomDpi", m_customDpi);
-    m_config->writeEntry("BackgroundColor", m_backgroundColor);
-    m_config->writeEntry("MargingSize", m_marging);
-    m_config->writeEntry("CustomSettings", m_customSettings);
+    group.writeEntry("PaperSize", m_paperSize);
+    group.writeEntry("PrintDpi", m_printDpi);
+    group.writeEntry("CustomXSize", m_customXSize);
+    group.writeEntry("CustomYSize", m_customYSize);
+    group.writeEntry("CustomDpi", m_customDpi);
+    group.writeEntry("BackgroundColor", m_backgroundColor);
+    group.writeEntry("MargingSize", m_marging);
+    group.writeEntry("CustomSettings", m_customSettings);
 
-    m_config->writeEntry("Quality", m_quality);
-    m_config->writeEntry("Width", m_Width);
-    m_config->writeEntry("Height", m_Height);
-    m_config->writeEntry("Border", m_Border);
-    m_config->writeEntry("BgColor", m_bgColor);
+    group.writeEntry("Quality", m_quality);
+    group.writeEntry("Width", m_Width);
+    group.writeEntry("Height", m_Height);
+    group.writeEntry("Border", m_Border);
+    group.writeEntry("BgColor", m_bgColor);
 
-    m_config->writeEntry("FixedWidth", m_fixedWidth);
-    m_config->writeEntry("FixedHeight", m_fixedHeight);
+    group.writeEntry("FixedWidth", m_fixedWidth);
+    group.writeEntry("FixedHeight", m_fixedHeight);
 
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
 
-    delete m_config;
 }
 
 QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,

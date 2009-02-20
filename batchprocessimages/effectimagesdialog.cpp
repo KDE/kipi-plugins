@@ -247,76 +247,73 @@ void EffectImagesDialog::slotOptionsClicked(void)
 
 void EffectImagesDialog::readSettings(void)
 {
-m_config = new KConfig("kipirc");
-    m_config->setGroup("EffectImages Settings");
+KConfig config("kipirc");
+    KConfigGroup group = config.group("EffectImages Settings");
 
-    m_Type->setCurrentItem(m_config->readNumEntry("EffectType", 3));   // Emboss per default.
-    m_latWidth = m_config->readNumEntry("LatWidth", 50);
-    m_latHeight = m_config->readNumEntry("LatHeight", 50);
-    m_latOffset = m_config->readNumEntry("LatOffset", 1);
-    m_charcoalRadius = m_config->readNumEntry("CharcoalRadius", 3);
-    m_charcoalDeviation = m_config->readNumEntry("CharcoalDeviation", 3);
-    m_edgeRadius = m_config->readNumEntry("EdgeRadius", 3);
-    m_embossRadius = m_config->readNumEntry("EmbossRadius", 3);
-    m_embossDeviation = m_config->readNumEntry("EmbossDeviation", 3);
-    m_implodeFactor = m_config->readNumEntry("ImplodeFactor", 1);
-    m_paintRadius = m_config->readNumEntry("PaintRadius", 3);
-    m_shadeAzimuth = m_config->readNumEntry("ShadeAzimuth", 40);
-    m_shadeElevation = m_config->readNumEntry("ShadeElevation", 40);
-    m_solarizeFactor = m_config->readNumEntry("SolarizeFactor", 10);
-    m_spreadRadius = m_config->readNumEntry("SpreadRadius", 3);
-    m_swirlDegrees = m_config->readNumEntry("SwirlDegrees", 45);
-    m_waveAmplitude = m_config->readNumEntry("WaveAmplitude", 50);
-    m_waveLenght = m_config->readNumEntry("WaveLenght", 100);
+    m_Type->setCurrentItem(group.readEntry("EffectType", 3));   // Emboss per default.
+    m_latWidth = group.readEntry("LatWidth", 50);
+    m_latHeight = group.readEntry("LatHeight", 50);
+    m_latOffset = group.readEntry("LatOffset", 1);
+    m_charcoalRadius = group.readEntry("CharcoalRadius", 3);
+    m_charcoalDeviation = group.readEntry("CharcoalDeviation", 3);
+    m_edgeRadius = group.readEntry("EdgeRadius", 3);
+    m_embossRadius = group.readEntry("EmbossRadius", 3);
+    m_embossDeviation = group.readEntry("EmbossDeviation", 3);
+    m_implodeFactor = group.readEntry("ImplodeFactor", 1);
+    m_paintRadius = group.readEntry("PaintRadius", 3);
+    m_shadeAzimuth = group.readEntry("ShadeAzimuth", 40);
+    m_shadeElevation = group.readEntry("ShadeElevation", 40);
+    m_solarizeFactor = group.readEntry("SolarizeFactor", 10);
+    m_spreadRadius = group.readEntry("SpreadRadius", 3);
+    m_swirlDegrees = group.readEntry("SwirlDegrees", 45);
+    m_waveAmplitude = group.readEntry("WaveAmplitude", 50);
+    m_waveLenght = group.readEntry("WaveLenght", 100);
 
-    if (m_config->readEntry("SmallPreview", "true") == "true")
+    if (group.readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(m_config->readNumEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    if (m_config->readEntry("RemoveOriginal", "false") == "true")
+    if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
     else
         m_removeOriginal->setChecked( false );
 
-    delete m_config;
 }
 
 void EffectImagesDialog::saveSettings(void)
 {
     // Write all settings in configuration file.
 
-    m_config = new KConfig("kipirc");
-    m_config->setGroup("EffectImages Settings");
-    m_config->writeEntry("EffectType", m_Type->currentItem());
+    KConfig config("kipirc");
+    KConfigGroup group = config.group("EffectImages Settings");
+    group.writeEntry("EffectType", m_Type->currentItem());
 
-    m_config->writeEntry("LatWidth", m_latWidth);
-    m_config->writeEntry("LatHeight", m_latHeight);
-    m_config->writeEntry("LatOffset", m_latOffset);
-    m_config->writeEntry("CharcoalRadius", m_charcoalRadius);
-    m_config->writeEntry("CharcoalDeviation", m_charcoalDeviation);
-    m_config->writeEntry("EdgeRadius", m_edgeRadius);
-    m_config->writeEntry("EmbossRadius", m_embossRadius);
-    m_config->writeEntry("EmbossDeviation", m_embossDeviation);
-    m_config->writeEntry("ImplodeFactor", m_implodeFactor);
-    m_config->writeEntry("PaintRadius", m_paintRadius);
-    m_config->writeEntry("ShadeAzimuth", m_shadeAzimuth);
-    m_config->writeEntry("ShadeElevation", m_shadeElevation);
-    m_config->writeEntry("SolarizeFactor", m_solarizeFactor);
-    m_config->writeEntry("SpreadRadius", m_spreadRadius);
-    m_config->writeEntry("SwirlDegrees", m_swirlDegrees);
-    m_config->writeEntry("WaveAmplitude", m_waveAmplitude);
-    m_config->writeEntry("WaveLenght", m_waveLenght);
+    group.writeEntry("LatWidth", m_latWidth);
+    group.writeEntry("LatHeight", m_latHeight);
+    group.writeEntry("LatOffset", m_latOffset);
+    group.writeEntry("CharcoalRadius", m_charcoalRadius);
+    group.writeEntry("CharcoalDeviation", m_charcoalDeviation);
+    group.writeEntry("EdgeRadius", m_edgeRadius);
+    group.writeEntry("EmbossRadius", m_embossRadius);
+    group.writeEntry("EmbossDeviation", m_embossDeviation);
+    group.writeEntry("ImplodeFactor", m_implodeFactor);
+    group.writeEntry("PaintRadius", m_paintRadius);
+    group.writeEntry("ShadeAzimuth", m_shadeAzimuth);
+    group.writeEntry("ShadeElevation", m_shadeElevation);
+    group.writeEntry("SolarizeFactor", m_solarizeFactor);
+    group.writeEntry("SpreadRadius", m_spreadRadius);
+    group.writeEntry("SwirlDegrees", m_swirlDegrees);
+    group.writeEntry("WaveAmplitude", m_waveAmplitude);
+    group.writeEntry("WaveLenght", m_waveLenght);
 
-    m_config->writeEntry("SmallPreview", m_smallPreview->isChecked());
-    m_config->writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    m_config->writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    group.writeEntry("SmallPreview", m_smallPreview->isChecked());
+    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
 
-    m_config->sync();
 
-    delete m_config;
 }
 
 QString EffectImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
