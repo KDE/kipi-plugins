@@ -160,7 +160,6 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
     KProcess process;
     process.clearArguments();
     process << "convert";
-    process << "-verbose";
 
     switch(action)
     {

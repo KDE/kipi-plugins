@@ -136,7 +136,6 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     KProcess process;
     process.clearArguments();
     process << "mogrify";
-    process << "-verbose";
 
     process << "-profile";
     process << exifTemp.name();
