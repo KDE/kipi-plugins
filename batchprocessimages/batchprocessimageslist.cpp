@@ -44,8 +44,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name)
-                      : K3ListView(parent, name)
+BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char * /*name*/) // FIXME: remove name
+                      : K3ListView(parent)
 {
     setAcceptDrops(true);
     setDropVisualizer(false);

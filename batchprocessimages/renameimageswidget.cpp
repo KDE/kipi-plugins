@@ -69,7 +69,6 @@ extern "C"
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes.
 
@@ -83,10 +82,11 @@ namespace KIPIBatchProcessImagesPlugin
 RenameImagesWidget::RenameImagesWidget(QWidget *parent,
                                        KIPI::Interface* interface,
                                        const KUrl::List& urlList)
-    : RenameImagesBase(parent),
+    : QWidget(parent),
       m_interface(interface),
       m_urlList(urlList)
 {
+    setupUi(this);
     m_listView->setSorting(-1);
 #if KDE_IS_VERSION(3,4,0)
     // next can be done directly into designer but it seems not to compile

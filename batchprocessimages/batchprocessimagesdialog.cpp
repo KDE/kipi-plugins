@@ -90,7 +90,6 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/uploadwidget.h>
-#include <libkipi/imagedialog.h>
 
 // Local includes
 
@@ -106,7 +105,7 @@ namespace KIPIBatchProcessImagesPlugin
 BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::Interface* interface,
                                                     QString caption, QWidget *parent )
                         : KDialog(parent)
-                          m_selectedImageFiles( urlList), m_interface( interface )
+                        , m_selectedImageFiles( urlList), m_interface( interface )
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
