@@ -71,11 +71,16 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and maintainer"),
                        "caulier dot gilles at gmail dot com");
 
-    m_helpButton = actionButton( Help );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Plugin Handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setMenu(helpMenu->menu());
 
     //---------------------------------------------
 
