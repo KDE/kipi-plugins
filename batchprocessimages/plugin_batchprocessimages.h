@@ -47,7 +47,7 @@ class Plugin_BatchProcessImages : public KIPI::Plugin
 Q_OBJECT
 
 public:
-  Plugin_BatchProcessImages(QObject *parent, const char* name, const QStringList &args);
+  Plugin_BatchProcessImages(QObject *parent, const QVariantList &args);
   virtual ~Plugin_BatchProcessImages();
   virtual KIPI::Category category( KAction* action ) const;
   virtual void setup( QWidget* );

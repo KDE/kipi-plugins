@@ -64,13 +64,11 @@ extern "C"
 #include "plugin_batchprocessimages.h"
 #include "plugin_batchprocessimages.moc"
 
-typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
+K_PLUGIN_FACTORY(BatchProcessImagesFactory, registerPlugin<Plugin_BatchProcessImages>();)
+K_EXPORT_PLUGIN( BatchProcessImagesFactory("kipiplugin_batchprocessimages"))
 
-K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
-                            Factory("kipiplugin_batchprocessimages"))
-
-Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char*, const QStringList&)
-            : KIPI::Plugin( Factory::instance(), parent, "BatchProcessImages")
+Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVariantList&)
+: KIPI::Plugin(BatchProcessImagesFactory::componentData(), parent, "BatchProcessImages")
 {
     kDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
 
