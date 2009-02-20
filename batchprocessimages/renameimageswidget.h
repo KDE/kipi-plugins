@@ -30,7 +30,7 @@
 
 // Local includes.
 
-#include "renameimagesbase.h"
+#include "ui_renameimagesbase.h"
 //Added by qt3to4:
 #include <QPixmap>
 
@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 class BatchProcessImagesItem;
 
-class RenameImagesWidget : public RenameImagesBase
+class RenameImagesWidget : public QWidget, public Ui_RenameImagesBase
 {
     Q_OBJECT
     
