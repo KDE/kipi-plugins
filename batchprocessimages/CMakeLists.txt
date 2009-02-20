@@ -2,7 +2,7 @@
 find_package(KDE4 REQUIRED)
 
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-add_definitions(-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
+add_definitions(-DQT3_SUPPORT)
 
 include(KDE4Defaults)
 
@@ -37,7 +37,9 @@ set(kipiplugin_batchprocessimages_PART_SRCS
     resizeoptionsdialog.cpp
     batchprocessimagesdialog.cpp
     batchprocessimageslist.cpp
-    renameimageswidget.cpp)
+    renameimageswidget.cpp
+    dialogutils.cpp
+    )
 
 kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS renameimagesbase.ui)
 

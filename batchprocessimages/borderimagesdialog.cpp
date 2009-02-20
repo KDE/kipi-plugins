@@ -45,6 +45,7 @@
 
 // Local includes
 
+#include "dialogutils.h"
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
 #include "outputdialog.h"
@@ -71,11 +72,7 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
                      "caulier dot gilles at gmail dot com");
  
-    m_helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Plugin Handbook"), this, SLOT(slotHelp()), 0, -1, 0);
-    m_helpButton->setPopup( helpMenu->menu() );
+    DialogUtils::setupHelpButton(this, m_about);
 
     //---------------------------------------------
 
