@@ -36,7 +36,7 @@
 
 // Include files for KDE
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kcolorbutton.h>

@@ -73,7 +73,7 @@ extern "C"
 #include <kconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <k3listview.h>
 #include <kimageio.h>
 #include <k3process.h>
