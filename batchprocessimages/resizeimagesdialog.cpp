@@ -376,9 +376,9 @@ QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem 
           
           *proc << "-profile" << item->pathSrc();
           
-          Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.Qt::red()) + ",";
-          Temp2.append(Temp.setNum(m_bgColor.Qt::green()) + ",");
-          Temp2.append(Temp.setNum(m_bgColor.Qt::blue()) + ")");
+          Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
+          Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
+          Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
           *proc << Temp2;
 
           *proc << "-resize" << targetBackgroundSize + "!";
@@ -493,9 +493,9 @@ QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem 
 
           *proc << item->pathSrc();
 
-          Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.Qt::red()) + ",";
-          Temp2.append(Temp.setNum(m_backgroundColor.Qt::green()) + ",");
-          Temp2.append(Temp.setNum(m_backgroundColor.Qt::blue()) + ")");
+          Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.red()) + ",";
+          Temp2.append(Temp.setNum(m_backgroundColor.green()) + ",");
+          Temp2.append(Temp.setNum(m_backgroundColor.blue()) + ")");
           *proc << Temp2;
 
           // ImageMagick composite program do not preserve exif data from original. 
