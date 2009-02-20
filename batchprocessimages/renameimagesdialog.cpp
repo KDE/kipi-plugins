@@ -33,7 +33,8 @@
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes.
 
@@ -46,7 +47,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
+RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
                                        KIPI::Interface* interface,
                                        QWidget* parent)
     : KDialogBase( KDialogBase::Plain, "Rename Images", Help|User1|Close,
@@ -90,7 +91,7 @@ RenameImagesDialog::~RenameImagesDialog()
 
 void RenameImagesDialog::slotHelp(void)
 {
-   kapp->invokeHelp("renameimages", "kipi-plugins");
+   KToolInvocation::invokeHelp("renameimages", "kipi-plugins");
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

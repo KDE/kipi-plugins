@@ -36,8 +36,9 @@
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -100,7 +101,7 @@ OutputDialog::~OutputDialog()
 
 void OutputDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("",
+    KToolInvocation::invokeHelp("",
                                              "kipi-plugins");
 }
 

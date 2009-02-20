@@ -82,7 +82,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 RenameImagesWidget::RenameImagesWidget(QWidget *parent,
                                        KIPI::Interface* interface,
-                                       const KURL::List& urlList)
+                                       const KUrl::List& urlList)
     : RenameImagesBase(parent),
       m_interface(interface),
       m_urlList(urlList)
@@ -162,7 +162,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     connect(m_progress, SIGNAL(canceled()),
             SLOT(slotAbort()));
 
-    for (KURL::List::iterator it = m_urlList.begin();
+    for (KUrl::List::iterator it = m_urlList.begin();
          it != m_urlList.end(); ++it)
     {
         new BatchProcessImagesItem(m_listView,
@@ -244,7 +244,7 @@ void RenameImagesWidget::slotImageSelected(Q3ListViewItem* item)
     m_pixLabel->clear();
     
     BatchProcessImagesItem* it = static_cast<BatchProcessImagesItem*>(item);
-    KIO::PreviewJob* thumbJob = KIO::filePreview(KURL(it->pathSrc()),
+    KIO::PreviewJob* thumbJob = KIO::filePreview(KUrl(it->pathSrc()),
                                                  m_pixLabel->height() );
 
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
@@ -276,7 +276,7 @@ void RenameImagesWidget::sortList(int intSortOrder)
         }
         case(BYDATE):
         {
-            KURL url(item->pathSrc());
+            KUrl url(item->pathSrc());
             KIPI::ImageInfo info = m_interface->info(url);
             item->setKey(info.time().toString(Qt::ISODate), false);
             break;
@@ -356,7 +356,7 @@ void RenameImagesWidget::updateListing()
 QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                                          int itemPosition)
 {
-    KURL url;
+    KUrl url;
     url.setPath(item->pathSrc());
 
     QFileInfo fi(item->pathSrc());
@@ -516,9 +516,9 @@ void RenameImagesWidget::slotNext()
     }
 
     BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(it);
-    KURL src;
+    KUrl src;
     src.setPath(item->pathSrc());
-    KURL dst = src.upURL();
+    KUrl dst = src.upUrl();
     dst.addPath(item->text(2));
 
     bool skip      = false;
@@ -614,9 +614,9 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KURL::List urls = KIPI::ImageDialog::getImageURLs(this, m_interface);
+    KUrl::List urls = KIPI::ImageDialog::getImageURLs(this, m_interface);
 
-    for (KURL::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
         if (m_urlList.contains(*it))
             continue;

@@ -47,7 +47,7 @@ class QLCDNumber;
 class QSlider;
 class QPushButton;
 
-class KProcess;
+class K3Process;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -68,8 +68,8 @@ public:
 
 private slots:
     
-    void slotPreviewReadStd(KProcess* proc, char *buffer, int buflen);
-    void PreviewProcessDone(KProcess* proc);
+    void slotPreviewReadStd(K3Process* proc, char *buffer, int buflen);
+    void PreviewProcessDone(K3Process* proc);
     void contentsWheelEvent( QWheelEvent * e );
     void contentsMousePressEvent ( QMouseEvent * e );
     void contentsMouseReleaseEvent ( QMouseEvent * e );
@@ -90,7 +90,7 @@ protected:
     int          m_xpos;
     int          m_ypos;
 
-    KProcess    *m_PreviewProc;
+    K3Process    *m_PreviewProc;
 
     QString      m_previewOutput;
     QString      m_previewFileName;

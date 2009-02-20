@@ -40,7 +40,7 @@ Q_OBJECT
 
  public:
  
-   ConvertImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
+   ConvertImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ConvertImagesDialog();
 
  private slots:
@@ -56,7 +56,7 @@ Q_OBJECT
    QString                m_TIFFCompressionAlgo;
    QString                m_TGACompressionAlgo;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void processDone();

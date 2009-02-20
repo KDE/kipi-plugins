@@ -38,7 +38,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 BatchProcessImagesItem::BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
-                      : KListViewItem( parent, "", nameSrc, nameDest, result),
+                      : K3ListViewItem( parent, "", nameSrc, nameDest, result),
                         _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result),
                         _overwrote( false ),
                         _reverseSort( false )
@@ -69,17 +69,17 @@ void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int 
     if (text(3) != i18n("OK") && !text(3).isEmpty() )
        {
        _cg.setColor( QColorGroup::Text, Qt::red );
-       KListViewItem::paintCell( p, _cg, column, width, alignment );
+       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
        return;
        }
     if (text(3) == i18n("OK") )
        {
        _cg.setColor( QColorGroup::Text, Qt::darkGreen );
-       KListViewItem::paintCell( p, _cg, column, width, alignment );
+       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
        return;
        }
 
-    KListViewItem::paintCell( p, cg, column, width, alignment );
+    K3ListViewItem::paintCell( p, cg, column, width, alignment );
 }
 
 bool BatchProcessImagesItem::overWrote()

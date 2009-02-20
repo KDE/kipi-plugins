@@ -68,11 +68,11 @@ class Q3ListViewItemIterator;
 class Q3ListViewItem;
 class Q3GroupBox;
 
-class KProcess;
+class K3Process;
 class KConfig;
 class KProgress;
-class KURL;
-class KURLRequester;
+class KUrl;
+class KUrlRequester;
 class KFileItem;
 
 namespace KIPIBatchProcessImagesPlugin
@@ -86,7 +86,7 @@ Q_OBJECT
    // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
    // children dialog class.
 
-   BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface, QString caption, QWidget *parent=0 );
+   BatchProcessImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QString caption, QWidget *parent=0 );
    ~BatchProcessImagesDialog();
 
 protected slots:
@@ -101,12 +101,12 @@ private slots:
    void slotOk( void );
 
    void slotProcessStart(void);
-   void slotProcessDone(KProcess* proc);
-   void slotReadStd(KProcess* proc, char *buffer, int buflen);
+   void slotProcessDone(K3Process* proc);
+   void slotReadStd(K3Process* proc, char *buffer, int buflen);
 
    void slotPreview(void);
-   void slotPreviewProcessDone(KProcess* proc);
-   void slotPreviewReadStd(KProcess* proc, char *buffer, int buflen);
+   void slotPreviewProcessDone(K3Process* proc);
+   void slotPreviewReadStd(K3Process* proc, char *buffer, int buflen);
    void slotPreviewStop( void );
 
    void slotListDoubleClicked(Q3ListViewItem *itemClicked);
@@ -138,7 +138,7 @@ private slots:
    QComboBox              *m_overWriteMode;
    QComboBox              *m_Type;
 
-   KURLRequester          *m_destinationURL;
+   KUrlRequester          *m_destinationURL;
 
    BatchProcessImagesList *m_listFiles;
    KProgress              *m_progress;
@@ -164,8 +164,8 @@ private slots:
    int                     m_progressStatus;
    int                     m_nbItem;
 
-   KProcess               *m_ProcessusProc;
-   KProcess               *m_PreviewProc;
+   K3Process               *m_ProcessusProc;
+   K3Process               *m_PreviewProc;
 
    Q3ListViewItemIterator  *m_listFile2Process_iterator;
 
@@ -175,7 +175,7 @@ private slots:
    QString                 m_commandLine;
    QString                 m_tmpFolder;
    QString                 m_previewOutput;
-   KURL::List              m_selectedImageFiles;
+   KUrl::List              m_selectedImageFiles;
 
    KIPI::Interface        *m_interface;
 
@@ -195,10 +195,10 @@ private slots:
 
    QString RenameTargetImageFile(QFileInfo *fi);
 
-   // Extract the arguments from a KProcess an merge that in a QString. Used by makeProcess for to
+   // Extract the arguments from a K3Process an merge that in a QString. Used by makeProcess for to
    // show the command line arguments (debugging).
 
-   QString extractArguments(KProcess *proc);
+   QString extractArguments(K3Process *proc);
 
    // --------------------------------------------------------------------------------------------------------
    // Standards virtuals fonctions for re-implementation.
@@ -223,7 +223,7 @@ private slots:
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-    virtual QString makeProcess(KProcess* /*proc*/, BatchProcessImagesItem */*item*/,
+    virtual QString makeProcess(K3Process* /*proc*/, BatchProcessImagesItem */*item*/,
                                 const QString& /*albumDest*/ = QString::null,
                                 bool  /*previewMode*/ = false)
            { return QString::null; };

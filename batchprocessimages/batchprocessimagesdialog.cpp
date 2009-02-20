@@ -64,25 +64,24 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
-#include <kprogress.h>
+#include <kprogressdialog.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kinstance.h>
+#include <kcomponentdata.h>
 #include <kconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kimageio.h>
-#include <kprocess.h>
-#include <klineeditdlg.h>
+#include <k3process.h>
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kio/global.h>
 #include <kio/previewjob.h>
-#include <kbuttonbox.h>
+#include <k3buttonbox.h>
 #include <kdiroperator.h>
 #include <kdeversion.h>
 #include <kurlrequester.h>
@@ -104,7 +103,7 @@ extern "C"
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::Interface* interface,
+BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::Interface* interface,
                                                     QString caption, QWidget *parent )
                         : KDialogBase( KDialogBase::Plain, caption, Help|User1|Cancel,
                                        Cancel, parent, "BatchProcessImagesDialog", false, false, i18n("&Start")),
@@ -121,7 +120,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_ProcessusProc  = 0;
     m_PreviewProc    = 0;
 
-    KImageIO::registerFormats();
+    
 
     QWidget* box = plainPage();
     Q3VBoxLayout *dvlay = new Q3VBoxLayout(box, 0, KDialog::spacingHint());
@@ -186,7 +185,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     groupBox3 = new Q3HGroupBox( i18n("Target Folder"), box );
 
-    m_destinationURL = new KURLRequester(groupBox3);
+    m_destinationURL = new KUrlRequester(groupBox3);
 	m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
 	KIPI::ImageCollection album = interface->currentAlbum();
 	if (album.isValid())
@@ -289,9 +288,9 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
     QStringList ImageFilesList;
 
-    KURL::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    KUrl::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
 
-    for ( KURL::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
+    for ( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
 
     if ( urls.isEmpty() ) return;
@@ -333,7 +332,7 @@ void BatchProcessImagesDialog::slotImageSelected( Q3ListViewItem * item )
 
     QString IdemIndexed = "file:" + pitem->pathSrc();
 
-    KURL url(IdemIndexed);
+    KUrl url(IdemIndexed);
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
@@ -372,7 +371,7 @@ void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
     
         bool findItem = false;
     
-        for ( KURL::List::Iterator it2 = m_selectedImageFiles.begin() ; it2 != m_selectedImageFiles.end() ; ++it2 )
+        for ( KUrl::List::Iterator it2 = m_selectedImageFiles.begin() ; it2 != m_selectedImageFiles.end() ; ++it2 )
         {
             QString currentFile = (*it2).path(); // PENDING(blackie) Handle URL's
     
@@ -409,7 +408,7 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     {
         if ( KMessageBox::warningContinueCancel(this,
              i18n("All original image files will be removed from the source Album.\nDo you want to continue?"),
-             i18n("Delete Original Image Files"), KStdGuiItem::cont(),
+             i18n("Delete Original Image Files"), KStandardGuiItem::cont(),
              "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
     }
@@ -481,7 +480,7 @@ bool BatchProcessImagesDialog::startProcess(void)
         }
     }
 
-    KURL desturl(targetAlbum + "/" + item->nameDest());
+    KUrl desturl(targetAlbum + "/" + item->nameDest());
 
 #if KDE_VERSION >= 0x30200
     if ( KIO::NetAccess::exists( desturl, false, kapp->activeWindow() ) == true )
@@ -496,7 +495,7 @@ bool BatchProcessImagesDialog::startProcess(void)
              int ValRet = KMessageBox::warningYesNoCancel(this,
                           i18n("The destination file \"%1\" already exists;\n"
                           "do you want overwrite it?").arg(item->nameDest()),
-                          i18n("Overwrite Destination Image File"), KStdGuiItem::cont());
+                          i18n("Overwrite Destination Image File"), KStandardGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
              {
@@ -598,21 +597,21 @@ bool BatchProcessImagesDialog::startProcess(void)
     }
 
     m_commandLine = QString();
-    m_ProcessusProc = new KProcess;
+    m_ProcessusProc = new K3Process;
     m_commandLine.append(makeProcess(m_ProcessusProc, item, targetAlbum));
 
     item->changeOutputMess(m_commandLine + "\n\n");
 
-    connect(m_ProcessusProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(slotProcessDone(KProcess*)));
+    connect(m_ProcessusProc, SIGNAL(processExited(K3Process *)),
+            this, SLOT(slotProcessDone(K3Process*)));
 
-    connect(m_ProcessusProc, SIGNAL(receivedStdout(KProcess *, char*, int)),
-            this, SLOT(slotReadStd(KProcess*, char*, int)));
+    connect(m_ProcessusProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
+            this, SLOT(slotReadStd(K3Process*, char*, int)));
 
-    connect(m_ProcessusProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotReadStd(KProcess*, char*, int)));
+    connect(m_ProcessusProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotReadStd(K3Process*, char*, int)));
 
-    bool result = m_ProcessusProc->start(KProcess::NotifyOnExit, KProcess::All);
+    bool result = m_ProcessusProc->start(K3Process::NotifyOnExit, K3Process::All);
     if(!result)
     {
        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
@@ -623,13 +622,13 @@ bool BatchProcessImagesDialog::startProcess(void)
     return true;
 }
 
-void BatchProcessImagesDialog::slotReadStd(KProcess* /*proc*/, char *buffer, int buflen)
+void BatchProcessImagesDialog::slotReadStd(K3Process* /*proc*/, char *buffer, int buflen)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     item->changeOutputMess( QString::fromLocal8Bit(buffer, buflen) );
 }
 
-void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
+void BatchProcessImagesDialog::slotProcessDone(K3Process* proc)
 {
     if ( m_convertStatus == PROCESS_DONE )
     {
@@ -667,7 +666,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
     }
 
     int ValRet = proc->exitStatus();
-    kdWarning() << "Convert exit (" << ValRet << ")" << endl;
+    kWarning() << "Convert exit (" << ValRet << ")" << endl;
 
     switch (ValRet)
     {
@@ -678,13 +677,13 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
             processDone();
     
             // Save the comments for the converted image
-            KURL src;
+            KUrl src;
             src.setPath( item->pathSrc() );
-            KURL dest = m_destinationURL->url();
+            KUrl dest = m_destinationURL->url();
             dest.addPath( item->nameDest() );
             QString errmsg;
     
-            KURL::List urlList;
+            KUrl::List urlList;
             urlList.append(src);
             urlList.append(dest);
             m_interface->refreshImages( urlList );
@@ -720,7 +719,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
     
             if ( m_removeOriginal->isChecked() && src != dest )
             {
-                KURL deleteImage(item->pathSrc());
+                KUrl deleteImage(item->pathSrc());
     
 #if KDE_VERSION >= 0x30200
                 if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
@@ -777,7 +776,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(Q3ListViewItem *itemClicked
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
-    kdWarning() << "BatchProcessImagesDialog::slotPreview" << endl;
+    kWarning() << "BatchProcessImagesDialog::slotPreview" << endl;
 
     if ( m_listFiles->currentItem() == 0 )
     {
@@ -810,23 +809,23 @@ void BatchProcessImagesDialog::slotPreview(void)
             this, SLOT(slotPreviewStop()));
 
     m_previewOutput = "";
-    m_PreviewProc = new KProcess;
+    m_PreviewProc = new K3Process;
 
     m_previewOutput.append(makeProcess(m_PreviewProc, item, QString(), true));
 
     *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append( " "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");
 
-    connect(m_PreviewProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(slotPreviewProcessDone(KProcess*)));
+    connect(m_PreviewProc, SIGNAL(processExited(K3Process *)),
+            this, SLOT(slotPreviewProcessDone(K3Process*)));
 
-    connect(m_PreviewProc, SIGNAL(receivedStdout(KProcess *, char*, int)),
-            this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
+    connect(m_PreviewProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
+            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
 
-    connect(m_PreviewProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
+    connect(m_PreviewProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
 
-    bool result = m_PreviewProc->start(KProcess::NotifyOnExit, KProcess::All);
+    bool result = m_PreviewProc->start(K3Process::NotifyOnExit, K3Process::All);
     if(!result)
     {
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
@@ -836,12 +835,12 @@ void BatchProcessImagesDialog::slotPreview(void)
     }
 }
 
-void BatchProcessImagesDialog::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)
+void BatchProcessImagesDialog::slotPreviewReadStd(K3Process* /*proc*/, char *buffer, int buflen)
 {
     m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
 }
 
-void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
+void BatchProcessImagesDialog::slotPreviewProcessDone(K3Process* proc)
 {
     if (!m_PreviewProc->normalExit())
     {
@@ -853,7 +852,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
     int ValRet = proc->exitStatus();
 
-    kdWarning() << "Convert exit (" << ValRet << ")" << endl;
+    kWarning() << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )
     {
@@ -873,7 +872,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(KProcess* proc)
                                          this);
        previewDialog->exec();
 
-       KURL deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
+       KUrl deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
 
 #if KDE_VERSION >= 0x30200
        KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
@@ -932,7 +931,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
     if (m_selectedImageFiles.isEmpty()) return;
 
-    for ( KURL::List::Iterator it = m_selectedImageFiles.begin() ; it != m_selectedImageFiles.end() ; ++it )
+    for ( KUrl::List::Iterator it = m_selectedImageFiles.begin() ; it != m_selectedImageFiles.end() ; ++it )
     {
         QString currentFile = (*it).path(); // PENDING(blackie) Handle URLS
         QFileInfo *fi = new QFileInfo(currentFile);
@@ -1023,7 +1022,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    kdWarning() << "BatchProcessImagesDialog::processAborted" << endl;
+    kWarning() << "BatchProcessImagesDialog::processAborted" << endl;
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
@@ -1033,7 +1032,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
     if (removeFlag == true) // Try to delete de destination !
     {
-       KURL deleteImage = m_destinationURL->url();
+       KUrl deleteImage = m_destinationURL->url();
        deleteImage.addPath(item->nameDest());
 
 #if KDE_VERSION >= 0x30200
@@ -1064,7 +1063,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 {
     QString Temp;
     int Enumerator = 0;
-    KURL NewDestUrl;
+    KUrl NewDestUrl;
 
     do
     {
@@ -1086,7 +1085,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
     return (NewDestUrl.path());
 }
 
-QString BatchProcessImagesDialog::extractArguments(KProcess *proc)
+QString BatchProcessImagesDialog::extractArguments(K3Process *proc)
 {
     QString retArguments;
     Q3ValueList<Q3CString> argumentsList = proc->args();

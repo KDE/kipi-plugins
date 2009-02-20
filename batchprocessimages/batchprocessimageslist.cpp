@@ -45,7 +45,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name)
-                      : KListView(parent, name)
+                      : K3ListView(parent, name)
 {
     setAcceptDrops(true);
     setDropVisualizer(false);

@@ -35,11 +35,12 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -54,7 +55,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ColorImagesDialog::ColorImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing"), parent )
 {
     // About data and help button.
@@ -137,7 +138,7 @@ ColorImagesDialog::~ColorImagesDialog()
 
 void ColorImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("colorimages",
+    KToolInvocation::invokeHelp("colorimages",
                                              "kipi-plugins");
 }
 
@@ -237,7 +238,7 @@ void ColorImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString ColorImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString ColorImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                        const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

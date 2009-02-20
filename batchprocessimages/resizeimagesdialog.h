@@ -39,7 +39,7 @@ Q_OBJECT
 
  public:
  
-   ResizeImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
+   ResizeImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ResizeImagesDialog();
 
  private slots:
@@ -72,7 +72,7 @@ Q_OBJECT
    int                    m_fixedHeight;
    int			  m_quality;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

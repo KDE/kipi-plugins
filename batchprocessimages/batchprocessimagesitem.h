@@ -30,7 +30,7 @@
 
 // Include files for KDE
 
-#include <klistview.h>
+#include <k3listview.h>
 
 class QPainter;
 class Q3ListView;
@@ -38,7 +38,7 @@ class Q3ListView;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BatchProcessImagesItem : public KListViewItem
+class BatchProcessImagesItem : public K3ListViewItem
 {
 public:
 

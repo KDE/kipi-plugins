@@ -62,7 +62,7 @@ public:
     }; 
 
     RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
-                       const KURL::List& urlList);
+                       const KUrl::List& urlList);
     ~RenameImagesWidget();
 
 private:
@@ -75,7 +75,7 @@ private:
                          int itemPosition);
     
     KIPI::Interface* m_interface;
-    KURL::List       m_urlList;
+    KUrl::List       m_urlList;
     QTimer*          m_timer;
     Q3ProgressDialog* m_progress;
     bool             m_overwriteAll;

@@ -54,7 +54,7 @@ extern "C"
 
 // KDE includes
 
-#include <kprocess.h>
+#include <k3process.h>
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kio/job.h>
@@ -68,8 +68,9 @@ extern "C"
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kdeversion.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -179,7 +180,7 @@ ImagePreview::~ImagePreview()
 
 void ImagePreview::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("", "kipi-plugins");
+    KToolInvocation::invokeHelp("", "kipi-plugins");
 }
 
 void ImagePreview::slotWheelChanged( int delta )
@@ -259,7 +260,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     p.end();
 
     m_previewOutput ="convert";
-    m_PreviewProc = new KProcess;
+    m_PreviewProc = new K3Process;
     *m_PreviewProc << "convert";
     *m_PreviewProc << "-verbose";
 
@@ -273,16 +274,16 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     *m_PreviewProc << m_previewFileName;
     m_previewOutput.append( " -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
 
-    connect(m_PreviewProc, SIGNAL(processExited(KProcess *)),
-            this, SLOT(PreviewProcessDone(KProcess*)));
+    connect(m_PreviewProc, SIGNAL(processExited(K3Process *)),
+            this, SLOT(PreviewProcessDone(K3Process*)));
 
-    connect(m_PreviewProc, SIGNAL(receivedStdout(KProcess *, char*, int)),
-            this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
+    connect(m_PreviewProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
+            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
 
-    connect(m_PreviewProc, SIGNAL(receivedStderr(KProcess *, char*, int)),
-            this, SLOT(slotPreviewReadStd(KProcess*, char*, int)));
+    connect(m_PreviewProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
+            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
 
-    bool result = m_PreviewProc->start(KProcess::NotifyOnExit, KProcess::All);
+    bool result = m_PreviewProc->start(K3Process::NotifyOnExit, K3Process::All);
     if(!result)
     {
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
@@ -291,15 +292,15 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     }
 }
 
-void PixmapView::slotPreviewReadStd(KProcess* /*proc*/, char *buffer, int buflen)
+void PixmapView::slotPreviewReadStd(K3Process* /*proc*/, char *buffer, int buflen)
 {
     m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
 }
 
-void PixmapView::PreviewProcessDone(KProcess* proc)
+void PixmapView::PreviewProcessDone(K3Process* proc)
 {
     int ValRet = proc->exitStatus();
-    kdDebug (51000) << "Convert exit (" << ValRet << ")" << endl;
+    kDebug (51000) << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )
        {
@@ -312,7 +313,7 @@ void PixmapView::PreviewProcessDone(KProcess* proc)
           resizeImage( INIT_ZOOM_FACTOR * 5 );
           horizontalScrollBar()->setLineStep(1);
           verticalScrollBar()->setLineStep(1);
-          KURL deletePreviewImage( m_previewFileName );
+          KUrl deletePreviewImage( m_previewFileName );
 
 #if KDE_VERSION >= 0x30200
           KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
@@ -372,7 +373,7 @@ void PixmapView::contentsMousePressEvent ( QMouseEvent * e )
 
 void PixmapView::contentsMouseReleaseEvent ( QMouseEvent * /*e*/ )
 {
-    setCursor ( KCursor::arrowCursor() );
+    setCursor ( Qt::ArrowCursor );
 }
 
 void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )

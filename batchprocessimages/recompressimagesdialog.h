@@ -39,7 +39,7 @@ Q_OBJECT
 
  public:
  
-   RecompressImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
+   RecompressImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~RecompressImagesDialog();
 
  private slots:
@@ -55,7 +55,7 @@ Q_OBJECT
    QString m_TIFFCompressionAlgo;
    QString m_TGACompressionAlgo;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

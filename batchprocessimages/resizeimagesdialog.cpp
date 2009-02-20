@@ -36,12 +36,13 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kcolorbutton.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -55,7 +56,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Resize Images"), parent )
 {
     // About data and help button.
@@ -124,7 +125,7 @@ ResizeImagesDialog::~ResizeImagesDialog()
 
 void ResizeImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("resizeimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("resizeimages", "kipi-plugins");
 }
 
 void ResizeImagesDialog::slotOptionsClicked(void)
@@ -294,7 +295,7 @@ void ResizeImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool )
 {
     QImage img;

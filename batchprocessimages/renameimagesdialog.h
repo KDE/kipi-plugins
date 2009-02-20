@@ -49,7 +49,7 @@ class RenameImagesDialog : public KDialogBase
 
 public:
 
-    RenameImagesDialog(const KURL::List& images,
+    RenameImagesDialog(const KUrl::List& images,
                     KIPI::Interface* interface,
                     QWidget* parent);
     ~RenameImagesDialog();

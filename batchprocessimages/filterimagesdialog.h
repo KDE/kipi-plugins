@@ -39,7 +39,7 @@ Q_OBJECT
 
  public:
  
-   FilterImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
+   FilterImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~FilterImagesDialog();
 
  private slots:
@@ -62,7 +62,7 @@ Q_OBJECT
    int                    m_unsharpenPercent;
    int                    m_unsharpenThreshold;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

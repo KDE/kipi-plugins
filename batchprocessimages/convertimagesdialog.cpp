@@ -37,16 +37,17 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kurlrequester.h>
 
 // LibKExiv2 includes. 
 
 #include <libkexiv2/kexiv2.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -60,7 +61,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                    : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images"), parent )
 {
     // About data and help button.
@@ -147,7 +148,7 @@ ConvertImagesDialog::~ConvertImagesDialog()
 
 void ConvertImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("convertimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("convertimages", "kipi-plugins");
 }
 
 void ConvertImagesDialog::slotTypeChanged(int type)
@@ -243,7 +244,7 @@ void ConvertImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString ConvertImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString ConvertImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                          const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
@@ -327,8 +328,8 @@ void ConvertImagesDialog::processDone()
             QString tgt = m_destinationURL->url() + "/" + item->nameDest();
             QFileInfo fi(tgt);
 
-            kdDebug() << src << endl;
-            kdDebug() << tgt << fi.size()<< endl;
+            kDebug() << src << endl;
+            kDebug() << tgt << fi.size()<< endl;
             
             KExiv2Iface::KExiv2 metaSrc(src);
     

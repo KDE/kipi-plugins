@@ -35,12 +35,13 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kcolorbutton.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -55,7 +56,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch-Bordering Images"), parent )
 {
     // About data and help button.
@@ -116,7 +117,7 @@ BorderImagesDialog::~BorderImagesDialog()
 
 void BorderImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("borderimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("borderimages", "kipi-plugins");
 }
 
 void BorderImagesDialog::slotOptionsClicked(void)
@@ -248,7 +249,7 @@ void BorderImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString BorderImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString BorderImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

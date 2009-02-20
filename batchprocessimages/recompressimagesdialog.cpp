@@ -35,11 +35,12 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -53,7 +54,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RecompressImagesDialog::RecompressImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+RecompressImagesDialog::RecompressImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                       : BatchProcessImagesDialog( urlList, interface, i18n("Batch Recompress Images"), parent )
 {
     // About data and help button.
@@ -100,7 +101,7 @@ RecompressImagesDialog::~RecompressImagesDialog()
 
 void RecompressImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("recompressimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("recompressimages", "kipi-plugins");
 }
 
 void RecompressImagesDialog::slotOptionsClicked(void)
@@ -174,7 +175,7 @@ void RecompressImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString RecompressImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString RecompressImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                             const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

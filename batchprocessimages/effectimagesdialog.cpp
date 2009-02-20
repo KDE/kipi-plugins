@@ -35,11 +35,12 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -54,7 +55,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+EffectImagesDialog::EffectImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Effects"), parent )
 {
     // About data and help button.
@@ -135,7 +136,7 @@ EffectImagesDialog::~EffectImagesDialog()
 
 void EffectImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("effectimages",
+    KToolInvocation::invokeHelp("effectimages",
                                              "kipi-plugins");
 }
 
@@ -322,7 +323,7 @@ void EffectImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString EffectImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString EffectImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

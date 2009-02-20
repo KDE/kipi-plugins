@@ -32,12 +32,12 @@
 
 // Include files for KDE
 
-#include <klistview.h>
+#include <k3listview.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BatchProcessImagesList : public KListView
+class BatchProcessImagesList : public K3ListView
 {
 Q_OBJECT
 

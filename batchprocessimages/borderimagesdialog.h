@@ -39,7 +39,7 @@ Q_OBJECT
 
  public:
  
-   BorderImagesDialog( KURL::List images, KIPI::Interface* interface, QWidget *parent=0 );
+   BorderImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~BorderImagesDialog();
 
  private slots:
@@ -63,7 +63,7 @@ Q_OBJECT
    int                    m_bevelWidth;
    QColor                 m_frameColor;
 
-   QString makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

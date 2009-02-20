@@ -42,10 +42,10 @@ extern "C"
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kinstance.h>
+#include <kcomponentdata.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <ktemporaryfile.h>
 
 // KIPI includes
 
@@ -72,7 +72,7 @@ K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const char*, const QStringList&)
             : KIPI::Plugin( Factory::instance(), parent, "BatchProcessImages")
 {
-    kdDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
+    kDebug( 51001 ) << "Plugin_BatchProcessImages plugin loaded" << endl;
 
 }
 
@@ -157,7 +157,7 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
     
     if ( !interface ) 
        {
-       kdError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!" << endl;
        return;
        }
     
@@ -208,7 +208,7 @@ void Plugin_BatchProcessImages::slotActivate()
     
     if ( !interface ) 
            {
-           kdError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!" << endl;
            return;
            }
            
@@ -230,7 +230,7 @@ void Plugin_BatchProcessImages::slotActivate()
         return;
         }
                                    
-    KURL::List urlList = images.images();
+    KUrl::List urlList = images.images();
 
     QString from(sender()->name());
 
@@ -284,7 +284,7 @@ void Plugin_BatchProcessImages::slotActivate()
         }
     else
         {
-        kdWarning( 51000 ) << "The impossible happened... unknown batch action specified" << endl;
+        kWarning( 51000 ) << "The impossible happened... unknown batch action specified" << endl;
         return;
         }
 }
@@ -308,6 +308,6 @@ KIPI::Category Plugin_BatchProcessImages::category( KAction* action ) const
     else if ( action == m_action_resizeimages )
        return KIPI::BATCHPLUGIN;     
 
-    kdWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::BATCHPLUGIN; // no warning from compiler, please
 }

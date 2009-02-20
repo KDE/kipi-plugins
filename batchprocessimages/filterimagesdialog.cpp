@@ -35,11 +35,12 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -54,7 +55,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* interface, QWidget *parent )
+FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Filtering"), parent )
 {
     // About data and help button.
@@ -123,7 +124,7 @@ FilterImagesDialog::~FilterImagesDialog()
 
 void FilterImagesDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("filterimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("filterimages", "kipi-plugins");
 }
 
 void FilterImagesDialog::slotTypeChanged(int type)
@@ -269,7 +270,7 @@ void FilterImagesDialog::saveSettings(void)
     delete m_config;
 }
 
-QString FilterImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *item,
+QString FilterImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
