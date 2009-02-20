@@ -48,15 +48,15 @@ kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS renameimagesbase.ui)
 
 kde4_add_plugin(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
 
-target_link_libraries(kipiplugin_batchprocessimages ${KDE4_KDECORE_LIBS} kio kdeui kipiplugins)
+target_link_libraries(kipiplugin_batchprocessimages ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} kipiplugins)
 
 install(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
 
 
 ########### install files ###############
 
-install(FILES  kipiplugin_batchprocessimages.desktop DESTINATION /share/services)
-install(FILES  DESTINATION /share/apps/kipiplugin_batchprocessimages/icons)
+install(FILES  kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(FILES  DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_batchprocessimages/icons)
 
 
 

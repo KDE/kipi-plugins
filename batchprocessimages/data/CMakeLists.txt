@@ -4,7 +4,7 @@ include_directories(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
 ########### install files ###############
 
-install(FILES  handcursor.png DESTINATION /share/apps/kipiplugin_batchprocessimages/data)
+install(FILES  handcursor.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_batchprocessimages/data)
 
 
 
