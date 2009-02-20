@@ -52,7 +52,7 @@ K_EXPORT_PLUGIN ( FacebookFactory("kipiplugin_facebook") )
 
 Plugin_Facebook::Plugin_Facebook(QObject *parent, const QVariantList &/*args*/)
                    : KIPI::Plugin(FacebookFactory::componentData(),
-                                  parent, "Fb")
+                                  parent, "Facebook Import/Export")
 {
     kDebug(51001) << "Plugin_Facebook plugin loaded";
 }
