@@ -254,7 +254,7 @@ void RenameImagesWidget::slotImageSelected(Q3ListViewItem* item)
 
 void RenameImagesWidget::sortList(int intSortOrder)
 {
-    SortOrder sortOrder = static_cast<Qt::SortOrder>(intSortOrder);
+    SortOrder sortOrder = static_cast<SortOrder>(intSortOrder);
 
     for (Q3ListViewItem* it = m_listView->firstChild(); it;
          it = it->nextSibling())
