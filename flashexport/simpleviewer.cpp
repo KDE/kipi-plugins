@@ -360,9 +360,9 @@ bool SimpleViewer::exportImages()
     galleryElem.setAttribute(QString::fromLatin1("enableRightClickOpen"), d->configDlg->settings().enableRightClickToOpen());
     galleryElem.setAttribute(QString::fromLatin1("maxImageWidth"),        d->configDlg->settings().maxImageDimension);
     galleryElem.setAttribute(QString::fromLatin1("maxImageHeight"),       d->configDlg->settings().maxImageDimension);
-    galleryElem.setAttribute(QString::fromLatin1("textColor"),            d->configDlg->settings().textColor.name().replace("#", "0x"));
-    galleryElem.setAttribute(QString::fromLatin1("frameColor"),           d->configDlg->settings().frameColor.name().replace("#", "0x"));
-    galleryElem.setAttribute(QString::fromLatin1("bgColor"),              d->configDlg->settings().backgroundColor.name().replace("#", "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("textColor"),            d->configDlg->settings().textColor.name().replace('#', "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("frameColor"),           d->configDlg->settings().frameColor.name().replace('#', "0x"));
+    galleryElem.setAttribute(QString::fromLatin1("bgColor"),              d->configDlg->settings().backgroundColor.name().replace('#', "0x"));
     galleryElem.setAttribute(QString::fromLatin1("frameWidth"),           d->configDlg->settings().frameWidth);
     galleryElem.setAttribute(QString::fromLatin1("stagePadding"),         d->configDlg->settings().stagePadding);
     galleryElem.setAttribute(QString::fromLatin1("thumbnailColumns"),     d->configDlg->settings().thumbnailColumns);
