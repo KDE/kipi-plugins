@@ -25,6 +25,8 @@
 
 #include <qlayout.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 // KDE includes.
 
@@ -71,7 +73,7 @@ RenameImagesDialog::RenameImagesDialog(const KURL::List& images,
     // gui
 
     QWidget* box = plainPage();
-    QVBoxLayout* lay = new QVBoxLayout(box);
+    Q3VBoxLayout* lay = new Q3VBoxLayout(box);
     m_widget = new RenameImagesWidget(box, interface, images);
     lay->addWidget(m_widget);
 

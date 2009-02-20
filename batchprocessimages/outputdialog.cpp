@@ -22,11 +22,13 @@
 
 // Qt includes
 
-#include <qtextview.h>
+#include <q3textview.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 // KDElib includes
 
@@ -74,14 +76,14 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
 
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
 
     //---------------------------------------------
 
     QLabel *labelHeader = new QLabel( Header, box);
     dvlay->addWidget( labelHeader );
 
-    debugView = new QTextView( box );
+    debugView = new Q3TextView( box );
     debugView->append( Messages );
     dvlay->addWidget( debugView );
 

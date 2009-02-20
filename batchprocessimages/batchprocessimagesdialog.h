@@ -37,7 +37,11 @@
 
 #include <qstring.h>
 #include <qpushbutton.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QLabel>
+#include <QCloseEvent>
 
 // Include files for KDE
 
@@ -60,9 +64,9 @@ class QComboBox;
 class QCheckBox;
 class QFileInfo;
 class QPushButton;
-class QListViewItemIterator;
-class QListViewItem;
-class QGroupBox;
+class Q3ListViewItemIterator;
+class Q3ListViewItem;
+class Q3GroupBox;
 
 class KProcess;
 class KConfig;
@@ -105,11 +109,11 @@ private slots:
    void slotPreviewReadStd(KProcess* proc, char *buffer, int buflen);
    void slotPreviewStop( void );
 
-   void slotListDoubleClicked(QListViewItem *itemClicked);
+   void slotListDoubleClicked(Q3ListViewItem *itemClicked);
 
    void slotAddDropItems(QStringList filesPath);
 
-   void slotImageSelected( QListViewItem * item );
+   void slotImageSelected( Q3ListViewItem * item );
    void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
 
    void slotImagesFilesButtonAdd( void );
@@ -142,11 +146,11 @@ private slots:
    QCheckBox              *m_removeOriginal;
    QCheckBox              *m_smallPreview;
 
-   QGroupBox              *groupBox1;
-   QGroupBox              *groupBox2;
-   QGroupBox              *groupBox3;
-   QGroupBox              *groupBox4;
-   QGroupBox              *groupBox41;
+   Q3GroupBox              *groupBox1;
+   Q3GroupBox              *groupBox2;
+   Q3GroupBox              *groupBox3;
+   Q3GroupBox              *groupBox4;
+   Q3GroupBox              *groupBox41;
 
    QPushButton            *m_optionsButton;
    QPushButton            *m_previewButton;
@@ -163,7 +167,7 @@ private slots:
    KProcess               *m_ProcessusProc;
    KProcess               *m_PreviewProc;
 
-   QListViewItemIterator  *m_listFile2Process_iterator;
+   Q3ListViewItemIterator  *m_listFile2Process_iterator;
 
    QString                 whatsThis;
    QString                 m_ImagesFilesSort;

@@ -23,7 +23,7 @@
 // Include files for Qt
 
 #include <qpainter.h>
-#include <qlistview.h>
+#include <q3listview.h>
 
 // Include files for KDE
 
@@ -36,7 +36,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesItem::BatchProcessImagesItem(QListView * parent, QString const & pathSrc,
+BatchProcessImagesItem::BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : KListViewItem( parent, "", nameSrc, nameDest, result),
                         _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result),
@@ -106,7 +106,7 @@ QString BatchProcessImagesItem::key(int column, bool ) const
     return _key;
 }
 
-int BatchProcessImagesItem::compare(QListViewItem * i, int col, bool ascending) const
+int BatchProcessImagesItem::compare(Q3ListViewItem * i, int col, bool ascending) const
 {
     int weight = _reverseSort ? -1 : 1;
     return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));

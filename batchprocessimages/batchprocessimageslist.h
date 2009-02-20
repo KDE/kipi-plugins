@@ -26,6 +26,9 @@
 // Include files for Qt
 
 #include <qobject.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 // Include files for KDE
 

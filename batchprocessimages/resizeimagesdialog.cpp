@@ -22,10 +22,10 @@
 
 // Include files for Qt
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qimage.h>
@@ -106,7 +106,7 @@ ResizeImagesDialog::ResizeImagesDialog( KURL::List urlList, KIPI::Interface* int
                                  "The target images will be adapted to the specified dimensions "
                                  "(included the background size, margin size, and background color).");
 
-    QWhatsThis::add( m_Type, whatsThis );
+    Q3WhatsThis::add( m_Type, whatsThis );
 
     m_previewButton->hide();
     m_smallPreview->hide();
@@ -387,9 +387,9 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
           
           *proc << "-profile" << item->pathSrc();
           
-          Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
-          Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
-          Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
+          Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.Qt::red()) + ",";
+          Temp2.append(Temp.setNum(m_bgColor.Qt::green()) + ",");
+          Temp2.append(Temp.setNum(m_bgColor.Qt::blue()) + ")");
           *proc << Temp2;
 
           *proc << "-resize" << targetBackgroundSize + "!";
@@ -504,9 +504,9 @@ QString ResizeImagesDialog::makeProcess(KProcess* proc, BatchProcessImagesItem *
 
           *proc << item->pathSrc();
 
-          Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.red()) + ",";
-          Temp2.append(Temp.setNum(m_backgroundColor.green()) + ",");
-          Temp2.append(Temp.setNum(m_backgroundColor.blue()) + ")");
+          Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.Qt::red()) + ",";
+          Temp2.append(Temp.setNum(m_backgroundColor.Qt::green()) + ",");
+          Temp2.append(Temp.setNum(m_backgroundColor.Qt::blue()) + ")");
           *proc << Temp2;
 
           // ImageMagick composite program do not preserve exif data from original. 

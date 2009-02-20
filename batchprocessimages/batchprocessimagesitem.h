@@ -33,7 +33,7 @@
 #include <klistview.h>
 
 class QPainter;
-class QListView;
+class Q3ListView;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -42,7 +42,7 @@ class BatchProcessImagesItem : public KListViewItem
 {
 public:
 
-    BatchProcessImagesItem(QListView * parent, QString const & pathSrc, QString const & nameSrc,
+    BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc, QString const & nameSrc,
                            QString const & nameDest, QString const & result);
 
     ~BatchProcessImagesItem();
@@ -65,7 +65,7 @@ public:
 
     void setKey(const QString& val, bool reverseSort);
     QString key(int column, bool ascending) const;
-    int compare (QListViewItem * i, int col, bool ascending) const;
+    int compare (Q3ListViewItem * i, int col, bool ascending) const;
 
 private:
     QString _pathSrc;

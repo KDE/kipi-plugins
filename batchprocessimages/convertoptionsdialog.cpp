@@ -22,15 +22,17 @@
 
 // Include files for Qt
 
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 // Include files for KDE
 
@@ -51,7 +53,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
     if (ImageFormatType == 0 || ImageFormatType == 1) // JPEG || PNG
@@ -67,14 +69,14 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                                     "<b>75</b>: low compression (default value)<p>"
                                     "<b>100</b>: no compression");
 
-       QWhatsThis::add( m_JPEGPNGCompression, whatsThis);
+       Q3WhatsThis::add( m_JPEGPNGCompression, whatsThis);
        m_label_imageCompression->setBuddy( m_JPEGPNGCompression );
        dvlay->addWidget( m_JPEGPNGCompression );
 
        if (ImageFormatType == 0) // JPEG
           {
           m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), box);
-          QWhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
+          Q3WhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
                                                     "all JPEG operations will use a lossless compression."));
           dvlay->addWidget( m_compressLossLess );
 
@@ -90,7 +92,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        m_TIFFCompressionAlgo->insertItem("LZW");
        m_TIFFCompressionAlgo->insertItem("JPEG");
        m_TIFFCompressionAlgo->insertItem(i18n("None"));
-       QWhatsThis::add( m_TIFFCompressionAlgo, i18n("<p>Select here the compression algorithm.") );
+       Q3WhatsThis::add( m_TIFFCompressionAlgo, i18n("<p>Select here the compression algorithm.") );
        m_label_imageCompression->setBuddy( m_TIFFCompressionAlgo );
        dvlay->addWidget( m_TIFFCompressionAlgo );
        }
@@ -102,7 +104,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        m_TGACompressionAlgo = new QComboBox( false, box );
        m_TGACompressionAlgo->insertItem("RLE");
        m_TGACompressionAlgo->insertItem(i18n("None"));
-       QWhatsThis::add( m_TGACompressionAlgo, i18n("<p>Select here the compression algorithm.") );
+       Q3WhatsThis::add( m_TGACompressionAlgo, i18n("<p>Select here the compression algorithm.") );
        m_label_imageCompression->setBuddy( m_TGACompressionAlgo );
        dvlay->addWidget( m_TGACompressionAlgo );
        }

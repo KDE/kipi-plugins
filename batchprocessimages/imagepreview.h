@@ -25,9 +25,13 @@
 
 // Include files for Qt
 
-#include <qscrollview.h>
+#include <q3scrollview.h>
 #include <qimage.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QWheelEvent>
+#include <QMouseEvent>
 
 // Include files for KDE
 
@@ -50,7 +54,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class PixmapView : public QScrollView
+class PixmapView : public Q3ScrollView
 {
 Q_OBJECT
 

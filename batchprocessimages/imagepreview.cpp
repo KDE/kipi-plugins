@@ -1,3 +1,9 @@
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QWheelEvent>
+#include <Q3GridLayout>
+#include <QMouseEvent>
+#include <Q3VBoxLayout>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -35,14 +41,14 @@ extern "C"
 
 #include <qpixmap.h>
 #include <qpushbutton.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qlayout.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qslider.h>
 #include <qlcdnumber.h>
 #include <qpainter.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qapplication.h>
 #include <qcursor.h>
 
@@ -114,39 +120,39 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     else
         INIT_ZOOM_FACTOR = 5;
 
-    QVBoxLayout* ml = new QVBoxLayout( box, 10 );
+    Q3VBoxLayout* ml = new Q3VBoxLayout( box, 10 );
 
     //---------------------------------------------
 
-    QHBoxLayout* h1 = new QHBoxLayout( ml );
-    QVBoxLayout* v1 = new QVBoxLayout( h1 );
+    Q3HBoxLayout* h1 = new Q3HBoxLayout( ml );
+    Q3VBoxLayout* v1 = new Q3VBoxLayout( h1 );
     h1->addSpacing( 5 );
-    QGridLayout* g1 = new QGridLayout( v1, 1, 2 );
+    Q3GridLayout* g1 = new Q3GridLayout( v1, 1, 2 );
 
-    QGroupBox * groupBoxZoomFactor = new QGroupBox( 2, Qt::Horizontal, i18n("Zoom Factor"), box );
+    Q3GroupBox * groupBoxZoomFactor = new Q3GroupBox( 2, Qt::Horizontal, i18n("Zoom Factor"), box );
     LCDZoomFactorValue = new QLCDNumber (4, groupBoxZoomFactor, "ZoomFactorLCDvalue");
     LCDZoomFactorValue->setSegmentStyle ( QLCDNumber::Flat );
     LCDZoomFactorValue->display( QString::number(INIT_ZOOM_FACTOR * 5) );
-    QWhatsThis::add( LCDZoomFactorValue, i18n("<p>The zoom factor value, as a percentage."));
+    Q3WhatsThis::add( LCDZoomFactorValue, i18n("<p>The zoom factor value, as a percentage."));
 
     ZoomFactorSlider = new QSlider (1, 20, 1, INIT_ZOOM_FACTOR, Qt::Horizontal,
                                     groupBoxZoomFactor, "ZoomFactorSlider");
     ZoomFactorSlider->setTracking ( false );
     ZoomFactorSlider->setTickInterval ( 5 );
-    QWhatsThis::add( ZoomFactorSlider, i18n("<p>Moving this slider changes the zoom factor value."));
+    Q3WhatsThis::add( ZoomFactorSlider, i18n("<p>Moving this slider changes the zoom factor value."));
     g1->addWidget( groupBoxZoomFactor, 0, 0);
 
-    QGridLayout* g2 = new QGridLayout( v1, 1, 2 );
-    QGroupBox * groupBox1 = new QGroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
+    Q3GridLayout* g2 = new Q3GridLayout( v1, 1, 2 );
+    Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
     m_previewOrig = new PixmapView(cropActionOrig, groupBox1);
-    QWhatsThis::add( m_previewOrig, i18n("<p>This is the original image preview. You can use the mouse "
+    Q3WhatsThis::add( m_previewOrig, i18n("<p>This is the original image preview. You can use the mouse "
                                          "wheel to change the zoom factor. Click in and use the mouse "
                                          "to move the image."));
     g2->addWidget( groupBox1 , 0, 0);
 
-    QGroupBox * groupBox2 = new QGroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
+    Q3GroupBox * groupBox2 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
     m_previewDest = new PixmapView(cropActionDest, groupBox2);
-    QWhatsThis::add( m_previewDest, i18n("<p>This is the destination image preview. You can use the "
+    Q3WhatsThis::add( m_previewDest, i18n("<p>This is the destination image preview. You can use the "
                                          "mouse wheel to change the zoom factor. Click in and use the "
                                          "mouse to move the image."));
     g2->setColStretch(0,1);
@@ -195,7 +201,7 @@ void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
 }
 
 PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
-           : QScrollView(parent, name)
+           : Q3ScrollView(parent, name)
 {
     m_cropAction = cropAction;
     m_pix = NULL;

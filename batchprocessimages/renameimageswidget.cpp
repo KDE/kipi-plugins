@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <QPixmap>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -37,7 +39,7 @@ extern "C"
 
 // Qt includes.
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
@@ -47,9 +49,9 @@ extern "C"
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qtimer.h>
-#include <qprogressdialog.h>
-#include <qgroupbox.h>
-#include <qpopupmenu.h>
+#include <q3progressdialog.h>
+#include <q3groupbox.h>
+#include <q3popupmenu.h>
 #include <qregexp.h>
 #include <qdir.h>
 #include <qtooltip.h>
@@ -94,7 +96,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
 
     readSettings();
 
-    QPopupMenu* sortMenu = new QPopupMenu(this);
+    Q3PopupMenu* sortMenu = new Q3PopupMenu(this);
     sortMenu->insertItem(i18n("Sort by Name"), BYNAME);
     sortMenu->insertItem(i18n("Sort by Size"), BYSIZE);
     sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
@@ -116,10 +118,10 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
             "[B:4..-2] - base name (big one - all before last ',', from 4-th to one before last characters)\n"
             "[b-:-3..] - base name (small one - all before first '.', last 3 characters)");
 
-    connect(m_listView, SIGNAL(doubleClicked(QListViewItem*)),
-            SLOT(slotListViewDoubleClicked(QListViewItem*)));
-    connect(m_listView, SIGNAL(selectionChanged(QListViewItem*)),
-            SLOT(slotImageSelected(QListViewItem*)));
+    connect(m_listView, SIGNAL(doubleClicked(Q3ListViewItem*)),
+            SLOT(slotListViewDoubleClicked(Q3ListViewItem*)));
+    connect(m_listView, SIGNAL(selectionChanged(Q3ListViewItem*)),
+            SLOT(slotImageSelected(Q3ListViewItem*)));
 
     connect(m_prefixEdit, SIGNAL(textChanged(const QString&)),
             SLOT(slotOptionsChanged()));
@@ -154,7 +156,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
             SLOT(moveCurrentItemDown()) );
     
     m_timer = new QTimer(this);
-    m_progress = new QProgressDialog(this, 0, true);
+    m_progress = new Q3ProgressDialog(this, 0, true);
     connect(m_timer, SIGNAL(timeout()),
             SLOT(slotNext()));
     connect(m_progress, SIGNAL(canceled()),
@@ -225,12 +227,12 @@ void RenameImagesWidget::slotOptionsChanged()
     updateListing();
 }
 
-void RenameImagesWidget::slotListViewDoubleClicked(QListViewItem*)
+void RenameImagesWidget::slotListViewDoubleClicked(Q3ListViewItem*)
 {
     // TODO: Implement    
 }
 
-void RenameImagesWidget::slotImageSelected(QListViewItem* item)
+void RenameImagesWidget::slotImageSelected(Q3ListViewItem* item)
 {
     if (!item)
     {
@@ -252,9 +254,9 @@ void RenameImagesWidget::slotImageSelected(QListViewItem* item)
 
 void RenameImagesWidget::sortList(int intSortOrder)
 {
-    SortOrder sortOrder = static_cast<SortOrder>(intSortOrder);
+    SortOrder sortOrder = static_cast<Qt::SortOrder>(intSortOrder);
 
-    for (QListViewItem* it = m_listView->firstChild(); it;
+    for (Q3ListViewItem* it = m_listView->firstChild(); it;
          it = it->nextSibling())
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(it);
@@ -296,7 +298,7 @@ void RenameImagesWidget::reverseList()
 {
     if (m_listView->childCount() < 2) return;
 
-    QListViewItem* lastItem = m_listView->lastItem();
+    Q3ListViewItem* lastItem = m_listView->lastItem();
 
     while (m_listView->firstChild() != lastItem) {
         m_listView->firstChild()->moveItem(lastItem);
@@ -307,10 +309,10 @@ void RenameImagesWidget::reverseList()
 
 
 void RenameImagesWidget::moveCurrentItemUp() {
-    QListViewItem* currentItem = m_listView->currentItem();
+    Q3ListViewItem* currentItem = m_listView->currentItem();
     if (!currentItem) return;
 
-    for (QListViewItem* previousItem = m_listView->firstChild(); previousItem;
+    for (Q3ListViewItem* previousItem = m_listView->firstChild(); previousItem;
          previousItem = previousItem->nextSibling()) 
     {
         if (previousItem->nextSibling() == currentItem) {
@@ -324,10 +326,10 @@ void RenameImagesWidget::moveCurrentItemUp() {
 
 
 void RenameImagesWidget::moveCurrentItemDown() {
-    QListViewItem* currentItem = m_listView->currentItem();
+    Q3ListViewItem* currentItem = m_listView->currentItem();
     if (!currentItem) return;
     
-    QListViewItem* nextItem = currentItem->nextSibling();
+    Q3ListViewItem* nextItem = currentItem->nextSibling();
     if (nextItem) {
         currentItem->moveItem(nextItem);
     }
@@ -339,7 +341,7 @@ void RenameImagesWidget::moveCurrentItemDown() {
 void RenameImagesWidget::updateListing()
 {
     int pos = 0;
-    for (QListViewItem* it = m_listView->firstChild(); it;
+    for (Q3ListViewItem* it = m_listView->firstChild(); it;
          it = it->nextSibling())
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(it);
@@ -506,7 +508,7 @@ void RenameImagesWidget::slotAbort()
 
 void RenameImagesWidget::slotNext()
 {
-    QListViewItem* it = m_listView->selectedItem();
+    Q3ListViewItem* it = m_listView->selectedItem();
     if (!it)
     {
         slotAbort();

@@ -26,6 +26,8 @@
 // Include files for Qt
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <QLabel>
 
 // Include files for KDE
 

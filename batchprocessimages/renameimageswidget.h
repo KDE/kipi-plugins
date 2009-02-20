@@ -31,10 +31,12 @@
 // Local includes.
 
 #include "renameimagesbase.h"
+//Added by qt3to4:
+#include <QPixmap>
 
 class KFileItem;
 class QTimer;
-class QProgressDialog;
+class Q3ProgressDialog;
 
 namespace KIPI
 {
@@ -75,7 +77,7 @@ private:
     KIPI::Interface* m_interface;
     KURL::List       m_urlList;
     QTimer*          m_timer;
-    QProgressDialog* m_progress;
+    Q3ProgressDialog* m_progress;
     bool             m_overwriteAll;
     bool             m_autoSkip;
 
@@ -87,8 +89,8 @@ public slots:
     
 private slots:
 
-    void slotListViewDoubleClicked(QListViewItem*);
-    void slotImageSelected(QListViewItem*);
+    void slotListViewDoubleClicked(Q3ListViewItem*);
+    void slotImageSelected(Q3ListViewItem*);
     void slotOptionsChanged();
     void slotGotPreview(const KFileItem*, const QPixmap&);
 

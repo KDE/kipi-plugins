@@ -23,11 +23,14 @@
 // Include files for Qt
 
 #include <qevent.h>
-#include <qdragobject.h>
-#include <qstrlist.h>
+#include <q3dragobject.h>
+#include <q3strlist.h>
 #include <qfileinfo.h>
-#include <qwhatsthis.h>
-#include <qlistview.h>
+#include <q3whatsthis.h>
+#include <q3listview.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 // Include files for KDE
 
@@ -52,10 +55,10 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
     addColumn(i18n("Result"));
     setSorting(3);
     setItemMargin(3);
-    setResizeMode(QListView::LastColumn);
-    setSelectionMode(QListView::Single);
+    setResizeMode(Q3ListView::LastColumn);
+    setSelectionMode(Q3ListView::Single);
     setAllColumnsShowFocus ( true );
-    QWhatsThis::add( this, i18n("<p>You can see here the operations' results "
+    Q3WhatsThis::add( this, i18n("<p>You can see here the operations' results "
                                 "during the process. Double-click on an item for more "
                                 "information once the process has ended. "
                                 "<p>You can use the \"Add\" button or drag-and-drop "
@@ -66,12 +69,12 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char *name
 
 void BatchProcessImagesList::dragEnterEvent(QDragEnterEvent *e)
 {
-    e->accept(QUriDrag::canDecode(e));
+    e->accept(Q3UriDrag::canDecode(e));
 }
 
 bool BatchProcessImagesList::acceptDrag(QDropEvent* e) const
 {
-    return ( QUriDrag::canDecode(e) );
+    return ( Q3UriDrag::canDecode(e) );
 }
 
 void BatchProcessImagesList::contentsDropEvent(QDropEvent* e)
@@ -86,18 +89,18 @@ void BatchProcessImagesList::dropEvent(QDropEvent *e)
 
 void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
 {
-    QStrList strList;
+    Q3StrList strList;
     QStringList FilesPath;
 
-    if ( !QUriDrag::decode(e, strList) ) return;
+    if ( !Q3UriDrag::decode(e, strList) ) return;
 
-    QStrList stringList;
-    QStrListIterator it(strList);
+    Q3StrList stringList;
+    Q3StrListIterator it(strList);
     char *str;
 
     while ( (str = it.current()) != 0 )
        {
-       QString filePath = QUriDrag::uriToLocalFile(str);
+       QString filePath = Q3UriDrag::uriToLocalFile(str);
        QFileInfo fileInfo(filePath);
 
        if (fileInfo.isFile() && fileInfo.exists())

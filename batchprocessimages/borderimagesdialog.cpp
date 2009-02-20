@@ -22,10 +22,10 @@
 
 // Include files for Qt
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -101,7 +101,7 @@ BorderImagesDialog::BorderImagesDialog( KURL::List urlList, KIPI::Interface* int
                      "<b>Raise</b>: creating a 3D effect around the images.<p>"
                      "<b>Frame</b>: surround the images with an ornamental border.<p>");
 
-    QWhatsThis::add( m_Type, whatsThis );
+    Q3WhatsThis::add( m_Type, whatsThis );
 
     //---------------------------------------------
 

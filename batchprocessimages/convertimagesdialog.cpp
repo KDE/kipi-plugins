@@ -22,10 +22,10 @@
 
 // Include files for Qt
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
@@ -129,7 +129,7 @@ ConvertImagesDialog::ConvertImagesDialog( KURL::List urlList, KIPI::Interface* i
                                  "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
                                  "language page description.");
 
-    QWhatsThis::add( m_Type, whatsThis );
+    Q3WhatsThis::add( m_Type, whatsThis );
 
     m_previewButton->hide();
     m_smallPreview->hide();

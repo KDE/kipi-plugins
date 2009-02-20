@@ -35,7 +35,7 @@
 
 #include "kpaboutdata.h"
 
-class QTextView;
+class Q3TextView;
 class QPushButton;
 
 namespace KIPIBatchProcessImagesPlugin
@@ -59,7 +59,7 @@ private slots:
 private:
   
   QPushButton *m_helpButton;
-  QTextView *debugView;
+  Q3TextView *debugView;
   
   KIPIPlugins::KPAboutData  *m_about;
 

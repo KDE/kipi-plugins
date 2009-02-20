@@ -1,3 +1,11 @@
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3ValueList>
+#include <Q3GridLayout>
+#include <Q3CString>
+#include <QPixmap>
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -29,27 +37,27 @@ extern "C"
 
 // Include files for Qt
 
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qlayout.h>
 #include <qdir.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qgroupbox.h>
-#include <qwhatsthis.h>
+#include <q3groupbox.h>
+#include <q3whatsthis.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <qcolor.h>
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qimage.h>
 #include <qevent.h>
-#include <qdragobject.h>
+#include <q3dragobject.h>
 #include <qfileinfo.h>
-#include <qhgroupbox.h>
-#include <qvgroupbox.h>
-#include <qframe.h>
-#include <qwmatrix.h>
+#include <q3hgroupbox.h>
+#include <q3vgroupbox.h>
+#include <q3frame.h>
+#include <qmatrix.h>
 
 // Include files for KDE
 
@@ -116,15 +124,15 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     KImageIO::registerFormats();
 
     QWidget* box = plainPage();
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 0, KDialog::spacingHint());
+    Q3VBoxLayout *dvlay = new Q3VBoxLayout(box, 0, KDialog::spacingHint());
 
     //---------------------------------------------
 
-    QHBoxLayout *hlay = new QHBoxLayout( dvlay );
-    groupBox1 = new QGroupBox( 0, Qt::Vertical, box );
+    Q3HBoxLayout *hlay = new Q3HBoxLayout( dvlay );
+    groupBox1 = new Q3GroupBox( 0, Qt::Vertical, box );
     groupBox1->layout()->setSpacing(KDialog::spacingHint());
     groupBox1->layout()->setMargin(KDialog::marginHint());
-    QGridLayout* grid = new QGridLayout( groupBox1->layout(), 2, 3);
+    Q3GridLayout* grid = new Q3GridLayout( groupBox1->layout(), 2, 3);
     m_labelType = new QLabel( groupBox1 );
     grid->addMultiCellWidget(m_labelType, 0, 0, 0, 0);
 
@@ -133,12 +141,12 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_optionsButton = new QPushButton (groupBox1, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
-    QWhatsThis::add( m_optionsButton, i18n("<p>You can choose here the options to use "
+    Q3WhatsThis::add( m_optionsButton, i18n("<p>You can choose here the options to use "
                                            "for the current process."));
     grid->addMultiCellWidget(m_optionsButton, 0, 0, 2, 2);
 
     m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
-    QWhatsThis::add( m_smallPreview, i18n("<p>If you enable this option, "
+    Q3WhatsThis::add( m_smallPreview, i18n("<p>If you enable this option, "
                                           "all preview effects will be calculated on a small zone "
                                           "of the image (300x300 pixels in the top left corner). "
                                           "Enable this option if you have a slow computer.") );
@@ -147,7 +155,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     m_previewButton = new QPushButton (groupBox1, "PreviewButton");
     m_previewButton->setText(i18n("&Preview"));
-    QWhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
+    Q3WhatsThis::add( m_previewButton, i18n("<p>This button builds a process "
                                            "preview for the currently selected image on the list."));
     grid->addMultiCellWidget(m_previewButton, 1, 1, 2, 2);
 
@@ -155,7 +163,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    groupBox2 = new QGroupBox( 2, Qt::Horizontal, i18n("File Operations"), box );
+    groupBox2 = new Q3GroupBox( 2, Qt::Horizontal, i18n("File Operations"), box );
 
     m_labelOverWrite = new QLabel (i18n("Overwrite mode:"), groupBox2);
     m_overWriteMode = new QComboBox( false, groupBox2 );
@@ -164,11 +172,11 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_overWriteMode->insertItem(i18n("Rename"));
     m_overWriteMode->insertItem(i18n("Skip"));
     m_overWriteMode->setCurrentText (i18n("Rename"));
-    QWhatsThis::add( m_overWriteMode, i18n("<p>Select here the overwrite mode used if your target's image "
+    Q3WhatsThis::add( m_overWriteMode, i18n("<p>Select here the overwrite mode used if your target's image "
                                            "files already exist.") );
 
     m_removeOriginal = new QCheckBox(i18n("Remove original"), groupBox2);
-    QWhatsThis::add( m_removeOriginal, i18n("<p>If you enable this option, "
+    Q3WhatsThis::add( m_removeOriginal, i18n("<p>If you enable this option, "
                                             "all original image files will be removed after processing.") );
     m_removeOriginal->setChecked( false );
 
@@ -176,7 +184,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    groupBox3 = new QHGroupBox( i18n("Target Folder"), box );
+    groupBox3 = new Q3HGroupBox( i18n("Target Folder"), box );
 
     m_destinationURL = new KURLRequester(groupBox3);
 	m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
@@ -194,36 +202,36 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
 		}
 		m_destinationURL->lineEdit()->setText(url);
 	}
-    QWhatsThis::add( m_destinationURL, i18n("<p>Here you can select the target folder which "
+    Q3WhatsThis::add( m_destinationURL, i18n("<p>Here you can select the target folder which "
                                             "will used by the process."));
 
     dvlay->addWidget( groupBox3 );
 
     //---------------------------------------------
 
-    groupBox4         = new QHGroupBox( box );
+    groupBox4         = new Q3HGroupBox( box );
     QWidget* box41    = new QWidget( groupBox4 );
-    QHBoxLayout* lay2 = new QHBoxLayout( box41, 0, spacingHint() );
+    Q3HBoxLayout* lay2 = new Q3HBoxLayout( box41, 0, spacingHint() );
     m_listFiles       = new BatchProcessImagesList( box41 );
     lay2->addWidget( m_listFiles );
 
     m_listFiles->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 
-    QVBoxLayout* lay3 = new QVBoxLayout( lay2 );
+    Q3VBoxLayout* lay3 = new Q3VBoxLayout( lay2 );
     m_addImagesButton = new QPushButton ( i18n( "&Add..." ), box41 );
     lay3->addWidget( m_addImagesButton );
-    QWhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
+    Q3WhatsThis::add( m_addImagesButton, i18n("<p>Add images to the list.") );
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), box41 );
     lay3->addWidget( m_remImagesButton );
-    QWhatsThis::add( m_remImagesButton, i18n("<p>Remove selected image from the list.") );
+    Q3WhatsThis::add( m_remImagesButton, i18n("<p>Remove selected image from the list.") );
 
     m_imageLabel = new QLabel( box41 );
     m_imageLabel->setFixedHeight( 80 );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     lay3->addWidget( m_imageLabel );
-    QWhatsThis::add( m_imageLabel, i18n( "<p>The preview of the selected image on the list." ) );
+    Q3WhatsThis::add( m_imageLabel, i18n( "<p>The preview of the selected image on the list." ) );
     lay3->addStretch( 1 );
 
     dvlay->addWidget( groupBox4 );
@@ -233,14 +241,14 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
+    Q3WhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
 
     dvlay->addWidget( m_progress );
 
     //---------------------------------------------
 
-    connect(m_listFiles, SIGNAL(doubleClicked(QListViewItem *)),
-            this, SLOT(slotListDoubleClicked(QListViewItem *)));
+    connect(m_listFiles, SIGNAL(doubleClicked(Q3ListViewItem *)),
+            this, SLOT(slotListDoubleClicked(Q3ListViewItem *)));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStart()));
@@ -257,8 +265,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KURL::List urlList, KIPI::In
     connect(m_listFiles, SIGNAL( addedDropItems(QStringList) ),
             this, SLOT( slotAddDropItems(QStringList)));
 
-    connect(m_listFiles, SIGNAL( currentChanged( QListViewItem * ) ),
-            this, SLOT( slotImageSelected( QListViewItem * )));
+    connect(m_listFiles, SIGNAL( currentChanged( Q3ListViewItem * ) ),
+            this, SLOT( slotImageSelected( Q3ListViewItem * )));
 
     connect(m_addImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonAdd()));
@@ -310,7 +318,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
     }
 }
 
-void BatchProcessImagesDialog::slotImageSelected( QListViewItem * item )
+void BatchProcessImagesDialog::slotImageSelected( Q3ListViewItem * item )
 {
     if ( !item || m_listFiles->childCount() == 0 )
     {
@@ -342,7 +350,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixma
     if ( info.angle() != 0 )
     {
         QImage img = pix.convertToImage();
-        QWMatrix matrix;
+        QMatrix matrix;
 
         matrix.rotate( info.angle() );
         img = img.xForm( matrix );
@@ -426,7 +434,7 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     m_addImagesButton->setEnabled(false);
     m_remImagesButton->setEnabled(false);
 
-    m_listFile2Process_iterator = new QListViewItemIterator( m_listFiles );
+    m_listFile2Process_iterator = new Q3ListViewItemIterator( m_listFiles );
     startProcess();
 }
 
@@ -751,7 +759,7 @@ void BatchProcessImagesDialog::slotProcessDone(KProcess* proc)
         endProcess();
 }
 
-void BatchProcessImagesDialog::slotListDoubleClicked(QListViewItem *itemClicked)
+void BatchProcessImagesDialog::slotListDoubleClicked(Q3ListViewItem *itemClicked)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( itemClicked );
 
@@ -933,7 +941,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
     
         bool findItem = false;
     
-        QListViewItemIterator it2( m_listFiles );
+        Q3ListViewItemIterator it2( m_listFiles );
     
         while ( it2.current() )
         {
@@ -1081,9 +1089,9 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 QString BatchProcessImagesDialog::extractArguments(KProcess *proc)
 {
     QString retArguments;
-    QValueList<QCString> argumentsList = proc->args();
+    Q3ValueList<Q3CString> argumentsList = proc->args();
 
-    for ( QValueList<QCString>::iterator it = argumentsList.begin() ; it != argumentsList.end() ; ++it )
+    for ( Q3ValueList<Q3CString>::iterator it = argumentsList.begin() ; it != argumentsList.end() ; ++it )
       retArguments.append(*it + " ");
 
     return (retArguments);

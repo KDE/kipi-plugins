@@ -22,15 +22,17 @@
  
 // Include files for Qt
 
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcolor.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 // Include files for KDE
 
@@ -53,7 +55,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
 {
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
     if (ColorType == 1) // Depth
@@ -64,7 +66,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        m_depthValue->insertItem("8");
        m_depthValue->insertItem("16");
        m_depthValue->insertItem("32");
-       QWhatsThis::add( m_depthValue, i18n("<p>Select here the image depth in bits.") );
+       Q3WhatsThis::add( m_depthValue, i18n("<p>Select here the image depth in bits.") );
        m_label_depthValue->setBuddy( m_depthValue );
        dvlay->addWidget( m_depthValue );
        }
@@ -75,7 +77,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        dvlay->addWidget( m_label_fuzzDistance );
        m_fuzzDistance = new KIntNumInput(3, box);
        m_fuzzDistance->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_fuzzDistance, i18n("<p>Select here the fuzz distance in "
+       Q3WhatsThis::add( m_fuzzDistance, i18n("<p>Select here the fuzz distance in "
                                              "absolute intensity units.") );
        m_label_fuzzDistance->setBuddy( m_fuzzDistance );
        dvlay->addWidget( m_fuzzDistance );
@@ -87,7 +89,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        dvlay->addWidget( m_label_segmentCluster );
        m_segmentCluster = new KIntNumInput(3, box);
        m_segmentCluster->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_segmentCluster, i18n("<p>Select here the value which represents the minimum "
+       Q3WhatsThis::add( m_segmentCluster, i18n("<p>Select here the value which represents the minimum "
                                                "number of pixels contained in a hexahedra before it can "
                                                "be considered valid.") );
        m_label_segmentCluster->setBuddy( m_segmentCluster );
@@ -97,7 +99,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        dvlay->addWidget( m_label_segmentSmooth );
        m_segmentSmooth = new KIntNumInput(3, box);
        m_segmentSmooth->setRange(0, 20, 1, true );
-       QWhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value which eliminates noise in the "
+       Q3WhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value which eliminates noise in the "
                                               "second derivative of the histogram. As the value is increased, "
                                               "you can expect a smoother second derivative.") );
        m_label_segmentSmooth->setBuddy( m_segmentSmooth );

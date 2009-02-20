@@ -22,10 +22,10 @@
 
 // Include files for Qt
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -107,7 +107,7 @@ FilterImagesDialog::FilterImagesDialog( KURL::List urlList, KIPI::Interface* int
                      "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<p>"
                      "<b>Unsharp</b>: sharpen the image with an unsharp mask operator.<p>");
 
-    QWhatsThis::add( m_Type, whatsThis );
+    Q3WhatsThis::add( m_Type, whatsThis );
 
     //---------------------------------------------
 

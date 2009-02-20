@@ -22,10 +22,10 @@
  
 // Include files for Qt
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -120,7 +120,7 @@ EffectImagesDialog::EffectImagesDialog( KURL::List urlList, KIPI::Interface* int
                      "<b>Wave</b>: creates a \"ripple\" effect in the image by shifting the pixels vertically "
                      "along a sine wave.<p>");
 
-    QWhatsThis::add( m_Type, whatsThis );
+    Q3WhatsThis::add( m_Type, whatsThis );
 
     //---------------------------------------------
 
