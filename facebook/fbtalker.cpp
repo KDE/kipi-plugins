@@ -47,7 +47,7 @@
 #include "fbitem.h"
 #include "mpform.h"
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 bool operator< (const FbUser& first, const FbUser& second)
@@ -1352,4 +1352,4 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
                               photosList);
 }
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin

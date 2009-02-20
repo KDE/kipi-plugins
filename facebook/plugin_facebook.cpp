@@ -112,7 +112,7 @@ void Plugin_Facebook::slotExport()
                                            + QString::number(getpid()) + '/');
 
     // We clean it up in the close button
-    m_dlg = new KIPIFbPlugin::FbWindow(interface, tmp, false,
+    m_dlg = new KIPIFacebookPlugin::FbWindow(interface, tmp, false,
                                        kapp->activeWindow());
     m_dlg->show();
 }
@@ -131,7 +131,7 @@ void Plugin_Facebook::slotImport()
                                            + QString::number(getpid()) + '/');
 
     // We clean it up in the close button
-    m_dlg = new KIPIFbPlugin::FbWindow(interface, tmp, true,
+    m_dlg = new KIPIFacebookPlugin::FbWindow(interface, tmp, true,
                                        kapp->activeWindow());
     m_dlg->show();
 }

@@ -66,7 +66,7 @@
 #include "fbwidget.h"
 #include "fbalbum.h"
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder, 
@@ -825,4 +825,4 @@ void FbWindow::slotImageListChanged(bool state)
     enableButton(User1, !state);
 }
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin

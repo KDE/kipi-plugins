@@ -47,7 +47,7 @@
 // Local includes.
 #include "imageslist.h"
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
@@ -381,4 +381,4 @@ long long FbWidget::getAlbumID()
     return 0;
 }
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin

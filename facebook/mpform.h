@@ -29,7 +29,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 class MPForm
@@ -55,6 +55,6 @@ private:
     QByteArray m_boundary;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif /* MPFORM_H */

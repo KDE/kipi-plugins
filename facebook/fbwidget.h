@@ -44,7 +44,7 @@ namespace KIPIPlugins
     class ImagesList;
 }
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 enum FbDownloadType
@@ -103,6 +103,6 @@ private:
     friend class FbWindow;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif // FBWIDGET_H

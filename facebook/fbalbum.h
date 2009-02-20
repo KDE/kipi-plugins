@@ -32,7 +32,7 @@ class KLineEdit;
 class KTextEdit;
 class KComboBox;
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 class FbAlbum;
@@ -56,6 +56,6 @@ private:
     friend class FbWindow;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif // FBALBUM_H

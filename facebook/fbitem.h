@@ -26,7 +26,7 @@
 // Qt includes.
 #include <QString>
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 class FbUser
@@ -94,6 +94,6 @@ public:
     QString     originalURL;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif /* FBITEM_H */

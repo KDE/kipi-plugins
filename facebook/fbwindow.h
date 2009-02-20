@@ -51,7 +51,7 @@ namespace KIPIPlugins
 class KPAboutData;
 }
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 class FbTalker;
@@ -139,6 +139,6 @@ private:
     KIPIPlugins::KPAboutData   *m_about;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif /* FBWINDOW_H */

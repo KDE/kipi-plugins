@@ -38,7 +38,7 @@
 class QProgressDialog;
 class QDomElement;
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 class FbTalker : public QObject
@@ -163,6 +163,6 @@ private:
     State           m_state;
 };
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
 
 #endif /* FBTALKER_H */

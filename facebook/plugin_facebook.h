@@ -33,7 +33,7 @@
 
 class KAction;
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
     class FbWindow;
 }
@@ -57,9 +57,9 @@ public slots:
 
 private:
 
-    KAction                 *m_actionImport;
-    KAction                 *m_actionExport;
-    KIPIFbPlugin::FbWindow  *m_dlg;
+    KAction                       *m_actionImport;
+    KAction                       *m_actionExport;
+    KIPIFacebookPlugin::FbWindow  *m_dlg;
 };
 
 #endif // PLUGIN_FACEBOOK_H

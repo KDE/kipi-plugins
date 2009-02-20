@@ -38,7 +38,7 @@
 #include <KUrl>
 #include <KRandom>
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 MPForm::MPForm()
@@ -143,4 +143,4 @@ QByteArray MPForm::formData() const
     return m_buffer;
 }
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin

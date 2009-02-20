@@ -36,7 +36,7 @@
 // local includes
 #include <fbitem.h>
 
-namespace KIPIFbPlugin
+namespace KIPIFacebookPlugin
 {
 
 FbNewAlbum::FbNewAlbum(QWidget* parent)
@@ -100,7 +100,7 @@ void FbNewAlbum::getAlbumProperties(FbAlbum &album)
     album.title = m_titleEdt->text();
     album.location = m_locEdt->text();
     album.description = m_descEdt->toPlainText();
-    album.privacy = static_cast<KIPIFbPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
+    album.privacy = static_cast<KIPIFacebookPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
 }
 
-} // namespace KIPIFbPlugin
+} // namespace KIPIFacebookPlugin
