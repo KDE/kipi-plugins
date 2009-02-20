@@ -1,23 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flash Export
-Name[es]=Visor simple
-Name[fr]=Visionneuse simple d'images
-Name[ga]=AmharcánSimplí
-Name[he]=מציג פשוט
-Name[km]=កម្មវិធី​មើល​ធម្មតា
-Name[lv]=VienkāršsSkatītājs
-Name[nds]=Eenfachkieker
-Name[nl]=Eenvoudige viewer
-Name[pa]=ਸਧਾਰਨ-ਦਰਸ਼ਕ
-Name[pt]=Visualizador Simples
-Name[pt_BR]=Visualizador simples
-Name[ro]=VizualizatorSimplu
-Name[sv]=Enkel visning
-Name[th]=แสดงภาพอย่างง่าย
-Name[tr]=Basit Gösterici
-Name[x-test]=xxSimpleViewerxx
-Name[zh_CN]=简易查看器
 Comment=A tool to export images to Flash
 Comment[ca]=Una eina per a exportar imatges a Flash
 Comment[da]=Et værktøj til at eksportere billeder til Flash
