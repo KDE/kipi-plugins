@@ -96,16 +96,16 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     setDefaultButton(Ok);
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch process images"),
-                                           0,
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch process images"),
+                                           QByteArray(),
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("An interface to preview the \"Batch Process Images\" "
+                                           ki18n("An interface to preview the \"Batch Process Images\" "
                                                      "Kipi plugin.\n"
                                                      "This plugin uses the \"convert\" program from \"ImageMagick\" "
                                                      "package."),
-                                           "(c) 2003-2004, Gilles Caulier");
+                                           ki18n("(c) 2003-2004, Gilles Caulier"));
 
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and maintainer"),
                      "caulier dot gilles at gmail dot com");
 
     DialogUtils::setupHelpButton(this, m_about);

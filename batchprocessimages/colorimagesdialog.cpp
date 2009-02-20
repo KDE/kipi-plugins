@@ -61,18 +61,17 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
 {
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch image-color enhancement"),
-                                           0,
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch image-color enhancement"),
+                                           QByteArray(),
                                            KAboutData::License_GPL,
-                                           I18N_NOOP("A Kipi plugin for batch image-color enhancement\n"
+                                           ki18n("A Kipi plugin for batch image-color enhancement\n"
                                                      "This plugin use the \"convert\" program from \"ImageMagick\" package."),
-                                           "(c) 2003-2007, Gilles Caulier");
+                                           ki18n("(c) 2003-2007, Gilles Caulier"));
 
-    m_about->addAuthor("Gilles Caulier", I18N_NOOP("Author and maintainer"),
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and maintainer"),
                      "caulier dot gilles at gmail dot com");
 
     DialogUtils::setupHelpButton(this, m_about);
-    
     //---------------------------------------------
     
     m_nbItem = m_selectedImageFiles.count();
