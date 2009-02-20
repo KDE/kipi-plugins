@@ -31,7 +31,7 @@
 
 // Include files for KDE
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class QLabel;
 class QComboBox;

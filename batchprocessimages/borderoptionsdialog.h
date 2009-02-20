@@ -25,7 +25,7 @@
 
 // Include files for KDE
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class KIntNumInput;
 class KColorButton;
