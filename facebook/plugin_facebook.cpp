@@ -47,21 +47,21 @@ extern "C"
 // Local includes.
 #include "fbwindow.h"
 
-K_PLUGIN_FACTORY( FbFactory, registerPlugin<Plugin_Fb>(); )
-K_EXPORT_PLUGIN ( FbFactory("kipiplugin_fb") )
+K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )
+K_EXPORT_PLUGIN ( FacebookFactory("kipiplugin_facebook") )
 
-Plugin_Fb::Plugin_Fb(QObject *parent, const QVariantList &/*args*/)
-                   : KIPI::Plugin(FbFactory::componentData(),
+Plugin_Facebook::Plugin_Facebook(QObject *parent, const QVariantList &/*args*/)
+                   : KIPI::Plugin(FacebookFactory::componentData(),
                                   parent, "Fb")
 {
-    kDebug(51001) << "Plugin_Fb plugin loaded";
+    kDebug(51001) << "Plugin_Facebook plugin loaded";
 }
 
-void Plugin_Fb::setup(QWidget* widget)
+void Plugin_Facebook::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_actionExport = actionCollection()->addAction("fbexport");
+    m_actionExport = actionCollection()->addAction("facebookexport");
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("applications-internet"));
     m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F);
@@ -71,7 +71,7 @@ void Plugin_Fb::setup(QWidget* widget)
 
     addAction(m_actionExport);
 
-    m_actionImport = actionCollection()->addAction("fbimport");
+    m_actionImport = actionCollection()->addAction("facebookimport");
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("applications-internet"));
     m_actionImport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F);
@@ -94,11 +94,11 @@ void Plugin_Fb::setup(QWidget* widget)
     m_actionImport->setEnabled(true);
 }
 
-Plugin_Fb::~Plugin_Fb()
+Plugin_Facebook::~Plugin_Facebook()
 {
 }
 
-void Plugin_Fb::slotExport()
+void Plugin_Facebook::slotExport()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -117,7 +117,7 @@ void Plugin_Fb::slotExport()
     m_dlg->show();
 }
 
-void Plugin_Fb::slotImport()
+void Plugin_Facebook::slotImport()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -136,7 +136,7 @@ void Plugin_Fb::slotImport()
     m_dlg->show();
 }
 
-KIPI::Category Plugin_Fb::category( KAction* action ) const
+KIPI::Category Plugin_Facebook::category( KAction* action ) const
 {
     if (action == m_actionExport)
         return KIPI::ExportPlugin;

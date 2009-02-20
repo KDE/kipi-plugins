@@ -38,14 +38,14 @@ namespace KIPIFbPlugin
     class FbWindow;
 }
 
-class Plugin_Fb : public KIPI::Plugin
+class Plugin_Facebook : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_Fb(QObject *parent, const QVariantList &args);
-    ~Plugin_Fb();
+    Plugin_Facebook(QObject *parent, const QVariantList &args);
+    ~Plugin_Facebook();
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
