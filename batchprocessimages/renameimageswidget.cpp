@@ -392,7 +392,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                 {
                     j = rxI.matchedLength();
                     QString digits = rxI.cap(2);
-                    int k = (!digits || !digits.length()) ? 0 : digits.toInt();
+                    int k = digits.isEmpty() ? 0 : digits.toInt();
                     if (k < 2)
                     {
                         to = QString::number(seqNumber);
@@ -424,13 +424,13 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                     int len = from.length();
                     QString start = rxN.cap(4);
                     QString end = rxN.cap(5);
-                    int k = (!start || !start.length()) ? 1 : start.toInt();
-                    int l = (!end || !end.length()) ? len : end.toInt();
+                    int k = start.isEmpty() ? 1 : start.toInt();
+                    int l = end.isEmpty() ? len : end.toInt();
                     k = (k < -len) ? 0 : (k < 0) ? (len + k) : (k > 0) ? (k - 1) : 0;
                     l = (l < -len) ? -1 : (l < 0) ? (len + l) : (l > 0) ? (l - 1) : 0;
                     to = l < k ? "" : from.mid(k, l - k + 1);
                     QString changeCase = rxN.cap(2);
-                    if (!!changeCase && changeCase.length())
+                    if (!changeCase.isEmpty())
                     {
                         to = (changeCase == "+") ? to.toUpper() : to.toLower();
                     }
