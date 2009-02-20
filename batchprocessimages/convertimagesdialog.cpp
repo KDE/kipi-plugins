@@ -318,7 +318,7 @@ void ConvertImagesDialog::processDone()
         if (item)
         {
             QString src = item->pathSrc();
-            QString tgt = m_destinationURL->url() + "/" + item->nameDest();
+            QString tgt = m_destinationURL->url().path() + "/" + item->nameDest();
             QFileInfo fi(tgt);
 
             kDebug() << src << endl;
