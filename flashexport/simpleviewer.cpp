@@ -290,7 +290,8 @@ void SimpleViewer::slotProcess()
     }
 
     if(!d->canceled)
-        d->progressDlg->addedAction(i18n("Finished..."), KIPIPlugins::SuccessMessage);
+        d->progressDlg->addedAction(i18nc("Flash export has finished", "Finished..."),
+                                    KIPIPlugins::SuccessMessage);
 
     if(d->configDlg->settings().openInKonqueror)
         KToolInvocation::invokeBrowser(d->configDlg->settings().exportUrl.path());

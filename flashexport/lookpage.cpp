@@ -78,7 +78,7 @@ LookPage::LookPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box    = new QGroupBox(i18n("Navigation"), this);
+    QGroupBox *box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), this);
     QVBoxLayout *vlay = new QVBoxLayout(box);
 
     d->thumbnailRows = new KIntNumInput(this);
@@ -96,10 +96,14 @@ LookPage::LookPage(QWidget* parent)
     KHBox *hbox          = new KHBox;
     QLabel *label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
     d->thumbnailPosition = new KComboBox(hbox);
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  i18n("Right"));
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   i18n("Left"));
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    i18n("Top"));
-    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, i18n("Bottom"));
+    QString pos_right  = i18nc("thumbnail position: right",  "Right");
+    QString pos_left   = i18nc("thumbnail position: left",   "Left");
+    QString pos_top    = i18nc("thumbnail position: top",    "Top");
+    QString pos_bottom = i18nc("thumbnail position: bottom", "Bottom");
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  pos_right);
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   pos_left);
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    pos_top);
+    d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, pos_bottom);
     d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
     label->setBuddy(d->thumbnailPosition);
 

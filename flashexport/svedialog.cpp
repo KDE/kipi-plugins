@@ -98,17 +98,19 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
     // ---------------------------------------------------------------
 
     d->selectionPage  = new SelectionPage(d->interface, this);
-    d->page_selection = addPage(d->selectionPage, i18n("Selection"));
+    d->page_selection = addPage(d->selectionPage, i18nc("Settings tab for selections",
+                                                        "Selection"));
     d->page_selection->setHeader(i18n("Collections List"));
     d->page_selection->setIcon(KIcon("view-list-tree"));
 
     d->generalPage  = new GeneralPage(this);
-    d->page_general = addPage(d->generalPage, i18n("General"));
+    d->page_general = addPage(d->generalPage, i18nc("General settings tab", "General"));
     d->page_general->setHeader(i18n("General Settings"));
     d->page_general->setIcon(KIcon("text-html"));
 
     d->lookPage  = new LookPage(this);
-    d->page_look = addPage(d->lookPage, i18n("Look"));
+    d->page_look = addPage(d->lookPage, i18nc("Settings tab for the look of the flash export",
+                                              "Look"));
     d->page_look->setHeader(i18n("Look Settings"));
     d->page_look->setIcon(KIcon("view-media-visualization"));
 
