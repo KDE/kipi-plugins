@@ -34,6 +34,7 @@ extern "C"
 // KDE includes
 
 #include <klocale.h>
+#include <kactioncollection.h>
 #include <kapplication.h>
 #include <kglobal.h>
 #include <kaction.h>
@@ -78,69 +79,37 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_borderimages = new KAction (i18n("Border Images..."),           // Menu message.
-                                        "borderimages",                      // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_border_images");
+    m_action_borderimages = actionCollection()->addAction("batch_border_images", this, SLOT(slotActivate()));
+    m_action_borderimages->setIcon(KIcon("borderimages"));
+    m_action_borderimages->setText(i18n("Border Images..."));
 
-    m_action_colorimages = new KAction (i18n("Color Images..."),             // Menu message.
-                                        "colorimages",                       // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_color_images");
+    m_action_colorimages->setIcon(KIcon("colorimages"));
+    m_action_colorimages->setText(i18n("Color Images..."));
+    m_action_colorimages = actionCollection()->addAction("batch_color_images", this, SLOT(slotActivate()));
 
-    m_action_convertimages = new KAction (i18n("Convert Images..."),         // Menu message.
-                                        "convertimages",                     // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_convert_images");
+    m_action_convertimages = actionCollection()->addAction("batch_convert_images", this, SLOT(slotActivate()));
+    m_action_convertimages->setIcon(KIcon("convertimages"));
+    m_action_convertimages->setText(i18n("Convert Images..."));
 
-    m_action_effectimages = new KAction (i18n("Image Effects..."),           // Menu message.
-                                        "effectimages",                      // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_effect_images");
+    m_action_effectimages = actionCollection()->addAction("batch_effect_images", this, SLOT(slotActivate()));
+    m_action_effectimages->setIcon(KIcon("effectimages"));
+    m_action_effectimages->setText(i18n("Image Effects..."));
 
-    m_action_filterimages = new KAction (i18n("Filter Images..."),           // Menu message.
-                                        "filterimages",                      // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_filter_images");
+    m_action_filterimages = actionCollection()->addAction("batch_filter_images", this, SLOT(slotActivate()));
+    m_action_filterimages->setIcon(KIcon("filterimages"));
+    m_action_filterimages->setText(i18n("Filter Images..."));
 
-    m_action_renameimages = new KAction (i18n("Rename Images..."),           // Menu message.
-                                        "renameimages",                      // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_rename_images");
+    m_action_renameimages = actionCollection()->addAction("batch_rename_images", this, SLOT(slotActivate()));
+    m_action_renameimages->setIcon(KIcon("renameimages"));
+    m_action_renameimages->setText(i18n("Rename Images..."));
 
-    m_action_recompressimages = new KAction (i18n("Recompress Images..."),   // Menu message.
-                                        "recompressimages",                  // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_recompress_images");
+    m_action_recompressimages = actionCollection()->addAction("batch_recompress_images", this, SLOT(slotActivate()));
+    m_action_recompressimages->setIcon(KIcon("recompressimages"));
+    m_action_recompressimages->setText(i18n("Recompress Images..."));
 
-    m_action_resizeimages = new KAction (i18n("Resize Images..."),           // Menu message.
-                                        "resizeimages",                      // Menu icon.
-                                        0,                                   // default shortcut.
-                                        this,
-                                        SLOT(slotActivate()),
-                                        actionCollection(),
-                                        "batch_resize_images");
+    m_action_resizeimages = actionCollection()->addAction("batch_resize_images", this, SLOT(slotActivate()));
+    m_action_resizeimages->setIcon(KIcon("resizeimages"));
+    m_action_resizeimages->setText(i18n("Resize Images..."));
 
     addAction( m_action_borderimages );
     addAction( m_action_colorimages );
