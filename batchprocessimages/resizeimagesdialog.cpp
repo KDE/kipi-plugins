@@ -223,7 +223,7 @@ void ResizeImagesDialog::readSettings(void)
     m_customXSize = group.readEntry("CustomXSize", 10);
     m_customYSize = group.readEntry("CustomYSize", 15);
     m_customDpi = group.readEntry("CustomDpi", 300);
-    m_backgroundColor = group.readEntry("BackgroundColor", Qt::white);
+    m_backgroundColor = group.readEntry("BackgroundColor", QColor(Qt::white));
     m_marging = group.readEntry("MargingSize", 10);
 
 
@@ -231,7 +231,7 @@ void ResizeImagesDialog::readSettings(void)
     m_Width = group.readEntry("Width", 1024);
     m_Height = group.readEntry("Height", 768);
     m_Border = group.readEntry("Border", 100);
-    m_bgColor = group.readEntry("BgColor", Qt::black);
+    m_bgColor = group.readEntry("BgColor", QColor(Qt::black));
 
     m_fixedWidth = group.readEntry("FixedWidth", 640);
     m_fixedHeight = group.readEntry("FixedHeight", 480);

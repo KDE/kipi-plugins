@@ -182,18 +182,18 @@ void BorderImagesDialog::readSettings(void)
 
     m_Type->setCurrentItem(group.readEntry("BorderType", 1));     // Niepce per default.
     m_solidWidth = group.readEntry("SolidWidth", 25);
-    m_solidColor = group.readEntry("SolidColor", Qt::black);
+    m_solidColor = group.readEntry("SolidColor", QColor(Qt::black));
 
     m_lineNiepceWidth = group.readEntry("LineNiepceWidth", 10);
-    m_lineNiepceColor = group.readEntry("LineNiepceColor", Qt::black);
+    m_lineNiepceColor = group.readEntry("LineNiepceColor", QColor(Qt::black));
     m_NiepceWidth = group.readEntry("NiepceWidth", 100);
-    m_NiepceColor = group.readEntry("NiepceColor", Qt::white);
+    m_NiepceColor = group.readEntry("NiepceColor", QColor(Qt::white));
 
     m_raiseWidth = group.readEntry("RaiseWidth", 50);
 
     m_frameWidth = group.readEntry("FrameWidth", 25);
     m_bevelWidth = group.readEntry("BevelWidth", 10);
-    m_frameColor = group.readEntry("FrameColor", Qt::black);
+    m_frameColor = group.readEntry("FrameColor", QColor(Qt::black));
 
     if (group.readEntry("SmallPreview", "true") == "true")
         m_smallPreview->setChecked( true );
