@@ -66,7 +66,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_solidBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_solidBorderWidth );
        m_solidBorderWidth = new KIntNumInput(25, box);
-       m_solidBorderWidth->setRange(1, 1000, 1, true );
+       m_solidBorderWidth->setRange(1, 1000);
+       m_solidBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_solidBorderWidth, i18n("<p>Select here the border width in pixels.") );
        m_label_solidBorderWidth->setBuddy( m_solidBorderWidth );
        dvlay->addWidget( m_solidBorderWidth );
@@ -84,7 +85,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_lineNiepceBorderWidth = new QLabel (i18n("Line border width:"), box);
        dvlay->addWidget( m_label_lineNiepceBorderWidth );
        m_lineNiepceBorderWidth = new KIntNumInput(10, box);
-       m_lineNiepceBorderWidth->setRange(1, 500, 1, true );
+       m_lineNiepceBorderWidth->setRange(1, 500);
+       m_lineNiepceBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_lineNiepceBorderWidth, i18n("<p>Select here the line border width in pixels.") );
        m_label_lineNiepceBorderWidth->setBuddy( m_lineNiepceBorderWidth );
        dvlay->addWidget( m_lineNiepceBorderWidth );
@@ -99,7 +101,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_NiepceBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_NiepceBorderWidth );
        m_NiepceBorderWidth = new KIntNumInput(100, box);
-       m_NiepceBorderWidth->setRange(1, 500, 1, true );
+       m_NiepceBorderWidth->setRange(1, 500);
+       m_NiepceBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_NiepceBorderWidth, i18n("<p>Select here the border width in pixels.") );
        m_label_NiepceBorderWidth->setBuddy( m_NiepceBorderWidth );
        dvlay->addWidget( m_NiepceBorderWidth );
@@ -117,7 +120,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_raiseBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_raiseBorderWidth );
        m_raiseBorderWidth = new KIntNumInput(50, box);
-       m_raiseBorderWidth->setRange(1, 500, 1, true );
+       m_raiseBorderWidth->setRange(1, 500);
+       m_raiseBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_raiseBorderWidth, i18n("<p>Select here the border width in pixels.") );
        m_label_raiseBorderWidth->setBuddy( m_raiseBorderWidth );
        dvlay->addWidget( m_raiseBorderWidth );
@@ -128,7 +132,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_frameBorderWidth = new QLabel (i18n("Border width:"), box);
        dvlay->addWidget( m_label_frameBorderWidth );
        m_frameBorderWidth = new KIntNumInput(25, box);
-       m_frameBorderWidth->setRange(0, 500, 1, true );
+       m_frameBorderWidth->setRange(0, 500);
+       m_frameBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_frameBorderWidth, i18n("<p>Select here the border width in pixels.") );
        m_label_frameBorderWidth->setBuddy( m_frameBorderWidth );
        dvlay->addWidget( m_frameBorderWidth );
@@ -136,7 +141,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        QLabel *m_label_frameBevelBorderWidth = new QLabel (i18n("Bevel width:"), box);
        dvlay->addWidget( m_label_frameBevelBorderWidth );
        m_frameBevelBorderWidth = new KIntNumInput(10, box);
-       m_frameBevelBorderWidth->setRange(0, 250, 1, true );
+       m_frameBevelBorderWidth->setRange(0, 250);
+       m_frameBevelBorderWidth->setSliderEnabled(true);
        Q3WhatsThis::add( m_frameBevelBorderWidth, i18n("<p>Select here the bevel width in pixels. "
                                                       "This value must be <= Border width / 2") );
        m_label_frameBevelBorderWidth->setBuddy( m_frameBevelBorderWidth );
@@ -159,7 +165,7 @@ BorderOptionsDialog::~BorderOptionsDialog()
 
 void BorderOptionsDialog::slotFrameBorderWidthChanged (int value)
 {
-   m_frameBevelBorderWidth->setMaxValue((int)(value / 2));
+   m_frameBevelBorderWidth->setMaximum((int)(value / 2));
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
