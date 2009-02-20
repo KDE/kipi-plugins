@@ -68,12 +68,14 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
        m_size = new KIntNumInput(640, groupBox1);
-       m_size->setRange(10, 10000, 1, true );
+       m_size->setRange(10, 10000);
+       m_size->setSliderEnabled(true);
        m_size->setLabel( i18n("New size (pixels):") );
        Q3WhatsThis::add( m_size, i18n("<p>The new images' size in pixels.") );
 
        m_quality = new KIntNumInput(75, groupBox1);
-       m_quality->setRange(0, 100, 1, true);
+       m_quality->setRange(0, 100);
+       m_quality->setSliderEnabled(true);
        m_quality->setLabel( i18n("Image quality (percent):") );
        Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
 
@@ -117,19 +119,22 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_Width = new QLabel (i18n("Width (pixels):"), groupBox1);
        m_Width = new KIntNumInput(1024, groupBox1);
-       m_Width->setRange(100, 10000, 1, true );
+       m_Width->setRange(100, 10000);
+       m_Width->setSliderEnabled(true);
        Q3WhatsThis::add( m_Width, i18n("<p>The new images' width in pixels."));
        m_label_Width->setBuddy( m_Width );
 
        m_label_Height = new QLabel (i18n("Height (pixels):"), groupBox1);
        m_Height = new KIntNumInput(768, groupBox1);
-       m_Height->setRange(100, 10000, 1, true );
+       m_Height->setRange(100, 10000);
+       m_Height->setSliderEnabled(true);
        Q3WhatsThis::add( m_Height, i18n("<p>The new images' height in pixels."));
        m_label_Height->setBuddy( m_Height );
 
        m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox1);
        m_quality = new KIntNumInput(75, groupBox1);
-       m_quality->setRange(0, 100, 1, true);
+       m_quality->setRange(0, 100);
+       m_quality->setSliderEnabled(true);
        Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
        m_label_quality->setBuddy(m_quality);
 
@@ -169,7 +174,8 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_border = new QLabel (i18n("Border size (pixels):"), groupBox2);
        m_Border = new KIntNumInput(100, groupBox2);
-       m_Border->setRange(0, 1000, 1, true );
+       m_Border->setRange(0, 1000);
+       m_Border->setSliderEnabled(true);
        Q3WhatsThis::add( m_Border, i18n("<p>The border size around the images in pixels."));
        m_label_border->setBuddy( m_Border );
 
@@ -181,17 +187,20 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );
 
        m_fixedWidth = new KIntNumInput(640, groupBox1);
-       m_fixedWidth->setRange(10, 10000, 1, true );
+       m_fixedWidth->setRange(10, 10000);
+       m_fixedWidth->setSliderEnabled(true);
        m_fixedWidth->setLabel( i18n("New width (pixels):") );
        Q3WhatsThis::add( m_fixedWidth, i18n("<p>The new images' width in pixels.") );
 
        m_fixedHeight = new KIntNumInput(480, groupBox1);
-       m_fixedHeight->setRange(10, 10000, 1, true );
+       m_fixedHeight->setRange(10, 10000);
+       m_fixedHeight->setSliderEnabled(true);
        m_fixedHeight->setLabel( i18n("New height (pixels):") );
        Q3WhatsThis::add( m_fixedHeight, i18n("<p>The new images' height in pixels.") );
        
        m_quality = new KIntNumInput(75, groupBox1);
-       m_quality->setRange(0, 100, 1, true);
+       m_quality->setRange(0, 100);
+       m_quality->setSliderEnabled(true);
        m_quality->setLabel( i18n("Image quality (percent):") );
        Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
 
@@ -265,21 +274,24 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_customXSize = new QLabel (i18n("Paper width (cm):"), groupBox2);
        m_customXSize = new KIntNumInput(10, groupBox2);
-       m_customXSize->setRange(1, 100, 1, true );
+       m_customXSize->setRange(1, 100);
+       m_customXSize->setSliderEnabled(true);
        Q3WhatsThis::add( m_customXSize, i18n("<p>The customized width of the photographic paper size "
                                             "in centimeters."));
        m_label_customXSize->setBuddy( m_customXSize );
 
        m_label_customYSize = new QLabel (i18n("Paper height (cm):"), groupBox2);
        m_customYSize = new KIntNumInput(15, groupBox2);
-       m_customYSize->setRange(1, 100, 1, true );
+       m_customYSize->setRange(1, 100);
+       m_customYSize->setSliderEnabled(true);
        Q3WhatsThis::add( m_customYSize, i18n("<p>The customized height of the photographic paper size "
                                             "in centimeters."));
        m_label_customYSize->setBuddy( m_customYSize );
 
        m_label_customDpi = new QLabel (i18n("Print resolution (dpi):"), groupBox2);
        m_customDpi = new KIntNumInput(300, groupBox2);
-       m_customDpi->setRange(10, 5000, 10, true );
+       m_customDpi->setRange(10, 5000, 10);
+       m_customDpi->setSliderEnabled(true);
        Q3WhatsThis::add( m_customDpi, i18n("<p>The customized print resolution in dots per inch."));
        m_label_customDpi->setBuddy( m_customDpi );
 
@@ -319,13 +331,15 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_marging = new QLabel (i18n("Margin size (mm):"), groupBox3);
        m_marging = new KIntNumInput(1, groupBox3);
-       m_marging->setRange(0, 80, 1, true );
+       m_marging->setRange(0, 80);
+       m_marging->setSliderEnabled(true);
        Q3WhatsThis::add( m_marging, i18n("<p>The margin around the images in millimeters."));
        m_label_marging->setBuddy( m_marging );
 
        m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox3);
        m_quality = new KIntNumInput(75, groupBox3);
-       m_quality->setRange(0, 100, 1, true);
+       m_quality->setRange(0, 100);
+       m_quality->setSliderEnabled(true);
        Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
        m_label_quality->setBuddy(m_quality);
 

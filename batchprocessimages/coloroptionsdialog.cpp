@@ -79,7 +79,8 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        QLabel *m_label_fuzzDistance = new QLabel (i18n("Distance:"), box);
        dvlay->addWidget( m_label_fuzzDistance );
        m_fuzzDistance = new KIntNumInput(3, box);
-       m_fuzzDistance->setRange(0, 20, 1, true );
+       m_fuzzDistance->setRange(0, 20);
+       m_fuzzDistance->setSliderEnabled(true);
        Q3WhatsThis::add( m_fuzzDistance, i18n("<p>Select here the fuzz distance in "
                                              "absolute intensity units.") );
        m_label_fuzzDistance->setBuddy( m_fuzzDistance );
@@ -91,7 +92,8 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        QLabel *m_label_segmentCluster = new QLabel (i18n("Cluster threshold:"), box);
        dvlay->addWidget( m_label_segmentCluster );
        m_segmentCluster = new KIntNumInput(3, box);
-       m_segmentCluster->setRange(0, 20, 1, true );
+       m_segmentCluster->setRange(0, 20);
+       m_segmentCluster->setSliderEnabled(true);
        Q3WhatsThis::add( m_segmentCluster, i18n("<p>Select here the value which represents the minimum "
                                                "number of pixels contained in a hexahedra before it can "
                                                "be considered valid.") );
@@ -101,7 +103,8 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        QLabel *m_label_segmentSmooth = new QLabel (i18n("Smooth threshold:"), box);
        dvlay->addWidget( m_label_segmentSmooth );
        m_segmentSmooth = new KIntNumInput(3, box);
-       m_segmentSmooth->setRange(0, 20, 1, true );
+       m_segmentSmooth->setRange(0, 20);
+       m_segmentSmooth->setSliderEnabled(true);
        Q3WhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value which eliminates noise in the "
                                               "second derivative of the histogram. As the value is increased, "
                                               "you can expect a smoother second derivative.") );

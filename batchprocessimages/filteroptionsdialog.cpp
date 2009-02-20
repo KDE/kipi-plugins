@@ -82,7 +82,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_blurRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_blurRadius );
        m_blurRadius = new KIntNumInput(3, box);
-       m_blurRadius->setRange(0, 20, 1, true );
+       m_blurRadius->setRange(0, 20);
+       m_blurRadius->setSliderEnabled(true);
        Q3WhatsThis::add( m_blurRadius, i18n("<p>Select here the blur radius of the Gaussian, in pixels, "
                                            "not counting the center pixel. For reasonable results, the "
                                            "radius should be larger than deviation. If you use a radius of 0 "
@@ -93,7 +94,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_blurDeviation = new QLabel (i18n("Deviation:"), box);
        dvlay->addWidget( m_label_blurDeviation );
        m_blurDeviation = new KIntNumInput(1, box);
-       m_blurDeviation->setRange(0, 20, 1, true );
+       m_blurDeviation->setRange(0, 20);
+       m_blurDeviation->setSliderEnabled(true);
        Q3WhatsThis::add( m_blurDeviation, i18n("<p>Select here the standard deviation of the blur Gaussian, "
                                               "in pixels.") );
        m_label_blurDeviation->setBuddy( m_blurDeviation );
@@ -105,7 +107,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_medianRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_medianRadius );
        m_medianRadius = new KIntNumInput(3, box);
-       m_medianRadius->setRange(0, 20, 1, true );
+       m_medianRadius->setRange(0, 20);
+       m_medianRadius->setSliderEnabled(true);
        Q3WhatsThis::add( m_medianRadius, i18n("<p>Select here the median radius of the pixel neighborhood. "
                                              "The algorithm applies a digital filter that improves the quality "
                                              "of noisy images. Each pixel is replaced by the median in a "
@@ -120,7 +123,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_noiseRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_noiseRadius );
        m_noiseRadius = new KIntNumInput(3, box);
-       m_noiseRadius->setRange(0, 20, 1, true );
+       m_noiseRadius->setRange(0, 20);
+       m_noiseRadius->setSliderEnabled(true);
        Q3WhatsThis::add( m_noiseRadius, i18n("<p>Select here the noise reduction radius value, in pixels. "
                                             "The algorithm smooths the contours of an image while still "
                                             "preserving edge information. The algorithm works by replacing "
@@ -136,7 +140,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_sharpenRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_sharpenRadius );
        m_sharpenRadius = new KIntNumInput(3, box);
-       m_sharpenRadius->setRange(0, 20, 1, true );
+       m_sharpenRadius->setRange(0, 20);
+       m_sharpenRadius->setSliderEnabled(true);
        Q3WhatsThis::add( m_sharpenRadius, i18n("<p>Select here the radius of the sharpen Gaussian, in "
                                               "pixels, not counting the center pixel. For reasonable "
                                               "results, the radius should be larger than deviation. "
@@ -148,7 +153,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_sharpenDeviation = new QLabel (i18n("Deviation:"), box);
        dvlay->addWidget( m_label_sharpenDeviation );
        m_sharpenDeviation = new KIntNumInput(1, box);
-       m_sharpenDeviation->setRange(0, 20, 1, true );
+       m_sharpenDeviation->setRange(0, 20);
+       m_sharpenDeviation->setSliderEnabled(true);
        Q3WhatsThis::add( m_sharpenDeviation, i18n("<p>Select here the sharpen deviation value of the "
                                                  "Laplacian in pixels.") );
        m_label_sharpenDeviation->setBuddy( m_sharpenDeviation );
@@ -160,7 +166,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_unsharpenRadius = new QLabel (i18n("Radius:"), box);
        dvlay->addWidget( m_label_unsharpenRadius );
        m_unsharpenRadius = new KIntNumInput(3, box);
-       m_unsharpenRadius->setRange(0, 20, 1, true );
+       m_unsharpenRadius->setRange(0, 20);
+       m_unsharpenRadius->setSliderEnabled(true);
        Q3WhatsThis::add( m_unsharpenRadius, i18n("<p>Select here the radius of the unsharpen Gaussian, "
                                                 "in pixels, not counting the center pixel. The algorithm "
                                                 "convolve the image with a Gaussian operator of the given "
@@ -173,7 +180,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_unsharpenDeviation = new QLabel (i18n("Deviation:"), box);
        dvlay->addWidget( m_label_unsharpenDeviation );
        m_unsharpenDeviation = new KIntNumInput(1, box);
-       m_unsharpenDeviation->setRange(0, 20, 1, true );
+       m_unsharpenDeviation->setRange(0, 20);
+       m_unsharpenDeviation->setSliderEnabled(true);
        Q3WhatsThis::add( m_unsharpenDeviation, i18n("<p>Select here the unsharpen deviation value of the "
                                                    "Gaussian, in pixels.") );
        m_label_unsharpenDeviation->setBuddy( m_unsharpenDeviation );
@@ -182,7 +190,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_unsharpenPercent = new QLabel (i18n("Percent:"), box);
        dvlay->addWidget( m_label_unsharpenPercent );
        m_unsharpenPercent = new KIntNumInput(3, box);
-       m_unsharpenPercent->setRange(1, 100, 1, true );
+       m_unsharpenPercent->setRange(1, 100);
+       m_unsharpenPercent->setSliderEnabled(true);
        Q3WhatsThis::add( m_unsharpenPercent, i18n("<p>Select here the percentage difference between original "
                                                  "and blurred image which should be added to original.") );
        m_label_unsharpenPercent->setBuddy( m_unsharpenPercent );
@@ -191,7 +200,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        QLabel *m_label_unsharpenThreshold = new QLabel (i18n("Threshold:"), box);
        dvlay->addWidget( m_label_unsharpenThreshold );
        m_unsharpenThreshold = new KIntNumInput(1, box);
-       m_unsharpenThreshold->setRange(0, 20, 1, true );
+       m_unsharpenThreshold->setRange(0, 20);
+       m_unsharpenThreshold->setSliderEnabled(true);
        Q3WhatsThis::add( m_unsharpenThreshold, i18n("<p>Select here the unsharpen threshold value, in "
                                                    "pixels, needed to apply the diffence amount."));
        m_label_unsharpenThreshold->setBuddy( m_unsharpenThreshold );

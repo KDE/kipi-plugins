@@ -65,7 +65,8 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     m_label_JPEGimageCompression = new QLabel (i18n("Image compression level:"), groupBox1);
     m_JPEGCompression = new KIntNumInput(75, groupBox1);
-    m_JPEGCompression->setRange(1, 100, 1, true );
+    m_JPEGCompression->setRange(1, 100);
+    m_JPEGCompression->setSliderEnabled(true);
     whatsThis = i18n("<p>The compression value for JPEG target images:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"
@@ -91,7 +92,8 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     m_label_PNGimageCompression = new QLabel (i18n("Image compression level:"), groupBox2);
     m_PNGCompression = new KIntNumInput(75, groupBox2);
-    m_PNGCompression->setRange(1, 100, 1, true );
+    m_PNGCompression->setRange(1, 100);
+    m_PNGCompression->setSliderEnabled(true);
     whatsThis = i18n("<p>The compression value for PNG target images:<p>");
     whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                  "<b>25</b>: high compression<p>"

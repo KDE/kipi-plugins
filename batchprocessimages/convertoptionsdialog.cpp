@@ -64,7 +64,8 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        m_label_imageCompression = new QLabel (i18n("Image compression level:"), box);
        dvlay->addWidget( m_label_imageCompression );
        m_JPEGPNGCompression = new KIntNumInput(75, box);
-       m_JPEGPNGCompression->setRange(1, 100, 1, true );
+       m_JPEGPNGCompression->setRange(1, 100);
+       m_JPEGPNGCompression->setSliderEnabled(true);
        whatsThis = i18n("<p>The compression value for the target images:<p>");
        whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
                                     "<b>25</b>: high compression<p>"
