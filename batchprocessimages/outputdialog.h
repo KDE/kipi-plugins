@@ -29,7 +29,7 @@
 
 // Include files for KDE
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // Local includes
 
@@ -41,7 +41,7 @@ class QPushButton;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class OutputDialog : public KDialogBase
+class OutputDialog : public KDialog
 {
 Q_OBJECT
 

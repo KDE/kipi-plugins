@@ -42,7 +42,7 @@ class KIntNumInput;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class ConvertOptionsDialog : public KDialogBase
+class ConvertOptionsDialog : public KDialog
 {
 Q_OBJECT
 

@@ -51,9 +51,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
-                   : KDialogBase( parent, "ResizeOptionsDialog", true,
-                     i18n("Image-Resize Options"), Ok|Cancel, Ok, false)
+                   : KDialog(parent)
 {
+    setCaption(i18n("Image-Resize Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     m_Type = ResizeType;
     QWidget* box = new QWidget( this );
     setMainWidget(box);

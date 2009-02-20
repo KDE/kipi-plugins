@@ -50,10 +50,13 @@ namespace KIPIBatchProcessImagesPlugin
 RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
                                        KIPI::Interface* interface,
                                        QWidget* parent)
-    : KDialogBase( KDialogBase::Plain, "Rename Images", Help|User1|Close,
-                   Close, parent, "RenameImages",
-                   false, false, i18n("&Start"))
+    : KDialog(parent)
 {
+    setCaption(i18n("Rename Images"));
+    setModal(true);
+    setButtons(Help | User1 | Close);
+    setButtonGuiItem(User1, i18n("&Start"));
+    setDefaultButton(Close);
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch-rename images"),

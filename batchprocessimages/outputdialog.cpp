@@ -50,9 +50,13 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header )
-            : KDialogBase( parent, "OutputDialog", true, caption, Help|User1|Ok, Ok, false,
-                           i18n("Copy to Clip&board"))
+            : KDialog(parent)
 {
+    setCaption(caption);
+    setModal(true);
+    setButtons(Ok | Help | User1);
+    setButtonGuiItem(User1, i18n("Copy to Clip&board"));
+    setDefaultButton(Ok);
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch processes images"),

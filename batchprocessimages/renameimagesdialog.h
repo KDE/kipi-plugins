@@ -26,7 +26,7 @@
 
 // KDE includes.
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kurl.h>
 
 // Local includes
@@ -43,7 +43,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 class RenameImagesWidget;
 
-class RenameImagesDialog : public KDialogBase
+class RenameImagesDialog : public KDialog
 {
     Q_OBJECT
 

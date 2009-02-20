@@ -50,9 +50,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
-                        : KDialogBase( parent, "ColorOptionsDialog", true,
-                          i18n("Color Options"), Ok|Cancel, Ok, false)
+                        : KDialog(parent)
 {
+    setCaption(i18n("Color Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );

@@ -50,9 +50,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
-                        : KDialogBase( parent, "BorderOptionsDialog", true,
-                          i18n("Border Options"), Ok|Cancel, Ok, false)
+                        : KDialog(parent)
 {
+    setCaption(i18n("Border Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );

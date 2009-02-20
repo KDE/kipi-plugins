@@ -43,7 +43,7 @@ class KColorButton;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class ResizeOptionsDialog : public KDialogBase
+class ResizeOptionsDialog : public KDialog
 {
 Q_OBJECT
 

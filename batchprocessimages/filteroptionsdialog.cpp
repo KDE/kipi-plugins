@@ -49,9 +49,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
-                        : KDialogBase( parent, "FilterOptionsDialog", true,
-                          i18n("Filter Options"), Ok|Cancel, Ok, false)
+                        : KDialog(parent)
 {
+    setCaption(i18n("Filter Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );

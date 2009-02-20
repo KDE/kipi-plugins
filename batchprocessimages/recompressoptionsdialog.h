@@ -42,7 +42,7 @@ class KIntNumInput;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class RecompressOptionsDialog : public KDialogBase
+class RecompressOptionsDialog : public KDialog
 {
 Q_OBJECT
 

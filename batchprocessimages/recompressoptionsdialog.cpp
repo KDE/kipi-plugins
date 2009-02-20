@@ -48,9 +48,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
-                       : KDialogBase( parent, "RecompressOptionsDialog", true,
-                         i18n("Recompression Options"), Ok|Cancel, Ok, false)
+                       : KDialogBase( parent)
 {
+    setCaption(i18n("Recompression Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );

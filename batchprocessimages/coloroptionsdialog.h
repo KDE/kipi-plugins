@@ -38,7 +38,7 @@ class KIntNumInput;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class ColorOptionsDialog : public KDialogBase
+class ColorOptionsDialog : public KDialog
 {
 Q_OBJECT
 

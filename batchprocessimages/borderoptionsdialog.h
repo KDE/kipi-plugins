@@ -33,7 +33,7 @@ class KColorButton;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BorderOptionsDialog : public KDialogBase
+class BorderOptionsDialog : public KDialog
 {
 Q_OBJECT
 

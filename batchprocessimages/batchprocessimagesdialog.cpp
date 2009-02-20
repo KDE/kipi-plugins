@@ -105,10 +105,14 @@ namespace KIPIBatchProcessImagesPlugin
 
 BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::Interface* interface,
                                                     QString caption, QWidget *parent )
-                        : KDialogBase( KDialogBase::Plain, caption, Help|User1|Cancel,
-                                       Cancel, parent, "BatchProcessImagesDialog", false, false, i18n("&Start")),
+                        : KDialog(parent)
                           m_selectedImageFiles( urlList), m_interface( interface )
 {
+    setCaption(caption);
+    setButtons(Help | User1 | Cancel);
+    setButtonGuiItem(User1, i18n("&Start"));
+    showButtonSeparator(false);
+
     // Init. Tmp folder
 
     KStandardDirs dir;

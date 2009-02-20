@@ -49,9 +49,12 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
-                        : KDialogBase( parent, "EffectOptionsDialog", true,
-                          i18n("Effect Options"), Ok|Cancel, Ok, false)
+                        : KDialog(parent)
 {
+    setCaption(i18n("Effect Options"));
+    setModal(true);
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );

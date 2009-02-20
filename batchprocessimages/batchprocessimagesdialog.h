@@ -46,7 +46,7 @@
 // Include files for KDE
 
 #include <kio/job.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kdebug.h>
 #include <kurl.h>
 
@@ -78,7 +78,7 @@ class KFileItem;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BatchProcessImagesDialog : public KDialogBase
+class BatchProcessImagesDialog : public KDialog
 {
 Q_OBJECT
 

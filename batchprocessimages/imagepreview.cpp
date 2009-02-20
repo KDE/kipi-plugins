@@ -87,9 +87,12 @@ int INIT_ZOOM_FACTOR;
 ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
                            bool cropActionOrig, bool cropActionDest, const QString &EffectName,
                            const QString &FileName, QWidget *parent)
-            : KDialogBase( parent, "PreviewDialog", true, i18n("Batch Process Preview (%1 - %2)").arg(EffectName)
-                           .arg(FileName), Help|Ok, Ok, true)
+            : KDialog( parent)
 {
+    setCaption(i18n("Batch Process Preview (%1 - %2)").arg(EffectName).arg(FileName));
+    setModal(true);
+    setButtons(Ok | Help);
+    setDefaultButton(Ok);
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(I18N_NOOP("Batch process images"),
