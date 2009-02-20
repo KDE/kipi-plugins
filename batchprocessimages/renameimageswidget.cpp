@@ -167,7 +167,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     {
         new BatchProcessImagesItem(m_listView,
                                    (*it).path().section('/', 0, -1),
-                                   (*it).filename(),
+                                   (*it).fileName(),
                                    QString(),
                                    QString());
     }
@@ -186,16 +186,16 @@ RenameImagesWidget::~RenameImagesWidget()
 void RenameImagesWidget::readSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("RenameImages Settings");
+    KConfigGroup group = config.group("RenameImages Settings");
 
-    m_prefixEdit->setText(config.readEntry("PrefixString", ""));
-    m_seqSpin->setValue(config.readNumEntry("FirstRenameValue", 1));
+    m_prefixEdit->setText(group.readEntry("PrefixString", ""));
+    m_seqSpin->setValue(group.readEntry("FirstRenameValue", 1));
 
-    m_addFileNameCheck->setChecked(config.readBoolEntry("AddOriginalFileName", false));
-    m_useExtraSymbolsCheck->setChecked(config.readBoolEntry("UseExtraSymbolsCheck", false));
-    m_addFileDateCheck->setChecked(config.readBoolEntry("AddImageFileDate", false));
-    m_formatDateCheck->setChecked(config.readBoolEntry("FormatDate", false));
-    m_formatDateEdit->setText(config.readEntry("FormatDateString", "%Y-%m-%d"));
+    m_addFileNameCheck->setChecked(group.readEntry("AddOriginalFileName", false));
+    m_useExtraSymbolsCheck->setChecked(group.readEntry("UseExtraSymbolsCheck", false));
+    m_addFileDateCheck->setChecked(group.readEntry("AddImageFileDate", false));
+    m_formatDateCheck->setChecked(group.readEntry("FormatDate", false));
+    m_formatDateEdit->setText(group.readEntry("FormatDateString", "%Y-%m-%d"));
 
     slotOptionsChanged();
 }
@@ -203,16 +203,16 @@ void RenameImagesWidget::readSettings()
 void RenameImagesWidget::saveSettings()
 {
     KConfig config("kipirc");
-    config.setGroup("RenameImages Settings");
+    KConfigGroup group = config.group("RenameImages Settings");
 
-    config.writeEntry("PrefixString", m_prefixEdit->text());
-    config.writeEntry("FirstRenameValue", m_seqSpin->value());
+    group.writeEntry("PrefixString", m_prefixEdit->text());
+    group.writeEntry("FirstRenameValue", m_seqSpin->value());
 
-    config.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
-    config.writeEntry("UseExtraSymbolsCheck", m_useExtraSymbolsCheck->isChecked());
-    config.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
-    config.writeEntry("FormatDate", m_formatDateCheck->isChecked());
-    config.writeEntry("FormatDateString", m_formatDateEdit->text());
+    group.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
+    group.writeEntry("UseExtraSymbolsCheck", m_useExtraSymbolsCheck->isChecked());
+    group.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
+    group.writeEntry("FormatDate", m_formatDateCheck->isChecked());
+    group.writeEntry("FormatDateString", m_formatDateEdit->text());
 
     config.sync();
 }
@@ -592,7 +592,7 @@ void RenameImagesWidget::slotNext()
         if (::rename(QFile::encodeName(src.path()),
                      QFile::encodeName(dst.path())) == 0)
         {
-            srcInfo.setTitle(dst.filename());
+            srcInfo.setTitle(dst.fileName());
             
             item->changeResult(i18n("OK"));
         }
@@ -623,7 +623,7 @@ void RenameImagesWidget::slotAddImages()
 
         new BatchProcessImagesItem(m_listView,
                                    (*it).path().section('/', 0, -1),
-                                   (*it).filename(),
+                                   (*it).fileName(),
                                    QString(),
                                    QString());
         m_urlList.append(*it);
