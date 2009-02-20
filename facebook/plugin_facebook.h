@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_FB_H
-#define PLUGIN_FB_H
+#ifndef PLUGIN_FACEBOOK_H
+#define PLUGIN_FACEBOOK_H
 
 // Qt includes.
 #include <QVariant>
@@ -62,4 +62,4 @@ private:
     KIPIFbPlugin::FbWindow  *m_dlg;
 };
 
-#endif // PLUGIN_FB_H
+#endif // PLUGIN_FACEBOOK_H

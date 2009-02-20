@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#include "plugin_fb.h"
-#include "plugin_fb.moc"
+#include "plugin_facebook.h"
+#include "plugin_facebook.moc"
 
 // C ANSI includes.
 extern "C"

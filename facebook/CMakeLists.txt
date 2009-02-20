@@ -1,5 +1,5 @@
-SET(kipiplugin_fb_PART_SRCS
-    plugin_fb.cpp
+SET(kipiplugin_facebook_PART_SRCS
+    plugin_facebook.cpp
     fbwindow.cpp
     fbwidget.cpp
     fbalbum.cpp
@@ -7,9 +7,9 @@ SET(kipiplugin_fb_PART_SRCS
     mpform.cpp
    )
 
-KDE4_ADD_PLUGIN(kipiplugin_fb ${kipiplugin_fb_PART_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_facebook ${kipiplugin_facebook_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_fb
+TARGET_LINK_LIBRARIES(kipiplugin_facebook
                       kipiplugins
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
@@ -18,5 +18,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_fb
                       ${KDE4_KDEUI_LIBS}
                      )
 
-INSTALL(TARGETS kipiplugin_fb DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_fb.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_facebook DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES kipiplugin_facebook.desktop DESTINATION ${SERVICES_INSTALL_DIR})
