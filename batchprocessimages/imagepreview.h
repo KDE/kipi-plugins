@@ -132,8 +132,6 @@ protected:
     QLCDNumber  *LCDZoomFactorValue;
     
     QSlider     *ZoomFactorSlider;
-    
-    QPushButton *m_helpButton;
 
 private:
 

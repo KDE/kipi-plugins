@@ -58,7 +58,6 @@ private slots:
 
 private:
   
-  QPushButton *m_helpButton;
   Q3TextView *debugView;
   
   KIPIPlugins::KPAboutData  *m_about;

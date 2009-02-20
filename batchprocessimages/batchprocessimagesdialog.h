@@ -156,7 +156,6 @@ private slots:
    QPushButton            *m_previewButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
-   QPushButton            *m_helpButton;
    
    KConfig                *m_config;
 
