@@ -344,7 +344,7 @@ void PixmapView::resizeImage(int ZoomFactor)
     int w = m_w - (int)((float)m_w * (100-(float)ZoomFactor) / 100);
     int h = m_h - (int)((float)m_h * (100-(float)ZoomFactor) / 100);
 
-    QImage imgTmp = m_img.scale(w, h);
+    QImage imgTmp = m_img.scaled(w, h);
     m_pix->convertFromImage(imgTmp);
     resizeContents(w, h);
     repaintContents(false);

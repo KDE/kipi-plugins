@@ -72,7 +72,8 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
     DialogUtils::setupHelpButton(this, m_about);
     // gui
 
-    QWidget* box = plainPage();
+    QWidget* box = new QWidget(this);
+    setMainWidget(box);
     Q3VBoxLayout* lay = new Q3VBoxLayout(box);
     m_widget = new RenameImagesWidget(box, interface, images);
     lay->addWidget(m_widget);
