@@ -110,7 +110,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
-    setButtonGuiItem(User1, i18n("&Start"));
+    setButtonText(User1, i18n("&Start"));
     showButtonSeparator(false);
 
     // Init. Tmp folder

@@ -55,7 +55,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
     setCaption(i18n("Rename Images"));
     setModal(true);
     setButtons(Help | User1 | Close);
-    setButtonGuiItem(User1, i18n("&Start"));
+    setButtonText(User1, i18n("&Start"));
     setDefaultButton(Close);
     // About data and help button.
 

@@ -55,7 +55,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     setCaption(caption);
     setModal(true);
     setButtons(Ok | Help | User1);
-    setButtonGuiItem(User1, i18n("Copy to Clip&board"));
+    setButtonText(User1, i18n("Copy to Clip&board"));
     setDefaultButton(Ok);
     // About data and help button.
 
