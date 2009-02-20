@@ -48,7 +48,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
-                       : KDialogBase( parent)
+                       : KDialog( parent)
 {
     setCaption(i18n("Recompression Options"));
     setModal(true);
