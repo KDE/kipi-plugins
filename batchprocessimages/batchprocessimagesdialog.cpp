@@ -125,7 +125,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 
     
 
-    QWidget* box = plainPage();
+    QWidget* box = new QWidget();
+    setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout(box, 0, KDialog::spacingHint());
 
     //---------------------------------------------
@@ -240,7 +241,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 
     //---------------------------------------------
 
-    m_progress = new KProgress( box, "Progress" );
+    m_progress = new QProgressBar( box );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
     Q3WhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
@@ -411,14 +412,14 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     {
         if ( KMessageBox::warningContinueCancel(this,
              i18n("All original image files will be removed from the source Album.\nDo you want to continue?"),
-             i18n("Delete Original Image Files"), KStandardGuiItem::cont(),
+             i18n("Delete Original Image Files"), KStandardGuiItem::cont(),KStandardGuiItem::cancel(),
              "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
     }
 
     m_convertStatus = UNDER_PROCESS;
     disconnect( this, SIGNAL(user1Clicked()), this, SLOT(slotProcessStart()));
-    showButtonCancel( false );
+    showButton(KDialog::Cancel, false );
     setButtonText( User1, i18n("&Stop") );
     connect(this, SIGNAL(user1Clicked()), this, SLOT(slotProcessStop()));
 
@@ -448,7 +449,7 @@ bool BatchProcessImagesDialog::startProcess(void)
        return true;
     }
 
-    QString targetAlbum = m_destinationURL->url();
+    QString targetAlbum = m_destinationURL->url().path();
 
     //TODO check if it is valid also for remote URL's
     // this is a workarond for bug 117397
@@ -805,7 +806,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     disconnect( this, SIGNAL(user1Clicked()),
                 this, SLOT(slotProcessStart()));
 
-    showButtonCancel( false );
+    showButton(KDialog::Cancel, false );
     setButtonText( User1, i18n("&Stop") );
 
     connect(this, SIGNAL(user1Clicked()),
@@ -990,7 +991,7 @@ void BatchProcessImagesDialog::endPreview(void)
     m_remImagesButton->setEnabled(true);
     m_smallPreview->setEnabled(true);
     m_removeOriginal->setEnabled(true);
-    showButtonCancel( true );
+    showButton(KDialog::Cancel, true );
 
     m_optionsButton->setEnabled(true);          // Default status if 'slotTypeChanged' isn't re-implemented.
     slotTypeChanged(m_Type->currentItem());
@@ -1091,9 +1092,9 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 QString BatchProcessImagesDialog::extractArguments(K3Process *proc)
 {
     QString retArguments;
-    Q3ValueList<Q3CString> argumentsList = proc->args();
+    QList<QByteArray> argumentsList = proc->args();
 
-    for ( Q3ValueList<Q3CString>::iterator it = argumentsList.begin() ; it != argumentsList.end() ; ++it )
+    for ( QList<QByteArray>::iterator it = argumentsList.begin() ; it != argumentsList.end() ; ++it )
       retArguments.append(*it + " ");
 
     return (retArguments);

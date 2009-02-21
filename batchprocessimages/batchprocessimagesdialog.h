@@ -42,7 +42,7 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QCloseEvent>
-
+#include <QProgressBar>
 // Include files for KDE
 
 #include <kio/job.h>
@@ -70,7 +70,6 @@ class Q3GroupBox;
 
 class K3Process;
 class KConfig;
-class KProgress;
 class KUrl;
 class KUrlRequester;
 class KFileItem;
@@ -141,7 +140,7 @@ private slots:
    KUrlRequester          *m_destinationURL;
 
    BatchProcessImagesList *m_listFiles;
-   KProgress              *m_progress;
+   QProgressBar              *m_progress;
 
    QCheckBox              *m_removeOriginal;
    QCheckBox              *m_smallPreview;
