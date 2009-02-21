@@ -36,7 +36,8 @@ void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
     QObject::connect(openHandbookAction, SIGNAL(triggered(bool)),
             dialog, SLOT(slotHelp()));
     menu->insertAction(menu->actions().first(), openHandbookAction);
-    button(Help)->setMenu(menu);
+    #warning "Readd it"
+    //button(Help)->setMenu(menu);
 }
 
 } // namespace
