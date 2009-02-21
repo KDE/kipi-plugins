@@ -90,7 +90,7 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/uploadwidget.h>
-
+#include <imagedialog.h>
 // Local includes
 
 #include "pluginsversion.h"
@@ -242,7 +242,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     //---------------------------------------------
 
     m_progress = new QProgressBar( box );
-    m_progress->setTotalSteps(100);
+    m_progress->setMaximum(100);
     m_progress->setValue(0);
     Q3WhatsThis::add( m_progress, i18n("<p>This is the current percentage of the task completed.") );
 
@@ -292,7 +292,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd( void )
 {
     QStringList ImageFilesList;
 
-    KUrl::List urls = KIPI::ImageDialog::getImageURLs( this, m_interface );
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs( this, m_interface );
 
     for ( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
