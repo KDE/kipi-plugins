@@ -45,7 +45,17 @@ kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS renameimagesbase.ui)
 
 kde4_add_plugin(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
 
-target_link_libraries(kipiplugin_batchprocessimages ${KIPI_LIBRARIES} ${KEXIV2_LIBRARIES} ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDEUI_LIBS} kipiplugins)
+target_link_libraries(
+    kipiplugin_batchprocessimages
+    kipiplugins
+    ${KIPI_LIBRARIES}
+    ${KEXIV2_LIBRARIES}
+    ${KDE4_KDECORE_LIBS}
+    ${KDE4_KIO_LIBS}
+    ${KDE4_KDEUI_LIBS}
+    ${KDE4_KDE3SUPPORT_LIBRARY}
+    ${QT_QT3SUPPORT_LIBRARY}
+    )
 
 install(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
 
