@@ -5,6 +5,8 @@ NEW FEATURES:
 
 FlickrExport   : Add support for 23hq.com service which uses Flickr API
 General        : SimpleViewer plugin has been renamed to FlashExport
+PrintImages    : new plugin that allow to choose old print assistant
+               : or to print all the selected photos directly
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
