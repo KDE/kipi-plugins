@@ -83,9 +83,9 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
     m_action_borderimages->setIcon(KIcon("borderimages"));
     m_action_borderimages->setText(i18n("Border Images..."));
 
+    m_action_colorimages = actionCollection()->addAction("batch_color_images", this, SLOT(slotActivate()));
     m_action_colorimages->setIcon(KIcon("colorimages"));
     m_action_colorimages->setText(i18n("Color Images..."));
-    m_action_colorimages = actionCollection()->addAction("batch_color_images", this, SLOT(slotActivate()));
 
     m_action_convertimages = actionCollection()->addAction("batch_convert_images", this, SLOT(slotActivate()));
     m_action_convertimages->setIcon(KIcon("convertimages"));
