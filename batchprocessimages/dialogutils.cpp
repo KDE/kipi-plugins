@@ -20,8 +20,10 @@
 
 #include <kdialog.h>
 #include <khelpmenu.h>
-#include <kmenu.h>
 #include <klocale.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
+
 namespace DialogUtils {
 
 void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
@@ -36,8 +38,7 @@ void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
     QObject::connect(openHandbookAction, SIGNAL(triggered(bool)),
             dialog, SLOT(slotHelp()));
     menu->insertAction(menu->actions().first(), openHandbookAction);
-    #warning "Readd it"
-    //button(Help)->setMenu(menu);
+    dialog->button(KDialog::Help)->setMenu(menu);
 }
 
 } // namespace

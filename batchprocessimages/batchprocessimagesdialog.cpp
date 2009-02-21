@@ -88,7 +88,11 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/uploadwidget.h>
-#include <imagedialog.h>
+
+// KIPIPlugins includes
+
+#include "imagedialog.h"
+
 // Local includes
 
 #include "pluginsversion.h"
@@ -123,7 +127,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 
     
 
-    QWidget* box = new QWidget();
+    QWidget* box = new QWidget(this);
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout(box, 0, KDialog::spacingHint());
 
@@ -315,7 +319,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
         if (m_nbItem == 0)
             groupBox4->setTitle(i18n("Image Files List"));
         else
-            groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
+            groupBox4->setTitle(i18np("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
     }
 }
 
@@ -410,7 +414,7 @@ void BatchProcessImagesDialog::slotProcessStart( void )
     {
         if ( KMessageBox::warningContinueCancel(this,
              i18n("All original image files will be removed from the source Album.\nDo you want to continue?"),
-             i18n("Delete Original Image Files"), KStandardGuiItem::cont(),KStandardGuiItem::cancel(),
+             i18n("Delete Original Image Files"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
              "KIPIplugin-BatchProcessImages-AlwaysRemomveOriginalFiles") != KMessageBox::Continue )
            return;
     }
@@ -929,7 +933,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
     if (m_nbItem == 0) groupBox4->setTitle(i18n("Image File List"));
     else
-        groupBox4->setTitle(i18n("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
+        groupBox4->setTitle(i18np("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
 
     if (m_selectedImageFiles.isEmpty()) return;
 
@@ -1092,8 +1096,9 @@ QString BatchProcessImagesDialog::extractArguments(K3Process *proc)
     QString retArguments;
     QList<QByteArray> argumentsList = proc->args();
 
-    for ( QList<QByteArray>::iterator it = argumentsList.begin() ; it != argumentsList.end() ; ++it )
-      retArguments.append(*it + " ");
+    Q_FOREACH(const QByteArray& arg, argumentsList) {
+      retArguments.append(arg + " ");
+    }
 
     return (retArguments);
 }

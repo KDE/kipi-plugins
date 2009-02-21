@@ -70,6 +70,7 @@ class Q3GroupBox;
 
 class K3Process;
 class KConfig;
+class QProgressBar;
 class KUrl;
 class KUrlRequester;
 class KFileItem;
@@ -140,7 +141,7 @@ private slots:
    KUrlRequester          *m_destinationURL;
 
    BatchProcessImagesList *m_listFiles;
-   QProgressBar              *m_progress;
+   QProgressBar           *m_progress;
 
    QCheckBox              *m_removeOriginal;
    QCheckBox              *m_smallPreview;

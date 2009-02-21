@@ -61,7 +61,7 @@ extern "C"
 #include <klocale.h>
 #include <kconfig.h>
 #include <kio/previewjob.h>
-#include <kio/renamedlg.h>
+#include <kio/renamedialog.h>
 #include <kdebug.h>
 #include <kdeversion.h>
 
@@ -69,6 +69,10 @@ extern "C"
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
+
+// Libkipiplugins includes.
+
+#include "imagedialog.h"
 
 // Local includes.
 
@@ -537,9 +541,7 @@ void RenameImagesWidget::slotNext()
             }
 
             KIO::RenameDialog dlg(this, i18n("Rename File"), src.path(), dst.path(),
-                               KIO::RenameDialog_Mode(KIO::M_MULTI |
-                                                   KIO::M_OVERWRITE |
-                                                   KIO::M_SKIP));
+                                  KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
             int result = dlg.exec();
             dst        = dlg.newDestUrl();
 
