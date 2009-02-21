@@ -21,7 +21,7 @@
 
 class KAboutData;
 class KDialog;
-
+#include <QObject>
 namespace DialogUtils {
 
 void setupHelpButton(KDialog*, KAboutData*);

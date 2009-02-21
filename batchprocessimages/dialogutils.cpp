@@ -20,19 +20,20 @@
 
 #include <kdialog.h>
 #include <khelpmenu.h>
-
+#include <kmenu.h>
+#include <klocale.h>
 namespace DialogUtils {
 
 void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
 {
-    disconnect(dialog, SIGNAL(helpClicked()), dialog, SLOT(slotHelp()));
+    QObject::disconnect(dialog, SIGNAL(helpClicked()), dialog, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(dialog, aboutData, false);
     KMenu* menu = helpMenu->menu();
     menu->removeAction(menu->actions().first());
 
     QAction* openHandbookAction = new QAction(i18n("Handbook"), dialog);
-    connect(openHandbookAction, SIGNAL(triggered(bool)),
+    QObject::connect(openHandbookAction, SIGNAL(triggered(bool)),
             dialog, SLOT(slotHelp()));
     menu->insertAction(menu->actions().first(), openHandbookAction);
     button(Help)->setMenu(menu);

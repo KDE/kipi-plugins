@@ -75,6 +75,7 @@ extern "C"
 #include "batchprocessimagesitem.h"
 #include "renameimageswidget.h"
 #include "renameimageswidget.moc"
+#include <imagedialog.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -535,12 +536,12 @@ void RenameImagesWidget::slotNext()
                 break;
             }
 
-            KIO::RenameDlg dlg(this, i18n("Rename File"), src.path(), dst.path(),
-                               KIO::RenameDlg_Mode(KIO::M_MULTI |
+            KIO::RenameDialog dlg(this, i18n("Rename File"), src.path(), dst.path(),
+                               KIO::RenameDialog_Mode(KIO::M_MULTI |
                                                    KIO::M_OVERWRITE |
                                                    KIO::M_SKIP));
             int result = dlg.exec();
-            dst        = dlg.newDestURL();
+            dst        = dlg.newDestUrl();
 
             switch (result)
             {
@@ -614,7 +615,7 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KUrl::List urls = KIPI::ImageDialog::getImageURLs(this, m_interface);
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
 
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {
