@@ -90,7 +90,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
                            const QString &FileName, QWidget *parent)
             : KDialog( parent)
 {
-    setCaption(i18n("Batch Process Preview (%1 - %2)").arg(EffectName).arg(FileName));
+    setCaption(i18n("Batch Process Preview (%1 - %2)",EffectName,FileName));
     setModal(true);
     setButtons(Ok | Help);
     setDefaultButton(Ok);
