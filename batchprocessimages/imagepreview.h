@@ -45,7 +45,6 @@ class QPixmap;
 class QCursor;
 class QLCDNumber;
 class QSlider;
-class QPushButton;
 
 class K3Process;
 

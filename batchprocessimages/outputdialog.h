@@ -36,7 +36,6 @@
 #include "kpaboutdata.h"
 
 class Q3TextView;
-class QPushButton;
 
 namespace KIPIBatchProcessImagesPlugin
 {
