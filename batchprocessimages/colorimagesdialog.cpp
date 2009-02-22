@@ -115,7 +115,7 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
                      "<b>Segment</b>: segment an image by analyzing the histograms of the color "
                      "components and identifying units that are homogeneous with the fuzzy c-means "
                      "technique.<p>"
-                     "<b>Trim</b>: trim an image (fuzz reverse technic). The algorithm remove edges "
+                     "<b>Trim</b>: trim an image (fuzz reverse technique). The algorithm remove edges "
                      "that are the background color from the image.<p>");
 
     Q3WhatsThis::add( m_Type, whatsThis );

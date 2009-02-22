@@ -319,7 +319,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
         if (m_nbItem == 0)
             groupBox4->setTitle(i18n("Image Files List"));
         else
-            groupBox4->setTitle(i18np("Image File List (1 item)", "Image File List (%n items)", m_nbItem));
+            groupBox4->setTitle(i18np("Image File List (1 item)", "Image File List (%1 items)", m_nbItem));
     }
 }
 

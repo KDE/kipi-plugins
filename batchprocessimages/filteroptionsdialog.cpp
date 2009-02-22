@@ -145,7 +145,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        Q3WhatsThis::add( m_sharpenRadius, i18n("<p>Select here the radius of the sharpen Gaussian, in "
                                               "pixels, not counting the center pixel. For reasonable "
                                               "results, the radius should be larger than deviation. "
-                                              "if you use a radius of 0 the sharpen operation selects a "
+                                              "If you use a radius of 0 the sharpen operation selects a "
                                               "suitable radius.") );
        m_label_sharpenRadius->setBuddy( m_sharpenRadius );
        dvlay->addWidget( m_sharpenRadius );
