@@ -1,14 +1,20 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=BatchProcessImages
+Name[de]=BilderStapelverarbeitung
+Name[it]=Elaborazione di immagini non interattiva
 Name[nds]=Bild-Stapelverarbeiden
+Name[pt]=Processamento em Lote de Imagens
 Name[pt_BR]=ProcessamentoImagensLote
 Name[sv]=Bakgrundsbehandling av bilder
 Name[uk]=Пакетна обробка зображень
 Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
 Comment[ca]=Connector KIPI per a processar imatges per lots
+Comment[de]=Kipi-Modul zur Stapelverarbeitung von Bildern
+Comment[it]=Estensione di elaborazione di immagini non interattiva di KIPI
 Comment[nds]=KIPI-Moduul, dat Billerstapels verarbeiden deit
+Comment[pt]='Plugin' de Processamento de Imagens em Lote do KIPI
 Comment[pt_BR]=Plug-in do KIPI para processamento de imagens em lote
 Comment[sv]=KIPI-insticksprogram för bakgrundsbehandling av bilder
 Comment[uk]=Додаток KIPI для пакетної обробки зображень
