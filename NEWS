@@ -14,8 +14,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 140438 : General            : 3 different viewers for diferents needs.
 003 ==> 184553 : GalleryExport      : Encoding issue with gallery2.
 004 ==> 159794 : JPEGLossLess       : Cannot rotate .tif images in digiKam.
-005 ==> 184702 : JPEGLossLess       : cannot rotate TIFFs in Album GUI.
-006 ==> 
+005 ==> 184702 : JPEGLossLess       : Cannot rotate TIFFs in Album GUI.
+006 ==> 184332 : AdvancedSlideShow  : Compiling error with Qt4.5.
+007 ==> 
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
