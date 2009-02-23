@@ -37,7 +37,7 @@
 // LibKExiv2 includes.
 #include <libkexiv2/kexiv2.h>
 
-class QProgressDialog;
+class KProgressDialog;
 
 class KUrl;
 
@@ -74,6 +74,7 @@ public:
 private slots:
 
     void slotBusy(bool val);
+    void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotChangePermDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
@@ -109,6 +110,9 @@ private:
 
     void readSettings();
     void writeSettings();
+
+    void authenticate();
+
     void buttonStateChange(bool state);
 
 private:
@@ -125,8 +129,8 @@ private:
     QString                     m_sessionSecret;
     unsigned int                m_sessionExpires;
 
-    QProgressDialog            *m_progressDlg;
-    QProgressDialog            *m_authProgressDlg;
+    KProgressDialog            *m_progressDlg;
+    KProgressDialog            *m_authProgressDlg;
 
     KUrl::List                  m_transferQueue;
 

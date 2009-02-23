@@ -30,7 +30,6 @@
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QProgressDialog>
 #include <QtAlgorithms>
 
 // KDE includes.
@@ -40,6 +39,7 @@
 #include <KIO/JobUiDelegate>
 #include <KApplication>
 #include <KMessageBox>
+#include <KProgressDialog>
 #include <KToolInvocation>
 
 // Local includes.
@@ -113,9 +113,6 @@ void FbTalker::cancel()
         m_job = 0;
     }
 
-    if (m_authProgressDlg && !m_authProgressDlg->isHidden())
-        m_authProgressDlg->hide();
-
     emit signalBusy(false);
 }
 
@@ -179,10 +176,7 @@ void FbTalker::authenticate(const QString &sessionKey,
         m_sessionSecret  = sessionSecret;
         m_sessionExpires = sessionExpires;
 
-        m_authProgressDlg->setLabelText(i18n("Validate previous session..."));
-        m_authProgressDlg->setMaximum(8);
-        m_authProgressDlg->setValue(1);
-        m_authProgressDlg->show();
+        emit signalLoginProgress(1, 8, i18n("Validate previous session..."));
 
         // get logged in user - this will check if session is still valid
         getLoggedInUser();
@@ -202,11 +196,7 @@ void FbTalker::createToken()
         m_job = 0;
     }
     emit signalBusy(true);
-
-    m_authProgressDlg->setLabelText(i18n("Logging to Facebook service..."));
-    m_authProgressDlg->setMaximum(8);
-    m_authProgressDlg->setValue(1);
-    m_authProgressDlg->show();
+    emit signalLoginProgress(1, 8, i18n("Logging to Facebook service..."));
 
     QMap<QString, QString> args;
     args["method"]  = "facebook.auth.createToken";
@@ -239,7 +229,7 @@ void FbTalker::getSession()
         m_job = 0;
     }
     emit signalBusy(true);
-    m_authProgressDlg->setValue(3);
+    emit signalLoginProgress(3);
 
     QMap<QString, QString> args;
     args["method"]      = "facebook.auth.getSession";
@@ -273,7 +263,7 @@ void FbTalker::getLoggedInUser()
         m_job = 0;
     }
     emit signalBusy(true);
-    m_authProgressDlg->setValue(2);
+    emit signalLoginProgress(2);
 
     QMap<QString, QString> args;
     args["method"]      = "facebook.users.getLoggedInUser";
@@ -309,7 +299,7 @@ void FbTalker::getUserInfo(const QString& userIDs)
     }
     if (userIDs.isEmpty()) {
         emit signalBusy(true);
-        m_authProgressDlg->setValue(5);
+        emit signalLoginProgress(5);
     }
 
     QMap<QString, QString> args;
@@ -353,7 +343,7 @@ void FbTalker::getUploadPermission()
     }
     emit signalBusy(true);
     if (m_loginInProgress)
-        m_authProgressDlg->setValue(7);
+        emit signalLoginProgress(7);
 
     QMap<QString, QString> args;
     args["method"]      = "facebook.users.hasAppPermission";
@@ -818,7 +808,6 @@ void FbTalker::authenticationDone(int errCode, const QString &errMsg)
         m_user.clear();
     }
 
-    m_authProgressDlg->hide();
     emit signalBusy(false);
     emit signalLoginDone(errCode, errMsg);
     m_loginInProgress = false;
@@ -857,7 +846,8 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    m_authProgressDlg->setValue(2);
+    emit signalLoginProgress(2);
+
     kDebug(51000) << "Parse CreateToken response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
@@ -908,7 +898,8 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    m_authProgressDlg->setValue(4);
+    emit signalLoginProgress(4);
+
     kDebug(51000) << "Parse GetSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
@@ -955,7 +946,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    m_authProgressDlg->setValue(3);
+    emit signalLoginProgress(3);
 
     kDebug(51000) << "Parse GetLoggedInUser response:" << endl << data;
 
@@ -995,7 +986,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
         return;
 
     if (m_state == FB_GETUSERINFO) // during login
-        m_authProgressDlg->setValue(6);
+        emit signalLoginProgress(6);
 
     kDebug(51000) << "Parse GetUserInfo response:" << endl << data;
 
@@ -1069,7 +1060,8 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
         return;
 
     if (m_loginInProgress)
-        m_authProgressDlg->setValue(8);
+        emit signalLoginProgress(8);
+
     kDebug(51000) << "Parse HasAppPermission response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
