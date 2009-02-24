@@ -421,9 +421,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 #       MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
 #   ENDIF(KDESKTOP_INTERFACE_FILE_FOUND)
 
-    IF(BPI)
-        ADD_SUBDIRECTORY(batchprocessimages)
-    ENDIF(BPI)
+    ADD_SUBDIRECTORY(batchprocessimages)
 
     IF(NOT WIN32)
         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
