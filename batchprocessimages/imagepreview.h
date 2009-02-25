@@ -25,10 +25,10 @@
 
 // Include files for Qt
 
-#include <q3scrollview.h>
 #include <qimage.h>
 #include <qstring.h>
 //Added by qt3to4:
+#include <QAbstractScrollArea>
 #include <QPixmap>
 #include <QWheelEvent>
 #include <QMouseEvent>
@@ -42,7 +42,6 @@
 #include "kpaboutdata.h"
 
 class QPixmap;
-class QCursor;
 class QLCDNumber;
 class QSlider;
 
@@ -53,41 +52,42 @@ namespace KIPIBatchProcessImagesPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class PixmapView : public Q3ScrollView
+class PixmapView : public QAbstractScrollArea
 {
 Q_OBJECT
 
 public:
 
-    PixmapView(bool cropAction, QWidget *parent=0, const char *name=0);
+    PixmapView(bool cropAction, QWidget *parent=0);
     ~PixmapView();
 
     void setImage(const QString &ImagePath, const QString &tmpPath);
     void resizeImage(int ZoomFactor);
 
+signals:
+    void wheelChanged( int delta );
+
+protected:
+    void contentsWheelEvent( QWheelEvent * e );
+    void mousePressEvent ( QMouseEvent * e );
+    void mouseReleaseEvent ( QMouseEvent * e );
+    void mouseMoveEvent( QMouseEvent * e );
+    void paintEvent(QPaintEvent*);
+    void resizeEvent(QResizeEvent*);
+
 private slots:
     
     void slotPreviewReadStd(K3Process* proc, char *buffer, int buflen);
     void PreviewProcessDone(K3Process* proc);
-    void contentsWheelEvent( QWheelEvent * e );
-    void contentsMousePressEvent ( QMouseEvent * e );
-    void contentsMouseReleaseEvent ( QMouseEvent * e );
-    void contentsMouseMoveEvent( QMouseEvent * e );
 
-signals:
-
-    void wheelEvent( int delta );
-
-protected:
-
+private:
     QPixmap     *m_pix;
     
     QImage       m_img;
 
     int          m_w;
     int          m_h;
-    int          m_xpos;
-    int          m_ypos;
+    QPoint       m_dragPos;
 
     K3Process    *m_PreviewProc;
 
@@ -97,11 +97,8 @@ protected:
     bool         m_validPreview;
     bool         m_cropAction;
 
-    QCursor     *m_handCursor;
-
-    void drawContents(QPainter *p, int x, int y, int w, int h);
     void PreviewCal(const QString &ImagePath, const QString &tmpPath);
-
+    void updateScrollBars();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

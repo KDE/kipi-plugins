@@ -63,6 +63,3 @@ install(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install(FILES  kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(FILES  DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_batchprocessimages/icons)
-
-

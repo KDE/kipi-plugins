@@ -51,6 +51,7 @@ extern "C"
 #include <q3whatsthis.h>
 #include <qapplication.h>
 #include <qcursor.h>
+#include <QScrollBar>
 
 // KDE includes
 
@@ -163,10 +164,10 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     connect( ZoomFactorSlider, SIGNAL(valueChanged(int)),
              this, SLOT(slotZoomFactorValueChanged(int)) );
 
-    connect( m_previewOrig, SIGNAL(wheelEvent(int)),
+    connect( m_previewOrig, SIGNAL(wheelChanged(int)),
              this, SLOT(slotWheelChanged(int)) );
 
-    connect( m_previewDest, SIGNAL(wheelEvent(int)),
+    connect( m_previewDest, SIGNAL(wheelChanged(int)),
              this, SLOT(slotWheelChanged(int)) );
 
     m_previewOrig->setImage(fileOrig, tmpPath);
@@ -201,8 +202,8 @@ void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
     m_previewDest->resizeImage( ZoomFactorValue * 5 );
 }
 
-PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
-           : Q3ScrollView(parent, name)
+PixmapView::PixmapView(bool cropAction, QWidget *parent)
+           : QAbstractScrollArea(parent)
 {
     m_cropAction = cropAction;
     m_pix = NULL;
@@ -212,10 +213,7 @@ PixmapView::PixmapView(bool cropAction, QWidget *parent, const char *name)
     horizontalScrollBar()->setPageStep( 1 );
     verticalScrollBar()->setLineStep( 1 );
     verticalScrollBar()->setPageStep( 1 );
-    KGlobal::dirs()->addResourceType("kipi_handcursor", KGlobal::dirs()->kde_default("data")
-                   + "kipi/data");
-    m_handCursor = new QCursor( KGlobal::dirs()->findResourceDir("kipi_handcursor", "handcursor.png")
-                   + "handcursor.png" );
+    viewport()->setCursor(Qt::OpenHandCursor);
 }
 
 PixmapView::~PixmapView()
@@ -323,7 +321,7 @@ void PixmapView::PreviewProcessDone(K3Process* proc)
           }
        else
           {
-          m_pix = new QPixmap(visibleWidth(), visibleHeight());
+          m_pix = new QPixmap(viewport()->size());
           QPainter p;
           p.begin(m_pix);
           p.fillRect(0, 0, m_pix->width(), m_pix->height(), Qt::white);
@@ -331,7 +329,7 @@ void PixmapView::PreviewProcessDone(K3Process* proc)
           p.drawText(0, 0, m_pix->width(), m_pix->height(), Qt::AlignCenter,
                      i18n("Cannot\nprocess\npreview\nimage."));
           p.end();
-          repaintContents();
+          viewport()->update();
           m_validPreview = false;
           }
        }
@@ -346,48 +344,58 @@ void PixmapView::resizeImage(int ZoomFactor)
 
     QImage imgTmp = m_img.scaled(w, h);
     m_pix->convertFromImage(imgTmp);
-    resizeContents(w, h);
-    repaintContents(false);
+    updateScrollBars();
+    viewport()->update();
 }
 
-void PixmapView::drawContents(QPainter *p, int x, int y, int w, int h)
+void PixmapView::paintEvent(QPaintEvent*)
 {
     if(!m_pix) return;
-    else p->drawPixmap(x, y, *m_pix, x, y, w, h);
+    QPainter painter(viewport());
+    const int x = horizontalScrollBar()->value();
+    const int y = verticalScrollBar()->value();
+    painter.drawPixmap(0, 0, *m_pix, x, y, viewport()->width(), viewport()->height());
+}
+
+void PixmapView::resizeEvent(QResizeEvent*)
+{
+    updateScrollBars();
 }
 
 void PixmapView::contentsWheelEvent( QWheelEvent * e )
 {
-    emit wheelEvent(e->delta());
+    emit wheelChanged(e->delta());
 }
 
-void PixmapView::contentsMousePressEvent ( QMouseEvent * e )
+void PixmapView::mousePressEvent ( QMouseEvent * e )
 {
-    if ( e->button() == Qt::LeftButton )
-       {
-       m_xpos = e->x();
-       m_ypos = e->y();
-       setCursor ( *m_handCursor );
-       }
+    if ( e->button() == Qt::LeftButton ) {
+        viewport()->setCursor(Qt::ClosedHandCursor);
+        m_dragPos = e->pos();
+    }
 }
 
-void PixmapView::contentsMouseReleaseEvent ( QMouseEvent * /*e*/ )
+void PixmapView::mouseReleaseEvent ( QMouseEvent * /*e*/ )
 {
-    setCursor ( Qt::ArrowCursor );
+    viewport()->setCursor(Qt::OpenHandCursor);
 }
 
-void PixmapView::contentsMouseMoveEvent( QMouseEvent * e )
+void PixmapView::mouseMoveEvent( QMouseEvent * e )
 {
-     if ( e->state() == Qt::LeftButton )
-     {
-         uint newxpos = e->x();
-         uint newypos = e->y();
+    if ( e->state() == Qt::LeftButton ) {
+        QPoint delta = e->pos() - m_dragPos;
+        horizontalScrollBar()->setValue(
+            horizontalScrollBar()->value() - delta.x());
+        verticalScrollBar()->setValue(
+            verticalScrollBar()->value() - delta.y());
+        m_dragPos = e->pos();
+    }
+}
 
-         scrollBy (-(newxpos - m_xpos), -(newypos - m_ypos));
-
-         m_xpos = newxpos - (newxpos-m_xpos);
-         m_ypos = newypos - (newypos-m_ypos);
-     }
+void PixmapView::updateScrollBars()
+{
+    horizontalScrollBar()->setMaximum(m_pix->width() - viewport()->width());
+    verticalScrollBar()->setMaximum(m_pix->height() - viewport()->height());
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
