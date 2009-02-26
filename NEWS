@@ -16,7 +16,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 159794 : JPEGLossLess       : Cannot rotate .tif images in digiKam.
 005 ==> 184702 : JPEGLossLess       : Cannot rotate TIFFs in Album GUI.
 006 ==> 184332 : AdvancedSlideShow  : Compiling error with Qt4.5.
-007 ==> 
+007 ==> 177137 : PrintWizard        : digiKam print assistant problems and ideas.
+008 ==> 
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
