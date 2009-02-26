@@ -39,7 +39,6 @@
 #include <KIO/JobUiDelegate>
 #include <KApplication>
 #include <KMessageBox>
-#include <KProgressDialog>
 #include <KToolInvocation>
 
 // Local includes.
