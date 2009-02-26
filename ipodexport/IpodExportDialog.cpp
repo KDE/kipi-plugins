@@ -347,7 +347,7 @@ void UploadDialog::enableButtons()
 
     const QList<QTreeWidgetItem*> ipodSelection = m_ipodAlbumList->selectedItems();
 
-    const bool hasSelection = ipodSelection.count() == 1;
+    const bool hasSelection = m_ipodAlbumList->currentItem() != 0;
 
     const bool isMasterLibrary = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
     const bool isAlbum = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
