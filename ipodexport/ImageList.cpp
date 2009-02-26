@@ -24,6 +24,8 @@
 
 #include <KLocale>
 #include <QHeaderView>
+#include <QMimeData>
+#include <QUrl>
 
 namespace KIPIIpodExportPlugin
 {
@@ -48,55 +50,23 @@ ImageList::ImageList( ListType type, QWidget *parent )
     header()->hide();
 }
 
-// TODO: Port to KDE4
-
-/*
-void ImageList::dragEnterEvent( QDragEnterEvent *e )
+bool ImageList::dropMimeData(QTreeWidgetItem *parent, const QMimeData *data, Qt::DropAction action)
 {
-    e->accept( Q3UriDrag::canDecode(e) );
+    droppedImagesItems(data->urls());
 }
 
-
-bool ImageList::acceptDrag( QDropEvent* e ) const
+void ImageList::droppedImagesItems(QList<QUrl> urls)
 {
-    return Q3UriDrag::canDecode( e );
-}
-
-void ImageList::contentsDropEvent( QDropEvent *e )
-{
-    droppedImagesItems( e );
-}
-
-void ImageList::dropEvent( QDropEvent *e )
-{
-    droppedImagesItems( e );
-}
-
-void ImageList::droppedImagesItems( QDropEvent *e )
-{
-    Q3StrList strList;
     QStringList filesPath;
 
-    if ( !Q3UriDrag::decode(e, strList) ) return;
-
-    Q3StrList stringList;
-    Q3StrListIterator it(strList);
-    char *str;
-
-    while ( (str = it.current()) != 0 )
-    {
-        QString filePath = Q3UriDrag::uriToLocalFile(str);
-        QFileInfo fileInfo(filePath);
-
-        if( fileInfo.isFile() && fileInfo.exists() )
-            filesPath.append( fileInfo.filePath() );
-
-        ++it;
+    foreach( QUrl u, urls ) {
+        filesPath << u.path();
     }
-
-    if( !filesPath.isEmpty() )
+    
+    if( !filesPath.isEmpty() ) {
        emit addedDropItems( filesPath );
+    }
 }
-*/
+
 
 } // namespace KIPIIpodExportPlugin

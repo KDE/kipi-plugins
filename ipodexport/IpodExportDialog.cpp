@@ -252,13 +252,11 @@ UploadDialog::UploadDialog(
     connect( m_transferImagesButton, SIGNAL( clicked() ), this, SLOT( startTransfer() ) );
     
     connect( m_uploadList, SIGNAL( addedDropItems(QStringList) ), this, SLOT( addDropItems(QStringList) ) );
-#if 0
-    connect(m_uploadList, SIGNAL( currentChanged(Q3ListViewItem*) ),
-            this, SLOT( imageSelected(Q3ListViewItem*) ));
 
-    connect(m_ipodAlbumList, SIGNAL( currentChanged(Q3ListViewItem*) ),
-            this, SLOT( ipodItemSelected(Q3ListViewItem*) ));
-#endif
+    connect(m_uploadList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
+            this, SLOT( imageSelected(QTreeWidgetItem*) ));
+    connect(m_ipodAlbumList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
+            this, SLOT( ipodItemSelected(QTreeWidgetItem*) ));
 }
 
 UploadDialog::~UploadDialog()

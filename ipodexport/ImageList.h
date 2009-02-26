@@ -43,11 +43,12 @@ class ImageList : public QTreeWidget
         void addedDropItems( QStringList filesPath );
 
     protected:
+        virtual bool dropMimeData(QTreeWidgetItem *parent, const QMimeData *data, Qt::DropAction action);
         //bool acceptDrag( QDropEvent *e ) const;
         //void contentsDropEvent( QDropEvent *e );
         //void dragEnterEvent( QDragEnterEvent *e );
         //void dropEvent( QDropEvent *e );
-        //void droppedImagesItems( QDropEvent *e );
+        void droppedImagesItems(QList<QUrl>);
         //void viewportPaintEvent( QPaintEvent *e );
 
     private:
