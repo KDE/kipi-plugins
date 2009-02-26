@@ -19,7 +19,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> 177137 : PrintWizard        : digiKam print assistant problems and ideas.
 008 ==> 176367 : PrintWizard        : Crop stage does not allow rotation or selection.
 009 ==> 178983 : PrintWizard        : Next/back-buttons in print-assistant should be labeled.
-010 ==> 
+010 ==> 095404 : PrintWizard        : Printwizard print image with custom size, original size, autoscaled size to paper.
+011 ==> 
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
