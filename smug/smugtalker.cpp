@@ -83,9 +83,6 @@ void SmugTalker::cancel()
         m_job = 0;
     }
 
-    if (m_authProgressDlg && !m_authProgressDlg->isHidden())
-        m_authProgressDlg->hide();
-
     emit signalBusy(false);
 }
 
@@ -97,10 +94,7 @@ void SmugTalker::login(const QString& email, const QString& password)
         m_job = 0;
     }
     emit signalBusy(true);
-
-    m_authProgressDlg->setLabelText(i18n("Logging to SmugMug service..."));
-    m_authProgressDlg->setMaximum(4);
-    m_authProgressDlg->setValue(1);
+    emit signalLoginProgress(1, 4, i18n("Logging to SmugMug service..."));
 
     KUrl url(m_apiURL);
     if (email.isEmpty()) 
@@ -131,7 +125,6 @@ void SmugTalker::login(const QString& email, const QString& password)
     m_state = SMUG_LOGIN;
     m_job   = job;
     m_buffer.resize(0);
-    m_authProgressDlg->setValue(2);
 
     m_user.email = email;
 }
@@ -499,7 +492,6 @@ void SmugTalker::slotResult(KJob *kjob)
             m_sessionID.clear();
             m_user.clear();
 
-            m_authProgressDlg->hide();
             emit signalBusy(false);
             emit signalLoginDone(job->error(), job->errorText());
         }
@@ -564,7 +556,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     int errCode = -1;
     QString errMsg;
 
-    m_authProgressDlg->setValue(3);
+    emit signalLoginProgress(3);
     QDomDocument doc("login");
     if (!doc.setContent(data))
         return;
@@ -611,14 +603,13 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         }
     }
 
-    m_authProgressDlg->setValue(4);
+    emit signalLoginProgress(4);
     if (errCode != 0) // if login failed, reset user properties
     {
         m_sessionID.clear();
         m_user.clear();
     }
 
-    m_authProgressDlg->hide();
     emit signalBusy(false);
     emit signalLoginDone(errCode, errorToText(errCode, errMsg));
 }

@@ -38,7 +38,7 @@
 // local includes.
 #include "smugitem.h"
 
-class QProgressDialog;
+class KProgressDialog;
 class KPasswordDialog;
 
 class KUrl;
@@ -73,6 +73,7 @@ public:
 private slots:
 
     void slotBusy(bool val);
+    void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotGetPhotoDone(int errCode, const QString& errMsg,
@@ -109,6 +110,9 @@ private:
 
     void readSettings();
     void writeSettings();
+
+    void authenticate(const QString& email = "", const QString& password = "");
+
     void buttonStateChange(bool state);
 
 private:
@@ -127,8 +131,8 @@ private:
     int                         m_currentTmplID;
     int                         m_currentCategoryID;
 
-    QProgressDialog            *m_progressDlg;
-    QProgressDialog            *m_authProgressDlg;
+    KProgressDialog            *m_progressDlg;
+    KProgressDialog            *m_authProgressDlg;
     KPasswordDialog            *m_loginDlg;
 
     KUrl::List                  m_transferQueue;

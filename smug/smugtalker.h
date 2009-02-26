@@ -35,8 +35,6 @@
 // local includes.
 #include "smugitem.h"
 
-class QProgressDialog;
-
 namespace KIPISmugPlugin
 {
 
@@ -68,11 +66,10 @@ public:
     bool    addPhoto(const QString& imgPath, int albumID);
     void    getPhoto(const QString& imgPath);
 
-public:
-    QProgressDialog *m_authProgressDlg; // TODO: move to method?
-
 signals:
     void signalBusy(bool val);
+    void signalLoginProgress(int step, int maxStep = 0, 
+                             const QString& label = "");
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
