@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=BatchProcessImages
 Name[de]=BilderStapelverarbeitung
+Name[el]=Ομαδική επεξεργασία εικόνων
 Name[et]=Piltide pakktöötlus
 Name[it]=Elaborazione di immagini non interattiva
 Name[nds]=Bild-Stapelverarbeiden
@@ -15,6 +16,7 @@ Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
 Comment[ca]=Connector KIPI per a processar imatges per lots
 Comment[de]=Kipi-Modul zur Stapelverarbeitung von Bildern
+Comment[el]=Πρόσθετο του KIPI για την ομαδική επεξεργασία εικόνων
 Comment[et]=KIPI piltide pakktöötluse plugin
 Comment[it]=Estensione di elaborazione di immagini non interattiva di KIPI
 Comment[ja]=画像を一括処理する Kipi プラグイン
