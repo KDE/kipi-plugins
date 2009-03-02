@@ -113,7 +113,7 @@ private slots:
    void slotAddDropItems(QStringList filesPath);
 
    void slotImageSelected( Q3ListViewItem * item );
-   void slotGotPreview(const KFileItem* , const QPixmap &pixmap);
+   void slotGotPreview(const KFileItem&, const QPixmap &pixmap);
 
    void slotImagesFilesButtonAdd( void );
    void slotImagesFilesButtonRem( void );

@@ -341,16 +341,16 @@ void BatchProcessImagesDialog::slotImageSelected( Q3ListViewItem * item )
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imageLabel->height() );
 
-    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-            this, SLOT(slotGotPreview(const KFileItem*, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+            this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
 }
 
-void BatchProcessImagesDialog::slotGotPreview(const KFileItem* url, const QPixmap &pixmap)
+void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixmap &pixmap)
 {
     QPixmap pix( pixmap );
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KIPI::ImageInfo info = m_interface->info( url->url() );
+    KIPI::ImageInfo info = m_interface->info( item.url() );
     if ( info.angle() != 0 )
     {
         QImage img = pix.convertToImage();
