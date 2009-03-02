@@ -25,7 +25,6 @@
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -118,7 +117,7 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
                      "<b>Trim</b>: trim an image (fuzz reverse technique). The algorithm remove edges "
                      "that are the background color from the image.<p>");
 
-    Q3WhatsThis::add( m_Type, whatsThis );
+    m_Type->setWhatsThis(whatsThis );
 
     //---------------------------------------------
 

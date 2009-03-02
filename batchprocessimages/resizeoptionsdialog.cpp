@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -71,13 +70,13 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_size->setRange(10, 10000);
        m_size->setSliderEnabled(true);
        m_size->setLabel( i18n("New size (pixels):") );
-       Q3WhatsThis::add( m_size, i18n("<p>The new images' size in pixels.") );
+       m_size->setWhatsThis(i18n("<p>The new images' size in pixels.") );
 
        m_quality = new KIntNumInput(75, groupBox1);
        m_quality->setRange(0, 100);
        m_quality->setSliderEnabled(true);
        m_quality->setLabel( i18n("Image quality (percent):") );
-       Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_quality->setWhatsThis(i18n("<p>Quality for JPEG images.") );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
@@ -97,7 +96,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_resizeFilter->insertItem(i18nc("Filter name","Quadratic"));
        m_resizeFilter->insertItem(i18nc("Filter name","Sinc"));
        m_resizeFilter->insertItem(i18nc("Filter name","Triangle"));
-       Q3WhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
+       m_resizeFilter->setWhatsThis(i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
@@ -121,21 +120,21 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_Width = new KIntNumInput(1024, groupBox1);
        m_Width->setRange(100, 10000);
        m_Width->setSliderEnabled(true);
-       Q3WhatsThis::add( m_Width, i18n("<p>The new images' width in pixels."));
+       m_Width->setWhatsThis(i18n("<p>The new images' width in pixels."));
        m_label_Width->setBuddy( m_Width );
 
        m_label_Height = new QLabel (i18n("Height (pixels):"), groupBox1);
        m_Height = new KIntNumInput(768, groupBox1);
        m_Height->setRange(100, 10000);
        m_Height->setSliderEnabled(true);
-       Q3WhatsThis::add( m_Height, i18n("<p>The new images' height in pixels."));
+       m_Height->setWhatsThis(i18n("<p>The new images' height in pixels."));
        m_label_Height->setBuddy( m_Height );
 
        m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox1);
        m_quality = new KIntNumInput(75, groupBox1);
        m_quality->setRange(0, 100);
        m_quality->setSliderEnabled(true);
-       Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_quality->setWhatsThis(i18n("<p>Quality for JPEG images.") );
        m_label_quality->setBuddy(m_quality);
 
        dvlay->addWidget( groupBox1 );
@@ -145,7 +144,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_bgColor = new QLabel(i18n("Background color:"), groupBox2);
        QColor bgColor = QColor( 0, 0, 0 );                         // Black per default.
        m_button_bgColor = new KColorButton( bgColor, groupBox2 );
-       Q3WhatsThis::add( m_button_bgColor, i18n( "<p>You can select here the background color to "
+       m_button_bgColor->setWhatsThis(i18n( "<p>You can select here the background color to "
                                                 "be used when adapting the images' sizes." ));
        m_label_bgColor->setBuddy( m_button_bgColor );
 
@@ -166,7 +165,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_resizeFilter->insertItem(i18nc("Filter name","Quadratic"));
        m_resizeFilter->insertItem(i18nc("Filter name","Sinc"));
        m_resizeFilter->insertItem(i18nc("Filter name","Triangle"));
-       Q3WhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
+       m_resizeFilter->setWhatsThis(i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
@@ -176,7 +175,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_Border = new KIntNumInput(100, groupBox2);
        m_Border->setRange(0, 1000);
        m_Border->setSliderEnabled(true);
-       Q3WhatsThis::add( m_Border, i18n("<p>The border size around the images in pixels."));
+       m_Border->setWhatsThis(i18n("<p>The border size around the images in pixels."));
        m_label_border->setBuddy( m_Border );
 
        dvlay->addWidget( groupBox2 );
@@ -190,19 +189,19 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_fixedWidth->setRange(10, 10000);
        m_fixedWidth->setSliderEnabled(true);
        m_fixedWidth->setLabel( i18n("New width (pixels):") );
-       Q3WhatsThis::add( m_fixedWidth, i18n("<p>The new images' width in pixels.") );
+       m_fixedWidth->setWhatsThis(i18n("<p>The new images' width in pixels.") );
 
        m_fixedHeight = new KIntNumInput(480, groupBox1);
        m_fixedHeight->setRange(10, 10000);
        m_fixedHeight->setSliderEnabled(true);
        m_fixedHeight->setLabel( i18n("New height (pixels):") );
-       Q3WhatsThis::add( m_fixedHeight, i18n("<p>The new images' height in pixels.") );
+       m_fixedHeight->setWhatsThis(i18n("<p>The new images' height in pixels.") );
        
        m_quality = new KIntNumInput(75, groupBox1);
        m_quality->setRange(0, 100);
        m_quality->setSliderEnabled(true);
        m_quality->setLabel( i18n("Image quality (percent):") );
-       Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_quality->setWhatsThis(i18n("<p>Quality for JPEG images.") );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
@@ -222,7 +221,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_resizeFilter->insertItem(i18nc("Filter name","Quadratic"));
        m_resizeFilter->insertItem(i18nc("Filter name","Sinc"));
        m_resizeFilter->insertItem(i18nc("Filter name","Triangle"));
-       Q3WhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
+       m_resizeFilter->setWhatsThis(i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
@@ -234,7 +233,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
     if (m_Type == 3) // Prepare to print
        {
        m_customSettings = new QCheckBox( i18n("Use custom settings"), box);
-       Q3WhatsThis::add( m_customSettings, i18n("<p>If this option is enabled, "
+       m_customSettings->setWhatsThis(i18n("<p>If this option is enabled, "
                                                "all printing settings can be customized."));
        dvlay->addWidget( m_customSettings );
 
@@ -253,7 +252,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_paperSize->insertItem("30x45");
        m_paperSize->insertItem("40x50");
        m_paperSize->insertItem("50x75");
-       Q3WhatsThis::add( m_paperSize, i18n("<p>The standard photographic paper sizes in centimeters."));
+       m_paperSize->setWhatsThis(i18n("<p>The standard photographic paper sizes in centimeters."));
        m_label_paperSize->setBuddy( m_paperSize );
 
        m_label_printDpi = new QLabel (i18n("Print resolution (dpi):"), groupBox1);
@@ -265,7 +264,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_printDpi->insertItem("1200");
        m_printDpi->insertItem("1400");
        m_printDpi->insertItem("2400");
-       Q3WhatsThis::add( m_printDpi, i18n("<p>The standard print resolutions in dots per inch."));
+       m_printDpi->setWhatsThis(i18n("<p>The standard print resolutions in dots per inch."));
        m_label_printDpi->setBuddy( m_printDpi );
 
        dvlay->addWidget( groupBox1 );
@@ -276,7 +275,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_customXSize = new KIntNumInput(10, groupBox2);
        m_customXSize->setRange(1, 100);
        m_customXSize->setSliderEnabled(true);
-       Q3WhatsThis::add( m_customXSize, i18n("<p>The customized width of the photographic paper size "
+       m_customXSize->setWhatsThis(i18n("<p>The customized width of the photographic paper size "
                                             "in centimeters."));
        m_label_customXSize->setBuddy( m_customXSize );
 
@@ -284,7 +283,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_customYSize = new KIntNumInput(15, groupBox2);
        m_customYSize->setRange(1, 100);
        m_customYSize->setSliderEnabled(true);
-       Q3WhatsThis::add( m_customYSize, i18n("<p>The customized height of the photographic paper size "
+       m_customYSize->setWhatsThis(i18n("<p>The customized height of the photographic paper size "
                                             "in centimeters."));
        m_label_customYSize->setBuddy( m_customYSize );
 
@@ -292,7 +291,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_customDpi = new KIntNumInput(300, groupBox2);
        m_customDpi->setRange(10, 5000, 10);
        m_customDpi->setSliderEnabled(true);
-       Q3WhatsThis::add( m_customDpi, i18n("<p>The customized print resolution in dots per inch."));
+       m_customDpi->setWhatsThis(i18n("<p>The customized print resolution in dots per inch."));
        m_label_customDpi->setBuddy( m_customDpi );
 
        dvlay->addWidget( groupBox2 );
@@ -302,7 +301,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_backgroundColor = new QLabel(i18n("Background color:"), groupBox3);
        QColor backgroundColor = QColor( 255, 255, 255 );                         // White per default.
        m_button_backgroundColor = new KColorButton( backgroundColor, groupBox3 );
-       Q3WhatsThis::add( m_button_backgroundColor, i18n( "<p>You can select here the background color to "
+       m_button_backgroundColor->setWhatsThis(i18n( "<p>You can select here the background color to "
                                                 "be used when adapting the images' sizes." ));
        m_label_backgroundColor->setBuddy( m_button_backgroundColor );
 
@@ -323,7 +322,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_resizeFilter->insertItem(i18nc("Filter name","Quadratic"));
        m_resizeFilter->insertItem(i18nc("Filter name","Sinc"));
        m_resizeFilter->insertItem(i18nc("Filter name","Triangle"));
-       Q3WhatsThis::add( m_resizeFilter, i18n("<p>Select here the filter name for the resize-image process. "
+       m_resizeFilter->setWhatsThis(i18n("<p>Select here the filter name for the resize-image process. "
                                              "This filter will be used like a kernel convolution process "
                                              "during the increased image size rendering. The default filter "
                                              "is 'Lanczos'.") );
@@ -333,14 +332,14 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_marging = new KIntNumInput(1, groupBox3);
        m_marging->setRange(0, 80);
        m_marging->setSliderEnabled(true);
-       Q3WhatsThis::add( m_marging, i18n("<p>The margin around the images in millimeters."));
+       m_marging->setWhatsThis(i18n("<p>The margin around the images in millimeters."));
        m_label_marging->setBuddy( m_marging );
 
        m_label_quality = new QLabel (i18n("Image quality (percent):"), groupBox3);
        m_quality = new KIntNumInput(75, groupBox3);
        m_quality->setRange(0, 100);
        m_quality->setSliderEnabled(true);
-       Q3WhatsThis::add( m_quality, i18n("<p>Quality for JPEG images.") );
+       m_quality->setWhatsThis(i18n("<p>Quality for JPEG images.") );
        m_label_quality->setBuddy(m_quality);
 
        dvlay->addWidget( groupBox3 );

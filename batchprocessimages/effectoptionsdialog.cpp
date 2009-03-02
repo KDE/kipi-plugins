@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -67,7 +66,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_latWidth = new KIntNumInput(50, box);
        m_latWidth->setRange(0, 200);
        m_latWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_latWidth, i18n("<p>Select here the value which represents the width "
+       m_latWidth->setWhatsThis(i18n("<p>Select here the value which represents the width "
                                          "of the local neighborhood.") );
        m_label_latWidth->setBuddy( m_latWidth );
        dvlay->addWidget( m_latWidth );
@@ -77,7 +76,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_latHeight = new KIntNumInput(50, box);
        m_latHeight->setRange(0, 200);
        m_latHeight->setSliderEnabled(true);
-       Q3WhatsThis::add( m_latHeight, i18n("<p>Select here the value which represents the height of "
+       m_latHeight->setWhatsThis(i18n("<p>Select here the value which represents the height of "
                                           "the local neighborhood.") );
        m_label_latHeight->setBuddy( m_latHeight );
        dvlay->addWidget( m_latHeight );
@@ -87,7 +86,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_latOffset = new KIntNumInput(1, box);
        m_latOffset->setRange(0, 200);
        m_latOffset->setSliderEnabled(true);
-       Q3WhatsThis::add( m_latOffset, i18n("<p>Select here the value which represents the mean offset.") );
+       m_latOffset->setWhatsThis(i18n("<p>Select here the value which represents the mean offset.") );
        m_label_latOffset->setBuddy( m_latOffset );
        dvlay->addWidget( m_latOffset );
        }
@@ -99,7 +98,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_charcoalRadius = new KIntNumInput(3, box);
        m_charcoalRadius->setRange(0, 20);
        m_charcoalRadius->setSliderEnabled(true);
-       Q3WhatsThis::add( m_charcoalRadius, i18n("<p>Select here the value which represents the "
+       m_charcoalRadius->setWhatsThis(i18n("<p>Select here the value which represents the "
                                                "radius of the pixel neighborhood.") );
        m_label_charcoalRadius->setBuddy( m_charcoalRadius );
        dvlay->addWidget( m_charcoalRadius );
@@ -109,7 +108,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_charcoalDeviation = new KIntNumInput(3, box);
        m_charcoalDeviation->setRange(0, 20);
        m_charcoalDeviation->setSliderEnabled(true);
-       Q3WhatsThis::add( m_charcoalDeviation, i18n("<p>Select here the value which represents the "
+       m_charcoalDeviation->setWhatsThis(i18n("<p>Select here the value which represents the "
                                                   "standard deviation of the Gaussian, in pixels.") );
        m_label_charcoalDeviation->setBuddy( m_charcoalDeviation );
        dvlay->addWidget( m_charcoalDeviation );
@@ -122,7 +121,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_edgeRadius = new KIntNumInput(3, box);
        m_edgeRadius->setRange(0, 20);
        m_edgeRadius->setSliderEnabled(true);
-       Q3WhatsThis::add( m_edgeRadius, i18n("<p>Select here the value which represents the radius of "
+       m_edgeRadius->setWhatsThis(i18n("<p>Select here the value which represents the radius of "
                                            "the pixel neighborhood. Radius defines the radius of the "
                                            "convolution filter. If you use a radius of 0 the algorithm selects "
                                            "a suitable radius.") );
@@ -137,7 +136,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_embossRadius = new KIntNumInput(3, box);
        m_embossRadius->setRange(0, 20);
        m_embossRadius->setSliderEnabled(true);
-       Q3WhatsThis::add( m_embossRadius, i18n("<p>Select here the value which represents the radius of the "
+       m_embossRadius->setWhatsThis(i18n("<p>Select here the value which represents the radius of the "
                                              "pixel neighborhood. For reasonable results, radius should be "
                                              "larger than deviation. If you use a radius of 0 the algorithm "
                                              "selects a suitable radius.") );
@@ -149,7 +148,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_embossDeviation = new KIntNumInput(3, box);
        m_embossDeviation->setRange(0, 20);
        m_embossDeviation->setSliderEnabled(true);
-       Q3WhatsThis::add( m_embossDeviation, i18n("<p>Select here the value which represents the standard "
+       m_embossDeviation->setWhatsThis(i18n("<p>Select here the value which represents the standard "
                                                 "deviation of the Gaussian, in pixels.") );
        m_label_embossDeviation->setBuddy( m_embossDeviation );
        dvlay->addWidget( m_embossDeviation );
@@ -162,7 +161,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_implodeFactor = new KIntNumInput(1, box);
        m_implodeFactor->setRange(0, 20);
        m_implodeFactor->setSliderEnabled(true);
-       Q3WhatsThis::add( m_implodeFactor, i18n("<p>Select here the value which represents the extent of "
+       m_implodeFactor->setWhatsThis(i18n("<p>Select here the value which represents the extent of "
                                               "the implosion.") );
        m_label_implodeFactor->setBuddy( m_implodeFactor );
        dvlay->addWidget( m_implodeFactor );
@@ -175,7 +174,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_paintRadius = new KIntNumInput(3, box);
        m_paintRadius->setRange(0, 20);
        m_paintRadius->setSliderEnabled(true);
-       Q3WhatsThis::add( m_paintRadius, i18n("<p>Select here the value which represents the radius of "
+       m_paintRadius->setWhatsThis(i18n("<p>Select here the value which represents the radius of "
                                             "the circular neighborhood. Each pixel is replaced by the "
                                             "most frequent color occurring in a circular region defined "
                                             "by the radius.") );
@@ -190,7 +189,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_shadeAzimuth = new KIntNumInput(40, box);
        m_shadeAzimuth->setRange(0, 360);
        m_shadeAzimuth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_shadeAzimuth, i18n("<p>Select here the value which represents the azimuth of "
+       m_shadeAzimuth->setWhatsThis(i18n("<p>Select here the value which represents the azimuth of "
                                              "the light source direction. The azimuth is measured in degrees "
                                              "above the x axis.") );
        m_label_shadeAzimuth->setBuddy( m_shadeAzimuth );
@@ -201,7 +200,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_shadeElevation = new KIntNumInput(40, box);
        m_shadeElevation->setRange(0, 500);
        m_shadeElevation->setSliderEnabled(true);
-       Q3WhatsThis::add( m_shadeElevation, i18n("<p>Select here the value which represents the elevation of "
+       m_shadeElevation->setWhatsThis(i18n("<p>Select here the value which represents the elevation of "
                                                "the light source direction. The elevation is measured in "
                                                "pixels above the Z axis.") );
        m_label_shadeElevation->setBuddy( m_shadeElevation );
@@ -215,7 +214,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_solarizeFactor = new KIntNumInput(3, box);
        m_solarizeFactor->setRange(0, 99);
        m_solarizeFactor->setSliderEnabled(true);
-       Q3WhatsThis::add( m_solarizeFactor, i18n("<p>Select here the value which represents the percent-"
+       m_solarizeFactor->setWhatsThis(i18n("<p>Select here the value which represents the percent-"
                                                "threshold of the solarize intensity.") );
        m_label_solarizeFactor->setBuddy( m_solarizeFactor );
        dvlay->addWidget( m_solarizeFactor );
@@ -228,7 +227,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_spreadRadius = new KIntNumInput(10, box);
        m_spreadRadius->setRange(0, 200);
        m_spreadRadius->setSliderEnabled(true);
-       Q3WhatsThis::add( m_spreadRadius, i18n("<p>Select here the value which represents the random "
+       m_spreadRadius->setWhatsThis(i18n("<p>Select here the value which represents the random "
                                              "pixel in a neighborhood of this extent.") );
        m_label_spreadRadius->setBuddy( m_spreadRadius );
        dvlay->addWidget( m_spreadRadius );
@@ -241,7 +240,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_swirlDegrees = new KIntNumInput(45, box);
        m_swirlDegrees->setRange(0, 360);
        m_swirlDegrees->setSliderEnabled(true);
-       Q3WhatsThis::add( m_swirlDegrees, i18n("<p>Select here the value which represents the tightness of "
+       m_swirlDegrees->setWhatsThis(i18n("<p>Select here the value which represents the tightness of "
                                              "the swirling effect. You get a more dramatic effect as the "
                                              "degrees move from 1 to 360.") );
        m_label_swirlDegrees->setBuddy( m_swirlDegrees );
@@ -255,7 +254,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_waveAmplitude = new KIntNumInput(50, box);
        m_waveAmplitude->setRange(0, 200);
        m_waveAmplitude->setSliderEnabled(true);
-       Q3WhatsThis::add( m_waveAmplitude, i18n("<p>Select here the value which represents the amplitude of "
+       m_waveAmplitude->setWhatsThis(i18n("<p>Select here the value which represents the amplitude of "
                                               "the sine wave.") );
        m_label_waveAmplitude->setBuddy( m_waveAmplitude );
        dvlay->addWidget( m_waveAmplitude );
@@ -265,7 +264,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
        m_waveLenght = new KIntNumInput(100, box);
        m_waveLenght->setRange(0, 200);
        m_waveLenght->setSliderEnabled(true);
-       Q3WhatsThis::add( m_waveLenght, i18n("<p>Select here the value which represents the wave length "
+       m_waveLenght->setWhatsThis(i18n("<p>Select here the value which represents the wave length "
                                            "of the sine wave.") );
        m_label_waveLenght->setBuddy( m_waveLenght );
        dvlay->addWidget( m_waveLenght );

@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -68,7 +67,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_solidBorderWidth = new KIntNumInput(25, box);
        m_solidBorderWidth->setRange(1, 1000);
        m_solidBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_solidBorderWidth, i18n("<p>Select here the border width in pixels.") );
+       m_solidBorderWidth->setWhatsThis(i18n("<p>Select here the border width in pixels.") );
        m_label_solidBorderWidth->setBuddy( m_solidBorderWidth );
        dvlay->addWidget( m_solidBorderWidth );
 
@@ -76,7 +75,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        dvlay->addWidget( m_label_solidColor );
        QColor solidBorderColor = QColor( 0, 0, 0 );                         // Black per default.
        m_button_solidBorderColor = new KColorButton( solidBorderColor, box );
-       Q3WhatsThis::add( m_button_solidBorderColor, i18n( "<p>You can select here the border color." ));
+       m_button_solidBorderColor->setWhatsThis(i18n( "<p>You can select here the border color." ));
        dvlay->addWidget( m_button_solidBorderColor );
        }
 
@@ -87,7 +86,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_lineNiepceBorderWidth = new KIntNumInput(10, box);
        m_lineNiepceBorderWidth->setRange(1, 500);
        m_lineNiepceBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_lineNiepceBorderWidth, i18n("<p>Select here the line border width in pixels.") );
+       m_lineNiepceBorderWidth->setWhatsThis(i18n("<p>Select here the line border width in pixels.") );
        m_label_lineNiepceBorderWidth->setBuddy( m_lineNiepceBorderWidth );
        dvlay->addWidget( m_lineNiepceBorderWidth );
 
@@ -95,7 +94,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        dvlay->addWidget( m_label_lineNiepceColor );
        QColor lineNiepceBorderColor = QColor( 0, 0, 0 );                         // Black per default.
        m_button_lineNiepceBorderColor = new KColorButton( lineNiepceBorderColor, box );
-       Q3WhatsThis::add( m_button_lineNiepceBorderColor, i18n( "<p>You can select here the line border color." ));
+       m_button_lineNiepceBorderColor->setWhatsThis(i18n( "<p>You can select here the line border color." ));
        dvlay->addWidget( m_button_lineNiepceBorderColor );
 
        QLabel *m_label_NiepceBorderWidth = new QLabel (i18n("Border width:"), box);
@@ -103,7 +102,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_NiepceBorderWidth = new KIntNumInput(100, box);
        m_NiepceBorderWidth->setRange(1, 500);
        m_NiepceBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_NiepceBorderWidth, i18n("<p>Select here the border width in pixels.") );
+       m_NiepceBorderWidth->setWhatsThis(i18n("<p>Select here the border width in pixels.") );
        m_label_NiepceBorderWidth->setBuddy( m_NiepceBorderWidth );
        dvlay->addWidget( m_NiepceBorderWidth );
 
@@ -111,7 +110,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        dvlay->addWidget( m_label_NiepceColor );
        QColor NiepceBorderColor = QColor( 255, 255, 255 );                         // White per default.
        m_button_NiepceBorderColor = new KColorButton( NiepceBorderColor, box );
-       Q3WhatsThis::add( m_button_NiepceBorderColor, i18n( "<p>You can select here the border color." ));
+       m_button_NiepceBorderColor->setWhatsThis(i18n( "<p>You can select here the border color." ));
        dvlay->addWidget( m_button_NiepceBorderColor );
        }
 
@@ -122,7 +121,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_raiseBorderWidth = new KIntNumInput(50, box);
        m_raiseBorderWidth->setRange(1, 500);
        m_raiseBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_raiseBorderWidth, i18n("<p>Select here the border width in pixels.") );
+       m_raiseBorderWidth->setWhatsThis(i18n("<p>Select here the border width in pixels.") );
        m_label_raiseBorderWidth->setBuddy( m_raiseBorderWidth );
        dvlay->addWidget( m_raiseBorderWidth );
        }
@@ -134,7 +133,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_frameBorderWidth = new KIntNumInput(25, box);
        m_frameBorderWidth->setRange(0, 500);
        m_frameBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_frameBorderWidth, i18n("<p>Select here the border width in pixels.") );
+       m_frameBorderWidth->setWhatsThis(i18n("<p>Select here the border width in pixels.") );
        m_label_frameBorderWidth->setBuddy( m_frameBorderWidth );
        dvlay->addWidget( m_frameBorderWidth );
 
@@ -143,7 +142,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_frameBevelBorderWidth = new KIntNumInput(10, box);
        m_frameBevelBorderWidth->setRange(0, 250);
        m_frameBevelBorderWidth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_frameBevelBorderWidth, i18n("<p>Select here the bevel width in pixels. "
+       m_frameBevelBorderWidth->setWhatsThis(i18n("<p>Select here the bevel width in pixels. "
                                                       "This value must be <= Border width / 2") );
        m_label_frameBevelBorderWidth->setBuddy( m_frameBevelBorderWidth );
        dvlay->addWidget( m_frameBevelBorderWidth );
@@ -152,7 +151,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        dvlay->addWidget( m_label_frameColor );
        QColor frameBorderColor = QColor( 0, 0, 0 );                         // Black per default.
        m_button_frameBorderColor = new KColorButton( frameBorderColor, box );
-       Q3WhatsThis::add( m_button_frameBorderColor, i18n( "<p>You can select here the border color." ));
+       m_button_frameBorderColor->setWhatsThis(i18n( "<p>You can select here the border color." ));
        dvlay->addWidget( m_button_frameBorderColor );
 
        connect(m_frameBorderWidth, SIGNAL(valueChanged(int)), this, SLOT(slotFrameBorderWidthChanged(int)));

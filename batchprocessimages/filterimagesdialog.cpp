@@ -25,7 +25,6 @@
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -104,7 +103,7 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
                      "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<p>"
                      "<b>Unsharp</b>: sharpen the image with an unsharp mask operator.<p>");
 
-    Q3WhatsThis::add( m_Type, whatsThis );
+    m_Type->setWhatsThis(whatsThis );
 
     //---------------------------------------------
 

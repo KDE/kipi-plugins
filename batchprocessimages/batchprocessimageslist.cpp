@@ -26,7 +26,6 @@
 #include <q3dragobject.h>
 #include <q3strlist.h>
 #include <qfileinfo.h>
-#include <q3whatsthis.h>
 #include <q3listview.h>
 //Added by qt3to4:
 #include <QDropEvent>
@@ -58,7 +57,7 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char * /*n
     setResizeMode(Q3ListView::LastColumn);
     setSelectionMode(Q3ListView::Single);
     setAllColumnsShowFocus ( true );
-    Q3WhatsThis::add( this, i18n("<p>You can see here the operations' results "
+    this->setWhatsThis(i18n("<p>You can see here the operations' results "
                                 "during the process. Double-click on an item for more "
                                 "information once the process has ended. "
                                 "<p>You can use the \"Add\" button or drag-and-drop "

@@ -25,7 +25,6 @@
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 

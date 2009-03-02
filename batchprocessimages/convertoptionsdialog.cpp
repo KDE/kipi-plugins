@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -73,14 +72,14 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
                                     "<b>75</b>: low compression (default value)<p>"
                                     "<b>100</b>: no compression");
 
-       Q3WhatsThis::add( m_JPEGPNGCompression, whatsThis);
+       m_JPEGPNGCompression->setWhatsThis(whatsThis);
        m_label_imageCompression->setBuddy( m_JPEGPNGCompression );
        dvlay->addWidget( m_JPEGPNGCompression );
 
        if (ImageFormatType == 0) // JPEG
           {
           m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), box);
-          Q3WhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
+          m_compressLossLess->setWhatsThis(i18n("<p>If this option is enabled, "
                                                     "all JPEG operations will use a lossless compression."));
           dvlay->addWidget( m_compressLossLess );
 
@@ -96,7 +95,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        m_TIFFCompressionAlgo->insertItem("LZW");
        m_TIFFCompressionAlgo->insertItem("JPEG");
        m_TIFFCompressionAlgo->insertItem(i18n("None"));
-       Q3WhatsThis::add( m_TIFFCompressionAlgo, i18n("<p>Select here the compression algorithm.") );
+       m_TIFFCompressionAlgo->setWhatsThis(i18n("<p>Select here the compression algorithm.") );
        m_label_imageCompression->setBuddy( m_TIFFCompressionAlgo );
        dvlay->addWidget( m_TIFFCompressionAlgo );
        }
@@ -108,7 +107,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        m_TGACompressionAlgo = new QComboBox( false, box );
        m_TGACompressionAlgo->insertItem("RLE");
        m_TGACompressionAlgo->insertItem(i18n("None"));
-       Q3WhatsThis::add( m_TGACompressionAlgo, i18n("<p>Select here the compression algorithm.") );
+       m_TGACompressionAlgo->setWhatsThis(i18n("<p>Select here the compression algorithm.") );
        m_label_imageCompression->setBuddy( m_TGACompressionAlgo );
        dvlay->addWidget( m_TGACompressionAlgo );
        }

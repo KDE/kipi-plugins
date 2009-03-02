@@ -25,7 +25,6 @@
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qimage.h>
@@ -103,7 +102,7 @@ ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* int
                                  "The target images will be adapted to the specified dimensions "
                                  "(included the background size, margin size, and background color).");
 
-    Q3WhatsThis::add( m_Type, whatsThis );
+    m_Type->setWhatsThis(whatsThis );
 
     m_previewButton->hide();
     m_smallPreview->hide();

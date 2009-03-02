@@ -48,7 +48,6 @@ extern "C"
 #include <qslider.h>
 #include <qlcdnumber.h>
 #include <qpainter.h>
-#include <q3whatsthis.h>
 #include <qapplication.h>
 #include <qcursor.h>
 #include <QScrollBar>
@@ -135,26 +134,26 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     LCDZoomFactorValue = new QLCDNumber (4, groupBoxZoomFactor, "ZoomFactorLCDvalue");
     LCDZoomFactorValue->setSegmentStyle ( QLCDNumber::Flat );
     LCDZoomFactorValue->display( QString::number(INIT_ZOOM_FACTOR * 5) );
-    Q3WhatsThis::add( LCDZoomFactorValue, i18n("<p>The zoom factor value, as a percentage."));
+    LCDZoomFactorValue->setWhatsThis(i18n("<p>The zoom factor value, as a percentage."));
 
     ZoomFactorSlider = new QSlider (1, 20, 1, INIT_ZOOM_FACTOR, Qt::Horizontal,
                                     groupBoxZoomFactor, "ZoomFactorSlider");
     ZoomFactorSlider->setTracking ( false );
     ZoomFactorSlider->setTickInterval ( 5 );
-    Q3WhatsThis::add( ZoomFactorSlider, i18n("<p>Moving this slider changes the zoom factor value."));
+    ZoomFactorSlider->setWhatsThis(i18n("<p>Moving this slider changes the zoom factor value."));
     g1->addWidget( groupBoxZoomFactor, 0, 0);
 
     Q3GridLayout* g2 = new Q3GridLayout( v1, 1, 2 );
     Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
     m_previewOrig = new PixmapView(cropActionOrig, groupBox1);
-    Q3WhatsThis::add( m_previewOrig, i18n("<p>This is the original image preview. You can use the mouse "
+    m_previewOrig->setWhatsThis(i18n("<p>This is the original image preview. You can use the mouse "
                                          "wheel to change the zoom factor. Click in and use the mouse "
                                          "to move the image."));
     g2->addWidget( groupBox1 , 0, 0);
 
     Q3GroupBox * groupBox2 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
     m_previewDest = new PixmapView(cropActionDest, groupBox2);
-    Q3WhatsThis::add( m_previewDest, i18n("<p>This is the destination image preview. You can use the "
+    m_previewDest->setWhatsThis(i18n("<p>This is the destination image preview. You can use the "
                                          "mouse wheel to change the zoom factor. Click in and use the "
                                          "mouse to move the image."));
     g2->setColStretch(0,1);

@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -69,7 +68,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        m_depthValue->insertItem("8");
        m_depthValue->insertItem("16");
        m_depthValue->insertItem("32");
-       Q3WhatsThis::add( m_depthValue, i18n("<p>Select here the image depth in bits.") );
+       m_depthValue->setWhatsThis(i18n("<p>Select here the image depth in bits.") );
        m_label_depthValue->setBuddy( m_depthValue );
        dvlay->addWidget( m_depthValue );
        }
@@ -81,7 +80,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        m_fuzzDistance = new KIntNumInput(3, box);
        m_fuzzDistance->setRange(0, 20);
        m_fuzzDistance->setSliderEnabled(true);
-       Q3WhatsThis::add( m_fuzzDistance, i18n("<p>Select here the fuzz distance in "
+       m_fuzzDistance->setWhatsThis(i18n("<p>Select here the fuzz distance in "
                                              "absolute intensity units.") );
        m_label_fuzzDistance->setBuddy( m_fuzzDistance );
        dvlay->addWidget( m_fuzzDistance );
@@ -94,7 +93,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        m_segmentCluster = new KIntNumInput(3, box);
        m_segmentCluster->setRange(0, 20);
        m_segmentCluster->setSliderEnabled(true);
-       Q3WhatsThis::add( m_segmentCluster, i18n("<p>Select here the value which represents the minimum "
+       m_segmentCluster->setWhatsThis(i18n("<p>Select here the value which represents the minimum "
                                                "number of pixels contained in a hexahedra before it can "
                                                "be considered valid.") );
        m_label_segmentCluster->setBuddy( m_segmentCluster );
@@ -105,7 +104,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        m_segmentSmooth = new KIntNumInput(3, box);
        m_segmentSmooth->setRange(0, 20);
        m_segmentSmooth->setSliderEnabled(true);
-       Q3WhatsThis::add( m_segmentSmooth, i18n("<p>Select here the value which eliminates noise in the "
+       m_segmentSmooth->setWhatsThis(i18n("<p>Select here the value which eliminates noise in the "
                                               "second derivative of the histogram. As the value is increased, "
                                               "you can expect a smoother second derivative.") );
        m_label_segmentSmooth->setBuddy( m_segmentSmooth );

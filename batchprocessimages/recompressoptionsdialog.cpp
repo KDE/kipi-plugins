@@ -25,7 +25,6 @@
 #include <q3vbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <q3groupbox.h>
@@ -74,11 +73,11 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                                  "<b>75</b>: low compression (default value)<p>"
                                  "<b>100</b>: no compression");
 
-    Q3WhatsThis::add( m_JPEGCompression, whatsThis);
+    m_JPEGCompression->setWhatsThis(whatsThis);
     m_label_JPEGimageCompression->setBuddy( m_JPEGCompression );
 
     m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), groupBox1);
-    Q3WhatsThis::add( m_compressLossLess, i18n("<p>If this option is enabled, "
+    m_compressLossLess->setWhatsThis(i18n("<p>If this option is enabled, "
                                               "all JPEG operations will use lossless compression."));
 
     connect(m_compressLossLess, SIGNAL( toggled(bool) ),
@@ -101,7 +100,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                                  "<b>75</b>: low compression (default value)<p>"
                                  "<b>100</b>: no compression");
 
-    Q3WhatsThis::add( m_PNGCompression, whatsThis);
+    m_PNGCompression->setWhatsThis(whatsThis);
     m_label_PNGimageCompression->setBuddy( m_PNGCompression );
 
     dvlay->addWidget( groupBox2 );
@@ -115,7 +114,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_TIFFCompressionAlgo->insertItem("LZW");
     m_TIFFCompressionAlgo->insertItem("JPEG");
     m_TIFFCompressionAlgo->insertItem(i18n("None"));
-    Q3WhatsThis::add( m_TIFFCompressionAlgo, i18n("<p>Select here the TIFF compression algorithm.") );
+    m_TIFFCompressionAlgo->setWhatsThis(i18n("<p>Select here the TIFF compression algorithm.") );
     m_label_TIFFimageCompression->setBuddy( m_TIFFCompressionAlgo );
 
     dvlay->addWidget( groupBox3 );
@@ -128,7 +127,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_TGACompressionAlgo = new QComboBox( false, groupBox4 );
     m_TGACompressionAlgo->insertItem("RLE");
     m_TGACompressionAlgo->insertItem(i18n("None"));
-    Q3WhatsThis::add( m_TGACompressionAlgo, i18n("<p>Select here the TGA compression algorithm.") );
+    m_TGACompressionAlgo->setWhatsThis(i18n("<p>Select here the TGA compression algorithm.") );
     m_label_TGAimageCompression->setBuddy( m_TGACompressionAlgo );
 
     dvlay->addWidget( groupBox4 );

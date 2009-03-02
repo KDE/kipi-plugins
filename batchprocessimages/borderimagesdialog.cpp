@@ -25,7 +25,6 @@
 #include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
-#include <q3whatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
@@ -98,7 +97,7 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
                      "<b>Raise</b>: creating a 3D effect around the images.<p>"
                      "<b>Frame</b>: surround the images with an ornamental border.<p>");
 
-    Q3WhatsThis::add( m_Type, whatsThis );
+    m_Type->setWhatsThis(whatsThis );
 
     //---------------------------------------------
 
