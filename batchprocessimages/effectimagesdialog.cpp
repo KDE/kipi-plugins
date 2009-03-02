@@ -34,7 +34,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
@@ -315,7 +315,7 @@ void EffectImagesDialog::saveSettings(void)
 
 }
 
-void EffectImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
+void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

@@ -35,7 +35,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kcolorbutton.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
@@ -282,7 +282,7 @@ void ResizeImagesDialog::saveSettings(void)
 
 }
 
-void ResizeImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
+void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool )
 {
     QImage img;

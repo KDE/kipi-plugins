@@ -34,7 +34,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
@@ -230,7 +230,7 @@ void ColorImagesDialog::saveSettings(void)
 
 }
 
-void ColorImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
+void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                        const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

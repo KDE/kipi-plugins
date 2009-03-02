@@ -45,7 +45,7 @@ class QPixmap;
 class QLCDNumber;
 class QSlider;
 
-class K3Process;
+class KProcess;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -77,8 +77,8 @@ protected:
 
 private slots:
     
-    void slotPreviewReadStd(K3Process* proc, char *buffer, int buflen);
-    void PreviewProcessDone(K3Process* proc);
+    void slotPreviewReadyRead();
+    void slotPreviewProcessFinished();
 
 private:
     QPixmap     *m_pix;
@@ -89,7 +89,7 @@ private:
     int          m_h;
     QPoint       m_dragPos;
 
-    K3Process    *m_PreviewProc;
+    KProcess    *m_PreviewProc;
 
     QString      m_previewOutput;
     QString      m_previewFileName;

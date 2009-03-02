@@ -34,7 +34,7 @@
 #include <kconfig.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kcolorbutton.h>
 #include <kapplication.h>
 #include <khelpmenu.h>
@@ -236,7 +236,7 @@ void BorderImagesDialog::saveSettings(void)
 
 }
 
-void BorderImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
+void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";

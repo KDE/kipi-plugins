@@ -54,7 +54,7 @@ extern "C"
 
 // KDE includes
 
-#include <k3process.h>
+#include <kprocess.h>
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kio/job.h>
@@ -257,7 +257,8 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     p.end();
 
     m_previewOutput ="convert";
-    m_PreviewProc = new K3Process;
+    m_PreviewProc = new KProcess;
+    m_PreviewProc->setOutputChannelMode(KProcess::MergedChannels);
     *m_PreviewProc << "convert";
     *m_PreviewProc << "-verbose";
 
@@ -271,17 +272,12 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     *m_PreviewProc << m_previewFileName;
     m_previewOutput.append( " -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
 
-    connect(m_PreviewProc, SIGNAL(processExited(K3Process *)),
-            this, SLOT(PreviewProcessDone(K3Process*)));
+    connect(m_PreviewProc, SIGNAL(finished()), SLOT(slotPreviewProcessFinished()));
 
-    connect(m_PreviewProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
-            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
+    connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 
-    connect(m_PreviewProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
-
-    bool result = m_PreviewProc->start(K3Process::NotifyOnExit, K3Process::All);
-    if(!result)
+    m_PreviewProc->start();
+    if(!m_PreviewProc->waitForStarted())
     {
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
@@ -289,14 +285,15 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     }
 }
 
-void PixmapView::slotPreviewReadStd(K3Process* /*proc*/, char *buffer, int buflen)
+void PixmapView::slotPreviewReadyRead()
 {
-    m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
+    QByteArray output = m_PreviewProc->readAll();
+    m_previewOutput.append( QString::fromLocal8Bit(output.data(), output.size()) );
 }
 
-void PixmapView::PreviewProcessDone(K3Process* proc)
+void PixmapView::slotPreviewProcessFinished()
 {
-    int ValRet = proc->exitStatus();
+    int ValRet = m_PreviewProc->exitCode();
     kDebug (51000) << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )

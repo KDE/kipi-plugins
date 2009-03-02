@@ -56,7 +56,7 @@ Q_OBJECT
    int                    m_segmentCluster;
    int                    m_segmentSmooth;
 
-   void initProcess(K3Process* proc, BatchProcessImagesItem *item,
+   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

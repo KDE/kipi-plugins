@@ -68,7 +68,7 @@ class Q3ListViewItemIterator;
 class Q3ListViewItem;
 class Q3GroupBox;
 
-class K3Process;
+class KProcess;
 class KConfig;
 class QProgressBar;
 class KUrl;
@@ -97,16 +97,15 @@ private slots:
    // --------------------------------------------------------------------------------------------------------
    // Standards slots
 
-   void closeEvent ( QCloseEvent *e );
    void slotOk( void );
 
    void slotProcessStart(void);
-   void slotProcessDone(K3Process* proc);
-   void slotReadStd(K3Process* proc, char *buffer, int buflen);
+   void slotReadyRead();
+   void slotFinished();
 
    void slotPreview(void);
-   void slotPreviewProcessDone(K3Process* proc);
-   void slotPreviewReadStd(K3Process* proc, char *buffer, int buflen);
+   void slotPreviewFinished();
+   void slotPreviewReadyRead();
    void slotPreviewStop( void );
 
    void slotListDoubleClicked(Q3ListViewItem *itemClicked);
@@ -163,8 +162,8 @@ private slots:
    int                     m_progressStatus;
    int                     m_nbItem;
 
-   K3Process               *m_ProcessusProc;
-   K3Process               *m_PreviewProc;
+   KProcess               *m_ProcessusProc;
+   KProcess               *m_PreviewProc;
 
    Q3ListViewItemIterator  *m_listFile2Process_iterator;
 
@@ -194,11 +193,6 @@ private slots:
 
    QString RenameTargetImageFile(QFileInfo *fi);
 
-   // Extract the arguments from a K3Process an merge that in a QString. Used by initProcess for to
-   // show the command line arguments (debugging).
-
-   QString extractArguments(K3Process *proc);
-
    // --------------------------------------------------------------------------------------------------------
    // Standards virtuals fonctions for re-implementation.
 
@@ -222,7 +216,7 @@ private slots:
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-    virtual void initProcess(K3Process* /*proc*/, BatchProcessImagesItem */*item*/,
+    virtual void initProcess(KProcess* /*proc*/, BatchProcessImagesItem */*item*/,
                                 const QString& /*albumDest*/ = QString::null,
                                 bool  /*previewMode*/ = false) = 0;
 

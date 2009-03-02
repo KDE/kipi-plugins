@@ -73,7 +73,7 @@ extern "C"
 #include <kdialog.h>
 #include <k3listview.h>
 #include <kimageio.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kio/global.h>
@@ -391,19 +391,6 @@ void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
     listImageFiles();
 }
 
-void BatchProcessImagesDialog::closeEvent ( QCloseEvent *e )
-{
-    if (!e) return;
-
-    if ( m_PreviewProc != 0 )
-       if ( m_PreviewProc->isRunning() ) m_PreviewProc->kill(SIGTERM);
-
-    if ( m_ProcessusProc != 0 )
-       if ( m_ProcessusProc->isRunning() ) m_ProcessusProc->kill(SIGTERM);
-
-    e->accept();
-}
-
 void BatchProcessImagesDialog::slotProcessStart( void )
 {
     if ( m_selectedImageFiles.isEmpty() == true )
@@ -601,23 +588,19 @@ bool BatchProcessImagesDialog::startProcess(void)
        }
     }
 
-    m_ProcessusProc = new K3Process;
+    m_ProcessusProc = new KProcess(this);
+    m_ProcessusProc->setOutputChannelMode(KProcess::MergedChannels);
     initProcess(m_ProcessusProc, item, targetAlbum);
-    m_commandLine = extractArguments(m_ProcessusProc);
+    m_commandLine = m_ProcessusProc->program().join(" ");
 
     item->changeOutputMess(m_commandLine + "\n\n");
 
-    connect(m_ProcessusProc, SIGNAL(processExited(K3Process *)),
-            this, SLOT(slotProcessDone(K3Process*)));
+    connect(m_ProcessusProc, SIGNAL(finished()), SLOT(slotFinished()));
 
-    connect(m_ProcessusProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
-            this, SLOT(slotReadStd(K3Process*, char*, int)));
+    connect(m_ProcessusProc, SIGNAL(readyRead()), SLOT(slotReadyRead()));
 
-    connect(m_ProcessusProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotReadStd(K3Process*, char*, int)));
-
-    bool result = m_ProcessusProc->start(K3Process::NotifyOnExit, K3Process::All);
-    if(!result)
+    m_ProcessusProc->start();
+    if(!m_ProcessusProc->waitForStarted())
     {
        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                      "please check your installation."));
@@ -627,13 +610,14 @@ bool BatchProcessImagesDialog::startProcess(void)
     return true;
 }
 
-void BatchProcessImagesDialog::slotReadStd(K3Process* /*proc*/, char *buffer, int buflen)
+void BatchProcessImagesDialog::slotReadyRead()
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
-    item->changeOutputMess( QString::fromLocal8Bit(buffer, buflen) );
+    QByteArray output = m_ProcessusProc->readAll();
+    item->changeOutputMess( QString::fromLocal8Bit(output.data(), output.size()) );
 }
 
-void BatchProcessImagesDialog::slotProcessDone(K3Process* proc)
+void BatchProcessImagesDialog::slotFinished()
 {
     if ( m_convertStatus == PROCESS_DONE )
     {
@@ -644,7 +628,7 @@ void BatchProcessImagesDialog::slotProcessDone(K3Process* proc)
     BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
     
-    if ( !m_ProcessusProc->normalExit() )
+    if (m_ProcessusProc->exitStatus() == QProcess::CrashExit)
     {
         int code = KMessageBox::warningContinueCancel( this,
                                 i18n("The 'convert' program from 'ImageMagick' package has been stopped abnormally"),
@@ -670,7 +654,7 @@ void BatchProcessImagesDialog::slotProcessDone(K3Process* proc)
         return;
     }
 
-    int ValRet = proc->exitStatus();
+    int ValRet = m_ProcessusProc->exitCode();
     kWarning() << "Convert exit (" << ValRet << ")" << endl;
 
     switch (ValRet)
@@ -813,25 +797,20 @@ void BatchProcessImagesDialog::slotPreview(void)
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotPreviewStop()));
 
-    m_PreviewProc = new K3Process;
+    m_PreviewProc = new KProcess(this);
+    m_PreviewProc->setOutputChannelMode(KProcess::MergedChannels);
     initProcess(m_PreviewProc, item, QString(), true);
 
-    m_previewOutput = extractArguments(m_PreviewProc);
+    m_previewOutput = m_PreviewProc->program().join(" ");
 
     *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append( " "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");
 
-    connect(m_PreviewProc, SIGNAL(processExited(K3Process *)),
-            this, SLOT(slotPreviewProcessDone(K3Process*)));
+    connect(m_PreviewProc, SIGNAL(finished()), SLOT(slotPreviewFinished()));
+    connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 
-    connect(m_PreviewProc, SIGNAL(receivedStdout(K3Process *, char*, int)),
-            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
-
-    connect(m_PreviewProc, SIGNAL(receivedStderr(K3Process *, char*, int)),
-            this, SLOT(slotPreviewReadStd(K3Process*, char*, int)));
-
-    bool result = m_PreviewProc->start(K3Process::NotifyOnExit, K3Process::All);
-    if(!result)
+    m_PreviewProc->start();
+    if(!m_PreviewProc->waitForStarted())
     {
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
@@ -840,14 +819,15 @@ void BatchProcessImagesDialog::slotPreview(void)
     }
 }
 
-void BatchProcessImagesDialog::slotPreviewReadStd(K3Process* /*proc*/, char *buffer, int buflen)
+void BatchProcessImagesDialog::slotPreviewReadyRead()
 {
-    m_previewOutput.append( QString::fromLocal8Bit(buffer, buflen) );
+    QByteArray output = m_ProcessusProc->readAll();
+    m_previewOutput.append( QString::fromLocal8Bit(output.data(), output.size()));
 }
 
-void BatchProcessImagesDialog::slotPreviewProcessDone(K3Process* proc)
+void BatchProcessImagesDialog::slotPreviewFinished()
 {
-    if (!m_PreviewProc->normalExit())
+    if (m_PreviewProc->exitStatus() == QProcess::CrashExit)
     {
         KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package."));
         m_previewButton->setEnabled(true);
@@ -855,7 +835,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(K3Process* proc)
     }
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
-    int ValRet = proc->exitStatus();
+    int ValRet = m_PreviewProc->exitCode();
 
     kWarning() << "Convert exit (" << ValRet << ")" << endl;
 
@@ -902,8 +882,7 @@ void BatchProcessImagesDialog::slotPreviewProcessDone(K3Process* proc)
 
 void BatchProcessImagesDialog::slotPreviewStop( void )
 {
-    // Try to kill the current preview process !
-    if ( m_PreviewProc->isRunning() == true ) m_PreviewProc->kill(SIGTERM);
+    m_PreviewProc->close();
 
     endPreview();
 }
@@ -911,7 +890,7 @@ void BatchProcessImagesDialog::slotPreviewStop( void )
 void BatchProcessImagesDialog::slotProcessStop( void )
 {
     // Try to kill the current process !
-    if ( m_ProcessusProc->isRunning() == true ) m_ProcessusProc->kill(SIGTERM);
+    m_ProcessusProc->close();
 
     // If kill operation failed, Stop the process at the next image !
     if ( m_convertStatus == UNDER_PROCESS ) m_convertStatus = STOP_PROCESS;
@@ -1088,18 +1067,6 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
     if (Enumerator == 100) return QString();
 
     return (NewDestUrl.path());
-}
-
-QString BatchProcessImagesDialog::extractArguments(K3Process *proc)
-{
-    QString retArguments;
-    QList<QByteArray> argumentsList = proc->args();
-
-    Q_FOREACH(const QByteArray& arg, argumentsList) {
-      retArguments.append(arg + " ");
-    }
-
-    return (retArguments);
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
