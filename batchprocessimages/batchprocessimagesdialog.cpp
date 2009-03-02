@@ -595,7 +595,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 
     item->changeOutputMess(m_commandLine + "\n\n");
 
-    connect(m_ProcessusProc, SIGNAL(finished()), SLOT(slotFinished()));
+    connect(m_ProcessusProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(slotFinished()));
 
     connect(m_ProcessusProc, SIGNAL(readyRead()), SLOT(slotReadyRead()));
 
@@ -806,7 +806,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append( " "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");
 
-    connect(m_PreviewProc, SIGNAL(finished()), SLOT(slotPreviewFinished()));
+    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(slotPreviewFinished()));
     connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 
     m_PreviewProc->start();
@@ -821,7 +821,7 @@ void BatchProcessImagesDialog::slotPreview(void)
 
 void BatchProcessImagesDialog::slotPreviewReadyRead()
 {
-    QByteArray output = m_ProcessusProc->readAll();
+    QByteArray output = m_PreviewProc->readAll();
     m_previewOutput.append( QString::fromLocal8Bit(output.data(), output.size()));
 }
 
