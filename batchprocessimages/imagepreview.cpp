@@ -145,14 +145,14 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
 
     Q3GridLayout* g2 = new Q3GridLayout( v1, 1, 2 );
     Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
-    m_previewOrig = new PixmapView(cropActionOrig, groupBox1);
+    m_previewOrig = new PixmapView(groupBox1);
     m_previewOrig->setWhatsThis(i18n("<p>This is the original image preview. You can use the mouse "
                                          "wheel to change the zoom factor. Click in and use the mouse "
                                          "to move the image."));
     g2->addWidget( groupBox1 , 0, 0);
 
     Q3GroupBox * groupBox2 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
-    m_previewDest = new PixmapView(cropActionDest, groupBox2);
+    m_previewDest = new PixmapView(groupBox2);
     m_previewDest->setWhatsThis(i18n("<p>This is the destination image preview. You can use the "
                                          "mouse wheel to change the zoom factor. Click in and use the "
                                          "mouse to move the image."));
@@ -169,8 +169,8 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     connect( m_previewDest, SIGNAL(wheelChanged(int)),
              this, SLOT(slotWheelChanged(int)) );
 
-    m_previewOrig->setImage(fileOrig, tmpPath);
-    m_previewDest->setImage(fileDest, tmpPath);
+    m_previewOrig->setImage(fileOrig, tmpPath, cropActionOrig);
+    m_previewDest->setImage(fileDest, tmpPath, cropActionDest);
 }
 
 ImagePreview::~ImagePreview()
@@ -201,10 +201,9 @@ void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
     m_previewDest->resizeImage( ZoomFactorValue * 5 );
 }
 
-PixmapView::PixmapView(bool cropAction, QWidget *parent)
+PixmapView::PixmapView(QWidget *parent)
            : QAbstractScrollArea(parent)
 {
-    m_cropAction = cropAction;
     m_pix = NULL;
     m_validPreview = false;
     setMinimumSize(QSize(300,300));
@@ -220,8 +219,9 @@ PixmapView::~PixmapView()
     if(m_pix) delete m_pix;
 }
 
-void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath)
+void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction)
 {
+    m_cropAction = cropAction;
 
     m_previewFileName = tmpPath + "/" + QString::number(getpid()) + "-"
                         + QString::number(random()) + "PreviewImage.PNG";
@@ -272,7 +272,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     *m_PreviewProc << m_previewFileName;
     m_previewOutput.append( " -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
 
-    connect(m_PreviewProc, SIGNAL(finished()), SLOT(slotPreviewProcessFinished()));
+    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(slotPreviewProcessFinished()));
 
     connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 

@@ -58,10 +58,10 @@ Q_OBJECT
 
 public:
 
-    PixmapView(bool cropAction, QWidget *parent=0);
+    PixmapView(QWidget *parent=0);
     ~PixmapView();
 
-    void setImage(const QString &ImagePath, const QString &tmpPath);
+    void setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction);
     void resizeImage(int ZoomFactor);
 
 signals:
