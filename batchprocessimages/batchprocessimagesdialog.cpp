@@ -601,9 +601,9 @@ bool BatchProcessImagesDialog::startProcess(void)
        }
     }
 
-    m_commandLine = QString();
     m_ProcessusProc = new K3Process;
-    m_commandLine.append(makeProcess(m_ProcessusProc, item, targetAlbum));
+    initProcess(m_ProcessusProc, item, targetAlbum);
+    m_commandLine = extractArguments(m_ProcessusProc);
 
     item->changeOutputMess(m_commandLine + "\n\n");
 
@@ -813,10 +813,10 @@ void BatchProcessImagesDialog::slotPreview(void)
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotPreviewStop()));
 
-    m_previewOutput = "";
     m_PreviewProc = new K3Process;
+    initProcess(m_PreviewProc, item, QString(), true);
 
-    m_previewOutput.append(makeProcess(m_PreviewProc, item, QString(), true));
+    m_previewOutput = extractArguments(m_PreviewProc);
 
     *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append( " "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");

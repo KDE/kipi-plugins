@@ -236,7 +236,7 @@ void BorderImagesDialog::saveSettings(void)
 
 }
 
-QString BorderImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+void BorderImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
@@ -319,8 +319,6 @@ QString BorderImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem 
 
     if ( !previewMode )   // No preview mode !
        *proc << albumDest + "/" + item->nameDest();
-
-    return(extractArguments(proc));
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

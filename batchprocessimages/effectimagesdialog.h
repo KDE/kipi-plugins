@@ -67,7 +67,7 @@ Q_OBJECT
    int  m_waveAmplitude;
    int  m_waveLenght;
 
-   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+   void initProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

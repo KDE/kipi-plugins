@@ -194,7 +194,7 @@ private slots:
 
    QString RenameTargetImageFile(QFileInfo *fi);
 
-   // Extract the arguments from a K3Process an merge that in a QString. Used by makeProcess for to
+   // Extract the arguments from a K3Process an merge that in a QString. Used by initProcess for to
    // show the command line arguments (debugging).
 
    QString extractArguments(K3Process *proc);
@@ -222,10 +222,9 @@ private slots:
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-    virtual QString makeProcess(K3Process* /*proc*/, BatchProcessImagesItem */*item*/,
+    virtual void initProcess(K3Process* /*proc*/, BatchProcessImagesItem */*item*/,
                                 const QString& /*albumDest*/ = QString::null,
-                                bool  /*previewMode*/ = false)
-           { return QString::null; };
+                                bool  /*previewMode*/ = false) = 0;
 
     virtual void processDone(){};
 

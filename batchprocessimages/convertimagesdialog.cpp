@@ -236,7 +236,7 @@ void ConvertImagesDialog::saveSettings(void)
 
 }
 
-QString ConvertImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+void ConvertImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
                                          const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
@@ -302,8 +302,6 @@ QString ConvertImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem
     {
        *proc << albumDest + "/" + item->nameDest();
     }
-
-    return(extractArguments(proc));
 }
 
 void ConvertImagesDialog::processDone()

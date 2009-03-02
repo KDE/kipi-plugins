@@ -55,7 +55,7 @@ Q_OBJECT
    QString m_TIFFCompressionAlgo;
    QString m_TGACompressionAlgo;
 
-   QString makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+   void initProcess(K3Process* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
 
    void readSettings(void);

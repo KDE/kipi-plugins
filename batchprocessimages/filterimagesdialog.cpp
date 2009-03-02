@@ -262,7 +262,7 @@ void FilterImagesDialog::saveSettings(void)
 
 }
 
-QString FilterImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+void FilterImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
@@ -351,8 +351,6 @@ QString FilterImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem 
        {
        *proc << albumDest + "/" + item->nameDest();
        }
-
-    return(extractArguments(proc));
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

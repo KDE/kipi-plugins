@@ -167,7 +167,7 @@ void RecompressImagesDialog::saveSettings(void)
 
 }
 
-QString RecompressImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+void RecompressImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
                                             const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
@@ -237,8 +237,6 @@ QString RecompressImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesI
        {
        *proc << albumDest + "/" + item->nameDest();
        }
-
-    return(extractArguments(proc));
 }
 
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,

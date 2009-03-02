@@ -282,7 +282,7 @@ void ResizeImagesDialog::saveSettings(void)
 
 }
 
-QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem *item,
+void ResizeImagesDialog::initProcess(K3Process* proc, BatchProcessImagesItem *item,
                                         const QString& albumDest, bool )
 {
     QImage img;
@@ -511,8 +511,6 @@ QString ResizeImagesDialog::makeProcess(K3Process* proc, BatchProcessImagesItem 
 
           *proc << albumDest + "/" + item->nameDest();
           }
-
-    return(extractArguments(proc));
 }
 
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
