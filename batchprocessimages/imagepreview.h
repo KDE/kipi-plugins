@@ -39,6 +39,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
+#include "ui_imagepreview.h"
 
 class QLCDNumber;
 class QSlider;
@@ -50,7 +51,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class ImagePreview : public KDialog
+class ImagePreview : public KDialog, private Ui_ImagePreview
 {
 Q_OBJECT
 
@@ -66,18 +67,8 @@ private slots:
     void slotZoomFactorValueChanged( int ZoomFactorValue );
     void slotWheelChanged( int delta );
     void slotHelp(void);
-    
-protected:
-    
-    PixmapView  *m_previewOrig;
-    PixmapView  *m_previewDest;
-    
-    QLCDNumber  *LCDZoomFactorValue;
-    
-    QSlider     *ZoomFactorSlider;
 
 private:
-
     KIPIPlugins::KPAboutData    *m_about;
 
     int INIT_ZOOM_FACTOR; // FIXME: Ugly name

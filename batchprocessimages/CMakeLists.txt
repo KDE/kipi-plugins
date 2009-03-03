@@ -40,7 +40,10 @@ set(kipiplugin_batchprocessimages_PART_SRCS
     pixmapview.cpp
     )
 
-kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS renameimagesbase.ui)
+kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS
+    imagepreview.ui
+    renameimagesbase.ui
+    )
 
 kde4_add_plugin(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
 

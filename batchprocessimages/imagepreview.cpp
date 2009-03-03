@@ -97,6 +97,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     //---------------------------------------------
 
     QWidget* box = new QWidget( this );
+    setupUi(box);
     setMainWidget(box);
     resize(700, 400);
 
@@ -105,59 +106,23 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     else
         INIT_ZOOM_FACTOR = 5;
 
-    Q3VBoxLayout* ml = new Q3VBoxLayout( box, 10 );
+    m_zoomSlider->setValue(INIT_ZOOM_FACTOR);
+    m_zoomLcd->display(INIT_ZOOM_FACTOR * 5);
 
-    //---------------------------------------------
-
-    Q3HBoxLayout* h1 = new Q3HBoxLayout( ml );
-    Q3VBoxLayout* v1 = new Q3VBoxLayout( h1 );
-    h1->addSpacing( 5 );
-    Q3GridLayout* g1 = new Q3GridLayout( v1, 1, 2 );
-
-    Q3GroupBox * groupBoxZoomFactor = new Q3GroupBox( 2, Qt::Horizontal, i18n("Zoom Factor"), box );
-    LCDZoomFactorValue = new QLCDNumber (4, groupBoxZoomFactor, "ZoomFactorLCDvalue");
-    LCDZoomFactorValue->setSegmentStyle ( QLCDNumber::Flat );
-    LCDZoomFactorValue->display( QString::number(INIT_ZOOM_FACTOR * 5) );
-    LCDZoomFactorValue->setWhatsThis(i18n("<p>The zoom factor value, as a percentage."));
-
-    ZoomFactorSlider = new QSlider (1, 20, 1, INIT_ZOOM_FACTOR, Qt::Horizontal,
-                                    groupBoxZoomFactor, "ZoomFactorSlider");
-    ZoomFactorSlider->setTracking ( false );
-    ZoomFactorSlider->setTickInterval ( 5 );
-    ZoomFactorSlider->setWhatsThis(i18n("<p>Moving this slider changes the zoom factor value."));
-    g1->addWidget( groupBoxZoomFactor, 0, 0);
-
-    Q3GridLayout* g2 = new Q3GridLayout( v1, 1, 2 );
-    Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Original Image"), box );
-    m_previewOrig = new PixmapView(groupBox1);
-    m_previewOrig->setWhatsThis(i18n("<p>This is the original image preview. You can use the mouse "
-                                         "wheel to change the zoom factor. Click in and use the mouse "
-                                         "to move the image."));
-    g2->addWidget( groupBox1 , 0, 0);
-
-    Q3GroupBox * groupBox2 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Destination Image"), box );
-    m_previewDest = new PixmapView(groupBox2);
-    m_previewDest->setWhatsThis(i18n("<p>This is the destination image preview. You can use the "
-                                         "mouse wheel to change the zoom factor. Click in and use the "
-                                         "mouse to move the image."));
-    g2->setColStretch(0,1);
-    g2->setColStretch(1,1);
-    g2->addWidget( groupBox2 , 0, 1);
-
-    connect( ZoomFactorSlider, SIGNAL(valueChanged(int)),
+    connect( m_zoomSlider, SIGNAL(valueChanged(int)),
              this, SLOT(slotZoomFactorValueChanged(int)) );
 
-    connect( m_previewOrig, SIGNAL(wheelChanged(int)),
+    connect( m_origView, SIGNAL(wheelChanged(int)),
              this, SLOT(slotWheelChanged(int)) );
 
-    connect( m_previewDest, SIGNAL(wheelChanged(int)),
+    connect( m_destView, SIGNAL(wheelChanged(int)),
              this, SLOT(slotWheelChanged(int)) );
 
-    m_previewOrig->setZoom(INIT_ZOOM_FACTOR * 5);
-    m_previewDest->setZoom(INIT_ZOOM_FACTOR * 5);
+    m_origView->setZoom(INIT_ZOOM_FACTOR * 5);
+    m_destView->setZoom(INIT_ZOOM_FACTOR * 5);
 
-    m_previewOrig->setImage(fileOrig, tmpPath, cropActionOrig);
-    m_previewDest->setImage(fileDest, tmpPath, cropActionDest);
+    m_origView->setImage(fileOrig, tmpPath, cropActionOrig);
+    m_destView->setImage(fileDest, tmpPath, cropActionDest);
 }
 
 ImagePreview::~ImagePreview()
@@ -173,19 +138,19 @@ void ImagePreview::slotHelp( void )
 void ImagePreview::slotWheelChanged( int delta )
 {
     if ( delta > 0 )
-        ZoomFactorSlider->setValue ( ZoomFactorSlider->value() - 1 );
+        m_zoomSlider->setValue ( m_zoomSlider->value() - 1 );
     else
-        ZoomFactorSlider->setValue ( ZoomFactorSlider->value() + 1 );
+        m_zoomSlider->setValue ( m_zoomSlider->value() + 1 );
 
-    slotZoomFactorValueChanged( ZoomFactorSlider->value() );
+    slotZoomFactorValueChanged( m_zoomSlider->value() );
 }
 
 void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
 {
-    LCDZoomFactorValue->display( QString::number(ZoomFactorValue * 5) );
+    m_zoomLcd->display( QString::number(ZoomFactorValue * 5) );
 
-    m_previewOrig->setZoom( ZoomFactorValue * 5 );
-    m_previewDest->setZoom( ZoomFactorValue * 5 );
+    m_origView->setZoom( ZoomFactorValue * 5 );
+    m_destView->setZoom( ZoomFactorValue * 5 );
 }
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
