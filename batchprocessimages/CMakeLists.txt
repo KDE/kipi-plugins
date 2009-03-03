@@ -37,6 +37,7 @@ set(kipiplugin_batchprocessimages_PART_SRCS
     batchprocessimageslist.cpp
     renameimageswidget.cpp
     dialogutils.cpp
+    pixmapview.cpp
     )
 
 kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS renameimagesbase.ui)

@@ -29,7 +29,6 @@
 #include <qstring.h>
 //Added by qt3to4:
 #include <QAbstractScrollArea>
-#include <QPixmap>
 #include <QWheelEvent>
 #include <QMouseEvent>
 
@@ -41,65 +40,13 @@
 
 #include "kpaboutdata.h"
 
-class QPixmap;
 class QLCDNumber;
 class QSlider;
 
-class KProcess;
+class PixmapView;
 
 namespace KIPIBatchProcessImagesPlugin
 {
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class PixmapView : public QAbstractScrollArea
-{
-Q_OBJECT
-
-public:
-
-    PixmapView(QWidget *parent=0);
-    ~PixmapView();
-
-    void setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction);
-    void resizeImage(int ZoomFactor);
-
-signals:
-    void wheelChanged( int delta );
-
-protected:
-    void contentsWheelEvent( QWheelEvent * e );
-    void mousePressEvent ( QMouseEvent * e );
-    void mouseReleaseEvent ( QMouseEvent * e );
-    void mouseMoveEvent( QMouseEvent * e );
-    void paintEvent(QPaintEvent*);
-    void resizeEvent(QResizeEvent*);
-
-private slots:
-    
-    void slotPreviewReadyRead();
-    void slotPreviewProcessFinished();
-
-private:
-    QPixmap     *m_pix;
-    
-    QImage       m_img;
-
-    int          m_w;
-    int          m_h;
-    QPoint       m_dragPos;
-
-    KProcess    *m_PreviewProc;
-
-    QString      m_previewOutput;
-    QString      m_previewFileName;
-
-    bool         m_validPreview;
-    bool         m_cropAction;
-
-    void PreviewCal(const QString &ImagePath, const QString &tmpPath);
-    void updateScrollBars();
-};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -132,6 +79,8 @@ protected:
 private:
 
     KIPIPlugins::KPAboutData    *m_about;
+
+    int INIT_ZOOM_FACTOR; // FIXME: Ugly name
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
