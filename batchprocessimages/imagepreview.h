@@ -23,14 +23,6 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-// Include files for Qt
-
-#include <qimage.h>
-#include <qstring.h>
-//Added by qt3to4:
-#include <QAbstractScrollArea>
-#include <QWheelEvent>
-#include <QMouseEvent>
 
 // Include files for KDE
 
@@ -38,11 +30,14 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
 #include "ui_imagepreview.h"
 
 class QLCDNumber;
 class QSlider;
+
+namespace KIPIPlugins {
+class KPAboutData;
+}
 
 class PixmapView;
 

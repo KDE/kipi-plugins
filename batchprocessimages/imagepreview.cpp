@@ -1,9 +1,3 @@
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <QWheelEvent>
-#include <Q3GridLayout>
-#include <QMouseEvent>
-#include <Q3VBoxLayout>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -26,45 +20,24 @@
  *
  * ============================================================ */
 
-
-// C++ includes.
-
-#include <cstdlib>
+#include "imagepreview.moc"
 
 // Qt includes
 
-#include <qpixmap.h>
-#include <qpushbutton.h>
-#include <q3vbox.h>
-#include <qlayout.h>
-#include <q3groupbox.h>
-#include <qlabel.h>
-#include <qslider.h>
-#include <qlcdnumber.h>
-#include <qpainter.h>
-#include <qapplication.h>
-#include <qcursor.h>
+#include <QLCDNumber>
+#include <QSlider>
 
 // KDE includes
 
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <kcursor.h>
 #include <kdebug.h>
-#include <kapplication.h>
-#include <khelpmenu.h>
-#include <kiconloader.h>
-#include <kmenu.h>
+#include <klocale.h>
 #include <ktoolinvocation.h>
 
 // Local includes
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
 #include "pixmapview.h"
-#include "imagepreview.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
