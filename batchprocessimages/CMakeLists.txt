@@ -1,19 +1,15 @@
 
-find_package(KDE4 REQUIRED)
+FIND_PACKAGE(KDE4 REQUIRED)
 
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-add_definitions(-DQT3_SUPPORT)
+ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+ADD_DEFINITIONS(-DQT3_SUPPORT)
 
-include(KDE4Defaults)
+INCLUDE(KDE4Defaults)
+INCLUDE(MacroLibrary)
 
-include(MacroLibrary)
+INCLUDE_DIRECTORIES(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
-include_directories(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
-
-
-########### next target ###############
-
-set(kipiplugin_batchprocessimages_PART_SRCS
+SET(kipiplugin_batchprocessimages_PART_SRCS
     plugin_batchprocessimages.cpp
     batchprocessimagesitem.cpp
     outputdialog.cpp
@@ -40,14 +36,14 @@ set(kipiplugin_batchprocessimages_PART_SRCS
     pixmapview.cpp
     )
 
-kde4_add_ui_files(kipiplugin_batchprocessimages_PART_SRCS
-    imagepreview.ui
-    renameimagesbase.ui
-    )
+KDE4_ADD_UI_FILES(kipiplugin_batchprocessimages_PART_SRCS
+                  imagepreview.ui
+                  renameimagesbase.ui
+                 )
 
-kde4_add_plugin(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PART_SRCS})
 
-target_link_libraries(
+TARGET_LINK_LIBRARIES(
     kipiplugin_batchprocessimages
     kipiplugins
     ${KIPI_LIBRARIES}
@@ -59,9 +55,8 @@ target_link_libraries(
     ${QT_QT3SUPPORT_LIBRARY}
     )
 
-install(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})
 
+INSTALL(FILES kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-########### install files ###############
-
-install(FILES  kipiplugin_batchprocessimages.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
