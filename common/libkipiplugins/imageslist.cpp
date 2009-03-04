@@ -140,7 +140,7 @@ int ImagesListViewItem::rating()
 void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
     QPixmap pixmap(ICONSIZE+2, ICONSIZE+2);
-    pixmap.fill(Qt::color0);
+    pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
     setIcon(ImagesListView::Thumbnail, QIcon(pixmap));
