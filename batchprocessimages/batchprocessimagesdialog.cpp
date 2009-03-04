@@ -523,8 +523,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
           case OVERWRITE_RENAME:
           {
-             QFileInfo *Target = new QFileInfo(targetAlbum + "/" + item->nameDest());
-             QString newFileName = RenameTargetImageFile(Target);
+             QFileInfo Target(targetAlbum + "/" + item->nameDest());
+             QString newFileName = RenameTargetImageFile(&Target);
 
              if ( newFileName.isNull() )
              {
@@ -547,8 +547,8 @@ bool BatchProcessImagesDialog::startProcess(void)
              }
              else
              {
-                QFileInfo *newTarget = new QFileInfo(newFileName);
-                item->changeNameDest(newTarget->fileName());
+                QFileInfo newTarget(newFileName);
+                item->changeNameDest(newTarget.fileName());
              }
 
              break;
