@@ -27,6 +27,7 @@
 
 #include <QBrush>
 #include <QTreeWidgetItem>
+#include <QPainter>
 #include <QPixmap>
 #include <QString>
 #include <QIcon>
@@ -54,9 +55,15 @@ public:
 
     ~CListViewItem(){}
 
-    void setThumbnail(const QPixmap& pixmap) 
+    void setThumbnail(const QPixmap& pix)
     {
-        setIcon(0, pixmap);
+        int iconSize = treeWidget()->iconSize().width();
+        QPixmap pixmap(iconSize+2, iconSize+2);
+        pixmap.fill(Qt::transparent);
+        QPainter p(&pixmap);
+        p.drawPixmap((pixmap.width()/2)  - (pix.width()/2),
+                     (pixmap.height()/2) - (pix.height()/2), pix);
+        setIcon(0, QIcon(pixmap));
     }
 
     void setProgressIcon(const QIcon& icon) 
