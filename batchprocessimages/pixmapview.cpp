@@ -65,7 +65,7 @@ PixmapView::PixmapView(QWidget *parent)
 
 PixmapView::~PixmapView()
 {
-    if(m_pix) delete m_pix;
+    delete m_pix;
 }
 
 void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction)
@@ -106,7 +106,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     p.end();
 
     m_previewOutput ="convert";
-    m_PreviewProc = new KProcess;
+    m_PreviewProc = new KProcess(this);
     m_PreviewProc->setOutputChannelMode(KProcess::MergedChannels);
     *m_PreviewProc << "convert";
     *m_PreviewProc << "-verbose";
@@ -128,6 +128,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     m_PreviewProc->start();
     if(!m_PreviewProc->waitForStarted())
     {
+	delete m_PreviewProc;
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
         return;
@@ -158,11 +159,7 @@ void PixmapView::slotPreviewProcessFinished()
           verticalScrollBar()->setLineStep(1);
           KUrl deletePreviewImage( m_previewFileName );
 
-#if KDE_VERSION >= 0x30200
           KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
-#else
-          KIO::NetAccess::del( deletePreviewImage );
-#endif
           }
        else
           {
