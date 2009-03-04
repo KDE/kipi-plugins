@@ -61,7 +61,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
     setMainWidget(box);
     Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
-
+    connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
     if (m_Type == 0) // Proportional (1 dim.)
        {
        Q3GroupBox * groupBox1 = new Q3GroupBox( 1, Qt::Horizontal, i18n("Resize Options"), box );

@@ -80,7 +80,8 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
 
     connect(this, SIGNAL(user1Clicked()),
             m_widget, SLOT(slotStart()));
-    
+    connect(this, SIGNAL(helpClicked()),
+	    this, SLOT(slotHelp()));
     adjustSize();
 }
 
