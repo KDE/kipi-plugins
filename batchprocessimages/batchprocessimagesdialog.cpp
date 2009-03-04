@@ -472,13 +472,9 @@ bool BatchProcessImagesDialog::startProcess(void)
         }
     }
 
-    KUrl desturl(targetAlbum + "/" + item->nameDest());
+    KUrl desturl(targetAlbum + '/' + item->nameDest());
 
-#if KDE_VERSION >= 0x30200
     if ( KIO::NetAccess::exists( desturl, false, kapp->activeWindow() ) == true )
-#else
-    if ( KIO::NetAccess::exists( desturl ) == true )
-#endif
     {
        switch (overwriteMode())
        {
@@ -604,6 +600,8 @@ bool BatchProcessImagesDialog::startProcess(void)
     {
        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                      "please check your installation."));
+	delete m_ProcessusProc;
+	m_ProcessusProc=0;
        return false;
     }
 
@@ -625,7 +623,7 @@ void BatchProcessImagesDialog::slotFinished()
         return;
     }
     
-    BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
+    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
     
     if (m_ProcessusProc->exitStatus() == QProcess::CrashExit)
@@ -710,11 +708,7 @@ void BatchProcessImagesDialog::slotFinished()
             {
                 KUrl deleteImage(item->pathSrc());
     
-#if KDE_VERSION >= 0x30200
                 if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
-#else
-                if ( KIO::NetAccess::del( deleteImage ) == false )
-#endif
                 {
                     item->changeResult(i18n("Warning:"));
                     item->changeError(i18n("cannot remove original image file."));
@@ -859,11 +853,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
 
        KUrl deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
 
-#if KDE_VERSION >= 0x30200
        KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
-#else
-       KIO::NetAccess::del( deletePreviewImage );
-#endif
     }
     else
     {
@@ -1019,13 +1009,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        KUrl deleteImage = m_destinationURL->url();
        deleteImage.addPath(item->nameDest());
 
-#if KDE_VERSION >= 0x30200
        if ( KIO::NetAccess::exists( deleteImage, false, kapp->activeWindow() ) == true )
           KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
-#else
-       if ( KIO::NetAccess::exists( deleteImage ) == true )
-          KIO::NetAccess::del( deleteImage );
-#endif
     }
 
     endProcess();
@@ -1057,11 +1042,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
                     + "." + fi->filePath().section('.', -1 );
     }
     while ( Enumerator < 100 &&
-#if KDE_VERSION >= 0x30200
             KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() )
-#else
-            KIO::NetAccess::exists( NewDestUrl )
-#endif
             == true );
 
     if (Enumerator == 100) return QString();
