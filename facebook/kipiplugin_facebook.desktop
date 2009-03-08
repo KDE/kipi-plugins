@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Facebook Import/Export
+Name[da]=Facebook import/eksport
 Name[de]=Facebook-Import/Export
 Name[el]=Εισαγωγέας/εξαγωγέας Facebook
 Name[et]=Facebooki import/eksport
@@ -18,6 +19,7 @@ Name[x-test]=xxFacebook Import/Exportxx
 Name[zh_CN]=Facebook 导入/导出
 Comment=A tool to import/export images to/from a remote Facebook web service
 Comment[ca]=Una eina per a importar/exportar imatges a un servei web remot Facebook
+Comment[da]=Et værktøj til at importere/eksportere billeder fra/til en ekstern Facebook-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu dem Facebook-Web-Service zu im bzw. exportieren.
 Comment[el]=Ένα εργαλείο για την εισαγωγή/εξαγωγή εικόνων από/σε μια υπηρεσία ιστού Facebook
 Comment[et]=Tööriist piltide importimiseks/eksportimiseks Facebooki veebiteenusest/veebiteenusesse

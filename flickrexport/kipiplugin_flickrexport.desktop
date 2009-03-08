@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr/23hq Exporter
+Name[da]=Flickr/23hq Eksport
 Name[de]=Flickr/23hq-Export
 Name[el]=Εξαγωγέας Flickr/23hq
 Name[et]=Flickri/23hq eksport
@@ -17,6 +18,7 @@ Name[uk]=Експорт до Flickr/23hq
 Name[zh_CN]=Flickr/23hq 导出
 Comment=A tool to export images to a remote Flickr or 23hq web service
 Comment[ca]=Una eina per a exportar imatges a un servei web remot Flickr o 23hq
+Comment[da]=Et værktøj til at eksportere billeder til en ekstern Flickr- eller 23hq-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder zu einem Flickr- oder 23hq-Web-Service zu exportieren.
 Comment[el]=Ένα εργαλείο για την εξαγωγή εικόνων σε μια υπηρεσία ιστού Flickr ή 23hq
 Comment[et]=Tööriist piltide eksportimiseks Flickri või 23hq veebiteenusesse

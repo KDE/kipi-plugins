@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=BatchProcessImages
+Name[da]=Batchbehandling af billeder
 Name[de]=BilderStapelverarbeitung
 Name[el]=Ομαδική επεξεργασία εικόνων
 Name[et]=Piltide pakktöötlus
@@ -15,6 +16,7 @@ Name[uk]=Пакетна обробка зображень
 Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
 Comment[ca]=Connector KIPI per a processar imatges per lots
+Comment[da]=KIPI plugin til batchbehandling af billeder01000000 to 17999999
 Comment[de]=Kipi-Modul zur Stapelverarbeitung von Bildern
 Comment[el]=Πρόσθετο του KIPI για την ομαδική επεξεργασία εικόνων
 Comment[et]=KIPI piltide pakktöötluse plugin
