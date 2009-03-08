@@ -179,7 +179,7 @@ struct Wizard::Private {
 
 			if (widget->sizePolicy().expandingDirections() & Qt::Horizontal) {
 				// Widget wants full width
-				layout->addWidget(widget, row, row, 1, 2);
+				layout->addWidget(widget, row, 1, 1, 2);
 			} else {
 				// Widget doesn't like to be stretched, add a spacer next to it
 				layout->addWidget(widget, row, 1);
