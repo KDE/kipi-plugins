@@ -1,3 +1,5 @@
+subdirs(icons)
+
 SET(kipiplugin_facebook_PART_SRCS
     plugin_facebook.cpp
     fbwindow.cpp

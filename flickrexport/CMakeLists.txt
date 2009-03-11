@@ -1,3 +1,5 @@
+subdirs(icons)
+
 ADD_DEFINITIONS (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 
 SET(kipiplugin_flickrexport_PART_SRCS

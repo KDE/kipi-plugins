@@ -1,3 +1,5 @@
+subdirs(icons)
+
 SET(kipiplugin_flashexport_PART_SRCS plugin_flashexport.cpp 
                                       firstrundlg.cpp
                                       selectionpage.cpp

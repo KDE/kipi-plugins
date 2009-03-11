@@ -57,9 +57,11 @@ void Plugin_FlashExport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
+    KIconLoader::global()->addAppDir("kipiplugin_flashexport");
+
     m_actionFlashExport = actionCollection()->addAction("flashexport");
     m_actionFlashExport->setText(i18n("Export to F&lash..."));
-    m_actionFlashExport->setIcon(KIcon("applications-internet"));
+    m_actionFlashExport->setIcon(KIcon("flash"));
     m_actionFlashExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L);
 
     connect(m_actionFlashExport, SIGNAL(triggered(bool)),

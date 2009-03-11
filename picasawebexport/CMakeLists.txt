@@ -1,3 +1,4 @@
+subdirs(icons)
 
 SET(kipiplugin_picasawebexport_PART_SRCS
     mpform.cpp

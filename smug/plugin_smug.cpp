@@ -63,9 +63,11 @@ void Plugin_Smug::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
+    KIconLoader::global()->addAppDir("kipiplugin_smug");
+
     m_actionExport = actionCollection()->addAction("smugexport");
     m_actionExport->setText(i18n("Export to &SmugMug..."));
-    m_actionExport->setIcon(KIcon("applications-internet"));
+    m_actionExport->setIcon(KIcon("smugmug"));
     m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S);
 
     connect(m_actionExport, SIGNAL( triggered(bool) ),
@@ -75,7 +77,7 @@ void Plugin_Smug::setup(QWidget* widget)
 
     m_actionImport = actionCollection()->addAction("smugimport");
     m_actionImport->setText(i18n("Import from &SmugMug..."));
-    m_actionImport->setIcon(KIcon("applications-internet"));
+    m_actionImport->setIcon(KIcon("smugmug"));
     m_actionImport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S);
 
     connect(m_actionImport, SIGNAL( triggered(bool) ),

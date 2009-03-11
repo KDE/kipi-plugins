@@ -1,3 +1,5 @@
+subdirs(icons)
+
 SET(kipiplugin_smug_PART_SRCS
     plugin_smug.cpp
     smugwindow.cpp
