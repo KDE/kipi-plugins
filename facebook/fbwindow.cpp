@@ -82,6 +82,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_widget                 = new FbWidget(this, interface, import);
 
     setMainWidget(m_widget);
+    setWindowIcon(KIcon("facebook"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -126,7 +127,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
             this, SLOT( slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Fb Import/Export"), 0,
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Facebook Import/Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to import/export image collection "
                             "to/from Facebook web service."),
@@ -280,7 +281,7 @@ void FbWindow::authenticate()
 
 void FbWindow::slotHelp()
 {
-    KToolInvocation::invokeHelp("fbexport", "kipi-plugins");
+    KToolInvocation::invokeHelp("facebook", "kipi-plugins");
 }
 
 void FbWindow::slotClose()
