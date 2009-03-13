@@ -74,7 +74,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     headerLabel->setFocusPolicy(Qt::NoFocus);
     if (serviceName == "23hq")
         headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
-                                  "<font color=\"#7CD164\">23hq</font>"
+                                  "<font color=\"#7CD164\">23hq</font></a>"
                                   " Export"
                                   "</h2></b>"));
     else
