@@ -292,8 +292,8 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
     if (!url.isEmpty())
         web = url;
     m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                   "<font color=\"#3B5998\">facebook</font>"
-                                   "</a></h2></b>").arg(web));
+                                 "<font color=\"#3B5998\">facebook</font>"
+                                 "</a></h2></b>").arg(web));
     if (name.isEmpty())
     {
         m_userNameDisplayLbl->clear();
