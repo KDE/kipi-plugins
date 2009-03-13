@@ -306,6 +306,7 @@ void FbTalker::getUserInfo(const QString& userIDs)
     args["api_key"]     = m_apiKey;
     args["v"]           = m_apiVersion;
     args["call_id"]     = QString::number(m_callID.elapsed());
+    args["session_key"] = m_sessionKey;
     if (userIDs.isEmpty())
         args["uids"]    = QString::number(m_user.id);
     else
