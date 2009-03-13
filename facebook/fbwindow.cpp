@@ -271,7 +271,7 @@ void FbWindow::authenticate()
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
 
-    connect(m_authProgressDlg, SIGNAL( canceled() ),
+    connect(m_authProgressDlg, SIGNAL( cancelClicked() ),
             this, SLOT( slotLoginCancel() ));
 
     kDebug(51000) << "Calling Login method";
@@ -422,7 +422,7 @@ void FbWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     m_progressDlg->setAutoClose(true);
     m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
 
-    connect(m_progressDlg, SIGNAL( canceled() ),
+    connect(m_progressDlg, SIGNAL( cancelClicked() ),
             this, SLOT( slotTransferCancel() ));
 
     // start download with first photo in queue
@@ -558,7 +558,7 @@ void FbWindow::slotStartTransfer()
         m_progressDlg->setAutoClose(true);
         m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
 
-        connect(m_progressDlg, SIGNAL( canceled() ),
+        connect(m_progressDlg, SIGNAL( cancelClicked() ),
                 this, SLOT( slotTransferCancel() ));
 
         uploadNextPhoto();
