@@ -123,6 +123,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData *about)
     d->iface = iface;
     d->about = about;
 
+    setWindowIcon(KIcon("dngconverter"));
     setButtons(Help | Default | Apply | Close | User1 | User2);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
