@@ -80,6 +80,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
+    if (serviceName != "23hq")
+        setWindowIcon(KIcon("flickr"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

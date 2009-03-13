@@ -86,6 +86,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_widget                 = new SmugWidget(this, interface, import);
 
     setMainWidget(m_widget);
+    setWindowIcon(KIcon("smugmug"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);

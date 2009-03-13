@@ -73,6 +73,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
                  m_tmp(tmpFolder)
 {
     setWindowTitle(i18n("Export to Picasa Web Service"));
+    setWindowIcon(KIcon("picasa"));
     setModal(false);
     setButtons(Help|Close);
     setDefaultButton(Close);

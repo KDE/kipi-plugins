@@ -90,6 +90,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
     d->interface = interface;
 
     setCaption(i18n("Flash Export"));
+    setWindowIcon(KIcon("flash"));
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
     setFaceType(List);

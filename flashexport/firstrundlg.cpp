@@ -76,6 +76,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     setDefaultButton(Ok);
     setModal(true);
     setCaption(i18n("Flash Export"));
+    setWindowIcon(KIcon("flash"));
     enableButton(Ok, false);
 
     QFrame *page = new QFrame(this);
