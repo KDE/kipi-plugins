@@ -28,6 +28,7 @@
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QTextDocument>
 #include <QFile>
 #include <QFileInfo>
 #include <QProgressDialog>
@@ -762,12 +763,12 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                     SmugAlbum album;
                     album.id = e.attribute("id").toInt();
                     album.key = e.attribute("Key");
-                    album.title = e.attribute("Title");
-                    album.description = e.attribute("Description");
-                    album.keywords = e.attribute("Keywords");
+                    album.title = htmlToText(e.attribute("Title"));
+                    album.description = htmlToText(e.attribute("Description"));
+                    album.keywords = htmlToText(e.attribute("Keywords"));
                     album.isPublic = e.attribute("Public") == "1";
-                    album.password = e.attribute("Password");
-                    album.passwordHint = e.attribute("PasswordHint");
+                    album.password = htmlToText(e.attribute("Password"));
+                    album.passwordHint = htmlToText(e.attribute("PasswordHint"));
                     album.imageCount = e.attribute("ImageCount").toInt();
 
                     for (QDomNode nodeC = e.firstChild();
@@ -780,12 +781,12 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                         if (e.tagName() == "Category")
                         {
                             album.categoryID = e.attribute("id").toInt();
-                            album.category = e.attribute("Name");
+                            album.category = htmlToText(e.attribute("Name"));
                         }
                         else if (e.tagName() == "SubCategory")
                         {
                             album.subCategoryID = e.attribute("id").toInt();
-                            album.subCategory = e.attribute("Name");
+                            album.subCategory = htmlToText(e.attribute("Name"));
                         }
                     }
                     albumsList.append(album);
@@ -841,8 +842,8 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
                     SmugPhoto photo;
                     photo.id = e.attribute("id").toInt();
                     photo.key = e.attribute("Key");
-                    photo.caption = e.attribute("Caption");
-                    photo.keywords = e.attribute("Keywords");
+                    photo.caption = htmlToText(e.attribute("Caption"));
+                    photo.keywords = htmlToText(e.attribute("Keywords"));
                     photo.thumbURL = e.attribute("ThumbURL");
                     // try to get largest size available
                     if (e.hasAttribute("Video1280URL"))
@@ -919,10 +920,10 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
                 {
                     SmugAlbumTmpl tmpl;
                     tmpl.id = e.attribute("id").toInt();
-                    tmpl.name = e.attribute("AlbumTemplateName");
+                    tmpl.name = htmlToText(e.attribute("AlbumTemplateName"));
                     tmpl.isPublic = e.attribute("Public") == "1";
-                    tmpl.password = e.attribute("Password");
-                    tmpl.passwordHint = e.attribute("PasswordHint");
+                    tmpl.password = htmlToText(e.attribute("Password"));
+                    tmpl.passwordHint = htmlToText(e.attribute("PasswordHint"));
                     albumTList.append(tmpl);
                 }
             }
@@ -975,7 +976,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
                 {
                     SmugCategory category;
                     category.id = e.attribute("id").toInt();
-                    category.name = e.attribute("Title"); // Name in 1.2.1
+                    category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
                     categoriesList.append(category);
                 }
             }
@@ -1028,7 +1029,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
                 {
                     SmugCategory category;
                     category.id = e.attribute("id").toInt();
-                    category.name = e.attribute("Title"); // Name in 1.2.1
+                    category.name = htmlToText(e.attribute("Title")); // Name in 1.2.1
                     categoriesList.append(category);
                 }
             }
@@ -1047,6 +1048,14 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     emit signalBusy(false);
     emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg),
                                      categoriesList);
+}
+
+
+QString SmugTalker::htmlToText(const QString& htmlText)
+{
+    QTextDocument txtDoc;
+    txtDoc.setHtml(htmlText);
+    return txtDoc.toPlainText();
 }
 
 } // namespace KIPISmugPlugin

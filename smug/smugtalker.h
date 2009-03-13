@@ -102,6 +102,7 @@ private:
         SMUG_GETPHOTO
     };
 
+    QString htmlToText(const QString& htmlText);
     QString errorToText(int errCode, const QString& errMsg);
     void parseResponseLogin(const QByteArray& data);
     void parseResponseLogout(const QByteArray& data);
