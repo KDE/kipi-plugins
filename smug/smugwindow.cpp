@@ -245,7 +245,7 @@ void SmugWindow::authenticate(const QString& email, const QString& password)
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
 
-    connect(m_authProgressDlg, SIGNAL( canceled() ),
+    connect(m_authProgressDlg, SIGNAL( cancelClicked() ),
             this, SLOT( slotLoginCancel() ));
 
     m_talker->login(email, password);
@@ -428,7 +428,7 @@ void SmugWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     m_progressDlg->setAutoClose(true);
     m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
 
-    connect(m_progressDlg, SIGNAL( canceled() ),
+    connect(m_progressDlg, SIGNAL( cancelClicked() ),
             this, SLOT( slotTransferCancel() ));
 
     // start download with first photo in queue
@@ -657,7 +657,7 @@ void SmugWindow::slotStartTransfer()
         m_progressDlg->setAutoClose(true);
         m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
 
-        connect(m_progressDlg, SIGNAL( canceled() ),
+        connect(m_progressDlg, SIGNAL( cancelClicked() ),
                 this, SLOT( slotTransferCancel() ));
 
         kDebug(51000) << "m_currentAlbumID" << m_currentAlbumID;
