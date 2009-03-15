@@ -1,4 +1,4 @@
-Kipi-plugins 0.2.0 - Release date: xx/03/2009
+Kipi-plugins 0.2.0 - Release date: 15/03/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -21,7 +21,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> 178983 : PrintWizard        : Next/back-buttons in print-assistant should be labeled.
 010 ==> 095404 : PrintWizard        : Printwizard print image with custom size, original size, autoscaled size to paper.
 011 ==> 183661 : General            : Better action icons for export plugins
-012 ==> 
+012 ==> 187203 : RAWConverter       : Batch raw converter crash digikam.
 
 Kipi-plugins 0.2.0-rc2 - Release date: 15/02/2009
 ------------------------------------------------------------------------
