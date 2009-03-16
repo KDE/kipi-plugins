@@ -3,10 +3,11 @@ Kipi-plugins 0.2.0 - Release date: 15/03/2009
 
 NEW FEATURES:
 
-FlickrExport   : Add support for 23hq.com service which uses Flickr API
 General        : SimpleViewer plugin has been renamed to FlashExport
-PrintImages    : new plugin that allow to choose old print assistant
-               : or to print all the selected photos directly
+General        : New icons for all Export/import plugins.
+FlickrExport   : Add support for 23hq.com service which uses Flickr API
+PrintImages    : New plugin that allow to choose old print assistant
+                 or to print all the selected photos directly
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
