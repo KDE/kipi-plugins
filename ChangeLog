@@ -1,3 +1,1226 @@
+0.2.0 2009-03-15
+--------------------------------------------------------------------------------
+
+2009-03-15 20:46  lure
+
+    * facebook/icons/hi128-action-facebook.png,
+      facebook/icons/hi16-action-facebook.png,
+      facebook/icons/hi22-action-facebook.png,
+      facebook/icons/hi32-action-facebook.png,
+      facebook/icons/hi48-action-facebook.png,
+      facebook/icons/hi64-action-facebook.png,
+      facebook/icons/hisc-action-facebook.svgz,
+      flashexport/icons/hi128-action-flash.png,
+      flashexport/icons/hi16-action-flash.png,
+      flashexport/icons/hi22-action-flash.png,
+      flashexport/icons/hi32-action-flash.png,
+      flashexport/icons/hi48-action-flash.png,
+      flashexport/icons/hi64-action-flash.png,
+      flashexport/icons/hisc-action-flash.svgz,
+      flickrexport/icons/hi128-action-flickr.png,
+      flickrexport/icons/hi16-action-flickr.png,
+      flickrexport/icons/hi22-action-flickr.png,
+      flickrexport/icons/hi32-action-flickr.png,
+      flickrexport/icons/hi48-action-flickr.png,
+      flickrexport/icons/hi64-action-flickr.png,
+      flickrexport/icons/hisc-action-flickr.svgz,
+      picasawebexport/icons/hi128-action-picasa.png,
+      picasawebexport/icons/hi16-action-picasa.png,
+      picasawebexport/icons/hi22-action-picasa.png,
+      picasawebexport/icons/hi32-action-picasa.png,
+      picasawebexport/icons/hi48-action-picasa.png,
+      picasawebexport/icons/hi64-action-picasa.png,
+      picasawebexport/icons/hisc-action-picasa.svgz,
+      smug/icons/hi128-action-smugmug.png,
+      smug/icons/hi16-action-smugmug.png,
+      smug/icons/hi22-action-smugmug.png,
+      smug/icons/hi32-action-smugmug.png,
+      smug/icons/hi48-action-smugmug.png,
+      smug/icons/hi64-action-smugmug.png,
+      smug/icons/hisc-action-smugmug.svgz: Improved Import/Export
+      plugin icons from Risto Saukonpää
+      
+      CCMAIL: paristo@gmail.com
+
+2009-03-15 17:56  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-03-15 17:56  cgilles
+
+    * NEWS: update
+
+2009-03-15 13:52  scripty
+
+    * galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop: SVN_SILENT
+      made messages (.desktop file)
+
+2009-03-13 22:31  lure
+
+    * smug/smugtalker.cpp, smug/smugtalker.h: SmugMug API returns many
+      text fields in HTML escaped form: convert all to
+      plain text on receive
+
+2009-03-13 21:13  cgilles
+
+    * dngconverter/plugin/batchdialog.cpp: use windows icon
+
+2009-03-13 21:12  lure
+
+    * flickrexport/flickrwidget.cpp: Fix 23hq label
+
+2009-03-13 21:10  lure
+
+    * flashexport/firstrundlg.cpp, flashexport/svedialog.cpp,
+      flickrexport/flickrwindow.cpp,
+      picasawebexport/picasawebwindow.cpp, smug/smugwindow.cpp: Use new
+      icons also for window icons
+
+2009-03-13 20:44  lure
+
+    * facebook/fbwindow.cpp: Fix window icon, help anchor and about
+      label
+
+2009-03-13 20:12  lure
+
+    * facebook/fbwidget.cpp: ident
+
+2009-03-13 19:41  lure
+
+    * facebook/fbtalker.cpp: Fix empty username (missing session_key
+      arg to users.getInfo call)
+
+2009-03-13 19:27  lure
+
+    * facebook/TODO: Update todo
+
+2009-03-13 19:10  lure
+
+    * smug/smugwindow.cpp: Fix signal (due to transition to
+      KProgressDialog)
+
+2009-03-13 18:51  lure
+
+    * facebook/fbwindow.cpp: Fix signal (due to transition to
+      KProgressDialog)
+
+2009-03-13 13:46  scripty
+
+    * gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/themes/s0/s0.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-03-11 18:50  lure
+
+    * AUTHORS, NEWS, facebook/CMakeLists.txt, facebook/icons,
+      facebook/icons/CMakeLists.txt,
+      facebook/icons/hi128-action-facebook.png,
+      facebook/icons/hi16-action-facebook.png,
+      facebook/icons/hi22-action-facebook.png,
+      facebook/icons/hi32-action-facebook.png,
+      facebook/icons/hi48-action-facebook.png,
+      facebook/icons/hi64-action-facebook.png,
+      facebook/icons/hisc-action-facebook.svgz,
+      facebook/plugin_facebook.cpp, flashexport/CMakeLists.txt,
+      flashexport/icons, flashexport/icons/CMakeLists.txt,
+      flashexport/icons/hi128-action-flash.png,
+      flashexport/icons/hi16-action-flash.png,
+      flashexport/icons/hi22-action-flash.png,
+      flashexport/icons/hi32-action-flash.png,
+      flashexport/icons/hi48-action-flash.png,
+      flashexport/icons/hi64-action-flash.png,
+      flashexport/icons/hisc-action-flash.svgz,
+      flashexport/plugin_flashexport.cpp, flickrexport/CMakeLists.txt,
+      flickrexport/icons, flickrexport/icons/CMakeLists.txt,
+      flickrexport/icons/hi128-action-flickr.png,
+      flickrexport/icons/hi16-action-flickr.png,
+      flickrexport/icons/hi22-action-flickr.png,
+      flickrexport/icons/hi32-action-flickr.png,
+      flickrexport/icons/hi48-action-flickr.png,
+      flickrexport/icons/hi64-action-flickr.png,
+      flickrexport/icons/hisc-action-flickr.svgz,
+      flickrexport/plugin_flickrexport.cpp,
+      picasawebexport/CMakeLists.txt, picasawebexport/icons,
+      picasawebexport/icons/CMakeLists.txt,
+      picasawebexport/icons/hi128-action-picasa.png,
+      picasawebexport/icons/hi16-action-picasa.png,
+      picasawebexport/icons/hi22-action-picasa.png,
+      picasawebexport/icons/hi32-action-picasa.png,
+      picasawebexport/icons/hi48-action-picasa.png,
+      picasawebexport/icons/hi64-action-picasa.png,
+      picasawebexport/icons/hisc-action-picasa.svgz,
+      picasawebexport/plugin_picasawebexport.cpp, smug/CMakeLists.txt,
+      smug/icons, smug/icons/CMakeLists.txt,
+      smug/icons/hi128-action-smugmug.png,
+      smug/icons/hi16-action-smugmug.png,
+      smug/icons/hi22-action-smugmug.png,
+      smug/icons/hi32-action-smugmug.png,
+      smug/icons/hi48-action-smugmug.png,
+      smug/icons/hi64-action-smugmug.png,
+      smug/icons/hisc-action-smugmug.svgz, smug/plugin_smug.cpp: Add
+      action icons for Picasa, Flickr, Facebook, Flash and SmugMug.
+      
+      SVG icons are from Julien Narboux - thanks for your contribution.
+      
+      BUG: 183661
+      CCMAIL: Julien@narboux.fr
+
+2009-03-08 15:51  gateau
+
+    * htmlexport/wizard.cpp: Fix weird layouts when using string
+      parameters.
+
+2009-03-08 14:50  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-03-04 20:42  cgilles
+
+    * batchprocessimages/CMakeLists.txt: install icons
+
+2009-03-04 20:33  cgilles
+
+    * dngconverter/plugin/clistviewitem.h,
+      rawconverter/clistviewitem.h: improve thumbnail rendering
+
+2009-03-04 20:27  cgilles
+
+    * common/libkipiplugins/imageslist.cpp: fix background color
+
+2009-03-04 12:48  mlaurent
+
+    * batchprocessimages/pixmapview.cpp: Fix potential mem leak
+
+2009-03-04 12:42  mlaurent
+
+    * batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.cpp: Fix connect
+      signal/slot
+
+2009-03-04 12:39  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: We use kde4
+      Fix potential mem leak
+      Minor fix
+
+2009-03-04 12:36  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Don't mem leak
+
+2009-03-03 09:01  gateau
+
+    * batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h: Include cleanup
+
+2009-03-03 09:01  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/imagepreview.ui: ui-fied.
+
+2009-03-03 09:01  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/pixmapview.cpp,
+      batchprocessimages/pixmapview.h: Moved PixmapView class to its
+      own files.
+
+2009-03-02 15:42  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h: Fix preview.
+
+2009-03-02 15:41  gateau
+
+    * batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h: Get ready for ui-fication;
+
+2009-03-02 15:41  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Fix K3Process
+      removal.
+
+2009-03-02 15:08  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderimagesdialog.h,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.h,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.h,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.h,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.h,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.h: K3Process--
+
+2009-03-02 15:08  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderimagesdialog.h,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.h,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.h,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.h,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.h,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.h: Refactor: makeProcess =>
+      initProcess, no longer returns the command line text.
+
+2009-03-02 13:55  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimageslist.cpp,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderoptionsdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/coloroptionsdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectoptionsdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.cpp: Q3WhatsThis--
+
+2009-03-02 13:54  gateau
+
+    * batchprocessimages/CMakeLists.txt: "data" dir is no more, do not
+      add it.
+
+2009-02-28 13:38  scripty
+
+    * batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      flashexport/kipiplugin_flashexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-26 23:01  ruphy
+
+    * ipodexport/IpodExportDialog.cpp: kinda fix the remove button....
+
+2009-02-26 22:45  ruphy
+
+    * ipodexport/ImageList.cpp, ipodexport/ImageList.h,
+      ipodexport/IpodExportDialog.cpp: finish (?) porting ipodexport to
+      KDE 4 :-)
+
+2009-02-26 17:28  cgilles
+
+    * NEWS: update
+
+2009-02-26 17:26  cgilles
+
+    * NEWS: update
+
+2009-02-26 09:28  lure
+
+    * facebook/fbtalker.cpp: Remove include that is not needed anymore
+
+2009-02-26 09:24  lure
+
+    * smug/smugtalker.cpp, smug/smugtalker.h, smug/smugwindow.cpp,
+      smug/smugwindow.h: QProgressDialog -> KProgressDialog
+      Use "X / Y" as progress bar label for upload/download to indicate
+      # of images
+      Remove delete calls for objects that have QWidget() parent
+
+2009-02-26 05:27  cgilles
+
+    * NEWS: update
+
+2009-02-26 05:25  cgilles
+
+    * NEWS: update
+
+2009-02-25 19:40  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-02-25 08:53  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/data/CMakeLists.txt,
+      batchprocessimages/data/handcursor.png,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h: Refactored PixmapView to use
+      QAbstractScrollArea instead of Q3ScrollView.
+
+2009-02-24 15:31  scripty
+
+    * batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-24 13:14  cgilles
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: optimize space on header
+
+2009-02-24 13:11  cgilles
+
+    * dngconverter/plugin/batchdialog.cpp,
+      rawconverter/batchdialog.cpp: polish
+
+2009-02-24 07:57  mlaurent
+
+    * CMakeLists.txt: Now that it compiles fine we can remove
+      conditional compile
+
+2009-02-23 23:16  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Fix typos.
+
+2009-02-23 21:56  lure
+
+    * facebook/fbtalker.cpp, facebook/fbtalker.h,
+      facebook/fbwindow.cpp, facebook/fbwindow.h: QProgressDialog ->
+      KProgressDialog
+      Use "X / Y" as progress bar label for upload/download to indicate
+      # of images
+      Remove delete calls for objects that have QWidget() parent
+
+2009-02-23 21:51  anaselli
+
+    * printimages/printerpage.ui: This file was a wrong commit, sorry
+      mlaurent.
+
+2009-02-23 09:48  cgilles
+
+    * NEWS: update
+
+2009-02-23 08:25  mlaurent
+
+    * advancedslideshow/playbackwidget.ui,
+      advancedslideshow/volslider.h: Add patch from #184332 to allow to
+      compile it
+
+2009-02-22 21:46  mlaurent
+
+    * printimages/printerpage.ui: Fix ui files
+
+2009-02-22 20:55  mjansen
+
+    * galleryexport/galleryalbumwidget.ui: Fix another self
+      inheritance. There seems to be a change in the current
+      qt4.5 snapshot which makes uic go crazy on these.
+
+2009-02-22 14:43  pino
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp: fix typos
+
+2009-02-22 13:42  anaselli
+
+    * common/libkipiplugins/kpaboutdata.cpp: SVN_SILENT: avoid a
+      compiler warning :)
+
+2009-02-22 13:06  scripty
+
+    * batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      flashexport/kipiplugin_flashexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-21 23:26  gateau
+
+    * batchprocessimages/plugin_batchprocessimages.cpp: It runs!
+      
+      CCMAIL: kde-imaging@kde.org
+
+2009-02-21 23:25  gateau
+
+    * batchprocessimages/CMakeLists.txt: One step forward: It crashes!
+      (this means that it builds...)
+      
+      CCMAIL:kde-imaging@kde.org
+
+2009-02-21 23:25  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/dialogutils.cpp,
+      batchprocessimages/renameimageswidget.cpp: Multiple fixes.
+      
+      It seems we made almost the same fixes, Laurent :). I had to
+      rebase mine after yours
+      so it looks like nitpicks. Sorry about that.
+      
+      CCMAIL:montel@kde.org
+
+2009-02-21 22:11  anaselli
+
+    * AUTHORS: SVN_SILENT: updated
+
+2009-02-21 22:10  anaselli
+
+    * NEWS: SVN_SILENT: updated
+
+2009-02-21 22:07  anaselli
+
+    * printwizard: Removed printwizard it is in print images now.
+
+2009-02-21 14:10  scripty
+
+    * batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-21 10:24  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/dialogutils.h,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.h: Fix include/forward
+      declaration
+
+2009-02-21 10:22  mlaurent
+
+    * batchprocessimages/imagepreview.cpp: Fix i18n
+
+2009-02-21 10:21  mlaurent
+
+    * batchprocessimages/renameimagesbase.ui: Fix ui files
+
+2009-02-21 10:20  mlaurent
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/dialogutils.cpp: now it links need to fix
+      dialogutils.cpp
+
+2009-02-21 10:16  mlaurent
+
+    * batchprocessimages/dialogutils.cpp,
+      batchprocessimages/dialogutils.h,
+      batchprocessimages/renameimageswidget.cpp: port++
+
+2009-02-21 10:11  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Port++
+
+2009-02-21 10:08  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h: port++
+
+2009-02-21 10:00  mlaurent
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/Makefile.am,
+      batchprocessimages/data/CMakeLists.txt,
+      batchprocessimages/data/Makefile.am: Cleanup and remove
+      Makefile.am
+
+2009-02-21 09:59  mlaurent
+
+    * batchprocessimages/renameimagesbase.ui: Fix include
+
+2009-02-20 23:49  gateau
+
+    * batchprocessimages/renameimageswidget.cpp: use QString::isEmpty()
+
+2009-02-20 23:49  gateau
+
+    * batchprocessimages/renameimageswidget.cpp: qt3to4 brokeness.
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/renameimageswidget.cpp: More KConfig
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimageslist.cpp,
+      batchprocessimages/renameimageswidget.cpp: Misc fixes
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/resizeoptionsdialog.cpp: i18n -> i18nc
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/resizeimagesdialog.cpp: Fix qt3to4 brokeness
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/recompressoptionsdialog.cpp: KDialogBase ->
+      KDialog
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/convertimagesdialog.cpp: KUrlRequester url
+      fix.
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/coloroptionsdialog.cpp,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/effectoptionsdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.cpp:
+      KIntNumInput::setRange() fixes.
+
+2009-02-20 23:48  gateau
+
+    * batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Fix use of
+      QGlobalColor in KConfigGroup
+
+2009-02-20 23:45  gateau
+
+    * batchprocessimages/borderoptionsdialog.cpp: Fix KIntNumValue
+      usage.
+
+2009-02-20 23:43  gateau
+
+    * batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Fix KConfig usage
+
+2009-02-20 23:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.h: No need for m_helpButton
+
+2009-02-20 23:36  gateau
+
+    * batchprocessimages/imagepreview.cpp,
+      batchprocessimages/renameimagesdialog.cpp: Misc fixes.
+
+2009-02-20 23:33  gateau
+
+    * batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Fix abouts.
+
+2009-02-20 23:33  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/dialogutils.cpp,
+      batchprocessimages/dialogutils.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Factorized help button
+      code.
+
+2009-02-20 23:33  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/coloroptionsdialog.cpp: kdialogbase.h ->
+      kdialog.h
+
+2009-02-20 23:33  gateau
+
+    * batchprocessimages/renameimageswidget.h: Adapted to Qt4 ui
+
+2009-02-20 23:33  gateau
+
+    * batchprocessimages/borderoptionsdialog.h,
+      batchprocessimages/coloroptionsdialog.h,
+      batchprocessimages/convertoptionsdialog.h,
+      batchprocessimages/effectoptionsdialog.h,
+      batchprocessimages/filteroptionsdialog.h,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/recompressoptionsdialog.h,
+      batchprocessimages/resizeoptionsdialog.h: kdialogbase.h ->
+      kdialog.h
+
+2009-02-20 23:32  gateau
+
+    * batchprocessimages/plugin_batchprocessimages.cpp: BATCHPLUGIN ->
+      BatchPlugin
+
+2009-02-20 23:32  gateau
+
+    * batchprocessimages/outputdialog.cpp: Help button.
+
+2009-02-20 23:31  gateau
+
+    * batchprocessimages/plugin_batchprocessimages.cpp: Fix actions.
+
+2009-02-20 23:31  gateau
+
+    * batchprocessimages/outputdialog.cpp: Fix KPAboutData
+
+2009-02-20 23:31  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/renameimagesdialog.cpp: setButtonGuiItem ->
+      setButtonText
+
+2009-02-20 19:42  cgilles
+
+    * NEWS: update
+
+2009-02-20 19:08  cgilles
+
+    * jpeglossless/convert2grayscale.cpp, jpeglossless/imageflip.cpp,
+      jpeglossless/imagerotate.cpp, jpeglossless/utils.cpp: "-verbose"
+      option from imagegick convert option is broken with TIFF files.
+      Sound dlike a bug in recent libtiff.
+      This option is now removed everywhere.
+      CCBUGS: 159794
+      CCBUGS: 184702
+
+2009-02-20 16:11  scripty
+
+    * batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-20 10:33  pino
+
+    * Messages.sh: extract also .h and h.cmake files from the common
+      kipiplugins lib
+
+2009-02-20 10:20  aclemens
+
+    * facebook/plugin_facebook.cpp: rename internal plugin name
+
+2009-02-20 10:20  aclemens
+
+    * facebook/kipiplugin_facebook.desktop,
+      facebook/kipiplugin_fb.desktop: rename desktop file
+
+2009-02-20 10:19  aclemens
+
+    * facebook/Messages.sh: modify Messages.sh
+
+2009-02-20 10:19  aclemens
+
+    * facebook/kipiplugin_fb.desktop: modify desktop file
+
+2009-02-20 10:19  aclemens
+
+    * facebook/fbalbum.cpp, facebook/fbalbum.h, facebook/fbitem.h,
+      facebook/fbtalker.cpp, facebook/fbtalker.h,
+      facebook/fbwidget.cpp, facebook/fbwidget.h,
+      facebook/fbwindow.cpp, facebook/fbwindow.h, facebook/mpform.cpp,
+      facebook/mpform.h, facebook/plugin_facebook.cpp,
+      facebook/plugin_facebook.h: rename namespace
+
+2009-02-20 10:18  aclemens
+
+    * facebook/plugin_facebook.cpp, facebook/plugin_facebook.h: rename
+      plugin class
+
+2009-02-20 10:18  aclemens
+
+    * facebook/CMakeLists.txt, facebook/plugin_facebook.cpp,
+      facebook/plugin_facebook.h, facebook/plugin_fb.cpp,
+      facebook/plugin_fb.h: beginning to adapt the plugin to its new
+      name
+
+2009-02-20 09:43  aclemens
+
+    * flashexport/lookpage.cpp, flashexport/simpleviewer.cpp,
+      flashexport/svedialog.cpp: add comments for ambiguous message
+      strings
+
+2009-02-20 09:43  aclemens
+
+    * flashexport/simpleviewer.h, flashexport/svedialog.h: use explicit
+      ctors
+
+2009-02-20 09:43  aclemens
+
+    * flashexport/simpleviewer.cpp: Use single-char QString operations
+      for efficiency
+
+2009-02-20 08:37  gateau
+
+    * batchprocessimages/plugin_batchprocessimages.cpp,
+      batchprocessimages/plugin_batchprocessimages.h: New KIPI::Plugin
+      signature
+
+2009-02-20 08:37  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderoptionsdialog.cpp,
+      batchprocessimages/borderoptionsdialog.h,
+      batchprocessimages/coloroptionsdialog.cpp,
+      batchprocessimages/coloroptionsdialog.h,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/convertoptionsdialog.h,
+      batchprocessimages/effectoptionsdialog.cpp,
+      batchprocessimages/effectoptionsdialog.h,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/filteroptionsdialog.h,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/outputdialog.h,
+      batchprocessimages/recompressoptionsdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.h,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/renameimagesdialog.h,
+      batchprocessimages/resizeoptionsdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.h: KDialogBase -> KDialog
+
+2009-02-20 08:36  gateau
+
+    * CMakeLists.txt: Build batchprocessimages if -DBPI=ON is passed to
+      cmake.
+
+2009-02-20 08:36  gateau
+
+    * batchprocessimages/CMakeLists.txt: Removed example .cmake
+      includes
+
+2009-02-20 08:35  gateau
+
+    * batchprocessimages/Messages.sh: Added Messages.sh
+
+2009-02-20 08:35  gateau
+
+    * batchprocessimages/renameimagesbase.ui: Converted ui file
+
+2009-02-20 08:35  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/batchprocessimagesitem.cpp,
+      batchprocessimages/batchprocessimagesitem.h,
+      batchprocessimages/batchprocessimageslist.cpp,
+      batchprocessimages/batchprocessimageslist.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderimagesdialog.h,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.h,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.h,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.h,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/plugin_batchprocessimages.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.h,
+      batchprocessimages/renameimagesbase.ui,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/renameimagesdialog.h,
+      batchprocessimages/renameimageswidget.cpp,
+      batchprocessimages/renameimageswidget.h,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.h: Ran adapt-to-kde4-api
+
+2009-02-20 08:34  gateau
+
+    * batchprocessimages/CMakeLists.txt: Use Qt3 support for now
+
+2009-02-20 08:34  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/renameimageswidget.cpp: Ran remove-qt3-support
+
+2009-02-20 08:34  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/batchprocessimagesitem.cpp,
+      batchprocessimages/batchprocessimagesitem.h,
+      batchprocessimages/batchprocessimageslist.cpp,
+      batchprocessimages/batchprocessimageslist.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderoptionsdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/coloroptionsdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/convertoptionsdialog.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectoptionsdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/outputdialog.h,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.h,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/renameimageswidget.cpp,
+      batchprocessimages/renameimageswidget.h,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.h: Ran qt3to4
+
+2009-02-20 08:33  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/data/CMakeLists.txt: Ran cmakelint
+
+2009-02-20 08:33  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/data/CMakeLists.txt: Ran am2cmake
+
+2009-02-20 07:39  gateau
+
+    * batchprocessimages: Copied KDE3 version of batchprocessimages to
+      trunk.
+
+2009-02-19 22:06  aclemens
+
+    * flashexport/generalpage.cpp, flashexport/svedialog.cpp: add
+      missing slash for standard album save path
+
+2009-02-19 21:56  aclemens
+
+    * flashexport/firstrundlg.cpp: new version of simpleviewer is 1.9
+
+2009-02-19 21:45  aclemens
+
+    * simpleviewerexport: delete obsolete plugin folder
+
+2009-02-19 21:35  aclemens
+
+    * AUTHORS, CMakeLists.txt, NEWS, flashexport,
+      flashexport/CMakeLists.txt, flashexport/Messages.sh,
+      flashexport/firstrundlg.cpp, flashexport/firstrundlg.h,
+      flashexport/generalpage.cpp, flashexport/generalpage.h,
+      flashexport/index.template,
+      flashexport/kipiplugin_flashexport.desktop,
+      flashexport/lookpage.cpp, flashexport/lookpage.h,
+      flashexport/plugin_flashexport.cpp,
+      flashexport/plugin_flashexport.h, flashexport/selectionpage.cpp,
+      flashexport/selectionpage.h, flashexport/simpleviewer.cpp,
+      flashexport/simpleviewer.h,
+      flashexport/simpleviewersettingscontainer.h,
+      flashexport/space.png, flashexport/svedialog.cpp,
+      flashexport/svedialog.h, simpleviewerexport/CMakeLists.txt,
+      simpleviewerexport/Messages.sh,
+      simpleviewerexport/firstrundlg.cpp,
+      simpleviewerexport/firstrundlg.h,
+      simpleviewerexport/generalpage.cpp,
+      simpleviewerexport/generalpage.h,
+      simpleviewerexport/index.template,
+      simpleviewerexport/kipiplugin_simpleviewer.desktop,
+      simpleviewerexport/lookpage.cpp, simpleviewerexport/lookpage.h,
+      simpleviewerexport/plugin_simpleviewer.cpp,
+      simpleviewerexport/plugin_simpleviewer.h,
+      simpleviewerexport/selectionpage.cpp,
+      simpleviewerexport/selectionpage.h,
+      simpleviewerexport/simpleviewerexport.cpp,
+      simpleviewerexport/simpleviewerexport.h,
+      simpleviewerexport/simpleviewersettingscontainer.h,
+      simpleviewerexport/space.png, simpleviewerexport/svedialog.cpp,
+      simpleviewerexport/svedialog.h: rename plugin "SimpleViewer" to
+      "Flash Export"... I hope I have not
+      forgotten anything.
+
+2009-02-19 20:59  lure
+
+    * flickrexport/flickrtalker.cpp: Fix error message (missing space)
+
+2009-02-19 20:52  lure
+
+    * flickrexport/flickrtalker.cpp: Call flickr.photosets.getList
+      without userID of currently logged in user,
+      but rather pass auth_token for currently logged in user. This
+      will list
+      the same photosets/albums and has a side effect to also making it
+      work
+      for 23hq.com.
+      
+      Thanks to Daniel Isenmann for investigating this issue.
+
+2009-02-19 18:50  cgilles
+
+    * NEWS: update
+
+2009-02-19 18:43  aclemens
+
+    * simpleviewerexport/plugin_simpleviewer.cpp: fix factory name
+
+2009-02-19 18:38  aclemens
+
+    * advancedslideshow/Messages.sh: adapt to new plugin name
+
+2009-02-19 18:36  adjam
+
+    * galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp:
+      BUG: 184553
+      
+      Gallery plugin now displays accents properly!
+
+2009-02-19 17:41  adjam
+
+    * galleryexport/gallerywindow.cpp, galleryexport/gallerywindow.h:
+      Now Gallery Export PLugin creates an album in the root
+      dir if user doesn't select anything..
+
+2009-02-19 17:39  adjam
+
+    * galleryexport/gallerytalker.cpp: Typo
+
+2009-02-19 12:56  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      facebook/kipiplugin_fb.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-18 21:57  rdieter
+
+    * dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.cpp: give
+      some gcc-4.4 love
+
+2009-02-18 17:26  adjam
+
+    * galleryexport/gallerywindow.cpp: Removed space limitation on
+      album's names
+
+2009-02-18 16:16  aclemens
+
+    * CMakeLists.txt, ChangeLog: information has no plural form
+
+2009-02-18 16:16  aclemens
+
+    * ChangeLog, advancedslideshow/captiondialog.ui,
+      advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h,
+      removeredeyes/libcvblobs/Blob.cpp: lenght => length
+
+2009-02-18 16:05  cgilles
+
+    * NEWS: update
+
+2009-02-18 13:19  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      facebook/kipiplugin_fb.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-18 11:16  lueck
+
+    * removeredeyes/Messages.sh: extract messages in subdirs too
+
+2009-02-18 08:37  wstephens
+
+    * metadataedit/commenteditdialog.cpp: Focus the textedit on show
+
+2009-02-17 18:04  anaselli
+
+    * printimages/CMakeLists.txt,
+      printimages/kipiplugin_printassistant.desktop,
+      printimages/kipiplugin_printimages.desktop: One desktop file is
+      better to avoid menu entries seen twice
+
+2009-02-17 12:13  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printassistant.desktop,
+      printimages/kipiplugin_printimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-17 08:59  anaselli
+
+    * CMakeLists.txt: Time to enable new print plugin SVN_SILENT:
+      Gilles can you please check if you se it twice for every
+      action?CCMAIL: kde-imaging@kde.org, caulier.gilles@gmail.com
+
+2009-02-16 20:45  lure
+
+    * NEWS, flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+      flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      flickrexport/plugin_flickrexport.cpp,
+      flickrexport/plugin_flickrexport.h: FlickExport plugin now also
+      supports upload to 23hq.com service.
+      23hq.com uses Flickr API and support most of Flickr functionality
+      (does not support Visible for Friends/Family).
+      
+      New functionality is available via "Export to 23hq..." menu
+      action.
+      
+      Thanks to Daniel Isenmann for initial work and testing of final
+      implementation.
+
+2009-02-16 12:57  mlaurent
+
+    * metadataedit/iptcsubjects.cpp: Add missing i18n here too
+
+2009-02-16 12:56  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      printimages/kipiplugin_printassistant.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-16 12:55  mlaurent
+
+    * metadataedit/xmpsubjects.cpp: Add missing i18n
+
+2009-02-16 08:44  lure
+
+    * NEWS, advancedslideshow/imageloadthread.cpp,
+      advancedslideshow/slideshowloader.cpp, calendar/calpainter.cpp,
+      facebook/fbwindow.cpp, flickrexport/flickrtalker.cpp,
+      galleryexport/gallerytalker.cpp,
+      simpleviewerexport/simpleviewerexport.cpp, smug/smugwindow.cpp:
+      Use Qt::SmoothTransform when image is resized. This is fixed for
+      Calendar,
+      Advanced Slideshow, GalleryExport, FlashExport, FlickrExport,
+      Facebook and
+      SmugMug plugins.
+      
+      Thanks to Matthias Welwarsky for noticing this and proposing
+      patch.
+      
+      BUG: 184312
+
+2009-02-15 22:26  anaselli
+
+    * printimages/wizard.cpp, printimages/wizard.h: removed warnings,
+      hope not to get regressions :)
+
+2009-02-15 14:27  sengels
+
+    * common/libkipiplugins/imageslist.cpp: rename iterator as a
+      previous one with the same name already exists
+
+2009-02-15 13:08  scripty
+
+    * printimages/kipiplugin_printassistant.desktop,
+      printimages/kipiplugin_printimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-14 23:39  anaselli
+
+    * slideshow: SVN_SILENT: removed useless directory
+      CCMAIL: andi.clemens@gmx.net
+
+2009-02-14 23:36  anaselli
+
+    * printimages/CMakeLists.txt, printimages/cropframe.cpp,
+      printimages/cropframe.h, printimages/croppage.ui,
+      printimages/infopage.ui, printimages/intropage.ui,
+      printimages/kipiplugin_printassistant.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      printimages/photopage.ui, printimages/plugin_printimages.cpp,
+      printimages/plugin_printimages.h, printimages/printerpage.ui,
+      printimages/tphoto.cpp, printimages/tphoto.h,
+      printimages/utils.cpp, printimages/utils.h,
+      printimages/wizard.cpp, printimages/wizard.h: First try to merge
+      print assistant and print images to one plugin and two actions.
+      
+      CCMAIL: caulier.gilles@gmail.com
+      SVN_SILENT: Gilles can you please tell me why i get menu entries
+      twice?
+
+2009-02-14 16:07  scripty
+
+    * printimages/kipiplugin_printimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-02-14 12:00  cgilles
+
+    * kipi-plugins.lsm.cmake: fix release date
+
+2009-02-14 11:59  cgilles
+
+    * CMakeLists.txt: let's go to final release
+
+2009-02-14 07:55  cgilles
+
+    * ChangeLog: prepare rc2
+
+2009-02-14 07:47  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-02-14 07:47  cgilles
+
+    * NEWS: update
+
 0.2.0-rc2 2009-02-15
 --------------------------------------------------------------------------------
 
