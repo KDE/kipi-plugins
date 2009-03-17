@@ -161,7 +161,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData *about)
     d->listView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
     d->listView->header()->setResizeMode(1, QHeaderView::Stretch);
     d->listView->header()->setResizeMode(2, QHeaderView::Stretch);
-    d->listView->header()->setResizeMode(4, QHeaderView::Stretch);
+    d->listView->header()->setResizeMode(3, QHeaderView::Stretch);
 
     // ---------------------------------------------------------------
 
