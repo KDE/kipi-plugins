@@ -349,7 +349,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     // And set finaly update the metadata to target file.
 
     QImage img(destGiven);
-    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio);
+    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     exiv2Iface.load(destGiven);
     exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));

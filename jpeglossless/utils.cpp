@@ -89,8 +89,8 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     }
 
     QImage img(src);
-    QImage iptcPreview   = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-    QImage exifThumbnail = iptcPreview.scaled(160, 120, Qt::KeepAspectRatio);
+    QImage iptcPreview   = img.scaled(1280, 1024, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage exifThumbnail = iptcPreview.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     KExiv2Iface::KExiv2 meta;
     meta.load(src);

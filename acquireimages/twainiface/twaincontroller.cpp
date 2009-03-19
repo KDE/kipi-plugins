@@ -265,8 +265,8 @@ void TwainController::saveImage(const QImage& img)
 
     kapp->setOverrideCursor( Qt::WaitCursor );
 
-    QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-    QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio);
+    QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
 
     KExiv2Iface::KExiv2 meta;

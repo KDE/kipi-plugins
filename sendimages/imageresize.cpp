@@ -88,7 +88,7 @@ public:
 };
 
 ImageResize::ImageResize(QObject *parent)
-            : QThread(parent), d(new ImageResizePriv)
+           : QThread(parent), d(new ImageResizePriv)
 {
 }
 
@@ -237,7 +237,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
                 Q_ASSERT( w <= sizeFactor );
             }
 
-            const QImage scaledImg(img.scaled(w, h));
+            const QImage scaledImg(img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
             if ( scaledImg.width() != w || scaledImg.height() != h )
             {

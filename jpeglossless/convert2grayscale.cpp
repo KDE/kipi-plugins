@@ -227,7 +227,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     exiv2Iface.load(dest);
 
     QImage img(dest);
-    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio);
+    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     exiv2Iface.setExifThumbnail(exifThumbnail);
     exiv2Iface.save(dest);

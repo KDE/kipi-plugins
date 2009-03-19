@@ -75,9 +75,9 @@ void PreviewWidget::load(const QString& file)
 
     if (!d->image.isNull()) 
     {
-        QImage img = d->image.scaled(width(), height(), Qt::KeepAspectRatio);
-        int x = d->pix.width()/2  - img.width()/2;
-        int y = d->pix.height()/2 - img.height()/2;
+        QImage img = d->image.scaled(width(), height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        int x      = d->pix.width()/2  - img.width()/2;
+        int y      = d->pix.height()/2 - img.height()/2;
 
         QPainter p(&d->pix);
         p.drawImage(x, y, img);
@@ -139,9 +139,9 @@ void PreviewWidget::paintEvent(QPaintEvent*)
     {
         if (!d->image.isNull()) 
         {
-            QImage img = d->image.scaled(width(),height(), Qt::KeepAspectRatio);
-            int x = d->pix.width()/2  - img.width()/2;
-            int y = d->pix.height()/2 - img.height()/2;
+            QImage img = d->image.scaled(width(),height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            int x      = d->pix.width()/2  - img.width()/2;
+            int y      = d->pix.height()/2 - img.height()/2;
 
             QPainter p(&d->pix);
             p.drawImage(x, y, img);
