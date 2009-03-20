@@ -113,12 +113,13 @@ private slots:
 
     void slotHelp();
 
+    void enableButtons();
+
 private:
 
     void addUrlToList( QString file );
     bool deleteIpodAlbum( IpodAlbumItem *album );
     bool deleteIpodPhoto( IpodPhotoItem *photo );
-    void enableButtons();
     void getIpodAlbums();
     void getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
     Itdb_Artwork *photoFromId( const uint id );

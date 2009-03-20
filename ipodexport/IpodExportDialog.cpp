@@ -46,6 +46,7 @@ extern "C" {
 #include <QPixmap>
 #include <QPushButton>
 #include <QTreeWidgetItem>
+#include <QTimer>
 
 // KDE includes
 
@@ -347,9 +348,10 @@ void UploadDialog::enableButtons()
 
     const QList<QTreeWidgetItem*> ipodSelection = m_ipodAlbumList->selectedItems();
 
-    const bool hasSelection = m_ipodAlbumList->currentItem() != 0;
+    const bool hasSelection = ipodSelection.count() != 0;
 
     const bool isMasterLibrary = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
+
     const bool isAlbum = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
 
     m_removeAlbumButton->setEnabled( hasSelection && !isMasterLibrary );
@@ -418,7 +420,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
     if( m_ipodAlbumList->currentItem() )
         m_ipodAlbumList->currentItem()->setSelected( true );
 
-    enableButtons();
+    QTimer::singleShot(0, this, SLOT(enableButtons())); // Need a singleshot, else the selected items don't get updated.
 
 #define item dynamic_cast<IpodPhotoItem*>(item)
     if( !item )
