@@ -33,7 +33,7 @@
 
 // Local includes.
 
-#include "svnversion.h"
+#include <svnversion.h>
 
 static const char kipiplugins_version[] = "${KIPIPLUGINS_VERSION_STRING}";
 
