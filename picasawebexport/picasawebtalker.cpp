@@ -758,10 +758,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
 
                     if(detailsNode.nodeName() == "title")
                     {
-                        album_title = "Not fetched";
-
-                        if(detailsNode.toElement().attribute("type")=="text")
-                            album_title = detailsNode.toElement().text();
+                        album_title = detailsNode.toElement().text();
 
                         //this is what is obtained from data.
                         fps.title = album_title;
