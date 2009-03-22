@@ -369,6 +369,8 @@ void PicasawebWindow::slotCreateNewAlbum()
     {
         if (dlg->m_isPublicRadioButton->isChecked())
             access = QString("public");
+        else if (dlg->m_isProtectedRadioButton->isChecked())
+            access = QString("protected");
         else
             access = QString("private");
 
