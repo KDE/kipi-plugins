@@ -11,5 +11,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 185010 : FaceBook           : Export to facebook gone in KIPI.
 004 ==> 150737 : PicasaWebExport    : Tool does not use correct album name if special characters present.
 005 ==> 169695 : PicasaWebExport    : digiKam crashes with cancel in Export to Picasaweb.
-006 ==> 187512 : PicasaWebExport    : picsaweb GUI no picasa album list.
-007 ==> 
+006 ==> 187512 : PicasaWebExport    : PicasaWeb GUI shows no picasa album list.
+007 ==> 175221 : PicasaWebExport    : Photos are always rewritten to JPEG before upload (and not only for RAW and rescale)
+008 ==> 

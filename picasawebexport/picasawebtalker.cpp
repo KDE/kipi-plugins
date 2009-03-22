@@ -416,7 +416,6 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
 
     QString     postUrl     = "http://www.picasaweb.google.com/data/feed/api/user/" + 
                               QUrl::toPercentEncoding(m_username) + "/albumid/" + album_id;
-    QString     path        = postUrl;
     QString     auth_string = "GoogleLogin auth=" + m_token;
     QStringList headers;
     MPForm      form;
@@ -438,7 +437,6 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
 
     // save the tags for this photo in to the tags hashmap
     tags_map.insert(info.title, info.tags);
-    QImage image;
 
     // Check if RAW file.
 #if KDCRAW_VERSION < 0x000400
@@ -447,40 +445,54 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fileInfo(photoPath);
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
-        KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
-    else
-        image.load(photoPath);
+    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
 
-    if (!image.isNull())
+    if (isRAW || rescale)
     {
-        path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
+        // use temporary file for upload
+        QImage image;
+        if (isRAW)
+            KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
+        else
+            image.load(photoPath);
+
+        QString tmpPath = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-        image.save(path, "JPEG", imageQuality);
+        image.save(tmpPath, "JPEG", imageQuality);
 
         // Restore all metadata.
-
         KExiv2Iface::KExiv2 exiv2Iface;
 
         if (exiv2Iface.load(photoPath))
         {
             exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(image.size());
-            exiv2Iface.save(path);
+            exiv2Iface.save(tmpPath);
         }
         else
         {
-            kWarning(51000) << "(picasawebExport::Image doesn't have exif data)" << endl;
+            kWarning(51000) << "Image " << photoPath << " has no exif data";
         }
 
-        kDebug( 51000 ) << "Resizing and saving to temp file: " << path << endl;
-    }
+        kDebug( 51000 ) << "Resizing and saving to temp file: " << tmpPath;
 
-    if (!form.addFile("photo", path))
-        return false;
+        if (!form.addFile("photo", tmpPath))
+        {
+            QFile::remove(tmpPath);
+            return false;
+        }
+
+        QFile::remove(tmpPath);
+    }
+    else
+    {
+        // use original file
+        if (!form.addFile("photo", photoPath))
+            return false;
+    }
 
     form.finish();
 
