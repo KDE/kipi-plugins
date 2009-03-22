@@ -121,6 +121,8 @@ private:
     KHTMLPart                               *m_photoView;
     KUrl::List                              *m_urls;
 
+    QString                                  m_currentAlbumId;
+
     PicasawebWidget                         *m_widget;
     PicasawebTalker                         *m_talker;
 

@@ -300,17 +300,15 @@ void PicasawebWindow::slotHelp()
 
 void PicasawebWindow::slotGetAlbumsListSucceeded()
 {
+    m_albumsListComboBox->clear();
     if (m_talker && m_talker->m_albumsList)
     {
         QLinkedList <PicasaWebAlbum> *list = m_talker->m_albumsList;
-        m_albumsListComboBox->clear();
         QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
-        int index = 0;
         while(it != list->end())
         {
             PicasaWebAlbum pwa=*it;
-            QString name = pwa.title;
-            m_albumsListComboBox->insertItem(index++, name);
+            m_albumsListComboBox->addItem(pwa.title, pwa.id);
             it++;
         }
     }
@@ -420,15 +418,29 @@ void PicasawebWindow::slotAddPhotos()
 
 void PicasawebWindow::slotUploadImages()
 {
-   if(m_widget->m_currentSelectionButton->isChecked())
-   {
+
+    if (m_albumsListComboBox->currentIndex() == -1) 
+    {
+        KMessageBox::error(this, 
+            i18n("No album selected - please create and select album."));
+        return;
+    }
+    m_currentAlbumId = m_albumsListComboBox->itemData(
+                            m_albumsListComboBox->currentIndex()).toString();
+
+    if (m_widget->m_currentSelectionButton->isChecked())
+    {
         delete m_urls;
 
         m_urls=new KUrl::List(m_interface->currentSelection().images());
-   }
+    }
 
-   if (m_urls == NULL || m_urls->isEmpty())
+    if (m_urls == NULL || m_urls->isEmpty()) 
+    {
+        KMessageBox::error(this, 
+            i18n("Nothing to upload - please select photos to upload."));
         return;
+    }
 
     typedef QPair<QString,FPhotoInfo> Pair;
 
@@ -509,25 +521,8 @@ void PicasawebWindow::slotAddPhotoNext()
 /*    int upload_image_size;
     int upload_image_quality;*/
 
-    // Get the albums' Id from the name.
-    QString albumId = "";
-    QString selectedAlbumName = m_albumsListComboBox->currentText();
-
-    QLinkedList<PicasaWebAlbum>::iterator it = m_talker->m_albumsList->begin();
-    while(it != m_talker->m_albumsList->end()) 
-    {
-       PicasaWebAlbum pwa=*it;
-       QString name = pwa.title;
-       if (name == selectedAlbumName) 
-        {
-           albumId = pwa.id;
-           break;
-       }
-       it++;
-    }
-
     bool res = m_talker->addPhoto(pathComments.first,          //the file path
-                                  info, albumId,
+                                  info, m_currentAlbumId,
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(), m_imageQualitySpinBox->value());
     if (!res)
@@ -574,6 +569,7 @@ void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
 void PicasawebWindow::slotGetAlbumsListFailed(const QString& /*msg*/)
 {
     // Raise some errors
+    m_albumsListComboBox->clear();
 }
 
 void PicasawebWindow::slotAddPhotoCancel()
