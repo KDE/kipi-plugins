@@ -1,9 +1,3 @@
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3GridLayout>
-#include <QPixmap>
-#include <Q3VBoxLayout>
-#include <QCloseEvent>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -12,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,28 +30,35 @@ extern "C"
 // Include files for Qt
 
 #include <q3vbox.h>
+#include <q3process.h>
+#include <q3groupbox.h>
+#include <q3hgroupbox.h>
+#include <q3vgroupbox.h>
+#include <q3dragobject.h>
+#include <q3frame.h>
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
+#include <QPixmap>
 #include <qlayout.h>
 #include <qdir.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-#include <q3process.h>
 #include <qcolor.h>
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qimage.h>
 #include <qevent.h>
-#include <q3dragobject.h>
 #include <qfileinfo.h>
-#include <q3hgroupbox.h>
-#include <q3vgroupbox.h>
-#include <q3frame.h>
 #include <qmatrix.h>
 
 // Include files for KDE
 
+#include <k3buttonbox.h>
+#include <k3listview.h>
 #include <kstandarddirs.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
@@ -71,14 +72,12 @@ extern "C"
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <k3listview.h>
 #include <kimageio.h>
 #include <kprocess.h>
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <kio/global.h>
 #include <kio/previewjob.h>
-#include <k3buttonbox.h>
 #include <kdiroperator.h>
 #include <kdeversion.h>
 #include <kurlrequester.h>
@@ -123,8 +122,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     m_progressStatus = 0;
     m_ProcessusProc  = 0;
     m_PreviewProc    = 0;
-
-    
 
     QWidget* box = new QWidget(this);
     setMainWidget(box);
@@ -191,21 +188,21 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     groupBox3 = new Q3HGroupBox( i18n("Target Folder"), box );
 
     m_destinationURL = new KUrlRequester(groupBox3);
-	m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
-	KIPI::ImageCollection album = interface->currentAlbum();
-	if (album.isValid())
+    m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
+    KIPI::ImageCollection album = interface->currentAlbum();
+    if (album.isValid())
     {
-		QString url;
-		if (album.isDirectory())
+        QString url;
+        if (album.isDirectory())
         {
-			url = album.uploadPath().path();
-		}
+            url = album.uploadPath().path();
+        }
         else
         {
-			url = QDir::homePath();
-		}
-		m_destinationURL->lineEdit()->setText(url);
-	}
+            url = QDir::homePath();
+        }
+        m_destinationURL->lineEdit()->setText(url);
+    }
     m_destinationURL->setWhatsThis(i18n("<p>Here you can select the target folder which "
                                             "will used by the process."));
 
@@ -280,7 +277,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 
    // Get the image files filters from the hosts app.
 
-    m_ImagesFilesSort = m_interface->fileExtensions();
+    m_ImagesFilesSort = m_interface->hostSetting("FileExtensions").toString();
 
     dvlay->activate();
 }
@@ -371,19 +368,19 @@ void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
     for ( QStringList::Iterator it = filesPath.begin() ; it != filesPath.end() ; ++it )
     {
         QString currentDropFile = *it;
-    
+
         // Check if the new item already exist in the list.
-    
+
         bool findItem = false;
-    
+
         for ( KUrl::List::Iterator it2 = m_selectedImageFiles.begin() ; it2 != m_selectedImageFiles.end() ; ++it2 )
         {
             QString currentFile = (*it2).path(); // PENDING(blackie) Handle URL's
-    
+
             if ( currentFile == currentDropFile )
                 findItem = true;
         }
-    
+
         if (findItem == false)
             m_selectedImageFiles.append(currentDropFile);
     }
@@ -459,7 +456,7 @@ bool BatchProcessImagesDialog::startProcess(void)
         m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
         item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
         m_listFiles->setCurrentItem(item);
-    
+
         if ( m_listFile2Process_iterator->current() )
         {
             startProcess();
@@ -600,8 +597,8 @@ bool BatchProcessImagesDialog::startProcess(void)
     {
        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                      "please check your installation."));
-	delete m_ProcessusProc;
-	m_ProcessusProc=0;
+    delete m_ProcessusProc;
+    m_ProcessusProc=0;
        return false;
     }
 
@@ -622,16 +619,16 @@ void BatchProcessImagesDialog::slotFinished()
         // processAborted() has already been called. No need to show the warning.
         return;
     }
-    
+
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
     m_listFiles->ensureItemVisible(m_listFiles->currentItem());
-    
+
     if (m_ProcessusProc->exitStatus() == QProcess::CrashExit)
     {
         int code = KMessageBox::warningContinueCancel( this,
                                 i18n("The 'convert' program from 'ImageMagick' package has been stopped abnormally"),
                                 i18n("Error running 'convert'") );
-    
+
         if ( code == KMessageBox::Cancel )
         {
             processAborted(true);
@@ -643,7 +640,7 @@ void BatchProcessImagesDialog::slotFinished()
             ++*m_listFile2Process_iterator;
             ++m_progressStatus;
             m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
-    
+
             if ( m_listFile2Process_iterator->current() )
                 startProcess();
             else
@@ -662,31 +659,31 @@ void BatchProcessImagesDialog::slotFinished()
             item->changeResult(i18n("OK"));
             item->changeError(i18n("no processing error"));
             processDone();
-    
+
             // Save the comments for the converted image
             KUrl src;
             src.setPath( item->pathSrc() );
             KUrl dest = m_destinationURL->url();
             dest.addPath( item->nameDest() );
             QString errmsg;
-    
+
             KUrl::List urlList;
             urlList.append(src);
             urlList.append(dest);
             m_interface->refreshImages( urlList );
-    
+
             if ( !item->overWrote() )
             {
                 // Do not add an entry if there was an image at the location already.
                 bool ok = m_interface->addImage( dest, errmsg );
-    
+
                 if ( !ok )
                 {
                     int code = KMessageBox::warningContinueCancel( this,
                                             i18n("<qt>Error adding image to application; error message was: "
                                             "<b>%1</b></qt>").arg( errmsg ),
                                             i18n("Error Adding Image to Application") );
-    
+
                     if ( code == KMessageBox::Cancel )
                     {
                         slotProcessStop();
@@ -703,11 +700,11 @@ void BatchProcessImagesDialog::slotFinished()
                 KIPI::ImageInfo destInfo = m_interface->info( dest );
                 destInfo.cloneData( srcInfo );
             }
-    
+
             if ( m_removeOriginal->isChecked() && src != dest )
             {
                 KUrl deleteImage(item->pathSrc());
-    
+
                 if ( KIO::NetAccess::del( deleteImage, kapp->activeWindow() ) == false )
                 {
                     item->changeResult(i18n("Warning:"));
@@ -909,28 +906,28 @@ void BatchProcessImagesDialog::listImageFiles(void)
     {
         QString currentFile = (*it).path(); // PENDING(blackie) Handle URLS
         QFileInfo *fi = new QFileInfo(currentFile);
-    
+
         // Check if the new item already exist in the list.
-    
+
         bool findItem = false;
-    
+
         Q3ListViewItemIterator it2( m_listFiles );
-    
+
         while ( it2.current() )
         {
             BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(it2.current());
-    
+
             if ( pitem->pathSrc() == currentFile.section('/', 0, -1) )
                 findItem = true;
-    
+
             ++it2;
         }
-    
+
         if (findItem == false)
         {
             QString oldFileName = fi->fileName();
             QString newFileName = oldFileName2NewFileName(oldFileName);
-    
+
             new BatchProcessImagesItem(m_listFiles,
                                         currentFile.section('/', 0, -1),
                                         oldFileName,
@@ -938,7 +935,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
                                         ""
                                         );
         }
-    
+
         delete fi;
     }
 

@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -66,16 +66,21 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin for batch bordering images\n"
                                                       "This plugin use the \"convert\" program from \"ImageMagick\" package."),
-                                           ki18n("(c) 2003-2008, Gilles Caulier"));
+                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
+                                                 "(c) 2007-2009, Aurélien Gateau"));
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and maintainer"),
-                     "caulier dot gilles at gmail dot com");
- 
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+                       "caulier dot gilles at gmail dot com");
+
+    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+                       "aurelien dot gateau at free dot fr");
+
     DialogUtils::setupHelpButton(this, m_about);
+
     //---------------------------------------------
 
     m_nbItem = m_selectedImageFiles.count();
-    
+
     //---------------------------------------------
 
     groupBox1->setTitle( i18n("Images Bordering Options") );

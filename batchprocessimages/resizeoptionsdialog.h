@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,7 +26,6 @@
 // Include files for Qt
 
 #include <qstring.h>
-//Added by qt3to4:
 #include <QLabel>
 
 // Include files for KDE
@@ -48,7 +47,7 @@ class ResizeOptionsDialog : public KDialog
 Q_OBJECT
 
  public:
- 
+
    ResizeOptionsDialog(QWidget *parent=0, int ResizeType = 0);
    ~ResizeOptionsDialog();
 
@@ -89,12 +88,12 @@ Q_OBJECT
    QComboBox       *m_printDpi;
 
  protected slots:
- 
+
    void slotCustomSettingsEnabled(bool val);
    void slotOk();
 
  protected:
- 
+
    int              m_Type;
 };
 

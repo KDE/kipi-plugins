@@ -16,6 +16,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #include "dialogutils.h"
 
 #include <kdialog.h>
@@ -24,7 +25,8 @@
 #include <kpushbutton.h>
 #include <kmenu.h>
 
-namespace DialogUtils {
+namespace DialogUtils 
+{
 
 void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
 {

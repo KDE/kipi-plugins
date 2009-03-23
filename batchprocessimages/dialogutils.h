@@ -16,12 +16,15 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef DIALOGUTILS_H
 #define DIALOGUTILS_H
 
 class KAboutData;
 class KDialog;
-namespace DialogUtils {
+
+namespace DialogUtils 
+{
 
 void setupHelpButton(KDialog*, KAboutData*);
 

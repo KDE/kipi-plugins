@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <QPixmap>
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
@@ -8,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2003-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
  *
  * This program is free software; you can redistribute it
@@ -40,6 +38,10 @@ extern "C"
 // Qt includes.
 
 #include <q3listview.h>
+#include <q3progressdialog.h>
+#include <q3groupbox.h>
+#include <q3popupmenu.h>
+#include <QPixmap>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
@@ -49,9 +51,6 @@ extern "C"
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qtimer.h>
-#include <q3progressdialog.h>
-#include <q3groupbox.h>
-#include <q3popupmenu.h>
 #include <qregexp.h>
 #include <qdir.h>
 #include <qtooltip.h>
