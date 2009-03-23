@@ -43,7 +43,7 @@ namespace KIPIBatchProcessImagesPlugin
     class RenameImagesDialog;
     class RecompressImagesDialog;
     class ResizeImagesDialog;
-};
+}
 
 class Plugin_BatchProcessImages : public KIPI::Plugin
 {
