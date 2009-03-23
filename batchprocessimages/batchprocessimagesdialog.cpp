@@ -471,7 +471,8 @@ bool BatchProcessImagesDialog::startProcess(void)
 
     KUrl desturl(targetAlbum + '/' + item->nameDest());
 
-    if ( KIO::NetAccess::exists( desturl, false, kapp->activeWindow() ) == true )
+    if ( KIO::NetAccess::exists( desturl, KIO::NetAccess::DestinationSide,
+         kapp->activeWindow() ) == true )
     {
        switch (overwriteMode())
        {
@@ -595,11 +596,11 @@ bool BatchProcessImagesDialog::startProcess(void)
     m_ProcessusProc->start();
     if(!m_ProcessusProc->waitForStarted())
     {
-       KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
-                                     "please check your installation."));
-    delete m_ProcessusProc;
-    m_ProcessusProc=0;
-       return false;
+        KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
+                                      "please check your installation."));
+        delete m_ProcessusProc;
+        m_ProcessusProc=0;
+        return false;
     }
 
     return true;
@@ -1006,7 +1007,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        KUrl deleteImage = m_destinationURL->url();
        deleteImage.addPath(item->nameDest());
 
-       if ( KIO::NetAccess::exists( deleteImage, false, kapp->activeWindow() ) == true )
+       if ( KIO::NetAccess::exists( deleteImage, KIO::NetAccess::DestinationSide, 
+            kapp->activeWindow() ) == true )
           KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
     }
 
@@ -1039,7 +1041,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
                     + "." + fi->filePath().section('.', -1 );
     }
     while ( Enumerator < 100 &&
-            KIO::NetAccess::exists( NewDestUrl, true, kapp->activeWindow() )
+            KIO::NetAccess::exists( NewDestUrl, KIO::NetAccess::SourceSide, kapp->activeWindow() )
             == true );
 
     if (Enumerator == 100) return QString();
