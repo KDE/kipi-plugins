@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "batchprocessimagesdialog.h"
+#include "batchprocessimagesdialog.moc"
+
 // C Ansi includes
 
 extern "C"
@@ -96,8 +99,6 @@ extern "C"
 #include "pluginsversion.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
-#include "batchprocessimagesdialog.h"
-#include "batchprocessimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

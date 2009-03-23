@@ -35,20 +35,20 @@ class BatchProcessImagesItem;
 
 class BorderImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    BorderImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~BorderImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
 
- protected:
- 
+protected:
+
    int                    m_solidWidth;
    QColor                 m_solidColor;
 
@@ -69,7 +69,7 @@ Q_OBJECT
    void readSettings(void);
    void saveSettings(void);
 
-  private:
+private:
 
    KIPIPlugins::KPAboutData *m_about;
 };

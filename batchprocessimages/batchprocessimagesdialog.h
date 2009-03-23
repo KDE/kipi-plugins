@@ -38,11 +38,11 @@
 #include <qstring.h>
 #include <qpushbutton.h>
 #include <qpointer.h>
-//Added by qt3to4:
 #include <QPixmap>
 #include <QLabel>
 #include <QCloseEvent>
 #include <QProgressBar>
+
 // Include files for KDE
 
 #include <kio/job.h>
@@ -59,6 +59,7 @@
 #include "batchprocessimagesitem.h"
 #include "batchprocessimageslist.h"
 
+class QProgressBar;
 class QLabel;
 class QComboBox;
 class QCheckBox;
@@ -70,7 +71,6 @@ class Q3GroupBox;
 
 class KProcess;
 class KConfig;
-class QProgressBar;
 class KUrl;
 class KUrlRequester;
 class KFileItem;
@@ -155,7 +155,7 @@ private slots:
    QPushButton            *m_previewButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
-   
+
    KConfig                *m_config;
 
    int                     m_convertStatus;

@@ -26,14 +26,12 @@
 // Include files for Qt
 
 #include <qstring.h>
-//Added by qt3to4:
 #include <QLabel>
 
 // Include files for KDE
 
 #include <kdialog.h>
 
-class QLabel;
 class QCheckBox;
 class QComboBox;
 
@@ -44,9 +42,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 class ConvertOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
+
    ConvertOptionsDialog(QWidget *parent=0, int ImageFormatType = 0);
    ~ConvertOptionsDialog();
 
@@ -56,7 +55,8 @@ Q_OBJECT
    QComboBox       *m_TIFFCompressionAlgo;
    QComboBox       *m_TGACompressionAlgo;
 
- public slots:
+public slots:
+
    void slotCompressLossLessEnabled(bool val);
 };
 

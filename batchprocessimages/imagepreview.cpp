@@ -20,6 +20,7 @@
  *
  * ============================================================ */
 
+#include "imagepreview.h"
 #include "imagepreview.moc"
 
 // Qt includes

@@ -35,21 +35,21 @@ class BatchProcessImagesItem;
 
 class ConvertImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    ConvertImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ConvertImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
    void slotTypeChanged(int type);
 
- protected:
- 
+protected:
+
    int                    m_JPEGPNGCompression;
    bool                   m_compressLossLess;
    QString                m_TIFFCompressionAlgo;
@@ -66,7 +66,7 @@ Q_OBJECT
    QString oldFileName2NewFileName(QString fileName);
    QString ImageFileExt(QString Ext);
 
- private:
+private:
 
    KIPIPlugins::KPAboutData *m_about;
 };

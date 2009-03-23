@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "recompressimagesdialog.h"
+#include "recompressimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -48,8 +51,6 @@
 #include "pluginsversion.h"
 #include "recompressoptionsdialog.h"
 #include "outputdialog.h"
-#include "recompressimagesdialog.h"
-#include "recompressimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

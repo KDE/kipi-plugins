@@ -20,19 +20,21 @@
  *
  * ============================================================ */
 
+#include "borderoptionsdialog.h"
+#include "borderoptionsdialog.moc"
+
 // Include files for Qt
 
 #include <q3vbox.h>
+#include <Q3VBoxLayout>
+#include <q3groupbox.h>
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3groupbox.h>
 #include <qstring.h>
 #include <qcombobox.h>
 #include <qcolor.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // Include files for KDE
 
@@ -40,16 +42,11 @@
 #include <knuminput.h>
 #include <kcolorbutton.h>
 
-// Local includes
-
-#include "borderoptionsdialog.h"
-#include "borderoptionsdialog.moc"
-
 namespace KIPIBatchProcessImagesPlugin
 {
 
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
-                        : KDialog(parent)
+                   : KDialog(parent)
 {
     setCaption(i18n("Border Options"));
     setModal(true);
@@ -154,7 +151,8 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_button_frameBorderColor->setWhatsThis(i18n( "<p>You can select here the border color." ));
        dvlay->addWidget( m_button_frameBorderColor );
 
-       connect(m_frameBorderWidth, SIGNAL(valueChanged(int)), this, SLOT(slotFrameBorderWidthChanged(int)));
+       connect(m_frameBorderWidth, SIGNAL(valueChanged(int)), 
+               this, SLOT(slotFrameBorderWidthChanged(int)));
        }
 }
 

@@ -40,9 +40,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 class FilterOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
+
    FilterOptionsDialog(QWidget *parent=0, int FilterType = 0);
    ~FilterOptionsDialog();
 

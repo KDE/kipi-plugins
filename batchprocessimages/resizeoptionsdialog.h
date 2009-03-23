@@ -44,9 +44,9 @@ namespace KIPIBatchProcessImagesPlugin
 
 class ResizeOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
 
    ResizeOptionsDialog(QWidget *parent=0, int ResizeType = 0);
    ~ResizeOptionsDialog();
@@ -64,7 +64,7 @@ Q_OBJECT
    QLabel          *m_label_Height;
    QLabel          *m_label_bgColor;
    QLabel          *m_label_border;
-   QLabel	   *m_label_quality;
+   QLabel          *m_label_quality;
 
    KIntNumInput    *m_size;
    KIntNumInput    *m_customXSize;

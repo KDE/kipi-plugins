@@ -68,15 +68,17 @@ public:
     int compare (Q3ListViewItem * i, int col, bool ascending) const;
 
 private:
+
+    bool    _overwrote;
+    bool    _reverseSort;
+
     QString _pathSrc;
     QString _nameSrc;
     QString _nameDest;
     QString _result;
     QString _error;
     QString _outputMess;
-    bool    _overwrote;
     QString _key;
-    bool    _reverseSort;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

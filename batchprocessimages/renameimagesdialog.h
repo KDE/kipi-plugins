@@ -56,9 +56,9 @@ public:
 
 private:
 
-    RenameImagesWidget* m_widget;
+    RenameImagesWidget       *m_widget;
 
-    KIPIPlugins::KPAboutData* m_about;
+    KIPIPlugins::KPAboutData *m_about;
 
 private slots:
 

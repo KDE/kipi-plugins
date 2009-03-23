@@ -21,12 +21,14 @@
  *
  * ============================================================ */
 
+#include "renameimagesdialog.h"
+#include "renameimagesdialog.moc"
+
 // Qt includes.
 
+#include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // KDE includes.
 
@@ -42,8 +44,6 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "renameimageswidget.h"
-#include "renameimagesdialog.h"
-#include "renameimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

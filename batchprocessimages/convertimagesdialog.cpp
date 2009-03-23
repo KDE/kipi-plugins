@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "convertimagesdialog.h"
+#include "convertimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -42,11 +45,11 @@
 #include <kiconloader.h>
 #include <kmenu.h>
 #include <kurlrequester.h>
+#include <ktoolinvocation.h>
 
 // LibKExiv2 includes. 
 
 #include <libkexiv2/kexiv2.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -55,8 +58,6 @@
 #include "kpaboutdata.h"
 #include "convertoptionsdialog.h"
 #include "outputdialog.h"
-#include "convertimagesdialog.h"
-#include "convertimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

@@ -20,18 +20,20 @@
  *
  * ============================================================ */
 
+#include "effectoptionsdialog.h"
+#include "effectoptionsdialog.moc"
+
 // Include files for Qt
 
 #include <q3vbox.h>
+#include <q3groupbox.h>
+#include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcolor.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // Include files for KDE
 
@@ -39,16 +41,11 @@
 #include <knuminput.h>
 #include <kcolorbutton.h>
 
-// Local includes
-
-#include "effectoptionsdialog.h"
-#include "effectoptionsdialog.moc"
-
 namespace KIPIBatchProcessImagesPlugin
 {
 
 EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
-                        : KDialog(parent)
+                   : KDialog(parent)
 {
     setCaption(i18n("Effect Options"));
     setModal(true);

@@ -34,7 +34,8 @@
 class QLCDNumber;
 class QSlider;
 
-namespace KIPIPlugins {
+namespace KIPIPlugins 
+{
 class KPAboutData;
 }
 
@@ -43,26 +44,25 @@ class PixmapView;
 namespace KIPIBatchProcessImagesPlugin
 {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 class ImagePreview : public KDialog, private Ui_ImagePreview
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    
+
     ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
                  bool cropActionOrig, bool cropActionDest, const QString &EffectName,
                  const QString &FileName, QWidget *parent=0);
     ~ImagePreview();
 
 private slots:
-    
+
     void slotZoomFactorValueChanged( int ZoomFactorValue );
     void slotWheelChanged( int delta );
     void slotHelp(void);
 
 private:
+
     KIPIPlugins::KPAboutData    *m_about;
 
     int INIT_ZOOM_FACTOR; // FIXME: Ugly name
@@ -71,4 +71,3 @@ private:
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // IMAGEPREVIEW_H
-

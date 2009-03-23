@@ -36,9 +36,10 @@
 
 #include "ui_renameimagesbase.h"
 
-class KFileItem;
 class QTimer;
 class Q3ProgressDialog;
+
+class KFileItem;
 
 namespace KIPI
 {
@@ -106,6 +107,6 @@ private slots:
     void moveCurrentItemDown();
 };
 
-}
+} // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* RENAMEIMAGESWIDGET_H */

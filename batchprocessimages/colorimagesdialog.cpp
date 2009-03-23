@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "colorimagesdialog.h"
+#include "colorimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -49,8 +52,6 @@
 #include "coloroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
-#include "colorimagesdialog.h"
-#include "colorimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

@@ -20,15 +20,17 @@
  *
  * ============================================================ */
 
+#include "outputdialog.h"
+#include "outputdialog.moc"
+
 // Qt includes
 
 #include <q3textview.h>
+#include <q3frame.h>
+#include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3frame.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // KDElib includes
 
@@ -43,8 +45,6 @@
 
 #include "dialogutils.h"
 #include "pluginsversion.h"
-#include "outputdialog.h"
-#include "outputdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -105,8 +105,7 @@ OutputDialog::~OutputDialog()
 
 void OutputDialog::slotHelp( void )
 {
-    KToolInvocation::invokeHelp("",
-                                             "kipi-plugins");
+    KToolInvocation::invokeHelp("", "kipi-plugins");
 }
 
 void OutputDialog::slotCopyToCliboard( void )

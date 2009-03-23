@@ -40,9 +40,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 class ColorOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
+
    ColorOptionsDialog(QWidget *parent=0, int ColorType = 0);
    ~ColorOptionsDialog();
 

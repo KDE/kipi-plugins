@@ -22,8 +22,8 @@
 
 // Include files for Qt
 
-#include <qpainter.h>
 #include <q3listview.h>
+#include <qpainter.h>
 
 // Include files for KDE
 
@@ -39,9 +39,9 @@ namespace KIPIBatchProcessImagesPlugin
 BatchProcessImagesItem::BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
                       : K3ListViewItem( parent, "", nameSrc, nameDest, result),
-                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result),
                         _overwrote( false ),
-                        _reverseSort( false )
+                        _reverseSort( false ),
+                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
 {
     setText(0, pathSrc.section('/', -2, -2));
 }

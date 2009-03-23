@@ -20,34 +20,31 @@
  *
  * ============================================================ */
 
+#include "convertoptionsdialog.h"
+#include "convertoptionsdialog.moc"
+
 // Include files for Qt
 
+#include <q3groupbox.h>
 #include <q3vbox.h>
+#include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // Include files for KDE
 
 #include <klocale.h>
 #include <knuminput.h>
 
-// Local includes
-
-#include "convertoptionsdialog.h"
-#include "convertoptionsdialog.moc"
-
 namespace KIPIBatchProcessImagesPlugin
 {
 
 ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
-                        : KDialog(parent)
+                    : KDialog(parent)
 {
     setCaption(i18n("Image File Format Options"));
     setModal(true);

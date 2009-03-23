@@ -19,7 +19,10 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
- 
+
+#include "effectimagesdialog.h"
+#include "effectimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -49,8 +52,6 @@
 #include "effectoptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
-#include "effectimagesdialog.h"
-#include "effectimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

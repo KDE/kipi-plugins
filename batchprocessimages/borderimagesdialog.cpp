@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "borderimagesdialog.h"
+#include "borderimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -50,8 +53,6 @@
 #include "outputdialog.h"
 #include "imagepreview.h"
 #include "borderoptionsdialog.h"
-#include "borderimagesdialog.h"
-#include "borderimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -88,7 +89,7 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_labelType->setText( i18n("Border:") );
 
     m_Type->insertItem(i18n("Solid"));
-    
+
     // Niepce is Real name. This is the first guy in the world to have build a camera.
     m_Type->insertItem("Niepce");
 
@@ -126,55 +127,55 @@ void BorderImagesDialog::slotOptionsClicked(void)
     BorderOptionsDialog *optionsDialog = new BorderOptionsDialog(this, Type);
 
     if ( Type == 0 )  // Solid
-       {
+    {
        optionsDialog->m_solidBorderWidth->setValue(m_solidWidth);
        optionsDialog->m_button_solidBorderColor->setColor(m_solidColor);
-       }
+    }
     if ( Type == 1 ) // Niepce
-       {
+    {
        optionsDialog->m_lineNiepceBorderWidth->setValue(m_lineNiepceWidth);
        optionsDialog->m_button_lineNiepceBorderColor->setColor(m_lineNiepceColor);
        optionsDialog->m_NiepceBorderWidth->setValue(m_NiepceWidth);
        optionsDialog->m_button_NiepceBorderColor->setColor(m_NiepceColor);
-       }
+    }
     if ( Type == 2 ) // Raise
-       {
+    {
        optionsDialog->m_raiseBorderWidth->setValue(m_raiseWidth);
-       }
+    }
     if ( Type == 3 ) // Frame
-       {
+    {
        optionsDialog->m_frameBorderWidth->setValue(m_frameWidth);
        optionsDialog->m_frameBevelBorderWidth->setValue(m_bevelWidth);
        optionsDialog->m_button_frameBorderColor->setColor(m_frameColor);
-       }
+    }
 
     if ( optionsDialog->exec() == KMessageBox::Ok )
-       {
-       if ( Type == 0 ) // Solid
-          {
-          m_solidWidth = optionsDialog->m_solidBorderWidth->value();
-          m_solidColor = optionsDialog->m_button_solidBorderColor->color();
-          }
-       if ( Type == 1 ) // Niepce
-          {
-          m_lineNiepceWidth = optionsDialog->m_lineNiepceBorderWidth->value();
-          m_lineNiepceColor = optionsDialog->m_button_lineNiepceBorderColor->color();
-          m_NiepceWidth = optionsDialog->m_NiepceBorderWidth->value();
-          m_NiepceColor = optionsDialog->m_button_NiepceBorderColor->color();
-          }
-       if ( Type == 2 ) // Raise
-          {
-          m_raiseWidth = optionsDialog->m_raiseBorderWidth->value();
-          }
-       if ( Type == 3 ) // Frame
-          {
-          m_frameWidth = optionsDialog->m_frameBorderWidth->value();
-          m_bevelWidth = optionsDialog->m_frameBevelBorderWidth->value();
-          m_frameColor = optionsDialog->m_button_frameBorderColor->color();
-          }
-       }
+    {
+        if ( Type == 0 ) // Solid
+        {
+            m_solidWidth = optionsDialog->m_solidBorderWidth->value();
+            m_solidColor = optionsDialog->m_button_solidBorderColor->color();
+        }
+        if ( Type == 1 ) // Niepce
+        {
+            m_lineNiepceWidth = optionsDialog->m_lineNiepceBorderWidth->value();
+            m_lineNiepceColor = optionsDialog->m_button_lineNiepceBorderColor->color();
+            m_NiepceWidth = optionsDialog->m_NiepceBorderWidth->value();
+            m_NiepceColor = optionsDialog->m_button_NiepceBorderColor->color();
+        }
+        if ( Type == 2 ) // Raise
+        {
+            m_raiseWidth = optionsDialog->m_raiseBorderWidth->value();
+        }
+        if ( Type == 3 ) // Frame
+        {
+            m_frameWidth = optionsDialog->m_frameBorderWidth->value();
+            m_bevelWidth = optionsDialog->m_frameBevelBorderWidth->value();
+            m_frameColor = optionsDialog->m_button_frameBorderColor->color();
+        }
+    }
 
-   delete optionsDialog;
+    delete optionsDialog;
 }
 
 void BorderImagesDialog::readSettings(void)
@@ -237,8 +238,6 @@ void BorderImagesDialog::saveSettings(void)
     group.writeEntry("SmallPreview", m_smallPreview->isChecked());
     group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
     group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
-
 }
 
 void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,

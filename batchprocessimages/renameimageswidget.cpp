@@ -21,6 +21,9 @@
  *
  * ============================================================ */
 
+#include "renameimageswidget.h"
+#include "renameimageswidget.moc"
+
 // C Ansi includes.
 
 extern "C"
@@ -76,9 +79,6 @@ extern "C"
 // Local includes.
 
 #include "batchprocessimagesitem.h"
-#include "renameimageswidget.h"
-#include "renameimageswidget.moc"
-#include <imagedialog.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {

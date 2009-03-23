@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "resizeimagesdialog.h"
+#include "resizeimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -50,8 +53,6 @@
 #include "pluginsversion.h"
 #include "resizeoptionsdialog.h"
 #include "outputdialog.h"
-#include "resizeimagesdialog.h"
-#include "resizeimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

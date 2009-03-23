@@ -35,20 +35,20 @@ class BatchProcessImagesItem;
 
 class RecompressImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    RecompressImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~RecompressImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotOptionsClicked(void);
    void slotHelp(void);
 
- protected:
- 
+protected:
+
    int     m_JPEGCompression;
    int     m_PNGCompression;
    bool    m_compressLossLess;
@@ -64,9 +64,9 @@ Q_OBJECT
    bool prepareStartProcess(BatchProcessImagesItem *item,
                             const QString& albumDest);
 
- private:
+private:
 
-   KIPIPlugins::KPAboutData    *m_about;
+   KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

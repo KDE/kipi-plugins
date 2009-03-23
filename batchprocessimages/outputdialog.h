@@ -42,7 +42,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 class OutputDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -56,14 +56,12 @@ private slots:
   void slotCopyToCliboard( void );
 
 private:
-  
-  Q3TextView *debugView;
-  
-  KIPIPlugins::KPAboutData  *m_about;
 
+  Q3TextView *debugView;
+
+  KIPIPlugins::KPAboutData  *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
 #endif  // OUTPUTDIALOG_H
-

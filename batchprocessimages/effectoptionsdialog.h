@@ -38,9 +38,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 class EffectOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
+
    EffectOptionsDialog(QWidget *parent=0, int EffectType = 0);
    ~EffectOptionsDialog();
 

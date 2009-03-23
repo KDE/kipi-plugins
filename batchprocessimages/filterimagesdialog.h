@@ -35,21 +35,21 @@ class BatchProcessImagesItem;
 
 class FilterImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    FilterImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~FilterImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
    void slotTypeChanged(int type);
 
- protected:
- 
+protected:
+
    QString                m_noiseType;
    int                    m_blurRadius;
    int                    m_blurDeviation;
@@ -63,12 +63,12 @@ Q_OBJECT
    int                    m_unsharpenThreshold;
 
    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+                    const QString& albumDest, bool previewMode);
 
    void readSettings(void);
    void saveSettings(void);
 
- private:
+private:
 
    KIPIPlugins::KPAboutData *m_about;
 };

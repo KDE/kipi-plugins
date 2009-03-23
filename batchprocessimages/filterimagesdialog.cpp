@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "filterimagesdialog.h"
+#include "filterimagesdialog.moc"
+
 // Include files for Qt
 
 #include <q3groupbox.h>
@@ -49,8 +52,6 @@
 #include "filteroptionsdialog.h"
 #include "outputdialog.h"
 #include "imagepreview.h"
-#include "filterimagesdialog.h"
-#include "filterimagesdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

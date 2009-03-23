@@ -20,28 +20,25 @@
  *
  * ============================================================ */
 
+#include "recompressoptionsdialog.h"
+#include "recompressoptionsdialog.moc"
+
 // Include files for Qt
 
 #include <q3vbox.h>
+#include <q3groupbox.h>
+#include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3groupbox.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 // Include files for KDE
 
 #include <klocale.h>
 #include <knuminput.h>
-
-// Local includes
-
-#include "recompressoptionsdialog.h"
-#include "recompressoptionsdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

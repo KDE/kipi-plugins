@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-
 #ifndef COLORIMAGESDIALOG_H
 #define COLORIMAGESDIALOG_H
 
@@ -36,21 +35,21 @@ class BatchProcessImagesItem;
 
 class ColorImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    ColorImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ColorImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
    void slotTypeChanged(int type);
 
- protected:
- 
+protected:
+
    QString                m_depthValue;
    int                    m_fuzzDistance;
    int                    m_segmentCluster;
@@ -62,8 +61,8 @@ Q_OBJECT
    void readSettings(void);
    void saveSettings(void);
 
- private:
- 
+private:
+
    KIPIPlugins::KPAboutData *m_about;
 };
 

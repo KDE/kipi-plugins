@@ -35,9 +35,10 @@ namespace KIPIBatchProcessImagesPlugin
 
 class BorderOptionsDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
+public:
+
    BorderOptionsDialog(QWidget *parent=0, int BorderType = 0);
    ~BorderOptionsDialog();
 
@@ -55,7 +56,8 @@ Q_OBJECT
    KIntNumInput    *m_frameBevelBorderWidth;
    KColorButton    *m_button_frameBorderColor;
 
- private slots:
+private slots:
+
    void slotFrameBorderWidthChanged (int value);
 };
 

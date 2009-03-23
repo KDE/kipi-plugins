@@ -20,25 +20,22 @@
  *
  * ============================================================ */
 
+#include "batchprocessimageslist.h"
+#include "batchprocessimageslist.moc"
+
 // Include files for Qt
 
-#include <qevent.h>
 #include <q3dragobject.h>
 #include <q3strlist.h>
-#include <qfileinfo.h>
 #include <q3listview.h>
-//Added by qt3to4:
+#include <qevent.h>
+#include <qfileinfo.h>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
 // Include files for KDE
 
 #include <klocale.h>
-
-// Local include files
-
-#include "batchprocessimageslist.h"
-#include "batchprocessimageslist.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {

@@ -35,20 +35,20 @@ class BatchProcessImagesItem;
 
 class ResizeImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
- 
+public:
+
    ResizeImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~ResizeImagesDialog();
 
- private slots:
- 
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
 
- protected:
- 
+protected:
+
    QString                m_resizeFilter;
    QString                m_paperSize;
    QString                m_printDpi;
@@ -70,7 +70,7 @@ Q_OBJECT
    int                    m_Border;
    int                    m_fixedWidth;
    int                    m_fixedHeight;
-   int			  m_quality;
+   int                    m_quality;
 
    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                        const QString& albumDest, bool previewMode);
@@ -82,9 +82,9 @@ Q_OBJECT
 
    bool ResizeImage( int &w, int &h, int SizeFactor);
 
- private:
+private:
 
- KIPIPlugins::KPAboutData   *m_about;
+   KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // NameSpace KIPIBatchProcessImagesPlugin

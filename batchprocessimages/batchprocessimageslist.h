@@ -26,7 +26,6 @@
 // Include files for Qt
 
 #include <qobject.h>
-//Added by qt3to4:
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
@@ -39,15 +38,18 @@ namespace KIPIBatchProcessImagesPlugin
 
 class BatchProcessImagesList : public K3ListView
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     BatchProcessImagesList(QWidget *parent=0, const char *name=0);
 
 signals:
+
     void addedDropItems(QStringList filesPath);
 
 protected:
+
     void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent* e);
     bool acceptDrag(QDropEvent* e) const;
@@ -57,4 +59,4 @@ protected:
 
 }  // NameSpace KIPIBatchProcessImagesPlugin
 
-#endif
+#endif // BATCHPROCESSIMAGE_H

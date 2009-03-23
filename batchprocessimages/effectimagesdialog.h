@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
- 
+
 #ifndef EFFECTIMAGESDIALOG_H
 #define EFFECTIMAGESDIALOG_H
 
@@ -35,20 +35,20 @@ class BatchProcessImagesItem;
 
 class EffectImagesDialog : public BatchProcessImagesDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
- public:
-   
+public:
+
    EffectImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
    ~EffectImagesDialog();
 
- private slots:
-   
+private slots:
+
    void slotHelp(void);
    void slotOptionsClicked(void);
 
- protected:
-   
+protected:
+
    int  m_latWidth;
    int  m_latHeight;
    int  m_latOffset;
@@ -73,7 +73,7 @@ Q_OBJECT
    void readSettings(void);
    void saveSettings(void);
 
- private:
+private:
 
    KIPIPlugins::KPAboutData *m_about;
 };

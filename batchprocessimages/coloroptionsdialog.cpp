@@ -19,7 +19,10 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
- 
+
+#include "coloroptionsdialog.h"
+#include "coloroptionsdialog.moc"
+
 // Include files for Qt
 
 #include <q3vbox.h>
@@ -39,11 +42,6 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kcolorbutton.h>
-
-// Local includes
-
-#include "coloroptionsdialog.h"
-#include "coloroptionsdialog.moc"
 
 namespace KIPIBatchProcessImagesPlugin
 {
