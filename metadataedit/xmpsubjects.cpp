@@ -131,10 +131,6 @@ public:
 XMPSubjects::XMPSubjects(QWidget* parent)
            : QWidget(parent), d(new XMPSubjectsPriv)
 {
-    QGridLayout *grid = new QGridLayout(this);
-
-    // --------------------------------------------------------
-
     // Load subject codes provided by IPTC/NAA as xml file.
     // See http://www.iptc.org/NewsCodes/nc_ts-table01.php for details.
 
@@ -162,18 +158,20 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->optionsBox      = new QWidget(this);
-    QGridLayout *grid2 = new QGridLayout(d->optionsBox);
-    d->btnGroup        = new QButtonGroup(d->optionsBox);
-    KHBox *hbox        = new KHBox(d->optionsBox);
-    d->stdBtn          = new QRadioButton(QString(), hbox);
-    QLabel *codeLink   = new QLabel(i18n("Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>"), hbox);
-    d->refCB           = new KComboBox(d->optionsBox);
-    d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
+    d->optionsBox = new QWidget;
+    d->btnGroup   = new QButtonGroup(this);
+    d->stdBtn     = new QRadioButton;
+    d->customBtn  = new QRadioButton;
+    d->refCB      = new KComboBox;
+
+    QLabel *codeLink = new QLabel(i18n("Use standard "
+                                          "<b><a href='http://www.iptc.org/NewsCodes'>"
+                                              "reference code"
+                                          "</a></b>"));
     codeLink->setOpenExternalLinks(true);
-    codeLink->setWordWrap(true);
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
+    codeLink->setWordWrap(false);
+
+    QLabel *customLabel = new QLabel(i18n("Use custom definition"));
 
     d->btnGroup->addButton(d->stdBtn,    XMPSubjectsPriv::STANDARD);
     d->btnGroup->addButton(d->customBtn, XMPSubjectsPriv::CUSTOM);
@@ -186,7 +184,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprEdit = new KLineEdit(d->optionsBox);
+    d->iprEdit = new KLineEdit;
     d->iprEdit->setClearButtonShown(true);
     d->iprEdit->setValidator(subjectValidator);
     d->iprEdit->setWhatsThis(i18n("Enter here the Informative Provider Reference. "
@@ -197,7 +195,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->refEdit = new KLineEdit(d->optionsBox);
+    d->refEdit = new KLineEdit;
     d->refEdit->setClearButtonShown(true);
     d->refEdit->setValidator(refValidator);
     d->refEdit->setMaxLength(8);
@@ -215,7 +213,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->nameEdit = new KLineEdit(d->optionsBox);
+    d->nameEdit = new KLineEdit;
     d->nameEdit->setClearButtonShown(true);
     d->nameEdit->setValidator(subjectValidator);
     d->nameEdit->setWhatsThis(i18n("Enter here the Subject Name. English language is used "
@@ -223,7 +221,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->matterEdit = new KLineEdit(d->optionsBox);
+    d->matterEdit = new KLineEdit;
     d->matterEdit->setClearButtonShown(true);
     d->matterEdit->setValidator(subjectValidator);
     d->matterEdit->setWhatsThis(i18n("Enter here the Subject Matter Name. English language is used "
@@ -231,7 +229,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->detailEdit = new KLineEdit(d->optionsBox);
+    d->detailEdit = new KLineEdit;
     d->detailEdit->setClearButtonShown(true);
     d->detailEdit->setValidator(subjectValidator);
     d->detailEdit->setWhatsThis(i18n("Enter here the Subject Detail Name. English language is used "
@@ -239,39 +237,43 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprLabel    = new QLabel(i18n("I.P.R:"), d->optionsBox);
-    d->refLabel    = new QLabel(i18n("Reference:"), d->optionsBox);
-    d->nameLabel   = new QLabel(i18n("Name:"), d->optionsBox);
-    d->matterLabel = new QLabel(i18n("Matter:"), d->optionsBox);
-    d->detailLabel = new QLabel(i18n("Detail:"), d->optionsBox);
+    d->iprLabel    = new QLabel(i18n("I.P.R:"));
+    d->refLabel    = new QLabel(i18n("Reference:"));
+    d->nameLabel   = new QLabel(i18n("Name:"));
+    d->matterLabel = new QLabel(i18n("Matter:"));
+    d->detailLabel = new QLabel(i18n("Detail:"));
 
     // --------------------------------------------------------
 
-    grid2->addWidget(hbox,              0, 0, 1, 2);
-    grid2->addWidget(d->refCB,          0, 2, 1, 1);
-    grid2->addWidget(d->customBtn,      1, 0, 1, 4);
-    grid2->addWidget(d->iprLabel,       2, 0, 1, 1);
-    grid2->addWidget(d->iprEdit,        2, 1, 1, 4);
-    grid2->addWidget(d->refLabel,       3, 0, 1, 1);
-    grid2->addWidget(d->refEdit,        3, 1, 1, 1);
-    grid2->addWidget(d->nameLabel,      4, 0, 1, 1);
-    grid2->addWidget(d->nameEdit,       4, 1, 1, 4);
-    grid2->addWidget(d->matterLabel,    5, 0, 1, 1);
-    grid2->addWidget(d->matterEdit,     5, 1, 1, 4);
-    grid2->addWidget(d->detailLabel,    6, 0, 1, 1);
-    grid2->addWidget(d->detailEdit,     6, 1, 1, 4);
-    grid2->setColumnStretch(4, 10);
-    grid2->setMargin(0);
-    grid2->setSpacing(KDialog::spacingHint());
+    QGridLayout *optionsBoxLayout = new QGridLayout;
+    optionsBoxLayout->addWidget(d->stdBtn,      0, 0, 1, 1);
+    optionsBoxLayout->addWidget(codeLink,       0, 1, 1, 2);
+    optionsBoxLayout->addWidget(d->refCB,       0, 3, 1, 1);
+    optionsBoxLayout->addWidget(d->customBtn,   1, 0, 1, 4);
+    optionsBoxLayout->addWidget(customLabel,    1, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->iprLabel,    2, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->iprEdit,     2, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->refLabel,    3, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->refEdit,     3, 1, 1, 1);
+    optionsBoxLayout->addWidget(d->nameLabel,   4, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->nameEdit,    4, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->matterLabel, 5, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->matterEdit,  5, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->detailLabel, 6, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->detailEdit,  6, 1, 1, 4);
+    optionsBoxLayout->setColumnStretch(4, 10);
+    optionsBoxLayout->setMargin(0);
+    optionsBoxLayout->setSpacing(KDialog::spacingHint());
+    d->optionsBox->setLayout(optionsBoxLayout);
 
     // --------------------------------------------------------
 
-    d->subjectsBox = new KListWidget(this);
+    d->subjectsBox = new KListWidget;
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    d->addSubjectButton = new QPushButton( i18n("&Add"), this);
-    d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
-    d->repSubjectButton = new QPushButton( i18n("&Replace"), this);
+    d->addSubjectButton = new QPushButton( i18n("&Add"));
+    d->delSubjectButton = new QPushButton( i18n("&Delete"));
+    d->repSubjectButton = new QPushButton( i18n("&Replace"));
     d->addSubjectButton->setIcon(SmallIcon("list-add"));
     d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
@@ -280,17 +282,19 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->subjectsCheck,       0, 0, 1, 4);
-    grid->addWidget(d->optionsBox,          1, 0, 1, 4);
-    grid->addWidget(d->subjectsBox,         2, 0, 5, 3);
-    grid->addWidget(d->addSubjectButton,    2, 3, 1, 1);
-    grid->addWidget(d->delSubjectButton,    3, 3, 1, 1);
-    grid->addWidget(d->repSubjectButton,    4, 3, 1, 1);
-    grid->setRowStretch(5, 10);
-    grid->setColumnStretch(2, 1);
-    grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
+    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout->setAlignment( Qt::AlignTop );
+    mainLayout->addWidget(d->subjectsCheck,    0, 0, 1, 4);
+    mainLayout->addWidget(d->optionsBox,       1, 0, 1, 4);
+    mainLayout->addWidget(d->subjectsBox,      2, 0, 5, 3);
+    mainLayout->addWidget(d->addSubjectButton, 2, 3, 1, 1);
+    mainLayout->addWidget(d->delSubjectButton, 3, 3, 1, 1);
+    mainLayout->addWidget(d->repSubjectButton, 4, 3, 1, 1);
+    mainLayout->setRowStretch(5, 10);
+    mainLayout->setColumnStretch(2, 1);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(KDialog::spacingHint());
+    setLayout(mainLayout);
 
     // --------------------------------------------------------
 
