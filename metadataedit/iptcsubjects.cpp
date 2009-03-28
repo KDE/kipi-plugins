@@ -130,7 +130,7 @@ public:
 IPTCSubjects::IPTCSubjects(QWidget* parent)
             : QWidget(parent), d(new IPTCSubjectsPriv)
 {
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout *grid = new QGridLayout;
 
     // --------------------------------------------------------
 
@@ -161,23 +161,25 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->optionsBox      = new QWidget(this);
-    QGridLayout *grid2 = new QGridLayout(d->optionsBox);
-    d->btnGroup        = new QButtonGroup(d->optionsBox);
-    KHBox *hbox        = new KHBox(d->optionsBox);
-    d->stdBtn          = new QRadioButton(QString(), hbox);
-    QLabel *codeLink   = new QLabel(i18n("Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>"), hbox);
-    d->refCB           = new KComboBox(d->optionsBox);
-    d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
+    d->optionsBox       = new QWidget;
+    QGridLayout *grid2  = new QGridLayout;
+    d->btnGroup         = new QButtonGroup;
+    d->stdBtn           = new QRadioButton;
+    d->customBtn        = new QRadioButton;
+    d->refCB            = new KComboBox;
+
+    QString codeLinkStr = i18n("Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>");
+    QLabel *codeLink    = new QLabel(codeLinkStr);
     codeLink->setOpenExternalLinks(true);
-    codeLink->setWordWrap(true);
-    hbox->setMargin(0);
-    hbox->setSpacing(0);
+    codeLink->setWordWrap(false);
+
+    QLabel *customLabel = new QLabel(i18n("Use custom definition"));
 
     d->btnGroup->addButton(d->stdBtn,    IPTCSubjectsPriv::STANDARD);
     d->btnGroup->addButton(d->customBtn, IPTCSubjectsPriv::CUSTOM);
     d->btnGroup->setExclusive(true);
     d->stdBtn->setChecked(true);
+
 
     for (IPTCSubjectsPriv::SubjectCodesMap::Iterator it = d->subMap.begin();
          it != d->subMap.end(); ++it)
@@ -185,7 +187,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprEdit = new KLineEdit(d->optionsBox);
+    d->iprEdit = new KLineEdit;
     d->iprEdit->setClearButtonShown(true);
     d->iprEdit->setValidator(subjectAsciiValidator);
     d->iprEdit->setMaxLength(32);
@@ -197,7 +199,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->refEdit = new KLineEdit(d->optionsBox);
+    d->refEdit = new KLineEdit;
     d->refEdit->setClearButtonShown(true);
     d->refEdit->setValidator(refValidator);
     d->refEdit->setMaxLength(8);
@@ -215,7 +217,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->nameEdit = new KLineEdit(d->optionsBox);
+    d->nameEdit = new KLineEdit;
     d->nameEdit->setClearButtonShown(true);
     d->nameEdit->setValidator(subjectAsciiValidator);
     d->nameEdit->setMaxLength(64);
@@ -225,7 +227,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->matterEdit = new KLineEdit(d->optionsBox);
+    d->matterEdit = new KLineEdit;
     d->matterEdit->setClearButtonShown(true);
     d->matterEdit->setValidator(subjectAsciiValidator);
     d->matterEdit->setMaxLength(64);
@@ -235,7 +237,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->detailEdit = new KLineEdit(d->optionsBox);
+    d->detailEdit = new KLineEdit;
     d->detailEdit->setClearButtonShown(true);
     d->detailEdit->setValidator(subjectAsciiValidator);
     d->detailEdit->setMaxLength(64);
@@ -253,31 +255,13 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid2->addWidget(hbox,              0, 0, 1, 2);
-    grid2->addWidget(d->refCB,          0, 2, 1, 1);
-    grid2->addWidget(d->customBtn,      1, 0, 1, 4);
-    grid2->addWidget(d->iprLabel,       2, 0, 1, 1);
-    grid2->addWidget(d->iprEdit,        2, 1, 1, 4);
-    grid2->addWidget(d->refLabel,       3, 0, 1, 1);
-    grid2->addWidget(d->refEdit,        3, 1, 1, 1);
-    grid2->addWidget(d->nameLabel,      4, 0, 1, 1);
-    grid2->addWidget(d->nameEdit,       4, 1, 1, 4);
-    grid2->addWidget(d->matterLabel,    5, 0, 1, 1);
-    grid2->addWidget(d->matterEdit,     5, 1, 1, 4);
-    grid2->addWidget(d->detailLabel,    6, 0, 1, 1);
-    grid2->addWidget(d->detailEdit,     6, 1, 1, 4);
-    grid2->setColumnStretch(4, 10);
-    grid2->setMargin(0);
-    grid2->setSpacing(KDialog::spacingHint());
 
-    // --------------------------------------------------------
-
-    d->subjectsBox = new KListWidget(this);
+    d->subjectsBox = new KListWidget;
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    d->addSubjectButton = new QPushButton( i18n("&Add"), this);
-    d->delSubjectButton = new QPushButton( i18n("&Delete"), this);
-    d->repSubjectButton = new QPushButton( i18n("&Replace"), this);
+    d->addSubjectButton = new QPushButton( i18n("&Add"));
+    d->delSubjectButton = new QPushButton( i18n("&Delete"));
+    d->repSubjectButton = new QPushButton( i18n("&Replace"));
     d->addSubjectButton->setIcon(SmallIcon("list-add"));
     d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
@@ -291,7 +275,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters set and limit strings size. "
-                 "Use contextual help for details.</b>"), this);
+                 "Use contextual help for details.</b>"));
     note->setMaximumWidth(150);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
@@ -299,10 +283,32 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
+    grid2->addWidget(d->stdBtn,         0, 0, 1, 1);
+    grid2->addWidget(codeLink,          0, 1, 1, 2);
+    grid2->addWidget(d->refCB,          0, 3, 1, 1);
+    grid2->addWidget(d->customBtn,      1, 0, 1, 4);
+    grid2->addWidget(customLabel,       1, 1, 1, 4);
+    grid2->addWidget(d->iprLabel,       2, 0, 1, 1);
+    grid2->addWidget(d->iprEdit,        2, 1, 1, 4);
+    grid2->addWidget(d->refLabel,       3, 0, 1, 1);
+    grid2->addWidget(d->refEdit,        3, 1, 1, 1);
+    grid2->addWidget(d->nameLabel,      4, 0, 1, 1);
+    grid2->addWidget(d->nameEdit,       4, 1, 1, 4);
+    grid2->addWidget(d->matterLabel,    5, 0, 1, 1);
+    grid2->addWidget(d->matterEdit,     5, 1, 1, 4);
+    grid2->addWidget(d->detailLabel,    6, 0, 1, 1);
+    grid2->addWidget(d->detailEdit,     6, 1, 1, 4);
+    grid2->setColumnStretch(4, 10);
+    grid2->setMargin(0);
+    grid2->setSpacing(KDialog::spacingHint());
+    d->optionsBox->setLayout(grid2);
+
+    // --------------------------------------------------------
+
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->subjectsCheck, 0, 0, 1, 4);
-    grid->addWidget(d->optionsBox, 1, 0, 1, 4);
-    grid->addWidget(d->subjectsBox, 2, 0, 5, 3);
+    grid->addWidget(d->subjectsCheck,    0, 0, 1, 4);
+    grid->addWidget(d->optionsBox,       1, 0, 1, 4);
+    grid->addWidget(d->subjectsBox,      2, 0, 5, 3);
     grid->addWidget(d->addSubjectButton, 2, 3, 1, 1);
     grid->addWidget(d->delSubjectButton, 3, 3, 1, 1);
     grid->addWidget(d->repSubjectButton, 4, 3, 1, 1);
@@ -311,6 +317,7 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     grid->setColumnStretch(2, 1);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
+    setLayout(grid);
 
     // --------------------------------------------------------
 
