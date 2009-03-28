@@ -157,13 +157,13 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->optionsBox       = new QWidget;
-    d->btnGroup         = new QButtonGroup;
-    d->stdBtn           = new QRadioButton;
-    d->customBtn        = new QRadioButton;
-    d->refCB            = new KComboBox;
+    d->optionsBox = new QWidget;
+    d->btnGroup   = new QButtonGroup(this);
+    d->stdBtn     = new QRadioButton;
+    d->customBtn  = new QRadioButton;
+    d->refCB      = new KComboBox;
 
-    QLabel *codeLink    = new QLabel(i18n("Use standard "
+    QLabel *codeLink = new QLabel(i18n("Use standard "
                                           "<b><a href='http://www.iptc.org/NewsCodes'>"
                                               "reference code"
                                           "</a></b>"));
