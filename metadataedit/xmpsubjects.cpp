@@ -166,8 +166,8 @@ XMPSubjects::XMPSubjects(QWidget* parent)
     QGridLayout *grid2 = new QGridLayout(d->optionsBox);
     d->btnGroup        = new QButtonGroup(d->optionsBox);
     KHBox *hbox        = new KHBox(d->optionsBox);
-    d->stdBtn          = new QRadioButton(i18n("Use standard "), hbox);
-    QLabel *codeLink   = new QLabel(QString("<b><a href='http://www.iptc.org/NewsCodes'>%1</a></b>").arg(i18n("reference code")), hbox);
+    d->stdBtn          = new QRadioButton(QString(), hbox);
+    QLabel *codeLink   = new QLabel(i18n("Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>"), hbox);
     d->refCB           = new KComboBox(d->optionsBox);
     d->customBtn       = new QRadioButton(i18n("Use custom definition"), d->optionsBox);
     codeLink->setOpenExternalLinks(true);
