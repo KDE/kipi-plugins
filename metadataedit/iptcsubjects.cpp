@@ -163,8 +163,10 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->customBtn        = new QRadioButton;
     d->refCB            = new KComboBox;
 
-    QString codeLinkStr = i18n("Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</a></b>");
-    QLabel *codeLink    = new QLabel(codeLinkStr);
+    QLabel *codeLink    = new QLabel(i18n("Use standard "
+                                          "<b><a href='http://www.iptc.org/NewsCodes'>"
+                                              "reference code"
+                                          "</a></b>"));
     codeLink->setOpenExternalLinks(true);
     codeLink->setWordWrap(false);
 
@@ -254,9 +256,9 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     d->subjectsBox = new KListWidget;
     d->subjectsBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-    d->addSubjectButton = new QPushButton( i18n("&Add"));
-    d->delSubjectButton = new QPushButton( i18n("&Delete"));
-    d->repSubjectButton = new QPushButton( i18n("&Replace"));
+    d->addSubjectButton = new QPushButton(i18n("&Add"));
+    d->delSubjectButton = new QPushButton(i18n("&Delete"));
+    d->repSubjectButton = new QPushButton(i18n("&Replace"));
     d->addSubjectButton->setIcon(SmallIcon("list-add"));
     d->delSubjectButton->setIcon(SmallIcon("edit-delete"));
     d->repSubjectButton->setIcon(SmallIcon("view-refresh"));
