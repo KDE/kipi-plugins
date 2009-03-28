@@ -130,10 +130,6 @@ public:
 IPTCSubjects::IPTCSubjects(QWidget* parent)
             : QWidget(parent), d(new IPTCSubjectsPriv)
 {
-    QGridLayout *grid = new QGridLayout;
-
-    // --------------------------------------------------------
-
     // Load subject codes provided by IPTC/NAA as xml file.
     // See http://www.iptc.org/NewsCodes/nc_ts-table01.php for details.
 
@@ -162,7 +158,6 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
     // --------------------------------------------------------
 
     d->optionsBox       = new QWidget;
-    QGridLayout *grid2  = new QGridLayout;
     d->btnGroup         = new QButtonGroup;
     d->stdBtn           = new QRadioButton;
     d->customBtn        = new QRadioButton;
@@ -247,11 +242,11 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprLabel    = new QLabel(i18n("I.P.R:"), d->optionsBox);
-    d->refLabel    = new QLabel(i18n("Reference:"), d->optionsBox);
-    d->nameLabel   = new QLabel(i18n("Name:"), d->optionsBox);
-    d->matterLabel = new QLabel(i18n("Matter:"), d->optionsBox);
-    d->detailLabel = new QLabel(i18n("Detail:"), d->optionsBox);
+    d->iprLabel    = new QLabel(i18n("I.P.R:"));
+    d->refLabel    = new QLabel(i18n("Reference:"));
+    d->nameLabel   = new QLabel(i18n("Name:"));
+    d->matterLabel = new QLabel(i18n("Matter:"));
+    d->detailLabel = new QLabel(i18n("Detail:"));
 
     // --------------------------------------------------------
 
@@ -283,41 +278,43 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    grid2->addWidget(d->stdBtn,         0, 0, 1, 1);
-    grid2->addWidget(codeLink,          0, 1, 1, 2);
-    grid2->addWidget(d->refCB,          0, 3, 1, 1);
-    grid2->addWidget(d->customBtn,      1, 0, 1, 4);
-    grid2->addWidget(customLabel,       1, 1, 1, 4);
-    grid2->addWidget(d->iprLabel,       2, 0, 1, 1);
-    grid2->addWidget(d->iprEdit,        2, 1, 1, 4);
-    grid2->addWidget(d->refLabel,       3, 0, 1, 1);
-    grid2->addWidget(d->refEdit,        3, 1, 1, 1);
-    grid2->addWidget(d->nameLabel,      4, 0, 1, 1);
-    grid2->addWidget(d->nameEdit,       4, 1, 1, 4);
-    grid2->addWidget(d->matterLabel,    5, 0, 1, 1);
-    grid2->addWidget(d->matterEdit,     5, 1, 1, 4);
-    grid2->addWidget(d->detailLabel,    6, 0, 1, 1);
-    grid2->addWidget(d->detailEdit,     6, 1, 1, 4);
-    grid2->setColumnStretch(4, 10);
-    grid2->setMargin(0);
-    grid2->setSpacing(KDialog::spacingHint());
-    d->optionsBox->setLayout(grid2);
+    QGridLayout *optionsBoxLayout = new QGridLayout;
+    optionsBoxLayout->addWidget(d->stdBtn,      0, 0, 1, 1);
+    optionsBoxLayout->addWidget(codeLink,       0, 1, 1, 2);
+    optionsBoxLayout->addWidget(d->refCB,       0, 3, 1, 1);
+    optionsBoxLayout->addWidget(d->customBtn,   1, 0, 1, 4);
+    optionsBoxLayout->addWidget(customLabel,    1, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->iprLabel,    2, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->iprEdit,     2, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->refLabel,    3, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->refEdit,     3, 1, 1, 1);
+    optionsBoxLayout->addWidget(d->nameLabel,   4, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->nameEdit,    4, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->matterLabel, 5, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->matterEdit,  5, 1, 1, 4);
+    optionsBoxLayout->addWidget(d->detailLabel, 6, 0, 1, 1);
+    optionsBoxLayout->addWidget(d->detailEdit,  6, 1, 1, 4);
+    optionsBoxLayout->setColumnStretch(4, 10);
+    optionsBoxLayout->setMargin(0);
+    optionsBoxLayout->setSpacing(KDialog::spacingHint());
+    d->optionsBox->setLayout(optionsBoxLayout);
 
     // --------------------------------------------------------
 
-    grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->subjectsCheck,    0, 0, 1, 4);
-    grid->addWidget(d->optionsBox,       1, 0, 1, 4);
-    grid->addWidget(d->subjectsBox,      2, 0, 5, 3);
-    grid->addWidget(d->addSubjectButton, 2, 3, 1, 1);
-    grid->addWidget(d->delSubjectButton, 3, 3, 1, 1);
-    grid->addWidget(d->repSubjectButton, 4, 3, 1, 1);
-    grid->addWidget(note, 5, 3, 1, 1);
-    grid->setRowStretch(6, 10);
-    grid->setColumnStretch(2, 1);
-    grid->setMargin(0);
-    grid->setSpacing(KDialog::spacingHint());
-    setLayout(grid);
+    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout->setAlignment( Qt::AlignTop );
+    mainLayout->addWidget(d->subjectsCheck,    0, 0, 1, 4);
+    mainLayout->addWidget(d->optionsBox,       1, 0, 1, 4);
+    mainLayout->addWidget(d->subjectsBox,      2, 0, 5, 3);
+    mainLayout->addWidget(d->addSubjectButton, 2, 3, 1, 1);
+    mainLayout->addWidget(d->delSubjectButton, 3, 3, 1, 1);
+    mainLayout->addWidget(d->repSubjectButton, 4, 3, 1, 1);
+    mainLayout->addWidget(note, 5, 3, 1, 1);
+    mainLayout->setRowStretch(6, 10);
+    mainLayout->setColumnStretch(2, 1);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(KDialog::spacingHint());
+    setLayout(mainLayout);
 
     // --------------------------------------------------------
 
