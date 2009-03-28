@@ -495,7 +495,8 @@ int DNGWriter::convert()
         long     val;
         QString  str;
         KExiv2   meta;
-        if (meta.load(inputFile()))
+        if (KExiv2Iface::KExiv2::supportMetadataWritting("image/x-adobe-dng") &&
+            meta.load(inputFile()))
         {
             // String Tags
 
@@ -622,23 +623,23 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))           exif->fGPSVersionID             = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))         exif->fGPSAltitudeRef           = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))        exif->fGPSDifferential          = (uint32)val;
-        }
 
-        // Markernote backup.
+            // Markernote backup.
 
-        QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
-        if (!mkrnts.isEmpty())
-        {
-            kDebug( 51000 ) << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" << endl;
+            QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
+            if (!mkrnts.isEmpty())
+            {
+                kDebug( 51000 ) << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" << endl;
 
-            dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
-            dng_memory_stream stream(memalloc);
-            stream.Put(mkrnts.data(), mkrnts.size());
-            AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
-            stream.SetReadPosition(0);
-            stream.Get(block->Buffer(), mkrnts.size());
-            negative->SetMakerNote(block);
-            negative->SetMakerNoteSafety(true);
+                dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
+                dng_memory_stream stream(memalloc);
+                stream.Put(mkrnts.data(), mkrnts.size());
+                AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
+                stream.SetReadPosition(0);
+                stream.Get(block->Buffer(), mkrnts.size());
+                negative->SetMakerNote(block);
+                negative->SetMakerNoteSafety(true);
+            }
         }
 
         if (d->backupOriginalRawFile)
@@ -801,6 +802,15 @@ int DNGWriter::convert()
         writer.WriteDNG(host, filestream, *negative.Get(), thumbnail, 
                         d->jpegLossLessCompression ? ccJPEG : ccUncompressed,
                         &previewList);
+
+        /* Metadata transfert using Exiv2 */
+        if (KExiv2Iface::KExiv2::supportMetadataWritting("image/x-adobe-dng"))
+        {
+            kDebug( 51000 ) << "DNGWriter: Backup meta-data using Exiv2" << endl;
+            meta.setWriteRawFiles(true);
+            if (meta.load(inputFile()))
+                meta.save(dngFilePath);
+        }
     }
 
     catch (const dng_exception &exception)
