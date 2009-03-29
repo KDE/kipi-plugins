@@ -495,8 +495,7 @@ int DNGWriter::convert()
         long     val;
         QString  str;
         KExiv2   meta;
-        if (KExiv2Iface::KExiv2::supportMetadataWritting("image/x-adobe-dng") &&
-            meta.load(inputFile()))
+        if (meta.load(inputFile()))
         {
             // String Tags
 
