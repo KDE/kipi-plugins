@@ -72,9 +72,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     QLabel *headerLabel = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
-    if (serviceName == "23hq")
+    if (serviceName == "23")
         headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
-                                  "<font color=\"#7CD164\">23hq</font></a>"
+                                  "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
     else
@@ -215,7 +215,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     connect(m_exportHostTagsCheckBox, SIGNAL(clicked()),
             this, SLOT(slotExportHostTagsChecked()));
 
-    if (serviceName == "23hq")
+    if (serviceName == "23")
     {
         // 23hq.com does not support Family/Friends concept, so hide it
         m_familyCheckBox->hide();

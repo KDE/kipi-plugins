@@ -78,16 +78,16 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     addAction(m_action);
 
-    m_action23hq = actionCollection()->addAction("23hqexport");
-    m_action23hq->setText(i18n("Export to &23hq..."));
-    m_action23hq->setIcon(KIcon("applications-internet"));
-    m_action23hq->setEnabled(false);
-    m_action23hq->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2);
+    m_action23 = actionCollection()->addAction("23export");
+    m_action23->setText(i18n("Export to &23..."));
+    m_action23->setIcon(KIcon("applications-internet"));
+    m_action23->setEnabled(false);
+    m_action23->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2);
 
-    connect(m_action23hq, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate23hq()));
+    connect(m_action23, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivate23()));
 
-    addAction(m_action23hq);
+    addAction(m_action23);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
@@ -97,7 +97,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
         return;
     }
     m_action->setEnabled(true);
-    m_action23hq->setEnabled(true);
+    m_action23->setEnabled(true);
 }
 
 Plugin_FlickrExport::~Plugin_FlickrExport()
@@ -121,7 +121,7 @@ void Plugin_FlickrExport::slotActivate()
     m_dlg->show();
 }
 
-void Plugin_FlickrExport::slotActivate23hq()
+void Plugin_FlickrExport::slotActivate23()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -131,16 +131,16 @@ void Plugin_FlickrExport::slotActivate23hq()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-23hqexportplugin-" + QString::number(getpid()) + "/");
+    QString tmp = dir.saveLocation("tmp", "kipi-23exportplugin-" + QString::number(getpid()) + "/");
 
     // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23hq");
+    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
     m_dlg->show();
 }
 
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
 {
-    if (action == m_action || action == m_action23hq)
+    if (action == m_action || action == m_action23)
         return KIPI::ExportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;

@@ -80,7 +80,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
-    if (serviceName != "23hq")
+    if (serviceName != "23")
         setWindowIcon(KIcon("flickr"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
@@ -120,11 +120,11 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     // --------------------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23hq Export"),
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23 Export"),
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collection to "
-                                                     "Flickr/23hq web service."),
+                                                     "Flickr / 23 web service."),
                                            ki18n( "(c) 2005-2008, Vardhman Jain\n"
                                            "(c) 2008, Gilles Caulier\n"
                                            "(c) 2009, Luka Renko" ));

@@ -86,7 +86,7 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
     m_photoSetsList = 0;
 
     m_serviceName = serviceName;
-    if (serviceName == "23hq") 
+    if (serviceName == "23") 
     {
         m_apiUrl = QString("http://www.23hq.com/services/rest/");
         m_authUrl = QString("http://www.23hq.com/services/auth/");
