@@ -394,8 +394,8 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 
     QPixmap pix(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 
-    for (KUrl::List::const_iterator  it = itemList.begin();
-         it != itemList.end(); ++it)
+    for (KUrl::List::const_iterator  it = itemList.constBegin();
+         it != itemList.constEnd(); ++it)
     {
         KUrl url = *it;
         QFileInfo fi(url.path());

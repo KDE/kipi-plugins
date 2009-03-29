@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-12-03
- * Description : a class to manage JPEGLossLess plugin 
+ * Description : a class to manage JPEGLossLess plugin
  *               actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
@@ -108,8 +108,8 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         KIPI::ImageInfo info = d->interface->info( *it );
 
@@ -126,8 +126,8 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 
 void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         KIPI::ImageInfo info = d->interface->info( *it );
         int angle = (info.angle() + 360) % 360;
@@ -135,7 +135,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         if ( ((90-45) <= angle && angle < (90+45)) ||
              ((270-45) < angle && angle < (270+45)) )
         {
-            // The image is rotated 90 or 270 degrees, which means that the flip operations 
+            // The image is rotated 90 or 270 degrees, which means that the flip operations
             // must be switched to gain the effect the user expects.
             // Note: this will only work if the angles is one of 90,180,270.
             val = (FlipAction) !val;
@@ -154,8 +154,8 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->filePath               = (*it).path();

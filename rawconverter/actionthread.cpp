@@ -57,7 +57,7 @@ public:
         running = false;
     }
 
-    class Task 
+    class Task
     {
         public:
 
@@ -99,7 +99,7 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
+void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings,
                                           SaveSettingsWidget::OutputFormat outputFormat)
 {
     d->rawDecodingSettings = rawDecodingSettings;
@@ -129,8 +129,8 @@ void ActionThread::identifyRawFile(const KUrl& url, bool full)
 
 void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -151,8 +151,8 @@ void ActionThread::thumbRawFile(const KUrl& url)
 
 void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -166,8 +166,8 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -183,8 +183,8 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
 
 void ActionThread::processHalfRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it ) 
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -223,10 +223,10 @@ void ActionThread::run()
 
         if (t)
         {
-            switch (t->action) 
+            switch (t->action)
             {
-                case IDENTIFY: 
-                case IDENTIFY_FULL: 
+                case IDENTIFY:
+                case IDENTIFY_FULL:
                 {
                     // Identify Camera model.
                     KDcrawIface::DcrawInfoContainer info;
@@ -239,7 +239,7 @@ void ActionThread::run()
                             identify = info.make + QString("-") + info.model;
                         else
                         {
-                            identify = i18n("Make: %1\n", info.make); 
+                            identify = i18n("Make: %1\n", info.make);
                             identify.append(i18n("Model: %1\n", info.model));
 
                             if (info.dateTime.isValid())
@@ -280,7 +280,7 @@ void ActionThread::run()
                     break;
                 }
 
-                case THUMBNAIL: 
+                case THUMBNAIL:
                 {
                     // Get embedded RAW file thumbnail.
                     QImage image;
@@ -295,7 +295,7 @@ void ActionThread::run()
                     break;
                 }
 
-                case PREVIEW: 
+                case PREVIEW:
                 {
                     ActionData ad1;
                     ad1.action   = PREVIEW;
@@ -304,7 +304,7 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QString destPath;
-                    bool result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.path(), destPath, 
+                    bool result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.path(), destPath,
                                                                    t->outputFormat, t->decodingSettings);
 
                     ActionData ad2;
@@ -316,7 +316,7 @@ void ActionThread::run()
                     break;
                 }
 
-                case PROCESS: 
+                case PROCESS:
                 {
                     ActionData ad1;
                     ad1.action   = PROCESS;
@@ -325,7 +325,7 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QString destPath;
-                    bool result = d->dcrawIface.decodeRAWImage(t->fileUrl.path(), destPath, 
+                    bool result = d->dcrawIface.decodeRAWImage(t->fileUrl.path(), destPath,
                                                                t->outputFormat, t->decodingSettings);
 
                     ActionData ad2;
@@ -337,7 +337,7 @@ void ActionThread::run()
                     break;
                 }
 
-                default: 
+                default:
                 {
                     qCritical() << "KIPIRawConverterPlugin:ActionThread: "
                                 << "Unknown action specified"

@@ -231,7 +231,7 @@ void MultiValuesEdit::slotAddValue()
 void MultiValuesEdit::setData(const QStringList& data)
 {
     d->dataList->clear();
-    for (QStringList::const_iterator it = data.begin(); it != data.end(); ++it )
+    for (QStringList::const_iterator it = data.constBegin(); it != data.constEnd(); ++it )
         d->dataList->addSqueezedItem(*it);
 }
 

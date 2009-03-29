@@ -122,8 +122,8 @@ QString FbTalker::getApiSig(const QMap<QString, QString>& args)
 {
     QString concat;
     // NOTE: QMap iterator will sort alphabetically
-    for (QMap<QString, QString>::const_iterator it = args.begin(); 
-         it != args.end(); 
+    for (QMap<QString, QString>::const_iterator it = args.constBegin();
+         it != args.constEnd();
          ++it)
     {
         concat.append(it.key());
@@ -143,8 +143,8 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
 {
     QString concat;
     // NOTE: QMap iterator will sort alphabetically
-    for (QMap<QString, QString>::const_iterator it = args.begin(); 
-         it != args.end(); 
+    for (QMap<QString, QString>::const_iterator it = args.constBegin();
+         it != args.constEnd();
          ++it)
     {
         if (!concat.isEmpty())
@@ -159,13 +159,13 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
     return concat;
 }
 
-void FbTalker::authenticate(const QString &sessionKey, 
+void FbTalker::authenticate(const QString &sessionKey,
                             const QString &sessionSecret,
                             unsigned int sessionExpires)
 {
     m_loginInProgress = true;
 
-    if (!sessionKey.isEmpty() 
+    if (!sessionKey.isEmpty()
         && !sessionSecret.isEmpty()
         && sessionExpires > (unsigned int)(time(0) + 900))
     {
@@ -521,7 +521,7 @@ void FbTalker::listPhotos(long long userID, long long albumID)
     else if (userID != 0)
         args["subj_id"] = QString::number(userID);
     else
-        args["subj_id"] = QString::number(m_user.id); 
+        args["subj_id"] = QString::number(m_user.id);
     args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
@@ -594,8 +594,8 @@ void FbTalker::createAlbum(const FbAlbum& album)
     m_buffer.resize(0);
 }
 
-bool FbTalker::addPhoto(const QString& imgPath, 
-                        long long albumID, 
+bool FbTalker::addPhoto(const QString& imgPath,
+                        long long albumID,
                         const QString& caption)
 {
     if (m_job)
@@ -619,14 +619,14 @@ bool FbTalker::addPhoto(const QString& imgPath,
     args["sig"]         = getApiSig(args);
 
     MPForm  form;
-    for (QMap<QString, QString>::const_iterator it = args.constBegin(); 
-         it != args.constEnd(); 
+    for (QMap<QString, QString>::const_iterator it = args.constBegin();
+         it != args.constEnd();
          ++it)
     {
         form.addPair(it.key(), it.value());
     }
 
-    if (!form.addFile(args["name"], imgPath)) 
+    if (!form.addFile(args["name"], imgPath))
     {
         emit signalBusy(false);
         return false;
@@ -851,7 +851,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     kDebug(51000) << "Parse CreateToken response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "auth_createToken_response") 
+    if (docElem.tagName() == "auth_createToken_response")
     {
         m_authToken = docElem.text();
         errCode = 0;
@@ -903,7 +903,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
     kDebug(51000) << "Parse GetSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "auth_getSession_response") 
+    if (docElem.tagName() == "auth_getSession_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -951,7 +951,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     kDebug(51000) << "Parse GetLoggedInUser response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "users_getLoggedInUser_response") 
+    if (docElem.tagName() == "users_getLoggedInUser_response")
     {
         m_user.id = docElem.text().toLongLong();
         errCode = 0;
@@ -992,7 +992,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
 
     QList<FbUser> friendsList;
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "users_getInfo_response") 
+    if (docElem.tagName() == "users_getInfo_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1030,7 +1030,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
     else if (docElem.tagName() == "error_response")
         errCode = parseErrorResponse(docElem, errMsg);
 
-    if (m_state == FB_GETUSERINFO) 
+    if (m_state == FB_GETUSERINFO)
     {
         if (errCode != 0)
         {
@@ -1065,7 +1065,7 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
     kDebug(51000) << "Parse HasAppPermission response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "users_hasAppPermission_response") 
+    if (docElem.tagName() == "users_hasAppPermission_response")
     {
         m_user.uploadPerm = docElem.text().toInt();
         errCode = 0;
@@ -1094,7 +1094,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
     kDebug(51000) << "Parse ExpireSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "auth_expireSession_response ") 
+    if (docElem.tagName() == "auth_expireSession_response ")
     {
         errCode = 0;
     }
@@ -1122,7 +1122,7 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
     kDebug(51000) << "Parse Add Photo response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "photos_upload_response") 
+    if (docElem.tagName() == "photos_upload_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1152,7 +1152,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     long long newAlbumID = -1;
     QDomElement docElem = doc.documentElement();
-    if (docElem.tagName() == "photos_createAlbum_response") 
+    if (docElem.tagName() == "photos_createAlbum_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1188,7 +1188,7 @@ void FbTalker::parseResponseListFriends(const QByteArray& data)
 
     QDomElement docElem = doc.documentElement();
     QString friendsUIDs;
-    if (docElem.tagName() == "friends_get_response") 
+    if (docElem.tagName() == "friends_get_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1235,7 +1235,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
 
     QDomElement docElem = doc.documentElement();
     QList <FbAlbum> albumsList;
-    if (docElem.tagName() == "photos_getAlbums_response") 
+    if (docElem.tagName() == "photos_getAlbums_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1272,7 +1272,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                             album.privacy = FB_NETWORKS;
                         else if (nodeA.toElement().text() == "everyone")
                             album.privacy = FB_EVERYONE;
-                    }   
+                    }
                 }
                 kDebug(51000) << "AID: " << album.id;
                 albumsList.append(album);
@@ -1302,7 +1302,7 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
 
     QDomElement docElem = doc.documentElement();
     QList <FbPhoto> photosList;
-    if (docElem.tagName() == "photos_get_response") 
+    if (docElem.tagName() == "photos_get_response")
     {
         for (QDomNode node = docElem.firstChild();
              !node.isNull();
@@ -1327,7 +1327,7 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
                         photo.thumbURL = nodeP.toElement().text();
                     else if (nodeP.nodeName() == "src_big")
                         photo.originalURL = nodeP.toElement().text();
-                    else if (nodeP.nodeName() == "src" 
+                    else if (nodeP.nodeName() == "src"
                              && photo.originalURL.isEmpty())
                         photo.originalURL = nodeP.toElement().text();
                 }

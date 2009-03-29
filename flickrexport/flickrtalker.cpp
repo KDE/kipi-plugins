@@ -6,8 +6,8 @@
  * Date        : 2005-07-07
  * Description : a kipi plugin to export images to Flickr web service
  *
- * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2005-2009 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2009      by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -331,7 +331,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     url.addQueryItem("method", method);
     url.addQueryItem("frob", m_frob);
 
-    for (QStringList::const_iterator it = argList.begin(); it != argList.end(); ++it)
+    for (QStringList::const_iterator it = argList.constBegin(); it != argList.constEnd(); ++it)
     {
         QStringList str = (*it).split("=", QString::SkipEmptyParts);
         url.addQueryItem(str[0], str[1]);
@@ -364,7 +364,7 @@ void FlickrTalker::listPhotos(const QString& /*albumName*/)
     // TODO
 }
 
-void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& albumTitle, 
+void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& albumTitle,
                                   const QString& albumDescription, const QString& primaryPhotoId)
 {
     if (m_job)
@@ -515,7 +515,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, 
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                                  Qt::SmoothTransformation);
 
         image.save(path, "JPEG", imageQuality);
@@ -948,7 +948,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
     QDomNode node       = docElem.firstChild();
     QDomElement e;
 
-    while(!node.isNull()) 
+    while(!node.isNull())
     {
         if (node.isElement() && node.nodeName() == "photoset")
         {

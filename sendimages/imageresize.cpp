@@ -36,7 +36,7 @@
 
 #include <klocale.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes.
 
 #include <libkexiv2/kexiv2.h>
 
@@ -107,13 +107,13 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
     d->count = 0;
     int i    = 1;
 
-    for (QList<EmailItem>::const_iterator it = settings.itemsList.begin();
-         it != settings.itemsList.end(); ++it) 
+    for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
+         it != settings.itemsList.constEnd(); ++it)
     {
         QString tmp;
 
         ImageResizePriv::Task *t = new ImageResizePriv::Task;
-        t->orgUrl                = (*it).orgUrl; 
+        t->orgUrl                = (*it).orgUrl;
         t->settings              = settings;
         t->destName              = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
 
@@ -182,7 +182,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     EmailSettingsContainer emailSettings = settings;
     QFileInfo fi(orgUrl.path());
 
-    if (!fi.exists() || !fi.isReadable()) 
+    if (!fi.exists() || !fi.isReadable())
     {
         err = i18n("Error in opening input file");
         return false;

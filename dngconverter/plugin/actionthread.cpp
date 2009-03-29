@@ -135,8 +135,8 @@ void ActionThread::identifyRawFile(const KUrl& url, bool full)
 
 void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -157,8 +157,8 @@ void ActionThread::thumbRawFile(const KUrl& url)
 
 void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
@@ -172,8 +172,8 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
 
 void ActionThread::processRawFiles(const KUrl::List& urlList)
 {
-    for (KUrl::List::const_iterator it = urlList.begin();
-         it != urlList.end(); ++it )
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
