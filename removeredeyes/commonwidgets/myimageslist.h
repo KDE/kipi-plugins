@@ -55,11 +55,11 @@ public:
     void removeUnprocessedImages();
     void resetEyeCounterColumn();
 
-public slots:
+public Q_SLOTS:
 
     void addEyeCounterByUrl(const KUrl&, int);
 
-private slots:
+private Q_SLOTS:
 
     void updateSummary();
     void resetCounters();

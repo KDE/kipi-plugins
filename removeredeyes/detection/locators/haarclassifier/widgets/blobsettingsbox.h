@@ -50,7 +50,7 @@ public:
     double minRoundness() const;
     void setMinRoundness(double);
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 

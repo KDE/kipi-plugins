@@ -71,11 +71,11 @@ public:
 
     void setPreviewImage(ImageType type, const QString& filename);
 
-public slots:
+public Q_SLOTS:
 
     void reset();
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
@@ -84,7 +84,7 @@ protected:
     void enterEvent (QEvent* e);
     void resizeEvent(QResizeEvent* e);
 
-private slots:
+private Q_SLOTS:
 
     void updateSettings();
 

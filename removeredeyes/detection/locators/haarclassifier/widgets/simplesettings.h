@@ -55,11 +55,11 @@ public:
 
     int simpleMode() const;
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
-private slots:
+private Q_SLOTS:
 
     void simpleModeChanged(int);
     void prepareSettings();

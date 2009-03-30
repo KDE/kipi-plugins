@@ -65,7 +65,7 @@ public:
     void triggerShow(int ms = 0);
     void triggerHide(int ms = 500);
 
-signals:
+Q_SIGNALS:
 
     void correctedClicked();
     void maskClicked();
@@ -81,7 +81,7 @@ protected:
     void mousePressEvent (QMouseEvent* e);
     void paintEvent(QPaintEvent* e);
 
-private slots:
+private Q_SLOTS:
 
     void fadeIn();
     void fadeOut();

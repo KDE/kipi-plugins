@@ -46,11 +46,11 @@ public:
     void         loadSettings(HaarSettings&);
     HaarSettings readSettings();
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
-private slots:
+private Q_SLOTS:
 
     void prepareSettings();
 

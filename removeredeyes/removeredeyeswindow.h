@@ -59,12 +59,12 @@ public:
     RemoveRedEyesWindow(KIPI::Interface *interface);
     ~RemoveRedEyesWindow();
 
-signals:
+Q_SIGNALS:
 
     void myCloseClicked();
     void locatorUpdated();
 
-private slots:
+private Q_SLOTS:
 
     void closeClicked();
     void helpClicked();
@@ -82,7 +82,7 @@ private slots:
 
     void locatorChanged();
 
-public slots:
+public Q_SLOTS:
 
     void calculationFinished(WorkerThreadData*);
 

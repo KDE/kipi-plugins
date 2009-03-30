@@ -61,11 +61,11 @@ public:
     bool addKeyword() const;
     void setAddKeyword(bool checked);
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
-private slots:
+private Q_SLOTS:
 
     void buttonClicked(int);
     void keywordToggled(bool);

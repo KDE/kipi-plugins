@@ -52,7 +52,7 @@ public:
     int handleMode() const;
     void setHandleMode(int mode);
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 

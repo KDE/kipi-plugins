@@ -65,7 +65,7 @@ public:
         MaskImage
     };
 
-signals:
+Q_SIGNALS:
 
     void calculationFinished(WorkerThreadData*);
 

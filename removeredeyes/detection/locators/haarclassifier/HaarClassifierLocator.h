@@ -63,7 +63,7 @@ public:
     void readSettings();
     void writeSettings();
 
-private slots:
+private Q_SLOTS:
 
     void updateSettings();
 

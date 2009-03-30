@@ -56,11 +56,11 @@ public:
     QString classifierUrl() const;
     void setClassifierUrl(QString&);
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
-public slots:
+public Q_SLOTS:
 
     void standardClassifierChecked();
 

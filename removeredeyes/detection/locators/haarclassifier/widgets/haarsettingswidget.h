@@ -53,7 +53,7 @@ public:
     HaarSettings readSettings();
     HaarSettings readSettingsForSave();
 
-private slots:
+private Q_SLOTS:
 
     void settingsModeChanged();
 

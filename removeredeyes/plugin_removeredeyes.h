@@ -47,7 +47,7 @@ public:
     KIPI::Category category(KAction* action) const;
     void setup(QWidget* widget);
 
-private slots:
+private Q_SLOTS:
 
     void activate();
 
