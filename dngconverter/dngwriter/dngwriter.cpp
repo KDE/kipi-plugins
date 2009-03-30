@@ -802,13 +802,18 @@ int DNGWriter::convert()
                         d->jpegLossLessCompression ? ccJPEG : ccUncompressed,
                         &previewList);
 
-        /* Metadata transfert using Exiv2 */
-        if (KExiv2Iface::KExiv2::supportMetadataWritting("image/x-adobe-dng"))
+        // -----------------------------------------------------------------------------------------
+        // Metadata transfert using Exiv2. Used to restore Makernote offset.
+
+        kDebug( 51000 ) << "DNGWriter: Backup meta-data using Exiv2" << endl;
+        KExiv2 dngMeta(dngFilePath);
+
+        if (meta.load(inputFile()))
         {
-            kDebug( 51000 ) << "DNGWriter: Backup meta-data using Exiv2" << endl;
             meta.setWriteRawFiles(true);
-            if (meta.load(inputFile()))
-                meta.save(dngFilePath);
+            meta.setIptc(dngMeta.getIptc());
+            meta.setXmp(dngMeta.getXmp());
+            meta.save(dngFilePath);
         }
     }
 
