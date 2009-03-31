@@ -1,7 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr/23 Exporter
+Name[ga]=Easpórtálaí Flickr/23
+Name[it]=Esportazione a Flickr/23
+Name[uk]=Експорт до Flickr/23
 Comment=A tool to export images to a remote Flickr or 23 web service
+Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin Flickr nó 23
+Comment[it]=Uno strumento per esportare immagini ai servizi Web remoti Flickr o 23
+Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби Flickr або 23
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
