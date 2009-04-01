@@ -350,6 +350,9 @@ void BatchDialog::readSettings()
     d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
     d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
     d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
+#if KDCRAW_VERSION >= 0x000500
+    d->decodingSettingsBox->setAutoBrightness(group.readEntry("AutoBrightness", true));
+#endif
 
     d->decodingSettingsBox->setQuality(
         (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality",
@@ -398,7 +401,9 @@ void BatchDialog::saveSettings()
     group.writeEntry("caBlueMultiplier", d->decodingSettingsBox->caBlueMultiplier());
     group.writeEntry("Decoding Quality", (int)d->decodingSettingsBox->quality());
     group.writeEntry("Output Color Space", (int)d->decodingSettingsBox->outputColorSpace());
-
+#if KDCRAW_VERSION >= 0x000500
+    group.writeEntry("AutoBrightness", d->decodingSettingsBox->useAutoBrightness());
+#endif
     group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
     group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
@@ -461,6 +466,9 @@ void BatchDialog::slotStartStop()
         rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
         rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
         rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
+#if KDCRAW_VERSION >= 0x000500
+        rawDecodingSettings.autoBrightness             = d->decodingSettingsBox->useAutoBrightness();
+#endif
 
         d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
         processOne();
