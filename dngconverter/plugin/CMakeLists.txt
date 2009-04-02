@@ -29,7 +29,7 @@ INSTALL(FILES kipiplugin_dngconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR
 
 SET(dngconverter_SRCS dngconverter.cpp ${kipiplugin_dngconverter_PART_SRCS})
 
-KDE4_ADD_APP_ICON(dngconverter_SRCS "hi*-action-dngconverter.png")
+KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/oxygen/*/apps/dngconverter.png")
 
 KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
 
