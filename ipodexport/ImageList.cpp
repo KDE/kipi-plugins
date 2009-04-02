@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2006-2009 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,18 +21,24 @@
  * ============================================================ */
 
 #include "ImageList.h"
+#include "ImageList.moc"
 
-#include <KLocale>
+// Qt includes
+
 #include <QHeaderView>
 #include <QMimeData>
 #include <QUrl>
+
+// KDE includes.
+
+#include <KLocale>
 
 namespace KIPIIpodExportPlugin
 {
 
 ImageList::ImageList( ListType type, QWidget *parent )
-    : QTreeWidget( parent )
-    , m_type( type )
+         : QTreeWidget( parent ),
+           m_type( type )
 {
     if( type == ImageList::UploadType )
     {
@@ -50,20 +56,23 @@ ImageList::ImageList( ListType type, QWidget *parent )
     header()->hide();
 }
 
-bool ImageList::dropMimeData(QTreeWidgetItem *parent, const QMimeData *data, Qt::DropAction action)
+bool ImageList::dropMimeData(QTreeWidgetItem* /*parent*/, const QMimeData *data, Qt::DropAction /*action*/)
 {
     droppedImagesItems(data->urls());
+    return true;
 }
 
 void ImageList::droppedImagesItems(QList<QUrl> urls)
 {
     QStringList filesPath;
 
-    foreach( QUrl u, urls ) {
+    foreach( QUrl u, urls ) 
+    {
         filesPath << u.path();
     }
-    
-    if( !filesPath.isEmpty() ) {
+
+    if( !filesPath.isEmpty() )
+    {
        emit addedDropItems( filesPath );
     }
 }

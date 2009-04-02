@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2006-2009 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,33 +26,38 @@
 #include <QTreeWidget>
 
 namespace KIPIIpodExportPlugin
+
 {
 
 class ImageList : public QTreeWidget
 {
-        Q_OBJECT
-    
-    public:
-        enum ListType { UploadType, IpodType };
-        
-        ImageList( ListType = UploadType, QWidget *parent = 0 );
+    Q_OBJECT
 
-        ListType getType() const { return m_type; }
+public:
 
-    signals:
-        void addedDropItems( QStringList filesPath );
+    enum ListType { UploadType, IpodType };
 
-    protected:
-        virtual bool dropMimeData(QTreeWidgetItem *parent, const QMimeData *data, Qt::DropAction action);
-        //bool acceptDrag( QDropEvent *e ) const;
-        //void contentsDropEvent( QDropEvent *e );
-        //void dragEnterEvent( QDragEnterEvent *e );
-        //void dropEvent( QDropEvent *e );
-        void droppedImagesItems(QList<QUrl>);
-        //void viewportPaintEvent( QPaintEvent *e );
+    ImageList( ListType = UploadType, QWidget *parent = 0 );
 
-    private:
-        ListType m_type;
+    ListType getType() const { return m_type; }
+
+Q_SIGNALS:
+
+    void addedDropItems( QStringList filesPath );
+
+protected:
+
+    virtual bool dropMimeData(QTreeWidgetItem *parent, const QMimeData *data, Qt::DropAction action);
+    //bool acceptDrag( QDropEvent *e ) const;
+    //void contentsDropEvent( QDropEvent *e );
+    //void dragEnterEvent( QDragEnterEvent *e );
+    //void dropEvent( QDropEvent *e );
+    void droppedImagesItems(QList<QUrl>);
+    //void viewportPaintEvent( QPaintEvent *e );
+
+private:
+
+    ListType m_type;
 };
 
 } // namespace KIPIIpodExportPlugin
