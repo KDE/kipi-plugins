@@ -56,13 +56,13 @@ ImageList::ImageList( ListType type, QWidget *parent )
     header()->hide();
 }
 
-bool ImageList::dropMimeData(QTreeWidgetItem* /*parent*/, const QMimeData *data, Qt::DropAction /*action*/)
+bool ImageList::dropMimeData(QTreeWidgetItem* /*parent*/, int /*index*/, const QMimeData *data, Qt::DropAction /*action*/)
 {
     droppedImagesItems(data->urls());
     return true;
 }
 
-void ImageList::droppedImagesItems(QList<QUrl> urls)
+void ImageList::droppedImagesItems(const QList<QUrl>& urls)
 {
     QStringList filesPath;
 
