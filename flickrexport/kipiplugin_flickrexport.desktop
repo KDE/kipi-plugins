@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr/23 Exporter
+Name[el]=Εξαγωγέας Flickr/23
 Name[ga]=Easpórtálaí Flickr/23
 Name[it]=Esportazione a Flickr/23
 Name[pt]=Exportação para o Flickr/23
@@ -8,6 +9,7 @@ Name[pt_BR]=Exportar para o Flickr/23
 Name[sv]=Export till Flickr eller 23
 Name[uk]=Експорт до Flickr/23
 Comment=A tool to export images to a remote Flickr or 23 web service
+Comment[el]=Ένα εργαλείο για την εξαγωγή εικόνων σε μια υπηρεσία ιστού Flickr ή 23
 Comment[ga]=Uirlis a easpórtálann íomhánna go seirbhís Ghréasáin Flickr nó 23
 Comment[it]=Uno strumento per esportare immagini ai servizi Web remoti Flickr o 23
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Flickr ou 23
