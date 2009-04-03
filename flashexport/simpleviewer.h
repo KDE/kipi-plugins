@@ -59,7 +59,7 @@ public:
 
 private:
 
-    explicit SimpleViewer(KIPI::Interface *interface, QObject *parent=0);
+    SimpleViewer(KIPI::Interface *interface, QObject *parent=0);
     ~SimpleViewer();
 
     bool configure();

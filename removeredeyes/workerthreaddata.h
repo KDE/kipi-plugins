@@ -34,7 +34,7 @@ class WorkerThreadData
 
 public:
 
-    explicit WorkerThreadData(const KUrl& url, int current = 0, int eyes = 0);
+    WorkerThreadData(const KUrl& url, int current = 0, int eyes = 0);
     ~WorkerThreadData();
 
     int         current;

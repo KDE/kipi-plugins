@@ -43,7 +43,7 @@ class MyImagesList : public KIPIPlugins::ImagesList
 
 public:
 
-    explicit MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
+    MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
     ~MyImagesList();
 
     int totalImages() const;

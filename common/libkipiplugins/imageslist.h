@@ -141,8 +141,8 @@ public:
         ControlButtonsBelow
     };
 
-    explicit ImagesList(KIPI::Interface *iface, QWidget* parent = 0, 
-                        ControlButtonPlacement btnPlace = ControlButtonsRight);
+    ImagesList(KIPI::Interface *iface, QWidget* parent = 0,
+               ControlButtonPlacement btnPlace = ControlButtonsRight);
     virtual ~ImagesList();
 
     void setAllowRAW(bool allow);
