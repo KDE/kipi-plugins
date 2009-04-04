@@ -72,7 +72,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(
-        i18n("This is clickable link to open SmugMug home page in web browser."));
+        i18n("This is a clickable link to open the SmugMug home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -89,11 +89,11 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     m_accountRBtn       = new QRadioButton(i18n("SmugMug Account"), accountBox);
     m_accountRBtn->setWhatsThis(
-        i18n("Login with e-mail and password to SmugMug web service."));
+        i18n("Login to SmugMug web service using email and password."));
 
     m_userNameLbl       = new QLabel(i18n("Name:"), accountBox);
     m_userName          = new QLabel(accountBox);
-    m_emailLbl          = new QLabel(i18n("E-mail:"), accountBox);
+    m_emailLbl          = new QLabel(i18n("Email:"), accountBox);
     m_email             = new QLabel(accountBox);
     m_changeUserBtn     = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
@@ -121,7 +121,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_nickNameLbl       = new QLabel(i18n("Nickname:"), albumsBox);
     m_nickNameEdt       = new KLineEdit(albumsBox);
     m_nickNameEdt->setWhatsThis(
-        i18n("Nick name of SmugMug user to list albums."));
+        i18n("Nickname of SmugMug user to list albums."));
     m_sitePasswordLbl   = new QLabel(i18n("Site Password:"), albumsBox);
     m_sitePasswordEdt   = new KLineEdit(albumsBox);
     m_sitePasswordEdt->setWhatsThis(
@@ -129,7 +129,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_albumPasswordLbl  = new QLabel(i18n("Album Password:"), albumsBox);
     m_albumPasswordEdt  = new KLineEdit(albumsBox);
     m_albumPasswordEdt->setWhatsThis(
-        i18n("Password of SmugMug album."));
+        i18n("Password for SmugMug album."));
 
     m_newAlbumBtn       = new KPushButton(
             KGuiItem(i18n("New Album"), "list-add",
@@ -152,7 +152,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(
-        i18n("This is the location where SmugMug images will be downloaded to."));
+        i18n("This is the location where SmugMug images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);

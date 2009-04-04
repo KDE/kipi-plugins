@@ -95,7 +95,7 @@ void SmugTalker::login(const QString& email, const QString& password)
         m_job = 0;
     }
     emit signalBusy(true);
-    emit signalLoginProgress(1, 4, i18n("Logging to SmugMug service..."));
+    emit signalLoginProgress(1, 4, i18n("Logging in to SmugMug service..."));
 
     KUrl url(m_apiURL);
     if (email.isEmpty()) 

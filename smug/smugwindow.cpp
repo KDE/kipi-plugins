@@ -130,8 +130,8 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder,
     // ------------------------------------------------------------------------
     m_about = new KIPIPlugins::KPAboutData(ki18n("Smug Import/Export"), 0,
                       KAboutData::License_GPL,
-                      ki18n("A Kipi plugin to import/export image collection "
-                            "to/from SmugMug web service."),
+                      ki18n("A Kipi plugin to import/export image collections "
+                            "from/to the SmugMug web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
                             "(c) 2008, Gilles Caulier\n"
                             "(c) 2008-2009, Luka Renko"));
@@ -153,7 +153,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder,
     // ------------------------------------------------------------------------
 
     m_loginDlg  = new KPasswordDialog(this, KPasswordDialog::ShowUsernameLine);
-    m_loginDlg->setPrompt(i18n("<qt>Enter an <b>e-mail</b> and a <b>password</b> of your "
+    m_loginDlg->setPrompt(i18n("<qt>Enter the <b>email address</b> and <b>password</b> for your "
                                "<a href=\"http://www.smugmug.com\">SmugMug</a> account</qt>"));
 
     // ------------------------------------------------------------------------

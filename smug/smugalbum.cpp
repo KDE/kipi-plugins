@@ -60,7 +60,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     // ------------------------------------------------------------------------
     QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
-        i18n("These are basic settings for new SmugMug album."));
+        i18n("These are basic settings for the new SmugMug album."));
 
     m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(
@@ -83,7 +83,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_templateCoB      = new KComboBox;
     m_templateCoB->setEditable(false);
     m_templateCoB->setWhatsThis(
-        i18n("Album template for new album (optional)."));
+        i18n("Album template for the new album (optional)."));
 
     QFormLayout* albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
@@ -100,7 +100,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
 
     m_privBox = new QGroupBox(i18n("Security && Privacy"), mainWidget);
     m_privBox->setWhatsThis(
-        i18n("These are security and privacy settings for new SmugMug album."));
+        i18n("These are security and privacy settings for the new SmugMug album."));
 
     m_publicRBtn        = new QRadioButton(i18n("Public"));
     m_publicRBtn->setChecked(true);
@@ -120,7 +120,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
 
     m_hintEdt           = new KLineEdit;
     m_hintEdt->setWhatsThis(
-        i18n("Password hint to present to users on the password prompt (optional)."));
+        i18n("Password hint to present to users in the password prompt (optional)."));
 
     QFormLayout* privBoxLayout = new QFormLayout;
     privBoxLayout->addRow(i18n("Privacy:"), radioLayout);
