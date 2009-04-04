@@ -203,7 +203,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
    OrgKdeKdesktopBackgroundInterface desktopInterface("org.kde.kdesktop", "/Background", QDBusConnection::sessionBus());
    QDBusReply<void> reply = desktopInterface.setWallpaper(path,layout);
    if(!reply.isValid())
-      KMessageBox::information(0L,i18n("Change Background"),i18n("We can not change background."));
+      KMessageBox::information(0L,i18n("Change Background"),i18n("Background cannot be changed."));
 }
 
 KIPI::Category  Plugin_WallPaper::category( KAction* action ) const

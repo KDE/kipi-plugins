@@ -7,7 +7,7 @@
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you could brighten up your images using Batch Color Images plugin for increased contrast?
+Did you know that you can brighten up your images using the Batch Color Images plugin for increased contrast?
 </td>
 </tr>
 </table>
@@ -24,7 +24,7 @@ Did you know that you could brighten up your images using Batch Color Images plu
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you could abort a slideshow using <b>ESC</b>?
+Did you know that you can abort a slideshow using <b>ESC</b>?
 </td>
 </tr>
 </table>
@@ -41,7 +41,7 @@ Did you know that you could abort a slideshow using <b>ESC</b>?
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that Kipi library provide a scanner plugin that gives you direct access to your scanner?
+Did you know that the Kipi library provides a scanner plugin that gives you direct access to your scanner?
 </td>
 </tr>
 </table>
@@ -92,7 +92,7 @@ Did you know that you can use the <b>LZW</b> compression to reduce the size of t
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that all image operations in the batch processing images plugins run without losing the <b>Exif</b> information in the <b>JPEG</b> files?
+Did you know that all image operations in the batch processing image plugins run without losing the <b>Exif</b> information in the <b>JPEG</b> files?
 </td>
 </tr>
 </table>
@@ -126,7 +126,7 @@ Did you know that the <b>Noise Reduction</b> option in the <b>Filter Images</b> 
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you can use the drag and drop feature in e-mail images to add some items to the list?
+Did you know that you can use the drag and drop feature with email images to add some items to the list?
 </td>
 </tr>
 </table>
@@ -143,7 +143,7 @@ Did you know that you can use the drag and drop feature in e-mail images to add 
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that if you want to reduce the space disk used by your images in the Albums database, you could try using the Recompress Images plugin?
+Did you know that if you want to reduce the disk space used by your images in the Albums database, you can try using the Recompress Images plugin?
 </td>
 </tr>
 </table>
@@ -160,7 +160,7 @@ Did you know that if you want to reduce the space disk used by your images in th
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you could use the Resize Images plugin?
+Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you can use the Resize Images plugin?
 </td>
 </tr>
 </table>
@@ -177,8 +177,8 @@ Did you know that if you want to resize images to prepare them for printing on p
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you could use image files from different Albums in the 'batch-process images' 
-plugin? The processed results will then be merged in the selected target Album.
+Did you know that you can use image files from different Albums in the 'batch-process images' 
+plugin? The processed results will then be merged into the selected target Album.
 </td>
 </tr>
 </table>
@@ -195,7 +195,7 @@ plugin? The processed results will then be merged in the selected target Album.
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you can change the time stamp of the target images files in the batch-rename images plugin?
+Did you know that you can change the timestamp of the target image files in the batch-rename images plugin?
 </td>
 </tr>
 </table>
@@ -212,7 +212,7 @@ Did you know that you can change the time stamp of the target images files in th
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that you can navigate on the slideshow with the left and right mouse buttons?
+Did you know that you can navigate during the slideshow using the left and right mouse buttons?
 </td>
 </tr>
 </table>
@@ -229,7 +229,7 @@ Did you know that you can navigate on the slideshow with the left and right mous
 <img src="hicolor/32x32/apps/kipi.png">
 </td>
 <td>
-Did you know that Kipi plugins can be used also in Digikam, Kimdaba, Showimg, and Gwenview programs?
+Did you know that Kipi plugins can also be used in Digikam, Kimdaba, Showimg, and Gwenview programs?
 </td>
 </tr>
 </table>

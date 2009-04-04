@@ -169,7 +169,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->about = new KIPIPlugins::KPAboutData(ki18n("Time Adjust"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin for adjusting time stamp of picture files"),
+                   ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
                          "(c) 2006-2009, Gilles Caulier"));
 
