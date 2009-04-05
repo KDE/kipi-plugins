@@ -11,7 +11,7 @@
 // ================================================================
 //
 // This header is just C preprocessor macro definitions to set up the XMP toolkit build environment.
-// It must be the first #include in any chain since it might affect things in other #includes.
+// It must be the first #include in any chain since it might affect things in other #includes
 //
 // =================================================================================================
 */

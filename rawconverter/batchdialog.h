@@ -24,12 +24,12 @@
 #ifndef BATCHDIALOG_H
 #define BATCHDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 

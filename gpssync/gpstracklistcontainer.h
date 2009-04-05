@@ -23,17 +23,17 @@
 #ifndef GPSTRACKLISTCONTAINER_H
 #define GPSTRACKLISTCONTAINER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QMap>
 #include <QString>
 #include <QDateTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include <gpsdatacontainer.h>
 

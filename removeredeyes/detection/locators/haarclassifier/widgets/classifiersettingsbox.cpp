@@ -24,12 +24,12 @@
 #include "classifiersettingsbox.h"
 #include "classifiersettingsbox.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kurlrequester.h>

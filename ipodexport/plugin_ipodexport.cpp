@@ -25,7 +25,7 @@ extern "C"
 #include <glib-object.h> // g_type_init
 }
 
-// Local includes.
+// Local includes
 
 #include "IpodExportDialog.h"
 #include "plugin_ipodexport.h"
@@ -41,7 +41,7 @@ extern "C"
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKipi includes.
+// LibKipi includes
 
 #include <libkipi/imagecollection.h>
 

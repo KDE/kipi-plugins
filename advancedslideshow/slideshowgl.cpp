@@ -28,7 +28,7 @@
 #include <cmath>
 #include <cstdlib>
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <qtimer.h>
@@ -48,7 +48,7 @@
 #include <QSvgRenderer>
 #include <QPainter>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfig.h>
 #include <klocale.h>

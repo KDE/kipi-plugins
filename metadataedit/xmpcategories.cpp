@@ -23,13 +23,13 @@
 #include "xmpcategories.h"
 #include "xmpcategories.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kiconloader.h>
@@ -37,7 +37,7 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

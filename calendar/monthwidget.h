@@ -25,13 +25,13 @@
 #ifndef MONTHWIDGET_H
 #define MONTHWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QPixmap>
 #include <QPushButton>
 #include <QSize>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

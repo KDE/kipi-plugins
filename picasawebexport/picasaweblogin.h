@@ -23,7 +23,7 @@
 #ifndef PICASAWEBLOGIN_H
 #define PICASAWEBLOGIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDialog>
 

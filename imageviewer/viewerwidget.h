@@ -24,11 +24,11 @@
 #ifndef VIEWERWIDGET_H
 #define VIEWERWIDGET_H
 
-// C++ includes.
+// C++ includes
 
 #include <iostream>
 
-// Qt includes.
+// Qt includes
 
 #include <QCursor>
 #include <QDir>
@@ -37,18 +37,18 @@
 #include <QTimer>
 #include <QWheelEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kmimetype.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "texture.h"
 

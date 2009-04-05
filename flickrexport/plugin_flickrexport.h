@@ -24,11 +24,11 @@
 #ifndef PLUGIN_FLICKREXPORT_H
 #define PLUGIN_FLICKREXPORT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

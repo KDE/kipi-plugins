@@ -24,17 +24,17 @@
 #include "haarsettingswidget.h"
 #include "haarsettingswidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QPushButton>
 #include <QStackedWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 
-// Local includes.
+// Local includes
 
 #include "advancedsettings.h"
 #include "simplesettings.h"

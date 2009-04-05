@@ -26,7 +26,7 @@
 #include "imageslist.h"
 #include "imageslist.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDragEnterEvent>
 #include <QFileInfo>
@@ -38,23 +38,23 @@
 #include <QPushButton>
 #include <QUrl>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/kdcraw.h>
 
-// Local includes.
+// Local includes
 
 #include "imagedialog.h"
 

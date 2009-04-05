@@ -39,7 +39,7 @@
     ADOBE DNG CONVERTER: ftp://ftp.adobe.com/pub/adobe/photoshop/cameraraw/win/4.x
 */
 
-// Qt includes.
+// Qt includes
 
 #include <QImage>
 #include <QString>
@@ -49,16 +49,16 @@
 #include <QIODevice>
 #include <QTemporaryFile>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kzip.h>
 
-// Libkexiv2 includes.
+// Libkexiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "dngwriterprivate.h"
 #include "dngwriterhost.h"

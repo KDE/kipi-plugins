@@ -26,7 +26,7 @@
 
 #define ICONSIZE 32
 
-// Qt includes.
+// Qt includes
 
 #include <Q3StrList>
 #include <Q3DragObject>
@@ -37,7 +37,7 @@
 #include <QDragEnterEvent>
 #include <QIcon>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kiconloader.h>

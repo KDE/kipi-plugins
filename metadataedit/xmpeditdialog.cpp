@@ -23,12 +23,12 @@
 #include "xmpeditdialog.h"
 #include "xmpeditdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCloseEvent>
 #include <QKeyEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -42,19 +42,19 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"

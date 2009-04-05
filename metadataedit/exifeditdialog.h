@@ -23,7 +23,7 @@
 #ifndef EXIFEDITDIALOG_H
 #define EXIFEDITDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kpagedialog.h>
 #include <kurl.h>

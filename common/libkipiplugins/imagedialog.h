@@ -23,16 +23,16 @@
 #ifndef IMAGEDIALOG_H
 #define IMAGEDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "kipiplugins_export.h"
 

@@ -24,11 +24,11 @@
 #ifndef PLUGIN_PICASAWEBEXPORT_H
 #define PLUGIN_PICASAWEBEXPORT_H
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 
-// Local includes.
+// Local includes
 
 #include "picasawebwindow.h"
 

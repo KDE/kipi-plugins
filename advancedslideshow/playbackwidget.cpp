@@ -23,13 +23,13 @@
 #include "playbackwidget.h"
 #include "playbackwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QTime>
 #include <QUrl>
 #include <QKeyEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kicon.h>
 

@@ -23,7 +23,7 @@
 #ifndef XMP_KEYWORDS_H
 #define XMP_KEYWORDS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

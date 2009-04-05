@@ -24,31 +24,31 @@
 #include "rawdecodingiface.h"
 #include "rawdecodingiface.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QDateTime>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 #include "kpwriteimage.h"

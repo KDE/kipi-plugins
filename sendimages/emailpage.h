@@ -23,11 +23,11 @@
 #ifndef EMAIL_PAGE_H
 #define EMAIL_PAGE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// Local includes.
+// Local includes
 
 #include <emailsettingscontainer.h>
 

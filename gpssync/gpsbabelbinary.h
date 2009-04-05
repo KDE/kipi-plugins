@@ -23,7 +23,7 @@
 #ifndef GPSBABELBINARY_H
 #define GPSBABELBINARY_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 

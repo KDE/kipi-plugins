@@ -23,7 +23,7 @@
 #ifndef XMP_ORIGIN_H
 #define XMP_ORIGIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 #include <QWidget>

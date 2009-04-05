@@ -23,7 +23,7 @@
 #include "iptcenvelope.h"
 #include "iptcenvelope.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QLabel>
@@ -32,7 +32,7 @@
 #include <QValidator>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdatewidget.h>
@@ -42,15 +42,15 @@
 #include <klocale.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 #include "pluginsversion.h"

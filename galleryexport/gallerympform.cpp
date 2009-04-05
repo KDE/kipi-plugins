@@ -26,23 +26,23 @@
 
 #include "gallerympform.h"
 
-// C++ includes.
+// C++ includes
 
 #include <cstring>
 #include <cstdio>
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <krandom.h>
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "gallerytalker.h"
 

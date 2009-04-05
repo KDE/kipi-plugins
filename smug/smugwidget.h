@@ -24,7 +24,7 @@
 #ifndef SMUGWIDGET_H
 #define SMUGWIDGET_H
 
-// Qt includes.
+// Qt includes
 #include <QWidget>
 
 class QLabel;

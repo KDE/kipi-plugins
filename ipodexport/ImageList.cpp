@@ -29,7 +29,7 @@
 #include <QMimeData>
 #include <QUrl>
 
-// KDE includes.
+// KDE includes
 
 #include <KLocale>
 

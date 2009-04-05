@@ -31,7 +31,7 @@
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
 
-// KDE includes.
+// KDE includes
 
 #include <kfile.h>
 #include <kicon.h>
@@ -39,7 +39,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-// Local includes.
+// Local includes
 
 #include "playbackwidget.h"
 

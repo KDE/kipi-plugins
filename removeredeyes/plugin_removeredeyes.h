@@ -25,11 +25,11 @@
 #ifndef PLUGIN_REMOVEREDEYES_H
 #define PLUGIN_REMOVEREDEYES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

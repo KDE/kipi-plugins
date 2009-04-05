@@ -25,15 +25,15 @@
 #ifndef IMAGEROTATE_H
 #define IMAGEROTATE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 
 #include <KTemporaryFile>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 

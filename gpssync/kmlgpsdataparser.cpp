@@ -23,7 +23,7 @@
 
 #include "kmlgpsdataparser.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>

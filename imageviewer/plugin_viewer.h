@@ -24,11 +24,11 @@
 #ifndef PLUGIN_VIEWER_H
 #define PLUGIN_VIEWER_H
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 
-// Local includes.
+// Local includes
 
 #include "viewerwidget.h"
 

@@ -25,11 +25,11 @@
 
 #include "galleries.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>

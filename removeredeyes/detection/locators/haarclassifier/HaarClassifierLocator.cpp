@@ -24,22 +24,22 @@
 #include "HaarClassifierLocator.h"
 #include "HaarClassifierLocator.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QFile>
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
-// OpenCV includes.
+// OpenCV includes
 
 #include <BlobResult.h>
 
-// Local includes.
+// Local includes
 
 #include "haarsettings.h"
 #include "haarsettingswidget.h"

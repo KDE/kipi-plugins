@@ -23,7 +23,7 @@
 #include "advanceddialog.h"
 #include "advanceddialog.moc"
 
-// Local includes.
+// Local includes
 
 #include "listimageitems.h"
 #include "slideshow.h"

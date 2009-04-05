@@ -25,14 +25,14 @@
 #include "picasawebtalker.h"
 #include "picasawebtalker.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QDomDocument>
@@ -45,7 +45,7 @@
 #include <QStringList>
 #include <QUrl>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kcodecs.h>
@@ -60,11 +60,11 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -73,7 +73,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "mpform.h"
 #include "picasawebitem.h"

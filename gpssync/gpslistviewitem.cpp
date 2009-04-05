@@ -22,12 +22,12 @@
 
 #include "gpslistviewitem.h"
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>

@@ -23,15 +23,15 @@
 #ifndef GPSTRACKLISTEDITDIALOG_H
 #define GPSTRACKLISTEDITDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "gpstracklistcontainer.h"
 

@@ -23,7 +23,7 @@
 #ifndef PLAYBACKWIDGET_H
 #define PLAYBACKWIDGET_H
 
-// Qt includes.
+// Qt includes
 #include <QKeyEvent>
 
 // Phonon includes
@@ -32,10 +32,10 @@
 #include <Phonon/Global>
 #include <Phonon/VolumeSlider>
 
-// KDE includes.
+// KDE includes
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 #include "ui_playbackwidget.h"
 #include "common.h"
 

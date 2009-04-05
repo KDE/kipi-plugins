@@ -23,7 +23,7 @@
 #ifndef PICASAWEBITEM_H
 #define PICASAWEBITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QStringList>

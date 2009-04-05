@@ -24,14 +24,14 @@
 #include "smugalbum.h"
 #include "smugalbum.moc"
 
-// Qt includes.
+// Qt includes
 #include <QFormLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QRadioButton>
 
-// KDE includes.
+// KDE includes
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>

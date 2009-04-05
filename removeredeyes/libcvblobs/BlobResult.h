@@ -31,13 +31,13 @@
 #endif // _MSC_VER > 1000
 #endif // WIN32
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 #include <vector>        // vectors de la STL
 #include <functional>
 
-// OpenCV includes.
+// OpenCV includes
 
 #ifdef WIN32
 #include <cxcore.h>
@@ -54,7 +54,7 @@
 typedef std::vector<double> double_stl_vector;
 #endif // MATRIXCV_ACTIU
 
-// Local includes.
+// Local includes
 
 #include "BlobLibraryConfiguration.h"
 #include "Blob.h"

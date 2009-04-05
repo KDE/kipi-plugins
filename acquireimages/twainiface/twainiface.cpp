@@ -23,11 +23,11 @@
 
 #include "twainiface.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QtGlobal>
 
-// C++ includes.
+// C++ includes
 
 #include <cstring>
 

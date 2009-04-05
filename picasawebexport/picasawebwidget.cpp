@@ -23,11 +23,11 @@
 #include "picasawebwidget.h"
 #include "picasawebwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 
-// KDE includes.
+// KDE includes
 
 #include <khtml_part.h>
 

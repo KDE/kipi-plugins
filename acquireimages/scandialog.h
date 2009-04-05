@@ -23,11 +23,11 @@
 #ifndef SCANDIALOG_H
 #define SCANDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QCloseEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

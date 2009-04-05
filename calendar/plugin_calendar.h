@@ -24,11 +24,11 @@
 #ifndef PLUGIN_CALENDAR_H
 #define PLUGIN_CALENDAR_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

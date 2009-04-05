@@ -22,11 +22,11 @@
 
 #include "gpstracklistviewitem.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kiconloader.h>
 #include <klocale.h>

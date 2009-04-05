@@ -25,11 +25,11 @@
 #ifndef PLUGIN_GPSSYNC_H
 #define PLUGIN_GPSSYNC_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

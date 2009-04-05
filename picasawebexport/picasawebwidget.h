@@ -23,11 +23,11 @@
 #ifndef PICASAWEBWIDGET_H
 #define PICASAWEBWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// Local includes.
+// Local includes
 
 #include "ui_uploadwidget.h"
 

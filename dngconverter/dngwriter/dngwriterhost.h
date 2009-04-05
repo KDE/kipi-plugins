@@ -23,7 +23,7 @@
 #ifndef DNGWRITTERHOST_H
 #define DNGWRITTERHOST_H
 
-// Local includes.
+// Local includes
 
 #include "dngwriterprivate.h"
 

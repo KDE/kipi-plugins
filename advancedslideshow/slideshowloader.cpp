@@ -22,7 +22,7 @@
 
 #include "slideshowloader.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QImage>
 #include <QMatrix>
@@ -30,7 +30,7 @@
 #include <Q3ValueList>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 

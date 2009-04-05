@@ -23,7 +23,7 @@
 #include "plugin_acquireimages.h"
 #include "plugin_acquireimages.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -38,20 +38,23 @@
 
 #ifdef WIN32
 
-// Twain interface includes.
+// Twain interface includes
+
 #include "twaincontroller.h"
 
 #else /*  WIN32 */
 
-// LibKSane includes.
+// LibKSane includes
+
 #include <libksane/ksane.h>
 
-// Local includes.
+// Local includes
+
 #include "scandialog.h"
 
 #endif /*  WIN32 */
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>

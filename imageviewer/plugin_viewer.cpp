@@ -24,11 +24,11 @@
 #include "plugin_viewer.h"
 #include "plugin_viewer.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QMessageBox>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -37,13 +37,13 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 
 #include "viewerwidget.h"
 

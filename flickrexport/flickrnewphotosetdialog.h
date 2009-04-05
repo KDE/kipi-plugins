@@ -24,11 +24,11 @@
 #ifndef NEWPHOTOSETDIALOG_H
 #define NEWPHOTOSETDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDialog>
 
-// Local includes.
+// Local includes
 
 #include "ui_flickralbumdialog.h"
 

@@ -24,7 +24,7 @@
 #ifndef CALSETTINGS_H
 #define CALSETTINGS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QMap>
 #include <QDate>
@@ -36,7 +36,7 @@
 #include <QPointer>
 #include <QPrinter>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

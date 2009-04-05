@@ -23,7 +23,7 @@
 #ifndef XMPEDITDIALOG_H
 #define XMPEDITDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kpagedialog.h>
 #include <kurl.h>

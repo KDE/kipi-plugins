@@ -23,7 +23,7 @@
 #ifndef MULTI_STRINGS_EDIT_H
 #define MULTI_STRINGS_EDIT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

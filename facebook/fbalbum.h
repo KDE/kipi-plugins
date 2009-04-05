@@ -23,9 +23,9 @@
 #ifndef FBALBUM_H
 #define FBALBUM_H
 
-// Qt includes.
+// Qt includes
 
-// KDE includes.
+// KDE includes
 #include <KDialog>
 
 class KLineEdit;

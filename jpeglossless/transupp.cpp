@@ -17,7 +17,7 @@
  */
 #define JPEG_INTERNALS
 
-// LibJPEG includes.
+// LibJPEG includes
 
 extern "C"
 {
@@ -25,7 +25,7 @@ extern "C"
 #include "jpeglib.h"
 }
 
-// Local includes.
+// Local includes
 
 #include "transupp.h"		/* My own external interface */
 

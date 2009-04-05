@@ -27,12 +27,12 @@
 #include "slideshowkb.h"
 #include "slideshowkb.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cassert>
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QApplication>
@@ -43,7 +43,7 @@
 #include <QPixmap>
 #include <QMouseEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -52,7 +52,7 @@
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 
-// Local includes.
+// Local includes
 
 #include "imageloadthread.h"
 

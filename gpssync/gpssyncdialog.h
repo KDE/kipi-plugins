@@ -24,12 +24,12 @@
 #ifndef GPSSYNCDIALOG_H
 #define GPSSYNCDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 

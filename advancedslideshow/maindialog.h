@@ -26,11 +26,11 @@
 // Qt includes
 #include <QSvgRenderer>
 
-// KDE includes.
+// KDE includes
 #include "kio/previewjob.h"
 #include "kurl.h"
 
-// Local includes.
+// Local includes
 #include "common.h"
 #include "ui_maindialog.h"
 

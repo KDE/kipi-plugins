@@ -24,7 +24,7 @@
 #ifndef KPWRITEIMAGE_H
 #define KPWRITEIMAGE_H
 
-// C++ includes.
+// C++ includes
 
 #include <cstdarg>
 #include <cstdio>
@@ -32,7 +32,7 @@
 #include <cstring>
 #include <iostream>
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -42,15 +42,15 @@ extern "C"
 #include <png.h>
 }
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include "kipiplugins_export.h"
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

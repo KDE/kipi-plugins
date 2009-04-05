@@ -23,7 +23,7 @@
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -39,17 +39,17 @@
 #include <kmenu.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "commenteditdialog.h"
 #include "commentremovedialog.h"

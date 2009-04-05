@@ -24,13 +24,13 @@
 #ifndef FLICKRTALKER_H
 #define FLICKRTALKER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QList>
 #include <QString>
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kio/job.h>

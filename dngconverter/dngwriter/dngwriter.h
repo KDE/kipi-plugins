@@ -23,7 +23,7 @@
 #ifndef DNGWRITTER_H
 #define DNGWRITTER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 

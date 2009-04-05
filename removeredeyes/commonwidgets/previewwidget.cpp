@@ -24,18 +24,18 @@
 #include "previewwidget.h"
 #include "previewwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGraphicsScene>
 #include <QStackedWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "controlwidget.h"
 #include "infomessagewidget.h"

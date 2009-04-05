@@ -23,7 +23,7 @@
 #ifndef FBITEM_H
 #define FBITEM_H
 
-// Qt includes.
+// Qt includes
 #include <QString>
 
 namespace KIPIFacebookPlugin

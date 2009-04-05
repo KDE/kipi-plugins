@@ -23,24 +23,24 @@
 #include "xmpcredits.h"
 #include "xmpcredits.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <klineedit.h>
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "multistringsedit.h"
 

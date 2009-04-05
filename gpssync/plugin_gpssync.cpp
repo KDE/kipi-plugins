@@ -25,7 +25,7 @@
 #include "plugin_gpssync.h"
 #include "plugin_gpssync.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -38,16 +38,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsbabelbinary.h"
 #include "gpsdatacontainer.h"

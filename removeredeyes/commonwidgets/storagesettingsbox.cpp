@@ -24,18 +24,18 @@
 #include "storagesettingsbox.h"
 #include "storagesettingsbox.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QCheckBox>
 
-// KDE includes.
+// KDE includes
 
 #include <klineedit.h>
 #include <klocale.h>
 #include <kcombobox.h>
 
-// Local includes.
+// Local includes
 
 #include "removeredeyeswindow.h"
 

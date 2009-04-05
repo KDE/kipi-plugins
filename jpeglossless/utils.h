@@ -25,7 +25,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-// Qt includes.
+// Qt includes
 
 #include <qobject.h>
 #include <qstring.h>

@@ -23,11 +23,11 @@
 #ifndef KPABOUTDATA_H
 #define KPABOUTDATA_H
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include "kipiplugins_export.h"
 

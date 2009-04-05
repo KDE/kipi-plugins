@@ -22,14 +22,14 @@
 
 #include "kpaboutdata.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 

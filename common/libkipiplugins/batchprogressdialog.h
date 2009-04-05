@@ -25,11 +25,11 @@
 #ifndef BATCHPROGRESSDIALOG_H
 #define BATCHPROGRESSDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// Local includes.
+// Local includes
 
 #include "kipiplugins_export.h"
 

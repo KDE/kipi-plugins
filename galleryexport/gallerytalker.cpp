@@ -26,19 +26,19 @@
 #include "gallerytalker.h"
 #include "gallerytalker.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cstring>
 #include <cstdio>
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QImage>
 #include <QRegExp>
 #include <QTextStream>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kio/job.h>
@@ -46,11 +46,11 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "galleryitem.h"
 #include "gallerympform.h"

@@ -24,7 +24,7 @@
 
 #include "BlobResult.h"
 
-// C++ includes.
+// C++ includes
 
 #include <climits>
 #include <cstdio>
@@ -37,7 +37,7 @@
     #include <afxwin.h>            //suport per a AfxMessageBox
 #endif
 
-// Local includes.
+// Local includes
 
 #include "BlobExtraction.h"
 

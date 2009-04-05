@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 #include "listthemeparameter.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kconfiggroup.h>

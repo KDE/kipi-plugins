@@ -23,10 +23,10 @@
 #include "fbalbum.h"
 #include "fbalbum.moc"
 
-// Qt includes.
+// Qt includes
 #include <QFormLayout>
 
-// KDE includes.
+// KDE includes
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>

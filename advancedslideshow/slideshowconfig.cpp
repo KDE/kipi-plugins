@@ -23,11 +23,11 @@
 #include "slideshowconfig.h"
 #include "slideshowconfig.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFont>
 
-// KDE includes.
+// KDE includes
 
 #include <ktoolinvocation.h>
 #include <kconfig.h>
@@ -38,7 +38,7 @@
 #include <kmenu.h>
 #include <kdebug.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include "kpaboutdata.h"
 

@@ -23,11 +23,11 @@
 
 #include "LocatorFactory.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// Local includes.
+// Local includes
 
 #include "Locator.h"
 #include "HaarClassifierLocator.h"

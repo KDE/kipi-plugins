@@ -24,14 +24,14 @@
 #include "calsettings.h"
 #include "calsettings.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcalendarsystem.h>
 
-// LibKCAL includes.
+// LibKCAL includes
 
 #include <kcal/calendarlocal.h>
 

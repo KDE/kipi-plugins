@@ -25,7 +25,7 @@
 #ifndef CALWIDGET_H
 #define CALWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

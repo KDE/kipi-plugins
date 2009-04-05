@@ -26,11 +26,11 @@
 #include "viewerwidget.h"
 #include "viewerwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDesktopWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -38,7 +38,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// Local includes.
+// Local includes
 
 //#define PERFORMANCE_ANALYSIS
 #ifdef PERFORMANCE_ANALYSIS

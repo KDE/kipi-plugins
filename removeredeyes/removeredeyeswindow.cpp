@@ -24,7 +24,7 @@
 #include "removeredeyeswindow.h"
 #include "removeredeyeswindow.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -32,7 +32,7 @@
 #include <QProgressBar>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -46,11 +46,11 @@
 #include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "Locator.h"
 #include "LocatorFactory.h"

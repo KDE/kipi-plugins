@@ -24,17 +24,17 @@
 #ifndef IMAGESLIST_H
 #define IMAGESLIST_H
 
-// Qt includes.
+// Qt includes
 
 #include <QStringList>
 #include <QTreeWidget>
 #include <QWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imageinfo.h>
 

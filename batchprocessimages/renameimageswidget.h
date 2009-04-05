@@ -24,15 +24,15 @@
 #ifndef RENAMEIMAGESWIDGET_H
 #define RENAMEIMAGESWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "ui_renameimagesbase.h"
 

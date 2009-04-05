@@ -23,7 +23,7 @@
 
 #include "workerthreaddata.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

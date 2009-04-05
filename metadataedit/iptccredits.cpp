@@ -23,7 +23,7 @@
 #include "iptccredits.h"
 #include "iptccredits.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QLabel>
@@ -31,17 +31,17 @@
 #include <QValidator>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <klineedit.h>
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "multistringsedit.h"
 

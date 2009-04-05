@@ -26,7 +26,7 @@
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 class QWidget;
 namespace KIPI {

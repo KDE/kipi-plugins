@@ -23,7 +23,7 @@
 
 //#define ENABLE_DEBUG_MESSAGES 1
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -37,18 +37,18 @@ extern "C"
 #include "iccjpeg.h"
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QFile>
 #include <QDataStream>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-// Local includes.
+// Local includes
 #include "kpwriteimage.h"
 #include "pluginsversion.h"
 

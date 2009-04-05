@@ -24,7 +24,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 #include <QString>

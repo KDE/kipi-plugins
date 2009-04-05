@@ -24,13 +24,13 @@
 #include "previewwidget.h"
 #include "previewwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QImage>
 #include <QPaintEvent>
 #include <QPainter>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 

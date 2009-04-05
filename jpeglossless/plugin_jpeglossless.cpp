@@ -22,11 +22,11 @@
  *
  * ============================================================ */
 
-// C++ includes.
+// C++ includes
 
 #include <iostream>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -42,11 +42,11 @@
 #include <kstandardguiitem.h>
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "batchprogressdialog.h"
 #include "actionthread.h"

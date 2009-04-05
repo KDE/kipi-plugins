@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -29,12 +29,12 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
-// Libkexiv2 includes.
+// Libkexiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "twaincontroller.h"
 #include "pluginsversion.h"

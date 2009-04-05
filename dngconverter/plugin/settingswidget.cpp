@@ -23,7 +23,7 @@
 #include "settingswidget.h"
 #include "settingswidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -32,7 +32,7 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdialog.h>
@@ -42,11 +42,11 @@
 #include <kurllabel.h>
 #include <kiconloader.h>
 
-// Libkdcraw includes.
+// Libkdcraw includes
 
 #include <libkdcraw/rcombobox.h>
 
-// Local includes.
+// Local includes
 
 #include "dngwriter.h"
 

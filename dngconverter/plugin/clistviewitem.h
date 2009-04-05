@@ -23,7 +23,7 @@
 #ifndef CLISTVIEWITEM_H
 #define CLISTVIEWITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QBrush>
 #include <QTreeWidgetItem>
@@ -32,7 +32,7 @@
 #include <QString>
 #include <QIcon>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

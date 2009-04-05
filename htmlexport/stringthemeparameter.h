@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #ifndef STRINGTHEMEPARAMETER_H
 #define STRINGTHEMEPARAMETER_H
 
-// Local includes.
+// Local includes
 
 #include "abstractthemeparameter.h"
 

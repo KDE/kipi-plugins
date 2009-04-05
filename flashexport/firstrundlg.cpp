@@ -24,13 +24,13 @@
 #include "firstrundlg.h"
 #include "firstrundlg.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFrame>
 #include <QLabel>
 #include <QLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <khelpmenu.h>
 #include <klocale.h>
@@ -40,12 +40,12 @@
 #include <kurllabel.h>
 #include <kurlrequester.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 

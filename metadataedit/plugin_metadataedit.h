@@ -23,11 +23,11 @@
 #ifndef PLUGIN_METADATAEDIT_H
 #define PLUGIN_METADATAEDIT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

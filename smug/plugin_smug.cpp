@@ -26,13 +26,13 @@
 #include "plugin_smug.h"
 #include "plugin_smug.moc"
 
-// C ANSI includes.
+// C ANSI includes
 extern "C"
 {
 #include <unistd.h>
 }
 
-// KDE includes.
+// KDE includes
 #include <KDebug>
 #include <KConfig>
 #include <KApplication>
@@ -42,10 +42,10 @@ extern "C"
 #include <KLibLoader>
 #include <KStandardDirs>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 #include "smugwindow.h"
 
 K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )

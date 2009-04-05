@@ -33,7 +33,7 @@
 #include <opencv/cv.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "BlobResult.h"
 

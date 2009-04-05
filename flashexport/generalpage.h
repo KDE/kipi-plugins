@@ -23,11 +23,11 @@
 #ifndef GENERAL_PAGE_H
 #define GENERAL_PAGE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// Local includes.
+// Local includes
 
 #include "simpleviewersettingscontainer.h"
 

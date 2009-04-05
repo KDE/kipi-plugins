@@ -24,15 +24,15 @@
 #ifndef IMAGEFLIP_H
 #define IMAGEFLIP_H
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 
 #include <KTemporaryFile>
 

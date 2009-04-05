@@ -20,19 +20,19 @@
  *
  * ============================================================ */
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 
-// Local includes.
+// Local includes
 
 #include "dngwriter.h"
 #include "dngwriterprivate.h"

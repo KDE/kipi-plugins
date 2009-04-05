@@ -23,7 +23,7 @@
 #ifndef XMP_PROPERTIES_H
 #define XMP_PROPERTIES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

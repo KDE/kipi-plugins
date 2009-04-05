@@ -25,7 +25,7 @@
 #include "calwidget.h"
 #include "calwidget.moc"
 
-// Local includes.
+// Local includes
 
 #include "calpainter.h"
 #include "calsettings.h"

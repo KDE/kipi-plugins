@@ -24,16 +24,16 @@
 #ifndef GPSDATAPARSER_H
 #define GPSDATAPARSER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 #include <QMap>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsdatacontainer.h"
 

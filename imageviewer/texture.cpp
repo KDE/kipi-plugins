@@ -25,12 +25,12 @@
 
 #include "texture.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QMatrix>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 
@@ -43,12 +43,12 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 #ifdef PERFORMANCE_ANALYSIS
     #include "timer.h"
 #endif

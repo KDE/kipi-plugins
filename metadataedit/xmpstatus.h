@@ -23,7 +23,7 @@
 #ifndef XMP_STATUS_H
 #define XMP_STATUS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

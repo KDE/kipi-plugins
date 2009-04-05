@@ -23,7 +23,7 @@
 #ifndef MYIMAGESLIST_H
 #define MYIMAGESLIST_H
 
-// Local includes.
+// Local includes
 
 #include "imageslist.h"
 

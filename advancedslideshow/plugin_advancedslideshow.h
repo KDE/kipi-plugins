@@ -24,16 +24,16 @@
 #ifndef PLUGIN_ADVANCEDSLIDESHOW_H
 #define PLUGIN_ADVANCEDSLIDESHOW_H
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "common.h"
 

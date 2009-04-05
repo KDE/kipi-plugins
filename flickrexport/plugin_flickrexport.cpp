@@ -25,14 +25,14 @@
 #include "plugin_flickrexport.h"
 #include "plugin_flickrexport.moc"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
 #include <unistd.h>
 }
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kaction.h>
@@ -44,11 +44,11 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "flickrwindow.h"
 

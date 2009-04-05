@@ -23,15 +23,15 @@
 #ifndef GPSTRACKLISTWIDGET_H
 #define GPSTRACKLISTWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <khtml_part.h>
 
-// Local includes.
+// Local includes
 
 #include "gpstracklistcontainer.h"
 

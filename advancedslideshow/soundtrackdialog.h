@@ -23,15 +23,15 @@
 #ifndef SOUNDTRACKDIALOG_H
 #define SOUNDTRACKDIALOG_H
 
-// Qt includes.
+// Qt includes
 #include <QTime>
 #include <QMutex>
 
-// KDE includes.
+// KDE includes
 #include <kurl.h>
 #include <kdialog.h>
 
-// Local includes.
+// Local includes
 #include "ui_soundtrackdialog.h"
 #include "common.h"
 #include "playbackwidget.h"

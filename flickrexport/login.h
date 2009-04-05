@@ -23,12 +23,12 @@
 #ifndef FLICKRLOGIN_H
 #define FLICKRLOGIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

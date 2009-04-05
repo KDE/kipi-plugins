@@ -24,11 +24,11 @@
 #ifndef TIMEADJUSTDIALOG_H
 #define TIMEADJUSTDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>

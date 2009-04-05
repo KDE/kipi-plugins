@@ -23,7 +23,7 @@
 #include "gpstracklistwidget.h"
 #include "gpstracklistwidget.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <khtmlview.h>

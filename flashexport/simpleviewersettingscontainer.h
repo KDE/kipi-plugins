@@ -23,13 +23,13 @@
 #ifndef SIMPLEVIEWERSETTINGSCONTAINER_H
 #define SIMPLEVIEWERSETTINGSCONTAINER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QList>
 #include <QString>
 #include <QColor>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

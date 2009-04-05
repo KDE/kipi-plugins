@@ -24,16 +24,16 @@
 #ifndef QTWAIN_H
 #define QTWAIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QImage>
 
-// C++ includes.
+// C++ includes
 
 #include <climits>
 
-// Local includes.
+// Local includes
 
 #include "twainiface.h"
 

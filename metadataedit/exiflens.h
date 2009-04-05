@@ -23,7 +23,7 @@
 #ifndef EXIF_LENS_H
 #define EXIF_LENS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

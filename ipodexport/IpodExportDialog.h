@@ -30,16 +30,16 @@ extern "C"
 
 #define KIPI_PLUGIN 1
 
-// Qt includes.
+// Qt includes
 
 #include <QPixmap>
 #include <QLabel>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// Kipi includes.
+// Kipi includes
 
 #if KIPI_PLUGIN
 #include <libkipi/interface.h>

@@ -23,17 +23,17 @@
 #include "exifdevice.h"
 #include "exifdevice.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 #include <QValidator>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdialog.h>
@@ -42,11 +42,11 @@
 #include <knuminput.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 

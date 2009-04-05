@@ -26,10 +26,10 @@
 #ifndef PLUGIN_SMUG_H
 #define PLUGIN_SMUG_H
 
-// Qt includes.
+// Qt includes
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/plugin.h>
 
 class KAction;

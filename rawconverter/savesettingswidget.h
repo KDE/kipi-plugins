@@ -23,7 +23,7 @@
 #ifndef SAVESETTINGSWIDGET_H
 #define SAVESETTINGSWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

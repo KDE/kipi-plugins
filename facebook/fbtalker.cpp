@@ -23,16 +23,16 @@
 #include "fbtalker.h"
 #include "fbtalker.moc"
 
-// C++ includes.
+// C++ includes
 #include <ctime>
 
-// Qt includes.
+// Qt includes
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QtAlgorithms>
 
-// KDE includes.
+// KDE includes
 #include <KCodecs>
 #include <KDebug>
 #include <KIO/Job>
@@ -41,7 +41,7 @@
 #include <KMessageBox>
 #include <KToolInvocation>
 
-// Local includes.
+// Local includes
 #include "pluginsversion.h"
 #include "fbitem.h"
 #include "mpform.h"

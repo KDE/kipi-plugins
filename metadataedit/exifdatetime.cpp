@@ -23,13 +23,13 @@
 #include "exifdatetime.h"
 #include "exifdatetime.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 #include <kcomponentdata.h>
@@ -41,7 +41,7 @@
 #include <knuminput.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

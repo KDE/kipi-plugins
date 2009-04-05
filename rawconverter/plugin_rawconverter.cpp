@@ -25,7 +25,7 @@
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -34,15 +34,15 @@ extern "C"
 #include <unistd.h>
 }
 
-// C++ includes.
+// C++ includes
 
 #include <cstdlib>
 
-// Qt includes.
+// Qt includes
 
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -54,7 +54,7 @@ extern "C"
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -63,11 +63,11 @@ extern "C"
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "singledialog.h"
 #include "batchdialog.h"

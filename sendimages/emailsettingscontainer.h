@@ -23,13 +23,13 @@
 #ifndef EMAILSETTINGSCONTAINER_H
 #define EMAILSETTINGSCONTAINER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QList>
 #include <QString>
 #include <QStringList>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

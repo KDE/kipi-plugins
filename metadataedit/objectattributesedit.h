@@ -24,7 +24,7 @@
 #ifndef OBJECT_ATTRIBUTES_EDIT_H
 #define OBJECT_ATTRIBUTES_EDIT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

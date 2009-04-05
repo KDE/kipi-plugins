@@ -24,23 +24,23 @@
 #include "actionthread.h"
 #include "actionthread.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QMutex>
 #include <QMutexLocker>
 #include <QWaitCondition>
 #include <QtDebug>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/dcrawinfocontainer.h>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 #include "rawdecodingiface.h"

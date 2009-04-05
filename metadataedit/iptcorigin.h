@@ -23,7 +23,7 @@
 #ifndef IPTC_ORIGIN_H
 #define IPTC_ORIGIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 #include <QWidget>

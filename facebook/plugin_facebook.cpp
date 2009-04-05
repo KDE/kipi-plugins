@@ -25,13 +25,13 @@
 #include "plugin_facebook.h"
 #include "plugin_facebook.moc"
 
-// C ANSI includes.
+// C ANSI includes
 extern "C"
 {
 #include <unistd.h>
 }
 
-// KDE includes.
+// KDE includes
 #include <KDebug>
 #include <KConfig>
 #include <KApplication>
@@ -41,10 +41,10 @@ extern "C"
 #include <KLibLoader>
 #include <KStandardDirs>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 #include "fbwindow.h"
 
 K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )

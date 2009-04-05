@@ -24,14 +24,14 @@
 #include "slideshow.h"
 #include "slideshow.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cstdlib>
 #include <cassert>
 #include <cmath>
 #include <ctime>
 
-// Qt includes.
+// Qt includes
 
 #include <qtimer.h>
 #include <qpainter.h>
@@ -52,7 +52,7 @@
 #include <QPolygon>
 #include <QSvgRenderer>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kdeversion.h>

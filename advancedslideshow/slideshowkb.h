@@ -27,14 +27,14 @@
 #ifndef SLIDESHOWKB_H
 #define SLIDESHOWKB_H
 
-// C++ includes.
+// C++ includes
 #ifndef _MSC_VER
 #include <cstdlib>
 #else
 #include <winsock2.h>
 #endif
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QKeyEvent>
@@ -46,7 +46,7 @@
 #include <QTimer>
 #include <QGLWidget>
 
-// Local includes.
+// Local includes
 
 #include "common.h"
 #include "kbeffect.h"

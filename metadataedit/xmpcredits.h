@@ -23,7 +23,7 @@
 #ifndef XMP_CREDITS_H
 #define XMP_CREDITS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

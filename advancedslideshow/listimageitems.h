@@ -24,7 +24,7 @@
 #ifndef LISTIMAGEITEM_H
 #define LISTIMAGEITEM_H
 
-// Qt includes.
+// Qt includes
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
@@ -32,11 +32,11 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
-// KDE includes.
+// KDE includes
 #include <kurl.h>
 #include "kio/previewjob.h"
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 

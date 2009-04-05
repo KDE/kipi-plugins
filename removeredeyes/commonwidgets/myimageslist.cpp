@@ -25,7 +25,7 @@
 #include "myimageslist.h"
 #include "myimageslist.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFileInfo>
 #include <QGridLayout>
@@ -34,16 +34,16 @@
 #include <QLabel>
 #include <QTreeWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "imagedialog.h"
 

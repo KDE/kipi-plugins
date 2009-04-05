@@ -23,7 +23,7 @@
 #ifndef ABOUTDATA_H
 #define ABOUTDATA_H
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 

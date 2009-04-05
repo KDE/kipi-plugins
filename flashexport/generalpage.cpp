@@ -23,14 +23,14 @@
 #include "generalpage.h"
 #include "generalpage.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <klineedit.h>

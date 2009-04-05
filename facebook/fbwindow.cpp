@@ -25,12 +25,12 @@
 #include "fbwindow.h"
 #include "fbwindow.moc"
 
-// Qt includes.
+// Qt includes
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
 
-// KDE includes.
+// KDE includes
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
@@ -43,10 +43,10 @@
 #include <KProgressDialog>
 #include <KToolInvocation>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
@@ -54,13 +54,13 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
-// Local includes.
+// Local includes
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"

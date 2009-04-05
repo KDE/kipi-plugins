@@ -23,7 +23,7 @@
 #ifndef FLICKRITEM_H
 #define FLICKRITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QStringList>
 #include <QString>

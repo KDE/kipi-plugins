@@ -24,11 +24,11 @@
 #ifndef GPSMAPWIDGET_H
 #define GPSMAPWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <khtml_part.h>
 

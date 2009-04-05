@@ -23,11 +23,11 @@
 #ifndef PLUGIN_SENDIMAGES_H
 #define PLUGIN_SENDIMAGES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

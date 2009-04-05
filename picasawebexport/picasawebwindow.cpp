@@ -25,7 +25,7 @@
 #include "picasawebwindow.h"
 #include "picasawebwindow.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QProgressDialog>
 #include <QCloseEvent>
@@ -33,7 +33,7 @@
 #include <QLinkedList>
 #include <QStringList>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -50,12 +50,12 @@
 #include <ksimpleconfig.h>
 #include <kwallet.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "imagedialog.h"
 #include "kpaboutdata.h"

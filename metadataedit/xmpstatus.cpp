@@ -23,12 +23,12 @@
 #include "xmpstatus.h"
 #include "xmpstatus.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kglobal.h>
@@ -38,11 +38,11 @@
 #include <kseparator.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "altlangstringedit.h"
 #include "multistringsedit.h"

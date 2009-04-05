@@ -23,7 +23,7 @@
 
 #include "utils.h"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -31,12 +31,12 @@ extern "C"
 #include <stdio.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QDir>
 #include <QProcess>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kmessagebox.h>

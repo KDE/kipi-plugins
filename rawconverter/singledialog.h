@@ -24,12 +24,12 @@
 #ifndef SINGLEDIALOG_H
 #define SINGLEDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>

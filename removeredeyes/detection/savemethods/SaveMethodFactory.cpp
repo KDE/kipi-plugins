@@ -23,7 +23,7 @@
 
 #include "SaveMethodFactory.h"
 
-// Local includes.
+// Local includes
 
 #include "storagesettingsbox.h"
 

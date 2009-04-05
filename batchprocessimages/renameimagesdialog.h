@@ -24,7 +24,7 @@
 #ifndef RENAMEIMAGESDLG_H
 #define RENAMEIMAGESDLG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>

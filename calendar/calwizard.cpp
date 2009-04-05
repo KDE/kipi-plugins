@@ -25,14 +25,14 @@
 #include "calwizard.h"
 #include "calwizard.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDate>
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QStringList>
 
-// KDE includes.
+// KDE includes
 
 #include <kcalendarsystem.h>
 #include <kdebug.h>
@@ -43,11 +43,11 @@
 #include <kmenu.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "calprinter.h"
 #include "calselect.h"

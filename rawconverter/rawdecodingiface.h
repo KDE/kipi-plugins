@@ -24,12 +24,12 @@
 #ifndef RAW_DECODING_IFACE_H
 #define RAW_DECODING_IFACE_H
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/kdcraw.h>
 #include <libkdcraw/rawdecodingsettings.h>
 
-// Local includes.
+// Local includes
 
 #include "savesettingswidget.h"
 

@@ -26,13 +26,13 @@
 #include "imageloadthread.h"
 #include "imageloadthread.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QMatrix>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -46,7 +46,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "slideshowkb.h"
 

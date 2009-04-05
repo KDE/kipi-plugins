@@ -25,7 +25,7 @@
 
 #include "gallerywindow.h"
 
-// Qt includes.
+// Qt includes
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
@@ -35,7 +35,7 @@
 #include <Qt>
 #include <QTreeWidgetItem>
 
-// KDE includes.
+// KDE includes
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -49,10 +49,10 @@
 #include <krun.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 #include "albumdlg.h"
 #include "galleries.h"
 #include "galleryconfig.h"

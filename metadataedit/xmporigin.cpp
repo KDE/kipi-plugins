@@ -23,14 +23,14 @@
 #include "xmporigin.h"
 #include "xmporigin.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QMap>
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 #include <kcombobox.h>
@@ -43,15 +43,15 @@
 #include <klocale.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 

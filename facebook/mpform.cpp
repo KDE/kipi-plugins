@@ -24,14 +24,14 @@
 
 #include "mpform.h"
 
-// C++ includes.
+// C++ includes
 #include <cstring>
 #include <cstdio>
 
-// Qt includes.
+// Qt includes
 #include <QFile>
 
-// KDE includes.
+// KDE includes
 #include <KApplication>
 #include <KDebug>
 #include <KMimeType>

@@ -24,7 +24,7 @@
 #include "subjects.h"
 #include "subjects.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QDomDocument>
@@ -36,7 +36,7 @@
 #include <QRadioButton>
 #include <QValidator>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -49,7 +49,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

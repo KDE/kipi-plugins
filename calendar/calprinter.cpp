@@ -23,15 +23,15 @@
 #include "calprinter.h"
 #include "calprinter.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QPrinter>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "calpainter.h"
 

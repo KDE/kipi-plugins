@@ -23,13 +23,13 @@
 #include "multivaluesedit.h"
 #include "multivaluesedit.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdialog.h>
@@ -37,15 +37,15 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 

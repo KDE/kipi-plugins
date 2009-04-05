@@ -24,7 +24,7 @@
 #ifndef SLIDESHOW_H
 #define SLIDESHOW_H
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QFont>
@@ -40,17 +40,17 @@
 #include <QWidget>
 #include <Q3PointArray>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfig.h>
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "slideshowloader.h"
 #include "slideplaybackwidget.h"

@@ -24,13 +24,13 @@
 #include "renameimagesdialog.h"
 #include "renameimagesdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qpushbutton.h>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <khelpmenu.h>
@@ -38,7 +38,7 @@
 #include <kmenu.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"

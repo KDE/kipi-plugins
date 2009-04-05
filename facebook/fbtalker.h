@@ -23,16 +23,16 @@
 #ifndef FBTALKER_H
 #define FBTALKER_H
 
-// Qt includes.
+// Qt includes
 #include <QList>
 #include <QString>
 #include <QTime>
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 #include <KIO/Job>
 
-// local includes.
+// local includes
 #include "fbitem.h"
 
 class QDomElement;

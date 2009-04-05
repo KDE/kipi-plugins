@@ -22,11 +22,11 @@
 
 #include "gpsbabelbinary.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QProcess>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kdebug.h>

@@ -23,7 +23,7 @@
 #ifndef EXIF_DATETIME_H
 #define EXIF_DATETIME_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

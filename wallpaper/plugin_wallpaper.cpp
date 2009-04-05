@@ -24,7 +24,7 @@
 #include "plugin_wallpaper.h"
 #include "plugin_wallpaper.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kactionmenu.h>
@@ -38,12 +38,12 @@
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 
 #include "kdesktop_interface.h"
 

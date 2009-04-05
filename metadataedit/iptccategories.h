@@ -23,7 +23,7 @@
 #ifndef IPTC_CATEGORIES_H
 #define IPTC_CATEGORIES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

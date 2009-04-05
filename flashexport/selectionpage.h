@@ -23,7 +23,7 @@
 #ifndef SELECTION_PAGE_H
 #define SELECTION_PAGE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

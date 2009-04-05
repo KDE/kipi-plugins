@@ -24,7 +24,7 @@
 #ifndef SAVEMETHODS_H
 #define SAVEMETHODS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 

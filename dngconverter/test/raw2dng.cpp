@@ -20,11 +20,11 @@
  *
  * ============================================================ */
 
-// Qt includes.
+// Qt includes
 
 #include <QDebug>
 
-// Local includes.
+// Local includes
 
 #include "dngwriter.h"
 

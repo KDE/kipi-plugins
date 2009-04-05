@@ -24,16 +24,16 @@
 #ifndef CALSELECT_H
 #define CALSELECT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QVector>
 
-// LibKIPi includes.
+// LibKIPi includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "ui_calselect.h"
 

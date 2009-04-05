@@ -25,10 +25,10 @@
 #ifndef PLUGIN_FACEBOOK_H
 #define PLUGIN_FACEBOOK_H
 
-// Qt includes.
+// Qt includes
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/plugin.h>
 
 class KAction;

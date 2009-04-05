@@ -24,7 +24,7 @@
 #ifndef HAARSETTINGSWIDGET_H
 #define HAARSETTINGSWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

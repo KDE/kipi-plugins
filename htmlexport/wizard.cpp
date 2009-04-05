@@ -20,12 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 #include "wizard.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QLabel>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -41,12 +41,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <kpushbutton.h>
 #include <khelpmenu.h>
 
-// KIPI includes.
+// KIPI includes
 
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "abstractthemeparameter.h"
 #include "galleryinfo.h"

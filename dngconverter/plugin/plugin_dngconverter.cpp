@@ -23,11 +23,11 @@
 #include "plugin_dngconverter.h"
 #include "plugin_dngconverter.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -39,16 +39,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/kdcraw.h>
 #include <libkdcraw/version.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "aboutdata.h"
 #include "batchdialog.h"

@@ -24,7 +24,7 @@
 #ifndef SAVEMETHODFACTORY_H
 #define SAVEMETHODFACTORY_H
 
-// Local includes.
+// Local includes
 
 #include "SaveMethods.h"
 

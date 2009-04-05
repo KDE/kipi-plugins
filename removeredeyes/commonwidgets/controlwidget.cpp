@@ -24,7 +24,7 @@
 #include "controlwidget.h"
 #include "controlwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QColor>
 #include <QMouseEvent>
@@ -33,7 +33,7 @@
 #include <QSvgRenderer>
 #include <QTimer>
 
-// KDE includes.
+// KDE includes
 
 #include <kstandarddirs.h>
 

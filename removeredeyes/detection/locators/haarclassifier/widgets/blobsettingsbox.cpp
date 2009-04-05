@@ -24,11 +24,11 @@
 #include "blobsettingsbox.h"
 #include "blobsettingsbox.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <knuminput.h>

@@ -23,7 +23,7 @@
 #ifndef FBWIDGET_H
 #define FBWIDGET_H
 
-// Qt includes.
+// Qt includes
 #include <QWidget>
 
 class QLabel;

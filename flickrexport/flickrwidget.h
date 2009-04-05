@@ -24,7 +24,7 @@
 #ifndef FLICKRWIDGET_H
 #define FLICKRWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

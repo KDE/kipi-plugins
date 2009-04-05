@@ -23,27 +23,27 @@
 #include "exiflight.h"
 #include "exiflight.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <QMap>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <klocale.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 

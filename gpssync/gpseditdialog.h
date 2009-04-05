@@ -24,11 +24,11 @@
 #ifndef GPSEDITDIALOG_H
 #define GPSEDITDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsdatacontainer.h"
 

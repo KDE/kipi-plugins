@@ -23,19 +23,19 @@
 #ifndef GPSLISTVIEWITEM_H
 #define GPSLISTVIEWITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsdatacontainer.h"
 #include "imageslist.h"

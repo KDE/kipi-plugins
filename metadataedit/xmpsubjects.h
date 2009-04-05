@@ -24,16 +24,16 @@
 #ifndef XMP_SUBJECTS_H
 #define XMP_SUBJECTS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "subjects.h"
 

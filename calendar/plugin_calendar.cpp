@@ -24,7 +24,7 @@
 #include "plugin_calendar.h"
 #include "plugin_calendar.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -33,11 +33,11 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "calwizard.h"
 

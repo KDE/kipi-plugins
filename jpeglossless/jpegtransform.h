@@ -25,7 +25,7 @@
 #ifndef JPEGTRANSFORM_H
 #define JPEGTRANSFORM_H
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

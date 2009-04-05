@@ -23,7 +23,7 @@
 
 #include "cropframe.h"
 
-// C ANSI includes.
+// C ANSI includes
 
 #ifndef _WIN32
 extern "C"
@@ -35,12 +35,12 @@ extern "C"
 }
 #endif
 
-// Qt includes.
+// Qt includes
 #include <QPainter>
 #include <QMouseEvent>
 #include <QtGlobal>
 
-// Local includes.
+// Local includes
 #include "utils.h"
 
 namespace KIPIPrintImagesPlugin

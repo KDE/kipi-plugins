@@ -23,7 +23,7 @@
 #ifndef IPTC_CONTENT_H
 #define IPTC_CONTENT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

@@ -24,7 +24,7 @@
 #ifndef PLUGIN_WALLPAPER_H
 #define PLUGIN_WALLPAPER_H
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

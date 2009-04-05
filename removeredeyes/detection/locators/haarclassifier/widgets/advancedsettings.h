@@ -24,7 +24,7 @@
 #ifndef ADVANCEDSETTINGS_H
 #define ADVANCEDSETTINGS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

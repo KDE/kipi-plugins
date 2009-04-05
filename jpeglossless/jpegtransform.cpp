@@ -22,12 +22,12 @@
  *
  * ============================================================ */
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 #include <cstdlib>
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -37,21 +37,21 @@ extern "C"
 #include <jpeglib.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 #include "transupp.h"

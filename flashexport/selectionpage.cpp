@@ -23,16 +23,16 @@
 #include "selectionpage.h"
 #include "selectionpage.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kdialog.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollectionselector.h>
 

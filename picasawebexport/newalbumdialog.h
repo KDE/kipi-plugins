@@ -24,11 +24,11 @@
 #ifndef NEWALBUMDIALOG_H
 #define NEWALBUMDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QDialog>
 
-// Local includes.
+// Local includes
 
 #include "ui_picasawebnewalbumdialog.h"
 

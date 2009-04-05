@@ -25,7 +25,7 @@
 #include "monthwidget.h"
 #include "monthwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDragEnterEvent>
 #include <QFileInfo>
@@ -36,7 +36,7 @@
 #include <QPainter>
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kcalendarsystem.h>
 #include <kdebug.h>
@@ -45,11 +45,11 @@
 #include <klocale.h>
 #include <kurl.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -58,7 +58,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "calsettings.h"
 #include "imagedialog.h"

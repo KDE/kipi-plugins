@@ -25,12 +25,12 @@
 #ifndef PLUGIN_JPEGLOSSLESS_H
 #define PLUGIN_JPEGLOSSLESS_H
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 

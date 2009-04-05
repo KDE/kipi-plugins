@@ -23,7 +23,7 @@
 #include "savesettingswidget.h"
 #include "savesettingswidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QButtonGroup>
 #include <QGridLayout>
@@ -31,7 +31,7 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdialog.h>

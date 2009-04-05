@@ -24,17 +24,17 @@
 #include "twaincontroller.h"
 #include "twaincontroller.moc"
 
-// Windows includes.
+// Windows includes
 
 #include <windows.h>
 
-// Qt includes.
+// Qt includes
 
 #include <QPixmap>
 #include <QDataStream>
 #include <QByteArray>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kapplication.h>
@@ -46,11 +46,11 @@
 #include <kurl.h>
 #include <kglobalsettings.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "kpwriteimage.h"
 #include "pluginsversion.h"

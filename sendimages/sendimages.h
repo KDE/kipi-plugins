@@ -23,11 +23,11 @@
 #ifndef SENDIMAGES_H
 #define SENDIMAGES_H
 
-// Qt includes.
+// Qt includes
 
 #include <qobject.h>
 
-// Local includes.
+// Local includes
 
 #include "emailsettingscontainer.h"
 

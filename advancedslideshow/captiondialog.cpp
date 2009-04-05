@@ -23,7 +23,7 @@
 #include "captiondialog.h"
 #include "captiondialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFont>
 

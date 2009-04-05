@@ -24,7 +24,7 @@
 #ifndef COMMONSETTINGS_H
 #define COMMONSETTINGS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 

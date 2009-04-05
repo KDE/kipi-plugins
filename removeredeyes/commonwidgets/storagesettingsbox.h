@@ -24,7 +24,7 @@
 #ifndef STORAGESETTINGSBOX_H
 #define STORAGESETTINGSBOX_H
 
-// Qt includes.
+// Qt includes
 
 #include <QGroupBox>
 

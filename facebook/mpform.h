@@ -25,7 +25,7 @@
 #ifndef MPFORM_H
 #define MPFORM_H
 
-// Qt includes.
+// Qt includes
 #include <QByteArray>
 #include <QString>
 

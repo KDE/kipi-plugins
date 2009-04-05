@@ -25,11 +25,11 @@
 #include "sendimagesdialog.h"
 #include "sendimagesdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCloseEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -43,12 +43,12 @@
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"

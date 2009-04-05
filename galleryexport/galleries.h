@@ -26,7 +26,7 @@
 #ifndef GALLERIES_H
 #define GALLERIES_H
 
-// Qt includes.
+// Qt includes
 #include <QString>
 
 namespace KWallet

@@ -23,12 +23,12 @@
 
 #include "SaveMethods.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDir>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

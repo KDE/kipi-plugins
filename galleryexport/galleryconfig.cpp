@@ -25,23 +25,23 @@
 
 #include "galleryconfig.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QFrame>
 #include <QGridLayout>
 #include <QPushButton>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "galleries.h"
 

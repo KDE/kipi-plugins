@@ -23,7 +23,7 @@
 #ifndef COMMENTREMOVEDIALOG_H
 #define COMMENTREMOVEDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

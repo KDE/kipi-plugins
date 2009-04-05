@@ -24,7 +24,7 @@
 #include "renameimageswidget.h"
 #include "renameimageswidget.moc"
 
-// C Ansi includes.
+// C Ansi includes
 
 extern "C"
 {
@@ -33,12 +33,12 @@ extern "C"
 #include <unistd.h>
 }
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 #include <ctime>
 
-// Qt includes.
+// Qt includes
 
 #include <q3listview.h>
 #include <q3progressdialog.h>
@@ -58,7 +58,7 @@ extern "C"
 #include <qdir.h>
 #include <qtooltip.h>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -67,16 +67,16 @@ extern "C"
 #include <kdebug.h>
 #include <kdeversion.h>
 
-// Libkipi includes.
+// Libkipi includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Libkipiplugins includes.
+// Libkipiplugins includes
 
 #include "imagedialog.h"
 
-// Local includes.
+// Local includes
 
 #include "batchprocessimagesitem.h"
 

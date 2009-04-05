@@ -25,7 +25,7 @@ extern "C" {
 #include <gdk-pixbuf/gdk-pixbuf.h>
 }
 
-// Local includes.
+// Local includes
 
 #include "IpodHeader.h"
 #include "ImageList.h"
@@ -33,7 +33,7 @@ extern "C" {
 #include "IpodExportDialog.h"
 #include "IpodListItem.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDir>
 #include <QFile>

@@ -24,12 +24,12 @@
 #include "svedialog.h"
 #include "svedialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFrame>
 #include <QCloseEvent>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfig.h>
 #include <kglobalsettings.h>
@@ -43,7 +43,7 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "generalpage.h"
 #include "kpaboutdata.h"

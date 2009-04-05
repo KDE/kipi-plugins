@@ -24,11 +24,11 @@
 #ifndef TPHOTO_H
 #define TPHOTO_H
 
-// Qt includes.
+// Qt includes
 
 #include <QRect>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

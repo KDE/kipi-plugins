@@ -23,7 +23,7 @@
 #ifndef EXIF_DEVICE_H
 #define EXIF_DEVICE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

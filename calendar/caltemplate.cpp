@@ -23,7 +23,7 @@
 
 #include "caltemplate.h"
 
-// Local includes.
+// Local includes
 
 #include "calsettings.h"
 

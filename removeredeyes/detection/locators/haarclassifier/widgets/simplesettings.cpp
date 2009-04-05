@@ -24,19 +24,19 @@
 #include "simplesettings.h"
 #include "simplesettings.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QLabel>
 #include <QSlider>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// Local includes.
+// Local includes
 
 #include "haarsettings.h"
 

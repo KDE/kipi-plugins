@@ -24,7 +24,7 @@
 #ifndef SMUGALBUM_H
 #define SMUGALBUM_H
 
-// KDE includes.
+// KDE includes
 #include <KDialog>
 
 class QGroupBox;

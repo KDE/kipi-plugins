@@ -24,7 +24,7 @@
 #ifndef CALTEMPLATE_H
 #define CALTEMPLATE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

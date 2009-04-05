@@ -25,18 +25,18 @@
 #include "iptcsubjects.moc"
 #include "metadataedit_global.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QLabel>
 
-// KDE includes.
+// KDE includes
 
 #include <klineedit.h>
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

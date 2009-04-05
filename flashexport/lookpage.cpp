@@ -23,13 +23,13 @@
 #include "lookpage.h"
 #include "lookpage.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 #include <QGroupBox>
 #include <QLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcolorbutton.h>
 #include <kcombobox.h>

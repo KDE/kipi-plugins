@@ -23,12 +23,12 @@
 #ifndef SENDIMAGESDIALOG_H
 #define SENDIMAGESDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kpagedialog.h>
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "emailsettingscontainer.h"
 

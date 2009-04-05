@@ -26,16 +26,16 @@
 #ifndef SMUGWINDOW_H
 #define SMUGWINDOW_H
 
-// Qt includes.
+// Qt includes
 #include <QList>
 
-// KDE includes.
+// KDE includes
 #include <KDialog>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 
-// local includes.
+// local includes
 #include "smugitem.h"
 
 class KProgressDialog;

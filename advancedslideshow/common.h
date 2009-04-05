@@ -23,12 +23,12 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QFont>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kpagedialog.h>
@@ -38,11 +38,11 @@
 
 #include <Phonon/VolumeSlider>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "maindialog.h"
 #include "captiondialog.h"

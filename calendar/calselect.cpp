@@ -24,17 +24,17 @@
 #include "calselect.h"
 #include "calselect.moc"
 
-// Qt includes.
+// Qt includes
 
 
-// KDE includes.
+// KDE includes
 
 #include <kcalendarsystem.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// Local includes.
+// Local includes
 
 #include "calsettings.h"
 #include "monthwidget.h"

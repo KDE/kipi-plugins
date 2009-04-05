@@ -25,11 +25,11 @@
 
 #include "kbeffect.h"
 
-// C ANSI includes.
+// C ANSI includes
 
 #include <assert.h>
 
-// Local includes.
+// Local includes
 
 #include "slideshowkb.h"
 

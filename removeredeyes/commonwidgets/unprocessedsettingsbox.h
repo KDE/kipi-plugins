@@ -24,7 +24,7 @@
 #ifndef UNPROCESSEDSETTINGSBOX_H
 #define UNPROCESSEDSETTINGSBOX_H
 
-// Qt includes.
+// Qt includes
 
 #include <QGroupBox>
 

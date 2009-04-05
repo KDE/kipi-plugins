@@ -24,7 +24,7 @@
 #ifndef CLASSIFIERSETTINGSBOX_H
 #define CLASSIFIERSETTINGSBOX_H
 
-// Qt includes.
+// Qt includes
 
 #include <QGroupBox>
 

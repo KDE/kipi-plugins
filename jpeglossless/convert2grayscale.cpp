@@ -23,11 +23,11 @@
 
 #define XMD_H
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C" 
 {
@@ -36,24 +36,24 @@ extern "C"
 #include <jpeglib.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kprocess.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kdebug.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "utils.h"
 #include "pluginsversion.h"

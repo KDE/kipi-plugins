@@ -24,7 +24,7 @@
 #include "batchdialog.h"
 #include "batchdialog.moc"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -33,11 +33,11 @@ extern "C"
 #include <unistd.h>
 }
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
 
-// Qt includes.
+// Qt includes
 
 #include <QCloseEvent>
 #include <QFile>
@@ -50,7 +50,7 @@ extern "C"
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -66,17 +66,17 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 #include "actionthread.h"

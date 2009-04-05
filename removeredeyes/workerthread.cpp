@@ -24,20 +24,20 @@
 #include "workerthread.h"
 #include "workerthread.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 #include <libkexiv2/version.h>
 
-// Local includes.
+// Local includes
 
 #include "Locator.h"
 #include "SaveMethodFactory.h"

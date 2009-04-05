@@ -23,7 +23,7 @@
 #ifndef IPTC_KEYWORDS_H
 #define IPTC_KEYWORDS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

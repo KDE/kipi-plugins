@@ -26,11 +26,11 @@
 
 #include "Blob.h"
 
-// C++ includes.
+// C++ includes
 
 #include <climits>
 
-// OpenCV includes.
+// OpenCV includes
 
 #ifdef WIN32
 #include <cv.h>

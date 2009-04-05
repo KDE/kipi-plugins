@@ -23,11 +23,11 @@
 #ifndef COMMENTEDITDIALOG_H
 #define COMMENTEDITDIALOG_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

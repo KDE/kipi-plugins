@@ -23,7 +23,7 @@
 #ifndef IPTC_CREDITS_H
 #define IPTC_CREDITS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

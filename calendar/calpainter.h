@@ -24,13 +24,13 @@
 #ifndef CALPAINTER_H
 #define CALPAINTER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QImage>
 #include <QObject>
 #include <QPainter>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

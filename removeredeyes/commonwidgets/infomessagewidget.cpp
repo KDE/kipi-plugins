@@ -25,13 +25,13 @@
 #include "infomessagewidget.h"
 #include "infomessagewidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QPainter>
 #include <QPalette>
 #include <QTimer>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kiconloader.h>

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
@@ -32,7 +32,7 @@ extern "C"
 #include <sys/stat.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QFileInfo>
 #include <QImageReader>
@@ -40,7 +40,7 @@ extern "C"
 #include <QFile>
 #include <QDir>
 
-// KDE includes.
+// KDE includes
 
 #include <kprocess.h>
 #include <kdebug.h>
@@ -48,11 +48,11 @@ extern "C"
 #include <klocale.h>
 #include <kurl.h>
 
-// LibKExiv2 includes. 
+// LibKExiv2 includes 
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -61,7 +61,7 @@ extern "C"
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 #include "utils.h"

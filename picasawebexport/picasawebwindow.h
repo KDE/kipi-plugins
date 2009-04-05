@@ -24,21 +24,21 @@
 #ifndef PICASAWEBWINDOW_H
 #define PICASAWEBWINDOW_H
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 #include <QLinkedList>
 #include <QPair>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 

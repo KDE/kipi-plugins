@@ -25,7 +25,7 @@
 
 #include "screenproperties.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -33,7 +33,7 @@
 #ifdef Q_WS_X11
 #include <QX11Info>
 
-// X11 includes.
+// X11 includes
 
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>

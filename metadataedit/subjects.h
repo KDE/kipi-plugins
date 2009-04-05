@@ -24,7 +24,7 @@
 #ifndef SUBJECTS_H
 #define SUBJECTS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QButtonGroup>
 #include <QByteArray>
@@ -32,11 +32,11 @@
 #include <QStringList>
 #include <QWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "metadataedit_global.h"
 

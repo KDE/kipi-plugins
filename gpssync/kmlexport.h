@@ -24,13 +24,13 @@
 #ifndef KIPIKMLEXPORTKMLEXPORT_H
 #define KIPIKMLEXPORTKMLEXPORT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QColor>
 #include <QDir>
 #include <QDomDocument>
 
-// Local includes.
+// Local includes
 
 #include "kmlgpsdataparser.h"
 

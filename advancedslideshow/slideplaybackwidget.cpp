@@ -25,14 +25,14 @@
 #include "slideplaybackwidget.h"
 #include "slideplaybackwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kicon.h>

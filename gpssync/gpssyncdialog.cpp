@@ -24,7 +24,7 @@
 #include "gpssyncdialog.h"
 #include "gpssyncdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QCloseEvent>
@@ -33,7 +33,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -53,7 +53,7 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsdataparser.h"
 #include "gpseditdialog.h"

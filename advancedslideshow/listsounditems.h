@@ -23,7 +23,7 @@
 #ifndef LISTSOUNDITEM_H
 #define LISTSOUNDITEM_H
 
-// Qt includes.
+// Qt includes
 #include <QTime>
 #include <QWidget>
 #include <QString>
@@ -36,7 +36,7 @@
 #include <Phonon/Global>
 #include <Phonon/MediaObject>
 
-// KDE includes.
+// KDE includes
 #include <kurl.h>
 
 namespace KIPIAdvancedSlideshowPlugin

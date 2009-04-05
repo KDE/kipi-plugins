@@ -24,11 +24,11 @@
 #ifndef CROPFRAME_H
 #define CROPFRAME_H
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 
-// Local includes.
+// Local includes
 
 #include "tphoto.h"
 

@@ -23,7 +23,7 @@
 #include "listsounditems.h"
 #include "listsounditems.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <q3strlist.h>
 #include <q3dragobject.h>
@@ -36,7 +36,7 @@
 #include <QIcon>
 #include <QBrush>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kiconloader.h>

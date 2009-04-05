@@ -26,7 +26,7 @@
 #ifndef IMAGELOADTHREAD_H
 #define IMAGELOADTHREAD_H
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QImage>

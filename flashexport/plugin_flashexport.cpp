@@ -24,7 +24,7 @@
 #include "plugin_flashexport.h"
 #include "plugin_flashexport.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -35,11 +35,11 @@
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 
 #include "svedialog.h"
 #include "simpleviewer.h"

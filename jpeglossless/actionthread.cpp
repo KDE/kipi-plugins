@@ -23,28 +23,28 @@
  *
  * ============================================================ */
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
 #include <unistd.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QMutexLocker>
 #include <QMutex>
 #include <QWaitCondition>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "utils.h"
 #include "imagerotate.h"

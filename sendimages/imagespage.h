@@ -23,7 +23,7 @@
 #ifndef IMAGES_PAGE_H
 #define IMAGES_PAGE_H
 
-// Local includes.
+// Local includes
 
 #include "imageslist.h"
 #include "emailsettingscontainer.h"

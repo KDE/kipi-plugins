@@ -23,7 +23,7 @@
 #ifndef IPTC_ENVELOPE_H
 #define IPTC_ENVELOPE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

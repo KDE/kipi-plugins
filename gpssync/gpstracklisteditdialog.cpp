@@ -23,13 +23,13 @@
 #include "gpstracklisteditdialog.h"
 #include "gpstracklisteditdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -42,7 +42,7 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "gpstracklistviewitem.h"
 #include "gpstracklistwidget.h"

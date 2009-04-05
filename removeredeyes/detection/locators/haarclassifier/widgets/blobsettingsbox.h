@@ -24,7 +24,7 @@
 #ifndef BLOBSETTINGSBOX_H
 #define BLOBSETTINGSBOX_H
 
-// Qt includes.
+// Qt includes
 
 #include <QGroupBox>
 

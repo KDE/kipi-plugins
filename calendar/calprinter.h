@@ -23,12 +23,12 @@
 #ifndef CALPRINTER_H
 #define CALPRINTER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QMap>
 #include <QThread>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

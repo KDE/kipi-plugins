@@ -23,11 +23,11 @@
 #ifndef PLUGIN_PRINTIMAGES_H
 #define PLUGIN_PRINTIMAGES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

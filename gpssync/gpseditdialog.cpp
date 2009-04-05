@@ -23,7 +23,7 @@
 #include "gpseditdialog.h"
 #include "gpseditdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QLabel>
 #include <QLayout>
@@ -31,7 +31,7 @@
 #include <QTimer>
 #include <QValidator>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -46,7 +46,7 @@
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsmapwidget.h"
 #include "kpaboutdata.h"

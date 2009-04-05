@@ -24,11 +24,11 @@
 #include "advancedsettings.h"
 #include "advancedsettings.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 
-// Local includes.
+// Local includes
 
 #include "blobsettingsbox.h"
 #include "classifiersettingsbox.h"

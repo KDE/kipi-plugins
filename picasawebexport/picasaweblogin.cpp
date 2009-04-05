@@ -23,7 +23,7 @@
 #include "picasaweblogin.h"
 #include "picasaweblogin.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -32,7 +32,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <klineedit.h>

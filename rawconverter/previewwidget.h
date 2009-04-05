@@ -24,7 +24,7 @@
 #ifndef PREVIEWWIDGET_H
 #define PREVIEWWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QColor>
 #include <QWidget>

@@ -26,7 +26,7 @@
 #include "flickrwindow.moc"
 #include "flickrnewphotosetdialog.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QProgressDialog>
 #include <QPushButton>
@@ -35,7 +35,7 @@
 #include <QStringList>
 #include <QSpinBox>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <klineedit.h>
@@ -55,12 +55,12 @@
 #include <kwallet.h>
 #include <kpushbutton.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <ktoolinvocation.h>
 
-// Local includes.
+// Local includes
 
 #include "imageslist.h"
 #include "kpaboutdata.h"

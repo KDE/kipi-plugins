@@ -33,7 +33,7 @@
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "simpleviewersettingscontainer.h"
 

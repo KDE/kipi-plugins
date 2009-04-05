@@ -26,15 +26,15 @@
 #ifndef ACTIONTHREAD_H
 #define ACTIONTHREAD_H
 
-// Qt includes.
+// Qt includes
 
 #include <QThread>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "actions.h"
 

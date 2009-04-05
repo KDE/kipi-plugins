@@ -24,7 +24,7 @@
 #ifndef SIMPLEVIEWER_H
 #define SIMPLEVIEWER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QObject>
 #include <QList>
@@ -32,16 +32,16 @@
 #include <QDomDocument>
 #include <QDomElement>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kzip.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 

@@ -24,7 +24,7 @@
 #ifndef LOCATOR_H
 #define LOCATOR_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QWidget>

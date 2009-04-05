@@ -24,11 +24,11 @@
 #ifndef WORKERTHREAD_H
 #define WORKERTHREAD_H
 
-// Qt includes.
+// Qt includes
 
 #include <QThread>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

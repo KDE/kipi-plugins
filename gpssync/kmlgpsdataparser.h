@@ -24,11 +24,11 @@
 #ifndef KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
 #define KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H
 
-// Local includes.
+// Local includes
 
 #include "gpsdataparser.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDomDocument>
 

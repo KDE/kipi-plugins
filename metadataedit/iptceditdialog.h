@@ -23,7 +23,7 @@
 #ifndef IPTCEDITDIALOG_H
 #define IPTCEDITDIALOG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kpagedialog.h>
 #include <kurl.h>

@@ -25,7 +25,7 @@
 #include "maindialog.h"
 #include "maindialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 #include <QFileInfo>
@@ -34,7 +34,7 @@
 #include <QStringList>
 #include <QTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <kicon.h>
@@ -43,7 +43,7 @@
 #include <kurl.h>
 #include <kstandarddirs.h>
 
-// Local includes.
+// Local includes
 
 #include "imagedialog.h"
 #include "listimageitems.h"

@@ -24,11 +24,11 @@
 #ifndef FLICKRVIEWITEM_H
 #define FLICKRVIEWITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <q3listview.h>
 
-// Local includes.
+// Local includes
 
 #include "flickritem.h"
 

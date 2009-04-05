@@ -23,12 +23,12 @@
 #include "scandialog.h"
 #include "scandialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDateTime>
 #include <QPushButton>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -45,15 +45,15 @@
 #include <ktoolinvocation.h>
 #include <kurl.h>
 
-// LibKSane includes.
+// LibKSane includes
 
 #include <libksane/ksane.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 #include "kpwriteimage.h"

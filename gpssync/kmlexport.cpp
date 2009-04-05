@@ -23,21 +23,21 @@
 
 #include "kmlexport.h"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
 #include <unistd.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QImageReader>
 #include <QPainter>
 #include <QRegExp>
 #include <QTextStream>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -46,17 +46,17 @@ extern "C"
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// Libkexiv2 includes.
+// Libkexiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// Local includes.
+// Local includes
 
 #include "batchprogressdialog.h"
 

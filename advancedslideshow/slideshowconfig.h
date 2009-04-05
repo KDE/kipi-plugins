@@ -23,7 +23,7 @@
 #ifndef SLIDESHOWCONFIG_H
 #define SLIDESHOWCONFIG_H
 
-// Local includes.
+// Local includes
 #include "common.h"
 
 namespace KIPIAdvancedSlideshowPlugin

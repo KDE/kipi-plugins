@@ -25,16 +25,16 @@
 #ifndef FBWINDOW_H
 #define FBWINDOW_H
 
-// Qt includes.
+// Qt includes
 #include <QList>
 
-// KDE includes.
+// KDE includes
 #include <KDialog>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 #include <libkexiv2/kexiv2.h>
 
 class KProgressDialog;

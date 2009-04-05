@@ -24,18 +24,18 @@
 #include "plugin_advancedslideshow.h"
 #include "plugin_advancedslideshow.moc"
 
-// C++ includes.
+// C++ includes
 
 #include <ctime>
 #include <cstdlib>
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QPair>
 #include <QStringList>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kaction.h>
@@ -47,12 +47,12 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Local includes.
+// Local includes
 
 #include "slideshowconfig.h"
 #include "slideshow.h"

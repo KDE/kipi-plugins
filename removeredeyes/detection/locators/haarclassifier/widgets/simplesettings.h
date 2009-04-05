@@ -24,7 +24,7 @@
 #ifndef SIMPLESETTINGS_H
 #define SIMPLESETTINGS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

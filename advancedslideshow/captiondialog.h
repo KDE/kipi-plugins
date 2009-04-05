@@ -23,7 +23,7 @@
 #ifndef CAPTIONDIALOG_H
 #define CAPTIONDIALOG_H
 
-// Local includes.
+// Local includes
 #include "common.h"
 #include "ui_captiondialog.h"
 

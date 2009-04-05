@@ -23,18 +23,18 @@
 #include "plugin_printimages.h"
 #include "plugin_printimages.moc"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
 #include <unistd.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -43,7 +43,7 @@ extern "C"
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>

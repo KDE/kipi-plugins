@@ -24,7 +24,7 @@
 #include "smugwidget.h"
 #include "smugwidget.moc"
 
-// Qt includes.
+// Qt includes
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
@@ -34,18 +34,18 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>
 #include <KComboBox>
 #include <KPushButton>
 
-// LibKIPI includes.
+// LibKIPI includes
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
-// Local includes.
+// Local includes
 #include "imageslist.h"
 
 namespace KIPISmugPlugin

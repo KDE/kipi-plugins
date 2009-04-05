@@ -24,18 +24,18 @@
 #ifndef FLICKRWINDOW_H
 #define FLICKRWINDOW_H
 
-// Qt includes.
+// Qt includes
 
 #include <QHash>
 #include <QList>
 #include <QPair>
 #include <QLabel>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 

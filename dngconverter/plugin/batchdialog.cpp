@@ -23,7 +23,7 @@
 #include "batchdialog.h"
 #include "batchdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCloseEvent>
 #include <QFile>
@@ -36,7 +36,7 @@
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
 
-// KDE includes.
+// KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -52,12 +52,12 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "aboutdata.h"
 #include "actions.h"

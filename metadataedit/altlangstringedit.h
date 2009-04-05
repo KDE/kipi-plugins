@@ -24,11 +24,11 @@
 #ifndef ALTLANGSTRINGEDIT_H
 #define ALTLANGSTRINGEDIT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 

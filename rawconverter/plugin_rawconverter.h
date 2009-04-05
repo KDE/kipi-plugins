@@ -25,11 +25,11 @@
 #ifndef PLUGIN_RAWCONVERTER_H
 #define PLUGIN_RAWCONVERTER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

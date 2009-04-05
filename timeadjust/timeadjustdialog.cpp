@@ -24,14 +24,14 @@
 #include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
-// C ANSI includes.
+// C ANSI includes
 
 extern "C"
 {
 #include <utime.h>
 }
 
-// Qt includes.
+// Qt includes
 
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -46,7 +46,7 @@ extern "C"
 #include <QToolButton>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -63,17 +63,17 @@ extern "C"
 #include <ktoolinvocation.h>
 #include <kvbox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"

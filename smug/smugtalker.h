@@ -24,15 +24,15 @@
 #ifndef SMUGTALKER_H
 #define SMUGTALKER_H
 
-// Qt includes.
+// Qt includes
 #include <QList>
 #include <QString>
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 #include <KIO/Job>
 
-// local includes.
+// local includes
 #include "smugitem.h"
 
 namespace KIPISmugPlugin

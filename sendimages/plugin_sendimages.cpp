@@ -23,7 +23,7 @@
 #include "plugin_sendimages.h"
 #include "plugin_sendimages.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -35,11 +35,11 @@
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "sendimages.h"
 #include "sendimagesdialog.h"

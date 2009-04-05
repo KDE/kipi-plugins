@@ -23,12 +23,12 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QImage>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

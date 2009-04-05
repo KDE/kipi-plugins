@@ -27,7 +27,7 @@
 #ifndef GALLERYITEM_H
 #define GALLERYITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 

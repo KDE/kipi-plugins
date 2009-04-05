@@ -23,7 +23,7 @@
 #include "emailpage.h"
 #include "emailpage.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QGridLayout>
@@ -31,7 +31,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 #include <kcomponentdata.h>

@@ -24,7 +24,7 @@
 #include "kmlexportconfig.h"
 #include "kmlexportconfig.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
@@ -35,7 +35,7 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 
-// KDE includes.
+// KDE includes
 
 #include "kpaboutdata.h"
 #include <kapplication.h>
@@ -52,7 +52,7 @@
 #include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 

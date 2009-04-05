@@ -24,7 +24,7 @@
 #ifndef CONTROLWIDGET_H
 #define CONTROLWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

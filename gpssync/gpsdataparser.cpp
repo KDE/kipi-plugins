@@ -23,18 +23,18 @@
 
 #include "gpsdataparser.h"
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 #include <cstdlib>
 
-// Qt includes.
+// Qt includes
 
 #include <QDomDocument>
 #include <QFile>
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 

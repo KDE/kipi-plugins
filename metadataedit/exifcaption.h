@@ -23,7 +23,7 @@
 #ifndef EXIF_CAPTION_H
 #define EXIF_CAPTION_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

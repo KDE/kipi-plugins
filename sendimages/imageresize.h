@@ -23,16 +23,16 @@
 #ifndef IMAGERESIZE_H
 #define IMAGERESIZE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QThread>
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "emailsettingscontainer.h"
 

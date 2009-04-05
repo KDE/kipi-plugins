@@ -24,14 +24,14 @@
 #ifndef PICASAWEBTALKER_H
 #define PICASAWEBTALKER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QProgressDialog>
 #include <QLinkedList>
 #include <QMap>
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kio/jobclasses.h>

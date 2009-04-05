@@ -24,17 +24,17 @@
 #include "unprocessedsettingsbox.h"
 #include "unprocessedsettingsbox.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QButtonGroup>
 #include <QGridLayout>
 #include <QRadioButton>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 
-// Local includes.
+// Local includes
 
 #include "removeredeyeswindow.h"
 

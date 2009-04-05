@@ -25,15 +25,15 @@
 #ifndef CALWIZARD_H
 #define CALWIZARD_H
 
-// Qt includes.
+// Qt includes
 
 #include <QMap>
 
-// KDE includes.
+// KDE includes
 
 #include <kassistantdialog.h>
 
-// UI includes.
+// UI includes
 
 #include "ui_calevents.h"
 #include "ui_calprogress.h"

@@ -24,7 +24,7 @@
 #include "gpsmapwidget.h"
 #include "gpsmapwidget.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 #include <khtmlview.h>

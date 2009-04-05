@@ -23,7 +23,7 @@
 #ifndef SLIDESHOWLOADER_H
 #define SLIDESHOWLOADER_H
 
-// Qt includes.
+// Qt includes
 
 #include <Q3ValueList>
 #include <QMap>
@@ -32,7 +32,7 @@
 #include <QThread>
 #include <QPair>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 

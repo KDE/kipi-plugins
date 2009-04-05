@@ -25,12 +25,12 @@
 #ifndef SLIDEPLAYBACKWIDGET_H
 #define SLIDEPLAYBACKWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QKeyEvent>
 
-// Local includes.
+// Local includes
 
 #include "ui_slideplaybackwidget.h"
 

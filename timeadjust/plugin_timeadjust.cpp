@@ -24,7 +24,7 @@
 #include "plugin_timeadjust.h"
 #include "plugin_timeadjust.moc"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -36,12 +36,12 @@
 #include <klibloader.h>
 #include <klocale.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "timeadjustdialog.h"
 

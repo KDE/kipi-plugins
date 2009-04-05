@@ -24,7 +24,7 @@
 #ifndef REMOVEREDEYESWINDOW_H
 #define REMOVEREDEYESWINDOW_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

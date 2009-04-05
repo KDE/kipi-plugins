@@ -24,7 +24,7 @@
 #ifndef KMLEXPORTCONFIG_H
 #define KMLEXPORTCONFIG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 

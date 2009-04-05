@@ -23,7 +23,7 @@
 #include "imageresize.h"
 #include "imageresize.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QImage>
 #include <QFile>
@@ -32,15 +32,15 @@
 #include <QMutex>
 #include <QWaitCondition>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -49,7 +49,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 #include "kpwriteimage.h"

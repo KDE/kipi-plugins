@@ -23,7 +23,7 @@
 #include "batchprogressdialog.h"
 #include "batchprogressdialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QBrush>
 #include <QWidget>
@@ -31,7 +31,7 @@
 #include <QProgressBar>
 #include <QLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>

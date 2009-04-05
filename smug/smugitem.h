@@ -24,7 +24,7 @@
 #ifndef SMUGITEM_H
 #define SMUGITEM_H
 
-// Qt includes.
+// Qt includes
 #include <QString>
 
 namespace KIPISmugPlugin

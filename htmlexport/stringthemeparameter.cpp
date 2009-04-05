@@ -20,11 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 #include "stringthemeparameter.h"
 
-// Qt includes.
+// Qt includes
 
 #include <qlineedit.h>
 
-// KDE includes.
+// KDE includes
 
 #include <kconfiggroup.h>
 #include <klineedit.h>

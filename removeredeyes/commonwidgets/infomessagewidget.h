@@ -25,7 +25,7 @@
 #ifndef INFOMESSAGEWIDGET_H
 #define INFOMESSAGEWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 

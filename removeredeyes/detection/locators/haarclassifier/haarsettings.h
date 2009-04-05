@@ -24,11 +24,11 @@
 #ifndef HAARSETTINGS_H
 #define HAARSETTINGS_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kstandarddirs.h>
 #include <kdebug.h>

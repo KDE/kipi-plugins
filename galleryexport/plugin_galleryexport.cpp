@@ -25,7 +25,7 @@
 
 #include "plugin_galleryexport.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -36,12 +36,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// Local includes.
+// Local includes
 
 #include "galleries.h"
 #include "galleryconfig.h"

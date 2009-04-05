@@ -23,14 +23,14 @@
 #include "login.h"
 #include "login.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kdialog.h>
 #include <klineedit.h>

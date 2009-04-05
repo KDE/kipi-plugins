@@ -24,11 +24,11 @@
 #ifndef PLUGIN_TIMEADJUST_H
 #define PLUGIN_TIMEADJUST_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

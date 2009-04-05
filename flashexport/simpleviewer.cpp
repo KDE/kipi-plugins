@@ -24,7 +24,7 @@
 #include "simpleviewer.h"
 #include "simpleviewer.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QByteArray>
 #include <QDataStream>
@@ -32,7 +32,7 @@
 #include <QDomText>
 #include <QFile>
 
-// KDE includes.
+// KDE includes
 
 #include <kaboutdata.h>
 #include <kapplication.h>
@@ -47,11 +47,11 @@
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imageinfo.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -60,7 +60,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "batchprogressdialog.h"
 #include "firstrundlg.h"

@@ -23,7 +23,7 @@
 #ifndef ADVANCEDDIALOG_H
 #define ADVANCEDDIALOG_H
 
-// Local includes.
+// Local includes
 #include "common.h"
 #include "ui_advanceddialog.h"
 

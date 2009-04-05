@@ -26,7 +26,7 @@
 // QT incudes
 #include <QPainter>
 
-// KDE includes.
+// KDE includes
 #include <kassistantdialog.h>
 
 

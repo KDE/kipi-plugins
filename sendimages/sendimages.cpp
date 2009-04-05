@@ -25,7 +25,7 @@
 #include "sendimages.h"
 #include "sendimages.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QFile>
 #include <QTextStream>
@@ -33,7 +33,7 @@
 #include <QTextCodec>
 #include <QProcess>
 
-// KDE includes.
+// KDE includes
 
 #include <kguiitem.h>
 #include <ktoolinvocation.h>
@@ -44,11 +44,11 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "batchprogressdialog.h"
 #include "imageresize.h"

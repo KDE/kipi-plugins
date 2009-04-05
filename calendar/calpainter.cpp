@@ -24,7 +24,7 @@
 #include "calpainter.h"
 #include "calpainter.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QDate>
 #include <QFileInfo>
@@ -33,14 +33,14 @@
 #include <QRect>
 #include <QString>
 
-// KDE includes.
+// KDE includes
 
 #include <kcalendarsystem.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 
-// LibKDcraw includes.
+// LibKDcraw includes
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
@@ -49,7 +49,7 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "calsettings.h"
 

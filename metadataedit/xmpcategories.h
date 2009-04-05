@@ -23,7 +23,7 @@
 #ifndef XMP_CATEGORIES_H
 #define XMP_CATEGORIES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

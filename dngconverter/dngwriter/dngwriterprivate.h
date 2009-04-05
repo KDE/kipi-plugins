@@ -23,15 +23,15 @@
 #ifndef KDCRAWPRIVATE_H
 #define KDCRAWPRIVATE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 
-// Libkdcraw includes.
+// Libkdcraw includes
 
 #include <libkdcraw/kdcraw.h>
 
-// DNG SDK includes.
+// DNG SDK includes
 
 #include "dng_camera_profile.h"
 #include "dng_color_space.h"

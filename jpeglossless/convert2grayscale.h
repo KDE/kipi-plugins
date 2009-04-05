@@ -24,11 +24,11 @@
 #ifndef convert2grayscale_H
 #define convert2grayscale_H
 
-// Qt includes.
+// Qt includes
 
 #include <QObject>
 
-// KDE includes.
+// KDE includes
 
 #include <KTemporaryFile>
 

@@ -23,7 +23,7 @@
 
 #include "flickrviewitem.h"
 
-// Qt includes.
+// Qt includes
 
 #include <qpainter.h>
 #include <qpixmap.h>

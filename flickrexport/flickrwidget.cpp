@@ -25,7 +25,7 @@
 #include "flickrwidget.h"
 #include "flickrwidget.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QGroupBox>
 #include <QGridLayout>
@@ -35,7 +35,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <ktabwidget.h>
@@ -48,11 +48,11 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "imageslist.h"
 

@@ -24,7 +24,7 @@
 #ifndef HAARCLASSIFIERLOCATOR_H
 #define HAARCLASSIFIERLOCATOR_H
 
-// OpenCV includes.
+// OpenCV includes
 
 #ifdef WIN32
 #include <cv.h>
@@ -34,7 +34,7 @@
 #include <opencv/highgui.h>
 #endif
 
-// Local includes.
+// Local includes
 
 #include "Locator.h"
 

@@ -23,7 +23,7 @@
 #include "iptcproperties.h"
 #include "iptcproperties.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QLabel>
@@ -33,7 +33,7 @@
 #include <QtCore/QtDebug>
 #include <QGridLayout>
 
-// KDE includes.
+// KDE includes
 
 #include <kcombobox.h>
 #include <kdatewidget.h>
@@ -45,11 +45,11 @@
 #include <klocale.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "metadatacheckbox.h"
 #include "objectattributesedit.h"

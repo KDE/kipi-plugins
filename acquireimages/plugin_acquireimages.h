@@ -23,11 +23,11 @@
 #ifndef PLUGIN_ACQUIREIMAGES_H
 #define PLUGIN_ACQUIREIMAGES_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 

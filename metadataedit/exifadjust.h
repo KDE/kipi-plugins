@@ -23,7 +23,7 @@
 #ifndef EXIF_ADJUST_H
 #define EXIF_ADJUST_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 #include <QByteArray>

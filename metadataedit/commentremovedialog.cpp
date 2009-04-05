@@ -23,13 +23,13 @@
 #include "commentremovedialog.h"
 #include "commentremovedialog.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QLabel>
 #include <QVBoxLayout>
-// KDE includes.
+// KDE includes
 
 #include <kcomponentdata.h>
 #include <kconfig.h>
@@ -43,11 +43,11 @@
 #include <ktextedit.h>
 #include <ktoolinvocation.h>
 
-// LibKExiv2 includes.
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
-// Local includes.
+// Local includes
 
 #include "pluginsversion.h"
 #include "kpaboutdata.h"

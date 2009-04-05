@@ -24,13 +24,13 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QGLWidget>
 #include <QImage>
 #include <QString>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
