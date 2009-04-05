@@ -10,6 +10,7 @@ Name[et]=Puhtad raamid
 Name[fr]=Sans cadres
 Name[gl]=Molduras simples
 Name[he]=מסגרות נקיות
+Name[hne]=साफ फ्रेम
 Name[it]=Riquadri puliti
 Name[ja]=クリーンフレーム
 Name[km]=ជម្រះ​ស៊ុម
@@ -54,6 +55,7 @@ Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
 Name[he]=אליזבת מרמורשטיין
+Name[hne]=एलिजाबेथ मारमोर्स्टीन
 Name[x-test]=xxElizabeth Marmorsteinxx
 Url=mailto:purplegamba@cox.net
 
@@ -69,6 +71,7 @@ Name[et]=Stiil
 Name[ga]=Stíl
 Name[gl]=Estilo
 Name[he]=סגנון
+Name[hne]=सैली
 Name[is]=Stíll
 Name[it]=Stile
 Name[ja]=スタイル
