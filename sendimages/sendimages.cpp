@@ -119,7 +119,7 @@ void SendImages::sendImages()
     d->settings.tempPath = tmpDir.name();
 
     d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
-                                      i18n("E-mail images"));
+                                      i18n("Email images"));
 
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCancel()));
@@ -176,14 +176,14 @@ void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, in
     d->attachementFiles.append(emailUrl);
     d->settings.setEmailUrl(orgUrl, emailUrl);
 
-    QString text = i18n("%1 resized succesfully", orgUrl.fileName());
+    QString text = i18n("%1 resized successfully", orgUrl.fileName());
     d->progressDlg->addedAction(text, KIPIPlugins::SuccessMessage);
 }
 
 void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
 {
     d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
-    QString text = i18n("Failed to resize %1 : %2", orgUrl.fileName(), error);
+    QString text = i18n("Failed to resize %1: %2", orgUrl.fileName(), error);
     d->progressDlg->addedAction(text, KIPIPlugins::ErrorMessage);
 
     d->failedResizedImages.append(orgUrl);
@@ -253,7 +253,7 @@ void SendImages::buildPropertiesFile()
         propertiesFile.close();
         d->attachementFiles.append(propertiesFile.fileName());
 
-        d->progressDlg->addedAction(i18n("Images properties file done"), KIPIPlugins::SuccessMessage);
+        d->progressDlg->addedAction(i18n("Image properties file done"), KIPIPlugins::SuccessMessage);
     }
 }
 
@@ -374,7 +374,7 @@ bool SendImages::invokeMailAgent()
                         QString::null,                     // Message Body File.
                         stringFileList);          // Images attachments (+ image properties file).
 
-                    d->progressDlg->addedAction(i18n("Starting default KDE e-mail program..."), KIPIPlugins::StartingMessage);
+                    d->progressDlg->addedAction(i18n("Starting default KDE email program..."), KIPIPlugins::StartingMessage);
 
                     agentInvoked = true;
                     break;
@@ -555,8 +555,8 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCleanUp()));
 
-    d->progressDlg->addedAction(i18n("After to have sent your images by e-mail..."), KIPIPlugins::WarningMessage);
-    d->progressDlg->addedAction(i18n("Press 'Close' button to clean-up temporary files"), KIPIPlugins::WarningMessage);
+    d->progressDlg->addedAction(i18n("After having sent your images by email..."), KIPIPlugins::WarningMessage);
+    d->progressDlg->addedAction(i18n("Press 'Close' button to clean up temporary files"), KIPIPlugins::WarningMessage);
 }
 
 void SendImages::slotCleanUp()

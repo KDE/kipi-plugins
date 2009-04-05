@@ -99,9 +99,9 @@ EmailPage::EmailPage(QWidget* parent)
     d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEEDCLAWS, "Sylpheed-Claws");
     d->mailAgentName->insertItem(EmailSettingsContainer::THUNDERBIRD,   "Thunderbird");
     d->mailAgentName->setCurrentIndex(EmailSettingsContainer::DEFAULT);
-    d->mailAgentName->setWhatsThis(i18n("Select here your preferred external e-mail program. "
-                                        "<b>Default</b> is the current e-mail program set on KDE "
-                                        "Control Panel."));
+    d->mailAgentName->setWhatsThis(i18n("Select your preferred external email program here. "
+                                        "<b>Default</b> is the current email program set in KDE "
+                                        "System Settings."));
 
     //---------------------------------------------
 
@@ -117,7 +117,7 @@ EmailPage::EmailPage(QWidget* parent)
     d->attachmentlimit = new KIntNumInput(this);
     d->attachmentlimit->setRange(1, 50, 1);
     d->attachmentlimit->setValue(17);
-    d->attachmentlimit->setLabel( i18n("Maximum e-mail size limit:"), Qt::AlignLeft | Qt::AlignVCenter);
+    d->attachmentlimit->setLabel( i18n("Maximum email size limit:"), Qt::AlignLeft | Qt::AlignVCenter);
     d->attachmentlimit->setSuffix(i18n("MB"));
 
     //---------------------------------------------
@@ -125,7 +125,7 @@ EmailPage::EmailPage(QWidget* parent)
     d->changeImagesProp  = new QCheckBox(i18n("Adjust image properties"), this);
     d->changeImagesProp->setChecked(true);
     d->changeImagesProp->setWhatsThis(i18n("If you enable this option, "
-                                           "all images to send can be resized and recompressed."));
+                                           "all images to be sent can be resized and recompressed."));
 
     QGroupBox *groupBox = new QGroupBox(i18n("Image Properties"), this);
     QGridLayout *grid2  = new QGridLayout(groupBox);
@@ -138,23 +138,23 @@ EmailPage::EmailPage(QWidget* parent)
     d->imagesResize->insertItem(EmailSettingsContainer::VERYBIG,   i18n("Very Big (1280 pixels)"));
     d->imagesResize->insertItem(EmailSettingsContainer::HUGE,      i18n("Huge - for printing (1600 pixels)"));
     d->imagesResize->setCurrentIndex(EmailSettingsContainer::MEDIUM);
-    QString whatsThis = i18n("<p>Select here the images size to send:</p>"
-                             "<p><b>%1</b>: use this if you have a very slow internet "
-                             "connection or if the target mailbox size is very limited.</p>"
-                             "<p><b>%2</b>: use this if you have a slow internet connection "
-                             "and if the target mailbox size is limited.</p>"
-                             "<p><b>%3</b>: this is the default value for a medium internet connection "
-                             "and a target mailbox size.</p>"
-                             "<p><b>%4</b>: use this if you have a high-speed internet connection "
-                             "and if the target mailbox size is not limited.</p>"
+    QString whatsThis = i18n("<p>Select the size of the images that are to be sent:</p>"
+                             "<p><b>%1</b>: use this if you have a very slow Internet "
+                             "connection or the target mailbox size is very limited.</p>"
+                             "<p><b>%2</b>: use this if you have a slow Internet connection "
+                             "and the target mailbox size is limited.</p>"
+                             "<p><b>%3</b>: this is the default value for medium Internet connection "
+                             "speed and target mailbox size.</p>"
+                             "<p><b>%4</b>: use this if you have a high-speed Internet connection "
+                             "and the target mailbox size is not limited.</p>"
                              "<p><b>%5</b>: use this if you have no size or speed restrictions.</p>"
-                             "<p><b>%6</b>: use this only for printing purpose.</p>",
-                             i18n("very small (320 pixels)"),
-                             i18n("small (640 pixels)"),
-                             i18n("medium (800 pixels)"),
-                             i18n("big (1024 pixels)"),
-                             i18n("very big (1280 pixels)"),
-                             i18n("huge - for printing (1600 pixels)"));
+                             "<p><b>%6</b>: use this only for printing purposes.</p>",
+                             i18n("Very Small (320 pixels)"),
+                             i18n("Small (640 pixels)"),
+                             i18n("Medium (800 pixels)"),
+                             i18n("Big (1024 pixels)"),
+                             i18n("Very Big (1280 pixels)"),
+                             i18n("Huge - for printing (1600 pixels)"));
     d->imagesResize->setWhatsThis(whatsThis);
 
 
@@ -167,15 +167,15 @@ EmailPage::EmailPage(QWidget* parent)
     d->imagesFormat->insertItem(EmailSettingsContainer::JPEG, "JPEG");
     d->imagesFormat->insertItem(EmailSettingsContainer::PNG,  "PNG");
     d->imagesFormat->setCurrentIndex(EmailSettingsContainer::JPEG);
-    whatsThis = i18n("<p>Select here the images files format to send.</p>");
-    whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group's file format "
-                "is a good Web file format but it uses lossy compression.</p>"
+    whatsThis = i18n("<p>Select the file format of the image files to be sent.</p>");
+    whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group file format "
+                "is a good web file format but it uses lossy compression.</p>"
                 "<p><b>PNG</b>: the Portable Network Graphics format is an extensible file format for "
                 "the lossless, portable, well-compressed storage of raster images. PNG provides a "
                 "patent-free replacement for GIF and can also replace many common uses of TIFF. "
                 "PNG is designed to work well in online viewing applications, such as the World Wide Web, "
                 "so it is fully streamable with a progressive display option. Also, PNG can store gamma "
-                "and chromaticity data for improved color matching on heterogeneous platforms.</p>");
+                "and chromaticity data for improved color-matching on heterogeneous platforms.</p>");
     d->imagesFormat->setWhatsThis(whatsThis);
 
     d->labelImagesFormat = new QLabel(i18n("Image file format:"), groupBox);
@@ -187,7 +187,7 @@ EmailPage::EmailPage(QWidget* parent)
     d->imageCompression->setRange(1, 100, 1);
     d->imageCompression->setValue(75);
     d->imageCompression->setLabel(i18n("Image quality:"), Qt::AlignLeft | Qt::AlignVCenter);
-    whatsThis = i18n("<p>The new compression value of JPEG images to send:</p>");
+    whatsThis = i18n("<p>The new compression value of JPEG images to be sent:</p>");
     whatsThis = whatsThis + i18n("<p><b>1</b>: very high compression<br/>"
                                  "<b>25</b>: high compression<br/>"
                                  "<b>50</b>: medium compression<br/>"

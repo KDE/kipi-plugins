@@ -184,7 +184,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
 
     if (!fi.exists() || !fi.isReadable())
     {
-        err = i18n("Error in opening input file");
+        err = i18n("Error opening input file");
         return false;
     }
 
@@ -192,7 +192,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
 
     if (!tmp.exists() || !tmp.isWritable())
     {
-        err = i18n("Error in opening temporary folder");
+        err = i18n("Error opening temporary folder");
         return false;
     }
 
@@ -241,7 +241,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
 
             if ( scaledImg.width() != w || scaledImg.height() != h )
             {
-                err = i18n("Cannot resizing image. Aborting.");
+                err = i18n("Cannot resize image. Aborting.");
                 return false;
             }
 

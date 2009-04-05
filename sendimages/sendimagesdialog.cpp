@@ -90,7 +90,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
 {
     d->urls = urls;
 
-    setCaption(i18n("E-Mail Images Options"));
+    setCaption(i18n("Email Images Options"));
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
     setFaceType(List);
@@ -100,7 +100,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
 
     d->imagesPage  = new ImagesPage(this, iface);
     d->page_images = addPage(d->imagesPage, i18n("Images"));
-    d->page_images->setHeader(i18n("Images List"));
+    d->page_images->setHeader(i18n("Image List"));
     d->page_images->setIcon(KIcon("image-jp2"));
     d->imagesPage->slotAddImages(urls);
 
@@ -115,7 +115,7 @@ SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl
     d->about = new KIPIPlugins::KPAboutData(ki18n("Send Images"),
                                             0,
                                             KAboutData::License_GPL,
-                                            ki18n("A Plugin to e-mail pictures"),
+                                            ki18n("A plugin to email pictures"),
                                             ki18n("(c) 2003-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
