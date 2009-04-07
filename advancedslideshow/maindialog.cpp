@@ -245,10 +245,7 @@ void MainDialog::ShowNumberImages( int Number )
     // Notify total time is changed
     emit totalTimeChanged(m_totalTime);
 
-    if ( Number == 1 )
-        m_label6->setText(i18n("%1 image [%2]", Number, TotalDuration.toString()));
-    else
-        m_label6->setText(i18n("%1 images [%2]", Number, TotalDuration.toString()));
+    m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", Number, TotalDuration.toString()));
 }
 
 void MainDialog::loadEffectNames()
