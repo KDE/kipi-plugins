@@ -77,11 +77,11 @@ PreviewWidget::PreviewWidget(QWidget* parent)
              : QGraphicsView(parent), d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
-            "preview for the currently selected image</p>"
+            "preview for the currently selected image.</p>"
             "<p><ul>"
-            "<li>Move the mouse <b>over</b> the preview to display the original image</li>"
-            "<li>Move the mouse <b>out of</b> the preview to display the corrected image</li>"
-            "<li><b>Click on</b> the preview to display the correction mask</li>"
+            "<li>Move the mouse <b>over</b> the preview to display the original image.</li>"
+            "<li>Move the mouse <b>out of</b> the preview to display the corrected image.</li>"
+            "<li><b>Click on</b> the preview to display the correction mask.</li>"
             "</ul></p>"
             "<p>The zoom buttons and panning widget allow you to view certain parts of the image "
             "more closely.</p>");
@@ -277,7 +277,7 @@ void PreviewWidget::setMode(DisplayMode mode)
             break;
 
         case LockedMode:
-            d->modeInfo->display(i18n("No image selected!"), InfoMessageWidget::Warning);
+            d->modeInfo->display(i18n("No image selected"), InfoMessageWidget::Warning);
             d->modeInfo->raise();
             d->controller->hide();
             d->controller->lower();

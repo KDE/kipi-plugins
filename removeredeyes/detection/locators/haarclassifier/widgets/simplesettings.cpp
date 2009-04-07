@@ -86,8 +86,8 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     d->settingsSlider->setStyleSheet(sliderStyle);
 
     QLabel* lSlow = new QLabel(i18n("<p><b>Slower<br/>(low-res / slightly blurred images)</b></p>"
-                                    "<p>In this mode the automatic detection and correction of the "
-                                    "red eyes is the most reliable. The drawback "
+                                    "<p>In this mode the automatic detection and correction of "
+                                    "red-eye is the most reliable. The drawback "
                                     "of the higher detection rate is a much slower computation.</p>"));
 
     QLabel* lStd = new QLabel(i18n("<p><b>Standard</b></p>"

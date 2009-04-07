@@ -123,7 +123,7 @@ public:
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
                    : KDialog(0), d(new RemoveRedEyesWindowPriv)
 {
-    setWindowTitle(i18n("Automatic Red Eyes Removal"));
+    setWindowTitle(i18n("Automatic Red-Eye Removal"));
     setButtons(Help|User1|User2|Close);
     setDefaultButton(Close);
     setModal(false);
@@ -151,11 +151,11 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     // ----------------------------------------------------------
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eyes"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eye"),
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A plugin to automatically "
-                                                  "detect and remove red-eyes"),
+                                                  "detect and remove red-eye effect."),
                                             ki18n("(c) 2008-2009, Andi Clemens"));
 
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
@@ -176,7 +176,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     setButtonGuiItem(User1, correctBtn);
 
     KGuiItem testrunBtn = KStandardGuiItem::apply();
-    testrunBtn.setText(i18n("&Testrun"));
+    testrunBtn.setText(i18n("&Test-Run"));
     testrunBtn.setToolTip(i18n("Simulate the correction process, without saving the results."));
     setButtonGuiItem(User2, testrunBtn);
 
@@ -216,7 +216,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
 
-    d->tabWidget->insertTab(FileList, imagesTab,        i18n("Files List"));
+    d->tabWidget->insertTab(FileList, imagesTab,        i18n("File List"));
     d->tabWidget->insertTab(Settings, d->settingsTab,   i18n("Settings"));
 //    d->tabWidget->insertTab(Preview,  previewTab,       i18n("Preview"));
 
@@ -338,8 +338,8 @@ bool RemoveRedEyesWindow::acceptStorageSettings()
 {
     if (d->settings.storageMode == StorageSettingsBox::Overwrite)
     {
-        QString message = i18n("<p>You choose the <b>'overwrite' correction mode</b>!<br/>"
-                               "Are you sure you want to loose your original image files?</p>");
+        QString message = i18n("<p>You chose the <b>'overwrite' correction mode</b>.<br/>"
+                               "Are you sure you want to lose your original image files?</p>");
 
         if (KMessageBox::questionYesNo(this, message, i18n("Overwrite mode"))
             == KMessageBox::No)
@@ -527,9 +527,9 @@ void RemoveRedEyesWindow::handleUnprocessedImages()
             case UnprocessedSettingsBox::Ask:
             {
                 QString message = i18n("<p>Some of the images could not be analyzed "
-                                       "with the current settings or they do not "
-                                       "contain any red-eyes at all.</p>"
-                                       "<p><b>Would you like to remove those images "
+                                       "with the current settings, or they do not "
+                                       "contain any red-eye at all.</p>"
+                                       "<p><b>Would you like to remove these images "
                                        "from the list?</b></p>");
 
                 if (KMessageBox::questionYesNo(this, message, i18n("Remove unprocessed images?"))
@@ -565,7 +565,7 @@ void RemoveRedEyesWindow::foundRAWImages(bool raw)
     if (raw)
     {
         QString message = i18n("<p>You tried to add <b>RAW images</b> to the plugin,<br/>"
-                               "but those filetypes are not supported.</p>"
+                               "but those file-types are not supported.</p>"
                                "<p><b>They were automatically removed from the list.</b></p>");
 
         KMessageBox::information(this, message, i18n("RAW images found"));
@@ -650,7 +650,7 @@ void RemoveRedEyesWindow::showSummary()
     QString message = i18np("<p>%1 image has been successfully processed.</p>",
                             "<p>%1 images have been successfully processed.</p>",
                             d->imageList->processedImages());
-    message.append(i18n("<h2>Correction Complete!</h2>"));
+    message.append(i18n("<h2>Correction Complete</h2>"));
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
     closeClicked();
