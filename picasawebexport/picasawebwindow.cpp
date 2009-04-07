@@ -107,11 +107,11 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
     // ------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Picasaweb Export"),
+    m_about = new KIPIPlugins::KPAboutData(ki18n("PicasaWeb Export"),
                                            0,
                                            KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collection to "
-                                                 "Picasaweb web service."),
+                                           ki18n("A Kipi plugin to export image collections to "
+                                                 "PicasaWeb web service."),
                                            ki18n( "(c) 2007-2009, Vardhman Jain\n"
                                            "(c) 2008-2009, Gilles Caulier\n"
                                            "(c) 2009, Luka Renko" ));
@@ -553,7 +553,7 @@ void PicasawebWindow::slotAddPhotoSucceeded()
 void PicasawebWindow::slotAddPhotoFailed(const QString& msg)
 {
     if ( KMessageBox::warningContinueCancel(this,
-           i18n("Failed to upload photo into Picasaweb. %1\nDo you want to continue?",
+           i18n("Failed to upload photo to PicasaWeb. %1\nDo you want to continue?",
                 msg )) != KMessageBox::Continue)
     {
         m_uploadQueue.clear();

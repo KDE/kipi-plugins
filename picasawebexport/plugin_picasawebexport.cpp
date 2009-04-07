@@ -67,7 +67,7 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
     KIconLoader::global()->addAppDir("kipiplugin_picasawebexport");
 
     m_action = actionCollection()->addAction("picasawebexport");
-    m_action->setText(i18n("Export to &Picasaweb..."));
+    m_action->setText(i18n("Export to &PicasaWeb..."));
     m_action->setIcon(KIcon("picasa"));
     m_action->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P);
 

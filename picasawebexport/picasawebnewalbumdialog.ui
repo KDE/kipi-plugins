@@ -75,7 +75,7 @@
       <item>
        <widget class="QRadioButton" name="m_isProtectedRadioButton" >
         <property name="text" >
-         <string>Sign-in Required to View</string>
+         <string>Sign-In Required to View</string>
         </property>
        </widget>
       </item>

@@ -577,9 +577,9 @@ void PicasawebTalker::slotError(const QString & error)
         case 3:
             transError=i18n("General upload failure");break;
         case 4:
-            transError=i18n("Filesize was zero");break;
+            transError=i18n("File-size was zero");break;
         case 5:
-            transError=i18n("Filetype was not recognised");break;
+            transError=i18n("File-type was not recognized");break;
         case 6:
             transError=i18n("User exceeded upload limit");break;
         case 96:
@@ -587,7 +587,7 @@ void PicasawebTalker::slotError(const QString & error)
         case 97:
             transError=i18n("Missing signature"); break;
         case 98:
-            transError=i18n("Login Failed / Invalid auth token"); break;
+            transError=i18n("Login failed / Invalid auth token"); break;
         case 100:
             transError=i18n("Invalid API Key"); break;
         case 105:
@@ -603,12 +603,12 @@ void PicasawebTalker::slotError(const QString & error)
         case 115:
             transError=i18n("Invalid XML-RPC Method Call");break;
         case 116:
-            transError=i18n("The POST method is now required for all setters"); break;
+            transError=i18n("The POST method is now required for all setters."); break;
         default:
             transError=i18n("Unknown error");
     };
 
-    KMessageBox::error(kapp->activeWindow(), i18n("Error Occured: %1\n We can not proceed further",transError + error));
+    KMessageBox::error(kapp->activeWindow(), i18n("Error occurred: %1\nUnable to proceed further.",transError + error));
 }
 
 void PicasawebTalker::slotResult(KJob *job)
@@ -794,7 +794,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
 
     if (!success)
     {
-        emit signalGetAlbumsListFailed(i18n("Failed to fetch photoSets List"));
+        emit signalGetAlbumsListFailed(i18n("Failed to fetch photo-set list"));
         m_albumsList = NULL;
     }
     else
