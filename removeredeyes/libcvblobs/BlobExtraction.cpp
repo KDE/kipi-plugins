@@ -155,14 +155,14 @@ bool BlobAnalysis(    IplImage* inputImage,
         imatgePerimetreExtern = NULL;
 
         //Fill Transition array
-        for(iRow = 1; iRow < Rows + 1; iRow++)        // Choose a row of Bordered image
+        for(iRow = 1; iRow < Rows + 1; ++iRow)        // Choose a row of Bordered image
         {
             TransitionOffset = iRow*(Cols + 2); //per a que sigui paral�litzable
             iTran = 0;                    // Index into Transition array
             Tran = 0;                    // No transitions at row start
             LastCell = borderColor;
 
-            for(iCol = 0; iCol < Cols + 2; iCol++)    // Scan that row of Bordered image
+            for(iCol = 0; iCol < Cols + 2; ++iCol)    // Scan that row of Bordered image
             {
                 if(iCol == 0 || iCol == Cols+1)
                     ThisCell = borderColor;
@@ -203,7 +203,7 @@ bool BlobAnalysis(    IplImage* inputImage,
         pMask = maskImage->imageData - 1;
 
         //Fill Transition array
-        for(iRow = 1; iRow < Rows + 1; iRow++)        // Choose a row of Bordered image
+        for(iRow = 1; iRow < Rows + 1; ++iRow)        // Choose a row of Bordered image
         {
             TransitionOffset = iRow*(Cols + 2);
             iTran = 0;                    // Index into Transition array
@@ -213,7 +213,7 @@ bool BlobAnalysis(    IplImage* inputImage,
             pPerimetre = imatgePerimetreExtern->imageData + (iRow - 1) * imatgePerimetreExtern->widthStep;
             //pMask = maskImage->imageData + (iRow-1) * maskImage->widthStep;
 
-            for(iCol = 0; iCol < Cols + 2; iCol++)    // Scan that row of Bordered image
+            for(iCol = 0; iCol < Cols + 2; ++iCol)    // Scan that row of Bordered image
             {
                 if(iCol == 0 || iCol == Cols+1 || ((unsigned char) *pMask) == PIXEL_EXTERIOR)
                     ThisCell = borderColor;
@@ -388,7 +388,7 @@ bool BlobAnalysis(    IplImage* inputImage,
     LastRegion=new int[Cols+2];
     ThisRegion=new int[Cols+2];
 
-    for(i = 0; i < Cols + 2; i++)    // Initialize result arrays
+    for(i = 0; i < Cols + 2; ++i)    // Initialize result arrays
     {
         LastRegion[i] = -1;
         ThisRegion[i] = -1;
@@ -413,7 +413,7 @@ bool BlobAnalysis(    IplImage* inputImage,
     char *pImageAux, *pMaskAux;
 
     // Loop over all rows
-    for(ThisRow = 1; ThisRow < Rows + 2; ThisRow++)
+    for(ThisRow = 1; ThisRow < Rows + 2; ++ThisRow)
     {
         //cout << "========= THIS ROW = " << ThisRow << endl;    // for debugging
         ThisOffset += Trans + 2;
@@ -426,7 +426,7 @@ bool BlobAnalysis(    IplImage* inputImage,
         int EndLast = 0;
         int EndThis = 0;
 
-        for(int j = 0; j < Trans + 2; j++)
+        for(int j = 0; j < Trans + 2; ++j)
         {
             int Index = ThisOffset + j;
             int TranVal = Transition[Index];
@@ -791,7 +791,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
                                 if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
@@ -803,7 +803,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
 
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
                                 if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
@@ -886,7 +886,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
                                 if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
@@ -897,7 +897,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
                                 if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
@@ -984,7 +984,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
                                 if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
@@ -995,7 +995,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
                                 if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
@@ -1048,7 +1048,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
                                 if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
@@ -1059,7 +1059,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; iOld++)
+                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
                                 if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
                                 if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
@@ -1111,7 +1111,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                 {
                     float ImageRow = (float) (ThisRow - 1);
 
-                    for(int k = ThisStart; k <= ThisEnd; k++)
+                    for(int k = ThisStart; k <= ThisEnd; ++k)
                     {
                         ThisSumX += (float) (k - 1);
                         ThisSumXX += (float) (k - 1) * (k - 1);
@@ -1127,7 +1127,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                 {
                     pImageAux = pImage + ThisStart;
                     if(maskImage!=NULL) pMaskAux = pMask + ThisStart;
-                    for(int k = ThisStart; k <= ThisEnd; k++)
+                    for(int k = ThisStart; k <= ThisEnd; ++k)
                     {
                         if((k>0) && (k <= Cols))
                         {
@@ -1422,7 +1422,7 @@ double GetExternPerimeter( int start, int end, int row, int width, int height, I
         if( end >= width ) end = width - 2;
 
         pPerimetre = imatgePerimetreExtern->imageData + (row - 1) * imatgePerimetreExtern->widthStep + start;
-        for (int x = start - 1; x <= end; x++ )
+        for (int x = start - 1; x <= end; ++x )
         {
             perimeter += *pPerimetre;
             pPerimetre++;

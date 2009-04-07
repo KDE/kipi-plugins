@@ -145,7 +145,7 @@ CBlob::CBlob( const CBlob &src )
     cvStartReadSeq( src.Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
 
-    for( int i=0; i< src.Edges()->total; i++)
+    for( int i=0; i< src.Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -188,7 +188,7 @@ CBlob::CBlob( const CBlob *src )
     cvStartReadSeq( src->Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
 
-    for( int i=0; i< src->Edges()->total; i++)
+    for( int i=0; i< src->Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -292,7 +292,7 @@ CBlob& CBlob::operator=(const CBlob &src )
         cvStartReadSeq( src.Edges(), &reader);
         cvStartAppendToSeq( edges, &writer );
 
-        for( int i=0; i< src.Edges()->total; i++)
+        for( int i=0; i< src.Edges()->total; ++i)
         {
             CV_READ_SEQ_ELEM( edgeactual ,reader);
             CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -419,7 +419,7 @@ void CBlob::CopyEdges( CBlob &destination ) const
     cvStartReadSeq( edges, &reader);
     cvStartAppendToSeq( destination.Edges(), &writer );
 
-    for( int i=0; i<edges->total; i++)
+    for( int i=0; i<edges->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -663,7 +663,7 @@ double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;j++)
+    for(int j=0;j<blob.Edges()->total;++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
         if( (edgeactual.y == blob.MinY()) && (edgeactual.x < MinX_at_MinY) )
@@ -706,7 +706,7 @@ double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;j++)
+    for(int j=0;j<blob.Edges()->total;++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
         if( (edgeactual.x == blob.MaxX()) && (edgeactual.y < MinY_at_MaxX) )
@@ -749,7 +749,7 @@ double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;j++)
+    for(int j=0;j<blob.Edges()->total;++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
         if( (edgeactual.y == blob.MaxY()) && (edgeactual.x > MaxX_at_MaxY) )
@@ -792,7 +792,7 @@ double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;j++)
+    for(int j=0;j<blob.Edges()->total;++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
         if( (edgeactual.x == blob.MinY()) && (edgeactual.y > MaxY_at_MinX) )
@@ -1009,7 +1009,7 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
     // agafem tots els punts amb la mateixa y que l'actual
     cvStartReadSeq( blob.Edges(), &reader);
 
-    for( int i=0; i< blob.Edges()->total; i++)
+    for( int i=0; i< blob.Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader );
         if( edgeactual.y == m_p.y )

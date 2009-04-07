@@ -234,7 +234,7 @@ CBlobResult& CBlobResult::operator=(const CBlobResult& source)
     if (this != &source)
     {
         // alliberem el conjunt de blobs antic
-        for( int i = 0; i < GetNumBlobs(); i++ )
+        for( int i = 0; i < GetNumBlobs(); ++i )
         {
             delete m_blobs[i];
         }
@@ -537,7 +537,7 @@ void CBlobResult::Filter(CBlobResult &dst,
     switch(condition)
     {
         case B_EQUAL:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs == lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -548,7 +548,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_NOT_EQUAL:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio = *itavaluacioBlobs != lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -559,7 +559,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_GREATER:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs > lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -570,7 +570,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_LESS:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs < lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -581,7 +581,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_GREATER_OR_EQUAL:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs>= lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -592,7 +592,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_LESS_OR_EQUAL:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs <= lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -603,7 +603,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_INSIDE:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs >= lowLimit) && ( *itavaluacioBlobs <= highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -614,7 +614,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             }
             break;
         case B_OUTSIDE:
-            for(i=0;i<numBlobs;i++, itavaluacioBlobs++)
+            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs < lowLimit) || ( *itavaluacioBlobs > highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -633,7 +633,7 @@ void CBlobResult::Filter(CBlobResult &dst,
         // esborrem els primers blobs ( que s�n els originals )
         // ja que els tindrem replicats al final si passen el filtre
         blob_vector::iterator itBlobs = m_blobs.begin();
-        for( int i = 0; i < numBlobs; i++ )
+        for( int i = 0; i < numBlobs; ++i )
         {
             delete *itBlobs;
             itBlobs++;
@@ -778,7 +778,7 @@ void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst 
 */
 void CBlobResult::ClearBlobs()
 {
-    /*for( int i = 0; i < GetNumBlobs(); i++ )
+    /*for( int i = 0; i < GetNumBlobs(); ++i )
     {
         delete m_blobs[i];
     }*/
@@ -888,7 +888,7 @@ void CBlobResult::PrintBlobs( char *nom_fitxer ) const
 
     fitxer_sortida = fopen( nom_fitxer, "w" );
 
-    for(i=0; i<GetNumBlobs(); i++)
+    for(i=0; i<GetNumBlobs(); ++i)
     {
         fprintf( fitxer_sortida, "blob %d ->\t a=%7.0f\t p=%8.2f (%8.2f extern)\t pconvex=%8.2f\t ext=%.0f\t m=%7.2f\t c=%3.2f\t l=%8.2f\n",
                  i, area[i], perimetre[i], externPerimeter[i], perimetreConvex[i], exterior[i], mitjana[i], compacitat[i], longitud[i] );
