@@ -237,7 +237,7 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
     effects["Horizontal Lines"] = i18n( "Horizontal Lines" );
     effects["Vertical Lines"] = i18n( "Vertical Lines" );
     effects["Circle Out"] = i18n( "Circle Out" );
-    effects["MultiCircle Out"] = i18n( "MultiCircle Out" );
+    effects["MultiCircle Out"] = i18n( "Multi-Circle Out" );
     effects["Spiral In"] = i18n( "Spiral In" );
     effects["Blobs"] = i18n( "Blobs" );
     effects["Random"] = i18n( "Random" );
@@ -1306,8 +1306,8 @@ void SlideShow::paintEvent( QPaintEvent * )
 
         p.setFont( fn );
         p.setPen( Qt::white );
-        p.drawText( 100, 100, i18n( "Slideshow Completed." ) );
-        p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click To Exit..." ) );
+        p.drawText( 100, 100, i18n( "Slideshow Completed" ) );
+        p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click to Exit..." ) );
 
         QSvgRenderer svgRenderer( KStandardDirs::locate( "data", "kipiplugin_advancedslideshow/KIPIicon.svg" ) );
         QPixmap kipiLogoPixmap = QPixmap( width()/6, width()/6 );

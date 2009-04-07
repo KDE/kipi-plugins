@@ -208,7 +208,7 @@ void SoundtrackDialog::compareTimes()
 
     if ( m_imageTime > m_totalTime )
     {
-        m_statusBarLabel->setText(i18n("Slide time is more than soundtrack time. Suggest: add more sound files."));
+        m_statusBarLabel->setText(i18n("Slide time is greater than soundtrack time. Suggestion: add more sound files."));
 
 
         QPalette paletteStatusBar = m_statusBarLabel->palette();
@@ -319,7 +319,7 @@ void SoundtrackDialog::slotSoundFilesButtonUp( void )
 
     if  (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move up one image file at once."));
+        KMessageBox::error(this, i18n("You can only move image files up one at a time."));
         return;
     }
 
@@ -348,7 +348,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown( void )
 
     if (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move down one file at once."));
+        KMessageBox::error(this, i18n("You can only move files down one at a time."));
         return;
     }
 
@@ -376,7 +376,7 @@ void SoundtrackDialog::slotPreviewButtonClicked( void )
         if (!QFile::exists(path))
         {
             KMessageBox::error(this,
-                               i18n("Cannot access to file %1, please check the path is right.", path));
+                               i18n("Cannot access file %1. Please check the path is correct.", path));
             return;
         }
 

@@ -108,7 +108,7 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
     d->about = new KIPIPlugins::KPAboutData(ki18n("Advanced Slideshow"),
                                             0,
                                             KAboutData::License_GPL,
-                                            ki18n("A Kipi plugin for image slideshow"),
+                                            ki18n("A Kipi plugin for image slideshows"),
                                             ki18n("(c) 2003-2004, Renchi Raju\n(c) 2006-2008, Valerio Fuoglio"));
 
     d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),

@@ -526,8 +526,8 @@ void SlideShowKB::endOfShow()
     QPainter p(&pix);
     p.setPen(Qt::white);
     p.setFont(fn);
-    p.drawText(20, 50, i18n("SlideShow Completed."));
-    p.drawText(20, 100, i18n("Click To Exit..."));
+    p.drawText(20, 50, i18n("SlideShow Completed"));
+    p.drawText(20, 100, i18n("Click to Exit..."));
     p.end();
 
     QImage image = pix.toImage();

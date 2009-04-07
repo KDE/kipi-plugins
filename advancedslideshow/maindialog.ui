@@ -52,7 +52,7 @@
       <string>Preview the currently selected image.</string>
      </property>
      <property name="title" >
-      <string>Image Files in slideshow</string>
+      <string>Image Files in Slideshow</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3" >
       <item row="0" column="0" >
@@ -65,8 +65,8 @@
         </property>
         <property name="whatsThis" >
          <string>This is the list of the image files for your portfolio.
-The portfolio's first image is on the top; the last image is on the bottom.
-If you want to add some images, click on the 'Add' button or use the drag-and-drop.</string>
+The portfolio's first image is at the top; the last image is at the bottom.
+If you want to add some images, click on the 'Add' button or use drag-and-drop.</string>
         </property>
        </widget>
       </item>
@@ -109,7 +109,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
            </size>
           </property>
           <property name="whatsThis" >
-           <string>Moving the current image up on the portfolio list.</string>
+           <string>Move the current image up in the portfolio list.</string>
           </property>
           <property name="text" >
            <string/>
@@ -193,7 +193,7 @@ If you want to add some images, click on the 'Add' button or use the drag-and-dr
            </size>
           </property>
           <property name="whatsThis" >
-           <string>Moving the current image down on the portfolio list.</string>
+           <string>Move the current image down in the portfolio list.</string>
           </property>
           <property name="text" >
            <string/>

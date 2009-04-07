@@ -317,7 +317,7 @@ bool MainDialog::updateUrlList()
         if (!QFile::exists(pitem->path()))
         {
             KMessageBox::error(this,
-                               i18n("Cannot access to file %1, please check the path is right.", pitem->path()));
+                               i18n("Cannot access file %1. Please check the path is correct.", pitem->path()));
             return false;
         }
 
@@ -354,7 +354,7 @@ void MainDialog::slotImagesFilesSelected( int row )
 
     int index = m_ImagesFilesListBox->row ( item );
 
-    m_label7->setText(i18n("Image no. %1", QString::number(index + 1)));
+    m_label7->setText(i18n("Image number %1", "Image #%1", QString::number(index + 1)));
 }
 
 void MainDialog::addItems(const KUrl::List& fileList)
@@ -434,7 +434,7 @@ void MainDialog::slotImagesFilesButtonUp( void )
 
     if  (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move up one image file at once."));
+        KMessageBox::error(this, i18n("You can only move image files up one at a time."));
         return;
     }
 
@@ -463,7 +463,7 @@ void MainDialog::slotImagesFilesButtonDown( void )
 
     if (Cpt > 1)
     {
-        KMessageBox::error(this, i18n("You can only move down one image file at once."));
+        KMessageBox::error(this, i18n("You can only move image files down one at a time."));
         return;
     }
 
@@ -529,7 +529,7 @@ void MainDialog::slotUseMillisecondsToggled( void )
     }
     else
     {
-        m_delayLabel->setText(i18n("Delay between images  (s):"));
+        m_delayLabel->setText(i18n("Delay between images (s):"));
 
         m_delaySpinBox->setRange(m_sharedData->delayMsMinValue / 100, m_sharedData->delayMsMaxValue / 10);
         m_delaySpinBox->setSingleStep(m_sharedData->delayMsLineStep / 100);

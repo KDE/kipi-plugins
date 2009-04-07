@@ -72,7 +72,7 @@
              </size>
             </property>
             <property name="whatsThis" >
-             <string>Moving the current image up on the portfolio list.</string>
+             <string>Move the current image up in the portfolio list.</string>
             </property>
             <property name="text" >
              <string/>
@@ -156,7 +156,7 @@
              </size>
             </property>
             <property name="whatsThis" >
-             <string>Moving the current image down on the portfolio list.</string>
+             <string>Move the current image down in the portfolio list.</string>
             </property>
             <property name="text" >
              <string/>
@@ -271,7 +271,7 @@
           <item row="0" column="0" >
            <widget class="QLabel" name="label" >
             <property name="text" >
-             <string>Slide :</string>
+             <string>Slide:</string>
             </property>
            </widget>
           </item>
@@ -285,7 +285,7 @@
           <item row="1" column="0" >
            <widget class="QLabel" name="label_2" >
             <property name="text" >
-             <string>Soundtrack :</string>
+             <string>Soundtrack:</string>
             </property>
            </widget>
           </item>

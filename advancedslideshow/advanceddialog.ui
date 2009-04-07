@@ -110,7 +110,7 @@
          </sizepolicy>
         </property>
         <property name="text" >
-         <string>Disable &amp;crossfade</string>
+         <string>Disable &amp;cross-fade</string>
         </property>
        </widget>
       </item>
@@ -212,7 +212,7 @@
         </property>
         <property name="text" >
          <string>&lt;b>Notice&lt;/b>:
-Ken Burns effect doesn't use this cache mechanism.</string>
+Ken Burns effect does not use this cache mechanism.</string>
         </property>
         <property name="wordWrap" >
          <bool>false</bool>

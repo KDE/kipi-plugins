@@ -243,7 +243,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     {
         if (!QGLFormat::hasOpenGL())
             KMessageBox::error(kapp->activeWindow(),
-                               i18n("Sorry. OpenGL support not available on your system"));
+                               i18n("OpenGL support is not available on your system."));
         else
         {
             if (wantKB)
