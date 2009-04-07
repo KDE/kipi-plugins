@@ -145,15 +145,15 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     setButtons(Help | Default | Apply | Close | User1 | User2);
     setDefaultButton(KDialog::Close);
-    setButtonToolTip(Close, i18n("Exit Raw Converter"));
-    setCaption(i18n("Raw Images Batch Converter"));
+    setButtonToolTip(Close, i18n("Exit RAW Converter"));
+    setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
     setButtonIcon(User1, KIcon("list-add"));
     setButtonText(User1, i18n("&Add"));
-    setButtonToolTip(User1, i18n("Add new Raw files to the list"));
+    setButtonToolTip(User1, i18n("Add new RAW files to the list"));
     setButtonIcon(User2, KIcon("list-remove"));
     setButtonText(User2, i18n("&Remove"));
-    setButtonToolTip(User2, i18n("Remove selected Raw files from the list"));
+    setButtonToolTip(User2, i18n("Remove selected RAW files from the list"));
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -173,7 +173,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     QStringList labels;
     labels.append( i18n("Thumbnail") );
-    labels.append( i18n("Raw File") );
+    labels.append( i18n("RAW File") );
     labels.append( i18n("Target File") );
     labels.append( i18n("Camera") );
     d->listView->setHeaderLabels(labels);
@@ -211,7 +211,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to batch convert Raw images"),
+                   ki18n("A Kipi plugin to batch convert RAW images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2009, Gilles Caulier"));
 
@@ -435,7 +435,7 @@ void BatchDialog::slotStartStop()
 
         if (d->fileList.empty())
         {
-            KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
+            KMessageBox::error(this, i18n("There is no RAW file in the list to process."));
             busy(false);
             slotAborted();
             return;
@@ -652,13 +652,13 @@ void BatchDialog::busy(bool busy)
     {
         setButtonIcon(Apply, KIcon("process-stop"));
         setButtonText(Apply, i18n("&Abort"));
-        setButtonToolTip(Apply, i18n("Abort the current Raw files conversion"));
+        setButtonToolTip(Apply, i18n("Abort the current RAW file conversion"));
     }
     else
     {
         setButtonIcon(Apply, KIcon("system-run"));
         setButtonText(Apply, i18n("Con&vert"));
-        setButtonToolTip(Apply, i18n("Start converting the Raw images from current settings"));
+        setButtonToolTip(Apply, i18n("Start converting the RAW images using current settings."));
     }
 
     d->decodingSettingsBox->setEnabled(!d->busy);
@@ -708,7 +708,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
+            KIO::RenameDialog dlg(this, i18n("Save RAW image converted from '%1' as",
                                   d->currentConvertItem->url().fileName()),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));

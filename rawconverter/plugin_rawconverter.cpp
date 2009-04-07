@@ -88,7 +88,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
     KGlobal::locale()->insertCatalog("libkdcraw");
 
     m_singleAction = actionCollection()->addAction("raw_converter_single");
-    m_singleAction->setText(i18n("Raw Image Converter..."));
+    m_singleAction->setText(i18n("RAW Image Converter..."));
     m_singleAction->setIcon(KIcon("rawconverter"));
 
     connect(m_singleAction, SIGNAL(triggered(bool)),
@@ -97,7 +97,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
     addAction(m_singleAction);
 
     m_batchAction = actionCollection()->addAction("raw_converter_batch");
-    m_batchAction->setText(i18n("Batch Raw Converter..."));
+    m_batchAction->setText(i18n("Batch RAW Converter..."));
     m_batchAction->setIcon(KIcon("rawconverter"));
 
     connect(m_batchAction, SIGNAL(triggered(bool)),
@@ -171,7 +171,7 @@ void Plugin_RawConverter::slotActivateSingle()
     if (!isRAWFile(images.images()[0].path()))
     {
         KMessageBox::error(kapp->activeWindow(),
-                           i18n("\"%1\" is not a Raw file.", images.images()[0].fileName()));
+                           i18n("\"%1\" is not a RAW file.", images.images()[0].fileName()));
         return;
     }
 

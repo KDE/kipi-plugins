@@ -140,7 +140,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     setButtonText(User1, i18n("&Preview"));
     setButtonText(User2, i18n("Con&vert"));
     setButtonText(User3, i18n("&Abort"));
-    setCaption(i18n("Raw Image Converter"));
+    setCaption(i18n("RAW Image Converter"));
     setModal(false);
 
     QWidget *page = new QWidget( this );
@@ -173,7 +173,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to convert a Raw image"),
+                   ki18n("A Kipi plugin to convert RAW images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
                          "(c) 2006-2009, Gilles Caulier"));
 
@@ -198,16 +198,16 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    setButtonToolTip(User1, i18n("Generate a Preview from current settings. "
+    setButtonToolTip(User1, i18n("Generate a preview using current settings. "
                                  "Uses a simple bilinear interpolation for "
                                  "quick results."));
 
-    setButtonToolTip(User2, i18n("Convert the Raw Image from current settings. "
+    setButtonToolTip(User2, i18n("Convert the RAW Image using current settings. "
                                  "This uses a high-quality adaptive algorithm."));
 
-    setButtonToolTip(User3, i18n("Abort the current Raw file conversion"));
+    setButtonToolTip(User3, i18n("Abort the current RAW file conversion"));
 
-    setButtonToolTip(Close, i18n("Exit Raw Converter"));
+    setButtonToolTip(Close, i18n("Exit RAW Converter"));
 
     d->blinkPreviewTimer = new QTimer(this);
     d->blinkConvertTimer = new QTimer(this);
@@ -567,7 +567,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
-            KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as", fi.fileName()),
+            KIO::RenameDialog dlg(this, i18n("Save RAW image converted from '%1' as", fi.fileName()),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -611,7 +611,7 @@ void SingleDialog::processingFailed(const KUrl& /*url*/)
 {
     d->previewWidget->unsetCursor();
     d->blinkConvertTimer->stop();
-    d->previewWidget->setIdentity(i18n("Failed to convert Raw image"), Qt::red);
+    d->previewWidget->setIdentity(i18n("Failed to convert RAW image"), Qt::red);
 }
 
 void SingleDialog::slotPreviewBlinkTimerDone()
@@ -629,7 +629,7 @@ void SingleDialog::slotPreviewBlinkTimerDone()
 
 void SingleDialog::slotConvertBlinkTimerDone()
 {
-    QString convert = i18n("Converting Raw Image...");
+    QString convert = i18n("Converting RAW Image...");
 
     if (d->convertBlink)
         d->previewWidget->setIdentity(convert, Qt::green);

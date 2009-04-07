@@ -74,21 +74,21 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
 
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new KComboBox( this );
-    d->formatComboBox->setWhatsThis(i18n("<p>Set here the output file format to use:</p>"
-                                         "<p><b>JPEG</b>: output the processed image in JPEG Format. "
-                                         "this format will give smaller-sized files. Minimum JPEG "
-                                         "compression level will be used during Raw conversion.</p>"
-                                         "<p><b>Warning!!! duing of destructive compression algorithm, "
+    d->formatComboBox->setWhatsThis(i18n("<p>Set the output file format to use here:</p>"
+                                         "<p><b>JPEG</b>: output the processed image in JPEG format. "
+                                         "This format will give smaller-sized files. Minimum JPEG "
+                                         "compression level will be used during RAW conversion.</p>"
+                                         "<p><b>Warning: Due to the destructive compression algorithm, "
                                          "JPEG is a lossy quality format.</b></p>"
-                                         "<p><b>TIFF</b>: output the processed image in TIFF Format. "
-                                         "This generates larges, without "
+                                         "<p><b>TIFF</b>: output the processed image in TIFF format. "
+                                         "This generates large files, without "
                                          "losing quality. Adobe Deflate compression "
                                          "will be used during conversion.</p>"
-                                         "<p><b>PPM</b>: output the processed image in PPM Format. "
+                                         "<p><b>PPM</b>: output the processed image in PPM format. "
                                          "This generates the largest files, without "
                                          "losing quality.</p>"
-                                         "<p><b>PNG</b>: output the processed image in PNG Format. "
-                                         "This generates larges, without "
+                                         "<p><b>PNG</b>: output the processed image in PNG format. "
+                                         "This generates large files, without "
                                          "losing quality. Maximum PNG compression "
                                          "will be used during conversion.</p>"));
     slotPopulateImageFormat(false);
