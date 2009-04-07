@@ -19,10 +19,10 @@
       </size>
      </property>
      <property name="whatsThis" >
-      <string>Move the box to crop photos to fit inside the photo sizes you have given.  
+      <string>Move the box in order to crop photos so that they fit inside the photo sizes you have given.  
 You can crop each image differently, or just click 'Next' button to use the default crop 
 setting for each photo.
-Enable "Don't crop" to avoid cropping all the photos.</string>
+Enable "Do not crop" to avoid cropping all of the photos.</string>
      </property>
     </widget>
    </item>
@@ -47,10 +47,10 @@ Enable "Don't crop" to avoid cropping all the photos.</string>
      <item>
       <widget class="QCheckBox" name="m_disableCrop" >
        <property name="whatsThis" >
-        <string>Don't crop photos, just scale them</string>
+        <string>Do not crop photos, just scale them.</string>
        </property>
        <property name="text" >
-        <string>Don't crop</string>
+        <string>Do not crop</string>
        </property>
       </widget>
      </item>

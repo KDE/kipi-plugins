@@ -161,7 +161,7 @@
              </property>
              <property name="text" >
               <string>%f  filename    %t exposure time
-%c comment  %i iso
+%c comment  %i ISO
 %d date-time  %r resolution
 %a aperture    %l focal length
 
@@ -299,7 +299,7 @@
            </sizepolicy>
           </property>
           <property name="text" >
-           <string>Open image using Gimp</string>
+           <string>Open image using GIMP</string>
           </property>
          </widget>
         </item>
@@ -342,7 +342,7 @@
            <bool>false</bool>
           </property>
           <property name="text" >
-           <string>Each page is named kipi_printassistant_N.jpeg (N=1,2,etc) and saved to this folder.</string>
+           <string>Each page is named kipi_printassistant_N.jpeg (N is 1, 2, etc.) and saved to this folder.</string>
           </property>
          </widget>
         </item>

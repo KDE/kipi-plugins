@@ -45,7 +45,7 @@
        <property name="text" >
         <string>Welcome to the Print Assistant.
 
-This assistant will help you in printing your photos.
+This assistant will help you with the printing of your photos.
 
 Click the 'Next' button to begin.</string>
        </property>
@@ -84,7 +84,7 @@ Click the 'Next' button to begin.</string>
      <item>
       <widget class="QCheckBox" name="m_skipIntro" >
        <property name="text" >
-        <string>Don't show this any more</string>
+        <string>Do not show this any more</string>
        </property>
       </widget>
      </item>

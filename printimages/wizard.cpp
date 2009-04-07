@@ -1467,7 +1467,7 @@ namespace KIPIPrintImagesPlugin
     if ( pageSize > A6 )
     {
       KMessageBox::information ( this,
-                                 i18n ( "Don't forget to set up the correct page size according to your printer settings" ),
+                                 i18n ( "Do not forget to set up the correct page size according to your printer settings." ),
                                  i18n ( "Page size settings" ), "pageSizeInfo" );
     }
   }
@@ -1979,7 +1979,7 @@ namespace KIPIPrintImagesPlugin
     if ( m_kjobviewer->isChecked() )
       if ( !m_Proc->start() )
         kdDebug ( 51000 ) << "Error running kjobviewr\n";
-    LblPrintProgress->setText ( i18n ( "Complete.  Click Finish to exit the Print Wizard." ) );
+    LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
 #endif
   }
 
@@ -2021,7 +2021,7 @@ namespace KIPIPrintImagesPlugin
       if ( QFile::exists ( filename ) )
       {
         int result = KMessageBox::warningYesNoCancel ( this,
-                     i18n ( "The following file will be overwritten. Do you want to overwrite this file?" ) +
+                     i18n ( "The following file will be overwritten. Are you sure you want to overwrite it?" ) +
                      "\n\n" + filename );
         if ( result == KMessageBox::No )
           saveFile = false;
@@ -2075,7 +2075,7 @@ namespace KIPIPrintImagesPlugin
       {
         if ( QFile::remove ( *it ) == false )
         {
-          KMessageBox::sorry ( this, i18n ( "Could not remove the Gimp's temporary files." ) );
+          KMessageBox::sorry ( this, i18n ( "Could not remove the GIMP's temporary files." ) );
           break;
         }
       }
@@ -2190,7 +2190,7 @@ namespace KIPIPrintImagesPlugin
       if ( !launchExternalApp ( prog, args ) )
       {
         KMessageBox::sorry ( this,
-                             i18n ( "There was an error launching the Gimp. Please make sure it is properly installed." ),
+                             i18n ( "There was an error launching the GIMP. Please make sure it is properly installed." ),
                              i18n ( "KIPI" ) );
         return;
       }
