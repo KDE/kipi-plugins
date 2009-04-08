@@ -354,7 +354,7 @@ void MainDialog::slotImagesFilesSelected( int row )
 
     int index = m_ImagesFilesListBox->row ( item );
 
-    m_label7->setText(i18n("Image number %1", "Image #%1", QString::number(index + 1)));
+    m_label7->setText(i18np("Image number %1", "Image #%1", QString::number(index + 1)));
 }
 
 void MainDialog::addItems(const KUrl::List& fileList)
