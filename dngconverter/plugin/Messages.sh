@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_dngconverter.pot
+$XGETTEXT *.h *.cpp -o $podir/kipiplugin_dngconverter.pot
 
