@@ -249,29 +249,10 @@ void HaarClassifierLocator::saveImage(const QString& path, SaveResult type)
 
     switch (type)
     {
-        case Final:
-        {
-            cvSaveImage(savePath, d->original);
-            break;
-        }
-
-        case OriginalPreview:
-        {
-            cvSaveImage(savePath, d->original);
-            break;
-        }
-
-        case CorrectedPreview:
-        {
-            cvSaveImage(savePath, d->original);
-            break;
-        }
-
-        case MaskPreview:
-        {
-            cvSaveImage(savePath, d->redMask);
-            break;
-        }
+        case Final:             cvSaveImage(savePath, d->original); break;
+        case OriginalPreview:   cvSaveImage(savePath, d->original); break;
+        case CorrectedPreview:  cvSaveImage(savePath, d->original); break;
+        case MaskPreview:       cvSaveImage(savePath, d->redMask);  break;
     }
 }
 
@@ -318,13 +299,11 @@ int HaarClassifierLocator::startCorrection(const QString& src, const QString& de
 
 int HaarClassifierLocator::startTestrun(const QString& src)
 {
-    // TODO: is this really the correct way?
     return startCorrection(src, QString());
 }
 
 int HaarClassifierLocator::startPreview(const QString& src)
 {
-    // TODO: is this really the correct way?
     return startCorrection(src, QString());
 }
 
