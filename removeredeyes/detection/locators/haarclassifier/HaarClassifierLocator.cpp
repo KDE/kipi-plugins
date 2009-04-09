@@ -118,18 +118,19 @@ void HaarClassifierLocator::removeRedEyes()
     IplImage* removed_redchannel = cvCreateImage(cvGetSize(d->original), d->original->depth, 3);
     cvCopy(d->original, removed_redchannel);
 
-    // remove red channel
-    uchar* c_data  = (uchar*) removed_redchannel->imageData;
-    int c_step     = removed_redchannel->widthStep / sizeof(uchar);
-    int c_channels = removed_redchannel->nChannels;
+    // number of channels
+    int nc = removed_redchannel->nChannels;
+    uchar* ptr = 0;
 
-    for (int i = 0; i < removed_redchannel->height - 1; ++i)
+    for (int y = 0; y < removed_redchannel->height; ++y)
     {
-        for (int j=0; j<removed_redchannel->width-1; ++j)
+        ptr = (uchar*)(removed_redchannel->imageData + y * removed_redchannel->widthStep);
+        for (int x = 0; x < removed_redchannel->width; ++x)
         {
-            c_data[i*c_step+j*c_channels+2] = uchar(uchar(c_data[i*c_step+j*c_channels+2])*0.02 +
-                                                    uchar(c_data[i*c_step+j*c_channels+1])*0.68 +
-                                                    uchar(c_data[i*c_step+j*c_channels+0])*0.3);
+            // channels are in reverse order
+            ptr[nc*x+2] = (uchar)(ptr[nc*x+2] * 0.02)
+                               + (ptr[nc*x+1] * 0.68)
+                               + (ptr[nc*x+0] * 0.3);
         }
     }
 
