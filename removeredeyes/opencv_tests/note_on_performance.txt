@@ -1,0 +1,52 @@
+--------------------------------------------------------------------
+Note on performance issues
+--------------------------------------------------------------------
+
+OpenCV (Open Computer Vision Library) is a graphics library by Intel.
+
+Intel has a product called the Integrated Performance Primitives (IPP) library (IPP).
+This library is essentially a toolbox of high-performance kernels for handling multime-
+dia and other processor-intensive operations in a manner that makes extensive use of
+the detailed architecture of their processors.
+OpenCV is designed to recognize the presence of the IPP library and to automati-
+cally “swap out” the lower-performance implementations of many core functionalities
+for their higher-performance counterparts in IPP.
+
+To see if your system is configured to have OpenCV run with IPP support,
+you can use the following test-program:
+
+--------------------------------------------------------------------
+
+#include <cv.h>
+#include <cstdio>
+
+int main (int argc, char const* argv[])
+{
+    const char* libs = 0;
+    const char* modules = 0;
+    cvGetModuleInfo(0, &libs, &modules);
+    printf("Libraries: %s\nModules: %s\n", libs, modules);
+
+    return 0;
+}
+
+--------------------------------------------------------------------
+
+To compile, you need to include and link the OpenCV libraries, which typically
+should work as follows:
+
+g++ testForIPP.cpp -o testForIPP -I/usr/include/opencv -lcv
+
+--------------------------------------------------------------------
+
+If everything went well, the output might look like this:
+
+    Libraries cxcore: 1.0.0
+    Modules: ippcv20.dll, ippi20.dll, ipps20.dll, ippvm20.dll
+
+If you don't see any entries in the Modules section (like I do on my Archlinux
+system, running on a MacBook Pro v4), this means that OpenCV is not running
+in IPP mode and therefore is slower then it could be on an Intel based machine.
+
+I'm still looking for a way to fix this...
+
