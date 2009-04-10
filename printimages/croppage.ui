@@ -20,7 +20,7 @@
      </property>
      <property name="whatsThis" >
       <string>Move the box in order to crop photos so that they fit inside the photo sizes you have given.  
-You can crop each image differently, or just click 'Next' button to use the default crop 
+You can crop each image differently, or just click the 'Next' button to use the default crop 
 setting for each photo.
 Enable "Do not crop" to avoid cropping all of the photos.</string>
      </property>

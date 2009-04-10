@@ -1467,7 +1467,7 @@ namespace KIPIPrintImagesPlugin
     if ( pageSize > A6 )
     {
       KMessageBox::information ( this,
-                                 i18n ( "Do not forget to set up the correct page size according to your printer settings." ),
+                                 i18n ( "Do not forget to set the correct page size according to your printer settings." ),
                                  i18n ( "Page size settings" ), "pageSizeInfo" );
     }
   }
@@ -2061,7 +2061,7 @@ namespace KIPIPrintImagesPlugin
       if ( m_kjobviewer->isChecked() )
         if ( !m_Proc->start() )
           kdDebug ( 51000 ) << "Error launching kjobviewr\n";
-      LblPrintProgress->setText ( i18n ( "Complete.  Click Finish to exit the Print Wizard." ) );
+      LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
     }
 #endif
     return files;
