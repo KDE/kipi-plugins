@@ -31,11 +31,9 @@
 #include <functional>
 #include <algorithm>
 
+// KDE includes.
 
-#ifdef _DEBUG
-    #include <afx.h>            //suport per a CStrings
-    #include <afxwin.h>            //suport per a AfxMessageBox
-#endif
+#include <kdebug.h>
 
 // Local includes
 
@@ -811,8 +809,7 @@ void CBlobResult::ClearBlobs()
 - PARAMETERS:
     - errorCode: reason of the error
 - RESULT:
-    - in _DEBUG version, shows a message box with the error. In release is silent.
-      In both cases throws an exception with the error.
+	- throws an exception with the error.
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -822,19 +819,16 @@ void CBlobResult::RaiseError(const int errorCode) const
 {
     // estem en mode debug?
 #ifdef _DEBUG
-    CString msg, format = "Error en CBlobResult: %s";
 
-    switch (errorCode)
+	switch (errorCode)
     {
-    case EXCEPTION_BLOB_OUT_OF_BOUNDS:
-        msg.Format(format, "Intentant accedir a un blob no existent");
-        break;
-    default:
-        msg.Format(format, "Codi d'error desconegut");
-        break;
+		case EXCEPTION_BLOB_OUT_OF_BOUNDS:
+			kDebug(51000) << "Error en CBlobResult: Intentant accedir a un blob no existent" << endl;
+			break;
+		default:
+			kDebug(51000) << "Error en CBlobResult: Codi d'error desconegut" << endl;
+			break;
     }
-
-    AfxMessageBox(msg);
 
 #endif
     throw errorCode;
@@ -877,12 +871,12 @@ void CBlobResult::PrintBlobs( char *nom_fitxer ) const
     int i;
     FILE *fitxer_sortida;
 
-     area      = GetSTLResult( CBlobGetArea());
-    perimetre = GetSTLResult( CBlobGetPerimeter());
-    exterior  = GetSTLResult( CBlobGetExterior());
-    mitjana   = GetSTLResult( CBlobGetMean());
-    compacitat = GetSTLResult(CBlobGetCompactness());
-    longitud  = GetSTLResult( CBlobGetLength());
+    area			= GetSTLResult( CBlobGetArea());
+    perimetre		= GetSTLResult( CBlobGetPerimeter());
+    exterior		= GetSTLResult( CBlobGetExterior());
+    mitjana			= GetSTLResult( CBlobGetMean());
+    compacitat      = GetSTLResult(CBlobGetCompactness());
+    longitud        = GetSTLResult( CBlobGetLength());
     externPerimeter = GetSTLResult( CBlobGetExternPerimeter());
     perimetreConvex = GetSTLResult( CBlobGetHullPerimeter());
 
