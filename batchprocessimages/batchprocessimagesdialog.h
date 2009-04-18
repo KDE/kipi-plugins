@@ -211,12 +211,12 @@ private slots:
    // Called by 'startProcess' fonction at start. You can checking here some things about the current
    // 'item' before the 'startprocess' fonction execution.
 
-    virtual bool prepareStartProcess(BatchProcessImagesItem */*item*/, const QString& /*albumDest*/) { return true; };
+    virtual bool prepareStartProcess(BatchProcessImagesItem* /*item*/, const QString& /*albumDest*/) { return true; };
 
    // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
-    virtual void initProcess(KProcess* /*proc*/, BatchProcessImagesItem */*item*/,
+    virtual void initProcess(KProcess* /*proc*/, BatchProcessImagesItem* /*item*/,
                                 const QString& /*albumDest*/ = QString::null,
                                 bool  /*previewMode*/ = false) = 0;
 

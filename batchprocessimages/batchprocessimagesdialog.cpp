@@ -309,7 +309,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem( void )
     {
         m_listFiles->takeItem(pitem);
         m_listFiles->setSelected( m_listFiles->currentItem(), true );
-        m_selectedImageFiles.remove(m_selectedImageFiles.find(pitem->pathSrc()));
+        m_selectedImageFiles.removeAt(m_selectedImageFiles.indexOf(pitem->pathSrc()));
         delete pitem;
         m_nbItem = m_selectedImageFiles.count();
 
