@@ -125,9 +125,9 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
                     return;
 
 		// define zoomfactors for one zoom step
-		zoomfactor_scrollwheel = 1.1;
-		zoomfactor_mousemove = 1.03;
-		zoomfactor_keyboard = 1.05;
+		zoomfactor_scrollwheel = 1.1F;
+		zoomfactor_mousemove   = 1.03F;
+		zoomfactor_keyboard    = 1.05F;
 
 		// load cursors for zooming and panning
 		QString file;
