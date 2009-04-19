@@ -48,8 +48,10 @@
 namespace KIPIPrintImagesPlugin
 {
 
-  struct PrintHelperPrivate
+  class PrintHelperPrivate
   {
+  public:
+
     QWidget* mParent;
     QList<TPhoto*>     m_photos;
 #if 0

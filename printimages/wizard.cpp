@@ -807,9 +807,9 @@ namespace KIPIPrintImagesPlugin
   }
 
 
-  const float FONT_HEIGHT_RATIO = 0.8;
+  const float FONT_HEIGHT_RATIO = 0.8F;
 
-  void Wizard::printCaption ( QPainter &p, TPhoto*/*photo*/, int captionW, int captionH, QString caption )
+  void Wizard::printCaption ( QPainter &p, TPhoto* /*photo*/, int captionW, int captionH, QString caption )
   {
     // PENDING anaselli TPhoto*photo will be needed to add a per photo caption management
     QStringList captionByLines;
