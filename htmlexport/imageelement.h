@@ -37,7 +37,10 @@ namespace KIPIHTMLExport {
  * This structure stores all the necessary information to produce an XML
  * description of an image
  */
-struct ImageElement {
+class ImageElement {
+
+	public:
+
 	ImageElement(const KIPI::ImageInfo& info)
 	: mValid(false)
 	, mTitle(info.title())

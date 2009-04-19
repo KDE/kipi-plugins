@@ -33,7 +33,8 @@ static const char* DEFAULT_VALUE_KEY = "Default";
 
 namespace KIPIHTMLExport {
 
-struct AbstractThemeParameter::Private {
+class AbstractThemeParameter::Private {
+	public:
 	QByteArray mInternalName;
 	QString mName;
 	QString mDefaultValue;

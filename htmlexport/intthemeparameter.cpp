@@ -35,7 +35,8 @@ static const char* MAX_VALUE_KEY = "Max";
 namespace KIPIHTMLExport {
 
 
-struct IntThemeParameter::Private {
+class IntThemeParameter::Private {
+	public:
 	int mMinValue;
 	int mMaxValue;
 };
