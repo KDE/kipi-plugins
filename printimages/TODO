@@ -5,3 +5,4 @@
 - test on enabled group instead of number of photos > 0                - DONE
 - improve dialog gui too big i believe
 - add a button to save settings as default (additional info settings)
+- clean code
