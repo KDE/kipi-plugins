@@ -28,7 +28,7 @@ ImageViewer        : A tool to preview images using OpenGL.
 JpegLossLess       : A tool to rotate/flip images without losing quality.
 MetadataEdit       : A tool to edit EXIF, IPTC and XMP metadata.
 PicasaWebExport    : A tool to export images to a remote Picasa web service (http://www.picasaweb.com).
-PrintWizard        : A tool to print images in various format.
+PrintImage         : A tool to print images in various format.
 RawConverter       : A tool to convert Raw Image to JPEG/PNG/TIFF.
 RemoveRedEyes      : A tool to remove red eyes on image automatically.
 SendImages         : A tool to send images by e-mail.

@@ -4,6 +4,8 @@ Kipi-plugins 0.3.0 - Release date: xx/xx/2009
 NEW FEATURES:
 
 PicasaWebExport : Support protected albums (sign-in required to view)
+PrintImages     : Added per photo print management 
+PrintImages     : Added Atkins page layout printing
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -17,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 187536 : PicasaWebExport    : Support new type of albums (sign-in required to view)
 009 ==> 187809 : PicasaWebExport    : Crash on Start upload when no album selected (issue error instead)
 010 ==> 185909 : AdvancedSlideshow  : Crash on startup (KIPI plugin Advanced Slideshow).
-011 ==> 
+011 ==> 141535 : PrintImages        : Suggestion for photo layout algorithm
+012 ==>
