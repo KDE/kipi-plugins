@@ -1,4 +1,6 @@
-- Autorotation
-- More photos per page
-- EXIF info
-- Cropping
+- fix data per photo (additional info into tphoto)                     - DONE
+- load data into additional info when plugin starts                    - DONE
+- change data when a new photo is selected
+- manage data per photo
+- test on enabled group instead of number of photos > 0                - DONE
+- add a button to save settings as default (additional info settings)

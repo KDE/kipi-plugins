@@ -1,0 +1,8 @@
+File=printimagesconfig.kcfg
+ClassName=PrintImagesConfig
+NameSpace=KIPIPrintImagesPlugin
+Singleton=true
+Mutators=true
+UseEnumTypes=true
+IncludeFiles=kipiplugins_export.h
+Visibility=KIPIPLUGINS_EXPORT

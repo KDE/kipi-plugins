@@ -5,6 +5,9 @@ SET(kipiplugin_printimages_SRCS
     cropframe.cpp
     wizard.cpp
     utils.cpp
+    printoptionspage.cpp
+    layouttree.cpp
+    atkinspagelayout.cpp 
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_printimages_SRCS
@@ -12,7 +15,11 @@ KDE4_ADD_UI_FILES(kipiplugin_printimages_SRCS
                   infopage.ui
                   photopage.ui
                   croppage.ui
+                  printoptionspage.ui
                   )
+kde4_add_kcfg_files(kipiplugin_printimages_SRCS
+        printimagesconfig.kcfgc
+        )
 
 KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_SRCS})
 

@@ -40,40 +40,61 @@ class KExiv2;
 namespace KIPIPrintImagesPlugin
 {
 
-class TPhoto
-{
+  class AdditionalInfo
+  {
+    public:
+      int mUnit;
+      int mPrintPosition;
+      int mScaleMode;
+      bool mKeepRatio;
+      bool mAutoRotate;
+      double mPrintWidth, mPrintHeight;
+      bool mEnlargeSmallerImages;
+      AdditionalInfo() : mUnit(0), mPrintPosition(0), mScaleMode(0), mKeepRatio(true),
+                         mAutoRotate(true), mPrintWidth(0.0), mPrintHeight(0.0),
+                         mEnlargeSmallerImages(false)
+                         {}
+  };
 
-public:
+  class TPhoto
+  {
 
-    TPhoto(int thumbnailSize);
-    ~TPhoto();
+  public:
 
-    KUrl filename; // full path
+      TPhoto ( int thumbnailSize );
+      ~TPhoto();
 
-    QPixmap & thumbnail();
-    QImage    loadPhoto();
+      KUrl filename; // full path
 
-    int m_thumbnailSize;
+      QPixmap & thumbnail();
+      QImage    loadPhoto();
 
-    int width();
-    int height();
+      int m_thumbnailSize;
 
-    QRect cropRegion;
-    int copies;
-    int rotation;
-    KExiv2Iface::KExiv2 *exiv2Iface();
+      int width();
+      int height();
+      QSize& size();
 
-private:
+      QRect cropRegion;
+      int copies;
+      int rotation;
+      AdditionalInfo *pAddInfo;
 
-    void   loadCache();
-    QSize& size();
+      double scaleWidth(double unitToInches);
+      double scaleHeight(double unitToInches);
 
-private:
+      KExiv2Iface::KExiv2 *exiv2Iface();
 
-    QPixmap             *m_thumbnail;
-    QSize               *m_size;
-    KExiv2Iface::KExiv2 *m_exiv2Iface;
-};
+  private:
+
+      void   loadCache();
+
+  private:
+
+      QPixmap             *m_thumbnail;
+      QSize               *m_size;
+      KExiv2Iface::KExiv2 *m_exiv2Iface;
+  };
 
 }  // NameSpace KIPIPrintImagesPlugin
 
