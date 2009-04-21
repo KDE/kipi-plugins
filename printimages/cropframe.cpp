@@ -24,17 +24,10 @@
 #include "cropframe.moc"
 #include "cropframe.h"
 
-// C ANSI includes
+// C++ includes
 
-#ifndef _WIN32
-extern "C"
-{
-#endif
-#include <math.h>
-#include <stdio.h>
-#ifndef _WIN32
-}
-#endif
+#include <cmath>
+#include <cstdio>
 
 // Qt includes
 
