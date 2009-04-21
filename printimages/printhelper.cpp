@@ -254,50 +254,50 @@ void PrintHelper::print ( KUrl::List fileList )
     {
         if (optionsPage->printUsingAtkinsLayout())
         {
-            int pages = optionsPage->photoXPage();
-            int j = 0;
-            // create AtkinsPageLayout
-            AtkinsPageLayout layout(rect);
-            // add all items
-            for (j=0; i+j<fileList.count() && j<pages; j++)
-            {
-                layout.addLayoutItem(j, d->m_photos.at(i+j)->size());
-            }
-            // retrieve rectangles for all items
-            for (j=0; i+j<fileList.count() && j<pages; j++)
-            {
-                QImage image = d->m_photos.at(i+j)->loadPhoto();
-                painter.drawImage (layout.itemRect(j) , image );
-            }
-            i+=pages;
-            if (i < fileList.count())
-                printer.newPage();
+          int pages = optionsPage->photoXPage();
+          int j = 0;
+          // create AtkinsPageLayout
+          AtkinsPageLayout layout(rect);
+          // add all items
+          for (j=0; i+j<fileList.count() && j<pages; j++)
+          {
+              layout.addLayoutItem(j, d->m_photos.at(i+j)->size());
+          }
+          // retrieve rectangles for all items
+          for (j=0; i+j<fileList.count() && j<pages; j++)
+          {
+              QImage image = d->m_photos.at(i+j)->loadPhoto();
+              painter.drawImage (layout.itemRect(j) , image );
+          }
+          i+=pages;
+          if (i < fileList.count())
+              printer.newPage();
         }
         else
         {
           TPhoto *pPhoto = d->m_photos.at(i);
-            QImage image = pPhoto->loadPhoto();
-            kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
-            // trying to fix size at the moment
-            QSize size = d->adjustSize ( *pPhoto, printer.resolution(), rect.size() );
-            QPoint pos = d->adjustPosition ( *pPhoto, size, rect.size() );
+          QImage image = pPhoto->loadPhoto();
+          kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
+          // trying to fix size at the moment
+          QSize size = d->adjustSize ( *pPhoto, printer.resolution(), rect.size() );
+          QPoint pos = d->adjustPosition ( *pPhoto, size, rect.size() );
 
-            if (pPhoto->pAddInfo->mAutoRotate)
-            {
-                printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
-                                        : QPrinter::Landscape );
-            }
-            painter.setViewport ( pos.x(), pos.y(), size.width(), size.height() );
+          if (pPhoto->pAddInfo->mAutoRotate)
+          {
+              printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
+                    : QPrinter::Landscape );
+          }
+          painter.setViewport ( pos.x(), pos.y(), size.width(), size.height() );
 
 #if 0
-            QSize size = image.size();
-            size.scale(rect.size(), Qt::KeepAspectRatio);
-            painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+          QSize size = image.size();
+          size.scale(rect.size(), Qt::KeepAspectRatio);
+          painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
 #endif
-            painter.setWindow ( image.rect() );
-            painter.drawImage ( 0, 0, image );
-            if ((i++) < fileList.count())
-                printer.newPage();
+          painter.setWindow ( image.rect() );
+          painter.drawImage ( 0, 0, image );
+          if ((++i) < fileList.count())
+              printer.newPage();
         }
     }
 }
