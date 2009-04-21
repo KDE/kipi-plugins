@@ -27,7 +27,10 @@
 
 #include <QWidget>
 
+// Local includes.
+
 #include "tphoto.h"
+
 namespace KIPIPrintImagesPlugin
 {
 
