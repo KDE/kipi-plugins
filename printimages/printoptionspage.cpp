@@ -39,6 +39,7 @@
 #include <kmessagebox.h>
 
 // Local includes.
+
 #include "tphoto.h"
 #include "printimagesconfig.h"
 #include "signalblocker.h"
@@ -428,7 +429,6 @@ void PrintOptionsPage::loadConfig()
     // config has been read, now we set photo additional info
     setAdditionalInfo();
 }
-
 
 void PrintOptionsPage::saveConfig()
 {
