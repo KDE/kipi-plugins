@@ -105,9 +105,8 @@ public:
         PrintOptionsPage::ScaleMode scaleMode = PrintOptionsPage::ScaleMode(doc.pAddInfo->mScaleMode);
         if ( scaleMode == PrintOptionsPage::ScaleToPage )
         {
-            bool imageBiggerThanPaper =
-                size.width() > viewportSize.width()
-                || size.height() > viewportSize.height();
+            bool imageBiggerThanPaper = size.width() > viewportSize.width() || 
+                                        size.height() > viewportSize.height();
 
             if ( imageBiggerThanPaper || doc.pAddInfo->mEnlargeSmallerImages )
             {
@@ -118,8 +117,8 @@ public:
         else if ( scaleMode == PrintOptionsPage::ScaleToCustomSize )
         {
             PrintOptionsPage::Unit unit = PrintOptionsPage::Unit(doc.pAddInfo->mUnit);
-            double wImg = doc.scaleWidth(PrintOptionsPage::unitToInches(unit));
-            double hImg = doc.scaleHeight(PrintOptionsPage::unitToInches(unit));
+            double wImg                 = doc.scaleWidth(PrintOptionsPage::unitToInches(unit));
+            double hImg                 = doc.scaleHeight(PrintOptionsPage::unitToInches(unit));
             size.setWidth ( int ( wImg * printerResolution ) );
             size.setHeight ( int ( hImg * printerResolution ) );
         }
@@ -127,9 +126,10 @@ public:
         {
             // No scale
             const double INCHES_PER_METER = 100. / 2.54;
-            QImage img = doc.loadPhoto();
-            int dpmX = img.dotsPerMeterX();
-            int dpmY = img.dotsPerMeterY();
+            QImage img                    = doc.loadPhoto();
+            int dpmX                      = img.dotsPerMeterX();
+            int dpmY                      = img.dotsPerMeterY();
+
             if ( dpmX > 0 && dpmY > 0 )
             {
                 double wImg = double ( size.width() ) / double ( dpmX ) * INCHES_PER_METER;
@@ -203,7 +203,7 @@ void PrintHelper::print ( KUrl::List fileList )
 
     for (int i=0; i < fileList.count(); i++)
     {
-        TPhoto *photo = new TPhoto(150);
+        TPhoto *photo   = new TPhoto(150);
         photo->filename = fileList[i];
         photo->pAddInfo = new AdditionalInfo();
         d->m_photos.append(photo);
@@ -215,7 +215,6 @@ void PrintHelper::print ( KUrl::List fileList )
     std::auto_ptr<PrintHelperDialog> dialog ( new PrintHelperDialog(&printer,
                                               optionsPage,
                                               d->mParent) );
-
 
     dialog->setOptionTabs(QList<QWidget*>() << optionsPage);
 
@@ -255,7 +254,7 @@ void PrintHelper::print ( KUrl::List fileList )
         if (optionsPage->printUsingAtkinsLayout())
         {
           int pages = optionsPage->photoXPage();
-          int j = 0;
+          int j     = 0;
           // create AtkinsPageLayout
           AtkinsPageLayout layout(rect);
           // add all items
@@ -276,8 +275,9 @@ void PrintHelper::print ( KUrl::List fileList )
         else
         {
           TPhoto *pPhoto = d->m_photos.at(i);
-          QImage image = pPhoto->loadPhoto();
-          kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
+          QImage image   = pPhoto->loadPhoto();
+          kDebug(51000) << "Img size " << image.size() << " viewportSize " << rect.size();
+
           // trying to fix size at the moment
           QSize size = d->adjustSize ( *pPhoto, printer.resolution(), rect.size() );
           QPoint pos = d->adjustPosition ( *pPhoto, size, rect.size() );
