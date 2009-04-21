@@ -1,34 +1,44 @@
 /* ============================================================
- * Authors: Marcel Wiesweg <marcel.wiesweg@gmx.de>
- * Date   : 2007-02-13
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-02-13
  * Description : Layouting photos on a page
- * 
- * Copyright      2007 by Marcel Wiesweg
+ *
+ * Copyright 2007-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- * 
+ * either version 2, or (at your option) any later version.
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
-#include <math.h>
+// C++ includes.
+
+#include <cmath>
+
+// Qt includes.
 
 #include <QList>
 #include <QtDebug>
 
+// Local includes.
+
 #include "layouttree.h"
+
+namespace KIPIPrintImagesPlugin
+{
 
 /*
     Some comments refer to the paper mentioned in the header file
 */
-
 
 LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
     : m_a(aspectRatio), m_e(relativeArea), m_division(0),
@@ -36,7 +46,6 @@ LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
       m_leftChild(0), m_rightChild(0)
 {
 }
-
 
 LayoutNode::LayoutNode(LayoutNode *subtree, LayoutNode *terminalChild, bool horizontal, int index)
     : m_a(0), m_e(0), m_division(0),
@@ -165,9 +174,7 @@ void LayoutNode::computeDivisions()
     }
 }
 
-
 // --------------------------------------------- //
-
 
 LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
     : m_root(0), m_count(0), m_aspectRatioPage(aspectRatioPage), m_absoluteAreaPage(absoluteAreaPage)
@@ -371,4 +378,4 @@ QRectF LayoutTree::rectInRect(const QRectF &rect, double aspectRatio, double abs
     return QRectF(x,y,width, height);
 }
 
-
+}  // NameSpace KIPIPrintImagesPlugin
