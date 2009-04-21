@@ -45,7 +45,8 @@
 namespace KIPIPrintImagesPlugin
 {
 
-TPhoto::TPhoto(int thumbnailSize): pAddInfo(NULL)
+TPhoto::TPhoto(int thumbnailSize)
+      : pAddInfo(NULL)
 {
     m_size = 0;
     cropRegion = QRect(-1, -1, -1, -1);
@@ -139,19 +140,19 @@ double TPhoto::scaleWidth(double unitToInches)
 {
   Q_ASSERT(pAddInfo != NULL);
   cropRegion = QRect(0, 0,
-                     pAddInfo->mPrintWidth * unitToInches,
-                     pAddInfo->mPrintHeight * unitToInches);
+                     (int)(pAddInfo->mPrintWidth * unitToInches),
+                     (int)(pAddInfo->mPrintHeight * unitToInches));
   return pAddInfo->mPrintWidth * unitToInches;
 }
-
 
 double TPhoto::scaleHeight(double unitToInches)
 {
   Q_ASSERT(pAddInfo != NULL);
   cropRegion = QRect(0,
                      0,
-                     pAddInfo->mPrintWidth * unitToInches,
-                     pAddInfo->mPrintHeight * unitToInches);
+                     (int)(pAddInfo->mPrintWidth * unitToInches),
+                     (int)(pAddInfo->mPrintHeight * unitToInches));
               return pAddInfo->mPrintHeight * unitToInches;
 }
+
 }  // NameSpace KIPIPrintImagesPlugin

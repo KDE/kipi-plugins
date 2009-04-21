@@ -51,6 +51,7 @@ namespace KIPIPrintImagesPlugin
 class PrintOptionsPagePrivate : public Ui_PrintOptionsPage
 {
   public:
+
     QWidget              *mParent;
     QList<TPhoto*>       *m_photos;
     int                   m_currentPhoto;
@@ -124,13 +125,12 @@ class PrintOptionsPagePrivate : public Ui_PrintOptionsPage
 
 
 PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
-        : QWidget()
-        , d ( new PrintOptionsPagePrivate )
+                : QWidget(), d ( new PrintOptionsPagePrivate )
 {
     d->setupUi ( this );
-    d->mParent        = parent;
-    d->m_photos       = photoList;
-    d->m_currentPhoto = 0;
+    d->mParent              = parent;
+    d->m_photos             = photoList;
+    d->m_currentPhoto       = 0;
     d->mConfigDialogManager = new KConfigDialogManager(this, PrintImagesConfig::self());
 
     d->initPositionFrame();
@@ -158,9 +158,7 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
               this, SLOT ( selectPrev() ) );
 
     layout()->setMargin ( 0 );
-
 }
-
 
 PrintOptionsPage::~PrintOptionsPage()
 {
@@ -183,7 +181,6 @@ double PrintOptionsPage::unitToInches ( PrintOptionsPage::Unit unit )
     }
 }
 
-
 bool PrintOptionsPage::autoRotation()
 {
     return d->kcfg_PrintAutoRotate->isChecked();
@@ -196,7 +193,6 @@ Qt::Alignment PrintOptionsPage::alignment() const
     return Qt::Alignment ( id );
 }
 
-
 PrintOptionsPage::ScaleMode PrintOptionsPage::scaleMode() const
 {
     return PrintOptionsPage::ScaleMode ( d->mScaleGroup.checkedId() );
@@ -208,32 +204,27 @@ bool PrintOptionsPage::enlargeSmallerImages() const
     return d->kcfg_PrintEnlargeSmallerImages->isChecked();
 }
 
-
 PrintOptionsPage::Unit PrintOptionsPage::scaleUnit() const
 {
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mUnit = PrintOptionsPage::Unit ( d->kcfg_PrintUnit->currentIndex() );
     return PrintOptionsPage::Unit ( d->kcfg_PrintUnit->currentIndex() );
 }
 
-
 double PrintOptionsPage::scaleWidth() const
 {
-  d->m_photos->at(d->m_currentPhoto)->cropRegion = QRect(0, 0,
-                                                         d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit() ),
-                                                         d->kcfg_PrintHeight->value() * unitToInches ( scaleUnit() ));
-  return d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit() );
+    d->m_photos->at(d->m_currentPhoto)->cropRegion = QRect(0, 0,
+                                                          (int)(d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit()) ),
+                                                          (int)(d->kcfg_PrintHeight->value() * unitToInches ( scaleUnit() )));
+    return d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit() );
 }
-
 
 double PrintOptionsPage::scaleHeight() const
 {
-    d->m_photos->at(d->m_currentPhoto)->cropRegion = QRect(0,
-            0,
-            d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit() ),
-            d->kcfg_PrintHeight->value() * unitToInches ( scaleUnit() ));
+    d->m_photos->at(d->m_currentPhoto)->cropRegion = QRect(0, 0,
+                                                           (int)(d->kcfg_PrintWidth->value() * unitToInches ( scaleUnit()) ),
+                                                           (int)(d->kcfg_PrintHeight->value() * unitToInches ( scaleUnit()) ));
     return d->kcfg_PrintHeight->value() * unitToInches ( scaleUnit() );
 }
-
 
 void PrintOptionsPage::adjustWidthToRatio()
 {
@@ -241,13 +232,13 @@ void PrintOptionsPage::adjustWidthToRatio()
     {
         return;
     }
-    double width = d->m_photos->at(d->m_currentPhoto)->width() * d->kcfg_PrintHeight->value() / d->m_photos->at(d->m_currentPhoto)->height();
+    double width = d->m_photos->at(d->m_currentPhoto)->width() * d->kcfg_PrintHeight->value() / 
+                                   d->m_photos->at(d->m_currentPhoto)->height();
 
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintWidth =  width ? width : 1.;
     SignalBlocker blocker ( d->kcfg_PrintWidth );
     d->kcfg_PrintWidth->setValue ( d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintWidth );
 }
-
 
 void PrintOptionsPage::adjustHeightToRatio()
 {
@@ -266,7 +257,6 @@ void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
     kWarning() << "It has been called!";
 }
 
-
 int PrintOptionsPage::photoXPage() const
 {
     return d->mPhotoXPage->value();
@@ -274,30 +264,31 @@ int PrintOptionsPage::photoXPage() const
 
 bool PrintOptionsPage::printUsingAtkinsLayout() const
 {
-  return d->mGroupPxP->isChecked();
+    return d->mGroupPxP->isChecked();
 }
+
 void PrintOptionsPage::enableButtons()
 {
-  if (d->m_photos->size() == 1)
-  {
-    d->mLeftButton->setEnabled(false);
-    d->mRightButton->setEnabled(false);
-  }
-  else if (d->m_currentPhoto == 0)
-  {
-    d->mLeftButton->setEnabled(false);
-    d->mRightButton->setEnabled(true);
-  }
-  else if (d->m_currentPhoto == d->m_photos->size()-1)
-  {
-    d->mRightButton->setEnabled(false);
-    d->mLeftButton->setEnabled(true);
-  }
-  else
-  {
-    d->mLeftButton->setEnabled(true);
-    d->mRightButton->setEnabled(true);
-  }
+    if (d->m_photos->size() == 1)
+    {
+        d->mLeftButton->setEnabled(false);
+        d->mRightButton->setEnabled(false);
+    }
+    else if (d->m_currentPhoto == 0)
+    {
+        d->mLeftButton->setEnabled(false);
+        d->mRightButton->setEnabled(true);
+    }
+    else if (d->m_currentPhoto == d->m_photos->size()-1)
+    {
+        d->mRightButton->setEnabled(false);
+        d->mLeftButton->setEnabled(true);
+    }
+    else
+    {
+        d->mLeftButton->setEnabled(true);
+        d->mRightButton->setEnabled(true);
+    }
 }
 
 void PrintOptionsPage::imagePreview()
@@ -307,6 +298,7 @@ void PrintOptionsPage::imagePreview()
     d->mPreview->setPixmap ( pPhoto->thumbnail() );
     if (pPhoto->cropRegion != QRect())
     {
+        // TODO
     }
 }
 
@@ -337,62 +329,62 @@ void PrintOptionsPage::selectPrev()
 
 void PrintOptionsPage::setAdditionalInfo()
 {
-  for ( int i=0; i < d->m_photos->count(); i++ )
-  {
-    TPhoto *pPhoto = d->m_photos->at(i);
-    if ( pPhoto )
+    for ( int i=0; i < d->m_photos->count(); i++ )
     {
-      pPhoto->pAddInfo->mUnit          = PrintImagesConfig::printUnit();
-      pPhoto->pAddInfo->mPrintPosition = PrintImagesConfig::printPosition();
-      pPhoto->pAddInfo->mKeepRatio     = PrintImagesConfig::printKeepRatio();
-      pPhoto->pAddInfo->mScaleMode     = PrintImagesConfig::printScaleMode();
-      pPhoto->pAddInfo->mAutoRotate    = PrintImagesConfig::printAutoRotate();
-      pPhoto->pAddInfo->mPrintWidth    = PrintImagesConfig::printWidth();
-      pPhoto->pAddInfo->mPrintHeight   = PrintImagesConfig::printHeight();
-      pPhoto->pAddInfo->mEnlargeSmallerImages = PrintImagesConfig::printEnlargeSmallerImages();
+        TPhoto *pPhoto = d->m_photos->at(i);
+        if ( pPhoto )
+        {
+            pPhoto->pAddInfo->mUnit                 = PrintImagesConfig::printUnit();
+            pPhoto->pAddInfo->mPrintPosition        = PrintImagesConfig::printPosition();
+            pPhoto->pAddInfo->mKeepRatio            = PrintImagesConfig::printKeepRatio();
+            pPhoto->pAddInfo->mScaleMode            = PrintImagesConfig::printScaleMode();
+            pPhoto->pAddInfo->mAutoRotate           = PrintImagesConfig::printAutoRotate();
+            pPhoto->pAddInfo->mPrintWidth           = PrintImagesConfig::printWidth();
+            pPhoto->pAddInfo->mPrintHeight          = PrintImagesConfig::printHeight();
+            pPhoto->pAddInfo->mEnlargeSmallerImages = PrintImagesConfig::printEnlargeSmallerImages();
+        }
     }
-  }
 }
 
 void PrintOptionsPage::showAdditionalInfo()
 {
-  QAbstractButton* button;
+    QAbstractButton* button;
 
-  int i = d->m_currentPhoto;
-  TPhoto *pPhoto = d->m_photos->at(i);
-  if ( pPhoto )
-  {
-    d->kcfg_PrintUnit->setCurrentIndex(pPhoto->pAddInfo->mUnit);
-    button = d->mPositionGroup.button ( pPhoto->pAddInfo->mPrintPosition );
-    if ( button )
+    int i = d->m_currentPhoto;
+    TPhoto *pPhoto = d->m_photos->at(i);
+    if ( pPhoto )
     {
-        button->setChecked ( true );
-    }
-    else
-    {
-        kWarning() << "Unknown button for position group";
-    }
+        d->kcfg_PrintUnit->setCurrentIndex(pPhoto->pAddInfo->mUnit);
+        button = d->mPositionGroup.button ( pPhoto->pAddInfo->mPrintPosition );
+        if ( button )
+        {
+            button->setChecked ( true );
+        }
+        else
+        {
+            kWarning() << "Unknown button for position group";
+        }
 
-    button = d->mScaleGroup.button ( pPhoto->pAddInfo->mScaleMode );
-    if ( button )
-    {
-        button->setChecked ( true );
-    }
-    else
-    {
-        kWarning() << "Unknown button for scale group";
-    }
-    d->kcfg_PrintKeepRatio->setChecked(pPhoto->pAddInfo->mKeepRatio);
-    d->kcfg_PrintAutoRotate->setChecked(pPhoto->pAddInfo->mAutoRotate);
-    d->kcfg_PrintEnlargeSmallerImages->setChecked(pPhoto->pAddInfo->mEnlargeSmallerImages);
-    d->kcfg_PrintWidth->setValue ( pPhoto->pAddInfo->mPrintWidth );
-    d->kcfg_PrintHeight->setValue ( pPhoto->pAddInfo->mPrintHeight );
+        button = d->mScaleGroup.button ( pPhoto->pAddInfo->mScaleMode );
+        if ( button )
+        {
+            button->setChecked ( true );
+        }
+        else
+        {
+            kWarning() << "Unknown button for scale group";
+        }
+        d->kcfg_PrintKeepRatio->setChecked(pPhoto->pAddInfo->mKeepRatio);
+        d->kcfg_PrintAutoRotate->setChecked(pPhoto->pAddInfo->mAutoRotate);
+        d->kcfg_PrintEnlargeSmallerImages->setChecked(pPhoto->pAddInfo->mEnlargeSmallerImages);
+        d->kcfg_PrintWidth->setValue ( pPhoto->pAddInfo->mPrintWidth );
+        d->kcfg_PrintHeight->setValue ( pPhoto->pAddInfo->mPrintHeight );
 
-    if ( d->kcfg_PrintKeepRatio->isChecked() )
-    {
-        adjustHeightToRatio();
+        if ( d->kcfg_PrintKeepRatio->isChecked() )
+        {
+            adjustHeightToRatio();
+        }
     }
-  }
 }
 
 void PrintOptionsPage::loadConfig()
