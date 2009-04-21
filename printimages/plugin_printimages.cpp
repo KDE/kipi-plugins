@@ -57,52 +57,52 @@ K_PLUGIN_FACTORY ( PrintImagesFactory, registerPlugin<Plugin_PrintImages>(); )
 K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 
 Plugin_PrintImages::Plugin_PrintImages ( QObject *parent, const QVariantList& /*args*/ )
-    : KIPI::Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
+                  : KIPI::Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
-  kDebug ( 51001 ) << "Plugin_PrintImages plugin loaded" << endl;
+    kDebug ( 51001 ) << "Plugin_PrintImages plugin loaded" << endl;
 }
 
 void Plugin_PrintImages::setup ( QWidget* widget )
 {
-  KIPI::Plugin::setup ( widget );
+    KIPI::Plugin::setup ( widget );
 
-  m_printImagesAction = actionCollection()->addAction ( "printimages" );
-  m_printImagesAction->setText ( i18n ( "Print images" ) );
-  m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
+    m_printImagesAction = actionCollection()->addAction ( "printimages" );
+    m_printImagesAction->setText ( i18n ( "Print images" ) );
+    m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
 
-  connect ( m_printImagesAction, SIGNAL ( triggered ( bool ) ),
-            this, SLOT ( slotPrintImagesActivate() ) );
+    connect ( m_printImagesAction, SIGNAL ( triggered ( bool ) ),
+              this, SLOT ( slotPrintImagesActivate() ) );
 
-  addAction ( m_printImagesAction );
+    addAction ( m_printImagesAction );
 
-  m_printAssistantAction = actionCollection()->addAction ( "printassistant" );
-  m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
-  m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
-  addAction ( m_printAssistantAction );
+    m_printAssistantAction = actionCollection()->addAction ( "printassistant" );
+    m_printAssistantAction->setText ( i18n ( "Print Assistant..." ) );
+    m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
+    addAction ( m_printAssistantAction );
 
-  connect ( m_printAssistantAction, SIGNAL ( triggered ( bool ) ),
-            this, SLOT ( slotPrintAssistantActivate() ) );
+    connect ( m_printAssistantAction, SIGNAL ( triggered ( bool ) ),
+              this, SLOT ( slotPrintAssistantActivate() ) );
 
-  m_interface = dynamic_cast< KIPI::Interface* > ( parent() );
+    m_interface = dynamic_cast< KIPI::Interface* > ( parent() );
 
-  if ( !m_interface )
-  {
-    kError( ) << "Kipi interface is null!" << endl;
-    return;
-  }
+    if ( !m_interface )
+    {
+        kError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
 
-  KIPI::ImageCollection selection = m_interface->currentSelection();
-  m_printImagesAction->setEnabled ( selection.isValid() &&
-                                    !selection.images().isEmpty() );
+    KIPI::ImageCollection selection = m_interface->currentSelection();
+    m_printImagesAction->setEnabled ( selection.isValid() &&
+                                      !selection.images().isEmpty() );
 
-  m_printAssistantAction->setEnabled ( selection.isValid() &&
-                                       !selection.images().isEmpty() );
+    m_printAssistantAction->setEnabled ( selection.isValid() &&
+                                        !selection.images().isEmpty() );
 
-  connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
-            m_printImagesAction, SLOT ( setEnabled ( bool ) ) );
+    connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
+              m_printImagesAction, SLOT ( setEnabled ( bool ) ) );
 
-  connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
-            m_printAssistantAction, SLOT ( setEnabled ( bool ) ) );
+    connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
+              m_printAssistantAction, SLOT ( setEnabled ( bool ) ) );
 }
 
 Plugin_PrintImages::~Plugin_PrintImages()
@@ -111,58 +111,55 @@ Plugin_PrintImages::~Plugin_PrintImages()
 
 void Plugin_PrintImages::slotPrintImagesActivate()
 {
-  KIPI::ImageCollection album = m_interface->currentSelection();
+    KIPI::ImageCollection album = m_interface->currentSelection();
 
-  if ( !album.isValid() )
-    return;
+    if ( !album.isValid() )
+        return;
 
-  KUrl::List fileList = album.images();
+    KUrl::List fileList = album.images();
 
-  if ( fileList.count() == 0 )
-  {
-    KMessageBox::sorry ( kapp->activeWindow(), i18n ( "Please select one or more photos to print." ),
-                         i18n ( "Print images" ) );
-    return;
-  }
+    if ( fileList.count() == 0 )
+    {
+        KMessageBox::sorry ( kapp->activeWindow(), i18n ( "Please select one or more photos to print." ),
+                            i18n ( "Print images" ) );
+        return;
+    }
 
-  QWidget* parent=QApplication::activeWindow();
-  KIPIPrintImagesPlugin::PrintHelper printPlugin ( parent, m_interface );
-  printPlugin.print ( fileList );
+    QWidget* parent=QApplication::activeWindow();
+    KIPIPrintImagesPlugin::PrintHelper printPlugin ( parent, m_interface );
+    printPlugin.print ( fileList );
 }
-
 
 void Plugin_PrintImages::slotPrintAssistantActivate()
 {
-  KIPI::ImageCollection album = m_interface->currentSelection();
+    KIPI::ImageCollection album = m_interface->currentSelection();
 
-  if ( !album.isValid() )
-    return;
+    if ( !album.isValid() )
+        return;
 
-  KUrl::List fileList = album.images();
+    KUrl::List fileList = album.images();
 
-  if (fileList.count() == 0)
-  {
-    KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
-                       i18n("Print assistant"));
-    return;
-  }
+    if (fileList.count() == 0)
+    {
+        KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
+                           i18n("Print assistant"));
+        return;
+    }
 
-  QWidget* parent=QApplication::activeWindow();
-  KIPIPrintImagesPlugin::Wizard printAssistant(parent, m_interface);
-  KStandardDirs dir;
-  QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + "/");
-  printAssistant.print(fileList, tempPath);
-  if (printAssistant.exec()==QDialog::Rejected) return;
+    QWidget* parent = QApplication::activeWindow();
+    KIPIPrintImagesPlugin::Wizard printAssistant(parent, m_interface);
+    KStandardDirs dir;
+    QString tempPath = dir.saveLocation("tmp", "kipi-printassistantdplugin-" + QString::number(getpid()) + "/");
+    printAssistant.print(fileList, tempPath);
+
+    if (printAssistant.exec()==QDialog::Rejected) return;
 }
-
-
-
 
 KIPI::Category Plugin_PrintImages::category ( KAction* action ) const
 {
-  if ( action == m_printImagesAction || action == m_printAssistantAction )
-    return KIPI::ImagesPlugin;
+    if ( action == m_printImagesAction || action == m_printAssistantAction )
+        return KIPI::ImagesPlugin;
 
-  kWarning ( 51000 ) << "Unrecognized action for plugin category identification" << endl;
-  return KIPI::ImagesPlugin; // no warning from compiler, please
+    kWarning ( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    return KIPI::ImagesPlugin; // no warning from compiler, please
 }

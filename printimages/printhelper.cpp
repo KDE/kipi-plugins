@@ -74,31 +74,32 @@ PrintHelperDialog::PrintHelperDialog(QPrinter *printer, PrintOptionsPage *option
     connect(this, SIGNAL ( accepted ( QPrinter*) ),/* this,*/
             pOptionsPage, SLOT ( manageQPrintDialogChanges ( QPrinter * ) ) );
 }
+
 void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
-    kWarning() << "It has been called!";
+    kWarning(51000) << "It has been called!";
 }
 
 class PrintHelperPrivate
 {
-  public:
+public:
 
     QWidget*       mParent;
     QList<TPhoto*> m_photos;
 
     QSize adjustSize ( TPhoto &doc, int printerResolution, const QSize & viewportSize )
     {
-      // can't be null here!
-      Q_ASSERT (doc.pAddInfo != NULL);
-      /*
-      int mUnit;
-      int mPrintPosition;
-      int mScaleMode;
-      bool mKeepRatio;
-      bool mAutoRotate;
-      double mPrintWidth, mPrintHeight;
-      bool mEnlargeSmallerImages;
-      */
+        // can't be null here!
+        Q_ASSERT (doc.pAddInfo != NULL);
+        /*
+        int mUnit;
+        int mPrintPosition;
+        int mScaleMode;
+        bool mKeepRatio;
+        bool mAutoRotate;
+        double mPrintWidth, mPrintHeight;
+        bool mEnlargeSmallerImages;
+        */
         QSize size = doc.size();
 
         PrintOptionsPage::ScaleMode scaleMode = PrintOptionsPage::ScaleMode(doc.pAddInfo->mScaleMode);
@@ -121,7 +122,6 @@ class PrintHelperPrivate
             double hImg = doc.scaleHeight(PrintOptionsPage::unitToInches(unit));
             size.setWidth ( int ( wImg * printerResolution ) );
             size.setHeight ( int ( hImg * printerResolution ) );
-
         }
         else
         {
@@ -141,11 +141,10 @@ class PrintHelperPrivate
         return size;
     }
 
-
     QPoint adjustPosition ( TPhoto &doc, const QSize& imageSize, const QSize & viewportSize )
     {
-      // can't be null here!
-      Q_ASSERT (doc.pAddInfo != NULL);
+        // can't be null here!
+        Q_ASSERT (doc.pAddInfo != NULL);
         Qt::Alignment alignment = Qt::Alignment(doc.pAddInfo->mPrintPosition);
         int posX, posY;
 
@@ -187,12 +186,10 @@ PrintHelper::PrintHelper ( QWidget* parent , KIPI::Interface*)
     d->mParent = parent;
 }
 
-
 PrintHelper::~PrintHelper()
 {
     delete d;
 }
-
 
 void PrintHelper::print ( KUrl::List fileList )
 {
@@ -201,6 +198,7 @@ void PrintHelper::print ( KUrl::List fileList )
     for (int i=0; i < d->m_photos.count(); i++)
         if (d->m_photos.at(i))
             delete d->m_photos.at(i);
+
     d->m_photos.clear();
 
     for (int i=0; i < fileList.count(); i++)
@@ -215,12 +213,11 @@ void PrintHelper::print ( KUrl::List fileList )
     optionsPage->loadConfig();
 
     std::auto_ptr<PrintHelperDialog> dialog ( new PrintHelperDialog(&printer,
-            optionsPage,
-            d->mParent) );
+                                              optionsPage,
+                                              d->mParent) );
 
 
     dialog->setOptionTabs(QList<QWidget*>() << optionsPage);
-
 
 #if 0
     connect(dialog, SIGNAL ( accepted ( QPrinter*) ),

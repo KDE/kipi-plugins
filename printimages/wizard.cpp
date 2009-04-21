@@ -70,11 +70,12 @@
 namespace KIPIPrintImagesPlugin
 {
 
-
   template <class Ui_Class>
+
   class WizardPage : public QWidget, public Ui_Class
   {
     public:
+
       WizardPage ( KAssistantDialog* dialog, const QString& title )
           : QWidget ( dialog )
       {
@@ -209,11 +210,13 @@ namespace KIPIPrintImagesPlugin
 
     connect ( d->mPhotoPage->BtnPreviewPageUp, SIGNAL ( clicked ( void ) ),
               this, SLOT ( BtnPreviewPageUp_clicked ( void ) ) );
+
     connect ( d->mPhotoPage->BtnPreviewPageDown, SIGNAL ( clicked ( void ) ),
               this, SLOT ( BtnPreviewPageDown_clicked ( void ) ) );
 
     connect ( d->mCropPage->BtnCropPrev, SIGNAL ( clicked() ),
               this, SLOT ( BtnCropPrev_clicked() ) );
+
     connect ( d->mCropPage->BtnCropNext, SIGNAL ( clicked() ),
               this, SLOT ( BtnCropNext_clicked() ) );
 
@@ -721,7 +724,7 @@ namespace KIPIPrintImagesPlugin
 
       default:
       {
-        kDebug() << "Initializing Unsupported page layouts\n";
+        kDebug(51000) << "Initializing Unsupported page layouts\n";
         // We don't support this page size yet.  Just create a default page.
         TPhotoSize *p;
         p = new TPhotoSize;
@@ -1484,12 +1487,12 @@ namespace KIPIPrintImagesPlugin
     if ( before )
     {
       saveSettings ( before->name() );
-      kDebug() << " before " << before->name();
+      kDebug(51000) << " before " << before->name();
     }
     if ( current )
     {
       readSettings ( current->name() );
-      kDebug() << " current " << current->name();
+      kDebug(51000) << " current " << current->name();
     }
     if ( current->name() == i18n ( introPageName ) )
     {
@@ -1513,7 +1516,7 @@ namespace KIPIPrintImagesPlugin
         {
           this->nextButton()->setEnabled ( true );
         }
-      kDebug() << "CCCC" << endl;
+      kDebug(51000) << "CCCC" << endl;
 #endif
     }
     else if ( current->name() == i18n ( photoPageName ) )
@@ -2092,7 +2095,7 @@ namespace KIPIPrintImagesPlugin
 //TODO not needed at the moment maybe we can remove it
   void Wizard::PageRemoved ( KPageWidgetItem *page )
   {
-    kDebug() << page->name();
+    kDebug(51000) << page->name();
   }
 
   void Wizard::crop_selection ( int )
@@ -2150,7 +2153,7 @@ namespace KIPIPrintImagesPlugin
           break;
       }
 
-      kDebug() << " page size " << d->m_pageSize
+      kDebug(51000) << " page size " << d->m_pageSize
       << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 << endl;
 
       if ( d->mInfoPage->m_fullbleed->isChecked() )
@@ -2160,7 +2163,7 @@ namespace KIPIPrintImagesPlugin
       }
 
       bool wantToPrint = dialog->exec();
-      kDebug() << "full page " << printer.fullPage() ;
+      kDebug(51000) << "full page " << printer.fullPage() ;
 
       if ( !wantToPrint )
       {
@@ -2168,7 +2171,7 @@ namespace KIPIPrintImagesPlugin
       }
 
       printPhotos ( d->m_photos, s->layouts, printer );
-      kDebug() << "paper page " << dialog->printer()->paperSize() ;
+      kDebug(51000) << "paper page " << dialog->printer()->paperSize() ;
     }
     else if ( d->mInfoPage->RdoOutputFile->isChecked() )
     {

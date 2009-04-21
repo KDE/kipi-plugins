@@ -27,7 +27,6 @@
 // Qt includes.
 
 #include <QList>
-#include <QtDebug>
 
 // Local includes.
 
@@ -41,16 +40,16 @@ namespace KIPIPrintImagesPlugin
 */
 
 LayoutNode::LayoutNode(double aspectRatio, double relativeArea, int index)
-    : m_a(aspectRatio), m_e(relativeArea), m_division(0),
-      m_type(TerminalNode), m_index(index),
-      m_leftChild(0), m_rightChild(0)
+          : m_a(aspectRatio), m_e(relativeArea), m_division(0),
+            m_type(TerminalNode), m_index(index),
+            m_leftChild(0), m_rightChild(0)
 {
 }
 
 LayoutNode::LayoutNode(LayoutNode *subtree, LayoutNode *terminalChild, bool horizontal, int index)
-    : m_a(0), m_e(0), m_division(0),
-      m_type(horizontal ? HorizontalDivision : VerticalDivision), m_index(index),
-      m_leftChild(subtree), m_rightChild(terminalChild)
+          : m_a(0), m_e(0), m_division(0),
+            m_type(horizontal ? HorizontalDivision : VerticalDivision), m_index(index),
+            m_leftChild(subtree), m_rightChild(terminalChild)
 {
 }
 
@@ -114,6 +113,7 @@ LayoutNode *LayoutNode::parentOf(LayoutNode *child)
     LayoutNode *fromLeft = m_leftChild->parentOf(child);
     if (fromLeft)
         return fromLeft;
+
     return m_rightChild->parentOf(child);
 }
 
@@ -177,7 +177,8 @@ void LayoutNode::computeDivisions()
 // --------------------------------------------- //
 
 LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
-    : m_root(0), m_count(0), m_aspectRatioPage(aspectRatioPage), m_absoluteAreaPage(absoluteAreaPage)
+          : m_root(0), m_count(0), m_aspectRatioPage(aspectRatioPage), 
+            m_absoluteAreaPage(absoluteAreaPage)
 {
 }
 
@@ -371,10 +372,10 @@ QRectF LayoutTree::drawingArea(int index, const QRectF &absoluteRectPage)
 // (not in the paper)
 QRectF LayoutTree::rectInRect(const QRectF &rect, double aspectRatio, double absoluteArea)
 {
-    double width = sqrt(absoluteArea / aspectRatio);
+    double width  = sqrt(absoluteArea / aspectRatio);
     double height = sqrt(absoluteArea * aspectRatio);
-    double x = rect.x() + (rect.width() - width) / 2;
-    double y = rect.y() + (rect.height() - height) / 2;
+    double x      = rect.x() + (rect.width() - width) / 2;
+    double y      = rect.y() + (rect.height() - height) / 2;
     return QRectF(x,y,width, height);
 }
 

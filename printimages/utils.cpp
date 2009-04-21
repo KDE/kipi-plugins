@@ -28,8 +28,11 @@
 extern "C"
 {
 #include <unistd.h>
-#include <stdio.h>
 }
+
+// C++ includes.
+
+#include <cstdio>
 
 // Qt includes
 
@@ -46,34 +49,32 @@ namespace KIPIPrintImagesPlugin
 
 int NINT(double n)
 {
-  return (int)(n + 0.5);
+    return (int)(n + 0.5);
 }
 
 // given a list of args, launch this app as a separate thread.
 // args[0] is the application to run.
 bool launchExternalApp(QString &program, QStringList &args)
 {
-  QProcess process;
-
-  return process.startDetached(program, args);
+    QProcess process;
+    return process.startDetached(program, args);
 }
 
 bool checkTempPath(QWidget *parent, QString tempPath)
 {
-  // does the temp path exist?
-  QDir tempDir(tempPath);
-  if (!tempDir.exists())
-  {
-    if (!tempDir.mkdir(tempDir.path()))
+    // does the temp path exist?
+    QDir tempDir(tempPath);
+    if (!tempDir.exists())
     {
-      KMessageBox::sorry(parent,
-                         i18n("Unable to create a temporary folder. "
-                             "Please make sure you have proper permissions to this folder and try again."));
-      return false;
+        if (!tempDir.mkdir(tempDir.path()))
+        {
+            KMessageBox::sorry(parent,
+                              i18n("Unable to create a temporary folder. "
+                                  "Please make sure you have proper permissions to this folder and try again."));
+            return false;
+        }
     }
-  }
-  return true;
+    return true;
 }
 
 }  // NameSpace KIPIPrintImagesPlugin
-

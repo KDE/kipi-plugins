@@ -123,7 +123,6 @@ class PrintOptionsPagePrivate : public Ui_PrintOptionsPage
     }
 };
 
-
 PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
                 : QWidget(), d ( new PrintOptionsPagePrivate )
 {
@@ -189,7 +188,7 @@ bool PrintOptionsPage::autoRotation()
 Qt::Alignment PrintOptionsPage::alignment() const
 {
     int id = d->mPositionGroup.checkedId();
-    kWarning() << "alignment=" << id;
+    kWarning(51000) << "alignment=" << id;
     return Qt::Alignment ( id );
 }
 
@@ -198,7 +197,6 @@ PrintOptionsPage::ScaleMode PrintOptionsPage::scaleMode() const
     return PrintOptionsPage::ScaleMode ( d->mScaleGroup.checkedId() );
 }
 
-
 bool PrintOptionsPage::enlargeSmallerImages() const
 {
     return d->kcfg_PrintEnlargeSmallerImages->isChecked();
@@ -206,7 +204,7 @@ bool PrintOptionsPage::enlargeSmallerImages() const
 
 PrintOptionsPage::Unit PrintOptionsPage::scaleUnit() const
 {
-    d->m_photos->at(d->m_currentPhoto)->pAddInfo->mUnit = PrintOptionsPage::Unit ( d->kcfg_PrintUnit->currentIndex() );
+    d->m_photos->at(d->m_currentPhoto)->pAddInfo->mUnit = PrintOptionsPage::Unit ( d->kcfg_PrintUnit->currentIndex());
     return PrintOptionsPage::Unit ( d->kcfg_PrintUnit->currentIndex() );
 }
 
@@ -254,7 +252,7 @@ void PrintOptionsPage::adjustHeightToRatio()
 
 void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
-    kWarning() << "It has been called!";
+    kWarning(51000) << "It has been called!" << endl;
 }
 
 int PrintOptionsPage::photoXPage() const
@@ -293,7 +291,7 @@ void PrintOptionsPage::enableButtons()
 
 void PrintOptionsPage::imagePreview()
 {
-    kWarning() << d->m_currentPhoto;
+    kWarning(51000) << d->m_currentPhoto << endl;
     TPhoto *pPhoto = d->m_photos->at(d->m_currentPhoto);
     d->mPreview->setPixmap ( pPhoto->thumbnail() );
     if (pPhoto->cropRegion != QRect())
@@ -304,7 +302,7 @@ void PrintOptionsPage::imagePreview()
 
 void PrintOptionsPage::selectNext()
 {
-    kWarning() << d->m_currentPhoto;
+    kWarning(51000) << d->m_currentPhoto << endl;
 
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintPosition = alignment();
     if (d->m_currentPhoto+1 < d->m_photos->size())
@@ -317,7 +315,7 @@ void PrintOptionsPage::selectNext()
 
 void PrintOptionsPage::selectPrev()
 {
-    kWarning() << d->m_currentPhoto;
+    kWarning(51000) << d->m_currentPhoto << endl;
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintPosition = alignment();
     if (d->m_currentPhoto-1 >= 0)
         d->m_currentPhoto--;
@@ -362,7 +360,7 @@ void PrintOptionsPage::showAdditionalInfo()
         }
         else
         {
-            kWarning() << "Unknown button for position group";
+            kWarning(51000) << "Unknown button for position group" << endl;
         }
 
         button = d->mScaleGroup.button ( pPhoto->pAddInfo->mScaleMode );
@@ -372,7 +370,7 @@ void PrintOptionsPage::showAdditionalInfo()
         }
         else
         {
-            kWarning() << "Unknown button for scale group";
+            kWarning(51000) << "Unknown button for scale group" << endl;
         }
         d->kcfg_PrintKeepRatio->setChecked(pPhoto->pAddInfo->mKeepRatio);
         d->kcfg_PrintAutoRotate->setChecked(pPhoto->pAddInfo->mAutoRotate);
@@ -398,7 +396,7 @@ void PrintOptionsPage::loadConfig()
     }
     else
     {
-        kWarning() << "Unknown button for position group";
+        kWarning(51000) << "Unknown button for position group" << endl;
     }
 
     button = d->mScaleGroup.button ( PrintImagesConfig::printScaleMode() );
@@ -408,7 +406,7 @@ void PrintOptionsPage::loadConfig()
     }
     else
     {
-        kWarning() << "Unknown button for scale group";
+        kWarning(51000) << "Unknown button for scale group" << endl;
     }
 
     d->mConfigDialogManager->updateWidgets();
