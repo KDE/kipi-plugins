@@ -34,6 +34,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QList>
+
 // KDE includes
 
 #include <klocale.h>
@@ -41,6 +42,7 @@
 #include <kdebug.h>
 
 // Local includes
+
 #include "tphoto.h"
 #include "printoptionspage.h"
 #include "atkinspagelayout.h"
@@ -51,19 +53,23 @@ namespace KIPIPrintImagesPlugin
 class PrintHelperDialog : public QPrintDialog
 {
 private:
+
     PrintOptionsPage *pOptionsPage;
+
 public:
+
     PrintHelperDialog(QPrinter *printer, PrintOptionsPage *optionsPage, QWidget *parent = 0);
     ~PrintHelperDialog() {};
 
 private Q_SLOTS:
 
     void manageQPrintDialogChanges ( QPrinter * printer );
-
 };
 
-PrintHelperDialog::PrintHelperDialog(QPrinter *printer, PrintOptionsPage *optionsPage, QWidget *parent) :
-        QPrintDialog(printer, parent), pOptionsPage(optionsPage)
+// -----------------------------------------------------------------
+
+PrintHelperDialog::PrintHelperDialog(QPrinter *printer, PrintOptionsPage *optionsPage, QWidget *parent)
+                 : QPrintDialog(printer, parent), pOptionsPage(optionsPage)
 {
     connect(this, SIGNAL ( accepted ( QPrinter*) ),/* this,*/
             pOptionsPage, SLOT ( manageQPrintDialogChanges ( QPrinter * ) ) );
@@ -72,11 +78,13 @@ void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
     kWarning() << "It has been called!";
 }
+
 class PrintHelperPrivate
 {
   public:
-    QWidget* mParent;
-    QList<TPhoto*>     m_photos;
+
+    QWidget*       mParent;
+    QList<TPhoto*> m_photos;
 
     QSize adjustSize ( TPhoto &doc, int printerResolution, const QSize & viewportSize )
     {
@@ -169,12 +177,12 @@ class PrintHelperPrivate
 
         return QPoint ( posX, posY );
     }
-
 };
 
+// ----------------------------------------------------------------------------
 
 PrintHelper::PrintHelper ( QWidget* parent , KIPI::Interface*)
-        : d ( new PrintHelperPrivate )
+           : d ( new PrintHelperPrivate )
 {
     d->mParent = parent;
 }
