@@ -2211,5 +2211,4 @@ namespace KIPIPrintImagesPlugin
     KAssistantDialog::accept();
   }
 
-
 } // namespace

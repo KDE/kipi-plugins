@@ -24,21 +24,26 @@
 #define WIZARD_H
 
 // QT incudes
+
 #include <QPainter>
 
 // KDE includes
+
 #include <kassistantdialog.h>
 
 
-namespace KIPI {
+namespace KIPI
+{
 class Interface;
 }
 
-namespace KIPIPrintImagesPlugin {
+namespace KIPIPrintImagesPlugin
+{
 
 class TPhoto;
 
-typedef struct _TPhotoSize {
+typedef struct _TPhotoSize
+{
   QString label;
   int dpi;
   bool autoRotate;
