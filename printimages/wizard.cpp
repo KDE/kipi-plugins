@@ -21,10 +21,13 @@
  * ============================================================ */
 
 #include "wizard.moc"
+
 // STD
+
 #include <memory>
 
 // Qt includes
+
 #include <QFileInfo>
 #include <QPainter>
 #include <QPalette>
@@ -33,6 +36,7 @@
 #include <QPrintDialog>
 
 // KDE includes
+
 #include <kapplication.h>
 #include <kconfigdialogmanager.h>
 #include <khelpmenu.h>
@@ -45,13 +49,16 @@
 #include <kdebug.h>
 
 // libkipi includes
+
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
 // libkexiv2 includes
+
 #include <libkexiv2/kexiv2.h>
 
 // Local includes
+
 #include "kpaboutdata.h"
 #include "ui_croppage.h"
 #include "ui_infopage.h"
