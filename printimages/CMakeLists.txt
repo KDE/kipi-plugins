@@ -25,8 +25,10 @@ KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
 KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_printimages
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
+                      ${KDE4_KDECORE_LIBS}
+                      ${KDE4_KIO_LIBS}
+                      ${QT_QTCORE_LIBRARY}
+                      ${QT_QTGUI_LIBRARY}
                       ${KIPI_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
