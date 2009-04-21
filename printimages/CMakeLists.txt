@@ -1,4 +1,5 @@
-SET(kipiplugin_printimages_SRCS
+
+SET(kipiplugin_printimages_PART_SRCS
     plugin_printimages.cpp
     printhelper.cpp
     tphoto.cpp
@@ -10,18 +11,18 @@ SET(kipiplugin_printimages_SRCS
     atkinspagelayout.cpp 
    )
 
-KDE4_ADD_UI_FILES(kipiplugin_printimages_SRCS
+KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
                   intropage.ui
                   infopage.ui
                   photopage.ui
                   croppage.ui
                   printoptionspage.ui
-                  )
-kde4_add_kcfg_files(kipiplugin_printimages_SRCS
-        printimagesconfig.kcfgc
-        )
+                 )
+KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
+                    printimagesconfig.kcfgc
+                   )
 
-KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_printimages
                       ${KDE4_KPARTS_LIBS}
