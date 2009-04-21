@@ -21,6 +21,7 @@
  *
  * ============================================================ */
 
+#include "cropframe.moc"
 #include "cropframe.h"
 
 // C ANSI includes
@@ -36,11 +37,13 @@ extern "C"
 #endif
 
 // Qt includes
+
 #include <QPainter>
 #include <QMouseEvent>
 #include <QtGlobal>
 
 // Local includes
+
 #include "utils.h"
 
 namespace KIPIPrintImagesPlugin
@@ -337,5 +340,3 @@ QColor CropFrame::color()
 }
 
 }  // NameSpace KIPIPrintImagesPlugin
-
-#include "cropframe.moc"
