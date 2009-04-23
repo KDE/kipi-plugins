@@ -36,7 +36,7 @@ namespace KIPIHTMLExport {
 
 
 class IntThemeParameter::Private {
-	public:
+public:
 	int mMinValue;
 	int mMaxValue;
 };

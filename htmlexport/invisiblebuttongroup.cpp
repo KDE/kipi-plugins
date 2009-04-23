@@ -34,7 +34,7 @@ namespace KIPIHTMLExport {
 
 
 class InvisibleButtonGroupPrivate {
-	public:
+public:
 	QButtonGroup* mGroup;
 };
 
