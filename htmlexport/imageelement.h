@@ -38,9 +38,7 @@ namespace KIPIHTMLExport {
  * description of an image
  */
 class ImageElement {
-
-	public:
-
+public:
 	ImageElement(const KIPI::ImageInfo& info)
 	: mValid(false)
 	, mTitle(info.title())
