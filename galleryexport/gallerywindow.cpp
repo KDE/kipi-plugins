@@ -394,7 +394,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
             firstAlbumName = album.name;
-            item->setText(2, QString("Album") );
+            item->setText(2, i18n("Album") );
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
@@ -415,7 +415,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
                     item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
-                    item->setText(2, QString("Album") );
+                    item->setText(2, i18n("Album") );
 
                     d->albumDict.insert(album.title, album);
                     parentItemList << item;
@@ -447,7 +447,7 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
         item->setText(0, cleanName(plain) );
         item->setIcon(0, KIcon("image-x-generic") );
         item->setText(1, (*iterator).name);
-        item->setText(2, QString("Image") );
+        item->setText(2, i18n("Image") );
     }
 }
 
@@ -457,7 +457,7 @@ void GalleryWindow::slotAlbumSelected()
     QTreeWidgetItem* item = d->albumView->currentItem();
 
     // stop loading if user clicked an image
-    if( item->text(2) == QString("Image") )
+    if( item->text(2) == i18n("Image") )
         return;
 
     QString albumName = item->text(1);
