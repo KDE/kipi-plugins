@@ -21,4 +21,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> 187809 : PicasaWebExport    : Crash on Start upload when no album selected (issue error instead).
 010 ==> 185909 : AdvancedSlideshow  : Crash on startup (KIPI plugin Advanced Slideshow).
 011 ==> 141535 : PrintImages        : Suggestion for photo layout algorithm.
-012 ==>
+012 ==> 157173 : LibKexiv2          : Crash by adding gps data to pictures.
+013 ==> 
