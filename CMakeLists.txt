@@ -329,7 +329,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                        COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/svnscript.cmake")
 
     # Add a custom target to drive the custom command.
-    ADD_CUSTOM_TARGET(svnversion
+    ADD_CUSTOM_TARGET(kipiplugins-svnversion
                       ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/svnversion.h")
 
     # ==================================================================================================
