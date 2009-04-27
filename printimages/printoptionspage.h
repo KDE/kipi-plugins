@@ -63,7 +63,6 @@ namespace KIPIPrintImagesPlugin
       bool printUsingAtkinsLayout() const;
 
       void loadConfig();
-      void saveConfig();
 
       static double unitToInches ( PrintOptionsPage::Unit unit );
 
@@ -74,6 +73,7 @@ namespace KIPIPrintImagesPlugin
       void manageQPrintDialogChanges ( QPrinter * printer );
       void selectNext();
       void selectPrev();
+      void saveConfig();
 
     private:
 

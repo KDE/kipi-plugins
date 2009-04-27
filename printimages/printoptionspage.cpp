@@ -155,7 +155,8 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
 
     connect ( d->mLeftButton, SIGNAL ( clicked() ),
               this, SLOT ( selectPrev() ) );
-
+    connect ( d->mSaveSettings, SIGNAL (clicked()),
+              this, SLOT ( saveConfig() ) );
     layout()->setMargin ( 0 );
 }
 
@@ -230,7 +231,7 @@ void PrintOptionsPage::adjustWidthToRatio()
     {
         return;
     }
-    double width = d->m_photos->at(d->m_currentPhoto)->width() * d->kcfg_PrintHeight->value() / 
+    double width = d->m_photos->at(d->m_currentPhoto)->width() * d->kcfg_PrintHeight->value() /
                                    d->m_photos->at(d->m_currentPhoto)->height();
 
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintWidth =  width ? width : 1.;

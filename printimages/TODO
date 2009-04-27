@@ -3,6 +3,8 @@
 - change data when a new photo is selected                             - DONE
 - manage data per photo                                                - DONE
 - test on enabled group instead of number of photos > 0                - DONE
+- add a button to save settings as default (additional info settings)  - DONE
+- check update on size, sometimes it's not as expected 
+  (suppose same odd behaviour as gwenview and digikam)
 - improve dialog gui too big i believe
-- add a button to save settings as default (additional info settings)
 - clean code

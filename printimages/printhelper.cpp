@@ -105,7 +105,7 @@ public:
         PrintOptionsPage::ScaleMode scaleMode = PrintOptionsPage::ScaleMode(doc.pAddInfo->mScaleMode);
         if ( scaleMode == PrintOptionsPage::ScaleToPage )
         {
-            bool imageBiggerThanPaper = size.width() > viewportSize.width() || 
+            bool imageBiggerThanPaper = size.width() > viewportSize.width() ||
                                         size.height() > viewportSize.height();
 
             if ( imageBiggerThanPaper || doc.pAddInfo->mEnlargeSmallerImages )
@@ -232,7 +232,7 @@ void PrintHelper::print ( KUrl::List fileList )
     dialog->setWindowTitle ( i18n ( "Kipi-plugins image printing" ) );
     bool wantToPrint = dialog->exec();
 
-    optionsPage->saveConfig();
+    //optionsPage->saveConfig();
     if ( !wantToPrint )
     {
         return;
@@ -284,7 +284,8 @@ void PrintHelper::print ( KUrl::List fileList )
 
           if (pPhoto->pAddInfo->mAutoRotate)
           {
-              printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
+//               printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
+                 printer.setOrientation( image.width() <= image.height() ? QPrinter::Portrait
                     : QPrinter::Landscape );
           }
           painter.setViewport ( pos.x(), pos.y(), size.width(), size.height() );
