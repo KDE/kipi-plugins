@@ -58,7 +58,7 @@ class HaarSettings
         void debug()
         {
             kDebug(51000) << "***************" << endl;
-            kDebug(51000) << "HaarSettings" << endl;
+            kDebug(51000) << "HaarSettings"    << endl;
             kDebug(51000) << "***************" << endl;
             kDebug(51000) << "useStandardClassifier = " << useStandardClassifier << endl;
             kDebug(51000) << "minRoundness          = " << minRoundness          << endl;
