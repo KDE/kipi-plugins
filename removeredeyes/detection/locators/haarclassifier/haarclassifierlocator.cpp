@@ -51,14 +51,14 @@ struct HaarClassifierLocatorPriv
 {
     HaarClassifierLocatorPriv()
     {
-        aChannel          = 0;
-        gray              = 0;
-        lab               = 0;
-        redMask           = 0;
-        original          = 0;
-        possible_eyes     = 0;
-        red_eyes          = 0;
-        settingsWidget    = 0;
+        aChannel       = 0;
+        gray           = 0;
+        lab            = 0;
+        redMask        = 0;
+        original       = 0;
+        possible_eyes  = 0;
+        red_eyes       = 0;
+        settingsWidget = 0;
     };
 
     IplImage*           aChannel;

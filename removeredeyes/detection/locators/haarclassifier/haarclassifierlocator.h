@@ -54,9 +54,9 @@ public:
     HaarClassifierLocator();
     virtual ~HaarClassifierLocator();
 
-    int      startCorrection(const QString& src, const QString& dest);
-    int      startTestrun(const QString& src);
-    int      startPreview(const QString& src);
+    int startCorrection(const QString& src, const QString& dest);
+    int startTestrun(const QString& src);
+    int startPreview(const QString& src);
 
     QWidget* settingsWidget();
 
