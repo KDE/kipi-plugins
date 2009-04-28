@@ -20,7 +20,7 @@ SET(libcvblobs_SRCS
    )
    
 SET(locators_haarclassifier_SRCS
-    detection/locators/haarclassifier/HaarClassifierLocator.cpp
+    detection/locators/haarclassifier/haarclassifierlocator.cpp
     detection/locators/haarclassifier/widgets/advancedsettings.cpp
     detection/locators/haarclassifier/widgets/blobsettingsbox.cpp
     detection/locators/haarclassifier/widgets/simplesettings.cpp
@@ -29,12 +29,12 @@ SET(locators_haarclassifier_SRCS
    )
 
 SET(locators_SRCS
-    detection/locators/LocatorFactory.cpp
+    detection/locators/locatorfactory.cpp
    )
 
 SET(savemethods_SRCS
-    detection/savemethods/SaveMethods.cpp
-    detection/savemethods/SaveMethodFactory.cpp
+    detection/savemethods/savemethods.cpp
+    detection/savemethods/savemethodfactory.cpp
    )
 
 SET(commonwidgets_SRCS

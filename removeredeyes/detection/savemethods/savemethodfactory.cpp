@@ -21,32 +21,36 @@
  *
  * ============================================================ */
 
-#ifndef SAVEMETHODFACTORY_H
-#define SAVEMETHODFACTORY_H
+#include "savemethodfactory.h"
 
 // Local includes
 
-#include "SaveMethods.h"
+#include "storagesettingsbox.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class SaveMethod;
-
-class SaveMethodFactory
+SaveMethod* SaveMethodFactory::create(int type)
 {
+    SaveMethod* saveMethod = 0;
 
-public:
+    switch (type)
+    {
+        case StorageSettingsBox::Subfolder:
+            saveMethod = new SaveSubfolder();
+            break;
+        case StorageSettingsBox::Prefix:
+            saveMethod = new SavePrefix();
+            break;
+        case StorageSettingsBox::Suffix:
+            saveMethod = new SaveSuffix();
+            break;
+        case StorageSettingsBox::Overwrite:
+            saveMethod = new SaveOverwrite();
+            break;
+    }
 
-    static SaveMethod* create(int type);
-
-private:
-
-    SaveMethodFactory() {};
-    virtual ~SaveMethodFactory() {};
-
-};
-
+    return saveMethod;
 }
 
-#endif /* SAVEMETHODFACTORY_H */
+}

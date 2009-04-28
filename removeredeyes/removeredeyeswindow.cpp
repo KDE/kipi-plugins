@@ -52,9 +52,9 @@
 
 // Local includes
 
-#include "Locator.h"
-#include "LocatorFactory.h"
-#include "SaveMethodFactory.h"
+#include "locator.h"
+#include "locatorfactory.h"
+#include "savemethodfactory.h"
 #include "commonsettings.h"
 #include "haarsettingswidget.h"
 #include "kpaboutdata.h"

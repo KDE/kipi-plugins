@@ -21,32 +21,32 @@
  *
  * ============================================================ */
 
-#include "LocatorFactory.h"
-
-// Qt includes
-
-#include <QString>
+#ifndef SAVEMETHODFACTORY_H
+#define SAVEMETHODFACTORY_H
 
 // Local includes
 
-#include "Locator.h"
-#include "HaarClassifierLocator.h"
+#include "savemethods.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-Locator* LocatorFactory::create(const QString& type)
+class SaveMethod;
+
+class SaveMethodFactory
 {
-    if (type.isEmpty())
-        return 0;
 
-    Locator* locator = 0;
+public:
 
-    if (type.contains("HaarClassifierLocator"))
-        locator = new HaarClassifierLocator;
+    static SaveMethod* create(int type);
 
-    return locator;
+private:
+
+    SaveMethodFactory() {};
+    virtual ~SaveMethodFactory() {};
+
+};
+
 }
 
-
-} // namespace KIPIRemoveRedEyesPlugin
+#endif /* SAVEMETHODFACTORY_H */

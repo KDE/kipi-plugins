@@ -36,7 +36,7 @@
 
 // Local includes
 
-#include "Locator.h"
+#include "locator.h"
 
 class QString;
 

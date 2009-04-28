@@ -39,9 +39,9 @@
 
 // Local includes
 
-#include "Locator.h"
-#include "SaveMethodFactory.h"
-#include "SaveMethods.h"
+#include "locator.h"
+#include "savemethodfactory.h"
+#include "savemethods.h"
 #include "commonsettings.h"
 #include "haarsettings.h"
 #include "simplesettings.h"

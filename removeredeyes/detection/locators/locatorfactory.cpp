@@ -21,36 +21,32 @@
  *
  * ============================================================ */
 
-#include "SaveMethodFactory.h"
+#include "locatorfactory.h"
+
+// Qt includes
+
+#include <QString>
 
 // Local includes
 
-#include "storagesettingsbox.h"
+#include "locator.h"
+#include "haarclassifierlocator.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-SaveMethod* SaveMethodFactory::create(int type)
+Locator* LocatorFactory::create(const QString& type)
 {
-    SaveMethod* saveMethod = 0;
+    if (type.isEmpty())
+        return 0;
 
-    switch (type)
-    {
-        case StorageSettingsBox::Subfolder:
-            saveMethod = new SaveSubfolder();
-            break;
-        case StorageSettingsBox::Prefix:
-            saveMethod = new SavePrefix();
-            break;
-        case StorageSettingsBox::Suffix:
-            saveMethod = new SaveSuffix();
-            break;
-        case StorageSettingsBox::Overwrite:
-            saveMethod = new SaveOverwrite();
-            break;
-    }
+    Locator* locator = 0;
 
-    return saveMethod;
+    if (type.contains("HaarClassifierLocator"))
+        locator = new HaarClassifierLocator;
+
+    return locator;
 }
 
-}
+
+} // namespace KIPIRemoveRedEyesPlugin
