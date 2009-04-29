@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "batchprocessimagesitem.h"
+
 // Qt includes
 
 #include <Q3ListView>
@@ -28,10 +30,6 @@
 // KDE includes
 
 #include <klocale.h>
-
-// Local includes
-
-#include "batchprocessimagesitem.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {

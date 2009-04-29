@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef RENAMEIMAGESDLG_H
-#define RENAMEIMAGESDLG_H
+#ifndef RENAMEIMAGESDIALOG_H
+#define RENAMEIMAGESDIALOG_H
 
 // KDE includes
 
