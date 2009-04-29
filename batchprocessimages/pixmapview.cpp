@@ -18,7 +18,7 @@
  * ============================================================ */
 #include "pixmapview.moc"
 
-// C Ansi includes
+// C ANSI includes
 
 extern "C"
 {

@@ -24,7 +24,7 @@
 #include "renameimageswidget.h"
 #include "renameimageswidget.moc"
 
-// C Ansi includes
+// C ANSI includes
 
 extern "C"
 {
