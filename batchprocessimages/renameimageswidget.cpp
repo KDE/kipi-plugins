@@ -94,7 +94,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
 #if KDE_IS_VERSION(3,4,0)
     // next can be done directly into designer but it seems not to compile
     // under kde < 3.4.0
-    m_listView->setShadeSortColumn( FALSE );
+    m_listView->setShadeSortColumn(false);
 #endif
 
     readSettings();
@@ -416,12 +416,12 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                     }
                     j = rxN.matchedLength();
                     QString from = rxN.cap(1);
-                    from = (from == "e") ? fi.extension(/*complete=*/FALSE) :
-                           (from == "E") ? fi.extension(/*complete=*/TRUE) :
-                           (from == "b") ? fi.baseName(/*complete=*/FALSE) :
-                           (from == "B") ? fi.baseName(/*complete=*/TRUE) :
+                    from = (from == "e") ? fi.extension(/*complete=*/false) :
+                           (from == "E") ? fi.extension(/*complete=*/true) :
+                           (from == "b") ? fi.baseName(/*complete=*/false) :
+                           (from == "B") ? fi.baseName(/*complete=*/true) :
                            (from == "n") ? fi.fileName() :
-                           (from == "a") ? fi.dir(/*absPath=*/TRUE).dirName() :
+                           (from == "a") ? fi.dir(/*absPath=*/true).dirName() :
                            (from == "p") ? fi.absolutePath() :
                            "";
                     int len = from.length();
