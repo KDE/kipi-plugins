@@ -57,6 +57,6 @@ protected:
     void droppedImagesItems(QDropEvent *e);
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif // BATCHPROCESSIMAGE_H

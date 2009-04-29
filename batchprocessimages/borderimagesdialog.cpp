@@ -329,4 +329,4 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
        *proc << albumDest + "/" + item->nameDest();
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

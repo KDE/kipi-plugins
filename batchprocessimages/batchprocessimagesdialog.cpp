@@ -1030,4 +1030,4 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
     return (NewDestUrl.path());
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

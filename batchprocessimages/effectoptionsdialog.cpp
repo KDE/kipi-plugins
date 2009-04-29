@@ -271,4 +271,4 @@ EffectOptionsDialog::~EffectOptionsDialog()
 {
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

@@ -385,4 +385,4 @@ void ResizeOptionsDialog::slotOk()
     accept();
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

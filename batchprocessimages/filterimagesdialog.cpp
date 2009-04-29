@@ -360,4 +360,4 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
        }
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

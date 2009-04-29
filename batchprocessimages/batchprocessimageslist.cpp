@@ -109,4 +109,4 @@ void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
        emit addedDropItems(FilesPath);
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

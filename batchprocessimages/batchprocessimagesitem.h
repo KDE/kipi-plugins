@@ -81,6 +81,6 @@ private:
     QString _key;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // BATCHPROCESSIMAGESITEM_H

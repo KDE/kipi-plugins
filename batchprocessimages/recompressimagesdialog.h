@@ -69,6 +69,6 @@ private:
    KIPIPlugins::KPAboutData *m_about;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // RECOMPRESSIMAGESDIALOG_H

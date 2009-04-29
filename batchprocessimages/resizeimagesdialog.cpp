@@ -564,4 +564,4 @@ bool ResizeImagesDialog::ResizeImage( int &w, int &h, int SizeFactor)
     return (valRet);  // Return true is image increased, else true.
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

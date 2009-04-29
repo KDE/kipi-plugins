@@ -144,4 +144,4 @@ void RecompressOptionsDialog::slotCompressLossLessEnabled(bool val)
     m_label_JPEGimageCompression->setEnabled( !val );
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

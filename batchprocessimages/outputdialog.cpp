@@ -115,4 +115,4 @@ void OutputDialog::slotCopyToCliboard( void )
     debugView->selectAll(false);
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

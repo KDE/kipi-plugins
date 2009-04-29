@@ -122,4 +122,4 @@ void ConvertOptionsDialog::slotCompressLossLessEnabled(bool val)
     m_label_imageCompression->setEnabled( !val );
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

@@ -66,6 +66,6 @@ private:
    KIPIPlugins::KPAboutData *m_about;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // COLORIMAGESDIALOG_H

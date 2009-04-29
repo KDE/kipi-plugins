@@ -437,4 +437,4 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
        }
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

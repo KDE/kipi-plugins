@@ -87,6 +87,6 @@ private:
    KIPIPlugins::KPAboutData *m_about;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // RESIZEIMAGESDIALOG_H

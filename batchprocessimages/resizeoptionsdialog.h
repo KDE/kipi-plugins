@@ -97,6 +97,6 @@ public:
    int              m_Type;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // RESIZEOPTIONSDIALOG_H

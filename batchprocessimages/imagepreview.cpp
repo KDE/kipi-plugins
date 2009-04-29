@@ -131,4 +131,4 @@ void ImagePreview::slotZoomFactorValueChanged( int ZoomFactorValue )
     m_destView->setZoom( ZoomFactorValue * 5 );
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

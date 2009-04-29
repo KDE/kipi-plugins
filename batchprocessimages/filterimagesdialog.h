@@ -73,6 +73,6 @@ private:
    KIPIPlugins::KPAboutData *m_about;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // FILTERIMAGESDIALOG_H

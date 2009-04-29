@@ -64,6 +64,6 @@ public:
    KIntNumInput    *m_unsharpenThreshold;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // FILTEROPTIONSDIALOG_H

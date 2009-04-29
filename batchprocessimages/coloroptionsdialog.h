@@ -55,6 +55,6 @@ public:
    KIntNumInput    *m_segmentSmooth;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // COLOROPTIONSDIALOG_H

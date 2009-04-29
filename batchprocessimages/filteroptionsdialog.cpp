@@ -209,4 +209,4 @@ FilterOptionsDialog::~FilterOptionsDialog()
 {
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

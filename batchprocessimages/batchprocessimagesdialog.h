@@ -224,6 +224,6 @@ private slots:
            { return (fileName); };
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // BATCHPROCESSIMAGESDIALOG_H

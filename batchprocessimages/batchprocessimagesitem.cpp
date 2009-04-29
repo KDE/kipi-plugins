@@ -110,4 +110,4 @@ int BatchProcessImagesItem::compare(Q3ListViewItem * i, int col, bool ascending)
     return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

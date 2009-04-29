@@ -113,4 +113,4 @@ ColorOptionsDialog::~ColorOptionsDialog()
 {
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

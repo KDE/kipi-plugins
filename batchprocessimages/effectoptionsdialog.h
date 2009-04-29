@@ -74,6 +74,6 @@ public:
    KIntNumInput    *m_waveLenght;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // EFFECTOPTIONSDIALOG_H

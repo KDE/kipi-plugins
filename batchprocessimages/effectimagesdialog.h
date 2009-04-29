@@ -78,6 +78,6 @@ private:
    KIPIPlugins::KPAboutData *m_about;
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // EFFECTIMAGESDIALOG_H

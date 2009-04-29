@@ -321,4 +321,4 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
        }
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

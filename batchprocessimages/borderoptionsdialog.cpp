@@ -164,4 +164,4 @@ void BorderOptionsDialog::slotFrameBorderWidthChanged (int value)
    m_frameBevelBorderWidth->setMaximum((int)(value / 2));
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

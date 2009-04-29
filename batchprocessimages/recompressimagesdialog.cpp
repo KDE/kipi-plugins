@@ -265,4 +265,4 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
     return true;
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

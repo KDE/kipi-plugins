@@ -60,6 +60,6 @@ public slots:
    void slotCompressLossLessEnabled(bool val);
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // CONVERTOPTIONSDIALOG_H

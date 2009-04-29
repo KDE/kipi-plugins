@@ -61,6 +61,6 @@ private slots:
    void slotFrameBorderWidthChanged (int value);
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // BORDEROPTIONSDIALOG_H

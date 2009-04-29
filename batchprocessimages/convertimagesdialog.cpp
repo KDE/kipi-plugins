@@ -368,4 +368,4 @@ QString ConvertImagesDialog::ImageFileExt(QString Ext)
        return (Ext.toLower());
 }
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin

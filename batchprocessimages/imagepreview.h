@@ -68,6 +68,6 @@ private:
     int INIT_ZOOM_FACTOR; // FIXME: Ugly name
 };
 
-}  // NameSpace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // IMAGEPREVIEW_H
