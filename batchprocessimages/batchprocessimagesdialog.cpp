@@ -113,10 +113,9 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     QGridLayout *gb1Layout = new QGridLayout;
     gb1Layout->addWidget(m_labelType,     0, 0, 1, 1);
     gb1Layout->addWidget(m_Type,          0, 1, 1, 1);
-    gb1Layout->addWidget(m_optionsButton, 0, 2, 1, 1);
+    gb1Layout->addWidget(m_optionsButton, 0, 3, 1, 1);
     gb1Layout->addWidget(m_smallPreview,  1, 0, 1, 2);
-    gb1Layout->addWidget(m_previewButton, 1, 2, 1, 1);
-    gb1Layout->setColStretch(1, 10);
+    gb1Layout->addWidget(m_previewButton, 1, 3, 1, 1);
     gb1Layout->setSpacing(KDialog::spacingHint());
     gb1Layout->setMargin(KDialog::marginHint());
     groupBox1->setLayout(gb1Layout);
