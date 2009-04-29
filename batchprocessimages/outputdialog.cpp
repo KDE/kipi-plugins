@@ -25,18 +25,18 @@
 
 // Qt includes
 
-#include <q3textview.h>
-#include <q3frame.h>
+#include <Q3Frame>
+#include <Q3TextView>
 #include <Q3VBoxLayout>
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
 
-// KDElib includes
+// KDE includes
 
-#include <klocale.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <klocale.h>
 #include <kmenu.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>

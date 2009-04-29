@@ -23,22 +23,22 @@
 #include "effectoptionsdialog.h"
 #include "effectoptionsdialog.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3vbox.h>
-#include <q3groupbox.h>
+#include <Q3GroupBox>
+#include <Q3VBox>
 #include <Q3VBoxLayout>
-#include <qlayout.h>
-#include <qwidget.h>
-#include <qlabel.h>
+#include <QColor>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
-#include <qcolor.h>
+#include <QWidget>
 
-// Include files for KDE
+// KDE includes
 
+#include <kcolorbutton.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <kcolorbutton.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {

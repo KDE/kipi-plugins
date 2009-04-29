@@ -23,17 +23,17 @@
 #ifndef BATCHPROCESSIMAGESITEM_H
 #define BATCHPROCESSIMAGESITEM_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
-#include <qobject.h>
+#include <QObject>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <k3listview.h>
 
-class QPainter;
 class Q3ListView;
+class QPainter;
 
 namespace KIPIBatchProcessImagesPlugin
 {

@@ -23,7 +23,7 @@
 #ifndef BORDEROPTIONSDIALOG_H
 #define BORDEROPTIONSDIALOG_H
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 

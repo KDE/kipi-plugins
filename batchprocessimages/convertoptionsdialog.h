@@ -23,19 +23,19 @@
 #ifndef CONVERTOPTIONSDIALOG_H
 #define CONVERTOPTIONSDIALOG_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
 #include <QLabel>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 
 class QCheckBox;
 
-class KIntNumInput;
 class KComboBox;
+class KIntNumInput;
 
 namespace KIPIBatchProcessImagesPlugin
 {

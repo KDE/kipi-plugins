@@ -51,11 +51,11 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 
-// KIPI includes
+// LibKIPI includes
 
 #include <libkipi/uploadwidget.h>
 
-// KIPIPlugins includes
+// KIPI includes
 
 #include "imagedialog.h"
 

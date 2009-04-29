@@ -23,35 +23,35 @@
 #include "effectimagesdialog.h"
 #include "effectimagesdialog.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3groupbox.h>
-#include <qlabel.h>
+#include <Q3GroupBox>
 #include <QCheckBox>
+#include <QLabel>
 #include <QPushButton>
 
-// Include files for KDE
+// KDE includes
 
+#include <kapplication.h>
 #include <kcombobox.h>
-#include <klocale.h>
 #include <kconfig.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
-#include <kapplication.h>
-#include <khelpmenu.h>
-#include <kiconloader.h>
-#include <kmenu.h>
 #include <ktoolinvocation.h>
 
 // Local includes
 
 #include "dialogutils.h"
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 #include "effectoptionsdialog.h"
-#include "outputdialog.h"
 #include "imagepreview.h"
+#include "kpaboutdata.h"
+#include "outputdialog.h"
+#include "pluginsversion.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {

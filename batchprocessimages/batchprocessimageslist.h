@@ -23,13 +23,13 @@
 #ifndef BATCHPROCESSIMAGE_H
 #define BATCHPROCESSIMAGE_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qobject.h>
-#include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QObject>
 
-// Include files for KDE
+// KDE includes
 
 #include <k3listview.h>
 

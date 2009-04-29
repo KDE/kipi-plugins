@@ -56,7 +56,7 @@ protected:
     void resizeEvent(QResizeEvent*);
 
 private slots:
-    
+
     void slotPreviewReadyRead();
     void slotPreviewProcessFinished();
 

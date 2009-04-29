@@ -23,11 +23,11 @@
 #ifndef PLUGIN_BATCHPROCESSIMAGES_H
 #define PLUGIN_BATCHPROCESSIMAGES_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <libkipi/plugin.h>
 
@@ -40,8 +40,8 @@ namespace KIPIBatchProcessImagesPlugin
     class ConvertImagesDialog;
     class EffectImagesDialog;
     class FilterImagesDialog;
-    class RenameImagesDialog;
     class RecompressImagesDialog;
+    class RenameImagesDialog;
     class ResizeImagesDialog;
 }
 

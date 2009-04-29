@@ -40,38 +40,38 @@ extern "C"
 
 // Qt includes
 
-#include <q3listview.h>
-#include <q3progressdialog.h>
-#include <q3groupbox.h>
-#include <q3popupmenu.h>
-#include <QPixmap>
-#include <qlineedit.h>
+#include <Q3GroupBox>
+#include <Q3ListView>
+#include <Q3PopupMenu>
+#include <Q3ProgressDialog>
 #include <QCheckBox>
-#include <qspinbox.h>
-#include <qfile.h>
-#include <qfileinfo.h>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPixmap>
 #include <QPushButton>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qregexp.h>
-#include <qdir.h>
-#include <qtooltip.h>
+#include <QRegExp>
+#include <QSpinBox>
+#include <QTimer>
+#include <QToolTip>
 
 // KDE includes
 
-#include <klocale.h>
 #include <kconfig.h>
-#include <kio/previewjob.h>
-#include <kio/renamedialog.h>
 #include <kdebug.h>
 #include <kdeversion.h>
+#include <kio/previewjob.h>
+#include <kio/renamedialog.h>
+#include <klocale.h>
 
-// Libkipi includes
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Libkipiplugins includes
+// LibKIPI includes
 
 #include "imagedialog.h"
 

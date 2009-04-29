@@ -19,13 +19,15 @@
 
 #include "dialogutils.h"
 
+// KDE includes
+
 #include <kdialog.h>
 #include <khelpmenu.h>
 #include <klocale.h>
-#include <kpushbutton.h>
 #include <kmenu.h>
+#include <kpushbutton.h>
 
-namespace DialogUtils 
+namespace DialogUtils
 {
 
 void setupHelpButton(KDialog* dialog, KAboutData* aboutData)

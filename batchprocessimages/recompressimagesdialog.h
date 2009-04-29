@@ -25,8 +25,8 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
+#include "kpaboutdata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {

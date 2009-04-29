@@ -23,12 +23,12 @@
 #ifndef RECOMPRESSOPTIONSDIALOG_H
 #define RECOMPRESSOPTIONSDIALOG_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
 #include <QLabel>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 

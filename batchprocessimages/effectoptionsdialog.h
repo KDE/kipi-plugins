@@ -23,11 +23,11 @@
 #ifndef EFFECTOPTIONSDIALOG_H
 #define EFFECTOPTIONSDIALOG_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 

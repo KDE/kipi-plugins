@@ -39,12 +39,11 @@
 
 // KDE includes
 
-//#include <kdebug.h>
 #include <kdialog.h>
 #include <kio/job.h>
 #include <kurl.h>
 
-// KIPI includes
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 

@@ -23,11 +23,11 @@
 #ifndef COLOROPTIONSDIALOG_H
 #define COLOROPTIONSDIALOG_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 

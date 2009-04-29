@@ -20,12 +20,12 @@
  *
  * ============================================================ */
 
-// Include files for Qt
+// Qt includes
 
-#include <q3listview.h>
-#include <qpainter.h>
+#include <Q3ListView>
+#include <QPainter>
 
-// Include files for KDE
+// KDE includes
 
 #include <klocale.h>
 

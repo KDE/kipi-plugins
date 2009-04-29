@@ -23,17 +23,17 @@
 #include "batchprocessimageslist.h"
 #include "batchprocessimageslist.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3dragobject.h>
-#include <q3strlist.h>
-#include <q3listview.h>
-#include <qevent.h>
-#include <qfileinfo.h>
-#include <QDropEvent>
+#include <Q3DragObject>
+#include <Q3ListView>
+#include <Q3StrList>
 #include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QEvent>
+#include <QFileInfo>
 
-// Include files for KDE
+// KDE includes
 
 #include <klocale.h>
 

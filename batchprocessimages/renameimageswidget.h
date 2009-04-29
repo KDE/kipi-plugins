@@ -36,8 +36,8 @@
 
 #include "ui_renameimagesbase.h"
 
-class QTimer;
 class Q3ProgressDialog;
+class QTimer;
 
 class KFileItem;
 
@@ -62,7 +62,7 @@ public:
         BYNAME = 0,
         BYSIZE,
         BYDATE
-    }; 
+    };
 
     RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
                        const KUrl::List& urlList);

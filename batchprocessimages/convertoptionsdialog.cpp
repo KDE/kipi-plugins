@@ -23,21 +23,21 @@
 #include "convertoptionsdialog.h"
 #include "convertoptionsdialog.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3groupbox.h>
-#include <q3vbox.h>
+#include <Q3GroupBox>
+#include <Q3VBox>
 #include <Q3VBoxLayout>
-#include <qlayout.h>
-#include <qwidget.h>
-#include <qlabel.h>
-#include <QPushButton>
 #include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QWidget>
 
-// Include files for KDE
+// KDE includes
 
-#include <klocale.h>
 #include <kcombobox.h>
+#include <klocale.h>
 #include <knuminput.h>
 
 namespace KIPIBatchProcessImagesPlugin

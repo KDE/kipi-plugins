@@ -23,23 +23,23 @@
 #include "borderoptionsdialog.h"
 #include "borderoptionsdialog.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3vbox.h>
+#include <Q3GroupBox>
+#include <Q3VBox>
 #include <Q3VBoxLayout>
-#include <q3groupbox.h>
-#include <qlayout.h>
-#include <qwidget.h>
-#include <qlabel.h>
+#include <QColor>
+#include <QLabel>
+#include <QLayout>
 #include <QPushButton>
-#include <qstring.h>
-#include <qcolor.h>
+#include <QString>
+#include <QWidget>
 
-// Include files for KDE
+// KDE includes
 
+#include <kcolorbutton.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <kcolorbutton.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {

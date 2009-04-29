@@ -19,27 +19,30 @@
 #include "pixmapview.moc"
 
 // C Ansi includes
+
 extern "C"
 {
 #include <unistd.h>
 }
 
-// Qt
+// Qt includes
+
 #include <QMouseEvent>
-#include <QPainter>
 #include <QPaintEvent>
+#include <QPainter>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
 
-// KDE
+// KDE includes
+
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kio/global.h>
-#include <kio/jobclasses.h>
 #include <kio/job.h>
+#include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>

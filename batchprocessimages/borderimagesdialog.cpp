@@ -23,37 +23,38 @@
 #include "borderimagesdialog.h"
 #include "borderimagesdialog.moc"
 
-// Include files for Qt
+// Qt includes
 
-#include <q3groupbox.h>
-#include <qlabel.h>
+#include <Q3GroupBox>
 #include <QCheckBox>
+#include <QLabel>
 #include <QPushButton>
-#include <qstring.h>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
-#include <klocale.h>
+#include <kapplication.h>
+#include <kcolorbutton.h>
+#include <kcombobox.h>
 #include <kconfig.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
-#include <kcolorbutton.h>
-#include <kapplication.h>
-#include <khelpmenu.h>
-#include <kiconloader.h>
-#include <kmenu.h>
 #include <ktoolinvocation.h>
-#include <kcombobox.h>
 
 // Local includes
 
+#include "borderoptionsdialog.h"
 #include "dialogutils.h"
-#include "pluginsversion.h"
+#include "imagepreview.h"
 #include "kpaboutdata.h"
 #include "outputdialog.h"
-#include "imagepreview.h"
-#include "borderoptionsdialog.h"
+#include "pluginsversion.h"
+
 
 namespace KIPIBatchProcessImagesPlugin
 {

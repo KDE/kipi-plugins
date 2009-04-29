@@ -27,7 +27,7 @@
 // Qt includes
 
 #include <Q3VBoxLayout>
-#include <qlayout.h>
+#include <QLayout>
 #include <QPushButton>
 
 // KDE includes
@@ -91,7 +91,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
 
 RenameImagesDialog::~RenameImagesDialog()
 {
-    delete m_about; 
+    delete m_about;
 }
 
 void RenameImagesDialog::slotHelp(void)

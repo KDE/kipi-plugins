@@ -23,21 +23,21 @@
 #ifndef RESIZEOPTIONSDIALOG_H
 #define RESIZEOPTIONSDIALOG_H
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
+#include <QString>
 #include <QLabel>
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 
-class QLabel;
 class QCheckBox;
+class QLabel;
 
+class KColorButton;
 class KComboBox;
 class KIntNumInput;
-class KColorButton;
 
 namespace KIPIBatchProcessImagesPlugin
 {

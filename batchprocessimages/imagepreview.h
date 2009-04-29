@@ -23,7 +23,7 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-// Include files for KDE
+// KDE includes
 
 #include <kdialog.h>
 
