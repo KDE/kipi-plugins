@@ -32,12 +32,10 @@ extern "C"
 
 // Qt includes
 
-#include <Q3GridLayout>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <Q3VBoxLayout>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QGridLayout>
+#include <QGroupBox>
 #include <QProgressBar>
 
 // KDE includes
@@ -89,14 +87,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     m_ProcessusProc  = 0;
     m_PreviewProc    = 0;
 
-    QWidget* box = new QWidget(this);
-    setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout(box, 0, KDialog::spacingHint());
-
-    //---------------------------------------------
-
-    Q3HBoxLayout *hlay = new Q3HBoxLayout(dvlay);
-
     //---------------------------------------------
 
     m_labelType     = new QLabel;
@@ -112,7 +102,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
                                       "Enable this option if you have a slow computer."));
     m_smallPreview->setChecked(true);
 
-    m_previewButton = new QPushButton(this, "PreviewButton");
+    m_previewButton = new QPushButton;
+    m_previewButton->setObjectName("PreviewButton");
     m_previewButton->setText(i18n("&Preview"));
     m_previewButton->setWhatsThis(i18n("This button builds a process "
                                        "preview for the currently selected image on the list."));
@@ -128,8 +119,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     gb1Layout->setSpacing(KDialog::spacingHint());
     gb1Layout->setMargin(KDialog::marginHint());
     groupBox1->setLayout(gb1Layout);
-
-    hlay->addWidget(groupBox1);
 
     //---------------------------------------------
 
@@ -154,8 +143,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     gb2Layout->addWidget(m_overWriteMode,  0, 1, 1, 1);
     gb2Layout->addWidget(m_removeOriginal, 1, 0, 1,-1);
     groupBox2->setLayout(gb2Layout);
-
-    hlay->addWidget(groupBox2);
 
     //---------------------------------------------
 
@@ -182,8 +169,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     QGridLayout *gb3Layout = new QGridLayout;
     gb3Layout->addWidget(m_destinationURL,  0, 0, 1, 1);
     groupBox3->setLayout(gb3Layout);
-
-    dvlay->addWidget(groupBox3);
 
     //---------------------------------------------
 
@@ -212,16 +197,23 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     gb4Layout->setRowStretch(3, 10);
     groupBox4->setLayout(gb4Layout);
 
-    dvlay->addWidget(groupBox4);
-
     //---------------------------------------------
 
-    m_progress = new QProgressBar(box);
+    m_progress = new QProgressBar;
     m_progress->setMaximum(100);
     m_progress->setValue(0);
     m_progress->setWhatsThis(i18n("This is the current percentage of the task completed."));
 
-    dvlay->addWidget(m_progress);
+    QWidget* box            = new QWidget(this);
+    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout->addWidget(groupBox1,  0, 0, 1, 1);
+    mainLayout->addWidget(groupBox2,  0, 1, 1, 1);
+    mainLayout->addWidget(groupBox3,  1, 0, 1,-1);
+    mainLayout->addWidget(groupBox4,  2, 0, 1,-1);
+    mainLayout->addWidget(m_progress, 3, 0, 1,-1);
+    box->setLayout(mainLayout);
+
+    setMainWidget(box);
 
     //---------------------------------------------
 
@@ -255,8 +247,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
    // Get the image files filters from the hosts app.
 
     m_ImagesFilesSort = m_interface->hostSetting("FileExtensions").toString();
-
-    dvlay->activate();
 }
 
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
