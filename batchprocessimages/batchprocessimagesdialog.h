@@ -53,7 +53,7 @@
 #include "batchprocessimagesitem.h"
 #include "batchprocessimageslist.h"
 
-class Q3GroupBox;
+class QGroupBox;
 class QCheckBox;
 class QComboBox;
 class QFileInfo;
@@ -133,11 +133,11 @@ private slots:
    QCheckBox              *m_removeOriginal;
    QCheckBox              *m_smallPreview;
 
-   Q3GroupBox              *groupBox1;
-   Q3GroupBox              *groupBox2;
-   Q3GroupBox              *groupBox3;
-   Q3GroupBox              *groupBox4;
-   Q3GroupBox              *groupBox41;
+   QGroupBox              *groupBox1;
+   QGroupBox              *groupBox2;
+   QGroupBox              *groupBox3;
+   QGroupBox              *groupBox4;
+   QGroupBox              *groupBox41;
 
    QPushButton            *m_optionsButton;
    QPushButton            *m_previewButton;

@@ -33,8 +33,8 @@ extern "C"
 // Qt includes
 
 #include <Q3GridLayout>
-#include <Q3GroupBox>
-#include <Q3HGroupBox>
+#include <QGridLayout>
+#include <QGroupBox>
 #include <Q3VBoxLayout>
 #include <QCheckBox>
 #include <QComboBox>
@@ -96,43 +96,45 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     //---------------------------------------------
 
     Q3HBoxLayout *hlay = new Q3HBoxLayout(dvlay);
-    groupBox1          = new Q3GroupBox(0, Qt::Vertical, box);
-    groupBox1->layout()->setSpacing(KDialog::spacingHint());
-    groupBox1->layout()->setMargin(KDialog::marginHint());
-    Q3GridLayout* grid = new Q3GridLayout(groupBox1->layout(), 2, 3);
-    m_labelType        = new QLabel(groupBox1);
-    grid->addMultiCellWidget(m_labelType, 0, 0, 0, 0);
 
-    m_Type = new QComboBox(false, groupBox1);
-    grid->addMultiCellWidget(m_Type, 0, 0, 1, 1);
+    //---------------------------------------------
 
-    m_optionsButton = new QPushButton (groupBox1, "OptionButton");
+    m_labelType     = new QLabel;
+    m_Type          = new QComboBox;
+    m_optionsButton = new QPushButton(this, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
     m_optionsButton->setWhatsThis(i18n("You can choose here the options to use for the current process."));
-    grid->addMultiCellWidget(m_optionsButton, 0, 0, 2, 2);
 
-    m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
+    m_smallPreview = new QCheckBox(i18n("Small preview"));
     m_smallPreview->setWhatsThis(i18n("If you enable this option, "
                                       "all preview effects will be calculated on a small zone "
                                       "of the image (300x300 pixels in the top left corner). "
                                       "Enable this option if you have a slow computer."));
     m_smallPreview->setChecked(true);
-    grid->addMultiCellWidget(m_smallPreview, 1, 1, 0, 1);
 
-    m_previewButton = new QPushButton(groupBox1, "PreviewButton");
+    m_previewButton = new QPushButton(this, "PreviewButton");
     m_previewButton->setText(i18n("&Preview"));
     m_previewButton->setWhatsThis(i18n("This button builds a process "
                                        "preview for the currently selected image on the list."));
-    grid->addMultiCellWidget(m_previewButton, 1, 1, 2, 2);
+
+    groupBox1 = new QGroupBox;
+    QGridLayout *gb1Layout = new QGridLayout;
+    gb1Layout->addWidget(m_labelType,     0, 0, 1, 1);
+    gb1Layout->addWidget(m_Type,          0, 1, 1, 1);
+    gb1Layout->addWidget(m_optionsButton, 0, 2, 1, 1);
+    gb1Layout->addWidget(m_smallPreview,  1, 0, 1, 2);
+    gb1Layout->addWidget(m_previewButton, 1, 2, 1, 1);
+    gb1Layout->setColStretch(1, 10);
+    gb1Layout->setSpacing(KDialog::spacingHint());
+    gb1Layout->setMargin(KDialog::marginHint());
+    groupBox1->setLayout(gb1Layout);
 
     hlay->addWidget(groupBox1);
 
     //---------------------------------------------
 
-    groupBox2 = new Q3GroupBox(2, Qt::Horizontal, i18n("File Operations"), box);
-
-    m_labelOverWrite = new QLabel(i18n("Overwrite mode:"), groupBox2);
-    m_overWriteMode  = new QComboBox(false, groupBox2);
+    m_labelOverWrite = new QLabel(i18n("Overwrite mode:"));
+    m_overWriteMode  = new QComboBox();
     m_overWriteMode->insertItem(i18n("Ask"));
     m_overWriteMode->insertItem(i18n("Always Overwrite"));
     m_overWriteMode->insertItem(i18n("Rename"));
@@ -141,18 +143,23 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
                                        "files already exist."));
 
-    m_removeOriginal = new QCheckBox(i18n("Remove original"), groupBox2);
+    m_removeOriginal = new QCheckBox(i18n("Remove original"));
     m_removeOriginal->setWhatsThis(i18n("If you enable this option, "
                                         "all original image files will be removed after processing."));
     m_removeOriginal->setChecked(false);
+
+    groupBox2              = new QGroupBox(i18n("File Operations"));
+    QGridLayout *gb2Layout = new QGridLayout;
+    gb2Layout->addWidget(m_labelOverWrite, 0, 0, 1, 1);
+    gb2Layout->addWidget(m_overWriteMode,  0, 1, 1, 1);
+    gb2Layout->addWidget(m_removeOriginal, 1, 0, 1,-1);
+    groupBox2->setLayout(gb2Layout);
 
     hlay->addWidget(groupBox2);
 
     //---------------------------------------------
 
-    groupBox3 = new Q3HGroupBox(i18n("Target Folder"), box);
-
-    m_destinationURL = new KUrlRequester(groupBox3);
+    m_destinationURL = new KUrlRequester;
     m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
     KIPI::ImageCollection album = interface->currentAlbum();
     if (album.isValid())
@@ -171,34 +178,39 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     m_destinationURL->setWhatsThis(i18n("Here you can select the target folder which "
                                         "will used by the process."));
 
+    groupBox3 = new QGroupBox(i18n("Target Folder"));
+    QGridLayout *gb3Layout = new QGridLayout;
+    gb3Layout->addWidget(m_destinationURL,  0, 0, 1, 1);
+    groupBox3->setLayout(gb3Layout);
+
     dvlay->addWidget(groupBox3);
 
     //---------------------------------------------
 
-    groupBox4          = new Q3HGroupBox(box);
-    QWidget* box41     = new QWidget(groupBox4);
-    Q3HBoxLayout* lay2 = new Q3HBoxLayout(box41, 0, spacingHint());
-    m_listFiles        = new BatchProcessImagesList(box41);
-    lay2->addWidget(m_listFiles);
-
+    m_listFiles = new BatchProcessImagesList(this);
     m_listFiles->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 
-    Q3VBoxLayout* lay3 = new Q3VBoxLayout(lay2);
-    m_addImagesButton  = new QPushButton(i18n("&Add..."), box41);
-    lay3->addWidget(m_addImagesButton);
+    m_addImagesButton = new QPushButton(i18n("&Add..."));
     m_addImagesButton->setWhatsThis(i18n("Add images to the list."));
 
-    m_remImagesButton = new QPushButton(i18n("&Remove"), box41);
-    lay3->addWidget(m_remImagesButton);
+    m_remImagesButton = new QPushButton(i18n("&Remove"));
     m_remImagesButton->setWhatsThis(i18n("Remove selected image from the list."));
 
-    m_imageLabel = new QLabel(box41);
+    m_imageLabel = new QLabel;
     m_imageLabel->setFixedHeight(80);
     m_imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
-    lay3->addWidget(m_imageLabel);
     m_imageLabel->setWhatsThis(i18n("The preview of the selected image on the list."));
-    lay3->addStretch(1);
+
+    groupBox4 = new QGroupBox;
+    QGridLayout *gb4Layout = new QGridLayout;
+    gb4Layout->addWidget(m_listFiles,        0, 0,-1, 1);
+    gb4Layout->addWidget(m_addImagesButton,  0, 1, 1, 1);
+    gb4Layout->addWidget(m_remImagesButton,  1, 1, 1, 1);
+    gb4Layout->addWidget(m_imageLabel,       2, 1, 1, 1);
+    gb4Layout->setColStretch(0, 10);
+    gb4Layout->setRowStretch(3, 10);
+    groupBox4->setLayout(gb4Layout);
 
     dvlay->addWidget(groupBox4);
 
