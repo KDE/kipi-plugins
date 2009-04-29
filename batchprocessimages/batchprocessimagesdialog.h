@@ -33,24 +33,18 @@
 #define PROCESS_DONE     2
 #define STOP_PROCESS     3
 
-// Include files for Qt
+// Qt includes
 
-#include <qstring.h>
-#include <qpushbutton.h>
-#include <qpointer.h>
-#include <QPixmap>
-#include <QLabel>
-#include <QCloseEvent>
-#include <QProgressBar>
+#include <QString>
 
-// Include files for KDE
+// KDE includes
 
-#include <kio/job.h>
-#include <kdialog.h>
 #include <kdebug.h>
+#include <kdialog.h>
+#include <kio/job.h>
 #include <kurl.h>
 
-// Include files for KIPI
+// KIPI includes
 
 #include <libkipi/interface.h>
 
@@ -59,21 +53,15 @@
 #include "batchprocessimagesitem.h"
 #include "batchprocessimageslist.h"
 
-class QProgressBar;
-class QLabel;
-class QComboBox;
-class QCheckBox;
-class QFileInfo;
-class QPushButton;
-class Q3ListViewItemIterator;
-class Q3ListViewItem;
 class Q3GroupBox;
+class QCheckBox;
+class QComboBox;
+class QFileInfo;
+class QLabel;
+class QProgressBar;
 
 class KProcess;
-class KConfig;
-class KUrl;
 class KUrlRequester;
-class KFileItem;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -194,7 +182,7 @@ private slots:
    QString RenameTargetImageFile(QFileInfo *fi);
 
    // --------------------------------------------------------------------------------------------------------
-   // Standards virtuals fonctions for re-implementation.
+   // Standard virtual functions for re-implementation.
 
    // Called when ImageMagick process is started or for another re-implementation without
    // ImageMagick calls (like 'RenameImages' plugin).
@@ -206,14 +194,14 @@ private slots:
 
    virtual void endProcess(void);
 
-   //  Fonctions for ImageMagick implementation calls only.
+   //  Functions for ImageMagick implementation calls only.
 
-   // Called by 'startProcess' fonction at start. You can checking here some things about the current
-   // 'item' before the 'startprocess' fonction execution.
+   // Called by 'startProcess' function at start. You can checking here some things about the current
+   // 'item' before the 'startprocess' function execution.
 
     virtual bool prepareStartProcess(BatchProcessImagesItem* /*item*/, const QString& /*albumDest*/) { return true; };
 
-   // Called for to contruct the ImageMagick command line used for to process or preview the image traitements.
+   // Called to construct the ImageMagick command line used for to process or preview the image traitements.
    // If 'albumDest' = 0L ==> preview process.
 
     virtual void initProcess(KProcess* /*proc*/, BatchProcessImagesItem* /*item*/,
@@ -222,7 +210,7 @@ private slots:
 
     virtual void processDone(){};
 
-   // Fonctions used for to read and to save the settings in the configuration file.
+   // Functions used for to read and to save the settings in the configuration file.
 
    virtual void readSettings(void){};
    virtual void saveSettings(void){};

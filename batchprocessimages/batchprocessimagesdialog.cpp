@@ -30,61 +30,27 @@ extern "C"
 #include <unistd.h>
 }
 
-// Include files for Qt
+// Qt includes
 
-#include <q3vbox.h>
-#include <q3process.h>
-#include <q3groupbox.h>
-#include <q3hgroupbox.h>
-#include <q3vgroupbox.h>
-#include <q3dragobject.h>
-#include <q3frame.h>
-#include <Q3HBoxLayout>
 #include <Q3GridLayout>
+#include <Q3GroupBox>
+#include <Q3HGroupBox>
 #include <Q3VBoxLayout>
-#include <QCloseEvent>
-#include <QPixmap>
-#include <qlayout.h>
-#include <qdir.h>
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qcolor.h>
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qimage.h>
-#include <qevent.h>
-#include <qfileinfo.h>
-#include <qmatrix.h>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QProgressBar>
 
-// Include files for KDE
+// KDE includes
 
-#include <k3buttonbox.h>
-#include <k3listview.h>
-#include <kstandarddirs.h>
-#include <kcolorbutton.h>
-#include <klocale.h>
-#include <kprogressdialog.h>
-#include <kfiledialog.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <knuminput.h>
-#include <kcomponentdata.h>
-#include <kconfig.h>
 #include <kapplication.h>
-#include <kdebug.h>
-#include <kdialog.h>
-#include <kimageio.h>
-#include <kprocess.h>
-#include <kio/jobclasses.h>
+#include <kfileitem.h>
 #include <kio/netaccess.h>
-#include <kio/global.h>
 #include <kio/previewjob.h>
-#include <kdiroperator.h>
-#include <kdeversion.h>
-#include <kurlrequester.h>
 #include <klineedit.h>
+#include <kmessagebox.h>
+#include <kprocess.h>
+#include <kstandarddirs.h>
+#include <kurlrequester.h>
 
 // KIPI includes
 
@@ -96,9 +62,9 @@ extern "C"
 
 // Local includes
 
-#include "pluginsversion.h"
-#include "outputdialog.h"
 #include "imagepreview.h"
+#include "outputdialog.h"
+#include "pluginsversion.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -1008,7 +974,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
        KUrl deleteImage = m_destinationURL->url();
        deleteImage.addPath(item->nameDest());
 
-       if ( KIO::NetAccess::exists( deleteImage, KIO::NetAccess::DestinationSide, 
+       if ( KIO::NetAccess::exists( deleteImage, KIO::NetAccess::DestinationSide,
             kapp->activeWindow() ) == true )
           KIO::NetAccess::del( deleteImage, kapp->activeWindow() );
     }
