@@ -447,7 +447,7 @@ bool BatchProcessImagesDialog::startProcess(void)
           {
              int ValRet = KMessageBox::warningYesNoCancel(this,
                           i18n("The destination file \"%1\" already exists;\n"
-                          "do you want overwrite it?").arg(item->nameDest()),
+                          "do you want overwrite it?", item->nameDest()),
                           i18n("Overwrite Destination Image File"), KStandardGuiItem::cont());
 
              if ( ValRet == KMessageBox::No )
@@ -649,7 +649,7 @@ void BatchProcessImagesDialog::slotFinished()
                 {
                     int code = KMessageBox::warningContinueCancel( this,
                                             i18n("<qt>Error adding image to application; error message was: "
-                                            "<b>%1</b></qt>").arg( errmsg ),
+                                            "<b>%1</b></qt>", errmsg),
                                             i18n("Error Adding Image to Application") );
 
                     if ( code == KMessageBox::Cancel )
@@ -715,8 +715,8 @@ void BatchProcessImagesDialog::slotListDoubleClicked(Q3ListViewItem *itemClicked
        OutputDialog *infoDialog = new OutputDialog(this,
                                                    i18n("Image processing error"),
                                                    item->outputMess(),
-                                                   i18n("Image \"%1\": %2\n\nThe output messages are:\n")
-                                                        .arg(item->nameSrc()).arg(item->error())
+                                                   i18n("Image \"%1\": %2\n\nThe output messages are:\n",
+                                                        item->nameSrc(), item->error())
                                                    );
        infoDialog->exec();
     }
@@ -826,8 +826,8 @@ void BatchProcessImagesDialog::slotPreviewFinished()
                                                    i18n("Preview processing error"),
                                                    m_previewOutput,
                                                    i18n("Cannot process preview for image \"%1\"."
-                                                        "\nThe output messages are:\n")
-                                                        .arg(item->nameSrc())
+                                                        "\nThe output messages are:\n",
+                                                        item->nameSrc())
                                                    );
        infoDialog->exec();
     }
