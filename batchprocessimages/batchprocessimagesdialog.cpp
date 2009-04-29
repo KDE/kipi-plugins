@@ -109,22 +109,21 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
 
     m_optionsButton = new QPushButton (groupBox1, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
-    m_optionsButton->setWhatsThis(i18n("<p>You can choose here the options to use "
-                                           "for the current process."));
+    m_optionsButton->setWhatsThis(i18n("You can choose here the options to use for the current process."));
     grid->addMultiCellWidget(m_optionsButton, 0, 0, 2, 2);
 
     m_smallPreview = new QCheckBox(i18n("Small preview"), groupBox1);
-    m_smallPreview->setWhatsThis(i18n("<p>If you enable this option, "
-                                          "all preview effects will be calculated on a small zone "
-                                          "of the image (300x300 pixels in the top left corner). "
-                                          "Enable this option if you have a slow computer.") );
+    m_smallPreview->setWhatsThis(i18n("If you enable this option, "
+                                      "all preview effects will be calculated on a small zone "
+                                      "of the image (300x300 pixels in the top left corner). "
+                                      "Enable this option if you have a slow computer."));
     m_smallPreview->setChecked( true );
     grid->addMultiCellWidget(m_smallPreview, 1, 1, 0, 1);
 
     m_previewButton = new QPushButton (groupBox1, "PreviewButton");
     m_previewButton->setText(i18n("&Preview"));
-    m_previewButton->setWhatsThis(i18n("<p>This button builds a process "
-                                           "preview for the currently selected image on the list."));
+    m_previewButton->setWhatsThis(i18n("This button builds a process "
+                                       "preview for the currently selected image on the list."));
     grid->addMultiCellWidget(m_previewButton, 1, 1, 2, 2);
 
     hlay->addWidget( groupBox1 );
@@ -140,12 +139,12 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     m_overWriteMode->insertItem(i18n("Rename"));
     m_overWriteMode->insertItem(i18n("Skip"));
     m_overWriteMode->setCurrentText (i18n("Rename"));
-    m_overWriteMode->setWhatsThis(i18n("<p>Select here the overwrite mode used if your target's image "
-                                           "files already exist.") );
+    m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
+                                       "files already exist."));
 
     m_removeOriginal = new QCheckBox(i18n("Remove original"), groupBox2);
-    m_removeOriginal->setWhatsThis(i18n("<p>If you enable this option, "
-                                            "all original image files will be removed after processing.") );
+    m_removeOriginal->setWhatsThis(i18n("If you enable this option, "
+                                        "all original image files will be removed after processing.") );
     m_removeOriginal->setChecked( false );
 
     hlay->addWidget( groupBox2 );
@@ -170,8 +169,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
         }
         m_destinationURL->lineEdit()->setText(url);
     }
-    m_destinationURL->setWhatsThis(i18n("<p>Here you can select the target folder which "
-                                            "will used by the process."));
+    m_destinationURL->setWhatsThis(i18n("Here you can select the target folder which "
+                                        "will used by the process."));
 
     dvlay->addWidget( groupBox3 );
 
@@ -188,18 +187,18 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     Q3VBoxLayout* lay3 = new Q3VBoxLayout( lay2 );
     m_addImagesButton = new QPushButton ( i18n( "&Add..." ), box41 );
     lay3->addWidget( m_addImagesButton );
-    m_addImagesButton->setWhatsThis(i18n("<p>Add images to the list.") );
+    m_addImagesButton->setWhatsThis(i18n("Add images to the list.") );
 
     m_remImagesButton = new QPushButton ( i18n( "&Remove" ), box41 );
     lay3->addWidget( m_remImagesButton );
-    m_remImagesButton->setWhatsThis(i18n("<p>Remove selected image from the list.") );
+    m_remImagesButton->setWhatsThis(i18n("Remove selected image from the list.") );
 
     m_imageLabel = new QLabel( box41 );
     m_imageLabel->setFixedHeight( 80 );
     m_imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
     m_imageLabel->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
     lay3->addWidget( m_imageLabel );
-    m_imageLabel->setWhatsThis(i18n( "<p>The preview of the selected image on the list." ) );
+    m_imageLabel->setWhatsThis(i18n( "The preview of the selected image on the list." ) );
     lay3->addStretch( 1 );
 
     dvlay->addWidget( groupBox4 );
@@ -209,7 +208,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog( KUrl::List urlList, KIPI::In
     m_progress = new QProgressBar( box );
     m_progress->setMaximum(100);
     m_progress->setValue(0);
-    m_progress->setWhatsThis(i18n("<p>This is the current percentage of the task completed.") );
+    m_progress->setWhatsThis(i18n("This is the current percentage of the task completed.") );
 
     dvlay->addWidget( m_progress );
 
