@@ -93,20 +93,20 @@ ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Non-Proportional"));       // 2
     m_Type->insertItem(i18n("Prepare to Print"));       // 3
     m_Type->setCurrentText(i18n("Proportional (1 dim.)"));
-    whatsThis = i18n("<p>Select here the image-resize type.");
+    whatsThis = i18n("<p>Select here the image-resize type.</p>");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
                                  "The width or the height of the images will be automatically "
                                  "selected, depending on the images' orientations. "
-                                 "The images' aspect ratios are preserved.");
+                                 "The images' aspect ratios are preserved.</p>");
     whatsThis = whatsThis + i18n("<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. "
                                  "The images' aspect ratio are preserved. You can use this, for example, "
-                                 "to adapt your images' sizes to your screen size.");
+                                 "to adapt your images' sizes to your screen size.</p>");
     whatsThis = whatsThis + i18n("<p><b>Non proportional</b>: non-proportional resizing using two dimensions. "
-                                 "The images' aspect ratios are not preserved.");
+                                 "The images' aspect ratios are not preserved.</p>");
     whatsThis = whatsThis + i18n("<p><b>Prepare to print</b>: prepare the image for photographic printing. "
                                  "The user can set the print resolution and the photographic paper size. "
                                  "The target images will be adapted to the specified dimensions "
-                                 "(included the background size, margin size, and background color).");
+                                 "(included the background size, margin size, and background color).</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

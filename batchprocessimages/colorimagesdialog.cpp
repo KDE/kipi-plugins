@@ -99,29 +99,31 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
     m_Type->insertItem(i18n("Segment"));            // 9
     m_Type->insertItem(i18n("Trim"));
     m_Type->setCurrentText(i18n("Normalize"));
-    whatsThis = i18n("<p>Select here the color enhancement type for your images:<p>"
+    whatsThis = i18n("<p>Select here the color enhancement type for your images:</p>"
+                     "<p>"
                      "<b>Decrease contrast</b>: reduce the image contrast. The algorithm "
                      "reduces the intensity difference between the lighter and darker elements "
-                     "of the image.<p>"
-                     "<b>Depth</b>: change the color depth of the image.<p>"
-                     "<b>Equalize</b>: perform histogram equalization to the image.<p>"
-                     "<b>Fuzz</b>: merging colors within a distance, i.e. consider them to be equal.<p>"
-                     "<b>Gray scales</b>: convert color images to grayscale images.<p>"
+                     "of the image.<br/>"
+                     "<b>Depth</b>: change the color depth of the image.<br/>"
+                     "<b>Equalize</b>: perform histogram equalization to the image.<br/>"
+                     "<b>Fuzz</b>: merging colors within a distance, i.e. consider them to be equal.<br/>"
+                     "<b>Gray scales</b>: convert color images to grayscale images.<br/>"
                      "<b>Increase contrast</b>: enhance the image contrast. The algorithm enhances "
-                     "the intensity differences between the lighter and darker elements of the image.<p>"
-                     "<b>Monochrome</b>: transform the image to black and white.<p>"
+                     "the intensity differences between the lighter and darker elements of the image.<br/>"
+                     "<b>Monochrome</b>: transform the image to black and white.<br/>"
                      "<b>Negate</b>: replace every pixel with its complementary color. The red, green, "
                      "and blue intensities of an image are negated. White becomes black, yellow becomes "
-                     "blue, etc.<p>"
+                     "blue, etc.<br/>"
                      "<b>Normalize</b>: transform image to span the full range of color values. "
                      "This is a contrast enhancement technique. The algorithm enhances the contrast "
                      "of a colored image by adjusting the pixels color to span the entire range of "
-                     "colors available.<p>"
+                     "colors available.<br/>"
                      "<b>Segment</b>: segment an image by analyzing the histograms of the color "
                      "components and identifying units that are homogeneous with the fuzzy c-means "
-                     "technique.<p>"
+                     "technique.<br/>"
                      "<b>Trim</b>: trim an image (fuzz reverse technique). The algorithm remove edges "
-                     "that are the background color from the image.<p>");
+                     "that are the background color from the image."
+                     "</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

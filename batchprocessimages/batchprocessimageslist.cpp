@@ -55,12 +55,12 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char * /*n
     setSelectionMode(Q3ListView::Single);
     setAllColumnsShowFocus ( true );
     this->setWhatsThis(i18n("<p>You can see here the operations' results "
-                                "during the process. Double-click on an item for more "
-                                "information once the process has ended. "
-                                "<p>You can use the \"Add\" button or drag-and-drop "
-                                "to add some new items to the list. "
-                                "<p>If the items are taken from different Albums "
-                                "the process' results will be merged to the target Album.") );
+                            "during the process. Double-click on an item for more "
+                            "information once the process has ended.</p>"
+                            "<p>You can use the \"Add\" button or drag-and-drop "
+                            "to add some new items to the list.</p>"
+                            "<p>If the items are taken from different Albums "
+                            "the process' results will be merged to the target Album.</p>"));
 }
 
 void BatchProcessImagesList::dragEnterEvent(QDragEnterEvent *e)

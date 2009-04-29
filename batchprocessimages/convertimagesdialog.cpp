@@ -97,39 +97,39 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
     m_Type->insertItem("TGA");
     m_Type->insertItem("EPS");
     m_Type->setCurrentText("JPEG");
-    whatsThis = i18n("<p>Select here the target image file format.<p>");
-    whatsThis = whatsThis + i18n("<b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
-                                 "good Web file format but it uses lossy data compression.<p>"
-                                 "<b>PNG</b>: the Portable Network Graphics format is an extensible file "
+    whatsThis = i18n("<p>Select here the target image file format.</p>");
+    whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
+                                 "good Web file format but it uses lossy data compression.</p>"
+                                 "<p><b>PNG</b>: the Portable Network Graphics format is an extensible file "
                                  "format for the lossless, portable, well-compressed storage of raster images. "
                                  "PNG provides a patent-free replacement for GIF and can also replace many common "
                                  "uses of TIFF. PNG is designed to work well in online viewing applications, such "
                                  "as the World Wide Web, so it is fully streamable with a progressive display "
                                  "option. Also, PNG can store gamma and chromaticity data for improved color "
-                                 "matching on heterogeneous platforms.");
+                                 "matching on heterogeneous platforms.</p>");
     whatsThis = whatsThis + i18n("<p><b>TIFF</b>: the Tag Image File Format is a rather old standard that is "
                                  "still very popular today. It is a highly flexible and platform-independent "
                                  "format which is supported by numerous image processing applications and "
-                                 "virtually all prepress software on the market.");
+                                 "virtually all prepress software on the market.</p>");
     whatsThis = whatsThis + i18n("<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
                                  "intermediate format for storing color bitmap information. PPM files "
                                  "may be either binary or ASCII and store pixel values up to 24 bits in size. "
                                  "This format generate the largest-sized text files to encode images without "
-                                 "losing quality");
+                                 "losing quality.</p>");
     whatsThis = whatsThis + i18n("<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
                                  "environment. It efficiently stores mapped or unmapped RGB graphics data with "
                                  "pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw or compressed "
                                  "using a 4-bit or 8-bit RLE data compression algorithm. BMP is an excellent "
                                  "choice for a simple bitmap format which supports a wide range of RGB image "
-                                 "data.");
+                                 "data.</p>");
     whatsThis = whatsThis + i18n("<p><b>TGA</b>: the TarGA image file format is one of the most widely used "
                                  "bitmap file formats for storage of 24 and 32 bits truecolor images.  "
                                  "TGA supports colormaps, alpha channel, gamma value, postage stamp image, "
-                                 "textual information, and developer-definable data.");
+                                 "textual information, and developer-definable data.</p>");
     whatsThis = whatsThis + i18n("<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format "
                                  "is a PostScript language program describing the appearance of a single page. "
                                  "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
-                                 "language page description.");
+                                 "language page description.</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

@@ -98,28 +98,30 @@ EffectImagesDialog::EffectImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Swirl"));
     m_Type->insertItem(i18n("Wave"));                // 10
     m_Type->setCurrentText(i18n("Emboss"));
-    whatsThis = i18n("<p>Select here the effect type for your images:<p>"
+    whatsThis = i18n("<p>Select here the effect type for your images:</p>"
+                     "<p>"
                      "<b>Adaptive threshold</b>: perform local adaptive thresholding. The algorithm "
                      "selects an individual threshold for each pixel based on the range of intensity "
                      "values in its local neighborhood. This allows for thresholding of an image whose "
-                     "global intensity histogram does not contain distinctive peaks.<p>"
-                     "<b>Charcoal</b>: simulate a charcoal drawing.<p>"
-                     "<b>Detect edges</b>: detect edges within an image.<p>"
+                     "global intensity histogram does not contain distinctive peaks.<br/>"
+                     "<b>Charcoal</b>: simulate a charcoal drawing.<br/>"
+                     "<b>Detect edges</b>: detect edges within an image.<br/>"
                      "<b>Emboss</b>: returns a grayscale image with a three-dimensional effect. The "
                      "algorithm convolves the image with a Gaussian operator of the given radius and "
-                     "standard deviation.<p>"
-                     "<b>Implode</b>: implode image pixels about the center.<p>"
-                     "<b>Paint</b>: applies a special effect filter that simulates an oil painting.<p>"
+                     "standard deviation.<br/>"
+                     "<b>Implode</b>: implode image pixels about the center.<br/>"
+                     "<b>Paint</b>: applies a special effect filter that simulates an oil painting.<br/>"
                      "<b>Shade light</b>: shines a distant light on an image to create a three-dimensional "
-                     "effect.<p>"
+                     "effect.<br/>"
                      "<b>Solarize</b>: negate all pixels above the threshold level. This algorithm produces a "
                      "solarization effect seen when exposing a photographic film to light during the development "
-                     "process.<p>"
+                     "process.<br/>"
                      "<b>Spread</b>: this is a special-effect method that randomly displaces each pixel in a "
-                     "block defined by the radius parameter.<p>"
-                     "<b>Swirl</b>: swirls the pixels about the center of the image. <p>"
+                     "block defined by the radius parameter.<br/>"
+                     "<b>Swirl</b>: swirls the pixels about the center of the image. <br/>"
                      "<b>Wave</b>: creates a \"ripple\" effect in the image by shifting the pixels vertically "
-                     "along a sine wave.<p>");
+                     "along a sine wave."
+                     "</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

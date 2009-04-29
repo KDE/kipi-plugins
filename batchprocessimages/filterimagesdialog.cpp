@@ -96,17 +96,19 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Sharpen"));
     m_Type->insertItem(i18n("Unsharp"));         // 8
     m_Type->setCurrentText(i18n("Sharpen"));
-    whatsThis = i18n("<p>Select here the filter type for your images:<p>"
-                     "<b>Add noise</b>: add artificial noise to an image.<p>"
-                     "<b>Antialias</b>: remove pixel aliasing.<p>"
-                     "<b>Blur</b>: blur the image with a Gaussian operator.<p>"
-                     "<b>Despeckle</b>: reduces the speckle noise in an image while perserving the "
-                     "edges of the original image.<p>"
-                     "<b>Enhance</b>: apply a digital filter to enhance a noisy image.<p>"
-                     "<b>Median</b>: apply a median filter to an image.<p>"
-                     "<b>Noise reduction</b>: reduce noise in an image. <p>"
-                     "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<p>"
-                     "<b>Unsharp</b>: sharpen the image with an unsharp mask operator.<p>");
+    whatsThis = i18n("<p>Select here the filter type for your images:</p>"
+                     "<p>"
+                     "<b>Add noise</b>: add artificial noise to an image.<br/>"
+                     "<b>Antialias</b>: remove pixel aliasing.<br/>"
+                     "<b>Blur</b>: blur the image with a Gaussian operator.<br/>"
+                     "<b>Despeckle</b>: reduces the speckle noise in an image while preserving the "
+                     "edges of the original image.<br/>"
+                     "<b>Enhance</b>: apply a digital filter to enhance a noisy image.<br/>"
+                     "<b>Median</b>: apply a median filter to an image.<br/>"
+                     "<b>Noise reduction</b>: reduce noise in an image. <br/>"
+                     "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<br/>"
+                     "<b>Unsharp</b>: sharpen the image with an unsharp mask operator."
+                     "</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

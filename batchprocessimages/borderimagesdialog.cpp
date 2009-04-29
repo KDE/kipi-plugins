@@ -98,12 +98,14 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Raise"));
     m_Type->insertItem(i18n("Frame"));
     m_Type->setCurrentText(i18n("Niepce"));
-    whatsThis = i18n("<p>Select here the border type for your images:<p>"
-                     "<b>Solid</b>: just surround the images with a line.<p>"
+    whatsThis = i18n("<p>Select here the border type for your images:</p>"
+                     "<p>"
+                     "<b>Solid</b>: just surround the images with a line.<br/>"
                      "<b>Niepce</b>: surround the images with a fine line and a large border "
-                     "(ideal for black and white pictures).<p>"
-                     "<b>Raise</b>: creating a 3D effect around the images.<p>"
-                     "<b>Frame</b>: surround the images with an ornamental border.<p>");
+                     "(ideal for black and white pictures).<br/>"
+                     "<b>Raise</b>: creating a 3D effect around the images.<br/>"
+                     "<b>Frame</b>: surround the images with an ornamental border."
+                     "</p>");
 
     m_Type->setWhatsThis(whatsThis );
 

@@ -63,19 +63,21 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_JPEGCompression = new KIntNumInput(75, groupBox1);
     m_JPEGCompression->setRange(1, 100);
     m_JPEGCompression->setSliderEnabled(true);
-    whatsThis = i18n("<p>The compression value for JPEG target images:<p>");
-    whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
-                                 "<b>25</b>: high compression<p>"
-                                 "<b>50</b>: medium compression<p>"
-                                 "<b>75</b>: low compression (default value)<p>"
-                                 "<b>100</b>: no compression");
+    whatsThis = i18n("<p>The compression value for JPEG target images:</p>");
+    whatsThis = whatsThis + i18n("<p>"
+                                 "<b>1</b>: very high compression<br/>"
+                                 "<b>25</b>: high compression<br/>"
+                                 "<b>50</b>: medium compression<br/>"
+                                 "<b>75</b>: low compression (default value)<br/>"
+                                 "<b>100</b>: no compression"
+                                 "</p>");
 
     m_JPEGCompression->setWhatsThis(whatsThis);
     m_label_JPEGimageCompression->setBuddy( m_JPEGCompression );
 
     m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), groupBox1);
-    m_compressLossLess->setWhatsThis(i18n("<p>If this option is enabled, "
-                                              "all JPEG operations will use lossless compression."));
+    m_compressLossLess->setWhatsThis(i18n("If this option is enabled, "
+                                          "all JPEG operations will use lossless compression."));
 
     connect(m_compressLossLess, SIGNAL( toggled(bool) ),
             this, SLOT( slotCompressLossLessEnabled(bool) ) );
@@ -90,12 +92,14 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_PNGCompression = new KIntNumInput(75, groupBox2);
     m_PNGCompression->setRange(1, 100);
     m_PNGCompression->setSliderEnabled(true);
-    whatsThis = i18n("<p>The compression value for PNG target images:<p>");
-    whatsThis = whatsThis + i18n("<b>1</b>: very high compression<p>"
-                                 "<b>25</b>: high compression<p>"
-                                 "<b>50</b>: medium compression<p>"
-                                 "<b>75</b>: low compression (default value)<p>"
-                                 "<b>100</b>: no compression");
+    whatsThis = i18n("<p>The compression value for PNG target images:</p>");
+    whatsThis = whatsThis + i18n("<p>"
+                                 "<b>1</b>: very high compression<br/>"
+                                 "<b>25</b>: high compression<br/>"
+                                 "<b>50</b>: medium compression<br/>"
+                                 "<b>75</b>: low compression (default value)<br/>"
+                                 "<b>100</b>: no compression"
+                                 "</p>");
 
     m_PNGCompression->setWhatsThis(whatsThis);
     m_label_PNGimageCompression->setBuddy( m_PNGCompression );
@@ -111,7 +115,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_TIFFCompressionAlgo->insertItem("LZW");
     m_TIFFCompressionAlgo->insertItem("JPEG");
     m_TIFFCompressionAlgo->insertItem(i18n("None"));
-    m_TIFFCompressionAlgo->setWhatsThis(i18n("<p>Select here the TIFF compression algorithm.") );
+    m_TIFFCompressionAlgo->setWhatsThis(i18n("Select here the TIFF compression algorithm.") );
     m_label_TIFFimageCompression->setBuddy( m_TIFFCompressionAlgo );
 
     dvlay->addWidget( groupBox3 );
@@ -124,7 +128,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_TGACompressionAlgo = new KComboBox(groupBox4);
     m_TGACompressionAlgo->insertItem("RLE");
     m_TGACompressionAlgo->insertItem(i18n("None"));
-    m_TGACompressionAlgo->setWhatsThis(i18n("<p>Select here the TGA compression algorithm.") );
+    m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm.") );
     m_label_TGAimageCompression->setBuddy( m_TGACompressionAlgo );
 
     dvlay->addWidget( groupBox4 );
