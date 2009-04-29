@@ -33,9 +33,9 @@
 #include <kdialog.h>
 
 class QLabel;
-class QComboBox;
 class QCheckBox;
 
+class KComboBox;
 class KIntNumInput;
 class KColorButton;
 
@@ -83,9 +83,9 @@ public:
    KColorButton    *m_button_backgroundColor;
    KColorButton    *m_button_bgColor;
 
-   QComboBox       *m_resizeFilter;
-   QComboBox       *m_paperSize;
-   QComboBox       *m_printDpi;
+   KComboBox       *m_resizeFilter;
+   KComboBox       *m_paperSize;
+   KComboBox       *m_printDpi;
 
  protected slots:
 

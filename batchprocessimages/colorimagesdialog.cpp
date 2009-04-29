@@ -27,12 +27,12 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 
 // Include files for KDE
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -196,7 +196,7 @@ void ColorImagesDialog::readSettings(void)
     KConfig config("kipirc");
     KConfigGroup group = config.group("ColorImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("ColorType", 8)); // Normalize per default.
+    m_Type->setCurrentIndex(group.readEntry("ColorType", 8)); // Normalize per default.
     m_depthValue = group.readEntry("DepthValue", "32");
     m_fuzzDistance = group.readEntry("FuzzDistance", 3);
     m_segmentCluster = group.readEntry("SegmentCluster", 3);
@@ -207,7 +207,7 @@ void ColorImagesDialog::readSettings(void)
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );

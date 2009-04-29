@@ -31,13 +31,13 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QPushButton>
+#include <QCheckBox>
 
 // Include files for KDE
 
 #include <klocale.h>
+#include <kcombobox.h>
 #include <knuminput.h>
 
 namespace KIPIBatchProcessImagesPlugin
@@ -88,7 +88,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        {
        QLabel *m_label_imageCompression = new QLabel (i18n("Image compression algorithm:"), box);
        dvlay->addWidget( m_label_imageCompression );
-       m_TIFFCompressionAlgo = new QComboBox( false, box );
+       m_TIFFCompressionAlgo = new KComboBox(box);
        m_TIFFCompressionAlgo->insertItem("LZW");
        m_TIFFCompressionAlgo->insertItem("JPEG");
        m_TIFFCompressionAlgo->insertItem(i18n("None"));
@@ -101,7 +101,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
        {
        QLabel *m_label_imageCompression = new QLabel (i18n("Image compression algorithm:"), box);
        dvlay->addWidget( m_label_imageCompression );
-       m_TGACompressionAlgo = new QComboBox( false, box );
+       m_TGACompressionAlgo = new KComboBox(box);
        m_TGACompressionAlgo->insertItem("RLE");
        m_TGACompressionAlgo->insertItem(i18n("None"));
        m_TGACompressionAlgo->setWhatsThis(i18n("<p>Select here the compression algorithm.") );

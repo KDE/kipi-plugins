@@ -23,7 +23,7 @@
 #include "batchprocessimagesdialog.h"
 #include "batchprocessimagesdialog.moc"
 
-// C Ansi includes
+// C ANSI includes
 
 extern "C"
 {
@@ -33,7 +33,6 @@ extern "C"
 // Qt includes
 
 #include <QCheckBox>
-#include <QComboBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QProgressBar>
@@ -41,6 +40,8 @@ extern "C"
 // KDE includes
 
 #include <kapplication.h>
+#include <kcombobox.h>
+#include <kdebug.h>
 #include <kfileitem.h>
 #include <kio/netaccess.h>
 #include <kio/previewjob.h>
@@ -90,7 +91,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     //---------------------------------------------
 
     m_labelType     = new QLabel;
-    m_Type          = new QComboBox;
+    m_Type          = new KComboBox;
     m_optionsButton = new QPushButton(this, "OptionButton");
     m_optionsButton->setText(i18n("Options"));
     m_optionsButton->setWhatsThis(i18n("You can choose here the options to use for the current process."));
@@ -123,7 +124,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     //---------------------------------------------
 
     m_labelOverWrite = new QLabel(i18n("Overwrite mode:"));
-    m_overWriteMode  = new QComboBox();
+    m_overWriteMode  = new KComboBox;
     m_overWriteMode->insertItem(i18n("Ask"));
     m_overWriteMode->insertItem(i18n("Always Overwrite"));
     m_overWriteMode->insertItem(i18n("Rename"));

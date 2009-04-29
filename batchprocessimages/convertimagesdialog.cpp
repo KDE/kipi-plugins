@@ -27,9 +27,8 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 #include <qfileinfo.h>
 #include <qdir.h>
 
@@ -46,8 +45,10 @@
 #include <kmenu.h>
 #include <kurlrequester.h>
 #include <ktoolinvocation.h>
+#include <kcombobox.h>
+#include <kdebug.h>
 
-// LibKExiv2 includes 
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
 
@@ -204,7 +205,7 @@ void ConvertImagesDialog::readSettings(void)
     KConfig config("kipirc");
     KConfigGroup group = config.group("ConvertImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("ImagesFormat", 0));  // JPEG per default
+    m_Type->setCurrentIndex(group.readEntry("ImagesFormat", 0));  // JPEG per default
     if ( group.readEntry("CompressLossLess", "false") == "true")
        m_compressLossLess = true;
     else
@@ -214,7 +215,7 @@ void ConvertImagesDialog::readSettings(void)
     m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
     m_TGACompressionAlgo = group.readEntry("TGACompressionAlgo", i18n("None"));
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
@@ -311,7 +312,7 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
 
 void ConvertImagesDialog::processDone()
 {
-    if (m_Type->currentItem() == 0) 
+    if (m_Type->currentItem() == 0)
     {
         // JPEG file, we remove IPTC preview.
 
@@ -325,19 +326,19 @@ void ConvertImagesDialog::processDone()
 
             kDebug() << src << endl;
             kDebug() << tgt << fi.size()<< endl;
-            
+
             KExiv2Iface::KExiv2 metaSrc(src);
-    
+
             // Update Iptc preview.
             // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
             // bigger than 64K duing of image preview tag size, the target JPEG image will be
             // broken. Note that IPTC image preview tag is limited to 256K!!!
             // There is no limitation with TIFF and PNG about IPTC byte array size.
-        
+
             metaSrc.removeIptcTag("Iptc.Application2.Preview");
             metaSrc.removeIptcTag("Iptc.Application2.PreviewFormat");
             metaSrc.removeIptcTag("Iptc.Application2.PreviewVersion");
-            
+
             KExiv2Iface::KExiv2 metaTgt(tgt);
             metaTgt.setIptc(metaSrc.getIptc());
             metaTgt.applyChanges();

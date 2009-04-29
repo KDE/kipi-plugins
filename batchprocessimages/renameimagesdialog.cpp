@@ -28,7 +28,7 @@
 
 #include <Q3VBoxLayout>
 #include <qlayout.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 
 // KDE includes
 

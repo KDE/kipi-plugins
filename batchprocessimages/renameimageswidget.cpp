@@ -46,13 +46,12 @@ extern "C"
 #include <q3popupmenu.h>
 #include <QPixmap>
 #include <qlineedit.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <qspinbox.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <qlabel.h>
-#include <qcombobox.h>
 #include <qtimer.h>
 #include <qregexp.h>
 #include <qdir.h>
@@ -149,16 +148,16 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
 
 	connect(sortMenu, SIGNAL(activated(int)),
 			SLOT(sortList(int)) );
-	
+
 	connect(m_reverseList, SIGNAL(clicked()),
 			SLOT(reverseList()) );
 
     connect(m_moveUp, SIGNAL(clicked()),
             SLOT(moveCurrentItemUp()) );
-    
+
     connect(m_moveDown, SIGNAL(clicked()),
             SLOT(moveCurrentItemDown()) );
-    
+
     m_timer = new QTimer(this);
     m_progress = new Q3ProgressDialog(this, 0, true);
     connect(m_timer, SIGNAL(timeout()),
@@ -183,7 +182,7 @@ RenameImagesWidget::~RenameImagesWidget()
 {
     delete m_timer;
     delete m_progress;
-    
+
     saveSettings();
 }
 
@@ -233,7 +232,7 @@ void RenameImagesWidget::slotOptionsChanged()
 
 void RenameImagesWidget::slotListViewDoubleClicked(Q3ListViewItem*)
 {
-    // TODO: Implement    
+    // TODO: Implement
 }
 
 void RenameImagesWidget::slotImageSelected(Q3ListViewItem* item)
@@ -246,7 +245,7 @@ void RenameImagesWidget::slotImageSelected(Q3ListViewItem* item)
 
     m_removeButton->setEnabled(true);
     m_pixLabel->clear();
-    
+
     BatchProcessImagesItem* it = static_cast<BatchProcessImagesItem*>(item);
     KIO::PreviewJob* thumbJob = KIO::filePreview(KUrl(it->pathSrc()),
                                                  m_pixLabel->height() );
@@ -287,7 +286,7 @@ void RenameImagesWidget::sortList(int intSortOrder)
         }
         }
     };
-    
+
     // Update list order. We need to set the sorting column temporarily
     // otherwise sort() won't do anything
     m_listView->setSorting(1);
@@ -317,7 +316,7 @@ void RenameImagesWidget::moveCurrentItemUp() {
     if (!currentItem) return;
 
     for (Q3ListViewItem* previousItem = m_listView->firstChild(); previousItem;
-         previousItem = previousItem->nextSibling()) 
+         previousItem = previousItem->nextSibling())
     {
         if (previousItem->nextSibling() == currentItem) {
             previousItem->moveItem(currentItem);
@@ -332,7 +331,7 @@ void RenameImagesWidget::moveCurrentItemUp() {
 void RenameImagesWidget::moveCurrentItemDown() {
     Q3ListViewItem* currentItem = m_listView->currentItem();
     if (!currentItem) return;
-    
+
     Q3ListViewItem* nextItem = currentItem->nextSibling();
     if (nextItem) {
         currentItem->moveItem(nextItem);
@@ -366,12 +365,12 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
     QFileInfo fi(item->pathSrc());
 
     KIPI::ImageInfo info = m_interface->info(url);
-    
-    bool useExtraSymbols = m_addFileDateCheck->isChecked() && 
+
+    bool useExtraSymbols = m_addFileDateCheck->isChecked() &&
         m_useExtraSymbolsCheck->isChecked();
 
     QString newName = m_prefixEdit->text();
-    
+
     if (m_addFileNameCheck->isChecked())
     {
         newName += fi.baseName();
@@ -412,8 +411,8 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
                 else
                 {
                     if ((i = rxN.search(format)) == -1)
-                    { 
-                        break; 
+                    {
+                        break;
                     }
                     j = rxN.matchedLength();
                     QString from = rxN.cap(1);
@@ -479,13 +478,13 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
 
         newName += QString::fromLatin1(".") + fi.extension();
     }
-    
+
     return newName;
 }
 
 void RenameImagesWidget::slotGotPreview(const KFileItem*, const QPixmap& pix)
 {
-    m_pixLabel->setPixmap(pix);    
+    m_pixLabel->setPixmap(pix);
 }
 
 void RenameImagesWidget::slotStart()
@@ -527,7 +526,7 @@ void RenameImagesWidget::slotNext()
 
     bool skip      = false;
     bool overwrite = false;
-    
+
     if (!m_overwriteAll)
     {
         struct stat info;
@@ -590,12 +589,12 @@ void RenameImagesWidget::slotNext()
     {
         // Get the src info
         KIPI::ImageInfo srcInfo = m_interface->info(src);
-        
+
         if (::rename(QFile::encodeName(src.path()),
                      QFile::encodeName(dst.path())) == 0)
         {
             srcInfo.setTitle(dst.fileName());
-            
+
             item->changeResult(i18n("OK"));
         }
         else
@@ -644,7 +643,7 @@ void RenameImagesWidget::slotRemoveImage()
     delete item;
 
     m_pixLabel->clear();
-    
+
     updateListing();
 }
 

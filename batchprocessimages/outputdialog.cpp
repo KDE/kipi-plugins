@@ -30,7 +30,7 @@
 #include <Q3VBoxLayout>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 
 // KDElib includes
 

@@ -31,8 +31,7 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
+#include <QPushButton>
 #include <qcolor.h>
 
 // Include files for KDE
@@ -40,6 +39,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kcolorbutton.h>
+#include <kcombobox.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -60,7 +60,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        {
        QLabel *m_label_noiseType = new QLabel (i18n("Noise algorithm:"), box);
        dvlay->addWidget( m_label_noiseType );
-       m_noiseType = new QComboBox( false, box );
+       m_noiseType = new KComboBox( false, box );
        m_noiseType->insertItem(i18n("Uniform"));
        m_noiseType->insertItem(i18n("Gaussian"));
        m_noiseType->insertItem(i18n("Multiplicative"));

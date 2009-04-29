@@ -27,13 +27,13 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 #include <qimage.h>
 
 // Include files for KDE
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -174,13 +174,13 @@ void ResizeImagesDialog::slotOptionsClicked(void)
        {
        if (Type == 0) // Proportional (1 dim.)
           {
-	  m_quality = optionsDialog->m_quality->value();	  
+	  m_quality = optionsDialog->m_quality->value();
           m_size = optionsDialog->m_size->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
        if (Type == 1) // Proportional (2 dim.)
           {
-	  m_quality = optionsDialog->m_quality->value();	  
+	  m_quality = optionsDialog->m_quality->value();
           m_Width = optionsDialog->m_Width->value();
           m_Height = optionsDialog->m_Height->value();
           m_bgColor = optionsDialog->m_button_bgColor->color();
@@ -189,14 +189,14 @@ void ResizeImagesDialog::slotOptionsClicked(void)
           }
        if (Type == 2) // Non-proportional
           {
-	  m_quality = optionsDialog->m_quality->value();	  
+	  m_quality = optionsDialog->m_quality->value();
           m_fixedWidth = optionsDialog->m_fixedWidth->value();
           m_fixedHeight = optionsDialog->m_fixedHeight->value();
           m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
           }
        if (Type == 3) // Prepare to print
           {
-	  m_quality = optionsDialog->m_quality->value();	  
+	  m_quality = optionsDialog->m_quality->value();
           m_paperSize = optionsDialog->m_paperSize->currentText();
           m_printDpi = optionsDialog->m_printDpi->currentText();
           m_customXSize = optionsDialog->m_customXSize->value();
@@ -219,7 +219,7 @@ void ResizeImagesDialog::readSettings(void)
     KConfig config("kipirc");
     KConfigGroup group = config.group("ResizeImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("ResiseType", 3)); // Prepare to print per default.
+    m_Type->setCurrentIndex(group.readEntry("ResiseType", 3)); // Prepare to print per default.
     m_size = group.readEntry("Size", 640);
     m_resizeFilter = group.readEntry("ResizeFilter", "Lanczos");
 
@@ -246,7 +246,7 @@ void ResizeImagesDialog::readSettings(void)
     else
        m_customSettings = false;
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
@@ -376,11 +376,11 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
           *proc << item->pathSrc() + "[0]";
 
-          // ImageMagick composite program do not preserve exif data from original. 
+          // ImageMagick composite program do not preserve exif data from original.
           // Need to use "-profile" option for that.
-          
+
           *proc << "-profile" << item->pathSrc();
-          
+
           Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
           Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
           Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
@@ -405,7 +405,7 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
              {
              *proc << "-filter" << m_resizeFilter;
              }
-            
+
           *proc << "-quality";
           QString Temp3;
           Temp3.setNum(m_quality);
@@ -503,9 +503,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
           Temp2.append(Temp.setNum(m_backgroundColor.blue()) + ")");
           *proc << Temp2;
 
-          // ImageMagick composite program do not preserve exif data from original. 
+          // ImageMagick composite program do not preserve exif data from original.
           // Need to use "-profile" option for that.
-          
+
           *proc << "-profile" << item->pathSrc();
 
           *proc << "-resize" << targetBackgroundSize + "!";

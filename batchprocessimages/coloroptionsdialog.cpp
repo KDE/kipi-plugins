@@ -29,9 +29,8 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <q3groupbox.h>
-#include <qcombobox.h>
 #include <qcolor.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
@@ -42,6 +41,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kcolorbutton.h>
+#include <kcombobox.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -62,7 +62,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
        {
        QLabel *m_label_depthValue = new QLabel (i18n("Depth value:"), box);
        dvlay->addWidget( m_label_depthValue );
-       m_depthValue = new QComboBox( false, box );
+       m_depthValue = new KComboBox( box);
        m_depthValue->insertItem("8");
        m_depthValue->insertItem("16");
        m_depthValue->insertItem("32");

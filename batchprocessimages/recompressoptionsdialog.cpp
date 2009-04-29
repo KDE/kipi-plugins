@@ -31,14 +31,14 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QPushButton>
+#include <QCheckBox>
 
 // Include files for KDE
 
 #include <klocale.h>
 #include <knuminput.h>
+#include <kcombobox.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -107,7 +107,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     Q3GroupBox * groupBox3 = new Q3GroupBox( 2, Qt::Horizontal, i18n("TIFF File Format"), box );
 
     m_label_TIFFimageCompression = new QLabel (i18n("Image compression algorithm:"), groupBox3);
-    m_TIFFCompressionAlgo = new QComboBox( false, groupBox3 );
+    m_TIFFCompressionAlgo = new KComboBox(groupBox3);
     m_TIFFCompressionAlgo->insertItem("LZW");
     m_TIFFCompressionAlgo->insertItem("JPEG");
     m_TIFFCompressionAlgo->insertItem(i18n("None"));
@@ -121,7 +121,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     Q3GroupBox * groupBox4 = new Q3GroupBox( 2, Qt::Horizontal, i18n("TGA File Format"), box );
 
     m_label_TGAimageCompression = new QLabel (i18n("Image compression algorithm:"), groupBox4);
-    m_TGACompressionAlgo = new QComboBox( false, groupBox4 );
+    m_TGACompressionAlgo = new KComboBox(groupBox4);
     m_TGACompressionAlgo->insertItem("RLE");
     m_TGACompressionAlgo->insertItem(i18n("None"));
     m_TGACompressionAlgo->setWhatsThis(i18n("<p>Select here the TGA compression algorithm.") );

@@ -33,9 +33,9 @@
 #include <kdialog.h>
 
 class QCheckBox;
-class QComboBox;
 
 class KIntNumInput;
+class KComboBox;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -52,8 +52,8 @@ public:
    QLabel          *m_label_imageCompression;
    KIntNumInput    *m_JPEGPNGCompression;
    QCheckBox       *m_compressLossLess;
-   QComboBox       *m_TIFFCompressionAlgo;
-   QComboBox       *m_TGACompressionAlgo;
+   KComboBox       *m_TIFFCompressionAlgo;
+   KComboBox       *m_TGACompressionAlgo;
 
 public slots:
 

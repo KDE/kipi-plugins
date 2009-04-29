@@ -31,8 +31,8 @@
 
 #include <kdialog.h>
 
-class QComboBox;
 
+class KComboBox;
 class KIntNumInput;
 
 namespace KIPIBatchProcessImagesPlugin
@@ -47,7 +47,7 @@ public:
    ColorOptionsDialog(QWidget *parent=0, int ColorType = 0);
    ~ColorOptionsDialog();
 
-   QComboBox       *m_depthValue;
+   KComboBox       *m_depthValue;
 
    KIntNumInput    *m_fuzzDistance;
 

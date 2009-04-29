@@ -31,9 +31,8 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QPushButton>
+#include <QCheckBox>
 #include <qcolor.h>
 
 // Include files for KDE
@@ -42,6 +41,7 @@
 #include <knuminput.h>
 #include <kcolorbutton.h>
 #include <kmessagebox.h>
+#include <kcombobox.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -77,7 +77,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
-       m_resizeFilter = new QComboBox( false, groupBox1 );
+       m_resizeFilter = new KComboBox(groupBox1);
        m_resizeFilter->insertItem(i18nc("Filter name","Bessel"));
        m_resizeFilter->insertItem(i18nc("Filter name","Blackman"));
        m_resizeFilter->insertItem(i18nc("Filter name","Box"));
@@ -146,7 +146,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_bgColor->setBuddy( m_button_bgColor );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox2);
-       m_resizeFilter = new QComboBox( false, groupBox2 );
+       m_resizeFilter = new KComboBox(groupBox2);
        m_resizeFilter->insertItem(i18nc("Filter name","Bessel"));
        m_resizeFilter->insertItem(i18nc("Filter name","Blackman"));
        m_resizeFilter->insertItem(i18nc("Filter name","Box"));
@@ -193,7 +193,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_fixedHeight->setSliderEnabled(true);
        m_fixedHeight->setLabel( i18n("New height (pixels):") );
        m_fixedHeight->setWhatsThis(i18n("<p>The new images' height in pixels.") );
-       
+
        m_quality = new KIntNumInput(75, groupBox1);
        m_quality->setRange(0, 100);
        m_quality->setSliderEnabled(true);
@@ -202,7 +202,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox1);
 
-       m_resizeFilter = new QComboBox( false, groupBox1 );
+       m_resizeFilter = new KComboBox(groupBox1);
        m_resizeFilter->insertItem(i18nc("Filter name","Bessel"));
        m_resizeFilter->insertItem(i18nc("Filter name","Blackman"));
        m_resizeFilter->insertItem(i18nc("Filter name","Box"));
@@ -237,7 +237,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        Q3GroupBox * groupBox1 = new Q3GroupBox( 2, Qt::Horizontal, i18n("Printing Standard Settings"), box );
 
        m_label_paperSize = new QLabel (i18n("Paper size (cm):"), groupBox1);
-       m_paperSize = new QComboBox( false, groupBox1 );
+       m_paperSize = new KComboBox(groupBox1);
        m_paperSize->insertItem("9x13");
        m_paperSize->insertItem("10x15");
        m_paperSize->insertItem("13x19");
@@ -253,7 +253,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_paperSize->setBuddy( m_paperSize );
 
        m_label_printDpi = new QLabel (i18n("Print resolution (dpi):"), groupBox1);
-       m_printDpi = new QComboBox( false, groupBox1 );
+       m_printDpi = new KComboBox(groupBox1);
        m_printDpi->insertItem("75");
        m_printDpi->insertItem("150");
        m_printDpi->insertItem("300");
@@ -303,7 +303,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
        m_label_backgroundColor->setBuddy( m_button_backgroundColor );
 
        m_label_resizeFilter = new QLabel (i18n("Filter name:"), groupBox3);
-       m_resizeFilter = new QComboBox( false, groupBox3 );
+       m_resizeFilter = new KComboBox(groupBox3);
        m_resizeFilter->insertItem(i18nc("Filter name","Bessel"));
        m_resizeFilter->insertItem(i18nc("Filter name","Blackman"));
        m_resizeFilter->insertItem(i18nc("Filter name","Box"));

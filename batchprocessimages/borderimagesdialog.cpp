@@ -27,9 +27,9 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
+#include <qstring.h>
 
 // Include files for KDE
 
@@ -44,6 +44,7 @@
 #include <kiconloader.h>
 #include <kmenu.h>
 #include <ktoolinvocation.h>
+#include <kcombobox.h>
 
 // Local includes
 
@@ -185,7 +186,7 @@ void BorderImagesDialog::readSettings(void)
     KConfig config("kipirc");
     KConfigGroup group = config.group("BorderImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("BorderType", 1));     // Niepce per default.
+    m_Type->setCurrentIndex(group.readEntry("BorderType", 1));     // Niepce per default.
     m_solidWidth = group.readEntry("SolidWidth", 25);
     m_solidColor = group.readEntry("SolidColor", QColor(Qt::black));
 
@@ -205,7 +206,7 @@ void BorderImagesDialog::readSettings(void)
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );

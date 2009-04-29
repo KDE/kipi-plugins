@@ -31,9 +31,8 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <qstring.h>
-#include <qcombobox.h>
 #include <qcolor.h>
 
 // Include files for KDE
@@ -151,7 +150,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
        m_button_frameBorderColor->setWhatsThis(i18n( "<p>You can select here the border color." ));
        dvlay->addWidget( m_button_frameBorderColor );
 
-       connect(m_frameBorderWidth, SIGNAL(valueChanged(int)), 
+       connect(m_frameBorderWidth, SIGNAL(valueChanged(int)),
                this, SLOT(slotFrameBorderWidthChanged(int)));
        }
 }

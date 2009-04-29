@@ -31,8 +31,7 @@
 
 #include <kdialog.h>
 
-class QComboBox;
-
+class KComboBox;
 class KIntNumInput;
 
 namespace KIPIBatchProcessImagesPlugin
@@ -47,7 +46,7 @@ public:
    FilterOptionsDialog(QWidget *parent=0, int FilterType = 0);
    ~FilterOptionsDialog();
 
-   QComboBox       *m_noiseType;
+   KComboBox       *m_noiseType;
 
    KIntNumInput    *m_blurRadius;
    KIntNumInput    *m_blurDeviation;

@@ -27,12 +27,12 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 
 // Include files for KDE
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -254,7 +254,7 @@ void EffectImagesDialog::readSettings(void)
 KConfig config("kipirc");
     KConfigGroup group = config.group("EffectImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("EffectType", 3));   // Emboss per default.
+    m_Type->setCurrentIndex(group.readEntry("EffectType", 3));   // Emboss per default.
     m_latWidth = group.readEntry("LatWidth", 50);
     m_latHeight = group.readEntry("LatHeight", 50);
     m_latOffset = group.readEntry("LatOffset", 1);
@@ -278,7 +278,7 @@ KConfig config("kipirc");
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );

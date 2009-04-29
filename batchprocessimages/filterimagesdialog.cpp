@@ -27,12 +27,12 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 
 // Include files for KDE
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -213,7 +213,7 @@ void FilterImagesDialog::readSettings(void)
     KConfig config("kipirc");
     KConfigGroup group = config.group("FilterImages Settings");
 
-    m_Type->setCurrentItem(group.readEntry("FilterType", 7));      // Sharpen per default
+    m_Type->setCurrentIndex(group.readEntry("FilterType", 7));      // Sharpen per default
     m_noiseType = group.readEntry("NoiseType", i18n("Gaussian"));
     m_blurRadius = group.readEntry("BlurRadius", 3);
     m_blurDeviation = group.readEntry("BlurDeviation", 1);
@@ -231,7 +231,7 @@ void FilterImagesDialog::readSettings(void)
     else
         m_smallPreview->setChecked( false );
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );

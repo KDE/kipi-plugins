@@ -27,12 +27,12 @@
 
 #include <q3groupbox.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
+#include <QCheckBox>
+#include <QPushButton>
 
 // Include files for KDE
 
+#include <kcombobox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
@@ -144,7 +144,7 @@ void RecompressImagesDialog::readSettings(void)
     m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
     m_TGACompressionAlgo = group.readEntry("TGACompressionAlgo", i18n("None"));
 
-    m_overWriteMode->setCurrentItem(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
     if (group.readEntry("RemoveOriginal", "false") == "true")
         m_removeOriginal->setChecked( true );
@@ -249,11 +249,11 @@ bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 {
     QString imageExt = item->nameSrc().section('.', -1 );
 
-    if (imageExt != "JPEG" && imageExt != "jpeg" && 
+    if (imageExt != "JPEG" && imageExt != "jpeg" &&
         imageExt != "JPG"  && imageExt != "jpg"  &&
         imageExt != "JPE"  && imageExt != "jpe"  &&
         imageExt != "PNG"  && imageExt != "png"  &&
-        imageExt != "TIFF" && imageExt != "tiff" && 
+        imageExt != "TIFF" && imageExt != "tiff" &&
         imageExt != "TIF"  && imageExt != "tif"  &&
         imageExt != "TGA"  && imageExt != "tga")
         {

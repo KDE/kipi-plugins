@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kdebug.h>
+//#include <kdebug.h>
 #include <kdialog.h>
 #include <kio/job.h>
 #include <kurl.h>
@@ -55,11 +55,11 @@
 
 class QGroupBox;
 class QCheckBox;
-class QComboBox;
 class QFileInfo;
 class QLabel;
 class QProgressBar;
 
+class KComboBox;
 class KProcess;
 class KUrlRequester;
 
@@ -122,9 +122,6 @@ private slots:
    QLabel                 *m_labelType;
    QLabel                 *m_imageLabel;
 
-   QComboBox              *m_overWriteMode;
-   QComboBox              *m_Type;
-
    KUrlRequester          *m_destinationURL;
 
    BatchProcessImagesList *m_listFiles;
@@ -143,6 +140,9 @@ private slots:
    QPushButton            *m_previewButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
+
+   KComboBox              *m_overWriteMode;
+   KComboBox              *m_Type;
 
    KConfig                *m_config;
 

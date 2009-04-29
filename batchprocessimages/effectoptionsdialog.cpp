@@ -31,8 +31,7 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
+#include <QPushButton>
 #include <qcolor.h>
 
 // Include files for KDE
