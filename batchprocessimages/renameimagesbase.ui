@@ -15,7 +15,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="Q3GroupBox" name="m_templateGroupBox">
+    <widget class="QGroupBox" name="m_templateGroupBox">
      <property name="title">
       <string>Template for renaming files</string>
      </property>
@@ -128,7 +128,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="m_addRemoveBox">
+    <widget class="QGroupBox" name="m_addRemoveBox">
      <property name="title">
       <string/>
      </property>
@@ -263,9 +263,9 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>Q3GroupBox</class>
+   <class>QGroupBox</class>
    <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
+   <header>QGroupBox</header>
    <container>1</container>
   </customwidget>
   <customwidget>

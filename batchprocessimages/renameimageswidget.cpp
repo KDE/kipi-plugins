@@ -40,7 +40,7 @@ extern "C"
 
 // Qt includes
 
-#include <Q3GroupBox>
+#include <QGroupBox>
 #include <Q3PopupMenu>
 #include <Q3ProgressDialog>
 #include <QCheckBox>

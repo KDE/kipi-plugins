@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <Q3GroupBox>
+#include <QGroupBox>
 #include <QCheckBox>
 #include <QImage>
 #include <QLabel>
