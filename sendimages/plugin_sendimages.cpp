@@ -47,23 +47,29 @@
 K_PLUGIN_FACTORY( SendImagesFactory, registerPlugin<Plugin_SendImages>(); )
 K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
+using namespace KIPISendimagesPlugin;
+
 class Plugin_SendImagesPriv
 {
 public:
 
     Plugin_SendImagesPriv()
     {
+        dialog              = 0;
         action_sendimages   = 0;
         sendImagesOperation = 0;
     }
 
-   KAction                          *action_sendimages;
+    KAction          *action_sendimages;
 
-   KIPISendimagesPlugin::SendImages *sendImagesOperation;
+    SendImagesDialog *dialog;
+
+    SendImages       *sendImagesOperation;
 };
 
 Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
-                 : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), d(new Plugin_SendImagesPriv)
+                 : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
+                   d(new Plugin_SendImagesPriv)
 {
     kDebug( 51001 ) << "Plugin_SendImages plugin loaded";
 }
@@ -114,13 +120,27 @@ void Plugin_SendImages::slotActivate()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPISendimagesPlugin::SendImagesDialog dialog(kapp->activeWindow(), interface, images.images());
-    if (dialog.exec() == QDialog::Accepted)
+    if (d->dialog) delete d->dialog;
+
+    d->dialog = new SendImagesDialog(kapp->activeWindow(), interface, images.images());
+    d->dialog->show();
+
+    connect(d->dialog, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
+}
+
+void Plugin_SendImages::slotOk()
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    if ( !interface )
     {
-        KIPISendimagesPlugin::EmailSettingsContainer settings = dialog.emailSettings();
-        d->sendImagesOperation = new KIPISendimagesPlugin::SendImages(settings, this, interface);
-        d->sendImagesOperation->sendImages();
+       kError( 51000 ) << "Kipi interface is null!" << endl;
+       return;
     }
+
+    EmailSettingsContainer settings = d->dialog->emailSettings();
+    d->sendImagesOperation          = new SendImages(settings, this, interface);
+    d->sendImagesOperation->sendImages();
 }
 
 KIPI::Category Plugin_SendImages::category( KAction* action ) const

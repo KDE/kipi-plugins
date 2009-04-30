@@ -85,8 +85,8 @@ public:
     KIPIPlugins::KPAboutData *about;
 };
 
-SendImagesDialog::SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl::List urls)
-                : KPageDialog(parent), d(new SendImagesDialogPrivate)
+SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface *iface, const KUrl::List& urls)
+                : KPageDialog(0), d(new SendImagesDialogPrivate)
 {
     d->urls = urls;
 

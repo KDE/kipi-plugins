@@ -50,7 +50,7 @@ class SendImagesDialog : public KPageDialog
 
 public:
 
-    SendImagesDialog(QWidget* parent, KIPI::Interface *iface, KUrl::List urls);
+    SendImagesDialog(QWidget* parent, KIPI::Interface *iface, const KUrl::List& urls);
     ~SendImagesDialog();
 
     EmailSettingsContainer emailSettings();
@@ -59,7 +59,7 @@ protected:
 
     void closeEvent(QCloseEvent *);
 
-private slots:
+private Q_SLOTS:
 
     void slotOk();
     void slotHelp();

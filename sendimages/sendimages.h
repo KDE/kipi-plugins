@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <qobject.h>
+#include <QObject>
 
 // Local includes
 
@@ -52,7 +52,7 @@ public:
 
     void sendImages();
 
-private slots:
+private Q_SLOTS:
 
     void slotStartingResize(const KUrl&);
     void slotFinishedResize(const KUrl&, const KUrl&, int);

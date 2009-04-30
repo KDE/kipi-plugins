@@ -45,15 +45,19 @@ Q_OBJECT
 
 public:
 
-   Plugin_SendImages(QObject *parent, const QVariantList &args);
-   ~Plugin_SendImages();
+    Plugin_SendImages(QObject *parent, const QVariantList& args);
+    ~Plugin_SendImages();
 
-   virtual KIPI::Category category( KAction* action ) const;
-   virtual void setup( QWidget* );
+    virtual KIPI::Category category( KAction* action ) const;
+    virtual void setup( QWidget* );
 
-public slots:
+public Q_SLOTS:
 
-   void slotActivate();
+    void slotActivate();
+
+private Q_SLOTS:
+
+    void slotOk();
 
 private:
 

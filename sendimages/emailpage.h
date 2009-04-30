@@ -48,7 +48,7 @@ public:
     void setEmailSettings(const EmailSettingsContainer& settings);
     EmailSettingsContainer emailSettings();
 
-private slots:
+private Q_SLOTS:
 
     void slotImagesFormatChanged(int);
 

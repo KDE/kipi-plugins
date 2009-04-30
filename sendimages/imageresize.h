@@ -59,7 +59,7 @@ private:
     bool imageResize(const EmailSettingsContainer& settings, 
                      const KUrl& orgUrl, const QString& destName, QString& err);
 
-signals:
+Q_SIGNALS:
 
     void startingResize(const KUrl &orgUrl);
     void finishedResize(const KUrl &orgUrl, const KUrl& emailUrl, int percent);
