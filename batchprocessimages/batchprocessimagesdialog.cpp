@@ -36,6 +36,7 @@ extern "C"
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QProgressBar>
+#include <QTimer>
 
 // KDE includes
 
@@ -203,6 +204,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     m_progress->setMaximum(100);
     m_progress->setValue(0);
     m_progress->setWhatsThis(i18n("This is the current percentage of the task completed."));
+    m_progress->setVisible(false);
 
     QWidget* box            = new QWidget(this);
     QGridLayout *mainLayout = new QGridLayout;
@@ -381,19 +383,8 @@ void BatchProcessImagesDialog::slotProcessStart(void)
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStop()));
 
-    m_labelType->setEnabled(false);
-    m_Type->setEnabled(false);
-    m_optionsButton->setEnabled(false);
-    m_previewButton->setEnabled(false);
-    m_smallPreview->setEnabled(false);
-
-    m_labelOverWrite->setEnabled(false);
-    m_overWriteMode->setEnabled(false);
-    m_removeOriginal->setEnabled(false);
-
-    m_destinationURL->setEnabled(false);
-    m_addImagesButton->setEnabled(false);
-    m_remImagesButton->setEnabled(false);
+    enableWidgets(false);
+    m_progress->setVisible(true);
 
     m_listFile2Process_iterator = new Q3ListViewItemIterator( m_listFiles );
     startProcess();
@@ -742,18 +733,7 @@ void BatchProcessImagesDialog::slotPreview(void)
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*> (m_listFiles->currentItem());
 
-    m_listFiles->setEnabled(false);
-    m_labelType->setEnabled(false);
-    m_Type->setEnabled(false);
-    m_optionsButton->setEnabled(false);
-    m_previewButton->setEnabled(false);
-    m_labelOverWrite->setEnabled(false);
-    m_overWriteMode->setEnabled(false);
-    m_removeOriginal->setEnabled(false);
-    m_smallPreview->setEnabled(false);
-    m_destinationURL->setEnabled(false);
-    m_addImagesButton->setEnabled(false);
-    m_remImagesButton->setEnabled(false);
+    enableWidgets(false);
 
     disconnect( this, SIGNAL(user1Clicked()),
                 this, SLOT(slotProcessStart()));
@@ -927,17 +907,7 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
 void BatchProcessImagesDialog::endPreview(void)
 {
-    m_listFiles->setEnabled(true);
-    m_labelType->setEnabled(true);
-    m_Type->setEnabled(true);
-    m_previewButton->setEnabled(true);
-    m_labelOverWrite->setEnabled(true);
-    m_overWriteMode->setEnabled(true);
-    m_destinationURL->setEnabled(true);
-    m_addImagesButton->setEnabled(true);
-    m_remImagesButton->setEnabled(true);
-    m_smallPreview->setEnabled(true);
-    m_removeOriginal->setEnabled(true);
+    enableWidgets(true);
     showButton(KDialog::Cancel, true);
 
     // Default status if 'slotTypeChanged' isn't re-implemented.
@@ -999,6 +969,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 void BatchProcessImagesDialog::endProcess(void)
 {
     m_convertStatus = PROCESS_DONE;
+    enableWidgets(true);
+    QTimer::singleShot(500, m_progress, SLOT(hide()));
     setButtonText(User1, i18n("&Close"));
 
     disconnect(this, SIGNAL(user1Clicked()),
@@ -1027,6 +999,22 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
         return QString();
 
     return (NewDestUrl.path());
+}
+
+void BatchProcessImagesDialog::enableWidgets(bool state)
+{
+    m_Type->setEnabled(state);
+    m_addImagesButton->setEnabled(state);
+    m_destinationURL->setEnabled(state);
+    m_labelOverWrite->setEnabled(state);
+    m_labelType->setEnabled(state);
+    m_listFiles->setEnabled(state);
+    m_optionsButton->setEnabled(state);
+    m_overWriteMode->setEnabled(state);
+    m_previewButton->setEnabled(state);
+    m_remImagesButton->setEnabled(state);
+    m_removeOriginal->setEnabled(state);
+    m_smallPreview->setEnabled(state);
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

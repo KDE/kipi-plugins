@@ -84,33 +84,37 @@ private slots:
    // --------------------------------------------------------------------------------------------------------
    // Standards slots
 
-   void slotOk( void );
+    void slotOk(void);
 
-   void slotProcessStart(void);
-   void slotReadyRead();
-   void slotFinished();
+    void slotProcessStart(void);
+    void slotReadyRead();
+    void slotFinished();
 
-   void slotPreview(void);
-   void slotPreviewFinished();
-   void slotPreviewReadyRead();
-   void slotPreviewStop( void );
+    void slotPreview(void);
+    void slotPreviewFinished();
+    void slotPreviewReadyRead();
+    void slotPreviewStop(void);
 
-   void slotListDoubleClicked(Q3ListViewItem *itemClicked);
+    void slotListDoubleClicked(Q3ListViewItem *itemClicked);
 
-   void slotAddDropItems(QStringList filesPath);
+    void slotAddDropItems(QStringList filesPath);
 
-   void slotImageSelected( Q3ListViewItem * item );
-   void slotGotPreview(const KFileItem&, const QPixmap &pixmap);
+    void slotImageSelected(Q3ListViewItem * item);
+    void slotGotPreview(const KFileItem&, const QPixmap &pixmap);
 
-   void slotImagesFilesButtonAdd( void );
-   void slotImagesFilesButtonRem( void );
+    void slotImagesFilesButtonAdd(void);
+    void slotImagesFilesButtonRem(void);
 
    // --------------------------------------------------------------------------------------------------------
    // Standards virtuals slots for re-implementation
 
-   virtual void slotHelp(void){};                             // Called when 'Help' menu option is actived.
-   virtual void slotOptionsClicked(void){};                   // Called when 'Options' button is clicked.
-   virtual void slotTypeChanged(int){};                       // Called when the current type option is changed.
+    virtual void slotHelp(void){};                             // Called when 'Help' menu option is actived.
+    virtual void slotOptionsClicked(void){};                   // Called when 'Options' button is clicked.
+    virtual void slotTypeChanged(int){};                       // Called when the current type option is changed.
+
+private:
+
+    void enableWidgets(bool state);
 
  protected:
 
