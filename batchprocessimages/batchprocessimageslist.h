@@ -28,21 +28,20 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QObject>
+#include <QTreeWidget>
 
 // KDE includes
-
-#include <k3listview.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BatchProcessImagesList : public K3ListView
+class BatchProcessImagesList : public QTreeWidget
 {
     Q_OBJECT
 
 public:
 
-    BatchProcessImagesList(QWidget *parent=0, const char *name=0);
+    BatchProcessImagesList(QWidget *parent=0);
 
 signals:
 
@@ -51,10 +50,8 @@ signals:
 protected:
 
     void dragEnterEvent(QDragEnterEvent *e);
+    void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent* e);
-    bool acceptDrag(QDropEvent* e) const;
-    void contentsDropEvent(QDropEvent* e);
-    void droppedImagesItems(QDropEvent *e);
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

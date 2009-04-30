@@ -95,11 +95,11 @@ private slots:
     void slotPreviewReadyRead();
     void slotPreviewStop(void);
 
-    void slotListDoubleClicked(Q3ListViewItem *itemClicked);
+    void slotListDoubleClicked(QTreeWidgetItem *itemClicked);
 
     void slotAddDropItems(QStringList filesPath);
 
-    void slotImageSelected(Q3ListViewItem * item);
+    void slotImageSelected( QTreeWidgetItem * item );
     void slotGotPreview(const KFileItem&, const QPixmap &pixmap);
 
     void slotImagesFilesButtonAdd(void);
@@ -156,7 +156,7 @@ private:
    KProcess               *m_ProcessusProc;
    KProcess               *m_PreviewProc;
 
-   Q3ListViewItemIterator  *m_listFile2Process_iterator;
+   QTreeWidgetItemIterator *m_listFile2Process_iterator;
 
    QString                 whatsThis;
    QString                 m_ImagesFilesSort;

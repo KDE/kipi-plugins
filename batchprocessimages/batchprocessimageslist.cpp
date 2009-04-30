@@ -20,39 +20,33 @@
  *
  * ============================================================ */
 
-#include "batchprocessimageslist.h"
 #include "batchprocessimageslist.moc"
 
 // Qt includes
-
-#include <Q3DragObject>
-#include <Q3ListView>
-#include <Q3StrList>
 #include <QDragEnterEvent>
 #include <QDropEvent>
-#include <QEvent>
-#include <QFileInfo>
 
 // KDE includes
-
 #include <klocale.h>
+#include <kurl.h>
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char * /*name*/) // FIXME: remove name
-                      : K3ListView(parent)
+BatchProcessImagesList::BatchProcessImagesList(QWidget *parent)
+: QTreeWidget(parent)
 {
     setAcceptDrops(true);
-    setDropVisualizer(false);
-    addColumn(i18n("Source Album"));
-    addColumn(i18n("Source Image"));
-    addColumn(i18n("Target Image"));
-    addColumn(i18n("Result"));
-    setSorting(3);
-    setItemMargin(3);
-    setResizeMode(Q3ListView::LastColumn);
-    setSelectionMode(Q3ListView::Single);
+    setDropIndicatorShown(false);
+    setColumnCount(4);
+    setRootIsDecorated(false);
+    setHeaderLabels(QStringList()
+        << i18n("Source Album")
+        << i18n("Source Image")
+        << i18n("Target Image")
+        << i18n("Result")
+        );
+    sortByColumn(3);
     setAllColumnsShowFocus ( true );
     this->setWhatsThis(i18n("<p>You can see here the operations' results "
                             "during the process. Double-click on an item for more "
@@ -63,50 +57,29 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent, const char * /*n
                             "the process' results will be merged to the target Album.</p>"));
 }
 
-void BatchProcessImagesList::dragEnterEvent(QDragEnterEvent *e)
+void BatchProcessImagesList::dragEnterEvent(QDragEnterEvent* event)
 {
-    e->accept(Q3UriDrag::canDecode(e));
+    if (event->mimeData()->hasUrls()) {
+        event->acceptProposedAction();
+    }
 }
 
-bool BatchProcessImagesList::acceptDrag(QDropEvent* e) const
+void BatchProcessImagesList::dragMoveEvent(QDragMoveEvent* event)
 {
-    return ( Q3UriDrag::canDecode(e) );
+    event->acceptProposedAction();
 }
 
-void BatchProcessImagesList::contentsDropEvent(QDropEvent* e)
+void BatchProcessImagesList::dropEvent(QDropEvent* event)
 {
-    droppedImagesItems(e);
-}
+    const KUrl::List urlList = KUrl::List::fromMimeData(event->mimeData());
+    QStringList paths;
+    Q_FOREACH(const KUrl& url, urlList) {
+        paths << url.toLocalFile();
+    }
 
-void BatchProcessImagesList::dropEvent(QDropEvent *e)
-{
-    droppedImagesItems(e);
-}
-
-void BatchProcessImagesList::droppedImagesItems(QDropEvent *e)
-{
-    Q3StrList strList;
-    QStringList FilesPath;
-
-    if ( !Q3UriDrag::decode(e, strList) ) return;
-
-    Q3StrList stringList;
-    Q3StrListIterator it(strList);
-    char *str;
-
-    while ( (str = it.current()) != 0 )
-       {
-       QString filePath = Q3UriDrag::uriToLocalFile(str);
-       QFileInfo fileInfo(filePath);
-
-       if (fileInfo.isFile() && fileInfo.exists())
-          FilesPath.append(fileInfo.filePath());
-
-       ++it;
-       }
-
-    if (FilesPath.isEmpty() == false)
-       emit addedDropItems(FilesPath);
+    if (!paths.isEmpty()) {
+       emit addedDropItems(paths);
+    }
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

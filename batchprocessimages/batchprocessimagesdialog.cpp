@@ -219,8 +219,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
 
     //---------------------------------------------
 
-    connect(m_listFiles, SIGNAL(doubleClicked(Q3ListViewItem *)),
-            this, SLOT(slotListDoubleClicked(Q3ListViewItem *)));
+    connect(m_listFiles, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
+            this, SLOT(slotListDoubleClicked(QTreeWidgetItem *)));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStart()));
@@ -237,8 +237,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     connect(m_listFiles, SIGNAL( addedDropItems(QStringList) ),
             this, SLOT( slotAddDropItems(QStringList)));
 
-    connect(m_listFiles, SIGNAL( currentChanged( Q3ListViewItem * ) ),
-            this, SLOT( slotImageSelected( Q3ListViewItem * )));
+    connect(m_listFiles, SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem *) ),
+            this, SLOT( slotImageSelected( QTreeWidgetItem * )));
 
     connect(m_addImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonAdd()));
@@ -276,10 +276,14 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem(void)
 
     if (pitem)
     {
-        m_listFiles->takeItem(pitem);
-        m_listFiles->setSelected(m_listFiles->currentItem(), true);
-        m_selectedImageFiles.removeAt(m_selectedImageFiles.indexOf(pitem->pathSrc()));
+        m_selectedImageFiles.removeOne(pitem->pathSrc());
         delete pitem;
+
+        /*
+        if (m_listFiles->currentItem()) {
+            m_listFiles->currentItem()->setSelected(true);
+        }
+        */
         m_nbItem = m_selectedImageFiles.count();
 
         if (m_nbItem == 0)
@@ -289,9 +293,9 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem(void)
     }
 }
 
-void BatchProcessImagesDialog::slotImageSelected(Q3ListViewItem * item)
+void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
 {
-    if (!item || m_listFiles->childCount() == 0)
+    if (!item || m_listFiles->topLevelItemCount() == 0)
     {
         m_imageLabel->clear();
         return;
@@ -386,7 +390,7 @@ void BatchProcessImagesDialog::slotProcessStart(void)
     enableWidgets(false);
     m_progress->setVisible(true);
 
-    m_listFile2Process_iterator = new Q3ListViewItemIterator( m_listFiles );
+    m_listFile2Process_iterator = new QTreeWidgetItemIterator( m_listFiles );
     startProcess();
 }
 
@@ -410,7 +414,7 @@ bool BatchProcessImagesDialog::startProcess(void)
         return true;
     }
 
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
+    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( **m_listFile2Process_iterator );
     m_listFiles->setCurrentItem(item);
 
     if ( prepareStartProcess(item, targetAlbum) == false ) // If there is a problem during the
@@ -418,10 +422,10 @@ bool BatchProcessImagesDialog::startProcess(void)
         ++*m_listFile2Process_iterator;
         ++m_progressStatus;
         m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
-        item = static_cast<BatchProcessImagesItem*>( m_listFile2Process_iterator->current() );
+        item = static_cast<BatchProcessImagesItem*>( **m_listFile2Process_iterator );
         m_listFiles->setCurrentItem(item);
 
-        if ( m_listFile2Process_iterator->current() )
+        if ( **m_listFile2Process_iterator )
         {
             startProcess();
             return true;
@@ -455,7 +459,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
-                if ( m_listFile2Process_iterator->current() )
+                if ( **m_listFile2Process_iterator )
                 {
                    startProcess();
                    return true;
@@ -492,7 +496,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 ++m_progressStatus;
                 m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
-                if ( m_listFile2Process_iterator->current() )
+                if ( **m_listFile2Process_iterator )
                 {
                    startProcess();
                    return true;
@@ -520,7 +524,7 @@ bool BatchProcessImagesDialog::startProcess(void)
              ++m_progressStatus;
              m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
-             if ( m_listFile2Process_iterator->current() )
+             if ( **m_listFile2Process_iterator )
              {
                 startProcess();
                 return true;
@@ -573,7 +577,7 @@ bool BatchProcessImagesDialog::startProcess(void)
 void BatchProcessImagesDialog::slotReadyRead()
 {
     BatchProcessImagesItem *item =
-            static_cast<BatchProcessImagesItem*> (m_listFile2Process_iterator->current());
+            static_cast<BatchProcessImagesItem*> (**m_listFile2Process_iterator);
     QByteArray output = m_ProcessusProc->readAll();
     item->changeOutputMess(QString::fromLocal8Bit(output.data(), output.size()));
 }
@@ -587,8 +591,8 @@ void BatchProcessImagesDialog::slotFinished()
     }
 
     BatchProcessImagesItem *item =
-            static_cast<BatchProcessImagesItem*> (m_listFile2Process_iterator->current());
-    m_listFiles->ensureItemVisible(m_listFiles->currentItem());
+            static_cast<BatchProcessImagesItem*> (**m_listFile2Process_iterator);
+    m_listFiles->scrollToItem(m_listFiles->currentItem());
 
     if (m_ProcessusProc->exitStatus() == QProcess::CrashExit)
     {
@@ -609,7 +613,7 @@ void BatchProcessImagesDialog::slotFinished()
             ++m_progressStatus;
             m_progress->setValue((int) ((float) m_progressStatus * (float) 100 / (float) m_nbItem));
 
-            if (m_listFile2Process_iterator->current())
+            if (**m_listFile2Process_iterator)
                 startProcess();
             else
                 endProcess();
@@ -700,13 +704,13 @@ void BatchProcessImagesDialog::slotFinished()
     ++m_progressStatus;
     m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
-    if ( m_listFile2Process_iterator->current() )
+    if ( **m_listFile2Process_iterator )
         startProcess();
     else
         endProcess();
 }
 
-void BatchProcessImagesDialog::slotListDoubleClicked(Q3ListViewItem *itemClicked)
+void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicked)
 {
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*> (itemClicked);
 
@@ -871,11 +875,11 @@ void BatchProcessImagesDialog::listImageFiles(void)
 
         bool findItem = false;
 
-        Q3ListViewItemIterator it2(m_listFiles);
+        QTreeWidgetItemIterator it2(m_listFiles);
 
-        while (it2.current())
+        while (*it2)
         {
-            BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*> (it2.current());
+            BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*> (*it2);
 
             if (pitem->pathSrc() == currentFile.section('/', 0, -1))
                 findItem = true;
@@ -899,10 +903,13 @@ void BatchProcessImagesDialog::listImageFiles(void)
         delete fi;
     }
 
-    m_listFiles->setCurrentItem(m_listFiles->firstChild());
-    m_listFiles->setSelected(m_listFiles->currentItem(), true);
-    slotImageSelected(m_listFiles->currentItem());
-    m_listFiles->ensureItemVisible(m_listFiles->currentItem());
+    QTreeWidgetItem* firstItem = m_listFiles->topLevelItem(0);
+    if (firstItem)
+    {
+        m_listFiles->setCurrentItem(firstItem);
+        slotImageSelected(firstItem);
+        m_listFiles->scrollToItem(firstItem);
+    }
 }
 
 void BatchProcessImagesDialog::endPreview(void)
@@ -947,8 +954,8 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
     kWarning() << "BatchProcessImagesDialog::processAborted" << endl;
 
     BatchProcessImagesItem *item =
-            static_cast<BatchProcessImagesItem*> (m_listFile2Process_iterator->current());
-    m_listFiles->ensureItemVisible(m_listFiles->currentItem());
+            static_cast<BatchProcessImagesItem*> (**m_listFile2Process_iterator);
+    m_listFiles->scrollToItem(m_listFiles->currentItem());
 
     item->changeResult(i18n("Aborted."));
     item->changeError(i18n("process aborted by user"));

@@ -153,63 +153,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="10">
-       <widget class="K3ListView" name="m_listView">
-        <property name="allColumnsShowFocus">
-         <bool>true</bool>
-        </property>
-        <property name="resizeMode">
-         <enum>Q3ListView::LastColumn</enum>
-        </property>
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-        <column>
-         <property name="text">
-          <string>Album</string>
-         </property>
-         <property name="clickable">
-          <bool>true</bool>
-         </property>
-         <property name="resizable">
-          <bool>true</bool>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Source Image</string>
-         </property>
-         <property name="clickable">
-          <bool>true</bool>
-         </property>
-         <property name="resizable">
-          <bool>true</bool>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Target Image</string>
-         </property>
-         <property name="clickable">
-          <bool>true</bool>
-         </property>
-         <property name="resizable">
-          <bool>true</bool>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Result</string>
-         </property>
-         <property name="clickable">
-          <bool>true</bool>
-         </property>
-         <property name="resizable">
-          <bool>true</bool>
-         </property>
-        </column>
-       </widget>
-      </item>
       <item row="9" column="1">
        <spacer name="spacer25">
         <property name="orientation">
@@ -308,6 +251,9 @@
         </property>
        </spacer>
       </item>
+      <item row="0" column="0" rowspan="10">
+       <widget class="KIPIBatchProcessImagesPlugin::BatchProcessImagesList" name="m_listView"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -323,9 +269,10 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>K3ListView</class>
-   <extends>Q3ListView</extends>
-   <header>k3listview.h</header>
+   <class>KIPIBatchProcessImagesPlugin::BatchProcessImagesList</class>
+   <extends>QFrame</extends>
+   <header>batchprocessimageslist.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <includes>

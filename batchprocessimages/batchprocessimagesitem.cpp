@@ -24,8 +24,8 @@
 
 // Qt includes
 
-#include <Q3ListView>
 #include <QPainter>
+#include <QTreeWidget>
 
 // KDE includes
 
@@ -34,14 +34,17 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesItem::BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc,
+BatchProcessImagesItem::BatchProcessImagesItem(QTreeWidget* parent, QString const & pathSrc,
                         QString const & nameSrc, QString const & nameDest, QString const & result)
-                      : K3ListViewItem( parent, "", nameSrc, nameDest, result),
+                      : QTreeWidgetItem(parent),
                         _overwrote( false ),
                         _reverseSort( false ),
                         _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
 {
     setText(0, pathSrc.section('/', -2, -2));
+    setText(1, nameSrc);
+    setText(2, nameDest);
+    setText(3, result);
 }
 
 BatchProcessImagesItem::~BatchProcessImagesItem()
@@ -60,6 +63,7 @@ void BatchProcessImagesItem::changeError(QString text)      { _error = text; }
 void BatchProcessImagesItem::changeNameDest(QString text)   { _nameDest = text; setText(2, _nameDest); }
 void BatchProcessImagesItem::changeOutputMess(QString text) { _outputMess.append(text); }
 
+/* FIXME
 void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
     QColorGroup _cg( cg );
@@ -79,6 +83,7 @@ void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int 
 
     K3ListViewItem::paintCell( p, cg, column, width, alignment );
 }
+*/
 
 bool BatchProcessImagesItem::overWrote()
 {
@@ -104,10 +109,12 @@ QString BatchProcessImagesItem::key(int column, bool ) const
     return _key;
 }
 
+/* FIXME
 int BatchProcessImagesItem::compare(Q3ListViewItem * i, int col, bool ascending) const
 {
     int weight = _reverseSort ? -1 : 1;
     return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));
 }
+*/
 
 }  // namespace KIPIBatchProcessImagesPlugin

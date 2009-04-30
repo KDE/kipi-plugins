@@ -317,7 +317,7 @@ void ConvertImagesDialog::processDone()
         // JPEG file, we remove IPTC preview.
 
         BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>(
-                                       m_listFile2Process_iterator->current() );
+                                       **m_listFile2Process_iterator );
         if (item)
         {
             QString src = item->pathSrc();

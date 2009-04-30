@@ -92,8 +92,8 @@ public slots:
 
 private slots:
 
-    void slotListViewDoubleClicked(Q3ListViewItem*);
-    void slotImageSelected(Q3ListViewItem*);
+    void slotListViewDoubleClicked(QTreeWidgetItem*);
+    void slotImageSelected(QTreeWidgetItem*);
     void slotOptionsChanged();
     void slotGotPreview(const KFileItem*, const QPixmap&);
 

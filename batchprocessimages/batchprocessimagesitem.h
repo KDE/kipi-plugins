@@ -27,22 +27,20 @@
 
 #include <QObject>
 #include <QString>
+#include <QTreeWidgetItem>
 
 // KDE includes
 
-#include <k3listview.h>
-
-class Q3ListView;
 class QPainter;
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class BatchProcessImagesItem : public K3ListViewItem
+class BatchProcessImagesItem : public QTreeWidgetItem
 {
 public:
 
-    BatchProcessImagesItem(Q3ListView * parent, QString const & pathSrc, QString const & nameSrc,
+    BatchProcessImagesItem(QTreeWidget * parent, QString const & pathSrc, QString const & nameSrc,
                            QString const & nameDest, QString const & result);
 
     ~BatchProcessImagesItem();
@@ -61,11 +59,11 @@ public:
     void changeNameDest(QString text);
     void changeOutputMess(QString text);
 
-    void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
+    //void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
 
     void setKey(const QString& val, bool reverseSort);
     QString key(int column, bool ascending) const;
-    int compare (Q3ListViewItem * i, int col, bool ascending) const;
+    //bool compare (Q3ListViewItem * i, int col, bool ascending) const;
 
 private:
 
