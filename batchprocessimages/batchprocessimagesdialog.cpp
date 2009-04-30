@@ -865,7 +865,7 @@ void BatchProcessImagesDialog::slotProcessStop(void)
 void BatchProcessImagesDialog::slotOk()
 {
     saveSettings();
-    close();
+    done(Close);
 }
 
 void BatchProcessImagesDialog::listImageFiles(void)
