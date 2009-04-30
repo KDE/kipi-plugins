@@ -25,13 +25,12 @@
 
 // Qt includes
 
-#include <QGroupBox>
-#include <Q3VBox>
-#include <Q3VBoxLayout>
 #include <QCheckBox>
+#include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
 
 // KDE includes
@@ -52,7 +51,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
     setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
     if (ImageFormatType == 0 || ImageFormatType == 1) // JPEG || PNG

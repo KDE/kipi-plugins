@@ -25,14 +25,13 @@
 
 // Qt includes
 
-#include <QGroupBox>
-#include <Q3VBox>
-#include <Q3VBoxLayout>
 #include <QColor>
+#include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
 #include <QString>
+#include <QVBoxLayout>
 #include <QWidget>
 
 // KDE includes
@@ -53,7 +52,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
     setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
     if (BorderType == 0) // Solid

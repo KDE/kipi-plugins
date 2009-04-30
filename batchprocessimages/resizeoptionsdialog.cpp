@@ -25,8 +25,6 @@
 
 // Qt includes
 
-#include <Q3VBox>
-#include <Q3VBoxLayout>
 #include <QCheckBox>
 #include <QColor>
 #include <QGridLayout>
@@ -34,6 +32,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
 
 // KDE includes
@@ -57,7 +56,7 @@ ResizeOptionsDialog::ResizeOptionsDialog(QWidget *parent, int ResizeType)
     m_Type = ResizeType;
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
     connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
 

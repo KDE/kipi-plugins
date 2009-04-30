@@ -26,7 +26,7 @@
 
 // Qt includes
 
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QLayout>
 #include <QPushButton>
 
@@ -78,7 +78,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
 
     QWidget* box = new QWidget(this);
     setMainWidget(box);
-    Q3VBoxLayout* lay = new Q3VBoxLayout(box);
+    QVBoxLayout* lay = new QVBoxLayout(box);
     m_widget = new RenameImagesWidget(box, interface, images);
     lay->addWidget(m_widget);
 

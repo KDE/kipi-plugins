@@ -25,14 +25,13 @@
 
 // Qt includes
 
-#include <Q3VBox>
-#include <Q3VBoxLayout>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
 
 // KDE includes
@@ -53,7 +52,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     setDefaultButton(Ok);
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
     QString whatsThis;
 
     // JPEG file format.

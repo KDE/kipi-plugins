@@ -27,7 +27,7 @@
 
 #include <Q3Frame>
 #include <Q3TextView>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
@@ -81,7 +81,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
 
     QWidget* box = new QWidget( this );
     setMainWidget(box);
-    Q3VBoxLayout *dvlay = new Q3VBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
 
     //---------------------------------------------
 
