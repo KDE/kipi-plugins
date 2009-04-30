@@ -57,7 +57,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 
-    void slotOk();
+    void slotPrepareEmail();
 
 private:
 

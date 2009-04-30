@@ -125,11 +125,11 @@ void Plugin_SendImages::slotActivate()
     d->dialog = new SendImagesDialog(kapp->activeWindow(), interface, images.images());
     d->dialog->show();
 
-    connect(d->dialog, SIGNAL(okClicked()),
-            this, SLOT(slotOk()));
+    connect(d->dialog, SIGNAL(signalPrepareEmail()),
+            this, SLOT(slotPrepareEmail()));
 }
 
-void Plugin_SendImages::slotOk()
+void Plugin_SendImages::slotPrepareEmail()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )

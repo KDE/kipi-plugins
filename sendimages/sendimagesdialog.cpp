@@ -184,6 +184,8 @@ void SendImagesDialog::slotOk()
     // Get List of all items to send
     d->settings.itemsList = d->imagesPage->imagesList(); 
 
+    emit signalPrepareEmail();
+
     accept();
 }
 
