@@ -128,9 +128,9 @@ void HaarClassifierLocator::removeRedEyes()
         for (int x = 0; x < removed_redchannel->width; ++x)
         {
             // remember: we are in BGR colorspace
-            ptr[nc*x+2] = (uchar)(ptr[nc*x+2] * 0.02)
-                               + (ptr[nc*x+1] * 0.68)
-                               + (ptr[nc*x+0] * 0.3);
+            ptr[nc*x+2] = (uchar)((ptr[nc*x+2] * 0.02)
+                                + (ptr[nc*x+1] * 0.68)
+                                + (ptr[nc*x+0] * 0.3));
         }
     }
 
