@@ -125,7 +125,7 @@ void Plugin_SendImages::slotActivate()
     d->dialog = new SendImagesDialog(kapp->activeWindow(), interface, images.images());
     d->dialog->show();
 
-    connect(d->dialog, SIGNAL(signalPrepareEmail()),
+    connect(d->dialog, SIGNAL(okClicked()),
             this, SLOT(slotPrepareEmail()));
 }
 

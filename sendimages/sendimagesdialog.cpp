@@ -80,8 +80,6 @@ public:
     ImagesPage               *imagesPage;
     EmailPage                *emailPage;
 
-    EmailSettingsContainer    settings;
-
     KIPIPlugins::KPAboutData *about;
 };
 
@@ -178,20 +176,14 @@ void SendImagesDialog::slotCancel()
 void SendImagesDialog::slotOk()
 {
     saveSettings();
-
-    // Get Email settings.
-    d->settings = d->emailPage->emailSettings(); 
-    // Get List of all items to send
-    d->settings.itemsList = d->imagesPage->imagesList(); 
-
-    emit signalPrepareEmail();
-
     accept();
 }
 
 EmailSettingsContainer SendImagesDialog::emailSettings()
 {
-    return d->settings;
+    EmailSettingsContainer settings = d->emailPage->emailSettings(); 
+    settings.itemsList              = d->imagesPage->imagesList(); 
+    return settings;
 }
 
 void SendImagesDialog::readSettings()

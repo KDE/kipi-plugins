@@ -55,10 +55,6 @@ public:
 
     EmailSettingsContainer emailSettings();
 
-Q_SIGNALS:
-
-    void signalPrepareEmail();
-
 protected:
 
     void closeEvent(QCloseEvent *);
