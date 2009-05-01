@@ -23,4 +23,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 141535 : PrintImages        : Suggestion for photo layout algorithm.
 012 ==> 157173 : LibKexiv2          : Crash by adding gps data to pictures.
 013 ==> 190964 : SendImages         : "send pictures" is modal in digiKam.
-014 ==> 
+014 ==> 189636 : BatchProcessImages : Application crashes when closing completed batch resize or convert.
+015 ==> 
+
