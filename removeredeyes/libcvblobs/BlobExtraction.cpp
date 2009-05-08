@@ -172,12 +172,12 @@ bool BlobAnalysis(    IplImage* inputImage,
                 if(ThisCell != LastCell)
                 {
                     Transition[TransitionOffset + iTran] = Tran;    // Save completed Tran
-                    iTran++;                        // Prepare new index
+                    ++iTran;                        // Prepare new index
                     LastCell = ThisCell;            // With this color
                 }
 
-                Tran++;    // Tran continues
-                pImage++;
+                ++Tran;    // Tran continues
+                ++pImage;
             }
 
             Transition[TransitionOffset + iTran] = Tran;    // Save completed run
@@ -223,7 +223,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                 if(ThisCell != LastCell)
                 {
                     Transition[TransitionOffset + iTran] = Tran;    // Save completed Tran
-                    iTran++;                        // Prepare new index
+                    ++iTran;                        // Prepare new index
                     LastCell = ThisCell;            // With this color
                 }
 
@@ -244,31 +244,35 @@ bool BlobAnalysis(    IplImage* inputImage,
                         // pixels al nord de l'actual
                         if(iRow>1)
                         {
-                            if( *(pMask - maskImage->widthStep ) == PIXEL_EXTERIOR) perimeter++;
+                            if( *(pMask - maskImage->widthStep ) == PIXEL_EXTERIOR)
+                                ++perimeter;
                         }
 
                         // pixels a l'est i oest de l'actual
                         if( iRow < imatgePerimetreExtern->height )
                         {
-                            if( (iCol>0) && (*(pMask-1) == PIXEL_EXTERIOR) ) perimeter++;
+                            if( (iCol>0) && (*(pMask-1) == PIXEL_EXTERIOR) )
+                                ++perimeter;
 
-                            if( ( iCol < imatgePerimetreExtern->width - 1) && (*(pMask+1) == PIXEL_EXTERIOR) ) perimeter++;
+                            if( ( iCol < imatgePerimetreExtern->width - 1) && (*(pMask+1) == PIXEL_EXTERIOR) )
+                                ++perimeter;
                         }
 
                         // pixels al sud de l'actual
                         if( iRow < imatgePerimetreExtern->height - 1)
                         {
-                            if( (*(pMask+maskImage->widthStep) == PIXEL_EXTERIOR) ) perimeter++;
+                            if( (*(pMask+maskImage->widthStep) == PIXEL_EXTERIOR) )
+                                ++perimeter;
                         }
 
                         *pPerimetre = perimeter;
                     }
                 }
 
-                Tran++;    // Tran continues
-                pImage++;
-                pMask++;
-                pPerimetre++;
+                ++Tran;    // Tran continues
+                ++pImage;
+                ++pMask;
+                ++pPerimetre;
             }
             Transition[TransitionOffset + iTran] = Tran;    // Save completed run
 
@@ -532,7 +536,7 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
-                    LastIndex++;
+                    ++LastIndex;
 
                     //afegim la cantonada a LastRegion
                     actualedge.x = ThisEnd;
@@ -597,7 +601,7 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
-                    LastIndex++;
+                    ++LastIndex;
                     break;
 
                 case 3: //|xxxxxxx|
@@ -664,7 +668,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
                     ComputeData = 1;
-                    ThisIndex++;
+                    ++ThisIndex;
                     break;
 
                 case 4:    //|xxxxxxx|
@@ -730,16 +734,16 @@ bool BlobAnalysis(    IplImage* inputImage,
 #ifdef B_CONNECTIVITAT_8
                     if( TestMatch )
                     {
-                        LastIndex++;
-                        ThisIndex++;
+                        ++LastIndex;
+                        ++ThisIndex;
                     }
                     else
                     {
-                        LastIndex++;
+                        ++LastIndex;
                     }
 #else
-                    LastIndex++;
-                    ThisIndex++;
+                    ++LastIndex;
+                    ++ThisIndex;
 #endif
                     break;
 
@@ -840,16 +844,16 @@ bool BlobAnalysis(    IplImage* inputImage,
 #ifdef B_CONNECTIVITAT_8
                     if( TestMatch )
                     {
-                        LastIndex++;
-                        ThisIndex++;
+                        ++LastIndex;
+                        ++ThisIndex;
                     }
                     else
                     {
-                        LastIndex++;
+                        ++LastIndex;
                     }
 #else
-                    LastIndex++;
-                    ThisIndex++;
+                    ++LastIndex;
+                    ++ThisIndex;
 #endif
                     break;
 
@@ -933,7 +937,7 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
-                    LastIndex++;
+                    ++LastIndex;
                     break;
 
                 case 7:    //|ooxxxxx|
@@ -1034,7 +1038,7 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
-                    ThisIndex++;
+                    ++ThisIndex;
                     break;
 
                 case 8:    //|    xxx|
@@ -1093,9 +1097,9 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
-                    ThisIndex++;
+                    ++ThisIndex;
 #ifdef B_CONNECTIVITAT_8
-                    LastIndex--;
+                    --LastIndex;
 #endif
                     break;
 
@@ -1144,7 +1148,7 @@ bool BlobAnalysis(    IplImage* inputImage,
                                 }
                                 else
                                 {
-                                    nombre_pixels_mascara++;
+                                    ++nombre_pixels_mascara;
                                 }
                             }
                             else
@@ -1155,8 +1159,9 @@ bool BlobAnalysis(    IplImage* inputImage,
 
                             }
                         }
-                        pImageAux++;
-                        if(maskImage!=NULL) pMaskAux++;
+                        ++pImageAux;
+                        if(maskImage!=NULL)
+                            ++pMaskAux;
                     }
                 }
 
@@ -1233,7 +1238,7 @@ bool BlobAnalysis(    IplImage* inputImage,
     {
         iti = RegionData.begin();
         // Normalize summation fields into moments
-        for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ThisRegionNum++, iti++)
+        for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
         {
             blobActual = *iti;
 
@@ -1260,7 +1265,7 @@ bool BlobAnalysis(    IplImage* inputImage,
 
     //Get the real mean and std deviation
     iti = RegionData.begin();
-    for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ThisRegionNum++, iti++)
+    for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
     {
         blobActual = *iti;
         if(!SubsumedRegion[ThisRegionNum])    // is a valid blob?
@@ -1300,9 +1305,9 @@ bool BlobAnalysis(    IplImage* inputImage,
             itBlobs = RegionData.erase( itBlobs );
         }
         else
-            itBlobs++;
+            ++itBlobs;
 
-        ThisRegionNum++;
+        ++ThisRegionNum;
     }
 
     free(SubsumedRegion);
@@ -1369,7 +1374,7 @@ void Subsume(blob_vector &RegionData,
     // Make sure no region still has subsumed region as parent
     blob_vector::iterator it = (RegionData.begin() + HiNum + 1);
 
-    for(i = HiNum + 1; i <= HighRegionNum; i++, it++)
+    for(i = HiNum + 1; i <= HighRegionNum; ++i, ++it)
     {
         if((*it)->parent == (float) HiNum) { (*it)->parent = LoNum; }
     }
@@ -1425,7 +1430,7 @@ double GetExternPerimeter( int start, int end, int row, int width, int height, I
         for (int x = start - 1; x <= end; ++x )
         {
             perimeter += *pPerimetre;
-            pPerimetre++;
+            ++pPerimetre;
         }
     }
 

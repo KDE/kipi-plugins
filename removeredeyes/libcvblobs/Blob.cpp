@@ -350,7 +350,7 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         *itEdges = edgeactual;
-        itEdges++;
+        ++itEdges;
     }
     // ordenem el vector per les Y's i les X's d'esquerra a dreta
     std::sort( vectorEdges.begin(), vectorEdges.end(), comparaCvPoint() );
@@ -381,8 +381,8 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
             }
             dinsBlob =! dinsBlob;
         }
-        itEdges++;
-        itEdgesSeguent++;
+        ++itEdges;
+        ++itEdgesSeguent;
         if( (*itEdges).y != yActual ) dinsBlob = true;
     }
     vectorEdges.clear();
@@ -1036,8 +1036,8 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
             return 1.0;
         }
 
-        itEdges++;
-        itEdgesSeguent++;
+        ++itEdges;
+        ++itEdgesSeguent;
         dinsBlob = !dinsBlob;
     }
 
