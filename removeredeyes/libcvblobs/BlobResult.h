@@ -147,7 +147,7 @@ public:
                 int condition, double lowLimit, double highLimit = 0 );
 
     //! Retorna l'en�ssim blob segons un determinat criteri
-    //! Sorts the blobs of the class acording to some criteria and returns the n-th blob
+    //! Sorts the blobs of the class according to some criteria and returns the n-th blob
     void GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst ) const;
 
     //! Retorna el blob en�ssim
