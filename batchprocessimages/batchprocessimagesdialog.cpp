@@ -253,6 +253,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
 
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
 {
+    delete m_listFile2Process_iterator;
 }
 
 void BatchProcessImagesDialog::slotImagesFilesButtonAdd(void)
