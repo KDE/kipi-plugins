@@ -17,6 +17,8 @@ KDE4_ADD_UI_FILES(kipiplugin_calendar_PART_SRCS caltemplate.ui
 
 KDE4_ADD_PLUGIN(kipiplugin_calendar ${kipiplugin_calendar_PART_SRCS})
 
+INCLUDE_DIRECTORIES(${KDEPIMLIBS_INCLUDE_DIR})
+
 TARGET_LINK_LIBRARIES(kipiplugin_calendar 
                       ${KDE4_KPARTS_LIBS} 
                       ${QT_AND_KDECORE_LIBS} 
