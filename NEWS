@@ -26,4 +26,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> 189636 : BatchProcessImages : Application crashes when closing completed batch resize or convert.
 015 ==> 191351 : GPSSync            : digiKam crashes in Ubuntu (NOT Kubuntu) 9.04 when Konqueror removed.
 016 ==> 187756 : BatchProcessImages : Crash normalizing image colors batch processing.
-017 ==> 
+017 ==> 161492 : RawConverter       : Crash when converting Nikon RAW (NEF) image to anything. 
+018 ==> 
