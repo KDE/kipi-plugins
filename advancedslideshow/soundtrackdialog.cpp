@@ -190,10 +190,7 @@ void SoundtrackDialog::updateTracksNumber()
         }
     }
 
-    if ( number == 1 )
-        m_timeLabel->setText(i18n("%1 track [%2]", number, displayTime.toString()));
-    else
-        m_timeLabel->setText(i18n("%1 tracks [%2]", number, displayTime.toString()));
+    m_timeLabel->setText(i18np("1 track [%2]", "%1 tracks [%2]", number, displayTime.toString()));
 
     m_soundtrackTimeLabel->setText(displayTime.toString());
 
