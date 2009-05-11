@@ -36,15 +36,15 @@ SimpleViewerExport : A tool to export images to Flash using SimpleViewer (http:/
 SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 TimeAdjust         : A tool to adjust date and time.
+IpodExport         : A tool to export pictures to an Ipod device.
+BatchProcess       : A collection of tools to batch process images (convert, resize, rename, etc.)
 
 Porting under progress to Qt4/KDE4:
 
-IpodExport         : A tool to export pictures to an Ipod device.
 WallPaper          : A tool to set image as background on your desktop.
 
 Not yet ported to Qt4/KDE4:
 
-BatchProcess       : A collection of tools to batch process images (convert, resize, rename, etc.)
 CDArchiving        : A tool to archive your image collections to a CD or DVD.
 MpegEncoder        : A tool to create an MPEG slideshow with a set of images.
 
