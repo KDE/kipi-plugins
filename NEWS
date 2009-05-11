@@ -1,9 +1,9 @@
-Kipi-plugins 0.3.0 - Release date: xx/xx/2009
+Kipi-plugins 0.3.0 - Release date: 11/05/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-General         : Fix compilartion under MSVC 9.
+General         : Fix compilation under MSVC 9.
 PicasaWebExport : Support protected albums (sign-in required to view).
 PrintImages     : Added per photo print management.
 PrintImages     : Added Atkins page layout printing.
@@ -27,4 +27,3 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> 191351 : GPSSync            : digiKam crashes in Ubuntu (NOT Kubuntu) 9.04 when Konqueror removed.
 016 ==> 187756 : BatchProcessImages : Crash normalizing image colors batch processing.
 017 ==> 161492 : RawConverter       : Crash when converting Nikon RAW (NEF) image to anything. 
-018 ==> 
