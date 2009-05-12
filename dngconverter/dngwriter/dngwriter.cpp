@@ -60,7 +60,7 @@
 
 // Local includes
 
-#include "dngwriterprivate.h"
+#include "dngwriter_p.h"
 #include "dngwriterhost.h"
 #include "dngwriter.h"
 
@@ -156,7 +156,7 @@ int DNGWriter::convert()
 
         if (dngFilePath.isEmpty())
         {
-            dngFilePath = QString(inputInfo.baseName() + QString(".dng"));
+            dngFilePath = QString(inputInfo.completeBaseName() + QString(".dng"));
         }
 
         QFileInfo          outputInfo(dngFilePath);
@@ -199,10 +199,10 @@ int DNGWriter::convert()
         for(int i=0; i<12; i+=3)
         {
             kDebug( 51000 ) << "                   "
-                     << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
-                                                                    identify.cameraXYZMatrix[0][i+1],
-                                                                    identify.cameraXYZMatrix[0][i+2])
-                     << endl;
+                            << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
+                                                                           identify.cameraXYZMatrix[0][i+1],
+                                                                           identify.cameraXYZMatrix[0][i+2])
+                            << endl;
         }
 
         // Check if CFA layout is supported by DNG SDK.
@@ -570,58 +570,58 @@ int DNGWriter::convert()
 
             // Rational Tags
 
-            if (meta.getExifTagRational("Exif.Photo.ExposureTime", num, den))          exif->fExposureTime          = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.FNumber", num, den))               exif->fFNumber               = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))     exif->fShutterSpeedValue     = dng_srational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.ApertureValue", num, den))         exif->fApertureValue         = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.BrightnessValue", num, den))       exif->fBrightnessValue       = dng_srational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))     exif->fExposureBiasValue     = dng_srational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))      exif->fMaxApertureValue      = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.FocalLength", num, den))           exif->fFocalLength           = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.DigitalZoomRatio", num, den))      exif->fDigitalZoomRatio      = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.SubjectDistance", num, den))       exif->fSubjectDistance       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Image.BatteryLevel", num, den))          exif->fBatteryLevelR         = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.FocalPlaneXResolution", num, den)) exif->fFocalPlaneXResolution = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Photo.FocalPlaneYResolution", num, den)) exif->fFocalPlaneYResolution = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSAltitude", num, den))         exif->fGPSAltitude           = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDOP", num, den))              exif->fGPSDOP                = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den))            exif->fGPSSpeed              = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSTrack", num, den))            exif->fGPSTrack              = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSImgDirection", num, den))     exif->fGPSImgDirection       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestBearing", num, den))      exif->fGPSDestBearing        = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestDistance", num, den))     exif->fGPSDestDistance       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den))         exif->fGPSLatitude[0]        = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den))        exif->fGPSLongitude[0]       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den))        exif->fGPSTimeStamp[0]       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den))     exif->fGPSDestLatitude[0]    = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den))    exif->fGPSDestLongitude[0]   = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.ExposureTime", num, den))          exif->fExposureTime             = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.FNumber", num, den))               exif->fFNumber                  = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))     exif->fShutterSpeedValue        = dng_srational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.ApertureValue", num, den))         exif->fApertureValue            = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.BrightnessValue", num, den))       exif->fBrightnessValue          = dng_srational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))     exif->fExposureBiasValue        = dng_srational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))      exif->fMaxApertureValue         = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.FocalLength", num, den))           exif->fFocalLength              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.DigitalZoomRatio", num, den))      exif->fDigitalZoomRatio         = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.SubjectDistance", num, den))       exif->fSubjectDistance          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Image.BatteryLevel", num, den))          exif->fBatteryLevelR            = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.FocalPlaneXResolution", num, den)) exif->fFocalPlaneXResolution    = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Photo.FocalPlaneYResolution", num, den)) exif->fFocalPlaneYResolution    = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSAltitude", num, den))         exif->fGPSAltitude              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDOP", num, den))              exif->fGPSDOP                   = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den))            exif->fGPSSpeed                 = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSTrack", num, den))            exif->fGPSTrack                 = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSImgDirection", num, den))     exif->fGPSImgDirection          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestBearing", num, den))      exif->fGPSDestBearing           = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestDistance", num, den))     exif->fGPSDestDistance          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den))         exif->fGPSLatitude[0]           = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den))        exif->fGPSLongitude[0]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den))        exif->fGPSTimeStamp[0]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den))     exif->fGPSDestLatitude[0]       = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den))    exif->fGPSDestLongitude[0]      = dng_urational(num, den);
 
             // Integer Tags
 
-            if (meta.getExifTagLong("Exif.Photo.ExposureProgram", val))          exif->fExposureProgram          = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.MeteringMode", val))             exif->fMeteringMode             = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.LightSource", val))              exif->fLightSource              = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.Flash", val))                    exif->fFlash                    = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.SensingMethod", val))            exif->fSensingMethod            = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.FileSource", val))               exif->fFileSource               = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.SceneType", val))                exif->fSceneType                = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.CustomRendered", val))           exif->fCustomRendered           = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.ExposureMode", val))             exif->fExposureMode             = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.WhiteBalance", val))             exif->fWhiteBalance             = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.SceneCaptureType", val))         exif->fSceneCaptureType         = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.GainControl", val))              exif->fGainControl              = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.Contrast", val))                 exif->fContrast                 = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.Saturation", val))               exif->fSaturation               = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.Sharpness", val))                exif->fSharpness                = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))     exif->fSubjectDistanceRange     = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))    exif->fFocalLengthIn35mmFilm    = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.ComponentsConfiguration", val))  exif->fComponentsConfiguration  = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.PixelXDimension", val))          exif->fPixelXDimension          = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.PixelYDimension", val))          exif->fPixelYDimension          = (uint32)val;
-            if (meta.getExifTagLong("Exif.Photo.FocalPlaneResolutionUnit", val)) exif->fFocalPlaneResolutionUnit = (uint32)val;
-            if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))           exif->fGPSVersionID             = (uint32)val;
-            if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))         exif->fGPSAltitudeRef           = (uint32)val;
-            if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))        exif->fGPSDifferential          = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.ExposureProgram", val))                exif->fExposureProgram          = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.MeteringMode", val))                   exif->fMeteringMode             = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.LightSource", val))                    exif->fLightSource              = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.Flash", val))                          exif->fFlash                    = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.SensingMethod", val))                  exif->fSensingMethod            = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.FileSource", val))                     exif->fFileSource               = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.SceneType", val))                      exif->fSceneType                = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.CustomRendered", val))                 exif->fCustomRendered           = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.ExposureMode", val))                   exif->fExposureMode             = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.WhiteBalance", val))                   exif->fWhiteBalance             = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.SceneCaptureType", val))               exif->fSceneCaptureType         = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.GainControl", val))                    exif->fGainControl              = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.Contrast", val))                       exif->fContrast                 = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.Saturation", val))                     exif->fSaturation               = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.Sharpness", val))                      exif->fSharpness                = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))           exif->fSubjectDistanceRange     = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))          exif->fFocalLengthIn35mmFilm    = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.ComponentsConfiguration", val))        exif->fComponentsConfiguration  = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.PixelXDimension", val))                exif->fPixelXDimension          = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.PixelYDimension", val))                exif->fPixelYDimension          = (uint32)val;
+            if (meta.getExifTagLong("Exif.Photo.FocalPlaneResolutionUnit", val))       exif->fFocalPlaneResolutionUnit = (uint32)val;
+            if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))                 exif->fGPSVersionID             = (uint32)val;
+            if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))               exif->fGPSAltitudeRef           = (uint32)val;
+            if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))              exif->fGPSDifferential          = (uint32)val;
 
             // Markernote backup.
 

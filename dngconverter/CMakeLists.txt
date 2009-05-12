@@ -187,7 +187,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter )
 
 SET(libdngwriter_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriterprivate.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriterhost.cpp
     ${libxmp_SRCS}
     ${libmd5_SRCS}

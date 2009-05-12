@@ -35,7 +35,7 @@
 // Local includes
 
 #include "dngwriter.h"
-#include "dngwriterprivate.h"
+#include "dngwriter_p.h"
 
 namespace DNGIface
 {
