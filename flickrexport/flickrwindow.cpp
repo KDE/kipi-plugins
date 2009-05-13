@@ -399,8 +399,10 @@ void FlickrWindow::slotListPhotoSetsSucceeded()
     {
         QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
         m_albumsListComboBox->clear();
+        m_albumsListComboBox->insertItem(0, i18n("<Photostream Only>"));
+        m_albumsListComboBox->insertSeparator(1);
         QLinkedList<FPhotoSet>::iterator it = list->begin();
-	    int index = 0;
+        int index = 2;
         while(it != list->end())
         {
             FPhotoSet photoSet=*it;
