@@ -15,5 +15,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> BatchProcessImages : 190273 : Crash after hitting ok after batch convert. 
 008 ==> BatchProcessImages : 189786 : Batch Menu Border Images.
 009 ==> BatchProcessImages : 191507 : Converting RAW (Canon) to JPG crash.
-010 ==> 
+010 ==> BatchProcessImages : 189798 : digiKam crashes with SIGSEGV when converting .CR2 image to .jpg.
+011 ==> 
 
