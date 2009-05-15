@@ -14,5 +14,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> BatchProcessImages : 191749 : digiKam crashes when closing the picture resize box.
 007 ==> BatchProcessImages : 190273 : Crash after hitting ok after batch convert. 
 008 ==> BatchProcessImages : 189786 : Batch Menu Border Images.
-009 ==> 
+009 ==> BatchProcessImages : 191507 : Converting RAW (Canon) to JPG crash.
+010 ==> 
 
