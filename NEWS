@@ -10,4 +10,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> FlashExport        : 192165 : digiKam flash export plugin does not auto-rotate portrait images.
 003 ==> BatchProcessImages : 192469 : Repeatedly crashes when doing batch resize or rename.
 004 ==> BatchProcessImages : 192675 : digiKam Crashes after recompressing images.
-005 ==> 
+005 ==> BatchProcessImages : 190724 : digiKam crashes after resizing several pictures in a batch.
+006 ==> 
+
