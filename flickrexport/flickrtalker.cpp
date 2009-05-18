@@ -475,7 +475,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     form.addPair("is_friend", isfriend, "text/plain");
     url2.addQueryItem("is_friend", isfriend);
 
-    QString tags = info.tags.join(" ");
+    QString tags = "\"" + info.tags.join("\" \"") + "\"";
     if(tags.length() > 0)
     {
         form.addPair("tags", tags, "text/plain");
