@@ -271,6 +271,10 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     meta.setXmpTagString("Xmp.tiff.Make", meta.getExifTagString("Exif.Image.Make"));
     meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
 
+    // the image has already been rotated after being read from the raw format,
+    // therefore reset the EXIF-tag:
+    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+
     KIPIPlugins::KPWriteImage wImageIface;
     wImageIface.setImageData(imageData, width, height, sixteenBits, false, prof, meta);
     wImageIface.setCancel(&m_cancel);
