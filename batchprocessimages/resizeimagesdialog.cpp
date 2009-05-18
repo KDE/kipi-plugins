@@ -110,8 +110,7 @@ ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     m_Type->setWhatsThis(whatsThis );
 
-    m_previewButton->hide();
-    m_smallPreview->hide();
+    setPreviewOptionsVisible(false);
 
     //---------------------------------------------
 
@@ -246,12 +245,7 @@ void ResizeImagesDialog::readSettings(void)
     else
        m_customSettings = false;
 
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
+    readCommonSettings(group);
 }
 
 void ResizeImagesDialog::saveSettings(void)
@@ -282,10 +276,7 @@ void ResizeImagesDialog::saveSettings(void)
     group.writeEntry("FixedWidth", m_fixedWidth);
     group.writeEntry("FixedHeight", m_fixedHeight);
 
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
-
+    saveCommonSettings(group);
 }
 
 void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,

@@ -118,6 +118,10 @@ private:
 
    // --------------------------------------------------------------------------------------------------------
    // Standards widgets in the dialog
+   QCheckBox              *m_smallPreview;
+   KComboBox              *m_overWriteMode;
+   QCheckBox              *m_removeOriginal;
+   QPushButton            *m_previewButton;
 
    QLabel                 *m_labelOverWrite;
    QLabel                 *m_imageLabel;
@@ -138,10 +142,6 @@ protected:
    QGroupBox              *groupBox1;
    QLabel                 *m_labelType;
    KComboBox              *m_Type;
-   QCheckBox              *m_smallPreview;
-   KComboBox              *m_overWriteMode;
-   QCheckBox              *m_removeOriginal;
-   QPushButton            *m_previewButton;
    QPushButton            *m_optionsButton;
 
    BatchProcessImagesList *m_listFiles;
@@ -172,6 +172,23 @@ protected:
 
    // --------------------------------------------------------------------------------------------------------
    // Standards fonctions
+
+    /**
+    * Init common widgets from settings
+    */
+    void readCommonSettings(const KConfigGroup& group);
+
+    /**
+    * Save common widgets settings
+    */
+    void saveCommonSettings(KConfigGroup& group) const;
+
+    void setPreviewOptionsVisible(bool visible);
+
+    /**
+     * Whether we should use large or small previews
+     */
+    bool smallPreview() const;
 
    // Fonctions for ImageMAgick call implementations.
 

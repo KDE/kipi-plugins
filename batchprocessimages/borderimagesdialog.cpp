@@ -204,17 +204,7 @@ void BorderImagesDialog::readSettings(void)
     m_bevelWidth = group.readEntry("BevelWidth", 10);
     m_frameColor = group.readEntry("FrameColor", QColor(Qt::black));
 
-    if (group.readEntry("SmallPreview", "true") == "true")
-        m_smallPreview->setChecked( true );
-    else
-        m_smallPreview->setChecked( false );
-
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
+    readCommonSettings(group);
 }
 
 void BorderImagesDialog::saveSettings(void)
@@ -239,9 +229,7 @@ void BorderImagesDialog::saveSettings(void)
     group.writeEntry("BevelWidth", m_bevelWidth);
     group.writeEntry("FrameColor", m_frameColor);
 
-    group.writeEntry("SmallPreview", m_smallPreview->isChecked());
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    saveCommonSettings(group);
 }
 
 void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
@@ -249,7 +237,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 {
     *proc << "convert";
 
-    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");

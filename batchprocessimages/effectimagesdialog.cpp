@@ -275,18 +275,7 @@ KConfig config("kipirc");
     m_waveAmplitude = group.readEntry("WaveAmplitude", 50);
     m_waveLenght = group.readEntry("WaveLenght", 100);
 
-    if (group.readEntry("SmallPreview", "true") == "true")
-        m_smallPreview->setChecked( true );
-    else
-        m_smallPreview->setChecked( false );
-
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
-
+    readCommonSettings(group);
 }
 
 void EffectImagesDialog::saveSettings(void)
@@ -315,11 +304,7 @@ void EffectImagesDialog::saveSettings(void)
     group.writeEntry("WaveAmplitude", m_waveAmplitude);
     group.writeEntry("WaveLenght", m_waveLenght);
 
-    group.writeEntry("SmallPreview", m_smallPreview->isChecked());
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
-
+    saveCommonSettings(group);
 }
 
 void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
@@ -327,7 +312,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 {
     *proc << "convert";
 
-    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");

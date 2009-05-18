@@ -228,18 +228,7 @@ void FilterImagesDialog::readSettings(void)
     m_unsharpenPercent = group.readEntry("UnsharpenPercent", 3);
     m_unsharpenThreshold = group.readEntry("UnsharpenThreshold", 1);
 
-    if (group.readEntry("SmallPreview", "true") == "true")
-        m_smallPreview->setChecked( true );
-    else
-        m_smallPreview->setChecked( false );
-
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
-
+    readCommonSettings(group);
 }
 
 void FilterImagesDialog::saveSettings(void)
@@ -262,11 +251,7 @@ void FilterImagesDialog::saveSettings(void)
     group.writeEntry("UnsharpenPercent", m_unsharpenPercent);
     group.writeEntry("UnsharpenThreshold", m_unsharpenThreshold);
 
-    group.writeEntry("SmallPreview", m_smallPreview->isChecked());
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
-
+    saveCommonSettings(group);
 }
 
 void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
@@ -274,7 +259,7 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 {
     *proc << "convert";
 
-    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");

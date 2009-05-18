@@ -133,8 +133,7 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
 
     m_Type->setWhatsThis(whatsThis );
 
-    m_previewButton->hide();
-    m_smallPreview->hide();
+    setPreviewOptionsVisible(false);
 
     //---------------------------------------------
 
@@ -215,13 +214,7 @@ void ConvertImagesDialog::readSettings(void)
     m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
     m_TGACompressionAlgo = group.readEntry("TGACompressionAlgo", i18n("None"));
 
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
-
+    readCommonSettings(group);
 }
 
 void ConvertImagesDialog::saveSettings(void)
@@ -237,21 +230,13 @@ void ConvertImagesDialog::saveSettings(void)
     group.writeEntry("TIFFCompressionAlgo", m_TIFFCompressionAlgo);
     group.writeEntry("TGACompressionAlgo", m_TGACompressionAlgo);
 
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
+    saveCommonSettings(group);
 }
 
 void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                          const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
-
-    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
-    {
-       *m_PreviewProc << "-crop" << "300x300+0+0";
-       m_previewOutput.append( " -crop 300x300+0+0 ");
-    }
 
     if (m_Type->currentItem() == 0) // JPEG
     {

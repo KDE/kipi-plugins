@@ -204,18 +204,7 @@ void ColorImagesDialog::readSettings(void)
     m_segmentCluster = group.readEntry("SegmentCluster", 3);
     m_segmentSmooth = group.readEntry("SegmentSmooth", 3);
 
-    if (group.readEntry("SmallPreview", "true") == "true")
-        m_smallPreview->setChecked( true );
-    else
-        m_smallPreview->setChecked( false );
-
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
-
-    if (group.readEntry("RemoveOriginal", "false") == "true")
-        m_removeOriginal->setChecked( true );
-    else
-        m_removeOriginal->setChecked( false );
-
+    readCommonSettings(group);
 }
 
 void ColorImagesDialog::saveSettings(void)
@@ -231,11 +220,7 @@ void ColorImagesDialog::saveSettings(void)
     group.writeEntry("SegmentCluster", m_segmentCluster);
     group.writeEntry("SegmentSmooth", m_segmentSmooth);
 
-    group.writeEntry("SmallPreview", m_smallPreview->isChecked());
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
-
-
+    saveCommonSettings(group);
 }
 
 void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
@@ -243,7 +228,7 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
 {
     *proc << "convert";
 
-    if ( previewMode && m_smallPreview->isChecked() )    // Preview mode and small preview enabled !
+    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
        {
        *m_PreviewProc << "-crop" << "300x300+0+0";
        m_previewOutput.append( " -crop 300x300+0+0 ");

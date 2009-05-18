@@ -1025,4 +1025,34 @@ void BatchProcessImagesDialog::enableWidgets(bool state)
     m_smallPreview->setEnabled(state);
 }
 
+void BatchProcessImagesDialog::readCommonSettings(const KConfigGroup& group)
+{
+    if (m_smallPreview->isVisible()) {
+        m_smallPreview->setChecked(group.readEntry("SmallPreview", "true") == "true");
+    }
+
+    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+
+    m_removeOriginal->setChecked(group.readEntry("RemoveOriginal", "false") == "true");
+}
+
+void BatchProcessImagesDialog::saveCommonSettings(KConfigGroup& group) const
+{
+    if (m_smallPreview->isVisible()) {
+        group.writeEntry("SmallPreview", m_smallPreview->isChecked());
+    }
+    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
+    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+}
+
+void BatchProcessImagesDialog::setPreviewOptionsVisible(bool visible)
+{
+    m_previewButton->setVisible(visible);
+    m_smallPreview->setVisible(visible);
+}
+
+bool BatchProcessImagesDialog::smallPreview() const
+{
+    return m_smallPreview->isChecked();
+}
 }  // namespace KIPIBatchProcessImagesPlugin
