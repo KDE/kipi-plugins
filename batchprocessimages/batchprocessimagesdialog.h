@@ -116,36 +116,38 @@ private:
 
     void enableWidgets(bool state);
 
- protected:
-
    // --------------------------------------------------------------------------------------------------------
    // Standards widgets in the dialog
 
    QLabel                 *m_labelOverWrite;
-   QLabel                 *m_labelType;
    QLabel                 *m_imageLabel;
 
-   KUrlRequester          *m_destinationURL;
-
-   BatchProcessImagesList *m_listFiles;
    QProgressBar           *m_progress;
 
-   QCheckBox              *m_removeOriginal;
-   QCheckBox              *m_smallPreview;
-
-   QGroupBox              *groupBox1;
    QGroupBox              *groupBox2;
    QGroupBox              *groupBox3;
    QGroupBox              *groupBox4;
    QGroupBox              *groupBox41;
 
-   QPushButton            *m_optionsButton;
-   QPushButton            *m_previewButton;
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
 
-   KComboBox              *m_overWriteMode;
+protected:
+   // --------------------------------------------------------------------------------------------------------
+   // Widgets used by inherited dialogs
+   QGroupBox              *groupBox1;
+   QLabel                 *m_labelType;
    KComboBox              *m_Type;
+   QCheckBox              *m_smallPreview;
+   KComboBox              *m_overWriteMode;
+   QCheckBox              *m_removeOriginal;
+   QPushButton            *m_previewButton;
+   QPushButton            *m_optionsButton;
+
+   BatchProcessImagesList *m_listFiles;
+
+   KUrlRequester          *m_destinationURL;
+   ////
 
    KConfig                *m_config;
 
