@@ -81,7 +81,7 @@ RecompressImagesDialog::RecompressImagesDialog( KUrl::List urlList, KIPI::Interf
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Recompression Options") );
+    setOptionBoxTitle( i18n("Image Recompression Options") );
 
     m_labelType->hide();
     m_Type->hide();

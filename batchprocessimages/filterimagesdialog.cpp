@@ -82,7 +82,7 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Filtering Options") );
+    setOptionBoxTitle( i18n("Image Filtering Options") );
 
     m_labelType->setText( i18n("Filter:") );
 

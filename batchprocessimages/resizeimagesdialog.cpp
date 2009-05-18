@@ -84,7 +84,7 @@ ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Resizing Options") );
+    setOptionBoxTitle( i18n("Image Resizing Options") );
 
     m_labelType->setText( i18n("Type:") );
 

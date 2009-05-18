@@ -1061,4 +1061,9 @@ KUrl BatchProcessImagesDialog::destinationUrl() const
     return m_destinationURL->url();
 }
 
+void BatchProcessImagesDialog::setOptionBoxTitle(const QString& title)
+{
+    groupBox1->setTitle(title);
+}
+
 }  // namespace KIPIBatchProcessImagesPlugin

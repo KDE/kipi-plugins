@@ -128,6 +128,7 @@ private:
 
    QProgressBar           *m_progress;
 
+   QGroupBox              *groupBox1;
    QGroupBox              *groupBox2;
    QGroupBox              *groupBox3;
    QGroupBox              *groupBox4;
@@ -141,7 +142,6 @@ private:
 protected:
    // --------------------------------------------------------------------------------------------------------
    // Widgets used by inherited dialogs
-   QGroupBox              *groupBox1;
    QLabel                 *m_labelType;
    KComboBox              *m_Type;
    QPushButton            *m_optionsButton;
@@ -194,6 +194,11 @@ protected:
      * @return destination url
      */
     KUrl destinationUrl() const;
+
+    /**
+     * Set title of option group box
+     */
+    void setOptionBoxTitle(const QString& title);
 
    // Fonctions for ImageMAgick call implementations.
 

@@ -82,7 +82,7 @@ EffectImagesDialog::EffectImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Effect Options") );
+    setOptionBoxTitle( i18n("Image Effect Options") );
 
     m_labelType->setText( i18n("Effect:") );
 

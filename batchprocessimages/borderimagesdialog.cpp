@@ -86,7 +86,7 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Images Bordering Options") );
+    setOptionBoxTitle( i18n("Images Bordering Options") );
 
     m_labelType->setText( i18n("Border:") );
 

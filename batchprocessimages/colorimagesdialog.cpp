@@ -83,7 +83,7 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
 
     //---------------------------------------------
 
-    groupBox1->setTitle( i18n("Image Coloring Options") );
+    setOptionBoxTitle( i18n("Image Coloring Options") );
 
     m_labelType->setText( i18n("Filter:") );
 
