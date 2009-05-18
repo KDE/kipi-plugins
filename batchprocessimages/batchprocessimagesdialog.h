@@ -119,6 +119,7 @@ private:
    Ui::BatchProcessImagesDialog *m_ui;
 
 protected:
+    virtual QSize sizeHint() const;
    // --------------------------------------------------------------------------------------------------------
    // Widgets used by inherited dialogs
    QLabel                 *m_labelType;

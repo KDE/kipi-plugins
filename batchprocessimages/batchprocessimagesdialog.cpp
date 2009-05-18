@@ -987,4 +987,9 @@ void BatchProcessImagesDialog::setOptionBoxTitle(const QString& title)
     m_ui->m_optionGroupBox->setTitle(title);
 }
 
+QSize BatchProcessImagesDialog::sizeHint() const
+{
+    return QSize(650, 530);
+}
+
 }  // namespace KIPIBatchProcessImagesPlugin
