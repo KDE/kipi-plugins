@@ -190,8 +190,12 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->saveSettingsBox     = new SaveSettingsWidget(d->page);
 
+#if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
     d->decodingSettingsBox->updateMinimumWidth();
+#else
+    d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"), QString("savesettings"), false);
+#endif
 
     d->progressBar = new QProgressBar(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
@@ -373,6 +377,9 @@ void BatchDialog::readSettings()
     d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
+#if KDCRAW_VERSION > 0x000500
+    d->decodingSettingsBox->readSettings(group2);
+#endif
     restoreDialogSize(group2);
 }
 
@@ -408,6 +415,9 @@ void BatchDialog::saveSettings()
     group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
+#if KDCRAW_VERSION > 0x000500
+    d->decodingSettingsBox->writeSettings(group2);
+#endif
     saveDialogSize(group2);
     config.sync();
 }

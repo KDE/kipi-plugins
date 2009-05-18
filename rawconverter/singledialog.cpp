@@ -157,11 +157,15 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                                                            DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->saveSettingsBox     = new SaveSettingsWidget(d->decodingSettingsBox);
 
+#if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
     d->decodingSettingsBox->updateMinimumWidth();
+#else
+    d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"), QString("savesettings"), false);
+#endif
 
-    mainLayout->addWidget(d->previewWidget,         0, 0, 2, 1);
-    mainLayout->addWidget(d->decodingSettingsBox,   0, 1, 1, 1);
+    mainLayout->addWidget(d->previewWidget,       0, 0, 2, 1);
+    mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setRowStretch(1, 10);
     mainLayout->setMargin(0);
