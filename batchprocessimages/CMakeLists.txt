@@ -37,6 +37,7 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     )
 
 KDE4_ADD_UI_FILES(kipiplugin_batchprocessimages_PART_SRCS
+                  batchprocessimagesdialog.ui
                   imagepreview.ui
                   renameimagesbase.ui
                  )

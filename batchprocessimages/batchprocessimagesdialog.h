@@ -50,20 +50,18 @@
 // Local includes
 
 #include "batchprocessimagesitem.h"
-#include "batchprocessimageslist.h"
 
-class QGroupBox;
-class QCheckBox;
 class QFileInfo;
 class QLabel;
-class QProgressBar;
 
 class KComboBox;
 class KProcess;
-class KUrlRequester;
 
+namespace Ui { class BatchProcessImagesDialog; }
 namespace KIPIBatchProcessImagesPlugin
 {
+
+class BatchProcessImagesList;
 
 class BatchProcessImagesDialog : public KDialog
 {
@@ -113,31 +111,12 @@ private slots:
     virtual void slotTypeChanged(int){};                       // Called when the current type option is changed.
 
 private:
-
+    void setupUi();
     void enableWidgets(bool state);
 
    // --------------------------------------------------------------------------------------------------------
    // Standards widgets in the dialog
-   QCheckBox              *m_smallPreview;
-   KComboBox              *m_overWriteMode;
-   QCheckBox              *m_removeOriginal;
-   QPushButton            *m_previewButton;
-
-   QLabel                 *m_labelOverWrite;
-   QLabel                 *m_imageLabel;
-
-   QProgressBar           *m_progress;
-
-   QGroupBox              *groupBox1;
-   QGroupBox              *groupBox2;
-   QGroupBox              *groupBox3;
-   QGroupBox              *groupBox4;
-   QGroupBox              *groupBox41;
-
-   QPushButton            *m_addImagesButton;
-   QPushButton            *m_remImagesButton;
-
-   KUrlRequester          *m_destinationURL;
+   Ui::BatchProcessImagesDialog *m_ui;
 
 protected:
    // --------------------------------------------------------------------------------------------------------

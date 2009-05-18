@@ -54,6 +54,7 @@
 
 // Local includes
 
+#include "batchprocessimageslist.h"
 #include "convertoptionsdialog.h"
 #include "dialogutils.h"
 #include "kpaboutdata.h"

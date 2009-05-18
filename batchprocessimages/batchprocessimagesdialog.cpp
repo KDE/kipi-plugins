@@ -65,6 +65,7 @@ extern "C"
 #include "imagepreview.h"
 #include "outputdialog.h"
 #include "pluginsversion.h"
+#include "ui_batchprocessimagesdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -90,67 +91,46 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     m_ProcessusProc  = 0;
     m_PreviewProc    = 0;
 
+    setupUi();
+
+   // Get the image files filters from the hosts app.
+
+    m_ImagesFilesSort = m_interface->hostSetting("FileExtensions").toString();
+}
+
+
+void BatchProcessImagesDialog::setupUi()
+{
+    m_ui = new Ui::BatchProcessImagesDialog;
+
+    QWidget* widget = new QWidget(this);
+    m_ui->setupUi(widget);
+    setMainWidget(widget);
     //---------------------------------------------
 
-    m_labelType     = new QLabel;
-    m_Type          = new KComboBox;
-    m_optionsButton = new QPushButton(this, "OptionButton");
-    m_optionsButton->setText(i18n("Options"));
-    m_optionsButton->setWhatsThis(i18n("You can choose here the options to use for the current process."));
+    m_ui->m_optionsButton->setWhatsThis(i18n("You can choose here the options to use for the current process."));
 
-    m_smallPreview = new QCheckBox(i18n("Small preview"));
-    m_smallPreview->setWhatsThis(i18n("If you enable this option, "
+    m_ui->m_smallPreview->setWhatsThis(i18n("If you enable this option, "
                                       "all preview effects will be calculated on a small zone "
                                       "of the image (300x300 pixels in the top left corner). "
                                       "Enable this option if you have a slow computer."));
-    m_smallPreview->setChecked(true);
 
-    m_previewButton = new QPushButton;
-    m_previewButton->setObjectName("PreviewButton");
-    m_previewButton->setText(i18n("&Preview"));
-    m_previewButton->setWhatsThis(i18n("This button builds a process "
+    m_ui->m_previewButton->setWhatsThis(i18n("This button builds a process "
                                        "preview for the currently selected image on the list."));
 
-    groupBox1 = new QGroupBox;
-    QGridLayout *gb1Layout = new QGridLayout;
-    gb1Layout->addWidget(m_labelType,     0, 0, 1, 1);
-    gb1Layout->addWidget(m_Type,          0, 1, 1, 1);
-    gb1Layout->addWidget(m_optionsButton, 0, 3, 1, 1);
-    gb1Layout->addWidget(m_smallPreview,  1, 0, 1, 2);
-    gb1Layout->addWidget(m_previewButton, 1, 3, 1, 1);
-    gb1Layout->setSpacing(KDialog::spacingHint());
-    gb1Layout->setMargin(KDialog::marginHint());
-    groupBox1->setLayout(gb1Layout);
-
-    //---------------------------------------------
-
-    m_labelOverWrite = new QLabel(i18n("Overwrite mode:"));
-    m_overWriteMode  = new KComboBox;
-    m_overWriteMode->insertItem(i18n("Ask"));
-    m_overWriteMode->insertItem(i18n("Always Overwrite"));
-    m_overWriteMode->insertItem(i18n("Rename"));
-    m_overWriteMode->insertItem(i18n("Skip"));
-    m_overWriteMode->setCurrentText(i18n("Rename"));
-    m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
+    m_ui->m_overWriteMode->insertItem(i18n("Ask"));
+    m_ui->m_overWriteMode->insertItem(i18n("Always Overwrite"));
+    m_ui->m_overWriteMode->insertItem(i18n("Rename"));
+    m_ui->m_overWriteMode->insertItem(i18n("Skip"));
+    m_ui->m_overWriteMode->setCurrentText(i18n("Rename"));
+    m_ui->m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
                                        "files already exist."));
 
-    m_removeOriginal = new QCheckBox(i18n("Remove original"));
-    m_removeOriginal->setWhatsThis(i18n("If you enable this option, "
+    m_ui->m_removeOriginal->setWhatsThis(i18n("If you enable this option, "
                                         "all original image files will be removed after processing."));
-    m_removeOriginal->setChecked(false);
 
-    groupBox2              = new QGroupBox(i18n("File Operations"));
-    QGridLayout *gb2Layout = new QGridLayout;
-    gb2Layout->addWidget(m_labelOverWrite, 0, 0, 1, 1);
-    gb2Layout->addWidget(m_overWriteMode,  0, 1, 1, 1);
-    gb2Layout->addWidget(m_removeOriginal, 1, 0, 1,-1);
-    groupBox2->setLayout(gb2Layout);
-
-    //---------------------------------------------
-
-    m_destinationURL = new KUrlRequester;
-    m_destinationURL->setMode(KFile::Directory | KFile::LocalOnly);
-    KIPI::ImageCollection album = interface->currentAlbum();
+    m_ui->m_destinationUrl->setMode(KFile::Directory | KFile::LocalOnly);
+    KIPI::ImageCollection album = m_interface->currentAlbum();
     if (album.isValid())
     {
         QString url;
@@ -162,63 +142,23 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
         {
             url = QDir::homePath();
         }
-        m_destinationURL->lineEdit()->setText(url);
+        m_ui->m_destinationUrl->lineEdit()->setText(url);
     }
-    m_destinationURL->setWhatsThis(i18n("Here you can select the target folder which "
+    m_ui->m_destinationUrl->setWhatsThis(i18n("Here you can select the target folder which "
                                         "will used by the process."));
 
-    groupBox3 = new QGroupBox(i18n("Target Folder"));
-    QGridLayout *gb3Layout = new QGridLayout;
-    gb3Layout->addWidget(m_destinationURL,  0, 0, 1, 1);
-    groupBox3->setLayout(gb3Layout);
+    m_ui->m_addImagesButton->setWhatsThis(i18n("Add images to the list."));
+    m_ui->m_remImagesButton->setWhatsThis(i18n("Remove selected image from the list."));
+    m_ui->m_imageLabel->setWhatsThis(i18n("The preview of the selected image on the list."));
 
-    //---------------------------------------------
+    m_ui->m_progress->setVisible(false);
 
-    m_listFiles = new BatchProcessImagesList(this);
-    m_listFiles->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-
-    m_addImagesButton = new QPushButton(i18n("&Add..."));
-    m_addImagesButton->setWhatsThis(i18n("Add images to the list."));
-
-    m_remImagesButton = new QPushButton(i18n("&Remove"));
-    m_remImagesButton->setWhatsThis(i18n("Remove selected image from the list."));
-
-    m_imageLabel = new QLabel;
-    m_imageLabel->setFixedHeight(80);
-    m_imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    m_imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
-    m_imageLabel->setWhatsThis(i18n("The preview of the selected image on the list."));
-
-    groupBox4 = new QGroupBox;
-    QGridLayout *gb4Layout = new QGridLayout;
-    gb4Layout->addWidget(m_listFiles,        0, 0,-1, 1);
-    gb4Layout->addWidget(m_addImagesButton,  0, 1, 1, 1);
-    gb4Layout->addWidget(m_remImagesButton,  1, 1, 1, 1);
-    gb4Layout->addWidget(m_imageLabel,       2, 1, 1, 1);
-    gb4Layout->setColStretch(0, 10);
-    gb4Layout->setRowStretch(3, 10);
-    groupBox4->setLayout(gb4Layout);
-
-    //---------------------------------------------
-
-    m_progress = new QProgressBar;
-    m_progress->setMaximum(100);
-    m_progress->setValue(0);
-    m_progress->setWhatsThis(i18n("This is the current percentage of the task completed."));
-    m_progress->setVisible(false);
-
-    QWidget* box            = new QWidget(this);
-    QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->addWidget(groupBox1,  0, 0, 1, 1);
-    mainLayout->addWidget(groupBox2,  0, 1, 1, 1);
-    mainLayout->addWidget(groupBox3,  1, 0, 1,-1);
-    mainLayout->addWidget(groupBox4,  2, 0, 1,-1);
-    mainLayout->addWidget(m_progress, 3, 0, 1,-1);
-    box->setLayout(mainLayout);
-
-    setMainWidget(box);
-
-    //---------------------------------------------
+    // Adapt names for inherited dialogs
+    // FIXME: Use accessors
+    m_labelType     = m_ui->m_optionComboBoxLabel;
+    m_Type          = m_ui->m_optionComboBox;
+    m_optionsButton = m_ui->m_optionsButton;
+    m_listFiles     = m_ui->m_listView;
 
     connect(m_listFiles, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
             this, SLOT(slotListDoubleClicked(QTreeWidgetItem *)));
@@ -226,10 +166,10 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStart()));
 
-    connect(m_optionsButton, SIGNAL(clicked()),
+    connect(m_ui->m_optionsButton, SIGNAL(clicked()),
             this, SLOT(slotOptionsClicked()));
 
-    connect(m_previewButton, SIGNAL(clicked()),
+    connect(m_ui->m_previewButton, SIGNAL(clicked()),
             this, SLOT(slotPreview()));
 
     connect(m_Type, SIGNAL(activated(int)),
@@ -241,19 +181,16 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Int
     connect(m_listFiles, SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem *) ),
             this, SLOT( slotImageSelected( QTreeWidgetItem * )));
 
-    connect(m_addImagesButton, SIGNAL(clicked()),
+    connect(m_ui->m_addImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonAdd()));
 
-    connect(m_remImagesButton, SIGNAL(clicked()),
+    connect(m_ui->m_remImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonRem()));
-
-   // Get the image files filters from the hosts app.
-
-    m_ImagesFilesSort = m_interface->hostSetting("FileExtensions").toString();
 }
 
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
 {
+    delete m_ui;
     delete m_listFile2Process_iterator;
 }
 
@@ -281,17 +218,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonRem(void)
         m_selectedImageFiles.removeOne(pitem->pathSrc());
         delete pitem;
 
-        /*
-        if (m_listFiles->currentItem()) {
-            m_listFiles->currentItem()->setSelected(true);
-        }
-        */
         m_nbItem = m_selectedImageFiles.count();
-
-        if (m_nbItem == 0)
-            groupBox4->setTitle(i18n("Image Files List"));
-        else
-            groupBox4->setTitle(i18np("Image File List (1 item)", "Image File List (%1 items)", m_nbItem));
     }
 }
 
@@ -299,7 +226,7 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
 {
     if (!item || m_listFiles->topLevelItemCount() == 0)
     {
-        m_imageLabel->clear();
+        m_ui->m_imageLabel->clear();
         return;
     }
 
@@ -307,13 +234,13 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
     if (!pitem)
         return;
 
-    m_imageLabel->clear();
+    m_ui->m_imageLabel->clear();
 
     QString IdemIndexed = "file:" + pitem->pathSrc();
 
     KUrl url(IdemIndexed);
 
-    KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_imageLabel->height());
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_ui->m_imageLabel->height());
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
             this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
@@ -335,7 +262,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
         pix.convertFromImage(img);
     }
 
-    m_imageLabel->setPixmap(pix);
+    m_ui->m_imageLabel->setPixmap(pix);
 }
 
 void BatchProcessImagesDialog::slotAddDropItems(QStringList filesPath)
@@ -372,7 +299,7 @@ void BatchProcessImagesDialog::slotProcessStart(void)
     if (m_selectedImageFiles.isEmpty() == true)
         return;
 
-    if (m_removeOriginal->isChecked() == true)
+    if (m_ui->m_removeOriginal->isChecked() == true)
     {
         if (KMessageBox::warningContinueCancel(this, i18n(
                 "All original image files will be removed from the source Album.\nDo you want to continue?"),
@@ -390,7 +317,7 @@ void BatchProcessImagesDialog::slotProcessStart(void)
             this, SLOT(slotProcessStop()));
 
     enableWidgets(false);
-    m_progress->setVisible(true);
+    m_ui->m_progress->setVisible(true);
 
     m_listFile2Process_iterator = new QTreeWidgetItemIterator( m_listFiles );
     startProcess();
@@ -404,7 +331,7 @@ bool BatchProcessImagesDialog::startProcess(void)
        return true;
     }
 
-    QString targetAlbum = m_destinationURL->url().path();
+    QString targetAlbum = m_ui->m_destinationUrl->url().path();
 
     //TODO check if it is valid also for remote URL's
     // this is a workarond for bug 117397
@@ -423,7 +350,7 @@ bool BatchProcessImagesDialog::startProcess(void)
     {                                                   // preparation -> pass to the next item!
         ++*m_listFile2Process_iterator;
         ++m_progressStatus;
-        m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+        m_ui->m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
         item = static_cast<BatchProcessImagesItem*>( **m_listFile2Process_iterator );
         m_listFiles->setCurrentItem(item);
 
@@ -459,7 +386,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 item->changeError(i18n("destination image file already exists (skipped by user)."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
-                m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+                m_ui->m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
                 if ( **m_listFile2Process_iterator )
                 {
@@ -496,7 +423,7 @@ bool BatchProcessImagesDialog::startProcess(void)
                 item->changeError(i18n("destination image file already exists and cannot be renamed."));
                 ++*m_listFile2Process_iterator;
                 ++m_progressStatus;
-                m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+                m_ui->m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
                 if ( **m_listFile2Process_iterator )
                 {
@@ -524,7 +451,7 @@ bool BatchProcessImagesDialog::startProcess(void)
              item->changeError(i18n("destination image file already exists (skipped automatically)."));
              ++*m_listFile2Process_iterator;
              ++m_progressStatus;
-             m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+             m_ui->m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
              if ( **m_listFile2Process_iterator )
              {
@@ -613,7 +540,7 @@ void BatchProcessImagesDialog::slotFinished()
                                    "has been stopped abnormally."));
             ++*m_listFile2Process_iterator;
             ++m_progressStatus;
-            m_progress->setValue((int) ((float) m_progressStatus * (float) 100 / (float) m_nbItem));
+            m_ui->m_progress->setValue((int) ((float) m_progressStatus * (float) 100 / (float) m_nbItem));
 
             if (**m_listFile2Process_iterator)
                 startProcess();
@@ -637,7 +564,7 @@ void BatchProcessImagesDialog::slotFinished()
             // Save the comments for the converted image
             KUrl src;
             src.setPath(item->pathSrc());
-            KUrl dest = m_destinationURL->url();
+            KUrl dest = m_ui->m_destinationUrl->url();
             dest.addPath(item->nameDest());
             QString errmsg;
 
@@ -675,7 +602,7 @@ void BatchProcessImagesDialog::slotFinished()
                 destInfo.cloneData(srcInfo);
             }
 
-            if (m_removeOriginal->isChecked() && src != dest)
+            if (m_ui->m_removeOriginal->isChecked() && src != dest)
             {
                 KUrl deleteImage(item->pathSrc());
 
@@ -704,7 +631,7 @@ void BatchProcessImagesDialog::slotFinished()
 
     ++*m_listFile2Process_iterator;
     ++m_progressStatus;
-    m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
+    m_ui->m_progress->setValue((int)((float)m_progressStatus *(float)100 / (float)m_nbItem));
 
     if ( **m_listFile2Process_iterator )
         startProcess();
@@ -767,7 +694,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     {
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
-        m_previewButton->setEnabled(true);
+        m_ui->m_previewButton->setEnabled(true);
         return;
     }
 }
@@ -783,7 +710,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     if (m_PreviewProc->exitStatus() == QProcess::CrashExit)
     {
         KMessageBox::error(this, i18n("Cannot run properly 'convert' program from 'ImageMagick' package."));
-        m_previewButton->setEnabled(true);
+        m_ui->m_previewButton->setEnabled(true);
         return;
     }
 
@@ -796,14 +723,14 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     {
        QString cropTitle = "";
 
-       if ( m_smallPreview->isChecked() )
+       if ( m_ui->m_smallPreview->isChecked() )
           cropTitle = i18n(" - small preview");
 
        ImagePreview *previewDialog = new ImagePreview(
                                          item->pathSrc(),
                                          m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG",
                                          m_tmpFolder,
-                                         m_smallPreview->isChecked(),
+                                         m_ui->m_smallPreview->isChecked(),
                                          false,
                                          m_Type->currentText() + cropTitle,
                                          item->nameSrc(),
@@ -857,12 +784,6 @@ void BatchProcessImagesDialog::slotOk()
 void BatchProcessImagesDialog::listImageFiles(void)
 {
     m_nbItem = m_selectedImageFiles.count();
-
-    if (m_nbItem == 0)
-        groupBox4->setTitle(i18n("Image File List"));
-    else
-        groupBox4->setTitle(i18np("Image File List (%1 item)",
-                                  "Image File List (%1 items)", m_nbItem));
 
     if (m_selectedImageFiles.isEmpty())
         return;
@@ -920,7 +841,7 @@ void BatchProcessImagesDialog::endPreview(void)
     showButton(KDialog::Cancel, true);
 
     // Default status if 'slotTypeChanged' isn't re-implemented.
-    m_optionsButton->setEnabled(true);
+    m_ui->m_optionsButton->setEnabled(true);
     slotTypeChanged(m_Type->currentItem());
 
     setButtonText(User1, i18n("&Start"));
@@ -934,7 +855,7 @@ void BatchProcessImagesDialog::endPreview(void)
 
 int BatchProcessImagesDialog::overwriteMode(void)
 {
-    QString OverWrite = m_overWriteMode->currentText();
+    QString OverWrite = m_ui->m_overWriteMode->currentText();
 
     if (OverWrite == i18n("Ask"))
         return OVERWRITE_ASK;
@@ -964,7 +885,7 @@ void BatchProcessImagesDialog::processAborted(bool removeFlag)
 
     if (removeFlag == true) // Try to delete de destination !
     {
-        KUrl deleteImage = m_destinationURL->url();
+        KUrl deleteImage = m_ui->m_destinationUrl->url();
         deleteImage.addPath(item->nameDest());
 
         if (KIO::NetAccess::exists(deleteImage, KIO::NetAccess::DestinationSide, kapp->activeWindow())
@@ -979,7 +900,7 @@ void BatchProcessImagesDialog::endProcess(void)
 {
     m_convertStatus = PROCESS_DONE;
     enableWidgets(true);
-    QTimer::singleShot(500, m_progress, SLOT(hide()));
+    QTimer::singleShot(500, m_ui->m_progress, SLOT(hide()));
     setButtonText(User1, i18n("&Close"));
 
     disconnect(this, SIGNAL(user1Clicked()),
@@ -1013,58 +934,57 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
 void BatchProcessImagesDialog::enableWidgets(bool state)
 {
     m_Type->setEnabled(state);
-    m_addImagesButton->setEnabled(state);
-    m_destinationURL->setEnabled(state);
-    m_labelOverWrite->setEnabled(state);
+    m_ui->m_addImagesButton->setEnabled(state);
+    m_ui->m_destinationUrl->setEnabled(state);
     m_labelType->setEnabled(state);
     m_listFiles->setEnabled(state);
-    m_optionsButton->setEnabled(state);
-    m_overWriteMode->setEnabled(state);
-    m_previewButton->setEnabled(state);
-    m_remImagesButton->setEnabled(state);
-    m_removeOriginal->setEnabled(state);
-    m_smallPreview->setEnabled(state);
+    m_ui->m_optionsButton->setEnabled(state);
+    m_ui->m_overWriteMode->setEnabled(state);
+    m_ui->m_previewButton->setEnabled(state);
+    m_ui->m_remImagesButton->setEnabled(state);
+    m_ui->m_removeOriginal->setEnabled(state);
+    m_ui->m_smallPreview->setEnabled(state);
 }
 
 void BatchProcessImagesDialog::readCommonSettings(const KConfigGroup& group)
 {
-    if (m_smallPreview->isVisible()) {
-        m_smallPreview->setChecked(group.readEntry("SmallPreview", "true") == "true");
+    if (m_ui->m_smallPreview->isVisible()) {
+        m_ui->m_smallPreview->setChecked(group.readEntry("SmallPreview", "true") == "true");
     }
 
-    m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
+    m_ui->m_overWriteMode->setCurrentIndex(group.readEntry("OverWriteMode", 2));  // 'Rename' per default...
 
-    m_removeOriginal->setChecked(group.readEntry("RemoveOriginal", "false") == "true");
+    m_ui->m_removeOriginal->setChecked(group.readEntry("RemoveOriginal", "false") == "true");
 }
 
 void BatchProcessImagesDialog::saveCommonSettings(KConfigGroup& group) const
 {
-    if (m_smallPreview->isVisible()) {
-        group.writeEntry("SmallPreview", m_smallPreview->isChecked());
+    if (m_ui->m_smallPreview->isVisible()) {
+        group.writeEntry("SmallPreview", m_ui->m_smallPreview->isChecked());
     }
-    group.writeEntry("OverWriteMode", m_overWriteMode->currentItem());
-    group.writeEntry("RemoveOriginal", m_removeOriginal->isChecked());
+    group.writeEntry("OverWriteMode", m_ui->m_overWriteMode->currentItem());
+    group.writeEntry("RemoveOriginal", m_ui->m_removeOriginal->isChecked());
 }
 
 void BatchProcessImagesDialog::setPreviewOptionsVisible(bool visible)
 {
-    m_previewButton->setVisible(visible);
-    m_smallPreview->setVisible(visible);
+    m_ui->m_previewButton->setVisible(visible);
+    m_ui->m_smallPreview->setVisible(visible);
 }
 
 bool BatchProcessImagesDialog::smallPreview() const
 {
-    return m_smallPreview->isChecked();
+    return m_ui->m_smallPreview->isChecked();
 }
 
 KUrl BatchProcessImagesDialog::destinationUrl() const
 {
-    return m_destinationURL->url();
+    return m_ui->m_destinationUrl->url();
 }
 
 void BatchProcessImagesDialog::setOptionBoxTitle(const QString& title)
 {
-    groupBox1->setTitle(title);
+    m_ui->m_optionGroupBox->setTitle(title);
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin
