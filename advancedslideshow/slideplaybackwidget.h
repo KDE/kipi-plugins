@@ -54,7 +54,7 @@ public:
     void setEnabledNext(bool val);
     void setEnabledPrev(bool val);
 
-signals:
+Q_SIGNALS:
 
     void signalNext();
     void signalPrev();
@@ -66,7 +66,7 @@ protected:
 
     void keyPressEvent(QKeyEvent *event);
 
-private slots:
+private Q_SLOTS:
 
     void slotPlayButtonToggled();
     void slotNexPrevClicked();

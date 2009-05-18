@@ -80,7 +80,7 @@ public:
     int                  delayMsLineStep;
 
     bool                 ImagesHasComments;
-    KUrl::List*          urlList;
+    KUrl::List           urlList;
 
     MainDialog*          mainPage;
     CaptionDialog*       captionPage;
@@ -122,8 +122,9 @@ public:
     bool             kbDisableFadeInOut;
     bool             kbDisableCrossFade;
     uint             cacheSize;
-
 };
+
+// ----------------------------------------------------------
 
 class VolumeSlider : public Phonon::VolumeSlider
 {

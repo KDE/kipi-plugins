@@ -51,17 +51,16 @@
 #include "slideshowgl.h"
 #include "slideshowkb.h"
 
-
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
-        : QWidget(parent)
+          : QWidget(parent)
 {
     setupUi(this);
 
     m_sharedData = sharedData;
-    m_thumbJob = 0L;
+    m_thumbJob   = 0L;
 
     m_ImagesFilesButtonUp->setIcon(KIcon("arrow-up"));
     m_ImagesFilesButtonDown->setIcon(KIcon("arrow-down"));
@@ -152,7 +151,6 @@ void MainDialog::readSettings()
     slotSelection();
 
     slotEffectChanged();
-
 }
 
 void MainDialog::saveSettings()
@@ -221,7 +219,6 @@ void MainDialog::saveSettings()
 
         m_sharedData->effectNameGL = effect;
     }
-
 }
 
 void MainDialog::ShowNumberImages( int Number )
@@ -321,7 +318,7 @@ bool MainDialog::updateUrlList()
             return false;
         }
 
-        m_sharedData->urlList->append(pitem->path());                              // Input images files.
+        m_sharedData->urlList.append(pitem->path());                              // Input images files.
     }
 
     return true;
@@ -392,7 +389,6 @@ void MainDialog::addItems(const KUrl::List& fileList)
     slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
     m_ImagesFilesListBox->scrollToItem(m_ImagesFilesListBox->currentItem());
 }
-
 
 void MainDialog::slotAddDropItems(KUrl::List filesUrl)
 {

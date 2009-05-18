@@ -28,6 +28,7 @@
 #define SLIDESHOWKB_H
 
 // C++ includes
+
 #ifndef _MSC_VER
 #include <cstdlib>
 #else
@@ -175,7 +176,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void keyPressEvent(QKeyEvent *event);
 
-private slots:
+private Q_SLOTS:
 
     void moveSlot();
     void slotEndOfShow();

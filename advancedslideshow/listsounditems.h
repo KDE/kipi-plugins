@@ -24,6 +24,7 @@
 #define LISTSOUNDITEM_H
 
 // Qt includes
+
 #include <QTime>
 #include <QWidget>
 #include <QString>
@@ -33,10 +34,12 @@
 #include <QListWidgetItem>
 
 // Phonon includes
+
 #include <Phonon/Global>
 #include <Phonon/MediaObject>
 
 // KDE includes
+
 #include <kurl.h>
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -58,10 +61,11 @@ public:
     QTime   totalTime();
     void    setName(QString text);
 
-signals:
+Q_SIGNALS:
+
     void totalTimeReady(KUrl, QTime);
 
-private slots:
+private Q_SLOTS:
 
     void slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate);
 
@@ -74,6 +78,8 @@ private:
     Phonon::MediaObject*    m_mediaObject;
 };
 
+// --------------------------------------------------------------------
+
 class ListSoundItems : public QListWidget
 {
     Q_OBJECT
@@ -82,7 +88,7 @@ public:
 
     ListSoundItems(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
 
     void addedDropItems(KUrl::List filesUrl);
 

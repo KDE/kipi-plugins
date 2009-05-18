@@ -25,6 +25,7 @@
 #define LISTIMAGEITEM_H
 
 // Qt includes
+
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
@@ -33,6 +34,7 @@
 #include <QListWidgetItem>
 
 // KDE includes
+
 #include <kurl.h>
 #include "kio/previewjob.h"
 
@@ -60,17 +62,17 @@ public:
     QString album();
     void setName(const QString &newName);
 
-private slots:
+private Q_SLOTS:
+
     void slotThumbnail(const KUrl&, const QPixmap&);
 
 private:
 
-private:
-    QString m_name;
-    QString m_comments;
-    QString m_path;
-    QString m_album;
-    
+    QString          m_name;
+    QString          m_comments;
+    QString          m_path;
+    QString          m_album;
+
     KIPI::Interface* m_interface;
 };
 
@@ -82,7 +84,7 @@ public:
 
     ListImageItems(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
 
     void addedDropItems(KUrl::List filesUrl);
 

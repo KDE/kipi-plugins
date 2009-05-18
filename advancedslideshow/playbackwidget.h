@@ -24,18 +24,22 @@
 #define PLAYBACKWIDGET_H
 
 // Qt includes
+
 #include <QKeyEvent>
 
 // Phonon includes
+
 #include <Phonon/MediaObject>
 #include <Phonon/AudioOutput>
 #include <Phonon/Global>
 #include <Phonon/VolumeSlider>
 
 // KDE includes
+
 #include <kurl.h>
 
 // Local includes
+
 #include "ui_playbackwidget.h"
 #include "common.h"
 
@@ -49,6 +53,7 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
     Q_OBJECT
 
 public:
+
     PlaybackWidget(QWidget*, KUrl::List&, SharedData* sharedData);
     ~PlaybackWidget();
 
@@ -58,7 +63,13 @@ public:
     void setPaused(bool);
     void keyPressEvent(QKeyEvent*);
 
-private slots:
+Q_SIGNALS:
+
+    void signalPlay();
+    void signalPause();
+
+private Q_SLOTS:
+
     void slotPlay( void );
     void slotStop( void );
     void slotPrev( void );
@@ -69,26 +80,23 @@ private slots:
     void slotSongFinished( void );
 
 private:
+
     void checkSkip ( void );
     void setGUIPlay( bool );
-    void setZeroTime( void);
-
-signals:
-    void signalPlay();
-    void signalPause();
+    void setZeroTime( void );
 
 private:
-    SharedData* m_sharedData;
-    KUrl::List  m_urlList;
-    int         m_currIndex;
-    bool        m_muted;
-    bool        m_stopCalled;
-    bool        m_isZeroTime;
+
+    SharedData*             m_sharedData;
+    KUrl::List              m_urlList;
+    int                     m_currIndex;
+    bool                    m_muted;
+    bool                    m_stopCalled;
+    bool                    m_isZeroTime;
+    bool                    m_canHide;
 
     Phonon::MediaObject*    m_mediaObject;
     Phonon::AudioOutput*    m_audioOutput;
-
-    bool        m_canHide;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

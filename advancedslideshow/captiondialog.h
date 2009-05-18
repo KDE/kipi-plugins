@@ -43,7 +43,7 @@ public:
     void readSettings();
     void saveSettings();
 
-private slots:
+private Q_SLOTS:
     void slotCommentsFontColorChanged( void );
     void slotCommentsBgColorChanged( void );
     void slotTransparentBgToggled( void );

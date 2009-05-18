@@ -76,7 +76,7 @@ public:
         return m_textureAspect;
     };
 
-signals:
+Q_SIGNALS:
 
     void endOfShow();
 

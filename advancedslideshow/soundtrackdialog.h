@@ -24,14 +24,17 @@
 #define SOUNDTRACKDIALOG_H
 
 // Qt includes
+
 #include <QTime>
 #include <QMutex>
 
 // KDE includes
+
 #include <kurl.h>
 #include <kdialog.h>
 
 // Local includes
+
 #include "ui_soundtrackdialog.h"
 #include "common.h"
 #include "playbackwidget.h"
@@ -60,6 +63,7 @@ class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
     Q_OBJECT
 
 public:
+
     SoundtrackDialog( QWidget* parent, SharedData* sharedData );
     ~SoundtrackDialog();
 
@@ -67,11 +71,13 @@ public:
     void saveSettings();
 
 private:
+
     void addItems(const KUrl::List& fileList);
     void updateTracksNumber();
     void compareTimes();
 
-private slots:
+private Q_SLOTS:
+
     void slotAddDropItems(KUrl::List filesUrl);
     void slotSoundFilesButtonAdd( void );
     void slotSoundFilesButtonDelete( void );
@@ -83,13 +89,14 @@ private slots:
     void slotAddNewTime(KUrl, QTime);
 
 private:
+
     KUrl::List              m_urlList;
     int                     m_currIndex;
     SharedData*             m_sharedData;
     QTime                   m_totalTime;
     QTime                   m_imageTime;
-    QMap<KUrl, QTime>*       m_tracksTime;
-    QMap<KUrl, SoundItem*>*  m_soundItems;
+    QMap<KUrl, QTime>*      m_tracksTime;
+    QMap<KUrl, SoundItem*>* m_soundItems;
     QMutex*                 m_timeMutex;
 };
 

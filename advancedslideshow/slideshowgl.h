@@ -29,6 +29,7 @@
 #endif
 
 // Qt includes
+
 #include <Q3ValueList>
 #include <QStringList>
 #include <QPair>
@@ -40,9 +41,11 @@
 #include <QGLWidget>
 
 // KDE includes
+
 #include <kconfig.h>
 
 // Local includes
+
 #include "slideshowloader.h"
 #include "slideplaybackwidget.h"
 #include "playbackwidget.h"
@@ -107,7 +110,7 @@ private:
     void          effectCube();
 
 
-private slots:
+private Q_SLOTS:
 
     void slotTimeOut();
     void slotMouseMoveTimeOut();

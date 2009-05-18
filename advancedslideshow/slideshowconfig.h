@@ -24,6 +24,7 @@
 #define SLIDESHOWCONFIG_H
 
 // Local includes
+
 #include "common.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -38,22 +39,27 @@ class SlideShowConfig : public KPageDialog
     Q_OBJECT
 
 public:
+
     SlideShowConfig (QWidget *parent, SharedData* sharedData);
     ~SlideShowConfig();
 
+Q_SIGNALS:
+
+    void buttonStartClicked(); // Signal needed by plugin_slideshow class
+
 private:
+
     void readSettings();
     void saveSettings();
 
-private slots:
+private Q_SLOTS:
+
     void slotStartClicked();
     void slotHelp();
     void slotClose();
 
-signals:
-    void buttonStartClicked(); // Signal needed by plugin_slideshow class
-
 private:
+
     SlideShowConfigPrivate* d;
 };
 

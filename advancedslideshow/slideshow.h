@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <Q3PointArray>
 #include <Q3ValueList>
 #include <QFont>
 #include <QKeyEvent>
@@ -38,7 +39,6 @@
 #include <QStringList>
 #include <QWheelEvent>
 #include <QWidget>
-#include <Q3PointArray>
 
 // KDE includes
 
@@ -117,7 +117,7 @@ protected:
     bool            m_endOfShow;
     QPixmap         m_buffer;
 
-private slots:
+private Q_SLOTS:
 
     void slotTimeOut();
     void slotMouseMoveTimeOut();

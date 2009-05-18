@@ -60,12 +60,10 @@ public:
     KIPIPlugins::KPAboutData* about;
     SharedData*               sharedData;
     KConfig*                  config;
-
 };
 
-
 SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
-        : KPageDialog(parent)
+               : KPageDialog(parent)
 {
     setWindowTitle(i18n("Advanced Slideshow"));
 
@@ -136,7 +134,6 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
             this, SLOT(slotClose()));
 
     readSettings();
-
 }
 
 SlideShowConfig::~SlideShowConfig ()

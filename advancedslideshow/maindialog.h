@@ -24,13 +24,16 @@
 #define MAINDIALOG_H
 
 // Qt includes
+
 #include <QSvgRenderer>
 
 // KDE includes
+
 #include "kio/previewjob.h"
 #include "kurl.h"
 
 // Local includes
+
 #include "common.h"
 #include "ui_maindialog.h"
 
@@ -44,6 +47,7 @@ class MainDialog : public QWidget, Ui::MainDialog
     Q_OBJECT
 
 public:
+
     MainDialog(QWidget* parent, SharedData* sharedData);
     ~MainDialog();
 
@@ -51,7 +55,8 @@ public:
     void  saveSettings();
     bool  updateUrlList();
 
-private slots:
+private Q_SLOTS:
+
     void slotOpenGLToggled( void );
     void slotEffectChanged( void );
     void slotDelayChanged( void );
@@ -59,7 +64,7 @@ private slots:
     void slotSelection( void );
     void slotUseMillisecondsToggled( void );
     void slotThumbnail(const KUrl&, const QPixmap&);
-    
+
     void SlotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( int );
     void slotAddDropItems(KUrl::List filesUrl);
@@ -68,7 +73,8 @@ private slots:
     void slotImagesFilesButtonUp( void );
     void slotImagesFilesButtonDown( void );
 
-signals :
+Q_SIGNALS :
+
     void totalTimeChanged( QTime );
 
 private:
@@ -80,10 +86,11 @@ private:
     void addItems(const KUrl::List& fileList);
 
 private:
-    SharedData*       m_sharedData;
-    KIO::PreviewJob*  m_thumbJob;
-    QTime             m_totalTime;
-    QPixmap           m_noPreviewPixmap;
+
+    SharedData*      m_sharedData;
+    KIO::PreviewJob* m_thumbJob;
+    QTime            m_totalTime;
+    QPixmap          m_noPreviewPixmap;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

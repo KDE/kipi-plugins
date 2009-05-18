@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+// Local includes.
+
 #include "common.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -27,16 +29,16 @@ namespace KIPIAdvancedSlideshowPlugin
 
 SharedData::SharedData()
 {
-    interface         = 0;
-    delayMsMaxValue   = 0;
-    delayMsMinValue   = 0;
-    delayMsLineStep   = 0;
-    ImagesHasComments = false;
-    urlList           = 0;
-    mainPage          = 0;
-    captionPage       = 0;
-    advancedPage      = 0;
-    soundtrackPage    = 0;
+    interface             = 0;
+    delayMsMaxValue       = 0;
+    delayMsMinValue       = 0;
+    delayMsLineStep       = 0;
+    ImagesHasComments     = false;
+    urlList               = KUrl::List();
+    mainPage              = 0;
+    captionPage           = 0;
+    advancedPage          = 0;
+    soundtrackPage        = 0;
 
     opengl                = false;
     delay                 = 0;
@@ -52,19 +54,19 @@ SharedData::SharedData()
     commentsLinesLength   = 0;
     captionFont           = 0;
 
-    soundtrackLoop = false;
+    soundtrackLoop        = false;
 
-    useMilliseconds    = false;
-    enableMouseWheel   = false;
-    enableCache        = false;
-    kbDisableFadeInOut = false;
-    kbDisableCrossFade = false;
-    cacheSize          = 0;
+    useMilliseconds       = false;
+    enableMouseWheel      = false;
+    enableCache           = false;
+    kbDisableFadeInOut    = false;
+    kbDisableCrossFade    = false;
+    cacheSize             = 0;
 
-    page_main       = 0;
-    page_caption    = 0;
-    page_soundtrack = 0;
-    page_advanced   = 0;
+    page_main             = 0;
+    page_caption          = 0;
+    page_soundtrack       = 0;
+    page_advanced         = 0;
 }
 
 SharedData::~SharedData()

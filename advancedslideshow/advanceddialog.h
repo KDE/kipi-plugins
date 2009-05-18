@@ -24,6 +24,7 @@
 #define ADVANCEDDIALOG_H
 
 // Local includes
+
 #include "common.h"
 #include "ui_advanceddialog.h"
 
@@ -37,21 +38,25 @@ class AdvancedDialog : public QWidget, Ui::AdvancedDialog
     Q_OBJECT
 
 public:
+
     AdvancedDialog(QWidget* parent, SharedData* sharedData);
     ~AdvancedDialog();
 
     void readSettings();
     void saveSettings();
 
-private slots:
+Q_SIGNALS:
+
+    void useMillisecondsToggled( void );
+
+private Q_SLOTS:
+
     void slotUseMillisecondsToggled( void );
     void slotCacheToggled( void );
 
-signals:
-    void useMillisecondsToggled( void );
-
 private:
-    SharedData*       m_sharedData;
+
+    SharedData* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

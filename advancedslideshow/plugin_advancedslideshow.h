@@ -56,11 +56,11 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
-public slots:
+public Q_SLOTS:
 
     void slotActivate();
 
-private slots:
+private Q_SLOTS:
 
     void slotAlbumChanged(bool anyAlbum);
     void slotSlideShow();
@@ -69,7 +69,7 @@ private:
 
     KAction*                                 m_actionSlideShow;
     KIPI::Interface*                         m_interface;
-    KUrl::List*                              m_urlList;
+    KUrl::List                               m_urlList;
 
     KIPIAdvancedSlideshowPlugin::SharedData* m_sharedData;
 };

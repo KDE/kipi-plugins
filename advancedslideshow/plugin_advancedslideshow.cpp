@@ -65,7 +65,7 @@ K_PLUGIN_FACTORY( AdvancedSlideshowFactory, registerPlugin<Plugin_AdvancedSlides
 K_EXPORT_PLUGIN ( AdvancedSlideshowFactory("kipiplugin_advancedslideshow") )
 
 Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVariantList &args)
-                : KIPI::Plugin( AdvancedSlideshowFactory::componentData(), parent, "AdvancedSlideshow")
+                        : KIPI::Plugin( AdvancedSlideshowFactory::componentData(), parent, "AdvancedSlideshow")
 {
     // Useless: to please the compiler
     QVariantList argsList = args;
@@ -98,7 +98,7 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
         return;
     }
 
-    m_urlList = new KUrl::List();
+    m_urlList = KUrl::List();
 
     connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
             this, SLOT( slotAlbumChanged( bool )));
@@ -106,7 +106,6 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
 
 Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
 {
-    delete m_urlList;
 }
 
 void Plugin_AdvancedSlideshow::slotActivate()
@@ -122,7 +121,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
     m_sharedData->showSelectedFilesOnly = true;
     m_sharedData->interface             = m_interface;
     m_sharedData->ImagesHasComments     = m_interface->hasFeature(KIPI::ImagesHasComments);
-    m_sharedData->urlList               = m_urlList;
+    m_sharedData->urlList                = m_urlList;
     KIPI::ImageCollection currSel       = m_interface->currentSelection();
 
     if ( !currSel.isValid() || currSel.images().isEmpty() )
@@ -185,7 +184,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     shuffle          = grp.readEntry("Shuffle", false);
     wantKB           = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
-    if ( m_urlList->isEmpty() )
+    if ( m_urlList.isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
         return;
@@ -197,14 +196,14 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     FileList fileList;
     QStringList commentsList;
 
-    for ( KUrl::List::ConstIterator urlIt = m_urlList->constBegin(); urlIt != m_urlList->constEnd(); ++urlIt )
+    for ( KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt )
     {
         KIPI::ImageInfo info = m_interface->info( *urlIt );
         fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
         commentsList.append(info.description());
     }
 
-    m_urlList->clear();
+    m_urlList.clear();
 
     if (shuffle)
     {
