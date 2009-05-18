@@ -99,7 +99,8 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
     m_Type->insertItem(i18n("Segment"));            // 9
     m_Type->insertItem(i18n("Trim"));
     m_Type->setCurrentText(i18n("Normalize"));
-    whatsThis = i18n("<p>Select here the color enhancement type for your images:</p>"
+    QString whatsThis = i18n(
+                     "<p>Select here the color enhancement type for your images:</p>"
                      "<p>"
                      "<b>Decrease contrast</b>: reduce the image contrast. The algorithm "
                      "reduces the intensity difference between the lighter and darker elements "

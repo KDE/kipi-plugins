@@ -98,7 +98,8 @@ EffectImagesDialog::EffectImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Swirl"));
     m_Type->insertItem(i18n("Wave"));                // 10
     m_Type->setCurrentText(i18n("Emboss"));
-    whatsThis = i18n("<p>Select here the effect type for your images:</p>"
+    QString whatsThis = i18n(
+                     "<p>Select here the effect type for your images:</p>"
                      "<p>"
                      "<b>Adaptive threshold</b>: perform local adaptive thresholding. The algorithm "
                      "selects an individual threshold for each pixel based on the range of intensity "

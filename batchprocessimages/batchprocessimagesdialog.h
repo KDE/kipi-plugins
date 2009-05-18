@@ -160,7 +160,6 @@ protected:
 
    QTreeWidgetItemIterator *m_listFile2Process_iterator;
 
-   QString                 whatsThis;
    QString                 m_ImagesFilesSort;
    QString                 m_newDir;
    QString                 m_commandLine;

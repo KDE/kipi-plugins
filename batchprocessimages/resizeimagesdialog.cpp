@@ -93,7 +93,7 @@ ResizeImagesDialog::ResizeImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Non-Proportional"));       // 2
     m_Type->insertItem(i18n("Prepare to Print"));       // 3
     m_Type->setCurrentText(i18n("Proportional (1 dim.)"));
-    whatsThis = i18n("<p>Select here the image-resize type.</p>");
+    QString whatsThis = i18n("<p>Select here the image-resize type.</p>");
     whatsThis = whatsThis + i18n("<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
                                  "The width or the height of the images will be automatically "
                                  "selected, depending on the images' orientations. "

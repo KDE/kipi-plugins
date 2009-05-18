@@ -96,7 +96,8 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Sharpen"));
     m_Type->insertItem(i18n("Unsharp"));         // 8
     m_Type->setCurrentText(i18n("Sharpen"));
-    whatsThis = i18n("<p>Select here the filter type for your images:</p>"
+    QString whatsThis = i18n(
+                     "<p>Select here the filter type for your images:</p>"
                      "<p>"
                      "<b>Add noise</b>: add artificial noise to an image.<br/>"
                      "<b>Antialias</b>: remove pixel aliasing.<br/>"

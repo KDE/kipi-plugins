@@ -98,7 +98,8 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Raise"));
     m_Type->insertItem(i18n("Frame"));
     m_Type->setCurrentText(i18n("Niepce"));
-    whatsThis = i18n("<p>Select here the border type for your images:</p>"
+    QString whatsThis = i18n(
+                     "<p>Select here the border type for your images:</p>"
                      "<p>"
                      "<b>Solid</b>: just surround the images with a line.<br/>"
                      "<b>Niepce</b>: surround the images with a fine line and a large border "

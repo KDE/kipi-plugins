@@ -97,7 +97,7 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
     m_Type->insertItem("TGA");
     m_Type->insertItem("EPS");
     m_Type->setCurrentText("JPEG");
-    whatsThis = i18n("<p>Select here the target image file format.</p>");
+    QString whatsThis = i18n("<p>Select here the target image file format.</p>");
     whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
                                  "good Web file format but it uses lossy data compression.</p>"
                                  "<p><b>PNG</b>: the Portable Network Graphics format is an extensible file "
