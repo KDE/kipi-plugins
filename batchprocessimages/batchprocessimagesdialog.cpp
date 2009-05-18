@@ -73,8 +73,9 @@ namespace KIPIBatchProcessImagesPlugin
 BatchProcessImagesDialog::BatchProcessImagesDialog(KUrl::List urlList, KIPI::Interface* interface,
                                                    QString caption, QWidget *parent)
                         : KDialog(parent)
-                        , m_selectedImageFiles(urlList), m_interface(interface)
                         , m_listFile2Process_iterator(0)
+                        , m_selectedImageFiles(urlList)
+                        , m_interface(interface)
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
