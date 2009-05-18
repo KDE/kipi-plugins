@@ -24,6 +24,7 @@
  * ============================================================ */
 
 #include "plugin_galleryexport.h"
+#include "plugin_galleryexport.moc"
 
 // KDE includes
 
@@ -50,15 +51,12 @@
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_galleryexport"))
 
-
-Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent,
-        const QVariantList&)
-        : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport")
+Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
+                    : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport")
 {
     kDebug(51001) << "Plugin_GalleryExport plugin loaded"
-    << endl;
+                  << endl;
 }
-
 
 void Plugin_GalleryExport::setup(QWidget* widget)
 {
@@ -68,7 +66,8 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
-    if (!interface) {
+    if (!interface)
+    {
         kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
@@ -96,7 +95,8 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
 void Plugin_GalleryExport::slotSync()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) {
+    if (!interface)
+    {
         kError(51000) << "Kipi interface is null!" << endl;
         return;
     }
@@ -111,7 +111,6 @@ void Plugin_GalleryExport::slotSync()
     dlg.exec();
 }
 
-
 KIPI::Category Plugin_GalleryExport::category(KAction* action) const
 {
     if (action == m_action)
@@ -122,6 +121,3 @@ KIPI::Category Plugin_GalleryExport::category(KAction* action) const
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
     return KIPI::ExportPlugin;
 }
-
-
-#include "plugin_galleryexport.moc"

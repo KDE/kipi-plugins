@@ -38,23 +38,25 @@ class GPhoto
 {
 public:
 
-    GPhoto() {
+    GPhoto()
+    {
         ref_num = -1;
     }
 
-    int           ref_num;
-    int           album_num;
-    QString       name;
-    QString       caption;
-    QString       thumbName;
-    QString       albumURL;
+    int     ref_num;
+    int     album_num;
+    QString name;
+    QString caption;
+    QString thumbName;
+    QString albumURL;
 };
 
 class GAlbum
 {
 public:
 
-    GAlbum() {
+    GAlbum()
+    {
         ref_num        = -1;
         parent_ref_num = -1;
 
@@ -90,6 +92,6 @@ public:
     bool               create_sub;
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERYITEM_H */

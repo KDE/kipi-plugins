@@ -56,7 +56,8 @@ class GalleryTalker : public QObject
 
 public:
 
-    enum State {
+    enum State
+    {
         GE_LOGIN = 0,
         GE_LISTALBUMS,
         GE_LISTPHOTOS,
@@ -67,15 +68,18 @@ public:
     GalleryTalker(QWidget* parent);
     ~GalleryTalker();
 
-    static void setGallery2(bool usegallery2) {
+    static void setGallery2(bool usegallery2)
+    {
         s_using_gallery2 = usegallery2;
     };
 
-    static bool isGallery2() {
+    static bool isGallery2()
+    {
         return s_using_gallery2;
     };
 
-    static QString getAuthToken() {
+    static QString getAuthToken()
+    {
         return s_authToken;
     };
 
@@ -96,6 +100,17 @@ public:
                   bool rescale = false, int maxDim = 600);
 
     void cancel();
+
+
+Q_SIGNALS:
+
+    void signalError(const QString& msg);
+    void signalLoginFailed(const QString& msg);
+    void signalBusy(bool val);
+    void signalAlbums(const QList<GAlbum>& albumList);
+    void signalPhotos(const QList<GPhoto>& photoList);
+    void signalAddPhotoSucceeded();
+    void signalAddPhotoFailed(const QString& msg);
 
 private:
 
@@ -118,22 +133,12 @@ private:
     void parseResponseCreateAlbum(const QByteArray &data);
     void parseResponseAddPhoto(const QByteArray &data);
 
-signals:
-
-    void signalError(const QString& msg);
-    void signalLoginFailed(const QString& msg);
-    void signalBusy(bool val);
-    void signalAlbums(const QList<GAlbum>& albumList);
-    void signalPhotos(const QList<GPhoto>& photoList);
-    void signalAddPhotoSucceeded();
-    void signalAddPhotoFailed(const QString& msg);
-
-private slots:
+private Q_SLOTS:
 
     void slotTalkerData(KIO::Job *job, const QByteArray &data);
     void slotResult(KJob *job);
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERYTALKER_H */

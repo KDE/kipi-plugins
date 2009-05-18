@@ -27,6 +27,7 @@
 #define GALLERIES_H
 
 // Qt includes
+
 #include <QString>
 
 namespace KWallet
@@ -75,9 +76,8 @@ private:
 
     void load();
     KWallet::Wallet* mpWallet;
-
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERIES_H */

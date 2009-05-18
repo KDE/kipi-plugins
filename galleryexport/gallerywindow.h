@@ -26,14 +26,14 @@
 #ifndef GALLERYWINDOW_H
 #define GALLERYWINDOW_H
 
-
 // KDE includes
+
 #include <KDialog>
 
 // Qt includes
+
 #include <QList>
 #include <QProgressDialog>
-
 
 namespace KIPI
 {
@@ -67,7 +67,7 @@ private:
     void readSettings();
     QString cleanName(QString);
 
-private slots:
+private Q_SLOTS:
 
     void slotDoLogin();
     void slotLoginFailed(const QString& msg);
@@ -89,21 +89,21 @@ private slots:
 
 private:
 
-    KIPI::Interface* m_interface;
-    KIPIPlugins::KPAboutData *m_about;
-    GalleryTalker* m_talker;
-    Gallery* mpGallery;
+    KIPI::Interface*          m_interface;
+    KIPIPlugins::KPAboutData* m_about;
+    GalleryTalker*            m_talker;
+    Gallery*                  mpGallery;
 
-    QProgressDialog *m_progressDlg;
-    unsigned int m_uploadCount;
-    unsigned int m_uploadTotal;
-    QStringList *mpUploadList;
-    QString firstAlbumName;
+    QProgressDialog*          m_progressDlg;
+    unsigned int              m_uploadCount;
+    unsigned int              m_uploadTotal;
+    QStringList*              mpUploadList;
+    QString                   firstAlbumName;
 
     class Private;
     Private* const d;
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERYWINDOW_H */

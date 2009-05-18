@@ -41,8 +41,6 @@ namespace KIPIGalleryExportPlugin
 class Gallery;
 }
 
-
-
 class Plugin_GalleryExport : public KIPI::Plugin
 {
     Q_OBJECT
@@ -55,16 +53,15 @@ public:
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
-public slots:
-
+public Q_SLOTS:
 
     void slotSync();
 
 private:
 
-    KAction *m_action;
+    KAction                          *m_action;
 
-    KIPIGalleryExportPlugin::Gallery* mpGallery;
+    KIPIGalleryExportPlugin::Gallery *mpGallery;
 };
 
-#endif
+#endif /* PLUGIN_GALLERYEXPORT_H */

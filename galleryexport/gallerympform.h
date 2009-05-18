@@ -59,6 +59,6 @@ private:
     QByteArray m_boundary;
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERYMPFORM_H */

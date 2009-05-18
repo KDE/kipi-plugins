@@ -33,11 +33,12 @@ namespace KIPIGalleryExportPlugin
 
 class AlbumDlg : public QDialog , public Ui::GalleryAlbumWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-  AlbumDlg(QWidget *parent = 0);
-  ~AlbumDlg();
+
+    AlbumDlg(QWidget *parent = 0);
+    ~AlbumDlg();
 };
 
 }

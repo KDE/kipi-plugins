@@ -62,10 +62,11 @@ private:
     KLineEdit*       mpPasswordEdit;
     QCheckBox*       mpGalleryVersion;
 
-private slots:
+private Q_SLOTS:
+
     void slotOk(void);
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
 
 #endif /* GALLERYCONFIG_H */
