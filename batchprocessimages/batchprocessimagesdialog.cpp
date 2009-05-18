@@ -1055,4 +1055,10 @@ bool BatchProcessImagesDialog::smallPreview() const
 {
     return m_smallPreview->isChecked();
 }
+
+KUrl BatchProcessImagesDialog::destinationUrl() const
+{
+    return m_destinationURL->url();
+}
+
 }  // namespace KIPIBatchProcessImagesPlugin

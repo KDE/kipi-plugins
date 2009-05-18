@@ -136,6 +136,8 @@ private:
    QPushButton            *m_addImagesButton;
    QPushButton            *m_remImagesButton;
 
+   KUrlRequester          *m_destinationURL;
+
 protected:
    // --------------------------------------------------------------------------------------------------------
    // Widgets used by inherited dialogs
@@ -145,8 +147,6 @@ protected:
    QPushButton            *m_optionsButton;
 
    BatchProcessImagesList *m_listFiles;
-
-   KUrlRequester          *m_destinationURL;
    ////
 
    KConfig                *m_config;
@@ -189,6 +189,11 @@ protected:
      * Whether we should use large or small previews
      */
     bool smallPreview() const;
+
+    /**
+     * @return destination url
+     */
+    KUrl destinationUrl() const;
 
    // Fonctions for ImageMAgick call implementations.
 
