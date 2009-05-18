@@ -64,10 +64,11 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     setOtherText(pluginDescription);
 
     // put the plugin name and version with kipi-plugins and kipi-plugins version
-    KLocalizedString shortDesc = ki18n("%1 %2 - Kipi-plugins %3")
+    KLocalizedString shortDesc = ki18n("%1 %2 - Kipi-plugins %3\nBuild date: %4")
                                        .subs(pluginName.toString())
                                        .subs(QString(pluginVersion))
-                                       .subs(QString(kipiplugins_version));
+                                       .subs(QString(kipiplugins_version))
+                                       .subs(QString(__DATE__));
 
     if (KGlobal::hasMainComponent())
     {
