@@ -51,7 +51,7 @@ public:
 
     GPSTrackList trackList() const;
 
-protected slots:
+protected Q_SLOTS:
 
     void slotOk();
     void slotCancel();
@@ -62,8 +62,8 @@ protected slots:
 
 protected:
 
-    void resizeEvent(QResizeEvent *);
-    void closeEvent(QCloseEvent *);
+    void resizeEvent(QResizeEvent*);
+    void closeEvent(QCloseEvent*);
 
 private:
 

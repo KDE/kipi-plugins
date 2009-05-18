@@ -100,12 +100,12 @@ public:
     KIntNumInput  *GPXTracksOpacityInput_;
     KIntNumInput  *GPXLineWidthInput_;
 
-public slots:
+public Q_SLOTS:
 
     void GoogleMapTargetRadioButton__toggled(bool);
     void KMLTracksCheckButton__toggled(bool);
 
-signals:
+Q_SIGNALS:
 
     void okButtonClicked(); // Signal needed by plugin_kmlexport class
 
@@ -126,7 +126,7 @@ protected:
     void saveSettings();
     void readSettings();
 
-protected slots:
+protected Q_SLOTS:
 
     void slotOk();
     void slotCancel();

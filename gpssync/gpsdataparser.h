@@ -62,7 +62,7 @@ private:
     QDateTime findNextDate(const QDateTime& dateTime, int secs);
     QDateTime findPrevDate(const QDateTime& dateTime, int secs);
 
-protected: 
+protected:
 
     typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
 

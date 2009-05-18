@@ -49,6 +49,7 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+#include "gpslistviewcontextmenu.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -105,6 +106,9 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
                                        i18n("Altitude"), true);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User6,
                                        i18n("Changed"), true);
+
+    // add the context menu provider to the imagesList:
+    new GPSListViewContextMenu(d->imagesList);
 
     d->worldMap       = new GPSTrackListWidget(page);
     d->worldMap->show();

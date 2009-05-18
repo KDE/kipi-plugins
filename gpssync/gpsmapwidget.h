@@ -59,7 +59,7 @@ public:
 
     void    resized();
 
-signals:
+Q_SIGNALS:
 
     void signalNewGPSLocationFromMap(const QString&, const QString&, const QString&);
 

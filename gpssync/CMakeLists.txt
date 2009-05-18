@@ -1,4 +1,5 @@
 SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp 
+                                 gpslistviewcontextmenu.cpp 
                                  gpslistviewitem.cpp 
                                  gpsbabelbinary.cpp 
                                  gpsdataparser.cpp 

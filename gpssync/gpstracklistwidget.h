@@ -59,7 +59,7 @@ public:
 
     void    resized();
 
-signals:
+Q_SIGNALS:
 
     void signalNewGPSLocationFromMap(int, double, double, double);
     void signalMarkerSelectedFromMap(int);

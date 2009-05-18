@@ -52,7 +52,7 @@ public:
     KIPI::Category category( KAction* action ) const;
     void setup( QWidget* );
 
-protected slots:
+protected Q_SLOTS:
 
     void slotGPSSync();
     void slotGPSEdit();

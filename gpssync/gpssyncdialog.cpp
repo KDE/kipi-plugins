@@ -61,6 +61,7 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+#include "gpslistviewcontextmenu.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -71,7 +72,7 @@ public:
 
     GPSSyncDialogPriv()
     {
-        imagesList       = 0;
+        imagesList     = 0;
         interface      = 0;
         maxGapInput    = 0;
         gpxFileName    = 0;
@@ -145,6 +146,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User5,
                                        i18n("Status"), true);
     d->imagesList->setMinimumWidth(450);
+
+    // add the context menu provider to the imagesList:
+    new GPSListViewContextMenu(d->imagesList);
+
 //    d->listView->setIconSize(QSize(64, 64));
 //    d->listView->setColumnWidth(0, 70);
 
@@ -258,7 +263,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures metadata with a GPS device"),
-                   ki18n("(c) 2006-2008, Gilles Caulier"));
+                   ki18n("(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),

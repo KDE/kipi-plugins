@@ -53,7 +53,7 @@ protected:
 
     void closeEvent(QCloseEvent *);
 
-protected slots:
+protected Q_SLOTS:
 
     void slotApply();
     void slotHelp();
@@ -62,7 +62,7 @@ protected slots:
     void slotUser2();
     void slotUser3();
 
-private slots:
+private Q_SLOTS:
 
     void slotLoadGPXFile();
 
