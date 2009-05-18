@@ -18,5 +18,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> BatchProcessImages : 189798 : digiKam crashes with SIGSEGV when converting .CR2 image to .jpg.
 011 ==> RAWConverter       : 192787 : RawConverter: Image rotated but EXIF tag not cleared.
 012 ==> FlickrExport       : 183639 : Can't upload photo without a PhotoSet.
-013 ==> 
+013 ==> FlickrExport       : 192862 : Spaces break tag into bits.
+014 ==> 
 
