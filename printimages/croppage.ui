@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>CropPage</class>
- <widget class="QWidget" name="CropPage" >
-  <property name="geometry" >
+ <widget class="QWidget" name="CropPage">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,57 +10,41 @@
     <height>300</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="KIPIPrintImagesPlugin::CropFrame" native="1" name="cropFrame" >
-     <property name="minimumSize" >
+    <widget class="KIPIPrintImagesPlugin::CropFrame" name="cropFrame" native="true">
+     <property name="minimumSize">
       <size>
        <width>0</width>
        <height>201</height>
       </size>
      </property>
-     <property name="whatsThis" >
+     <property name="whatsThis">
       <string>Move the box in order to crop photos so that they fit inside the photo sizes you have given.  
 You can crop each image differently, or just click the 'Next' button to use the default crop 
 setting for each photo.
-Enable "Do not crop" to avoid cropping all of the photos.</string>
+Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" >
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>41</width>
-         <height>21</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="m_disableCrop" >
-       <property name="whatsThis" >
+      <widget class="QCheckBox" name="m_disableCrop">
+       <property name="whatsThis">
         <string>Do not crop photos, just scale them.</string>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Do not crop</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer" >
-       <property name="orientation" >
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
          <height>20</height>
@@ -68,27 +53,27 @@ Enable "Do not crop" to avoid cropping all of the photos.</string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="BtnCropRotate" >
-       <property name="toolTip" >
+      <widget class="QPushButton" name="BtnCropRotate">
+       <property name="toolTip">
         <string>Rotate photo</string>
        </property>
-       <property name="whatsThis" >
+       <property name="whatsThis">
         <string>Rotate photo</string>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>&amp;Rotate</string>
        </property>
       </widget>
      </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType" >
+       <property name="sizeType">
         <enum>QSizePolicy::Expanding</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>127</width>
          <height>16</height>
@@ -97,40 +82,40 @@ Enable "Do not crop" to avoid cropping all of the photos.</string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="BtnCropPrev" >
-       <property name="toolTip" >
+      <widget class="QPushButton" name="BtnCropPrev">
+       <property name="toolTip">
         <string>Previous photo</string>
        </property>
-       <property name="whatsThis" >
+       <property name="whatsThis">
         <string>Previous photo</string>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>&lt;&lt; Pr&amp;evious</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="BtnCropNext" >
-       <property name="toolTip" >
+      <widget class="QPushButton" name="BtnCropNext">
+       <property name="toolTip">
         <string>Next photo</string>
        </property>
-       <property name="whatsThis" >
+       <property name="whatsThis">
         <string>Next photo</string>
        </property>
-       <property name="text" >
-        <string>Ne&amp;xt >></string>
+       <property name="text">
+        <string>Ne&amp;xt &gt;&gt;</string>
        </property>
       </widget>
      </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType" >
+       <property name="sizeType">
         <enum>QSizePolicy::Expanding</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>127</width>
          <height>16</height>
@@ -139,36 +124,20 @@ Enable "Do not crop" to avoid cropping all of the photos.</string>
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="LblCropPhoto" >
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+      <widget class="QLabel" name="LblCropPhoto">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Photo 0 of 0</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType" >
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>41</width>
-         <height>21</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>

@@ -1404,15 +1404,14 @@ namespace KIPIPrintImagesPlugin
     }
 
     // send this photo list to the painter
-    QPixmap img ( d->mPhotoPage->BmpFirstPagePreview->width(), d->mPhotoPage->BmpFirstPagePreview->height() );
-    QPainter p;
-    p.begin ( &img );
-    QPalette palette ( d->mPhotoPage->backgroundRole() );
-    p.fillRect ( 0, 0, img.width(), img.height(), palette.color ( QPalette::Background ) );
+    QImage img ( d->mPhotoPage->BmpFirstPagePreview->size(), QImage::Format_ARGB32_Premultiplied );
+    QPainter p ( &img );
+    p.setCompositionMode( QPainter::CompositionMode_Destination );
+    p.fillRect ( img.rect(), Qt::transparent );
+    p.setCompositionMode( QPainter::CompositionMode_SourceOver );
     paintOnePage ( p, d->m_photos, s->layouts, d->mInfoPage->m_captions-> currentIndex(), current, true );
     p.end();
-    d->mPhotoPage->BmpFirstPagePreview->setPixmap ( img );
-    d->mPhotoPage->LblPreview->setText ( i18n ( "Page " ) + QString::number ( d->m_currentPreviewPage + 1 ) + i18n ( " of " ) + QString::number ( getPageCount() ) );
+    d->mPhotoPage->BmpFirstPagePreview->setPixmap ( QPixmap::fromImage(img) );
     d->mPhotoPage->LblPreview->setText ( i18n ( "Page %1 of %2", d->m_currentPreviewPage + 1, getPageCount() ) );
 
     manageBtnPreviewPage();
@@ -1562,24 +1561,28 @@ namespace KIPIPrintImagesPlugin
   void Wizard::captionChanged ( const QString & text )
   {
     //TODO use QVariant and add them by hands
+    bool fontSettingsEnabled;
     if ( text == i18n ( "No captions" ) )
     {
-      d->mInfoPage->m_font_frame->setEnabled ( false );
+      fontSettingsEnabled = false;
       d->mInfoPage->m_FreeCaptionFormat->setEnabled ( false );
       d->mInfoPage->m_free_label->setEnabled ( false );
     }
     else if ( text == i18n ( "Free" ) )
     {
-      d->mInfoPage->m_font_frame->setEnabled ( true );
+      fontSettingsEnabled = true;
       d->mInfoPage->m_FreeCaptionFormat->setEnabled ( true );
       d->mInfoPage->m_free_label->setEnabled ( true );
     }
     else
     {
-      d->mInfoPage->m_font_frame->setEnabled ( true );
+      fontSettingsEnabled = true;
       d->mInfoPage->m_FreeCaptionFormat->setEnabled ( false );
       d->mInfoPage->m_free_label->setEnabled ( false );
     }
+    d->mInfoPage->m_font_name->setEnabled ( fontSettingsEnabled );
+    d->mInfoPage->m_font_size->setEnabled ( fontSettingsEnabled );
+    d->mInfoPage->m_font_color->setEnabled ( fontSettingsEnabled );
   }
 
   void Wizard::BtnCropRotate_clicked()
