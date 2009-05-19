@@ -193,7 +193,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     // --------------------------------------------------------
 
     d->sceneEdit = new MultiValuesEdit(this, i18n("Scene:"),
-                       i18n("Select here the scene type of content."));
+                       i18n("Select here the scene type of the content."));
 
     QStringList list2;
     for (XMPPropertiesPriv::SceneCodeMap::Iterator it = d->sceneCodeMap.begin();
@@ -205,7 +205,7 @@ XMPProperties::XMPProperties(QWidget* parent)
     // --------------------------------------------------------
 
     d->objectTypeEdit = new MultiValuesEdit(this, i18n("Type:"),
-                            i18n("Select here the editorial type of content."));
+                            i18n("Select here the editorial type of the content."));
 
     QStringList list3;
     for (XMPPropertiesPriv::TypeCodeMap::Iterator it = d->typeCodeMap.begin();
@@ -220,9 +220,9 @@ XMPProperties::XMPProperties(QWidget* parent)
     d->objectAttributeCB    = new SqueezedComboBox(this);
     d->objectAttributeEdit  = new KLineEdit(this);
     d->objectAttributeEdit->setClearButtonShown(true);
-    d->objectAttributeEdit->setWhatsThis(i18n("Set here the editorial attribute description of content."));
+    d->objectAttributeEdit->setWhatsThis(i18n("Set here the editorial attribute description of the content."));
 
-    d->objectAttributeCB->setWhatsThis(i18n("Select here the editorial attribute of content."));
+    d->objectAttributeCB->setWhatsThis(i18n("Select here the editorial attribute of the content."));
     d->objectAttributeCB->addSqueezedItem(QString("001 - ") + i18n("Current"));
     d->objectAttributeCB->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
     d->objectAttributeCB->addSqueezedItem(QString("003 - ") + i18n("Archive material"));

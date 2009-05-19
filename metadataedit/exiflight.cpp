@@ -168,7 +168,7 @@ EXIFLight::EXIFLight(QWidget* parent)
         it != d->flashModeMap.end(); ++it )
        d->flashModeCB->addItem(it.value().desc());
 
-    d->flashModeCB->setWhatsThis(i18n("Select here the flash program mode used by camera "
+    d->flashModeCB->setWhatsThis(i18n("Select here the flash program mode used by the camera "
                                       "to take the picture."));
 
     // --------------------------------------------------------
@@ -180,7 +180,7 @@ EXIFLight::EXIFLight(QWidget* parent)
     d->flashEnergyEdit->setValue(1.0);
     d->flashEnergyEdit->setDecimals(1);
     d->flashEnergyEdit->setWhatsThis(i18n("Set here the flash energy used to take the picture "
-                                          "in BCPS unit. Beam Candle Power Seconds is the measure "
+                                          "in BCPS units.  Beam Candle Power Seconds is the measure "
                                           "of effective intensity of a light source when it is "
                                           "focused into a beam by a reflector or lens. This value "
                                           "is the effective intensity for a period of one second."));
@@ -191,8 +191,8 @@ EXIFLight::EXIFLight(QWidget* parent)
     d->whiteBalanceCB    = new KComboBox(this);
     d->whiteBalanceCB->insertItem(0, i18n("Auto"));
     d->whiteBalanceCB->insertItem(1, i18n("Manual"));
-    d->whiteBalanceCB->setWhatsThis(i18n("Select here the white balance mode set by camera when "
-                                         "the picture have been shot."));
+    d->whiteBalanceCB->setWhatsThis(i18n("Select here the white balance mode set by the camera when "
+                                         "the picture was taken."));
 
     // --------------------------------------------------------
 

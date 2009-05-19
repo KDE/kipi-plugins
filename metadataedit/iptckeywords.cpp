@@ -111,7 +111,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set and limit strings size. "
+                 "characters and limit string sizes. "
                  "Use contextual help for details.</b>"), this);
     note->setMaximumWidth(150);
     note->setOpenExternalLinks(true);

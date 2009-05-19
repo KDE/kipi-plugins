@@ -150,7 +150,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
     d->syncXMPCaptionCheck  = new QCheckBox(i18n("Sync XMP caption"), this);
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
-                                                 "Ascii characters set)"), this);
+                                                 "Ascii characters)"), this);
 
     if (!KExiv2Iface::KExiv2::supportXmp())
         d->syncXMPCaptionCheck->setEnabled(false);
@@ -161,7 +161,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set.</b>"), this);
+                 "characters.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
     note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);

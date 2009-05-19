@@ -85,7 +85,7 @@ XMPStatus::XMPStatus(QWidget* parent)
     // --------------------------------------------------------
 
     d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"),
-                                                i18n("Set here the shorthand reference of content."));
+                                                i18n("Set here a shorthand reference for the content."));
 
     // --------------------------------------------------------
 
@@ -97,7 +97,7 @@ XMPStatus::XMPStatus(QWidget* parent)
     // --------------------------------------------------------
 
     d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"),
-                              i18n("Set here the strings that identifies content that recurs."));
+                              i18n("Set here the strings that identify content that recurs."));
 
     // --------------------------------------------------------
 

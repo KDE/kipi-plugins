@@ -188,7 +188,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureProgramCB->insertItem(7, i18n("Portrait mode"));
     d->exposureProgramCB->insertItem(8, i18n("Landscape mode"));
     d->exposureProgramCB->setWhatsThis(i18n("Select here the program used by the camera "
-                                            "to set exposure when the picture have been taken."));
+                                            "to set exposure when the picture was taken."));
 
     // --------------------------------------------------------
 
@@ -198,7 +198,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureModeCB->insertItem(1, i18n("Manual"));
     d->exposureModeCB->insertItem(2, i18n("Auto bracket"));
     d->exposureModeCB->setWhatsThis(i18n("Select here the mode used by the camera "
-                                         "to set exposure when the picture have been shot. "
+                                         "to set exposure when the picture was taken. "
                                          "In auto-bracketing mode, the camera shoots a "
                                          "series of frames of the same scene at different "
                                          "exposure settings."));
@@ -210,7 +210,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->exposureBiasEdit->setRange(-99.99, 99.99);
     d->exposureBiasEdit->setSingleStep(0.1);
     d->exposureBiasEdit->setValue(0.0);
-    d->exposureBiasEdit->setWhatsThis(i18n("Set here the exposure bias value in APEX unit "
+    d->exposureBiasEdit->setWhatsThis(i18n("Set here the exposure bias value (in APEX units) "
                                            "used by camera to take the picture."));
 
     KSeparator *line2 = new KSeparator(Qt::Horizontal, this);
@@ -228,7 +228,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->meteringModeCB->insertItem(6, i18n("Partial"));
     d->meteringModeCB->insertItem(7, i18n("Other"));
     d->meteringModeCB->setWhatsThis(i18n("Select here the metering mode used by the camera "
-                                         "to set exposure when the picture have been shot."));
+                                         "to set exposure when the picture was taken."));
 
     // --------------------------------------------------------
 
@@ -271,7 +271,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     d->ISOSpeedCB->insertItem(35, "25000");
     d->ISOSpeedCB->insertItem(36, "32000");
     d->ISOSpeedCB->setWhatsThis(i18n("Select here the ISO Speed of the camera "
-                                     "witch have taken the picture."));
+                                     "which took the picture."));
 
     // --------------------------------------------------------
 
@@ -302,7 +302,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->subjectDistanceTypeCheck = new MetadataCheckBox(i18n("Subject distance type:"), this);
     d->subjectDistanceTypeCB    = new KComboBox(this);
-    d->subjectDistanceTypeCB->insertItem(1, i18n("Unknow"));
+    d->subjectDistanceTypeCB->insertItem(1, i18n("Unknown"));
     d->subjectDistanceTypeCB->insertItem(2, i18n("Macro"));
     d->subjectDistanceTypeCB->insertItem(3, i18n("Close view"));
     d->subjectDistanceTypeCB->insertItem(4, i18n("Distant view"));
@@ -315,7 +315,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
-                 "characters set.</b>"), this);
+                 "characters.</b>"), this);
     note->setOpenExternalLinks(true);
     note->setWordWrap(true);
     note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);

@@ -188,8 +188,8 @@ void Plugin_MetadataEdit::slotRemoveExif()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata will be permanently removed from all current selected pictures.\n"
-                          "Do you want to continue ?"),
+                     i18n("EXIF metadata will be permanently removed from all currently selected pictures.\n"
+                          "Do you want to continue?"),
                      i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
         return;
 
@@ -265,16 +265,16 @@ void Plugin_MetadataEdit::slotImportExif()
     if (exifData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
-                           i18n("\"%1\" do not have EXIF metadata", importEXIFFile.fileName()),
+                           i18n("\"%1\" does not have EXIF metadata.", importEXIFFile.fileName()),
                            i18n("Import EXIF Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("EXIF metadata from current selected pictures will be permanently "
+                     i18n("EXIF metadata from the currently selected pictures will be permanently "
                           "replaced by the EXIF content of \"%1\".\n"
-                          "Do you want to continue ?", importEXIFFile.fileName()),
+                          "Do you want to continue?", importEXIFFile.fileName()),
                      i18n("Import EXIF Metadata")) != KMessageBox::Yes)
         return;
 
@@ -345,8 +345,8 @@ void Plugin_MetadataEdit::slotRemoveIptc()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata will be permanently removed from all current selected pictures.\n"
-                          "Do you want to continue ?"),
+                     i18n("IPTC metadata will be permanently removed from all currently selected pictures.\n"
+                          "Do you want to continue?"),
                      i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
         return;
 
@@ -422,16 +422,16 @@ void Plugin_MetadataEdit::slotImportIptc()
     if (iptcData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
-                           i18n("\"%1\" do not have IPTC metadata", importIPTCFile.fileName()),
+                           i18n("\"%1\" does not have IPTC metadata.", importIPTCFile.fileName()),
                            i18n("Import IPTC Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("IPTC metadata from current selected pictures will be permanently "
+                     i18n("IPTC metadata from the currently selected pictures will be permanently "
                           "replaced by the IPTC content of \"%1\".\n"
-                          "Do you want to continue ?", importIPTCFile.fileName()),
+                          "Do you want to continue?", importIPTCFile.fileName()),
                      i18n("Import IPTC Metadata")) != KMessageBox::Yes)
         return;
 
@@ -502,8 +502,8 @@ void Plugin_MetadataEdit::slotRemoveXmp()
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("XMP metadata will be permanently removed from all current selected pictures.\n"
-                          "Do you want to continue ?"),
+                     i18n("XMP metadata will be permanently removed from all of the currently selected pictures.\n"
+                          "Do you want to continue?"),
                      i18n("Remove XMP Metadata")) != KMessageBox::Yes)
         return;
 
@@ -579,16 +579,16 @@ void Plugin_MetadataEdit::slotImportXmp()
     if (xmpData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
-                           i18n("\"%1\" do not have XMP metadata", importXMPFile.fileName()),
+                           i18n("\"%1\" does not have XMP metadata.", importXMPFile.fileName()),
                            i18n("Import XMP Metadata"));
         return;
     }
 
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
-                     i18n("XMP metadata from current selected pictures will be permanently "
+                     i18n("XMP metadata from the currently selected pictures will be permanently "
                           "replaced by the XMP content of \"%1\".\n"
-                          "Do you want to continue ?", importXMPFile.fileName()),
+                          "Do you want to continue?", importXMPFile.fileName()),
                      i18n("Import XMP Metadata")) != KMessageBox::Yes)
         return;
 

@@ -169,32 +169,32 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
 
     d->creditsPage  = new IPTCCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
-    d->page_credits->setHeader(i18n("<qt>Credits Information<br/>"
+    d->page_credits->setHeader(i18n("<qt>Credit Information<br/>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
     d->page_credits->setIcon(KIcon("view-pim-contacts"));
 
     d->subjectsPage  = new IPTCSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
-    d->page_subjects->setHeader(i18n("<qt>Subjects Information<br/>"
-                      "<i>Use this panel to record subjects about the image</i></qt>"));
+    d->page_subjects->setHeader(i18n("<qt>Subject Information<br/>"
+                      "<i>Use this panel to record subject information about the image</i></qt>"));
     d->page_subjects->setIcon(KIcon("feed-subscribe"));
 
     d->keywordsPage  = new IPTCKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
-    d->page_keywords->setHeader(i18n("<qt>Keywords Information<br/>"
-                      "<i>Use this panel to record keywords about the image</i></qt>"));
+    d->page_keywords->setHeader(i18n("<qt>Keyword Information<br/>"
+                      "<i>Use this panel to record keywords relevant to the image</i></qt>"));
     d->page_keywords->setIcon(KIcon("bookmarks"));
 
     d->categoriesPage  = new IPTCCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
-    d->page_categories->setHeader(i18n("<qt>Categories Information<br/>"
-                        "<i>Use this panel to record categories about the image</i></qt>"));
+    d->page_categories->setHeader(i18n("<qt>Category Information<br/>"
+                        "<i>Use this panel to record categories relevant to the image</i></qt>"));
     d->page_categories->setIcon(KIcon("folder-image"));
 
     d->statusPage  = new IPTCStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br/>"
-                    "<i>Use this panel to record workflow description</i></qt>"));
+                    "<i>Use this panel to record workflow information</i></qt>"));
     d->page_status->setIcon(KIcon("view-pim-tasks"));
 
     d->propertiesPage  = new IPTCProperties(this);
@@ -206,7 +206,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->envelopePage  = new IPTCEnvelope(this);
     d->page_envelope = addPage(d->envelopePage, i18n("Envelope"));
     d->page_envelope->setHeader(i18n("<qt>Envelope Information<br/>"
-                      "<i>Use this panel to record editorial description</i></qt>"));
+                      "<i>Use this panel to record editorial details</i></qt>"));
     d->page_envelope->setIcon(KIcon("view-pim-mail"));
 
     // ---------------------------------------------------------------
@@ -215,7 +215,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             0,
                                             KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("A Plugin to edit pictures' metadata."),
                                             ki18n("(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),

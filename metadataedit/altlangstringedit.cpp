@@ -100,7 +100,7 @@ public:
         languageCodeMap.insert( "ar-TN", i18n("Arabic (Tunisia)") );
         languageCodeMap.insert( "ar-YE", i18n("Arabic (Yemen)") );
         languageCodeMap.insert( "as-IN", i18n("Assamese (India)") );
-        languageCodeMap.insert( "ba-RU", i18n("Bashkir(Russia)") );
+        languageCodeMap.insert( "ba-RU", i18n("Bashkir (Russia)") );
         languageCodeMap.insert( "be-BY", i18n("Belarusian (Belarus)") );
         languageCodeMap.insert( "bg-BG", i18n("Bulgarian (Bulgaria)") );
         languageCodeMap.insert( "bn-IN", i18n("Bengali (India)") );

@@ -95,7 +95,7 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
     d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             0,
                                             KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("A Plugin to edit pictures' metadata."),
                                             ki18n("(c) 2006-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
@@ -131,7 +131,7 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
     d->syncEXIFCommentCheck = new QCheckBox(i18n("Sync EXIF Comment"), mainWidget());
     d->syncXMPCaptionCheck  = new QCheckBox(i18n("Sync XMP Caption"), mainWidget());
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
-                                                 "Ascii characters set)"), mainWidget());
+                                                 "Ascii characters)"), mainWidget());
 
     if (!KExiv2Iface::KExiv2::supportXmp())
         d->syncXMPCaptionCheck->setEnabled(false);

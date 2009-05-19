@@ -205,7 +205,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
                                             0,
                                             KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures metadata"),
+                                            ki18n("A Plugin to edit pictures' metadata."),
                                             ki18n("(c) 2007-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),

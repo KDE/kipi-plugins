@@ -114,13 +114,13 @@ MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
     if (ascii)
     {
         d->valueEdit->setValidator(asciiValidator);
-        whatsThis.append(i18n("<p>Printable ASCII characters set.</p>"));
+        whatsThis.append(i18n("<p>Printable ASCII characters.</p>"));
     }
 
     if (size != -1)
     {
         d->valueEdit->setMaxLength(size);
-        whatsThis.append(i18n("<p>Size of %1 characters.</p>", size));
+        whatsThis.append(i18np("<p>1 character.</p>","<p>%1 characters.</p>", size));
     }
 
     d->valueEdit->setWhatsThis(whatsThis);
