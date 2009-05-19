@@ -303,7 +303,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         if (foundDoubleData)
         {
             KMessageBox::sorry(d->imagesList,
-              i18n("Found more than one point in the clipboard. Can only assign one point at a time!")
+              i18n("Found more than one point on the clipboard - can only assign one point at a time.")
               , i18n("GPS Sync"));
         }
     }
@@ -336,7 +336,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
     if (!foundData)
     {
         KMessageBox::sorry(d->imagesList,
-                     i18n("Could not find any coordinates in the clipboard!"), i18n("GPS Sync"));
+                     i18n("Could not find any coordinates on the clipboard."), i18n("GPS Sync"));
         return;
     }
 

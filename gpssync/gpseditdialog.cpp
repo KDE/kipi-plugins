@@ -104,7 +104,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     QGridLayout* grid = new QGridLayout(page);
 
     QLabel *message   = new QLabel(i18n("<p>Use the map on the right to select the location where "
-                                        "the picture has been taken. Click with left mouse button or move the marker "
+                                        "the picture was taken. Click with left mouse button or move the marker "
                                         "on the map to get the GPS coordinates.</p>"), page);
     message->setWordWrap(true);
 
@@ -124,7 +124,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->latitudeInput->setValidator(new QDoubleValidator(-90.0, 90.0, 12, this));
     d->longitudeInput->setValidator(new QDoubleValidator(-180.0, 180.0, 12, this));
 
-    d->goButton = new QPushButton(i18n("Goto Location"), page);
+    d->goButton = new QPushButton(i18n("Go to Location"), page);
     d->goButton->setEnabled(false);
 
     d->worldMap = new GPSMapWidget(page);
@@ -316,7 +316,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->altitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Altitude value is not correct!"),
+        KMessageBox::error(this, i18n("Altitude value is invalid."),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }
@@ -324,7 +324,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->latitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Latitude value is not correct!"),
+        KMessageBox::error(this, i18n("Latitude value is invalid."),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }
@@ -332,7 +332,7 @@ bool GPSEditDialog::checkGPSLocation()
     d->longitudeInput->text().toDouble(&ok);
     if (!ok)
     {
-        KMessageBox::error(this, i18n("Longitude value is not correct!"),
+        KMessageBox::error(this, i18n("Longitude value is invalid."),
                            i18n("Edit Geographical Coordinates"));
         return false;
     }

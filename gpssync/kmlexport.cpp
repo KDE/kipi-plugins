@@ -362,7 +362,7 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
 {
     if( m_GPXFile.isEmpty() )
     {
-        logWarning(i18n("No GPX file Chosen!"));
+        logWarning(i18n("No GPX file chosen."));
         return;
     }
 
@@ -371,13 +371,13 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
 
     if (!ret)
     {
-        logError(i18n("Cannot parse %1 GPX file!",m_GPXFile));
+        logError(i18n("Cannot parse %1 GPX file.",m_GPXFile));
         return;
     }
 
     if (m_gpxParser.numPoints() <= 0)
     {
-        logError(i18n("The %1 GPX file do not have a date-time track to use!",
+        logError(i18n("The %1 GPX file do not have a date-time track to use.",
                       m_GPXFile));
         return;
     }

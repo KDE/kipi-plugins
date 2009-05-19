@@ -87,8 +87,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     LocalTargetRadioButton_->setChecked( true );
 
     GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ), TargetTypeGroupBox);
-    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all image must have complete Url, icons are "
-                                                 "squared and when drawing a track, only linetrack is exported" ) );
+    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all images must have complete URLs, icons are "
+                                                 "squared, and when drawing a track, only line track is exported." ) );
 
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_,     0, 0, 1, 1);
     buttonGroupTargetTypeLayout->addWidget( GoogleMapTargetRadioButton_, 1, 0, 1, 1);
@@ -118,12 +118,12 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
 
     // DestinationDirectory_ = new KLineEdit( TargetPreferenceGroupBox, "DestinationDirectory_" );
     DestinationDirectory_= new KUrlRequester(TargetPreferenceGroupBox);
-    DestinationDirectory_->setWindowTitle(i18n("Select a directory to save the kml file and pictures"));
+    DestinationDirectory_->setWindowTitle(i18n("Select a directory in which to save the kml file and pictures"));
     DestinationDirectory_->setMode(KFile::Directory | KFile::LocalOnly );
 
-    DestinationUrlLabel_ = new QLabel(i18n("Destination Url:"), TargetPreferenceGroupBox);
+    DestinationUrlLabel_ = new QLabel(i18n("Destination URL:"), TargetPreferenceGroupBox);
     DestinationUrl_      = new KLineEdit(TargetPreferenceGroupBox);
-    FileNameLabel_       = new QLabel(i18n( "File Name:" ), TargetPreferenceGroupBox);
+    FileNameLabel_       = new QLabel(i18n( "Filename:" ), TargetPreferenceGroupBox);
     FileName_            = new KLineEdit(TargetPreferenceGroupBox);
 
     TargetPreferenceGroupBoxLayout->addWidget(TargetTypeGroupBox,         0, 0, 2, 5);

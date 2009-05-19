@@ -149,7 +149,7 @@ void GPSListViewItem::eraseGPSInfo()
 {
     d->erase = true;
     d->dirty = true;
-    setText(KIPIPlugins::ImagesListView::User5, i18n("Deleted!"));
+    setText(KIPIPlugins::ImagesListView::User5, i18n("Deleted"));
 }
 
 void GPSListViewItem::setDateTime(const QDateTime& date)

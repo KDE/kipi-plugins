@@ -322,7 +322,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
     if (trackList.isEmpty())
     {
-        KMessageBox::sorry(0, i18n("No GPS location have been found in your pictures."));
+        KMessageBox::sorry(0, i18n("No GPS locations have been found in your pictures."));
         return;
     }
 

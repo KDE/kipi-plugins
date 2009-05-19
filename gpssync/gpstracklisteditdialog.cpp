@@ -126,7 +126,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Plugin to edit GPS track list"),
+                   ki18n("A plugin to edit GPS track lists."),
                    ki18n("(c) 2008-2009, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
