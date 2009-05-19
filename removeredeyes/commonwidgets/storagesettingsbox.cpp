@@ -84,7 +84,7 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
     d->saveMethodCB->insertItem(Overwrite, i18n("Overwrite"));
 
     d->saveMethodLineEdit = new KLineEdit;
-    d->saveMethodLineEdit->setToolTip(i18n("Enter the name of the extra here..."));
+    d->saveMethodLineEdit->setToolTip(i18n("Enter the name of the subfolder, prefix or suffix to use for the corrected images."));
 
     d->keywordCB = new QCheckBox(i18n("Add &metadata keyword"));
     d->keywordCB->setChecked(false);
