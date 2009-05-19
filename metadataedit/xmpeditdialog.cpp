@@ -165,32 +165,32 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
 
     d->creditsPage  = new XMPCredits(this);
     d->page_credits = addPage(d->creditsPage, i18n("Credits"));
-    d->page_credits->setHeader(i18n("<qt>Credits Information<br/>"
+    d->page_credits->setHeader(i18n("<qt>Credit Information<br/>"
                      "<i>Use this panel to record copyright information about the image</i></qt>"));
     d->page_credits->setIcon(KIcon("view-pim-contacts"));
 
     d->subjectsPage  = new XMPSubjects(this);
     d->page_subjects = addPage(d->subjectsPage, i18n("Subjects"));
-    d->page_subjects->setHeader(i18n("<qt>Subjects Information<br/>"
-                      "<i>Use this panel to record subjects about the image</i></qt>"));
+    d->page_subjects->setHeader(i18n("<qt>Subject Information<br/>"
+                      "<i>Use this panel to record subject information about the image</i></qt>"));
     d->page_subjects->setIcon(KIcon("feed-subscribe"));
 
     d->keywordsPage  = new XMPKeywords(this);
     d->page_keywords = addPage(d->keywordsPage, i18n("Keywords"));
-    d->page_keywords->setHeader(i18n("<qt>Keywords Information<br/>"
-                      "<i>Use this panel to record keywords about the image</i></qt>"));
+    d->page_keywords->setHeader(i18n("<qt>Keyword Information<br/>"
+                      "<i>Use this panel to record keywords relevant to the image</i></qt>"));
     d->page_keywords->setIcon(KIcon("bookmarks"));
 
     d->categoriesPage  = new XMPCategories(this);
     d->page_categories = addPage(d->categoriesPage, i18n("Categories"));
-    d->page_categories->setHeader(i18n("<qt>Categories Information<br/>"
-                        "<i>Use this panel to record categories about the image</i></qt>"));
+    d->page_categories->setHeader(i18n("<qt>Category Information<br/>"
+                        "<i>Use this panel to record categories relevant to the image</i></qt>"));
     d->page_categories->setIcon(KIcon("folder"));
 
     d->statusPage  = new XMPStatus(this);
     d->page_status = addPage(d->statusPage, i18n("Status"));
     d->page_status->setHeader(i18n("<qt>Status Information<br/>"
-                    "<i>Use this panel to record workflow description</i></qt>"));
+                    "<i>Use this panel to record workflow information</i></qt>"));
     d->page_status->setIcon(KIcon("view-pim-tasks"));
 
     d->propertiesPage  = new XMPProperties(this);
