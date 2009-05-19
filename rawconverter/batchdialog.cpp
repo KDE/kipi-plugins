@@ -204,10 +204,12 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     mainLayout->addWidget(d->listView,            0, 0, 3, 1);
     mainLayout->addWidget(d->decodingSettingsBox, 0, 1, 1, 1);
     mainLayout->addWidget(d->progressBar,         1, 1, 1, 1);
-    mainLayout->setColumnStretch(0, 10);
-    mainLayout->setRowStretch(2, 10);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
+    mainLayout->setColumnStretch(0, 10);
+#if KDCRAW_VERSION <= 0x000500
+    mainLayout->setRowStretch(2, 10);
+#endif
 
     // ---------------------------------------------------------------
     // About data and help button.
