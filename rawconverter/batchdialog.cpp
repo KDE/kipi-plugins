@@ -194,7 +194,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
     d->decodingSettingsBox->updateMinimumWidth();
 #else
-    d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"), QString("savesettings"), false);
+    d->decodingSettingsBox->insertItem(DcrawSettingsWidget::COLORMANAGEMENT+1, d->saveSettingsBox,
+                                       SmallIcon("document-save"), i18n("Save settings"),
+                                       QString("savesettings"), false);
 #endif
 
     d->progressBar = new QProgressBar(d->page);
