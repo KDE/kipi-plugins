@@ -494,7 +494,7 @@ void GPSSyncDialog::slotUser1()
                         "The GPS data of %1 images have been updated using the GPX data file.",
                         itemsUpdated);
     msg += '\n';
-    msg += i18np("Press the Apply buttom to update the image's metadata.","Press the Apply button to update the images' metadata.", itemsUpdated);
+    msg += i18np("Press the Apply button to update the image's metadata.","Press the Apply button to update the images' metadata.", itemsUpdated);
 
     KMessageBox::information(this, msg, i18n("GPS Sync"));
 }
