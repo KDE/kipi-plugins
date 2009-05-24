@@ -1648,7 +1648,7 @@ namespace KIPIPrintImagesPlugin
 
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kdDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
 
     d->mPhotoPage->ListPrintOrder->blockSignals(true);
@@ -1778,7 +1778,7 @@ namespace KIPIPrintImagesPlugin
   {
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kdDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
     if ( currentIndex == d->mPhotoPage->ListPrintOrder->count() - 1 )
       return;
@@ -2006,7 +2006,7 @@ namespace KIPIPrintImagesPlugin
 #ifdef NOT_YET
     if ( m_kjobviewer->isChecked() )
       if ( !m_Proc->start() )
-        kdDebug ( 51000 ) << "Error running kjobviewr\n";
+        kDebug ( 51000 ) << "Error running kjobviewr\n";
     LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
 #endif
   }
@@ -2088,7 +2088,7 @@ namespace KIPIPrintImagesPlugin
     {
       if ( m_kjobviewer->isChecked() )
         if ( !m_Proc->start() )
-          kdDebug ( 51000 ) << "Error launching kjobviewr\n";
+          kDebug ( 51000 ) << "Error launching kjobviewr\n";
       LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
     }
 #endif
