@@ -366,7 +366,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
    }
    else
    {
-     kDebug() << "New Photoset creation aborted " << endl;
+     kDebug(51000) << "New Photoset creation aborted " << endl;
    }
 }
 

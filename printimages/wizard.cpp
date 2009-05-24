@@ -1648,7 +1648,7 @@ namespace KIPIPrintImagesPlugin
 
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug(51000) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
 
     d->mPhotoPage->ListPrintOrder->blockSignals(true);
@@ -1778,7 +1778,7 @@ namespace KIPIPrintImagesPlugin
   {
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug(51000) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
     if ( currentIndex == d->mPhotoPage->ListPrintOrder->count() - 1 )
       return;
