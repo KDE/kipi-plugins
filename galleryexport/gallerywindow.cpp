@@ -175,7 +175,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_about = new KIPIPlugins::KPAboutData(ki18n("Gallery Export"),
                                            0,
                                            KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collection to remote Gallery server."),
+                                           ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
                                            ki18n("(c) 2003-2005, Renchi Raju\n"
                                                     "(c) 2006-2007, Colin Guthrie\n"
                                                     "(c) 2008, Andrea Diamantini\n")

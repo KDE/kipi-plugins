@@ -64,7 +64,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
                                            KAboutData::License_GPL,
                                            ki18n("An interface to show the output of the \"Batch Process "
                                                  "Images\" Kipi plugin.\n"
-                                                 "This plugin uses the \"convert\" program from \"ImageMagick\" "
+                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" "
                                                  "package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));

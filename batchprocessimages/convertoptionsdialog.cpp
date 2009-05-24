@@ -78,7 +78,7 @@ ConvertOptionsDialog::ConvertOptionsDialog(QWidget *parent, int ImageFormatType)
           {
           m_compressLossLess = new QCheckBox( i18n("Use lossless compression"), box);
           m_compressLossLess->setWhatsThis(i18n("If this option is enabled, "
-                                                "all JPEG operations will use a lossless compression."));
+                                                "all JPEG operations will use lossless compression."));
           dvlay->addWidget( m_compressLossLess );
 
           connect(m_compressLossLess, SIGNAL( toggled(bool) ), this, SLOT( slotCompressLossLessEnabled(bool) ) );

@@ -198,7 +198,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
        m_unsharpenThreshold->setRange(0, 20);
        m_unsharpenThreshold->setSliderEnabled(true);
        m_unsharpenThreshold->setWhatsThis(i18n("Select here the unsharpen threshold value, in "
-                                               "pixels, needed to apply the diffence amount."));
+                                               "pixels, needed to apply the difference amount."));
        m_label_unsharpenThreshold->setBuddy(m_unsharpenThreshold);
        dvlay->addWidget( m_unsharpenThreshold );
        }

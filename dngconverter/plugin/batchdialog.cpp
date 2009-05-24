@@ -324,7 +324,7 @@ void BatchDialog::slotStartStop()
 
         if (d->fileList.empty())
         {
-            KMessageBox::error(this, i18n("There is no Raw file to process in the list!"));
+            KMessageBox::error(this, i18n("The list does not contain any Raw files to process."));
             busy(false);
             slotAborted();
             return;
@@ -463,13 +463,13 @@ void BatchDialog::busy(bool busy)
     {
         setButtonIcon(Apply, KIcon("process-stop"));
         setButtonText(Apply, i18n("&Abort"));
-        setButtonToolTip(Apply, i18n("Abort the current Raw files conversion"));
+        setButtonToolTip(Apply, i18n("Abort the conversion of Raw files."));
     }
     else
     {
         setButtonIcon(Apply, KIcon("system-run"));
         setButtonText(Apply, i18n("Con&vert"));
-        setButtonToolTip(Apply, i18n("Start converting the Raw images from current settings"));
+        setButtonToolTip(Apply, i18n("Start converting the Raw images using the current settings."));
     }
 
     d->settingsBox->setEnabled(!d->busy);

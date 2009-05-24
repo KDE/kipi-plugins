@@ -59,7 +59,7 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
                                            KAboutData::License_GPL,
                                            ki18n("An interface to preview the \"Batch Process Images\" "
                                                      "Kipi plugin.\n"
-                                                     "This plugin uses the \"convert\" program from \"ImageMagick\" "
+                                                     "This plugin uses the \"convert\" program from the \"ImageMagick\" "
                                                      "package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));

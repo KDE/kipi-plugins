@@ -64,14 +64,14 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload on your Facebook account."));
+        i18n("This is the list of images to upload to your Facebook account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(
-        i18n("This is a clickable link to open Facebook home page in web browser."));
+        i18n("This is a clickable link to open the Facebook home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -119,7 +119,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     {
         albBox->setTitle(i18n("Destination"));
         albBox->setWhatsThis(
-            i18n("This is the Facebook album where selected photos will be uploaded."));
+            i18n("This is the Facebook album to which selected photos will be uploaded."));
     }
     QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
 
@@ -172,7 +172,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(
-        i18n("This is the location where Facebook images will be downloaded to."));
+        i18n("This is the location to which Facebook images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);

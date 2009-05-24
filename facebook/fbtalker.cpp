@@ -195,7 +195,7 @@ void FbTalker::createToken()
         m_job = 0;
     }
     emit signalBusy(true);
-    emit signalLoginProgress(1, 8, i18n("Logging to Facebook service..."));
+    emit signalLoginProgress(1, 8, i18n("Logging in to Facebook service..."));
 
     QMap<QString, QString> args;
     args["method"]  = "facebook.auth.createToken";
@@ -699,7 +699,7 @@ QString FbTalker::errorToText(int errCode, const QString &errMsg)
             transError = i18n("The service is not available at this time.");
             break;
         case 4:
-            transError = i18n("The application has reached maximum number of requests allowed.");
+            transError = i18n("The application has reached the maximum number of requests allowed.");
             break;
         case 102:
             transError = i18n("Invalid session key or session expired. Try to log in again.");

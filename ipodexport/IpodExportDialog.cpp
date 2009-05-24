@@ -766,8 +766,8 @@ bool UploadDialog::openDevice()
     {
         kDebug(51000) << "could not find iTunesDB on device mounted at " << m_mountPoint << endl;
 
-        QString msg = i18n( "An iPod photo database could not be found on device mounted at %1. "
-                            "Should I try to initialize your iPod photo database?",
+        QString msg = i18n( "An iPod photo database could not be found on the device mounted at %1. "
+                            "Initialize the iPod photo database?",
                             m_mountPoint);
 
         if( KMessageBox::warningContinueCancel( this, msg, i18n( "Initialize iPod Photo Database?" ),

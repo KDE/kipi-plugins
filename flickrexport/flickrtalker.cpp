@@ -239,8 +239,8 @@ void FlickrTalker::slotAuthenticate()
 
     KToolInvocation::invokeBrowser(url.url());
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
-                  i18n("Please Follow through the instructions in the browser window and "
-                       "return back to press ok if you are authenticated or press No"),
+                  i18n("Please follow the instructions in the browser window, then "
+                       "return to press Yes if you are authenticated, or No otherwise."),
                   i18n("%1 Service Web Authorization", m_serviceName));
 
     if( valueOk == KMessageBox::Yes)
@@ -657,7 +657,7 @@ void FlickrTalker::slotError(const QString& error)
     };
 
     KMessageBox::error(kapp->activeWindow(),
-                 i18n("Error Occurred: %1\n We can not proceed further",transError));
+                 i18n("Error Occurred: %1\nCannot proceed any further.",transError));
 }
 
 void FlickrTalker::slotResult(KJob *kjob)
@@ -839,7 +839,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
 
             int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
                                        i18n("Your token is invalid. Would you like to "
-                                            "get a new token to proceed ?\n"));
+                                            "get a new token to proceed?\n"));
             if(valueOk == KMessageBox::Yes)
             {
                 getFrob();
@@ -1054,7 +1054,7 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
 
     if (!success)
     {
-        emit signalListPhotoSetsFailed(i18n("Failed to fetch photoSets List"));
+        emit signalListPhotoSetsFailed(i18n("Failed to fetch list of photo sets."));
     }
     else
     {

@@ -107,7 +107,7 @@
       <item>
        <widget class="QCheckBox" name="drawLinesCheckBox" >
         <property name="text" >
-         <string>Draw lines in calendar</string>
+         <string>Draw lines on calendar</string>
         </property>
         <property name="checked" >
          <bool>true</bool>

@@ -553,7 +553,7 @@ void FlickrWindow::slotAddPhotoSucceeded()
 
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg) {
     KMessageBox::error(this,
-                 i18n("Failed to Fetch Photosets information from %1. %2\n", m_serviceName, msg));
+                 i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
 }
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {

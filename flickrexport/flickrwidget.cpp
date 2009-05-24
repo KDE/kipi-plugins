@@ -89,7 +89,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst  = new KIPIPlugins::ImagesList(iface, m_tab);
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
-    m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload on your Flickr account."));
+    m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
 
     QWidget* settingsBox           = new QWidget(m_tab);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
@@ -112,7 +112,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
     m_stripSpaceTagsCheckBox = new QCheckBox(settingsBox);
     m_stripSpaceTagsCheckBox->setText(i18n("Strip Space From Host Application Tags"));
-    m_tagsLineEdit->setToolTip(i18n("Enter here new tags separated by space."));
+    m_tagsLineEdit->setToolTip(i18n("Enter new tags here, separated by spaces."));
 
     tagsLayout->addWidget(tagsLabel,                0, 0);
     tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
@@ -175,7 +175,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLabel  = new QLabel(i18n("User Name: "), accountBox);
+    QLabel *userNameLabel  = new QLabel(i18n("Username: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);
     m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
@@ -204,7 +204,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(FILELIST, m_imglst,    i18n("Files List"));
+    m_tab->insertTab(FILELIST, m_imglst,    i18n("File List"));
     m_tab->insertTab(UPLOAD,   settingsBox, i18n("Upload Options"));
 
     // ------------------------------------------------------------------------

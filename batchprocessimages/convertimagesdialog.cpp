@@ -72,8 +72,8 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
     m_about = new KIPIPlugins::KPAboutData(ki18n("Batch convert images"),
                                            QByteArray(),
                                            KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin for batch converting images\n"
-                                                     "This plugin uses the \"convert\" program from \"ImageMagick\" package."),
+                                           ki18n("A Kipi plugin for batch converting images.\n"
+                                                     "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -115,7 +115,7 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
     whatsThis = whatsThis + i18n("<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
                                  "intermediate format for storing color bitmap information. PPM files "
                                  "may be either binary or ASCII and store pixel values up to 24 bits in size. "
-                                 "This format generate the largest-sized text files to encode images without "
+                                 "This format generates the largest-sized text files to encode images without "
                                  "losing quality.</p>");
     whatsThis = whatsThis + i18n("<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
                                  "environment. It efficiently stores mapped or unmapped RGB graphics data with "
