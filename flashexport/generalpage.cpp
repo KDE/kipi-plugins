@@ -112,16 +112,16 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->fixOrientation = new QCheckBox(i18n("Auto-Rotate/Flip Images"), this);
     d->fixOrientation->setChecked(true);
     d->fixOrientation->setWhatsThis(i18n("If you enable this option, "
-                                         "the images orientation will be fixed accordingly "
-                                         "with Exif information"));
+                                         "the images' orientations will be set according "
+                                         "to their Exif information."));
 
     d->imagesExportSize = new KIntNumInput(this);
     d->imagesExportSize->setRange(200, 2000, 1);
     d->imagesExportSize->setValue(640);
-    d->imagesExportSize->setLabel(i18n("&Target Images Size:"), Qt::AlignVCenter);
-    d->imagesExportSize->setWhatsThis(i18n("The new size of the exported images in pixels. "
-                                           "SimpleViewer resizes the images as well, but this "
-                                           "resizes your images before they are uploaded to your server"));
+    d->imagesExportSize->setLabel(i18n("&Target Images' Size:"), Qt::AlignVCenter);
+    d->imagesExportSize->setWhatsThis(i18n("The new size of the exported images, in pixels. "
+                                           "SimpleViewer resizes the images too, but this "
+                                           "resizes the images before they are uploaded to your server."));
 
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->imagesExportSize, SLOT(setEnabled(bool)));
@@ -132,11 +132,11 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->maxImageDimension = new KIntNumInput(this);
     d->maxImageDimension->setRange(200, 2000, 1);
     d->maxImageDimension->setValue(640);
-    d->maxImageDimension->setLabel(i18n("&Displayed Images Size:"), Qt::AlignVCenter);
-    d->maxImageDimension->setWhatsThis(i18n("scales the displayed images to this size. "
-                                            "Largest height or width of your largest image (in pixels). "
-                                            "Images will not be scaled up above this size, to ensure "
-                                            "best image quality."));
+    d->maxImageDimension->setLabel(i18n("&Displayed Images' Size:"), Qt::AlignVCenter);
+    d->maxImageDimension->setWhatsThis(i18n("Scales the displayed images to this size. Normally, use "
+                                            "the height or width of your largest image (in pixels). "
+                                            "Images will not be scaled up above this size, to "
+                                            "preserve image quality."));
 
     grid->addWidget(d->resizeExportImages, 0, 0, 1, 2);
     grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
@@ -153,19 +153,19 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     d->showComments = new QCheckBox(i18n("Display Captions"), this);
     d->showComments->setChecked(true);
-    d->showComments->setWhatsThis(i18n("If you enable this option, "
-                                       "the images caption will be shown"));
+    d->showComments->setWhatsThis(i18n("If this option is enabled, "
+                                       "the images' captions will be shown."));
 
     d->rightClick = new QCheckBox(i18n("Open Image with Right Click"), this);
     d->rightClick->setChecked(false);
-    d->rightClick->setWhatsThis(i18n("If you enable this option, "
-                                     "user will be able to open the target image in a separate window "
-                                     "using right mouse button"));
+    d->rightClick->setWhatsThis(i18n("If this option is enabled, "
+                                     "the user will be able to open the target image in a separate window "
+                                     "using the right mouse button."));
 
     d->openInKonqueror = new QCheckBox(i18n("Open gallery in Konqueror"), this);
     d->openInKonqueror->setChecked(true);
-    d->openInKonqueror->setWhatsThis(i18n("If you enable this option, "
-                                          "gallery will be open in Konqueror automatically"));
+    d->openInKonqueror->setWhatsThis(i18n("If this option is enabled, the "
+                                          "gallery will be opened in Konqueror automatically."));
 
 
     vlay4->setMargin(KDialog::spacingHint());

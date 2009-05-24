@@ -121,7 +121,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
     d->about = new KIPIPlugins::KPAboutData(ki18n("Flash Export"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to export images to Flash using Simple Viewer component"),
+                   ki18n("A Kipi plugin to export images to Flash using the Simple Viewer component."),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
                          "(c) 2008-2009, Gilles Caulier"));
 

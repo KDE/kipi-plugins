@@ -169,7 +169,7 @@ bool SimpleViewer::configure()
         {
             int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
                                                       i18n("Target folder %1 already exists.\n"
-                                                           "Do you want to overwrite it (all data in this folder will be lost)",
+                                                           "Do you want to overwrite it?  All data in this folder will be lost.",
                                                            d->configDlg->settings().exportUrl.path()));
 
             switch(ret)
@@ -177,8 +177,8 @@ bool SimpleViewer::configure()
                 case KMessageBox::Yes:
                     if(!KIO::NetAccess::del(d->configDlg->settings().exportUrl, kapp->activeWindow()))
                     {
-                        KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1\n"
-                                           "Please choose another export folder",
+                        KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1.\n"
+                                           "Please choose another export folder.",
                                            d->configDlg->settings().exportUrl.path()));
                         configured = false;
                     }
@@ -281,7 +281,7 @@ void SimpleViewer::slotProcess()
     {
         int ret = KMessageBox::warningYesNo(kapp->activeWindow(),
                                             i18n("Export was canceled.\n"
-                                                 "Do you want to delete the yet created files in %1 ?",
+                                                 "Do you want to delete files in %1 that have already been created?",
                                                  d->configDlg->settings().exportUrl.path()));
         if(ret == KMessageBox::Yes)
         {
