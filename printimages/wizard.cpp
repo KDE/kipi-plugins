@@ -1648,11 +1648,19 @@ namespace KIPIPrintImagesPlugin
 
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
+    kdDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+
+
+    d->mPhotoPage->ListPrintOrder->blockSignals(true);
     // swap these items
     QListWidgetItem *item1 = d->mPhotoPage->ListPrintOrder->takeItem ( currentIndex - 1 );
     QListWidgetItem *item2 = d->mPhotoPage->ListPrintOrder->takeItem ( currentIndex - 1 );
-    d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex - 1, item2 );
     d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex - 1, item1 );
+    d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex - 1, item2 );
+    d->mPhotoPage->ListPrintOrder->blockSignals(false);
+
+    // select picture again
+    d->mPhotoPage->ListPrintOrder->setCurrentItem(item2);
 
     // the list box items are swapped, now swap the items in the photo list
     d->m_photos.swap ( currentIndex, currentIndex - 1 );
@@ -1770,15 +1778,22 @@ namespace KIPIPrintImagesPlugin
   {
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
+    kdDebug ( ) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+
     if ( currentIndex == d->mPhotoPage->ListPrintOrder->count() - 1 )
       return;
 
 
+    d->mPhotoPage->ListPrintOrder->blockSignals(true);
     // swap these items
     QListWidgetItem *item1 = d->mPhotoPage->ListPrintOrder->takeItem ( currentIndex );
     QListWidgetItem *item2 = d->mPhotoPage->ListPrintOrder->takeItem ( currentIndex );
     d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex, item1 );
     d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex, item2 );
+    d->mPhotoPage->ListPrintOrder->blockSignals(false);
+
+    // select picture again
+    d->mPhotoPage->ListPrintOrder->setCurrentItem(item1);
 
     // the list box items are swapped, now swap the items in the photo list
     d->m_photos.swap ( currentIndex, currentIndex + 1 );
