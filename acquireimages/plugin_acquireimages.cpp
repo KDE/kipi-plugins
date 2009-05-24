@@ -70,7 +70,7 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
     m_interface         = 0;
     m_action_scanimages = 0;
     m_parentWidget      = 0;
-    kDebug( 51001 ) << "Plugin_AcquireImages plugin loaded";
+    kDebug(51001) << "Plugin_AcquireImages plugin loaded";
 }
 
 void Plugin_AcquireImages::setup(QWidget* widget)

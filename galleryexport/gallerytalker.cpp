@@ -219,7 +219,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         }
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
-        kDebug( 51000 ) << "Resizing and saving to temp file: "  << path << endl;
+        kDebug(51000) << "Resizing and saving to temp file: "  << path << endl;
     }
 
     // The filename bit can perhaps be calculated in addFile()
@@ -549,7 +549,7 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
                     success = (value == "0");
                     kWarning( 51000 ) << "Create Album. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
-                    kDebug( 51000 ) << "STATUS: Create Album: " << value << endl;
+                    kDebug(51000) << "STATUS: Create Album: " << value << endl;
                 }
 
             }
@@ -597,7 +597,7 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
                     success = (value == "0");
                     kWarning( 51000 ) << "Add photo. success: " << success << endl;
                 } else if (key.startsWith("status_text")) {
-                    kDebug( 51000 ) << "STATUS: Add Photo: " << value << endl;
+                    kDebug(51000) << "STATUS: Add Photo: " << value << endl;
                 }
 
             }

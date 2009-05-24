@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_dngconverter") )
 Plugin_DNGConverter::Plugin_DNGConverter(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
-    kDebug( 51001 ) << "Plugin_DNGConverter plugin loaded" << endl;
+    kDebug(51001) << "Plugin_DNGConverter plugin loaded" << endl;
 }
 
 void Plugin_DNGConverter::setup( QWidget* widget )

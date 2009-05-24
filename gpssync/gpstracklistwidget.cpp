@@ -116,7 +116,7 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
         double lng = lngTxt.toDouble();
         double alt = altTxt.toDouble();
         emit signalNewGPSLocationFromMap(id, lat, lng, alt);
-        kDebug( 51000 ) << id << "::" << lat << "::" << lng << "::" << alt << endl;
+        kDebug(51000) << id << "::" << lat << "::" << lng << "::" << alt << endl;
     }
 }
 
@@ -190,7 +190,7 @@ void GPSTrackListWidget::resized()
     }
 
     openUrl(KUrl(url));
-    kDebug( 51001 ) << url << endl;
+    kDebug(51001) << url << endl;
 }
 
 }  // namespace KIPIGPSSyncPlugin

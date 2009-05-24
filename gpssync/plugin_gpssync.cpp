@@ -64,7 +64,7 @@ K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const QVariantList &)
               : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
-    kDebug( 51001 ) << "Plugin_GPSSync plugin loaded" << endl;
+    kDebug(51001) << "Plugin_GPSSync plugin loaded" << endl;
 }
 
 void Plugin_GPSSync::setup( QWidget* widget )
@@ -250,7 +250,7 @@ void Plugin_GPSSync::slotGPSEdit()
             }
 
             if (!ret)
-                kDebug( 51000 ) << "Cannot set GPS location into file metadata from "
+                kDebug(51000) << "Cannot set GPS location into file metadata from "
                          << url.fileName() << endl;
 
             // Set kipi host GPS location
@@ -356,7 +356,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
                 ret &= exiv2Iface.save(url.path());
 
                 if (!ret)
-                    kDebug( 51000 ) << "Cannot set GPS location into file metadata from "
+                    kDebug(51000) << "Cannot set GPS location into file metadata from "
                              << url.fileName() << endl;
 
                 // Set kipi host GPS location
@@ -406,7 +406,7 @@ void Plugin_GPSSync::slotGPSRemove()
         ret &= exiv2Iface.save(url.path());
 
         if (!ret)
-            kDebug( 51000 ) << "Cannot remove GPS location into file metadata from "
+            kDebug(51000) << "Cannot remove GPS location into file metadata from "
                      << url.fileName() << endl;
 
         // Remove kipi host GPS location
@@ -423,7 +423,7 @@ void Plugin_GPSSync::slotKMLExport()
 
     if ( !selection.isValid() )
     {
-        kDebug( 51000) << "No Selection!" << endl;
+        kDebug(51000) << "No Selection!" << endl;
     }
     else
     {

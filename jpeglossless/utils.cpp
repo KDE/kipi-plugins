@@ -158,7 +158,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 
     process << src + QString("[0]");
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.program() << endl;
+    kDebug(51000) << "ImageMagick Command line: " << process.program() << endl;
 
     process.start();
 

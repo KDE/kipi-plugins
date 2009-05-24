@@ -91,7 +91,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug( 51000 ) << buffer << endl;
+    kDebug(51000) << buffer << endl;
 #endif
 
     longjmp(myerr->setjmp_buffer, 1);
@@ -104,7 +104,7 @@ static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug( 51000 ) << buffer << " (" << msg_level << ")" << endl;
+    kDebug(51000) << buffer << " (" << msg_level << ")" << endl;
 #endif
 }
 
@@ -114,7 +114,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug( 51000 ) << buffer << endl;
+    kDebug(51000) << buffer << endl;
 #endif
 }
 
@@ -204,7 +204,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    kDebug( 51000 ) << "Transforming with option " << flip << " " << rotate << endl;
+    kDebug(51000) << "Transforming with option " << flip << " " << rotate << endl;
     if (flip == JXFORM_NONE && rotate == JXFORM_NONE)
     {
         err = "nothing to do"; // magic string

@@ -70,7 +70,7 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVaria
     // Useless: to please the compiler
     QVariantList argsList = args;
 
-    kDebug( 51001 ) << "Plugin_AdvancedSlideshow plugin loaded" << endl;
+    kDebug(51001) << "Plugin_AdvancedSlideshow plugin loaded" << endl;
 
     m_sharedData = 0;
 }

@@ -189,7 +189,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     KConfig config("kipirc");
     KConfigGroup grp = config.group( "PicasawebExport Settings");
     QString token    = grp.readEntry("token");
-    kDebug (51000) << "Read token from database to be " << token << endl;
+    kDebug(51000) << "Read token from database to be " << token << endl;
     QString username = grp.readEntry("username");
     QString password = grp.readEntry("password");
 
@@ -244,7 +244,7 @@ void PicasawebWindow::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
 
-    kDebug (51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
+    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
     saveSettings();
     e->accept();
 }
@@ -253,7 +253,7 @@ void PicasawebWindow::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("PicasawebExport Settings");
-    kDebug (51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
+    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" << endl;
     grp.writeEntry("token", m_talker->token());
     grp.writeEntry("username", m_username);
     grp.writeEntry("Resize", m_resizeCheckBox->isChecked());

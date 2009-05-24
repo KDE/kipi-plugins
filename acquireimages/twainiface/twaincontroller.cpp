@@ -180,7 +180,7 @@ void TwainController::saveImage(const QImage& img)
     writableMimetypes.insert(1, "image/jpeg");
     writableMimetypes.insert(2, "image/tiff");
 
-    kDebug( 51000 ) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
+    kDebug(51000) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
 
     QString defaultMimeType("image/png");
     QString defaultFileName("image.png");

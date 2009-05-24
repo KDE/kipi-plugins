@@ -880,7 +880,7 @@ namespace KIPIPrintImagesPlugin
 
     p.setFont ( font );
     p.setPen ( d->mInfoPage->m_font_color->color() );
-    kDebug ( 51000 ) << "Number of lines " << ( int ) captionByLines.count() << endl;
+    kDebug(51000) << "Number of lines " << ( int ) captionByLines.count() << endl;
 
     // Now draw the caption
     // TODO allow printing captions  per photo and on top, bottom and vertically
@@ -1072,7 +1072,7 @@ namespace KIPIPrintImagesPlugin
             break;
         }
         caption = captionFormatter ( photo, format );
-        kDebug ( 51000 ) << "Caption " << caption << endl;
+        kDebug(51000) << "Caption " << caption << endl;
 
         // draw the text at (0,0), but we will translate and rotate the world
         // before drawing so the text will be in the correct location
@@ -1097,7 +1097,7 @@ namespace KIPIPrintImagesPlugin
           captionW = h;
         }
         p.rotate ( orientatation );
-        kDebug ( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
         int tx = left;
         int ty = top;
 
@@ -1256,7 +1256,7 @@ namespace KIPIPrintImagesPlugin
             break;
         }
         caption = captionFormatter ( photo, format );
-        kDebug ( 51000 ) << "Caption " << caption << endl;
+        kDebug(51000) << "Caption " << caption << endl;
 
         int captionW = w-2;
         double ratio = d->mInfoPage->m_font_size->value() * 0.01;
@@ -1283,7 +1283,7 @@ namespace KIPIPrintImagesPlugin
         QPainter painter;
         painter.begin ( &pixmap );
         painter.rotate ( orientatation );
-        kDebug ( 51000 ) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
         int tx = left;
         int ty = top;
 
@@ -2006,7 +2006,7 @@ namespace KIPIPrintImagesPlugin
 #ifdef NOT_YET
     if ( m_kjobviewer->isChecked() )
       if ( !m_Proc->start() )
-        kDebug ( 51000 ) << "Error running kjobviewr\n";
+        kDebug(51000) << "Error running kjobviewr\n";
     LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
 #endif
   }
@@ -2088,7 +2088,7 @@ namespace KIPIPrintImagesPlugin
     {
       if ( m_kjobviewer->isChecked() )
         if ( !m_Proc->start() )
-          kDebug ( 51000 ) << "Error launching kjobviewr\n";
+          kDebug(51000) << "Error launching kjobviewr\n";
       LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
     }
 #endif

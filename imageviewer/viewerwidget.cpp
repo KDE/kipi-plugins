@@ -78,16 +78,16 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 		screen_width = dw.screenGeometry(this).width();
 
 		if ( selection.images().count()==0 ) {
-			kDebug( 51000 ) << "no image selected, load entire album" << endl;
+			kDebug(51000) << "no image selected, load entire album" << endl;
 			myfiles = album.images();
 		}
 		else if ( selection.images().count()==1 ) {
-			kDebug( 51000 ) << "one image selected, load entire album and start with selected image" << endl;
+			kDebug(51000) << "one image selected, load entire album and start with selected image" << endl;
 			selectedImage = selection.images().first().path();
 			myfiles = album.images();
 		}
 		else if ( selection.images().count()>1 ) {
-			kDebug( 51000 ) << "load " << selection.images().count() << " selected images" << endl;
+			kDebug(51000) << "load " << selection.images().count() << " selected images" << endl;
 			myfiles = selection.images();
 		}
 
@@ -99,7 +99,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 			it->cleanPath();
 			QString s = (*it).path();
 			if ( s==selectedImage ) {
-				kDebug( 51000 ) << "selected img  " << selectedImage << " has idx=" << foundNumber << endl;
+				kDebug(51000) << "selected img  " << selectedImage << " has idx=" << foundNumber << endl;
 				file_idx=foundNumber;
 			}
 
@@ -110,12 +110,12 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
 			if ( isImage ) {
 				files.append(s);
 				foundNumber++;  //counter for searching the start image in case one image is selected
-				kDebug( 51000 ) << s << " type=" << type->name() << endl;
+				kDebug(51000) << s << " type=" << type->name() << endl;
 			}
 		}
 
 		firstImage=true;
-		kDebug( 51000 ) << files.count() << "images loaded" << endl;
+		kDebug(51000) << files.count() << "images loaded" << endl;
 		// initialize cache
 		for(int i=0;i<CACHESIZE;i++) {
 			cache[i].file_index=EMPTY;
@@ -172,7 +172,7 @@ void ViewerWidget::initializeGL() {
 	glClearDepth(1.0f);
 	// Generate texture
 	glGenTextures(1, tex);
-	//kDebug( 51000 ) << "width=" << width();
+	//kDebug(51000) << "width=" << width();
 }
 
 
@@ -188,15 +188,15 @@ bool ViewerWidget::listOfFilesIsEmpty() const
 void ViewerWidget::paintGL() {
 
 	//this test has to be performed here since QWidget::width() is only updated now
-	//kDebug( 51000 ) << "enter paintGL: isReallyFullscreen=" << isReallyFullScreen();
+	//kDebug(51000) << "enter paintGL: isReallyFullscreen=" << isReallyFullScreen();
 	//prepare 1st image
 	if (firstImage && isReallyFullScreen()) {
-		//kDebug( 51000 ) << "first image";
+		//kDebug(51000) << "first image";
 		texture=loadImage(file_idx);
 		texture->reset();
 		downloadTex(texture);
 
-		//kDebug( 51000 ) << "width=" << width();
+		//kDebug(51000) << "width=" << width();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		glTranslatef(0.0f,0.0f,-5.0f);
@@ -217,14 +217,14 @@ void ViewerWidget::paintGL() {
 	}
 
 	if (!firstImage) {
-		//kDebug( 51000 ) << "width=" << width();
+		//kDebug(51000) << "width=" << width();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		glTranslatef(0.0f,0.0f,-5.0f);
 		drawImage(texture);
 	}
 
-	//kDebug( 51000 ) << "exit paintGL";
+	//kDebug(51000) << "exit paintGL";
 }
 
 /*!
@@ -232,7 +232,7 @@ void ViewerWidget::paintGL() {
  */
 void ViewerWidget::resizeGL(int w, int h)
 {
-	//kDebug( 51000 ) << "resizeGL,w=" << w;
+	//kDebug(51000) << "resizeGL,w=" << w;
 	glViewport(0, 0, (GLint)w, (GLint)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -468,13 +468,13 @@ Texture * ViewerWidget::loadImage(int file_index)
 	int imod=file_index%CACHESIZE; //index for cache
 	if (cache[imod].file_index==file_index){
 		//image is already cached
-		kDebug( 51000 ) << "image " << file_index << " is already in cache@" << imod << endl;
+		kDebug(51000) << "image " << file_index << " is already in cache@" << imod << endl;
 		return cache[imod].texture;
 
 	} else {
 		// image is net yet loaded
 		QString f = files[file_index];
-		kDebug( 51000 ) << "loading image " << f << "(idx=" << file_index << ") to cache@" << imod << endl;
+		kDebug(51000) << "loading image " << f << "(idx=" << file_index << ") to cache@" << imod << endl;
 		cache[imod].file_index=file_index;
 
 		//when loadImage is called the first time, the frame is not yet fullscreen
@@ -484,10 +484,10 @@ Texture * ViewerWidget::loadImage(int file_index)
 		    	QDesktopWidget dw;
 			QRect r = dw.screenGeometry(this);
 			size=dw.size();
-			//kDebug( 51000 ) << "first image:size=" << size.width();
+			//kDebug(51000) << "first image:size=" << size.width();
 		} else {
 			size = QSize(width(),height());
-			//kDebug( 51000 ) << "next image:size=" << size.width();
+			//kDebug(51000) << "next image:size=" << size.width();
 		}
 
 		// handle non-loadable images

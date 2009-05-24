@@ -139,7 +139,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     if (!loginDialog)
     {
-        kDebug( 51000 ) << " Out of memory error " << endl;
+        kDebug(51000) << " Out of memory error " << endl;
     }
 
     if (loginDialog->exec() == QDialog::Accepted)
@@ -478,7 +478,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
             kWarning(51000) << "Image " << photoPath << " has no exif data";
         }
 
-        kDebug( 51000 ) << "Resizing and saving to temp file: " << tmpPath;
+        kDebug(51000) << "Resizing and saving to temp file: " << tmpPath;
 
         if (!form.addFile("photo", tmpPath))
         {
@@ -702,7 +702,7 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
         if ( strList.count() > 0 )
         {
             m_token = strList[1].trimmed();
-            kDebug (51000) << " m_token as obtained in token Response " << m_token << endl;
+            kDebug(51000) << " m_token as obtained in token Response " << m_token << endl;
             success = true;
         }
     }

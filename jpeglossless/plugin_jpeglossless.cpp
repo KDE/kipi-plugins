@@ -94,7 +94,7 @@ public:
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( JPEGLosslessFactory::componentData(), parent, "JPEGLossless"), d(new Plugin_JPEGLosslessPriv)
 {
-    kDebug( 51001 ) << "Plugin_JPEGLossless plugin loaded";
+    kDebug(51001) << "Plugin_JPEGLossless plugin loaded";
 }
 
 Plugin_JPEGLossless::~Plugin_JPEGLossless()

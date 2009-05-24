@@ -381,7 +381,7 @@ void FbTalker::changePerm()
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("ext_perm", "photo_upload");
-    kDebug( 51000 ) << "Change Perm URL: " << url;
+    kDebug(51000) << "Change Perm URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -869,7 +869,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("auth_token", m_authToken);
-    kDebug( 51000 ) << "Login URL: " << url;
+    kDebug(51000) << "Login URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);

@@ -243,7 +243,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    kDebug( 51000 ) << "ImageMagick Command line: " << process.program() << endl;
+    kDebug(51000) << "ImageMagick Command line: " << process.program() << endl;
 
     process.start();
 

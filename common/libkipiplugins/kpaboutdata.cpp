@@ -72,7 +72,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
 
     if (KGlobal::hasMainComponent())
     {
-        kDebug( 51001 ) << shortDesc.toString().constData() << endl;
+        kDebug(51001) << shortDesc.toString().constData() << endl;
     }
 
     // and set the string into the short description

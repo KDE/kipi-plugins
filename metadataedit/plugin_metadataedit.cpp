@@ -63,7 +63,7 @@ K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
                    : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit")
 {
-    kDebug( 51001 ) << "Plugin_MetadataEdit plugin loaded";
+    kDebug(51001) << "Plugin_MetadataEdit plugin loaded";
 }
 
 void Plugin_MetadataEdit::setup( QWidget* widget )

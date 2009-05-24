@@ -65,7 +65,7 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
     // Using the time zone.
     QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*(-1));
 
-    kDebug( 51000 ) << "cameraGMTDateTime: " << cameraGMTDateTime << endl;
+    kDebug(51000) << "cameraGMTDateTime: " << cameraGMTDateTime << endl;
 
     // We trying to find the right date in the GPS points list.
     bool findItem = false;
@@ -262,7 +262,7 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
         }
     }
 
-    kDebug( 51001 ) << "GPX File " << url.fileName()
+    kDebug(51001) << "GPX File " << url.fileName()
                     << " parsed with " << numPoints()
                     << " points extracted" << endl;
     return true;
