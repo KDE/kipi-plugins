@@ -677,7 +677,7 @@ void BatchDialog::busy(bool busy)
 
     d->decodingSettingsBox->setEnabled(!d->busy);
     d->saveSettingsBox->setEnabled(!d->busy);
-    d->listView->setEnabled(!d->busy);
+    d->listView->viewport()->setEnabled(!d->busy);
 
     d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
