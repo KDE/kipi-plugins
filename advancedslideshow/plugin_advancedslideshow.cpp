@@ -102,6 +102,11 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
 
     connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
             this, SLOT( slotAlbumChanged( bool )));
+
+    if ( m_interface->currentAlbum().isValid() )
+    {
+        slotAlbumChanged( true );
+    }
 }
 
 Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
@@ -184,6 +189,14 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     shuffle          = grp.readEntry("Shuffle", false);
     wantKB           = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
+    KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
+    if ( !currAlbum.isValid() )
+    {
+        kError( 51000 ) << "Current image collection is not valid. This should not happen at this point!" << endl;
+        return;
+    }
+
+    m_urlList = currAlbum.images();
     if ( m_urlList.isEmpty() )
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
