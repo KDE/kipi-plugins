@@ -21,5 +21,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> FlickrExport       : 192862 : Spaces break tag into bits.
 014 ==> GPSSync            : 191914 : Copy and paste of GPS-data in the correlator and the track list editor.
 015 ==> PrintImage         : 192982 : Fit image to paper on printing.
-016 ==> 
+016 ==> RAWConverter       : 193433 : digiKam crashes when converting RAW (Canon cr2) to JPEG.
+017 ==> 
 
