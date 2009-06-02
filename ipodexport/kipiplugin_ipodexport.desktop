@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=iPodExport
+Name[bg]=Изнасяне към iPod
 Name[el]=Εξαγωγή iPod
 Name[et]=iPodi eksport
 Name[fr]=Export IPod
@@ -18,6 +19,7 @@ Name[tr]=iPod'a Aktarıcı
 Name[x-test]=xxiPodExportxx
 Name[zh_CN]=iPod 导出
 Comment=A tool to export pictures to an Ipod device
+Comment[bg]=Инструмент за изнасяне на снимки към устройство ipod
 Comment[ca]=Una eina per a exportar fotografies a un dispositiu Ipod
 Comment[cs]=Nástroj pro export obrázků na iPod
 Comment[da]=Et værktøj til at eksportere billeder til en iPod-enhed

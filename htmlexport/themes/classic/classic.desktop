@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Classic
+Name[bg]=Класически
 Name[ca]=Clàssic
 Name[cs]=Klasický
 Name[de]=Klassisch
@@ -30,6 +31,7 @@ Name[uk]=Класичний
 Name[x-test]=xxClassicxx
 Name[zh_CN]=经典
 Comment=A port of the old HTML Export plugin theme
+Comment[bg]=Вариант на предишния изглед за изнасяне в HTML
 Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
 Comment[cs]=Port starého motivu pro modul HTML export
 Comment[da]=En port af det gamle HTML-eksports plugin-tema
@@ -67,6 +69,7 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
+Name[bg]=Умалени копия на ред
 Name[ca]=Miniatures per fila
 Name[cs]=Miniatury na řádek
 Name[da]=Miniaturer pr række
@@ -103,6 +106,7 @@ Max=100
 
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
+Name[bg]=Фонов цвят
 Name[ca]=Color de fons
 Name[cs]=Barva pozadí
 Name[da]=Baggrundsfarve
@@ -141,6 +145,7 @@ Default=#333333
 
 [X-HTMLExport Parameter fgColor]
 Name=Foreground Color
+Name[bg]=Цвят на преден план
 Name[ca]=Color de primer pla
 Name[cs]=Barva popředí
 Name[da]=Forgrundsfarve
@@ -178,6 +183,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
+Name[bg]=Размер на шрифт
 Name[ca]=Mida del tipus de lletra
 Name[cs]=Velikost písma
 Name[da]=Skrifttype-størrelse
@@ -218,6 +224,7 @@ Max=100
 
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
+Name[bg]=Размер на рамката на изображението
 Name[ca]=Mida de la vora de la imatge
 Name[cs]=Velikost rámečku obrázku
 Name[da]=Billedkant-størrelse
@@ -253,6 +260,7 @@ Max=50
 
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
+Name[bg]=Цвят на рамката на изображението
 Name[ca]=Color de la vora de la imatge
 Name[cs]=Barva rámečku obrázku
 Name[da]=Billedkant-farve
@@ -287,6 +295,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
+Name[bg]=Цвят на препратка
 Name[ca]=Color d'enllaç
 Name[cs]=Barva odkazu
 Name[da]=Farve på link
@@ -322,6 +331,7 @@ Default=#b3b3b3
 
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
+Name[bg]=Цвят на посетена препратка
 Name[ca]=Color d'enllaç visitat
 Name[cs]=Barva navštíveného odkazu
 Name[da]=Farve på besøgte link

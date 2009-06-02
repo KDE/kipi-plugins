@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Clean Frames
+Name[bg]=Изчистени рамки
 Name[ca]=Marcs nets
 Name[cs]=Vyčistit rámce
 Name[da]=Ryd rammer
@@ -28,6 +29,7 @@ Name[uk]=Чіткі рамки
 Name[x-test]=xxClean Framesxx
 Name[zh_CN]=简洁边框
 Comment=A frame theme based on Ruediger Bente's frame theme
+Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
 Comment[da]=Et ramme-tema baseret på Ruediger Bente's ramme-tema
 Comment[de]=Ein Rahmendesign, dass auf Rüdiger Bentes Rahmendesign basiert
@@ -63,6 +65,7 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[bg]=Изглед
 Name[ca]=Estil
 Name[cs]=Styl
 Name[da]=Stil

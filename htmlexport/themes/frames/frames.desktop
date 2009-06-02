@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Frames
+Name[bg]=Рамки
 Name[ca]=Marcs
 Name[cs]=Rámce
 Name[da]=Rammer
@@ -30,6 +31,7 @@ Name[uk]=Рамки
 Name[x-test]=xxFramesxx
 Name[zh_CN]=相框
 Comment=A frame theme
+Comment[bg]=Изглед с рамки
 Comment[ca]=Un tema de marcs
 Comment[da]=Et ramme-tema
 Comment[de]=Ein Rahmendesign

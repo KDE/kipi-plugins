@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=A tool to edit EXIF, IPTC and XMP metadata
+Comment[bg]=Инструмунт за редактиране на метаданни EXIF, IPTC и XMP
 Comment[ca]=Una eina per a editar metadades EXIF, IPTC i XMP
 Comment[da]=Et værktøj til at redigere EXIF-, IPTC- og XMP-metadata
 Comment[de]=Ein Werkzeug, um Exif, IPTC und XMP-Metadaten zu berabeiten.
@@ -30,6 +31,7 @@ Comment[zh_CN]=一个编辑 EXIF、IPTC 和 XMP 元数据的工具
 Encoding=UTF-8
 Icon=
 Name=MetadataEdit
+Name[bg]=Редактиране на метаданни
 Name[de]=Metadaten-Editor
 Name[es]=Editar metadatos
 Name[et]=Metaandmete redaktor

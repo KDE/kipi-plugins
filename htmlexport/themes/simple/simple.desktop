@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Simple
+Name[bg]=Опростено
 Name[cs]=Jednoduchý
 Name[de]=Einfach
 Name[el]=Απλό
@@ -27,6 +28,7 @@ Name[uk]=Проста
 Name[x-test]=xxSimplexx
 Name[zh_CN]=简洁
 Comment=A simple and light theme
+Comment[bg]=Опростен и лек изглед
 Comment[ca]=Un tema simple i lluminós
 Comment[cs]=Jednoduché světlé téma
 Comment[da]=Et enkelt og lyst tema
@@ -67,6 +69,7 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[bg]=Изглед
 Name[ca]=Estil
 Name[cs]=Styl
 Name[da]=Stil

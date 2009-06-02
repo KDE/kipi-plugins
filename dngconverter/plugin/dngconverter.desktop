@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=DNGConverter
+Name[bg]=Конвертор към DNG
 Name[de]=DNGkonverter
 Name[el]=Μετατροπέας DNG
 Name[es]=Conversor para DNG
@@ -21,6 +22,7 @@ Name[tr]=DNG Dönüştürücü
 Name[x-test]=xxDNGConverterxx
 Name[zh_CN]=DNG 转换器
 GenericName=DNG Image Converter
+GenericName[bg]=Конвертор на изображения в DNG
 GenericName[ca]=Convertidor a imatges DNG
 GenericName[cs]=Převod obrázků DNG
 GenericName[da]=DNG-billedkonvertering
@@ -51,6 +53,7 @@ GenericName[uk]=Перетворювач зображень DNG
 GenericName[x-test]=xxDNG Image Converterxx
 GenericName[zh_CN]=DNG 图像转换器
 Comment=A tool to batch convert RAW camera images to DNG
+Comment[bg]=Инструмент за пакетно конвертиране на изображения от RAW към DNG
 Comment[ca]=Una eina per a convertir massivament imatges de càmera RAW a DNG
 Comment[da]=Et værktøj til at batch-konvertere RAW-kamerabilleder til DNG
 Comment[de]=Ein Werkzeug, um Kamerarohbilder mit einer Stapelverarbeitung nach DNG zu konvertieren.

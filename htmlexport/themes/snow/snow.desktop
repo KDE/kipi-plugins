@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Snow
+Name[bg]=Сняг
 Name[ca]=Neu
 Name[cs]=Sníh
 Name[de]=Schnee
@@ -30,6 +31,7 @@ Name[uk]=Сніг
 Name[x-test]=xxSnowxx
 Name[zh_CN]=雪
 Comment=A perfect match for your mountain holidays
+Comment[bg]=Подхождащо за снимки от планинските ви почивки
 Comment[ca]=Una coincidència perfecte per a les vostres vacances de muntanya
 Comment[da]=Passer perfekt til din ferie i bjergene
 Comment[de]=Passt perfekt zu Ihrem letzten Urlaub in den Bergen
