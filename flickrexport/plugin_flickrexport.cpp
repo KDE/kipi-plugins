@@ -80,7 +80,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     m_action23 = actionCollection()->addAction("23export");
     m_action23->setText(i18n("Export to &23..."));
-    m_action23->setIcon(KIcon("applications-internet"));
+    m_action23->setIcon(KIcon("hq"));
     m_action23->setEnabled(false);
     m_action23->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2);
 
