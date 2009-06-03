@@ -1,3 +1,5 @@
+subdirs(icons)
+
 SET( kipiplugin_galleryexport_PART_SRCS
     plugin_galleryexport.cpp
     albumdlg.cpp
