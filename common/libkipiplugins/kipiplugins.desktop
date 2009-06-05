@@ -1,0 +1,11 @@
+# KDE Config File
+[Desktop Entry]
+Encoding=UTF-8
+Name=KIPI Plugins
+Name[x-test]=xxKIPI Pluginsxx
+Comment=KDE Image Plugins Interface
+Comment[x-test]=xxKDE Image Plugins Interfacexx
+X-DocPath=kipi-plugins/index.html
+Categories=Qt;KDE;Graphics;
+NoDisplay=true
+Type=Service
