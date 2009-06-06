@@ -23,4 +23,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> PrintImage         : 192982 : Fit image to paper on printing.
 016 ==> RAWConverter       : 193433 : digiKam crashes when converting RAW (Canon cr2) to JPEG.
 017 ==> BatchProcessImages : 195182 : Batch processing - Resize Images.
-018 ==> 
+018 ==> AdvancedSlideshow  : 187228 : Use the correct form for plurals in kipi advancedslideshow plugin. 
+019 ==> 
