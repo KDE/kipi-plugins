@@ -73,7 +73,10 @@ namespace KIPIPrintImagesPlugin
       void manageQPrintDialogChanges ( QPrinter * printer );
       void selectNext();
       void selectPrev();
+      void photoXpageChanged ( int i );
       void saveConfig();
+      void scaleOption();
+      void autoRotate(bool);
 
     private:
 
@@ -86,12 +89,10 @@ namespace KIPIPrintImagesPlugin
 
       // TODO fix remove what is not needed
       Qt::Alignment alignment() const;
-      ScaleMode scaleMode() const;
-      bool enlargeSmallerImages() const;
       Unit scaleUnit() const;
       double scaleWidth() const;
       double scaleHeight() const;
-      bool autoRotation();
+
   };
 
 } // namespace

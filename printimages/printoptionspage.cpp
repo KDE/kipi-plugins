@@ -37,6 +37,7 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 // Local includes.
 
@@ -137,6 +138,7 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
     d->mScaleGroup.addButton ( d->mNoScale, NoScale );
     d->mScaleGroup.addButton ( d->mScaleToPage, ScaleToPage );
     d->mScaleGroup.addButton ( d->mScaleTo, ScaleToCustomSize );
+    d->mPhotoXPage->setRange (0, d->m_photos->size() );
 
     imagePreview();
     enableButtons();
@@ -150,6 +152,8 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
     connect ( d->kcfg_PrintKeepRatio, SIGNAL ( toggled ( bool ) ),
               SLOT ( adjustHeightToRatio() ) );
 
+    connect (d->mPhotoXPage, SIGNAL(valueChanged (int)), SLOT(photoXpageChanged(int)));
+
     connect ( d->mRightButton, SIGNAL ( clicked() ),
               this, SLOT ( selectNext() ) );
 
@@ -157,6 +161,12 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
               this, SLOT ( selectPrev() ) );
     connect ( d->mSaveSettings, SIGNAL (clicked()),
               this, SLOT ( saveConfig() ) );
+
+    connect(d->mNoScale, SIGNAL(clicked(bool)), SLOT(scaleOption()));
+    connect(d->mScaleToPage, SIGNAL(clicked(bool)), SLOT(scaleOption()));
+    connect(d->mScaleTo, SIGNAL(clicked(bool)), SLOT(scaleOption()));
+    connect(d->kcfg_PrintAutoRotate, SIGNAL(toggled(bool)), SLOT(autoRotate(bool)));
+
     layout()->setMargin ( 0 );
 }
 
@@ -181,26 +191,11 @@ double PrintOptionsPage::unitToInches ( PrintOptionsPage::Unit unit )
     }
 }
 
-bool PrintOptionsPage::autoRotation()
-{
-    return d->kcfg_PrintAutoRotate->isChecked();
-}
-
 Qt::Alignment PrintOptionsPage::alignment() const
 {
     int id = d->mPositionGroup.checkedId();
     kWarning(51000) << "alignment=" << id;
     return Qt::Alignment ( id );
-}
-
-PrintOptionsPage::ScaleMode PrintOptionsPage::scaleMode() const
-{
-    return PrintOptionsPage::ScaleMode ( d->mScaleGroup.checkedId() );
-}
-
-bool PrintOptionsPage::enlargeSmallerImages() const
-{
-    return d->kcfg_PrintEnlargeSmallerImages->isChecked();
 }
 
 PrintOptionsPage::Unit PrintOptionsPage::scaleUnit() const
@@ -263,7 +258,7 @@ int PrintOptionsPage::photoXPage() const
 
 bool PrintOptionsPage::printUsingAtkinsLayout() const
 {
-    return d->mGroupPxP->isChecked();
+    return (d->mPhotoXPage->value() > 0);
 }
 
 void PrintOptionsPage::enableButtons()
@@ -429,9 +424,51 @@ void PrintOptionsPage::saveConfig()
     ScaleMode scaleMode = ScaleMode ( d->mScaleGroup.checkedId() );
     PrintImagesConfig::setPrintScaleMode ( scaleMode );
 
+    bool checked = d->kcfg_PrintAutoRotate->isChecked();
+    PrintImagesConfig::setPrintAutoRotate(checked);
+
     d->mConfigDialogManager->updateSettings();
 
     PrintImagesConfig::self()->writeConfig();
+}
+
+void PrintOptionsPage::photoXpageChanged ( int i )
+{
+  bool disabled = (i>0);
+  d->mPositionFrame->setDisabled(disabled);
+  d->mGroupScaling->setDisabled(disabled);
+  d->mGroupImage->setDisabled(disabled);
+  d->kcfg_PrintAutoRotate->setDisabled(disabled);
+  d->mPreview->setDisabled(disabled);
+  if (disabled)
+  {
+    d->mRightButton->setDisabled(disabled);
+    d->mLeftButton->setDisabled(disabled);
+  }
+  else
+    enableButtons();
+}
+
+void PrintOptionsPage::scaleOption()
+{
+  ScaleMode scaleMode = ScaleMode ( d->mScaleGroup.checkedId() );
+  kDebug(51000) << "ScaleMode " << int(scaleMode) << endl;
+  int i = d->m_currentPhoto;
+  TPhoto *pPhoto = d->m_photos->at(i);
+  if ( pPhoto )
+  {
+    pPhoto->pAddInfo->mScaleMode = scaleMode;
+  }
+}
+
+void PrintOptionsPage::autoRotate(bool value)
+{
+  int i = d->m_currentPhoto;
+  TPhoto *pPhoto = d->m_photos->at(i);
+  if ( pPhoto )
+  {
+    pPhoto->pAddInfo->mAutoRotate = value;
+  }
 }
 
 } // namespace
