@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
@@ -114,29 +114,29 @@ Q_SIGNALS:
 
 private:
 
-    QWidget*   m_parent;
-    State      m_state;
-    QString    m_cookie;
-    KUrl       m_url;
-    KIO::TransferJob* m_job;
-    bool       m_loggedIn;
-    QByteArray m_talker_buffer;
-
-    static bool s_using_gallery2;
-    static QString s_authToken;
-
-private:
-
-    void parseResponseLogin(const QByteArray &data);
-    void parseResponseListAlbums(const QByteArray &data);
-    void parseResponseListPhotos(const QByteArray &data);
-    void parseResponseCreateAlbum(const QByteArray &data);
-    void parseResponseAddPhoto(const QByteArray &data);
+    void parseResponseLogin(const QByteArray& data);
+    void parseResponseListAlbums(const QByteArray& data);
+    void parseResponseListPhotos(const QByteArray& data);
+    void parseResponseCreateAlbum(const QByteArray& data);
+    void parseResponseAddPhoto(const QByteArray& data);
 
 private Q_SLOTS:
 
-    void slotTalkerData(KIO::Job *job, const QByteArray &data);
+    void slotTalkerData(KIO::Job *job, const QByteArray& data);
     void slotResult(KJob *job);
+
+private:
+
+    QWidget*          m_parent;
+    State             m_state;
+    QString           m_cookie;
+    KUrl              m_url;
+    KIO::TransferJob* m_job;
+    bool              m_loggedIn;
+    QByteArray        m_talker_buffer;
+
+    static bool       s_using_gallery2;
+    static QString    s_authToken;
 };
 
 } // namespace KIPIGalleryExportPlugin

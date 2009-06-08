@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
@@ -37,6 +37,7 @@
 #include <QImage>
 #include <QRegExp>
 #include <QTextStream>
+#include <QFileInfo>
 
 // KDE includes
 
@@ -50,20 +51,28 @@
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes
+
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
+
 // Local includes
 
 #include "galleryitem.h"
 #include "gallerympform.h"
+#include "pluginsversion.h"
 
 namespace KIPIGalleryExportPlugin
 {
 
-
 GalleryTalker::GalleryTalker(QWidget* parent)
-        : m_parent(parent),  m_job(0),  m_loggedIn(false)
+             : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
 }
-
 
 GalleryTalker::~GalleryTalker()
 {
@@ -81,12 +90,11 @@ bool GalleryTalker::loggedIn() const
     return m_loggedIn;
 }
 
-
 void GalleryTalker::login(const KUrl& url, const QString& name,
                           const QString& passwd)
 {
-    m_job = 0;
-    m_url = url;
+    m_job   = 0;
+    m_url   = url;
     m_state = GE_LOGIN;
     m_talker_buffer.resize(0);
 
@@ -101,16 +109,18 @@ void GalleryTalker::login(const KUrl& url, const QString& name,
     m_job->addMetaData("content-type", form.contentType());
     m_job->addMetaData("cookies", "manual");
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+
+    connect(m_job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     emit signalBusy(true);
 }
 
-
 void GalleryTalker::listAlbums()
 {
-    m_job = 0;
+    m_job   = 0;
     m_state = GE_LISTALBUMS;
     m_talker_buffer.resize(0);
 
@@ -127,16 +137,18 @@ void GalleryTalker::listAlbums()
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+
+    connect(m_job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     emit signalBusy(true);
 }
 
-
 void GalleryTalker::listPhotos(const QString& albumName)
 {
-    m_job = 0;
+    m_job   = 0;
     m_state = GE_LISTPHOTOS;
     m_talker_buffer.resize(0);
 
@@ -151,12 +163,14 @@ void GalleryTalker::listPhotos(const QString& albumName)
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+
+    connect(m_job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     emit signalBusy(true);
 }
-
 
 void GalleryTalker::createAlbum(const QString& parentAlbumName,
                                 const QString& albumName,
@@ -190,17 +204,15 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     emit signalBusy(true);
 }
 
-
 bool GalleryTalker::addPhoto(const QString& albumName,
                              const QString& photoPath,
                              const QString& caption,
                              bool  captionIsTitle, bool captionIsDescription,
                              bool  rescale, int maxDim)
 {
-    m_job = 0;
+    m_job        = 0;
     QString path = photoPath;
-
-    m_state = GE_ADDPHOTO;
+    m_state      = GE_ADDPHOTO;
     m_talker_buffer.resize(0);
 
     GalleryMPForm form;
@@ -209,17 +221,44 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     form.addPair("set_albumName", albumName);
 
     QImage image;
-    image.load(photoPath);
 
-    if (!image.isNull()) {
+    // Check if RAW file.
+#if KDCRAW_VERSION < 0x000400
+    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+    QFileInfo fi(photoPath);
+    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+        KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
+    else
+        image.load(photoPath);
+
+    if (!image.isNull())
+    {
         // image file - see if we need to rescale it
-        if (rescale && (image.width() > maxDim || image.height() > maxDim)) {
+        if (rescale && (image.width() > maxDim || image.height() > maxDim))
+        {
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                                  Qt::SmoothTransformation);
         }
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
-        kDebug(51000) << "Resizing and saving to temp file: "  << path << endl;
+        kDebug(51000) << "Resizing and saving to temp file: " << path << endl;
+
+        // Restore all metadata.
+        KExiv2Iface::KExiv2 exiv2Iface;
+
+        if (exiv2Iface.load(photoPath))
+        {
+            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            exiv2Iface.setImageDimensions(image.size());
+            exiv2Iface.save(path);
+        }
+        else
+        {
+            kWarning(51000) << "Image " << photoPath << " has no exif data";
+        }
     }
 
     // The filename bit can perhaps be calculated in addFile()
@@ -229,7 +268,8 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         return false;
 
 
-    if (!caption.isEmpty()) {
+    if (!caption.isEmpty())
+    {
         if (captionIsTitle)
             form.addPair("caption", caption);
         if (captionIsDescription)
@@ -243,23 +283,25 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+
+    connect(m_job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 
     emit signalBusy(true);
 
     return true;
 }
 
-
 void GalleryTalker::cancel()
 {
-    if (m_job) {
+    if (m_job)
+    {
         m_job->kill();
         m_job = 0;
     }
 }
-
 
 void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
 {
@@ -270,7 +312,6 @@ void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
     m_talker_buffer.resize(oldSize + data.size());
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
 }
-
 
 void GalleryTalker::slotResult(KJob *job)
 {
@@ -358,17 +399,26 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
 
     m_loggedIn = false;
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             foundResponse = line.startsWith("#__GR2PROTO__");
-        } else {
+        }
+        else
+        {
             QStringList strlist = line.split('=');
-            if (strlist.count() == 2) {
-                if (("status" == strlist[0]) && ("0" == strlist[1])) {
+            if (strlist.count() == 2)
+            {
+                if (("status" == strlist[0]) && ("0" == strlist[1]))
+                {
                     m_loggedIn = true;
-                } else {
-                    if ("auth_token" == strlist[0]) {
+                }
+                else
+                {
+                    if ("auth_token" == strlist[0])
+                    {
                         s_authToken = strlist[1];
                     }
                 }
@@ -376,85 +426,104 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalLoginFailed(i18n("Gallery URL probably incorrect"));
         return;
     }
 
-    if (!m_loggedIn) {
+    if (!m_loggedIn)
+    {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }
 }
 
-
-void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
+void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-    bool success = false;
+    bool success       = false;
 
     typedef QList<GAlbum> GAlbumList;
     GAlbumList albumList;
     GAlbumList::iterator iter = albumList.begin();
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             foundResponse = line.startsWith("#__GR2PROTO__");
-        } else {
+        }
+        else
+        {
             QStringList strlist = line.split('=');
-            if (strlist.count() == 2) {
+            if (strlist.count() == 2)
+            {
                 QString key   = strlist[0];
                 QString value = strlist[1];
 
-                if (key == "status") {
+                if (key == "status")
+                {
                     success = (value == "0");
-                } else
-                    if (key.startsWith("album.name")) {
+                }
+                else if (key.startsWith("album.name"))
+                {
                         GAlbum album;
                         album.name    = value;
                         album.ref_num = key.section(".", 2, 2).toInt();
                         iter = albumList.insert(iter, album);
-                } else
-                    if (key.startsWith("album.title")) {
+                }
+                else if (key.startsWith("album.title"))
+                {
                         (*iter).title = value;
-                } else
-                    if (key.startsWith("album.summary")) {
+                }
+                else if (key.startsWith("album.summary"))
+                {
                         (*iter).summary = value;
-                } else
-                    if (key.startsWith("album.parent")) {
+                }
+                else if (key.startsWith("album.parent"))
+                {
                         (*iter).parent_ref_num = value.toInt();
-                } else
-                    if (key.startsWith("album.perms.add")) {
+                }
+                else if (key.startsWith("album.perms.add"))
+                {
                         (*iter).add = (value == "true");
-                } else
-                    if (key.startsWith("album.perms.write")) {
+                }
+                else if (key.startsWith("album.perms.write"))
+                {
                         (*iter).write = (value == "true");
-                } else
-                    if (key.startsWith("album.perms.del_item")) {
+                }
+                else if (key.startsWith("album.perms.del_item"))
+                {
                         (*iter).del_item = (value == "true");
-                } else
-                    if (key.startsWith("album.perms.del_alb")) {
+                }
+                else if (key.startsWith("album.perms.del_alb"))
+                {
                         (*iter).del_alb = (value == "true");
-                } else
-                    if (key.startsWith("album.perms.create_sub")) {
+                }
+                else if (key.startsWith("album.perms.create_sub"))
+                {
                         (*iter).create_sub = (value == "true");
-                } else
-                    if (key == "auth_token") {
+                }
+                else if (key == "auth_token")
+                {
                     s_authToken = value;
                 }
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalError(i18n("Invalid response received from remote Gallery"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalError(i18n("Failed to list albums"));
         return;
     }
@@ -465,14 +534,13 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray &data)
     emit signalAlbums(albumList);
 }
 
-
 void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 {
     QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-    bool success = false;
+    bool success       = false;
 
     typedef QList<GPhoto> GPhotoList;
     GPhotoList photoList;
@@ -480,45 +548,57 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
     QString albumURL;
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
 
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             foundResponse = line.startsWith("#__GR2PROTO__");
-        } else {
+        }
+        else
+        {
             QStringList strlist = line.split('=');
-            if (strlist.count() == 2) {
+            if (strlist.count() == 2)
+            {
                 QString key   = strlist[0];
                 QString value = strlist[1];
 
-                if (key == "status") {
+                if (key == "status")
+                {
                     success = (value == "0");
-                } else
-                    if (key.startsWith("image.name")) {
+                }
+                else if (key.startsWith("image.name"))
+                {
                         GPhoto photo;
                         photo.name    = value;
                         photo.ref_num = key.section(".", 2, 2).toInt();
                         iter = photoList.insert(iter, photo);
-                } else
-                    if (key.startsWith("image.caption")) {
+                }
+                else if (key.startsWith("image.caption"))
+                {
                         (*iter).caption = value;
-                } else
-                    if (key.startsWith("image.thumbName")) {
+                }
+                else if (key.startsWith("image.thumbName"))
+                {
                         (*iter).thumbName = value;
-                } else
-                    if (key.startsWith("baseurl")) {
+                }
+                else if (key.startsWith("baseurl"))
+                {
                         albumURL = value.replace("\\", "");     // doesn't compile fixing EBN Krazy issue!!
                 }
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalError(i18n("Invalid response received from remote Gallery"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalError(i18n("Failed to list photos"));
         return;
     }
@@ -527,41 +607,50 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 }
 
 
-void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
+void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-    bool success = false;
+    bool success       = false;
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
 
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             foundResponse = line.startsWith("#__GR2PROTO__");
-        } else {
+        }
+        else
+        {
             QStringList strlist = line.split('=');
-            if (strlist.count() == 2) {
+            if (strlist.count() == 2)
+            {
                 QString key   = strlist[0];
                 QString value = strlist[1];
-                if (key == "status") {      // key == "status" NOT FOUND!!!
+                if (key == "status")      // key == "status" NOT FOUND!!!
+                {
                     success = (value == "0");
                     kWarning( 51000 ) << "Create Album. success: " << success << endl;
-                } else if (key.startsWith("status_text")) {
+                }
+                else if (key.startsWith("status_text"))
+                {
                     kDebug(51000) << "STATUS: Create Album: " << value << endl;
                 }
-
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalError(i18n("Invalid response received from remote Gallery"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalError(i18n("Failed to create new album"));
         return;
     }
@@ -569,52 +658,61 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray &data)
     listAlbums();
 }
 
-
-void GalleryTalker::parseResponseAddPhoto(const QByteArray &data)
+void GalleryTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-    bool success = false;
+    bool success       = false;
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         line = ts.readLine();
 
-        if (!foundResponse) {
+        if (!foundResponse)
+        {
             // Gallery1 sends resizing debug code sometimes so we
             // have to detect things slightly differently
             foundResponse = (line.startsWith("#__GR2PROTO__")
                              || (line.startsWith("<br>- Resizing")
                                  && line.endsWith("#__GR2PROTO__")));
-        } else {
+        }
+        else
+        {
             QStringList strlist = line.split('=');
-            if (strlist.count() == 2) {
+            if (strlist.count() == 2)
+            {
                 QString key   = strlist[0];
                 QString value = strlist[1];
 
-                if (key == "status") {
+                if (key == "status")
+                {
                     success = (value == "0");
                     kWarning( 51000 ) << "Add photo. success: " << success << endl;
-                } else if (key.startsWith("status_text")) {
+                }
+                else if (key.startsWith("status_text"))
+                {
                     kDebug(51000) << "STATUS: Add Photo: " << value << endl;
                 }
-
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Gallery"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
-    } else {
+    }
+    else
+    {
         emit signalAddPhotoSucceeded();
     }
 }
 
-
-}
+} // namespace KIPIGalleryExportPlugin
