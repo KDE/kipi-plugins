@@ -3,6 +3,7 @@ Kipi-plugins 0.4.0 - Release date: xx/xx/2009
 
 NEW FEATURES:
 
+GalleryExport : Raw images can be uploaded directly to remote server.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
