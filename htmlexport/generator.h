@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef GENERATOR_H
 #define GENERATOR_H
 
-#include <qobject.h>
+#include <QObject>
 
 namespace KIPIPlugins {
 class BatchProgressDialog;

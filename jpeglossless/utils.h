@@ -27,8 +27,8 @@
 
 // Qt includes
 
-#include <qobject.h>
-#include <qstring.h>
+#include <QObject>
+#include <QString>
 
 namespace KIPIJPEGLossLessPlugin
 {
