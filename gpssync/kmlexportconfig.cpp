@@ -26,18 +26,17 @@
 
 // Qt includes
 
-#include <qbuttongroup.h>
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
 
 // KDE includes
 
-#include "kpaboutdata.h"
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <kcolorbutton.h>
@@ -54,6 +53,7 @@
 
 // Local includes
 
+#include "kpaboutdata.h"
 #include "pluginsversion.h"
 
 namespace KIPIGPSSyncPlugin

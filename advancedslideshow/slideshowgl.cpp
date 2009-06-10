@@ -31,16 +31,16 @@
 // Qt includes
 
 #include <Q3ValueList>
-#include <qtimer.h>
-#include <qpixmap.h>
-#include <qapplication.h>
-#include <qevent.h>
-#include <qcursor.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qfileinfo.h>
-#include <qfontmetrics.h>
-#include <qmatrix.h>
+#include <QTimer>
+#include <QPixmap>
+#include <QApplication>
+#include <QEvent>
+#include <QCursor>
+#include <QImage>
+#include <QPainter>
+#include <QFileInfo>
+#include <QFontMetrics>
+#include <QMatrix>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QWheelEvent>

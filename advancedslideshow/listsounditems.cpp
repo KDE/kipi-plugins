@@ -25,12 +25,12 @@
 
 // Qt includes
 
-#include <q3strlist.h>
-#include <q3dragobject.h>
-#include <qstring.h>
-#include <qwidget.h>
-#include <qevent.h>
-#include <qfileinfo.h>
+#include <Q3StrList>
+#include <Q3DragObject>
+#include <QString>
+#include <QWidget>
+#include <QEvent>
+#include <QFileInfo>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QIcon>
@@ -47,7 +47,7 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 SoundItem::SoundItem(QListWidget* parent, KUrl &url)
-        : QListWidgetItem(parent)
+         : QListWidgetItem(parent)
 {
     m_url = url;
     setIcon(SmallIcon( "audio-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
@@ -83,7 +83,6 @@ QString SoundItem::title()
 {
     return m_title;
 }
-
 
 void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate)
 {
@@ -139,7 +138,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State olds
 // ---------------------------------------------
 
 ListSoundItems::ListSoundItems(QWidget *parent)
-        : QListWidget(parent)
+              : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
     setAcceptDrops(true);

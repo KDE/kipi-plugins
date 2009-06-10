@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "theme.h"
 
 // Qt
-#include <qfile.h>
-#include <qtextstream.h>
+#include <QFile>
+#include <QTextStream>
 
 // KDE
 #include <kconfiggroup.h>

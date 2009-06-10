@@ -25,8 +25,8 @@
 
 // Qt includes
 
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QPainter>
+#include <QPixmap>
 
 namespace KIPIFlickrExportPlugin
 {

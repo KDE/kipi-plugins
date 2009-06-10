@@ -33,19 +33,19 @@
 
 // Qt includes
 
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qevent.h>
-#include <qcursor.h>
-#include <qfont.h>
-#include <qmatrix.h>
-#include <qtextcodec.h>
-#include <QKeyEvent>
 #include <Q3PointArray>
+#include <QTimer>
+#include <QPainter>
+#include <QPixmap>
+#include <QImage>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QEvent>
+#include <QCursor>
+#include <QFont>
+#include <QMatrix>
+#include <QTextCodec>
+#include <QKeyEvent>
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QPainterPath>
@@ -66,15 +66,14 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList, SharedData* sharedData )
-        : QWidget( 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose )
+         : QWidget( 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose )
 {
-    m_sharedData = sharedData;
-
+    m_sharedData   = sharedData;
     QRect deskRect = KGlobalSettings::desktopGeometry( this );
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
+    m_deskX        = deskRect.x();
+    m_deskY        = deskRect.y();
+    m_deskWidth    = deskRect.width();
+    m_deskHeight   = deskRect.height();
 
     move( m_deskX, m_deskY );
     resize( m_deskWidth, m_deskHeight );
