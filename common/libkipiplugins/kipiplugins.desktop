@@ -3,12 +3,14 @@
 Encoding=UTF-8
 Name=KIPI Plugins
 Name[da]=KIPI-plugins
+Name[gl]=Extensións de KIPI
 Name[pt]='Plugins' do KIPI
 Name[pt_BR]='Plugins' do KIPI
 Name[sv]=KIPI-insticksprogram
 Name[uk]=Додатки Kipi
 Comment=KDE Image Plugins Interface
 Comment[da]=KDE grænseflade til billed-plugins (KIPI)
+Comment[gl]=Interface para as extensións de imaxe de KDE
 Comment[pt]=Interface de 'Plugins' de Imagens do KDE
 Comment[pt_BR]=Interface de 'Plugins' de Imagens do KDE
 Comment[sv]=KDE:s gränssnitt för bildinsticksprogram
