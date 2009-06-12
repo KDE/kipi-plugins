@@ -26,4 +26,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> BatchProcessImages : 195182 : Batch processing - Resize Images.
 018 ==> AdvancedSlideshow  : 187228 : Use the correct form for plurals in kipi advancedslideshow plugin. 
 019 ==> GalleryExport      : 194245 : Exif information lost when exporting to Gallery.
-020 ==> 
+020 ==> BatchProcessImages : 196166 : Crash after batch resize (klick on close).
+021 ==> 
