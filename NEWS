@@ -27,4 +27,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> AdvancedSlideshow  : 187228 : Use the correct form for plurals in kipi advancedslideshow plugin. 
 019 ==> GalleryExport      : 194245 : Exif information lost when exporting to Gallery.
 020 ==> BatchProcessImages : 196166 : Crash after batch resize (klick on close).
-021 ==> 
+021 ==> Libkdcraw          : 196271 : libraw_alloc.h: error: The function "bzero" must have a prototype.
+022 ==> 
