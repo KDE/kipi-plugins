@@ -41,10 +41,6 @@
 #include <klocale.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
@@ -310,14 +306,14 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->valueCheck,                  0, 0, 1, 1 );
-    grid->addWidget(d->addValueButton,              0, 2, 1, 1);
-    grid->addWidget(d->delValueButton,              0, 3, 1, 1);
-    grid->addWidget(d->repValueButton,              0, 4, 1, 1);
-    grid->addWidget(d->valueBox,                    0, 5, 3, 1);
-    grid->addWidget(new QLabel(i18n("Language:")),  1, 0, 1, 1);
-    grid->addWidget(d->languageCB,                  1, 1, 1, 4);
-    grid->addWidget(d->valueEdit,                   2, 0, 1, 5);
+    grid->addWidget(d->valueCheck,                 0, 0, 1, 1);
+    grid->addWidget(d->addValueButton,             0, 2, 1, 1);
+    grid->addWidget(d->delValueButton,             0, 3, 1, 1);
+    grid->addWidget(d->repValueButton,             0, 4, 1, 1);
+    grid->addWidget(d->valueBox,                   0, 5, 3, 1);
+    grid->addWidget(new QLabel(i18n("Language:")), 1, 0, 1, 1);
+    grid->addWidget(d->languageCB,                 1, 1, 1, 4);
+    grid->addWidget(d->valueEdit,                  2, 0, 1, 5);
     grid->setColumnStretch(1, 5);
     grid->setColumnStretch(5, 10);
     grid->setMargin(0);
