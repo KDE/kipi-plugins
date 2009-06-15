@@ -281,7 +281,7 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
     d->delValueButton = new QPushButton(this);
     d->repValueButton = new QPushButton(this);
     d->addValueButton->setIcon(SmallIcon("list-add"));
-    d->delValueButton->setIcon(SmallIcon("edit-delete"));
+    d->delValueButton->setIcon(SmallIcon("list-remove"));
     d->repValueButton->setIcon(SmallIcon("view-refresh"));
     d->addValueButton->setWhatsThis(i18n("Add a new value to the list"));
     d->delValueButton->setWhatsThis(i18n("Remove the current selected value from the list"));
