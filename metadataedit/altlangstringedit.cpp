@@ -65,7 +65,6 @@ public:
         repValueButton = 0;
         valueBox       = 0;
         valueCheck     = 0;
-        valueBox       = 0;
         languageCB     = 0;
 
         // We cannot use KLocale::allLanguagesList() here because KDE only
