@@ -22,17 +22,17 @@ IF(WIN32)
                     -DWIN_ENV=1
                    )
 ELSE(WIN32)
-    IF(APPLE)
-        ADD_DEFINITIONS(
-                        # Set MACOS-X rules.
-                        -DMAC_ENV=1
-                       )
-    ELSE(APPLE)
+#    IF(APPLE)
+#        ADD_DEFINITIONS(
+#                        # Set MACOS-X rules.
+#                        -DMAC_ENV=1
+#                       )
+#    ELSE(APPLE)
         ADD_DEFINITIONS(
                         # Set Linux & co rules.
                         -DUNIX_ENV=1
                        )
-    ENDIF(APPLE)
+#    ENDIF(APPLE)
 ENDIF(WIN32)
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
@@ -88,13 +88,13 @@ IF(WIN32)
                     -DqMacOS=0
                    )
 ELSE(WIN32)
-    IF(APPLE)
-        ADD_DEFINITIONS(
-                        # Set MACOS-X rules.
-                        -DqWinOS=0
-                        -DqMacOS=1
-                       )
-    ELSE(APPLE)
+#    IF(APPLE)
+#        ADD_DEFINITIONS(
+#                        # Set MACOS-X rules.
+#                        -DqWinOS=0
+#                        -DqMacOS=1
+#                       )
+#    ELSE(APPLE)
         ADD_DEFINITIONS(
                         # Set Linux & co rules.
                         -DqWinOS=0
@@ -103,7 +103,7 @@ ELSE(WIN32)
                         # Must be set to 1, else do not compile under Linux.
                         -DqDNGUseStdInt=1
                        )
-    ENDIF(APPLE)
+#    ENDIF(APPLE)
 ENDIF(WIN32)
 
 # Check processor endianness
