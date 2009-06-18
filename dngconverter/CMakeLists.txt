@@ -22,6 +22,8 @@ IF(WIN32)
                     -DWIN_ENV=1
                    )
 ELSE(WIN32)
+#    NOTE: see B.K.O #195735: do not enable Mac flags provided by Adobe.
+#          Sound like all compile fine like under Linux.
 #    IF(APPLE)
 #        ADD_DEFINITIONS(
 #                        # Set MACOS-X rules.
@@ -88,6 +90,8 @@ IF(WIN32)
                     -DqMacOS=0
                    )
 ELSE(WIN32)
+#    NOTE: see B.K.O #195735: do not enable Mac flags provided by Adobe.
+#          Sound like all compile fine like under Linux.
 #    IF(APPLE)
 #        ADD_DEFINITIONS(
 #                        # Set MACOS-X rules.
