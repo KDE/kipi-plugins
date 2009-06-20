@@ -30,4 +30,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> BatchProcessImages : 196166 : Crash after batch resize (klick on close).
 021 ==> Libkdcraw          : 196271 : libraw_alloc.h: error: The function "bzero" must have a prototype.
 022 ==> PrintImage         : 137687 : Let the user decide the position where to print a photo.
-023 ==> 
+023 ==> MetaDataEdit       : 197218 : Plugin corrupts CRC information in PNGs.
+024 ==> 
