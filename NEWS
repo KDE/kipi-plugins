@@ -36,4 +36,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 026 ==> BatchProcessImages : 197764 : Batch resize crashes digiKam upon clicking the "close" option once resizing is done.
 027 ==> BatchProcessImages : 193488 : Abort after batch processing.
 028 ==> BatchProcessImages : 191955 : Turn off when resizing.
-029 ==> 
+029 ==> GalleryExport      : 198058 : EXIF information is lost on gallery export (only when resizing).
+030 ==> 
