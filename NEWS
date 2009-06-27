@@ -33,4 +33,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> MetaDataEdit       : 197218 : Plugin corrupts CRC information in PNGs.
 024 ==> AquireImages       : 194341 : digiKam crashed with seg fault. 
 025 ==> BatchProcessImages : 198039 : digiKam crashed after resizing several photos. 
-026 ==> 
+026 ==> BatchProcessImages : 197764 : Batch resize crashes digiKam upon clicking the "close" option once resizing is done.
+027 ==> BatchProcessImages : 193488 : Abort after batch processing.
+028 ==> BatchProcessImages : 191955 : Turn off when resizing.
+029 ==> 
