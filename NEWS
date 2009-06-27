@@ -32,4 +32,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> PrintImage         : 137687 : Let the user decide the position where to print a photo.
 023 ==> MetaDataEdit       : 197218 : Plugin corrupts CRC information in PNGs.
 024 ==> AquireImages       : 194341 : digiKam crashed with seg fault. 
-025 ==> 
+025 ==> BatchProcessImages : 198039 : digiKam crashed after resizing several photos. 
+026 ==> 
