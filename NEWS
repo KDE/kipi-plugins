@@ -37,4 +37,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 027 ==> BatchProcessImages : 193488 : Abort after batch processing.
 028 ==> BatchProcessImages : 191955 : Turn off when resizing.
 029 ==> GalleryExport      : 198058 : EXIF information is lost on gallery export (only when resizing).
-030 ==> 
+030 ==> MetadataEdit       : 198407 : Xmp comment language in afrikaans instead of french.
+031 ==> 
