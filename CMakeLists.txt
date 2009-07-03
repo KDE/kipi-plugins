@@ -5,7 +5,7 @@ PROJECT(kipi-plugins)
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "0")
-SET(KIPIPLUGINS_MINOR_VERSION "4")
+SET(KIPIPLUGINS_MINOR_VERSION "5")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
@@ -15,7 +15,7 @@ SET(KIPIPLUGINS_PATCH_VERSION "0")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPIPLUGINS_SUFFIX_VERSION "")
+SET(KIPIPLUGINS_SUFFIX_VERSION "-svn")
 
 # =======================================================
 # Set env. variables accordinly.
