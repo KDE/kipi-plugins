@@ -1,3 +1,735 @@
+0.4.0 2009-07-03
+--------------------------------------------------------------------------------
+
+2009-07-02 11:14  mlaurent
+
+    * batchprocessimages/batchprocessimagesdialog.ui: Fix ui files
+
+2009-07-01 03:18  cgilles
+
+    * NEWS: update
+
+2009-06-27 17:10  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-27 12:31  cgilles
+
+    * NEWS: update
+
+2009-06-27 08:27  aclemens
+
+    * NEWS: update
+
+2009-06-27 08:22  aclemens
+
+    * NEWS: update
+
+2009-06-26 07:59  aclemens
+
+    * NEWS: update
+
+2009-06-25 18:35  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop,
+      htmlexport/themes/classic/classic.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-20 06:18  cgilles
+
+    * NEWS: update
+
+2009-06-18 17:19  cgilles
+
+    * NEWS: update
+
+2009-06-18 12:51  cgilles
+
+    * dngconverter/CMakeLists.txt: added comments
+
+2009-06-17 20:17  anaselli
+
+    * NEWS: SVN_SILENT: updated
+
+2009-06-17 17:56  cgilles
+
+    * dngconverter/CMakeLists.txt: compile under macosx
+
+2009-06-16 14:15  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-15 13:28  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-15 10:17  cgilles
+
+    * metadataedit/altlangstringedit.cpp: use right icon
+
+2009-06-15 06:18  cgilles
+
+    * metadataedit/altlangstringedit.cpp: polish
+
+2009-06-15 06:09  cgilles
+
+    * metadataedit/altlangstringedit.cpp: polish
+
+2009-06-13 15:28  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-13 07:57  cgilles
+
+    * NEWS: update
+
+2009-06-12 14:31  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-12 10:53  cgilles
+
+    * NEWS: update
+
+2009-06-11 13:40  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-10 14:59  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-10 13:32  cgilles
+
+    * advancedslideshow/listsounditems.cpp,
+      advancedslideshow/slideshow.cpp,
+      advancedslideshow/slideshowgl.cpp,
+      flickrexport/flickrviewitem.cpp, gpssync/kmlexportconfig.cpp,
+      htmlexport/stringthemeparameter.cpp, htmlexport/theme.cpp: qt4
+      header
+
+2009-06-10 13:25  cgilles
+
+    * flickrexport/flickrviewitem.h, htmlexport/generator.h,
+      jpeglossless/utils.h: Qt4 header
+
+2009-06-09 14:50  scripty
+
+    * common/libkipiplugins/kipiplugins.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-08 08:17  cgilles
+
+    * NEWS: update
+
+2009-06-08 08:16  cgilles
+
+    * NEWS: update
+
+2009-06-08 08:15  cgilles
+
+    * galleryexport/CMakeLists.txt, galleryexport/gallerytalker.cpp,
+      galleryexport/gallerytalker.h: Gallery export plugin :
+      
+      -restore Exif info after image resizing. Exif rotation flag must
+      still here.
+      -Add RAW handling interface. Now, you can upload RAW image
+      directly to Gallery server. Raw preview image is used (not RAW
+      image data).
+      
+      Note: Patch is simple and must work as well. PLease test and
+      report if errors are found.
+      
+      BUG: 194245
+
+2009-06-07 22:28  anaselli
+
+    * printimages/printoptionspage.cpp, printimages/printoptionspage.h,
+      printimages/printoptionspage.ui: - fixed autorotate and scaling
+      per photo
+      - changed "save configuration" to "save as default"
+      - changed photo x page to label
+      TODO get back tips :/
+
+2009-06-06 18:27  aclemens
+
+    * NEWS: update
+
+2009-06-05 21:23  gateau
+
+    * printimages/printoptionspage.ui: More compact ui.
+
+2009-06-05 13:57  lueck
+
+    * common/libkipiplugins/CMakeLists.txt,
+      common/libkipiplugins/kipiplugins.desktop,
+      dngconverter/plugin/dngconverter.desktop: make kipi-plugins
+      documentation visible in khelpcenters navigation tree
+
+2009-06-04 13:55  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-06-04 13:51  cgilles
+
+    * NEWS: update
+
+2009-06-03 16:54  jnarboux
+
+    * galleryexport/CMakeLists.txt, galleryexport/icons,
+      galleryexport/icons/CMakeLists.txt,
+      galleryexport/icons/hi16-action-gallery.png,
+      galleryexport/icons/hi22-action-gallery.png,
+      galleryexport/icons/hi32-action-gallery.png,
+      galleryexport/icons/hi48-action-gallery.png,
+      galleryexport/icons/hisc-action-gallery.svgz,
+      galleryexport/plugin_galleryexport.cpp: add icon for gallery
+      plugin
+
+2009-06-03 08:32  jnarboux
+
+    * flickrexport/icons/hi16-action-23.png,
+      flickrexport/icons/hi16-action-hq.png,
+      flickrexport/icons/hi22-action-23.png,
+      flickrexport/icons/hi22-action-hq.png,
+      flickrexport/icons/hi32-action-23.png,
+      flickrexport/icons/hi32-action-hq.png,
+      flickrexport/icons/hi48-action-23.png,
+      flickrexport/icons/hi48-action-hq.png,
+      flickrexport/icons/hisc-action-23.svgz,
+      flickrexport/icons/hisc-action-hq.svgz,
+      flickrexport/plugin_flickrexport.cpp: add icon for 23 export
+      plugin
+
+2009-06-03 08:26  jnarboux
+
+    * flickrexport/icons/hi16-action-23.png,
+      flickrexport/icons/hi22-action-23.png,
+      flickrexport/icons/hi32-action-23.png,
+      flickrexport/icons/hi48-action-23.png,
+      flickrexport/icons/hisc-action-23.svgz: add icon files for 23hq
+
+2009-06-02 13:46  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      smug/kipiplugin_smug.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-06-02 07:24  cgilles
+
+    * NEWS: update
+
+2009-05-30 16:32  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-05-28 11:32  cgilles
+
+    * NEWS: update
+
+2009-05-28 09:22  gateau
+
+    * advancedslideshow/plugin_advancedslideshow.cpp: Check if there is
+      an album at startup and also init m_urlList.
+      
+      Makes plugin work with Gwenview.
+
+2009-05-27 15:11  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      sendimages/kipiplugin_sendimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-05-26 07:03  cgilles
+
+    * rawconverter/batchdialog.cpp: toogle viewport state when busy
+
+2009-05-26 07:01  cgilles
+
+    * dngconverter/plugin/batchdialog.cpp: toogle viewport state when
+      busy
+
+2009-05-25 14:06  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      smug/kipiplugin_smug.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-05-25 14:05  cgilles
+
+    * common/libkipiplugins/CMakeLists.txt: polish
+
+2009-05-25 14:02  cgilles
+
+    * sendimages/CMakeLists.txt: clean up
+
+2009-05-25 13:59  cgilles
+
+    * ipodexport/CMakeLists.txt: this plugin is pure Qt4/KDE4 code now
+
+2009-05-24 21:19  aclemens
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/scandialog.cpp,
+      acquireimages/twainiface/twaincontroller.cpp,
+      advancedslideshow/plugin_advancedslideshow.cpp,
+      batchprocessimages/pixmapview.cpp,
+      batchprocessimages/plugin_batchprocessimages.cpp,
+      calendar/plugin_calendar.cpp,
+      common/libkipiplugins/kpaboutdata.cpp,
+      common/libkipiplugins/kpwriteimage.cpp,
+      dngconverter/dngwriter/dngwriter.cpp,
+      dngconverter/dngwriter/dngwriterhost.cpp,
+      dngconverter/plugin/plugin_dngconverter.cpp,
+      facebook/fbtalker.cpp, flashexport/plugin_flashexport.cpp,
+      flashexport/simpleviewer.cpp, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrwindow.cpp, galleryexport/gallerytalker.cpp,
+      gpssync/gpsbabelbinary.cpp, gpssync/gpsdataparser.cpp,
+      gpssync/gpsmapwidget.cpp, gpssync/gpstracklistwidget.cpp,
+      gpssync/kmlgpsdataparser.cpp, gpssync/plugin_gpssync.cpp,
+      htmlexport/generator.cpp, imageviewer/plugin_viewer.cpp,
+      imageviewer/texture.cpp, imageviewer/timer.cpp,
+      imageviewer/viewerwidget.cpp, jpeglossless/convert2grayscale.cpp,
+      jpeglossless/imageflip.cpp, jpeglossless/imagerotate.cpp,
+      jpeglossless/jpegtransform.cpp,
+      jpeglossless/plugin_jpeglossless.cpp, jpeglossless/utils.cpp,
+      metadataedit/plugin_metadataedit.cpp, metadataedit/subjects.cpp,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwindow.cpp,
+      printimages/plugin_printimages.cpp, printimages/wizard.cpp,
+      rawconverter/plugin_rawconverter.cpp,
+      rawconverter/rawdecodingiface.cpp,
+      sendimages/plugin_sendimages.cpp, sendimages/sendimages.cpp,
+      timeadjust/plugin_timeadjust.cpp,
+      timeadjust/timeadjustdialog.cpp, wallpaper/plugin_wallpaper.cpp:
+      Add more missing area codes
+      polish code
+
+2009-05-24 21:19  aclemens
+
+    * batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/renameimageswidget.cpp,
+      flickrexport/flickrwindow.cpp, printimages/wizard.cpp: Add area
+      code
+
+2009-05-24 21:19  aclemens
+
+    * printimages/wizard.cpp: fix deprecate warning (kdDebug => kDebug)
+
+2009-05-24 20:56  anaselli
+
+    * printimages/wizard.cpp: fix print order management:
+      - crash if changing photo order with only two photos selected
+      - fix move up photo button management
+
+2009-05-24 18:46  coles
+
+    * flashexport/firstrundlg.cpp, flashexport/generalpage.cpp,
+      flashexport/simpleviewer.cpp, flashexport/svedialog.cpp:
+      Proof-reading.
+
+2009-05-24 13:46  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      printimages/kipiplugin_printimages.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-05-24 12:28  coles
+
+    * batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp, calendar/calevents.ui,
+      calendar/caltemplate.ui, dngconverter/plugin/batchdialog.cpp,
+      facebook/fbtalker.cpp, facebook/fbwidget.cpp,
+      flickrexport/flickralbumdialog.ui, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrwidget.cpp, flickrexport/flickrwindow.cpp,
+      galleryexport/gallerywindow.cpp, htmlexport/plugin.cpp,
+      ipodexport/IpodExportDialog.cpp: Proof-reading.
+
+2009-05-20 15:50  coles
+
+    * gpssync/gpssyncdialog.cpp: Made a typo yesterday when correcting
+      this - my bad.
+
+2009-05-20 07:40  cgilles
+
+    * rawconverter/batchdialog.cpp: polish
+
+2009-05-19 21:49  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      polish
+
+2009-05-19 20:42  coles
+
+    * gpssync/gpseditdialog.cpp, gpssync/gpslistviewcontextmenu.cpp,
+      gpssync/gpslistviewitem.cpp, gpssync/gpssyncdialog.cpp,
+      gpssync/gpstracklisteditdialog.cpp, gpssync/kmlexport.cpp,
+      gpssync/kmlexportconfig.cpp, gpssync/plugin_gpssync.cpp:
+      Proof-reading.
+
+2009-05-19 19:54  coles
+
+    * removeredeyes/commonwidgets/storagesettingsbox.cpp: Proof-reading
+      - didn't make a lot of sense before.
+
+2009-05-19 19:00  coles
+
+    * metadataedit/xmpeditdialog.cpp: Forgot to commit this one earlier
+      - rest of my proof-reading.
+
+2009-05-19 18:53  coles
+
+    * metadataedit/altlangstringedit.cpp,
+      metadataedit/commenteditdialog.cpp,
+      metadataedit/commentremovedialog.cpp,
+      metadataedit/exifcaption.cpp, metadataedit/exifdevice.cpp,
+      metadataedit/exifeditdialog.cpp, metadataedit/exiflight.cpp,
+      metadataedit/iptccategories.cpp, metadataedit/iptccontent.cpp,
+      metadataedit/iptccredits.cpp, metadataedit/iptceditdialog.cpp,
+      metadataedit/iptcenvelope.cpp, metadataedit/iptckeywords.cpp,
+      metadataedit/iptcorigin.cpp, metadataedit/iptcproperties.cpp,
+      metadataedit/iptcstatus.cpp, metadataedit/iptcsubjects.cpp,
+      metadataedit/multistringsedit.cpp,
+      metadataedit/objectattributesedit.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      metadataedit/xmpcredits.cpp, metadataedit/xmpeditdialog.cpp,
+      metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp,
+      metadataedit/xmpstatus.cpp: Proof-reading.
+
+2009-05-18 17:08  cgilles
+
+    * rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+      compile with future libkdcraw 1.0.0
+
+2009-05-18 13:40  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: warning--
+
+2009-05-18 13:40  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h: Start with a
+      reasonable size
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/CMakeLists.txt,
+      batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/batchprocessimagesdialog.ui,
+      batchprocessimages/convertimagesdialog.cpp: Ui-fied main dialog.
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Fixing leaks is
+      nice, but it should not introduce crashes :)
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Removed shared
+      whatsThis field.
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: make groupBox1
+      private.
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/convertimagesdialog.cpp: Make destination url
+      widget private.
+
+2009-05-18 13:39  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.cpp: Hide a few widgets
+      from inherited classes.
+
+2009-05-18 13:38  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.h: Make non-shared
+      widgets private.
+
+2009-05-18 13:38  gateau
+
+    * printimages/croppage.ui, printimages/infopage.ui,
+      printimages/intropage.ui, printimages/photopage.ui,
+      printimages/wizard.cpp: Reworked UI.
+
+2009-05-18 10:42  cgilles
+
+    * NEWS: update
+
+2009-05-18 10:41  cgilles
+
+    * gpssync/CMakeLists.txt, gpssync/gpsdataparser.h,
+      gpssync/gpseditdialog.h, gpssync/gpslistviewcontextmenu.cpp,
+      gpssync/gpslistviewcontextmenu.h, gpssync/gpsmapwidget.h,
+      gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+      gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklisteditdialog.h, gpssync/gpstracklistwidget.h,
+      gpssync/kmlexportconfig.h, gpssync/plugin_gpssync.h: GPSSync
+      kipi-plugins : apply patch #33449 from Michael G. Hansen to copy
+      and paste GPS coordinates with clipboard
+      BUG: 191914
+
+2009-05-18 09:46  cgilles
+
+    * common/libkipiplugins/kpaboutdata.cpp: as Amarok, add build date
+      to about data
+
+2009-05-18 07:10  cgilles
+
+    * galleryexport/albumdlg.h, galleryexport/galleries.h,
+      galleryexport/galleryconfig.h, galleryexport/galleryitem.h,
+      galleryexport/gallerympform.h, galleryexport/gallerytalker.h,
+      galleryexport/gallerywindow.h,
+      galleryexport/plugin_galleryexport.cpp,
+      galleryexport/plugin_galleryexport.h: slots => Q_SLOTS
+      signals => Q_SIGNALS
+
+2009-05-18 06:54  cgilles
+
+    * advancedslideshow/advanceddialog.h,
+      advancedslideshow/captiondialog.h, advancedslideshow/common.cpp,
+      advancedslideshow/common.h, advancedslideshow/imageloadthread.h,
+      advancedslideshow/listimageitems.h,
+      advancedslideshow/listsounditems.h,
+      advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      advancedslideshow/playbackwidget.h,
+      advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/plugin_advancedslideshow.h,
+      advancedslideshow/slideplaybackwidget.h,
+      advancedslideshow/slideshow.h,
+      advancedslideshow/slideshowconfig.cpp,
+      advancedslideshow/slideshowconfig.h,
+      advancedslideshow/slideshowgl.h, advancedslideshow/slideshowkb.h,
+      advancedslideshow/soundtrackdialog.h: fix memeory leak : use
+      KUrl::List instead KUrl::List*
+      signals => Q_SIGNALS
+      slots => Q_SLOTS
+
+2009-05-18 06:19  cgilles
+
+    * NEWS: update
+
+2009-05-18 06:19  cgilles
+
+    * flickrexport/flickrtalker.cpp: apply patch #33710 from Pieter
+      Edelman
+      BUG: 192862
+
+2009-05-18 06:16  cgilles
+
+    * NEWS: update
+
+2009-05-18 06:10  cgilles
+
+    * NEWS: update
+
+2009-05-18 06:10  cgilles
+
+    * rawconverter/rawdecodingiface.cpp: apply patch #33684 from
+      Michael G. Hansen
+      BUG: 192787
+
+2009-05-15 17:31  aclemens
+
+    * NEWS: update
+
+2009-05-15 10:50  aclemens
+
+    * NEWS: update
+
+2009-05-15 10:39  aclemens
+
+    * NEWS: update
+
+2009-05-15 10:34  aclemens
+
+    * NEWS: update
+
+2009-05-14 14:16  cgilles
+
+    * NEWS: update
+
+2009-05-13 15:51  welwarsky
+
+    * flickrexport/flickrwindow.cpp: allow to upload to flickr
+      photostream only.
+      
+      CCBUG: 183639
+
+2009-05-12 18:24  aclemens
+
+    * NEWS: update
+
+2009-05-12 10:19  cgilles
+
+    * NEWS: update
+
+2009-05-12 10:10  cgilles
+
+    * NEWS: update
+
+2009-05-12 10:09  cgilles
+
+    * dngconverter/CMakeLists.txt,
+      dngconverter/dngwriter/dngwriter.cpp,
+      dngconverter/dngwriter/dngwriter_p.cpp,
+      dngconverter/dngwriter/dngwriter_p.h,
+      dngconverter/dngwriter/dngwriterhost.h,
+      dngconverter/dngwriter/dngwriterprivate.cpp,
+      dngconverter/dngwriter/dngwriterprivate.h: use complete base file
+      name to convert to DNG
+      BUG: 192289
+
+2009-05-12 09:14  aclemens
+
+    * gpssync/plugin_gpssync.cpp: Fix some valgrind issues: The "export
+      KML" action was never added because we have
+      not assigned it properly.
+
+2009-05-11 07:53  cgilles
+
+    * NEWS, project/NEWS.0.3.0: backup
+
+2009-05-11 07:52  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-05-11 07:52  cgilles
+
+    * CMakeLists.txt: bump version
+
+2009-05-11 06:57  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-05-11 06:56  cgilles
+
+    * CMakeLists.txt: update version
+
+2009-05-11 06:55  cgilles
+
+    * NEWS: update
+
+2009-05-11 06:55  cgilles
+
+    * ChangeLog: preparing 0.3.0
+
 0.3.0 2009-05-11
 --------------------------------------------------------------------------------
 
