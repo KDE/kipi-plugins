@@ -358,6 +358,29 @@ namespace KIPIPrintImagesPlugin
         // add to the list
         d->m_photoSizes.append ( p );
 
+        // ========== 2-1/3" x 3-1/3"
+        p = new TPhotoSize;
+        p->label = i18n ( "2-1/3\" x 3-1/3\" " );
+        p->dpi = 0;
+        p->autoRotate = true;
+        // page size
+        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
+        // photo layouts
+        p->layouts.append ( new QRect ( 333,  333, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 2999, 333, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 5665, 333, 2333, 3333 ) );
+
+        p->layouts.append ( new QRect ( 333,  3999, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 2999, 3999, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 5665, 3999, 2333, 3333 ) );
+
+        p->layouts.append ( new QRect ( 333,  7665, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 2999, 7665, 2333, 3333 ) );
+        p->layouts.append ( new QRect ( 5665, 7665, 2333, 3333 ) );
+
+        // add to the list
+        d->m_photoSizes.append ( p );
+
         // ========== 4 x 6
         p = new TPhotoSize;
         p->label = i18n ( "4 x 6\"" );
