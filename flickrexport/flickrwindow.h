@@ -102,10 +102,11 @@ private slots:
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
-    void slotListPhotoSetsSucceeded();
+    void populatePhotoSetComboBox();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
+    void slotAddPhotoSetSucceeded();
     void slotListPhotoSetsFailed(const QString& msg);
     void slotAddPhotoCancel();
     void slotAuthCancel();

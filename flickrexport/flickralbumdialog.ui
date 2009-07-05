@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0" >
  <class>FlickrAlbumDialog</class>
  <widget class="QDialog" name="FlickrAlbumDialog" >
@@ -25,29 +26,13 @@
     </rect>
    </property>
    <property name="text" >
-    <string>&lt;h3>Create New PhotoSet &lt;/h3></string>
+    <string>&lt;h3&gt;Create New PhotoSet &lt;/h3&gt;</string>
    </property>
    <property name="wordWrap" >
     <bool>false</bool>
    </property>
   </widget>
   <widget class="Line" name="hline1" >
-   <property name="geometry" >
-    <rect>
-     <x>10</x>
-     <y>30</y>
-     <width>331</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="frameShape" >
-    <enum>QFrame::HLine</enum>
-   </property>
-   <property name="frameShadow" >
-    <enum>QFrame::Sunken</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="hline2" >
    <property name="geometry" >
     <rect>
      <x>10</x>
@@ -132,7 +117,7 @@
      <x>11</x>
      <y>50</y>
      <width>331</width>
-     <height>162</height>
+     <height>173</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout" >
@@ -140,19 +125,6 @@
      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
     </property>
     <item row="0" column="0" >
-     <widget class="QLabel" name="nameLabel" >
-      <property name="text" >
-       <string>Name (optional):</string>
-      </property>
-      <property name="wordWrap" >
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" >
-     <widget class="KLineEdit" name="nameEdit" />
-    </item>
-    <item row="1" column="0" >
      <widget class="QLabel" name="titleLabel" >
       <property name="text" >
        <string>Title (required):</string>
@@ -162,47 +134,28 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0" >
+    <item row="0" column="1" >
+     <widget class="KLineEdit" name="titleEdit" />
+    </item>
+    <item row="1" column="0" >
      <widget class="QLabel" name="captionLabel" >
       <property name="text" >
-       <string>Description (optional):</string>
+       <string>Description(optional)</string>
       </property>
       <property name="wordWrap" >
        <bool>false</bool>
       </property>
      </widget>
     </item>
-    <item row="2" column="1" >
-     <widget class="KLineEdit" name="descriptionEdit" />
-    </item>
-    <item row="3" column="0" >
-     <widget class="QLabel" name="label" >
-      <property name="text" >
-       <string>Primary Photo Id</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="1" >
-     <widget class="KLineEdit" name="titleEdit" />
-    </item>
-    <item row="3" column="1" >
-     <widget class="QLineEdit" name="primaryPhotoIdEdit" />
+     <widget class="QPlainTextEdit" name="descriptionEdit" />
     </item>
    </layout>
-   <zorder>nameLabel</zorder>
-   <zorder>nameEdit</zorder>
-   <zorder>titleLabel</zorder>
-   <zorder>captionLabel</zorder>
-   <zorder>descriptionEdit</zorder>
-   <zorder>label</zorder>
-   <zorder>primaryPhotoIdEdit</zorder>
-   <zorder>titleEdit</zorder>
   </widget>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>header</zorder>
   <zorder>hline1</zorder>
-  <zorder>hline2</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
@@ -214,10 +167,8 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>nameEdit</tabstop>
   <tabstop>titleEdit</tabstop>
   <tabstop>descriptionEdit</tabstop>
-  <tabstop>primaryPhotoIdEdit</tabstop>
   <tabstop>buttonOk</tabstop>
   <tabstop>buttonCancel</tabstop>
  </tabstops>

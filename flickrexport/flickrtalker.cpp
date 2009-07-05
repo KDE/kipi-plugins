@@ -101,6 +101,9 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
     m_apikey = "49d585bafa0758cb5c58ab67198bf632";
     m_secret = "34b39925e6273ffd";
 
+    /* Initialize selected photo set as empty. */
+    m_selectedPhotoSet = FPhotoSet();
+
     connect(this, SIGNAL(signalAuthenticate()),
             this, SLOT(slotAuthenticate()));
 }
@@ -402,7 +405,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
 
 void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,  const QString& photoSetId)
 {
-   if (m_job)
+    if (m_job)
     {
         m_job->kill();
         m_job = 0;
@@ -411,34 +414,42 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,  const QString& ph
     kDebug(51000) << "addPhotoToPhotoSet invoked" << endl;
     KUrl url(m_apiUrl);
 
-    url.addQueryItem("auth_token", m_token);
+    /* If the photoset id starts with the special string "UNDEFINED_", it means
+     * it doesn't exist yet on Flickr and needs to be created. Note that it's
+     * not necessary to subsequently add the photo to the photo set, as this
+     * is done in the set creation call to Flickr. */
+    if (photoSetId.startsWith("UNDEFINED_")) {
+        createPhotoSet("", m_selectedPhotoSet.title, m_selectedPhotoSet.description, photoId);
+    } else {
+        url.addQueryItem("auth_token", m_token);
 
-    url.addQueryItem("photoset_id", photoSetId);
+        url.addQueryItem("photoset_id", photoSetId);
 
-    url.addQueryItem("api_key", m_apikey);
+        url.addQueryItem("api_key", m_apikey);
 
-    url.addQueryItem("method", "flickr.photosets.addPhoto");
+        url.addQueryItem("method", "flickr.photosets.addPhoto");
 
-    url.addQueryItem("photo_id", photoId);
+        url.addQueryItem("photo_id", photoId);
 
-    QString md5 = getApiSig(m_secret, url);
-    url.addQueryItem("api_sig", md5);
+        QString md5 = getApiSig(m_secret, url);
+        url.addQueryItem("api_sig", md5);
 
-    QByteArray tmp;
-    kDebug(51000) << "Add photo to Photo set url: " << url << endl;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+        QByteArray tmp;
+        kDebug(51000) << "Add photo to Photo set url: " << url << endl;
+        KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+        connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+                this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+        connect(job, SIGNAL(result(KJob *)),
+                this, SLOT(slotResult(KJob *)));
 
-    m_state = FE_ADDPHOTOTOPHOTOSET;
-    m_job   = job;
-    m_buffer.resize(0);
-    emit signalBusy(true);
+        m_state = FE_ADDPHOTOTOPHOTOSET;
+        m_job   = job;
+        m_buffer.resize(0);
+        emit signalBusy(true);
+    }
 }
 
 bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
@@ -952,9 +963,23 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "photoset")
         {
-            KMessageBox::information(kapp->activeWindow(),
-                                     i18n("PhotoSet created successfully"));
-            listPhotoSets();
+          // Parse the id from the response.
+          QString new_id = node.toElement().attribute("id");
+
+          // Set the new id in the photo sets list.
+          QLinkedList<FPhotoSet>::iterator it = m_photoSetsList->begin();
+          while(it != m_photoSetsList->end()) {
+            if (it->id == m_selectedPhotoSet.id) {
+              it->id = new_id;
+              break;
+            }
+            it++;
+          }
+          // Set the new id in the selected photo set.
+          m_selectedPhotoSet.id = new_id;
+
+          kDebug() << "PhotoSet created successfully with id" << new_id << endl;
+          emit signalAddPhotoSetSucceeded();
         }
 
         if (node.isElement() && node.nodeName() == "err")
@@ -1128,8 +1153,8 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
     }
     else
     {
-        QString photoSetId = m_selectedPhotoSetId;
-        if (photoSetId == "")
+        QString photoSetId = m_selectedPhotoSet.id;
+        if (photoSetId == "-1")
         {
             kDebug(51000) << "PhotoSet Id not set, not adding the photo to any photoset";
             emit signalAddPhotoSucceeded();

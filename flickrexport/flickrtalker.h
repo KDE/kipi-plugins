@@ -35,6 +35,10 @@
 #include <kurl.h>
 #include <kio/job.h>
 
+// Local includes.
+
+#include "flickritem.h"
+
 class QProgressDialog;
 
 namespace KIPIFlickrExportPlugin
@@ -94,7 +98,7 @@ public:
 
     QProgressDialog *m_authProgressDlg;
     QLinkedList <FPhotoSet>* m_photoSetsList;
-    QString    m_selectedPhotoSetId;
+    FPhotoSet  m_selectedPhotoSet;
 
 signals:
 
@@ -104,6 +108,7 @@ signals:
     void signalAlbums(const QList<GAlbum>& albumList);
     void signalPhotos(const QList<GPhoto>& photoList);
     void signalAddPhotoSucceeded();
+    void signalAddPhotoSetSucceeded();
     void signalListPhotoSetsSucceeded();
     void signalListPhotoSetsFailed(QString& msg);
     void signalAddPhotoFailed(const QString& msg);

@@ -162,11 +162,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
             this, SLOT( slotAddPhotoFailed( const QString& ) ));
 
+    connect(m_talker, SIGNAL( signalAddPhotoSetSucceeded() ),
+            this, SLOT( slotAddPhotoSetSucceeded() ));
+
     connect(m_newAlbumBtn, SIGNAL( clicked() ),
             this, SLOT( slotCreateNewPhotoSet() ));
 
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded() ),
-            this, SLOT( slotListPhotoSetsSucceeded() ));
+            this, SLOT( populatePhotoSetComboBox() ));
 
     connect(m_talker, SIGNAL( signalListPhotoSetsFailed(const QString&) ),
             this, SLOT( slotListPhotoSetsFailed(const QString&) ));
@@ -355,14 +358,44 @@ void FlickrWindow::slotUserChangeRequest()
 
 void FlickrWindow::slotCreateNewPhotoSet() 
 {
+   /* This method is called when the photo set creation button is pressed. It
+    * summons a creation dialog for user input. When that is closed, it
+    * creates a new photo set in the local list. The id gets the form of
+    * UNDEFINED_ followed by a number, to indicate that it doesn't exist on
+    * Flickr yet. */
+
+   // Call the dialog
    FlickrNewPhotoSetDialog *dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
    int resp = dlg->exec();
-   if (resp == QDialog::Accepted) 
+   if ((resp == QDialog::Accepted) && (dlg->titleEdit->text() != ""))
    {
-      m_talker->createPhotoSet(dlg->nameEdit->text(),
-                               dlg->titleEdit->text(),
-                               dlg->descriptionEdit->text(),
-                               dlg->primaryPhotoIdEdit->text());
+      // Create a new photoset with title and description from the dialog.
+      FPhotoSet fps;
+      fps.title       = dlg->titleEdit->text();
+      fps.description = dlg->descriptionEdit->toPlainText();
+
+      // Lets find an UNDEFINED_ style id that isn't taken yet.s
+      QString id;
+      int i = 0;
+      id = "UNDEFINED_" + QString::number(i);
+      QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
+      while(it != m_talker->m_photoSetsList->end()) {
+        FPhotoSet fps = *it;
+        if (fps.id == id) {
+          id = "UNDEFINED_" + QString::number(++i);
+          it = m_talker->m_photoSetsList->begin();
+        }
+        it++;
+      }
+      fps.id = id;
+
+      kDebug() << "Created new photoset with temporary id " << id << endl;
+      // Append the new photoset to the list.
+      m_talker->m_photoSetsList->prepend(fps);
+      m_talker->m_selectedPhotoSet = fps;
+
+      // Repopulate the photo sets combo box.
+      populatePhotoSetComboBox();
    }
    else
    {
@@ -392,9 +425,9 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 }
 */
 
-void FlickrWindow::slotListPhotoSetsSucceeded()
+void FlickrWindow::populatePhotoSetComboBox()
 {
-    kDebug(51000) << "SlotListPhotoSetsResponse invoked" << endl;
+    kDebug(51000) << "populatePhotoSetComboBox invoked" << endl;
     if (m_talker && m_talker->m_photoSetsList)
     {
         QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
@@ -402,14 +435,19 @@ void FlickrWindow::slotListPhotoSetsSucceeded()
         m_albumsListComboBox->insertItem(0, i18n("<Photostream Only>"));
         m_albumsListComboBox->insertSeparator(1);
         QLinkedList<FPhotoSet>::iterator it = list->begin();
-        int index = 2;
+        int index = 2, curr_index = 0;
         while(it != list->end())
         {
             FPhotoSet photoSet=*it;
             QString name = photoSet.title;
-            m_albumsListComboBox->insertItem(index++, name);
+            // Store the id as user data, because the title is not unique.
+            QVariant id = QVariant(photoSet.id);
+            if (id == m_talker->m_selectedPhotoSet.id)
+                curr_index = index;
+            m_albumsListComboBox->insertItem(index++, name, id);
             it++;
         }
+        m_albumsListComboBox->setCurrentIndex(curr_index);
     }
     m_widget->setEnabled(true);
 }
@@ -509,19 +547,22 @@ void FlickrWindow::slotAddPhotoNext()
     typedef QPair<KUrl, FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
     FPhotoInfo info   = pathComments.second;
-    QString selectedPhotoSetName = m_albumsListComboBox->currentText();
-    QString selectedPhotoSetId = "";
-    QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
-    while(it != m_talker->m_photoSetsList->end()) {
-      FPhotoSet fps = *it;
-      QString name = fps.title;
-      if (name == selectedPhotoSetName) {
-        selectedPhotoSetId = fps.id;
-        break;
-      }
-      it++;
-    } 
-    m_talker->m_selectedPhotoSetId = selectedPhotoSetId;
+
+    // Find out the selected photo set.
+    QString selectedPhotoSetId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
+    if (selectedPhotoSetId == "") {
+       m_talker->m_selectedPhotoSet = FPhotoSet();
+    } else {
+       QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
+       while(it != m_talker->m_photoSetsList->end()) {
+          if (it->id == selectedPhotoSetId) {
+             m_talker->m_selectedPhotoSet = *it;
+             break;
+          }
+          it++;
+       }
+    }
+
     bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path
 					   info,
                                            m_resizeCheckBox->isChecked(),
@@ -575,6 +616,15 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
         m_progressDlg->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
+}
+
+void FlickrWindow::slotAddPhotoSetSucceeded()
+{
+  /* Method called when a photo set has been succesfully created on Flickr.
+   * It functions to restart the normal flow after a photo set has been created
+   * on Flickr. */
+  populatePhotoSetComboBox();
+  slotAddPhotoSucceeded();
 }
 
 void FlickrWindow::slotAddPhotoCancel()
