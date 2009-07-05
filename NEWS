@@ -6,7 +6,8 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> PrintWizard : 162085 : digiKam freezes while printing.
-002 ==> htmlexport  : 196890 : "Next" button on first wizard page is initially disabled
-003 ==> flickrexport: 180055 : Can't create new photoset: Invalid primary photo id (n)
-004 ==>
+001 ==> PrintWizard  : 162085 : digiKam freezes while printing.
+002 ==> htmlexport   : 196890 : "Next" button on first wizard page is initially disabled
+003 ==> flickrexport : 180055 : Can't create new photoset: Invalid primary photo id (n).
+004 ==> flickrexport : 192541 : Name based Flickr set selection is ambiguous [patch].
+005 ==> 
