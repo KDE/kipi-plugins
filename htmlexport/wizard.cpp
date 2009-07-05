@@ -235,7 +235,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
 
 	d->mCollectionSelector = interface->imageCollectionSelector(this);
 	d->mCollectionSelectorPage = addPage(d->mCollectionSelector, i18n("Collection Selection"));
-	setValid(d->mCollectionSelectorPage, false);
+	updateCollectionSelectorPageValidity();
 	connect(d->mCollectionSelector, SIGNAL(selectionChanged()),
 		SLOT(updateCollectionSelectorPageValidity()));
 
