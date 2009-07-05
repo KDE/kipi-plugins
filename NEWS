@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> PrintWizard : 162085 : digiKam freezes while printing.
-002 ==> 
+002 ==> htmlexport  : 196890 : "Next" button on first wizard page is initially disabled
+003 ==> 
