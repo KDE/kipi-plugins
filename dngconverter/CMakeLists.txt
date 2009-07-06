@@ -62,11 +62,9 @@ SET(libxmp_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPMeta.incl_cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/EndianUtils.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/LargeFileAccess.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeInlines.incl_cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XMLParserAdapter.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/ExpatAdapter.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/LargeFileAccess.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XML_Node.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.cpp
