@@ -2,15 +2,16 @@ Kipi-plugins 0.5.0 - Release date: xx/xx/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
-001 ==> PrintWizard : 188426 : Add support for 2-1/3" x 3-1/3" pictures
+
+PrintWizard : Add support for 2-1/3" x 3-1/3" pictures.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> PrintWizard  : 162085 : digiKam freezes while printing.
-002 ==> HtmlExport   : 196890 : "Next" button on first wizard page is initially disabled
+002 ==> HtmlExport   : 196890 : "Next" button on first wizard page is initially disabled.
 003 ==> FlickrExport : 180055 : Can't create new photoset: Invalid primary photo id (n).
 004 ==> FlickrExport : 192541 : Name based Flickr set selection is ambiguous [patch].
 005 ==> TimeAdjust   : 180244 : Timeadjust is not building on mac os x leopard.
 006 ==> SendImages   : 169952 : Pictures on nfs-drive crashes digiKam when i send picture as mail.
-007 ==> batchprocessimages : 173664 : Menu: Can't resize image(s) 
+007 ==> BatchProcess : 173664 : Menu: Can't resize image(s).
 008 ==> 
