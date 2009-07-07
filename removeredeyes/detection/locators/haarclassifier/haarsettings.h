@@ -57,16 +57,16 @@ class HaarSettings
 
         void debug()
         {
-            kDebug(51000) << "***************" << endl;
-            kDebug(51000) << "HaarSettings"    << endl;
-            kDebug(51000) << "***************" << endl;
-            kDebug(51000) << "useStandardClassifier = " << useStandardClassifier << endl;
-            kDebug(51000) << "minRoundness          = " << minRoundness          << endl;
-            kDebug(51000) << "scaleFactor           = " << scaleFactor           << endl;
-            kDebug(51000) << "minBlobsize           = " << minBlobsize           << endl;
-            kDebug(51000) << "neighborGroups        = " << neighborGroups        << endl;
-            kDebug(51000) << "simpleMode            = " << simpleMode            << endl;
-            kDebug(51000) << "classifierFile        = " << classifierFile        << endl;
+            kDebug(51000) << "***************";
+            kDebug(51000) << "HaarSettings";
+            kDebug(51000) << "***************";
+            kDebug(51000) << "useStandardClassifier = " << useStandardClassifier;
+            kDebug(51000) << "minRoundness          = " << minRoundness;
+            kDebug(51000) << "scaleFactor           = " << scaleFactor;
+            kDebug(51000) << "minBlobsize           = " << minBlobsize;
+            kDebug(51000) << "neighborGroups        = " << neighborGroups;
+            kDebug(51000) << "simpleMode            = " << simpleMode;
+            kDebug(51000) << "classifierFile        = " << classifierFile;
         };
 
         bool    useStandardClassifier;

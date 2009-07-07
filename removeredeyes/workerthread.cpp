@@ -96,7 +96,7 @@ void WorkerThread::run()
 {
     if (!d->locator)
     {
-        kDebug(51000) << "no locator has been defined" << endl;
+        kDebug(51000) << "no locator has been defined";
         return;
     }
     if (d->urls.count() <= 0) return;

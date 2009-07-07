@@ -390,7 +390,7 @@ void RemoveRedEyesWindow::startPreview()
         !d->correctedImageTempFile.open() ||
         !d->maskImageTempFile.open())
     {
-        kDebug(51000) << "unable to create temp file for image preview!" << endl;
+        kDebug(51000) << "unable to create temp file for image preview!";
     }
 
     updateSettings();
@@ -436,7 +436,7 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
 
     if (!d->thread)
     {
-        kError(51000) << "Creation of WorkerThread failed!" << endl;
+        kError(51000) << "Creation of WorkerThread failed!";
         setBusy(false);
         return;
     }
@@ -691,7 +691,7 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
                                         "The plugin is not executable.</h2>");
         d->locatorSettingsWidget = new QLabel(noLocatorMsg);
         d->hasLocator            = false;
-        kDebug(51000) << "Invalid locator: '" << locator << "'" << endl;
+        kDebug(51000) << "Invalid locator: '" << locator << "'";
     }
 
     settingsTabLayout->addWidget(d->locatorSettingsWidget, 0, 0, 1, 1);

@@ -52,7 +52,7 @@ Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject *parent, const QVariantList &
                                    parent, "RemoveRedEyes")
 {
 
-    kDebug(51001) << "Plugin_RemoveRedEyes plugin loaded" << endl;
+    kDebug(51001) << "Plugin_RemoveRedEyes plugin loaded";
 }
 
 void Plugin_RemoveRedEyes::setup(QWidget* widget)
@@ -72,7 +72,7 @@ void Plugin_RemoveRedEyes::setup(QWidget* widget)
 
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!";
         return;
     }
 
@@ -89,7 +89,7 @@ void Plugin_RemoveRedEyes::activate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!";
         return;
     }
 
@@ -103,6 +103,6 @@ KIPI::Category Plugin_RemoveRedEyes::category(KAction* action) const
     if (action == m_action)
         return KIPI::BatchPlugin;
 
-    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification";
     return KIPI::BatchPlugin; // no warning from compiler, please
 }
