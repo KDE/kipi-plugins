@@ -15,5 +15,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> SendImages   : 169952 : Pictures on nfs-drive crashes digiKam when i send picture as mail.
 007 ==> BatchProcess : 173664 : Menu: Can't resize image(s).
 008 ==> DngConverter : 199129 : xmp_sdk/common/LargeFileAccess.cpp: size of array ‘check_off_t_size’ is negative.
-009 ==> picasaExport : 188850 : does not upload to picassaweb --- just hangs for hours
-010 ==>
+009 ==> picasaExport : 188850 : Does not upload to picassaweb --- just hangs for hours.
+010 ==> ScanImages   : 147366 : SIGABORT on Second Scan from HP 5200 scanner.
+011 ==> 
+
