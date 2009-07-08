@@ -74,12 +74,10 @@ public:
         sublocationEdit        = 0;
         provinceEdit           = 0;
         locationEdit           = 0;
-        originalTransEdit      = 0;
         cityCheck              = 0;
         sublocationCheck       = 0;
         provinceCheck          = 0;
         countryCheck           = 0;
-        originalTransCheck     = 0;
         dateCreatedSel         = 0;
         dateDigitalizedSel     = 0;
         timeCreatedSel         = 0;
@@ -369,7 +367,6 @@ public:
     QCheckBox                     *cityCheck;
     QCheckBox                     *sublocationCheck;
     QCheckBox                     *provinceCheck;
-    QCheckBox                     *originalTransCheck;
 
     QTimeEdit                     *timeCreatedSel;
     QTimeEdit                     *timeDigitalizedSel;
@@ -383,7 +380,6 @@ public:
     KLineEdit                     *cityEdit;
     KLineEdit                     *sublocationEdit;
     KLineEdit                     *provinceEdit;
-    KLineEdit                     *originalTransEdit;
 
     MultiValuesEdit               *locationEdit;
 
@@ -497,16 +493,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
-    d->originalTransEdit  = new KLineEdit(this);
-    d->originalTransEdit->setClearButtonShown(true);
-    d->originalTransEdit->setValidator(asciiValidator);
-    d->originalTransEdit->setMaxLength(32);
-    d->originalTransEdit->setWhatsThis(i18n("Set here the location of original content transmission "
-                                            "reference. This field is limited to 32 ASCII characters."));
-
-    // --------------------------------------------------------
-
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -541,12 +527,9 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     grid->addWidget(d->provinceEdit,                       10, 1, 1, 4);
     grid->addWidget(d->countryCheck,                       11, 0, 1, 1);
     grid->addWidget(d->countryCB,                          11, 1, 1, 4);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),  12, 0, 1, 5);
-    grid->addWidget(d->originalTransCheck,                 13, 0, 1, 1);
-    grid->addWidget(d->originalTransEdit,                  13, 1, 1, 4);
-    grid->addWidget(note,                                  14, 0, 1, 5);
+    grid->addWidget(note,                                  12, 0, 1, 5);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(15, 10);
+    grid->setRowStretch(13, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -582,9 +565,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->countryCheck, SIGNAL(toggled(bool)),
             d->countryCB, SLOT(setEnabled(bool)));
 
-    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
-            d->originalTransEdit, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
 
     connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
@@ -612,9 +592,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->locationEdit, SIGNAL(signalModified()),
-            this, SIGNAL(signalModified()));
-
-    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -651,9 +628,6 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->provinceEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -840,16 +814,6 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
-    d->originalTransEdit->clear();
-    d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);
-    if (!data.isNull())
-    {
-        d->originalTransEdit->setText(data);
-        d->originalTransCheck->setChecked(true);
-    }
-    d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
-
     blockSignals(false);
 }
 
@@ -943,11 +907,6 @@ void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryCode");
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
     }
-
-    if (d->originalTransCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.TransmissionReference", d->originalTransEdit->text());
-    else
-        exiv2Iface.removeIptcTag("Iptc.Application2.TransmissionReference");
 
     exifData = exiv2Iface.getExif();
     iptcData = exiv2Iface.getIptc();

@@ -83,12 +83,16 @@ public:
         objectAttribute     = 0;
         languageBtn         = 0;
         languageCheck       = 0;
+        originalTransCheck  = 0;
+        originalTransEdit   = 0;
+
     }
 
     QCheckBox                     *dateReleasedCheck;
     QCheckBox                     *timeReleasedCheck;
     QCheckBox                     *dateExpiredCheck;
     QCheckBox                     *timeExpiredCheck;
+    QCheckBox                     *originalTransCheck;
 
     QTimeEdit                     *timeReleasedSel;
     QTimeEdit                     *timeExpiredSel;
@@ -101,6 +105,7 @@ public:
     KComboBox                     *objectTypeCB;
 
     KLineEdit                     *objectTypeDescEdit;
+    KLineEdit                     *originalTransEdit;
 
     KLanguageButton               *languageBtn;
 
@@ -220,6 +225,16 @@ IPTCProperties::IPTCProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
+    d->originalTransEdit  = new KLineEdit(this);
+    d->originalTransEdit->setClearButtonShown(true);
+    d->originalTransEdit->setValidator(asciiValidator);
+    d->originalTransEdit->setMaxLength(32);
+    d->originalTransEdit->setWhatsThis(i18n("Set here the original content transmission "
+                                            "reference. This field is limited to 32 ASCII characters."));
+
+    // --------------------------------------------------------
+
     QLabel *note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC'>IPTC</a></b> "
                  "text tags only support the printable "
@@ -254,9 +269,12 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     grid->addWidget(d->objectTypeDescEdit,                  8, 2, 1, 3);
     grid->addWidget(new KSeparator(Qt::Horizontal, this),   9, 0, 1, 5);
     grid->addWidget(d->objectAttribute,                    10, 0, 1, 5);
-    grid->addWidget(note,                                  11, 0, 1, 5);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),  11, 0, 1, 5);
+    grid->addWidget(d->originalTransCheck,                 12, 0, 1, 1);
+    grid->addWidget(d->originalTransEdit,                  12, 1, 1, 4);
+    grid->addWidget(note,                                  13, 0, 1, 5);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(12, 10);
+    grid->setRowStretch(14, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -289,6 +307,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     connect(d->objectTypeCheck, SIGNAL(toggled(bool)),
             d->objectTypeDescEdit, SLOT(setEnabled(bool)));
 
+    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
+            d->originalTransEdit, SLOT(setEnabled(bool)));
+
     // --------------------------------------------------------
 
     connect(d->dateReleasedCheck, SIGNAL(toggled(bool)),
@@ -316,6 +337,9 @@ IPTCProperties::IPTCProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->objectAttribute, SIGNAL(signalModified()),
+            this, SIGNAL(signalModified()));
+
+    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -357,6 +381,8 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 
+    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
 }
 
 IPTCProperties::~IPTCProperties()
@@ -528,6 +554,16 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);
     d->objectAttribute->setValues(list);
 
+    d->originalTransEdit->clear();
+    d->originalTransCheck->setChecked(false);
+    data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);
+    if (!data.isNull())
+    {
+        d->originalTransEdit->setText(data);
+        d->originalTransCheck->setChecked(true);
+    }
+    d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
+
     blockSignals(false);
 }
 
@@ -605,6 +641,11 @@ void IPTCProperties::applyMetadata(QByteArray& iptcData)
         exiv2Iface.setIptcTagsStringList("Iptc.Application2.ObjectAttribute", 64, oldList, newList);
     else if (d->objectAttribute->isValid())
         exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
+
+    if (d->originalTransCheck->isChecked())
+        exiv2Iface.setIptcTagString("Iptc.Application2.TransmissionReference", d->originalTransEdit->text());
+    else
+        exiv2Iface.removeIptcTag("Iptc.Application2.TransmissionReference");
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
