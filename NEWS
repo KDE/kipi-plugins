@@ -18,5 +18,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> DngConverter : 199129 : xmp_sdk/common/LargeFileAccess.cpp: size of array ‘check_off_t_size’ is negative.
 009 ==> picasaExport : 188850 : Does not upload to picassaweb --- just hangs for hours.
 010 ==> ScanImages   : 147366 : SIGABORT on Second Scan from HP 5200 scanner.
-011 ==> 
+011 ==> SendImages   : 190208 : Change image properties options should be grayed out when the check box is unchecked.
+012 ==> 
 
