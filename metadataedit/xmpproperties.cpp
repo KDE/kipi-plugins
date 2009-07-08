@@ -78,6 +78,9 @@ public:
         objectAttributeEdit  = 0;
         objectAttributeCB    = 0;
         languageEdit         = 0;
+        originalTransEdit    = 0;
+        originalTransCheck   = 0;
+
 
         sceneCodeMap.insert( "010100", i18n("Headshot") );
         sceneCodeMap.insert( "010200", i18n("Half-length") );
@@ -143,10 +146,13 @@ public:
     TypeCodeMap                     typeCodeMap;
     LanguageCodeMap                 languageCodeMap;
 
+    QCheckBox                      *originalTransCheck;
+
     KComboBox                      *priorityCB;
     KComboBox                      *objectTypeCB;
 
     KLineEdit                      *objectAttributeEdit;
+    KLineEdit                      *originalTransEdit;
 
     MetadataCheckBox               *priorityCheck;
     MetadataCheckBox               *objectAttributeCheck;
@@ -248,6 +254,13 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
+    d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
+    d->originalTransEdit  = new KLineEdit(this);
+    d->originalTransEdit->setClearButtonShown(true);
+    d->originalTransEdit->setWhatsThis(i18n("Set here the original content transmission reference."));
+
+    // --------------------------------------------------------
+
     grid->addWidget(d->languageEdit,                        0, 0, 1, 5);
     grid->addWidget(d->priorityCheck,                       1, 0, 1, 1);
     grid->addWidget(d->priorityCB,                          1, 1, 1, 1);
@@ -257,7 +270,11 @@ XMPProperties::XMPProperties(QWidget* parent)
     grid->addWidget(d->objectAttributeCheck,                5, 0, 1, 1);
     grid->addWidget(d->objectAttributeCB,                   5, 1, 1, 2);
     grid->addWidget(d->objectAttributeEdit,                 5, 3, 1, 2);
-    grid->setRowStretch(6, 10);
+    grid->addWidget(new KSeparator(Qt::Horizontal, this),   6, 0, 1, 5);
+    grid->addWidget(d->originalTransCheck,                  7, 0, 1, 1);
+    grid->addWidget(d->originalTransEdit,                   7, 1, 1, 4);
+
+    grid->setRowStretch(8, 10);
     grid->setColumnStretch(4, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
@@ -272,6 +289,9 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
             d->objectAttributeEdit, SLOT(setEnabled(bool)));
+
+    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
+            d->originalTransEdit, SLOT(setEnabled(bool)));
 
     // --------------------------------------------------------
 
@@ -290,6 +310,9 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->objectAttributeCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
+    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
+            this, SIGNAL(signalModified()));
+
     // --------------------------------------------------------
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -299,6 +322,9 @@ XMPProperties::XMPProperties(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->objectAttributeEdit, SIGNAL(textChanged(const QString &)),
+            this, SIGNAL(signalModified()));
+
+    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -424,6 +450,18 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     // ---------------------------------------------------------------
 
+    d->originalTransEdit->clear();
+    d->originalTransCheck->setChecked(false);
+    data = exiv2Iface.getXmpTagString("Xmp.photoshop.TransmissionReference", false);
+    if (!data.isNull())
+    {
+        d->originalTransEdit->setText(data);
+        d->originalTransCheck->setChecked(true);
+    }
+    d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
+
+    // ---------------------------------------------------------------
+
     blockSignals(false);
 }
 
@@ -492,6 +530,13 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
     {
         exiv2Iface.removeXmpTag("Xmp.iptc.IntellectualGenre");
     }
+
+    // ---------------------------------------------------------------
+
+    if (d->originalTransCheck->isChecked())
+        exiv2Iface.setXmpTagString("Xmp.photoshop.TransmissionReference", d->originalTransEdit->text());
+    else
+        exiv2Iface.removeXmpTag("Xmp.photoshop.TransmissionReference");
 
     // ---------------------------------------------------------------
 

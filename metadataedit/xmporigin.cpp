@@ -69,12 +69,10 @@ public:
         cityEdit               = 0;
         sublocationEdit        = 0;
         provinceEdit           = 0;
-        originalTransEdit      = 0;
         cityCheck              = 0;
         sublocationCheck       = 0;
         provinceCheck          = 0;
         countryCheck           = 0;
-        originalTransCheck     = 0;
         dateCreatedSel         = 0;
         dateDigitalizedSel     = 0;
         dateCreatedCheck       = 0;
@@ -358,7 +356,6 @@ public:
     QCheckBox                     *cityCheck;
     QCheckBox                     *sublocationCheck;
     QCheckBox                     *provinceCheck;
-    QCheckBox                     *originalTransCheck;
 
     QPushButton                   *setTodayCreatedBtn;
     QPushButton                   *setTodayDigitalizedBtn;
@@ -369,7 +366,6 @@ public:
     KLineEdit                     *cityEdit;
     KLineEdit                     *sublocationEdit;
     KLineEdit                     *provinceEdit;
-    KLineEdit                     *originalTransEdit;
 
     MetadataCheckBox              *countryCheck;
 
@@ -448,14 +444,6 @@ XMPOrigin::XMPOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->originalTransCheck = new QCheckBox(i18n("Reference:"), this);
-    d->originalTransEdit  = new KLineEdit(this);
-    d->originalTransEdit->setClearButtonShown(true);
-    d->originalTransEdit->setWhatsThis(i18n("Set here the location of the original content transmission "
-                                            "reference."));
-
-    // --------------------------------------------------------
-
     grid->addWidget(d->dateDigitalizedCheck,                0, 0, 1, 5);
     grid->addWidget(d->dateDigitalizedSel,                  1, 0, 1, 3);
     grid->addWidget(d->setTodayDigitalizedBtn,              1, 4, 1, 1);
@@ -473,11 +461,8 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     grid->addWidget(d->provinceEdit,                        9, 1, 1, 4);
     grid->addWidget(d->countryCheck,                       10, 0, 1, 1);
     grid->addWidget(d->countryCB,                          10, 1, 1, 4);
-    grid->addWidget(new KSeparator(Qt::Horizontal, this),  11, 0, 1, 5);
-    grid->addWidget(d->originalTransCheck,                 12, 0, 1, 1);
-    grid->addWidget(d->originalTransEdit,                  12, 1, 1, 4);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(13, 10);
+    grid->setRowStretch(11, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -507,9 +492,6 @@ XMPOrigin::XMPOrigin(QWidget* parent)
     connect(d->countryCheck, SIGNAL(toggled(bool)),
             d->countryCB, SLOT(setEnabled(bool)));
 
-    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
-            d->originalTransEdit, SLOT(setEnabled(bool)));
-
     // --------------------------------------------------------
 
     connect(d->dateCreatedCheck, SIGNAL(toggled(bool)),
@@ -528,9 +510,6 @@ XMPOrigin::XMPOrigin(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->countryCheck, SIGNAL(toggled(bool)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->originalTransCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -561,9 +540,6 @@ XMPOrigin::XMPOrigin(QWidget* parent)
             this, SIGNAL(signalModified()));
 
     connect(d->provinceEdit, SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(signalModified()));
-
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
             this, SIGNAL(signalModified()));
 }
 
@@ -714,16 +690,6 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     }
     d->countryCB->setEnabled(d->countryCheck->isChecked());
 
-    d->originalTransEdit->clear();
-    d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.TransmissionReference", false);
-    if (!data.isNull())
-    {
-        d->originalTransEdit->setText(data);
-        d->originalTransCheck->setChecked(true);
-    }
-    d->originalTransEdit->setEnabled(d->originalTransCheck->isChecked());
-
     blockSignals(false);
 }
 
@@ -799,11 +765,6 @@ void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
         exiv2Iface.removeXmpTag("Xmp.iptc.CountryCode");
         exiv2Iface.removeXmpTag("Xmp.photoshop.Country");
     }
-
-    if (d->originalTransCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.TransmissionReference", d->originalTransEdit->text());
-    else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.TransmissionReference");
 
     exifData = exiv2Iface.getExif();
     xmpData  = exiv2Iface.getXmp();
