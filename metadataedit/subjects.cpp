@@ -60,7 +60,7 @@ Subjects::Subjects(QWidget* parent)
         : QWidget(parent), d(new SubjectsPriv)
 {
     // Load subject codes provided by IPTC/NAA as xml file.
-    // See http://www.iptc.org/NewsCodes/nc_ts-table01.php for details.
+    // See http://iptc.cms.apa.at/std/topicset/topicset.iptc-subjectcode.xml for details.
 
     KGlobal::dirs()->addResourceDir("iptcschema", KStandardDirs::installPath("data") +
                                                   QString("kipiplugin_metadataedit/data"));
