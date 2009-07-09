@@ -57,7 +57,7 @@ namespace KIPIMetadataEditPlugin
 {
 
 Subjects::Subjects(QWidget* parent)
-            : QWidget(parent), d(new SubjectsPriv)
+        : QWidget(parent), d(new SubjectsPriv)
 {
     // Load subject codes provided by IPTC/NAA as xml file.
     // See http://www.iptc.org/NewsCodes/nc_ts-table01.php for details.
@@ -78,16 +78,15 @@ Subjects::Subjects(QWidget* parent)
     // --------------------------------------------------------
 
     d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);
-    d->optionsBox = new QWidget;
-    d->btnGroup   = new QButtonGroup(this);
-    d->stdBtn     = new QRadioButton;
-    d->customBtn  = new QRadioButton;
-    d->refCB      = new KComboBox;
+    d->optionsBox    = new QWidget;
+    d->btnGroup      = new QButtonGroup(this);
+    d->stdBtn        = new QRadioButton;
+    d->customBtn     = new QRadioButton;
+    d->refCB         = new KComboBox;
 
     QLabel *codeLink = new QLabel(i18n("Use standard "
-                                          "<b><a href='http://www.iptc.org/NewsCodes'>"
-                                              "reference code"
-                                          "</a></b>"));
+                                       "<b><a href='http://www.iptc.org/NewsCodes'>"
+                                       "reference code</a></b>"));
     codeLink->setOpenExternalLinks(true);
     codeLink->setWordWrap(false);
 
