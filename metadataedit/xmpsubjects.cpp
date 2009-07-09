@@ -98,31 +98,14 @@ void XMPSubjects::readMetadata(QByteArray& xmpData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
-    d->subjectsList = exiv2Iface.getXmpSubjects();
-
-    blockSignals(true);
-    d->subjectsBox->clear();
-    d->subjectsCheck->setChecked(false);
-    if (!d->subjectsList.isEmpty())
-    {
-        d->subjectsBox->insertItems(0, d->subjectsList);
-        d->subjectsCheck->setChecked(true);
-    }
-    blockSignals(false);
-    slotSubjectsToggled(d->subjectsCheck->isChecked());
+    setSubjectsList(exiv2Iface.getXmpSubjects());
 }
 
 void XMPSubjects::applyMetadata(QByteArray& xmpData)
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
-    QStringList newSubjects;
-
-    for (int i = 0 ; i < d->subjectsBox->count(); i++)
-    {
-        QListWidgetItem *item = d->subjectsBox->item(i);
-        newSubjects.append(item->text());
-    }
+    QStringList newSubjects = subjectsList();
 
     // We remove in first all existing subjects.
     exiv2Iface.removeXmpTag("Xmp.iptc.SubjectCode");

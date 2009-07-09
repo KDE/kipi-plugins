@@ -149,6 +149,9 @@ public:
     Subjects(QWidget* parent);
     ~Subjects();
 
+    void setSubjectsList(const QStringList& list);
+    QStringList subjectsList() const;
+
     virtual void applyMetadata(QByteArray& metadata) = 0;
     virtual void readMetadata(QByteArray& metadata) = 0;
 

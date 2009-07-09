@@ -512,4 +512,33 @@ bool Subjects::loadSubjectCodesFromXML(const KUrl& url)
     return true;
 }
 
+void Subjects::setSubjectsList(const QStringList& list)
+{
+    d->subjectsList = list;
+
+    blockSignals(true);
+    d->subjectsBox->clear();
+    d->subjectsCheck->setChecked(false);
+    if (!d->subjectsList.isEmpty())
+    {
+        d->subjectsBox->insertItems(0, d->subjectsList);
+        d->subjectsCheck->setChecked(true);
+    }
+    blockSignals(false);
+    slotSubjectsToggled(d->subjectsCheck->isChecked());
+}
+
+QStringList Subjects::subjectsList() const
+{
+    QStringList newSubjects;
+
+    for (int i = 0 ; i < d->subjectsBox->count(); i++)
+    {
+        QListWidgetItem *item = d->subjectsBox->item(i);
+        newSubjects.append(item->text());
+    }
+
+    return newSubjects;
+}
+
 }  // namespace KIPIMetadataEditPlugin
