@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE NewsML PUBLIC "urn:newsml:iptc.org:20001006:NewsMLv1.0.dtd:1" "..\NewsML\1.0\specification\NewsML_1.0.dtd">
 <NewsML>
 	<Catalog Href="http://www.iptc.org/IPTC/catalog/catalog.IptcMasterCatalog.xml"/>
 	<NewsEnvelope>
-		<DateAndTime>20060828T120000+0000</DateAndTime>
+		<DateAndTime>20080915T120000+0000</DateAndTime>
 	</NewsEnvelope>
 	<NewsItem>
 		<Identification>
@@ -11,14 +10,14 @@
 				<ProviderId>iptc.org</ProviderId>
 				<DateId>20001006</DateId>
 				<NewsItemId>topicset.iptc-subjectcode</NewsItemId>
-				<RevisionId PreviousRevision="17" Update="N">18</RevisionId>
+				<RevisionId PreviousRevision="18" Update="N">19</RevisionId>
 				<PublicIdentifier>urn:newsml:iptc.org:20001006:topicset.iptc-subjectcode:18</PublicIdentifier>
 			</NewsIdentifier>
 		</Identification>
 		<NewsManagement>
 			<NewsItemType Scheme="IptcNewsItemType" FormalName="TopicSet"/>
 			<FirstCreated>20001030T120000+0000</FirstCreated>
-			<ThisRevisionCreated>20070828T120000+0000</ThisRevisionCreated>
+			<ThisRevisionCreated>20080915T120000+0000</ThisRevisionCreated>
 			<Status Scheme="IptcStatus" FormalName="Usable"/>
 		</NewsManagement>
 		<TopicSet Duid="IptcSubjectCodes.subject" Scheme="IptcTopicType" FormalName="SubjectCode">
@@ -240,6 +239,16 @@
 				<Description xml:lang="en-GB" Variant="ChangeComment">none</Description>
 				<Description xml:lang="en-GB" Variant="ChangeVersion">9</Description>
 				<Description xml:lang="en-GB" Variant="FirstVersion">9</Description>
+				<Description xml:lang="en-GB" Variant="DeprecatedVersion">0</Description>
+			</Topic>
+			<Topic>
+				<TopicType Scheme="IptcTopicType" FormalName="SubjectDetail"/>
+				<FormalName Scheme="IptcSubjectCodes">01011007</FormalName>
+				<Description xml:lang="en-GB" Variant="Name">hip-hop</Description>
+				<Description xml:lang="en-GB" Variant="Explanation">A contemporary urban music originating in the 1970s.</Description>
+				<Description xml:lang="en-GB" Variant="ChangeComment">none</Description>
+				<Description xml:lang="en-GB" Variant="ChangeVersion">19</Description>
+				<Description xml:lang="en-GB" Variant="FirstVersion">19</Description>
 				<Description xml:lang="en-GB" Variant="DeprecatedVersion">0</Description>
 			</Topic>
 			<Topic>
@@ -620,6 +629,16 @@
 				<Description xml:lang="en-GB" Variant="ChangeComment">none</Description>
 				<Description xml:lang="en-GB" Variant="ChangeVersion">15</Description>
 				<Description xml:lang="en-GB" Variant="FirstVersion">15</Description>
+				<Description xml:lang="en-GB" Variant="DeprecatedVersion">0</Description>
+			</Topic>
+			<Topic>
+				<TopicType Scheme="IptcTopicType" FormalName="SubjectDetail"/>
+				<FormalName Scheme="IptcSubjectCodes">02001010</FormalName>
+				<Description xml:lang="en-GB" Variant="Name">terrorism</Description>
+				<Description xml:lang="en-GB" Variant="Explanation">Violence against people to create fear in order to achieve political or ideological objectives</Description>
+				<Description xml:lang="en-GB" Variant="ChangeComment">none</Description>
+				<Description xml:lang="en-GB" Variant="ChangeVersion">19</Description>
+				<Description xml:lang="en-GB" Variant="FirstVersion">19</Description>
 				<Description xml:lang="en-GB" Variant="DeprecatedVersion">0</Description>
 			</Topic>
 			<Topic>
