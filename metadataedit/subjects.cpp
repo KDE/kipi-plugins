@@ -56,6 +56,64 @@
 namespace KIPIMetadataEditPlugin
 {
 
+class SubjectsPriv
+{
+public:
+
+    enum EditionMode
+    {
+        STANDARD = 0,
+        CUSTOM
+    };
+
+    SubjectsPriv()
+    {
+        addSubjectButton = 0;
+        delSubjectButton = 0;
+        repSubjectButton = 0;
+        subjectsBox      = 0;
+        iprLabel         = 0;
+        refLabel         = 0;
+        nameLabel        = 0;
+        matterLabel      = 0;
+        detailLabel      = 0;
+        btnGroup         = 0;
+        stdBtn           = 0;
+        customBtn        = 0;
+        refCB            = 0;
+        optionsBox       = 0;
+    }
+
+    typedef QMap<QString, SubjectData>  SubjectCodesMap;
+
+    SubjectCodesMap                     subMap;
+
+    QStringList                         subjectsList;
+
+    QWidget                            *optionsBox;
+
+    QPushButton                        *addSubjectButton;
+    QPushButton                        *delSubjectButton;
+    QPushButton                        *repSubjectButton;
+
+    QLabel                             *iprLabel;
+    QLabel                             *refLabel;
+    QLabel                             *nameLabel;
+    QLabel                             *matterLabel;
+    QLabel                             *detailLabel;
+
+    QButtonGroup                       *btnGroup;
+
+    QRadioButton                       *stdBtn;
+    QRadioButton                       *customBtn;
+
+    KComboBox                          *refCB;
+
+    KListWidget                        *subjectsBox;
+};
+
+// --------------------------------------------------------------------------------
+
 Subjects::Subjects(QWidget* parent)
         : QWidget(parent), d(new SubjectsPriv)
 {
@@ -77,13 +135,12 @@ Subjects::Subjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->subjectsCheck = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);
+    m_subjectsCheck  = new QCheckBox(i18n("Use structured definition of the subject matter:"), this);
     d->optionsBox    = new QWidget;
     d->btnGroup      = new QButtonGroup(this);
     d->stdBtn        = new QRadioButton;
     d->customBtn     = new QRadioButton;
     d->refCB         = new KComboBox;
-
     QLabel *codeLink = new QLabel(i18n("Use standard "
                                        "<b><a href='http://www.iptc.org/NewsCodes'>"
                                        "reference code</a></b>"));
@@ -103,34 +160,34 @@ Subjects::Subjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprEdit = new KLineEdit;
-    d->iprEdit->setClearButtonShown(true);
-    d->iprEdit->setMaxLength(32);
+    m_iprEdit = new KLineEdit;
+    m_iprEdit->setClearButtonShown(true);
+    m_iprEdit->setMaxLength(32);
 
     // --------------------------------------------------------
 
-    d->refEdit = new KLineEdit;
-    d->refEdit->setClearButtonShown(true);
-    d->refEdit->setValidator(refValidator);
-    d->refEdit->setMaxLength(8);
+    m_refEdit = new KLineEdit;
+    m_refEdit->setClearButtonShown(true);
+    m_refEdit->setValidator(refValidator);
+    m_refEdit->setMaxLength(8);
 
     // --------------------------------------------------------
 
-    d->nameEdit = new KLineEdit;
-    d->nameEdit->setClearButtonShown(true);
-    d->nameEdit->setMaxLength(64);
+    m_nameEdit = new KLineEdit;
+    m_nameEdit->setClearButtonShown(true);
+    m_nameEdit->setMaxLength(64);
 
     // --------------------------------------------------------
 
-    d->matterEdit = new KLineEdit;
-    d->matterEdit->setClearButtonShown(true);
-    d->matterEdit->setMaxLength(64);
+    m_matterEdit = new KLineEdit;
+    m_matterEdit->setClearButtonShown(true);
+    m_matterEdit->setMaxLength(64);
 
     // --------------------------------------------------------
 
-    d->detailEdit = new KLineEdit;
-    d->detailEdit->setClearButtonShown(true);
-    d->detailEdit->setMaxLength(64);
+    m_detailEdit = new KLineEdit;
+    m_detailEdit->setClearButtonShown(true);
+    m_detailEdit->setMaxLength(64);
 
     // --------------------------------------------------------
 
@@ -156,11 +213,11 @@ Subjects::Subjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->note = new QLabel;
-    d->note->setMaximumWidth(150);
-    d->note->setOpenExternalLinks(true);
-    d->note->setWordWrap(true);
-    d->note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
+    m_note = new QLabel;
+    m_note->setMaximumWidth(150);
+    m_note->setOpenExternalLinks(true);
+    m_note->setWordWrap(true);
+    m_note->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 
     // --------------------------------------------------------
 
@@ -171,15 +228,15 @@ Subjects::Subjects(QWidget* parent)
     optionsBoxLayout->addWidget(d->customBtn,   1, 0, 1, 4);
     optionsBoxLayout->addWidget(customLabel,    1, 1, 1, 4);
     optionsBoxLayout->addWidget(d->iprLabel,    2, 0, 1, 1);
-    optionsBoxLayout->addWidget(d->iprEdit,     2, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_iprEdit,      2, 1, 1, 4);
     optionsBoxLayout->addWidget(d->refLabel,    3, 0, 1, 1);
-    optionsBoxLayout->addWidget(d->refEdit,     3, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_refEdit,      3, 1, 1, 1);
     optionsBoxLayout->addWidget(d->nameLabel,   4, 0, 1, 1);
-    optionsBoxLayout->addWidget(d->nameEdit,    4, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_nameEdit,     4, 1, 1, 4);
     optionsBoxLayout->addWidget(d->matterLabel, 5, 0, 1, 1);
-    optionsBoxLayout->addWidget(d->matterEdit,  5, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_matterEdit,   5, 1, 1, 4);
     optionsBoxLayout->addWidget(d->detailLabel, 6, 0, 1, 1);
-    optionsBoxLayout->addWidget(d->detailEdit,  6, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_detailEdit,   6, 1, 1, 4);
     optionsBoxLayout->setColumnStretch(4, 10);
     optionsBoxLayout->setMargin(0);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -189,13 +246,13 @@ Subjects::Subjects(QWidget* parent)
 
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setAlignment( Qt::AlignTop );
-    mainLayout->addWidget(d->subjectsCheck,    0, 0, 1, 4);
+    mainLayout->addWidget(m_subjectsCheck,    0, 0, 1, 4);
     mainLayout->addWidget(d->optionsBox,       1, 0, 1, 4);
     mainLayout->addWidget(d->subjectsBox,      2, 0, 5, 3);
     mainLayout->addWidget(d->addSubjectButton, 2, 3, 1, 1);
     mainLayout->addWidget(d->delSubjectButton, 3, 3, 1, 1);
     mainLayout->addWidget(d->repSubjectButton, 4, 3, 1, 1);
-    mainLayout->addWidget(d->note,             5, 3, 1, 1);
+    mainLayout->addWidget(m_note,             5, 3, 1, 1);
     mainLayout->setRowStretch(6, 10);
     mainLayout->setColumnStretch(2, 1);
     mainLayout->setMargin(0);
@@ -224,12 +281,12 @@ Subjects::Subjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+    connect(m_subjectsCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotSubjectsToggled(bool)));
 
     // --------------------------------------------------------
 
-    connect(d->subjectsCheck, SIGNAL(toggled(bool)),
+    connect(m_subjectsCheck, SIGNAL(toggled(bool)),
             this, SIGNAL(signalModified()));
 
     connect(d->addSubjectButton, SIGNAL(clicked()),
@@ -267,11 +324,11 @@ void Subjects::slotEditOptionChanged(int b)
         d->nameLabel->setEnabled(true);
         d->matterLabel->setEnabled(true);
         d->detailLabel->setEnabled(true);
-        d->iprEdit->setEnabled(true);
-        d->refEdit->setEnabled(true);
-        d->nameEdit->setEnabled(true);
-        d->matterEdit->setEnabled(true);
-        d->detailEdit->setEnabled(true);
+        m_iprEdit->setEnabled(true);
+        m_refEdit->setEnabled(true);
+        m_nameEdit->setEnabled(true);
+        m_matterEdit->setEnabled(true);
+        m_detailEdit->setEnabled(true);
     }
     else
     {
@@ -281,11 +338,11 @@ void Subjects::slotEditOptionChanged(int b)
         d->nameLabel->setEnabled(false);
         d->matterLabel->setEnabled(false);
         d->detailLabel->setEnabled(false);
-        d->iprEdit->setEnabled(false);
-        d->refEdit->setEnabled(false);
-        d->nameEdit->setEnabled(false);
-        d->matterEdit->setEnabled(false);
-        d->detailEdit->setEnabled(false);
+        m_iprEdit->setEnabled(false);
+        m_refEdit->setEnabled(false);
+        m_nameEdit->setEnabled(false);
+        m_matterEdit->setEnabled(false);
+        m_detailEdit->setEnabled(false);
         slotRefChanged();
     }
 }
@@ -306,23 +363,23 @@ void Subjects::slotRefChanged()
         }
     }
 
-    d->refEdit->setText(key);
-    d->nameEdit->setText(name);
-    d->matterEdit->setText(matter);
-    d->detailEdit->setText(detail);
+    m_refEdit->setText(key);
+    m_nameEdit->setText(name);
+    m_matterEdit->setText(matter);
+    m_detailEdit->setText(detail);
 }
 
 QString Subjects::buildSubject() const
 {
-    QString subject = d->iprEdit->text();
+    QString subject = m_iprEdit->text();
     subject.append(":");
-    subject.append(d->refEdit->text());
+    subject.append(m_refEdit->text());
     subject.append(":");
-    subject.append(d->nameEdit->text());
+    subject.append(m_nameEdit->text());
     subject.append(":");
-    subject.append(d->matterEdit->text());
+    subject.append(m_matterEdit->text());
     subject.append(":");
-    subject.append(d->detailEdit->text());
+    subject.append(m_detailEdit->text());
     return subject;
 }
 
@@ -342,11 +399,11 @@ void Subjects::slotRepSubject()
     if (!d->subjectsBox->selectedItems().isEmpty())
     {
         d->subjectsBox->selectedItems()[0]->setText(newSubject);
-        d->iprEdit->clear();
-        d->refEdit->clear();
-        d->nameEdit->clear();
-        d->matterEdit->clear();
-        d->detailEdit->clear();
+        m_iprEdit->clear();
+        m_refEdit->clear();
+        m_nameEdit->clear();
+        m_matterEdit->clear();
+        m_detailEdit->clear();
     }
 }
 
@@ -355,11 +412,11 @@ void Subjects::slotSubjectSelectionChanged()
     if (!d->subjectsBox->selectedItems().isEmpty())
     {
         QString subject = d->subjectsBox->selectedItems()[0]->text();
-        d->iprEdit->setText(subject.section(':', 0, 0));
-        d->refEdit->setText(subject.section(':', 1, 1));
-        d->nameEdit->setText(subject.section(':', 2, 2));
-        d->matterEdit->setText(subject.section(':', 3, 3));
-        d->detailEdit->setText(subject.section(':', 4, 4));
+        m_iprEdit->setText(subject.section(':', 0, 0));
+        m_refEdit->setText(subject.section(':', 1, 1));
+        m_nameEdit->setText(subject.section(':', 2, 2));
+        m_matterEdit->setText(subject.section(':', 3, 3));
+        m_detailEdit->setText(subject.section(':', 4, 4));
         d->delSubjectButton->setEnabled(true);
         d->repSubjectButton->setEnabled(true);
     }
@@ -389,11 +446,11 @@ void Subjects::slotAddSubject()
     if (!found)
     {
         d->subjectsBox->insertItem(d->subjectsBox->count(), newSubject);
-        d->iprEdit->clear();
-        d->refEdit->clear();
-        d->nameEdit->clear();
-        d->matterEdit->clear();
-        d->detailEdit->clear();
+        m_iprEdit->clear();
+        m_refEdit->clear();
+        m_nameEdit->clear();
+        m_matterEdit->clear();
+        m_detailEdit->clear();
     }
 }
 
@@ -518,14 +575,14 @@ void Subjects::setSubjectsList(const QStringList& list)
 
     blockSignals(true);
     d->subjectsBox->clear();
-    d->subjectsCheck->setChecked(false);
+    m_subjectsCheck->setChecked(false);
     if (!d->subjectsList.isEmpty())
     {
         d->subjectsBox->insertItems(0, d->subjectsList);
-        d->subjectsCheck->setChecked(true);
+        m_subjectsCheck->setChecked(true);
     }
     blockSignals(false);
-    slotSubjectsToggled(d->subjectsCheck->isChecked());
+    slotSubjectsToggled(m_subjectsCheck->isChecked());
 }
 
 QStringList Subjects::subjectsList() const

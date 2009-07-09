@@ -38,15 +38,13 @@
 
 class QCheckBox;
 class QLabel;
-class QPushButton;
-class QRadioButton;
 
-class KComboBox;
 class KLineEdit;
-class KListWidget;
 
 namespace KIPIMetadataEditPlugin
 {
+
+class SubjectsPriv;
 
 class SubjectData
 {
@@ -66,80 +64,6 @@ public:
 
 // --------------------------------------------------------------------------------
 
-class SubjectsPriv
-{
-public:
-
-    enum EditionMode
-    {
-        STANDARD = 0,
-        CUSTOM
-    };
-
-    SubjectsPriv()
-    {
-        addSubjectButton = 0;
-        delSubjectButton = 0;
-        repSubjectButton = 0;
-        subjectsBox      = 0;
-        subjectsCheck    = 0;
-        iprEdit          = 0;
-        refEdit          = 0;
-        nameEdit         = 0;
-        matterEdit       = 0;
-        detailEdit       = 0;
-        iprLabel         = 0;
-        refLabel         = 0;
-        nameLabel        = 0;
-        matterLabel      = 0;
-        detailLabel      = 0;
-        note             = 0;
-        btnGroup         = 0;
-        stdBtn           = 0;
-        customBtn        = 0;
-        refCB            = 0;
-        optionsBox       = 0;
-    }
-
-    typedef QMap<QString, SubjectData>  SubjectCodesMap;
-
-    SubjectCodesMap                     subMap;
-
-    QStringList                         subjectsList;
-
-    QWidget                            *optionsBox;
-
-    QPushButton                        *addSubjectButton;
-    QPushButton                        *delSubjectButton;
-    QPushButton                        *repSubjectButton;
-
-    QCheckBox                          *subjectsCheck;
-
-    QLabel                             *iprLabel;
-    QLabel                             *refLabel;
-    QLabel                             *nameLabel;
-    QLabel                             *matterLabel;
-    QLabel                             *detailLabel;
-    QLabel                             *note;
-
-    QButtonGroup                       *btnGroup;
-
-    QRadioButton                       *stdBtn;
-    QRadioButton                       *customBtn;
-
-    KComboBox                          *refCB;
-
-    KLineEdit                          *iprEdit;
-    KLineEdit                          *refEdit;
-    KLineEdit                          *nameEdit;
-    KLineEdit                          *matterEdit;
-    KLineEdit                          *detailEdit;
-
-    KListWidget                        *subjectsBox;
-};
-
-// --------------------------------------------------------------------------------
-
 class Subjects : public QWidget
 {
     Q_OBJECT
@@ -155,11 +79,11 @@ public:
     virtual void applyMetadata(QByteArray& metadata) = 0;
     virtual void readMetadata(QByteArray& metadata) = 0;
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-protected slots:
+protected Q_SLOTS:
 
     virtual void slotSubjectsToggled(bool);
     virtual void slotRefChanged();
@@ -175,6 +99,18 @@ protected:
     virtual QString buildSubject() const;
 
 protected:
+
+    QLabel    *m_note;
+
+    QCheckBox *m_subjectsCheck;
+
+    KLineEdit *m_iprEdit;
+    KLineEdit *m_refEdit;
+    KLineEdit *m_nameEdit;
+    KLineEdit *m_matterEdit;
+    KLineEdit *m_detailEdit;
+
+private:
 
     SubjectsPriv* const d;
 };

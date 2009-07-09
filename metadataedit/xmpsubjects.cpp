@@ -54,15 +54,15 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->iprEdit->setText(QString("XMP"));
-    d->iprEdit->setValidator(subjectValidator);
-    d->iprEdit->setWhatsThis(i18n("Enter here the Informative Provider Reference. "
+    m_iprEdit->setText(QString("XMP"));
+    m_iprEdit->setValidator(subjectValidator);
+    m_iprEdit->setWhatsThis(i18n("Enter here the Informative Provider Reference. "
                                   "I.P.R is a name registered with the XMP/NAA, identifying the "
                                   "provider that provides an indicator of the content. "
                                   "The default value for the I.P.R is \"XMP\" if a standard Reference "
                                   "Code is used."));
 
-    d->refEdit->setWhatsThis(i18n("Enter here the Subject Reference Number. "
+    m_refEdit->setWhatsThis(i18n("Enter here the Subject Reference Number. "
                                   "Provides a numeric code to indicate the Subject Name plus "
                                   "optional Subject Matter and Subject Detail Names in the "
                                   "language of the service. Subject Reference is a number "
@@ -74,20 +74,20 @@ XMPSubjects::XMPSubjects(QWidget* parent)
                                   "are the English language reference versions. "
                                   "This field is limited to 8 digit code."));
 
-    d->nameEdit->setValidator(subjectValidator);
-    d->nameEdit->setWhatsThis(i18n("Enter here the Subject Name. English language is used "
+    m_nameEdit->setValidator(subjectValidator);
+    m_nameEdit->setWhatsThis(i18n("Enter here the Subject Name. English language is used "
                                    "if you selected a standard XMP/NAA reference code."));
 
-    d->matterEdit->setValidator(subjectValidator);
-    d->matterEdit->setWhatsThis(i18n("Enter here the Subject Matter Name. English language is used "
+    m_matterEdit->setValidator(subjectValidator);
+    m_matterEdit->setWhatsThis(i18n("Enter here the Subject Matter Name. English language is used "
                                      "if you selected a standard XMP/NAA reference code."));
 
-    d->detailEdit->setValidator(subjectValidator);
-    d->detailEdit->setWhatsThis(i18n("Enter here the Subject Detail Name. English language is used "
+    m_detailEdit->setValidator(subjectValidator);
+    m_detailEdit->setWhatsThis(i18n("Enter here the Subject Detail Name. English language is used "
                                      "if you selected a standard XMP/NAA reference code."));
 
     // reset the note label, not used in XMP view
-    if (d->note) delete d->note;
+    if (m_note) delete m_note;
 }
 
 XMPSubjects::~XMPSubjects()
@@ -111,7 +111,7 @@ void XMPSubjects::applyMetadata(QByteArray& xmpData)
     exiv2Iface.removeXmpTag("Xmp.iptc.SubjectCode");
 
     // And add new list if necessary.
-    if (d->subjectsCheck->isChecked())
+    if (m_subjectsCheck->isChecked())
         exiv2Iface.setXmpSubjects(newSubjects);
 
     xmpData = exiv2Iface.getXmp();
