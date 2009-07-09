@@ -105,7 +105,7 @@ public:
 
     SubjectCodesMap                     subMap;
 
-    QStringList                         oldSubjects;
+    QStringList                         subjectsList;
 
     QWidget                            *optionsBox;
 

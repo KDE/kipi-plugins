@@ -96,16 +96,16 @@ XMPSubjects::~XMPSubjects()
 
 void XMPSubjects::readMetadata(QByteArray& xmpData)
 {
-    blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
-    d->oldSubjects = exiv2Iface.getXmpSubjects();
+    d->subjectsList = exiv2Iface.getXmpSubjects();
 
+    blockSignals(true);
     d->subjectsBox->clear();
     d->subjectsCheck->setChecked(false);
-    if (!d->oldSubjects.isEmpty())
+    if (!d->subjectsList.isEmpty())
     {
-        d->subjectsBox->insertItems(0, d->oldSubjects);
+        d->subjectsBox->insertItems(0, d->subjectsList);
         d->subjectsCheck->setChecked(true);
     }
     blockSignals(false);

@@ -111,16 +111,16 @@ IPTCSubjects::~IPTCSubjects()
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
-    blockSignals(true);
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
-    d->oldSubjects = exiv2Iface.getIptcSubjects();
+    d->subjectsList = exiv2Iface.getIptcSubjects();
 
+    blockSignals(true);
     d->subjectsBox->clear();
     d->subjectsCheck->setChecked(false);
-    if (!d->oldSubjects.isEmpty())
+    if (!d->subjectsList.isEmpty())
     {
-        d->subjectsBox->insertItems(0, d->oldSubjects);
+        d->subjectsBox->insertItems(0, d->subjectsList);
         d->subjectsCheck->setChecked(true);
     }
     blockSignals(false);
@@ -140,9 +140,9 @@ void IPTCSubjects::applyMetadata(QByteArray& iptcData)
     }
 
     if (d->subjectsCheck->isChecked())
-        exiv2Iface.setIptcSubjects(d->oldSubjects, newSubjects);
+        exiv2Iface.setIptcSubjects(d->subjectsList, newSubjects);
     else
-        exiv2Iface.setIptcSubjects(d->oldSubjects, QStringList());
+        exiv2Iface.setIptcSubjects(d->subjectsList, QStringList());
 
     iptcData = exiv2Iface.getIptc();
 }
