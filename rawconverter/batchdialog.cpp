@@ -188,6 +188,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                                                               DcrawSettingsWidget::COLORSPACE |
                                                               DcrawSettingsWidget::POSTPROCESSING |
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
+    d->decodingSettingsBox->setObjectName("RawSettingsBox Expander");
     d->saveSettingsBox     = new SaveSettingsWidget(d->page);
 
 #if KDCRAW_VERSION <= 0x000500
@@ -382,7 +383,7 @@ void BatchDialog::readSettings()
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
 #if KDCRAW_VERSION > 0x000500
-    d->decodingSettingsBox->readSettings(group2);
+    d->decodingSettingsBox->readSettings();
 #endif
     restoreDialogSize(group2);
 }
@@ -419,9 +420,6 @@ void BatchDialog::saveSettings()
     group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
-#if KDCRAW_VERSION > 0x000500
-    d->decodingSettingsBox->writeSettings(group2);
-#endif
     saveDialogSize(group2);
     config.sync();
 }
