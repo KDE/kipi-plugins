@@ -49,10 +49,6 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 namespace KIPIMetadataEditPlugin
 {
 
