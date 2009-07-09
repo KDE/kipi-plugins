@@ -23,7 +23,6 @@
 
 #include "iptcsubjects.h"
 #include "iptcsubjects.moc"
-#include "metadataedit_global.h"
 
 // Qt includes
 

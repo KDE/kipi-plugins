@@ -23,7 +23,6 @@
 
 #include "xmpsubjects.h"
 #include "xmpsubjects.moc"
-#include "metadataedit_global.h"
 
 // Qt includes
 

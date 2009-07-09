@@ -36,10 +36,6 @@
 
 #include <kurl.h>
 
-// Local includes
-
-#include "metadataedit_global.h"
-
 class QCheckBox;
 class QLabel;
 class QPushButton;
@@ -51,6 +47,24 @@ class KListWidget;
 
 namespace KIPIMetadataEditPlugin
 {
+
+class SubjectData
+{
+public:
+
+    SubjectData(const QString& n, const QString& m, const QString& d)
+    {
+        name   = n;
+        matter = m;
+        detail = d;
+    }
+
+    QString name;         // English and Ascii Name of subject.
+    QString matter;       // English and Ascii Matter Name of subject.
+    QString detail;       // English and Ascii Detail Name of subject.
+};
+
+// --------------------------------------------------------------------------------
 
 class SubjectsPriv
 {
@@ -123,6 +137,8 @@ public:
 
     KListWidget                        *subjectsBox;
 };
+
+// --------------------------------------------------------------------------------
 
 class Subjects : public QWidget
 {
