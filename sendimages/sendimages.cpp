@@ -333,8 +333,14 @@ KUrl::List SendImages::divideEmails()
         }
         else
         {
-            kDebug(51000) << "File \"" << file.fileName() << "\" is out of attachement limit!";
-            todoAttachement.append(*it);
+		if ((file.size()) >= d->settings.attachementLimitInBytes())
+		{
+			kDebug(51000) << "File \"" << file.fileName() << "\" is out of attachement limit!";
+			QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
+			d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
+		}
+		else
+			todoAttachement.append(*it);
         }
     }
 
@@ -389,7 +395,7 @@ bool SendImages::invokeMailAgent()
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("-a");
-                        args.append(QFile::encodeName((*it).path()));
+                        args.append((*it).path());
                     }
 
                     if (!QProcess::startDetached(prog, args))
@@ -412,7 +418,7 @@ bool SendImages::invokeMailAgent()
                     args.append("--attach");
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
-                        args.append(QFile::encodeName((*it).path()));
+                        args.append((*it).path());
                     }
 
                     QString prog;
@@ -442,7 +448,7 @@ bool SendImages::invokeMailAgent()
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append("&attach=");
-                        tmp.append( QFile::encodeName((*it).path()) );
+                        tmp.append( (*it).path() );
                     }
                     args.append(tmp);
 
@@ -464,7 +470,7 @@ bool SendImages::invokeMailAgent()
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         args.append("--attach");
-                        args.append(QFile::encodeName((*it).path()));
+                        args.append((*it).path());
                     }
 
                     if (!QProcess::startDetached(prog, args))
