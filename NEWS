@@ -21,5 +21,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> SendImages   : 190208 : Change image properties options should be grayed out when the check box is unchecked.
 012 ==> SendImages   : 146487 : kipi-plugins export to email fails when email too large
 013 ==> SendImages   : 189984 : Impossible to email images if the path contains characters such as éèà
-014 ==> 
+014 ==> RawConverter : 161337 : Image rotation of converted RAW photos (portrait format) broken 
+015 ==>
 
