@@ -136,7 +136,7 @@ void Gallery::load()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kWarning( 51000 ) << "Reading data from kipirc file.." << endl;
+    kDebug( 51000 ) << "Reading data from kipirc file.." << endl;
 
     mName = group.readEntry("Name", QString() );
     mUrl = group.readEntry("URL", QString() );
@@ -153,7 +153,7 @@ void Gallery::save()
     KConfig config("kipirc");
     KConfigGroup group = config.group("Gallery Settings");
 
-    kWarning( 51000 ) << "Saving data to kipirc file.." << endl;
+    kDebug( 51000 ) << "Saving data to kipirc file.." << endl;
 
     group.writeEntry(QString("Name"), name() );
     group.writeEntry(QString("URL"), url() );
