@@ -77,7 +77,7 @@ PrintHelperDialog::PrintHelperDialog(QPrinter *printer, PrintOptionsPage *option
 
 void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
-    kWarning(51000) << "It has been called!";
+    kDebug(51000) << "It has been called!";
 }
 
 class PrintHelperPrivate

@@ -657,7 +657,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
-    kWarning() << "BatchProcessImagesDialog::slotPreview" << endl;
+    kDebug() << "BatchProcessImagesDialog::slotPreview" << endl;
 
     if (m_listFiles->currentItem() == 0)
     {
@@ -718,7 +718,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>( m_listFiles->currentItem() );
     int ValRet = m_PreviewProc->exitCode();
 
-    kWarning() << "Convert exit (" << ValRet << ")" << endl;
+    kDebug() << "Convert exit (" << ValRet << ")" << endl;
 
     if ( ValRet == 0 )
     {
@@ -875,7 +875,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    kWarning() << "BatchProcessImagesDialog::processAborted" << endl;
+    kDebug() << "BatchProcessImagesDialog::processAborted" << endl;
 
     BatchProcessImagesItem *item =
             static_cast<BatchProcessImagesItem*> (**m_listFile2Process_iterator);

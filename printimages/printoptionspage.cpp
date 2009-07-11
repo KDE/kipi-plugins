@@ -194,7 +194,7 @@ double PrintOptionsPage::unitToInches ( PrintOptionsPage::Unit unit )
 Qt::Alignment PrintOptionsPage::alignment() const
 {
     int id = d->mPositionGroup.checkedId();
-    kWarning(51000) << "alignment=" << id;
+    kDebug(51000) << "alignment=" << id;
     return Qt::Alignment ( id );
 }
 
@@ -248,7 +248,7 @@ void PrintOptionsPage::adjustHeightToRatio()
 
 void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
-    kWarning(51000) << "It has been called!" << endl;
+    kDebug(51000) << "It has been called!" << endl;
 }
 
 int PrintOptionsPage::photoXPage() const
@@ -287,7 +287,7 @@ void PrintOptionsPage::enableButtons()
 
 void PrintOptionsPage::imagePreview()
 {
-    kWarning(51000) << d->m_currentPhoto << endl;
+    kDebug(51000) << d->m_currentPhoto << endl;
     TPhoto *pPhoto = d->m_photos->at(d->m_currentPhoto);
     d->mPreview->setPixmap ( pPhoto->thumbnail() );
     if (pPhoto->cropRegion != QRect())
@@ -298,7 +298,7 @@ void PrintOptionsPage::imagePreview()
 
 void PrintOptionsPage::selectNext()
 {
-    kWarning(51000) << d->m_currentPhoto << endl;
+    kDebug(51000) << d->m_currentPhoto << endl;
 
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintPosition = alignment();
     if (d->m_currentPhoto+1 < d->m_photos->size())
@@ -311,7 +311,7 @@ void PrintOptionsPage::selectNext()
 
 void PrintOptionsPage::selectPrev()
 {
-    kWarning(51000) << d->m_currentPhoto << endl;
+    kDebug(51000) << d->m_currentPhoto << endl;
     d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintPosition = alignment();
     if (d->m_currentPhoto-1 >= 0)
         d->m_currentPhoto--;

@@ -161,7 +161,7 @@ void Gallery::save()
     group.writeEntry(QString("Version"), version() );
     group.writeEntry(QString("Password"), password() );
 
-    kWarning( 51000 ) << "syncing.." << endl;
+    kDebug( 51000 ) << "syncing.." << endl;
     config.sync();
 }
 
