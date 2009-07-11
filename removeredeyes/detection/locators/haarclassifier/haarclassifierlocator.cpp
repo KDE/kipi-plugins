@@ -313,7 +313,7 @@ void HaarClassifierLocator::readSettings()
     QString configGroup = QString("RemoveRedEyes %1 Settings").arg(this->objectName());
     KConfigGroup group = config.group(configGroup);
 
-    d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Fast);
+    d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Standard);
     d->settings.minBlobsize           = group.readEntry("Minimum Blob Size", 10);
     d->settings.minRoundness          = group.readEntry("Minimum Roundness", 3.2);
     d->settings.neighborGroups        = group.readEntry("Neighbor Groups", 2);
