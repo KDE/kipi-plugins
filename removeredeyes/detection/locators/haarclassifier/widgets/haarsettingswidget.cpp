@@ -91,15 +91,6 @@ HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
 
     connect(d->settingsSwitcherBtn, SIGNAL(clicked()),
             this, SLOT(settingsModeChanged()));
-
-    connect(d->settingsSwitcherBtn, SIGNAL(clicked()),
-            this, SIGNAL(settingsChanged()));
-
-    connect(d->simpleSettings, SIGNAL(settingsChanged()),
-            this, SIGNAL(settingsChanged()));
-
-    connect(d->advancedSettings, SIGNAL(settingsChanged()),
-            this, SIGNAL(settingsChanged()));
 }
 
 HaarSettingsWidget::~HaarSettingsWidget()
