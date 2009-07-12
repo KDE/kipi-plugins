@@ -78,7 +78,7 @@ void GPSBabelBinary::checkSystem()
     if (firstLine.startsWith(headerStarts))
     {
         d->version = firstLine.remove(0, headerStarts.length());
-        kDebug(51001) << "Found gpsbabel version: " << version() << endl;
+        kDebug(51001) << "Found gpsbabel version: " << version() ;
     }
 }
 

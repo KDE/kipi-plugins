@@ -903,7 +903,7 @@ namespace KIPIPrintImagesPlugin
 
     p.setFont ( font );
     p.setPen ( d->mInfoPage->m_font_color->color() );
-    kDebug(51000) << "Number of lines " << ( int ) captionByLines.count() << endl;
+    kDebug(51000) << "Number of lines " << ( int ) captionByLines.count() ;
 
     // Now draw the caption
     // TODO allow printing captions  per photo and on top, bottom and vertically
@@ -1091,11 +1091,11 @@ namespace KIPIPrintImagesPlugin
             format = d->mInfoPage->m_FreeCaptionFormat->text();
             break;
           default:
-            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType; 
             break;
         }
         caption = captionFormatter ( photo, format );
-        kDebug(51000) << "Caption " << caption << endl;
+        kDebug(51000) << "Caption " << caption ;
 
         // draw the text at (0,0), but we will translate and rotate the world
         // before drawing so the text will be in the correct location
@@ -1120,7 +1120,7 @@ namespace KIPIPrintImagesPlugin
           captionW = h;
         }
         p.rotate ( orientatation );
-        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation ;
         int tx = left;
         int ty = top;
 
@@ -1275,11 +1275,11 @@ namespace KIPIPrintImagesPlugin
             format = d->mInfoPage->m_FreeCaptionFormat->text();
             break;
           default:
-            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType << endl;
+            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType ;
             break;
         }
         caption = captionFormatter ( photo, format );
-        kDebug(51000) << "Caption " << caption << endl;
+        kDebug(51000) << "Caption " << caption ;
 
         int captionW = w-2;
         double ratio = d->mInfoPage->m_font_size->value() * 0.01;
@@ -1306,7 +1306,7 @@ namespace KIPIPrintImagesPlugin
         QPainter painter;
         painter.begin ( &pixmap );
         painter.rotate ( orientatation );
-        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation << endl;
+        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation ;
         int tx = left;
         int ty = top;
 
@@ -1538,7 +1538,7 @@ namespace KIPIPrintImagesPlugin
         {
           this->nextButton()->setEnabled ( true );
         }
-      kDebug(51000) << "CCCC" << endl;
+      kDebug(51000) << "CCCC" ;
 #endif
     }
     else if ( current->name() == i18n ( photoPageName ) )
@@ -2195,7 +2195,7 @@ namespace KIPIPrintImagesPlugin
       }
 
       kDebug(51000) << " page size " << d->m_pageSize
-      << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 << endl;
+      << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 ;
 
       if ( d->mInfoPage->m_fullbleed->isChecked() )
       {

@@ -73,7 +73,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVar
                          : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
                                         parent, "BatchProcessImages")
 {
-    kDebug(51001) << "Plugin_BatchProcessImages plugin loaded" << endl;
+    kDebug(51001) << "Plugin_BatchProcessImages plugin loaded" ;
 }
 
 void Plugin_BatchProcessImages::setup( QWidget* widget )
@@ -125,7 +125,7 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
 
     if ( !interface )
     {
-       kError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!" ;
        return;
     }
 
@@ -176,7 +176,7 @@ void Plugin_BatchProcessImages::slotActivate()
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" ;
         return;
     }
 
@@ -252,7 +252,7 @@ void Plugin_BatchProcessImages::slotActivate()
     }
     else
     {
-        kWarning( 51000 ) << "The impossible happened... unknown batch action specified" << endl;
+        kWarning( 51000 ) << "The impossible happened... unknown batch action specified" ;
         return;
     }
 }
@@ -276,6 +276,6 @@ KIPI::Category Plugin_BatchProcessImages::category( KAction* action ) const
     else if ( action == m_action_resizeimages )
        return KIPI::BatchPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" ;
     return KIPI::BatchPlugin; // no warning from compiler, please
 }

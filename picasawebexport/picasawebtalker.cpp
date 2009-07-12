@@ -139,7 +139,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     if (!loginDialog)
     {
-        kDebug(51000) << " Out of memory error " << endl;
+        kDebug(51000) << " Out of memory error " ;
     }
 
     if (loginDialog->exec() == QDialog::Accepted)
@@ -189,7 +189,7 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
 {
     if (!token.isNull() || token.length() > 0)
     {
-        kDebug(51000) << " Checktoken being called" << token << endl;
+        kDebug(51000) << " Checktoken being called" << token ;
         m_username = username;
         m_password = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
@@ -211,7 +211,7 @@ void PicasawebTalker::checkToken(const QString& token)
     }
 
     QString url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
-    kDebug(51000) << " token value is " << token << endl;
+    kDebug(51000) << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -633,7 +633,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_CHECKTOKEN) 
         {
-            kDebug(51000) << " Error encountered in checking token, require user credentials" << endl;
+            kDebug(51000) << " Error encountered in checking token, require user credentials" ;
             return getToken(m_username, "");
         }
     }
@@ -682,7 +682,7 @@ void PicasawebTalker::parseResponseCheckToken(const QByteArray &data)
     // TODO(vardhman): Fix this with proper error handling.
     if(!success)
         getToken(m_username, m_password);
-     // kDebug(51000) << "Return code is " << transReturn << endl;
+     // kDebug(51000) << "Return code is " << transReturn ;
      emit slotCheckTokenSuccessful();
     // emit signalError(errorString);
 }
@@ -702,7 +702,7 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
         if ( strList.count() > 0 )
         {
             m_token = strList[1].trimmed();
-            kDebug(51000) << " m_token as obtained in token Response " << m_token << endl;
+            kDebug(51000) << " m_token as obtained in token Response " << m_token ;
             success = true;
         }
     }
@@ -953,16 +953,16 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
 
         if ( node.isElement() && node.nodeName() == "err" )
         {
-            kDebug(51001) << "Checking Error in response" << endl;
+            kDebug(51001) << "Checking Error in response" ;
             QString code = node.toElement().attribute("code");
-            kDebug(51001) << "Error code=" << code << endl;
-            kDebug(51001) << "Msg=" << node.toElement().attribute("msg") << endl;
+            kDebug(51001) << "Error code=" << code ;
+            kDebug(51001) << "Msg=" << node.toElement().attribute("msg") ;
             emit signalError(code);
         }
         node = node.nextSibling();
     }
 
-    kDebug(51001) << "GetToken finished" << endl;
+    kDebug(51001) << "GetToken finished" ;
     if (!success)
     {
         emit signalAddPhotoFailed(i18n("Failed to query photo information"));

@@ -70,7 +70,7 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVaria
     // Useless: to please the compiler
     QVariantList argsList = args;
 
-    kDebug(51001) << "Plugin_AdvancedSlideshow plugin loaded" << endl;
+    kDebug(51001) << "Plugin_AdvancedSlideshow plugin loaded" ;
 
     m_sharedData = 0;
 }
@@ -94,7 +94,7 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
 
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!" ;
         return;
     }
 
@@ -117,7 +117,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
 {
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!" ;
         return;
     }
 
@@ -163,7 +163,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
     if ( !currAlbum.isValid() )
     {
-        kError( 51000 ) << "Current image collection is not valid." << endl;
+        kError( 51000 ) << "Current image collection is not valid." ;
         m_actionSlideShow->setEnabled( false );
         return;
     }
@@ -175,7 +175,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 {
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi m_interface is null!" << endl;
+        kError( 51000 ) << "Kipi m_interface is null!" ;
         return;
     }
 
@@ -192,7 +192,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
     if ( !currAlbum.isValid() )
     {
-        kError( 51000 ) << "Current image collection is not valid. This should not happen at this point!" << endl;
+        kError( 51000 ) << "Current image collection is not valid. This should not happen at this point!" ;
         return;
     }
 

@@ -53,7 +53,7 @@ K_EXPORT_PLUGIN ( IpodFactory("kipiplugin_ipodexport") )
 Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
     : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
-    kDebug(51001) << "Plugin_iPodExport plugin loaded" << endl;
+    kDebug(51001) << "Plugin_iPodExport plugin loaded" ;
 
     g_type_init();
 }

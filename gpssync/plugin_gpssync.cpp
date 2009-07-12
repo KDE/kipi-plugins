@@ -64,7 +64,7 @@ K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const QVariantList &)
               : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
-    kDebug(51001) << "Plugin_GPSSync plugin loaded" << endl;
+    kDebug(51001) << "Plugin_GPSSync plugin loaded" ;
 }
 
 void Plugin_GPSSync::setup( QWidget* widget )
@@ -112,7 +112,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
 
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" ;
         return;
     }
 
@@ -251,7 +251,7 @@ void Plugin_GPSSync::slotGPSEdit()
 
             if (!ret)
                 kDebug(51000) << "Cannot set GPS location into file metadata from "
-                         << url.fileName() << endl;
+                         << url.fileName() ;
 
             // Set kipi host GPS location
             attributes.clear();
@@ -357,7 +357,7 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
 
                 if (!ret)
                     kDebug(51000) << "Cannot set GPS location into file metadata from "
-                             << url.fileName() << endl;
+                             << url.fileName() ;
 
                 // Set kipi host GPS location
                 attributes.clear();
@@ -407,7 +407,7 @@ void Plugin_GPSSync::slotGPSRemove()
 
         if (!ret)
             kDebug(51000) << "Cannot remove GPS location into file metadata from "
-                     << url.fileName() << endl;
+                     << url.fileName() ;
 
         // Remove kipi host GPS location
         QStringList list;
@@ -423,7 +423,7 @@ void Plugin_GPSSync::slotKMLExport()
 
     if ( !selection.isValid() )
     {
-        kDebug(51000) << "No Selection!" << endl;
+        kDebug(51000) << "No Selection!" ;
     }
     else
     {
@@ -450,6 +450,6 @@ KIPI::Category Plugin_GPSSync::category( KAction* action ) const
     if ( action == m_actionKMLExport )
        return KIPI::ExportPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" ;
     return KIPI::ImagesPlugin; // no warning from compiler, please
 }

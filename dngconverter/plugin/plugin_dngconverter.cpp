@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_dngconverter") )
 Plugin_DNGConverter::Plugin_DNGConverter(QObject *parent, const QVariantList &)
                    : KIPI::Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
-    kDebug(51001) << "Plugin_DNGConverter plugin loaded" << endl;
+    kDebug(51001) << "Plugin_DNGConverter plugin loaded" ;
 }
 
 void Plugin_DNGConverter::setup( QWidget* widget )
@@ -80,7 +80,7 @@ void Plugin_DNGConverter::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-           kError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!";
            return;
     }
 
@@ -111,7 +111,7 @@ void Plugin_DNGConverter::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!" ;
         return;
     }
 
@@ -141,6 +141,6 @@ KIPI::Category Plugin_DNGConverter::category( KAction* action ) const
     if (action == m_action)
        return KIPI::BatchPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification" ;
     return KIPI::BatchPlugin; // no warning from compiler, please
 }

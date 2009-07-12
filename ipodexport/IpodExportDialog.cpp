@@ -278,7 +278,7 @@ void UploadDialog::getIpodAlbums()
     if( !m_itdb )
         return;
 
-    kDebug(51000) << "populating ipod view" << endl;
+    kDebug(51000) << "populating ipod view" ;
 
     // clear cache
     m_ipodAlbumList->clear();
@@ -287,7 +287,7 @@ void UploadDialog::getIpodAlbums()
     {
         Itdb_PhotoAlbum *ipodAlbum = (Itdb_PhotoAlbum *) it->data;
 
-        kDebug(51000) << " found album: " << ipodAlbum->name << endl;
+        kDebug(51000) << " found album: " << ipodAlbum->name ;
 
         IpodAlbumItem *albumItem = new IpodAlbumItem( m_ipodAlbumList, ipodAlbum );
 
@@ -381,7 +381,7 @@ void UploadDialog::startTransfer()
     {
 #define item static_cast<ImageListItem*>(item)
         kDebug(51000) << "Uploading "      << item->pathSrc()
-                      << " to ipod album " << album->name << endl;
+                      << " to ipod album " << album->name ;
 
         Itdb_Artwork *art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
         if( !art )
@@ -389,7 +389,7 @@ void UploadDialog::startTransfer()
             if( err )
             {
                 kDebug(51000) << "Error adding photo " << item->pathSrc() << " to database:"
-                              << err->message << endl;
+                              << err->message ;
                 err = 0;
             }
         }
@@ -401,7 +401,7 @@ void UploadDialog::startTransfer()
     }
 
     itdb_photodb_write( m_itdb, &err );
-    if( err ) kDebug(51000) << "Failed with error: " << err->message << endl;
+    if( err ) kDebug(51000) << "Failed with error: " << err->message ;
 
     reloadIpodAlbum( ipodAlbum, album );
 
@@ -435,7 +435,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
 
     if( !gpixbuf )
     {
-        kDebug(51000) << "no thumb was found" << endl;
+        kDebug(51000) << "no thumb was found" ;
         return;
     }
 #undef item
@@ -443,7 +443,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
 //     GdkPixbuf *buf = itdb_thumb_get_gdk_pixbuf( m_itdb->device, thumb );
 //     int size = 0;
 //     QImage *image = buf->convertToImage();
-//     kDebug(51000) << "image size: " << image->size() << endl;
+//     kDebug(51000) << "image size: " << image->size() ;
 //
 //     QPixmap pix;
 //     pix.convertFromImage( image );
@@ -548,7 +548,7 @@ void UploadDialog::createIpodAlbum()
                                               helper, &ok, this );
     if( ok )
     {
-        kDebug(51000) << "creating album " << newAlbum << endl;
+        kDebug(51000) << "creating album " << newAlbum ;
 
         Itdb_PhotoAlbum *photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
         // add the new album to the list view
@@ -602,7 +602,7 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
 
     if( !artwork )
     {
-        kDebug(51000) << "Could not find photo artwork with id: " << photo->text(0) << endl;
+        kDebug(51000) << "Could not find photo artwork with id: " << photo->text(0) ;
         return false;
     }
 
@@ -621,7 +621,7 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
                 QTreeWidgetItem *photoItem = albumItem->child( j );
                 if( photoItem->text(0) == photo->text(0) ) // FIXME
                 {
-                    kDebug(51000) << "removing reference to photo from album " << albumItem->text(0) << endl;
+                    kDebug(51000) << "removing reference to photo from album " << albumItem->text(0) ;
                     delete photoItem;
                     break; // Items can't be duplicated in the same album
                 }
@@ -633,7 +633,7 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
 
 bool UploadDialog::deleteIpodAlbum( IpodAlbumItem *album )
 {
-    kDebug(51000) << "deleting album: " << album->name() << ", and removing all photos" << endl;
+    kDebug(51000) << "deleting album: " << album->name() << ", and removing all photos" ;
     itdb_photodb_photoalbum_remove( m_itdb, album->photoAlbum(), true/*remove photos*/);
 
     return true;
@@ -693,7 +693,7 @@ bool UploadDialog::openDevice()
 {
     if( m_itdb )
     {
-        kDebug(51000) <<  "ipod at " << m_mountPoint << " already opened" << endl;
+        kDebug(51000) <<  "ipod at " << m_mountPoint << " already opened" ;
         return false;
     }
 
@@ -750,7 +750,7 @@ bool UploadDialog::openDevice()
 
     if( !ipodFound )
     {
-        kDebug(51000) << "no mounted ipod found" << endl;
+        kDebug(51000) << "no mounted ipod found" ;
         if( m_itdb )
         {
             itdb_photodb_free( m_itdb );
@@ -759,12 +759,12 @@ bool UploadDialog::openDevice()
         return false;
     }
 
-    kDebug(51000) << "ipod found mounted at " << m_mountPoint << endl;
+    kDebug(51000) << "ipod found mounted at " << m_mountPoint ;
 
     /// No photodb was able to be parsed, so offer to initialise the ipod for the user.
     if( !m_itdb )
     {
-        kDebug(51000) << "could not find iTunesDB on device mounted at " << m_mountPoint << endl;
+        kDebug(51000) << "could not find iTunesDB on device mounted at " << m_mountPoint ;
 
         QString msg = i18n( "An iPod photo database could not be found on the device mounted at %1. "
                             "Initialize the iPod photo database?",
@@ -779,7 +779,7 @@ bool UploadDialog::openDevice()
 
             if( !m_itdb )
             {
-                kDebug(51000) << "Could not initialise photodb..." << endl;
+                kDebug(51000) << "Could not initialise photodb..." ;
                 return false;
             }
 
@@ -821,7 +821,7 @@ QString UploadDialog::ipodModel() const
 
 void UploadDialog::refreshDevices()
 {
-    kDebug(51000) << "refreshing ipod devices" << endl;
+    kDebug(51000) << "refreshing ipod devices" ;
 
     if( !m_ipodHeader )
         return;
@@ -842,7 +842,7 @@ void UploadDialog::refreshDevices()
 
         if( !m_ipodInfo || model.isEmpty() || model == "Invalid" )
         {
-            kDebug(51000) << "the ipod model must be set before photos can be added" << endl;
+            kDebug(51000) << "the ipod model must be set before photos can be added" ;
             m_ipodHeader->setViewType( IpodHeader::IncompatibleIpod );
 
             connect(m_ipodHeader, SIGNAL( updateSysInfo() ),
@@ -865,7 +865,7 @@ void UploadDialog::refreshDevices()
 
 void UploadDialog::updateSysInfo()
 {
-    kDebug(51000) << "updateSysInfo()" << endl;
+    kDebug(51000) << "updateSysInfo()" ;
 }
 
 } // namespace KIPIIpodExportPlugin

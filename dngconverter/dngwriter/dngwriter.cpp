@@ -147,7 +147,7 @@ int DNGWriter::convert()
     {
         if (inputFile().isEmpty())
         {
-            kDebug(51000) << "DNGWriter: No input file to convert. Aborted..." << endl;
+            kDebug(51000) << "DNGWriter: No input file to convert. Aborted..." ;
             return -1;
         }
 
@@ -165,12 +165,12 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: Loading RAW data from " << inputInfo.fileName() << endl;
+        kDebug(51000) << "DNGWriter: Loading RAW data from " << inputInfo.fileName() ;
 
         KDcraw rawProcessor;
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify))
         {
-            kDebug(51000) << "DNGWriter: Loading RAW data failed. Aborted..." << endl;
+            kDebug(51000) << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return -1;
         }
 
@@ -180,20 +180,20 @@ int DNGWriter::convert()
         int height     = identify.imageSize.height();
         int pixelRange = 16;
 
-        kDebug(51000) << "DNGWriter: Raw data loaded:" << endl;
-        kDebug(51000) << "--- Data Size:     " << rawData.size() << " bytes" << endl;
-        kDebug(51000) << "--- Date:          " << identify.dateTime.toString(Qt::ISODate) << endl;
-        kDebug(51000) << "--- Make:          " << identify.make << endl;
-        kDebug(51000) << "--- Model:         " << identify.model << endl;
-        kDebug(51000) << "--- Size:          " << width << "x" << height << endl;
-        kDebug(51000) << "--- Orientation:   " << identify.orientation << endl;
-        kDebug(51000) << "--- Top margin:    " << identify.topMargin << endl;
-        kDebug(51000) << "--- Left margin:   " << identify.leftMargin << endl;
-        kDebug(51000) << "--- Filter:        " << identify.filterPattern << endl;
-        kDebug(51000) << "--- Colors:        " << identify.rawColors << endl;
-        kDebug(51000) << "--- Black:         " << identify.blackPoint << endl;
-        kDebug(51000) << "--- White:         " << identify.whitePoint << endl;
-        kDebug(51000) << "--- CAM->XYZ:" << endl;
+        kDebug(51000) << "DNGWriter: Raw data loaded:" ;
+        kDebug(51000) << "--- Data Size:     " << rawData.size() << " bytes" ;
+        kDebug(51000) << "--- Date:          " << identify.dateTime.toString(Qt::ISODate) ;
+        kDebug(51000) << "--- Make:          " << identify.make ;
+        kDebug(51000) << "--- Model:         " << identify.model ;
+        kDebug(51000) << "--- Size:          " << width << "x" << height ;
+        kDebug(51000) << "--- Orientation:   " << identify.orientation ;
+        kDebug(51000) << "--- Top margin:    " << identify.topMargin ;
+        kDebug(51000) << "--- Left margin:   " << identify.leftMargin ;
+        kDebug(51000) << "--- Filter:        " << identify.filterPattern ;
+        kDebug(51000) << "--- Colors:        " << identify.rawColors ;
+        kDebug(51000) << "--- Black:         " << identify.blackPoint ;
+        kDebug(51000) << "--- White:         " << identify.whitePoint ;
+        kDebug(51000) << "--- CAM->XYZ:" ;
 
         QString matrixVal;
         for(int i=0; i<12; i+=3)
@@ -202,7 +202,7 @@ int DNGWriter::convert()
                           << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
                                                                          identify.cameraXYZMatrix[0][i+1],
                                                                          identify.cameraXYZMatrix[0][i+2])
-                          << endl;
+                          ;
         }
 
         // Check if CFA layout is supported by DNG SDK.
@@ -226,14 +226,14 @@ int DNGWriter::convert()
         }
         else
         {
-            kDebug(51000) << "DNGWriter: Bayer mosaic not supported. Aborted..." << endl;
+            kDebug(51000) << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
             return -1;
         }
 
         // Check if number of Raw Color components is supported.
         if (identify.rawColors != 3)
         {
-            kDebug(51000) << "DNGWriter: Number of Raw color components not supported. Aborted..." << endl;
+            kDebug(51000) << "DNGWriter: Number of Raw color components not supported. Aborted..." ;
             return -1;
         }
 
@@ -245,7 +245,7 @@ int DNGWriter::convert()
         QFile rawdataFile(rawdataFilePath);
         if (!rawdataFile.open(QIODevice::WriteOnly))
         {
-            kDebug(51000) << "DNGWriter: Cannot open file to write RAW data. Aborted..." << endl;
+            kDebug(51000) << "DNGWriter: Cannot open file to write RAW data. Aborted..." ;
             return -1;
         }
         QDataStream rawdataStream(&rawdataFile);
@@ -254,7 +254,7 @@ int DNGWriter::convert()
 */
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: Formating RAW data to memory" << endl;
+        kDebug(51000) << "DNGWriter: Formating RAW data to memory" ;
 
         std::vector<unsigned short> raw_data;
         raw_data.resize(rawData.size());
@@ -269,7 +269,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: DNG memory allocation and initialization" << endl;
+        kDebug(51000) << "DNGWriter: DNG memory allocation and initialization" ;
 
         dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
         dng_memory_stream stream(memalloc);
@@ -290,7 +290,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: DNG IFD structure creation" << endl;
+        kDebug(51000) << "DNGWriter: DNG IFD structure creation" ;
 
         dng_ifd ifd;
 
@@ -375,7 +375,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: DNG Negative structure creation" << endl;
+        kDebug(51000) << "DNGWriter: DNG Negative structure creation" ;
 
         AutoPtr<dng_negative> negative(host.Make_dng_negative());
 
@@ -450,7 +450,7 @@ int DNGWriter::convert()
         camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
 
         if (camXYZ.MaxEntry() == 0.0)
-            kDebug(51000) << "DNGWriter: Warning, camera XYZ Matrix is null" << endl;
+            kDebug(51000) << "DNGWriter: Warning, camera XYZ Matrix is null" ;
         else
             matrix = camXYZ;
 
@@ -470,7 +470,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: Updating metadata to DNG Negative" << endl;
+        kDebug(51000) << "DNGWriter: Updating metadata to DNG Negative" ;
 
         dng_exif *exif = negative->GetExif();
         exif->fModel.Set_ASCII(identify.model.toAscii());
@@ -628,7 +628,7 @@ int DNGWriter::convert()
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
             if (!mkrnts.isEmpty())
             {
-                kDebug(51000) << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" << endl;
+                kDebug(51000) << "DNGWriter: Backup Makernote (" << mkrnts.size() << " bytes)" ;
 
                 dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
                 dng_memory_stream stream(memalloc);
@@ -643,14 +643,14 @@ int DNGWriter::convert()
 
         if (d->backupOriginalRawFile)
         {
-            kDebug(51000) << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)" << endl;
+            kDebug(51000) << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)" ;
 
             // Compress Raw file data to Zip archive.
 
             QTemporaryFile zipFile;
             if (!zipFile.open())
             {
-                kDebug(51000) << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted..." << endl;
+                kDebug(51000) << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted..." ;
                 return -1;
             }
             KZip zipArchive(zipFile.fileName());
@@ -666,7 +666,7 @@ int DNGWriter::convert()
             zipRawFileData.resize(zipFileInfo.size());
             QDataStream dataStream(&zipFile);
             dataStream.readRawData(zipRawFileData.data(), zipRawFileData.size());
-            kDebug(51000) << "DNGWriter: Zipped RAW file size " << zipRawFileData.size() << " bytes" << endl;
+            kDebug(51000) << "DNGWriter: Zipped RAW file size " << zipRawFileData.size() << " bytes" ;
 
             // Pass byte array to DNG sdk and compute MD5 fingerprint.
 
@@ -690,7 +690,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: Build DNG Negative" << endl;
+        kDebug(51000) << "DNGWriter: Build DNG Negative" ;
 
         // Assign Raw image data.
         negative->SetStage1Image(image);
@@ -715,7 +715,7 @@ int DNGWriter::convert()
 
         if (d->previewMode != DNGWriter::NONE)
         {
-            kDebug(51000) << "DNGWriter: DNG preview image creation" << endl;
+            kDebug(51000) << "DNGWriter: DNG preview image creation" ;
 
             // Construct a preview image as TIFF format.
             AutoPtr<dng_image> tiffImage;
@@ -740,20 +740,20 @@ int DNGWriter::convert()
             QImage pre_image;
             if (!pre_image.loadFromData((uchar*)&tiff_mem_buffer.front(), tiff_mem_buffer.size(), "TIFF"))
             {
-                kDebug(51000) << "DNGWriter: Cannot load TIFF preview data in memory. Aborted..." << endl;
+                kDebug(51000) << "DNGWriter: Cannot load TIFF preview data in memory. Aborted..." ;
                 return -1;
             }
 
             QTemporaryFile previewFile;
             if (!previewFile.open())
             {
-                kDebug(51000) << "DNGWriter: Cannot open temporary file to write JPEG preview. Aborted..." << endl;
+                kDebug(51000) << "DNGWriter: Cannot open temporary file to write JPEG preview. Aborted..." ;
                 return -1;
             }
 
             if (!pre_image.save(previewFile.fileName(), "JPEG", 90))
             {
-                kDebug(51000) << "DNGWriter: Cannot save file to write JPEG preview. Aborted..." << endl;
+                kDebug(51000) << "DNGWriter: Cannot save file to write JPEG preview. Aborted..." ;
                 return -1;
             }
 
@@ -780,7 +780,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: DNG thumbnail creation" << endl;
+        kDebug(51000) << "DNGWriter: DNG thumbnail creation" ;
 
         dng_image_preview thumbnail;
         dng_render thumbnail_render(host, *negative);
@@ -793,7 +793,7 @@ int DNGWriter::convert()
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug(51000) << "DNGWriter: Creating DNG file " << outputInfo.fileName() << endl;
+        kDebug(51000) << "DNGWriter: Creating DNG file " << outputInfo.fileName() ;
 
         dng_image_writer writer;
         dng_file_stream filestream(QFile::encodeName(dngFilePath), true);
@@ -805,7 +805,7 @@ int DNGWriter::convert()
         // -----------------------------------------------------------------------------------------
         // Metadata transfert using Exiv2. Used to restore Makernote offset.
 
-        kDebug(51000) << "DNGWriter: Backup meta-data using Exiv2" << endl;
+        kDebug(51000) << "DNGWriter: Backup meta-data using Exiv2" ;
         KExiv2 dngMeta(dngFilePath);
 
         if (meta.load(inputFile()))
@@ -820,17 +820,17 @@ int DNGWriter::convert()
     catch (const dng_exception &exception)
     {
         int ret = exception.ErrorCode();
-        kDebug(51000) << "DNGWriter: DNG SDK exception code (" << ret << ")" << endl;
+        kDebug(51000) << "DNGWriter: DNG SDK exception code (" << ret << ")" ;
         return ret;
     }
 
     catch (...)
     {
-        kDebug(51000) << "DNGWriter: DNG SDK exception code unknow" << endl;
+        kDebug(51000) << "DNGWriter: DNG SDK exception code unknow" ;
         return dng_error_unknown;
     }
 
-    kDebug(51000) << "DNGWriter: DNG conversion complete..." << endl;
+    kDebug(51000) << "DNGWriter: DNG conversion complete..." ;
 
     return dng_error_none;
 }
