@@ -199,7 +199,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
                         "past.")+"</b>";
 
             wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
-                    "Following months will be printed for year %1:<br/>", year)
+                    "Following months will be printed for year %1:<br/>", QString::number(year))
                     + printList.join(" - ") + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
