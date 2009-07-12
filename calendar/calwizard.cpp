@@ -168,7 +168,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
         QString month;
         QStringList printList;
         QDate d;
-        KGlobal::locale()->calendar()->setYMD(d, cSettings_->year(), 1, 1);
+        KGlobal::locale()->calendar()->setDate(d, cSettings_->year(), 1, 1);
         for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); i++)
         {
             month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
