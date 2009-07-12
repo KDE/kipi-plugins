@@ -23,5 +23,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> SendImages   : 189984 : Impossible to email images if the path contains characters such as éèà
 014 ==> RawConverter : 161337 : Image rotation of converted RAW photos (portrait format) broken 
 015 ==> Calendar     : 196888 : Create Calender: Year formatted as 2,009 on last page of wizard
-016 ==> 
+016 ==> Calendar     : 111697 : i wish for the option to change the first day of week (sun / mon)
+017 ==> 
 
