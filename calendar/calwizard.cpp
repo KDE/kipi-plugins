@@ -198,8 +198,12 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
                         "calendar for<br/>the current year or a year in the "
                         "past.")+"</b>";
 
+	    KLocale tmpLocale(*KGlobal::locale());
+	    tmpLocale.setDateFormat("%Y");
+	    QString year_locale = tmpLocale.formatDate(d);
+
             wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
-                    "Following months will be printed for year %1:<br/>", QString::number(year))
+                    "Following months will be printed for year %1:<br/>", year_locale)
                     + printList.join(" - ") + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
