@@ -26,5 +26,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> Calendar     : 111697 : I wish for the option to change the first day of week (sun / mon).
 017 ==> GPSSync      : 187517 : gpsssync when entering no map.
 018 ==> BatchProcess : 200483 : digiKam crashes after batch image-color-improvement on single picture.
-019 ==> 
+019 ==> AcquireImages: 200558 : Crash when saving scanned image to .tiff
+020 ==> 
 

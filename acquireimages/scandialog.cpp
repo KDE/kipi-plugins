@@ -288,15 +288,16 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
 
     KIPIPlugins::KPWriteImage wImageIface;
-    if (frmt != KSaneIface::KSaneWidget::FormatRGB_16_C)
+
+    if ( (frmt = KSaneIface::KSaneWidget::FormatRGB_16_C) || (frmt = KSaneIface::KSaneWidget::FormatRGB_8_C) )
     {
-        QByteArray data((const char*)img.bits(), img.numBytes());
-        wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
+        // 8 and 16 bits color depth image.
+        wImageIface.setImageData(ksane_data, width, height, true, false, prof, meta);
     }
     else
     {
-        // 16 bits color depth image.
-        wImageIface.setImageData(ksane_data, width, height, true, false, prof, meta);
+        QByteArray data((const char*)img.bits(), img.numBytes());
+        wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
     }
 
     if (format == QString("JPEG"))
