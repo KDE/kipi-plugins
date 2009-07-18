@@ -123,7 +123,6 @@ void MainDialog::readSettings()
         connect(m_selectedFilesButton, SIGNAL(toggled(bool)), this, SLOT(slotSelection()));
 
     slotOpenGLToggled();
-    slotSelection();
     slotPrintCommentsToggled();
     slotEffectChanged();
     slotSelection();
