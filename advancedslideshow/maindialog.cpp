@@ -308,6 +308,8 @@ void MainDialog::loadEffectNamesGL()
 
 bool MainDialog::updateUrlList()
 {
+    m_sharedData->urlList.clear();
+
     for (int i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
     {
         ImageItem *pitem = static_cast<ImageItem*>( m_ImagesFilesListBox->item(i) );
