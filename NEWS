@@ -27,5 +27,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> GPSSync      : 187517 : gpsssync when entering no map.
 018 ==> BatchProcess : 200483 : digiKam crashes after batch image-color-improvement on single picture.
 019 ==> AcquireImages: 200558 : Crash when saving scanned image to .tiff
-020 ==> 
+020 ==> BatchProcess : 200217 : crash after batch recompress
+021 ==>
 
