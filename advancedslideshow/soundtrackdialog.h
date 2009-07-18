@@ -51,10 +51,12 @@ class SoundtrackPreview : public KDialog
 {
 
 public :
+
     SoundtrackPreview(QWidget*, KUrl::List&, SharedData*);
     ~SoundtrackPreview();
 
 private :
+
     PlaybackWidget* m_playbackWidget;
 };
 

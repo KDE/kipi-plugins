@@ -115,6 +115,10 @@ SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
 
 SoundtrackDialog::~SoundtrackDialog()
 {
+    delete m_sharedData;
+    delete m_tracksTime;
+    delete m_soundItems;
+    delete m_timeMutex;
 }
 
 void SoundtrackDialog::readSettings()

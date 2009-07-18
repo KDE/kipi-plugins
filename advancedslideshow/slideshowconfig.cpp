@@ -138,6 +138,8 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
 
 SlideShowConfig::~SlideShowConfig ()
 {
+    delete d->config;
+    delete d->about;
     delete d;
 }
 

@@ -80,8 +80,8 @@ SharedData::~SharedData()
 //    if ( page_caption ) delete page_caption;
 //    if ( page_soundtrack ) delete page_soundtrack;
 //    if ( page_advanced ) delete page_advanced;
-//
-//    if ( captionFont ) delete captionFont;
+
+    delete captionFont;
 }
 
 VolumeSlider::VolumeSlider(QWidget* parent)
