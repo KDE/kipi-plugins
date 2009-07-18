@@ -54,15 +54,10 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 class MainDialog;
-
 class CaptionDialog;
-
 class SoundtrackDialog;
-
 class AdvancedDialog;
-
 class PlaybackWidget;
-
 class SharedData
 {
 
@@ -94,34 +89,34 @@ public:
 
     // Config file data
     // --> Main page
-    bool             opengl;
-    int              delay;
-    bool             printFileName;
-    bool             printProgress;
-    bool             printFileComments;
-    bool             loop;
-    bool             shuffle;
-    bool             showSelectedFilesOnly;
-    QString          effectName;
-    QString          effectNameGL;
+    bool                 opengl;
+    int                  delay;
+    bool                 printFileName;
+    bool                 printProgress;
+    bool                 printFileComments;
+    bool                 loop;
+    bool                 shuffle;
+    bool                 showSelectedFilesOnly;
+    QString              effectName;
+    QString              effectNameGL;
     // --> Captions page
-    uint             commentsFontColor;
-    uint             commentsBgColor;
-    bool             transparentBg;
-    int              commentsLinesLength;
-    QFont*           captionFont;
+    uint                 commentsFontColor;
+    uint                 commentsBgColor;
+    bool                 transparentBg;
+    int                  commentsLinesLength;
+    QFont*               captionFont;
     // --> Soundtrack page
-    bool             soundtrackLoop;
-    KUrl             soundtrackPath;
-    KUrl::List       soundtrackUrls;
+    bool                 soundtrackLoop;
+    KUrl                 soundtrackPath;
+    KUrl::List           soundtrackUrls;
 
     // --> Advanced page
-    bool             useMilliseconds;
-    bool             enableMouseWheel;
-    bool             enableCache;
-    bool             kbDisableFadeInOut;
-    bool             kbDisableCrossFade;
-    uint             cacheSize;
+    bool                 useMilliseconds;
+    bool                 enableMouseWheel;
+    bool                 enableCache;
+    bool                 kbDisableFadeInOut;
+    bool                 kbDisableCrossFade;
+    uint                 cacheSize;
 };
 
 // ----------------------------------------------------------

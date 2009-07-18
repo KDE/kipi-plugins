@@ -81,28 +81,27 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
 
     // --- Pages settings ---
 
-    d->sharedData->mainPage   = new MainDialog(this, d->sharedData);
-    d->sharedData->page_main  = addPage(d->sharedData->mainPage, i18n("Main"));
+    d->sharedData->mainPage  = new MainDialog(this, d->sharedData);
+    d->sharedData->page_main = addPage(d->sharedData->mainPage, i18n("Main"));
     d->sharedData->page_main->setHeader(i18n("Main Settings"));
     d->sharedData->page_main->setIcon(KIcon("view-presentation"));
 
-    d->sharedData->captionPage   = new CaptionDialog(this, d->sharedData);
-    d->sharedData->page_caption  = addPage(d->sharedData->captionPage, i18n("Caption"));
+    d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
+    d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18n("Caption"));
     d->sharedData->page_caption->setHeader(i18n("Caption"));
     d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
 
-    d->sharedData->soundtrackPage   = new SoundtrackDialog(this, d->sharedData);
-    d->sharedData->page_soundtrack  = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
+    d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);
+    d->sharedData->page_soundtrack = addPage(d->sharedData->soundtrackPage, i18n("Soundtrack"));
     d->sharedData->page_soundtrack->setHeader(i18n("Soundtrack"));
     d->sharedData->page_soundtrack->setIcon(KIcon("speaker"));
 
-    d->sharedData->advancedPage   = new AdvancedDialog(this, d->sharedData);
-    d->sharedData->page_advanced  = addPage(d->sharedData->advancedPage, i18n("Advanced"));
+    d->sharedData->advancedPage  = new AdvancedDialog(this, d->sharedData);
+    d->sharedData->page_advanced = addPage(d->sharedData->advancedPage, i18n("Advanced"));
     d->sharedData->page_advanced->setHeader(i18n("Advanced"));
     d->sharedData->page_advanced->setIcon(KIcon("configure"));
 
     // --- About --
-
     d->about = new KIPIPlugins::KPAboutData(ki18n("Advanced Slideshow"),
                                             0,
                                             KAboutData::License_GPL,
@@ -118,15 +117,16 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
                this, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook   = new QAction(i18n("Handbook"), this);
+
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
+
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
 
     // Slot connections
-
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartClicked()));
 
@@ -189,11 +189,11 @@ void SlideShowConfig::readSettings()
     d->sharedData->useMilliseconds       = grp.readEntry("Use Milliseconds", false);
     d->sharedData->enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
 
-    d->sharedData->kbDisableFadeInOut = grp.readEntry("KB Disable FadeInOut", false);
-    d->sharedData->kbDisableCrossFade = grp.readEntry("KB Disable Crossfade", false);
+    d->sharedData->kbDisableFadeInOut    = grp.readEntry("KB Disable FadeInOut", false);
+    d->sharedData->kbDisableCrossFade    = grp.readEntry("KB Disable Crossfade", false);
 
-    d->sharedData->enableCache = grp.readEntry("Enable Cache", false);
-    d->sharedData->cacheSize  = grp.readEntry("Cache Size", 5);
+    d->sharedData->enableCache           = grp.readEntry("Enable Cache", false);
+    d->sharedData->cacheSize             = grp.readEntry("Cache Size", 5);
 
     d->sharedData->mainPage->readSettings();
     d->sharedData->captionPage->readSettings();
@@ -206,84 +206,51 @@ void SlideShowConfig::saveSettings()
     if (!d->config) return;
 
     d->sharedData->mainPage->saveSettings();
-
     d->sharedData->captionPage->saveSettings();
-
     d->sharedData->soundtrackPage->saveSettings();
-
     d->sharedData->advancedPage->saveSettings();
 
     KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
-
     grp.writeEntry("OpenGL", d->sharedData->opengl);
-
     grp.writeEntry("Delay", d->sharedData->delay);
-
     grp.writeEntry("Print Filename", d->sharedData->printFileName);
-
     grp.writeEntry("Print Progress Indicator", d->sharedData->printProgress);
-
     grp.writeEntry("Print Comments", d->sharedData->printFileComments);
-
     grp.writeEntry("Loop", d->sharedData->loop);
-
     grp.writeEntry("Shuffle", d->sharedData->shuffle);
-
     grp.writeEntry("Show Selected Files Only", d->sharedData->showSelectedFilesOnly);
-
     grp.writeEntry("Use Milliseconds", d->sharedData->useMilliseconds);
-
     grp.writeEntry("Enable Mouse Wheel", d->sharedData->enableMouseWheel);
 
     // Comments tab settings
     QFont* commentsFont = d->sharedData->captionFont;
-
     grp.writeEntry("Comments Font Family", commentsFont->family());
-
     grp.writeEntry("Comments Font Size", commentsFont->pointSize());
-
     grp.writeEntry("Comments Font Bold", commentsFont->bold());
-
     grp.writeEntry("Comments Font Italic", commentsFont->italic());
-
     grp.writeEntry("Comments Font Underline", commentsFont->underline());
-
     grp.writeEntry("Comments Font Overline", commentsFont->overline());
-
     grp.writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
-
     grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
-
     grp.writeEntry("Comments Font Color", d->sharedData->commentsFontColor);
-
     grp.writeEntry("Comments Bg Color", d->sharedData->commentsBgColor);
-
     grp.writeEntry("Transparent Bg", d->sharedData->transparentBg);
-
     grp.writeEntry("Comments Lines Length", d->sharedData->commentsLinesLength);
-
     grp.writeEntry("Effect Name (OpenGL)", d->sharedData->effectNameGL);
-
     grp.writeEntry("Effect Name", d->sharedData->effectName);
 
     // Sountrack tab
     grp.writeEntry("Sountrack Loop", d->sharedData->soundtrackLoop);
-
     grp.writeEntry("Sountrack Path", d->sharedData->soundtrackPath.path());
 
     // Advanced settings
     grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
-
     grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);
-
     grp.writeEntry("Enable Cache", d->sharedData->enableCache);
-
     grp.writeEntry("Cache Size", d->sharedData->cacheSize);
 
     d->config->sync();
 }
-
-// -- SLOTS
 
 void SlideShowConfig::slotStartClicked()
 {

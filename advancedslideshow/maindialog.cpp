@@ -145,6 +145,7 @@ void MainDialog::readSettings()
         connect(m_selectedFilesButton, SIGNAL(toggled(bool)), this, SLOT(slotSelection()));
 
     slotOpenGLToggled();
+    slotSelection();
 
     slotPrintCommentsToggled();
 
@@ -540,7 +541,6 @@ void MainDialog::slotSelection( void )
 
     if (m_selectedFilesButton->isChecked())
     {
-
         urlList = m_sharedData->interface->currentSelection().images();
 
         m_ImagesFilesButtonAdd->setEnabled(false);
@@ -548,30 +548,26 @@ void MainDialog::slotSelection( void )
         m_ImagesFilesButtonUp->setEnabled(false);
         m_ImagesFilesButtonDown->setEnabled(false);
     }
-    else
-        if (m_allFilesButton->isChecked())
-        {
+    else if (m_allFilesButton->isChecked())
+    {
 
-            KUrl currentPath = m_sharedData->interface->currentAlbum().path();
-            Q3ValueList<KIPI::ImageCollection> albumList;
+        KUrl currentPath = m_sharedData->interface->currentAlbum().path();
+        Q3ValueList<KIPI::ImageCollection> albumList;
 
-            albumList = m_sharedData->interface->allAlbums();
-            Q3ValueList<KIPI::ImageCollection>::iterator it;
+        albumList = m_sharedData->interface->allAlbums();
+        Q3ValueList<KIPI::ImageCollection>::iterator it;
 
-            urlList = m_sharedData->interface->currentAlbum().images();
+        urlList = m_sharedData->interface->currentAlbum().images();
 
-            for ( it = albumList.begin(); it != albumList.end(); ++it )
-                if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
-                    urlList += (*it).images();
+        for (it = albumList.begin(); it != albumList.end(); ++it)
+            if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
+                urlList += (*it).images();
 
-            m_ImagesFilesButtonAdd->setEnabled(false);
-
-            m_ImagesFilesButtonDelete->setEnabled(false);
-
-            m_ImagesFilesButtonUp->setEnabled(false);
-
-            m_ImagesFilesButtonDown->setEnabled(false);
-        }
+        m_ImagesFilesButtonAdd->setEnabled(false);
+        m_ImagesFilesButtonDelete->setEnabled(false);
+        m_ImagesFilesButtonUp->setEnabled(false);
+        m_ImagesFilesButtonDown->setEnabled(false);
+    }
 
     if ( m_customButton->isChecked() )    // Custom selected
     {

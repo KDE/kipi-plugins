@@ -51,9 +51,9 @@ public:
     MainDialog(QWidget* parent, SharedData* sharedData);
     ~MainDialog();
 
-    void  readSettings();
-    void  saveSettings();
-    bool  updateUrlList();
+    void readSettings();
+    void saveSettings();
+    bool updateUrlList();
 
 private Q_SLOTS:
 

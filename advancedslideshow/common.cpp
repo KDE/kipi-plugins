@@ -71,16 +71,6 @@ SharedData::SharedData()
 
 SharedData::~SharedData()
 {
-//    if ( mainPage ) delete mainPage;
-//    if ( captionPage ) delete captionPage;
-//    if ( soundtrackPage ) delete soundtrackPage;
-//    if ( advancedPage ) delete advancedPage;
-//
-//    if ( page_main ) delete page_main;
-//    if ( page_caption ) delete page_caption;
-//    if ( page_soundtrack ) delete page_soundtrack;
-//    if ( page_advanced ) delete page_advanced;
-
     delete captionFont;
 }
 

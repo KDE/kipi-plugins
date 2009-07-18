@@ -64,25 +64,22 @@ using namespace KIPIAdvancedSlideshowPlugin;
 K_PLUGIN_FACTORY( AdvancedSlideshowFactory, registerPlugin<Plugin_AdvancedSlideshow>(); )
 K_EXPORT_PLUGIN ( AdvancedSlideshowFactory("kipiplugin_advancedslideshow") )
 
-Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVariantList &args)
-                        : KIPI::Plugin( AdvancedSlideshowFactory::componentData(), parent, "AdvancedSlideshow")
+Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVariantList &/*args*/)
+                        : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
+                                       parent, "AdvancedSlideshow")
 {
-    // Useless: to please the compiler
-    QVariantList argsList = args;
-
     kDebug(51001) << "Plugin_AdvancedSlideshow plugin loaded" ;
-
     m_sharedData = 0;
 }
 
-void Plugin_AdvancedSlideshow::setup( QWidget* widget )
+void Plugin_AdvancedSlideshow::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    KIPI::Plugin::setup(widget);
 
     m_actionSlideShow = actionCollection()->addAction("advancedslideshow");
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("slideshow"));
-    m_actionSlideShow->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F9);
+    m_actionSlideShow->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9);
     m_actionSlideShow->setEnabled(false);
 
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),
@@ -90,11 +87,11 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
 
     addAction(m_actionSlideShow);
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast<KIPI::Interface*> (parent());
 
-    if ( !m_interface )
+    if (!m_interface)
     {
-        kError( 51000 ) << "Kipi m_interface is null!" ;
+        kError(51000) << "Kipi m_interface is null!";
         return;
     }
 
@@ -103,9 +100,9 @@ void Plugin_AdvancedSlideshow::setup( QWidget* widget )
     connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
             this, SLOT( slotAlbumChanged( bool )));
 
-    if ( m_interface->currentAlbum().isValid() )
+    if (m_interface->currentAlbum().isValid())
     {
-        slotAlbumChanged( true );
+        slotAlbumChanged(true);
     }
 }
 
@@ -115,9 +112,9 @@ Plugin_AdvancedSlideshow::~Plugin_AdvancedSlideshow()
 
 void Plugin_AdvancedSlideshow::slotActivate()
 {
-    if ( !m_interface )
+    if (!m_interface)
     {
-        kError( 51000 ) << "Kipi m_interface is null!" ;
+        kError(51000) << "Kipi m_interface is null!";
         return;
     }
 
@@ -126,15 +123,15 @@ void Plugin_AdvancedSlideshow::slotActivate()
     m_sharedData->showSelectedFilesOnly = true;
     m_sharedData->interface             = m_interface;
     m_sharedData->ImagesHasComments     = m_interface->hasFeature(KIPI::ImagesHasComments);
-    m_sharedData->urlList                = m_urlList;
+    m_sharedData->urlList               = m_urlList;
     KIPI::ImageCollection currSel       = m_interface->currentSelection();
 
-    if ( !currSel.isValid() || currSel.images().isEmpty() )
+    if (!currSel.isValid() || currSel.images().isEmpty())
     {
         m_sharedData->showSelectedFilesOnly = false;
     }
 
-    SlideShowConfig *slideShowConfig = new SlideShowConfig( kapp->activeWindow(), m_sharedData );
+    SlideShowConfig *slideShowConfig = new SlideShowConfig(kapp->activeWindow(), m_sharedData);
 
     connect(slideShowConfig, SIGNAL(buttonStartClicked()),
             this, SLOT(slotSlideShow()));
@@ -146,25 +143,25 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 {
     if (!anyAlbum)
     {
-        m_actionSlideShow->setEnabled( false );
+        m_actionSlideShow->setEnabled(false);
         return;
     }
 
-    KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* m_interface = dynamic_cast<KIPI::Interface*> (parent());
 
-    if ( !m_interface )
+    if (!m_interface)
     {
-        kError( 51000 ) << "Kipi m_interface is null!";
-        m_actionSlideShow->setEnabled( false );
+        kError(51000) << "Kipi m_interface is null!";
+        m_actionSlideShow->setEnabled(false);
         return;
     }
 
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
 
-    if ( !currAlbum.isValid() )
+    if (!currAlbum.isValid())
     {
-        kError( 51000 ) << "Current image collection is not valid." ;
-        m_actionSlideShow->setEnabled( false );
+        kError(51000) << "Current image collection is not valid.";
+        m_actionSlideShow->setEnabled(false);
         return;
     }
 
@@ -173,31 +170,31 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
 void Plugin_AdvancedSlideshow::slotSlideShow()
 {
-    if ( !m_interface )
+    if (!m_interface)
     {
-        kError( 51000 ) << "Kipi m_interface is null!" ;
+        kError(51000) << "Kipi m_interface is null!";
         return;
     }
 
     KConfig config("kipirc");
 
-    bool    opengl;
-    bool    shuffle;
-    bool    wantKB;
+    bool opengl;
+    bool shuffle;
+    bool wantKB;
     KConfigGroup grp = config.group("Advanced Slideshow Settings");
     opengl           = grp.readEntry("OpenGL", false);
     shuffle          = grp.readEntry("Shuffle", false);
     wantKB           = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
-    if ( !currAlbum.isValid() )
+    if (!currAlbum.isValid())
     {
-        kError( 51000 ) << "Current image collection is not valid. This should not happen at this point!" ;
+        kError(51000) << "Current image collection is not valid. This should not happen at this point!";
         return;
     }
 
     m_urlList = currAlbum.images();
-    if ( m_urlList.isEmpty() )
+    if (m_urlList.isEmpty())
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
         return;
@@ -272,9 +269,9 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     }
 }
 
-KIPI::Category Plugin_AdvancedSlideshow::category( KAction* action ) const
+KIPI::Category Plugin_AdvancedSlideshow::category(KAction* action) const
 {
-    if ( action == m_actionSlideShow )
+    if (action == m_actionSlideShow)
         return KIPI::ToolsPlugin;
 
     kWarning( 51000 ) << "Unrecognized action for plugin category identification";
