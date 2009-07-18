@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QMap>
 #include <QMutex>
 #include <QImage>
@@ -37,7 +37,7 @@
 #include <kurl.h>
 
 typedef QPair<QString, int> FileAnglePair;
-typedef Q3ValueList<FileAnglePair> FileList;
+typedef QList<FileAnglePair> FileList;
 
 namespace KIPIAdvancedSlideshowPlugin
 {

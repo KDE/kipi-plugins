@@ -34,7 +34,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QApplication>
 #include <QImage>
 #include <QPainter>
@@ -156,7 +156,7 @@ Image::~Image()
 
 // -------------------------------------------------------------------------
 
-SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
+SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedData* sharedData)
         : QGLWidget()
 {
@@ -208,7 +208,7 @@ SlideShowKB::SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
 
     m_haveImages  = true;
 
-    Q3ValueList<QPair<QString, int> > m_fileList = fileList;
+    QList<QPair<QString, int> > m_fileList = fileList;
 
     m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
 

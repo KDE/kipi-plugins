@@ -31,7 +31,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QPair>
 #include <QStringList>
 
@@ -202,7 +202,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     typedef QPair<QString, int> FileAnglePair;
 
-    typedef Q3ValueList<FileAnglePair > FileList;
+    typedef QList<FileAnglePair > FileList;
     FileList fileList;
     QStringList commentsList;
 

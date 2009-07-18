@@ -27,7 +27,7 @@
 // Qt includes
 
 #include <Q3PointArray>
-#include <Q3ValueList>
+#include <QList>
 #include <QFont>
 #include <QKeyEvent>
 #include <QMap>
@@ -59,7 +59,7 @@
 class QTimer;
 
 typedef QPair<QString, int> FileAnglePair;
-typedef Q3ValueList<FileAnglePair > FileList;
+typedef QList<FileAnglePair > FileList;
 
 namespace KIPIAdvancedSlideshowPlugin
 {

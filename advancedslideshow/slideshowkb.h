@@ -37,7 +37,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QKeyEvent>
 #include <QMap>
 #include <QMouseEvent>
@@ -140,7 +140,7 @@ class SlideShowKB : public QGLWidget
 
 public:
 
-    SlideShowKB(const Q3ValueList<QPair<QString, int> >& fileList,
+    SlideShowKB(const QList<QPair<QString, int> >& fileList,
                 const QStringList& commentsList, SharedData* sharedData);
 
     ~SlideShowKB();

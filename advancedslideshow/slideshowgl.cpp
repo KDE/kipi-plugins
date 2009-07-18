@@ -30,7 +30,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QTimer>
 #include <QPixmap>
 #include <QApplication>
@@ -61,7 +61,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SlideShowGL::SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
+SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedData* sharedData)
         : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
                     Qt::WX11BypassWM | Qt::WDestructiveClose)

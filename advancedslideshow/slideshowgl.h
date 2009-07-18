@@ -30,7 +30,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QStringList>
 #include <QPair>
 #include <QString>
@@ -64,7 +64,7 @@ class SlideShowGL : public QGLWidget
 
 public:
 
-    SlideShowGL(const Q3ValueList<QPair<QString, int> >& fileList,
+    SlideShowGL(const QList<QPair<QString, int> >& fileList,
                 const QStringList& commentsList, SharedData* sharedData);
     ~SlideShowGL();
 
@@ -132,7 +132,7 @@ private:
 
     QMap<QString, EffectMethod>       m_effects;
 
-    Q3ValueList<QPair<QString, int> > m_fileList;
+    QList<QPair<QString, int> > m_fileList;
     QStringList                       m_commentsList;
     QTimer*                           m_timer;
     int                               m_fileIndex;

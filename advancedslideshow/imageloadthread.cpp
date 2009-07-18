@@ -28,7 +28,6 @@
 
 // Qt includes
 
-#include <Q3ValueList>
 #include <QMatrix>
 #include <QFileInfo>
 
@@ -53,7 +52,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ImageLoadThread::ImageLoadThread(Q3ValueList<QPair<QString, int> >& fileList,
+ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList,
                                  int width, int height)
 {
     m_initialized   = false;
@@ -212,7 +211,7 @@ bool ImageLoadThread::loadImage()
 
 void ImageLoadThread::invalidateCurrentImageName()
 {
-    m_fileList.remove(m_fileList[m_fileIndex]);
+    m_fileList.removeAll(m_fileList[m_fileIndex]);
     m_fileIndex++;
 }
 

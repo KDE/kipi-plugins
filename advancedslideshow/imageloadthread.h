@@ -28,7 +28,7 @@
 
 // Qt includes
 
-#include <Q3ValueList>
+#include <QList>
 #include <QImage>
 #include <QThread>
 #include <QWaitCondition>
@@ -46,7 +46,7 @@ class ImageLoadThread : public QThread
 
 public:
 
-    ImageLoadThread(Q3ValueList<QPair<QString, int> >& fileList, int width, int height);
+    ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height);
 
     void  quit();
     void  requestNewImage();
@@ -90,7 +90,7 @@ protected:
 private:
 
     int                               m_fileIndex;
-    Q3ValueList<QPair<QString, int> > m_fileList;
+    QList<QPair<QString, int> >       m_fileList;
 
     int                               m_width, m_height;
 

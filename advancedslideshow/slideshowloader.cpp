@@ -27,7 +27,7 @@
 #include <QImage>
 #include <QMatrix>
 #include <QPainter>
-#include <Q3ValueList>
+#include <QList>
 #include <QFileInfo>
 
 // KDE includes

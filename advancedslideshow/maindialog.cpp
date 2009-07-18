@@ -552,13 +552,12 @@ void MainDialog::slotSelection( void )
     {
 
         KUrl currentPath = m_sharedData->interface->currentAlbum().path();
-        Q3ValueList<KIPI::ImageCollection> albumList;
-
+        QList<KIPI::ImageCollection> albumList;
         albumList = m_sharedData->interface->allAlbums();
-        Q3ValueList<KIPI::ImageCollection>::iterator it;
 
         urlList = m_sharedData->interface->currentAlbum().images();
 
+        QList<KIPI::ImageCollection>::iterator it;
         for (it = albumList.begin(); it != albumList.end(); ++it)
             if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
                 urlList += (*it).images();
