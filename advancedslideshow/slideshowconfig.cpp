@@ -50,11 +50,11 @@ class SlideShowConfigPrivate
 
 public:
 
-    SlideShowConfigPrivate() {}
-
-    ~SlideShowConfigPrivate()
+    SlideShowConfigPrivate()
     {
-//        if (config) delete config;
+        about      = 0;
+        sharedData = 0;
+        config     = 0;
     }
 
     KIPIPlugins::KPAboutData* about;
