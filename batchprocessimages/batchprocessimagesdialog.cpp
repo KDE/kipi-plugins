@@ -767,7 +767,8 @@ void BatchProcessImagesDialog::slotPreviewStop(void)
 void BatchProcessImagesDialog::slotProcessStop(void)
 {
     // Try to kill the current process !
-    m_ProcessusProc->close();
+if (m_ProcessusProc)
+	m_ProcessusProc->close();
 
     // If kill operation failed, Stop the process at the next image !
     if (m_convertStatus == UNDER_PROCESS)
