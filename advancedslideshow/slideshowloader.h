@@ -36,7 +36,7 @@
 
 #include <kurl.h>
 
-typedef QPair<QString, int> FileAnglePair;
+typedef QPair<QString, int>  FileAnglePair;
 typedef QList<FileAnglePair> FileList;
 
 namespace KIPIAdvancedSlideshowPlugin
