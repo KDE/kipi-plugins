@@ -79,6 +79,7 @@ Q_SIGNALS :
 
 private:
 
+    void setupConnections();
     void loadEffectNames();
     void loadEffectNamesGL();
 

@@ -128,41 +128,7 @@ void MainDialog::readSettings()
 
     // --------------------------------------------------------
 
-    connect(m_sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
-            SLOT(slotUseMillisecondsToggled()));
-
-    connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotPrintCommentsToggled()));
-
-    connect(m_openglCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotOpenGLToggled()));
-
-    connect(m_allFilesButton, SIGNAL(toggled(bool)),
-            this, SLOT(slotSelection()));
-
-    connect(m_delaySpinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(slotDelayChanged()));
-
-    connect(m_effectsComboBox, SIGNAL(activated(int)),
-            this, SLOT(slotEffectChanged()));
-
-    connect(m_ImagesFilesListBox, SIGNAL( currentRowChanged( int ) ),
-            this, SLOT( slotImagesFilesSelected( int ) ));
-
-    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
-            this, SLOT( slotAddDropItems(KUrl::List)));
-
-    connect(m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonAdd() ));
-
-    connect(m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonDelete() ));
-
-    connect(m_ImagesFilesButtonUp, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonUp() ));
-
-    connect(m_ImagesFilesButtonDown, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonDown() ));
+    setupConnections();
 }
 
 void MainDialog::saveSettings()
@@ -616,6 +582,45 @@ void MainDialog::slotPrintCommentsToggled( void )
 {
     m_sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
     m_sharedData->page_caption->setEnabled(m_printCommentsCheckBox->isChecked());
+}
+
+void MainDialog::setupConnections()
+{
+    connect(m_sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
+            SLOT(slotUseMillisecondsToggled()));
+
+    connect(m_printCommentsCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotPrintCommentsToggled()));
+
+    connect(m_openglCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotOpenGLToggled()));
+
+    connect(m_allFilesButton, SIGNAL(toggled(bool)),
+            this, SLOT(slotSelection()));
+
+    connect(m_delaySpinBox, SIGNAL(valueChanged(int)),
+            this, SLOT(slotDelayChanged()));
+
+    connect(m_effectsComboBox, SIGNAL(activated(int)),
+            this, SLOT(slotEffectChanged()));
+
+    connect(m_ImagesFilesListBox, SIGNAL( currentRowChanged( int ) ),
+            this, SLOT( slotImagesFilesSelected( int ) ));
+
+    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
+            this, SLOT( slotAddDropItems(KUrl::List)));
+
+    connect(m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
+            this, SLOT( slotImagesFilesButtonAdd() ));
+
+    connect(m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
+            this, SLOT( slotImagesFilesButtonDelete() ));
+
+    connect(m_ImagesFilesButtonUp, SIGNAL( clicked() ),
+            this, SLOT( slotImagesFilesButtonUp() ));
+
+    connect(m_ImagesFilesButtonDown, SIGNAL( clicked() ),
+            this, SLOT( slotImagesFilesButtonDown() ));
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin
