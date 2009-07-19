@@ -31,4 +31,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> BatchProcess : 200722 : Crashes after successfull batch and closing resize dialog.
 022 ==> AdvSlideShow : 200647 : Not all main settings are not restored correctly.
 023 ==> BatchProcess : 168243 : Delete photo after not found imagemagick
-024 ==>
+024 ==> BatchProcess : 149488 : after batch renaming pictures, the pictures appears as unkown images, and can't be removed from album nor can be viewed or edit
+025 ==>
