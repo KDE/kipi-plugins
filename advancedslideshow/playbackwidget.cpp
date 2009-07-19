@@ -37,7 +37,7 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedData* sharedData)
-        : QWidget(parent)
+              : QWidget(parent)
 {
     setupUi(this);
 
@@ -68,7 +68,7 @@ PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedData* sh
     connect(m_stopButton, SIGNAL(clicked(void)),
             this, SLOT(slotStop(void)));
 
-    if ( m_urlList.empty() )
+    if (m_urlList.empty())
     {
         setEnabled(false);
         return;
@@ -114,8 +114,6 @@ PlaybackWidget::~PlaybackWidget()
     if (!m_urlList.empty())
     {
         m_mediaObject->stop();
-//        delete m_mediaObject;
-//        delete m_audioOutput;
     }
 }
 
