@@ -22,14 +22,14 @@
 
 #include "soundtrackdialog.h"
 #include "soundtrackdialog.moc"
+
 #ifdef Q_WS_X11
 #include <fixx11h.h>
 #endif
-// Phonon includes
 
-#include <Phonon/BackendCapabilities>
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
+// Qt includes
+
+#include <QPointer>
 
 // KDE includes
 
@@ -38,6 +38,13 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+
+// Phonon includes
+
+#include <Phonon/BackendCapabilities>
+#include <Phonon/MediaObject>
+#include <Phonon/AudioOutput>
+
 
 // Local includes
 
@@ -270,23 +277,23 @@ void SoundtrackDialog::slotAddDropItems(KUrl::List filesUrl)
 
 void SoundtrackDialog::slotSoundFilesButtonAdd( void )
 {
-    KFileDialog dlg(m_sharedData->soundtrackPath, "", this);
+    QPointer<KFileDialog> dlg = new KFileDialog(m_sharedData->soundtrackPath, "", this);
 
     // Setting available mime-types (filtering out non audio mime-types)
-    dlg.setMimeFilter( Phonon::BackendCapabilities::availableMimeTypes().filter("audio/") );
+    dlg->setMimeFilter( Phonon::BackendCapabilities::availableMimeTypes().filter("audio/") );
+    dlg->setOperationMode(KFileDialog::Opening);
+    dlg->setMode( KFile::Files );
+    dlg->setWindowTitle(i18n("Select sound files"));
+    dlg->exec();
 
-    dlg.setOperationMode(KFileDialog::Opening);
-    dlg.setMode( KFile::Files );
-    dlg.setWindowTitle(i18n("Select sound files"));
-    dlg.exec();
-
-    KUrl::List urls = dlg.selectedUrls();
+    KUrl::List urls = dlg->selectedUrls();
 
     if (!urls.isEmpty())
     {
         addItems(urls);
     }
 
+    delete dlg;
 }
 
 void SoundtrackDialog::slotSoundFilesButtonDelete( void )
@@ -394,12 +401,10 @@ void SoundtrackDialog::slotPreviewButtonClicked( void )
     // Update SharedData from interface
     saveSettings();
 
-    SoundtrackPreview* preview = new SoundtrackPreview(this, urlList, m_sharedData);
-
+    QPointer<SoundtrackPreview> preview = new SoundtrackPreview(this, urlList, m_sharedData);
     preview->exec();
 
     delete preview;
-
     return;
 }
 
