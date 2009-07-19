@@ -6,7 +6,7 @@
  * Date        : 2007-11-14
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2007-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * Parts of this code are based on smoothslidesaver by Carsten Weinhold
  * <carsten dot weinhold at gmx dot de>
@@ -163,9 +163,9 @@ bool ImageLoadThread::loadImage()
     QPair<QString, int> fileAngle = m_fileList[m_fileIndex];
     QString path(fileAngle.first);
     int     angle(fileAngle.second);
-    
+
     QImage image;
-    
+
     // check if it's a RAW file.
 #if KDCRAW_VERSION < 0x000400
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());

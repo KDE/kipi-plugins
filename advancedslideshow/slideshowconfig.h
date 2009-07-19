@@ -6,7 +6,8 @@
  * Date        : 2008-09-09
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

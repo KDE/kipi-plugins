@@ -6,7 +6,7 @@
  * Date        : 2007-11-14
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2007-2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2007-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * Parts of this code are based on
  * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
