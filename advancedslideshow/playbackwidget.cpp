@@ -251,7 +251,8 @@ void PlaybackWidget::slotStop()
     checkSkip();
     setGUIPlay(false);
     setZeroTime();
-    m_mediaObject->play();
+    // FIXME: wrong logic?
+    //    m_mediaObject->play();
 }
 
 void PlaybackWidget::slotPrev()
