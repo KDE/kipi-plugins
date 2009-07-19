@@ -182,14 +182,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     bool shuffle     = grp.readEntry("Shuffle", false);
     bool wantKB      = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
-    KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
-    if (!currAlbum.isValid())
-    {
-        kError(51000) << "Current image collection is not valid. This should not happen at this point!";
-        return;
-    }
-
-    m_urlList = currAlbum.images();
+    m_urlList = m_sharedData->urlList;
     if (m_urlList.isEmpty())
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("There are no images to show."));
