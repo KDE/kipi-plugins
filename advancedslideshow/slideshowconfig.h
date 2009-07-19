@@ -60,7 +60,7 @@ private Q_SLOTS:
 
 private:
 
-    SlideShowConfigPrivate* d;
+    SlideShowConfigPrivate* const d;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin
