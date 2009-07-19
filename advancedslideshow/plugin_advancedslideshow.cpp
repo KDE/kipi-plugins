@@ -177,14 +177,10 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     }
 
     KConfig config("kipirc");
-
-    bool opengl;
-    bool shuffle;
-    bool wantKB;
     KConfigGroup grp = config.group("Advanced Slideshow Settings");
-    opengl           = grp.readEntry("OpenGL", false);
-    shuffle          = grp.readEntry("Shuffle", false);
-    wantKB           = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
+    bool opengl      = grp.readEntry("OpenGL",  false);
+    bool shuffle     = grp.readEntry("Shuffle", false);
+    bool wantKB      = grp.readEntry("Effect Name (OpenGL)") == QString("Ken Burns");
 
     KIPI::ImageCollection currAlbum = m_interface->currentAlbum();
     if (!currAlbum.isValid())

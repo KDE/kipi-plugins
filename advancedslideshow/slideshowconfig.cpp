@@ -145,19 +145,19 @@ void SlideShowConfig::readSettings()
 {
     KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
 
-    d->sharedData->opengl                = grp.readEntry("OpenGL", false);
-    d->sharedData->delay                 = grp.readEntry("Delay", 1500);
-    d->sharedData->printFileName         = grp.readEntry("Print Filename", true);
-    d->sharedData->printProgress         = grp.readEntry("Print Progress Inticator", true);
-    d->sharedData->printFileComments     = grp.readEntry("Print Comments", false);
-    d->sharedData->loop                  = grp.readEntry("Loop", false);
-    d->sharedData->shuffle               = grp.readEntry("Shuffle", false);
-    d->sharedData->effectName            = grp.readEntry("Effect Name", "Random");
-    d->sharedData->effectNameGL          = grp.readEntry("Effect Name (OpenGL)", "Random");
+    d->sharedData->opengl            = grp.readEntry("OpenGL", false);
+    d->sharedData->delay             = grp.readEntry("Delay", 1500);
+    d->sharedData->printFileName     = grp.readEntry("Print Filename", true);
+    d->sharedData->printProgress     = grp.readEntry("Print Progress Inticator", true);
+    d->sharedData->printFileComments = grp.readEntry("Print Comments", false);
+    d->sharedData->loop              = grp.readEntry("Loop", false);
+    d->sharedData->shuffle           = grp.readEntry("Shuffle", false);
+    d->sharedData->effectName        = grp.readEntry("Effect Name", "Random");
+    d->sharedData->effectNameGL      = grp.readEntry("Effect Name (OpenGL)", "Random");
 
-    d->sharedData->delayMsMaxValue = 10000;
-    d->sharedData->delayMsMinValue = 100;
-    d->sharedData->delayMsLineStep = 100;
+    d->sharedData->delayMsMaxValue   = 10000;
+    d->sharedData->delayMsMinValue   = 100;
+    d->sharedData->delayMsLineStep   = 100;
 
     // Comments tab settings
     QFont *savedFont = new QFont();
@@ -172,25 +172,25 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->captionFont = savedFont;
 
-    d->sharedData->commentsFontColor     = grp.readEntry("Comments Font Color", 0xffffff);
-    d->sharedData->commentsBgColor       = grp.readEntry("Comments Bg Color", 0x000000);
-    d->sharedData->transparentBg         = grp.readEntry("Transparent Bg", true);
+    d->sharedData->commentsFontColor   = grp.readEntry("Comments Font Color", 0xffffff);
+    d->sharedData->commentsBgColor     = grp.readEntry("Comments Bg Color", 0x000000);
+    d->sharedData->transparentBg       = grp.readEntry("Transparent Bg", true);
 
-    d->sharedData->commentsLinesLength   = grp.readEntry("Comments Lines Length", 72);
+    d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
     // Soundtrack tab
-    d->sharedData->soundtrackLoop        = grp.readEntry("Sountrack Loop", false);
-    d->sharedData->soundtrackPath        = KUrl(grp.readEntry("Sountrack Path", "" ));
+    d->sharedData->soundtrackLoop      = grp.readEntry("Sountrack Loop", false);
+    d->sharedData->soundtrackPath      = KUrl(grp.readEntry("Sountrack Path", "" ));
 
     // Advanced tab
-    d->sharedData->useMilliseconds       = grp.readEntry("Use Milliseconds", false);
-    d->sharedData->enableMouseWheel      = grp.readEntry("Enable Mouse Wheel", true);
+    d->sharedData->useMilliseconds     = grp.readEntry("Use Milliseconds", false);
+    d->sharedData->enableMouseWheel    = grp.readEntry("Enable Mouse Wheel", true);
 
-    d->sharedData->kbDisableFadeInOut    = grp.readEntry("KB Disable FadeInOut", false);
-    d->sharedData->kbDisableCrossFade    = grp.readEntry("KB Disable Crossfade", false);
+    d->sharedData->kbDisableFadeInOut  = grp.readEntry("KB Disable FadeInOut", false);
+    d->sharedData->kbDisableCrossFade  = grp.readEntry("KB Disable Crossfade", false);
 
-    d->sharedData->enableCache           = grp.readEntry("Enable Cache", false);
-    d->sharedData->cacheSize             = grp.readEntry("Cache Size", 5);
+    d->sharedData->enableCache         = grp.readEntry("Enable Cache", false);
+    d->sharedData->cacheSize           = grp.readEntry("Cache Size", 5);
 
     d->sharedData->mainPage->readSettings();
     d->sharedData->captionPage->readSettings();

@@ -82,51 +82,51 @@ public:
 
     void registerEffects();
 
-    static QStringList effectNames();
+    static QStringList            effectNames();
     static QMap<QString, QString> effectNamesI18N();
 
 
 protected:
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *);
-    void wheelEvent(QWheelEvent *);
-    void keyPressEvent(QKeyEvent *event);
+    void    mousePressEvent(QMouseEvent *event);
+    void    mouseMoveEvent(QMouseEvent *);
+    void    wheelEvent(QWheelEvent *);
+    void    keyPressEvent(QKeyEvent *event);
 
-    int effectNone(bool);
-    int effectChessboard(bool doInit);
-    int effectMeltdown(bool doInit);
-    int effectSweep(bool doInit);
-    int effectMosaic(bool doInit);
-    int effectCubism(bool doInit);
-    int effectRandom(bool doInit);
-    int effectGrowing(bool doInit);
-    int effectHorizLines(bool doInit);
-    int effectVertLines(bool doInit);
-    int effectMultiCircleOut(bool doInit);
-    int effectSpiralIn(bool doInit);
-    int effectCircleOut(bool doInit);
-    int effectBlobs(bool doInit);
+    int     effectNone(bool);
+    int     effectChessboard(bool doInit);
+    int     effectMeltdown(bool doInit);
+    int     effectSweep(bool doInit);
+    int     effectMosaic(bool doInit);
+    int     effectCubism(bool doInit);
+    int     effectRandom(bool doInit);
+    int     effectGrowing(bool doInit);
+    int     effectHorizLines(bool doInit);
+    int     effectVertLines(bool doInit);
+    int     effectMultiCircleOut(bool doInit);
+    int     effectSpiralIn(bool doInit);
+    int     effectCircleOut(bool doInit);
+    int     effectBlobs(bool doInit);
 
-    void paintEvent(QPaintEvent*);
-    void startPainter();
+    void    paintEvent(QPaintEvent*);
+    void    startPainter();
 
-    bool            m_simplyShow;
-    bool            m_startPainter;
-    int             m_px, m_py, m_psx, m_psy, m_psw, m_psh;
-    bool            m_endOfShow;
-    QPixmap         m_buffer;
+    bool    m_simplyShow;
+    bool    m_startPainter;
+    int     m_px, m_py, m_psx, m_psy, m_psw, m_psh;
+    bool    m_endOfShow;
+    QPixmap m_buffer;
 
 private Q_SLOTS:
 
-    void slotTimeOut();
-    void slotMouseMoveTimeOut();
+    void    slotTimeOut();
+    void    slotMouseMoveTimeOut();
 
-    void slotPause();
-    void slotPlay();
-    void slotPrev();
-    void slotNext();
-    void slotClose();
+    void    slotPause();
+    void    slotPlay();
+    void    slotPrev();
+    void    slotNext();
+    void    slotClose();
 
 private:
 
@@ -136,10 +136,10 @@ private:
     void         printFilename();
     void         printComments();
     void         printProgress();
-    EffectMethod getRandomEffect();
     void         showEndOfShow();
-
     void         readSettings();
+
+    EffectMethod getRandomEffect();
 
 private:
 
@@ -173,8 +173,8 @@ private:
     bool                        m_pdone;
     bool**                      m_pixelMatrix;
 
-    //static 
-    Q3PointArray                 m_pa;
+    //static
+    Q3PointArray                m_pa;
 
     SlidePlaybackWidget*        m_slidePlaybackWidget;
     QTimer*                     m_mouseMoveTimer;
@@ -183,7 +183,6 @@ private:
     int                         m_deskY;
     int                         m_deskWidth;
     int                         m_deskHeight;
-
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
