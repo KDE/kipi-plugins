@@ -119,9 +119,6 @@ void MainDialog::readSettings()
 
     // --------------------------------------------------------
 
-    if ( m_sharedData->showSelectedFilesOnly )
-        connect(m_selectedFilesButton, SIGNAL(toggled(bool)), this, SLOT(slotSelection()));
-
     slotOpenGLToggled();
     slotPrintCommentsToggled();
     slotEffectChanged();
@@ -622,6 +619,12 @@ void MainDialog::setupConnections()
 
     connect(m_ImagesFilesButtonDown, SIGNAL( clicked() ),
             this, SLOT( slotImagesFilesButtonDown() ));
+
+    if (m_sharedData->showSelectedFilesOnly)
+    {
+        connect(m_selectedFilesButton, SIGNAL(toggled(bool)),
+                this, SLOT(slotSelection()));
+    }
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin
