@@ -60,6 +60,8 @@ namespace KIPIPrintImagesPlugin
       ~PrintOptionsPage();
 
       int photoXPage() const;
+      int mp_horPages() const;
+      int mp_verPages() const;
       bool printUsingAtkinsLayout() const;
 
       void loadConfig();
@@ -74,6 +76,8 @@ namespace KIPIPrintImagesPlugin
       void selectNext();
       void selectPrev();
       void photoXpageChanged ( int i );
+      void horizontalPagesChanged ( int i );
+      void verticalPagesChanged ( int i );
       void saveConfig();
       void scaleOption();
       void autoRotate(bool);

@@ -153,6 +153,8 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
               SLOT ( adjustHeightToRatio() ) );
 
     connect (d->mPhotoXPage, SIGNAL(valueChanged (int)), SLOT(photoXpageChanged(int)));
+    connect (d->mPX, SIGNAL(valueChanged (int)), SLOT(horizontalPagesChanged(int)));
+    connect (d->mPY, SIGNAL(valueChanged (int)), SLOT(verticalPagesChanged(int)));
 
     connect ( d->mRightButton, SIGNAL ( clicked() ),
               this, SLOT ( selectNext() ) );
@@ -256,6 +258,15 @@ int PrintOptionsPage::photoXPage() const
     return d->mPhotoXPage->value();
 }
 
+int PrintOptionsPage::mp_horPages() const
+{
+    return d->mPX->value();
+}
+
+int PrintOptionsPage::mp_verPages() const
+{
+    return d->mPY->value();
+}
 bool PrintOptionsPage::printUsingAtkinsLayout() const
 {
     return (d->mPhotoXPage->value() > 0);
@@ -444,9 +455,69 @@ void PrintOptionsPage::photoXpageChanged ( int i )
   {
     d->mRightButton->setDisabled(disabled);
     d->mLeftButton->setDisabled(disabled);
+    SignalBlocker block_mPX ( d->mPX );
+    d->mPX->setValue(0);
+    SignalBlocker block_mPY ( d->mPY );
+    d->mPY->setValue(0);
   }
   else
     enableButtons();
+}
+
+void PrintOptionsPage::horizontalPagesChanged ( int i )
+{
+  bool disabled = (i>0);
+  d->mPositionFrame->setDisabled(disabled);
+  d->mGroupScaling->setDisabled(disabled);
+  d->mGroupImage->setDisabled(disabled);
+  d->kcfg_PrintAutoRotate->setDisabled(disabled);
+  d->mPreview->setDisabled(disabled);
+  if (disabled)
+  {
+    d->mRightButton->setDisabled(disabled);
+    d->mLeftButton->setDisabled(disabled);
+    SignalBlocker blocker ( d->mPhotoXPage );
+    d->mPhotoXPage->setValue(0);
+    if (d->mPY->value() == 0)
+    {
+      SignalBlocker block_mPY ( d->mPY );
+      d->mPY->setValue(1);
+    }
+  }
+  else
+  {
+    SignalBlocker block_mPX ( d->mPY );
+    d->mPY->setValue(0);
+    enableButtons();
+  }
+}
+
+void PrintOptionsPage::verticalPagesChanged ( int i )
+{
+  bool disabled = (i>0);
+  d->mPositionFrame->setDisabled(disabled);
+  d->mGroupScaling->setDisabled(disabled);
+  d->mGroupImage->setDisabled(disabled);
+  d->kcfg_PrintAutoRotate->setDisabled(disabled);
+  d->mPreview->setDisabled(disabled);
+  if (disabled)
+  {
+    d->mRightButton->setDisabled(disabled);
+    d->mLeftButton->setDisabled(disabled);
+    SignalBlocker blocker ( d->mPhotoXPage );
+    d->mPhotoXPage->setValue(0);
+    if (d->mPX->value() == 0)
+    {
+      SignalBlocker block_mPX ( d->mPX );
+      d->mPX->setValue(1);
+    }
+  }
+  else
+  {
+    SignalBlocker block_mPX ( d->mPX );
+    d->mPX->setValue(0);
+    enableButtons();
+  }
 }
 
 void PrintOptionsPage::scaleOption()

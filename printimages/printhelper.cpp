@@ -61,7 +61,7 @@ public:
     PrintHelperDialog(QPrinter *printer, PrintOptionsPage *optionsPage, QWidget *parent = 0);
     ~PrintHelperDialog() {};
 
-private Q_SLOTS:
+public Q_SLOTS:
 
     void manageQPrintDialogChanges ( QPrinter * printer );
 };
@@ -278,25 +278,62 @@ void PrintHelper::print ( KUrl::List fileList )
           QImage image   = pPhoto->loadPhoto();
           kDebug(51000) << "Img size " << image.size() << " viewportSize " << rect.size();
 
-          // trying to fix size at the moment
-          QSize size = d->adjustSize ( *pPhoto, printer.resolution(), rect.size() );
-          QPoint pos = d->adjustPosition ( *pPhoto, size, rect.size() );
+          // if horPages is > 0 vertPages is as well
+          bool multipagePrinting = optionsPage->mp_horPages() > 0; 
 
-          if (pPhoto->pAddInfo->mAutoRotate)
+          if (multipagePrinting)
           {
-//               printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
-                 printer.setOrientation( image.width() <= image.height() ? QPrinter::Portrait
-                    : QPrinter::Landscape );
-          }
-          painter.setViewport ( pos.x(), pos.y(), size.width(), size.height() );
+            int horPages = optionsPage->mp_horPages();
+            int vertPages = optionsPage->mp_verPages();
 
-#if 0
-          QSize size = image.size();
-          size.scale(rect.size(), Qt::KeepAspectRatio);
-          painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-#endif
-          painter.setWindow ( image.rect() );
-          painter.drawImage ( 0, 0, image );
+            QRect imageRec = image.rect();
+            int x1; int y1; int x2; int y2;
+            imageRec.getCoords (&x1, &y1, &x2, &y2);
+            kDebug(51000) << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 <<")";
+            QRect destRec = QRect(QPoint(0,0), QPoint(x2/horPages,y2/vertPages));
+
+            for (int px=1; px <= horPages; px++)
+            {
+              for (int py=1; py <= vertPages; py++)
+              {
+                int sx = ((px-1)*x2/horPages);
+                int sy = ((py-1)*y2/vertPages);
+                int ex = (px*x2/horPages);
+                int ey = (py*y2/vertPages);
+                kDebug(51000) << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey <<")";
+                QImage destImage = image.copy(QRect(QPoint(sx, sy), QPoint(ex, ey)));
+                QSize destSize = destImage.size();
+                destSize.scale(rect.size(), Qt::KeepAspectRatio);
+                painter.setViewport(rect.x(), rect.y(), destSize.width(), destSize.height());
+//                 painter.setViewport (destRec);
+                painter.setWindow (destRec);
+                painter.drawImage (0, 0, destImage);
+//                 painter.drawImage ( /*destRec*/ QPoint(0,0),
+//                                     image,
+//                                      QRect(QPoint(sx, sy), QPoint(ex, ey)));
+
+                if (!(px == horPages && py == vertPages))
+                  printer.newPage();
+              }
+            }
+          }
+          else
+          {
+            // trying to fix size at the moment
+            QSize size = d->adjustSize ( *pPhoto, printer.resolution(), rect.size() );
+            QPoint pos = d->adjustPosition ( *pPhoto, size, rect.size() );
+
+            if (pPhoto->pAddInfo->mAutoRotate)
+            {
+  //               printer.setOrientation( d->m_photos.at(i)->size().width() <= d->m_photos.at(i)->size().height() ? QPrinter::Portrait
+                  printer.setOrientation( image.width() <= image.height() ? QPrinter::Portrait
+                      : QPrinter::Landscape );
+            }
+            painter.setViewport ( pos.x(), pos.y(), size.width(), size.height() );
+
+            painter.setWindow ( image.rect() );
+            painter.drawImage ( 0, 0, image );
+          }
           if ((++i) < fileList.count())
               printer.newPage();
         }
