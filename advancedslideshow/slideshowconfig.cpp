@@ -154,7 +154,6 @@ void SlideShowConfig::readSettings()
     d->sharedData->printFileComments     = grp.readEntry("Print Comments", false);
     d->sharedData->loop                  = grp.readEntry("Loop", false);
     d->sharedData->shuffle               = grp.readEntry("Shuffle", false);
-//    d->sharedData->showSelectedFilesOnly = grp.readEntry("Show Selected Files Only", false);
     d->sharedData->effectName            = grp.readEntry("Effect Name", "Random");
     d->sharedData->effectNameGL          = grp.readEntry("Effect Name (OpenGL)", "Random");
 
@@ -218,7 +217,6 @@ void SlideShowConfig::saveSettings()
     grp.writeEntry("Print Comments", d->sharedData->printFileComments);
     grp.writeEntry("Loop", d->sharedData->loop);
     grp.writeEntry("Shuffle", d->sharedData->shuffle);
-//    grp.writeEntry("Show Selected Files Only", d->sharedData->showSelectedFilesOnly);
     grp.writeEntry("Use Milliseconds", d->sharedData->useMilliseconds);
     grp.writeEntry("Enable Mouse Wheel", d->sharedData->enableMouseWheel);
 
