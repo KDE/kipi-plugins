@@ -82,7 +82,7 @@ public:
     void next();
     void prev();
 
-    QImage getCurrent();
+    QImage  getCurrent();
     QString currFileName();
     KUrl    currPath();
 

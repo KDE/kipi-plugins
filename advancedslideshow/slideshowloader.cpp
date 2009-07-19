@@ -43,7 +43,6 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
-
 namespace KIPIAdvancedSlideshowPlugin
 {
 
@@ -51,12 +50,12 @@ LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl
                        const int angle, int width, int height)
 {
 
-    m_path  =  path;
-    m_angle =  angle;
-    m_swidth = width;
-    m_sheight = height;
-    m_imageLock = imageLock;
-    m_loadedImages = loadedImages;
+    m_path          = path;
+    m_angle         = angle;
+    m_swidth        = width;
+    m_sheight       = height;
+    m_imageLock     = imageLock;
+    m_loadedImages  = loadedImages;
 }
 
 LoadThread::~LoadThread()
@@ -66,7 +65,7 @@ LoadThread::~LoadThread()
 void LoadThread::run()
 {
     QImage newImage;
-    
+
     // check if it's a RAW file.
 #if KDCRAW_VERSION < 0x000400
     QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
@@ -74,22 +73,24 @@ void LoadThread::run()
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fileInfo(m_path.path());
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) {
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+    {
         // it's a RAW file, use the libkdcraw loader
         KDcrawIface::KDcraw::loadDcrawPreview(newImage, m_path.path());
-    } else {
+    }
+    else
+    {
         // use the standard loader
-        newImage=QImage(m_path.path());
+        newImage = QImage(m_path.path());
     }
 
     // Rotate according to angle
-    if ( m_angle != 0 )
+    if (m_angle != 0)
     {
         QMatrix matrix;
-        matrix.rotate((double)m_angle);
-        newImage = newImage.transformed( matrix );
+        matrix.rotate((double) m_angle);
+        newImage = newImage.transformed(matrix);
     }
-
 
     newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
@@ -103,17 +104,17 @@ void LoadThread::run()
 SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex)
 {
 
-    m_currIndex = beginAtIndex;
-    m_cacheSize = cacheSize;
-    m_pathList = pathList;
-    m_swidth = width;
-    m_sheight = height;
+    m_currIndex      = beginAtIndex;
+    m_cacheSize      = cacheSize;
+    m_pathList       = pathList;
+    m_swidth         = width;
+    m_sheight        = height;
     m_loadingThreads = new LoadingThreads();
-    m_loadedImages = new LoadedImages();
-    m_imageLock = new QMutex();
-    m_threadLock = new QMutex();
+    m_loadedImages   = new LoadedImages();
+    m_imageLock      = new QMutex();
+    m_threadLock     = new QMutex();
 
-    for ( uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); i++ )
+    for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); i++)
     {
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[i].first),
                                                m_pathList[i].second, m_swidth, m_sheight);
@@ -123,7 +124,7 @@ SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, 
         m_threadLock->unlock();
     }
 
-    for ( uint i = 0; i < ( m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); i++ )
+    for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); i++)
     {
         int toLoad = (m_currIndex - i) % m_pathList.count();
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[toLoad].first),
@@ -142,7 +143,7 @@ SlideShowLoader::~SlideShowLoader()
     m_threadLock->lock();
     LoadingThreads::Iterator it;
 
-    for ( it = m_loadingThreads->begin(); it != m_loadingThreads->end(); ++it )
+    for (it = m_loadingThreads->begin(); it != m_loadingThreads->end(); ++it)
     {
         it.value()->wait();
         delete it.value();
@@ -155,21 +156,21 @@ SlideShowLoader::~SlideShowLoader()
 
 void SlideShowLoader::next()
 {
-    int victim = (m_currIndex - ( m_cacheSize % 2 == 0 ? (m_cacheSize / 2) - 1 : int(m_cacheSize / 2))) % m_pathList.count();
+    int victim = (m_currIndex - (m_cacheSize % 2 == 0 ?
+                 (m_cacheSize / 2) - 1 :
+                  int(m_cacheSize / 2))) % m_pathList.count();
     int newBorn = (m_currIndex + int(m_cacheSize / 2) + 1) % m_pathList.count();
 
-    if ( victim == newBorn ) return;
+    if (victim == newBorn)
+        return;
 
     m_threadLock->lock();
-
     m_imageLock->lock();
 
     m_loadingThreads->remove(m_pathList[victim].first);
-
     m_loadedImages->remove(m_pathList[victim].first);
 
     m_imageLock->unlock();
-
     m_threadLock->unlock();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first),
@@ -178,7 +179,6 @@ void SlideShowLoader::next()
     m_threadLock->lock();
 
     m_loadingThreads->insert(m_pathList[newBorn].first, newThread);
-
     newThread->start();
 
     m_threadLock->unlock();
@@ -189,36 +189,33 @@ void SlideShowLoader::next()
 void SlideShowLoader::prev()
 {
     int victim = (m_currIndex + int(m_currIndex / 2)) % m_pathList.count();
-    int newBorn = (m_currIndex - ( (m_cacheSize & 2) == 0 ? (m_cacheSize / 2) : int(m_cacheSize / 2) + 1)) % m_pathList.count();
+    int newBorn = (m_currIndex - ((m_cacheSize & 2) == 0 ?
+                  (m_cacheSize / 2) :
+                   int(m_cacheSize / 2) + 1)) % m_pathList.count();
 
-    if ( victim == newBorn ) return;
+    if (victim == newBorn)
+        return;
 
     m_threadLock->lock();
-
     m_imageLock->lock();
 
     m_loadingThreads->remove(m_pathList[victim].first);
-
     m_loadedImages->remove(m_pathList[victim].first);
 
     m_imageLock->unlock();
-
     m_threadLock->unlock();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first),
-                                           m_pathList[newBorn].second, m_swidth, m_sheight);
-
+            m_pathList[newBorn].second, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
     m_loadingThreads->insert(m_pathList[newBorn].first, newThread);
-
     newThread->start();
 
     m_threadLock->unlock();
 
     m_currIndex = (m_currIndex - 1) % m_pathList.count();
-
 }
 
 QImage SlideShowLoader::getCurrent()
@@ -228,7 +225,6 @@ QImage SlideShowLoader::getCurrent()
     m_imageLock->lock();
     QImage returned = (*m_loadedImages)[m_pathList[m_currIndex].first];
     m_imageLock->unlock();
-
 
     return returned;
 }
@@ -249,7 +245,7 @@ void SlideShowLoader::checkIsIn(int index)
 
     if (m_loadingThreads->contains(m_pathList[index].first))
     {
-        if ( (*m_loadingThreads)[m_pathList[index].first]->isRunning() )
+        if ((*m_loadingThreads)[m_pathList[index].first]->isRunning())
             (*m_loadingThreads)[m_pathList[index].first]->wait();
 
         m_threadLock->unlock();
@@ -266,4 +262,4 @@ void SlideShowLoader::checkIsIn(int index)
     }
 }
 
-}  // namespace KIPIAdvancedSlideshowPlugin
+} // namespace KIPIAdvancedSlideshowPlugin
