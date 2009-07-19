@@ -65,7 +65,7 @@ private Q_SLOTS:
     void slotUseMillisecondsToggled( void );
     void slotThumbnail(const KUrl&, const QPixmap&);
 
-    void SlotPortfolioDurationChanged ( int );
+    void slotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected( int );
     void slotAddDropItems(KUrl::List filesUrl);
     void slotImagesFilesButtonAdd( void );

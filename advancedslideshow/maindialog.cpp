@@ -599,7 +599,7 @@ void MainDialog::slotSelection( void )
     }
 }
 
-void MainDialog::SlotPortfolioDurationChanged ( int )
+void MainDialog::slotPortfolioDurationChanged ( int )
 {
     showNumberImages( m_ImagesFilesListBox->count() );
     emit totalTimeChanged( m_totalTime );
