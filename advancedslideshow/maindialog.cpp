@@ -234,28 +234,28 @@ void MainDialog::saveSettings()
     }
 }
 
-void MainDialog::ShowNumberImages( int Number )
+void MainDialog::showNumberImages( int number )
 {
-    QTime TotalDuration (0, 0, 0);
+    QTime totalDuration (0, 0, 0);
 
-    int TransitionDuration = 2000;
+    int transitionDuration = 2000;
 
     if ( m_openglCheckBox->isChecked() )
-        TransitionDuration += 500;
+        transitionDuration += 500;
 
     if ( m_sharedData->useMilliseconds )
-        TotalDuration = TotalDuration.addMSecs(Number * m_delaySpinBox->text().toInt());
+        totalDuration = totalDuration.addMSecs(number * m_delaySpinBox->text().toInt());
     else
-        TotalDuration = TotalDuration.addSecs(Number * m_delaySpinBox->text().toInt());
+        totalDuration = totalDuration.addSecs(number * m_delaySpinBox->text().toInt());
 
-    TotalDuration = TotalDuration.addMSecs((Number - 1) * TransitionDuration);
+    totalDuration = totalDuration.addMSecs((number - 1) * transitionDuration);
 
-    m_totalTime = TotalDuration;
+    m_totalTime = totalDuration;
 
     // Notify total time is changed
     emit totalTimeChanged(m_totalTime);
 
-    m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", Number, TotalDuration.toString()));
+    m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", number, totalDuration.toString()));
 }
 
 void MainDialog::loadEffectNames()
@@ -398,7 +398,7 @@ void MainDialog::addItems(const KUrl::List& fileList)
         m_ImagesFilesListBox->insertItem(m_ImagesFilesListBox->count() - 1, item);
     }
 
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages( m_ImagesFilesListBox->count() );
 
     m_ImagesFilesListBox->setCurrentItem(m_ImagesFilesListBox->item(m_ImagesFilesListBox->count() - 1)) ;
     slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
@@ -429,7 +429,7 @@ void MainDialog::slotImagesFilesButtonDelete( void )
     delete pitem;
 
     slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages( m_ImagesFilesListBox->count() );
 }
 
 void MainDialog::slotImagesFilesButtonUp( void )
@@ -501,7 +501,7 @@ void MainDialog::slotOpenGLToggled( void )
         loadEffectNames();
     }
 
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages( m_ImagesFilesListBox->count() );
 
     slotEffectChanged();
 }
@@ -519,7 +519,7 @@ void MainDialog::slotEffectChanged( void )
 
 void MainDialog::slotDelayChanged( void )
 {
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages( m_ImagesFilesListBox->count() );
 }
 
 void MainDialog::slotUseMillisecondsToggled( void )
@@ -601,7 +601,7 @@ void MainDialog::slotSelection( void )
 
 void MainDialog::SlotPortfolioDurationChanged ( int )
 {
-    ShowNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages( m_ImagesFilesListBox->count() );
     emit totalTimeChanged( m_totalTime );
 }
 

@@ -82,7 +82,7 @@ private:
     void loadEffectNames();
     void loadEffectNamesGL();
 
-    void ShowNumberImages( int Number );
+    void showNumberImages( int number );
     void addItems(const KUrl::List& fileList);
 
 private:
