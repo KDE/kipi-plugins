@@ -126,7 +126,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
     m_sharedData->urlList               = m_urlList;
     KIPI::ImageCollection currSel       = m_interface->currentSelection();
 
-    if (!currSel.isValid() || currSel.images().isEmpty())
+    if (!currSel.isValid() || currSel.images().count() <= 1)
     {
         m_sharedData->showSelectedFilesOnly = false;
     }
