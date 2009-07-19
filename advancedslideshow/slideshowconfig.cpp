@@ -265,6 +265,7 @@ void SlideShowConfig::slotHelp()
 
 void SlideShowConfig::slotClose()
 {
+    saveSettings();
     close();
 }
 

@@ -111,7 +111,6 @@ void MainDialog::readSettings()
 
     m_selectedFilesButton->setEnabled( m_sharedData->showSelectedFilesOnly );
 
-
     m_delaySpinBox->setValue(m_sharedData->useMilliseconds ?
                              m_sharedData->delay : m_sharedData->delay / 1000 );
 
@@ -517,17 +516,16 @@ void MainDialog::slotEffectChanged( void )
                                            m_printCommentsCheckBox->isChecked());
 }
 
-void MainDialog::slotDelayChanged( void )
+void MainDialog::slotDelayChanged( int delay )
 {
+    m_sharedData->delay = m_sharedData->useMilliseconds ? delay : delay * 1000;
     showNumberImages( m_ImagesFilesListBox->count() );
 }
 
 void MainDialog::slotUseMillisecondsToggled( void )
 {
-
-    int delayValue = m_delaySpinBox->value();
-
     m_delaySpinBox->setValue(0);
+    int delay = m_sharedData->delay;
 
     if ( m_sharedData->useMilliseconds )
     {
@@ -535,18 +533,17 @@ void MainDialog::slotUseMillisecondsToggled( void )
 
         m_delaySpinBox->setRange(m_sharedData->delayMsMinValue, m_sharedData->delayMsMaxValue);
         m_delaySpinBox->setSingleStep(m_sharedData->delayMsLineStep);
-
-        m_delaySpinBox->setValue(delayValue*1000);
     }
     else
     {
         m_delayLabel->setText(i18n("Delay between images (s):"));
 
-        m_delaySpinBox->setRange(m_sharedData->delayMsMinValue / 100, m_sharedData->delayMsMaxValue / 10);
+        m_delaySpinBox->setRange(m_sharedData->delayMsMinValue / 100, m_sharedData->delayMsMaxValue / 1000  );
         m_delaySpinBox->setSingleStep(m_sharedData->delayMsLineStep / 100);
+        delay /= 1000;
 
-        m_delaySpinBox->setValue(delayValue / 1000);
     }
+    m_delaySpinBox->setValue(delay);
 }
 
 void MainDialog::slotSelection( void )
