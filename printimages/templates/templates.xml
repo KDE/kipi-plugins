@@ -1,0 +1,231 @@
+<templates>
+
+  <paper name="Letter" size="">
+    <template name="3.5x5" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="700"  y="500"  width="3500" height="5000" />
+      <photo x="4300" y="500"  width="3500" height="5000" />
+      <photo x="700"  y="5600" width="3500" height="5000" />
+      <photo x="4300" y="5600" width="3500" height="5000" />
+    </template>
+
+    <template name="4x6" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="225"  y="500"  width="4000" height="6000" />
+      <photo x="4275" y="500"  width="4000" height="6000" />
+      <photo x="1250" y="6600" width="6000" height="4000" />
+    </template>
+    
+    <template name="4x6Album" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="1250" y="1000" width="6000" height="4000" />
+      <photo x="1250" y="6000" width="6000" height="4000" />
+    </template>
+    
+    <template name="5x7" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="750" y="500"  width="7000" height="5000" />
+      <photo x="750" y="5750" width="7000" height="5000" />
+    </template>
+    
+    <template name="8x10" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="250" y="500" width="8000" height="10000" />
+    </template>
+
+    <template name="Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photogrid pageWidth="8500" pageHeight="11000" rows="5" columns="4" />
+    </template>
+    
+    <template name="Small-Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0"  width="8500" height="11000" />
+      <photogrid pageWidth="8500" pageHeight="11000" rows="6" columns="5" />
+    </template>
+    
+    <template name="Album-Collage" dpi="0" autorotate="false">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="2750" y="3250" width="3000" height="4500" />
+      <photo x="750"  y="750"  width="1500" height="2000" />
+      <photo x="3500" y="750"  width="1500" height="2000" />
+      <photo x="6250" y="750"  width="1500" height="2000" />
+      <photo x="6250" y="4500" width="1500" height="2000" />
+      <photo x="6250" y="8250" width="1500" height="2000" />
+      <photo x="3500" y="8250" width="1500" height="2000" />
+      <photo x="750"  y="8250" width="1500" height="2000" />
+      <photo x="750"  y="4500" width="1500" height="2000" />
+    </template>
+
+    <template name="Album-Collage1" dpi="0" autorotate="false">
+      <pagesize x="0" y="0" width="8500" height="11000" />
+      <photo x="1000" y="1000" width="3000" height="3000" />
+      <photo x="5000" y="1000" width="2500" height="1250" />
+      <photo x="5000" y="2750" width="2500" height="1250" />
+      <photo x="1000" y="5000" width="1500" height="2000" />
+      <photo x="2750" y="5000" width="4750" height="2000" />
+      <photo x="1000" y="8000" width="6500" height="2000" />
+    </template>
+  </paper>
+
+
+  <paper name="A4" size="">
+    <template name="21x29.7cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="0" y="0" width="2100" height="2970" />
+    </template>
+
+    <template name="Photoframe" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="80" y="80" width="570" height="440" />
+      <photo x="80" y="660" width="570" height="440" />
+      <photo x="790" y="80" width="1130" height="1030" />
+      <photo x="80" y="1240" width="850" height="930" />
+      <photo x="1070" y="1240" width="850" height="930" />
+    </template>
+    
+    <template name="6x9cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="100"  y="100"  width="900" height="600" />
+      <photo x="1100" y="100"  width="900" height="600" />
+      <photo x="100"  y="800"  width="900" height="600" />
+      <photo x="1100" y="800"  width="900" height="600" />
+      <photo x="100"  y="1500" width="900" height="600" />
+      <photo x="1100" y="1500" width="900" height="600" />
+      <photo x="100"  y="2200" width="900" height="600" />
+      <photo x="1100" y="2200" width="900" height="600" />
+    </template>
+    
+    <template name="9x13cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="100"  y="100"  width="900" height="1300" />
+      <photo x="1100" y="100"  width="900" height="1300" />
+      <photo x="100"  y="1500" width="900" height="1300" />
+      <photo x="1100" y="1500" width="900" height="1300" />
+    </template>
+    
+    <template name="10x13.33cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="50" y="100" width="1000" height="1333" />
+      <photo x="1060" y="100" width="1000" height="1333" />
+      <photo x="50" y="1500" width="1000" height="1333" />
+      <photo x="1060" y="1500" width="1000" height="1333" />
+    </template>
+    
+    <template name="10x15cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="50"   y="150"  width="1000" height="1500" />
+      <photo x="1060" y="150"  width="1000" height="1500" />
+      <photo x="300"  y="1750" width="1500" height="1000" />
+    </template>
+    
+    <template name="10x15cmAlbum" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="300" y="350"  width="1500" height="1000" />
+      <photo x="300" y="1620" width="1500" height="1000" />
+    </template>
+    
+    <template name="11.5x15cmAlbum" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="300" y="250"  width="1500" height="1100" />
+      <photo x="300" y="1570" width="1500" height="1100" />
+    </template>
+        
+    <template name="13x18cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="150" y="150"  width="1800" height="1300" />
+      <photo x="150" y="1520" width="1800" height="1300" />
+    </template>
+   
+    <template name="20x25cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photo x="50" y="230" width="2000" height="2500" />
+    </template>
+    
+    <template name="Thumbnails"  dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photogrid pageWidth="2100" pageHeight="2970" rows="5" columns="4" />
+    </template>
+
+    <template name="Small-Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="2100" height="2970" />
+      <photogrid pageWidth="2100" pageHeight="2970" rows="6" columns="5" />
+    </template>
+  </paper>
+
+
+  <paper name="A6" size="">
+    <template name="9x13cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1050" height="1480" />
+      <photo x="50" y="100" width="900" height="1300" />
+    </template>
+
+    <template name="10.5x14.8cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1050" height="1480" />
+      <photo x="0" y="0" width="1050" height="1480" />
+    </template>
+
+    <template name="Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1050" height="1480" />
+      <photogrid pageWidth="1050" pageHeight="1480" rows="5" columns="4" />
+    </template>
+
+    <template name="Small-Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1050" height="1480" />
+      <photogrid pageWidth="1050" pageHeight="1480" rows="6" columns="5" />
+    </template>
+  </paper>
+
+
+  <paper name="10x15cm" size="1016x1524">
+    <!-- // 10x15cm photo paper is 4x6" so the right size is 10.16 x 15.24 cm -->
+    <template name="10x15cm" dpi="0" autorotate="true" >
+      <pagesize x="0" y="0" width="1016" height="1524" />
+      <photo x="0" y="0" width="1016" height="1524" />
+    </template>
+
+    <template name="9x13cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1016" height="1524" />
+      <photo x="50" y="100" width="900" height="1300" />
+    </template>
+
+    <template name="Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1016" height="1524" />
+      <photogrid pageWidth="1016" pageHeight="1524" rows="5" columns="4" />
+    </template>
+    
+    <template name="Small-Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1016" height="1524" />
+      <photogrid pageWidth="1016" pageHeight="1524" rows="6" columns="5" />
+    </template>
+  </paper>
+
+
+  <paper name="13x18cm" size="1270x1778">
+    <!-- 10x18cm photo paper is 5x7" so the right conversion is 12.7 x 17.78 cm -->
+    <template name="13x18cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1270" height="1778" />
+      <photo x="0" y="0" width="1270" height="1778" />
+    </template>
+
+    <template name="10x15cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1270" height="1778" />
+      <photo x="0" y="0" width="1016" height="1524" />
+    </template>
+
+    <template name="9x13cm" dpi="0" autorotate="true">
+      <pagesize x="0" y="0" width="1270" height="1778" />
+      <photo x="50" y="100" width="900" height="1300" />
+    </template>
+
+    <template name="Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1270" height="1778" />
+      <photogrid pageWidth="1270" pageHeight="1778" rows="5" columns="4" />
+    </template>
+
+    <template name="Small-Thumbnails" dpi="100" autorotate="false">
+      <pagesize x="0" y="0" width="1270" height="1778" />
+      <photogrid pageWidth="1270" pageHeight="1778" rows="6" columns="5" />
+    </template>
+  </paper>
+
+</templates>

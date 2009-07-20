@@ -40,3 +40,7 @@ INSTALL(TARGETS kipiplugin_printimages
 
 INSTALL(FILES kipiplugin_printimages.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
+
+install(DIRECTORY templates
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
+        PATTERN ".svn" EXCLUDE)

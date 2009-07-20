@@ -34,6 +34,7 @@
 #include <QtGlobal>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QDomDocument>
 
 // KDE includes
 
@@ -47,6 +48,9 @@
 #include <kmessagebox.h>
 #include <kdeprintdialog.h>
 #include <kdebug.h>
+#include <kstandarddirs.h>
+#include <kconfig.h>
+#include <kdesktopfile.h>
 
 // libkipi includes
 
@@ -92,6 +96,7 @@ namespace KIPIPrintImagesPlugin
     private:
       KPageWidgetItem* mPage;
   };
+
 
   const char* introPageName="Introduction";
   const char* infoPageName="Select printing information";
@@ -152,6 +157,8 @@ namespace KIPIPrintImagesPlugin
                            "anaselli@linux.it" );
     d->mAbout->addAuthor ( ki18n ( "Valerio Fuoglio" ), ki18n ( "Contributor" ),
                            "valerio.fuoglio@gmail.com" );
+    d->mAbout->addAuthor ( ki18n ( "Andreas Trink" ), ki18n ( "Contributor" ),
+                           "atrink@nociaro.org" );
 
     d->mIntroPage = new IntroPage ( this, i18n ( introPageName ) );
     d->mInfoPage  = new InfoPage ( this, i18n ( infoPageName ) );
@@ -268,18 +275,12 @@ namespace KIPIPrintImagesPlugin
   }
 
 // create a MxN grid of photos, fitting on the page
-  TPhotoSize * createPhotoGrid ( int pageWidth, int pageHeight, QString label, int rows, int columns )
+  void createPhotoGrid ( TPhotoSize *p, int pageWidth, int pageHeight, int rows, int columns )
   {
     int MARGIN = ( int ) ( ( pageWidth + pageHeight ) / 2 * 0.04 + 0.5 );
     int GAP = MARGIN / 4;
     int photoWidth = ( pageWidth - ( MARGIN * 2 ) - ( ( columns-1 ) * GAP ) ) / columns;
     int photoHeight = ( pageHeight - ( MARGIN * 2 ) - ( ( rows-1 ) * GAP ) ) / rows;
-
-    TPhotoSize *p = new TPhotoSize;
-    p->label = label;
-    p->dpi = 100;
-    p->autoRotate = false;
-    p->layouts.append ( new QRect ( 0, 0, pageWidth, pageHeight ) );
 
     int row = 0;
     for ( int y=MARGIN; row < rows && y < pageHeight - MARGIN; y += photoHeight + GAP )
@@ -292,7 +293,6 @@ namespace KIPIPrintImagesPlugin
       }
       row++;
     }
-    return p;
   }
 
   void Wizard::print ( KUrl::List fileList, QString tempPath )
@@ -322,6 +322,119 @@ namespace KIPIPrintImagesPlugin
       d->mCropPage->BtnCropNext->setEnabled ( false );
   }
 
+
+  void Wizard::parseTemplateFile( QString fn, PageSize pageSize )
+  {
+    QDomDocument doc("mydocument"); 
+    kDebug(51000) << " XXX: " <<  fn;
+
+    if(fn.isEmpty()) {
+      return;
+    }
+    QFile file( fn ); 
+
+    if (!file.open(QIODevice::ReadOnly)) 
+      return; 
+
+    if (!doc.setContent(&file)) { 
+      file.close(); 
+      return; 
+    } 
+    file.close();
+
+    TPhotoSize *p;
+    
+    // print out the element names of all elements that are direct children
+    // of the outermost element.
+    QDomElement docElem = doc.documentElement();
+    kDebug(51000) << docElem.tagName(); // the node really is an element.
+             
+    QDomNode n = docElem.firstChild();
+    while(!n.isNull()) {
+      QDomElement e = n.toElement(); // try to convert the node to an element.
+      if(!e.isNull()) {
+        if( e.tagName() == "paper" ) {
+          if((e.attribute("name","")=="Letter"  && pageSize==Letter) ||
+             (e.attribute("name","")=="A4"      && pageSize==A4)     ||
+             (e.attribute("name","")=="A6"      && pageSize==A6)     ||
+             (e.attribute("name","")=="10x15cm" && pageSize==P10X15) ||
+             (e.attribute("name","")=="13x18cm" && pageSize==P13X18)
+            ) {
+            kDebug(51000) <<  e.tagName() << " name=" << e.attribute("name","??") 
+                                          << " size=" << e.attribute("size","??");
+
+            QDomNode np = e.firstChild();
+            while(!np.isNull()) {
+            QDomElement ep = np.toElement(); // try to convert the node to an element.
+            if(!ep.isNull()) {
+              if( ep.tagName() == "template" ) {
+                p = new TPhotoSize;
+                QString desktopFileName = QString("kipiplugin_printimages/templates/") +
+                                          QString(ep.attribute("name","XXX")) +
+                                          ".desktop";
+                kDebug(51000) <<  "template desktop file name" << desktopFileName;
+                const QStringList list=KGlobal::dirs()->findAllResources("data", desktopFileName);
+                QStringList::ConstIterator it=list.constBegin(), end=list.constEnd();
+                if (it != end)
+                  p->label = KDesktopFile(*it).readName();
+                else
+                  p->label = ep.attribute("name","XXX");  // FIXME i18n()
+                p->dpi = ep.attribute("dpi","0").toInt();
+                p->autoRotate = (ep.attribute("autorotate","false") == "true") ? true : false;
+
+                QDomNode nt = ep.firstChild();
+                while(!nt.isNull()) {
+                  QDomElement et = nt.toElement(); // try to convert the node to an element.
+                  if(!et.isNull()) {
+                    if( et.tagName() == "photo" ) {
+                      p->layouts.append( new QRect ( et.attribute("x","??").toInt(),
+                                                     et.attribute("y","??").toInt(),
+                                                     et.attribute("width","??").toInt(),
+                                                     et.attribute("height","??").toInt() ) );
+                    }
+                    else if( et.tagName() == "pagesize" ) {
+                      p->layouts.append( new QRect ( et.attribute("x","??").toInt(),
+                                                      et.attribute("y","??").toInt(),
+                                                      et.attribute("width","??").toInt(),
+                                                      et.attribute("height","??").toInt() ) );
+                    }
+                    else if( et.tagName() == "photogrid" ) {
+                      createPhotoGrid( p, et.attribute("pageWidth","??").toInt(), 
+                                          et.attribute("pageHeight","??").toInt(), 
+                                          et.attribute("rows","??").toInt(), 
+                                          et.attribute("columns","??").toInt() );
+                    }
+                    else {
+                        kDebug(51000) << "    " <<  et.tagName();
+                    }
+                  }
+                  nt = nt.nextSibling();
+                }
+                
+                d->m_photoSizes.append ( p );
+              }
+              else
+              {
+                kDebug(51000) << "? " <<  ep.tagName() << " attr=" << ep.attribute("name","??");
+              }
+
+            }
+            np = np.nextSibling();
+          }
+          
+        }
+        }
+        else
+        {
+          kDebug(51000) << "??" << e.tagName() << " name=" << e.attribute("name","??") 
+                                               << " size=" << e.attribute("size","??");
+        }
+      }
+      n = n.nextSibling();
+    }
+  }
+
+
 // TODO page layout configurable (using XML?)
   void Wizard::initPhotoSizes ( PageSize pageSize )
   {
@@ -331,438 +444,39 @@ namespace KIPIPrintImagesPlugin
 
     d->m_pageSize = pageSize;
 
-    // cleanng m_pageSize memory before invoking clear()
+    // cleaning m_pageSize memory before invoking clear()
     for ( int i=0; i < d->m_photoSizes.count(); i++ )
       if ( d->m_photoSizes.at ( i ) )
         delete d->m_photoSizes.at ( i );
     d->m_photoSizes.clear();
 
-    switch ( pageSize )
-    {
-        // ====================== LETTER SIZE =====================
-      case Letter:
-      {
-        TPhotoSize *p;
-        // ========== 5 x 3.5
-        p = new TPhotoSize;
-        p->label = i18n ( "3.5 x 5\"" );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 700,  500, 3500, 5000 ) );
-        p->layouts.append ( new QRect ( 4300,  500, 3500, 5000 ) );
-        p->layouts.append ( new QRect ( 700, 5600, 3500, 5000 ) );
-        p->layouts.append ( new QRect ( 4300, 5600, 3500, 5000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
+    // get template-files and parse them
+    const QStringList list=KGlobal::dirs()->findAllResources("data", 
+          "kipiplugin_printimages/templates/*templates*.xml");
 
-        // ========== 2-1/3" x 3-1/3"
-        p = new TPhotoSize;
-        p->label = i18n ( "2-1/3\" x 3-1/3\" " );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 333,  333, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 2999, 333, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 5665, 333, 2333, 3333 ) );
+    foreach( const QString& fn, list) {
+        kDebug(51000) << " LIST: " <<  fn;
+        parseTemplateFile( fn, pageSize );
+    }
 
-        p->layouts.append ( new QRect ( 333,  3999, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 2999, 3999, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 5665, 3999, 2333, 3333 ) );
+    kDebug(51000) << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
+    kDebug(51000) << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
 
-        p->layouts.append ( new QRect ( 333,  7665, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 2999, 7665, 2333, 3333 ) );
-        p->layouts.append ( new QRect ( 5665, 7665, 2333, 3333 ) );
-
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 4 x 6
-        p = new TPhotoSize;
-        p->label = i18n ( "4 x 6\"" );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 225,  500, 4000, 6000 ) );
-        p->layouts.append ( new QRect ( 4275,  500, 4000, 6000 ) );
-        p->layouts.append ( new QRect ( 1250, 6600, 6000, 4000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 4 x 6 Album
-        p = new TPhotoSize;
-        p->label = i18n ( "4 x 6\" Album" );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 1250,  1000, 6000, 4000 ) );
-        p->layouts.append ( new QRect ( 1250,  6000, 6000, 4000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 5 x 7
-        p = new TPhotoSize;
-        p->label = i18n ( "5 x 7\"" );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 750,  500, 7000, 5000 ) );
-        p->layouts.append ( new QRect ( 750, 5750, 7000, 5000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 8 x 10
-        p = new TPhotoSize;
-        p->label = i18n ( "8 x 10\"" );
-        p->dpi = 0;
-        p->autoRotate = true;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 250, 500, 8000, 10000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 8500, 11000, i18n ( "Thumbnails" ), 5, 4 ) );
-
-        // small thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 8500, 11000, i18n ( "Small Thumbnails" ), 6, 5 ) );
-
-        // album collage 1
-        p = new TPhotoSize;
-        p->label = i18n ( "Album Collage 1 (9 photos)" );
-        p->dpi = 0;
-        p->autoRotate = false;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        // photo 1 is in the center, 3x4.5
-        p->layouts.append ( new QRect ( 2750, 3250, 3000, 4500 ) );
-        // the remaining 1.5x2 photos begin with upper left and circle around
-        // top row
-        p->layouts.append ( new QRect ( 750, 750, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 3500, 750, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 6250, 750, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 6250, 4500, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 6250, 8250, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 3500, 8250, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 750, 8250, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 750, 4500, 1500, 2000 ) );
-        d->m_photoSizes.append ( p );
-
-        // album collage 2
-        p = new TPhotoSize;
-        p->label = i18n ( "Album Collage 2 (6 photos)" );
-        p->dpi = 0;
-        p->autoRotate = false;
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 1000, 1000, 3000, 3000 ) );
-        p->layouts.append ( new QRect ( 5000, 1000, 2500, 1250 ) );
-        p->layouts.append ( new QRect ( 5000, 2750, 2500, 1250 ) );
-        p->layouts.append ( new QRect ( 1000, 5000, 1500, 2000 ) );
-        p->layouts.append ( new QRect ( 2750, 5000, 4750, 2000 ) );
-        p->layouts.append ( new QRect ( 1000, 8000, 6500, 2000 ) );
-        d->m_photoSizes.append ( p );
-      } // letter
-      break;
-
-      // ====================== A4 SIZE =====================
-      case A4:
-      {
-        // A4 is 21 x 29.7cm
-        TPhotoSize *p;
-
-        // ========== 20x25cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "21 x 29.7cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 6x9 cm - 8 photos
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "6 x 9cm (8 photos)" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 100,  100, 900, 600 ) );
-        p->layouts.append ( new QRect ( 1100,  100, 900, 600 ) );
-        p->layouts.append ( new QRect ( 100,  800, 900, 600 ) );
-        p->layouts.append ( new QRect ( 1100,  800, 900, 600 ) );
-        p->layouts.append ( new QRect ( 100, 1500, 900, 600 ) );
-        p->layouts.append ( new QRect ( 1100, 1500, 900, 600 ) );
-        p->layouts.append ( new QRect ( 100, 2200, 900, 600 ) );
-        p->layouts.append ( new QRect ( 1100, 2200, 900, 600 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 9x13
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "9 x 13cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 100,  100, 900, 1300 ) );
-        p->layouts.append ( new QRect ( 1100,  100, 900, 1300 ) );
-        p->layouts.append ( new QRect ( 100, 1500, 900, 1300 ) );
-        p->layouts.append ( new QRect ( 1100, 1500, 900, 1300 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 10x13.33cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10 x 13.33cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50,  100, 1000, 1333 ) );
-        p->layouts.append ( new QRect ( 1060,  100, 1000, 1333 ) );
-        p->layouts.append ( new QRect ( 50, 1500, 1000, 1333 ) );
-        p->layouts.append ( new QRect ( 1060, 1500, 1000, 1333 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 10x15cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10 x 15cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50,  150, 1000, 1500 ) );
-        p->layouts.append ( new QRect ( 1060,  150, 1000, 1500 ) );
-        p->layouts.append ( new QRect ( 300, 1750, 1500, 1000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 10x15cm album
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10 x 15cm Album" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 300, 350, 1500, 1000 ) );
-        p->layouts.append ( new QRect ( 300, 1620, 1500, 1000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 11.5x15cm album
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "11.5 x 15cm Album" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 300, 250, 1500, 1100 ) );
-        p->layouts.append ( new QRect ( 300, 1570, 1500, 1100 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 13x18cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "13 x 18cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 150, 150, 1800, 1300 ) );
-        p->layouts.append ( new QRect ( 150, 1520, 1800, 1300 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 20x25cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "20 x 25cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 2100, 2970 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50, 230, 2000, 2500 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 2100, 2970, i18n ( "Thumbnails" ), 5, 4 ) );
-
-        // small thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 2100, 2970, i18n ( "Small Thumbnails" ), 6, 5 ) );
-      } // A4
-      break;
-
-      // ====================== A6 SIZE =====================
-      case A6:
-      {
-        // A6 is 10.5 x 14.8 cm
-        TPhotoSize *p;
-        // ========== 9x13
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "9 x 13cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1050, 1480 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50,  100, 900, 1300 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 10x15cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10.5 x 14.8cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1050, 1480 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 0, 0, 1050, 1480 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1050, 1480, i18n ( "Thumbnails" ), 5, 4 ) );
-
-        // small thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1050, 1480, i18n ( "Small Thumbnails" ), 6, 5 ) );
-      } // A6
-      break;
-
-      // ====================== 10x15cm SIZE =====================
-      case P10X15:
-      {
-        // 10x15cm photo paper is 4x6" so the right size is 10.16 x 15.24 cm
-        TPhotoSize *p;
-        // ========== 10x15cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10 x 15cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1016, 1524 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 0, 0, 1016, 1524 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 9x13
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "9 x 13cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1016, 1524 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50,  100, 900, 1300 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1016, 1524, i18n ( "Thumbnails" ), 5, 4 ) );
-
-        // small thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1016, 1524, i18n ( "Small Thumbnails" ), 6, 5 ) );
-
-      } // 10x15 cm
-      break;
-
-      // ====================== 13x18cm SIZE =====================
-      case P13X18:
-      {
-        // 10x18cm photo paper is 5x7" so the right conversion
-        // is 12.7 x 17.78 cm
-        TPhotoSize *p;
-        // ========== 10x15cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "13 x 18cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1270, 1778 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 0, 0, 1270, 1778 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 10x15cm
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "10 x 15cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1270, 1778 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 0, 0, 1016, 1524 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // ========== 9x13
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = true;
-        p->label = i18n ( "9 x 13cm" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 1270, 1778 ) );
-        // photo layouts
-        p->layouts.append ( new QRect ( 50,  100, 900, 1300 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-
-        // thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1270, 1778, i18n ( "Thumbnails" ), 5, 4 ) );
-
-        // small thumbnails
-        d->m_photoSizes.append ( createPhotoGrid ( 1270, 1778, i18n ( "Small Thumbnails" ), 6, 5 ) );
-
-      } // 13x18 cm
-      break;
-
-      default:
-      {
-        kDebug(51000) << "Initializing Unsupported page layouts\n";
-        // We don't support this page size yet.  Just create a default page.
-        TPhotoSize *p;
-        p = new TPhotoSize;
-        p->dpi = 0;
-        p->autoRotate = false;
-        p->label = i18n ( "Unsupported Paper Size" );
-        // page size
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        p->layouts.append ( new QRect ( 0, 0, 8500, 11000 ) );
-        // add to the list
-        d->m_photoSizes.append ( p );
-      }
-      break;
-    };
-
+    if( d->m_photoSizes.isEmpty() ) {
+      kDebug(51000) << "Empty photoSize-list, create default size\n";
+      // There is no valid page size yet.  Create a default page (B10) to prevent crashes.
+      TPhotoSize *p;
+      p = new TPhotoSize;
+      p->dpi = 0;
+      p->autoRotate = false;
+      p->label = i18n ( "Unsupported Paper Size" );
+      // page size: B10 (32 x 45 mm)
+      p->layouts.append ( new QRect ( 0, 0, 3200, 4500 ) );
+      p->layouts.append ( new QRect ( 0, 0, 3200, 4500 ) );
+      // add to the list
+      d->m_photoSizes.append ( p );
+    }    
+         
     // load the photo sizes into the listbox
     d->mPhotoPage->ListPhotoSizes->blockSignals ( true );
     d->mPhotoPage->ListPhotoSizes->clear();

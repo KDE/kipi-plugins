@@ -113,7 +113,7 @@ typedef struct _TPhotoSize
       };
       void initPhotoSizes(PageSize pageSize);
       void previewPhotos();
-
+      void parseTemplateFile( QString fn, PageSize pageSize );
 
       void updateCropFrame(TPhoto *, int);
       void setBtnCropEnabled();
