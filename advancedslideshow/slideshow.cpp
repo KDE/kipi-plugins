@@ -128,7 +128,7 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
     else
         m_cacheSize = 1;
 
-    m_imageLoader = new SlideShowLoader( m_fileList, m_cacheSize, width(), height(), m_fileIndex );
+    m_imageLoader = new SlideShowLoader( m_fileList, m_cacheSize, width(), height(), m_sharedData, m_fileIndex);
 
     // --------------------------------------------------
 
@@ -412,7 +412,9 @@ void SlideShow::printComments()
 {
     if ( m_currImage.isNull() ) return;
 
-    QString comments = m_commentsList[m_fileIndex];
+//    QString comments = m_commentsList[m_fileIndex];
+    KIPI::ImageInfo info = m_sharedData->interface->info(m_imageLoader->currPath());
+    QString comments = info.description();
 
     int yPos = 30; // Text Y coordinate
 

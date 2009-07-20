@@ -117,24 +117,23 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
 
     // --------------------------------------------------
 
-    m_fileList       = fileList;
-    m_commentsList   = commentsList;
-
-    m_cacheSize = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
+    m_fileList     = fileList;
+    m_commentsList = commentsList;
+    m_cacheSize    = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
 
     // ------------------------------------------------------------------
 
-    m_fileIndex  = 0;
+    m_fileIndex     = 0;
 
-    m_texture[0] = 0;
-    m_texture[1] = 0;
-    m_curr       = 0;
-    m_tex1First  = true;
-    m_timeout    = m_sharedData->delay;
+    m_texture[0]    = 0;
+    m_texture[1]    = 0;
+    m_curr          = 0;
+    m_tex1First     = true;
+    m_timeout       = m_sharedData->delay;
     m_effectRunning = false;
     m_endOfShow     = false;
 
-    m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height());
+    m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height(), m_sharedData);
 
     // --------------------------------------------------
 
@@ -628,7 +627,9 @@ void SlideShowGL::printProgress(QImage& layer)
 
 void SlideShowGL::printComments(QImage& layer)
 {
-    QString comments = m_commentsList[m_fileIndex];
+//    QString comments = m_commentsList[m_fileIndex];
+    KIPI::ImageInfo info = m_sharedData->interface->info(m_imageLoader->currPath());
+    QString comments = info.description();
 
     int yPos = 5; // Text Y coordinate
 

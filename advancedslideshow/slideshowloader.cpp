@@ -43,6 +43,10 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
+// Local includes
+
+#include "common.h"
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
@@ -101,7 +105,9 @@ void LoadThread::run()
 
 // -----------------------------------------------------------------------------------------
 
-SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex)
+//SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex)
+SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
+                                 SharedData* sharedData, int beginAtIndex)
 {
 
     m_currIndex      = beginAtIndex;
@@ -113,13 +119,20 @@ SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, 
     m_loadedImages   = new LoadedImages();
     m_imageLock      = new QMutex();
     m_threadLock     = new QMutex();
+    m_sharedData     = sharedData;
+
+    KUrl filePath;
+    int  angle = 0;
 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); i++)
     {
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[i].first),
-                                               m_pathList[i].second, m_swidth, m_sheight);
+        filePath = KUrl(m_pathList[i].first);
+        angle    = m_sharedData->interface->info(filePath).angle();
+
+        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                               filePath, angle, m_swidth, m_sheight);
         m_threadLock->lock();
-        m_loadingThreads->insert(m_pathList[i].first, newThread);
+        m_loadingThreads->insert(filePath, newThread);
         newThread->start();
         m_threadLock->unlock();
     }
@@ -127,10 +140,13 @@ SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, 
     for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); i++)
     {
         int toLoad = (m_currIndex - i) % m_pathList.count();
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[toLoad].first),
-                                               m_pathList[toLoad].second, m_swidth, m_sheight);
+        filePath   = KUrl(m_pathList[toLoad].first);
+        angle      = m_sharedData->interface->info(filePath).angle();
+
+        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                               filePath, angle, m_swidth, m_sheight);
         m_threadLock->lock();
-        m_loadingThreads->insert(m_pathList[toLoad].first, newThread);
+        m_loadingThreads->insert(filePath, newThread);
         newThread->start();
         m_threadLock->unlock();
     }
@@ -173,12 +189,15 @@ void SlideShowLoader::next()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first),
-                                           m_pathList[newBorn].second, m_swidth, m_sheight);
+    KUrl filePath = KUrl(m_pathList[newBorn].first);
+    int  angle    = m_sharedData->interface->info(filePath).angle();
+
+    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                           filePath, angle, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
-    m_loadingThreads->insert(m_pathList[newBorn].first, newThread);
+    m_loadingThreads->insert(filePath, newThread);
     newThread->start();
 
     m_threadLock->unlock();
@@ -205,12 +224,15 @@ void SlideShowLoader::prev()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[newBorn].first),
-            m_pathList[newBorn].second, m_swidth, m_sheight);
+    KUrl filePath = KUrl(m_pathList[newBorn].first);
+    int  angle    = m_sharedData->interface->info(filePath).angle();
+
+    LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                           filePath, angle, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
-    m_loadingThreads->insert(m_pathList[newBorn].first, newThread);
+    m_loadingThreads->insert(filePath, newThread);
     newThread->start();
 
     m_threadLock->unlock();
@@ -236,7 +258,7 @@ QString SlideShowLoader::currFileName()
 
 KUrl SlideShowLoader::currPath()
 {
-    return m_pathList[m_currIndex].first;
+    return KUrl(m_pathList[m_currIndex].first);
 }
 
 void SlideShowLoader::checkIsIn(int index)
@@ -252,8 +274,11 @@ void SlideShowLoader::checkIsIn(int index)
     }
     else
     {
-        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, KUrl(m_pathList[index].first),
-                                               m_pathList[index].second, m_swidth, m_sheight);
+        KUrl filePath = KUrl(m_pathList[index].first);
+        int  angle    = m_sharedData->interface->info(filePath).angle();
+
+        LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
+                                               filePath, angle, m_swidth, m_sheight);
 
         m_loadingThreads->insert(m_pathList[index].first, newThread);
         newThread->start();

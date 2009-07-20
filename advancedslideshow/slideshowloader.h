@@ -44,6 +44,8 @@ namespace KIPIAdvancedSlideshowPlugin
 
 typedef QMap<KUrl, QImage> LoadedImages;
 
+class SharedData;
+
 class LoadThread : public QThread
 {
 
@@ -76,7 +78,9 @@ class SlideShowLoader
 
 public:
 
-    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex = 0);
+    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
+                    SharedData* sharedData, int beginAtIndex = 0);
+//    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex = 0);
     ~SlideShowLoader();
 
     void next();
@@ -96,6 +100,8 @@ private:
 
     QMutex*         m_imageLock;
     QMutex*         m_threadLock;
+
+    SharedData*     m_sharedData;
 
     uint            m_cacheSize;
     int             m_currIndex;
