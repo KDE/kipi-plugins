@@ -6,6 +6,8 @@ NEW FEATURES:
 PrintWizard  : Added support for 2-1/3" x 3-1/3" pictures.
 DNGConverter : Update internal XMP sdk from Adobe to version 4.4.
 PrintImages  : Added multiple pages printing.
+PrintWizard  : Page layout into template.xml file, custom templates can be 
+               added now
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -35,4 +37,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> BatchProcess : 149488 : After batch renaming pictures, the pictures appears as unkown images, and can't be removed from album nor can be viewed or edit
 025 ==> SendImages   : 146828 : Sendimages opera command line.
 026 ==> BatchProcess : 186648 : Batch rename doesn't refresh view.
-027 ==> 
+027 ==> PrintWizard  : 188426 : Add support for different size  printwizard templates
+028 ==> 
