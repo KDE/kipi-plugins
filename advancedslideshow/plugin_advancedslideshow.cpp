@@ -190,16 +190,14 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         return;
     }
 
-    typedef QPair<QString, int> FileAnglePair;
-
-    typedef QList<FileAnglePair > FileList;
-    FileList fileList;
+    typedef QPair<QString, int>  FileAnglePair;
+    typedef QList<FileAnglePair> FileList;
+    FileList    fileList;
     QStringList commentsList;
 
-    for ( KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt )
+    for (KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
-        KIPI::ImageInfo info = m_interface->info( *urlIt );
-        fileList.append( FileAnglePair((*urlIt).path(), 0) );
+        fileList.append(FileAnglePair((*urlIt).path(), 0));
         commentsList.append(QString());
 //        KIPI::ImageInfo info = m_interface->info( *urlIt );
 //        fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
@@ -210,7 +208,6 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     if (shuffle)
     {
-
         struct timeval tv;
         gettimeofday(&tv, 0);
         srand(tv.tv_sec);
