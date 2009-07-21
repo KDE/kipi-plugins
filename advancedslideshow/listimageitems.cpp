@@ -99,7 +99,7 @@ void ImageItem::slotThumbnail(const KUrl& url, const QPixmap& pix)
     disconnect(m_interface, 0, this, 0);
 }
 
-// ---------------------------------------------
+// --------------------------------------------------------------------
 
 ListImageItems::ListImageItems(QWidget *parent)
               : QListWidget(parent)
@@ -111,6 +111,12 @@ ListImageItems::ListImageItems(QWidget *parent)
 }
 
 void ListImageItems::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+}
+
+void ListImageItems::dragMoveEvent(QDragMoveEvent *e)
 {
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();

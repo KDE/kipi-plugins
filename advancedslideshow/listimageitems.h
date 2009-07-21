@@ -76,6 +76,8 @@ private:
     KIPI::Interface* m_interface;
 };
 
+// ---------------------------------------------------------------
+
 class ListImageItems : public QListWidget
 {
     Q_OBJECT
