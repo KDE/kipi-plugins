@@ -25,7 +25,6 @@
 
 // Local includes
 
-#include "listimageitems.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
