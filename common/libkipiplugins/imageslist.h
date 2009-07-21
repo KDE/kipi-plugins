@@ -121,10 +121,10 @@ public:
 
     KIPI::Interface* iface() const;
 
-signals:
+Q_SIGNALS:
 
     void addedDropedItems(const KUrl::List& urls);
-    void signalItemClicked(QTreeWidgetItem* item);
+    void signalItemClicked(QTreeWidgetItem*);
 
 private Q_SLOTS:
 
@@ -174,11 +174,11 @@ public:
     virtual KUrl::List imageUrls() const;
     virtual void       removeItemByUrl(const KUrl& url);
 
-signals:
+Q_SIGNALS:
 
     void signalImageListChanged(bool);
     void signalFoundRAWImages(bool);
-    void signalItemClicked(QTreeWidgetItem* item);
+    void signalItemClicked(QTreeWidgetItem*);
 
 public slots:
 

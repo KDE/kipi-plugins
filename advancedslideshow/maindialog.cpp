@@ -365,7 +365,7 @@ void MainDialog::addItems(const KUrl::List& fileList)
 
 void MainDialog::slotAddDropItems(KUrl::List filesUrl)
 {
-    m_ImagesFilesListBox->slotAddImages(filesUrl);
+    addItems(filesUrl);
 }
 
 void MainDialog::slotImagesFilesButtonAdd( void )
@@ -375,7 +375,7 @@ void MainDialog::slotImagesFilesButtonAdd( void )
 
     if (!urls.isEmpty())
     {
-        m_ImagesFilesListBox->slotAddImages(urls);
+        addItems(urls);
     }
 }
 
@@ -460,8 +460,7 @@ void MainDialog::slotOpenGLToggled( void )
         loadEffectNames();
     }
 
-//    showNumberImages( m_ImagesFilesListBox->count() );
-
+    showNumberImages();
     slotEffectChanged();
 }
 
@@ -479,7 +478,7 @@ void MainDialog::slotEffectChanged( void )
 void MainDialog::slotDelayChanged( int delay )
 {
     m_sharedData->delay = m_sharedData->useMilliseconds ? delay : delay * 1000;
-//    showNumberImages( m_ImagesFilesListBox->count() );
+    showNumberImages();
 }
 
 void MainDialog::slotUseMillisecondsToggled( void )
@@ -549,7 +548,7 @@ void MainDialog::slotSelection( void )
     {
         if (!urlList.isEmpty())
         {
-            m_ImagesFilesListBox->slotAddImages(urlList);
+            addItems(urlList);
         }
     }
 }
@@ -599,8 +598,8 @@ void MainDialog::setupConnections()
     connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
             this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
 
-    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
-            this, SLOT( slotAddDropItems(KUrl::List)));
+//    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
+//            this, SLOT( slotAddDropItems(KUrl::List)));
 
     connect(m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
             this, SLOT( slotImagesFilesButtonAdd() ));

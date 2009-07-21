@@ -208,8 +208,8 @@ void ImagesListView::setup(int iconSize)
     header()->setResizeMode(User5, QHeaderView::Stretch);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem* item, int column)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem* item, int column)));
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
 }
 
 void ImagesListView::slotItemClicked(QTreeWidgetItem* item, int column)
@@ -368,8 +368,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent,
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
-    connect(d->listView, SIGNAL(itemClicked(QTreeWidgetItem* item)),
-            this, SIGNAL(signalItemClicked(QTreeWidgetItem* item)));
+    connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
+            this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
     // --------------------------------------------------------
 
