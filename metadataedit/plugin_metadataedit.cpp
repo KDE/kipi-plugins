@@ -694,6 +694,9 @@ void Plugin_MetadataEdit::slotEditComments()
 
                 ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(),
                                                          QString(), false);
+
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.tiff.ImageDescription", dlg.getComments(),
+                                                         QString(), false);
             }
 
             if (dlg.syncIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
@@ -771,6 +774,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
             {
                 ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
                 ret &= exiv2Iface.removeXmpTag("Xmp.exif.UserComment");
+                ret &= exiv2Iface.removeXmpTag("Xmp.tiff.ImageDescription");
             }
 
             if (dlg.removeIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
