@@ -74,7 +74,7 @@ class FPhotoInfo;
 class FPhotoSet;
 class GPhoto;
 class GAlbum;
-class GAlbumViewItem;
+//class GAlbumViewItem;
 class ImagesList;
 
 class FlickrWindow : public KDialog
@@ -141,7 +141,7 @@ private:
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
 
-    QHash<int, GAlbumViewItem>             m_albumDict;
+//    QHash<int, GAlbumViewItem>             m_albumDict;
 
     QString                                m_token;
     QString                                m_username;

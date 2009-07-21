@@ -68,7 +68,7 @@
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
-#include "flickrviewitem.h"
+//#include "flickrviewitem.h"
 #include "flickrwidget.h"
 #include "ui_flickralbumdialog.h"
 

@@ -1,7 +1,5 @@
 subdirs(icons)
 
-ADD_DEFINITIONS (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
-
 SET(kipiplugin_flickrexport_PART_SRCS
     plugin_flickrexport.cpp
     flickrwindow.cpp
@@ -9,7 +7,6 @@ SET(kipiplugin_flickrexport_PART_SRCS
     flickrtalker.cpp
     flickrwidget.cpp
     mpform.cpp
-    flickrviewitem.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_flickrexport_PART_SRCS flickralbumdialog.ui)
@@ -21,7 +18,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_flickrexport
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
-                      ${KDE4_KDE3SUPPORT_LIBS}
                       ${KDE4_KIO_LIBS}
                       ${KDE4_KDEUI_LIBS}
                      )
