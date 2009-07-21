@@ -53,6 +53,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path,
                        const int angle, int width, int height)
+          : QThread()
 {
 
     m_path          = path;
@@ -106,11 +107,9 @@ void LoadThread::run()
 
 // -----------------------------------------------------------------------------------------
 
-//SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex)
 SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
                                  SharedData* sharedData, int beginAtIndex)
 {
-
     m_currIndex      = beginAtIndex;
     m_cacheSize      = cacheSize;
     m_pathList       = pathList;
@@ -156,7 +155,6 @@ SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, 
 
 SlideShowLoader::~SlideShowLoader()
 {
-
     m_threadLock->lock();
     LoadingThreads::Iterator it;
 

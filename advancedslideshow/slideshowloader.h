@@ -81,7 +81,6 @@ public:
 
     SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
                     SharedData* sharedData, int beginAtIndex = 0);
-//    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height, int beginAtIndex = 0);
     ~SlideShowLoader();
 
     void next();

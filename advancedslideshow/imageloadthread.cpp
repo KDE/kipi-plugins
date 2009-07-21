@@ -54,6 +54,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList,
                                  int width, int height)
+               : QThread()
 {
     m_initialized   = false;
     m_needImage     = true;
