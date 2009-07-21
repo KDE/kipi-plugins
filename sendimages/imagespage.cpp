@@ -50,6 +50,8 @@ QList<EmailItem> ImagesPage::imagesList()
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
         if (item)
         {
+            item->updateInformation();
+
             EmailItem etem;
             etem.orgUrl   = item->url();
             etem.tags     = item->tags();

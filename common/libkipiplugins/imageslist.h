@@ -33,6 +33,7 @@
 // KDE includes
 
 #include <kurl.h>
+#include <kiconloader.h>
 
 // LibKIPI includes
 
@@ -75,15 +76,19 @@ public:
 
     void setThumb(const QPixmap& pix);
 
+    void updateInformation();
+
 private:
 
-    int         m_rating;         // Image Rating from Kipi host.
+    int             m_rating;         // Image Rating from Kipi host.
 
-    QString     m_comments;       // Image comments from Kipi host.
+    QString         m_comments;       // Image comments from Kipi host.
 
-    QStringList m_tags;           // List of keywords from Kipi host.
+    QStringList     m_tags;           // List of keywords from Kipi host.
 
-    KUrl        m_url;            // Image url provided by Kipi host.
+    KUrl            m_url;            // Image url provided by Kipi host.
+
+    ImagesListView* m_view;
 };
 
 // -------------------------------------------------------------------------
@@ -107,6 +112,7 @@ public:
     };
 
     ImagesListView(ImagesList *parent = 0);
+    ImagesListView(int iconSize, ImagesList *parent = 0);
     ~ImagesListView();
 
     void setColumnLabel(ColumnType column, const QString &label);
@@ -124,6 +130,12 @@ private:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
     void dropEvent(QDropEvent *e);
+
+    void setup(int iconSize);
+
+private:
+
+    int m_iconSize;
 };
 
 // -------------------------------------------------------------------------
@@ -142,17 +154,20 @@ public:
     };
 
     ImagesList(KIPI::Interface *iface, QWidget* parent = 0,
-               ControlButtonPlacement btnPlace = ControlButtonsRight);
+               ControlButtonPlacement btnPlace = ControlButtonsRight,
+               int iconSize = -1);
     virtual ~ImagesList();
 
-    void setAllowRAW(bool allow);
-    void loadImagesFromCurrentSelection();
+    void               setAllowRAW(bool allow);
+    void               loadImagesFromCurrentSelection();
 
-    ImagesListView*  listView() const;
-    KIPI::Interface* iface() const;
+    int                iconSize() const;
+
+    ImagesListView*    listView() const;
+    KIPI::Interface*   iface() const;
 
     virtual KUrl::List imageUrls() const;
-    virtual void removeItemByUrl(const KUrl& url);
+    virtual void       removeItemByUrl(const KUrl& url);
 
 signals:
 
@@ -176,6 +191,7 @@ protected slots:
 private:
 
     bool isRAWFile(const QString& filePath);
+    void setIconSize(int size);
 
 private:
 
