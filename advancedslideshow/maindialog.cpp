@@ -65,6 +65,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     m_sharedData = sharedData;
     m_thumbJob   = 0L;
 
+    // --------------------------------------------------------
+
     QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
     m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
                                                          ImagesList::NoControlButtons, KIconLoader::SizeMedium);
@@ -73,6 +75,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     listBoxContainerLayout->setSpacing(0);
     listBoxContainerLayout->setMargin(0);
     m_ImagesFilesListBoxContainer->setLayout(listBoxContainerLayout);
+
+    // --------------------------------------------------------
 
     m_ImagesFilesButtonUp->setIcon(KIcon("arrow-up"));
     m_ImagesFilesButtonDown->setIcon(KIcon("arrow-down"));
@@ -318,8 +322,6 @@ bool MainDialog::updateUrlList()
     return true;
 }
 
-// --- Slots
-
 void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
 //    QTreeWidgetItem* item = m_ImagesFilesListBox->listView()->currentItem();
@@ -361,11 +363,6 @@ void MainDialog::addItems(const KUrl::List& fileList)
     m_ImagesFilesListBox->slotAddImages(files);
     showNumberImages();
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
-}
-
-void MainDialog::slotAddDropItems(KUrl::List filesUrl)
-{
-    addItems(filesUrl);
 }
 
 void MainDialog::slotImagesFilesButtonAdd( void )
@@ -597,9 +594,6 @@ void MainDialog::setupConnections()
 
     connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
             this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
-
-//    connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
-//            this, SLOT( slotAddDropItems(KUrl::List)));
 
     connect(m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
             this, SLOT( slotImagesFilesButtonAdd() ));
