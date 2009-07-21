@@ -1,25 +1,22 @@
-ADD_DEFINITIONS(-DQT3_SUPPORT 
-                -DQT3_SUPPORT_WARNINGS
-               )
 
 SET(kipiplugin_advancedslideshow_PART_SRCS common.cpp
-                                   kbeffect.cpp 
-                                   screenproperties.cpp
-                                   slideshowkb.cpp 
-                                   imageloadthread.cpp
-                                   listimageitems.cpp
-                                   maindialog.cpp
-                                   captiondialog.cpp
-                                   soundtrackdialog.cpp
-                                   advanceddialog.cpp 
-                                   playbackwidget.cpp
-                                   slideplaybackwidget.cpp
-                                   slideshowconfig.cpp 
-                                   slideshowloader.cpp
-                                   listsounditems.cpp
-                                   plugin_advancedslideshow.cpp 
-                                   slideshow.cpp 
-                                   slideshowgl.cpp 
+                                           kbeffect.cpp 
+                                           screenproperties.cpp
+                                           slideshowkb.cpp 
+                                           imageloadthread.cpp
+                                           listimageitems.cpp
+                                           maindialog.cpp
+                                           captiondialog.cpp
+                                           soundtrackdialog.cpp
+                                           advanceddialog.cpp 
+                                           playbackwidget.cpp
+                                           slideplaybackwidget.cpp
+                                           slideshowconfig.cpp 
+                                           slideshowloader.cpp
+                                           listsounditems.cpp
+                                           plugin_advancedslideshow.cpp 
+                                           slideshowgl.cpp 
+                                           slideshow.cpp 
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS 
@@ -47,7 +44,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                       # For Linux only.
                       ${X11_LIBRARIES}
                       ${X11_Xrandr_LIB}
-                      
+
                       kipiplugins
                      )
 

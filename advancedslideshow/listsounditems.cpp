@@ -6,7 +6,7 @@
  * Date        : 2008-09-14
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,8 +25,6 @@
 
 // Qt includes
 
-#include <Q3StrList>
-#include <Q3DragObject>
 #include <QString>
 #include <QWidget>
 #include <QEvent>
@@ -52,9 +50,10 @@ SoundItem::SoundItem(QListWidget* parent, KUrl &url)
     m_url = url;
     setIcon(SmallIcon( "audio-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
 
-    m_totalTime = QTime(0, 0, 0);
+    m_totalTime   = QTime(0, 0, 0);
     m_mediaObject = new Phonon::MediaObject();
     m_mediaObject->setCurrentSource(url);
+
     connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             this, SLOT(slotMediaStateChanged(Phonon::State, Phonon::State)));
 }
@@ -84,13 +83,8 @@ QString SoundItem::title()
     return m_title;
 }
 
-void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State oldstate)
+void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*oldstate*/)
 {
-    // -- To please compiler --
-    if ( oldstate ) {}
-
-    // ------------------------
-
     if ( newstate == Phonon::ErrorState )
     {
         KMessageBox::detailedError( (QWidget*)(this),
@@ -115,17 +109,17 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State olds
 
     long int total = m_mediaObject->totalTime();
 
-    int hours = (int)(total / (long int)( 60 * 60 * 1000 ));
+    int hours      = (int)(total / (long int)( 60 * 60 * 1000 ));
 
-    int mins  = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
+    int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
 
-    int secs  = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
+    int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
 
-    m_totalTime = QTime(hours, mins, secs);
+    m_totalTime    = QTime(hours, mins, secs);
 
-    m_artist = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(",");
+    m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(",");
 
-    m_title  = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(",");
+    m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(",");
 
     if ( m_artist.isEmpty() && m_title.isEmpty() )
         setText(m_url.fileName());
@@ -135,7 +129,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State olds
     emit totalTimeReady(m_url, m_totalTime);
 }
 
-// ---------------------------------------------
+// ------------------------------------------------------------------
 
 ListSoundItems::ListSoundItems(QWidget *parent)
               : QListWidget(parent)
@@ -148,38 +142,32 @@ ListSoundItems::ListSoundItems(QWidget *parent)
 
 void ListSoundItems::dragEnterEvent(QDragEnterEvent *e)
 {
-    e->setAccepted(Q3UriDrag::canDecode(e));
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+}
+
+void ListSoundItems::dragMoveEvent(QDragMoveEvent *e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
 }
 
 void ListSoundItems::dropEvent(QDropEvent *e)
 {
-    Q3StrList strList;
-    KUrl::List filesUrl;
+    QList<QUrl> list = e->mimeData()->urls();
+    KUrl::List urls;
 
-    if ( !Q3UriDrag::decode(e, strList) ) return;
-
-    Q3StrList stringList;
-
-    Q3StrListIterator it(strList);
-
-    char *str;
-
-    while ( (str = it.current()) != 0 )
+    foreach (const QUrl &url, list)
     {
-        QString filePath = Q3UriDrag::uriToLocalFile(str);
-        QFileInfo fileInfo(filePath);
-
-        if (fileInfo.isFile() && fileInfo.exists())
-        {
-            KUrl url(fileInfo.filePath());
-            filesUrl.append(url);
-        }
-
-        ++it;
+        QFileInfo fi(url.path());
+        if (fi.isFile() && fi.exists())
+            urls.append(KUrl(url));
     }
 
-    if (filesUrl.isEmpty() == false)
-        emit addedDropItems(filesUrl);
+    e->acceptProposedAction();
+
+    if (!urls.isEmpty())
+        emit addedDropItems(urls);
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

@@ -6,7 +6,7 @@
  * Date        : 2008-09-14
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2008 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
+ * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,6 +29,7 @@
 #include <QWidget>
 #include <QString>
 #include <QDropEvent>
+#include <QDragMoveEvent>
 #include <QDragEnterEvent>
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -47,7 +48,6 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SoundItem : public QObject, public QListWidgetItem
 {
-
     Q_OBJECT
 
 public:
@@ -71,11 +71,11 @@ private Q_SLOTS:
 
 private:
 
-    KUrl                    m_url;
-    QString                 m_artist;
-    QString                 m_title;
-    QTime                   m_totalTime;
-    Phonon::MediaObject*    m_mediaObject;
+    KUrl                 m_url;
+    QString              m_artist;
+    QString              m_title;
+    QTime                m_totalTime;
+    Phonon::MediaObject* m_mediaObject;
 };
 
 // --------------------------------------------------------------------
@@ -95,6 +95,7 @@ Q_SIGNALS:
 protected:
 
     void dragEnterEvent(QDragEnterEvent *e);
+    void dragMoveEvent(QDragMoveEvent*);
     void dropEvent(QDropEvent *e);
 };
 
