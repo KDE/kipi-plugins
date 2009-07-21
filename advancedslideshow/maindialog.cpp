@@ -67,7 +67,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
 
     QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
     m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
-                                                         ImagesList::NoControlButtons);
+                                                         ImagesList::NoControlButtons, KIconLoader::SizeMedium);
+    m_ImagesFilesListBox->listView()->header()->hide();
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
     listBoxContainerLayout->setSpacing(0);
     listBoxContainerLayout->setMargin(0);
