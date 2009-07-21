@@ -4,8 +4,8 @@
  * Date  : 2004-01-19
  * Description :
  *
- * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Copyright 2006-2009 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
+ * Copyright (C) 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
@@ -64,14 +64,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedData* sharedData)
-        : QGLWidget(0, 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup |
-                    Qt::WX11BypassWM | Qt::WDestructiveClose)
+           : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
+    m_deskX        = deskRect.x();
+    m_deskY        = deskRect.y();
+    m_deskWidth    = deskRect.width();
+    m_deskHeight   = deskRect.height();
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
@@ -87,16 +87,19 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     }
 
     connect(m_slidePlaybackWidget, SIGNAL(signalPause()),
+            this, SLOT(slotPause()));
 
-            SLOT(slotPause()));
     connect(m_slidePlaybackWidget, SIGNAL(signalPlay()),
-            SLOT(slotPlay()));
+            this, SLOT(slotPlay()));
+
     connect(m_slidePlaybackWidget, SIGNAL(signalNext()),
-            SLOT(slotNext()));
+            this, SLOT(slotNext()));
+
     connect(m_slidePlaybackWidget, SIGNAL(signalPrev()),
-            SLOT(slotPrev()));
+            this, SLOT(slotPrev()));
+
     connect(m_slidePlaybackWidget, SIGNAL(signalClose()),
-            SLOT(slotClose()));
+            this, SLOT(slotClose()));
 
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
     m_playbackWidget->hide();
@@ -118,14 +121,13 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
 
     // --------------------------------------------------
 
-    m_fileList     = fileList;
-    m_commentsList = commentsList;
-    m_cacheSize    = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
+    m_fileList      = fileList;
+    m_commentsList  = commentsList;
+    m_cacheSize     = m_sharedData->enableCache ? m_sharedData->cacheSize : 1;
 
     // ------------------------------------------------------------------
 
     m_fileIndex     = 0;
-
     m_texture[0]    = 0;
     m_texture[1]    = 0;
     m_curr          = 0;
@@ -133,8 +135,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     m_timeout       = m_sharedData->delay;
     m_effectRunning = false;
     m_endOfShow     = false;
-
-    m_imageLoader = new SlideShowLoader(m_fileList, m_cacheSize, width(), height(), m_sharedData);
+    m_imageLoader   = new SlideShowLoader(m_fileList, m_cacheSize, width(), height(), m_sharedData);
 
     // --------------------------------------------------
 
@@ -160,7 +161,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     m_timer = new QTimer(this);
 
     connect(m_timer, SIGNAL(timeout()),
-            SLOT(slotTimeOut()));
+            this, SLOT(slotTimeOut()));
 
     m_timer->setSingleShot(true);
 
@@ -171,7 +172,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
     m_mouseMoveTimer = new QTimer;
 
     connect(m_mouseMoveTimer, SIGNAL(timeout()),
-            SLOT(slotMouseMoveTimeOut()));
+            this, SLOT(slotMouseMoveTimeOut()));
 
     setMouseTracking(true);
 
@@ -474,7 +475,6 @@ void SlideShowGL::previousFrame()
 
 void SlideShowGL::loadImage()
 {
-
     QImage image = m_imageLoader->getCurrent();
 
     if (!image.isNull())
@@ -520,10 +520,7 @@ void SlideShowGL::loadImage()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-
     }
-
 }
 
 void SlideShowGL::montage(QImage& top, QImage& bot)
@@ -553,14 +550,12 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 
     for (int y = sh; y < eh; y++)
     {
-
         bdata = (unsigned int*) bot.scanLine(y) + sw;
 
         for (int x = 0; x < tw; x++)
         {
             *(bdata++) = *(tdata++);
         }
-
     }
 }
 
@@ -1209,7 +1204,6 @@ glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * t : 0.0,
 
     glEnd();
 
-
     m_i++;
 }
 
@@ -1226,9 +1220,9 @@ void SlideShowGL::effectSlide()
     if (m_i == 0)
         m_dir = 1 + (int)((4.0 * rand() / (RAND_MAX + 1.0)));
 
-    int a = (m_curr == 0) ? 1 : 0;
+    int a      = (m_curr == 0) ? 1 : 0;
 
-    int b =  m_curr;
+    int b      =  m_curr;
 
     GLuint& ta = m_texture[a];
 
@@ -1258,8 +1252,8 @@ void SlideShowGL::effectSlide()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     float trans = 2.0 / 100.0 * (float)m_i;
-glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * trans : 0.0,
-             (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * trans : 0.0,
+    glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * trans : 0.0,
+                 (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * trans : 0.0,
                  0.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
@@ -1316,7 +1310,6 @@ void SlideShowGL::effectFlutter()
             }
         }
     }
-
 
     glBindTexture(GL_TEXTURE_2D, tb);
 
@@ -1468,7 +1461,6 @@ void SlideShowGL::effectCube()
 
     glRotatef(xrot, 1.0f, 0.0f, 0.0f);
     glRotatef(yrot, 0.0f, 1.0f, 0.0f);
-
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glBegin(GL_QUADS);

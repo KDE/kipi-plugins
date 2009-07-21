@@ -34,7 +34,7 @@
 
 // Qt includes
 
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QTimer>
 #include <QPainter>
 #include <QPixmap>
@@ -67,8 +67,10 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList, SharedData* sharedData )
-         : QWidget( 0, Qt::WStyle_StaysOnTop | Qt::WType_Popup | Qt::WX11BypassWM | Qt::WDestructiveClose )
+         : QWidget( 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint )
 {
+    setAttribute(Qt::WA_DeleteOnClose);
+
     m_sharedData   = sharedData;
     QRect deskRect = KGlobalSettings::desktopGeometry( this );
     m_deskX        = deskRect.x();
@@ -117,12 +119,12 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
     connect( m_timer, SIGNAL( timeout() ),
              this, SLOT( slotTimeOut() ) );
 
-    m_pa = Q3PointArray( 4 );
+    m_pa     = QPolygon( 4 );
     m_buffer = QPixmap( size() );
     m_buffer.fill( Qt::black );
 
-    m_fileList          = fileList;
-    m_commentsList      = commentsList;
+    m_fileList     = fileList;
+    m_commentsList = commentsList;
 
     if ( m_sharedData->enableCache )
         m_cacheSize  = m_sharedData->cacheSize;
@@ -150,7 +152,6 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
     }
 
     m_timer->setSingleShot( true );
-
     m_timer->start( 10 );
 
     // -- hide cursor when not moved --------------------
@@ -179,9 +180,6 @@ SlideShow::~SlideShow()
 
 void SlideShow::readSettings()
 {
-
-
-
 }
 
 void SlideShow::registerEffects()
