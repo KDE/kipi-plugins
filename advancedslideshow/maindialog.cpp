@@ -488,7 +488,6 @@ void MainDialog::slotDelayChanged( int delay )
 
 void MainDialog::slotUseMillisecondsToggled( void )
 {
-    m_delaySpinBox->setValue(0);
     int delay = m_sharedData->delay;
 
     if ( m_sharedData->useMilliseconds )
