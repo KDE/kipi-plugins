@@ -292,7 +292,6 @@ public:
     QWidget*            plainPage;
 
     ImagesListView*     listView;
-
     Interface*          iface;
 };
 
@@ -302,7 +301,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent,
             d(new ImagesListPriv)
 {
     d->iface    = iface;
-    d->allowRAW = true; // default, use setAllowRAW() to change
+    d->allowRAW = true;  // default, use setAllowRAW() to change
 
     if (iconSize != -1)  // default = ICONSIZE
         setIconSize(iconSize);
