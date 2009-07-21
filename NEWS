@@ -37,5 +37,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> BatchProcess : 149488 : After batch renaming pictures, the pictures appears as unkown images, and can't be removed from album nor can be viewed or edit
 025 ==> SendImages   : 146828 : Sendimages opera command line.
 026 ==> BatchProcess : 186648 : Batch rename doesn't refresh view.
-027 ==> PrintWizard  : 188426 : Add support for different size  printwizard templates
-028 ==> 
+027 ==> PrintWizard  : 188426 : Add support for different size  printwizard templates.
+028 ==> MetadataEdit : 200960 : Image / Metadata / Remove Captions does not remove caption from Xmp.tiff.ImageDescription.
+029 ==> 
