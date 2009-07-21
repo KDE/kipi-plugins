@@ -331,8 +331,6 @@ bool MainDialog::updateUrlList()
 
 void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
-//    QTreeWidgetItem* item = m_ImagesFilesListBox->listView()->currentItem();
-
     if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
     {
         m_label7->setText("");
@@ -397,60 +395,32 @@ void MainDialog::slotImagesFilesButtonDelete( void )
 
 void MainDialog::slotImagesFilesButtonUp( void )
 {
-//    int Cpt = 0;
-//
-//    for (int i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-//        if (m_ImagesFilesListBox->currentRow() == i)
-//            ++Cpt;
-//
-//    if  (Cpt == 0)
-//        return;
-//
-//    if  (Cpt > 1)
-//    {
-//        KMessageBox::error(this, i18n("You can only move image files up one at a time."));
-//        return;
-//    }
-//
-//    unsigned int Index = m_ImagesFilesListBox->currentRow();
-//
-//    if (Index == 0)
-//        return;
-//
-//    ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
-//
-//    m_ImagesFilesListBox->insertItem(Index - 1, pitem);
-//
-//    m_ImagesFilesListBox->setCurrentItem(pitem);
+    QModelIndex curIndex   = m_ImagesFilesListBox->listView()->currentIndex();
+    if (!curIndex.isValid())
+        return;
+
+    QModelIndex aboveIndex = m_ImagesFilesListBox->listView()->indexAbove(curIndex);
+    if (!aboveIndex.isValid())
+        return;
+
+    QTreeWidgetItem* temp = m_ImagesFilesListBox->listView()->takeTopLevelItem(aboveIndex.row());
+    QModelIndex curTemp   = m_ImagesFilesListBox->listView()->currentIndex();
+    m_ImagesFilesListBox->listView()->insertTopLevelItem(curIndex.row(), temp);
 }
 
 void MainDialog::slotImagesFilesButtonDown( void )
 {
-//    int Cpt = 0;
-//
-//    for (int i = 0 ; i < m_ImagesFilesListBox->count() ; ++i)
-//        if (m_ImagesFilesListBox->currentRow() == i)
-//            ++Cpt;
-//
-//    if (Cpt == 0)
-//        return;
-//
-//    if (Cpt > 1)
-//    {
-//        KMessageBox::error(this, i18n("You can only move image files down one at a time."));
-//        return;
-//    }
-//
-//    int Index = m_ImagesFilesListBox->currentRow();
-//
-//    if (Index == m_ImagesFilesListBox->count())
-//        return;
-//
-//    ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
-//
-//    m_ImagesFilesListBox->insertItem(Index + 1, pitem);
-//
-//    m_ImagesFilesListBox->setCurrentItem(pitem);
+    QModelIndex curIndex   = m_ImagesFilesListBox->listView()->currentIndex();
+    if (!curIndex.isValid())
+        return;
+
+    QModelIndex belowIndex = m_ImagesFilesListBox->listView()->indexBelow(curIndex);
+    if (!belowIndex.isValid())
+        return;
+
+    QTreeWidgetItem* temp = m_ImagesFilesListBox->listView()->takeTopLevelItem(belowIndex.row());
+    QModelIndex curTemp   = m_ImagesFilesListBox->listView()->currentIndex();
+    m_ImagesFilesListBox->listView()->insertTopLevelItem(curIndex.row(), temp);
 }
 
 void MainDialog::slotOpenGLToggled( void )
