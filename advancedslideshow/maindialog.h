@@ -38,6 +38,11 @@
 #include "common.h"
 #include "ui_maindialog.h"
 
+namespace KIPIPlugins
+{
+class ImagesList;
+}
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
@@ -89,10 +94,11 @@ private:
 
 private:
 
-    SharedData*      m_sharedData;
-    KIO::PreviewJob* m_thumbJob;
-    QTime            m_totalTime;
-    QPixmap          m_noPreviewPixmap;
+    SharedData*              m_sharedData;
+    KIO::PreviewJob*         m_thumbJob;
+    QTime                    m_totalTime;
+    QPixmap                  m_noPreviewPixmap;
+    KIPIPlugins::ImagesList* m_ImagesFilesListBox;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin
