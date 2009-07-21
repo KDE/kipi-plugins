@@ -208,8 +208,9 @@ void MainDialog::saveSettings()
     }
 }
 
-void MainDialog::showNumberImages( int number )
+void MainDialog::showNumberImages()
 {
+    int numberOfImages = m_ImagesFilesListBox->imageUrls().count();
     QTime totalDuration (0, 0, 0);
 
     int transitionDuration = 2000;
@@ -218,18 +219,18 @@ void MainDialog::showNumberImages( int number )
         transitionDuration += 500;
 
     if ( m_sharedData->useMilliseconds )
-        totalDuration = totalDuration.addMSecs(number * m_delaySpinBox->text().toInt());
+        totalDuration = totalDuration.addMSecs(numberOfImages * m_delaySpinBox->text().toInt());
     else
-        totalDuration = totalDuration.addSecs(number * m_delaySpinBox->text().toInt());
+        totalDuration = totalDuration.addSecs(numberOfImages * m_delaySpinBox->text().toInt());
 
-    totalDuration = totalDuration.addMSecs((number - 1) * transitionDuration);
+    totalDuration = totalDuration.addMSecs((numberOfImages - 1) * transitionDuration);
 
     m_totalTime = totalDuration;
 
     // Notify total time is changed
     emit totalTimeChanged(m_totalTime);
 
-    m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", number, totalDuration.toString()));
+    m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", numberOfImages, totalDuration.toString()));
 }
 
 void MainDialog::loadEffectNames()
@@ -319,73 +320,52 @@ bool MainDialog::updateUrlList()
 
 // --- Slots
 
-void MainDialog::slotImagesFilesSelected( int row )
+void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
 {
 //    QTreeWidgetItem* item = m_ImagesFilesListBox->listView()->currentItem();
-//
-//    if ( !item || m_ImagesFilesListBox->imageUrls().isEmpty())
-//    {
-//        m_label7->setText("");
-//        m_previewLabel->setPixmap(m_noPreviewPixmap);
-//        return;
-//    }
-//
-//    ImagesListViewItem *pitem = static_cast<ImagesListViewItem*>( item );
-//
-//    if ( !pitem ) return;
-//
-//    KUrl url;
-//    url.setPath(pitem->url().path());
-//
-//    connect(m_sharedData->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-//            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-//
-//    m_sharedData->interface->thumbnail(url, ICONSIZE);
-//
-//    int index = m_ImagesFilesListBox->row ( item );
-//
-//    m_label7->setText(i18nc("Image number %1", "Image #%1", QString::number(index + 1)));
+
+    if (!item || m_ImagesFilesListBox->imageUrls().isEmpty())
+    {
+        m_label7->setText("");
+        m_previewLabel->setPixmap(m_noPreviewPixmap);
+        return;
+    }
+
+    ImagesListViewItem *pitem = static_cast<ImagesListViewItem*> (item);
+
+    if (!pitem)
+        return;
+
+    KUrl url;
+    url.setPath(pitem->url().path());
+
+    connect(m_sharedData->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
+    m_sharedData->interface->thumbnail(url, ICONSIZE);
+
+    QModelIndex index = m_ImagesFilesListBox->listView()->currentIndex();
+    if (index.isValid())
+    {
+        int rowindex = index.row();
+        m_label7->setText(i18nc("Image number %1", "Image #%1", QString::number(rowindex + 1)));
+    }
 }
 
 void MainDialog::addItems(const KUrl::List& fileList)
 {
-//    if (fileList.isEmpty()) return;
-//
-//    KUrl::List Files = fileList;
-//
-//    for ( KUrl::List::Iterator it = Files.begin() ; it != Files.end() ; ++it )
-//    {
-//        KUrl currentFile = *it;
-//
-//        QFileInfo fi(currentFile.path());
-//        QString Temp = fi.path();
-//        QString albumName = Temp.section('/', -1);
-//
-//        KIPI::ImageInfo info = m_sharedData->interface->info(currentFile);
-//        QString comments = info.description();
-//
-//        ImageItem *item = new ImageItem( m_ImagesFilesListBox,
-//                                         currentFile.path().section('/', -1 ),   // File name with extension.
-//                                         comments,                               // Image comments.
-//                                         currentFile.path().section('/', 0, -1), // Complete path with file name.
-//                                         albumName,                              // Album name.
-//                                         m_sharedData->interface
-//                                       );
-//
-//        item->setName( currentFile.path().section('/', -1) );
-//        m_ImagesFilesListBox->insertItem(m_ImagesFilesListBox->count() - 1, item);
-//    }
-//
-//    showNumberImages( m_ImagesFilesListBox->count() );
-//
-//    m_ImagesFilesListBox->setCurrentItem(m_ImagesFilesListBox->item(m_ImagesFilesListBox->count() - 1)) ;
-//    slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
-//    m_ImagesFilesListBox->scrollToItem(m_ImagesFilesListBox->currentItem());
+    if (fileList.isEmpty())
+        return;
+    KUrl::List files = fileList;
+
+    m_ImagesFilesListBox->slotAddImages(files);
+    showNumberImages();
+    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
 void MainDialog::slotAddDropItems(KUrl::List filesUrl)
 {
-    addItems(filesUrl);
+    m_ImagesFilesListBox->slotAddImages(filesUrl);
 }
 
 void MainDialog::slotImagesFilesButtonAdd( void )
@@ -395,19 +375,20 @@ void MainDialog::slotImagesFilesButtonAdd( void )
 
     if (!urls.isEmpty())
     {
-        addItems(urls);
+        m_ImagesFilesListBox->slotAddImages(urls);
     }
-
 }
 
 void MainDialog::slotImagesFilesButtonDelete( void )
 {
-//    int Index = m_ImagesFilesListBox->currentRow();
-//    ImageItem* pitem = static_cast<ImageItem*>(m_ImagesFilesListBox->takeItem(Index));
-//    delete pitem;
-//
-//    slotImagesFilesSelected(m_ImagesFilesListBox->currentRow());
-//    showNumberImages( m_ImagesFilesListBox->count() );
+    ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(m_ImagesFilesListBox->listView()->currentItem());
+    if (!item)
+        return;
+
+    m_ImagesFilesListBox->removeItemByUrl(item->url());
+
+    showNumberImages();
+    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
 void MainDialog::slotImagesFilesButtonUp( void )
@@ -531,6 +512,7 @@ void MainDialog::slotSelection( void )
     if (m_selectedFilesButton->isChecked())
     {
         urlList = m_sharedData->interface->currentSelection().images();
+        m_ImagesFilesListBox->listView()->clear();
 
         m_ImagesFilesButtonAdd->setEnabled(false);
         m_ImagesFilesButtonDelete->setEnabled(false);
@@ -539,7 +521,6 @@ void MainDialog::slotSelection( void )
     }
     else if (m_allFilesButton->isChecked())
     {
-
         KUrl currentPath = m_sharedData->interface->currentAlbum().path();
         QList<KIPI::ImageCollection> albumList;
         albumList = m_sharedData->interface->allAlbums();
@@ -568,15 +549,14 @@ void MainDialog::slotSelection( void )
     {
         if (!urlList.isEmpty())
         {
-//            m_ImagesFilesListBox->clear();
-            addItems(urlList);
+            m_ImagesFilesListBox->slotAddImages(urlList);
         }
     }
 }
 
 void MainDialog::slotPortfolioDurationChanged ( int )
 {
-    showNumberImages( m_ImagesFilesListBox->imageUrls().count() );
+    showNumberImages();
     emit totalTimeChanged( m_totalTime );
 }
 
@@ -616,8 +596,8 @@ void MainDialog::setupConnections()
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL( currentRowChanged( int ) ),
-            this, SLOT( slotImagesFilesSelected( int ) ));
+    connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
+            this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
 
     connect(m_ImagesFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
             this, SLOT( slotAddDropItems(KUrl::List)));

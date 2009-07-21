@@ -124,6 +124,11 @@ public:
 signals:
 
     void addedDropedItems(const KUrl::List& urls);
+    void signalItemClicked(QTreeWidgetItem* item);
+
+private Q_SLOTS:
+
+    void slotItemClicked(QTreeWidgetItem* item, int column);
 
 private:
 
@@ -173,6 +178,7 @@ signals:
 
     void signalImageListChanged(bool);
     void signalFoundRAWImages(bool);
+    void signalItemClicked(QTreeWidgetItem* item);
 
 public slots:
 

@@ -38,6 +38,8 @@
 #include "common.h"
 #include "ui_maindialog.h"
 
+class QTreeWidgetItem;
+
 namespace KIPIPlugins
 {
 class ImagesList;
@@ -72,7 +74,7 @@ private Q_SLOTS:
     void slotThumbnail(const KUrl&, const QPixmap&);
 
     void slotPortfolioDurationChanged ( int );
-    void slotImagesFilesSelected( int );
+    void slotImagesFilesSelected(QTreeWidgetItem* item);
     void slotAddDropItems(KUrl::List filesUrl);
     void slotImagesFilesButtonAdd( void );
     void slotImagesFilesButtonDelete( void );
@@ -89,7 +91,7 @@ private:
     void loadEffectNames();
     void loadEffectNamesGL();
 
-    void showNumberImages( int number );
+    void showNumberImages();
     void addItems(const KUrl::List& fileList);
 
 private:
