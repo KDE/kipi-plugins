@@ -144,7 +144,7 @@ int ImagesListViewItem::rating()
 
 void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
-    int iconSize = m_view->iconSize().width();
+    int iconSize = qMax<int>(m_view->iconSize().width(), m_view->iconSize().height());
     QPixmap pixmap(iconSize+2, iconSize+2);
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
@@ -460,9 +460,9 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
         if (item->url() == url)
         {
             if (pix.isNull())
-                item->setThumb(SmallIcon("image-x-generic", DEFAULTSIZE, KIconLoader::DisabledState));
+                item->setThumb(SmallIcon("image-x-generic", d->iconSize, KIconLoader::DisabledState));
             else
-                item->setThumb(pix.scaled(DEFAULTSIZE, DEFAULTSIZE, Qt::KeepAspectRatio));
+                item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
 
             return;
         }

@@ -181,24 +181,6 @@ GPSTrackListEditDialog::~GPSTrackListEditDialog()
     delete d;
 }
 
-//void GPSTrackListEditDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-//{
-//    QTreeWidgetItemIterator it(d->imagesList->listView());
-//    while (*it)
-//    {
-//        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
-//        if (lvItem)
-//        {
-//            if (lvItem->url() == url)
-//            {
-//                lvItem->setThumbnail(pix);
-//                return;
-//            }
-//        }
-//        ++it;
-//    }
-//}
-
 void GPSTrackListEditDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("gpssync", "kipi-plugins");

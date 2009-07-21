@@ -52,8 +52,6 @@ public:
     void setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data);
     GPSTrackListItem gpsInfo() const;
 
-    void setThumbnail(const QPixmap& pix);
-
     void setDirty(bool dirty);
     bool isDirty() const;
 

@@ -51,7 +51,6 @@ GPSTrackListViewItem::GPSTrackListViewItem(KIPIPlugins::ImagesListView *view, co
                     : KIPIPlugins::ImagesListViewItem(view, url),
                       d(new GPSTrackListViewItemPriv)
 {
-    setIcon(0, SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 }
 
 GPSTrackListViewItem::~GPSTrackListViewItem()
@@ -80,11 +79,6 @@ void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListIte
 GPSTrackListItem GPSTrackListViewItem::gpsInfo() const
 {
     return d->data;
-}
-
-void GPSTrackListViewItem::setThumbnail(const QPixmap& pix)
-{
-    setIcon(0, pix.scaled(64, 64, Qt::KeepAspectRatio));
 }
 
 QDateTime GPSTrackListViewItem::dateTime() const

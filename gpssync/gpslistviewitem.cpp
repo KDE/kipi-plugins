@@ -63,16 +63,13 @@ public:
 };
 
 GPSListViewItem::GPSListViewItem(KIPI::Interface* interface, KIPIPlugins::ImagesListView *view, const KUrl& url)
-               : KIPIPlugins::ImagesListViewItem(view, url), 
+               : KIPIPlugins::ImagesListViewItem(view, url),
                  d(new GPSListViewItemPriv)
 {
     d->interface = interface;
     d->url       = url;
 
     setEnabled(false);
-    setIcon(KIPIPlugins::ImagesListView::Thumbnail,
-            SmallIcon( "image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
-    setText(KIPIPlugins::ImagesListView::Filename, d->url.fileName());
 
     double alt, lat, lng;
     KExiv2Iface::KExiv2 exiv2Iface;
