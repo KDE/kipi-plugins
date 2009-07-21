@@ -28,10 +28,6 @@
 
 #include <QWidget>
 #include <QString>
-#include <QDropEvent>
-#include <QDragEnterEvent>
-#include <QDragMoveEvent>
-#include <QListWidget>
 #include <QListWidgetItem>
 
 // KDE includes
@@ -42,6 +38,11 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+
+class QListWidget;
+class QDropEvent;
+class QDragEnterEvent;
+class QDragMoveEvent;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
