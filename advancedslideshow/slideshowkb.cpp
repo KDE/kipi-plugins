@@ -195,28 +195,20 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
         frameRate = m_forceFrameRate;
 
     m_image[0]    = new Image(0);
-
     m_image[1]    = new Image(0);
 
     m_effect      = 0;
-
     m_step        = 1.0 / ((float) (m_delay * frameRate));
-
     m_zoomIn      = rand() < RAND_MAX / 2;
-
     m_initialized = false;
-
     m_haveImages  = true;
 
     QList<QPair<QString, int> > m_fileList = fileList;
 
     m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
-
     m_timer           = new QTimer;
-
-    m_endOfShow = false;
-
-    m_showingEnd = false;
+    m_endOfShow       = false;
+    m_showingEnd      = false;
 
     connect(m_timer, SIGNAL(timeout(void)),
             this, SLOT(moveSlot()));
@@ -237,11 +229,8 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     // -- playback widget -------------------------------
 
-
     m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
-
     m_playbackWidget->hide();
-
     m_playbackWidget->move(m_deskX, m_deskY);
 
     // -- load image and let's start
