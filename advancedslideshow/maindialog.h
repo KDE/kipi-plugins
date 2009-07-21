@@ -60,7 +60,7 @@ private Q_SLOTS:
 
     void slotOpenGLToggled( void );
     void slotEffectChanged( void );
-    void slotDelayChanged( int delay );
+    void slotDelayChanged( int );
     void slotPrintCommentsToggled( void );
     void slotSelection( void );
     void slotUseMillisecondsToggled( void );

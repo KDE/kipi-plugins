@@ -597,7 +597,7 @@ void MainDialog::setupConnections()
             this, SLOT(slotSelection()));
 
     connect(m_delaySpinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(slotDelayChanged()));
+            this, SLOT(slotDelayChanged(int)));
 
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
