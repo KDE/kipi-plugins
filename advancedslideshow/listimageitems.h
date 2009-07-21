@@ -7,7 +7,7 @@
  * Description : a kipi plugin to slide images.
  *
  * Copyright (C) 2008 Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
- * Copyright (C) 2003-2007 Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2009 Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,18 +30,18 @@
 #include <QString>
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QDragMoveEvent>
 #include <QListWidget>
 #include <QListWidgetItem>
 
 // KDE includes
 
 #include <kurl.h>
-#include "kio/previewjob.h"
+#include <kio/previewjob.h>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -90,8 +90,9 @@ Q_SIGNALS:
 
 protected:
 
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dropEvent(QDropEvent *e);
+    void dragEnterEvent(QDragEnterEvent*);
+    void dragMoveEvent(QDragMoveEvent*);
+    void dropEvent(QDropEvent*);
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
