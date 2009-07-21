@@ -18,7 +18,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_picasawebexport
                       ${KDCRAW_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
-                      ${KDE4_KDE3SUPPORT_LIBS}
                       ${KDE4_KDEUI_LIBS}
                       ${KDE4_KIO_LIBS}
                      )
