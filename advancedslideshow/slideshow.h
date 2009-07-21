@@ -27,7 +27,7 @@
 
 // Qt includes
 
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QList>
 #include <QFont>
 #include <QKeyEvent>
@@ -175,7 +175,7 @@ private:
     bool**                      m_pixelMatrix;
 
     //static
-    Q3PointArray                m_pa;
+    QPolygon                    m_pa;
 
     SlidePlaybackWidget*        m_slidePlaybackWidget;
     QTimer*                     m_mouseMoveTimer;
