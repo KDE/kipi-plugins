@@ -162,7 +162,7 @@ SlideShowLoader::~SlideShowLoader()
     {
         it.value()->wait();
         delete it.value();
-        m_loadingThreads->remove(it.key());
+        it = m_loadingThreads->erase(it);
     }
 
     m_threadLock->unlock();
