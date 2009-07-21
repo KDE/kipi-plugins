@@ -38,7 +38,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${KDE4_KDE3SUPPORT_LIBS}
                       ${KDE4_PHONON_LIBRARY}
 
                       # For Linux only.
