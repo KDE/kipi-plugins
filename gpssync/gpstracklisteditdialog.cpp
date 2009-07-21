@@ -155,9 +155,6 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     connect(d->worldMap, SIGNAL(signalMarkerSelectedFromMap(int)),
             this, SLOT(slotMarkerSelectedFromMap(int)));
 
-//    connect(d->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-//            d->imagesList, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-
     // ---------------------------------------------------------------
 
     KUrl::List urls;
