@@ -212,7 +212,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
 
-    m_timer           = new QTimer(this);
+    m_timer           = new QTimer;
 
     m_endOfShow = false;
 
@@ -268,14 +268,9 @@ SlideShowKB::~SlideShowKB()
         terminated = m_imageLoadThread->wait(3000);
     }
 
-//    if (terminated)
-//        delete m_imageLoadThread;
-
-//    delete m_mouseMoveTimer;
-//
-//    delete m_timer;
-
     delete m_screen;
+    delete m_mouseMoveTimer;
+    delete m_timer;
 }
 
 void SlideShowKB::setNewKBEffect()

@@ -188,8 +188,8 @@ SlideShowGL::~SlideShowGL()
     if (m_texture[1])
         glDeleteTextures(1, &m_texture[1]);
 
-    if (m_imageLoader)
-        delete m_imageLoader;
+    delete m_imageLoader;
+    delete m_mouseMoveTimer;
 }
 
 void SlideShowGL::initializeGL()

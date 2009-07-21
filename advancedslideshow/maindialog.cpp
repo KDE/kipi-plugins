@@ -88,6 +88,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     m_ImagesFilesButtonAdd->setText("");
     m_ImagesFilesButtonDelete->setText("");
 
+    // --------------------------------------------------------
+
     // Prepare a preview pixmap (KIPI logo) for no image selection
     QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_advancedslideshow/KIPIicon.svg") );
     m_noPreviewPixmap = QPixmap(ICONSIZE, ICONSIZE);
