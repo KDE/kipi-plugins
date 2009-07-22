@@ -34,6 +34,7 @@
 #include <QString>
 #include <QStringList>
 #include <QTime>
+#include <QHeaderView>
 
 // KDE includes
 
