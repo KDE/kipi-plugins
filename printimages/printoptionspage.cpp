@@ -140,6 +140,10 @@ PrintOptionsPage::PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList )
     d->mScaleGroup.addButton ( d->mScaleTo, ScaleToCustomSize );
     d->mPhotoXPage->setRange (0, d->m_photos->size() );
 
+    d->mPX->setSpecialValueText(i18n("disabled"));
+    d->mPY->setSpecialValueText(i18n("disabled"));
+    d->mPhotoXPage->setSpecialValueText(i18n("disabled"));
+
     imagePreview();
     enableButtons();
 
