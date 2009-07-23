@@ -79,6 +79,7 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
 
     m_slidePlaybackWidget = new SlidePlaybackWidget( this );
     m_slidePlaybackWidget->hide();
+    m_slidePlaybackWidget->move(m_deskWidth - m_slidePlaybackWidget->width(), m_deskY);
 
     if ( !m_sharedData->loop )
     {
@@ -595,28 +596,27 @@ void SlideShow::mouseMoveEvent( QMouseEvent *e )
         return;
     }
 
-    int w = m_slidePlaybackWidget->width();
-
-    int h = m_slidePlaybackWidget->height();
-
-    if ( pos.y() < ( m_deskY + 20 ) )
-    {
-        if ( pos.x() <= ( m_deskX + m_deskWidth / 2 ) )
-            // position top left
-            m_slidePlaybackWidget->move( m_deskX, m_deskY );
-        else
-            // position top right
-            m_slidePlaybackWidget->move( m_deskX + m_deskWidth - w - 1, m_deskY );
-    }
-    else
-    {
-        if ( pos.x() <= ( m_deskX + m_deskWidth / 2 ) )
-            // position bot left
-            m_slidePlaybackWidget->move( m_deskX, m_deskY + m_deskHeight - h - 1 );
-        else
-            // position bot right
-            m_slidePlaybackWidget->move( m_deskX + m_deskWidth - w - 1, m_deskY + m_deskHeight - h - 1 );
-    }
+//    int w = m_slidePlaybackWidget->width();
+//    int h = m_slidePlaybackWidget->height();
+//
+//    if ( pos.y() < ( m_deskY + 20 ) )
+//    {
+//        if ( pos.x() <= ( m_deskX + m_deskWidth / 2 ) )
+//            // position top left
+//            m_slidePlaybackWidget->move( m_deskX, m_deskY );
+//        else
+//            // position top right
+//            m_slidePlaybackWidget->move( m_deskX + m_deskWidth - w - 1, m_deskY );
+//    }
+//    else
+//    {
+//        if ( pos.x() <= ( m_deskX + m_deskWidth / 2 ) )
+//            // position bot left
+//            m_slidePlaybackWidget->move( m_deskX, m_deskY + m_deskHeight - h - 1 );
+//        else
+//            // position bot right
+//            m_slidePlaybackWidget->move( m_deskX + m_deskWidth - w - 1, m_deskY + m_deskHeight - h - 1 );
+//    }
 
     m_slidePlaybackWidget->show();
     m_playbackWidget->show();
