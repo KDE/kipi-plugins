@@ -40,4 +40,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 027 ==> PrintWizard  : 188426 : Add support for different size  printwizard templates.
 028 ==> MetadataEdit : 200960 : Image / Metadata / Remove Captions does not remove caption from Xmp.tiff.ImageDescription.
 029 ==> AdvSlideShow : 155179 : Slideshow ignores Rating Filter.
-030 ==>
+030 ==> BatchProcess : 201257 : digiKam crashes when batch resizing images.
+031 ==>
