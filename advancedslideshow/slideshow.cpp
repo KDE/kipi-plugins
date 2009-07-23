@@ -27,41 +27,37 @@
 
 // C++ includes
 
-#include <cstdlib>
 #include <cassert>
 #include <cmath>
+#include <cstdlib>
 #include <ctime>
 
 // Qt includes
 
-#include <QPolygon>
-#include <QTimer>
-#include <QPainter>
-#include <QPixmap>
-#include <QImage>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QEvent>
 #include <QCursor>
 #include <QFont>
-#include <QMatrix>
-#include <QTextCodec>
 #include <QKeyEvent>
+#include <QMatrix>
 #include <QMouseEvent>
-#include <QWheelEvent>
+#include <QPainter>
 #include <QPainterPath>
+#include <QPixmap>
 #include <QPolygon>
 #include <QSvgRenderer>
+#include <QTimer>
+#include <QWheelEvent>
 
 // KDE includes
 
-#include <klocale.h>
-#include <kdeversion.h>
 #include <kglobalsettings.h>
-#include <kdebug.h>
-#include <kurl.h>
+#include <klocale.h>
 #include <kstandarddirs.h>
-#include <KConfigGroup>
+
+// Local includes
+
+#include "common.h"
+#include "slideplaybackwidget.h"
+#include "slideshowloader.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

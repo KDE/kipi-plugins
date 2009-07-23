@@ -27,51 +27,34 @@
 
 // Qt includes
 
-#include <QPolygon>
 #include <QList>
-#include <QFont>
-#include <QKeyEvent>
 #include <QMap>
-#include <QMouseEvent>
-#include <QPainter>
 #include <QPair>
 #include <QPixmap>
+#include <QPolygon>
 #include <QString>
 #include <QStringList>
-#include <QWheelEvent>
 #include <QWidget>
 
-// KDE includes
-
-#include <kconfig.h>
-#include <kurl.h>
-
-// LibKIPI includes
-
-#include <libkipi/imagecollection.h>
-#include <libkipi/interface.h>
-
-// Local includes
-
-#include "slideshowloader.h"
-#include "slideplaybackwidget.h"
-#include "common.h"
-
+class QKeyEvent;
+class QMouseEvent;
+class QPaintEvent;
 class QTimer;
+class QWheelEvent;
 
-typedef QPair<QString, int> FileAnglePair;
-typedef QList<FileAnglePair > FileList;
+typedef QPair<QString, int>  FileAnglePair;
+typedef QList<FileAnglePair> FileList;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
+class SlideShowLoader;
 class SlidePlaybackWidget;
-
-class SlideShow;
+class SharedData;
+class PlaybackWidget;
 
 class SlideShow : public QWidget
 {
-
     Q_OBJECT
 
     typedef int (SlideShow::*EffectMethod)(bool);
@@ -153,6 +136,7 @@ private:
     QMap<QString, EffectMethod> Effects;
 
     SlideShowLoader*            m_imageLoader;
+    PlaybackWidget*             m_playbackWidget;
     QPixmap                     m_currImage;
 
     FileList                    m_fileList;
