@@ -316,7 +316,6 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
     }
 
     m_slidePlaybackWidget->show();
-
     m_playbackWidget->show();
 }
 

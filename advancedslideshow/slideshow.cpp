@@ -85,21 +85,26 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
         m_slidePlaybackWidget->setEnabledPrev( false );
     }
 
-    connect( m_slidePlaybackWidget, SIGNAL( signalPause() ),
+    // -- playback widget -------------------------------
 
-             this, SLOT( slotPause() ) );
+    m_playbackWidget = new PlaybackWidget(this, m_sharedData->soundtrackUrls, m_sharedData);
+    m_playbackWidget->hide();
+    m_playbackWidget->move(m_deskX, m_deskY);
 
-    connect( m_slidePlaybackWidget, SIGNAL( signalPlay() ),
-             this, SLOT( slotPlay() ) );
+    connect(m_slidePlaybackWidget, SIGNAL( signalPause() ),
+            this, SLOT( slotPause() ));
 
-    connect( m_slidePlaybackWidget, SIGNAL( signalNext() ),
-             this, SLOT( slotNext() ) );
+    connect(m_slidePlaybackWidget, SIGNAL( signalPlay() ),
+            this, SLOT( slotPlay() ));
 
-    connect( m_slidePlaybackWidget, SIGNAL( signalPrev() ),
-             this, SLOT( slotPrev() ) );
+    connect(m_slidePlaybackWidget, SIGNAL( signalNext() ),
+            this, SLOT( slotNext() ));
 
-    connect( m_slidePlaybackWidget, SIGNAL( signalClose() ),
-             this, SLOT( slotClose() ) );
+    connect(m_slidePlaybackWidget, SIGNAL( signalPrev() ),
+            this, SLOT( slotPrev() ));
+
+    connect(m_slidePlaybackWidget, SIGNAL( signalClose() ),
+            this, SLOT( slotClose() ));
 
     // ---------------------------------------------------------------
 
@@ -112,8 +117,8 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
     m_startPainter  = false;
 
     m_timer = new QTimer(this);
-    connect( m_timer, SIGNAL( timeout() ),
-             this, SLOT( slotTimeOut() ) );
+    connect(m_timer, SIGNAL(timeout()),
+            this, SLOT(slotTimeOut()));
 
     m_pa     = QPolygon( 4 );
     m_buffer = QPixmap( size() );
@@ -133,16 +138,16 @@ SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList,
 
     registerEffects();
 
-    if ( m_sharedData->effectName  == "Random" )
+    if (m_sharedData->effectName == "Random")
         m_effect = getRandomEffect();
     else
     {
         m_effectName = m_sharedData->effectName;
-        m_effect = Effects[m_sharedData->effectName];
+        m_effect     = Effects[m_sharedData->effectName];
 
-        if ( !m_effect )
+        if (!m_effect)
         {
-            m_effect = Effects["None"];
+            m_effect     = Effects["None"];
             m_effectName = "None";
         }
     }
@@ -534,12 +539,13 @@ void SlideShow::showEndOfShow()
     m_slidePlaybackWidget->setEnabledPrev( false );
 }
 
-void SlideShow::keyPressEvent( QKeyEvent *event )
+void SlideShow::keyPressEvent(QKeyEvent *event)
 {
-    if ( !event )
+    if (!event)
         return;
 
-    m_slidePlaybackWidget->keyPressEvent( event );
+    m_playbackWidget->keyPressEvent(event);
+    m_slidePlaybackWidget->keyPressEvent(event);
 }
 
 void SlideShow::mousePressEvent( QMouseEvent *e )
@@ -567,7 +573,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent *e )
     m_mouseMoveTimer->setSingleShot( true );
     m_mouseMoveTimer->start( 1000 );
 
-    if ( !m_slidePlaybackWidget->canHide() )
+    if (!m_slidePlaybackWidget->canHide() || !m_playbackWidget->canHide())
         return;
 
     QPoint pos( e->pos() );
@@ -575,10 +581,16 @@ void SlideShow::mouseMoveEvent( QMouseEvent *e )
     if (( pos.y() > ( m_deskY + 20 ) ) &&
             ( pos.y() < ( m_deskY + m_deskHeight - 20 - 1 ) ) )
     {
-        if ( m_slidePlaybackWidget->isHidden() )
+        if (!m_slidePlaybackWidget->canHide() || !m_playbackWidget->canHide())
+        {
             return;
+        }
         else
+        {
             m_slidePlaybackWidget->hide();
+            m_playbackWidget->hide();
+        }
+
 
         return;
     }
@@ -607,6 +619,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent *e )
     }
 
     m_slidePlaybackWidget->show();
+    m_playbackWidget->show();
 }
 
 void SlideShow::wheelEvent( QWheelEvent *e )
