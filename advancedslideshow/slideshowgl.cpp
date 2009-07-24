@@ -31,32 +31,31 @@
 
 // Qt includes
 
-#include <QList>
-#include <QTimer>
-#include <QPixmap>
 #include <QApplication>
-#include <QEvent>
 #include <QCursor>
-#include <QImage>
-#include <QPainter>
+#include <QDesktopWidget>
+#include <QEvent>
 #include <QFileInfo>
 #include <QFontMetrics>
-#include <QMatrix>
+#include <QImage>
 #include <QKeyEvent>
+#include <QList>
+#include <QMatrix>
 #include <QMouseEvent>
-#include <QWheelEvent>
-#include <QDesktopWidget>
-#include <QSvgRenderer>
 #include <QPainter>
+#include <QPixmap>
+#include <QSvgRenderer>
+#include <QTimer>
+#include <QWheelEvent>
 
 // KDE includes
 
+#include <kconfiggroup.h>
 #include <kconfig.h>
-#include <klocale.h>
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
-#include <KConfigGroup>
+#include <klocale.h>
 #include <kstandarddirs.h>
 
 namespace KIPIAdvancedSlideshowPlugin
