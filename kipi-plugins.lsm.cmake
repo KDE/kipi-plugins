@@ -1,7 +1,7 @@
 Begin4
 Title:          kipi-plugins
 Version:        ${KIPIPLUGINS_VERSION_STRING}
-Entered-date:   2009-xx-xx
+Entered-date:   2009-07-24
 Description:    Plugins for KIPI, the KDE Image Plugin Interface
 Keywords:       kde image plugins, digiKam, photo management, KDE, Graphics, Digital Photo Management, Exif, Iptc, Makenotes, Xmp, Geolocation, Batch process, Raw workflow
 Author:         caulier dot gilles at gmail dot com (Gilles Caulier)
