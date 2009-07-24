@@ -1,3 +1,989 @@
+0.5.0 2009-07-24
+--------------------------------------------------------------------------------
+
+2009-07-23 18:23  aclemens
+
+    * advancedslideshow/slideshow.cpp: slideshow should behave like
+      slideshowGL and slideshowKB:
+      Do not move the slidePlaybackWidget to the current mouse
+      position, but
+      keep it in the upper right corner.
+
+2009-07-23 16:57  aclemens
+
+    * NEWS: update
+
+2009-07-23 16:53  aclemens
+
+    * advancedslideshow/slideshow.cpp,
+      advancedslideshow/slideshowgl.cpp: add soundtrack playback to the
+      normal slideshow
+
+2009-07-23 16:53  aclemens
+
+    * advancedslideshow/maindialog.cpp,
+      advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h:
+      use forward declarations
+
+2009-07-22 20:03  anaselli
+
+    * printimages/printoptionspage.cpp: set default value (0) as
+      disabled for "Photos per page" and "Multiple pages" options
+
+2009-07-22 16:56  scripty
+
+    * dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/13x18cm.desktop,
+      printimages/templates/20x25cm.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/6x9cm.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/9x13cm.desktop,
+      printimages/templates/Album-Collage.desktop,
+      printimages/templates/Album-Collage1.desktop,
+      printimages/templates/Photoframe.desktop,
+      printimages/templates/Small-Thumbnails.desktop,
+      printimages/templates/Thumbnails.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-07-22 15:27  cgilles
+
+    * advancedslideshow/maindialog.cpp: fix broken compilation under
+      win32
+
+2009-07-21 21:13  aclemens
+
+    * advancedslideshow/slideshowkb.cpp: polish
+
+2009-07-21 21:06  anaselli
+
+    * printimages/printoptionspage.ui: fix spinbox alignment
+
+2009-07-21 20:57  aclemens
+
+    * advancedslideshow/maindialog.cpp: re-implement the sort (up /
+      down) buttons
+
+2009-07-21 20:20  cgilles
+
+    * flickrexport/CMakeLists.txt, flickrexport/TODO,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h:
+      compile as pure Qt4. GAlbumViewItem class is not yet used and can
+      be disabled as well for the moment.
+
+2009-07-21 20:15  aclemens
+
+    * advancedslideshow/maindialog.cpp,
+      advancedslideshow/maindialog.ui: fix layout: avoid jumping of the
+      image label and the ImagesList widget
+
+2009-07-21 20:08  cgilles
+
+    * picasawebexport/CMakeLists.txt: remove KDE3 support here
+
+2009-07-21 19:42  aclemens
+
+    * NEWS: update
+
+2009-07-21 17:49  aclemens
+
+    * advancedslideshow/slideshowloader.cpp: fix some more memory leaks
+      and invalid map reads
+
+2009-07-21 17:49  aclemens
+
+    * advancedslideshow/imageloadthread.cpp,
+      advancedslideshow/slideshowkb.cpp,
+      advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h: ++
+
+2009-07-21 17:48  aclemens
+
+    * advancedslideshow/maindialog.cpp,
+      advancedslideshow/slideshowgl.cpp,
+      advancedslideshow/slideshowkb.cpp,
+      advancedslideshow/slideshowloader.cpp: fix memory leaks
+
+2009-07-21 16:34  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h:
+      this slot is not needed anymore, d&d is handled by ImagesList
+
+2009-07-21 16:22  aclemens
+
+    * advancedslideshow/maindialog.cpp: - hide header
+      - set smaller icon size
+
+2009-07-21 16:22  aclemens
+
+    * advancedslideshow/CMakeLists.txt,
+      advancedslideshow/advanceddialog.cpp,
+      advancedslideshow/listimageitems.cpp,
+      advancedslideshow/listimageitems.h,
+      advancedslideshow/maindialog.cpp: remove listimageitems file, not
+      needed anymore, we use ImagesList widget
+      from now on.
+      Still some polishing to do.
+
+2009-07-21 16:22  aclemens
+
+    * advancedslideshow/maindialog.cpp,
+      common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: ++
+
+2009-07-21 16:22  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: ++
+
+2009-07-21 16:22  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      advancedslideshow/maindialog.ui: beginning to use
+      KIPIPlugins::ImagesList widget in advancedslideshow
+
+2009-07-21 12:58  aclemens
+
+    * gpssync/gpstracklisteditdialog.cpp: polish
+
+2009-07-21 12:58  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      gpssync/gpslistviewitem.cpp, gpssync/gpstracklisteditdialog.cpp,
+      gpssync/gpstracklistviewitem.cpp, gpssync/gpstracklistviewitem.h:
+      We don't need to set custom sizes in the constructor anymore,
+      this is
+      handled by the base class.
+
+2009-07-21 12:58  aclemens
+
+    * common/libkipiplugins/imageslist.cpp: polish
+
+2009-07-21 12:17  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h, sendimages/imagespage.cpp:
+      Add possibilities to set a size for ImagesList widget and
+      ImagesListView.
+      The default iconsize was SizeLarge, but this may be to large for
+      advancedslideshow.
+      We need something to setup an default iconsize.
+      ImagesListViewItem will get its iconsize from the associated
+      view, and
+      ImagesListView and ImagesList widget take an optional size
+      parameter
+      now.
+
+      This commit will also remove the creation of comments and tag
+      information, because the only plugin that needs it is
+      advancedslideshow
+      and sendimages. If we add a lot of images to an ImagesList, it
+      can take
+      a while to add this information.
+      If a plugin really needs this, it should call updateInformation()
+      on the
+      ImagesListViewItem now, like sendimages does with this commit.
+
+      The next step will be to use ImagesList widget in
+      advancedslideshow, to
+      factorize code.
+
+      CCBUG:182743
+
+2009-07-21 09:19  aclemens
+
+    * advancedslideshow/CMakeLists.txt: get rid of KDE3 support as well
+
+2009-07-21 09:11  cgilles
+
+    * advancedslideshow/slideshowgl.h: missing (c) statement
+
+2009-07-21 08:59  cgilles
+
+    * advancedslideshow/CMakeLists.txt,
+      advancedslideshow/listsounditems.cpp,
+      advancedslideshow/listsounditems.h: plugin is now fully ported to
+      pure Qt4 implementation
+
+2009-07-21 08:55  aclemens
+
+    * advancedslideshow/listimageitems.h: forward declarations
+
+2009-07-21 08:55  aclemens
+
+    * advancedslideshow/maindialog.cpp: do not reset the spinbox value,
+      otherwise toggling useMilliSeconds in
+      the advanced dialog will give strange results, e.g. when the
+      value was
+      2000, it will be 1 after a toggle and when the value was 2, it
+      will
+      become 100.
+
+2009-07-21 08:55  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h:
+      fix connection
+
+2009-07-21 08:49  cgilles
+
+    * advancedslideshow/listimageitems.cpp,
+      advancedslideshow/listimageitems.h: link
+
+2009-07-21 08:38  cgilles
+
+    * advancedslideshow/listimageitems.cpp,
+      advancedslideshow/listimageitems.h: pure qt4 implementation
+      Andi, here libkipi-plugins::ImagesList can be easily used instead
+      to factorize implementation.
+      CCMAIL: andi.clemens@gmx.net
+
+2009-07-21 08:27  cgilles
+
+    * advancedslideshow/slideshow.h: pure Qt4
+
+2009-07-21 08:26  cgilles
+
+    * advancedslideshow/slideshow.cpp,
+      advancedslideshow/slideshowgl.cpp: pure Qt4 attributs
+
+2009-07-21 07:18  cgilles
+
+    * NEWS: update
+
+2009-07-21 07:15  cgilles
+
+    * metadataedit/plugin_metadataedit.cpp: handle
+      Xmp.tiff.ImageDescription
+      BUGS: 200960
+
+2009-07-20 23:07  anaselli
+
+    * printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/8x10.desktop: SVN_SILENT:TRAILING SPACE
+
+2009-07-20 23:05  anaselli
+
+    * NEWS: updated
+
+2009-07-20 23:03  anaselli
+
+    * printimages/CMakeLists.txt, printimages/TODO,
+      printimages/templates, printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/13x18cm.desktop,
+      printimages/templates/20x25cm.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/6x9cm.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/9x13cm.desktop,
+      printimages/templates/Album-Collage.desktop,
+      printimages/templates/Album-Collage1.desktop,
+      printimages/templates/Photoframe.desktop,
+      printimages/templates/Small-Thumbnails.desktop,
+      printimages/templates/Thumbnails.desktop,
+      printimages/templates/templates.xml, printimages/wizard.cpp,
+      printimages/wizard.h: Added page layout template file, thanks to
+      Andreas Trink
+      Now users can add their own template
+      CCMAIL: atrink@nociaro.org, kde-imaging@kde.org
+      BUG: 188426
+
+2009-07-20 19:42  cgilles
+
+    * advancedslideshow/CMakeLists.txt: fix compile order
+
+2009-07-20 18:19  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp: polish
+
+2009-07-20 18:14  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/plugin_advancedslideshow.h,
+      advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h,
+      advancedslideshow/slideshowgl.cpp,
+      advancedslideshow/slideshowgl.h,
+      advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h: update copyright headers
+
+2009-07-20 18:05  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/slideshow.cpp,
+      advancedslideshow/slideshowgl.cpp,
+      advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h: Quickfix: Do not create a
+      list of comments/captions and angles when
+      starting the slideshow, this will be very slow if you have more
+      then 300
+      images selected.
+      Instead read this info while images are loaded.
+
+      It is a quickfix because we still generate a fake comments and
+      angle
+      list in slotSlideShow(), but with default values. I did it this
+      way to
+      minimize code changes. In the future we might want to change the
+      slideshow classes instead.
+
+      Still the plugin wastes a lot of memory on startup, I have not
+      found out
+      yet what produces this memory consumption.
+      Will need to do further checks.
+
+      CCBUG:182743
+
+2009-07-20 13:57  cgilles
+
+    * NEWS: update
+
+2009-07-19 22:29  anaselli
+
+    * NEWS: SVN_SILENT: updated
+
+2009-07-19 22:26  anaselli
+
+    * printimages/printhelper.cpp, printimages/printoptionspage.cpp,
+      printimages/printoptionspage.h, printimages/printoptionspage.ui:
+      New multiple pages printing option implementation
+
+2009-07-19 18:39  aclemens
+
+    * advancedslideshow/maindialog.cpp: forgot to move a connection
+      into setupConnections()
+
+2009-07-19 18:35  aclemens
+
+    * advancedslideshow/common.cpp, advancedslideshow/common.h,
+      advancedslideshow/imageloadthread.cpp,
+      advancedslideshow/imageloadthread.h,
+      advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      advancedslideshow/playbackwidget.cpp,
+      advancedslideshow/playbackwidget.h,
+      advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h,
+      advancedslideshow/slideshowconfig.cpp,
+      advancedslideshow/slideshowconfig.h,
+      advancedslideshow/slideshowgl.cpp,
+      advancedslideshow/slideshowgl.h,
+      advancedslideshow/slideshowkb.cpp,
+      advancedslideshow/slideshowkb.h,
+      advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h,
+      advancedslideshow/soundtrackdialog.cpp,
+      advancedslideshow/soundtrackdialog.h: update copyright headers
+
+2009-07-19 18:26  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h:
+      put connection creation into a dedicated method
+
+2009-07-19 18:03  cgilles
+
+    * NEWS: update
+
+2009-07-19 15:50  nlecureuil
+
+    * NEWS: Updates
+
+2009-07-19 15:28  nlecureuil
+
+    * NEWS: Update
+
+2009-07-19 15:25  nlecureuil
+
+    * batchprocessimages/batchprocessimagesdialog.cpp: Do not crash if
+      imagemagick is not installed
+      BUG:168243
+
+2009-07-19 14:17  aclemens
+
+    * advancedslideshow/slideshowconfig.cpp: Increase the maximum
+      slideshow delay to 20s, some users might want to
+      have more...
+
+2009-07-19 14:17  aclemens
+
+    * NEWS: update
+
+2009-07-19 14:17  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      advancedslideshow/slideshowconfig.cpp: Fix loading of the saved
+      delay value from the config file.
+      The value was actually saved correctly, but not used properly.
+      This commit should have fixed this.
+
+      BUG:200647
+
+2009-07-19 14:17  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h:
+      ++
+
+2009-07-19 14:17  aclemens
+
+    * advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h:
+      do not use capitalized method names, it looks like a class call
+      when used in
+      code.
+
+2009-07-19 12:25  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp: use
+      sharedData->urlList in slotSlideShow(), now the selected images
+      are
+      displayed correcly.
+
+2009-07-19 12:15  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/slideshow.h,
+      advancedslideshow/slideshowconfig.cpp: polish
+
+2009-07-19 12:15  aclemens
+
+    * advancedslideshow/slideshowconfig.cpp,
+      advancedslideshow/slideshowconfig.h: use const dpointer
+
+2009-07-19 11:42  aclemens
+
+    * advancedslideshow/slideshowconfig.cpp: polish
+
+2009-07-19 11:38  aclemens
+
+    * advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/slideshowconfig.cpp: fix showSelectedFilesOnly:
+      don't save this value in the config file,
+      chances are that the radiobutton is always disabled, even if a
+      valid
+      selection is made.
+      Add a different logic: If only one image is selected, assume to
+      display
+      the whole album content, otherwise enable showSelectedFilesOnly
+      and
+      display the selected images.
+
+2009-07-19 10:44  aclemens
+
+    * advancedslideshow/playbackwidget.cpp: polish
+
+2009-07-19 10:31  aclemens
+
+    * advancedslideshow/playbackwidget.cpp: I will delete the code, it
+      is really not logical to use here.
+
+2009-07-19 10:07  aclemens
+
+    * advancedslideshow/playbackwidget.cpp: I guess this is a copy &
+      paste error?
+      Stopping the playback will just start it again. I comment this
+      out for
+      now, but I guess it is wrong.
+
+2009-07-19 10:07  aclemens
+
+    * advancedslideshow/soundtrackdialog.cpp: Use QPointers when
+      showing modal dialogs via exec(), as discussed in
+      http://www.kdedevelopers.org/node/3919
+
+2009-07-19 10:07  aclemens
+
+    * advancedslideshow/slideshowloader.h: polish
+
+2009-07-19 09:35  aclemens
+
+    * advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h: polish
+
+2009-07-18 23:59  aclemens
+
+    * NEWS: update
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/maindialog.cpp: remove duplicate slot call
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/maindialog.cpp: little speed improvement: don't
+      connect the slots at the beginning of
+      readSettings()
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/maindialog.cpp: This can't be right: the
+      urlList of the sharedData is always appended.
+      Every click on "Start Slideshow" will duplicate the list content.
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/imageloadthread.cpp,
+      advancedslideshow/imageloadthread.h,
+      advancedslideshow/maindialog.cpp,
+      advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/slideshow.h, advancedslideshow/slideshowgl.cpp,
+      advancedslideshow/slideshowgl.h,
+      advancedslideshow/slideshowkb.cpp,
+      advancedslideshow/slideshowkb.h,
+      advancedslideshow/slideshowloader.cpp,
+      advancedslideshow/slideshowloader.h: remove some Q3support
+      classes. We still have Qt3 classes in this plugin,
+      which is really bad.
+      Other things to fix: drag & drop
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/common.cpp, advancedslideshow/common.h,
+      advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+      advancedslideshow/plugin_advancedslideshow.cpp,
+      advancedslideshow/slideshowconfig.cpp: polish
+
+2009-07-18 22:32  aclemens
+
+    * advancedslideshow/slideshowconfig.cpp: init private members
+
+2009-07-18 22:31  aclemens
+
+    * advancedslideshow/common.cpp,
+      advancedslideshow/slideshowconfig.cpp,
+      advancedslideshow/soundtrackdialog.cpp,
+      advancedslideshow/soundtrackdialog.h: fix memory leaks
+
+2009-07-18 09:18  nlecureuil
+
+    * NEWS: Updates
+
+2009-07-18 07:21  nlecureuil
+
+    * NEWS, acquireimages/scandialog.cpp: Fix crash when saving images
+      in .tiff format
+
+2009-07-17 16:29  nlecureuil
+
+    * calendar/calwizard.cpp: make year locale aware
+      CCBUG:196888
+
+2009-07-17 12:02  aclemens
+
+    * jpeglossless/actionthread.cpp: When messing with pointers, always
+      check if they are valid.
+      This gives another backtrace now, which seems to confirm my guess
+      that
+      the libjpeg update is responsible for the crash.
+
+      CCBUG:200159
+
+2009-07-16 20:37  aclemens
+
+    * NEWS: update
+
+2009-07-15 10:47  cgilles
+
+    * NEWS: update
+
+2009-07-14 14:42  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-07-12 20:17  aclemens
+
+    * calendar/calwizard.cpp: setYMD is deprecated
+
+2009-07-12 19:47  nlecureuil
+
+    * NEWS: Update
+
+2009-07-12 19:43  nlecureuil
+
+    * NEWS: Update
+
+2009-07-12 19:41  nlecureuil
+
+    * calendar/calwizard.cpp: Fix year formating in calendar
+      BUG:196888
+
+2009-07-12 17:55  nlecureuil
+
+    * advancedslideshow/plugin_advancedslideshow.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/pixmapview.cpp,
+      batchprocessimages/plugin_batchprocessimages.cpp,
+      common/libkipiplugins/kpaboutdata.cpp,
+      common/libkipiplugins/kpwriteimage.cpp,
+      dngconverter/dngwriter/dngwriter.cpp,
+      dngconverter/dngwriter/dngwriterhost.cpp,
+      dngconverter/plugin/plugin_dngconverter.cpp,
+      flashexport/plugin_flashexport.cpp, flashexport/simpleviewer.cpp,
+      galleryexport/gallerytalker.cpp, gpssync/gpsbabelbinary.cpp,
+      gpssync/gpsdataparser.cpp, gpssync/gpsmapwidget.cpp,
+      gpssync/gpstracklistwidget.cpp, gpssync/kmlgpsdataparser.cpp,
+      gpssync/plugin_gpssync.cpp, imageviewer/viewerwidget.cpp,
+      ipodexport/IpodExportDialog.cpp,
+      ipodexport/plugin_ipodexport.cpp,
+      picasawebexport/picasaweblogin.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwidget.cpp,
+      picasawebexport/picasawebwindow.cpp,
+      picasawebexport/plugin_picasawebexport.cpp,
+      printimages/plugin_printimages.cpp, printimages/wizard.cpp,
+      rawconverter/rawdecodingiface.cpp: Remove endl
+
+2009-07-11 12:58  aclemens
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      galleryexport/galleries.cpp, printimages/printhelper.cpp,
+      printimages/printoptionspage.cpp: kWarning should only be used if
+      something failed, not for normal debug
+      messages. It makes debugging harder if QT_FATAL_WARNINGS is
+      active
+      otherwise.
+
+2009-07-11 12:48  aclemens
+
+    * removeredeyes/detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:
+      fix connections
+
+2009-07-11 12:48  aclemens
+
+    * removeredeyes/detection/locators/haarclassifier/haarclassifierlocator.cpp:
+      use standard mode if no settings can be found
+
+2009-07-11 09:29  aclemens
+
+    * galleryexport/galleries.cpp: A warning should only be used when
+      something is going wrong, not for
+      normal debugging output.
+      Otherwise the applications using this plugin will never start
+      when using
+      QT_FATAL_WARNINGS as an environment variable.
+
+2009-07-10 07:46  nlecureuil
+
+    * NEWS: Update
+
+2009-07-10 06:01  nlecureuil
+
+    * NEWS: Updates
+
+2009-07-10 05:53  nlecureuil
+
+    * sendimages/sendimages.cpp: SendImage: Add A warning when a file
+      is too big to be sent
+      SendImage: Do not encode file name as KUrl already does this
+      BUG:146487
+      BUG:189984
+
+2009-07-09 15:35  cgilles
+
+    * metadataedit/subjects.cpp: polish
+
+2009-07-09 13:48  cgilles
+
+    * metadataedit/iptcsubjects.cpp, metadataedit/subjects.cpp,
+      metadataedit/subjects.h, metadataedit/xmpsubjects.cpp: do not
+      export all d private container class content.
+
+2009-07-09 13:07  cgilles
+
+    * metadataedit/iptcsubjects.cpp, metadataedit/subjects.cpp,
+      metadataedit/subjects.h, metadataedit/xmpsubjects.cpp: factorize
+
+2009-07-09 13:02  cgilles
+
+    * metadataedit/iptcsubjects.cpp, metadataedit/subjects.h,
+      metadataedit/xmpsubjects.cpp: polish
+
+2009-07-09 12:34  cgilles
+
+    * metadataedit/topicset.iptc-subjectcode.xml: update IPTC subject
+      code XML file
+
+2009-07-09 12:26  cgilles
+
+    * metadataedit/subjects.cpp: new url
+
+2009-07-09 10:54  cgilles
+
+    * metadataedit/iptcsubjects.cpp,
+      metadataedit/metadataedit_global.h, metadataedit/subjects.h,
+      metadataedit/xmpsubjects.cpp: no need an external header to
+      define SubjectData class
+
+2009-07-09 10:49  cgilles
+
+    * metadataedit/subjects.cpp: polish
+
+2009-07-09 09:22  cgilles
+
+    * rawconverter/batchdialog.cpp: compile with new libkdcraw
+
+2009-07-08 11:42  cgilles
+
+    * metadataedit/iptcorigin.cpp, metadataedit/iptcproperties.cpp:
+      move Transmission Reference to properties tab
+
+2009-07-08 11:34  cgilles
+
+    * metadataedit/xmporigin.cpp, metadataedit/xmpproperties.cpp: move
+      Transmission Reference to properties tab
+
+2009-07-08 06:35  nlecureuil
+
+    * NEWS: Update closed bugs
+
+2009-07-07 20:51  aclemens
+
+    * removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+      removeredeyes/libcvblobs/BlobResult.cpp,
+      removeredeyes/plugin_removeredeyes.cpp,
+      removeredeyes/removeredeyeswindow.cpp,
+      removeredeyes/workerthread.cpp: No need for endl anymore in
+      kDebug and kWarning
+
+2009-07-07 18:42  cgilles
+
+    * NEWS: update
+
+2009-07-07 18:40  cgilles
+
+    * NEWS: update
+
+2009-07-07 14:11  scripty
+
+    * advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      common/libkipiplugins/kipiplugins.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      smug/kipiplugin_smug.desktop: SVN_SILENT made messages (.desktop
+      file)
+
+2009-07-07 11:12  nlecureuil
+
+    * NEWS: Update
+
+2009-07-07 11:10  nlecureuil
+
+    * NEWS: Update
+
+2009-07-06 17:01  cgilles
+
+    * NEWS: update
+
+2009-07-06 15:43  cgilles
+
+    * dngconverter/CMakeLists.txt,
+      dngconverter/dngwriter/extra/xmp_sdk/common/LargeFileAccess.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/LargeFileAccess.hpp:
+      With DNG converter, this file can be dropped from XMP sdk
+      CCBUGS: 199129
+
+2009-07-06 09:14  cgilles
+
+    * NEWS: polish
+
+2009-07-06 09:05  nlecureuil
+
+    * NEWS: Update NEWS
+
+2009-07-05 08:34  nlecureuil
+
+    * NEWS: add feature 188426 in NEWS
+
+2009-07-05 06:41  cgilles
+
+    * NEWS: update
+
+2009-07-05 06:39  cgilles
+
+    * NEWS: update
+
+2009-07-05 06:27  cgilles
+
+    * AUTHORS: update
+
+2009-07-05 06:25  cgilles
+
+    * NEWS: update
+
+2009-07-05 01:52  nlecureuil
+
+    * NEWS, flickrexport/flickralbumdialog.ui,
+      flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+      flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h: Fix
+      creation of photoset ( Patch from Pieter Edelman and enhanced by
+      James Vega )
+      BUG:180055
+      BUG:192541
+      CCMAIL:vega.james@gmail.com
+      CCMAIL:p.edelman@gmx.net
+
+2009-07-05 01:03  nlecureuil
+
+    * NEWS: Fix NEWS file
+
+2009-07-05 01:01  nlecureuil
+
+    * htmlexport/wizard.cpp: Fix selection list (Next button ) in the
+      HTML exporter thanks to Michael G. Hansen
+      BUG:196890
+      CCMAIL:mhansen@mghansen.de
+
+2009-07-04 22:48  cgilles
+
+    * NEWS: update
+
+2009-07-04 20:44  nlecureuil
+
+    * printimages/wizard.cpp: Add support for 2-1/3" x 3-1/3" pictures
+      CCBUG:188426
+      CCMAIL:anaselli@linux.it
+
+2009-07-04 19:07  cgilles
+
+    * dngconverter/dngwriter/extra/xmp_sdk/common/XML_Node.cpp: compile
+
+2009-07-03 14:09  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      common/libkipiplugins/kipiplugins.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-07-03 12:53  cgilles
+
+    * dngconverter/CMakeLists.txt,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/ExpatAdapter.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/ExpatAdapter.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/ParseRDF.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/WXMPIterator.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/WXMPMeta.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/WXMPUtils.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMLParserAdapter.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPCore_Impl.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPCore_Impl.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPIterator.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPIterator.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-GetSet.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-Parse.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-Serialize.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils-FileInfo.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/EndianUtils.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/ExpatAdapter.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/LargeFileAccess.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/LargeFileAccess.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/XMLParserAdapter.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/common/XML_Node.cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/TXMPFiles.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/TXMPIterator.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/TXMPMeta.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/TXMPUtils.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP.incl_cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP_BuildInfo.h,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP_Const.h,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP_Environment.h,
+      dngconverter/dngwriter/extra/xmp_sdk/include/XMP_Version.h,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/TXMPFiles.incl_cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/TXMPIterator.incl_cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/TXMPMeta.incl_cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/TXMPUtils.incl_cpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/WXMPFiles.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/WXMPIterator.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/WXMPMeta.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/WXMPUtils.hpp,
+      dngconverter/dngwriter/extra/xmp_sdk/include/client-glue/WXMP_Common.hpp:
+      Start kipi-plugins 0.5.0 : DNG converter : update MD5 and XMP sdk
+      to last release from Adobe.
+      Next stage, update DNG sdk.
+      CCMAIL: ahuggel@gmx.net
+
+2009-07-03 11:10  cgilles
+
+    * dngconverter/dngwriter/extra/md5/MD5.cpp: update MD5 code from
+      last XMP sdk
+
+2009-07-03 10:46  cgilles
+
+    * project/NEWS.0.4.0: backup
+
+2009-07-03 10:38  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-07-03 10:38  cgilles
+
+    * CMakeLists.txt: update
+
+2009-07-03 09:25  cgilles
+
+    * NEWS: update
+
+2009-07-03 08:39  cgilles
+
+    * ChangeLog: prepare 0.4.0
+
+2009-07-03 08:30  cgilles
+
+    * kipi-plugins.lsm.cmake: update
+
+2009-07-03 08:29  cgilles
+
+    * NEWS: prepare 0.4.0
+
+2009-07-03 08:28  cgilles
+
+    * CMakeLists.txt: prepare 0.4.0
+
 0.4.0 2009-07-03
 --------------------------------------------------------------------------------
 
