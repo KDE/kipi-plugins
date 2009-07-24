@@ -357,7 +357,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     if (index.isValid())
     {
         int rowindex = index.row();
-        m_label7->setText(i18nc("Image number %1", "Image #%1", QString::number(rowindex + 1)));
+        m_label7->setText(i18nc("Image number %1", "Image #%1", rowindex + 1));
     }
 }
 
