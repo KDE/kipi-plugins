@@ -531,14 +531,18 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     //        http://www.awaresystems.be/imaging/tiff/tifftags/predictor.html
     TIFFSetField(tif, TIFFTAG_PREDICTOR,           2);
 
+    uint16 sampleinfo[1];
     if (d->hasAlpha)
     {
+        sampleinfo[0] = EXTRASAMPLE_ASSOCALPHA;
         TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 4);
-        TIFFSetField(tif, TIFFTAG_EXTRASAMPLES,    EXTRASAMPLE_ASSOCALPHA);
+        TIFFSetField(tif, TIFFTAG_EXTRASAMPLES,    1, sampleinfo);
     }
     else
     {
+        sampleinfo[0] = EXTRASAMPLE_UNASSALPHA;
         TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+        TIFFSetField(tif, TIFFTAG_EXTRASAMPLES,    1, sampleinfo);
     }
 
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,       (uint16)bitsDepth);
