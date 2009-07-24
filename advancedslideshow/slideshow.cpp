@@ -227,20 +227,20 @@ QMap<QString, QString> SlideShow::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects["None"] = i18n( "None" );
-    effects["Chess Board"] = i18n( "Chess Board" );
-    effects["Melt Down"] = i18n( "Melt Down" );
-    effects["Sweep"] = i18n( "Sweep" );
-    effects["Mosaic"] = i18n( "Mosaic" );
-    effects["Cubism"] = i18n( "Cubism" );
-    effects["Growing"] = i18n( "Growing" );
-    effects["Horizontal Lines"] = i18n( "Horizontal Lines" );
-    effects["Vertical Lines"] = i18n( "Vertical Lines" );
-    effects["Circle Out"] = i18n( "Circle Out" );
-    effects["MultiCircle Out"] = i18n( "Multi-Circle Out" );
-    effects["Spiral In"] = i18n( "Spiral In" );
-    effects["Blobs"] = i18n( "Blobs" );
-    effects["Random"] = i18n( "Random" );
+    effects["None"]             = i18nc("Filter Effect: No effect",        "None" );
+    effects["Chess Board"]      = i18nc("Filter Effect: Chess Board",      "Chess Board" );
+    effects["Melt Down"]        = i18nc("Filter Effect: Melt Down",        "Melt Down" );
+    effects["Sweep"]            = i18nc("Filter Effect: Sweep",            "Sweep" );
+    effects["Mosaic"]           = i18nc("Filter Effect: Mosaic",           "Mosaic" );
+    effects["Cubism"]           = i18nc("Filter Effect: Cubism",           "Cubism" );
+    effects["Growing"]          = i18nc("Filter Effect: Growing",          "Growing" );
+    effects["Horizontal Lines"] = i18nc("Filter Effect: Horizontal Lines", "Horizontal Lines" );
+    effects["Vertical Lines"]   = i18nc("Filter Effect: Vertical Lines",   "Vertical Lines" );
+    effects["Circle Out"]       = i18nc("Filter Effect: Circle Out",       "Circle Out" );
+    effects["MultiCircle Out"]  = i18nc("Filter Effect: Multi-Circle Out", "Multi-Circle Out" );
+    effects["Spiral In"]        = i18nc("Filter Effect: Spiral In",        "Spiral In" );
+    effects["Blobs"]            = i18nc("Filter Effect: Blobs",            "Blobs" );
+    effects["Random"]           = i18nc("Filter Effect: Random effect",    "Random" );
 
     return effects;
 }

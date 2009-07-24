@@ -376,16 +376,16 @@ QMap<QString, QString> SlideShowGL::effectNamesI18N()
 {
     QMap<QString, QString> effects;
 
-    effects["None"]    = i18n("None");
-    effects["Bend"]    = i18n("Bend");
-    effects["Blend"]   = i18n("Blend");
-    effects["Cube"]    = i18n("Cube");
-    effects["Fade"]    = i18n("Fade");
-    effects["Flutter"] = i18n("Flutter");
-    effects["In Out"]  = i18n("In Out");
-    effects["Rotate"]  = i18n("Rotate");
-    effects["Slide"]   = i18n("Slide");
-    effects["Random"]  = i18n("Random");
+    effects["None"]    = i18nc("Filter Effect: No effect",     "None");
+    effects["Bend"]    = i18nc("Filter Effect: Bend",          "Bend");
+    effects["Blend"]   = i18nc("Filter Effect: Blend",         "Blend");
+    effects["Cube"]    = i18nc("Filter Effect: Cube",          "Cube");
+    effects["Fade"]    = i18nc("Filter Effect: Fade",          "Fade");
+    effects["Flutter"] = i18nc("Filter Effect: Flutter",       "Flutter");
+    effects["In Out"]  = i18nc("Filter Effect: In Out",        "In Out");
+    effects["Rotate"]  = i18nc("Filter Effect: Rotate",        "Rotate");
+    effects["Slide"]   = i18nc("Filter Effect: Slide",         "Slide");
+    effects["Random"]  = i18nc("Filter Effect: Random effect", "Random");
 
     return effects;
 }
