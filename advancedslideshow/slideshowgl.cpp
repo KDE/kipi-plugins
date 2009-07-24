@@ -266,7 +266,6 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
         return;
 
     m_slidePlaybackWidget->keyPressEvent(event);
-
     m_playbackWidget->keyPressEvent(event);
 }
 
@@ -492,7 +491,9 @@ void SlideShowGL::loadImage()
                                           Qt::ScaleMin);*/
         montage(image, black);
 
-        black = black.scaled(m_width, m_height);
+        black = black.scaled(m_width, m_height,
+                             Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
 
         if (m_sharedData->printFileName)
             printFilename(black);
