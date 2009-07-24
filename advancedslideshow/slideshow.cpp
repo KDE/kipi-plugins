@@ -411,21 +411,22 @@ void SlideShow::printFilename()
 
 void SlideShow::printComments()
 {
-    if ( m_currImage.isNull() ) return;
+    if (m_currImage.isNull())
+        return;
 
-//    QString comments = m_commentsList[m_fileIndex];
     KIPI::ImageInfo info = m_sharedData->interface->info(m_imageLoader->currPath());
     QString comments = info.description();
 
     int yPos = 30; // Text Y coordinate
 
-    if ( m_sharedData->printFileName ) yPos = 50;
+    if (m_sharedData->printFileName)
+        yPos = 50;
 
     QStringList commentsByLines;
 
     uint commentsIndex = 0; // Comments QString index
 
-    while ( commentsIndex < ( uint ) comments.length() )
+    while (commentsIndex < (uint) comments.length())
     {
         QString newLine;
         bool breakLine = false; // End Of Line found
@@ -435,61 +436,67 @@ void SlideShow::printComments()
 
         uint commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
-        for ( currIndex = commentsIndex; currIndex < ( uint ) comments.length() && !breakLine; currIndex++ )
-            if ( comments[currIndex] == QChar( '\n' ) || comments[currIndex].isSpace() ) breakLine = true;
+        for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++)
+        {
+            if (comments[currIndex] == QChar('\n') || comments[currIndex].isSpace())
+            {
+                breakLine = true;
+            }
+        }
 
-        if ( commentsLinesLengthLocal <= ( currIndex - commentsIndex ) )
-            commentsLinesLengthLocal = ( currIndex - commentsIndex );
+        if (commentsLinesLengthLocal <= (currIndex - commentsIndex))
+            commentsLinesLengthLocal = (currIndex - commentsIndex);
 
         breakLine = false;
 
-        for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-                currIndex < ( uint ) comments.length() &&
-                !breakLine; currIndex++ )
+        for (currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
+             currIndex < (uint) comments.length() && !breakLine; currIndex++)
         {
-            breakLine = ( comments[currIndex] == QChar( '\n' ) ) ? true : false;
+            breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
 
-            if ( breakLine )
-                newLine.append( ' ' );
+            if (breakLine)
+                newLine.append(' ');
             else
-                newLine.append( comments[currIndex] );
+                newLine.append(comments[currIndex]);
         }
 
         commentsIndex = currIndex; // The line is ended
 
-        if ( commentsIndex != ( uint ) comments.length() )
-            while ( !newLine.endsWith( " " ) )
+        if (commentsIndex != (uint) comments.length())
+        {
+            while (!newLine.endsWith(" "))
             {
-                newLine.truncate( newLine.length() - 1 );
+                newLine.truncate(newLine.length() - 1);
                 commentsIndex--;
             }
+        }
 
-        commentsByLines.prepend( newLine.trimmed() );
+        commentsByLines.prepend(newLine.trimmed());
     }
 
     QPainter p;
 
-    p.begin( &m_currImage );
-    p.setFont( *m_sharedData->captionFont );
+    p.begin(&m_currImage);
+    p.setFont(*m_sharedData->captionFont);
 
-    for ( int lineNumber = 0; lineNumber < ( int )commentsByLines.count(); lineNumber++ )
+    for (int lineNumber = 0; lineNumber < (int) commentsByLines.count(); lineNumber++)
     {
-
-        p.setPen( QColor( m_sharedData->commentsBgColor ) );
+        p.setPen(QColor(m_sharedData->commentsBgColor));
 
         // coefficient 1.5 is used to maintain distance between different lines
 
-        for ( int x = 9; x <= 11; x++ )
-            for ( int y = ( int )( yPos + lineNumber * 1.5 * m_sharedData->captionFont->pointSize()  + 1 );
-                    y >= ( int )( yPos + lineNumber* 1.5 * m_sharedData->captionFont->pointSize()  - 1 ); y-- )
-                p.drawText( x, height() - y, commentsByLines[lineNumber] );
+        for (int x = 9; x <= 11; x++)
+        {
+            for (int y = (int) (yPos + lineNumber * 1.5 * m_sharedData->captionFont->pointSize() + 1);
+                 y >= (int) (yPos + lineNumber * 1.5 * m_sharedData->captionFont->pointSize() - 1); y--)
+            {
+                p.drawText(x, height() - y, commentsByLines[lineNumber]);
+            }
+        }
 
-        p.setPen( QColor( m_sharedData->commentsFontColor ) );
-
-        p.drawText( 10, height() -
-                    ( int )( lineNumber * 1.5 * m_sharedData->captionFont->pointSize() + yPos ),
-                    commentsByLines[lineNumber]
-                  );
+        p.setPen(QColor(m_sharedData->commentsFontColor));
+        p.drawText(10, height() - (int) (lineNumber * 1.5 * m_sharedData->captionFont->pointSize() + yPos),
+                   commentsByLines[lineNumber]);
     }
 }
 

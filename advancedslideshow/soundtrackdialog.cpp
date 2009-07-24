@@ -189,8 +189,8 @@ void SoundtrackDialog::updateTracksNumber()
             int mins = it.value().minute() + displayTime.minute();
             int secs = it.value().second() + displayTime.second();
 
-            /* QTime doesn't get a overflow value in imput. They need
-             * to be cutted down to size.
+            /* QTime doesn't get a overflow value in input. They need
+             * to be cut down to size.
              */
 
             mins = mins + (int)(secs / 60);
