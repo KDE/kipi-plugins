@@ -183,7 +183,7 @@ void SoundtrackDialog::updateTracksNumber()
     {
         displayTime.addMSecs(1000 * (number - 1));
 
-        for ( QMap<KUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); it++ )
+        for (QMap<KUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
         {
             int hours = it.value().hour() + displayTime.hour();
             int mins = it.value().minute() + displayTime.minute();

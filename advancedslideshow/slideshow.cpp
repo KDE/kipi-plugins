@@ -436,7 +436,7 @@ void SlideShow::printComments()
 
         uint commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
-        for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++)
+        for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; ++currIndex)
         {
             if (comments[currIndex] == QChar('\n') || comments[currIndex].isSpace())
             {
@@ -450,7 +450,7 @@ void SlideShow::printComments()
         breakLine = false;
 
         for (currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-             currIndex < (uint) comments.length() && !breakLine; currIndex++)
+             currIndex < (uint) comments.length() && !breakLine; ++currIndex)
         {
             breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
 
@@ -726,7 +726,7 @@ int SlideShow::effectMeltdown( bool aInit )
         m_ix = m_w / m_dx;
         m_intArray = new int[m_ix];
 
-        for ( i = m_ix - 1; i >= 0; i-- )
+        for (i = m_ix - 1; i >= 0; --i)
             m_intArray[i] = 0;
     }
 
@@ -745,9 +745,8 @@ int SlideShow::effectMeltdown( bool aInit )
 
         if (( rand()&15 ) < 6 ) continue;
 
-        bufferPainter.drawPixmap( x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy );
-
-        bufferPainter.drawPixmap( x, y, m_currImage, x, y, m_dx, m_dy );
+        bufferPainter.drawPixmap(x, y + m_dy, m_buffer, x, y, m_dx, m_h - y - m_dy);
+        bufferPainter.drawPixmap(x, y, m_currImage, x, y, m_dx, m_dy);
 
         m_intArray[i] += m_dy;
     }

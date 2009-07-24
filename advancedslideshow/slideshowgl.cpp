@@ -546,11 +546,11 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
 
     unsigned int *bdata = 0;
 
-    for (int y = sh; y < eh; y++)
+    for (int y = sh; y < eh; ++y)
     {
         bdata = (unsigned int*) bot.scanLine(y) + sw;
 
-        for (int x = 0; x < tw; x++)
+        for (int x = 0; x < tw; ++x)
         {
             *(bdata++) = *(tdata++);
         }
@@ -643,8 +643,14 @@ void SlideShowGL::printComments(QImage& layer)
 
         int commentsLinesLengthLocal = m_sharedData->commentsLinesLength;
 
-        for ( currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; currIndex++ )
-            if ( comments[currIndex] == QChar('\n') || comments[currIndex].isSpace() ) breakLine = true;
+        for (currIndex = commentsIndex; currIndex < (uint) comments.length() && !breakLine; ++currIndex)
+        {
+            if (comments[currIndex] == QChar('\n') || comments[currIndex].isSpace())
+            {
+                breakLine = true;
+            }
+
+        }
 
         if (commentsLinesLengthLocal <= (int)((currIndex - commentsIndex)))
             commentsLinesLengthLocal = (currIndex - commentsIndex);
@@ -652,8 +658,7 @@ void SlideShowGL::printComments(QImage& layer)
         breakLine = false;
 
         for ( currIndex = commentsIndex; currIndex <= commentsIndex + commentsLinesLengthLocal &&
-                currIndex < (uint) comments.length() &&
-                !breakLine; currIndex++ )
+                currIndex < (uint) comments.length() && !breakLine; ++currIndex )
         {
             breakLine = (comments[currIndex] == QChar('\n')) ? true : false;
 
@@ -1345,9 +1350,9 @@ void SlideShowGL::effectFlutter()
         float float_x, float_y, float_xb, float_yb;
         int x, y;
 
-        for (x = 0; x < 39; x++)
+        for (x = 0; x < 39; ++x)
         {
-            for (y = 0; y < 39; y++)
+            for (y = 0; y < 39; ++y)
             {
                 float_x = (float) x / 40.0f;
                 float_y = (float) y / 40.0f;
@@ -1378,11 +1383,11 @@ void SlideShowGL::effectFlutter()
         float hold;
         int x, y;
 
-        for (y = 0; y < 40; y++)
+        for (y = 0; y < 40; ++y)
         {
             hold = m_points[0][y][2];
 
-            for (x = 0; x < 39; x++)
+            for (x = 0; x < 39; ++x)
             {
                 m_points[x][y][2] = m_points[x + 1][y][2];
             }
