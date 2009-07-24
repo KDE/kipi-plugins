@@ -6,9 +6,9 @@
  * Date        : 2004-01-19
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004      by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
- * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
