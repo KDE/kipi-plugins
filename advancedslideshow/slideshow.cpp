@@ -464,7 +464,7 @@ void SlideShow::printComments()
 
         if (commentsIndex != (uint) comments.length())
         {
-            while (!newLine.endsWith(" "))
+            while (!newLine.endsWith(' '))
             {
                 newLine.truncate(newLine.length() - 1);
                 commentsIndex--;
@@ -508,7 +508,7 @@ void SlideShow::printProgress()
 
     p.begin( &m_currImage );
 
-    QString progress( QString::number( m_fileIndex + 1 ) + "/" + QString::number( m_fileList.count() ) );
+    QString progress( QString::number( m_fileIndex + 1 ) + '/' + QString::number( m_fileList.count() ) );
 
     int stringLength = p.fontMetrics().width( progress ) * progress.length();
 

@@ -591,7 +591,7 @@ void SlideShowGL::printFilename(QImage& layer)
 
 void SlideShowGL::printProgress(QImage& layer)
 {
-    QString progress(QString::number(m_fileIndex + 1) + "/" + QString::number(m_fileList.count()));
+    QString progress(QString::number(m_fileIndex + 1) + '/' + QString::number(m_fileList.count()));
 
     QFont fn(font());
     fn.setPointSize(fn.pointSize());
@@ -667,7 +667,7 @@ void SlideShowGL::printComments(QImage& layer)
         commentsIndex = currIndex; // The line is ended
 
         if ( commentsIndex != (uint) comments.length() )
-            while ( !newLine.endsWith(" ") )
+            while ( !newLine.endsWith(' ') )
             {
                 newLine.truncate(newLine.length() - 1);
                 commentsIndex--;
