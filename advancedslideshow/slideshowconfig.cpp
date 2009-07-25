@@ -150,7 +150,7 @@ void SlideShowConfig::readSettings()
     d->sharedData->openGlFullScale   = grp.readEntry("OpenGLFullScale", false);
     d->sharedData->delay             = grp.readEntry("Delay", 1500);
     d->sharedData->printFileName     = grp.readEntry("Print Filename", true);
-    d->sharedData->printProgress     = grp.readEntry("Print Progress Inticator", true);
+    d->sharedData->printProgress     = grp.readEntry("Print Progress Indicator", true);
     d->sharedData->printFileComments = grp.readEntry("Print Comments", false);
     d->sharedData->loop              = grp.readEntry("Loop", false);
     d->sharedData->shuffle           = grp.readEntry("Shuffle", false);
@@ -163,13 +163,13 @@ void SlideShowConfig::readSettings()
 
     // Comments tab settings
     QFont *savedFont = new QFont();
-    savedFont->setFamily(grp.readEntry("Comments Font Family"));
-    savedFont->setPointSize(grp.readEntry("Comments Font Size", 10 ));
-    savedFont->setBold(grp.readEntry("Comments Font Bold", false));
-    savedFont->setItalic(grp.readEntry("Comments Font Italic", false));
-    savedFont->setUnderline(grp.readEntry("Comments Font Underline", false));
-    savedFont->setOverline(grp.readEntry("Comments Font Overline", false));
-    savedFont->setStrikeOut(grp.readEntry("Comments Font StrikeOut", false));
+    savedFont->setFamily(    grp.readEntry("Comments Font Family"));
+    savedFont->setPointSize( grp.readEntry("Comments Font Size", 10 ));
+    savedFont->setBold(      grp.readEntry("Comments Font Bold", false));
+    savedFont->setItalic(    grp.readEntry("Comments Font Italic", false));
+    savedFont->setUnderline( grp.readEntry("Comments Font Underline", false));
+    savedFont->setOverline(  grp.readEntry("Comments Font Overline", false));
+    savedFont->setStrikeOut( grp.readEntry("Comments Font StrikeOut", false));
     savedFont->setFixedPitch(grp.readEntry("Comments Font FixedPitch", false));
 
     d->sharedData->captionFont = savedFont;
@@ -181,8 +181,8 @@ void SlideShowConfig::readSettings()
     d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
     // Soundtrack tab
-    d->sharedData->soundtrackLoop      = grp.readEntry("Sountrack Loop", false);
-    d->sharedData->soundtrackPath      = KUrl(grp.readEntry("Sountrack Path", "" ));
+    d->sharedData->soundtrackLoop      = grp.readEntry("Soundtrack Loop", false);
+    d->sharedData->soundtrackPath      = KUrl(grp.readEntry("Soundtrack Path", "" ));
 
     // Advanced tab
     d->sharedData->useMilliseconds     = grp.readEntry("Use Milliseconds", false);
@@ -210,43 +210,43 @@ void SlideShowConfig::saveSettings()
     d->sharedData->advancedPage->saveSettings();
 
     KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
-    grp.writeEntry("OpenGL", d->sharedData->opengl);
-    grp.writeEntry("OpenGLFullScale", d->sharedData->openGlFullScale);
-    grp.writeEntry("Delay", d->sharedData->delay);
-    grp.writeEntry("Print Filename", d->sharedData->printFileName);
+    grp.writeEntry("OpenGL",                   d->sharedData->opengl);
+    grp.writeEntry("OpenGLFullScale",          d->sharedData->openGlFullScale);
+    grp.writeEntry("Delay",                    d->sharedData->delay);
+    grp.writeEntry("Print Filename",           d->sharedData->printFileName);
     grp.writeEntry("Print Progress Indicator", d->sharedData->printProgress);
-    grp.writeEntry("Print Comments", d->sharedData->printFileComments);
-    grp.writeEntry("Loop", d->sharedData->loop);
-    grp.writeEntry("Shuffle", d->sharedData->shuffle);
-    grp.writeEntry("Use Milliseconds", d->sharedData->useMilliseconds);
-    grp.writeEntry("Enable Mouse Wheel", d->sharedData->enableMouseWheel);
+    grp.writeEntry("Print Comments",           d->sharedData->printFileComments);
+    grp.writeEntry("Loop",                     d->sharedData->loop);
+    grp.writeEntry("Shuffle",                  d->sharedData->shuffle);
+    grp.writeEntry("Use Milliseconds",         d->sharedData->useMilliseconds);
+    grp.writeEntry("Enable Mouse Wheel",       d->sharedData->enableMouseWheel);
 
     // Comments tab settings
     QFont* commentsFont = d->sharedData->captionFont;
-    grp.writeEntry("Comments Font Family", commentsFont->family());
-    grp.writeEntry("Comments Font Size", commentsFont->pointSize());
-    grp.writeEntry("Comments Font Bold", commentsFont->bold());
-    grp.writeEntry("Comments Font Italic", commentsFont->italic());
-    grp.writeEntry("Comments Font Underline", commentsFont->underline());
-    grp.writeEntry("Comments Font Overline", commentsFont->overline());
-    grp.writeEntry("Comments Font StrikeOut", commentsFont->strikeOut());
+    grp.writeEntry("Comments Font Family",     commentsFont->family());
+    grp.writeEntry("Comments Font Size",       commentsFont->pointSize());
+    grp.writeEntry("Comments Font Bold",       commentsFont->bold());
+    grp.writeEntry("Comments Font Italic",     commentsFont->italic());
+    grp.writeEntry("Comments Font Underline",  commentsFont->underline());
+    grp.writeEntry("Comments Font Overline",   commentsFont->overline());
+    grp.writeEntry("Comments Font StrikeOut",  commentsFont->strikeOut());
     grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
-    grp.writeEntry("Comments Font Color", d->sharedData->commentsFontColor);
-    grp.writeEntry("Comments Bg Color", d->sharedData->commentsBgColor);
-    grp.writeEntry("Transparent Bg", d->sharedData->transparentBg);
-    grp.writeEntry("Comments Lines Length", d->sharedData->commentsLinesLength);
-    grp.writeEntry("Effect Name (OpenGL)", d->sharedData->effectNameGL);
-    grp.writeEntry("Effect Name", d->sharedData->effectName);
+    grp.writeEntry("Comments Font Color",      d->sharedData->commentsFontColor);
+    grp.writeEntry("Comments Bg Color",        d->sharedData->commentsBgColor);
+    grp.writeEntry("Transparent Bg",           d->sharedData->transparentBg);
+    grp.writeEntry("Comments Lines Length",    d->sharedData->commentsLinesLength);
+    grp.writeEntry("Effect Name (OpenGL)",     d->sharedData->effectNameGL);
+    grp.writeEntry("Effect Name",              d->sharedData->effectName);
 
-    // Sountrack tab
-    grp.writeEntry("Sountrack Loop", d->sharedData->soundtrackLoop);
-    grp.writeEntry("Sountrack Path", d->sharedData->soundtrackPath.path());
+    // Soundtrack tab
+    grp.writeEntry("Soundtrack Loop", d->sharedData->soundtrackLoop);
+    grp.writeEntry("Soundtrack Path", d->sharedData->soundtrackPath.path());
 
     // Advanced settings
     grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
     grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);
-    grp.writeEntry("Enable Cache", d->sharedData->enableCache);
-    grp.writeEntry("Cache Size", d->sharedData->cacheSize);
+    grp.writeEntry("Enable Cache",         d->sharedData->enableCache);
+    grp.writeEntry("Cache Size",           d->sharedData->cacheSize);
 
     d->config->sync();
 }
