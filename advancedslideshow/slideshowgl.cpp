@@ -570,11 +570,8 @@ void SlideShowGL::printFilename(QImage& layer)
 
     QPainter painter;
     painter.begin(&layer);
-    QRect target = QRect(m_xMargin, m_height - pix.height() - m_yMargin, pix.width(), pix.height());
-    QRect source = pix.rect();
     painter.drawPixmap(m_xMargin, layer.height() - m_yMargin - pix.height(), pix);
     painter.end();
-
 }
 
 void SlideShowGL::printProgress(QImage& layer)
@@ -585,11 +582,8 @@ void SlideShowGL::printProgress(QImage& layer)
 
     QPainter painter;
     painter.begin(&layer);
-    QRect target = QRect(m_width - pix.width() - m_xMargin, m_yMargin, pix.width(), pix.height());
-    QRect source = pix.rect();
     painter.drawPixmap(layer.width() - m_xMargin - pix.width(), m_yMargin, pix);
     painter.end();
-
 }
 
 void SlideShowGL::printComments(QImage& layer)
@@ -668,9 +662,6 @@ void SlideShowGL::printComments(QImage& layer)
         QPainter painter;
         painter.begin(&layer);
 
-        QRect target = QRect(m_xMargin, m_height - pix.height() - yPos, pix.width(), pix.height());
-        QRect source = pix.rect();
-
         painter.drawPixmap(m_xMargin, layer.height() - pix.height() - yPos, pix);
         painter.end();
 
@@ -745,7 +736,6 @@ void SlideShowGL::showEndOfShow()
     }
 
     glEnd();
-
 }
 
 void SlideShowGL::slotTimeOut()
