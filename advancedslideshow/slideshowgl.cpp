@@ -1103,7 +1103,7 @@ void SlideShowGL::effectInOut()
 
     if (m_i == 0)
     {
-        m_dir = 1 + (int)((4.0 * rand() / (RAND_MAX + 1.0)));
+        m_dir = 1 + (int) ((4.0 * rand() / (RAND_MAX + 1.0)));
     }
 
     int a;
@@ -1112,12 +1112,12 @@ void SlideShowGL::effectInOut()
 
     if (m_i <= 50)
     {
-        a   = (m_curr == 0) ? 1 : 0;
+        a = (m_curr == 0) ? 1 : 0;
         out = 1;
     }
     else
     {
-        a   = m_curr;
+        a = m_curr;
         out = 0;
     }
 
@@ -1128,8 +1128,8 @@ void SlideShowGL::effectInOut()
     float t = out ? 1.0 / 50.0 * (50.0 - m_i) : 1.0 / 50.0 * (m_i - 50.0);
     glScalef(t, t, 1.0);
     t = 1.0 - t;
-glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * t : 0.0,
-             (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * t : 0.0,
+    glTranslatef((m_dir % 2 == 0) ? ((m_dir == 2) ? 1 : -1) * t : 0.0,
+                 (m_dir % 2 == 1) ? ((m_dir == 1) ? 1 : -1) * t : 0.0,
                  0.0);
 
     glBindTexture(GL_TEXTURE_2D, ta);
@@ -1377,21 +1377,15 @@ void SlideShowGL::effectCube()
 
     glLoadIdentity();
 
-    float PI = 4.0 * atan(1.0);
-
+    float PI    = 4.0 * atan(1.0);
     float znear = 3.0;
-
     float theta = 2.0 * atan2((float)2.0 / (float)2.0, (float)znear);
-
-    theta = theta * 180.0 / PI;
+    theta       = theta * 180.0 / PI;
 
     glFrustum(-1.0, 1.0, -1.0, 1.0, znear - 0.01, 10.0);
 
-
     static float xrot;
-
     static float yrot;
-
     static float zrot;
 
     if (m_i == 0)
