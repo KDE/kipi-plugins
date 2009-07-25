@@ -283,11 +283,8 @@ void MainDialog::loadEffectNamesGL()
     // Load slideshowgl effects
     effectNames = SlideShowGL::effectNamesI18N();
 
-    for (it = effectNames.begin(); it != effectNames.end(); ++it)
-        effects.append(it.value());
-
-    // Load Ken Burns effect
-    effectNames = SlideShowKB::effectNamesI18N();
+    // Add Ken Burns effect
+    effectNames.unite(SlideShowKB::effectNamesI18N());
 
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
         effects.append(it.value());
@@ -298,7 +295,7 @@ void MainDialog::loadEffectNamesGL()
 
     m_effectsComboBox->insertItems(0, effects);
 
-    for (int i = 0; i < m_effectsComboBox->count(); i++)
+    for (int i = 0; i < m_effectsComboBox->count(); ++i)
     {
         if (effectNames[m_sharedData->effectNameGL] == m_effectsComboBox->itemText(i))
         {
