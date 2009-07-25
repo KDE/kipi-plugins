@@ -491,9 +491,11 @@ void SlideShowGL::loadImage()
                                           Qt::ScaleMin);*/
         montage(image, black);
 
-        black = black.scaled(m_width, m_height,
-                             Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+        if (!m_sharedData->openGlFullScale)
+        {
+            black = black.scaled(m_width, m_height,
+                                 Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        }
 
         if (m_sharedData->printFileName)
             printFilename(black);
@@ -584,7 +586,8 @@ void SlideShowGL::printFilename(QImage& layer)
     painter.begin(&layer);
     QRect target = QRect(m_xMargin, m_height - rect.height() - m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
-    painter.drawPixmap(target, pix, source);
+//    painter.drawPixmap(target, pix, source);
+    painter.drawPixmap(m_xMargin, layer.height() - m_yMargin - rect.height(), pix);
     painter.end();
 
 }
@@ -615,7 +618,8 @@ void SlideShowGL::printProgress(QImage& layer)
     painter.begin(&layer);
     QRect target = QRect(m_width - rect.width() - m_xMargin, m_yMargin, rect.width(), rect.height());
     QRect source = pix.rect();
-    painter.drawPixmap(target, pix, source);
+//    painter.drawPixmap(target, pix, source);
+    painter.drawPixmap(layer.width() - m_xMargin - rect.width(), m_yMargin, pix);
     painter.end();
 
 }
@@ -699,27 +703,22 @@ void SlideShowGL::printComments(QImage& layer)
         QPainter p(&pix);
 
         p.setPen(QColor(m_sharedData->commentsFontColor));
-
         p.setFont(*m_sharedData->captionFont);
-
         p.drawText(1, m_sharedData->captionFont->pointSize() + 0 , commentsByLines[lineNumber]);
 
         p.end();
 
         QPainter painter;
-
         painter.begin(&layer);
 
         QRect target = QRect(m_xMargin, m_height - rect.height() - yPos, rect.width(), rect.height());
-
         QRect source = pix.rect();
 
-        painter.drawPixmap(target, pix, source);
-
+//        painter.drawPixmap(target, pix, source);
+        painter.drawPixmap(m_xMargin, layer.height() - rect.height() - yPos, pix);
         painter.end();
 
         yPos += int(rect.height() + m_height / 400);
-
     }
 }
 

@@ -147,6 +147,7 @@ void SlideShowConfig::readSettings()
     KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
 
     d->sharedData->opengl            = grp.readEntry("OpenGL", false);
+    d->sharedData->openGlFullScale   = grp.readEntry("OpenGLFullScale", false);
     d->sharedData->delay             = grp.readEntry("Delay", 1500);
     d->sharedData->printFileName     = grp.readEntry("Print Filename", true);
     d->sharedData->printProgress     = grp.readEntry("Print Progress Inticator", true);
@@ -210,6 +211,7 @@ void SlideShowConfig::saveSettings()
 
     KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
     grp.writeEntry("OpenGL", d->sharedData->opengl);
+    grp.writeEntry("OpenGLFullScale", d->sharedData->openGlFullScale);
     grp.writeEntry("Delay", d->sharedData->delay);
     grp.writeEntry("Print Filename", d->sharedData->printFileName);
     grp.writeEntry("Print Progress Indicator", d->sharedData->printProgress);

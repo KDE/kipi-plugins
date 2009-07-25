@@ -90,6 +90,7 @@ public:
     // Config file data
     // --> Main page
     bool                 opengl;
+    bool                 openGlFullScale;
     int                  delay;
     bool                 printFileName;
     bool                 printProgress;

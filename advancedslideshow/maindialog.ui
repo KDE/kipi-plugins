@@ -363,6 +363,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="m_openGlFullScale">
+          <property name="text">
+           <string>Use full screen resolution (slower)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -479,5 +486,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>m_openglCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_openGlFullScale</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>65</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

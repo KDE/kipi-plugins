@@ -113,6 +113,7 @@ MainDialog::~MainDialog()
 void MainDialog::readSettings()
 {
     m_openglCheckBox->setChecked(m_sharedData->opengl);
+    m_openGlFullScale->setChecked(m_sharedData->openGlFullScale);
     m_delaySpinBox->setValue(m_sharedData->delay);
     m_printNameCheckBox->setChecked(m_sharedData->printFileName);
     m_printProgressCheckBox->setChecked(m_sharedData->printProgress);
@@ -155,11 +156,12 @@ void MainDialog::readSettings()
 
 void MainDialog::saveSettings()
 {
-    m_sharedData->opengl  = m_openglCheckBox->isChecked();
+    m_sharedData->opengl            = m_openglCheckBox->isChecked();
+    m_sharedData->openGlFullScale   = m_openGlFullScale->isChecked();
 
-    m_sharedData->delay   = m_sharedData->useMilliseconds ?
-                            m_delaySpinBox->value() :
-                            m_delaySpinBox->value() * 1000;
+    m_sharedData->delay             = m_sharedData->useMilliseconds ?
+                                      m_delaySpinBox->value() :
+                                      m_delaySpinBox->value() * 1000;
 
     m_sharedData->printFileName     = m_printNameCheckBox->isChecked();
     m_sharedData->printProgress     = m_printProgressCheckBox->isChecked();

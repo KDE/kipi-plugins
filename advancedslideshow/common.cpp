@@ -41,6 +41,7 @@ SharedData::SharedData()
     soundtrackPage        = 0;
 
     opengl                = false;
+    openGlFullScale       = false;
     delay                 = 0;
     printFileName         = false;
     printProgress         = false;
