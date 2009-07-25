@@ -55,7 +55,6 @@ LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl
                        const int angle, int width, int height)
           : QThread()
 {
-
     m_path          = path;
     m_angle         = angle;
     m_swidth        = width;
@@ -187,6 +186,10 @@ void SlideShowLoader::next()
     m_threadLock->lock();
     m_imageLock->lock();
 
+    LoadThread* lthread = m_loadingThreads->value(m_pathList[victim].first);
+    lthread->wait();
+    delete lthread;
+
     m_loadingThreads->remove(m_pathList[victim].first);
     m_loadedImages->remove(m_pathList[victim].first);
 
@@ -221,6 +224,10 @@ void SlideShowLoader::prev()
 
     m_threadLock->lock();
     m_imageLock->lock();
+
+    LoadThread* lthread = m_loadingThreads->value(m_pathList[victim].first);
+    lthread->wait();
+    delete lthread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
     m_loadedImages->remove(m_pathList[victim].first);
