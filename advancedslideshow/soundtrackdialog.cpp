@@ -186,17 +186,16 @@ void SoundtrackDialog::updateTracksNumber()
         for (QMap<KUrl, QTime>::iterator it = m_tracksTime->begin(); it != m_tracksTime->end(); ++it)
         {
             int hours = it.value().hour() + displayTime.hour();
-            int mins = it.value().minute() + displayTime.minute();
-            int secs = it.value().second() + displayTime.second();
+            int mins  = it.value().minute() + displayTime.minute();
+            int secs  = it.value().second() + displayTime.second();
 
             /* QTime doesn't get a overflow value in input. They need
              * to be cut down to size.
              */
 
-            mins = mins + (int)(secs / 60);
-            secs = secs % 60;
-            hours = hours + (int)(mins / 60);
-
+            mins        = mins + (int)(secs / 60);
+            secs        = secs % 60;
+            hours       = hours + (int)(mins / 60);
             displayTime = QTime(hours, mins, secs);
         }
     }
