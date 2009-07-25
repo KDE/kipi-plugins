@@ -213,6 +213,16 @@ void SoundtrackDialog::updateTracksNumber()
     compareTimes();
 }
 
+void SoundtrackDialog::updateFileList()
+{
+    KUrl::List files = m_SoundFilesListBox->fileUrls();
+    if (!files.isEmpty())
+    {
+        m_urlList.clear();
+        m_urlList = files;
+    }
+}
+
 void SoundtrackDialog::compareTimes()
 {
     QFont statusBarFont = m_statusBarLabel->font();
@@ -342,8 +352,9 @@ void SoundtrackDialog::slotSoundFilesButtonUp( void )
     SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index - 1, pitem);
-
     m_SoundFilesListBox->setCurrentItem(pitem);
+
+    updateFileList();
 }
 
 void SoundtrackDialog::slotSoundFilesButtonDown( void )
@@ -371,8 +382,9 @@ void SoundtrackDialog::slotSoundFilesButtonDown( void )
     SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
 
     m_SoundFilesListBox->insertItem(Index + 1, pitem);
-
     m_SoundFilesListBox->setCurrentItem(pitem);
+
+    updateFileList();
 }
 
 void SoundtrackDialog::slotPreviewButtonClicked( void )

@@ -170,4 +170,20 @@ void ListSoundItems::dropEvent(QDropEvent *e)
         emit addedDropItems(urls);
 }
 
+KUrl::List ListSoundItems::fileUrls()
+{
+    KUrl::List files;
+
+    for (int i = 0; i < count(); ++i)
+    {
+        SoundItem *sitem = dynamic_cast<SoundItem*>(item(i));
+        if (sitem)
+        {
+            files << KUrl(sitem->url());
+        }
+    }
+
+    return files;
+}
+
 }  // namespace KIPIAdvancedSlideshowPlugin

@@ -76,6 +76,7 @@ private:
 
     void addItems(const KUrl::List& fileList);
     void updateTracksNumber();
+    void updateFileList();
     void compareTimes();
 
 private Q_SLOTS:

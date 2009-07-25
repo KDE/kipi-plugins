@@ -88,6 +88,10 @@ public:
 
     ListSoundItems(QWidget *parent = 0);
 
+public:
+
+    KUrl::List fileUrls();
+
 Q_SIGNALS:
 
     void addedDropItems(KUrl::List filesUrl);
