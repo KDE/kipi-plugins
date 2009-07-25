@@ -33,18 +33,17 @@
 
 // KDE includes
 
-#include <kfile.h>
-#include <kicon.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
+#include <kfile.h>
+#include <kfiledialog.h>
+#include <kicon.h>
+#include <kmessagebox.h>
 
 // Phonon includes
 
+#include <Phonon/AudioOutput>
 #include <Phonon/BackendCapabilities>
 #include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
-
 
 // Local includes
 
@@ -52,8 +51,6 @@
 
 namespace KIPIAdvancedSlideshowPlugin
 {
-
-// ===================
 
 SoundtrackPreview::SoundtrackPreview( QWidget* parent, KUrl::List& urls, SharedData* sharedData )
         : KDialog(parent)
@@ -69,10 +66,7 @@ SoundtrackPreview::SoundtrackPreview( QWidget* parent, KUrl::List& urls, SharedD
 
 SoundtrackPreview::~SoundtrackPreview()
 {
-//    delete m_playbackWidget;
 }
-
-// ===================
 
 SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
         : QWidget(parent)
@@ -99,17 +93,21 @@ SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
     m_SoundFilesButtonAdd->setText("");
     m_SoundFilesButtonDelete->setText("");
 
-
     connect( m_SoundFilesListBox, SIGNAL( currentRowChanged( int ) ),
              this, SLOT( slotSoundFilesSelected( int ) ) );
+
     connect( m_SoundFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
              this, SLOT( slotAddDropItems(KUrl::List)));
+
     connect( m_SoundFilesButtonAdd, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonAdd() ) );
+
     connect( m_SoundFilesButtonDelete, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonDelete() ) );
+
     connect( m_SoundFilesButtonUp, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonUp() ) );
+
     connect( m_SoundFilesButtonDown, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonDown() ) );
 
@@ -130,18 +128,24 @@ SoundtrackDialog::~SoundtrackDialog()
 
 void SoundtrackDialog::readSettings()
 {
+    m_rememberSoundtrack->setChecked(m_sharedData->soundtrackRememberPlaylist);
     m_loopCheckBox->setChecked(m_sharedData->soundtrackLoop);
 
     connect( m_sharedData->mainPage, SIGNAL(totalTimeChanged(QTime)),
              this, SLOT(slotImageTotalTimeChanged(QTime) ) );
+
+    // if tracks are already set in m_sharedData, add them now
+    if (!m_sharedData->soundtrackUrls.isEmpty())
+        addItems(m_sharedData->soundtrackUrls);
 
     updateTracksNumber();
 }
 
 void SoundtrackDialog::saveSettings()
 {
-    m_sharedData->soundtrackLoop = m_loopCheckBox->isChecked();
-    m_sharedData->soundtrackUrls = m_urlList;
+    m_sharedData->soundtrackRememberPlaylist = m_rememberSoundtrack->isChecked();
+    m_sharedData->soundtrackLoop             = m_loopCheckBox->isChecked();
+    m_sharedData->soundtrackUrls             = m_urlList;
 }
 
 void SoundtrackDialog::addItems(const KUrl::List& fileList)

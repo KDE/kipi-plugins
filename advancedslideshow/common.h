@@ -108,6 +108,7 @@ public:
     QFont*               captionFont;
     // --> Soundtrack page
     bool                 soundtrackLoop;
+    bool                 soundtrackRememberPlaylist;
     KUrl                 soundtrackPath;
     KUrl::List           soundtrackUrls;
 

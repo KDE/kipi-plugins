@@ -26,18 +26,19 @@
 
 // Qt includes
 
+#include <QFileInfo>
 #include <QFont>
 
 // KDE includes
 
-#include <ktoolinvocation.h>
 #include <kconfig.h>
-#include <kiconloader.h>
-#include <kicon.h>
-#include <khelpmenu.h>
-#include <kpushbutton.h>
-#include <kmenu.h>
 #include <kdebug.h>
+#include <khelpmenu.h>
+#include <kicon.h>
+#include <kiconloader.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -66,6 +67,7 @@ public:
 SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
                : KPageDialog(parent), d(new SlideShowConfigPrivate)
 {
+    setObjectName("Advanced Slideshow Settings");
     setWindowTitle(i18n("Advanced Slideshow"));
 
     d->config     = new KConfig("kipirc");
@@ -144,7 +146,7 @@ SlideShowConfig::~SlideShowConfig ()
 
 void SlideShowConfig::readSettings()
 {
-    KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
+    KConfigGroup grp = d->config->group(objectName());
 
     d->sharedData->opengl            = grp.readEntry("OpenGL", false);
     d->sharedData->openGlFullScale   = grp.readEntry("OpenGLFullScale", false);
@@ -181,8 +183,9 @@ void SlideShowConfig::readSettings()
     d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
     // Soundtrack tab
-    d->sharedData->soundtrackLoop      = grp.readEntry("Soundtrack Loop", false);
-    d->sharedData->soundtrackPath      = KUrl(grp.readEntry("Soundtrack Path", "" ));
+    d->sharedData->soundtrackLoop             = grp.readEntry("Soundtrack Loop", false);
+    d->sharedData->soundtrackPath             = KUrl(grp.readEntry("Soundtrack Path", "" ));
+    d->sharedData->soundtrackRememberPlaylist = grp.readEntry("Soundtrack Remember Playlist", false);
 
     // Advanced tab
     d->sharedData->useMilliseconds     = grp.readEntry("Use Milliseconds", false);
@@ -193,6 +196,25 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->enableCache         = grp.readEntry("Enable Cache", false);
     d->sharedData->cacheSize           = grp.readEntry("Cache Size", 5);
+
+    if (d->sharedData->soundtrackRememberPlaylist)
+    {
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->interface->currentAlbum().path().path());
+        KConfigGroup soundGrp = d->config->group(groupName);
+
+        // load and check playlist files, if valid, add to tracklist widget
+        QStringList playlistFiles = soundGrp.readEntry("Tracks", QStringList());
+
+        foreach (const QString& playlistFile, playlistFiles)
+        {
+            KUrl file(playlistFile);
+            QFileInfo fi(file.path());
+            if (fi.isFile())
+            {
+                d->sharedData->soundtrackUrls << file;
+            }
+        }
+    }
 
     d->sharedData->mainPage->readSettings();
     d->sharedData->captionPage->readSettings();
@@ -209,7 +231,7 @@ void SlideShowConfig::saveSettings()
     d->sharedData->soundtrackPage->saveSettings();
     d->sharedData->advancedPage->saveSettings();
 
-    KConfigGroup grp = d->config->group("Advanced Slideshow Settings");
+    KConfigGroup grp = d->config->group(objectName());
     grp.writeEntry("OpenGL",                   d->sharedData->opengl);
     grp.writeEntry("OpenGLFullScale",          d->sharedData->openGlFullScale);
     grp.writeEntry("Delay",                    d->sharedData->delay);
@@ -239,14 +261,26 @@ void SlideShowConfig::saveSettings()
     grp.writeEntry("Effect Name",              d->sharedData->effectName);
 
     // Soundtrack tab
-    grp.writeEntry("Soundtrack Loop", d->sharedData->soundtrackLoop);
-    grp.writeEntry("Soundtrack Path", d->sharedData->soundtrackPath.path());
+    grp.writeEntry("Soundtrack Loop",              d->sharedData->soundtrackLoop);
+    grp.writeEntry("Soundtrack Path",              d->sharedData->soundtrackPath.path());
+    grp.writeEntry("Soundtrack Remember Playlist", d->sharedData->soundtrackRememberPlaylist);
 
     // Advanced settings
     grp.writeEntry("KB Disable FadeInOut", d->sharedData->kbDisableFadeInOut);
     grp.writeEntry("KB Disable Crossfade", d->sharedData->kbDisableCrossFade);
     grp.writeEntry("Enable Cache",         d->sharedData->enableCache);
     grp.writeEntry("Cache Size",           d->sharedData->cacheSize);
+
+    // --------------------------------------------------------
+
+    // only save tracks when option is set and tracklist is NOT empty, to prevent deletion
+    // of older track entries
+    if (d->sharedData->soundtrackRememberPlaylist && !d->sharedData->soundtrackUrls.isEmpty())
+    {
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->interface->currentAlbum().path().path());
+        KConfigGroup soundGrp = d->config->group(groupName);
+        soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls.toStringList());
+    }
 
     d->config->sync();
 }
