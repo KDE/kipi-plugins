@@ -564,30 +564,15 @@ void SlideShowGL::printFilename(QImage& layer)
 {
     QFileInfo fileinfo(m_fileList[m_fileIndex].first);
     QString filename = fileinfo.fileName();
+    QPixmap pix      = generateOutlinedTextPixmap(filename);
 
-    QFont fn(font());
-    fn.setPointSize(fn.pointSize());
-    fn.setBold(true);
-
-    QFontMetrics fm(fn);
-    QRect rect = fm.boundingRect(filename);
-    rect.adjust( 0, 0, 2, 2 );
-
-    QPixmap pix(rect.width(), rect.height());
-    pix.fill(Qt::transparent);
-
-    QPainter p(&pix);
-    p.setPen(Qt::white);
-    p.setFont(fn);
-    p.drawText(1, fn.pointSize() + 1 , filename);
-    p.end();
+    // --------------------------------------------------------
 
     QPainter painter;
     painter.begin(&layer);
-    QRect target = QRect(m_xMargin, m_height - rect.height() - m_yMargin, rect.width(), rect.height());
+    QRect target = QRect(m_xMargin, m_height - pix.height() - m_yMargin, pix.width(), pix.height());
     QRect source = pix.rect();
-//    painter.drawPixmap(target, pix, source);
-    painter.drawPixmap(m_xMargin, layer.height() - m_yMargin - rect.height(), pix);
+    painter.drawPixmap(m_xMargin, layer.height() - m_yMargin - pix.height(), pix);
     painter.end();
 
 }
@@ -596,30 +581,13 @@ void SlideShowGL::printProgress(QImage& layer)
 {
     QString progress(QString::number(m_fileIndex + 1) + '/' + QString::number(m_fileList.count()));
 
-    QFont fn(font());
-    fn.setPointSize(fn.pointSize());
-    fn.setBold(true);
-
-    QFontMetrics fm(fn);
-    QRect rect = fm.boundingRect(progress);
-    rect.adjust( 0, 0, 2, 2 );
-
-    QPixmap pix(rect.width(), rect.height());
-    pix.fill(Qt::transparent);
-
-    QPainter p(&pix);
-
-    p.setPen(Qt::white);
-    p.setFont(fn);
-    p.drawText(1, fn.pointSize() + 1 , progress);
-    p.end();
+    QPixmap pix = generateOutlinedTextPixmap(progress);
 
     QPainter painter;
     painter.begin(&layer);
-    QRect target = QRect(m_width - rect.width() - m_xMargin, m_yMargin, rect.width(), rect.height());
+    QRect target = QRect(m_width - pix.width() - m_xMargin, m_yMargin, pix.width(), pix.height());
     QRect source = pix.rect();
-//    painter.drawPixmap(target, pix, source);
-    painter.drawPixmap(layer.width() - m_xMargin - rect.width(), m_yMargin, pix);
+    painter.drawPixmap(layer.width() - m_xMargin - pix.width(), m_yMargin, pix);
     painter.end();
 
 }
@@ -685,40 +653,28 @@ void SlideShowGL::printComments(QImage& layer)
         commentsByLines.prepend(newLine.trimmed());
     }
 
-    QFontMetrics fm(*m_sharedData->captionFont);
-
     yPos += int(2.0 * m_sharedData->captionFont->pointSize());
+
+    QFont  font(*m_sharedData->captionFont);
+    QColor fgColor(m_sharedData->commentsFontColor);
+    QColor bgColor(m_sharedData->commentsBgColor);
+    bool   transBg = m_sharedData->transparentBg;
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ )
     {
-
-        QRect rect = fm.boundingRect(commentsByLines[lineNumber]);
-        rect.adjust( 0, 0, 2, 2 );
-
-        QPixmap pix(rect.width(), rect.height());
-
-        if ( m_sharedData->transparentBg ) pix.fill(Qt::transparent);
-        else pix.fill(QColor(m_sharedData->commentsFontColor));
-
-        QPainter p(&pix);
-
-        p.setPen(QColor(m_sharedData->commentsFontColor));
-        p.setFont(*m_sharedData->captionFont);
-        p.drawText(1, m_sharedData->captionFont->pointSize() + 0 , commentsByLines[lineNumber]);
-
-        p.end();
+        QPixmap pix = generateCustomOutlinedTextPixmap(commentsByLines[lineNumber],
+                                                       font, fgColor, bgColor, transBg);
 
         QPainter painter;
         painter.begin(&layer);
 
-        QRect target = QRect(m_xMargin, m_height - rect.height() - yPos, rect.width(), rect.height());
+        QRect target = QRect(m_xMargin, m_height - pix.height() - yPos, pix.width(), pix.height());
         QRect source = pix.rect();
 
-//        painter.drawPixmap(target, pix, source);
-        painter.drawPixmap(m_xMargin, layer.height() - rect.height() - yPos, pix);
+        painter.drawPixmap(m_xMargin, layer.height() - pix.height() - yPos, pix);
         painter.end();
 
-        yPos += int(rect.height() + m_height / 400);
+        yPos += int(pix.height() + m_height / 400);
     }
 }
 
@@ -1650,6 +1606,62 @@ void SlideShowGL::slotNext()
 void SlideShowGL::slotClose()
 {
     close();
+}
+
+QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text)
+{
+    QFont fn(font());
+    fn.setPointSize(fn.pointSize());
+    fn.setBold(true);
+
+    return generateOutlinedTextPixmap(text, fn);
+}
+
+QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text, QFont& fn)
+{
+    QColor fgColor(Qt::white);
+    QColor bgColor(Qt::black);
+    return generateCustomOutlinedTextPixmap(text, fn, fgColor, bgColor, true);
+}
+
+QPixmap SlideShowGL::generateCustomOutlinedTextPixmap(const QString& text, QFont& fn,
+                                                      QColor& fgColor, QColor& bgColor,
+                                                      bool transBg)
+{
+    QFontMetrics fm(fn);
+    QRect rect = fm.boundingRect(text);
+    rect.adjust( 0, 0, 2, 2 );
+
+    QPixmap pix(rect.width(), rect.height());
+
+    if (transBg)
+        pix.fill(Qt::transparent);
+    else
+        pix.fill(bgColor);
+
+    QPainter p(&pix);
+    p.setRenderHint(QPainter::Antialiasing, true);
+    p.setBrush(QBrush());
+    p.setPen(QPen());
+
+    // draw outline
+    QPainterPath path;
+    path.addText(1, fn.pointSize() +1, fn, text);
+
+    QPainterPathStroker stroker;
+    stroker.setWidth(2);
+    stroker.setCapStyle(Qt::RoundCap);
+    stroker.setJoinStyle(Qt::RoundJoin);
+    QPainterPath outline = stroker.createStroke(path);
+
+    if (transBg)
+        p.fillPath(outline, Qt::black);
+    p.fillPath(path,    QBrush(fgColor));
+
+    p.setRenderHint(QPainter::Antialiasing, false);
+    p.end();
+
+    return pix;
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

@@ -31,15 +31,15 @@
 
 // Qt includes
 
+#include <QGLWidget>
+#include <QKeyEvent>
 #include <QList>
-#include <QStringList>
+#include <QMap>
+#include <QMouseEvent>
 #include <QPair>
 #include <QString>
-#include <QMap>
+#include <QStringList>
 #include <QWheelEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
-#include <QGLWidget>
 
 // KDE includes
 
@@ -47,11 +47,14 @@
 
 // Local includes
 
-#include "slideshowloader.h"
-#include "slideplaybackwidget.h"
-#include "playbackwidget.h"
 #include "common.h"
+#include "playbackwidget.h"
+#include "slideplaybackwidget.h"
+#include "slideshowloader.h"
 
+class QColor;
+class QFont;
+class QPainter;
 class QTimer;
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -89,6 +92,12 @@ private:
 
     typedef void (SlideShowGL::*EffectMethod)();
 
+    QPixmap       generateOutlinedTextPixmap(const QString& text);
+    QPixmap       generateOutlinedTextPixmap(const QString& text, QFont& fn);
+    QPixmap       generateCustomOutlinedTextPixmap(const QString& text,
+                                                   QFont& fn, QColor& fgColor, QColor& bgColor,
+                                                   bool transBg = true);
+
     void          paintTexture();
     void          advanceFrame();
     void          previousFrame();
@@ -109,7 +118,6 @@ private:
     void          effectSlide();
     void          effectFlutter();
     void          effectCube();
-
 
 private Q_SLOTS:
 
