@@ -73,6 +73,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
                                                          ImagesList::NoControlButtons, KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
+    m_ImagesFilesListBox->listView()->setSelectionMode(QAbstractItemView::SingleSelection);
+
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
     listBoxContainerLayout->setSpacing(0);
     listBoxContainerLayout->setMargin(0);
@@ -487,11 +489,6 @@ void MainDialog::slotSelection( void )
     {
         urlList = m_sharedData->interface->currentSelection().images();
         m_ImagesFilesListBox->listView()->clear();
-
-        m_ImagesFilesButtonAdd->setEnabled(false);
-        m_ImagesFilesButtonDelete->setEnabled(false);
-        m_ImagesFilesButtonUp->setEnabled(false);
-        m_ImagesFilesButtonDown->setEnabled(false);
     }
     else if (m_allFilesButton->isChecked())
     {
@@ -505,27 +502,22 @@ void MainDialog::slotSelection( void )
         for (it = albumList.begin(); it != albumList.end(); ++it)
             if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
                 urlList += (*it).images();
-
-        m_ImagesFilesButtonAdd->setEnabled(false);
-        m_ImagesFilesButtonDelete->setEnabled(false);
-        m_ImagesFilesButtonUp->setEnabled(false);
-        m_ImagesFilesButtonDown->setEnabled(false);
     }
 
-    if ( m_customButton->isChecked() )    // Custom selected
+    bool customize = m_customButton->isChecked();
+
+    if (!urlList.isEmpty() && !customize)
     {
-        m_ImagesFilesButtonAdd->setEnabled(true);
-        m_ImagesFilesButtonDelete->setEnabled(true);
-        m_ImagesFilesButtonUp->setEnabled(true);
-        m_ImagesFilesButtonDown->setEnabled(true);
+        addItems(urlList);
     }
-    else
-    {
-        if (!urlList.isEmpty())
-        {
-            addItems(urlList);
-        }
-    }
+
+    m_ImagesFilesButtonAdd->setEnabled(customize);
+    m_ImagesFilesButtonDelete->setEnabled(customize);
+    m_ImagesFilesButtonUp->setEnabled(customize);
+    m_ImagesFilesButtonDown->setEnabled(customize);
+    m_ImagesFilesListBox->listView()->setDragEnabled(customize);
+    m_ImagesFilesListBox->listView()->setAcceptDrops(customize);
+    m_ImagesFilesListBox->listView()->setDropIndicatorShown(customize);
 }
 
 void MainDialog::slotPortfolioDurationChanged ( int )
