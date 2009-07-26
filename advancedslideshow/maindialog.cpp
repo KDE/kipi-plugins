@@ -202,13 +202,17 @@ void MainDialog::saveSettings()
         effectNames = SlideShowGL::effectNamesI18N();
 
         for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
+        {
             effects.insert(it.key(), it.value());
+        }
 
         // Load Ken Burns effect
         effectNames = SlideShowKB::effectNamesI18N();
 
         for (it = effectNames.constBegin(); it != effectNames.constEnd(); ++it)
+        {
             effects.insert(it.key(), it.value());
+        }
 
         QString effect;
 
@@ -260,7 +264,9 @@ void MainDialog::loadEffectNames()
     QMap<QString, QString>::Iterator it;
 
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
+    {
         effects.append(it.value());
+    }
 
     m_effectsComboBox->insertItems(0, effects);
 
@@ -289,7 +295,9 @@ void MainDialog::loadEffectNamesGL()
     effectNames.unite(SlideShowKB::effectNamesI18N());
 
     for (it = effectNames.begin(); it != effectNames.end(); ++it)
+    {
         effects.append(it.value());
+    }
 
     // Update GUI
 
@@ -500,8 +508,12 @@ void MainDialog::slotSelection( void )
 
         QList<KIPI::ImageCollection>::iterator it;
         for (it = albumList.begin(); it != albumList.end(); ++it)
+        {
             if (currentPath.isParentOf((*it).path()) && !((*it).path() == currentPath))
+            {
                 urlList += (*it).images();
+            }
+        }
     }
 
     bool customize = m_customButton->isChecked();
