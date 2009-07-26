@@ -83,6 +83,9 @@ SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
     m_soundtrackTimeLabel->setText(m_totalTime.toString());
     m_previewButton->setEnabled(false);
 
+    m_rememberSoundtrack->setToolTip(i18n("If set, the soundtrack layout for the current album "
+                                          "will be restored automatically on the next startup."));
+
     // --------------------------------------------------------
 
     m_SoundFilesButtonUp->setIcon(KIcon("arrow-up"));

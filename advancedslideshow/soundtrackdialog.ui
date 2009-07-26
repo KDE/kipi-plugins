@@ -335,7 +335,7 @@
         <item>
          <widget class="QCheckBox" name="m_rememberSoundtrack">
           <property name="text">
-           <string>Remember soundtrack for current album</string>
+           <string>Remember soundtrack</string>
           </property>
          </widget>
         </item>
