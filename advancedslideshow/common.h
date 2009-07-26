@@ -109,6 +109,7 @@ public:
     // --> Soundtrack page
     bool                 soundtrackLoop;
     bool                 soundtrackRememberPlaylist;
+    bool                 soundtrackPlayListNeedsUpdate;
     KUrl                 soundtrackPath;
     KUrl::List           soundtrackUrls;
 

@@ -275,7 +275,7 @@ void SlideShowConfig::saveSettings()
 
     // only save tracks when option is set and tracklist is NOT empty, to prevent deletion
     // of older track entries
-    if (d->sharedData->soundtrackRememberPlaylist && !d->sharedData->soundtrackUrls.isEmpty())
+    if (d->sharedData->soundtrackRememberPlaylist && d->sharedData->soundtrackPlayListNeedsUpdate)
     {
         QString groupName(objectName() + " Soundtrack " + d->sharedData->interface->currentAlbum().path().path());
         KConfigGroup soundGrp = d->config->group(groupName);

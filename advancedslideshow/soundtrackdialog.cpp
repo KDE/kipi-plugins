@@ -220,6 +220,7 @@ void SoundtrackDialog::updateFileList()
     {
         m_urlList.clear();
         m_urlList = files;
+        m_sharedData->soundtrackPlayListNeedsUpdate = true;
     }
 }
 
@@ -285,7 +286,11 @@ void SoundtrackDialog::slotSoundFilesSelected( int row )
 
 void SoundtrackDialog::slotAddDropItems(KUrl::List filesUrl)
 {
-    addItems(filesUrl);
+    if (!filesUrl.isEmpty())
+    {
+        addItems(filesUrl);
+        updateFileList();
+    }
 }
 
 void SoundtrackDialog::slotSoundFilesButtonAdd( void )
@@ -304,6 +309,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd( void )
     if (!urls.isEmpty())
     {
         addItems(urls);
+        updateFileList();
     }
 
     delete dlg;
@@ -325,6 +331,7 @@ void SoundtrackDialog::slotSoundFilesButtonDelete( void )
     slotSoundFilesSelected(m_SoundFilesListBox->currentRow());
 
     if (m_SoundFilesListBox->count() == 0) m_previewButton->setEnabled(false);
+    updateFileList();
 }
 
 void SoundtrackDialog::slotSoundFilesButtonUp( void )
