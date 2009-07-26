@@ -83,15 +83,33 @@ SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
     m_soundtrackTimeLabel->setText(m_totalTime.toString());
     m_previewButton->setEnabled(false);
 
+    // --------------------------------------------------------
+
     m_SoundFilesButtonUp->setIcon(KIcon("arrow-up"));
     m_SoundFilesButtonDown->setIcon(KIcon("arrow-down"));
     m_SoundFilesButtonAdd->setIcon(KIcon("list-add"));
     m_SoundFilesButtonDelete->setIcon(KIcon("list-remove"));
+    m_SoundFilesButtonLoad->setIcon(KIcon("document-open"));
+    m_SoundFilesButtonSave->setIcon(KIcon("document-save"));
+    m_SoundFilesButtonReset->setIcon(KIcon("edit-clear-list"));
 
-    m_SoundFilesButtonUp->setText("");
-    m_SoundFilesButtonDown->setText("");
-    m_SoundFilesButtonAdd->setText("");
-    m_SoundFilesButtonDelete->setText("");
+    m_SoundFilesButtonUp->setText(QString());
+    m_SoundFilesButtonDown->setText(QString());
+    m_SoundFilesButtonAdd->setText(QString());
+    m_SoundFilesButtonDelete->setText(QString());
+    m_SoundFilesButtonLoad->setText(QString());
+    m_SoundFilesButtonSave->setText(QString());
+    m_SoundFilesButtonReset->setText(QString());
+
+    m_SoundFilesButtonUp->setToolTip(i18n("Move the selected track up in the playlist."));
+    m_SoundFilesButtonDown->setToolTip(i18n("Move the selected track down in the playlist."));
+    m_SoundFilesButtonAdd->setToolTip(i18n("Add new tracks to the playlist."));
+    m_SoundFilesButtonDelete->setToolTip(i18n("Delete the selected track from the playlist."));
+    m_SoundFilesButtonLoad->setToolTip(i18n("Load playlist from a file."));
+    m_SoundFilesButtonSave->setToolTip(i18n("Save playlist to a file."));
+    m_SoundFilesButtonReset->setToolTip(i18n("Clear the playlist."));
+
+    // --------------------------------------------------------
 
     connect( m_SoundFilesListBox, SIGNAL( currentRowChanged( int ) ),
              this, SLOT( slotSoundFilesSelected( int ) ) );
@@ -110,6 +128,15 @@ SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
 
     connect( m_SoundFilesButtonDown, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonDown() ) );
+
+    connect( m_SoundFilesButtonLoad, SIGNAL( clicked() ),
+             this, SLOT( slotSoundFilesButtonLoad() ) );
+
+    connect( m_SoundFilesButtonSave, SIGNAL( clicked() ),
+             this, SLOT( slotSoundFilesButtonSave() ) );
+
+    connect( m_SoundFilesButtonReset, SIGNAL( clicked() ),
+             this, SLOT( slotSoundFilesButtonReset() ) );
 
     connect( m_previewButton, SIGNAL( clicked() ),
              this, SLOT( slotPreviewButtonClicked() ));
@@ -138,6 +165,7 @@ void SoundtrackDialog::readSettings()
     if (!m_sharedData->soundtrackUrls.isEmpty())
         addItems(m_sharedData->soundtrackUrls);
 
+    updateFileList();
     updateTracksNumber();
 }
 
@@ -216,12 +244,14 @@ void SoundtrackDialog::updateTracksNumber()
 void SoundtrackDialog::updateFileList()
 {
     KUrl::List files = m_SoundFilesListBox->fileUrls();
-    if (!files.isEmpty())
-    {
-        m_urlList.clear();
-        m_urlList = files;
-        m_sharedData->soundtrackPlayListNeedsUpdate = true;
-    }
+    m_urlList        = files;
+
+    m_SoundFilesButtonUp->setEnabled(!files.isEmpty());
+    m_SoundFilesButtonDown->setEnabled(!files.isEmpty());
+    m_SoundFilesButtonDelete->setEnabled(!files.isEmpty());
+    m_SoundFilesButtonSave->setEnabled(!files.isEmpty());
+    m_SoundFilesButtonReset->setEnabled(!files.isEmpty());
+    m_sharedData->soundtrackPlayListNeedsUpdate = true;
 }
 
 void SoundtrackDialog::compareTimes()
@@ -391,6 +421,90 @@ void SoundtrackDialog::slotSoundFilesButtonDown( void )
     m_SoundFilesListBox->insertItem(Index + 1, pitem);
     m_SoundFilesListBox->setCurrentItem(pitem);
 
+    updateFileList();
+}
+
+void SoundtrackDialog::slotSoundFilesButtonLoad( void )
+{
+    QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
+    dlg->setOperationMode(KFileDialog::Opening);
+    dlg->setMode(KFile::File);
+    dlg->setFilter(QString("*.playlist|Slideshow Playlist (*.playlist)"));
+    dlg->setWindowTitle(i18n("Select playlist file"));
+    if (dlg->exec() != KFileDialog::Accepted)
+        return;
+
+    QString  filename = dlg->selectedFile();
+
+    if (!filename.isEmpty())
+    {
+        QFile file(filename);
+        if (file.open(QIODevice::ReadOnly|QIODevice::Text))
+        {
+            QTextStream in(&file);
+            KUrl::List playlistFiles;
+
+            while (!in.atEnd())
+            {
+                KUrl fUrl(in.readLine());
+                if (fUrl.isValid())
+                    if (fUrl.isLocalFile())
+                    {
+                        playlistFiles << fUrl;
+                    }
+            }
+
+            if (!playlistFiles.isEmpty())
+            {
+                m_SoundFilesListBox->clear();
+                addItems(playlistFiles);
+                updateFileList();
+            }
+        }
+    }
+
+    delete dlg;
+}
+
+void SoundtrackDialog::slotSoundFilesButtonSave( void )
+{
+    QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
+    dlg->setOperationMode(KFileDialog::Saving);
+    dlg->setMode(KFile::File);
+    dlg->setFilter(QString("*.playlist|Slideshow Playlist (*.playlist)"));
+    dlg->setWindowTitle(i18n("Save playlist file"));
+    if (dlg->exec() != KFileDialog::Accepted)
+        return;
+
+    QString filename = dlg->selectedFile();
+
+    if (!filename.isEmpty())
+    {
+        QFile file(filename);
+        if (file.open(QIODevice::WriteOnly|QIODevice::Text))
+        {
+            QTextStream out(&file);
+            KUrl::List playlistFiles = m_SoundFilesListBox->fileUrls();
+
+            for (int i = 0; i < playlistFiles.count(); ++i)
+            {
+                KUrl fUrl(playlistFiles.at(i));
+                if (fUrl.isValid())
+                    if (fUrl.isLocalFile())
+                    {
+                        out << fUrl.toLocalFile() << endl;
+                    }
+            }
+            file.close();
+        }
+    }
+
+    delete dlg;
+}
+
+void SoundtrackDialog::slotSoundFilesButtonReset( void )
+{
+    m_SoundFilesListBox->clear();
     updateFileList();
 }
 

@@ -86,6 +86,9 @@ private Q_SLOTS:
     void slotSoundFilesButtonDelete( void );
     void slotSoundFilesButtonUp( void );
     void slotSoundFilesButtonDown( void );
+    void slotSoundFilesButtonLoad( void );
+    void slotSoundFilesButtonSave( void );
+    void slotSoundFilesButtonReset( void );
     void slotSoundFilesSelected( int );
     void slotPreviewButtonClicked( void );
     void slotImageTotalTimeChanged( QTime );
