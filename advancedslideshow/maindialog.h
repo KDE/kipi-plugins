@@ -72,6 +72,7 @@ private Q_SLOTS:
     void slotSelection( void );
     void slotUseMillisecondsToggled( void );
     void slotThumbnail(const KUrl&, const QPixmap&);
+    void slotImageListChanged();
 
     void slotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected(QTreeWidgetItem* item);

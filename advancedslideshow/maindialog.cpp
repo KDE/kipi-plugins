@@ -146,14 +146,12 @@ void MainDialog::readSettings()
 
     // --------------------------------------------------------
 
+    setupConnections();
+
     slotOpenGLToggled();
     slotPrintCommentsToggled();
     slotEffectChanged();
     slotSelection();
-
-    // --------------------------------------------------------
-
-    setupConnections();
 }
 
 void MainDialog::saveSettings()
@@ -377,7 +375,6 @@ void MainDialog::addItems(const KUrl::List& fileList)
     KUrl::List files = fileList;
 
     m_ImagesFilesListBox->slotAddImages(files);
-    showNumberImages();
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
@@ -399,8 +396,6 @@ void MainDialog::slotImagesFilesButtonDelete( void )
         return;
 
     m_ImagesFilesListBox->removeItemByUrl(item->url());
-
-    showNumberImages();
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
@@ -554,6 +549,11 @@ void MainDialog::slotPrintCommentsToggled( void )
     m_sharedData->page_caption->setEnabled(m_printCommentsCheckBox->isChecked());
 }
 
+void MainDialog::slotImageListChanged()
+{
+    showNumberImages();
+}
+
 void MainDialog::setupConnections()
 {
     connect(m_sharedData->advancedPage, SIGNAL(useMillisecondsToggled()), this,
@@ -573,6 +573,9 @@ void MainDialog::setupConnections()
 
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
+
+    connect(m_ImagesFilesListBox, SIGNAL( signalImageListChanged(bool) ),
+            this, SLOT( slotImageListChanged() ));
 
     connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
             this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
