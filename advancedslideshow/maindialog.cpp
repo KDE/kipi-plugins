@@ -116,6 +116,7 @@ void MainDialog::readSettings()
 {
     m_openglCheckBox->setChecked(m_sharedData->opengl);
     m_openGlFullScale->setChecked(m_sharedData->openGlFullScale);
+    m_openGlFullScale->setEnabled(m_sharedData->opengl);
     m_delaySpinBox->setValue(m_sharedData->delay);
     m_printNameCheckBox->setChecked(m_sharedData->printFileName);
     m_printProgressCheckBox->setChecked(m_sharedData->printProgress);
