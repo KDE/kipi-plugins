@@ -11,4 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> AdvancedSlideshow : 195772 : Allow to load playlists rather than having to re-add the songs one by one.
 003 ==> AdvancedSlideshow : 195699 : Ken Burns : it takes minutes before the slideshow actually starts.
 004 ==> AdvancedSlideshow : 182743 : Renders system unresponsive on large image collections.
-005 ==>
+005 ==> GalleryExport     : 202019 : [PATCH] : mpGallery not initialized, crash on destruction if setup not called.
+006 ==> 
