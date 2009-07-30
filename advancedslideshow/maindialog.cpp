@@ -452,6 +452,7 @@ void MainDialog::slotEffectChanged( void )
     m_printNameCheckBox->setEnabled(!isKB);
     m_printProgressCheckBox->setEnabled(!isKB);
     m_printCommentsCheckBox->setEnabled(!isKB);
+    m_openGlFullScale->setEnabled(!isKB && m_openglCheckBox->isChecked());
     m_sharedData->page_caption->setEnabled((!isKB) &&
                                            m_printCommentsCheckBox->isChecked());
 }
