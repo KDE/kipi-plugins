@@ -10,4 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> AdvancedSlideshow : 142676 : Recursive slideshow option.
 002 ==> AdvancedSlideshow : 195772 : Allow to load playlists rather than having to re-add the songs one by one.
 003 ==> AdvancedSlideshow : 195699 : Ken Burns : it takes minutes before the slideshow actually starts.
-004 ==>
+004 ==> AdvancedSlideshow : 182743 : Renders system unresponsive on large image collections.
+005 ==>
