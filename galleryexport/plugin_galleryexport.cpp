@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -52,7 +52,8 @@ K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_galleryexport"))
 
 Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
-                    : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport")
+                    : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport"),
+                      m_action(0), mpGallery(0)
 {
     kDebug(51001) << "Plugin_GalleryExport plugin loaded"
                   << endl;
