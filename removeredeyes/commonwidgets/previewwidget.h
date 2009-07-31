@@ -32,7 +32,6 @@
 
 class QWidget;
 
-class KUrl;
 
 namespace KIPIRemoveRedEyesPlugin
 {

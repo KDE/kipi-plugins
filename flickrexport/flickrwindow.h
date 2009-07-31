@@ -71,7 +71,6 @@ namespace KIPIFlickrExportPlugin
 class FlickrWidget;
 class FlickrTalker;
 class FPhotoInfo;
-class FPhotoSet;
 class GPhoto;
 class GAlbum;
 //class GAlbumViewItem;

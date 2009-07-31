@@ -31,15 +31,12 @@
 
 #include "ui_imagepreview.h"
 
-class QLCDNumber;
-class QSlider;
 
 namespace KIPIPlugins 
 {
 class KPAboutData;
 }
 
-class PixmapView;
 
 namespace KIPIBatchProcessImagesPlugin
 {

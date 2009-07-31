@@ -54,7 +54,6 @@
 
 class QColor;
 class QFont;
-class QPainter;
 class QTimer;
 
 namespace KIPIAdvancedSlideshowPlugin

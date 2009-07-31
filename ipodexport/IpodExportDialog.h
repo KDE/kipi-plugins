@@ -48,16 +48,12 @@ extern "C"
 #include "imagedialog.h"
 #endif
 
-class QCheckBox;
 class QGroupBox;
 class QLabel;
 class QPushButton;
 class QTreeWidgetItem;
 
-class KComboBox;
 class KFileItem;
-class KLineEdit;
-class KUrl;
 
 using namespace KIPI;
 using namespace KIPIPlugins;
