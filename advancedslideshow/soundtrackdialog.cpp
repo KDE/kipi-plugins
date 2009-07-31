@@ -181,17 +181,18 @@ void SoundtrackDialog::saveSettings()
 
 void SoundtrackDialog::addItems(const KUrl::List& fileList)
 {
-    if (fileList.isEmpty()) return;
+    if (fileList.isEmpty())
+        return;
 
     KUrl::List Files = fileList;
 
-    for ( KUrl::List::ConstIterator it = Files.constBegin() ; it != Files.constEnd() ; ++it )
+    for (KUrl::List::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
         KUrl currentFile = *it;
         KUrl path = KUrl(currentFile.path().section('/', 0, -1));
         m_sharedData->soundtrackPath = path;
-        SoundItem *item = new SoundItem( m_SoundFilesListBox, path );
-        item->setName( currentFile.path().section('/', -1) );
+        SoundItem *item = new SoundItem(m_SoundFilesListBox, path);
+        item->setName(currentFile.path().section('/', -1));
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
         m_soundItems->insert(path, item);
@@ -432,10 +433,13 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Opening);
     dlg->setMode(KFile::File);
-    dlg->setFilter(QString("*.playlist|Slideshow Playlist (*.playlist)"));
-    dlg->setWindowTitle(i18n("Select playlist file"));
+    dlg->setFilter(QString("*.m3u|Playlist (*.m3u)"));
+    dlg->setWindowTitle(i18n("Load playlist"));
+
     if (dlg->exec() != KFileDialog::Accepted)
+    {
         return;
+    }
 
     QString  filename = dlg->selectedFile();
 
@@ -449,12 +453,20 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
 
             while (!in.atEnd())
             {
-                KUrl fUrl(in.readLine());
+                QString line = in.readLine();
+
+                // we ignore the extended information of the m3u playlist file
+                if (line.startsWith('#') || line.isEmpty())
+                    continue;
+
+                KUrl fUrl(line);
                 if (fUrl.isValid())
+                {
                     if (fUrl.isLocalFile())
                     {
                         playlistFiles << fUrl;
                     }
+                }
             }
 
             if (!playlistFiles.isEmpty())
@@ -474,10 +486,13 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setMode(KFile::File);
-    dlg->setFilter(QString("*.playlist|Slideshow Playlist (*.playlist)"));
-    dlg->setWindowTitle(i18n("Save playlist file"));
+    dlg->setFilter(QString("*.m3u|Playlist (*.m3u)"));
+    dlg->setWindowTitle(i18n("Save playlist"));
+
     if (dlg->exec() != KFileDialog::Accepted)
+    {
         return;
+    }
 
     QString filename = dlg->selectedFile();
 
@@ -493,10 +508,12 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
             {
                 KUrl fUrl(playlistFiles.at(i));
                 if (fUrl.isValid())
+                {
                     if (fUrl.isLocalFile())
                     {
                         out << fUrl.toLocalFile() << endl;
                     }
+                }
             }
             file.close();
         }

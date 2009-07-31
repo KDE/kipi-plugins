@@ -49,7 +49,7 @@ SoundItem::SoundItem(QListWidget* parent, KUrl &url)
          : QListWidgetItem(parent)
 {
     m_url = url;
-    setIcon(SmallIcon( "audio-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState ));
+    setIcon(SmallIcon("audio-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
 
     m_totalTime   = QTime(0, 0, 0);
     m_mediaObject = new Phonon::MediaObject();
@@ -61,7 +61,6 @@ SoundItem::SoundItem(QListWidget* parent, KUrl &url)
 
 SoundItem::~SoundItem()
 {
-//    delete m_mediaObject;
 }
 
 KUrl SoundItem::url()
@@ -109,17 +108,12 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
         return;
 
     long int total = m_mediaObject->totalTime();
-
     int hours      = (int)(total / (long int)( 60 * 60 * 1000 ));
-
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
-
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
-
     m_totalTime    = QTime(hours, mins, secs);
 
     m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(",");
-
     m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(",");
 
     if ( m_artist.isEmpty() && m_title.isEmpty() )
