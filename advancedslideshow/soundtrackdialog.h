@@ -82,16 +82,16 @@ private:
 private Q_SLOTS:
 
     void slotAddDropItems(KUrl::List filesUrl);
-    void slotSoundFilesButtonAdd( void );
-    void slotSoundFilesButtonDelete( void );
-    void slotSoundFilesButtonUp( void );
-    void slotSoundFilesButtonDown( void );
-    void slotSoundFilesButtonLoad( void );
-    void slotSoundFilesButtonSave( void );
-    void slotSoundFilesButtonReset( void );
-    void slotSoundFilesSelected( int );
-    void slotPreviewButtonClicked( void );
-    void slotImageTotalTimeChanged( QTime );
+    void slotSoundFilesButtonAdd();
+    void slotSoundFilesButtonDelete();
+    void slotSoundFilesButtonUp();
+    void slotSoundFilesButtonDown();
+    void slotSoundFilesButtonLoad();
+    void slotSoundFilesButtonSave();
+    void slotSoundFilesButtonReset();
+    void slotSoundFilesSelected(int);
+    void slotPreviewButtonClicked();
+    void slotImageTotalTimeChanged(QTime);
     void slotAddNewTime(KUrl, QTime);
 
 private:

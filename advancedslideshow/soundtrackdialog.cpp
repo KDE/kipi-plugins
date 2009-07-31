@@ -427,7 +427,7 @@ void SoundtrackDialog::slotSoundFilesButtonDown( void )
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonLoad( void )
+void SoundtrackDialog::slotSoundFilesButtonLoad()
 {
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Opening);
@@ -469,7 +469,7 @@ void SoundtrackDialog::slotSoundFilesButtonLoad( void )
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonSave( void )
+void SoundtrackDialog::slotSoundFilesButtonSave()
 {
     QPointer<KFileDialog> dlg = new KFileDialog(QString(), QString(), this);
     dlg->setOperationMode(KFileDialog::Saving);
