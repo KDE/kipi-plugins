@@ -13,4 +13,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> AdvancedSlideshow : 182743 : Renders system unresponsive on large image collections.
 005 ==> GalleryExport     : 202019 : [PATCH] : mpGallery not initialized, crash on destruction if setup not called.
 006 ==> AdvancedSlideshow : 131619 : Blend transition in slideshow without OpenGL.
-007 ==> 
+007 ==> SendImages        : 147513 : It's non possible to send the file of photo because kmail don't start.
+008 ==> 
