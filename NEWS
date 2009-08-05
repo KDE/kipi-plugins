@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> AdvancedSlideshow  : 131619 : Blend transition in slideshow without OpenGL.
 007 ==> SendImages         : 147513 : It's non possible to send the file of photo because kmail don't start.
 008 ==> BatchProcessImages : 202447 : digiKam crashes after recompressing one or several images.
-009 ==> 
+009 ==> BatchProcessImages : 202706 : digiKam crashes after closing the batch resize window.
+010 ==> 
