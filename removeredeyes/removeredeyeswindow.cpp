@@ -229,22 +229,22 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
             "Failed:"));
 
     QWidget* summaryBox           = new QWidget;
-    QGridLayout* summaryBoxLayout = new QGridLayout;
-    summaryBoxLayout->addWidget(l1,                0, 0, 1, 1);
-    summaryBoxLayout->addWidget(d->totalLabel,     0, 1, 1, 1);
-    summaryBoxLayout->addWidget(l2,                0, 2, 1, 1);
-    summaryBoxLayout->addWidget(d->processedLabel, 0, 3, 1, 1);
-    summaryBoxLayout->addWidget(l3,                0, 4, 1, 1);
-    summaryBoxLayout->addWidget(d->failedLabel,    0, 5, 1, 1);
+    QHBoxLayout* summaryBoxLayout = new QHBoxLayout;
+    summaryBoxLayout->addWidget(l1);
+    summaryBoxLayout->addWidget(d->totalLabel);
+    summaryBoxLayout->addStretch(10);
+    summaryBoxLayout->addWidget(l2);
+    summaryBoxLayout->addWidget(d->processedLabel);
+    summaryBoxLayout->addWidget(l3);
+    summaryBoxLayout->addWidget(d->failedLabel);
     summaryBox->setLayout(summaryBoxLayout);
 
     // --------------------------------------------------------
 
     QWidget* imagesTab           = new QWidget;
     QGridLayout* imagesTabLayout = new QGridLayout();
-    imagesTabLayout->addWidget(d->imageList, 0, 0, 1, 2);
+    imagesTabLayout->addWidget(d->imageList, 0, 0, 1, 1);
     imagesTabLayout->addWidget(summaryBox,   1, 0, 1, 1);
-    imagesTabLayout->setColumnStretch(1, 10);
     imagesTabLayout->setRowStretch(0, 10);
     imagesTabLayout->setMargin(0);
     imagesTabLayout->setSpacing(0);
