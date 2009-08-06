@@ -175,10 +175,10 @@ public:
     void               setAllowRAW(bool allow);
     void               loadImagesFromCurrentSelection();
 
-    int                iconSize() const;
+    int                iconSize()  const;
 
-    ImagesListView*    listView() const;
-    KIPI::Interface*   iface() const;
+    ImagesListView*    listView()  const;
+    KIPI::Interface*   iface()     const;
 
     virtual KUrl::List imageUrls() const;
     virtual void       removeItemByUrl(const KUrl& url);
