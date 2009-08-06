@@ -74,7 +74,7 @@ private Q_SLOTS:
     void slotButtonClicked(int);
 
     void foundRAWImages(bool);
-    void imageListChanged(bool);
+    void imageListChanged();
     void tabwidgetChanged(int);
 
     void startPreview();

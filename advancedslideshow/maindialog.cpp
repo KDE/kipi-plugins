@@ -514,7 +514,7 @@ void MainDialog::setupConnections()
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL( signalImageListChanged(bool) ),
+    connect(m_ImagesFilesListBox, SIGNAL( signalImageListChanged() ),
             this, SLOT( slotImageListChanged() ));
 
     connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),

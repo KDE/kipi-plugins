@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2005-17-06
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
                  SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
@@ -66,7 +66,7 @@ class SmugWindow : public KDialog
 
 public:
 
-    SmugWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+    SmugWindow(KIPI::Interface *interface, const QString &tmpFolder,
                bool import, QWidget *parent);
     ~SmugWindow();
 
@@ -78,7 +78,7 @@ private slots:
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotGetPhotoDone(int errCode, const QString& errMsg,
                           const QByteArray& photoData);
-    void slotCreateAlbumDone(int errCode, const QString& errMsg, 
+    void slotCreateAlbumDone(int errCode, const QString& errMsg,
                              int newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <SmugAlbum>& albumsList);
@@ -99,7 +99,7 @@ private slots:
     void slotHelp();
     void slotClose();
     void slotStartTransfer();
-    void slotImageListChanged(bool);
+    void slotImageListChanged();
     void slotTemplateSelectionChanged(int index);
     void slotCategorySelectionChanged(int index);
 

@@ -283,7 +283,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
 
-    connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
+    connect(d->imageList, SIGNAL(signalImageListChanged()),
             this, SLOT(updateSummary()));
 
     connect(this, SIGNAL(user1Clicked()),
@@ -320,7 +320,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     setBusy(false);
     resetSummary();
     updateSummary();
-    imageListChanged(true);
+    imageListChanged();
 }
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()
@@ -532,8 +532,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // disable connection to make sure that the "test run" and "correct photos"
         // buttons are not enabled again on ImageListChange
-        disconnect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-                this, SLOT(imageListChanged(bool)));
+        disconnect(d->imageList, SIGNAL(signalImageListChanged()),
+                this, SLOT(imageListChanged()));
 
         disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(closeClicked()));
@@ -551,8 +551,8 @@ void RemoveRedEyesWindow::setBusy(bool busy)
     {
         // enable connection again to make sure that an empty image list will
         // disable the "test run" and "correct photos" buttons
-        connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
-                this, SLOT(imageListChanged(bool)));
+        connect(d->imageList, SIGNAL(signalImageListChanged()),
+                this, SLOT(imageListChanged()));
 
         disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(cancelCorrection()));
@@ -599,7 +599,7 @@ void RemoveRedEyesWindow::handleUnprocessedImages()
     }
 }
 
-void RemoveRedEyesWindow::imageListChanged(bool)
+void RemoveRedEyesWindow::imageListChanged()
 {
     bool isEmpty = d->imageList->imageUrls().isEmpty();
     enableButton(User1, !isEmpty);  // correction button

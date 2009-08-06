@@ -67,7 +67,7 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+    FbWindow(KIPI::Interface *interface, const QString &tmpFolder,
              bool import, QWidget *parent);
     ~FbWindow();
 
@@ -80,7 +80,7 @@ private slots:
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotGetPhotoDone(int errCode, const QString& errMsg,
                           const QByteArray& photoData);
-    void slotCreateAlbumDone(int errCode, const QString& errMsg, 
+    void slotCreateAlbumDone(int errCode, const QString& errMsg,
                              long long newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <FbAlbum>& albumsList);
@@ -98,7 +98,7 @@ private slots:
     void slotHelp();
     void slotClose();
     void slotStartTransfer();
-    void slotImageListChanged(bool);
+    void slotImageListChanged();
 
 private:
     void setProfileAID(long long userID);

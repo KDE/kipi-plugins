@@ -370,8 +370,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
-    connect(this, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(slotImageListChanged(bool)));
+    connect(this, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
 
     // --------------------------------------------------------
 
@@ -392,13 +392,13 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    emit signalImageListChanged(true);
+    emit signalImageListChanged();
 }
 
 void ImagesList::enableControlButtons(bool enable)
 {
     d->controlButtonsEnabled = enable;
-    slotImageListChanged(true);
+    slotImageListChanged();
 }
 
 void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
@@ -550,7 +550,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
     d->iface->thumbnails(urls, DEFAULTSIZE);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
     emit signalFoundRAWImages(raw);
 }
 
@@ -580,7 +580,7 @@ void ImagesList::slotAddItems()
     if (!urls.isEmpty())
         slotAddImages(urls);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 void ImagesList::slotRemoveItems()
@@ -592,7 +592,7 @@ void ImagesList::slotRemoveItems()
         ++it;
         delete item;
     }
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 void ImagesList::slotMoveUpItems()
@@ -608,7 +608,7 @@ void ImagesList::slotMoveUpItems()
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(aboveIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 void ImagesList::slotMoveDownItems()
@@ -624,7 +624,7 @@ void ImagesList::slotMoveDownItems()
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 void ImagesList::slotClearItems()
@@ -654,7 +654,7 @@ void ImagesList::removeItemByUrl(const KUrl& url)
     }
     while (found);
 
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 KUrl::List ImagesList::imageUrls() const
@@ -691,7 +691,7 @@ bool ImagesList::isRAWFile(const QString & filePath)
     return false;
 }
 
-void ImagesList::slotImageListChanged(bool)
+void ImagesList::slotImageListChanged()
 {
     bool enable = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
 

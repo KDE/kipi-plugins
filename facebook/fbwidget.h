@@ -81,24 +81,24 @@ private slots:
     void slotResizeChecked();
 
 private:
-    KIPIPlugins::ImagesList*   m_imgList;
-    KIPI::UploadWidget*        m_uploadWidget;
+    KIPIPlugins::ImagesList* m_imgList;
+    KIPI::UploadWidget*      m_uploadWidget;
 
-    QLabel*       m_headerLbl;
-    QLabel*       m_userNameDisplayLbl;
-    QLabel*       m_permissionLbl;
-    KPushButton*  m_changeUserBtn;
-    KPushButton*  m_changePermBtn;
+    QLabel*                  m_headerLbl;
+    QLabel*                  m_userNameDisplayLbl;
+    QLabel*                  m_permissionLbl;
+    KPushButton*             m_changeUserBtn;
+    KPushButton*             m_changePermBtn;
 
-    QButtonGroup* m_dlGrp;
-    KComboBox*    m_friendsCoB;
-    KComboBox*    m_albumsCoB;
-    KPushButton*  m_newAlbumBtn;
-    KPushButton*  m_reloadAlbumsBtn;
+    QButtonGroup*            m_dlGrp;
+    KComboBox*               m_friendsCoB;
+    KComboBox*               m_albumsCoB;
+    KPushButton*             m_newAlbumBtn;
+    KPushButton*             m_reloadAlbumsBtn;
 
-    QCheckBox*    m_resizeChB;
-    QSpinBox*     m_dimensionSpB;
-    QSpinBox*     m_imageQualitySpB;
+    QCheckBox*               m_resizeChB;
+    QSpinBox*                m_dimensionSpB;
+    QSpinBox*                m_imageQualitySpB;
 
     friend class FbWindow;
 };

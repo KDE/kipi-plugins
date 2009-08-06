@@ -112,8 +112,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     setMainWidget(m_widget);
     m_widget->setMinimumSize(600, 400);
 
-    connect(m_imglst, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(slotImageListChanged(bool)));
+    connect(m_imglst, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
 
     //m_startUploadButton->setEnabled(false);
 
@@ -356,7 +356,7 @@ void FlickrWindow::slotUserChangeRequest()
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
-void FlickrWindow::slotCreateNewPhotoSet() 
+void FlickrWindow::slotCreateNewPhotoSet()
 {
    /* This method is called when the photo set creation button is pressed. It
     * summons a creation dialog for user input. When that is closed, it
@@ -564,11 +564,11 @@ void FlickrWindow::slotAddPhotoNext()
     }
 
     bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path
-					   info,
+                       info,
                                            m_resizeCheckBox->isChecked(),
                                            m_dimensionSpinBox->value(),
                                            m_imageQualitySpinBox->value()
-					   );
+                       );
     if (!res)
     {
         slotAddPhotoFailed("");
@@ -639,9 +639,9 @@ void FlickrWindow::slotAddPhotoCancel()
     //slotTagSelected();
 }
 
-void FlickrWindow::slotImageListChanged(bool state)
+void FlickrWindow::slotImageListChanged()
 {
-    enableButton(User1, !state);
+    enableButton(User1, !(m_widget->m_imglst->imageUrls().isEmpty()));
 }
 
 } // namespace KIPIFlickrExportPlugin

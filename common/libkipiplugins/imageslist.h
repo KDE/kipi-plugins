@@ -200,7 +200,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalImageListChanged(bool);
+    void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
 
@@ -218,7 +218,7 @@ protected slots:
     virtual void slotClearItems();
 
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
-    virtual void slotImageListChanged(bool);
+    virtual void slotImageListChanged();
 
 private:
 

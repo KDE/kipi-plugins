@@ -82,7 +82,7 @@ class FlickrWindow : public KDialog
 
 public:
 
-    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder, 
+    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder,
                  QWidget *parent, const QString& serviceName);
     ~FlickrWindow();
 
@@ -112,7 +112,7 @@ private slots:
     void slotHelp();
     void slotClose();
     void slotUser1();
-    void slotImageListChanged(bool);
+    void slotImageListChanged();
 
 private:
 

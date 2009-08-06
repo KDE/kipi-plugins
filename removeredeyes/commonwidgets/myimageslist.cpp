@@ -93,7 +93,7 @@ void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
         }
         ++it;
     }
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 void MyImagesList::resetEyeCounterColumn()
@@ -105,7 +105,7 @@ void MyImagesList::resetEyeCounterColumn()
         item->setText(ImagesListView::User1, QString(""));
         ++it;
     }
-    emit signalImageListChanged(imageUrls().isEmpty());
+    emit signalImageListChanged();
 }
 
 bool MyImagesList::hasUnprocessedImages()
