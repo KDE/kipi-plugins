@@ -318,6 +318,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     readSettings();
     setBusy(false);
+    imageListChanged(true);
 }
 
 RemoveRedEyesWindow::~RemoveRedEyesWindow()

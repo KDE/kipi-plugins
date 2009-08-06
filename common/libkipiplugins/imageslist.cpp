@@ -386,6 +386,10 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     connect(d->clearButton, SIGNAL(clicked()),
             this, SLOT(slotClearItems()));
+
+    // --------------------------------------------------------
+
+    emit signalImageListChanged(true);
 }
 
 void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
