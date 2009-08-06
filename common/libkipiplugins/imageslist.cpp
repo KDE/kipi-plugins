@@ -374,6 +374,15 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     connect(d->removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveItems()));
+
+    connect(d->moveUpButton, SIGNAL(clicked()),
+            this, SLOT(slotMoveUpItems()));
+
+    connect(d->moveDownButton, SIGNAL(clicked()),
+            this, SLOT(slotMoveDownItems()));
+
+    connect(d->clearButton, SIGNAL(clicked()),
+            this, SLOT(slotClearItems()));
 }
 
 void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
@@ -567,6 +576,22 @@ void ImagesList::slotRemoveItems()
         delete item;
     }
     emit signalImageListChanged(imageUrls().isEmpty());
+}
+
+void ImagesList::slotMoveUpItems()
+{
+    // TODO: implement me
+}
+
+void ImagesList::slotMoveDownItems()
+{
+    // TODO: implement me
+}
+
+void ImagesList::slotClearItems()
+{
+    listView()->selectAll();
+    slotRemoveItems();
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)

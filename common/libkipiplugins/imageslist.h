@@ -217,6 +217,10 @@ protected slots:
 
     virtual void slotAddItems();
     virtual void slotRemoveItems();
+    virtual void slotMoveUpItems();
+    virtual void slotMoveDownItems();
+    virtual void slotClearItems();
+
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
