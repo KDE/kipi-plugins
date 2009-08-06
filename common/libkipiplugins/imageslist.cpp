@@ -353,8 +353,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    setControlButtons(Add|Remove|MoveUp|MoveDown);          // add all buttons, except 'Clear' (default)
-    setContolButtonsPlacement(ControlButtonsRight);         // button on the right (default)
+    setControlButtons(Add|Remove|MoveUp|MoveDown);      // add all buttons, except 'Clear' (default)
+    setControlButtonsPlacement(ControlButtonsRight);    // buttons on the right (default)
 
     // --------------------------------------------------------
 
@@ -392,7 +392,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     emit signalImageListChanged(true);
 }
 
-void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
+void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 {
     delete layout();
 

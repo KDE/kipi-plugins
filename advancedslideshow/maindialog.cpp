@@ -74,7 +74,7 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
                                                          KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
     m_ImagesFilesListBox->listView()->setSelectionMode(QAbstractItemView::SingleSelection);
-    m_ImagesFilesListBox->setContolButtonsPlacement(ImagesList::NoControlButtons);
+    m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::NoControlButtons);
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
     listBoxContainerLayout->setSpacing(0);

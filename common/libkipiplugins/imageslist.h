@@ -196,7 +196,7 @@ public:
     virtual void       removeItemByUrl(const KUrl& url);
 
     void               setControlButtons(ControlButtons buttonMask);
-    void               setContolButtonsPlacement(ControlButtonPlacement placement);
+    void               setControlButtonsPlacement(ControlButtonPlacement placement);
 
 Q_SIGNALS:
 
