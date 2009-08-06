@@ -606,7 +606,7 @@ void ImagesList::slotMoveDownItems()
 
 void ImagesList::slotClearItems()
 {
-    listView()->selectAll();
+    listView()->clear();
     slotRemoveItems();
 }
 
