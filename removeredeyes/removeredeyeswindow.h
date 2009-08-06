@@ -67,7 +67,7 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     void updateSummary();
-    void resetCounters();
+    void resetSummary();
 
     void closeClicked();
     void helpClicked();

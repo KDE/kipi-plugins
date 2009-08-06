@@ -318,6 +318,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     readSettings();
     setBusy(false);
+    resetSummary();
+    updateSummary();
     imageListChanged(true);
 }
 
@@ -792,7 +794,7 @@ int RemoveRedEyesWindow::failedImages() const
     return d->failed;
 }
 
-void RemoveRedEyesWindow::resetCounters()
+void RemoveRedEyesWindow::resetSummary()
 {
     d->total       = d->imageList->imageUrls().count();
     d->processed   = 0;
@@ -801,7 +803,7 @@ void RemoveRedEyesWindow::resetCounters()
 
 void RemoveRedEyesWindow::updateSummary()
 {
-    resetCounters();
+    resetSummary();
 
     QTreeWidgetItemIterator it(d->imageList->listView());
     while (*it)
