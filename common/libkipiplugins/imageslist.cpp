@@ -446,14 +446,15 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
             delete hBtnLayout;
             break;
         case NoControlButtons:
+        default:
+        {
+            delete vBtnLayout;
+            delete hBtnLayout;
+            setControlButtons(None);
             break;
+        }
     }
     setLayout(mainLayout);
-
-    if (placement == NoControlButtons)
-    {
-        setControlButtons(None);
-    }
 }
 
 void ImagesList::setControlButtons(ControlButtons buttonMask)
