@@ -338,6 +338,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     // --------------------------------------------------------
 
     d->listView  = new ImagesListView(d->iconSize, this);
+    d->listView->setSelectionMode(QAbstractItemView::SingleSelection);
 
     // --------------------------------------------------------
 
