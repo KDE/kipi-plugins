@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QPushButton>
 #include <QStringList>
 #include <QTreeWidget>
 #include <QWidget>
@@ -33,6 +34,7 @@
 // KDE includes
 
 #include <kurl.h>
+#include <kicon.h>
 #include <kiconloader.h>
 
 // LibKIPI includes
@@ -145,6 +147,18 @@ private:
 
 // -------------------------------------------------------------------------
 
+class CtrlButton : public QPushButton
+{
+    Q_OBJECT
+
+public:
+
+    CtrlButton(const KIcon& icon, QWidget* parent = 0);
+    virtual ~CtrlButton();
+};
+
+// -------------------------------------------------------------------------
+
 class KIPIPLUGINS_EXPORT ImagesList : public QWidget
 {
     Q_OBJECT
@@ -154,7 +168,9 @@ public:
     enum ControlButtonPlacement
     {
         NoControlButtons = 0,
+        ControlButtonsLeft,
         ControlButtonsRight,
+        ControlButtonsAbove,
         ControlButtonsBelow
     };
 

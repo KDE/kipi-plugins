@@ -281,6 +281,23 @@ KIPI::Interface* ImagesListView::iface() const
 
 // ---------------------------------------------------------------------------
 
+CtrlButton::CtrlButton(const KIcon& icon, QWidget* parent)
+          : QPushButton(parent)
+{
+
+    const int btnSize = 34;
+
+    setMinimumSize(btnSize, btnSize);
+    setMaximumSize(btnSize, btnSize);
+    setIcon(icon);
+}
+
+CtrlButton::~CtrlButton()
+{
+}
+
+// ---------------------------------------------------------------------------
+
 class ImagesListPriv
 {
 public:
@@ -294,14 +311,17 @@ public:
         iconSize        = DEFAULTSIZE;
     }
 
-    bool                allowRAW;
-    int                 iconSize;
+    bool            allowRAW;
+    int             iconSize;
 
-    QPushButton*        addButton;
-    QPushButton*        removeButton;
+    CtrlButton*     addButton;
+    CtrlButton*     removeButton;
+    CtrlButton*     moveUpButton;
+    CtrlButton*     moveDownButton;
+    CtrlButton*     clearButton;
 
-    ImagesListView*     listView;
-    Interface*          iface;
+    ImagesListView* listView;
+    Interface*      iface;
 };
 
 ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
@@ -319,21 +339,22 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    d->addButton    = new QPushButton(this);
-    d->removeButton = new QPushButton(this);
+    d->addButton      = new CtrlButton(KIcon("list-add"), this);
+    d->removeButton   = new CtrlButton(KIcon("list-remove"), this);
+    d->moveUpButton   = new CtrlButton(KIcon("arrow-up"), this);
+    d->moveDownButton = new CtrlButton(KIcon("arrow-down"), this);
+    d->clearButton    = new CtrlButton(KIcon("edit-clear-list"), this);
 
-    d->addButton->setText(i18n("&Add"));
-    d->addButton->setIcon(SmallIcon("list-add"));
-    d->addButton->hide();
-
-    d->removeButton->setText(i18n("&Remove"));
-    d->removeButton->setIcon(SmallIcon("list-remove"));
-    d->removeButton->hide();
+    d->addButton->setToolTip(i18n("Add new images to the list"));
+    d->removeButton->setToolTip(i18n("Remove selected images from the list"));
+    d->moveUpButton->setToolTip(i18n("Move current selected image up in the list"));
+    d->moveDownButton->setToolTip(i18n("Move current selected image down in the list"));
+    d->clearButton->setToolTip(i18n("Clear the list."));
 
     // --------------------------------------------------------
 
-    setControlButtons(Add|Remove);
-    setContolButtonsPlacement(ControlButtonsRight);
+    setControlButtons(Add|Remove|MoveUp|MoveDown);          // add all buttons, except 'Clear' (default)
+    setContolButtonsPlacement(ControlButtonsRight);         // button on the right (default)
 
     // --------------------------------------------------------
 
@@ -358,23 +379,59 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
 {
     delete layout();
+
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addWidget(d->listView, 0, 0, 5, 5);
+    mainLayout->addWidget(d->listView, 1, 1, 1, 1);
+    mainLayout->setRowStretch(1, 10);
+    mainLayout->setColumnStretch(1, 10);
+    mainLayout->setMargin(KDialog::spacingHint());
+    mainLayout->setSpacing(KDialog::spacingHint());
+
+    // --------------------------------------------------------
+
+    QHBoxLayout *hBtnLayout = new QHBoxLayout;
+    hBtnLayout->addStretch(10);
+    hBtnLayout->addWidget(d->moveUpButton);
+    hBtnLayout->addWidget(d->addButton);
+    hBtnLayout->addWidget(d->removeButton);
+    hBtnLayout->addWidget(d->moveDownButton);
+    hBtnLayout->addWidget(d->clearButton);
+    hBtnLayout->addStretch(10);
+
+    // --------------------------------------------------------
+
+    QVBoxLayout *vBtnLayout = new QVBoxLayout;
+    vBtnLayout->addStretch(10);
+    vBtnLayout->addWidget(d->moveUpButton);
+    vBtnLayout->addWidget(d->addButton);
+    vBtnLayout->addWidget(d->removeButton);
+    vBtnLayout->addWidget(d->moveDownButton);
+    vBtnLayout->addWidget(d->clearButton);
+    vBtnLayout->addStretch(10);
+
+    // --------------------------------------------------------
+
     switch (placement)
     {
+        case ControlButtonsAbove:
+            mainLayout->addLayout(hBtnLayout, 0, 1, 1, 1);
+            delete vBtnLayout;
+            break;
         case ControlButtonsBelow:
-            mainLayout->addWidget(d->addButton,    5, 0, 1, 1);
-            mainLayout->addWidget(d->removeButton, 5, 1, 1, 1);
+            mainLayout->addLayout(hBtnLayout, 2, 1, 1, 1);
+            delete vBtnLayout;
+            break;
+        case ControlButtonsLeft:
+            mainLayout->addLayout(vBtnLayout, 1, 0, 1, 1);
+            delete hBtnLayout;
             break;
         case ControlButtonsRight:
-            mainLayout->addWidget(d->addButton,    0, 5, 1, 1);
-            mainLayout->addWidget(d->removeButton, 1, 5, 1, 1);
+            mainLayout->addLayout(vBtnLayout, 1, 2, 1, 1);
+            delete hBtnLayout;
             break;
         case NoControlButtons:
             break;
     }
-    mainLayout->setMargin(KDialog::spacingHint());
-    mainLayout->setSpacing(KDialog::spacingHint());
     setLayout(mainLayout);
 
     if (placement == NoControlButtons)
@@ -387,6 +444,9 @@ void ImagesList::setControlButtons(ControlButtons buttonMask)
 {
     d->addButton->setVisible(buttonMask & Add);
     d->removeButton->setVisible(buttonMask & Remove);
+    d->moveUpButton->setVisible(buttonMask & MoveUp);
+    d->moveDownButton->setVisible(buttonMask & MoveDown);
+    d->clearButton->setVisible(buttonMask & Clear);
 }
 
 ImagesList::~ImagesList()
