@@ -367,6 +367,9 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
+    connect(this, SIGNAL(signalImageListChanged(bool)),
+            this, SLOT(slotImageListChanged(bool)));
+
     // --------------------------------------------------------
 
     connect(d->addButton, SIGNAL(clicked()),
@@ -650,6 +653,15 @@ bool ImagesList::isRAWFile(const QString & filePath)
         return true;
 
     return false;
+}
+
+void ImagesList::slotImageListChanged(bool)
+{
+    bool enable = !(imageUrls().isEmpty());
+    d->removeButton->setEnabled(enable);
+    d->moveUpButton->setEnabled(enable);
+    d->moveDownButton->setEnabled(enable);
+    d->clearButton->setEnabled(enable);
 }
 
 }  // namespace KIPIPlugins

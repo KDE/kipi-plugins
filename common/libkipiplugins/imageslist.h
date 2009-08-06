@@ -222,6 +222,7 @@ protected slots:
     virtual void slotClearItems();
 
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    virtual void slotImageListChanged(bool);
 
 private:
 
