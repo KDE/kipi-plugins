@@ -307,10 +307,8 @@ public:
     Interface*          iface;
 };
 
-ImagesList::ImagesList(Interface *iface, QWidget* parent,
-                       ControlButtonPlacement btnPlace, int iconSize)
-          : QWidget(parent),
-            d(new ImagesListPriv)
+ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
+          : QWidget(parent), d(new ImagesListPriv)
 {
     d->iface    = iface;
     d->allowRAW = true;  // default, use setAllowRAW() to change
@@ -320,9 +318,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent,
 
     // --------------------------------------------------------
 
-    QGridLayout* mainLayout = new QGridLayout;
-    d->listView             = new ImagesListView(d->iconSize, this);
-    d->plainPage            = new QWidget(this);
+    d->listView  = new ImagesListView(d->iconSize, this);
+    d->plainPage = new QWidget(this);
     d->plainPage->hide();
 
     // --------------------------------------------------------
@@ -340,8 +337,35 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent,
 
     // --------------------------------------------------------
 
+    setControlButtons(Add|Remove);
+    setContolButtonsPlacement(ControlButtonsRight);
+
+    // --------------------------------------------------------
+
+    connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
+            this, SLOT(slotAddImages(const KUrl::List&)));
+
+    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
+    connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
+            this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
+
+    // --------------------------------------------------------
+
+    connect(d->addButton, SIGNAL(clicked()),
+            this, SLOT(slotAddItems()));
+
+    connect(d->removeButton, SIGNAL(clicked()),
+            this, SLOT(slotRemoveItems()));
+}
+
+void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
+{
+    delete layout();
+    QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(d->listView, 0, 0, 5, 5);
-    switch (btnPlace)
+    switch (placement)
     {
         case ControlButtonsBelow:
             mainLayout->addWidget(d->addButton,    5, 0, 1, 1);
@@ -360,31 +384,17 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent,
     mainLayout->setSpacing(KDialog::spacingHint());
     setLayout(mainLayout);
 
-    // --------------------------------------------------------
-
-    connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
-            this, SLOT(slotAddImages(const KUrl::List&)));
-
-    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-
-    connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
-            this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
-
-    // --------------------------------------------------------
-
-    if (btnPlace != NoControlButtons)
+    if (placement == NoControlButtons)
     {
-        connect(d->addButton, SIGNAL(clicked()),
-                this, SLOT(slotAddItems()));
-
-        connect(d->removeButton, SIGNAL(clicked()),
-                this, SLOT(slotRemoveItems()));
-
-        d->addButton->show();
-        d->removeButton->show();
-        d->plainPage->show();
+        setControlButtons(None);
+        d->plainPage->hide();
     }
+}
+
+void ImagesList::setControlButtons(ControlButtons buttonMask)
+{
+    d->addButton->setVisible(buttonMask & Add);
+    d->removeButton->setVisible(buttonMask & Remove);
 }
 
 ImagesList::~ImagesList()

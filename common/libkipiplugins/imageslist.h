@@ -158,9 +158,18 @@ public:
         ControlButtonsBelow
     };
 
-    ImagesList(KIPI::Interface *iface, QWidget* parent = 0,
-               ControlButtonPlacement btnPlace = ControlButtonsRight,
-               int iconSize = -1);
+    enum ControlButton
+    {
+       None      = 0x0,
+       Add       = 0x1,
+       Remove    = 0x2,
+       MoveUp    = 0x4,
+       MoveDown  = 0x8,
+       Clear     = 0x10
+    };
+    Q_DECLARE_FLAGS(ControlButtons, ControlButton)
+
+    ImagesList(KIPI::Interface *iface, QWidget* parent = 0, int iconSize = -1);
     virtual ~ImagesList();
 
     void               setAllowRAW(bool allow);
@@ -173,6 +182,9 @@ public:
 
     virtual KUrl::List imageUrls() const;
     virtual void       removeItemByUrl(const KUrl& url);
+
+    void               setControlButtons(ControlButtons buttonMask);
+    void               setContolButtonsPlacement(ControlButtonPlacement placement);
 
 Q_SIGNALS:
 
@@ -203,6 +215,8 @@ private:
 
     ImagesListPriv* const d;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(ImagesList::ControlButtons)
 
 }  // namespace KIPIPlugins
 

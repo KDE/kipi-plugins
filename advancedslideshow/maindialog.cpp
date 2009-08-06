@@ -71,9 +71,10 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
 
     QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
     m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
-                                                         ImagesList::NoControlButtons, KIconLoader::SizeMedium);
+                                                         KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
     m_ImagesFilesListBox->listView()->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_ImagesFilesListBox->setContolButtonsPlacement(ImagesList::NoControlButtons);
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
     listBoxContainerLayout->setSpacing(0);
