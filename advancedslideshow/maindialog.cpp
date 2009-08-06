@@ -73,25 +73,11 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
                                                          KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
-    m_ImagesFilesListBox->listView()->setSelectionMode(QAbstractItemView::SingleSelection);
-    m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::NoControlButtons);
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
     listBoxContainerLayout->setSpacing(0);
     listBoxContainerLayout->setMargin(0);
     m_ImagesFilesListBoxContainer->setLayout(listBoxContainerLayout);
-
-    // --------------------------------------------------------
-
-    m_ImagesFilesButtonUp->setIcon(KIcon("arrow-up"));
-    m_ImagesFilesButtonDown->setIcon(KIcon("arrow-down"));
-    m_ImagesFilesButtonAdd->setIcon(KIcon("list-add"));
-    m_ImagesFilesButtonDelete->setIcon(KIcon("list-remove"));
-
-    m_ImagesFilesButtonUp->setText("");
-    m_ImagesFilesButtonDown->setText("");
-    m_ImagesFilesButtonAdd->setText("");
-    m_ImagesFilesButtonDelete->setText("");
 
     // --------------------------------------------------------
 
@@ -239,12 +225,15 @@ void MainDialog::showNumberImages()
     if ( m_openglCheckBox->isChecked() )
         transitionDuration += 500;
 
-    if ( m_sharedData->useMilliseconds )
-        totalDuration = totalDuration.addMSecs(numberOfImages * m_delaySpinBox->text().toInt());
-    else
-        totalDuration = totalDuration.addSecs(numberOfImages * m_delaySpinBox->text().toInt());
+    if (numberOfImages != 0)
+    {
+        if ( m_sharedData->useMilliseconds )
+            totalDuration = totalDuration.addMSecs(numberOfImages * m_delaySpinBox->text().toInt());
+        else
+            totalDuration = totalDuration.addSecs(numberOfImages * m_delaySpinBox->text().toInt());
 
-    totalDuration = totalDuration.addMSecs((numberOfImages - 1) * transitionDuration);
+        totalDuration = totalDuration.addMSecs((numberOfImages - 1) * transitionDuration);
+    }
 
     m_totalTime = totalDuration;
 
@@ -380,57 +369,6 @@ void MainDialog::addItems(const KUrl::List& fileList)
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
-void MainDialog::slotImagesFilesButtonAdd( void )
-{
-    KIPIPlugins::ImageDialog dlg(this, m_sharedData->interface, false);
-    KUrl::List urls = dlg.urls();
-
-    if (!urls.isEmpty())
-    {
-        addItems(urls);
-    }
-}
-
-void MainDialog::slotImagesFilesButtonDelete( void )
-{
-    ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(m_ImagesFilesListBox->listView()->currentItem());
-    if (!item)
-        return;
-
-    m_ImagesFilesListBox->removeItemByUrl(item->url());
-    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
-}
-
-void MainDialog::slotImagesFilesButtonUp( void )
-{
-    QModelIndex curIndex   = m_ImagesFilesListBox->listView()->currentIndex();
-    if (!curIndex.isValid())
-        return;
-
-    QModelIndex aboveIndex = m_ImagesFilesListBox->listView()->indexAbove(curIndex);
-    if (!aboveIndex.isValid())
-        return;
-
-    QTreeWidgetItem* temp = m_ImagesFilesListBox->listView()->takeTopLevelItem(aboveIndex.row());
-    QModelIndex curTemp   = m_ImagesFilesListBox->listView()->currentIndex();
-    m_ImagesFilesListBox->listView()->insertTopLevelItem(curIndex.row(), temp);
-}
-
-void MainDialog::slotImagesFilesButtonDown( void )
-{
-    QModelIndex curIndex   = m_ImagesFilesListBox->listView()->currentIndex();
-    if (!curIndex.isValid())
-        return;
-
-    QModelIndex belowIndex = m_ImagesFilesListBox->listView()->indexBelow(curIndex);
-    if (!belowIndex.isValid())
-        return;
-
-    QTreeWidgetItem* temp = m_ImagesFilesListBox->listView()->takeTopLevelItem(belowIndex.row());
-    QModelIndex curTemp   = m_ImagesFilesListBox->listView()->currentIndex();
-    m_ImagesFilesListBox->listView()->insertTopLevelItem(curIndex.row(), temp);
-}
-
 void MainDialog::slotOpenGLToggled( void )
 {
     if (m_openglCheckBox->isChecked())
@@ -521,13 +459,10 @@ void MainDialog::slotSelection( void )
         addItems(urlList);
     }
 
-    m_ImagesFilesButtonAdd->setEnabled(customize);
-    m_ImagesFilesButtonDelete->setEnabled(customize);
-    m_ImagesFilesButtonUp->setEnabled(customize);
-    m_ImagesFilesButtonDown->setEnabled(customize);
     m_ImagesFilesListBox->listView()->setDragEnabled(customize);
     m_ImagesFilesListBox->listView()->setAcceptDrops(customize);
     m_ImagesFilesListBox->listView()->setDropIndicatorShown(customize);
+    m_ImagesFilesListBox->enableControlButtons(customize);
 }
 
 void MainDialog::slotPortfolioDurationChanged ( int )
@@ -555,6 +490,7 @@ void MainDialog::slotPrintCommentsToggled( void )
 void MainDialog::slotImageListChanged()
 {
     showNumberImages();
+    slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
 void MainDialog::setupConnections()
@@ -582,18 +518,6 @@ void MainDialog::setupConnections()
 
     connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
             this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
-
-    connect(m_ImagesFilesButtonAdd, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonAdd() ));
-
-    connect(m_ImagesFilesButtonDelete, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonDelete() ));
-
-    connect(m_ImagesFilesButtonUp, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonUp() ));
-
-    connect(m_ImagesFilesButtonDown, SIGNAL( clicked() ),
-            this, SLOT( slotImagesFilesButtonDown() ));
 
     if (m_sharedData->showSelectedFilesOnly)
     {

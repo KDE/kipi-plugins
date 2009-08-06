@@ -55,159 +55,11 @@
      <property name="title">
       <string>Image Files in Slideshow</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="10,0,0">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="10,0">
       <item row="0" column="0">
        <widget class="QWidget" name="m_ImagesFilesListBoxContainer" native="true"/>
       </item>
       <item row="0" column="1">
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <spacer name="spacer14">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>19</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_ImagesFilesButtonUp">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="whatsThis">
-           <string>Move the current image up in the portfolio list.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_ImagesFilesButtonAdd">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="whatsThis">
-           <string>Add some image files to the portfolio list.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_ImagesFilesButtonDelete">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>34</width>
-            <height>36</height>
-           </size>
-          </property>
-          <property name="whatsThis">
-           <string>Remove some image files from the portfolio list.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="m_ImagesFilesButtonDown">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>34</width>
-            <height>34</height>
-           </size>
-          </property>
-          <property name="whatsThis">
-           <string>Move the current image down in the portfolio list.</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="spacer14_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>19</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="2">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <spacer name="verticalSpacer_5">
@@ -278,7 +130,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="1" column="1">
        <widget class="QLabel" name="m_label7">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

@@ -76,10 +76,6 @@ private Q_SLOTS:
 
     void slotPortfolioDurationChanged ( int );
     void slotImagesFilesSelected(QTreeWidgetItem* item);
-    void slotImagesFilesButtonAdd( void );
-    void slotImagesFilesButtonDelete( void );
-    void slotImagesFilesButtonUp( void );
-    void slotImagesFilesButtonDown( void );
 
 Q_SIGNALS :
 
