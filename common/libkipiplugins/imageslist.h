@@ -83,13 +83,9 @@ public:
 private:
 
     int             m_rating;         // Image Rating from Kipi host.
-
     QString         m_comments;       // Image comments from Kipi host.
-
     QStringList     m_tags;           // List of keywords from Kipi host.
-
     KUrl            m_url;            // Image url provided by Kipi host.
-
     ImagesListView* m_view;
 };
 
