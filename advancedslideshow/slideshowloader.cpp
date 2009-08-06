@@ -187,7 +187,8 @@ void SlideShowLoader::next()
     m_imageLock->lock();
 
     LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
-    oldThread->wait();
+    if (oldThread)
+        oldThread->wait();
     delete oldThread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
@@ -226,7 +227,8 @@ void SlideShowLoader::prev()
     m_imageLock->lock();
 
     LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
-    oldThread->wait();
+    if (oldThread)
+        oldThread->wait();
     delete oldThread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
