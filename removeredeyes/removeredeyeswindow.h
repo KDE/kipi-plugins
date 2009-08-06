@@ -66,6 +66,9 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
+    void updateSummary();
+    void resetCounters();
+
     void closeClicked();
     void helpClicked();
     void slotButtonClicked(int);
@@ -101,6 +104,10 @@ private:
 
     void loadLocator(const QString& locator);
     void unloadLocator();
+
+    int totalImages()     const;
+    int processedImages() const;
+    int failedImages()    const;
 
 private:
 

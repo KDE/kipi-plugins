@@ -59,11 +59,6 @@ public Q_SLOTS:
 
     void addEyeCounterByUrl(const KUrl&, int);
 
-private Q_SLOTS:
-
-    void updateSummary();
-    void resetCounters();
-
 private:
 
     MyImagesListPriv* const d;

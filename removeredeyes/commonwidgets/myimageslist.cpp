@@ -56,19 +56,8 @@ struct MyImagesListPriv
 {
     MyImagesListPriv()
     {
-        iface           = 0;
-        totalLabel      = 0;
-        processedLabel  = 0;
-        failedLabel     = 0;
+        iface = 0;
     }
-
-    int              total;
-    int              processed;
-    int              failed;
-
-    QLabel*          totalLabel;
-    QLabel*          processedLabel;
-    QLabel*          failedLabel;
 
     KIPI::Interface* iface;
 };
@@ -84,46 +73,6 @@ MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
     listView()->setColumn(ImagesListView::User1, i18n("Corrected Eyes"), true);
     listView()->header()->setResizeMode(QHeaderView::Stretch);
     listView()->setWhatsThis(i18n("This is the list of images from which to remove red-eye."));
-
-    // --------------------------------------------------------
-
-    QGroupBox* summaryGroupBox = new QGroupBox(i18n("Summary"));
-
-    d->totalLabel     = new QLabel;
-    d->processedLabel = new QLabel;
-    d->failedLabel    = new QLabel;
-
-    d->totalLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
-    d->processedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
-    d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
-
-    QLabel* l1 = new QLabel(i18nc("The total number of images in the list",
-                                  "Total:"));
-    QLabel* l2 = new QLabel(i18nc("number of images successfully processed",
-                                  "Success:"));
-    QLabel* l3 = new QLabel(i18nc("number of images failed to process",
-                                  "Failed:"));
-
-    QGridLayout* summaryGroupBoxLayout = new QGridLayout;
-    summaryGroupBoxLayout->addWidget(l1,                0, 0, 1, 1);
-    summaryGroupBoxLayout->addWidget(l2,                1, 0, 1, 1);
-    summaryGroupBoxLayout->addWidget(l3,                2, 0, 1, 1);
-    summaryGroupBoxLayout->addWidget(d->totalLabel,     0, 1, 1, 1);
-    summaryGroupBoxLayout->addWidget(d->processedLabel, 1, 1, 1, 1);
-    summaryGroupBoxLayout->addWidget(d->failedLabel,    2, 1, 1, 1);
-    summaryGroupBox->setLayout(summaryGroupBoxLayout);
-
-    // --------------------------------------------------------
-
-    QGridLayout* mainLayout = new QGridLayout(plainPage());
-    mainLayout->addWidget(summaryGroupBox, 0, 0, 1, 1);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
-
-    // --------------------------------------------------------
-
-    connect(this, SIGNAL(signalImageListChanged(bool)),
-            this, SLOT(updateSummary()));
 }
 
 MyImagesList::~MyImagesList()
@@ -195,51 +144,6 @@ void MyImagesList::removeUnprocessedImages()
         ++it;
     }
     slotRemoveItems();
-}
-
-int MyImagesList::totalImages() const
-{
-    return d->total;
-}
-
-int MyImagesList::processedImages() const
-{
-    return d->processed;
-}
-
-int MyImagesList::failedImages() const
-{
-    return d->failed;
-}
-
-void MyImagesList::resetCounters()
-{
-    d->total       = imageUrls().count();
-    d->processed   = 0;
-    d->failed      = 0;
-}
-
-void MyImagesList::updateSummary()
-{
-    resetCounters();
-
-    QTreeWidgetItemIterator it(listView());
-    while (*it)
-    {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        if (!item->text(ImagesListView::User1).isEmpty())
-        {
-            if (item->text(ImagesListView::User1).toInt() > 0)
-                d->processed++;
-            else
-                d->failed++;
-        }
-        ++it;
-    }
-
-    d->totalLabel->setText(QString("%1").arg(d->total));
-    d->processedLabel->setText(QString("%1").arg(d->processed));
-    d->failedLabel->setText(QString("%1").arg(d->failed));
 }
 
 }  // namespace KIPIRemoveRedEyesPlugin

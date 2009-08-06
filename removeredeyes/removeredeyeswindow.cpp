@@ -58,6 +58,7 @@
 #include "commonsettings.h"
 #include "haarsettingswidget.h"
 #include "kpaboutdata.h"
+#include "imageslist.h"
 #include "myimageslist.h"
 #include "previewwidget.h"
 #include "simplesettings.h"
@@ -65,6 +66,8 @@
 #include "unprocessedsettingsbox.h"
 #include "workerthread.h"
 #include "workerthreaddata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -88,7 +91,18 @@ public:
         saveMethod              = 0;
         unprocessedSettingsBox  = 0;
         storageSettingsBox      = 0;
+        totalLabel              = 0;
+        processedLabel          = 0;
+        failedLabel             = 0;
     }
+
+    int                       total;
+    int                       processed;
+    int                       failed;
+
+    QLabel*                   totalLabel;
+    QLabel*                   processedLabel;
+    QLabel*                   failedLabel;
 
     bool                      busy;
     bool                      hasLocator;
@@ -186,8 +200,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     d->locatorSettingsWidget = new QWidget;
 
     QVBoxLayout* mainSettingsLayout = new QVBoxLayout;
-    d->unprocessedSettingsBox = new UnprocessedSettingsBox;
-    d->storageSettingsBox     = new StorageSettingsBox;
+    d->unprocessedSettingsBox       = new UnprocessedSettingsBox;
+    d->storageSettingsBox           = new StorageSettingsBox;
     mainSettingsLayout->addWidget(d->storageSettingsBox);
     mainSettingsLayout->addWidget(d->unprocessedSettingsBox);
     mainSettingsLayout->addStretch(10);
@@ -199,9 +213,41 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     // ----------------------------------------------------------
 
+    d->totalLabel     = new QLabel;
+    d->processedLabel = new QLabel;
+    d->failedLabel    = new QLabel;
+
+    d->totalLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
+    d->processedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
+    d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
+
+    QLabel* l1 = new QLabel(i18nc("The total number of images in the list",
+            "Total:"));
+    QLabel* l2 = new QLabel(i18nc("number of images successfully processed",
+            "Success:"));
+    QLabel* l3 = new QLabel(i18nc("number of images failed to process",
+            "Failed:"));
+
+    QWidget* summaryBox           = new QWidget;
+    QGridLayout* summaryBoxLayout = new QGridLayout;
+    summaryBoxLayout->addWidget(l1,                0, 0, 1, 1);
+    summaryBoxLayout->addWidget(d->totalLabel,     0, 1, 1, 1);
+    summaryBoxLayout->addWidget(l2,                0, 2, 1, 1);
+    summaryBoxLayout->addWidget(d->processedLabel, 0, 3, 1, 1);
+    summaryBoxLayout->addWidget(l3,                0, 4, 1, 1);
+    summaryBoxLayout->addWidget(d->failedLabel,    0, 5, 1, 1);
+    summaryBox->setLayout(summaryBoxLayout);
+
+    // --------------------------------------------------------
+
     QWidget* imagesTab           = new QWidget;
-    QVBoxLayout* imagesTabLayout = new QVBoxLayout;
-    imagesTabLayout->addWidget(d->imageList);
+    QGridLayout* imagesTabLayout = new QGridLayout();
+    imagesTabLayout->addWidget(d->imageList, 0, 0, 1, 2);
+    imagesTabLayout->addWidget(summaryBox,   1, 0, 1, 1);
+    imagesTabLayout->setColumnStretch(1, 10);
+    imagesTabLayout->setRowStretch(0, 10);
+    imagesTabLayout->setMargin(0);
+    imagesTabLayout->setSpacing(0);
     imagesTab->setLayout(imagesTabLayout);
 
     // ----------------------------------------------------------
@@ -213,13 +259,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     // ----------------------------------------------------------
 
+    d->tabWidget->insertTab(FileList, imagesTab,      i18n("File List"));
+    d->tabWidget->insertTab(Settings, d->settingsTab, i18n("Settings"));
+//    d->tabWidget->insertTab(Preview,  previewTab,     i18n("Preview"));
+
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
-
-    d->tabWidget->insertTab(FileList, imagesTab,        i18n("File List"));
-    d->tabWidget->insertTab(Settings, d->settingsTab,   i18n("Settings"));
-//    d->tabWidget->insertTab(Preview,  previewTab,       i18n("Preview"));
-
     mainLayout->addWidget(d->tabWidget, 5);
     mainLayout->addWidget(d->progress);
     mainWidget->setLayout(mainLayout);
@@ -237,6 +282,9 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     connect(d->imageList, SIGNAL(signalFoundRAWImages(bool)),
             this, SLOT(foundRAWImages(bool)));
+
+    connect(d->imageList, SIGNAL(signalImageListChanged(bool)),
+            this, SLOT(updateSummary()));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(startCorrection()));
@@ -649,7 +697,7 @@ void RemoveRedEyesWindow::showSummary()
 {
     QString message = i18np("<p>%1 image has been successfully processed.</p>",
                             "<p>%1 images have been successfully processed.</p>",
-                            d->imageList->processedImages());
+                            processedImages());
     message.append(i18n("<h2>Correction Complete</h2>"));
 
     KMessageBox::information(this, message, i18n("Correction Complete"));
@@ -726,5 +774,51 @@ void RemoveRedEyesWindow::locatorChanged()
         enableButton(User2, false); // testrun button
     }
 }
+
+int RemoveRedEyesWindow::totalImages() const
+{
+    return d->total;
+}
+
+int RemoveRedEyesWindow::processedImages() const
+{
+    return d->processed;
+}
+
+int RemoveRedEyesWindow::failedImages() const
+{
+    return d->failed;
+}
+
+void RemoveRedEyesWindow::resetCounters()
+{
+    d->total       = d->imageList->imageUrls().count();
+    d->processed   = 0;
+    d->failed      = 0;
+}
+
+void RemoveRedEyesWindow::updateSummary()
+{
+    resetCounters();
+
+    QTreeWidgetItemIterator it(d->imageList->listView());
+    while (*it)
+    {
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        if (!item->text(ImagesListView::User1).isEmpty())
+        {
+            if (item->text(ImagesListView::User1).toInt() > 0)
+                d->processed++;
+            else
+                d->failed++;
+        }
+        ++it;
+    }
+
+    d->totalLabel->setText(QString("%1").arg(d->total));
+    d->processedLabel->setText(QString("%1").arg(d->processed));
+    d->failedLabel->setText(QString("%1").arg(d->failed));
+}
+
 
 } // namespace KIPIRemoveRedEyesPlugin

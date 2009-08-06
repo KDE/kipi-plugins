@@ -196,9 +196,6 @@ public slots:
 
     virtual void slotAddImages(const KUrl::List& list);
 
-protected:
-
-    QWidget* plainPage() const;
 
 protected slots:
 

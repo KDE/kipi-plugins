@@ -291,7 +291,6 @@ public:
         iface           = 0;
         addButton       = 0;
         removeButton    = 0;
-        plainPage       = 0;
         iconSize        = DEFAULTSIZE;
     }
 
@@ -300,8 +299,6 @@ public:
 
     QPushButton*        addButton;
     QPushButton*        removeButton;
-
-    QWidget*            plainPage;
 
     ImagesListView*     listView;
     Interface*          iface;
@@ -319,8 +316,6 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     // --------------------------------------------------------
 
     d->listView  = new ImagesListView(d->iconSize, this);
-    d->plainPage = new QWidget(this);
-    d->plainPage->hide();
 
     // --------------------------------------------------------
 
@@ -370,12 +365,10 @@ void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
         case ControlButtonsBelow:
             mainLayout->addWidget(d->addButton,    5, 0, 1, 1);
             mainLayout->addWidget(d->removeButton, 5, 1, 1, 1);
-            mainLayout->addWidget(d->plainPage,    5, 2, 1, 1);
             break;
         case ControlButtonsRight:
             mainLayout->addWidget(d->addButton,    0, 5, 1, 1);
             mainLayout->addWidget(d->removeButton, 1, 5, 1, 1);
-            mainLayout->addWidget(d->plainPage,    2, 5, 1, 1);
             break;
         case NoControlButtons:
             break;
@@ -387,7 +380,6 @@ void ImagesList::setContolButtonsPlacement(ControlButtonPlacement placement)
     if (placement == NoControlButtons)
     {
         setControlButtons(None);
-        d->plainPage->hide();
     }
 }
 
@@ -552,11 +544,6 @@ KUrl::List ImagesList::imageUrls() const
         ++it;
     }
     return list;
-}
-
-QWidget* ImagesList::plainPage() const
-{
-    return d->plainPage;
 }
 
 ImagesListView* ImagesList::listView() const
