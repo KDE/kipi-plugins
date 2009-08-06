@@ -46,12 +46,7 @@ public:
     MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
     ~MyImagesList();
 
-    int totalImages() const;
-    int processedImages() const;
-    int failedImages() const;
-
     bool hasUnprocessedImages();
-
     void removeUnprocessedImages();
     void resetEyeCounterColumn();
 
