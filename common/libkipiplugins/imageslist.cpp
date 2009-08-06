@@ -511,10 +511,10 @@ void ImagesList::loadImagesFromCurrentSelection()
 
 void ImagesList::slotAddImages(const KUrl::List& list)
 {
-    if (list.count() == 0) return;
+    if (list.count() == 0)
+        return;
 
     KUrl::List urls;
-
     bool raw = false;
 
     for ( KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
@@ -522,7 +522,6 @@ void ImagesList::slotAddImages(const KUrl::List& list)
         KUrl imageUrl = *it;
 
         // Check if the new item already exist in the list.
-
         bool found = false;
 
         QTreeWidgetItemIterator iter(d->listView);
@@ -598,7 +597,7 @@ void ImagesList::slotRemoveItems()
 
 void ImagesList::slotMoveUpItems()
 {
-    QModelIndex curIndex   = listView()->currentIndex();
+    QModelIndex curIndex = listView()->currentIndex();
     if (!curIndex.isValid())
         return;
 
@@ -607,7 +606,6 @@ void ImagesList::slotMoveUpItems()
         return;
 
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(aboveIndex.row());
-    QModelIndex curTemp   = listView()->currentIndex();
     listView()->insertTopLevelItem(curIndex.row(), temp);
 
     emit signalImageListChanged(imageUrls().isEmpty());
@@ -615,7 +613,7 @@ void ImagesList::slotMoveUpItems()
 
 void ImagesList::slotMoveDownItems()
 {
-    QModelIndex curIndex   = listView()->currentIndex();
+    QModelIndex curIndex = listView()->currentIndex();
     if (!curIndex.isValid())
         return;
 
@@ -624,7 +622,6 @@ void ImagesList::slotMoveDownItems()
         return;
 
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
-    QModelIndex curTemp   = listView()->currentIndex();
     listView()->insertTopLevelItem(curIndex.row(), temp);
 
     emit signalImageListChanged(imageUrls().isEmpty());
