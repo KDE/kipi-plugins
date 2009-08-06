@@ -197,6 +197,7 @@ public:
 
     void               setControlButtons(ControlButtons buttonMask);
     void               setControlButtonsPlacement(ControlButtonPlacement placement);
+    void               enableControlButtons(bool enable = true);
 
 Q_SIGNALS:
 

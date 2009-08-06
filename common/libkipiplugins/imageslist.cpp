@@ -304,14 +304,17 @@ public:
 
     ImagesListPriv()
     {
-        listView        = 0;
-        iface           = 0;
-        addButton       = 0;
-        removeButton    = 0;
-        iconSize        = DEFAULTSIZE;
+        listView              = 0;
+        iface                 = 0;
+        addButton             = 0;
+        removeButton          = 0;
+        iconSize              = DEFAULTSIZE;
+        allowRAW              = true;
+        controlButtonsEnabled = true;
     }
 
     bool            allowRAW;
+    bool            controlButtonsEnabled;
     int             iconSize;
 
     CtrlButton*     addButton;
@@ -328,7 +331,6 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
           : QWidget(parent), d(new ImagesListPriv)
 {
     d->iface    = iface;
-    d->allowRAW = true;  // default, use setAllowRAW() to change
 
     if (iconSize != -1)  // default = ICONSIZE
         setIconSize(iconSize);
@@ -390,6 +392,12 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     // --------------------------------------------------------
 
     emit signalImageListChanged(true);
+}
+
+void ImagesList::enableControlButtons(bool enable)
+{
+    d->controlButtonsEnabled = enable;
+    slotImageListChanged(true);
 }
 
 void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
@@ -662,11 +670,17 @@ bool ImagesList::isRAWFile(const QString & filePath)
 
 void ImagesList::slotImageListChanged(bool)
 {
-    bool enable = !(imageUrls().isEmpty());
+    bool enable = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
+
+    d->addButton->setEnabled(enable);
     d->removeButton->setEnabled(enable);
     d->moveUpButton->setEnabled(enable);
     d->moveDownButton->setEnabled(enable);
     d->clearButton->setEnabled(enable);
+
+    // All buttons are enabled / disabled now, but the "Add" button should always be
+    // enabled, if the buttons are not explicitly disabled with enableControlButtons()
+    d->addButton->setEnabled(d->controlButtonsEnabled);
 }
 
 }  // namespace KIPIPlugins
