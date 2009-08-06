@@ -159,7 +159,9 @@ SlideShowLoader::~SlideShowLoader()
 
     for (it = m_loadingThreads->begin(); it != m_loadingThreads->end(); ++it)
     {
-        it.value()->wait();
+        // better check for a valid pointer here
+        if (it.value())
+            it.value()->wait();
         delete it.value();
         it = m_loadingThreads->erase(it);
     }
