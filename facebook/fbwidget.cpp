@@ -59,8 +59,8 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this, 
-                                  KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -90,11 +90,11 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_permissionLbl         = new QLabel(accountBox);
     m_changeUserBtn         = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Logout and change Facebook Account used for transfer")), 
+                 i18n("Logout and change Facebook Account used for transfer")),
         accountBox);
     m_changePermBtn         = new KPushButton(
         KGuiItem(i18n("Change Permission"), "security-high",
-                 i18n("Change permission for KIPI application for photo upload")), 
+                 i18n("Change permission for KIPI application for photo upload")),
         accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
@@ -154,7 +154,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
             KGuiItem(i18n("New Album"), "list-add",
                      i18n("Create new Facebook album")), accountBox);
     m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18n("Reload"), "view-refresh", 
+            KGuiItem(i18n("Reload"), "view-refresh",
                      i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);
@@ -249,7 +249,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    if (import) 
+    if (import)
     {
         m_imgList->hide();
 
@@ -299,7 +299,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
         m_userNameDisplayLbl->clear();
         m_permissionLbl->clear();
     }
-    else 
+    else
     {
         m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
         if (uplPerm)
@@ -321,14 +321,14 @@ void FbWidget::slotDownloadTypeChanged(int dlType)
 {
     m_friendsCoB->setEnabled(dlType == FbPhotosFriend || dlType == FbFriendAlbum);
     m_albumsCoB->setEnabled(dlType == FbMyAlbum || dlType == FbFriendAlbum);
-   
+
     if (dlType == FbPhotosMe)
     {
         m_friendsCoB->setCurrentIndex(-1); // deselect friend
         m_albumsCoB->setCurrentIndex(-1); // deselect friend
     }
 
-    if (dlType == FbMyAlbum) 
+    if (dlType == FbMyAlbum)
     {
         m_friendsCoB->setCurrentIndex(-1); // deselect friend
         emit reloadAlbums(0);
@@ -355,7 +355,7 @@ void FbWidget::slotReloadAlbumsRequest()
     if (m_dlGrp->checkedId() == FbFriendAlbum)
         usrID = m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong();
 
-    emit reloadAlbums(usrID); 
+    emit reloadAlbums(usrID);
 }
 
 void FbWidget::slotResizeChecked()
@@ -374,7 +374,7 @@ long long FbWidget::getFriendID()
 
 long long FbWidget::getAlbumID()
 {
-    if (m_dlGrp->checkedId() == FbMyAlbum 
+    if (m_dlGrp->checkedId() == FbMyAlbum
         || m_dlGrp->checkedId() == FbFriendAlbum)
         return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toLongLong();
 
