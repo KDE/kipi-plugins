@@ -353,8 +353,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    setControlButtons(Add|Remove|MoveUp|MoveDown);      // add all buttons, except 'Clear' (default)
-    setControlButtonsPlacement(ControlButtonsRight);    // buttons on the right (default)
+    setControlButtons(Add|Remove|MoveUp|MoveDown|Clear);      // add all buttons       (default)
+    setControlButtonsPlacement(ControlButtonsRight);          // buttons on the right  (default)
 
     // --------------------------------------------------------
 
