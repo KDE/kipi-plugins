@@ -431,8 +431,8 @@ void MainDialog::slotSelection( void )
 
     if (m_selectedFilesButton->isChecked())
     {
-        urlList = m_sharedData->interface->currentSelection().images();
         m_ImagesFilesListBox->listView()->clear();
+        urlList = m_sharedData->interface->currentSelection().images();
     }
     else if (m_allFilesButton->isChecked())
     {
@@ -440,6 +440,7 @@ void MainDialog::slotSelection( void )
         QList<KIPI::ImageCollection> albumList;
         albumList = m_sharedData->interface->allAlbums();
 
+        m_ImagesFilesListBox->listView()->clear();
         urlList = m_sharedData->interface->currentAlbum().images();
 
         QList<KIPI::ImageCollection>::iterator it;
