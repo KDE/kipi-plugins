@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-12-01
- * Description : a kipi plugin to import/export images to/from 
+ * Description : a kipi plugin to import/export images to/from
                  SmugMug web service
  *
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
@@ -60,8 +60,8 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this, 
-                                  KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -135,7 +135,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
             KGuiItem(i18n("New Album"), "list-add",
                      i18n("Create new SmugMug album")), accountBox);
     m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18n("Reload"), "view-refresh", 
+            KGuiItem(i18n("Reload"), "view-refresh",
                      i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
@@ -226,7 +226,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    if (import) 
+    if (import)
     {
         m_imgList->hide();
         m_newAlbumBtn->hide();
