@@ -16,4 +16,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> SendImages         : 147513 : It's non possible to send the file of photo because kmail don't start.
 008 ==> BatchProcessImages : 202447 : digiKam crashes after recompressing one or several images.
 009 ==> BatchProcessImages : 202706 : digiKam crashes after closing the batch resize window.
-010 ==> 
+010 ==> AdvancedSlideshow  : 172384 : digiKam crashes when exiting advanced slide show from kipi-plugins.
+011 ==>
