@@ -598,12 +598,36 @@ void ImagesList::slotRemoveItems()
 
 void ImagesList::slotMoveUpItems()
 {
-    // TODO: implement me
+    QModelIndex curIndex   = listView()->currentIndex();
+    if (!curIndex.isValid())
+        return;
+
+    QModelIndex aboveIndex = listView()->indexAbove(curIndex);
+    if (!aboveIndex.isValid())
+        return;
+
+    QTreeWidgetItem* temp = listView()->takeTopLevelItem(aboveIndex.row());
+    QModelIndex curTemp   = listView()->currentIndex();
+    listView()->insertTopLevelItem(curIndex.row(), temp);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::slotMoveDownItems()
 {
-    // TODO: implement me
+    QModelIndex curIndex   = listView()->currentIndex();
+    if (!curIndex.isValid())
+        return;
+
+    QModelIndex belowIndex = listView()->indexBelow(curIndex);
+    if (!belowIndex.isValid())
+        return;
+
+    QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
+    QModelIndex curTemp   = listView()->currentIndex();
+    listView()->insertTopLevelItem(curIndex.row(), temp);
+
+    emit signalImageListChanged(imageUrls().isEmpty());
 }
 
 void ImagesList::slotClearItems()
