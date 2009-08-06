@@ -172,7 +172,6 @@ public:
 
     enum ControlButton
     {
-       None      = 0x0,
        Add       = 0x1,
        Remove    = 0x2,
        MoveUp    = 0x4,

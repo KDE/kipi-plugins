@@ -458,7 +458,8 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
         {
             delete vBtnLayout;
             delete hBtnLayout;
-            setControlButtons(None);
+            // set all buttons invisible
+            setControlButtons(0x0);
             break;
         }
     }
