@@ -281,7 +281,7 @@ KIPI::Interface* ImagesListView::iface() const
 
 // ---------------------------------------------------------------------------
 
-CtrlButton::CtrlButton(const KIcon& icon, QWidget* parent)
+CtrlButton::CtrlButton(const QIcon& icon, QWidget* parent)
           : QPushButton(parent)
 {
 

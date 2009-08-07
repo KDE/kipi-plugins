@@ -149,7 +149,7 @@ class CtrlButton : public QPushButton
 
 public:
 
-    CtrlButton(const KIcon& icon, QWidget* parent = 0);
+    CtrlButton(const QIcon& icon, QWidget* parent = 0);
     virtual ~CtrlButton();
 };
 
