@@ -56,14 +56,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="sizeIncrement">
@@ -90,14 +90,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
@@ -118,14 +118,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
@@ -146,14 +146,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
@@ -177,14 +177,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
@@ -205,14 +205,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
@@ -233,14 +233,14 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>34</width>
-              <height>34</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="whatsThis">
