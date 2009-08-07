@@ -234,8 +234,8 @@ private:
     ImagesListPriv* const d;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(ImagesList::ControlButtons)
-
 }  // namespace KIPIPlugins
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIPlugins::ImagesList::ControlButtons)
 
 #endif // IMAGESLIST_H
