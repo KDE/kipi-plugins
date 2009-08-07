@@ -306,8 +306,15 @@ public:
     {
         listView              = 0;
         iface                 = 0;
+
         addButton             = 0;
         removeButton          = 0;
+        moveUpButton          = 0;
+        moveDownButton        = 0;
+        clearButton           = 0;
+        loadButton            = 0;
+        saveButton            = 0;
+
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
@@ -322,6 +329,8 @@ public:
     CtrlButton*     moveUpButton;
     CtrlButton*     moveDownButton;
     CtrlButton*     clearButton;
+    CtrlButton*     loadButton;
+    CtrlButton*     saveButton;
 
     ImagesListView* listView;
     Interface*      iface;
@@ -347,12 +356,16 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     d->moveUpButton   = new CtrlButton(KIcon("arrow-up"), this);
     d->moveDownButton = new CtrlButton(KIcon("arrow-down"), this);
     d->clearButton    = new CtrlButton(KIcon("edit-clear-list"), this);
+    d->loadButton     = new CtrlButton(KIcon("document-open"), this);
+    d->saveButton     = new CtrlButton(KIcon("document-save"), this);
 
     d->addButton->setToolTip(i18n("Add new images to the list"));
     d->removeButton->setToolTip(i18n("Remove selected images from the list"));
     d->moveUpButton->setToolTip(i18n("Move current selected image up in the list"));
     d->moveDownButton->setToolTip(i18n("Move current selected image down in the list"));
     d->clearButton->setToolTip(i18n("Clear the list."));
+    d->loadButton->setToolTip(i18n("Load a saved list."));
+    d->saveButton->setToolTip(i18n("Save the list."));
 
     // --------------------------------------------------------
 
@@ -390,6 +403,12 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     connect(d->clearButton, SIGNAL(clicked()),
             this, SLOT(slotClearItems()));
 
+    connect(d->loadButton, SIGNAL(clicked()),
+            this, SLOT(slotLoadItems()));
+
+    connect(d->saveButton, SIGNAL(clicked()),
+            this, SLOT(slotSaveItems()));
+
     // --------------------------------------------------------
 
     emit signalImageListChanged();
@@ -420,6 +439,8 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
     hBtnLayout->addWidget(d->addButton);
     hBtnLayout->addWidget(d->removeButton);
     hBtnLayout->addWidget(d->moveDownButton);
+    hBtnLayout->addWidget(d->loadButton);
+    hBtnLayout->addWidget(d->saveButton);
     hBtnLayout->addWidget(d->clearButton);
     hBtnLayout->addStretch(10);
 
@@ -431,6 +452,8 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
     vBtnLayout->addWidget(d->addButton);
     vBtnLayout->addWidget(d->removeButton);
     vBtnLayout->addWidget(d->moveDownButton);
+    vBtnLayout->addWidget(d->loadButton);
+    vBtnLayout->addWidget(d->saveButton);
     vBtnLayout->addWidget(d->clearButton);
     vBtnLayout->addStretch(10);
 
@@ -474,6 +497,8 @@ void ImagesList::setControlButtons(ControlButtons buttonMask)
     d->moveUpButton->setVisible(buttonMask & MoveUp);
     d->moveDownButton->setVisible(buttonMask & MoveDown);
     d->clearButton->setVisible(buttonMask & Clear);
+    d->loadButton->setVisible(buttonMask & Load);
+    d->saveButton->setVisible(buttonMask & Save);
 }
 
 ImagesList::~ImagesList()
@@ -633,6 +658,14 @@ void ImagesList::slotClearItems()
     slotRemoveItems();
 }
 
+void ImagesList::slotLoadItems()
+{
+}
+
+void ImagesList::slotSaveItems()
+{
+}
+
 void ImagesList::removeItemByUrl(const KUrl& url)
 {
     bool found;
@@ -700,6 +733,8 @@ void ImagesList::slotImageListChanged()
     d->moveUpButton->setEnabled(enable);
     d->moveDownButton->setEnabled(enable);
     d->clearButton->setEnabled(enable);
+    d->loadButton->setEnabled(enable);
+    d->saveButton->setEnabled(enable);
 
     // All buttons are enabled / disabled now, but the "Add" button should always be
     // enabled, if the buttons are not explicitly disabled with enableControlButtons()
