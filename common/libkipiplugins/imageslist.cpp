@@ -285,7 +285,7 @@ CtrlButton::CtrlButton(const QIcon& icon, QWidget* parent)
           : QPushButton(parent)
 {
 
-    const int btnSize = 34;
+    const int btnSize = 32;
 
     setMinimumSize(btnSize, btnSize);
     setMaximumSize(btnSize, btnSize);
@@ -351,13 +351,13 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    d->addButton      = new CtrlButton(KIcon("list-add"), this);
-    d->removeButton   = new CtrlButton(KIcon("list-remove"), this);
-    d->moveUpButton   = new CtrlButton(KIcon("arrow-up"), this);
-    d->moveDownButton = new CtrlButton(KIcon("arrow-down"), this);
-    d->clearButton    = new CtrlButton(KIcon("edit-clear-list"), this);
-    d->loadButton     = new CtrlButton(KIcon("document-open"), this);
-    d->saveButton     = new CtrlButton(KIcon("document-save"), this);
+    d->addButton      = new CtrlButton(SmallIcon("list-add"), this);
+    d->removeButton   = new CtrlButton(SmallIcon("list-remove"), this);
+    d->moveUpButton   = new CtrlButton(SmallIcon("arrow-up"), this);
+    d->moveDownButton = new CtrlButton(SmallIcon("arrow-down"), this);
+    d->clearButton    = new CtrlButton(SmallIcon("edit-clear-list"), this);
+    d->loadButton     = new CtrlButton(SmallIcon("document-open"), this);
+    d->saveButton     = new CtrlButton(SmallIcon("document-save"), this);
 
     d->addButton->setToolTip(i18n("Add new images to the list"));
     d->removeButton->setToolTip(i18n("Remove selected images from the list"));
