@@ -129,3 +129,5 @@ Compared to old KDE3 autoconf options:
 "cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
 
 More details can be found ata this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
+
+Note: To know KDE install path on your computer, use 'kde-config --prefix' command line.
