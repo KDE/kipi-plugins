@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> BatchProcessImages : 203232 : Batch compress images crash.
 012 ==> PrintWizard        : 150479 : Provide export to pdf file.
 013 ==> BatchProcessImages : 203379 : Error while converting RAW images to JPEG
-014 ==> 
+014 ==> FlickrExport       : 203848 : Add ability to upload to flickr photo stream only.
+015 ==> 
