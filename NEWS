@@ -19,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> AdvancedSlideshow  : 172384 : digiKam crashes when exiting advanced slide show from kipi-plugins.
 011 ==> BatchProcessImages : 203232 : Batch compress images crash.
 012 ==> PrintWizard        : 150479 : Provide export to pdf file.
-013 ==> 
+013 ==> BatchProcessImages : 203379 : Error while converting RAW images to JPEG
+014 ==> 
