@@ -22,4 +22,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> BatchProcessImages : 203379 : Error while converting RAW images to JPEG
 014 ==> FlickrExport       : 203848 : Add ability to upload to flickr photo stream only.
 015 ==> FlickrExport       : 203849 : Add option to create a photo set from uploaded photos.
-016 ==> 
+016 ==> BatchProcessImages : 199932 : Batch resize images produces images 1 pixel too short.
+017 ==> 
