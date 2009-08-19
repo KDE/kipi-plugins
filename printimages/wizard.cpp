@@ -884,202 +884,6 @@ namespace KIPIPrintImagesPlugin
   }
 
 
-// Like above, but outputs to an initialized QImage.  UseThumbnails is
-// not an option.
-// We have to use QImage for saving to a file, otherwise we would have
-// to use a QPixmap, which will have the same bit depth as the display.
-// So someone with an 8-bit display would not be able to save 24-bit
-// images!
-  bool Wizard::paintOnePage ( QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                              int captionType, int &current )
-  {
-    Q_ASSERT ( layouts.count() > 1 );
-
-    QList<QRect*>::iterator it = layouts.begin();
-    QRect *srcPage = static_cast<QRect*> ( *it );
-    ++it;
-    QRect *layout = static_cast<QRect*> ( *it );
-
-    // scale the page size to best fit the painter
-    // size the rectangle based on the minimum image dimension
-    int destW = p.width();
-    int destH = p.height();
-
-    int srcW = srcPage->width();
-    int srcH = srcPage->height();
-    if ( destW < destH )
-    {
-      destH = NINT ( ( double ) destW * ( ( double ) srcH / ( double ) srcW ) );
-      if ( destH > p.height() )
-      {
-        destH = p.height();
-        destW = NINT ( ( double ) destH * ( ( double ) srcW / ( double ) srcH ) );
-      }
-    }
-    else
-    {
-      destW = NINT ( ( double ) destH * ( ( double ) srcW / ( double ) srcH ) );
-      if ( destW > p.width() )
-      {
-        destW = p.width();
-        destH = NINT ( ( double ) destW * ( ( double ) srcH / ( double ) srcW ) );
-      }
-    }
-
-    double xRatio = ( double ) destW / ( double ) srcPage->width();
-    double yRatio = ( double ) destH / ( double ) srcPage->height();
-
-    int left = ( p.width()  - destW ) / 2;
-    int top  = ( p.height() - destH ) / 2;
-
-
-    p.fill ( 0xffffff );
-
-    for ( ; current < photos.count(); current++ )
-    {
-      TPhoto *photo = photos.at ( current );
-      // crop
-      QImage img;
-      img = photo->loadPhoto();
-
-      // next, do we rotate?
-      if ( photo->rotation != 0 )
-      {
-        // rotate
-        QMatrix matrix;
-        matrix.rotate ( photo->rotation );
-        img = img.transformed ( matrix );
-      }
-
-      img = img.copy ( photo->cropRegion );
-
-      int x1 = NINT ( ( double ) layout->left() * xRatio );
-      int y1 = NINT ( ( double ) layout->top()  * yRatio );
-      int w  = NINT ( ( double ) layout->width() * xRatio );
-      int h  = NINT ( ( double ) layout->height() * yRatio );
-
-      // We can use scaleFree because the crop frame should have the proper dimensions.
-      img = img.scaled ( w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation );
-//     img = img.smoothScale(w, h, QImage::ScaleFree);
-
-      // don't have drawimage, so we copy the pixels over manually
-      for ( int srcY = 0; srcY < img.height(); srcY++ )
-        for ( int srcX = 0; srcX < img.width(); srcX++ )
-        {
-          p.setPixel ( x1 + left + srcX, y1 + top + srcY, img.pixel ( srcX, srcY ) );
-        }
-
-      if ( captionType != NoCaptions )
-      {
-        // Now draw the caption
-        QString caption;
-        QString format;
-        switch ( captionType )
-        {
-          case FileNames:
-            format = "%f";
-            break;
-          case ExifDateTime:
-            format = "%d";
-            break;
-          case Comment:
-            format = "%c";
-            break;
-          case Free:
-            format = d->mInfoPage->m_FreeCaptionFormat->text();
-            break;
-          default:
-            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType ;
-            break;
-        }
-        caption = captionFormatter ( photo, format );
-        kDebug(51000) << "Caption " << caption ;
-
-        int captionW = w-2;
-        double ratio = d->mInfoPage->m_font_size->value() * 0.01;
-        int captionH = ( int ) ( qMin ( w, h ) * ratio );
-
-        int exifOrientation = photo->exiv2Iface()->getImageOrientation();
-        int orientatation = photo->rotation;
-
-        //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-        if ( exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270 )
-          orientatation = ( photo->rotation + 270 ) % 360; // -90 degrees
-
-        if ( orientatation == 90 || orientatation == 270 )
-        {
-          captionW = h;
-        }
-
-        QPixmap pixmap ( w-2, img.height()-2 );
-        //TODO black is not ok if font is black...
-        pixmap.fill ( Qt::black );
-        QPainter painter;
-        painter.begin ( &pixmap );
-        painter.rotate ( orientatation );
-        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation ;
-        int tx = left;
-        int ty = top;
-
-        switch ( orientatation )
-        {
-          case 0 :
-          {
-            tx += x1 + 1;
-            ty += y1 + ( h - captionH - 1 );
-            break;
-          }
-          case 90 :
-          {
-            tx = top + y1 + 1;
-            ty = -left - x1 - captionH - 1;
-            break;
-          }
-          case 180 :
-          {
-            tx = -left - x1 - w + 1;
-            ty = -top -y1 - ( captionH + 1 );
-            break;
-          }
-          case 270 :
-          {
-            tx = -top - y1 - h + 1;
-            ty = left + x1 + ( w - captionH )- 1;
-            break;
-          }
-        }
-
-        painter.translate ( tx, ty );
-        printCaption ( painter, photo, captionW, captionH, caption );
-        painter.end();
-
-        // now put it on picture
-        QImage fontImage = pixmap.toImage();
-        QRgb black = QColor ( 0, 0, 0 ).rgb();
-        for ( int srcY = 0; srcY < fontImage.height(); srcY++ )
-          for ( int srcX = 0; srcX < fontImage.width(); srcX++ )
-          {
-            if ( fontImage.pixel ( srcX, srcY ) != black )
-              p.setPixel ( srcX, srcY, fontImage.pixel ( srcX, srcY ) );
-          }
-      } // caption
-
-      // iterate to the next position
-      ++it;
-      layout = ( it == layouts.end() ) ? 0 : static_cast<QRect*> ( *it );
-      if ( layout == 0 )
-      {
-        current++;
-        break;
-      }
-    }
-    // did we print the last photo?
-    return ( current < photos.count() );
-  }
-
   void Wizard::updateCropFrame ( TPhoto *photo, int photoIndex )
   {
     TPhotoSize *s = d->m_photoSizes.at ( d->mPhotoPage->ListPhotoSizes->currentRow() );
@@ -1725,7 +1529,8 @@ namespace KIPIPrintImagesPlugin
     bool printing = true;
     while ( printing )
     {
-      printing = paintOnePage ( p, photos, layouts, d->mInfoPage->m_captions->currentIndex(), current );
+      printing = paintOnePage ( p, photos, layouts,
+                                d->mInfoPage->m_captions->currentIndex(), current );
       if ( printing )
         printer.newPage();
 #ifdef NOT_YET
@@ -1769,16 +1574,16 @@ namespace KIPIPrintImagesPlugin
 
     while ( printing )
     {
-      // make a pixmap to save to file.  Make it just big enough to show the
+            // make a pixmap to save to file.  Make it just big enough to show the
       // highest-dpi image on the page without losing data.
       double dpi = layouts->dpi;
       if ( dpi == 0.0 )
         dpi = getMaxDPI ( photos, layouts->layouts, current ) * 1.1;
       int w = NINT ( srcPage->width() / 1000.0 * dpi );
       int h = NINT ( srcPage->height()  / 1000.0 * dpi );
-      QImage *img = new QImage ( w, h, QImage::Format_RGB32 );
-      if ( !img )
-        break;
+      QPixmap pixmap ( w, h );
+      QPainter painter;
+      painter.begin ( &pixmap );
 
       // save this page out to file
       QString filename = baseFilename + QString::number ( pageCount ) + ".jpeg";
@@ -1792,21 +1597,23 @@ namespace KIPIPrintImagesPlugin
           saveFile = false;
         else if ( result == KMessageBox::Cancel )
         {
-          delete img;
           break;
         }
       }
 
-      // paint this page, even if we aren't saving it to keep the page
-      // count accurate.
-      printing = paintOnePage ( *img, photos, layouts->layouts, d->mInfoPage->m_captions->currentIndex(), current );
+      printing = paintOnePage ( painter, photos,
+                                layouts->layouts,
+                                d->mInfoPage->m_captions->currentIndex(), current );
+
+      painter.end();
+
+      QImage img = pixmap.toImage();
 
       if ( saveFile )
       {
         files.append ( filename );
-        img->save ( filename, "JPEG" );
+        img.save ( filename, "JPEG" );
       }
-      delete img;
       pageCount++;
 
 #ifdef NOT_YET
