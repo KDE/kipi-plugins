@@ -8,6 +8,32 @@
 	xmlns:exsl="http://exslt.org/common"
 	extension-element-prefixes="exsl">
 
+<xsl:template name="linkTagsImagePage">
+	<link rel="first" href="{../image[position()=1]/full/@fileName}.html"></link>
+	<link rel="last" href="{../image[position()=last()]/full/@fileName}.html"></link>
+	<xsl:if test="position() &gt; 1">
+		<link rel="prev" href="{preceding-sibling::image[position()=1]/full/@fileName}.html"></link>
+	</xsl:if>
+	<xsl:if test="position() &lt; last()">
+		<link rel="next" href="{following-sibling::image[position()=1]/full/@fileName}.html"></link>
+	</xsl:if>
+	<xsl:choose>
+		<xsl:when test="count(/collections/collection) &gt; 1">
+			<link rel="up" href="../{../fileName}.html"></link>
+			<link rel="top" href="../index.html"></link>
+		</xsl:when>
+		<xsl:otherwise>
+			<link rel="up" href="../index.html"></link>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template name="linkTagsCollectionPage">
+	<xsl:if test="count(/collections/collection) &gt; 1">
+		<link rel="up" href="index.html"></link>
+	</xsl:if>
+</xsl:template>
+
 <xsl:template name="thumbnailLink">
 	<xsl:param name="text"/>
 	<xsl:param name="folder" select="'.'"/>
@@ -24,6 +50,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="title"/></title>
 		<link rel="stylesheet" type="text/css" href="../matrix/style.css"/>
+		<xsl:call-template name="linkTagsImagePage"/>
 	</head>
 	<body id="imagePage">
 	<h1>
@@ -106,6 +133,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><xsl:value-of select="name"/></title>
 		<link rel="stylesheet" type="text/css" href="matrix/style.css"/>
+		<xsl:call-template name="linkTagsCollectionPage"/>
 	</head>
 	<body id="collectionPage">
 	<h1>
