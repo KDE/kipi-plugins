@@ -129,9 +129,6 @@ typedef struct _TPhotoSize
       bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
                         int captionType, int &current, bool useThumbnails = false);
 
-      bool paintOnePage(QImage &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int captionType, int &current);
-
       void manageBtnPrintOrder();
       void manageBtnPreviewPage();
 
