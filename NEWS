@@ -23,4 +23,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> FlickrExport       : 203848 : Add ability to upload to flickr photo stream only.
 015 ==> FlickrExport       : 203849 : Add option to create a photo set from uploaded photos.
 016 ==> BatchProcessImages : 199932 : Batch resize images produces images 1 pixel too short.
-017 ==> 
+017 ==> HTMLExport         : 196968 : Add link-tags to exported HTML-galleries to ease navigation.
+018 ==> 
