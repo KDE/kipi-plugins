@@ -24,4 +24,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> FlickrExport       : 203849 : Add option to create a photo set from uploaded photos.
 016 ==> BatchProcessImages : 199932 : Batch resize images produces images 1 pixel too short.
 017 ==> HTMLExport         : 196968 : Add link-tags to exported HTML-galleries to ease navigation.
-018 ==> 
+018 ==> PrintWizard        : 202480 : PrintWizard doesn't add comments properly but shows them in the preview.
+019 ==> 
