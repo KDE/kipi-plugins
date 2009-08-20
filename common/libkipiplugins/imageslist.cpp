@@ -72,6 +72,7 @@ ImagesListViewItem::ImagesListViewItem(ImagesListView *view, const KUrl& url)
     setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState));
     setUrl(url);
     setRating(-1);
+    setFlags(Qt::ItemIsEnabled|Qt::ItemIsDragEnabled|Qt::ItemIsSelectable);
 }
 
 ImagesListViewItem::~ImagesListViewItem()
@@ -174,10 +175,13 @@ void ImagesListView::setup(int iconSize)
 {
     m_iconSize = iconSize;
     setIconSize(QSize(m_iconSize, m_iconSize));
-    setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setAlternatingRowColors(true);
+    setSelectionMode(QAbstractItemView::SingleSelection);
 
-    setAcceptDrops(true);
+    setDragEnabled(true);
     viewport()->setAcceptDrops(true);
+    setDragDropMode(QAbstractItemView::InternalMove);
+    setDragDropOverwriteMode(false);
     setDropIndicatorShown(true);
 
     setSortingEnabled(false);
@@ -242,18 +246,21 @@ void ImagesListView::setColumn(ColumnType column, const QString &label, bool ena
 
 void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
 {
+    QTreeWidget::dragEnterEvent(e);
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
 void ImagesListView::dragMoveEvent(QDragMoveEvent *e)
 {
+    QTreeWidget::dragMoveEvent(e);
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
 void ImagesListView::dropEvent(QDropEvent *e)
 {
+    QTreeWidget::dropEvent(e);
     QList<QUrl> list = e->mimeData()->urls();
     KUrl::List urls;
 
@@ -263,8 +270,6 @@ void ImagesListView::dropEvent(QDropEvent *e)
         if (fi.isFile() && fi.exists())
             urls.append(KUrl(url));
     }
-
-    e->acceptProposedAction();
 
     if (!urls.isEmpty())
         emit addedDropedItems(urls);
