@@ -401,7 +401,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
         QFileInfo fi(url.path());
         if (fi.exists() && !findItem(url))
         {
-            QString dest = fi.baseName() + QString(".dng");
+            QString dest = fi.completeBaseName() + QString(".dng");
             new CListViewItem(d->listView, pix, url, dest);
             urlList.append(url);
         }

@@ -239,7 +239,7 @@ int DNGWriter::convert()
 
 /*      // NOTE: code to hack RAW data extraction
 
-        QString   rawdataFilePath(inputInfo.baseName() + QString(".dat"));
+        QString   rawdataFilePath(inputInfo.completeBaseName() + QString(".dat"));
         QFileInfo rawdataInfo(rawdataFilePath);
 
         QFile rawdataFile(rawdataFilePath);
@@ -622,7 +622,7 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))                 exif->fGPSVersionID             = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))               exif->fGPSAltitudeRef           = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))              exif->fGPSDifferential          = (uint32)val;
-
+/*
             // Markernote backup.
 
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
@@ -638,7 +638,7 @@ int DNGWriter::convert()
                 stream.Get(block->Buffer(), mkrnts.size());
                 negative->SetMakerNote(block);
                 negative->SetMakerNoteSafety(true);
-            }
+            }*/
         }
 
         if (d->backupOriginalRawFile)

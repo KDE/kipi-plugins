@@ -566,7 +566,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 
     filter += ext;
     QFileInfo fi(d->inputFile.path());
-    QString destFile = fi.absolutePath() + QString("/") + fi.baseName() + QString(".") + ext;
+    QString destFile = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".") + ext;
 
     if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
     {

@@ -568,7 +568,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
         QFileInfo fi(url.path());
         if (fi.exists() && !findItem(url))
         {
-            QString dest = fi.baseName() + QString(".") + ext;
+            QString dest = fi.completeBaseName() + QString(".") + ext;
             new CListViewItem(d->listView, pix, url, dest);
             urlList.append(url);
         }
@@ -629,7 +629,7 @@ void BatchDialog::slotSaveFormatChanged()
             if (lvItem->isEnabled())
             {
                 QFileInfo fi(lvItem->url().path());
-                QString dest = fi.baseName() + QString(".") + ext;
+                QString dest = fi.completeBaseName() + QString(".") + ext;
                 lvItem->setDestFileName(dest);
             }
         }
