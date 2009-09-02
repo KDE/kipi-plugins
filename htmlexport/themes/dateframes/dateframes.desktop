@@ -1,0 +1,39 @@
+[Desktop Entry]
+Name=Date Frames
+Comment=A frame theme based on Ruediger Bente's frame theme
+
+[X-HTMLExport Author]
+Name=Elizabeth Marmorstein
+Url=mailto:purplegamba@cox.net
+
+[X-HTMLExport Parameter color1]
+Name=Thumbnail Background
+Type=color
+Default=#FFFFFF
+
+[X-HTMLExport Parameter color2]
+Name=Image Background (contrasting)
+Type=color
+Default=#000055
+
+[X-HTMLExport Parameter color3]
+Name=Nav Bar Background (dark)
+Type=color
+Default=#000011
+
+[X-HTMLExport Parameter intro]
+Name=Gallery Introduction
+Type=string
+Default=Welcome to my web gallery!
+
+[X-HTMLExport Parameter longformat]
+Name=Caption Date Format (see http://xsltsl.sourceforge.net/date-time.html)
+Type=string
+Default=%A, %b %e, %Y   %i:%M%P
+Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
+
+[X-HTMLExport Parameter shortformat]
+Name=Image List Date Format
+Type=string
+Default=%m-%d-%Y
+Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
