@@ -8,4 +8,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> BatchProcessImages : 205603 : Crash on finishing Batch Unsharp mask.
 002 ==> HTMLExport         : 199533 : Enable dateframes theme in kipi-plugins [patch].
-003 ==> 
+003 ==> HTMLExport         : 111509 : Subalbums not supported by HTML export.
+004 ==> 
+
+
