@@ -44,6 +44,7 @@ public:
 	, mTitle(info.title())
 	, mDescription(info.description())
 	, mAngle(info.angle())
+	, mTime(info.time())
 	{}
 
 	ImageElement() : mValid(false) {}
@@ -52,6 +53,7 @@ public:
 	QString mTitle;
 	QString mDescription;
 	int mAngle;
+	QDateTime mTime;
 
 	QString mPath;
 
@@ -69,6 +71,7 @@ public:
 		XMLElement imageX(xmlWriter, "image");
 		xmlWriter.writeElement("title", mTitle);
 		xmlWriter.writeElement("description", mDescription);
+		xmlWriter.writeElement("date", mTime.toString("yyyy-MM-ddThh:mm:ss"));
 
 		appendImageElementToXML(xmlWriter, "full", mFullFileName, mFullSize);
 		appendImageElementToXML(xmlWriter, "thumbnail", mThumbnailFileName, mThumbnailSize);

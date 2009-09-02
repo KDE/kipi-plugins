@@ -96,9 +96,11 @@ gallery.xml looks like this:
 	 <collection>
 	  <name>Name of first collection</name>
 	  <fileName>collection_folder</fileName>
+	  <comment>Collection comment</comment>
 	  <image>
 	   <title>Image Title</title>
 	   <description>Image Description</description>
+	   <date>2009-08-27T09:53:26</date>
 	   <full fileName="pict1279.jpeg" height="450" width="600"/>
 	   <thumbnail fileName="thumb_pict1279.jpeg" height="80" width="80"/>
 	   <!-- If there is an original image, you will get the 'original' tag -->
@@ -107,6 +109,7 @@ gallery.xml looks like this:
 	  </image>
 	  <image>
 	   <title>Image Title</title>
+	   <date>2009-08-27T09:55:33</date>
 	   <description>Image Description</description>
 	   <full fileName="pict1280.jpeg" height="450" width="600"/>
 	   <thumbnail fileName="thumb_pict1280.jpeg" height="80" width="80"/>

@@ -234,6 +234,7 @@ struct Generator::Private {
 			XMLElement collectionX(xmlWriter, "collection");
 			xmlWriter.writeElement("name", collection.name());
 			xmlWriter.writeElement("fileName", collectionFileName);
+			xmlWriter.writeElement("comment", collection.comment());
 
 			// Gather image element list
 			KUrl::List imageList = collection.images();
