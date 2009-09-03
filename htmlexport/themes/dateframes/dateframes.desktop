@@ -1,9 +1,40 @@
 [Desktop Entry]
 Name=Date Frames
 Comment=A frame theme based on Ruediger Bente's frame theme
+Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
+Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
+Comment[cs]=Motiv rámce založený na motivu Ruediger Bente
+Comment[da]=Et ramme-tema baseret på Ruediger Bente's ramme-tema
+Comment[de]=Ein Rahmendesign, dass auf Rüdiger Bentes Rahmendesign basiert
+Comment[el]=Ένα θέμα πλαισίων βασισμένο στο θέμα του Ruediger Bente
+Comment[es]=Un tema con marcos basado en el tema de marcos de Ruediger Bente
+Comment[et]=Ruediger Bente raamiteemal põhinev raamiteema
+Comment[fr]=Un thème de cadre utilisant le thème de Ruediger Bente
+Comment[gl]=Un tema de molduras baseado no de Ruediger Bente
+Comment[he]=ערכת מסגרות המבוססת על ערכת המסגרות של רודיגר בנטה
+Comment[it]=Un tema a riquadri basato sul tema a riquadri di Rüdiger Bente
+Comment[ja]=Ruediger Bente のフレームテーマに基づくフレームテーマ
+Comment[km]=ស្បែក​ស៊ុម​មាន​មូលដ្ឋាន​លើ​ស្បែក​ស៊ុម​របស់ Ruediger Bente
+Comment[lv]=Ietvaru tēma, balstīta uz  Ruediger Bente ietvaru tēmas
+Comment[nb]=Et rammetema bygget på Ruediger Bebtes rammetema
+Comment[nds]=En Rahmenmuster, opbuut op Ruediger Bente sien
+Comment[nl]=Een framethema gebaseerd op het framethema van Ruediger Bente'
+Comment[pt]=Um tema de moldura baseado no tema de Ruediger Bente
+Comment[pt_BR]=Um tema de moldura baseado no tema de Ruediger Bente
+Comment[sk]=Téma rámčekov založená na téme od Ruediger Bente
+Comment[sv]=Ett ramtema baserat på Ruediger Bentes ramtema
+Comment[th]=ชุดตกแต่งกรอบภาพ อิงพื้นฐานจากชุดตกแต่งกรอบภาพของ Ruediger Bente'
+Comment[tr]=Ruediger Bente'nin çerçeve teması tabanlı bir  tema
+Comment[uk]=Тема рамок на основі теми Ruediger Bente
+Comment[x-test]=xxA frame theme based on Ruediger Bente's frame themexx
+Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
+Name[he]=אליזבת מרמורשטיין
+Name[hne]=एलिजाबेथ मारमोर्स्टीन
+Name[pa]=ਏਲੀਜ਼ਬੈਥ ਮਾਰਮੋਰਸਟਿਨ
+Name[x-test]=xxElizabeth Marmorsteinxx
 Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter color1]
