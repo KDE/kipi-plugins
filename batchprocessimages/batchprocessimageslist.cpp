@@ -34,20 +34,20 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BatchProcessImagesList::BatchProcessImagesList(QWidget *parent)
-: QTreeWidget(parent)
+        : QTreeWidget(parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown(false);
     setColumnCount(4);
     setRootIsDecorated(false);
     setHeaderLabels(QStringList()
-        << i18n("Source Album")
-        << i18n("Source Image")
-        << i18n("Target Image")
-        << i18n("Result")
-        );
+                    << i18n("Source Album")
+                    << i18n("Source Image")
+                    << i18n("Target Image")
+                    << i18n("Result")
+                   );
     sortByColumn(3);
-    setAllColumnsShowFocus ( true );
+    setAllColumnsShowFocus(true);
     this->setWhatsThis(i18n("<p>You can see here the operations' results "
                             "during the process. Double-click on an item for more "
                             "information once the process has ended.</p>"
@@ -78,7 +78,7 @@ void BatchProcessImagesList::dropEvent(QDropEvent* event)
     }
 
     if (!paths.isEmpty()) {
-       emit addedDropItems(paths);
+        emit addedDropItems(paths);
     }
 }
 

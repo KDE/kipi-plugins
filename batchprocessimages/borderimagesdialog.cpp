@@ -59,8 +59,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch-Bordering Images"), parent )
+BorderImagesDialog::BorderImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+        : BatchProcessImagesDialog(urlList, interface, i18n("Batch-Bordering Images"), parent)
 {
     // About data and help button.
 
@@ -68,7 +68,7 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin for batch bordering images\n"
-                                                      "This plugin use the \"convert\" program from \"ImageMagick\" package."),
+                                                 "This plugin use the \"convert\" program from \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -86,9 +86,9 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    setOptionBoxTitle( i18n("Images Bordering Options") );
+    setOptionBoxTitle(i18n("Images Bordering Options"));
 
-    m_labelType->setText( i18n("Border:") );
+    m_labelType->setText(i18n("Border:"));
 
     m_Type->insertItem(i18n("Solid"));
 
@@ -99,16 +99,16 @@ BorderImagesDialog::BorderImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Frame"));
     m_Type->setCurrentText(i18n("Niepce"));
     QString whatsThis = i18n(
-                     "<p>Select here the border type for your images:</p>"
-                     "<p>"
-                     "<b>Solid</b>: just surround the images with a line.<br/>"
-                     "<b>Niepce</b>: surround the images with a fine line and a large border "
-                     "(ideal for black and white pictures).<br/>"
-                     "<b>Raise</b>: creating a 3D effect around the images.<br/>"
-                     "<b>Frame</b>: surround the images with an ornamental border."
-                     "</p>");
+                            "<p>Select here the border type for your images:</p>"
+                            "<p>"
+                            "<b>Solid</b>: just surround the images with a line.<br/>"
+                            "<b>Niepce</b>: surround the images with a fine line and a large border "
+                            "(ideal for black and white pictures).<br/>"
+                            "<b>Raise</b>: creating a 3D effect around the images.<br/>"
+                            "<b>Frame</b>: surround the images with an ornamental border."
+                            "</p>");
 
-    m_Type->setWhatsThis(whatsThis );
+    m_Type->setWhatsThis(whatsThis);
 
     //---------------------------------------------
 
@@ -121,7 +121,7 @@ BorderImagesDialog::~BorderImagesDialog()
     delete m_about;
 }
 
-void BorderImagesDialog::slotHelp( void )
+void BorderImagesDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("borderimages", "kipi-plugins");
 }
@@ -131,49 +131,40 @@ void BorderImagesDialog::slotOptionsClicked(void)
     int Type = m_Type->currentItem();
     BorderOptionsDialog *optionsDialog = new BorderOptionsDialog(this, Type);
 
-    if ( Type == 0 )  // Solid
-    {
-       optionsDialog->m_solidBorderWidth->setValue(m_solidWidth);
-       optionsDialog->m_button_solidBorderColor->setColor(m_solidColor);
+    if (Type == 0) {  // Solid
+        optionsDialog->m_solidBorderWidth->setValue(m_solidWidth);
+        optionsDialog->m_button_solidBorderColor->setColor(m_solidColor);
     }
-    if ( Type == 1 ) // Niepce
-    {
-       optionsDialog->m_lineNiepceBorderWidth->setValue(m_lineNiepceWidth);
-       optionsDialog->m_button_lineNiepceBorderColor->setColor(m_lineNiepceColor);
-       optionsDialog->m_NiepceBorderWidth->setValue(m_NiepceWidth);
-       optionsDialog->m_button_NiepceBorderColor->setColor(m_NiepceColor);
+    if (Type == 1) { // Niepce
+        optionsDialog->m_lineNiepceBorderWidth->setValue(m_lineNiepceWidth);
+        optionsDialog->m_button_lineNiepceBorderColor->setColor(m_lineNiepceColor);
+        optionsDialog->m_NiepceBorderWidth->setValue(m_NiepceWidth);
+        optionsDialog->m_button_NiepceBorderColor->setColor(m_NiepceColor);
     }
-    if ( Type == 2 ) // Raise
-    {
-       optionsDialog->m_raiseBorderWidth->setValue(m_raiseWidth);
+    if (Type == 2) { // Raise
+        optionsDialog->m_raiseBorderWidth->setValue(m_raiseWidth);
     }
-    if ( Type == 3 ) // Frame
-    {
-       optionsDialog->m_frameBorderWidth->setValue(m_frameWidth);
-       optionsDialog->m_frameBevelBorderWidth->setValue(m_bevelWidth);
-       optionsDialog->m_button_frameBorderColor->setColor(m_frameColor);
+    if (Type == 3) { // Frame
+        optionsDialog->m_frameBorderWidth->setValue(m_frameWidth);
+        optionsDialog->m_frameBevelBorderWidth->setValue(m_bevelWidth);
+        optionsDialog->m_button_frameBorderColor->setColor(m_frameColor);
     }
 
-    if ( optionsDialog->exec() == KMessageBox::Ok )
-    {
-        if ( Type == 0 ) // Solid
-        {
+    if (optionsDialog->exec() == KMessageBox::Ok) {
+        if (Type == 0) { // Solid
             m_solidWidth = optionsDialog->m_solidBorderWidth->value();
             m_solidColor = optionsDialog->m_button_solidBorderColor->color();
         }
-        if ( Type == 1 ) // Niepce
-        {
+        if (Type == 1) { // Niepce
             m_lineNiepceWidth = optionsDialog->m_lineNiepceBorderWidth->value();
             m_lineNiepceColor = optionsDialog->m_button_lineNiepceBorderColor->color();
             m_NiepceWidth = optionsDialog->m_NiepceBorderWidth->value();
             m_NiepceColor = optionsDialog->m_button_NiepceBorderColor->color();
         }
-        if ( Type == 2 ) // Raise
-        {
+        if (Type == 2) { // Raise
             m_raiseWidth = optionsDialog->m_raiseBorderWidth->value();
         }
-        if ( Type == 3 ) // Frame
-        {
+        if (Type == 3) { // Frame
             m_frameWidth = optionsDialog->m_frameBorderWidth->value();
             m_bevelWidth = optionsDialog->m_frameBevelBorderWidth->value();
             m_frameColor = optionsDialog->m_button_frameBorderColor->color();
@@ -234,88 +225,83 @@ void BorderImagesDialog::saveSettings(void)
 }
 
 void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                        const QString& albumDest, bool previewMode)
+                                     const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
-       {
-       *m_PreviewProc << "-crop" << "300x300+0+0";
-       m_previewOutput.append( " -crop 300x300+0+0 ");
-       }
+    if (previewMode && smallPreview()) {    // Preview mode and small preview enabled !
+        *m_PreviewProc << "-crop" << "300x300+0+0";
+        m_previewOutput.append(" -crop 300x300+0+0 ");
+    }
 
-    if (m_Type->currentItem() == 0) // Solid
-       {
-       *proc << "-border";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_solidWidth ) + "x";
-       Temp2.append(Temp.setNum( m_solidWidth ));
-       *proc << Temp2;
-       *proc << "-bordercolor";
-       Temp2 = "rgb(" + Temp.setNum(m_solidColor.red()) + ",";
-       Temp2.append(Temp.setNum(m_solidColor.green()) + ",");
-       Temp2.append(Temp.setNum(m_solidColor.blue()) + ")");
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 0) { // Solid
+        *proc << "-border";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_solidWidth) + "x";
+        Temp2.append(Temp.setNum(m_solidWidth));
+        *proc << Temp2;
+        *proc << "-bordercolor";
+        Temp2 = "rgb(" + Temp.setNum(m_solidColor.red()) + ",";
+        Temp2.append(Temp.setNum(m_solidColor.green()) + ",");
+        Temp2.append(Temp.setNum(m_solidColor.blue()) + ")");
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 1) // Niepce
-       {
-       QString Temp, Temp2;
+    if (m_Type->currentItem() == 1) { // Niepce
+        QString Temp, Temp2;
 
-       *proc << "-border";
-       Temp2 = Temp.setNum( m_lineNiepceWidth ) + "x";
-       Temp2.append(Temp.setNum( m_lineNiepceWidth ));
-       *proc << Temp2;
+        *proc << "-border";
+        Temp2 = Temp.setNum(m_lineNiepceWidth) + "x";
+        Temp2.append(Temp.setNum(m_lineNiepceWidth));
+        *proc << Temp2;
 
-       *proc << "-bordercolor";
-       Temp2 = "rgb(" + Temp.setNum(m_NiepceColor.red()) + ",";
-       Temp2.append(Temp.setNum(m_NiepceColor.green()) + ",");
-       Temp2.append(Temp.setNum(m_NiepceColor.blue()) + ")");
-       *proc << Temp2;
+        *proc << "-bordercolor";
+        Temp2 = "rgb(" + Temp.setNum(m_NiepceColor.red()) + ",";
+        Temp2.append(Temp.setNum(m_NiepceColor.green()) + ",");
+        Temp2.append(Temp.setNum(m_NiepceColor.blue()) + ")");
+        *proc << Temp2;
 
-       *proc << "-border";
-       Temp2 = Temp.setNum( m_NiepceWidth ) + "x";
-       Temp2.append(Temp.setNum( m_NiepceWidth ));
-       *proc << Temp2;
+        *proc << "-border";
+        Temp2 = Temp.setNum(m_NiepceWidth) + "x";
+        Temp2.append(Temp.setNum(m_NiepceWidth));
+        *proc << Temp2;
 
-       *proc << "-bordercolor";
-       Temp2 = "rgb(" + Temp.setNum(m_lineNiepceColor.red()) + ",";
-       Temp2.append(Temp.setNum(m_lineNiepceColor.green()) + ",");
-       Temp2.append(Temp.setNum(m_lineNiepceColor.blue()) + ")");
-       *proc << Temp2;
-       }
+        *proc << "-bordercolor";
+        Temp2 = "rgb(" + Temp.setNum(m_lineNiepceColor.red()) + ",";
+        Temp2.append(Temp.setNum(m_lineNiepceColor.green()) + ",");
+        Temp2.append(Temp.setNum(m_lineNiepceColor.blue()) + ")");
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 2) // Raise
-       {
-       *proc << "-raise";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_raiseWidth ) + "x";
-       Temp2.append(Temp.setNum( m_raiseWidth ));
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 2) { // Raise
+        *proc << "-raise";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_raiseWidth) + "x";
+        Temp2.append(Temp.setNum(m_raiseWidth));
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 3) // Frame
-       {
-       *proc << "-frame";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_frameWidth ) + "x";
-       Temp2.append(Temp.setNum( m_frameWidth ) + "+");
-       Temp2.append(Temp.setNum( m_bevelWidth ) + "+");
-       Temp2.append(Temp.setNum( m_bevelWidth ) );
-       *proc << Temp2;
-       *proc << "-mattecolor";
-       Temp2 = "rgb(" + Temp.setNum(m_frameColor.red()) + ",";
-       Temp2.append(Temp.setNum(m_frameColor.green()) + ",");
-       Temp2.append(Temp.setNum(m_frameColor.blue()) + ")");
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 3) { // Frame
+        *proc << "-frame";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_frameWidth) + "x";
+        Temp2.append(Temp.setNum(m_frameWidth) + "+");
+        Temp2.append(Temp.setNum(m_bevelWidth) + "+");
+        Temp2.append(Temp.setNum(m_bevelWidth));
+        *proc << Temp2;
+        *proc << "-mattecolor";
+        Temp2 = "rgb(" + Temp.setNum(m_frameColor.red()) + ",";
+        Temp2.append(Temp.setNum(m_frameColor.green()) + ",");
+        Temp2.append(Temp.setNum(m_frameColor.blue()) + ")");
+        *proc << Temp2;
+    }
 
     *proc << "-verbose";
 
     *proc << item->pathSrc();
 
-    if ( !previewMode )   // No preview mode !
-       *proc << albumDest + "/" + item->nameDest();
+    if (!previewMode)     // No preview mode !
+        *proc << albumDest + "/" + item->nameDest();
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

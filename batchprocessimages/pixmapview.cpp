@@ -49,20 +49,21 @@ extern "C"
 #include <kprocess.h>
 #include <kurl.h>
 
-namespace KIPIBatchProcessImagesPlugin {
+namespace KIPIBatchProcessImagesPlugin
+{
 
 
 PixmapView::PixmapView(QWidget *parent)
-: QAbstractScrollArea(parent)
-, m_zoomFactor(0)
+        : QAbstractScrollArea(parent)
+        , m_zoomFactor(0)
 {
     m_pix = NULL;
     m_validPreview = false;
-    setMinimumSize(QSize(300,300));
-    horizontalScrollBar()->setLineStep( 1 );
-    horizontalScrollBar()->setPageStep( 1 );
-    verticalScrollBar()->setLineStep( 1 );
-    verticalScrollBar()->setPageStep( 1 );
+    setMinimumSize(QSize(300, 300));
+    horizontalScrollBar()->setLineStep(1);
+    horizontalScrollBar()->setPageStep(1);
+    verticalScrollBar()->setLineStep(1);
+    verticalScrollBar()->setPageStep(1);
     viewport()->setCursor(Qt::OpenHandCursor);
 }
 
@@ -79,22 +80,20 @@ void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath, bool
                         + QString::number(random()) + "PreviewImage.PNG";
 
     if (m_cropAction == true)
-       PreviewCal(ImagePath, tmpPath);
-    else
-       {
-       if ( m_img.load(ImagePath) == false )
-          PreviewCal(ImagePath, tmpPath);
-       else
-          {
-          if(!m_pix) m_pix = new QPixmap(m_img.width(), m_img.height());
-          m_w = m_img.width();
-          m_h = m_img.height();
-          m_validPreview = true;
-          updateView();
-          horizontalScrollBar()->setLineStep(1);
-          verticalScrollBar()->setLineStep(1);
-          }
-       }
+        PreviewCal(ImagePath, tmpPath);
+    else {
+        if (m_img.load(ImagePath) == false)
+            PreviewCal(ImagePath, tmpPath);
+        else {
+            if (!m_pix) m_pix = new QPixmap(m_img.width(), m_img.height());
+            m_w = m_img.width();
+            m_h = m_img.height();
+            m_validPreview = true;
+            updateView();
+            horizontalScrollBar()->setLineStep(1);
+            verticalScrollBar()->setLineStep(1);
+        }
+    }
 }
 
 void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/)
@@ -108,30 +107,28 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
                i18n("Preview\nimage\nprocessing\nin\nprogress..."));
     p.end();
 
-    m_previewOutput ="convert";
+    m_previewOutput = "convert";
     m_PreviewProc = new KProcess(this);
     m_PreviewProc->setOutputChannelMode(KProcess::MergedChannels);
     *m_PreviewProc << "convert";
     *m_PreviewProc << "-verbose";
 
-    if (m_cropAction == true)
-       {
-       *m_PreviewProc << "-crop" << "300x300+0+0";
-       m_previewOutput.append( " -crop 300x300+0+0 " );
-       }
+    if (m_cropAction == true) {
+        *m_PreviewProc << "-crop" << "300x300+0+0";
+        m_previewOutput.append(" -crop 300x300+0+0 ");
+    }
 
     *m_PreviewProc << ImagePath;
     *m_PreviewProc << m_previewFileName;
-    m_previewOutput.append( " -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
+    m_previewOutput.append(" -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
 
     connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(slotPreviewProcessFinished()));
 
     connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 
     m_PreviewProc->start();
-    if(!m_PreviewProc->waitForStarted())
-    {
-	delete m_PreviewProc;
+    if (!m_PreviewProc->waitForStarted()) {
+        delete m_PreviewProc;
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
         return;
@@ -141,7 +138,7 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
 void PixmapView::slotPreviewReadyRead()
 {
     QByteArray output = m_PreviewProc->readAll();
-    m_previewOutput.append( QString::fromLocal8Bit(output.data(), output.size()) );
+    m_previewOutput.append(QString::fromLocal8Bit(output.data(), output.size()));
 }
 
 void PixmapView::slotPreviewProcessFinished()
@@ -149,35 +146,31 @@ void PixmapView::slotPreviewProcessFinished()
     int ValRet = m_PreviewProc->exitCode();
     kDebug(51000) << "Convert exit (" << ValRet << ")" ;
 
-    if ( ValRet == 0 )
-       {
-       if ( m_img.load( m_previewFileName ) == true )
-          {
-          if(!m_pix) m_pix = new QPixmap(300, 300);
-          m_w = m_img.width();
-          m_h = m_img.height();
-          m_validPreview = true;
-          updateView();
-          horizontalScrollBar()->setLineStep(1);
-          verticalScrollBar()->setLineStep(1);
-          KUrl deletePreviewImage( m_previewFileName );
+    if (ValRet == 0) {
+        if (m_img.load(m_previewFileName) == true) {
+            if (!m_pix) m_pix = new QPixmap(300, 300);
+            m_w = m_img.width();
+            m_h = m_img.height();
+            m_validPreview = true;
+            updateView();
+            horizontalScrollBar()->setLineStep(1);
+            verticalScrollBar()->setLineStep(1);
+            KUrl deletePreviewImage(m_previewFileName);
 
-          KIO::NetAccess::del( deletePreviewImage, kapp->activeWindow() );
-          }
-       else
-          {
-          m_pix = new QPixmap(viewport()->size());
-          QPainter p;
-          p.begin(m_pix);
-          p.fillRect(0, 0, m_pix->width(), m_pix->height(), Qt::white);
-          p.setPen(Qt::red);
-          p.drawText(0, 0, m_pix->width(), m_pix->height(), Qt::AlignCenter,
-                     i18n("Cannot\nprocess\npreview\nimage."));
-          p.end();
-          viewport()->update();
-          m_validPreview = false;
-          }
-       }
+            KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
+        } else {
+            m_pix = new QPixmap(viewport()->size());
+            QPainter p;
+            p.begin(m_pix);
+            p.fillRect(0, 0, m_pix->width(), m_pix->height(), Qt::white);
+            p.setPen(Qt::red);
+            p.drawText(0, 0, m_pix->width(), m_pix->height(), Qt::AlignCenter,
+                       i18n("Cannot\nprocess\npreview\nimage."));
+            p.end();
+            viewport()->update();
+            m_validPreview = false;
+        }
+    }
 }
 
 void PixmapView::setZoom(int zoomFactor)
@@ -195,8 +188,8 @@ void PixmapView::setZoom(int zoomFactor)
 
 void PixmapView::updateView()
 {
-    int w = m_w - (int)((float)m_w * (100-(float)m_zoomFactor) / 100);
-    int h = m_h - (int)((float)m_h * (100-(float)m_zoomFactor) / 100);
+    int w = m_w - (int)((float)m_w * (100 - (float)m_zoomFactor) / 100);
+    int h = m_h - (int)((float)m_h * (100 - (float)m_zoomFactor) / 100);
 
     QImage imgTmp = m_img.scaled(w, h);
     m_pix->convertFromImage(imgTmp);
@@ -206,7 +199,7 @@ void PixmapView::updateView()
 
 void PixmapView::paintEvent(QPaintEvent*)
 {
-    if(!m_pix) return;
+    if (!m_pix) return;
     QPainter painter(viewport());
     const int x = horizontalScrollBar()->value();
     const int y = verticalScrollBar()->value();
@@ -218,27 +211,27 @@ void PixmapView::resizeEvent(QResizeEvent*)
     updateScrollBars();
 }
 
-void PixmapView::contentsWheelEvent( QWheelEvent * e )
+void PixmapView::contentsWheelEvent(QWheelEvent * e)
 {
     emit wheelChanged(e->delta());
 }
 
-void PixmapView::mousePressEvent ( QMouseEvent * e )
+void PixmapView::mousePressEvent(QMouseEvent * e)
 {
-    if ( e->button() == Qt::LeftButton ) {
+    if (e->button() == Qt::LeftButton) {
         viewport()->setCursor(Qt::ClosedHandCursor);
         m_dragPos = e->pos();
     }
 }
 
-void PixmapView::mouseReleaseEvent ( QMouseEvent * /*e*/ )
+void PixmapView::mouseReleaseEvent(QMouseEvent * /*e*/)
 {
     viewport()->setCursor(Qt::OpenHandCursor);
 }
 
-void PixmapView::mouseMoveEvent( QMouseEvent * e )
+void PixmapView::mouseMoveEvent(QMouseEvent * e)
 {
-    if ( e->state() == Qt::LeftButton ) {
+    if (e->state() == Qt::LeftButton) {
         QPoint delta = e->pos() - m_dragPos;
         horizontalScrollBar()->setValue(
             horizontalScrollBar()->value() - delta.x());

@@ -39,31 +39,31 @@ class ColorImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   ColorImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~ColorImagesDialog();
+    ColorImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~ColorImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
-   void slotTypeChanged(int type);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
+    void slotTypeChanged(int type);
 
 protected:
 
-   QString                m_depthValue;
-   int                    m_fuzzDistance;
-   int                    m_segmentCluster;
-   int                    m_segmentSmooth;
+    QString                m_depthValue;
+    int                    m_fuzzDistance;
+    int                    m_segmentCluster;
+    int                    m_segmentSmooth;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

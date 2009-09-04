@@ -57,8 +57,7 @@ class RenameImagesWidget : public QWidget, public Ui_RenameImagesBase
 
 public:
 
-    enum SortOrder
-    {
+    enum SortOrder {
         BYNAME = 0,
         BYSIZE,
         BYDATE

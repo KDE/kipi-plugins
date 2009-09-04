@@ -32,7 +32,7 @@
 #include "ui_imagepreview.h"
 
 
-namespace KIPIPlugins 
+namespace KIPIPlugins
 {
 class KPAboutData;
 }
@@ -49,13 +49,13 @@ public:
 
     ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
                  bool cropActionOrig, bool cropActionDest, const QString &EffectName,
-                 const QString &FileName, QWidget *parent=0);
+                 const QString &FileName, QWidget *parent = 0);
     ~ImagePreview();
 
 private slots:
 
-    void slotZoomFactorValueChanged( int ZoomFactorValue );
-    void slotWheelChanged( int delta );
+    void slotZoomFactorValueChanged(int ZoomFactorValue);
+    void slotWheelChanged(int delta);
     void slotHelp(void);
 
 private:

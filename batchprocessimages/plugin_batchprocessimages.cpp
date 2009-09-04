@@ -67,18 +67,18 @@ extern "C"
 #include "plugin_batchprocessimages.moc"
 
 K_PLUGIN_FACTORY(BatchProcessImagesFactory, registerPlugin<Plugin_BatchProcessImages>();)
-K_EXPORT_PLUGIN( BatchProcessImagesFactory("kipiplugin_batchprocessimages"))
+K_EXPORT_PLUGIN(BatchProcessImagesFactory("kipiplugin_batchprocessimages"))
 
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVariantList&)
-                         : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
-                                        parent, "BatchProcessImages")
+        : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
+                       parent, "BatchProcessImages")
 {
     kDebug(51001) << "Plugin_BatchProcessImages plugin loaded" ;
 }
 
-void Plugin_BatchProcessImages::setup( QWidget* widget )
+void Plugin_BatchProcessImages::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    KIPI::Plugin::setup(widget);
 
     m_action_borderimages = actionCollection()->addAction("batch_border_images", this, SLOT(slotActivate()));
     m_action_borderimages->setIcon(KIcon("borderimages"));
@@ -112,58 +112,57 @@ void Plugin_BatchProcessImages::setup( QWidget* widget )
     m_action_resizeimages->setIcon(KIcon("resizeimages"));
     m_action_resizeimages->setText(i18n("Resize Images..."));
 
-    addAction( m_action_borderimages );
-    addAction( m_action_colorimages );
-    addAction( m_action_convertimages );
-    addAction( m_action_effectimages );
-    addAction( m_action_filterimages );
-    addAction( m_action_renameimages );
-    addAction( m_action_recompressimages );
-    addAction( m_action_resizeimages );
+    addAction(m_action_borderimages);
+    addAction(m_action_colorimages);
+    addAction(m_action_convertimages);
+    addAction(m_action_effectimages);
+    addAction(m_action_filterimages);
+    addAction(m_action_renameimages);
+    addAction(m_action_recompressimages);
+    addAction(m_action_resizeimages);
 
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >(parent());
 
-    if ( !interface )
-    {
-       kError( 51000 ) << "Kipi interface is null!" ;
-       return;
+    if (!interface) {
+        kError(51000) << "Kipi interface is null!" ;
+        return;
     }
 
     KIPI::ImageCollection images = interface->currentAlbum();
     bool enable                  = images.isValid() && !images.images().isEmpty();
 
-    m_action_borderimages->setEnabled( enable );
-    m_action_colorimages->setEnabled( enable );
-    m_action_convertimages->setEnabled( enable );
-    m_action_effectimages->setEnabled( enable );
-    m_action_filterimages->setEnabled( enable );
-    m_action_renameimages->setEnabled( enable );
-    m_action_recompressimages->setEnabled( enable );
-    m_action_resizeimages->setEnabled( enable );
+    m_action_borderimages->setEnabled(enable);
+    m_action_colorimages->setEnabled(enable);
+    m_action_convertimages->setEnabled(enable);
+    m_action_effectimages->setEnabled(enable);
+    m_action_filterimages->setEnabled(enable);
+    m_action_renameimages->setEnabled(enable);
+    m_action_recompressimages->setEnabled(enable);
+    m_action_resizeimages->setEnabled(enable);
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_borderimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_borderimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_colorimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_colorimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_convertimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_convertimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_effectimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_effectimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_filterimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_filterimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_renameimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_renameimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_recompressimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_recompressimages, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_action_resizeimages, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_action_resizeimages, SLOT(setEnabled(bool)));
 }
 
 Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
@@ -172,27 +171,25 @@ Plugin_BatchProcessImages::~Plugin_BatchProcessImages()
 
 void Plugin_BatchProcessImages::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
-    if ( !interface )
-    {
-        kError( 51000 ) << "Kipi interface is null!" ;
+    if (!interface) {
+        kError(51000) << "Kipi interface is null!" ;
         return;
     }
 
     KIPI::ImageCollection images = interface->currentSelection();
 
-    if ( !images.isValid() )
+    if (!images.isValid())
         return;
 
-    if ( images.images().isEmpty() )
-       images = interface->currentAlbum();
+    if (images.images().isEmpty())
+        images = interface->currentAlbum();
 
-    if ( !images.isValid() )
+    if (!images.isValid())
         return;
 
-    if ( images.images().isEmpty() )
-    {
+    if (images.images().isEmpty()) {
         KMessageBox::sorry(kapp->activeWindow(),
                            i18n("Please select an album or a selection of images."));
         return;
@@ -202,80 +199,63 @@ void Plugin_BatchProcessImages::slotActivate()
 
     QString from(sender()->name());
 
-    if (from == "batch_convert_images")
-    {
-        m_ConvertImagesDialog = new KIPIBatchProcessImagesPlugin::ConvertImagesDialog( urlList,
-                                                                  interface, kapp->activeWindow());
+    if (from == "batch_convert_images") {
+        m_ConvertImagesDialog = new KIPIBatchProcessImagesPlugin::ConvertImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_ConvertImagesDialog->show();
-    }
-    else if (from == "batch_rename_images")
-    {
+    } else if (from == "batch_rename_images") {
         KIPIBatchProcessImagesPlugin::RenameImagesDialog
-            dlg(urlList, interface, kapp->activeWindow());
+        dlg(urlList, interface, kapp->activeWindow());
         dlg.exec();
-    }
-    else if (from == "batch_border_images")
-    {
-        m_BorderImagesDialog = new KIPIBatchProcessImagesPlugin::BorderImagesDialog( urlList,
-                                                                 interface, kapp->activeWindow());
+    } else if (from == "batch_border_images") {
+        m_BorderImagesDialog = new KIPIBatchProcessImagesPlugin::BorderImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_BorderImagesDialog->show();
-    }
-    else if (from == "batch_color_images")
-    {
-        m_ColorImagesDialog = new KIPIBatchProcessImagesPlugin::ColorImagesDialog( urlList,
-                                                                interface, kapp->activeWindow());
+    } else if (from == "batch_color_images") {
+        m_ColorImagesDialog = new KIPIBatchProcessImagesPlugin::ColorImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_ColorImagesDialog->show();
-    }
-    else if (from == "batch_filter_images")
-    {
-        m_FilterImagesDialog = new KIPIBatchProcessImagesPlugin::FilterImagesDialog( urlList,
-                                                                 interface, kapp->activeWindow());
+    } else if (from == "batch_filter_images") {
+        m_FilterImagesDialog = new KIPIBatchProcessImagesPlugin::FilterImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_FilterImagesDialog->show();
-    }
-    else if (from == "batch_effect_images")
-    {
-        m_EffectImagesDialog = new KIPIBatchProcessImagesPlugin::EffectImagesDialog( urlList,
-                                                                 interface, kapp->activeWindow());
+    } else if (from == "batch_effect_images") {
+        m_EffectImagesDialog = new KIPIBatchProcessImagesPlugin::EffectImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_EffectImagesDialog->show();
-    }
-    else if (from == "batch_recompress_images")
-    {
-        m_RecompressImagesDialog = new KIPIBatchProcessImagesPlugin::RecompressImagesDialog( urlList,
-                                                                     interface, kapp->activeWindow());
+    } else if (from == "batch_recompress_images") {
+        m_RecompressImagesDialog = new KIPIBatchProcessImagesPlugin::RecompressImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_RecompressImagesDialog->show();
-    }
-    else if (from == "batch_resize_images")
-    {
-        m_ResizeImagesDialog = new KIPIBatchProcessImagesPlugin::ResizeImagesDialog( urlList,
-                                                                 interface, kapp->activeWindow());
+    } else if (from == "batch_resize_images") {
+        m_ResizeImagesDialog = new KIPIBatchProcessImagesPlugin::ResizeImagesDialog(urlList,
+                interface, kapp->activeWindow());
         m_ResizeImagesDialog->show();
-    }
-    else
-    {
-        kWarning( 51000 ) << "The impossible happened... unknown batch action specified" ;
+    } else {
+        kWarning(51000) << "The impossible happened... unknown batch action specified" ;
         return;
     }
 }
 
-KIPI::Category Plugin_BatchProcessImages::category( KAction* action ) const
+KIPI::Category Plugin_BatchProcessImages::category(KAction* action) const
 {
-    if ( action == m_action_borderimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_colorimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_convertimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_effectimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_filterimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_renameimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_recompressimages )
-       return KIPI::BatchPlugin;
-    else if ( action == m_action_resizeimages )
-       return KIPI::BatchPlugin;
+    if (action == m_action_borderimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_colorimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_convertimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_effectimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_filterimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_renameimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_recompressimages)
+        return KIPI::BatchPlugin;
+    else if (action == m_action_resizeimages)
+        return KIPI::BatchPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification" ;
+    kWarning(51000) << "Unrecognized action for plugin category identification" ;
     return KIPI::BatchPlugin; // no warning from compiler, please
 }

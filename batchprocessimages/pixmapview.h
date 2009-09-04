@@ -31,27 +31,28 @@ class QWheelEvent;
 
 class KProcess;
 
-namespace KIPIBatchProcessImagesPlugin {
+namespace KIPIBatchProcessImagesPlugin
+{
 
 class PixmapView : public QAbstractScrollArea
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    PixmapView(QWidget *parent=0);
+    PixmapView(QWidget *parent = 0);
     ~PixmapView();
 
     void setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction);
     void setZoom(int zoomFactor);
 
 signals:
-    void wheelChanged( int delta );
+    void wheelChanged(int delta);
 
 protected:
-    void contentsWheelEvent( QWheelEvent * e );
-    void mousePressEvent ( QMouseEvent * e );
-    void mouseReleaseEvent ( QMouseEvent * e );
-    void mouseMoveEvent( QMouseEvent * e );
+    void contentsWheelEvent(QWheelEvent * e);
+    void mousePressEvent(QMouseEvent * e);
+    void mouseReleaseEvent(QMouseEvent * e);
+    void mouseMoveEvent(QMouseEvent * e);
     void paintEvent(QPaintEvent*);
     void resizeEvent(QResizeEvent*);
 

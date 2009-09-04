@@ -41,7 +41,7 @@ class BatchProcessImagesList : public QTreeWidget
 
 public:
 
-    BatchProcessImagesList(QWidget *parent=0);
+    BatchProcessImagesList(QWidget *parent = 0);
 
 signals:
 

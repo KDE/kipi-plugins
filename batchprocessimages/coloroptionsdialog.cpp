@@ -45,67 +45,64 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
-                        : KDialog(parent)
+        : KDialog(parent)
 {
     setCaption(i18n("Color Options"));
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget( this );
+    QWidget* box = new QWidget(this);
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
-    if (ColorType == 1) // Depth
-       {
-       QLabel *m_label_depthValue = new QLabel (i18n("Depth value:"), box);
-       dvlay->addWidget( m_label_depthValue );
-       m_depthValue = new KComboBox( box);
-       m_depthValue->insertItem("8");
-       m_depthValue->insertItem("16");
-       m_depthValue->insertItem("32");
-       m_depthValue->setWhatsThis(i18n("Select here the image depth in bits.") );
-       m_label_depthValue->setBuddy( m_depthValue );
-       dvlay->addWidget( m_depthValue );
-       }
+    if (ColorType == 1) { // Depth
+        QLabel *m_label_depthValue = new QLabel(i18n("Depth value:"), box);
+        dvlay->addWidget(m_label_depthValue);
+        m_depthValue = new KComboBox(box);
+        m_depthValue->insertItem("8");
+        m_depthValue->insertItem("16");
+        m_depthValue->insertItem("32");
+        m_depthValue->setWhatsThis(i18n("Select here the image depth in bits."));
+        m_label_depthValue->setBuddy(m_depthValue);
+        dvlay->addWidget(m_depthValue);
+    }
 
-    if (ColorType == 3) // Fuzz
-       {
-       QLabel *m_label_fuzzDistance = new QLabel (i18n("Distance:"), box);
-       dvlay->addWidget( m_label_fuzzDistance );
-       m_fuzzDistance = new KIntNumInput(3, box);
-       m_fuzzDistance->setRange(0, 20);
-       m_fuzzDistance->setSliderEnabled(true);
-       m_fuzzDistance->setWhatsThis(i18n("Select here the fuzz distance in "
-                                         "absolute intensity units.") );
-       m_label_fuzzDistance->setBuddy( m_fuzzDistance );
-       dvlay->addWidget( m_fuzzDistance );
-       }
+    if (ColorType == 3) { // Fuzz
+        QLabel *m_label_fuzzDistance = new QLabel(i18n("Distance:"), box);
+        dvlay->addWidget(m_label_fuzzDistance);
+        m_fuzzDistance = new KIntNumInput(3, box);
+        m_fuzzDistance->setRange(0, 20);
+        m_fuzzDistance->setSliderEnabled(true);
+        m_fuzzDistance->setWhatsThis(i18n("Select here the fuzz distance in "
+                                          "absolute intensity units."));
+        m_label_fuzzDistance->setBuddy(m_fuzzDistance);
+        dvlay->addWidget(m_fuzzDistance);
+    }
 
-    if (ColorType == 9) // Segment
-       {
-       QLabel *m_label_segmentCluster = new QLabel (i18n("Cluster threshold:"), box);
-       dvlay->addWidget( m_label_segmentCluster );
-       m_segmentCluster = new KIntNumInput(3, box);
-       m_segmentCluster->setRange(0, 20);
-       m_segmentCluster->setSliderEnabled(true);
-       m_segmentCluster->setWhatsThis(i18n("Select here the value which represents the minimum "
-                                           "number of pixels contained in a hexahedra before it can "
-                                           "be considered valid.") );
-       m_label_segmentCluster->setBuddy( m_segmentCluster );
-       dvlay->addWidget( m_segmentCluster );
+    if (ColorType == 9) { // Segment
+        QLabel *m_label_segmentCluster = new QLabel(i18n("Cluster threshold:"), box);
+        dvlay->addWidget(m_label_segmentCluster);
+        m_segmentCluster = new KIntNumInput(3, box);
+        m_segmentCluster->setRange(0, 20);
+        m_segmentCluster->setSliderEnabled(true);
+        m_segmentCluster->setWhatsThis(i18n("Select here the value which represents the minimum "
+                                            "number of pixels contained in a hexahedra before it can "
+                                            "be considered valid."));
+        m_label_segmentCluster->setBuddy(m_segmentCluster);
+        dvlay->addWidget(m_segmentCluster);
 
-       QLabel *m_label_segmentSmooth = new QLabel (i18n("Smooth threshold:"), box);
-       dvlay->addWidget( m_label_segmentSmooth );
-       m_segmentSmooth = new KIntNumInput(3, box);
-       m_segmentSmooth->setRange(0, 20);
-       m_segmentSmooth->setSliderEnabled(true);
-       m_segmentSmooth->setWhatsThis(i18n("Select here the value which eliminates noise in the "
-                                          "second derivative of the histogram. As the value is increased, "
-                                          "you can expect a smoother second derivative.") );
-       m_label_segmentSmooth->setBuddy( m_segmentSmooth );
-       dvlay->addWidget( m_segmentSmooth );
-       }
+        QLabel *m_label_segmentSmooth = new QLabel(i18n("Smooth threshold:"), box);
+        dvlay->addWidget(m_label_segmentSmooth);
+        m_segmentSmooth = new KIntNumInput(3, box);
+        m_segmentSmooth->setRange(0, 20);
+        m_segmentSmooth->setSliderEnabled(true);
+        m_segmentSmooth->setWhatsThis(i18n("Select here the value which eliminates noise in the "
+                                           "second derivative of the histogram. As the value is increased, "
+                                           "you can expect a smoother second derivative."));
+        m_label_segmentSmooth->setBuddy(m_segmentSmooth);
+        dvlay->addWidget(m_segmentSmooth);
+    }
 }
 
 ColorOptionsDialog::~ColorOptionsDialog()

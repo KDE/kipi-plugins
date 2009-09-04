@@ -50,8 +50,8 @@ class RenameImagesDialog : public KDialog
 public:
 
     RenameImagesDialog(const KUrl::List& images,
-                    KIPI::Interface* interface,
-                    QWidget* parent);
+                       KIPI::Interface* interface,
+                       QWidget* parent);
     ~RenameImagesDialog();
 
 private:

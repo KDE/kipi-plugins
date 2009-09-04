@@ -39,43 +39,43 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   EffectImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~EffectImagesDialog();
+    EffectImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~EffectImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
 
 protected:
 
-   int  m_latWidth;
-   int  m_latHeight;
-   int  m_latOffset;
-   int  m_charcoalRadius;
-   int  m_charcoalDeviation;
-   int  m_edgeRadius;
-   int  m_embossRadius;
-   int  m_embossDeviation;
-   int  m_implodeFactor;
-   int  m_paintRadius;
-   int  m_shadeAzimuth;
-   int  m_shadeElevation;
-   int  m_solarizeFactor;
-   int  m_spreadRadius;
-   int  m_swirlDegrees;
-   int  m_waveAmplitude;
-   int  m_waveLenght;
+    int  m_latWidth;
+    int  m_latHeight;
+    int  m_latOffset;
+    int  m_charcoalRadius;
+    int  m_charcoalDeviation;
+    int  m_edgeRadius;
+    int  m_embossRadius;
+    int  m_embossDeviation;
+    int  m_implodeFactor;
+    int  m_paintRadius;
+    int  m_shadeAzimuth;
+    int  m_shadeElevation;
+    int  m_solarizeFactor;
+    int  m_spreadRadius;
+    int  m_swirlDegrees;
+    int  m_waveAmplitude;
+    int  m_waveLenght;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

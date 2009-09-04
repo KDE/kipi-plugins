@@ -64,8 +64,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
-                   : BatchProcessImagesDialog( urlList, interface, i18n("Batch Convert Images"), parent )
+ConvertImagesDialog::ConvertImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Convert Images"), parent)
 {
     // About data and help button.
 
@@ -73,7 +73,7 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin for batch converting images.\n"
-                                                     "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
+                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -86,9 +86,9 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
     DialogUtils::setupHelpButton(this, m_about);
     //---------------------------------------------
 
-    setOptionBoxTitle( i18n("Image Conversion Options") );
+    setOptionBoxTitle(i18n("Image Conversion Options"));
 
-    m_labelType->setText( i18n("Format:") );
+    m_labelType->setText(i18n("Format:"));
 
     m_Type->insertItem("JPEG");
     m_Type->insertItem("PNG");
@@ -132,7 +132,7 @@ ConvertImagesDialog::ConvertImagesDialog( KUrl::List urlList, KIPI::Interface* i
                                  "Usually, the purpose of the EPS file is to be embedded inside another PostScript "
                                  "language page description.</p>");
 
-    m_Type->setWhatsThis(whatsThis );
+    m_Type->setWhatsThis(whatsThis);
 
     setPreviewOptionsVisible(false);
 
@@ -147,17 +147,17 @@ ConvertImagesDialog::~ConvertImagesDialog()
     delete m_about;
 }
 
-void ConvertImagesDialog::slotHelp( void )
+void ConvertImagesDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("convertimages", "kipi-plugins");
 }
 
 void ConvertImagesDialog::slotTypeChanged(int type)
 {
-    if ( type == 3 || type == 4 || type == 6 ) // PPM || BMP || EPS
-       m_optionsButton->setEnabled(false);
+    if (type == 3 || type == 4 || type == 6)   // PPM || BMP || EPS
+        m_optionsButton->setEnabled(false);
     else
-       m_optionsButton->setEnabled(true);
+        m_optionsButton->setEnabled(true);
 
     m_listFiles->clear();
     listImageFiles();
@@ -168,31 +168,28 @@ void ConvertImagesDialog::slotOptionsClicked(void)
     int Type = m_Type->currentItem();
     ConvertOptionsDialog *optionsDialog = new ConvertOptionsDialog(this, Type);
 
-    if (Type == 0) // JPEG
-    {
-       optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
-       optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);
+    if (Type == 0) { // JPEG
+        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
+        optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);
     }
     if (Type == 1) // PNG
-       optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
+        optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
     if (Type == 2) // TIFF
-       optionsDialog->m_TIFFCompressionAlgo->setCurrentText(m_TIFFCompressionAlgo);
+        optionsDialog->m_TIFFCompressionAlgo->setCurrentText(m_TIFFCompressionAlgo);
     if (Type == 5) // TGA
-       optionsDialog->m_TGACompressionAlgo->setCurrentText(m_TGACompressionAlgo);
+        optionsDialog->m_TGACompressionAlgo->setCurrentText(m_TGACompressionAlgo);
 
-    if ( optionsDialog->exec() == KMessageBox::Ok )
-    {
-       if (Type == 0) // JPEG
-       {
-          m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
-          m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
-       }
-       if (Type == 1) // PNG
-          m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
-       if (Type == 2) // TIFF
-          m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
-       if (Type == 5) // TGA
-          m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
+    if (optionsDialog->exec() == KMessageBox::Ok) {
+        if (Type == 0) { // JPEG
+            m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
+            m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
+        }
+        if (Type == 1) // PNG
+            m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
+        if (Type == 2) // TIFF
+            m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
+        if (Type == 5) // TGA
+            m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
     }
 
     delete optionsDialog;
@@ -206,10 +203,10 @@ void ConvertImagesDialog::readSettings(void)
     KConfigGroup group = config.group("ConvertImages Settings");
 
     m_Type->setCurrentIndex(group.readEntry("ImagesFormat", 0));  // JPEG per default
-    if ( group.readEntry("CompressLossLess", "false") == "true")
-       m_compressLossLess = true;
+    if (group.readEntry("CompressLossLess", "false") == "true")
+        m_compressLossLess = true;
     else
-       m_compressLossLess = false;
+        m_compressLossLess = false;
 
     m_JPEGPNGCompression = group.readEntry("JPEGPNGCompression", 75);
     m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
@@ -235,77 +232,61 @@ void ConvertImagesDialog::saveSettings(void)
 }
 
 void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                         const QString& albumDest, bool previewMode)
+                                      const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    if (m_Type->currentItem() == 0) // JPEG
-    {
-       if (m_compressLossLess == true)
-       {
-          *proc << "-compress" << "Lossless";
-       }
-       else
-       {
-          *proc << "-quality";
-          QString Temp;
-          *proc << Temp.setNum( m_JPEGPNGCompression );
-       }
+    if (m_Type->currentItem() == 0) { // JPEG
+        if (m_compressLossLess == true) {
+            *proc << "-compress" << "Lossless";
+        } else {
+            *proc << "-quality";
+            QString Temp;
+            *proc << Temp.setNum(m_JPEGPNGCompression);
+        }
     }
 
-    if (m_Type->currentItem() == 1) // PNG
-    {
-       *proc << "-quality";
-       QString Temp;
-       *proc << Temp.setNum( m_JPEGPNGCompression );
+    if (m_Type->currentItem() == 1) { // PNG
+        *proc << "-quality";
+        QString Temp;
+        *proc << Temp.setNum(m_JPEGPNGCompression);
     }
 
-    if (m_Type->currentItem() == 2) // TIFF
-    {
-       *proc << "-compress";
+    if (m_Type->currentItem() == 2) { // TIFF
+        *proc << "-compress";
 
-       if (m_TIFFCompressionAlgo == i18n("None"))
-       {
-          *proc << "None";
-       }
-       else
-       {
-          *proc << m_TIFFCompressionAlgo;
-       }
+        if (m_TIFFCompressionAlgo == i18n("None")) {
+            *proc << "None";
+        } else {
+            *proc << m_TIFFCompressionAlgo;
+        }
     }
 
-    if (m_Type->currentItem() == 5) // TGA
-    {
-       *proc << "-compress";
+    if (m_Type->currentItem() == 5) { // TGA
+        *proc << "-compress";
 
-       if (m_TGACompressionAlgo == i18n("None"))
-       {
-          *proc << "None";
-       }
-       else
-       {
-          *proc << m_TGACompressionAlgo;
-       }
+        if (m_TGACompressionAlgo == i18n("None")) {
+            *proc << "None";
+        } else {
+            *proc << m_TGACompressionAlgo;
+        }
     }
 
     *proc << item->pathSrc() + "[0]";
 
-    if ( !previewMode )   // No preview mode !
-    {
-       *proc << albumDest + "/" + item->nameDest();
+    if (!previewMode) {   // No preview mode !
+        *proc << albumDest + "/" + item->nameDest();
     }
 }
 
 void ConvertImagesDialog::processDone()
 {
-    if (m_Type->currentItem() == 0)
-    {
+    if (m_Type->currentItem() == 0) {
         // JPEG file, we remove IPTC preview.
 
         BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>(
-                                       **m_listFile2Process_iterator );
-        if (item)
-        {
+                                           **m_listFile2Process_iterator);
+        if (item) {
             QString src = item->pathSrc();
             QString tgt = destinationUrl().path() + "/" + item->nameDest();
             QFileInfo fi(tgt);
@@ -338,7 +319,7 @@ QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 {
     QString Temp;
 
-    Temp = fileName.left( fileName.findRev('.', -1) );             // The source file name without extension.
+    Temp = fileName.left(fileName.findRev('.', -1));               // The source file name without extension.
     Temp = Temp + "." + ImageFileExt(m_Type->currentText());       // Added new file extension.
 
     return Temp;
@@ -346,12 +327,12 @@ QString ConvertImagesDialog::oldFileName2NewFileName(QString fileName)
 
 QString ConvertImagesDialog::ImageFileExt(QString Ext)
 {
-    if ( Ext == "TIFF" || Ext == "tiff" )
-       return ("tif");
-    else if ( Ext == "JPEG" || Ext == "jpeg" || Ext == "JPE" || Ext == "jpe" )
-       return ("jpg");
+    if (Ext == "TIFF" || Ext == "tiff")
+        return ("tif");
+    else if (Ext == "JPEG" || Ext == "jpeg" || Ext == "JPE" || Ext == "jpe")
+        return ("jpg");
     else
-       return (Ext.toLower());
+        return (Ext.toLower());
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -52,7 +52,7 @@ public:
     QString error();
     QString outputMess();
     bool overWrote();
-    void setDidOverWrite( bool b );
+    void setDidOverWrite(bool b);
 
     void changeResult(QString text);
     void changeError(QString text);

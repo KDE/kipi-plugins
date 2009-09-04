@@ -51,7 +51,7 @@ namespace KIPIBatchProcessImagesPlugin
 RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
                                        KIPI::Interface* interface,
                                        QWidget* parent)
-    : KDialog(parent)
+        : KDialog(parent)
 {
     setCaption(i18n("Rename Images"));
     setModal(true);
@@ -85,7 +85,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
     connect(this, SIGNAL(user1Clicked()),
             m_widget, SLOT(slotStart()));
     connect(this, SIGNAL(helpClicked()),
-	    this, SLOT(slotHelp()));
+            this, SLOT(slotHelp()));
     adjustSize();
 }
 
@@ -96,7 +96,7 @@ RenameImagesDialog::~RenameImagesDialog()
 
 void RenameImagesDialog::slotHelp(void)
 {
-   KToolInvocation::invokeHelp("renameimages", "kipi-plugins");
+    KToolInvocation::invokeHelp("renameimages", "kipi-plugins");
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

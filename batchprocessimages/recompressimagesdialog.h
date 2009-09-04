@@ -39,34 +39,34 @@ class RecompressImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   RecompressImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~RecompressImagesDialog();
+    RecompressImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~RecompressImagesDialog();
 
 private slots:
 
-   void slotOptionsClicked(void);
-   void slotHelp(void);
+    void slotOptionsClicked(void);
+    void slotHelp(void);
 
 protected:
 
-   int     m_JPEGCompression;
-   int     m_PNGCompression;
-   bool    m_compressLossLess;
-   QString m_TIFFCompressionAlgo;
-   QString m_TGACompressionAlgo;
+    int     m_JPEGCompression;
+    int     m_PNGCompression;
+    bool    m_compressLossLess;
+    QString m_TIFFCompressionAlgo;
+    QString m_TGACompressionAlgo;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
-   bool prepareStartProcess(BatchProcessImagesItem *item,
-                            const QString& albumDest);
+    bool prepareStartProcess(BatchProcessImagesItem *item,
+                             const QString& albumDest);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

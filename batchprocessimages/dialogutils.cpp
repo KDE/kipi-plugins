@@ -40,7 +40,7 @@ void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
 
     QAction* openHandbookAction = new QAction(i18n("Handbook"), dialog);
     QObject::connect(openHandbookAction, SIGNAL(triggered(bool)),
-            dialog, SLOT(slotHelp()));
+                     dialog, SLOT(slotHelp()));
     menu->insertAction(menu->actions().first(), openHandbookAction);
     dialog->button(KDialog::Help)->setMenu(menu);
 }

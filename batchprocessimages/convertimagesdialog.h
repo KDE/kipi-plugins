@@ -39,36 +39,36 @@ class ConvertImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   ConvertImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~ConvertImagesDialog();
+    ConvertImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~ConvertImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
-   void slotTypeChanged(int type);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
+    void slotTypeChanged(int type);
 
 protected:
 
-   int                    m_JPEGPNGCompression;
-   bool                   m_compressLossLess;
-   QString                m_TIFFCompressionAlgo;
-   QString                m_TGACompressionAlgo;
+    int                    m_JPEGPNGCompression;
+    bool                   m_compressLossLess;
+    QString                m_TIFFCompressionAlgo;
+    QString                m_TGACompressionAlgo;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void processDone();
+    void processDone();
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
-   QString oldFileName2NewFileName(QString fileName);
-   QString ImageFileExt(QString Ext);
+    QString oldFileName2NewFileName(QString fileName);
+    QString ImageFileExt(QString Ext);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

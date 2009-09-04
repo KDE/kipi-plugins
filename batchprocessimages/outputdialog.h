@@ -46,20 +46,20 @@ class OutputDialog : public KDialog
 
 public:
 
-  OutputDialog( QWidget* parent=0, QString caption=QString::null,
-                QString Messages=QString::null, QString Header=QString::null );
-  ~OutputDialog();
+    OutputDialog(QWidget* parent = 0, QString caption = QString::null,
+                 QString Messages = QString::null, QString Header = QString::null);
+    ~OutputDialog();
 
 private slots:
 
-  void slotHelp(void);
-  void slotCopyToCliboard( void );
+    void slotHelp(void);
+    void slotCopyToCliboard(void);
 
 private:
 
-  Q3TextView *debugView;
+    Q3TextView *debugView;
 
-  KIPIPlugins::KPAboutData  *m_about;
+    KIPIPlugins::KPAboutData  *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

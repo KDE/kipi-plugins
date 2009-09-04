@@ -35,11 +35,11 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BatchProcessImagesItem::BatchProcessImagesItem(QTreeWidget* parent, QString const & pathSrc,
-                        QString const & nameSrc, QString const & nameDest, QString const & result)
-                      : QTreeWidgetItem(parent),
-                        _overwrote( false ),
-                        _reverseSort( false ),
-                        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
+        QString const & nameSrc, QString const & nameDest, QString const & result)
+        : QTreeWidgetItem(parent),
+        _overwrote(false),
+        _reverseSort(false),
+        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
 {
     setText(0, pathSrc.section('/', -2, -2));
     setText(1, nameSrc);
@@ -51,17 +51,47 @@ BatchProcessImagesItem::~BatchProcessImagesItem()
 {
 }
 
-QString BatchProcessImagesItem::pathSrc()                   { return _pathSrc;    }
-QString BatchProcessImagesItem::nameSrc()                   { return _nameSrc;    }
-QString BatchProcessImagesItem::nameDest()                  { return _nameDest;   }
-QString BatchProcessImagesItem::result()                    { return _result;     }
-QString BatchProcessImagesItem::error()                     { return _error;      }
-QString BatchProcessImagesItem::outputMess()                { return _outputMess; }
+QString BatchProcessImagesItem::pathSrc()
+{
+    return _pathSrc;
+}
+QString BatchProcessImagesItem::nameSrc()
+{
+    return _nameSrc;
+}
+QString BatchProcessImagesItem::nameDest()
+{
+    return _nameDest;
+}
+QString BatchProcessImagesItem::result()
+{
+    return _result;
+}
+QString BatchProcessImagesItem::error()
+{
+    return _error;
+}
+QString BatchProcessImagesItem::outputMess()
+{
+    return _outputMess;
+}
 
-void BatchProcessImagesItem::changeResult(QString text)     { setText(3, text); }
-void BatchProcessImagesItem::changeError(QString text)      { _error = text; }
-void BatchProcessImagesItem::changeNameDest(QString text)   { _nameDest = text; setText(2, _nameDest); }
-void BatchProcessImagesItem::changeOutputMess(QString text) { _outputMess.append(text); }
+void BatchProcessImagesItem::changeResult(QString text)
+{
+    setText(3, text);
+}
+void BatchProcessImagesItem::changeError(QString text)
+{
+    _error = text;
+}
+void BatchProcessImagesItem::changeNameDest(QString text)
+{
+    _nameDest = text; setText(2, _nameDest);
+}
+void BatchProcessImagesItem::changeOutputMess(QString text)
+{
+    _outputMess.append(text);
+}
 
 /* FIXME
 void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
@@ -90,7 +120,7 @@ bool BatchProcessImagesItem::overWrote()
     return _overwrote;
 }
 
-void BatchProcessImagesItem::setDidOverWrite( bool b )
+void BatchProcessImagesItem::setDidOverWrite(bool b)
 {
     _overwrote = b;
 }
@@ -101,7 +131,7 @@ void BatchProcessImagesItem::setKey(const QString& val, bool reverseSort)
     _reverseSort = reverseSort;
 }
 
-QString BatchProcessImagesItem::key(int column, bool ) const
+QString BatchProcessImagesItem::key(int column, bool) const
 {
     if (_key.isNull())
         return text(column);

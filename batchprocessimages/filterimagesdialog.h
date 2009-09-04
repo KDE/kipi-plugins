@@ -39,38 +39,38 @@ class FilterImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   FilterImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~FilterImagesDialog();
+    FilterImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~FilterImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
-   void slotTypeChanged(int type);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
+    void slotTypeChanged(int type);
 
 protected:
 
-   QString                m_noiseType;
-   int                    m_blurRadius;
-   int                    m_blurDeviation;
-   int                    m_medianRadius;
-   int                    m_noiseRadius;
-   int                    m_sharpenRadius;
-   int                    m_sharpenDeviation;
-   int                    m_unsharpenRadius;
-   int                    m_unsharpenDeviation;
-   int                    m_unsharpenPercent;
-   int                    m_unsharpenThreshold;
+    QString                m_noiseType;
+    int                    m_blurRadius;
+    int                    m_blurDeviation;
+    int                    m_medianRadius;
+    int                    m_noiseRadius;
+    int                    m_sharpenRadius;
+    int                    m_sharpenDeviation;
+    int                    m_unsharpenRadius;
+    int                    m_unsharpenDeviation;
+    int                    m_unsharpenPercent;
+    int                    m_unsharpenThreshold;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                    const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

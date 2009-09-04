@@ -43,25 +43,25 @@ class FilterOptionsDialog : public KDialog
 
 public:
 
-   FilterOptionsDialog(QWidget *parent=0, int FilterType = 0);
-   ~FilterOptionsDialog();
+    FilterOptionsDialog(QWidget *parent = 0, int FilterType = 0);
+    ~FilterOptionsDialog();
 
-   KComboBox       *m_noiseType;
+    KComboBox       *m_noiseType;
 
-   KIntNumInput    *m_blurRadius;
-   KIntNumInput    *m_blurDeviation;
+    KIntNumInput    *m_blurRadius;
+    KIntNumInput    *m_blurDeviation;
 
-   KIntNumInput    *m_medianRadius;
+    KIntNumInput    *m_medianRadius;
 
-   KIntNumInput    *m_noiseRadius;
+    KIntNumInput    *m_noiseRadius;
 
-   KIntNumInput    *m_sharpenRadius;
-   KIntNumInput    *m_sharpenDeviation;
+    KIntNumInput    *m_sharpenRadius;
+    KIntNumInput    *m_sharpenDeviation;
 
-   KIntNumInput    *m_unsharpenRadius;
-   KIntNumInput    *m_unsharpenDeviation;
-   KIntNumInput    *m_unsharpenPercent;
-   KIntNumInput    *m_unsharpenThreshold;
+    KIntNumInput    *m_unsharpenRadius;
+    KIntNumInput    *m_unsharpenDeviation;
+    KIntNumInput    *m_unsharpenPercent;
+    KIntNumInput    *m_unsharpenThreshold;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -35,14 +35,14 @@ class KAction;
 
 namespace KIPIBatchProcessImagesPlugin
 {
-    class BorderImagesDialog;
-    class ColorImagesDialog;
-    class ConvertImagesDialog;
-    class EffectImagesDialog;
-    class FilterImagesDialog;
-    class RecompressImagesDialog;
-    class RenameImagesDialog;
-    class ResizeImagesDialog;
+class BorderImagesDialog;
+class ColorImagesDialog;
+class ConvertImagesDialog;
+class EffectImagesDialog;
+class FilterImagesDialog;
+class RecompressImagesDialog;
+class RenameImagesDialog;
+class ResizeImagesDialog;
 }
 
 class Plugin_BatchProcessImages : public KIPI::Plugin
@@ -51,35 +51,35 @@ class Plugin_BatchProcessImages : public KIPI::Plugin
 
 public:
 
-  Plugin_BatchProcessImages(QObject *parent, const QVariantList &args);
-  virtual ~Plugin_BatchProcessImages();
+    Plugin_BatchProcessImages(QObject *parent, const QVariantList &args);
+    virtual ~Plugin_BatchProcessImages();
 
-  virtual KIPI::Category category( KAction* action ) const;
-  virtual void setup( QWidget* );
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 public slots:
 
-  void slotActivate();
+    void slotActivate();
 
 private:
 
-  KAction                                              *m_action_borderimages;
-  KAction                                              *m_action_colorimages;
-  KAction                                              *m_action_convertimages;
-  KAction                                              *m_action_effectimages;
-  KAction                                              *m_action_filterimages;
-  KAction                                              *m_action_renameimages;
-  KAction                                              *m_action_recompressimages;
-  KAction                                              *m_action_resizeimages;
+    KAction                                              *m_action_borderimages;
+    KAction                                              *m_action_colorimages;
+    KAction                                              *m_action_convertimages;
+    KAction                                              *m_action_effectimages;
+    KAction                                              *m_action_filterimages;
+    KAction                                              *m_action_renameimages;
+    KAction                                              *m_action_recompressimages;
+    KAction                                              *m_action_resizeimages;
 
-  KIPIBatchProcessImagesPlugin::BorderImagesDialog     *m_BorderImagesDialog;
-  KIPIBatchProcessImagesPlugin::ColorImagesDialog      *m_ColorImagesDialog;
-  KIPIBatchProcessImagesPlugin::ConvertImagesDialog    *m_ConvertImagesDialog;
-  KIPIBatchProcessImagesPlugin::EffectImagesDialog     *m_EffectImagesDialog;
-  KIPIBatchProcessImagesPlugin::FilterImagesDialog     *m_FilterImagesDialog;
-  KIPIBatchProcessImagesPlugin::RenameImagesDialog     *m_RenameImagesDialog;
-  KIPIBatchProcessImagesPlugin::RecompressImagesDialog *m_RecompressImagesDialog;
-  KIPIBatchProcessImagesPlugin::ResizeImagesDialog     *m_ResizeImagesDialog;
+    KIPIBatchProcessImagesPlugin::BorderImagesDialog     *m_BorderImagesDialog;
+    KIPIBatchProcessImagesPlugin::ColorImagesDialog      *m_ColorImagesDialog;
+    KIPIBatchProcessImagesPlugin::ConvertImagesDialog    *m_ConvertImagesDialog;
+    KIPIBatchProcessImagesPlugin::EffectImagesDialog     *m_EffectImagesDialog;
+    KIPIBatchProcessImagesPlugin::FilterImagesDialog     *m_FilterImagesDialog;
+    KIPIBatchProcessImagesPlugin::RenameImagesDialog     *m_RenameImagesDialog;
+    KIPIBatchProcessImagesPlugin::RecompressImagesDialog *m_RecompressImagesDialog;
+    KIPIBatchProcessImagesPlugin::ResizeImagesDialog     *m_ResizeImagesDialog;
 };
 
 #endif /* PLUGIN_BATCHPROCESSIMAGES_H */

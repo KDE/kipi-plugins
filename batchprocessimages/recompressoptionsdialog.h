@@ -46,22 +46,22 @@ class RecompressOptionsDialog : public KDialog
 
 public:
 
-   RecompressOptionsDialog(QWidget *parent=0);
-   ~RecompressOptionsDialog();
+    RecompressOptionsDialog(QWidget *parent = 0);
+    ~RecompressOptionsDialog();
 
-   QLabel          *m_label_JPEGimageCompression;
-   QLabel          *m_label_PNGimageCompression;
-   QLabel          *m_label_TIFFimageCompression;
-   QLabel          *m_label_TGAimageCompression;
-   KIntNumInput    *m_JPEGCompression;
-   KIntNumInput    *m_PNGCompression;
-   QCheckBox       *m_compressLossLess;
-   KComboBox       *m_TIFFCompressionAlgo;
-   KComboBox       *m_TGACompressionAlgo;
+    QLabel          *m_label_JPEGimageCompression;
+    QLabel          *m_label_PNGimageCompression;
+    QLabel          *m_label_TIFFimageCompression;
+    QLabel          *m_label_TGAimageCompression;
+    KIntNumInput    *m_JPEGCompression;
+    KIntNumInput    *m_PNGCompression;
+    QCheckBox       *m_compressLossLess;
+    KComboBox       *m_TIFFCompressionAlgo;
+    KComboBox       *m_TGACompressionAlgo;
 
 public slots:
 
-   void slotCompressLossLessEnabled(bool val);
+    void slotCompressLossLessEnabled(bool val);
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -48,53 +48,53 @@ class ResizeOptionsDialog : public KDialog
 
 public:
 
-   ResizeOptionsDialog(QWidget *parent=0, int ResizeType = 0);
-   ~ResizeOptionsDialog();
+    ResizeOptionsDialog(QWidget *parent = 0, int ResizeType = 0);
+    ~ResizeOptionsDialog();
 
-   QLabel          *m_label_size;
-   QLabel          *m_label_resizeFilter;
-   QLabel          *m_label_paperSize;
-   QLabel          *m_label_printDpi;
-   QLabel          *m_label_customXSize;
-   QLabel          *m_label_customYSize;
-   QLabel          *m_label_customDpi;
-   QLabel          *m_label_backgroundColor;
-   QLabel          *m_label_marging;
-   QLabel          *m_label_Width;
-   QLabel          *m_label_Height;
-   QLabel          *m_label_bgColor;
-   QLabel          *m_label_border;
-   QLabel          *m_label_quality;
+    QLabel          *m_label_size;
+    QLabel          *m_label_resizeFilter;
+    QLabel          *m_label_paperSize;
+    QLabel          *m_label_printDpi;
+    QLabel          *m_label_customXSize;
+    QLabel          *m_label_customYSize;
+    QLabel          *m_label_customDpi;
+    QLabel          *m_label_backgroundColor;
+    QLabel          *m_label_marging;
+    QLabel          *m_label_Width;
+    QLabel          *m_label_Height;
+    QLabel          *m_label_bgColor;
+    QLabel          *m_label_border;
+    QLabel          *m_label_quality;
 
-   KIntNumInput    *m_size;
-   KIntNumInput    *m_customXSize;
-   KIntNumInput    *m_customYSize;
-   KIntNumInput    *m_customDpi;
-   KIntNumInput    *m_marging;
-   KIntNumInput    *m_Width;
-   KIntNumInput    *m_Height;
-   KIntNumInput    *m_Border;
-   KIntNumInput    *m_fixedWidth;
-   KIntNumInput    *m_fixedHeight;
-   KIntNumInput	   *m_quality;
+    KIntNumInput    *m_size;
+    KIntNumInput    *m_customXSize;
+    KIntNumInput    *m_customYSize;
+    KIntNumInput    *m_customDpi;
+    KIntNumInput    *m_marging;
+    KIntNumInput    *m_Width;
+    KIntNumInput    *m_Height;
+    KIntNumInput    *m_Border;
+    KIntNumInput    *m_fixedWidth;
+    KIntNumInput    *m_fixedHeight;
+    KIntNumInput    *m_quality;
 
-   QCheckBox       *m_customSettings;
+    QCheckBox       *m_customSettings;
 
-   KColorButton    *m_button_backgroundColor;
-   KColorButton    *m_button_bgColor;
+    KColorButton    *m_button_backgroundColor;
+    KColorButton    *m_button_bgColor;
 
-   KComboBox       *m_resizeFilter;
-   KComboBox       *m_paperSize;
-   KComboBox       *m_printDpi;
+    KComboBox       *m_resizeFilter;
+    KComboBox       *m_paperSize;
+    KComboBox       *m_printDpi;
 
- protected slots:
+protected slots:
 
-   void slotCustomSettingsEnabled(bool val);
-   void slotOk();
+    void slotCustomSettingsEnabled(bool val);
+    void slotOk();
 
- protected:
+protected:
 
-   int              m_Type;
+    int              m_Type;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

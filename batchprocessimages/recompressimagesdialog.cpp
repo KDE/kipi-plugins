@@ -55,8 +55,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RecompressImagesDialog::RecompressImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
-                      : BatchProcessImagesDialog( urlList, interface, i18n("Batch Recompress Images"), parent )
+RecompressImagesDialog::RecompressImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Recompress Images"), parent)
 {
     // About data and help button.
 
@@ -64,7 +64,7 @@ RecompressImagesDialog::RecompressImagesDialog( KUrl::List urlList, KIPI::Interf
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to batch recompress images.\n"
-                                                     "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
+                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -81,7 +81,7 @@ RecompressImagesDialog::RecompressImagesDialog( KUrl::List urlList, KIPI::Interf
 
     //---------------------------------------------
 
-    setOptionBoxTitle( i18n("Image Recompression Options") );
+    setOptionBoxTitle(i18n("Image Recompression Options"));
 
     m_labelType->hide();
     m_Type->hide();
@@ -98,7 +98,7 @@ RecompressImagesDialog::~RecompressImagesDialog()
     delete m_about;
 }
 
-void RecompressImagesDialog::slotHelp( void )
+void RecompressImagesDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("recompressimages", "kipi-plugins");
 }
@@ -113,14 +113,13 @@ void RecompressImagesDialog::slotOptionsClicked(void)
     optionsDialog->m_TIFFCompressionAlgo->setCurrentText(m_TIFFCompressionAlgo);
     optionsDialog->m_TGACompressionAlgo->setCurrentText(m_TGACompressionAlgo);
 
-    if ( optionsDialog->exec() == KMessageBox::Ok )
-       {
-       m_JPEGCompression = optionsDialog->m_JPEGCompression->value();
-       m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
-       m_PNGCompression = optionsDialog->m_PNGCompression->value();
-       m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
-       m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
-       }
+    if (optionsDialog->exec() == KMessageBox::Ok) {
+        m_JPEGCompression = optionsDialog->m_JPEGCompression->value();
+        m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
+        m_PNGCompression = optionsDialog->m_PNGCompression->value();
+        m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
+        m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
+    }
 
     delete optionsDialog;
 }
@@ -134,10 +133,10 @@ void RecompressImagesDialog::readSettings(void)
 
     m_JPEGCompression = group.readEntry("JPEGCompression", 75);
 
-    if ( group.readEntry("CompressLossLess", "false") == "true")
-       m_compressLossLess = true;
+    if (group.readEntry("CompressLossLess", "false") == "true")
+        m_compressLossLess = true;
     else
-       m_compressLossLess = false;
+        m_compressLossLess = false;
 
     m_PNGCompression = group.readEntry("PNGCompression", 75);
     m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
@@ -163,88 +162,73 @@ void RecompressImagesDialog::saveSettings(void)
 }
 
 void RecompressImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                            const QString& albumDest, bool previewMode)
+        const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    QString imageExt = item->nameSrc().section('.', -1 );
+    QString imageExt = item->nameSrc().section('.', -1);
 
-    if (imageExt == "JPEG" || imageExt == "jpeg" || imageExt == "JPG" || imageExt == "jpg")
-       {
-       if (m_compressLossLess == true)
-          {
-          *proc << "-compress" << "Lossless";
-          }
-       else
-          {
-          *proc << "-quality";
-          QString Temp;
-          *proc << Temp.setNum( m_JPEGCompression );
-          }
-       }
+    if (imageExt == "JPEG" || imageExt == "jpeg" || imageExt == "JPG" || imageExt == "jpg") {
+        if (m_compressLossLess == true) {
+            *proc << "-compress" << "Lossless";
+        } else {
+            *proc << "-quality";
+            QString Temp;
+            *proc << Temp.setNum(m_JPEGCompression);
+        }
+    }
 
-    else if (imageExt == "PNG" || imageExt == "png")
-       {
-       *proc << "-quality";
-       QString Temp;
-       *proc << Temp.setNum( m_PNGCompression );
-       }
+    else if (imageExt == "PNG" || imageExt == "png") {
+        *proc << "-quality";
+        QString Temp;
+        *proc << Temp.setNum(m_PNGCompression);
+    }
 
-    else if (imageExt == "TIFF" || imageExt == "tiff" || imageExt == "TIF" || imageExt == "tif")
-       {
-       *proc << "-compress";
+    else if (imageExt == "TIFF" || imageExt == "tiff" || imageExt == "TIF" || imageExt == "tif") {
+        *proc << "-compress";
 
-       if (m_TIFFCompressionAlgo == i18n("None"))
-          {
-          *proc << "None";
-          }
-       else
-          {
-          *proc << m_TIFFCompressionAlgo;
-          }
-       }
+        if (m_TIFFCompressionAlgo == i18n("None")) {
+            *proc << "None";
+        } else {
+            *proc << m_TIFFCompressionAlgo;
+        }
+    }
 
-    else if (imageExt == "TGA" || imageExt == "tga")
-       {
-       *proc << "-compress";
+    else if (imageExt == "TGA" || imageExt == "tga") {
+        *proc << "-compress";
 
-       if (m_TGACompressionAlgo == i18n("None"))
-          {
-          *proc << "None";
-          }
-       else
-          {
-          *proc << m_TGACompressionAlgo;
-          }
-       }
+        if (m_TGACompressionAlgo == i18n("None")) {
+            *proc << "None";
+        } else {
+            *proc << m_TGACompressionAlgo;
+        }
+    }
 
     *proc << "-verbose";
 
     *proc << item->pathSrc();
 
-    if ( !previewMode )   // No preview mode !
-       {
-       *proc << albumDest + "/" + item->nameDest();
-       }
+    if (!previewMode) {   // No preview mode !
+        *proc << albumDest + "/" + item->nameDest();
+    }
 }
 
 bool RecompressImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
-                                                 const QString& /*albumDest*/)
+        const QString& /*albumDest*/)
 {
-    QString imageExt = item->nameSrc().section('.', -1 );
+    QString imageExt = item->nameSrc().section('.', -1);
 
     if (imageExt != "JPEG" && imageExt != "jpeg" &&
-        imageExt != "JPG"  && imageExt != "jpg"  &&
-        imageExt != "JPE"  && imageExt != "jpe"  &&
-        imageExt != "PNG"  && imageExt != "png"  &&
-        imageExt != "TIFF" && imageExt != "tiff" &&
-        imageExt != "TIF"  && imageExt != "tif"  &&
-        imageExt != "TGA"  && imageExt != "tga")
-        {
+            imageExt != "JPG"  && imageExt != "jpg"  &&
+            imageExt != "JPE"  && imageExt != "jpe"  &&
+            imageExt != "PNG"  && imageExt != "png"  &&
+            imageExt != "TIFF" && imageExt != "tiff" &&
+            imageExt != "TIF"  && imageExt != "tif"  &&
+            imageExt != "TGA"  && imageExt != "tga") {
         item->changeResult(i18n("Skipped."));
         item->changeError(i18n("image file format unsupported."));
         return false;
-        }
+    }
 
     return true;
 }

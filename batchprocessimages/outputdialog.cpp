@@ -49,8 +49,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header )
-            : KDialog(parent)
+OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header)
+        : KDialog(parent)
 {
     setCaption(caption);
     setModal(true);
@@ -79,23 +79,23 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
 
     //---------------------------------------------
 
-    QWidget* box = new QWidget( this );
+    QWidget* box = new QWidget(this);
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
 
     //---------------------------------------------
 
-    QLabel *labelHeader = new QLabel( Header, box);
-    dvlay->addWidget( labelHeader );
+    QLabel *labelHeader = new QLabel(Header, box);
+    dvlay->addWidget(labelHeader);
 
-    debugView = new Q3TextView( box );
-    debugView->append( Messages );
-    dvlay->addWidget( debugView );
+    debugView = new Q3TextView(box);
+    debugView->append(Messages);
+    dvlay->addWidget(debugView);
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotCopyToCliboard()));
 
-    resize( 600, 400 );
+    resize(600, 400);
 }
 
 OutputDialog::~OutputDialog()
@@ -103,12 +103,12 @@ OutputDialog::~OutputDialog()
     delete m_about;
 }
 
-void OutputDialog::slotHelp( void )
+void OutputDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("", "kipi-plugins");
 }
 
-void OutputDialog::slotCopyToCliboard( void )
+void OutputDialog::slotCopyToCliboard(void)
 {
     debugView->selectAll(true);
     debugView->copy();

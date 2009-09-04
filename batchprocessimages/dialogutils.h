@@ -23,7 +23,7 @@
 class KAboutData;
 class KDialog;
 
-namespace DialogUtils 
+namespace DialogUtils
 {
 
 void setupHelpButton(KDialog*, KAboutData*);

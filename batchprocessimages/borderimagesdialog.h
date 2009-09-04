@@ -39,39 +39,39 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   BorderImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~BorderImagesDialog();
+    BorderImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~BorderImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
 
 protected:
 
-   int                    m_solidWidth;
-   QColor                 m_solidColor;
+    int                    m_solidWidth;
+    QColor                 m_solidColor;
 
-   int                    m_lineNiepceWidth;
-   QColor                 m_lineNiepceColor;
-   int                    m_NiepceWidth;
-   QColor                 m_NiepceColor;
+    int                    m_lineNiepceWidth;
+    QColor                 m_lineNiepceColor;
+    int                    m_NiepceWidth;
+    QColor                 m_NiepceColor;
 
-   int                    m_raiseWidth;
+    int                    m_raiseWidth;
 
-   int                    m_frameWidth;
-   int                    m_bevelWidth;
-   QColor                 m_frameColor;
+    int                    m_frameWidth;
+    int                    m_bevelWidth;
+    QColor                 m_frameColor;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
+    void readSettings(void);
+    void saveSettings(void);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

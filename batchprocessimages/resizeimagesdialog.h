@@ -39,52 +39,52 @@ class ResizeImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-   ResizeImagesDialog( KUrl::List images, KIPI::Interface* interface, QWidget *parent=0 );
-   ~ResizeImagesDialog();
+    ResizeImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ~ResizeImagesDialog();
 
 private slots:
 
-   void slotHelp(void);
-   void slotOptionsClicked(void);
+    void slotHelp(void);
+    void slotOptionsClicked(void);
 
 protected:
 
-   QString                m_resizeFilter;
-   QString                m_paperSize;
-   QString                m_printDpi;
+    QString                m_resizeFilter;
+    QString                m_paperSize;
+    QString                m_printDpi;
 
-   QColor                 m_backgroundColor;
-   QColor                 m_bgColor;
+    QColor                 m_backgroundColor;
+    QColor                 m_bgColor;
 
-   bool                   m_customSettings;
+    bool                   m_customSettings;
 
-   int                    m_customXSize;
-   int                    m_customYSize;
-   int                    m_marging;
-   int                    m_customDpi;
-   int                    m_size;
-   int                    m_xPixels;
-   int                    m_yPixels;
-   int                    m_Width;
-   int                    m_Height;
-   int                    m_Border;
-   int                    m_fixedWidth;
-   int                    m_fixedHeight;
-   int                    m_quality;
+    int                    m_customXSize;
+    int                    m_customYSize;
+    int                    m_marging;
+    int                    m_customDpi;
+    int                    m_size;
+    int                    m_xPixels;
+    int                    m_yPixels;
+    int                    m_Width;
+    int                    m_Height;
+    int                    m_Border;
+    int                    m_fixedWidth;
+    int                    m_fixedHeight;
+    int                    m_quality;
 
-   void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                       const QString& albumDest, bool previewMode);
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
 
-   void readSettings(void);
-   void saveSettings(void);
-   bool prepareStartProcess(BatchProcessImagesItem *item,
-                            const QString& albumDest);
+    void readSettings(void);
+    void saveSettings(void);
+    bool prepareStartProcess(BatchProcessImagesItem *item,
+                             const QString& albumDest);
 
-   bool ResizeImage( int &w, int &h, int SizeFactor);
+    bool ResizeImage(int &w, int &h, int SizeFactor);
 
 private:
 
-   KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -42,36 +42,36 @@ class EffectOptionsDialog : public KDialog
 
 public:
 
-   EffectOptionsDialog(QWidget *parent=0, int EffectType = 0);
-   ~EffectOptionsDialog();
+    EffectOptionsDialog(QWidget *parent = 0, int EffectType = 0);
+    ~EffectOptionsDialog();
 
-   KIntNumInput    *m_latWidth;
-   KIntNumInput    *m_latHeight;
-   KIntNumInput    *m_latOffset;
+    KIntNumInput    *m_latWidth;
+    KIntNumInput    *m_latHeight;
+    KIntNumInput    *m_latOffset;
 
-   KIntNumInput    *m_charcoalRadius;
-   KIntNumInput    *m_charcoalDeviation;
+    KIntNumInput    *m_charcoalRadius;
+    KIntNumInput    *m_charcoalDeviation;
 
-   KIntNumInput    *m_edgeRadius;
+    KIntNumInput    *m_edgeRadius;
 
-   KIntNumInput    *m_embossRadius;
-   KIntNumInput    *m_embossDeviation;
+    KIntNumInput    *m_embossRadius;
+    KIntNumInput    *m_embossDeviation;
 
-   KIntNumInput    *m_implodeFactor;
+    KIntNumInput    *m_implodeFactor;
 
-   KIntNumInput    *m_paintRadius;
+    KIntNumInput    *m_paintRadius;
 
-   KIntNumInput    *m_shadeAzimuth;
-   KIntNumInput    *m_shadeElevation;
+    KIntNumInput    *m_shadeAzimuth;
+    KIntNumInput    *m_shadeElevation;
 
-   KIntNumInput    *m_solarizeFactor;
+    KIntNumInput    *m_solarizeFactor;
 
-   KIntNumInput    *m_spreadRadius;
+    KIntNumInput    *m_spreadRadius;
 
-   KIntNumInput    *m_swirlDegrees;
+    KIntNumInput    *m_swirlDegrees;
 
-   KIntNumInput    *m_waveAmplitude;
-   KIntNumInput    *m_waveLenght;
+    KIntNumInput    *m_waveAmplitude;
+    KIntNumInput    *m_waveLenght;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

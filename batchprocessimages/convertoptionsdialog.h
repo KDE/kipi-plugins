@@ -46,18 +46,18 @@ class ConvertOptionsDialog : public KDialog
 
 public:
 
-   ConvertOptionsDialog(QWidget *parent=0, int ImageFormatType = 0);
-   ~ConvertOptionsDialog();
+    ConvertOptionsDialog(QWidget *parent = 0, int ImageFormatType = 0);
+    ~ConvertOptionsDialog();
 
-   QLabel          *m_label_imageCompression;
-   KIntNumInput    *m_JPEGPNGCompression;
-   QCheckBox       *m_compressLossLess;
-   KComboBox       *m_TIFFCompressionAlgo;
-   KComboBox       *m_TGACompressionAlgo;
+    QLabel          *m_label_imageCompression;
+    KIntNumInput    *m_JPEGPNGCompression;
+    QCheckBox       *m_compressLossLess;
+    KComboBox       *m_TIFFCompressionAlgo;
+    KComboBox       *m_TGACompressionAlgo;
 
 public slots:
 
-   void slotCompressLossLessEnabled(bool val);
+    void slotCompressLossLessEnabled(bool val);
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

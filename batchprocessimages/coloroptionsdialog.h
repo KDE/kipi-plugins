@@ -44,15 +44,15 @@ class ColorOptionsDialog : public KDialog
 
 public:
 
-   ColorOptionsDialog(QWidget *parent=0, int ColorType = 0);
-   ~ColorOptionsDialog();
+    ColorOptionsDialog(QWidget *parent = 0, int ColorType = 0);
+    ~ColorOptionsDialog();
 
-   KComboBox       *m_depthValue;
+    KComboBox       *m_depthValue;
 
-   KIntNumInput    *m_fuzzDistance;
+    KIntNumInput    *m_fuzzDistance;
 
-   KIntNumInput    *m_segmentCluster;
-   KIntNumInput    *m_segmentSmooth;
+    KIntNumInput    *m_segmentCluster;
+    KIntNumInput    *m_segmentSmooth;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -39,26 +39,26 @@ class BorderOptionsDialog : public KDialog
 
 public:
 
-   BorderOptionsDialog(QWidget *parent=0, int BorderType = 0);
-   ~BorderOptionsDialog();
+    BorderOptionsDialog(QWidget *parent = 0, int BorderType = 0);
+    ~BorderOptionsDialog();
 
-   KIntNumInput    *m_solidBorderWidth;
-   KColorButton    *m_button_solidBorderColor;
+    KIntNumInput    *m_solidBorderWidth;
+    KColorButton    *m_button_solidBorderColor;
 
-   KIntNumInput    *m_lineNiepceBorderWidth;
-   KColorButton    *m_button_lineNiepceBorderColor;
-   KIntNumInput    *m_NiepceBorderWidth;
-   KColorButton    *m_button_NiepceBorderColor;
+    KIntNumInput    *m_lineNiepceBorderWidth;
+    KColorButton    *m_button_lineNiepceBorderColor;
+    KIntNumInput    *m_NiepceBorderWidth;
+    KColorButton    *m_button_NiepceBorderColor;
 
-   KIntNumInput    *m_raiseBorderWidth;
+    KIntNumInput    *m_raiseBorderWidth;
 
-   KIntNumInput    *m_frameBorderWidth;
-   KIntNumInput    *m_frameBevelBorderWidth;
-   KColorButton    *m_button_frameBorderColor;
+    KIntNumInput    *m_frameBorderWidth;
+    KIntNumInput    *m_frameBevelBorderWidth;
+    KColorButton    *m_button_frameBorderColor;
 
 private slots:
 
-   void slotFrameBorderWidthChanged (int value);
+    void slotFrameBorderWidthChanged(int value);
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

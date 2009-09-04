@@ -44,20 +44,20 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
-                       : KDialog( parent)
+        : KDialog(parent)
 {
     setCaption(i18n("Recompression Options"));
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget( this );
+    QWidget* box = new QWidget(this);
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 10, spacingHint() );
+    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
     // JPEG file format.
 
-    m_label_JPEGimageCompression = new QLabel (i18n("Image compression level:"));
+    m_label_JPEGimageCompression = new QLabel(i18n("Image compression level:"));
     m_JPEGCompression = new KIntNumInput(75);
     m_JPEGCompression->setRange(1, 100);
     m_JPEGCompression->setSliderEnabled(true);
@@ -71,9 +71,9 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                                  "</p>");
 
     m_JPEGCompression->setWhatsThis(whatsThis);
-    m_label_JPEGimageCompression->setBuddy( m_JPEGCompression );
+    m_label_JPEGimageCompression->setBuddy(m_JPEGCompression);
 
-    m_compressLossLess = new QCheckBox( i18n("Use lossless compression"));
+    m_compressLossLess = new QCheckBox(i18n("Use lossless compression"));
     m_compressLossLess->setWhatsThis(i18n("If this option is enabled, "
                                           "all JPEG operations will use lossless compression."));
 
@@ -84,14 +84,14 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     QGridLayout *gb1Layout = new QGridLayout;
     gb1Layout->addWidget(m_label_JPEGimageCompression, 0, 0, 1, 1);
     gb1Layout->addWidget(m_JPEGCompression,            0, 1, 1, 1);
-    gb1Layout->addWidget(m_compressLossLess,           1, 0, 1,-1);
+    gb1Layout->addWidget(m_compressLossLess,           1, 0, 1, -1);
     groupBox1->setLayout(gb1Layout);
 
     dvlay->addWidget(groupBox1);
 
     // PNG File format.
 
-    m_label_PNGimageCompression = new QLabel (i18n("Image compression level:"));
+    m_label_PNGimageCompression = new QLabel(i18n("Image compression level:"));
     m_PNGCompression = new KIntNumInput(75);
     m_PNGCompression->setRange(1, 100);
     m_PNGCompression->setSliderEnabled(true);
@@ -105,7 +105,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
                                  "</p>");
 
     m_PNGCompression->setWhatsThis(whatsThis);
-    m_label_PNGimageCompression->setBuddy( m_PNGCompression );
+    m_label_PNGimageCompression->setBuddy(m_PNGCompression);
 
     QGroupBox *groupBox2   = new QGroupBox(i18n("PNG File Format"));
     QGridLayout *gb2Layout = new QGridLayout;
@@ -117,13 +117,13 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // TIFF File format.
 
-    m_label_TIFFimageCompression = new QLabel (i18n("Image compression algorithm:"));
+    m_label_TIFFimageCompression = new QLabel(i18n("Image compression algorithm:"));
     m_TIFFCompressionAlgo = new KComboBox;
     m_TIFFCompressionAlgo->insertItem("LZW");
     m_TIFFCompressionAlgo->insertItem("JPEG");
     m_TIFFCompressionAlgo->insertItem(i18n("None"));
-    m_TIFFCompressionAlgo->setWhatsThis(i18n("Select here the TIFF compression algorithm.") );
-    m_label_TIFFimageCompression->setBuddy( m_TIFFCompressionAlgo );
+    m_TIFFCompressionAlgo->setWhatsThis(i18n("Select here the TIFF compression algorithm."));
+    m_label_TIFFimageCompression->setBuddy(m_TIFFCompressionAlgo);
 
     QGroupBox *groupBox3   = new QGroupBox(i18n("TIFF File Format"));
     QGridLayout *gb3Layout = new QGridLayout;
@@ -135,12 +135,12 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
 
     // TGA File format.
 
-    m_label_TGAimageCompression = new QLabel (i18n("Image compression algorithm:"));
+    m_label_TGAimageCompression = new QLabel(i18n("Image compression algorithm:"));
     m_TGACompressionAlgo = new KComboBox;
     m_TGACompressionAlgo->insertItem("RLE");
     m_TGACompressionAlgo->insertItem(i18n("None"));
-    m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm.") );
-    m_label_TGAimageCompression->setBuddy( m_TGACompressionAlgo );
+    m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm."));
+    m_label_TGAimageCompression->setBuddy(m_TGACompressionAlgo);
 
     QGroupBox *groupBox4   = new QGroupBox(i18n("TGA File Format"));
     QGridLayout *gb4Layout = new QGridLayout;
@@ -157,8 +157,8 @@ RecompressOptionsDialog::~RecompressOptionsDialog()
 
 void RecompressOptionsDialog::slotCompressLossLessEnabled(bool val)
 {
-    m_JPEGCompression->setEnabled( !val );
-    m_label_JPEGimageCompression->setEnabled( !val );
+    m_JPEGCompression->setEnabled(!val);
+    m_label_JPEGimageCompression->setEnabled(!val);
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

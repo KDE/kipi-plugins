@@ -56,8 +56,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
-                 : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image-Color Processing"), parent )
+ColorImagesDialog::ColorImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image-Color Processing"), parent)
 {
     // About data and help button.
 
@@ -65,7 +65,7 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin for batch image-color enhancement.\n"
-                                                     "This plugin use the \"convert\" program from the \"ImageMagick\" package."),
+                                                 "This plugin use the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -83,9 +83,9 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
 
     //---------------------------------------------
 
-    setOptionBoxTitle( i18n("Image Coloring Options") );
+    setOptionBoxTitle(i18n("Image Coloring Options"));
 
-    m_labelType->setText( i18n("Filter:") );
+    m_labelType->setText(i18n("Filter:"));
 
     m_Type->insertItem(i18n("Decrease Contrast"));
     m_Type->insertItem(i18n("Depth"));              // 1
@@ -100,33 +100,33 @@ ColorImagesDialog::ColorImagesDialog( KUrl::List urlList, KIPI::Interface* inter
     m_Type->insertItem(i18n("Trim"));
     m_Type->setCurrentText(i18n("Normalize"));
     QString whatsThis = i18n(
-                     "<p>Select here the color enhancement type for your images:</p>"
-                     "<p>"
-                     "<b>Decrease contrast</b>: reduce the image contrast. The algorithm "
-                     "reduces the intensity difference between the lighter and darker elements "
-                     "of the image.<br/>"
-                     "<b>Depth</b>: change the color depth of the image.<br/>"
-                     "<b>Equalize</b>: perform histogram equalization to the image.<br/>"
-                     "<b>Fuzz</b>: merging colors within a distance, i.e. consider them to be equal.<br/>"
-                     "<b>Gray scales</b>: convert color images to grayscale images.<br/>"
-                     "<b>Increase contrast</b>: enhance the image contrast. The algorithm enhances "
-                     "the intensity differences between the lighter and darker elements of the image.<br/>"
-                     "<b>Monochrome</b>: transform the image to black and white.<br/>"
-                     "<b>Negate</b>: replace every pixel with its complementary color. The red, green, "
-                     "and blue intensities of an image are negated. White becomes black, yellow becomes "
-                     "blue, etc.<br/>"
-                     "<b>Normalize</b>: transform image to span the full range of color values. "
-                     "This is a contrast enhancement technique. The algorithm enhances the contrast "
-                     "of a colored image by adjusting the pixels color to span the entire range of "
-                     "colors available.<br/>"
-                     "<b>Segment</b>: segment an image by analyzing the histograms of the color "
-                     "components and identifying units that are homogeneous with the fuzzy c-means "
-                     "technique.<br/>"
-                     "<b>Trim</b>: trim an image (fuzz reverse technique). The algorithm remove edges "
-                     "that are the background color from the image."
-                     "</p>");
+                            "<p>Select here the color enhancement type for your images:</p>"
+                            "<p>"
+                            "<b>Decrease contrast</b>: reduce the image contrast. The algorithm "
+                            "reduces the intensity difference between the lighter and darker elements "
+                            "of the image.<br/>"
+                            "<b>Depth</b>: change the color depth of the image.<br/>"
+                            "<b>Equalize</b>: perform histogram equalization to the image.<br/>"
+                            "<b>Fuzz</b>: merging colors within a distance, i.e. consider them to be equal.<br/>"
+                            "<b>Gray scales</b>: convert color images to grayscale images.<br/>"
+                            "<b>Increase contrast</b>: enhance the image contrast. The algorithm enhances "
+                            "the intensity differences between the lighter and darker elements of the image.<br/>"
+                            "<b>Monochrome</b>: transform the image to black and white.<br/>"
+                            "<b>Negate</b>: replace every pixel with its complementary color. The red, green, "
+                            "and blue intensities of an image are negated. White becomes black, yellow becomes "
+                            "blue, etc.<br/>"
+                            "<b>Normalize</b>: transform image to span the full range of color values. "
+                            "This is a contrast enhancement technique. The algorithm enhances the contrast "
+                            "of a colored image by adjusting the pixels color to span the entire range of "
+                            "colors available.<br/>"
+                            "<b>Segment</b>: segment an image by analyzing the histograms of the color "
+                            "components and identifying units that are homogeneous with the fuzzy c-means "
+                            "technique.<br/>"
+                            "<b>Trim</b>: trim an image (fuzz reverse technique). The algorithm remove edges "
+                            "that are the background color from the image."
+                            "</p>");
 
-    m_Type->setWhatsThis(whatsThis );
+    m_Type->setWhatsThis(whatsThis);
 
     //---------------------------------------------
 
@@ -140,21 +140,21 @@ ColorImagesDialog::~ColorImagesDialog()
     delete m_about;
 }
 
-void ColorImagesDialog::slotHelp( void )
+void ColorImagesDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("colorimages",
-                                             "kipi-plugins");
+                                "kipi-plugins");
 }
 
 void ColorImagesDialog::slotTypeChanged(int type)
 {
-    if ( type == 1 || // Depth
-         type == 3 || // Fuzz
-         type == 9    // Segment
+    if (type == 1 ||  // Depth
+            type == 3 || // Fuzz
+            type == 9    // Segment
        )
-       m_optionsButton->setEnabled(true);
+        m_optionsButton->setEnabled(true);
     else
-       m_optionsButton->setEnabled(false);
+        m_optionsButton->setEnabled(false);
 }
 
 void ColorImagesDialog::slotOptionsClicked(void)
@@ -162,32 +162,29 @@ void ColorImagesDialog::slotOptionsClicked(void)
     int Type = m_Type->currentItem();
     ColorOptionsDialog *optionsDialog = new ColorOptionsDialog(this, Type);
 
-    if ( Type == 1) // Depth
-       optionsDialog->m_depthValue->setCurrentText(m_depthValue);
+    if (Type == 1)  // Depth
+        optionsDialog->m_depthValue->setCurrentText(m_depthValue);
 
-    if ( Type == 3) // Fuzz
-       optionsDialog->m_fuzzDistance->setValue(m_fuzzDistance);
+    if (Type == 3)  // Fuzz
+        optionsDialog->m_fuzzDistance->setValue(m_fuzzDistance);
 
-    if ( Type == 9) // Segment
-       {
-       optionsDialog->m_segmentCluster->setValue(m_segmentCluster);
-       optionsDialog->m_segmentSmooth->setValue(m_segmentSmooth);
-       }
+    if (Type == 9) { // Segment
+        optionsDialog->m_segmentCluster->setValue(m_segmentCluster);
+        optionsDialog->m_segmentSmooth->setValue(m_segmentSmooth);
+    }
 
-    if ( optionsDialog->exec() == KMessageBox::Ok )
-       {
-       if ( Type == 1) // Depth
-          m_depthValue = optionsDialog->m_depthValue->currentText();
+    if (optionsDialog->exec() == KMessageBox::Ok) {
+        if (Type == 1)  // Depth
+            m_depthValue = optionsDialog->m_depthValue->currentText();
 
-       if ( Type == 3) // Fuzz
-          m_fuzzDistance = optionsDialog->m_fuzzDistance->value();
+        if (Type == 3)  // Fuzz
+            m_fuzzDistance = optionsDialog->m_fuzzDistance->value();
 
-       if ( Type == 9) // Segment
-          {
-          m_segmentCluster = optionsDialog->m_segmentCluster->value();
-          m_segmentSmooth = optionsDialog->m_segmentSmooth->value();
-          }
-       }
+        if (Type == 9) { // Segment
+            m_segmentCluster = optionsDialog->m_segmentCluster->value();
+            m_segmentSmooth = optionsDialog->m_segmentSmooth->value();
+        }
+    }
 
     delete optionsDialog;
 }
@@ -225,86 +222,73 @@ void ColorImagesDialog::saveSettings(void)
 }
 
 void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                       const QString& albumDest, bool previewMode)
+                                    const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
-       {
-       *m_PreviewProc << "-crop" << "300x300+0+0";
-       m_previewOutput.append( " -crop 300x300+0+0 ");
-       }
+    if (previewMode && smallPreview()) {    // Preview mode and small preview enabled !
+        *m_PreviewProc << "-crop" << "300x300+0+0";
+        m_previewOutput.append(" -crop 300x300+0+0 ");
+    }
 
-    if (m_Type->currentItem() == 0) // Decrease contrast"
-       {
-       *proc << "-contrast";
-       }
+    if (m_Type->currentItem() == 0) { // Decrease contrast"
+        *proc << "-contrast";
+    }
 
-    if (m_Type->currentItem() == 1) // Depth
-       {
-       *proc << "-depth" << m_depthValue;
-       }
+    if (m_Type->currentItem() == 1) { // Depth
+        *proc << "-depth" << m_depthValue;
+    }
 
-    if (m_Type->currentItem() == 2) // Equalize
-       {
-       *proc << "-equalize";
-       }
+    if (m_Type->currentItem() == 2) { // Equalize
+        *proc << "-equalize";
+    }
 
-    if (m_Type->currentItem() == 3) // Fuzz
-       {
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_fuzzDistance );
-       *proc << "-fuzz" << Temp2;
-       }
+    if (m_Type->currentItem() == 3) { // Fuzz
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_fuzzDistance);
+        *proc << "-fuzz" << Temp2;
+    }
 
-    if (m_Type->currentItem() == 4) // Gray scales
-       {
-       *proc << "-type";
-       *proc << "Grayscale";
-       }
+    if (m_Type->currentItem() == 4) { // Gray scales
+        *proc << "-type";
+        *proc << "Grayscale";
+    }
 
-    if (m_Type->currentItem() == 5) // Increase contrast
-       {
-       *proc << "+contrast";
-       }
+    if (m_Type->currentItem() == 5) { // Increase contrast
+        *proc << "+contrast";
+    }
 
-    if (m_Type->currentItem() == 6) // Monochrome
-       {
-       *proc << "-monochrome";
-       }
+    if (m_Type->currentItem() == 6) { // Monochrome
+        *proc << "-monochrome";
+    }
 
-    if (m_Type->currentItem() == 7) // Negate
-       {
-       *proc << "-negate";
-       }
+    if (m_Type->currentItem() == 7) { // Negate
+        *proc << "-negate";
+    }
 
-    if (m_Type->currentItem() == 8) // Normalize
-       {
-       *proc << "-normalize";
-       }
+    if (m_Type->currentItem() == 8) { // Normalize
+        *proc << "-normalize";
+    }
 
-    if (m_Type->currentItem() == 9) // Segment
-       {
-       *proc << "-segment";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_segmentCluster ) + "x";
-       Temp2.append (Temp.setNum( m_segmentSmooth ));
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 9) { // Segment
+        *proc << "-segment";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_segmentCluster) + "x";
+        Temp2.append(Temp.setNum(m_segmentSmooth));
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 10) // Trim
-       {
-       *proc << "-trim";
-       }
+    if (m_Type->currentItem() == 10) { // Trim
+        *proc << "-trim";
+    }
 
     *proc << "-verbose";
 
     *proc << item->pathSrc();
 
-    if ( !previewMode )   // No preview mode !
-       {
-       *proc << albumDest + "/" + item->nameDest();
-       }
+    if (!previewMode) {   // No preview mode !
+        *proc << albumDest + "/" + item->nameDest();
+    }
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

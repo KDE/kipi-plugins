@@ -56,8 +56,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* interface, QWidget *parent )
-                  : BatchProcessImagesDialog( urlList, interface, i18n("Batch Image Filtering"), parent )
+FilterImagesDialog::FilterImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image Filtering"), parent)
 {
     // About data and help button.
 
@@ -65,7 +65,7 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to batch filter images.\n"
-                                                    "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
+                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
@@ -82,9 +82,9 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
 
     //---------------------------------------------
 
-    setOptionBoxTitle( i18n("Image Filtering Options") );
+    setOptionBoxTitle(i18n("Image Filtering Options"));
 
-    m_labelType->setText( i18n("Filter:") );
+    m_labelType->setText(i18n("Filter:"));
 
     m_Type->insertItem(i18n("Add Noise"));       // 0
     m_Type->insertItem(i18n("Antialias"));
@@ -97,21 +97,21 @@ FilterImagesDialog::FilterImagesDialog( KUrl::List urlList, KIPI::Interface* int
     m_Type->insertItem(i18n("Unsharp"));         // 8
     m_Type->setCurrentText(i18n("Sharpen"));
     QString whatsThis = i18n(
-                     "<p>Select here the filter type for your images:</p>"
-                     "<p>"
-                     "<b>Add noise</b>: add artificial noise to an image.<br/>"
-                     "<b>Antialias</b>: remove pixel aliasing.<br/>"
-                     "<b>Blur</b>: blur the image with a Gaussian operator.<br/>"
-                     "<b>Despeckle</b>: reduces the speckle noise in an image while preserving the "
-                     "edges of the original image.<br/>"
-                     "<b>Enhance</b>: apply a digital filter to enhance a noisy image.<br/>"
-                     "<b>Median</b>: apply a median filter to an image.<br/>"
-                     "<b>Noise reduction</b>: reduce noise in an image. <br/>"
-                     "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<br/>"
-                     "<b>Unsharp</b>: sharpen the image with an unsharp mask operator."
-                     "</p>");
+                            "<p>Select here the filter type for your images:</p>"
+                            "<p>"
+                            "<b>Add noise</b>: add artificial noise to an image.<br/>"
+                            "<b>Antialias</b>: remove pixel aliasing.<br/>"
+                            "<b>Blur</b>: blur the image with a Gaussian operator.<br/>"
+                            "<b>Despeckle</b>: reduces the speckle noise in an image while preserving the "
+                            "edges of the original image.<br/>"
+                            "<b>Enhance</b>: apply a digital filter to enhance a noisy image.<br/>"
+                            "<b>Median</b>: apply a median filter to an image.<br/>"
+                            "<b>Noise reduction</b>: reduce noise in an image. <br/>"
+                            "<b>Sharpen</b>: sharpen the image with a Gaussian operator.<br/>"
+                            "<b>Unsharp</b>: sharpen the image with an unsharp mask operator."
+                            "</p>");
 
-    m_Type->setWhatsThis(whatsThis );
+    m_Type->setWhatsThis(whatsThis);
 
     //---------------------------------------------
 
@@ -125,19 +125,19 @@ FilterImagesDialog::~FilterImagesDialog()
     delete m_about;
 }
 
-void FilterImagesDialog::slotHelp( void )
+void FilterImagesDialog::slotHelp(void)
 {
     KToolInvocation::invokeHelp("filterimages", "kipi-plugins");
 }
 
 void FilterImagesDialog::slotTypeChanged(int type)
 {
-    if ( type == 1 ||      // Antialias
-         type == 3 ||      // Despeckle
-         type == 4 )       // Enhance
-       m_optionsButton->setEnabled(false);
+    if (type == 1 ||       // Antialias
+            type == 3 ||      // Despeckle
+            type == 4)        // Enhance
+        m_optionsButton->setEnabled(false);
     else
-       m_optionsButton->setEnabled(true);
+        m_optionsButton->setEnabled(true);
 }
 
 void FilterImagesDialog::slotOptionsClicked(void)
@@ -145,66 +145,59 @@ void FilterImagesDialog::slotOptionsClicked(void)
     int Type = m_Type->currentItem();
     FilterOptionsDialog *optionsDialog = new FilterOptionsDialog(this, Type);
 
-    if ( Type == 0) // Add noise
-       optionsDialog->m_noiseType->setCurrentText(m_noiseType);
+    if (Type == 0)  // Add noise
+        optionsDialog->m_noiseType->setCurrentText(m_noiseType);
 
-    if ( Type == 2) // Blur
-       {
-       optionsDialog->m_blurRadius->setValue(m_blurRadius);
-       optionsDialog->m_blurDeviation->setValue(m_blurDeviation);
-       }
+    if (Type == 2) { // Blur
+        optionsDialog->m_blurRadius->setValue(m_blurRadius);
+        optionsDialog->m_blurDeviation->setValue(m_blurDeviation);
+    }
 
-    if ( Type == 5) // Median
-       optionsDialog->m_medianRadius->setValue(m_medianRadius);
+    if (Type == 5)  // Median
+        optionsDialog->m_medianRadius->setValue(m_medianRadius);
 
-    if ( Type == 6) // Noise reduction
-       optionsDialog->m_noiseRadius->setValue(m_noiseRadius);
+    if (Type == 6)  // Noise reduction
+        optionsDialog->m_noiseRadius->setValue(m_noiseRadius);
 
-    if ( Type == 7) // Sharpen
-       {
-       optionsDialog->m_sharpenRadius->setValue(m_sharpenRadius);
-       optionsDialog->m_sharpenDeviation->setValue(m_sharpenDeviation);
-       }
+    if (Type == 7) { // Sharpen
+        optionsDialog->m_sharpenRadius->setValue(m_sharpenRadius);
+        optionsDialog->m_sharpenDeviation->setValue(m_sharpenDeviation);
+    }
 
-    if ( Type == 8) // Unsharp
-       {
-       optionsDialog->m_unsharpenRadius->setValue(m_unsharpenRadius);
-       optionsDialog->m_unsharpenDeviation->setValue(m_unsharpenDeviation);
-       optionsDialog->m_unsharpenPercent->setValue(m_unsharpenPercent);
-       optionsDialog->m_unsharpenThreshold->setValue(m_unsharpenThreshold);
-       }
+    if (Type == 8) { // Unsharp
+        optionsDialog->m_unsharpenRadius->setValue(m_unsharpenRadius);
+        optionsDialog->m_unsharpenDeviation->setValue(m_unsharpenDeviation);
+        optionsDialog->m_unsharpenPercent->setValue(m_unsharpenPercent);
+        optionsDialog->m_unsharpenThreshold->setValue(m_unsharpenThreshold);
+    }
 
-    if ( optionsDialog->exec() == KMessageBox::Ok )
-       {
-       if ( Type == 0) // Add noise
-          m_noiseType = optionsDialog->m_noiseType->currentText();
+    if (optionsDialog->exec() == KMessageBox::Ok) {
+        if (Type == 0)  // Add noise
+            m_noiseType = optionsDialog->m_noiseType->currentText();
 
-       if ( Type == 2) // Blur
-          {
-          m_blurRadius = optionsDialog->m_blurRadius->value();
-          m_blurDeviation = optionsDialog->m_blurDeviation->value();
-          }
+        if (Type == 2) { // Blur
+            m_blurRadius = optionsDialog->m_blurRadius->value();
+            m_blurDeviation = optionsDialog->m_blurDeviation->value();
+        }
 
-       if ( Type == 5) // Median
-          m_medianRadius = optionsDialog->m_medianRadius->value();
+        if (Type == 5)  // Median
+            m_medianRadius = optionsDialog->m_medianRadius->value();
 
-       if ( Type == 6) // Noise reduction
-          m_noiseRadius = optionsDialog->m_noiseRadius->value();
+        if (Type == 6)  // Noise reduction
+            m_noiseRadius = optionsDialog->m_noiseRadius->value();
 
-       if ( Type == 7) // Sharpen
-          {
-          m_sharpenRadius = optionsDialog->m_sharpenRadius->value();
-          m_sharpenDeviation = optionsDialog->m_sharpenDeviation->value();
-          }
+        if (Type == 7) { // Sharpen
+            m_sharpenRadius = optionsDialog->m_sharpenRadius->value();
+            m_sharpenDeviation = optionsDialog->m_sharpenDeviation->value();
+        }
 
-       if ( Type == 8) // Unsharp
-          {
-          m_unsharpenRadius = optionsDialog->m_unsharpenRadius->value();
-          m_unsharpenDeviation = optionsDialog->m_unsharpenDeviation->value();
-          m_unsharpenPercent = optionsDialog->m_unsharpenPercent->value();
-          m_unsharpenThreshold = optionsDialog->m_unsharpenThreshold->value();
-          }
-       }
+        if (Type == 8) { // Unsharp
+            m_unsharpenRadius = optionsDialog->m_unsharpenRadius->value();
+            m_unsharpenDeviation = optionsDialog->m_unsharpenDeviation->value();
+            m_unsharpenPercent = optionsDialog->m_unsharpenPercent->value();
+            m_unsharpenThreshold = optionsDialog->m_unsharpenThreshold->value();
+        }
+    }
 
     delete optionsDialog;
 }
@@ -256,94 +249,83 @@ void FilterImagesDialog::saveSettings(void)
 }
 
 void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                                        const QString& albumDest, bool previewMode)
+                                     const QString& albumDest, bool previewMode)
 {
     *proc << "convert";
 
-    if ( previewMode && smallPreview() )    // Preview mode and small preview enabled !
-       {
-       *m_PreviewProc << "-crop" << "300x300+0+0";
-       m_previewOutput.append( " -crop 300x300+0+0 ");
-       }
+    if (previewMode && smallPreview()) {    // Preview mode and small preview enabled !
+        *m_PreviewProc << "-crop" << "300x300+0+0";
+        m_previewOutput.append(" -crop 300x300+0+0 ");
+    }
 
-    if (m_Type->currentItem() == 0) // Add noise
-       {
-       QString Temp;
-       if ( m_noiseType == i18n("Uniform") ) Temp = "Uniform";
-       if ( m_noiseType == i18n("Gaussian") ) Temp = "Gaussian";
-       if ( m_noiseType == i18n("Multiplicative") ) Temp = "Multiplicative";
-       if ( m_noiseType == i18n("Impulse") ) Temp = "Impulse";
-       if ( m_noiseType == i18n("Laplacian") ) Temp = "Laplacian";
-       if ( m_noiseType == i18n("Poisson") ) Temp = "Poisson";
-       *proc << "+noise" << Temp;
-       }
+    if (m_Type->currentItem() == 0) { // Add noise
+        QString Temp;
+        if (m_noiseType == i18n("Uniform")) Temp = "Uniform";
+        if (m_noiseType == i18n("Gaussian")) Temp = "Gaussian";
+        if (m_noiseType == i18n("Multiplicative")) Temp = "Multiplicative";
+        if (m_noiseType == i18n("Impulse")) Temp = "Impulse";
+        if (m_noiseType == i18n("Laplacian")) Temp = "Laplacian";
+        if (m_noiseType == i18n("Poisson")) Temp = "Poisson";
+        *proc << "+noise" << Temp;
+    }
 
-    if (m_Type->currentItem() == 1) // Antialias
-       {
-       *proc << "-antialias";
-       }
+    if (m_Type->currentItem() == 1) { // Antialias
+        *proc << "-antialias";
+    }
 
-    if (m_Type->currentItem() == 2) // Blur
-       {
-       *proc << "-blur";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_blurRadius ) + "x";
-       Temp2.append(Temp.setNum( m_blurDeviation ));
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 2) { // Blur
+        *proc << "-blur";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_blurRadius) + "x";
+        Temp2.append(Temp.setNum(m_blurDeviation));
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 3) // Despeckle
-       {
-       *proc << "-despeckle";
-       }
+    if (m_Type->currentItem() == 3) { // Despeckle
+        *proc << "-despeckle";
+    }
 
-    if (m_Type->currentItem() == 4) // Enhance
-       {
-       *proc << "-enhance";
-       }
+    if (m_Type->currentItem() == 4) { // Enhance
+        *proc << "-enhance";
+    }
 
-    if (m_Type->currentItem() == 5) // Median
-       {
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_medianRadius );
-       *proc << "-median" << Temp2;
-       }
+    if (m_Type->currentItem() == 5) { // Median
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_medianRadius);
+        *proc << "-median" << Temp2;
+    }
 
-    if (m_Type->currentItem() == 6) // Noise reduction
-       {
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_noiseRadius );
-       *proc << "-noise" << Temp2;
-       }
+    if (m_Type->currentItem() == 6) { // Noise reduction
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_noiseRadius);
+        *proc << "-noise" << Temp2;
+    }
 
-    if (m_Type->currentItem() == 7) // Sharpen
-       {
-       *proc << "-sharpen";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_sharpenRadius ) + "x";
-       Temp2.append(Temp.setNum( m_sharpenDeviation ));
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 7) { // Sharpen
+        *proc << "-sharpen";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_sharpenRadius) + "x";
+        Temp2.append(Temp.setNum(m_sharpenDeviation));
+        *proc << Temp2;
+    }
 
-    if (m_Type->currentItem() == 8) // Unsharp
-       {
-       *proc << "-unsharp";
-       QString Temp, Temp2;
-       Temp2 = Temp.setNum( m_unsharpenRadius ) + "x";
-       Temp2.append(Temp.setNum( m_unsharpenDeviation ));
-       Temp2.append( "+" + Temp.setNum( m_unsharpenPercent ));
-       Temp2.append( "+" + Temp.setNum( m_unsharpenThreshold ));
-       *proc << Temp2;
-       }
+    if (m_Type->currentItem() == 8) { // Unsharp
+        *proc << "-unsharp";
+        QString Temp, Temp2;
+        Temp2 = Temp.setNum(m_unsharpenRadius) + "x";
+        Temp2.append(Temp.setNum(m_unsharpenDeviation));
+        Temp2.append("+" + Temp.setNum(m_unsharpenPercent));
+        Temp2.append("+" + Temp.setNum(m_unsharpenThreshold));
+        *proc << Temp2;
+    }
 
     *proc << "-verbose";
 
     *proc << item->pathSrc();
 
-    if ( !previewMode )   // No preview mode !
-       {
-       *proc << albumDest + "/" + item->nameDest();
-       }
+    if (!previewMode) {   // No preview mode !
+        *proc << albumDest + "/" + item->nameDest();
+    }
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin
