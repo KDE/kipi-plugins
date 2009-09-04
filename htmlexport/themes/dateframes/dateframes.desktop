@@ -1,5 +1,10 @@
 [Desktop Entry]
 Name=Date Frames
+Name[pt]=Molduras de Datas
+Name[pt_BR]=Molduras de Datas
+Name[sv]=Datumramar
+Name[uk]=Рамки дат
+Name[x-test]=xxDate Framesxx
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
@@ -39,32 +44,72 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter color1]
 Name=Thumbnail Background
+Name[pt]=Fundo das Miniaturas
+Name[pt_BR]=Fundo das Miniaturas
+Name[sv]=Miniatyrbildernas bakgrund
+Name[uk]=Тло мініатюр
+Name[x-test]=xxThumbnail Backgroundxx
 Type=color
 Default=#FFFFFF
 
 [X-HTMLExport Parameter color2]
 Name=Image Background (contrasting)
+Name[pt]=Fundo da Imagem (com contraste)
+Name[pt_BR]=Fundo da Imagem (com contraste)
+Name[sv]=Bildens bakgrund (avvikande)
+Name[uk]=Тло зображення (контрастність)
+Name[x-test]=xxImage Background (contrasting)xx
 Type=color
 Default=#000055
 
 [X-HTMLExport Parameter color3]
 Name=Nav Bar Background (dark)
+Name[pt]=Fundo da Barra de Navegação (escuro)
+Name[pt_BR]=Fundo da Barra de Navegação (escuro)
+Name[sv]=Navigeringsradens bakgrund (mörk)
+Name[uk]=Тло панелі навігації (темне)
+Name[x-test]=xxNav Bar Background (dark)xx
 Type=color
 Default=#000011
 
 [X-HTMLExport Parameter intro]
 Name=Gallery Introduction
+Name[pt]=Introdução à Galeria
+Name[pt_BR]=Introdução à Galeria
+Name[sv]=Inledning till galleri
+Name[uk]=Вступ до галереї
+Name[x-test]=xxGallery Introductionxx
 Type=string
 Default=Welcome to my web gallery!
 
 [X-HTMLExport Parameter longformat]
 Name=Caption Date Format (see http://xsltsl.sourceforge.net/date-time.html)
+Name[pt]=Formato das Datas da Legenda (ver em http://xsltsl.sourceforge.net/date-time.html)
+Name[pt_BR]=Formato das Datas da Legenda (ver em http://xsltsl.sourceforge.net/date-time.html)
+Name[sv]=Bildtextens datumformat (se http://xsltsl.sourceforge.net/date-time.html)
+Name[uk]=Формат підпису-дати (див. http://xsltsl.sourceforge.net/date-time.html)
+Name[x-test]=xxCaption Date Format (see http://xsltsl.sourceforge.net/date-time.html)xx
 Type=string
 Default=%A, %b %e, %Y   %i:%M%P
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
+Comment[pt]=Texto de Formato das Datas em XSL. Use a sintaxe indicada em http://xsltsl.sourceforge.net/date-time.html
+Comment[pt_BR]=Texto de Formato das Datas em XSL. Use a sintaxe indicada em http://xsltsl.sourceforge.net/date-time.html
+Comment[sv]=XSL-datumformatsträng. Använd syntaxen angiven på http://xsltsl.sourceforge.net/date-time.html
+Comment[uk]=Рядок форматування дати XSL: використовуйте синтаксис, описаний на http://xsltsl.sourceforge.net/date-time.html
+Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.htmlxx
 
 [X-HTMLExport Parameter shortformat]
 Name=Image List Date Format
+Name[pt]=Formato das Datas da Lista de Imagens
+Name[pt_BR]=Formato das Datas da Lista de Imagens
+Name[sv]=Bildlistans datumformat
+Name[uk]=Формат дати у списку зображень
+Name[x-test]=xxImage List Date Formatxx
 Type=string
 Default=%m-%d-%Y
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
+Comment[pt]=Texto de Formato das Datas em XSL. Use a sintaxe indicada em http://xsltsl.sourceforge.net/date-time.html
+Comment[pt_BR]=Texto de Formato das Datas em XSL. Use a sintaxe indicada em http://xsltsl.sourceforge.net/date-time.html
+Comment[sv]=XSL-datumformatsträng. Använd syntaxen angiven på http://xsltsl.sourceforge.net/date-time.html
+Comment[uk]=Рядок форматування дати XSL: використовуйте синтаксис, описаний на http://xsltsl.sourceforge.net/date-time.html
+Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.htmlxx
