@@ -10,6 +10,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> HTMLExport         : 199533 : Enable dateframes theme in kipi-plugins [patch].
 003 ==> HTMLExport         : 111509 : Subalbums not supported by HTML export.
 004 ==> RAWConverter       : 205833 : Batch raw converter uses first dot in filename to determine file ending.
-005 ==> 
+005 ==> GPSSync            : 199181 : Gps sync unable to use search field.
+006 ==> 
 
 
