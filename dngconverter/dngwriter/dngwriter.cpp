@@ -622,7 +622,7 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))                 exif->fGPSVersionID             = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))               exif->fGPSAltitudeRef           = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))              exif->fGPSDifferential          = (uint32)val;
-/*
+
             // Markernote backup.
 
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
@@ -638,7 +638,7 @@ int DNGWriter::convert()
                 stream.Get(block->Buffer(), mkrnts.size());
                 negative->SetMakerNote(block);
                 negative->SetMakerNoteSafety(true);
-            }*/
+            }
         }
 
         if (d->backupOriginalRawFile)
@@ -803,17 +803,15 @@ int DNGWriter::convert()
                         &previewList);
 
         // -----------------------------------------------------------------------------------------
-        // Metadata transfert using Exiv2. Used to restore Makernote offset.
+        // Metadata makernote cleanup using Exiv2. See B.K.O #204437.
 
-        kDebug(51000) << "DNGWriter: Backup meta-data using Exiv2" ;
-        KExiv2 dngMeta(dngFilePath);
+        kDebug(51000) << "DNGWriter: cleanup makernotes using Exiv2" ;
 
-        if (meta.load(inputFile()))
+        if (meta.load(dngFilePath))
         {
             meta.setWriteRawFiles(true);
-            meta.setIptc(dngMeta.getIptc());
-            meta.setXmp(dngMeta.getXmp());
-            meta.save(dngFilePath);
+            meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
+            meta.applyChanges();
         }
     }
 
