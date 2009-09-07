@@ -72,31 +72,30 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     }
 
     if (FilterType == 2) { // Blur
-        QLabel *m_label_blurRadius = new QLabel(i18n("Radius:"), box);
+        QLabel *m_label_blurRadius = new QLabel(i18n("Radius (pixels):"), box);
         dvlay->addWidget(m_label_blurRadius);
         m_blurRadius = new KIntNumInput(3, box);
         m_blurRadius->setRange(0, 20);
         m_blurRadius->setSliderEnabled(true);
-        m_blurRadius->setWhatsThis(i18n("Select here the blur radius of the Gaussian, in pixels, "
+        m_blurRadius->setWhatsThis(i18n("Select here the blur radius of the Gaussian, "
                                         "not counting the center pixel. For reasonable results, the "
                                         "radius should be larger than deviation. If you use a radius of 0 "
                                         "the blur operations selects a suitable radius."));
         m_label_blurRadius->setBuddy(m_blurRadius);
         dvlay->addWidget(m_blurRadius);
 
-        QLabel *m_label_blurDeviation = new QLabel(i18n("Deviation:"), box);
+        QLabel *m_label_blurDeviation = new QLabel(i18n("Deviation (pixels):"), box);
         dvlay->addWidget(m_label_blurDeviation);
         m_blurDeviation = new KIntNumInput(1, box);
         m_blurDeviation->setRange(0, 20);
         m_blurDeviation->setSliderEnabled(true);
-        m_blurDeviation->setWhatsThis(i18n("Select here the standard deviation of the blur Gaussian, "
-                                           "in pixels."));
+        m_blurDeviation->setWhatsThis(i18n("Select here the standard deviation of the blur Gaussian."));
         m_label_blurDeviation->setBuddy(m_blurDeviation);
         dvlay->addWidget(m_blurDeviation);
     }
 
     if (FilterType == 5) { // Median
-        QLabel *m_label_medianRadius = new QLabel(i18n("Radius:"), box);
+        QLabel *m_label_medianRadius = new QLabel(i18n("Radius (pixels):"), box);
         dvlay->addWidget(m_label_medianRadius);
         m_medianRadius = new KIntNumInput(3, box);
         m_medianRadius->setRange(0, 20);
@@ -111,12 +110,12 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
 
 
     if (FilterType == 6) { // Noise reduction
-        QLabel *m_label_noiseRadius = new QLabel(i18n("Radius:"), box);
+        QLabel *m_label_noiseRadius = new QLabel(i18n("Radius (pixels):"), box);
         dvlay->addWidget(m_label_noiseRadius);
         m_noiseRadius = new KIntNumInput(3, box);
         m_noiseRadius->setRange(0, 20);
         m_noiseRadius->setSliderEnabled(true);
-        m_noiseRadius->setWhatsThis(i18n("Select here the noise reduction radius value, in pixels. "
+        m_noiseRadius->setWhatsThis(i18n("Select here the noise reduction radius value. "
                                          "The algorithm smooths the contours of an image while still "
                                          "preserving edge information. The algorithm works by replacing "
                                          "each pixel with its neighbor closest in value. A neighbor is "
@@ -127,38 +126,38 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     }
 
     if (FilterType == 7) { // Sharpen
-        QLabel *m_label_sharpenRadius = new QLabel(i18n("Radius:"), box);
+        QLabel *m_label_sharpenRadius = new QLabel(i18n("Radius (pixels):"), box);
         dvlay->addWidget(m_label_sharpenRadius);
         m_sharpenRadius = new KIntNumInput(3, box);
         m_sharpenRadius->setRange(0, 20);
         m_sharpenRadius->setSliderEnabled(true);
-        m_sharpenRadius->setWhatsThis(i18n("Select here the radius of the sharpen Gaussian, in "
-                                           "pixels, not counting the center pixel. For reasonable "
+        m_sharpenRadius->setWhatsThis(i18n("Select here the radius of the sharpen Gaussian, "
+                                           "not counting the center pixel. For reasonable "
                                            "results, the radius should be larger than deviation. "
                                            "If you use a radius of 0 the sharpen operation selects a "
                                            "suitable radius."));
         m_label_sharpenRadius->setBuddy(m_sharpenRadius);
         dvlay->addWidget(m_sharpenRadius);
 
-        QLabel *m_label_sharpenDeviation = new QLabel(i18n("Deviation:"), box);
+        QLabel *m_label_sharpenDeviation = new QLabel(i18n("Deviation (pixels):"), box);
         dvlay->addWidget(m_label_sharpenDeviation);
         m_sharpenDeviation = new KIntNumInput(1, box);
         m_sharpenDeviation->setRange(0, 20);
         m_sharpenDeviation->setSliderEnabled(true);
         m_sharpenDeviation->setWhatsThis(i18n("Select here the sharpen deviation value of the "
-                                              "Laplacian in pixels."));
+                                              "Laplacian."));
         m_label_sharpenDeviation->setBuddy(m_sharpenDeviation);
         dvlay->addWidget(m_sharpenDeviation);
     }
 
     if (FilterType == 8) { // Unsharp
-        QLabel *m_label_unsharpenRadius = new QLabel(i18n("Radius:"), box);
+        QLabel *m_label_unsharpenRadius = new QLabel(i18n("Radius (pixels):"), box);
         dvlay->addWidget(m_label_unsharpenRadius);
         m_unsharpenRadius = new KIntNumInput(3, box);
         m_unsharpenRadius->setRange(0, 20);
         m_unsharpenRadius->setSliderEnabled(true);
         m_unsharpenRadius->setWhatsThis(i18n("Select here the radius of the unsharpen Gaussian, "
-                                             "in pixels, not counting the center pixel. The algorithm "
+                                             "not counting the center pixel. The algorithm "
                                              "convolve the image with a Gaussian operator of the given "
                                              "radius and standard deviation. For reasonable results, "
                                              "radius should be larger than sigma. If you use a radius of 0 "
@@ -166,17 +165,17 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         m_label_unsharpenRadius->setBuddy(m_unsharpenRadius);
         dvlay->addWidget(m_unsharpenRadius);
 
-        QLabel *m_label_unsharpenDeviation = new QLabel(i18n("Deviation:"), box);
+        QLabel *m_label_unsharpenDeviation = new QLabel(i18n("Deviation (pixels):"), box);
         dvlay->addWidget(m_label_unsharpenDeviation);
         m_unsharpenDeviation = new KIntNumInput(1, box);
         m_unsharpenDeviation->setRange(0, 20);
         m_unsharpenDeviation->setSliderEnabled(true);
         m_unsharpenDeviation->setWhatsThis(i18n("Select here the unsharpen deviation value of the "
-                                                "Gaussian, in pixels."));
+                                                "Gaussian."));
         m_label_unsharpenDeviation->setBuddy(m_unsharpenDeviation);
         dvlay->addWidget(m_unsharpenDeviation);
 
-        QLabel *m_label_unsharpenPercent = new QLabel(i18n("Percent:"), box);
+        QLabel *m_label_unsharpenPercent = new QLabel(i18n("Amount (percent):"), box);
         dvlay->addWidget(m_label_unsharpenPercent);
         m_unsharpenPercent = new KIntNumInput(100, box);
         m_unsharpenPercent->setRange(1, 200);
@@ -186,13 +185,14 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         m_label_unsharpenPercent->setBuddy(m_unsharpenPercent);
         dvlay->addWidget(m_unsharpenPercent);
 
-        QLabel *m_label_unsharpenThreshold = new QLabel(i18n("Threshold:"), box);
+        QLabel *m_label_unsharpenThreshold = new QLabel(i18n("Threshold (percent):"), box);
         dvlay->addWidget(m_label_unsharpenThreshold);
         m_unsharpenThreshold = new KIntNumInput(5, box);
         m_unsharpenThreshold->setRange(1, 100);
         m_unsharpenThreshold->setSliderEnabled(true);
-        m_unsharpenThreshold->setWhatsThis(i18n("Select here the unsharpen threshold value, in "
-                                                "pixels, needed to apply the difference amount."));
+        m_unsharpenThreshold->setWhatsThis(i18n("Select here the unsharpen threshold value, "
+                                                "as a percentage of the maximum color component value,"
+                                                "needed to apply the difference amount."));
         m_label_unsharpenThreshold->setBuddy(m_unsharpenThreshold);
         dvlay->addWidget(m_unsharpenThreshold);
     }
