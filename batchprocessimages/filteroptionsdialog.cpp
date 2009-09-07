@@ -188,8 +188,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
 
         QLabel *m_label_unsharpenThreshold = new QLabel(i18n("Threshold:"), box);
         dvlay->addWidget(m_label_unsharpenThreshold);
-        m_unsharpenThreshold = new KIntNumInput(1, box);
-        m_unsharpenThreshold->setRange(0, 20);
+        m_unsharpenThreshold = new KIntNumInput(5, box);
+        m_unsharpenThreshold->setRange(1, 100);
         m_unsharpenThreshold->setSliderEnabled(true);
         m_unsharpenThreshold->setWhatsThis(i18n("Select here the unsharpen threshold value, in "
                                                 "pixels, needed to apply the difference amount."));

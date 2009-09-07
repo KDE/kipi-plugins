@@ -310,13 +310,12 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     }
 
     if (m_Type->currentItem() == 8) { // Unsharp
-        *proc << "-unsharp";
-        QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_unsharpenRadius) + "x";
-        Temp2.append(Temp.setNum(m_unsharpenDeviation));
-        Temp2.append("+" + Temp.setNum(m_unsharpenPercent));
-        Temp2.append("+" + Temp.setNum(m_unsharpenThreshold));
-        *proc << Temp2;
+        QString arg = QString("%1x%2+%3+%4")
+            .arg(m_unsharpenRadius)
+            .arg(m_unsharpenDeviation)
+            .arg(m_unsharpenPercent / 100.)
+            .arg(m_unsharpenThreshold / 100.);
+        *proc << "-unsharp" << arg;
     }
 
     *proc << "-verbose";
