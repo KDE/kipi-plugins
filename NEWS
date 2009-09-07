@@ -12,6 +12,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> RAWConverter       : 205833 : Batch raw converter uses first dot in filename to determine file ending.
 005 ==> GPSSync            : 199181 : Gps sync unable to use search field.
 006 ==> BatchProcessImages : 197377 : Batch -> Image Filtering -> Unsharp Mask: Wrong Thresold.
-007 ==> 
+007 ==> DNGConverter       : 204437 : DNGConverter turns olympus ORF unusable.
+008 ==> 
 
 
