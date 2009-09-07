@@ -178,8 +178,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
 
         QLabel *m_label_unsharpenPercent = new QLabel(i18n("Percent:"), box);
         dvlay->addWidget(m_label_unsharpenPercent);
-        m_unsharpenPercent = new KIntNumInput(3, box);
-        m_unsharpenPercent->setRange(1, 100);
+        m_unsharpenPercent = new KIntNumInput(100, box);
+        m_unsharpenPercent->setRange(1, 200);
         m_unsharpenPercent->setSliderEnabled(true);
         m_unsharpenPercent->setWhatsThis(i18n("Select here the percentage difference between original "
                                               "and blurred image which should be added to original."));
