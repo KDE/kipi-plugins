@@ -13,6 +13,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> GPSSync            : 199181 : Gps sync unable to use search field.
 006 ==> BatchProcessImages : 197377 : Batch -> Image Filtering -> Unsharp Mask: Wrong Thresold.
 007 ==> DNGConverter       : 204437 : DNGConverter turns olympus ORF unusable.
-008 ==> 
-
-
+008 ==> GPSSync            : 206714 : Can not select multiple images in list.
+009 ==>
