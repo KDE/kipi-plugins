@@ -176,7 +176,7 @@ void ImagesListView::setup(int iconSize)
     m_iconSize = iconSize;
     setIconSize(QSize(m_iconSize, m_iconSize));
     setAlternatingRowColors(true);
-    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
@@ -311,7 +311,6 @@ public:
     {
         listView              = 0;
         iface                 = 0;
-
         addButton             = 0;
         removeButton          = 0;
         moveUpButton          = 0;
@@ -319,7 +318,6 @@ public:
         clearButton           = 0;
         loadButton            = 0;
         saveButton            = 0;
-
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
@@ -352,7 +350,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     // --------------------------------------------------------
 
     d->listView  = new ImagesListView(d->iconSize, this);
-    d->listView->setSelectionMode(QAbstractItemView::SingleSelection);
+    d->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // --------------------------------------------------------
 
@@ -388,8 +386,15 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
+    // queue this connection because itemSelectionChanged is emitted
+    // while items are deleted, and accessing selectedItems at that
+    // time causes a crash ...
+    connect(d->listView, SIGNAL(itemSelectionChanged()),
+            this, SLOT(slotImageListChanged()), Qt::QueuedConnection);
+
     connect(this, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
+
 
     // --------------------------------------------------------
 
@@ -615,12 +620,11 @@ void ImagesList::slotAddItems()
 
 void ImagesList::slotRemoveItems()
 {
-    QTreeWidgetItemIterator it(d->listView, QTreeWidgetItemIterator::Selected);
-    while (*it)
+    QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
+    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        ++it;
-        delete item;
+        d->listView->removeItemWidget( *it, 0);
+        delete *it;
     }
     emit signalImageListChanged();
 }
@@ -661,14 +665,6 @@ void ImagesList::slotClearItems()
 {
     listView()->clear();
     slotRemoveItems();
-}
-
-void ImagesList::slotLoadItems()
-{
-}
-
-void ImagesList::slotSaveItems()
-{
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
@@ -731,19 +727,22 @@ bool ImagesList::isRAWFile(const QString & filePath)
 
 void ImagesList::slotImageListChanged()
 {
-    bool enable = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
+    const bool haveImages               = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
+    const bool haveSelectedImages       = !(d->listView->selectedItems().isEmpty()) && d->controlButtonsEnabled;
+    const bool haveOnlyOneSelectedImage = (d->listView->selectedItems().count()==1) && d->controlButtonsEnabled;
 
-    d->addButton->setEnabled(enable);
-    d->removeButton->setEnabled(enable);
-    d->moveUpButton->setEnabled(enable);
-    d->moveDownButton->setEnabled(enable);
-    d->clearButton->setEnabled(enable);
-    d->loadButton->setEnabled(enable);
-    d->saveButton->setEnabled(enable);
+    d->removeButton->setEnabled(haveSelectedImages);
+    d->moveUpButton->setEnabled(haveOnlyOneSelectedImage);
+    d->moveDownButton->setEnabled(haveOnlyOneSelectedImage);
+    d->clearButton->setEnabled(haveImages);
 
     // All buttons are enabled / disabled now, but the "Add" button should always be
     // enabled, if the buttons are not explicitly disabled with enableControlButtons()
     d->addButton->setEnabled(d->controlButtonsEnabled);
+
+    // TODO: load and save are not yet implemented, when should they be enabled/disabled?
+    d->loadButton->setEnabled(d->controlButtonsEnabled);
+    d->saveButton->setEnabled(d->controlButtonsEnabled);
 }
 
 }  // namespace KIPIPlugins

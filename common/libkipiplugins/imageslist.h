@@ -218,8 +218,8 @@ protected slots:
     virtual void slotMoveUpItems();
     virtual void slotMoveDownItems();
     virtual void slotClearItems();
-    virtual void slotLoadItems();
-    virtual void slotSaveItems();
+    virtual void slotLoadItems() {};
+    virtual void slotSaveItems() {};
 
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
