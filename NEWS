@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> GPSSync            : 206714 : Can not select multiple images in list.
 009 ==> JPEGLossLess       : 188933 : Lossless rotate does not work for this image. Image does not rotate.
 010 ==> FlickrExport       : 193685 : Set permissions on a per-photo base [patch].
-011 ==> 
+011 ==> GPSSync            : 193734 : Closing geolocation correlator without saving shows two warning dialogs.
+012 ==> 
