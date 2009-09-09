@@ -282,9 +282,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
-
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApply()));
 
@@ -372,13 +369,6 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
 
     saveSettings();
     e->accept();
-}
-
-void GPSSyncDialog::slotClose()
-{
-    if (!promptUserClose()) return;
-    saveSettings();
-    done(Close);
 }
 
 bool GPSSyncDialog::promptUserClose()

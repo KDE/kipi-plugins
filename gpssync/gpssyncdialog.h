@@ -57,7 +57,6 @@ protected Q_SLOTS:
 
     void slotApply();
     void slotHelp();
-    void slotClose();
     void slotUser1();
     void slotUser2();
     void slotUser3();
