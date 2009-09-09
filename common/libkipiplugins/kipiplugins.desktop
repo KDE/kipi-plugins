@@ -45,6 +45,6 @@ Comment[tr]=KDE Resim Eklentileri Arayüzü
 Comment[uk]=Інтерфейс додатків KDE для роботи з зображеннями
 Comment[x-test]=xxKDE Image Plugins Interfacexx
 X-DocPath=kipi-plugins/index.html
-Categories=Qt;KDE;Graphics;
+#Categories=Qt;KDE;Graphics;
 NoDisplay=true
 Type=Service
