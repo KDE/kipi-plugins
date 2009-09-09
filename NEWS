@@ -4,6 +4,7 @@ Kipi-plugins 0.7.0 - Release date: xx/09/2009
 NEW FEATURES:
 
 FlickrExport : User can set photo visibility one by one if necessary (public, friends, family).
+TimeAdjust   : A dedicated photo time-stamp can be used to adjust difference of camera clock.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -18,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> JPEGLossLess       : 188933 : Lossless rotate does not work for this image. Image does not rotate.
 010 ==> FlickrExport       : 193685 : Set permissions on a per-photo base [patch].
 011 ==> GPSSync            : 193734 : Closing geolocation correlator without saving shows two warning dialogs.
-012 ==> 
+012 ==> TimeAdjust         : 194768 : Use a clock photo to work out the time difference of the camera clock.
+013 ==> 
