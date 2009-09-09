@@ -57,7 +57,7 @@ class Interface;
 namespace KIPIPlugins
 {
 class KPAboutData;
-class ImagesList;
+class FlickrList;
 }
 
 namespace KWallet
@@ -74,7 +74,7 @@ class FPhotoInfo;
 class GPhoto;
 class GAlbum;
 //class GAlbumViewItem;
-class ImagesList;
+class FlickrList;
 
 class FlickrWindow : public KDialog
 {
@@ -166,7 +166,7 @@ private:
     KIPI::Interface                       *m_interface;
 
     KIPIPlugins::KPAboutData              *m_about;
-    KIPIPlugins::ImagesList               *m_imglst;
+    KIPIFlickrExportPlugin::FlickrList    *m_imglst;
 };
 
 } // namespace KIPIFlickrExportPlugin

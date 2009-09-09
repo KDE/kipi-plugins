@@ -68,6 +68,7 @@
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
+#include "flickrlist.h"
 //#include "flickrviewitem.h"
 #include "flickrwidget.h"
 #include "ui_flickralbumdialog.h"
@@ -460,26 +461,28 @@ void FlickrWindow::slotUser1()
     kDebug(51000) << "SlotUploadImages invoked" << endl;
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
-    KUrl::List urls = m_imglst->imageUrls();
 
-    if (urls.isEmpty())
+    if (m_imglst->imageUrls().isEmpty())
         return;
 
     typedef QPair<KUrl, FPhotoInfo> Pair;
 
     m_uploadQueue.clear();
 
-    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (int i = 0; i < m_imglst->listView()->topLevelItemCount(); ++i)
     {
-        KIPI::ImageInfo info = m_interface->info(*it);
+        FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>
+                                     (m_imglst->listView()->topLevelItem(i));
+
+        KIPI::ImageInfo info = m_interface->info(lvItem->url());
         kDebug(51000) << "Adding images to the list" << endl;
         FPhotoInfo temp;
 
         temp.title                 = info.title();
         temp.description           = info.description();
-        temp.is_public             = m_publicCheckBox->isChecked();
-        temp.is_family             = m_familyCheckBox->isChecked();
-        temp.is_friend             = m_friendsCheckBox->isChecked();
+        temp.is_public             = lvItem->isPublic()  ? 1 : 0;
+        temp.is_family             = lvItem->isFamily()  ? 1 : 0;
+        temp.is_friend             = lvItem->isFriends() ? 1 : 0;
         QStringList tagsFromDialog = m_tagsLineEdit->text().split(" ", QString::SkipEmptyParts);
 
         QStringList           allTags;
@@ -524,7 +527,7 @@ void FlickrWindow::slotUser1()
         }
 
         temp.tags = allTags;
-        m_uploadQueue.append(Pair(*it, temp));
+        m_uploadQueue.append(Pair(lvItem->url(), temp));
     }
 
     m_uploadTotal = m_uploadQueue.count();
@@ -564,7 +567,7 @@ void FlickrWindow::slotAddPhotoNext()
     }
 
     bool res          = m_talker->addPhoto(pathComments.first.path(), //the file path
-                       info,
+                                           info,
                                            m_resizeCheckBox->isChecked(),
                                            m_dimensionSpinBox->value(),
                                            m_imageQualitySpinBox->value()

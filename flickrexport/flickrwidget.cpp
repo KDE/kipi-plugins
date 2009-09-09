@@ -29,6 +29,7 @@
 
 #include <QGroupBox>
 #include <QGridLayout>
+#include <QHeaderView>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QLabel>
@@ -55,6 +56,7 @@
 // Local includes
 
 #include "imageslist.h"
+#include "flickrlist.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -86,10 +88,41 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     // -------------------------------------------------------------------
 
-    m_imglst  = new KIPIPlugins::ImagesList(iface, m_tab);
+    m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab,
+                                                      (serviceName == "23"));
+
+    // For figuring out the width of the permission columns.
+    QHeaderView *hdr = m_imglst->listView()->header();
+    QFontMetrics hdrFont = QFontMetrics(hdr->font());
+    int permColWidth = hdrFont.width(i18n("Public"));
+
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
+    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18n("Public"), true);
+    if (serviceName != "23")
+    {
+        int tmpWidth;
+        if ((tmpWidth = hdrFont.width(i18n("Family"))) > permColWidth)
+        {
+            permColWidth = tmpWidth;
+        }
+        if ((tmpWidth = hdrFont.width(i18n("Friends"))) > permColWidth)
+        {
+            permColWidth = tmpWidth;
+        }
+
+        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY),
+                                        i18n("Family"), true);
+        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS),
+                                        i18n("Friends"), true);
+        hdr->setResizeMode(FlickrList::FAMILY,  QHeaderView::Interactive);
+        hdr->setResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
+        hdr->resizeSection(FlickrList::FAMILY,  permColWidth);
+        hdr->resizeSection(FlickrList::FRIENDS, permColWidth);
+    }
+    hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
+    hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
     QWidget* settingsBox           = new QWidget(m_tab);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
@@ -215,7 +248,21 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     connect(m_exportHostTagsCheckBox, SIGNAL(clicked()),
             this, SLOT(slotExportHostTagsChecked()));
 
-    if (serviceName == "23")
+    connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType, Qt::CheckState)),
+            this, SLOT(slotPermissionChanged(FlickrList::FieldType, Qt::CheckState)));
+
+    connect(m_publicCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(slotMainPublicToggled(int)));
+
+    if (serviceName != "23")
+    {
+        // 23hq.com does not support Family/Friends concept
+        connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
+                this, SLOT(slotMainFamilyToggled(int)));
+        connect(m_friendsCheckBox, SIGNAL(stateChanged(int)),
+                this, SLOT(slotMainFriendsToggled(int)));
+    }
+    else
     {
         // 23hq.com does not support Family/Friends concept, so hide it
         m_familyCheckBox->hide();
@@ -235,6 +282,77 @@ void FlickrWidget::slotResizeChecked()
 void FlickrWidget::slotExportHostTagsChecked()
 {
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
+}
+
+void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox,
+                                         Qt::CheckState state)
+{
+    /* Slot for handling the signal from the FlickrList that the general
+     * permissions have changed, considering the clicks in the checkboxes next
+     * to each image. In response, the main permission checkboxes should be set
+     * to the proper state.
+     * checkbox_num determins which checkbox should be changed: 0 for public,
+     * 1 for family, 2 for friends.
+     * state follows the checked state rules from Qt: 0 means false, 1 means
+     * intermediate, 2 means true. */
+
+    // Select the proper checkbox.
+    QCheckBox *currBox;
+    if      (checkbox == FlickrList::PUBLIC) currBox = m_publicCheckBox;
+    else if (checkbox == FlickrList::FAMILY) currBox = m_familyCheckBox;
+    else                                     currBox = m_friendsCheckBox;
+
+    // If the checkbox should be set in the intermediate state, the tristate
+    // property of the checkbox should be manually set to true, otherwise, it
+    // has to be set to false so that the user cannot select it.
+    currBox->setCheckState(state);
+    if ((state == Qt::Checked) || (state == Qt::Unchecked))
+        currBox->setTristate(false);
+    else
+        currBox->setTristate(true);
+}
+
+void FlickrWidget::slotMainPublicToggled(int state)
+    {mainPermissionToggled(FlickrList::PUBLIC, static_cast<Qt::CheckState>(state));}
+void FlickrWidget::slotMainFamilyToggled(int state)
+    {mainPermissionToggled(FlickrList::FAMILY, static_cast<Qt::CheckState>(state));}
+void FlickrWidget::slotMainFriendsToggled(int state)
+    {mainPermissionToggled(FlickrList::FRIENDS, static_cast<Qt::CheckState>(state));}
+
+void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox,
+                                         Qt::CheckState state)
+{
+    /* Callback for when one of the main permission checkboxes is toggled.
+     * checkbox specifies which of the checkboxes is toggled. */
+
+    if (state != Qt::PartiallyChecked) {
+        // Set the states for the image list.
+        if      (checkbox == FlickrList::PUBLIC)  m_imglst->setPublic(state);
+        else if (checkbox == FlickrList::FAMILY)  m_imglst->setFamily(state);
+        else if (checkbox == FlickrList::FRIENDS) m_imglst->setFriends(state);
+
+        // Dis- or enable the family and friends checkboxes if the public
+        // checkbox is clicked.
+        if (checkbox == 0)
+        {
+            if (state == Qt::Checked)
+            {
+                m_familyCheckBox->setEnabled(false);
+                m_friendsCheckBox->setEnabled(false);
+            }
+            else if (state == Qt::Unchecked)
+            {
+                m_familyCheckBox->setEnabled(true);
+                m_friendsCheckBox->setEnabled(true);
+            }
+        }
+
+        // Set the main checkbox tristate state to false, so that the user
+        // cannot select the intermediate state.
+        if (checkbox == FlickrList::PUBLIC)       m_publicCheckBox->setTristate(false);
+        else if (checkbox == FlickrList::FAMILY)  m_familyCheckBox->setTristate(false);
+        else if (checkbox == FlickrList::FRIENDS) m_friendsCheckBox->setTristate(false);
+    }
 }
 
 } // namespace KIPIFlickrExportPlugin

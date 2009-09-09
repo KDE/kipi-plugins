@@ -28,6 +28,10 @@
 
 #include <QWidget>
 
+// Local includes
+
+#include "flickrlist.h"
+
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
@@ -43,15 +47,11 @@ namespace KIPI
     class Interface;
 }
 
-namespace KIPIPlugins
-{
-    class ImagesList;
-}
-
 namespace KIPIFlickrExportPlugin
 {
 
-
+    class FlickrList;
+    
 class FlickrWidget : public QWidget
 {
     Q_OBJECT
@@ -73,6 +73,10 @@ private slots:
 
     void slotResizeChecked();
     void slotExportHostTagsChecked();
+    void slotPermissionChanged(FlickrList::FieldType, Qt::CheckState);
+    void slotMainPublicToggled(int);
+    void slotMainFamilyToggled(int);
+    void slotMainFriendsToggled(int);
 
 private:
 
@@ -98,9 +102,11 @@ private:
 
     KHTMLPart*    m_photoView;
 
-    KIPIPlugins::ImagesList*   m_imglst;
+    KIPIFlickrExportPlugin::FlickrList*   m_imglst;
 
     friend class FlickrWindow;
+
+    void mainPermissionToggled(FlickrList::FieldType, Qt::CheckState);
 };
 
 } // namespace KIPIFlickrExportPlugin

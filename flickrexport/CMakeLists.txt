@@ -6,6 +6,7 @@ SET(kipiplugin_flickrexport_PART_SRCS
     login.cpp
     flickrtalker.cpp
     flickrwidget.cpp
+    flickrlist.cpp
     mpform.cpp
    )
 
