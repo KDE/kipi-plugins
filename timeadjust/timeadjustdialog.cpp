@@ -77,6 +77,7 @@ extern "C"
 
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+#include "clockphotodialog.h"
 
 namespace KIPITimeAdjustPlugin
 {
@@ -107,6 +108,7 @@ public:
         days              = 0;
         months            = 0;
         years             = 0;
+        clockPhotoBtn     = 0;
         dateCreatedSel    = 0;
         interface         = 0;
         todayBtn          = 0;
@@ -139,6 +141,7 @@ public:
     QSpinBox                 *days;
     QSpinBox                 *months;
     QSpinBox                 *years;
+    QPushButton              *clockPhotoBtn;
 
     QDateTime                 exampleDate;
 
@@ -229,6 +232,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     vlay2->setMargin(spacingHint());
     vlay2->setSpacing(spacingHint());
+    vlay2->addWidget(d->clockPhotoBtn);
     vlay2->addWidget(d->add);
     vlay2->addWidget(d->subtract);
     vlay2->addWidget(d->exif);
@@ -273,22 +277,25 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->years->setRange(0, 1000);
     d->years->setSingleStep(1);
 
+    d->clockPhotoBtn = new QPushButton(i18n("Determine from clock photo"));
+
     gridLay->setMargin(spacingHint());
     gridLay->setSpacing(spacingHint());
     gridLay->setColumnStretch(2, 1);
     gridLay->setColumnStretch(5, 1);
-    gridLay->addWidget(label1,      0, 0, 1, 1);
-    gridLay->addWidget(d->hours,    0, 1, 1, 1);
-    gridLay->addWidget(label2,      0, 3, 1, 1);
-    gridLay->addWidget(d->minutes,  0, 4, 1, 1);
-    gridLay->addWidget(label3,      0, 6, 1, 1);
-    gridLay->addWidget(d->secs,     0, 7, 1, 1);
-    gridLay->addWidget(label4,      1, 0, 1, 1);
-    gridLay->addWidget(d->days,     1, 1, 1, 1);
-    gridLay->addWidget(label5,      1, 3, 1, 1);
-    gridLay->addWidget(d->months,   1, 4, 1, 1);
-    gridLay->addWidget(label6,      1, 6, 1, 1);
-    gridLay->addWidget(d->years,    1, 7, 1, 1);
+    gridLay->addWidget(label1,           0, 0, 1, 1);
+    gridLay->addWidget(d->hours,         0, 1, 1, 1);
+    gridLay->addWidget(label2,           0, 3, 1, 1);
+    gridLay->addWidget(d->minutes,       0, 4, 1, 1);
+    gridLay->addWidget(label3,           0, 6, 1, 1);
+    gridLay->addWidget(d->secs,          0, 7, 1, 1);
+    gridLay->addWidget(label4,           1, 0, 1, 1);
+    gridLay->addWidget(d->days,          1, 1, 1, 1);
+    gridLay->addWidget(label5,           1, 3, 1, 1);
+    gridLay->addWidget(d->months,        1, 4, 1, 1);
+    gridLay->addWidget(label6,           1, 6, 1, 1);
+    gridLay->addWidget(d->years,         1, 7, 1, 1);
+    gridLay->addWidget(d->clockPhotoBtn, 2, 0, 1, 8);
 
     // -- Example ------------------------------------------------------------
 
@@ -339,6 +346,9 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->todayBtn, SIGNAL(clicked()),
             this, SLOT(slotResetDateToCurrent()));
 
+    connect(d->clockPhotoBtn, SIGNAL( clicked() ),
+            this, SLOT( slotClockPhoto() ));
+
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
@@ -360,6 +370,29 @@ TimeAdjustDialog::~TimeAdjustDialog()
 void TimeAdjustDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("timeadjust", "kipi-plugins");
+}
+
+void TimeAdjustDialog::slotClockPhoto()
+{
+    /* When the use presses the clock photo button, present a dialog and set the
+     * results to the proper widgets. */
+
+    ClockPhotoDialog *dilg = new ClockPhotoDialog(d->interface, this);
+    int result = dilg->exec();
+    if (result == QDialog::Accepted)
+    {
+        if (dilg->deltaNegative)
+        {
+            d->subtract->setChecked(true);
+        } else
+        {
+            d->add->setChecked(true);
+        }
+        d->days->setValue(dilg->deltaDays);
+        d->hours->setValue(dilg->deltaHours);
+        d->minutes->setValue(dilg->deltaMinutes);
+        d->secs->setValue(dilg->deltaSeconds);
+    }
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()

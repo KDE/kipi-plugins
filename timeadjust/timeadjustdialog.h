@@ -66,6 +66,7 @@ private slots:
     void slotCancel();
     void slotResetDateToCurrent();
     void slotHelp();
+    void slotClockPhoto();
 
 private:
 
