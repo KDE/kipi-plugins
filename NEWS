@@ -14,4 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> BatchProcessImages : 197377 : Batch -> Image Filtering -> Unsharp Mask: Wrong Thresold.
 007 ==> DNGConverter       : 204437 : DNGConverter turns olympus ORF unusable.
 008 ==> GPSSync            : 206714 : Can not select multiple images in list.
-009 ==>
+009 ==> JPEGLossLess       : 188933 : Lossless rotate does not work for this image. Image does not rotate.
+010 ==> 
