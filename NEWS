@@ -3,6 +3,7 @@ Kipi-plugins 0.7.0 - Release date: xx/09/2009
 
 NEW FEATURES:
 
+FlickrExport : User can set photo visibility one by one if necessary (public, friends, family).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -15,4 +16,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> DNGConverter       : 204437 : DNGConverter turns olympus ORF unusable.
 008 ==> GPSSync            : 206714 : Can not select multiple images in list.
 009 ==> JPEGLossLess       : 188933 : Lossless rotate does not work for this image. Image does not rotate.
-010 ==> 
+010 ==> FlickrExport       : 193685 : Set permissions on a per-photo base [patch].
+011 ==> 
