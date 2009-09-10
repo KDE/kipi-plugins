@@ -21,4 +21,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> GPSSync            : 193734 : Closing geolocation correlator without saving shows two warning dialogs.
 012 ==> TimeAdjust         : 194768 : Use a clock photo to work out the time difference of the camera clock.
 013 ==> FlickrExport       : 172359 : Set content type and safety level on flickr upload [patch].
-014 ==> 
+014 ==> RawConverter       : 160272 : Raw images converter changes brightness or exposure of photos.
+015 ==> 
