@@ -159,7 +159,7 @@ void SlideShowConfig::readSettings()
     d->sharedData->effectName        = grp.readEntry("Effect Name", "Random");
     d->sharedData->effectNameGL      = grp.readEntry("Effect Name (OpenGL)", "Random");
 
-    d->sharedData->delayMsMaxValue   = 20000;
+    d->sharedData->delayMsMaxValue   = 120000;
     d->sharedData->delayMsMinValue   = 100;
     d->sharedData->delayMsLineStep   = 100;
 
