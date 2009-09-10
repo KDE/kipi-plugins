@@ -7,6 +7,8 @@ SET(kipiplugin_flickrexport_PART_SRCS
     flickrtalker.cpp
     flickrwidget.cpp
     flickrlist.cpp
+    comboboxdelegate.cpp
+    comboboxintermediate.cpp
     mpform.cpp
    )
 

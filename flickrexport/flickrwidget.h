@@ -30,12 +30,15 @@
 
 // Local includes
 
+#include "comboboxintermediate.h"
 #include "flickrlist.h"
 
+class QGroupBox;
 class QPushButton;
 class QSpinBox;
 class QCheckBox;
 class QLabel;
+class QTreeWidgetItem;
 
 class KComboBox;
 class KTabWidget;
@@ -74,33 +77,45 @@ private slots:
     void slotResizeChecked();
     void slotExportHostTagsChecked();
     void slotPermissionChanged(FlickrList::FieldType, Qt::CheckState);
+    void slotSafetyLevelChanged(FlickrList::SafetyLevel);
+    void slotContentTypeChanged(FlickrList::ContentType);
     void slotMainPublicToggled(int);
     void slotMainFamilyToggled(int);
     void slotMainFriendsToggled(int);
+    void slotMainSafetyLevelChanged(int);
+    void slotMainContentTypeChanged(int);
+    void slotExtendedSettingsToggled(bool);
 
 private:
 
-    QPushButton*  m_newAlbumBtn;
-    QPushButton*  m_changeUserButton;
+    QPushButton*          m_newAlbumBtn;
+    QPushButton*          m_changeUserButton;
 
-    QCheckBox*    m_resizeCheckBox;
-    QCheckBox*    m_familyCheckBox;
-    QCheckBox*    m_friendsCheckBox;
-    QCheckBox*    m_publicCheckBox;
-    QCheckBox*    m_exportHostTagsCheckBox;
-    QCheckBox*    m_stripSpaceTagsCheckBox;
+    QCheckBox*            m_resizeCheckBox;
+    QCheckBox*            m_familyCheckBox;
+    QCheckBox*            m_friendsCheckBox;
+    QCheckBox*            m_publicCheckBox;
+    QCheckBox*            m_exportHostTagsCheckBox;
+    QCheckBox*            m_stripSpaceTagsCheckBox;
 
-    QSpinBox*     m_dimensionSpinBox;
-    QSpinBox*     m_imageQualitySpinBox;
+    QSpinBox*             m_dimensionSpinBox;
+    QSpinBox*             m_imageQualitySpinBox;
 
-    QLabel*       m_userNameDisplayLabel;
+    QPushButton*          m_extendedButton;
 
-    KComboBox*    m_albumsListComboBox;
-    KLineEdit*    m_tagsLineEdit;
+    ComboBoxIntermediate* m_contentTypeComboBox;
+    ComboBoxIntermediate* m_safetyLevelComboBox;
 
-    KTabWidget*   m_tab;
+    QGroupBox*            m_extendedSettingsBox;
 
-    KHTMLPart*    m_photoView;
+    QLabel*               m_userNameDisplayLabel;
+
+    KComboBox*            m_albumsListComboBox;
+    KLineEdit*            m_tagsLineEdit;
+
+    KTabWidget*           m_tab;
+
+    KHTMLPart*            m_photoView;
 
     KIPIFlickrExportPlugin::FlickrList*   m_imglst;
 

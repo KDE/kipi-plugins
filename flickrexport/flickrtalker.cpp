@@ -86,7 +86,7 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
     m_photoSetsList = 0;
 
     m_serviceName = serviceName;
-    if (serviceName == "23") 
+    if (serviceName == "23")
     {
         m_apiUrl = QString("http://www.23hq.com/services/rest/");
         m_authUrl = QString("http://www.23hq.com/services/auth/");
@@ -486,6 +486,14 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     form.addPair("is_friend", isfriend, "text/plain");
     url2.addQueryItem("is_friend", isfriend);
 
+    QString safetyLevel = QString::number(static_cast<int>(info.safety_level));
+    form.addPair("safety_level", safetyLevel, "text/plain");
+    url2.addQueryItem("safety_level", safetyLevel);
+
+    QString contentType = QString::number(static_cast<int>(info.content_type));
+    form.addPair("content_type", contentType, "text/plain");
+    url2.addQueryItem("content_type", contentType);
+
     QString tags = "\"" + info.tags.join("\" \"") + "\"";
     if(tags.length() > 0)
     {
@@ -548,7 +556,7 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
         }
         else
         {
-            kWarning(51000) << "(flickrExport::Image doesn't have metdata)" << endl;
+            kWarning(51000) << "(flickrExport::Image doesn't have metadata)" << endl;
         }
 
         kDebug(51000) << "Resizing and saving to temp file: " << path << endl;

@@ -23,13 +23,24 @@
 #include "flickrlist.h"
 #include "flickrlist.moc"
 
+// Qt includes
+#include <QApplication>
+#include <QComboBox>
+#include <QPainter>
+
 // KDE includes
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
 
+// KIPI includes
+
 #include <libkipi/interface.h>
+
+// Local includes
+
+#include "comboboxdelegate.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -40,10 +51,18 @@ FlickrList::FlickrList(KIPI::Interface *iface, QWidget* parent, bool is_23,
             m_public(Qt::Unchecked),
             m_family(Qt::Unchecked),
             m_friends(Qt::Unchecked),
+            m_safetyLevel(FlickrList::SAFE),
+            m_contentType(FlickrList::PHOTO),
+            m_userIsEditing(false),
             m_is23(is_23)
 {
+    // Catch a click on the items.
     connect(listView(), SIGNAL(itemClicked(QTreeWidgetItem *, int)),
-            this, SLOT(slotSinglePermissionChanged(QTreeWidgetItem *, int)));
+            this, SLOT(slotItemClicked(QTreeWidgetItem *, int)));
+
+    // Catch it if the items change.
+    connect(listView(), SIGNAL(itemChanged(QTreeWidgetItem *, int)),
+            this, SLOT(slotItemChanged(QTreeWidgetItem *, int)));
 }
 
 void FlickrList::setPublic(Qt::CheckState isPublic)
@@ -63,6 +82,36 @@ void FlickrList::setFriends(Qt::CheckState isFriends)
     /* Change the general friends flag for photos in the list. */
     m_friends = isFriends;
     setPermissionState(FRIENDS, m_friends);
+}
+
+void FlickrList::setSafetyLevels(SafetyLevel safetyLevel)
+{
+    /* Change the general safety level for photos in the list. */
+    m_safetyLevel = safetyLevel;
+    if (safetyLevel != MIXEDLEVELS)
+    {
+        for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+        {
+            FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>
+                                         (listView()->topLevelItem(i));
+            lvItem->setSafetyLevel(m_safetyLevel);
+        }
+    }
+}
+
+void FlickrList::setContentTypes(ContentType contentType)
+{
+    /* Change the general content type for photos in the list. */
+    m_contentType = contentType;
+    if (contentType != MIXEDTYPES)
+    {
+        for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+        {
+            FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>
+                                         (listView()->topLevelItem(i));
+            lvItem->setContentType(m_contentType);
+        }
+    }
 }
 
 void FlickrList::setPermissionState(FieldType type, Qt::CheckState state)
@@ -86,7 +135,36 @@ void FlickrList::setPermissionState(FieldType type, Qt::CheckState state)
     }
 }
 
-void FlickrList::slotSinglePermissionChanged(QTreeWidgetItem *item, int column)
+void FlickrList::slotItemClicked(QTreeWidgetItem *item, int column)
+{
+    // If a click occurs from one of the three permission checkbox columns,
+    // it means something has changed in the permissions.
+    if ((column == PUBLIC) || (column == FAMILY) || (column == FRIENDS)) {
+        singlePermissionChanged(item, column);
+    }
+    // If a click occurs in the Safety Level or Content Type column, it means
+    // that editing should start on these items.
+    else if ((column == static_cast<int>(FlickrList::SAFETYLEVEL)) ||
+        (column == static_cast<int>(FlickrList::CONTENTTYPE)))
+    {
+        m_userIsEditing = true;
+        dynamic_cast<ComboBoxDelegate*>
+                (listView()->itemDelegateForColumn(column))->
+                startEditing(item, column);
+    }
+}
+
+void FlickrList::slotItemChanged(QTreeWidgetItem *item, int column)
+{
+    // If an item in the Safety Level or Content Type column changes, it should
+    // be distributed further.
+    if ((column == SAFETYLEVEL) || (column == CONTENTTYPE))
+    {
+        singleComboBoxChanged(item, column);
+    }
+}
+
+void FlickrList::singlePermissionChanged(QTreeWidgetItem *item, int column)
 {
     /* Callback for when the user clicks a checkbox in one of the permission
      * columns. */
@@ -139,6 +217,76 @@ void FlickrList::slotSinglePermissionChanged(QTreeWidgetItem *item, int column)
     }
 }
 
+void FlickrList::singleComboBoxChanged(QTreeWidgetItem *item, int column)
+{
+    /* Callback for when one of the comboboxes for Safety Level or Content
+     * Type changes. */
+
+    // Make sure to only process changes from user editing, because this
+    // function also responds to programmatic changes, which it causes itself
+    // again.
+    if (((column == SAFETYLEVEL) || (column == CONTENTTYPE)) && m_userIsEditing)
+    {
+        // The user has stopped editing.
+        m_userIsEditing = false;
+
+        // Convert the value from the model to the setting for the
+        // FlickrListViewItem.
+        FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>(item);
+        int data = lvItem->data(column, Qt::DisplayRole).toInt();
+        if      (column == SAFETYLEVEL)
+            lvItem->setSafetyLevel(static_cast<SafetyLevel>(data));
+        else if (column == CONTENTTYPE)
+            lvItem->setContentType(static_cast<ContentType>(data));
+
+        // Determine how much photos are set to different Safety Levels/Content
+        // Types.
+        QMap<int, int> nums = QMap<int, int>();
+        for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+        {
+            FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>
+                                         (listView()->topLevelItem(i));
+            if      (column == SAFETYLEVEL) nums[lvItem->safetyLevel()]++;
+            else if (column == CONTENTTYPE) nums[lvItem->contentType()]++;
+        }
+
+        // If there's only one Safety Level or Content Type, make everything
+        // uniform
+        if (nums.count() == 1)
+        {
+            QMapIterator<int, int> i(nums);
+            i.next();
+            if (column == SAFETYLEVEL)
+            {
+                SafetyLevel safetyLevel = static_cast<SafetyLevel>(i.key());
+                setSafetyLevels(safetyLevel);
+                emit signalSafetyLevelChanged(safetyLevel);
+            }
+            else if (column == CONTENTTYPE)
+            {
+                ContentType contentType = static_cast<ContentType>(i.key());
+                setContentTypes(contentType);
+                emit signalContentTypeChanged(contentType);
+            }
+        }
+        // If there are different Safety Levels/Content Types among the photos,
+        // signal that.
+        else
+        {
+            if (column == SAFETYLEVEL)
+            {
+                setSafetyLevels(MIXEDLEVELS);
+                emit signalSafetyLevelChanged(MIXEDLEVELS);
+            }
+            else if (column == CONTENTTYPE)
+            {
+                setContentTypes(MIXEDTYPES);
+                emit signalContentTypeChanged(MIXEDTYPES);
+            }
+        }
+    }
+}
+
 void FlickrList::slotAddImages(const KUrl::List& list)
 {
     /* Replaces the ImagesList::slotAddImages method, so that
@@ -153,6 +301,15 @@ void FlickrList::slotAddImages(const KUrl::List& list)
                                           isFamily  = m_family;
     (m_friends == Qt::PartiallyChecked) ? isFriends = true :
                                           isFriends = m_friends;
+
+    // Figure out safety level and content type. If these are intermediate, use
+    // the Flickr defaults.
+    SafetyLevel safetyLevel;
+    ContentType contentType;
+    (m_safetyLevel == MIXEDLEVELS) ? safetyLevel = SAFE :
+                                     safetyLevel = m_safetyLevel;
+    (m_contentType == MIXEDTYPES)  ? contentType = PHOTO :
+                                     contentType = m_contentType;
 
     // Figure out which of the supplied URL's should actually be added and which
     // of them already exist.
@@ -177,7 +334,8 @@ void FlickrList::slotAddImages(const KUrl::List& list)
         if (!found) {
             kDebug() << "Insterting new item " << imageUrl.fileName() << endl;
             new FlickrListViewItem(listView(), imageUrl, m_is23,
-                                   isPublic, isFamily, isFriends);
+                                   isPublic, isFamily, isFriends,
+                                   safetyLevel, contentType);
             added_urls.append(imageUrl);
         }
     }
@@ -195,7 +353,9 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView *view,
                                        bool is23 = false,
                                        bool accessPublic  = true,
                                        bool accessFamily  = true,
-                                       bool accessFriends = true)
+                                       bool accessFriends = true,
+                                       FlickrList::SafetyLevel safetyLevel = FlickrList::SAFE,
+                                       FlickrList::ContentType contentType = FlickrList::PHOTO)
                   : KIPIPlugins::ImagesListViewItem(view, url),
                     m_is23(is23)
 {
@@ -227,11 +387,21 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView *view,
             FlickrList::FRIENDS),
                i18n("Check if photo should be visible to friends or use "
                     "Upload Options tab to specify this for all images"));
+    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+            FlickrList::SAFETYLEVEL),
+               i18n("Indicate the safety level for the photo or use Upload "
+                    "Options tab to specify this for all images"));
+    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+            FlickrList::CONTENTTYPE),
+               i18n("Indicate what kind of image this is or use Upload "
+                    "Options tab to specify this for all images"));
 
     // Set the other checkboxes
     setFamily(accessFamily);
     setFriends(accessFriends);
     setPublic(accessPublic);
+    setSafetyLevel(safetyLevel);
+    setContentType(contentType);
 }
 
 void FlickrListViewItem::toggled()
@@ -325,6 +495,20 @@ void FlickrListViewItem::setFriends(bool status)
     kDebug() << "Friends status set to" << m_friends << endl;
 }
 
+void FlickrListViewItem::setSafetyLevel(FlickrList::SafetyLevel safetyLevel)
+{
+    m_safetyLevel = safetyLevel;
+    setData(FlickrList::SAFETYLEVEL, Qt::DisplayRole, QVariant(safetyLevel));
+    kDebug(51000) << "Safety level set to" << safetyLevel << endl;
+}
+
+void FlickrListViewItem::setContentType(FlickrList::ContentType contentType)
+{
+    m_contentType = contentType;
+    setData(FlickrList::CONTENTTYPE, Qt::DisplayRole, QVariant(contentType));
+    kDebug(51000) << "Content type set to" << contentType << endl;
+}
+
 bool FlickrListViewItem::isPublic()
 {
     /* Return whether the photo is public. */
@@ -341,6 +525,16 @@ bool FlickrListViewItem::isFriends()
 {
     /* Return whether the photo is accessible for friends. */
     return m_friends;
+}
+
+FlickrList::SafetyLevel FlickrListViewItem::safetyLevel()
+{
+    return m_safetyLevel;
+}
+
+FlickrList::ContentType FlickrListViewItem::contentType()
+{
+    return m_contentType;
 }
 
 } // namespace KIPIFlickrExportPlugin

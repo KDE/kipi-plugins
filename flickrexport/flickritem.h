@@ -28,6 +28,10 @@
 #include <QStringList>
 #include <QString>
 
+// Local includes
+
+#include "flickrlist.h"
+
 namespace KIPIFlickrExportPlugin
 {
 
@@ -66,9 +70,11 @@ public:
 
     FPhotoInfo()
     {
-        is_public = false;
-        is_family = false;
-        is_friend = false;
+        is_public    = false;
+        is_family    = false;
+        is_friend    = false;
+        safety_level = FlickrList::SAFE;
+        content_type = FlickrList::PHOTO;
     }
 
     bool        is_public;
@@ -78,6 +84,9 @@ public:
     QString     title;
     QString     description;
     QStringList tags;
+
+    FlickrList::SafetyLevel safety_level;
+    FlickrList::ContentType content_type;
 };
 
 // -------------------------------------------------------------

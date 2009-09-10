@@ -102,6 +102,9 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_friendsCheckBox        = m_widget->m_friendsCheckBox;
     m_dimensionSpinBox       = m_widget->m_dimensionSpinBox;
     m_imageQualitySpinBox    = m_widget->m_imageQualitySpinBox;
+    m_extendedButton         = m_widget->m_extendedButton;
+    m_safetyLevelComboBox    = m_widget->m_safetyLevelComboBox;
+    m_contentTypeComboBox    = m_widget->m_contentTypeComboBox;
     m_tagsLineEdit           = m_widget->m_tagsLineEdit;
     m_exportHostTagsCheckBox = m_widget->m_exportHostTagsCheckBox;
     m_stripSpaceTagsCheckBox = m_widget->m_stripSpaceTagsCheckBox;
@@ -281,6 +284,17 @@ void FlickrWindow::readSettings()
     m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
+
+    m_extendedButton->setChecked(grp.readEntry("Show Extended Options", false));
+    int safetyLevel = m_safetyLevelComboBox->findData(
+                          QVariant(grp.readEntry("Safety Level", 0)));
+    if (safetyLevel == -1) safetyLevel = 0;
+    m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
+    int contentType = m_contentTypeComboBox->findData(
+                          QVariant(grp.readEntry("Content Type", 0)));
+    if (contentType == -1) contentType = 0;
+    m_contentTypeComboBox->setCurrentIndex(contentType);
+
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     restoreDialogSize(dialogGroup);
 }
@@ -298,6 +312,11 @@ void FlickrWindow::writeSettings()
     grp.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
     grp.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
     grp.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
+    grp.writeEntry("Show Extended Options", m_extendedButton->isChecked());
+    int safetyLevel = m_safetyLevelComboBox->itemData(m_safetyLevelComboBox->currentIndex()).toInt();
+    grp.writeEntry("Safety Level", safetyLevel);
+    int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
+    grp.writeEntry("Content Type", contentType);
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     saveDialogSize(dialogGroup );
     config.sync();
@@ -483,6 +502,8 @@ void FlickrWindow::slotUser1()
         temp.is_public             = lvItem->isPublic()  ? 1 : 0;
         temp.is_family             = lvItem->isFamily()  ? 1 : 0;
         temp.is_friend             = lvItem->isFriends() ? 1 : 0;
+        temp.safety_level          = lvItem->safetyLevel();
+        temp.content_type          = lvItem->contentType();
         QStringList tagsFromDialog = m_tagsLineEdit->text().split(" ", QString::SkipEmptyParts);
 
         QStringList           allTags;

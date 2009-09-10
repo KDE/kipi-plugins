@@ -55,6 +55,8 @@
 
 // Local includes
 
+#include "comboboxdelegate.h"
+#include "comboboxintermediate.h"
 #include "imageslist.h"
 #include "flickrlist.h"
 
@@ -89,7 +91,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // -------------------------------------------------------------------
 
     m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab,
-                                                      (serviceName == "23"));
+                                                     (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView *hdr = m_imglst->listView()->header();
@@ -100,6 +102,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
     m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18n("Public"), true);
+
     if (serviceName != "23")
     {
         int tmpWidth;
@@ -120,6 +123,25 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
         hdr->setResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
         hdr->resizeSection(FlickrList::FAMILY,  permColWidth);
         hdr->resizeSection(FlickrList::FRIENDS, permColWidth);
+
+        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+                                        i18n("Safety level"), true);
+        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+                                        i18n("Content type"), true);
+        QMap<int, QString> safetyLevelItems;
+        QMap<int, QString> contentTypeItems;
+        safetyLevelItems[FlickrList::SAFE]       = i18n("Safe");
+        safetyLevelItems[FlickrList::MODERATE]   = i18n("Moderate");
+        safetyLevelItems[FlickrList::RESTRICTED] = i18n("Restricted");
+        contentTypeItems[FlickrList::PHOTO]      = i18n("Photo");
+        contentTypeItems[FlickrList::SCREENSHOT] = i18n("Screenshot");
+        contentTypeItems[FlickrList::OTHER]      = i18n("Other");
+        ComboBoxDelegate *safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
+        ComboBoxDelegate *contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+                                                       safetyLevelDelegate);
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+                                                       contentTypeDelegate);
     }
     hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
@@ -190,6 +212,40 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // NOTE: The term Compression factor may be to technical to write in the label
     QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsBox);
 
+    // -- Extended options ----------------------------------------------------
+
+    m_extendedButton = new QPushButton(i18n("Extended options"));
+    m_extendedButton->setCheckable(true);
+    // Initialize this button to checked, because extended options are shown.
+    // FlickrWindow::readSettings can change this, but if checked is false it
+    // cannot uncheck and subsequently hide the extended options (the toggled
+    // signal won't be emitted).
+    m_extendedButton->setChecked(true);
+    m_extendedButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+
+    m_extendedSettingsBox = new QGroupBox("", settingsBox);
+    m_extendedSettingsBox->setFlat(true);
+    QGridLayout *extendedSettingsLayout = new QGridLayout(m_extendedSettingsBox);
+
+    QLabel *imageSafetyLabel = new QLabel(i18n("Safety level:"));
+    m_safetyLevelComboBox = new ComboBoxIntermediate();
+    m_safetyLevelComboBox->addItem(i18n("Safe"),       QVariant(FlickrList::SAFE));
+    m_safetyLevelComboBox->addItem(i18n("Moderate"),   QVariant(FlickrList::MODERATE));
+    m_safetyLevelComboBox->addItem(i18n("Restricted"), QVariant(FlickrList::RESTRICTED));
+
+    QLabel *imageTypeLabel = new QLabel(i18n("Content type:"));
+    m_contentTypeComboBox = new ComboBoxIntermediate();
+    m_contentTypeComboBox->addItem(i18n("Photo"),      QVariant(FlickrList::PHOTO));
+    m_contentTypeComboBox->addItem(i18n("Screenshot"), QVariant(FlickrList::SCREENSHOT));
+    m_contentTypeComboBox->addItem(i18n("Other"),      QVariant(FlickrList::OTHER));
+
+    extendedSettingsLayout->addWidget(imageSafetyLabel, 1, 0, Qt::AlignLeft);
+    extendedSettingsLayout->addWidget(m_safetyLevelComboBox, 1, 1, Qt::AlignLeft);
+    extendedSettingsLayout->addWidget(imageTypeLabel, 0, 0, Qt::AlignLeft);
+    extendedSettingsLayout->addWidget(m_contentTypeComboBox, 0, 1, Qt::AlignLeft);
+    extendedSettingsLayout->setColumnStretch(0, 0);
+    extendedSettingsLayout->setColumnStretch(1, 1);
+
     optionsBoxLayout->addWidget(m_publicCheckBox,      0, 0, 1, 4);
     optionsBoxLayout->addWidget(m_familyCheckBox,      1, 0, 1, 4);
     optionsBoxLayout->addWidget(m_friendsCheckBox,     2, 0, 1, 4);
@@ -198,6 +254,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     optionsBoxLayout->addWidget(m_resizeCheckBox,      4, 0, 1, 4);
     optionsBoxLayout->addWidget(resizeLabel,           5, 1, 1, 2);
     optionsBoxLayout->addWidget(m_dimensionSpinBox,    5, 3, 1, 1);
+    optionsBoxLayout->addWidget(m_extendedButton,      6, 0, 1, 1);
+    optionsBoxLayout->addWidget(m_extendedSettingsBox, 7, 0, 4, 4);
     optionsBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
     optionsBoxLayout->setColumnStretch(1, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
@@ -256,17 +314,31 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     if (serviceName != "23")
     {
-        // 23hq.com does not support Family/Friends concept
+        // 23hq.com does not support Family/Friends concept, Safety Level and
+        // Content Type.
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
         connect(m_friendsCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFriendsToggled(int)));
+        connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(slotMainSafetyLevelChanged(int)));
+        connect(m_contentTypeComboBox, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(slotMainContentTypeChanged(int)));
+        connect(m_extendedButton, SIGNAL(toggled(bool)),
+                this, SLOT(slotExtendedSettingsToggled(bool)));
+        connect(m_imglst, SIGNAL(signalSafetyLevelChanged(FlickrList::SafetyLevel)),
+                this, SLOT(slotSafetyLevelChanged(FlickrList::SafetyLevel)));
+        connect(m_imglst, SIGNAL(signalContentTypeChanged(FlickrList::ContentType)),
+                this, SLOT(slotContentTypeChanged(FlickrList::ContentType)));
     }
     else
     {
-        // 23hq.com does not support Family/Friends concept, so hide it
+        // 23hq.com does not support Family/Friends concept, Safety Level or
+        // Content Type, so hide it
         m_familyCheckBox->hide();
         m_friendsCheckBox->hide();
+        m_extendedSettingsBox->hide();
+        m_extendedButton->hide();
     }
 }
 
@@ -291,10 +363,8 @@ void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox,
      * permissions have changed, considering the clicks in the checkboxes next
      * to each image. In response, the main permission checkboxes should be set
      * to the proper state.
-     * checkbox_num determins which checkbox should be changed: 0 for public,
-     * 1 for family, 2 for friends.
-     * state follows the checked state rules from Qt: 0 means false, 1 means
-     * intermediate, 2 means true. */
+     * The checkbox variable determines which of the checkboxes should be
+     * changed. */
 
     // Select the proper checkbox.
     QCheckBox *currBox;
@@ -310,6 +380,38 @@ void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox,
         currBox->setTristate(false);
     else
         currBox->setTristate(true);
+}
+
+void FlickrWidget::slotSafetyLevelChanged(FlickrList::SafetyLevel safetyLevel)
+{
+    /* Called when the general safety level of the FlickrList has changed,
+     * considering the individual comboboxes next to the photos. Used to set the
+     * main safety level combobox appropriately. */
+    if (safetyLevel == FlickrList::MIXEDLEVELS)
+    {
+        m_safetyLevelComboBox->setIntermediate(true);
+    }
+    else
+    {
+        int index = m_safetyLevelComboBox->findData(QVariant(static_cast<int>(safetyLevel)));
+        m_safetyLevelComboBox->setCurrentIndex(index);
+    }
+}
+
+void FlickrWidget::slotContentTypeChanged(FlickrList::ContentType contentType)
+{
+    /* Called when the general content type of the FlickrList has changed,
+     * considering the individual comboboxes next to the photos. Used to set the
+     * main content type combobox appropriately. */
+    if (contentType == FlickrList::MIXEDTYPES)
+    {
+        m_contentTypeComboBox->setIntermediate(true);
+    }
+    else
+    {
+        int index = m_contentTypeComboBox->findData(QVariant(static_cast<int>(contentType)));
+        m_contentTypeComboBox->setCurrentIndex(index);
+    }
 }
 
 void FlickrWidget::slotMainPublicToggled(int state)
@@ -353,6 +455,27 @@ void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox,
         else if (checkbox == FlickrList::FAMILY)  m_familyCheckBox->setTristate(false);
         else if (checkbox == FlickrList::FRIENDS) m_friendsCheckBox->setTristate(false);
     }
+}
+
+void FlickrWidget::slotMainSafetyLevelChanged(int index)
+{
+    int currValue = qVariantValue<int>(m_safetyLevelComboBox->itemData(index));
+    m_imglst->setSafetyLevels(static_cast<FlickrList::SafetyLevel>(currValue));
+}
+
+void FlickrWidget::slotMainContentTypeChanged(int index)
+{
+    int currValue = qVariantValue<int>(m_contentTypeComboBox->itemData(index));
+    m_imglst->setContentTypes(static_cast<FlickrList::ContentType>(currValue));
+}
+
+void FlickrWidget::slotExtendedSettingsToggled(bool status)
+{
+    /* Show or hide the extended settings when the extended settings button
+     * is toggled. */
+    m_extendedSettingsBox->setVisible(status);
+    m_imglst->listView()->setColumnHidden(FlickrList::SAFETYLEVEL, !status);
+    m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
 }
 
 } // namespace KIPIFlickrExportPlugin

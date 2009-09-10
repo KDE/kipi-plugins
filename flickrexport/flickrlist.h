@@ -73,6 +73,8 @@ public:
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);
     void setFriends(Qt::CheckState);
+    void setSafetyLevels(SafetyLevel);
+    void setContentTypes(ContentType);
 
 signals:
     // Signal for notifying when the states of one of the permission columns has
@@ -80,19 +82,32 @@ signals:
     // second the state.
     void signalPermissionChanged(FlickrList::FieldType, Qt::CheckState);
 
+    void signalSafetyLevelChanged(FlickrList::SafetyLevel);
+    void signalContentTypeChanged(FlickrList::ContentType);
+
 public slots:
     virtual void slotAddImages(const KUrl::List& list);
 
 private:
     void setPermissionState(FieldType, Qt::CheckState);
+    void singlePermissionChanged(QTreeWidgetItem *, int);
+    void singleComboBoxChanged(QTreeWidgetItem *, int);
 
     Qt::CheckState m_public;
     Qt::CheckState m_family;
     Qt::CheckState m_friends;
+    FlickrList::SafetyLevel m_safetyLevel;
+    FlickrList::ContentType m_contentType;
+
+    // Used to separate the ImagesList::itemChanged signals that were caused
+    // programmatically from those caused by the user.
+    bool m_userIsEditing;
+
     bool m_is23;
 
 private slots:
-    void slotSinglePermissionChanged(QTreeWidgetItem *, int);
+    void slotItemChanged(QTreeWidgetItem *, int);
+    void slotItemClicked(QTreeWidgetItem *, int);
 };
 
 class FlickrListViewItem : public KIPIPlugins::ImagesListViewItem
@@ -101,15 +116,20 @@ class FlickrListViewItem : public KIPIPlugins::ImagesListViewItem
 public:
 
     FlickrListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url,
-                       bool, bool, bool, bool);
+                       bool, bool, bool, bool,
+                       FlickrList::SafetyLevel, FlickrList::ContentType);
 //    ~FlickListViewItem();
 
     void setPublic(bool);
     void setFamily(bool);
     void setFriends(bool);
+    void setSafetyLevel(FlickrList::SafetyLevel);
+    void setContentType(FlickrList::ContentType);
     bool isPublic();
     bool isFamily();
     bool isFriends();
+    FlickrList::SafetyLevel safetyLevel();
+    FlickrList::ContentType contentType();
 
     void toggled();
 
@@ -119,6 +139,8 @@ private:
     bool m_public;
     bool m_family;
     bool m_friends;
+    FlickrList::SafetyLevel m_safetyLevel;
+    FlickrList::ContentType m_contentType;
 };
 
 } // namespace KIPIFlickrExportPlugin

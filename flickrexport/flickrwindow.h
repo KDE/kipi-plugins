@@ -35,6 +35,10 @@
 
 #include <kdialog.h>
 
+// Local includes
+
+#include "comboboxintermediate.h"
+
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -139,6 +143,10 @@ private:
 
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
+
+    QPushButton                           *m_extendedButton;
+    ComboBoxIntermediate                  *m_contentTypeComboBox;
+    ComboBoxIntermediate                  *m_safetyLevelComboBox;
 
 //    QHash<int, GAlbumViewItem>             m_albumDict;
 
