@@ -23,5 +23,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> FlickrExport       : 172359 : Set content type and safety level on flickr upload [patch].
 014 ==> RawConverter       : 160272 : Raw images converter changes brightness or exposure of photos.
 015 ==> AdvancedSlideshow  : 206976 : Image display time in advanced slideshow.
-016 ==> 
+016 ==> GPSSync            : 206995 : GPSCorrelator: "Remove" removes from all and does not update digikam-database.
+017 ==> 
 
