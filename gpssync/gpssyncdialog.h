@@ -57,9 +57,9 @@ protected Q_SLOTS:
 
     void slotApply();
     void slotHelp();
-    void slotUser1();
-    void slotUser2();
-    void slotUser3();
+    void slotUser1Correlate();
+    void slotUser2EditCoordinates();
+    void slotUser3RemoveCoordinates();
 
 private Q_SLOTS:
 

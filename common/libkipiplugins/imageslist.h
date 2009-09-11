@@ -128,6 +128,9 @@ private Q_SLOTS:
 
     void slotItemClicked(QTreeWidgetItem* item, int column);
 
+public:
+    void enableDragAndDrop(const bool enable = true);
+    
 private:
 
     void dragEnterEvent(QDragEnterEvent *e);
@@ -199,6 +202,7 @@ public:
     void               setControlButtons(ControlButtons buttonMask);
     void               setControlButtonsPlacement(ControlButtonPlacement placement);
     void               enableControlButtons(bool enable = true);
+    void               enableDragAndDrop(const bool enable = true);
 
 Q_SIGNALS:
 

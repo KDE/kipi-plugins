@@ -460,10 +460,8 @@ void MainDialog::slotSelection( void )
         addItems(urlList);
     }
 
-    m_ImagesFilesListBox->listView()->setDragEnabled(customize);
-    m_ImagesFilesListBox->listView()->setAcceptDrops(customize);
-    m_ImagesFilesListBox->listView()->setDropIndicatorShown(customize);
     m_ImagesFilesListBox->enableControlButtons(customize);
+    m_ImagesFilesListBox->enableDragAndDrop(customize);
 }
 
 void MainDialog::slotPortfolioDurationChanged ( int )

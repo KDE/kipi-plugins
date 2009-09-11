@@ -71,17 +71,19 @@ class GPSSyncDialogPriv
 public:
 
     GPSSyncDialogPriv()
+    : gpxPointsLabel(0),
+      maxTimeLabel(0),
+      timeZoneCB(0),
+      interpolateBox(0),
+      maxGapInput(0),
+      maxTimeInput(0),
+      gpxFileName(0),
+      interface(0),
+      about(0),
+      imagesList(0),
+      gpxParser(),
+      gpxFileOpenLastDirectory(KGlobalSettings::documentPath())
     {
-        imagesList     = 0;
-        interface      = 0;
-        maxGapInput    = 0;
-        gpxFileName    = 0;
-        gpxPointsLabel = 0;
-        timeZoneCB     = 0;
-        interpolateBox = 0;
-        maxTimeInput   = 0;
-        maxTimeLabel   = 0;
-        about          = 0;
     }
 
     QLabel                   *gpxPointsLabel;
@@ -102,6 +104,7 @@ public:
     KIPIPlugins::ImagesList  *imagesList;
 
     GPSDataParser             gpxParser;
+    KUrl                      gpxFileOpenLastDirectory;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -134,6 +137,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->imagesList = new KIPIPlugins::ImagesList(d->interface, this);
     d->imagesList->setControlButtonsPlacement(KIPIPlugins::ImagesList::NoControlButtons);
+    d->imagesList->enableDragAndDrop(false);
     d->imagesList->setAllowRAW(true);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
                                        i18n("Date"), true);
@@ -286,13 +290,13 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotApply()));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1()));
+            this, SLOT(slotUser1Correlate()));
 
     connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotUser2()));
+            this, SLOT(slotUser2EditCoordinates()));
 
     connect(this, SIGNAL(user3Clicked()),
-            this, SLOT(slotUser3()));
+            this, SLOT(slotUser3RemoveCoordinates()));
 
     connect(loadGPXButton, SIGNAL(released()),
             this, SLOT(slotLoadGPXFile()));
@@ -327,11 +331,13 @@ void GPSSyncDialog::setImages( const KUrl::List& images )
 
 void GPSSyncDialog::slotLoadGPXFile()
 {
-    KUrl loadGPXFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+    KUrl loadGPXFile = KFileDialog::getOpenUrl(d->gpxFileOpenLastDirectory,
                                                i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
                                                i18n("Select GPX File to Load") );
     if( loadGPXFile.isEmpty() )
        return;
+    
+    d->gpxFileOpenLastDirectory = loadGPXFile.upUrl();
 
     d->gpxParser.clear();
     bool ret = d->gpxParser.loadGPXFile(loadGPXFile);
@@ -355,7 +361,7 @@ void GPSSyncDialog::slotLoadGPXFile()
     d->gpxFileName->setText(loadGPXFile.fileName());
     d->gpxPointsLabel->setText(i18n("Points parsed: %1", d->gpxParser.numPoints()));
     enableButton(User1, true);
-    slotUser1();
+    slotUser1Correlate();
 }
 
 void GPSSyncDialog::closeEvent(QCloseEvent *e)
@@ -438,7 +444,7 @@ void GPSSyncDialog::saveSettings()
 }
 
 // Correlate the GPS positions from Pictures using a GPX file data.
-void GPSSyncDialog::slotUser1()
+void GPSSyncDialog::slotUser1Correlate()
 {
     int itemsUpdated      = 0;
     int i                 = 0;
@@ -490,16 +496,18 @@ void GPSSyncDialog::slotUser1()
 }
 
 // Start the GPS coordinates editor dialog.
-void GPSSyncDialog::slotUser2()
+void GPSSyncDialog::slotUser2EditCoordinates()
 {
-    if (!d->imagesList->listView()->currentItem())
+    const QList<QTreeWidgetItem*> selectedItemsList = d->imagesList->listView()->selectedItems();
+    
+    if (selectedItemsList.isEmpty())
     {
         KMessageBox::information(this, i18n("Please select at least one image from "
                      "the list to edit GPS coordinates manually."), i18n("GPS Sync"));
         return;
     }
 
-    GPSListViewItem *item = dynamic_cast<GPSListViewItem*>(d->imagesList->listView()->currentItem());
+    GPSListViewItem* const item = dynamic_cast<GPSListViewItem*>(d->imagesList->listView()->currentItem());
 
     GPSEditDialog dlg(this, item->GPSInfo(),
                       item->url().fileName(),
@@ -507,44 +515,30 @@ void GPSSyncDialog::slotUser2()
 
     if (dlg.exec() == KDialog::Accepted)
     {
-        int i                 = 0;
-        QTreeWidgetItem *item = 0;
-        do
+        for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
         {
-            item = d->imagesList->listView()->topLevelItem(i);
-            GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
-            if (lvItem)
-            {
-                if (lvItem->isSelected())
-                    lvItem->setGPSInfo(dlg.getGPSInfo(), true, true);
-            }
-            i++;
+            GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(*it);
+            lvItem->setGPSInfo(dlg.getGPSInfo(), true, true);
         }
-        while (item);
     }
 }
 
 // Remove GPS coordinates from pictures.
-void GPSSyncDialog::slotUser3()
+void GPSSyncDialog::slotUser3RemoveCoordinates()
 {
-    if (!d->imagesList->listView()->currentItem())
+    const QList<QTreeWidgetItem*> selectedItemsList = d->imagesList->listView()->selectedItems();
+    if (selectedItemsList.isEmpty())
     {
         KMessageBox::information(this, i18n("Please select at least one image from "
                      "which to remove GPS coordinates."), i18n("GPS Sync"));
         return;
     }
 
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
     {
-        item = d->imagesList->listView()->topLevelItem(i);
-        GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
-        if (lvItem)
-            lvItem->eraseGPSInfo();
-        i++;
+        GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(*it);
+        lvItem->eraseGPSInfo();
     }
-    while (item);
 }
 
 void GPSSyncDialog::slotApply()
@@ -554,12 +548,15 @@ void GPSSyncDialog::slotApply()
     do
     {
         item = d->imagesList->listView()->topLevelItem(i);
-        GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
+        GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(item);
         if (lvItem)
         {
-            d->imagesList->listView()->setCurrentItem(lvItem);
-            d->imagesList->listView()->scrollToItem(lvItem);
-            lvItem->writeGPSInfoToFile();
+            if (lvItem->isDirty())
+            {
+                d->imagesList->listView()->setCurrentItem(lvItem);
+                d->imagesList->listView()->scrollToItem(lvItem);
+                lvItem->writeGPSInfoToFile();
+            }
         }
         kapp->processEvents();
         i++;

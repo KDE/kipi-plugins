@@ -189,12 +189,16 @@ void GPSListViewItem::writeGPSInfoToFile()
     if (isEnabled() && isDirty())
     {
         KExiv2Iface::KExiv2 exiv2Iface;
-        exiv2Iface.load(d->url.path());
         exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
         exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
+
+        // TODO: there is no error-checking here
+        //       We should warn the user if writing to the
+        //       file fails!
+        exiv2Iface.load(d->url.path());
 
         KIPI::ImageInfo info = d->interface->info(url());
 
@@ -205,7 +209,9 @@ void GPSListViewItem::writeGPSInfoToFile()
 
             // Remove kipi host GPS location
             QStringList list;
-            list << "latitude" << "longitude" << "altitude";
+            // note: delAttributes wants "gpslocation", addAttributes 
+            //       wants "latitude", "longitude" and "altitude"
+            list << "gpslocation";
             info.delAttributes(list);
         }
         else

@@ -178,12 +178,8 @@ void ImagesListView::setup(int iconSize)
     setAlternatingRowColors(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    setDragEnabled(true);
-    viewport()->setAcceptDrops(true);
-    setDragDropMode(QAbstractItemView::InternalMove);
-    setDragDropOverwriteMode(false);
-    setDropIndicatorShown(true);
-
+    enableDragAndDrop(true);
+    
     setSortingEnabled(false);
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
@@ -214,6 +210,15 @@ void ImagesListView::setup(int iconSize)
 
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
+}
+
+void ImagesListView::enableDragAndDrop(const bool enable)
+{
+    setDragEnabled(enable);
+    viewport()->setAcceptDrops(enable);
+    setDragDropMode(enable ? QAbstractItemView::InternalMove : QAbstractItemView::NoDragDrop);
+    setDragDropOverwriteMode(enable);
+    setDropIndicatorShown(enable);
 }
 
 void ImagesListView::slotItemClicked(QTreeWidgetItem* item, int column)
@@ -374,6 +379,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     setControlButtons(Add|Remove|MoveUp|MoveDown|Clear);      // add all buttons       (default)
     setControlButtonsPlacement(ControlButtonsRight);          // buttons on the right  (default)
+    enableDragAndDrop(true);                                  // enable drag and drop  (default)
 
     // --------------------------------------------------------
 
@@ -428,6 +434,11 @@ void ImagesList::enableControlButtons(bool enable)
 {
     d->controlButtonsEnabled = enable;
     slotImageListChanged();
+}
+
+void ImagesList::enableDragAndDrop(const bool enable)
+{
+    d->listView->enableDragAndDrop(enable);
 }
 
 void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
@@ -727,9 +738,10 @@ bool ImagesList::isRAWFile(const QString & filePath)
 
 void ImagesList::slotImageListChanged()
 {
+    const QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
     const bool haveImages               = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
-    const bool haveSelectedImages       = !(d->listView->selectedItems().isEmpty()) && d->controlButtonsEnabled;
-    const bool haveOnlyOneSelectedImage = (d->listView->selectedItems().count()==1) && d->controlButtonsEnabled;
+    const bool haveSelectedImages       = !(selectedItemsList.isEmpty()) && d->controlButtonsEnabled;
+    const bool haveOnlyOneSelectedImage = (selectedItemsList.count()==1) && d->controlButtonsEnabled;
 
     d->removeButton->setEnabled(haveSelectedImages);
     d->moveUpButton->setEnabled(haveOnlyOneSelectedImage);
