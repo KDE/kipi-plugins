@@ -45,7 +45,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
-        : KDialog(parent)
+                  : KDialog(parent)
 {
     setCaption(i18n("Color Options"));
     setModal(true);
@@ -87,7 +87,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
         m_segmentCluster->setRange(0, 20);
         m_segmentCluster->setSliderEnabled(true);
         m_segmentCluster->setWhatsThis(i18n("Select here the value which represents the minimum "
-                                            "number of pixels contained in a hexahedra before it can "
+                                            "number of pixels contained in a hexahedron before it can "
                                             "be considered valid."));
         m_label_segmentCluster->setBuddy(m_segmentCluster);
         dvlay->addWidget(m_segmentCluster);
