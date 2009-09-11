@@ -45,9 +45,8 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrList::FlickrList(KIPI::Interface *iface, QWidget* parent, bool is_23,
-                       ControlButtonPlacement btnPlace)
-          : ImagesList(iface, parent, btnPlace),
+FlickrList::FlickrList(KIPI::Interface *iface, QWidget* parent, bool is_23)
+          : ImagesList(iface, parent),
             m_public(Qt::Unchecked),
             m_family(Qt::Unchecked),
             m_friends(Qt::Unchecked),

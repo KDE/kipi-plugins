@@ -27,14 +27,15 @@
 
 // Qt includes
 
-#include <QGroupBox>
-#include <QGridLayout>
-#include <QHeaderView>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QLabel>
-#include <QSpinBox>
 #include <QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QSpinBox>
+#include <QVBoxLayout>
 
 // KDE includes
 
@@ -176,23 +177,33 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Override Default Options"), settingsBox);
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    QGroupBox* optionsBox           = new QGroupBox(i18n("Override Default Options"), settingsBox);
+    QGridLayout *optionsBoxLayout   = new QGridLayout;
+    optionsBox->setLayout(optionsBoxLayout);
 
-    m_publicCheckBox = new QCheckBox(optionsBox);
+    // Wrap the options box in a scroll area, so that it can be resized without
+    // squeezing the contents.
+    QScrollArea* optionsScrollArea = new QScrollArea;
+    optionsScrollArea->setFrameShadow(QFrame::Plain);
+    optionsBoxLayout->addWidget(optionsScrollArea, 0, 0);
+    QWidget* optionsWidget = new QWidget;
+    optionsScrollArea->setWidget(optionsWidget);
+    QGridLayout* optionsLayout = new QGridLayout(optionsWidget);
+
+    m_publicCheckBox = new QCheckBox(optionsWidget);
     m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
 
-    m_familyCheckBox = new QCheckBox(optionsBox);
+    m_familyCheckBox = new QCheckBox(optionsWidget);
     m_familyCheckBox->setText(i18n("Visible to Family"));
 
-    m_friendsCheckBox = new QCheckBox(optionsBox);
+    m_friendsCheckBox = new QCheckBox(optionsWidget);
     m_friendsCheckBox->setText(i18n("Visible to Friends"));
 
-    m_resizeCheckBox = new QCheckBox(optionsBox);
+    m_resizeCheckBox = new QCheckBox(optionsWidget);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
     m_resizeCheckBox->setChecked(false);
 
-    m_dimensionSpinBox = new QSpinBox(optionsBox);
+    m_dimensionSpinBox = new QSpinBox(optionsWidget);
     m_dimensionSpinBox->setMinimum(0);
     m_dimensionSpinBox->setMaximum(5000);
     m_dimensionSpinBox->setSingleStep(10);
@@ -200,9 +211,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), optionsBox);
+    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), optionsWidget);
 
-    m_imageQualitySpinBox = new QSpinBox(optionsBox);
+    m_imageQualitySpinBox = new QSpinBox(optionsWidget);
     m_imageQualitySpinBox->setMinimum(0);
     m_imageQualitySpinBox->setMaximum(100);
     m_imageQualitySpinBox->setSingleStep(1);
@@ -210,7 +221,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsBox);
+    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsWidget);
 
     // -- Extended options ----------------------------------------------------
 
@@ -246,20 +257,20 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     extendedSettingsLayout->setColumnStretch(0, 0);
     extendedSettingsLayout->setColumnStretch(1, 1);
 
-    optionsBoxLayout->addWidget(m_publicCheckBox,      0, 0, 1, 4);
-    optionsBoxLayout->addWidget(m_familyCheckBox,      1, 0, 1, 4);
-    optionsBoxLayout->addWidget(m_friendsCheckBox,     2, 0, 1, 4);
-    optionsBoxLayout->addWidget(imageQualityLabel,     3, 0, 1, 3);
-    optionsBoxLayout->addWidget(m_imageQualitySpinBox, 3, 3, 1, 1);
-    optionsBoxLayout->addWidget(m_resizeCheckBox,      4, 0, 1, 4);
-    optionsBoxLayout->addWidget(resizeLabel,           5, 1, 1, 2);
-    optionsBoxLayout->addWidget(m_dimensionSpinBox,    5, 3, 1, 1);
-    optionsBoxLayout->addWidget(m_extendedButton,      6, 0, 1, 1);
-    optionsBoxLayout->addWidget(m_extendedSettingsBox, 7, 0, 4, 4);
-    optionsBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
-    optionsBoxLayout->setColumnStretch(1, 10);
-    optionsBoxLayout->setSpacing(KDialog::spacingHint());
-    optionsBoxLayout->setMargin(KDialog::spacingHint());
+    optionsLayout->addWidget(m_publicCheckBox,      0, 0, 1, 4);
+    optionsLayout->addWidget(m_familyCheckBox,      1, 0, 1, 4);
+    optionsLayout->addWidget(m_friendsCheckBox,     2, 0, 1, 4);
+    optionsLayout->addWidget(imageQualityLabel,     3, 0, 1, 3);
+    optionsLayout->addWidget(m_imageQualitySpinBox, 3, 3, 1, 1);
+    optionsLayout->addWidget(m_resizeCheckBox,      4, 0, 1, 4);
+    optionsLayout->addWidget(resizeLabel,           5, 1, 1, 2);
+    optionsLayout->addWidget(m_dimensionSpinBox,    5, 3, 1, 1);
+    optionsLayout->addWidget(m_extendedButton,      6, 0, 1, 1);
+    optionsLayout->addWidget(m_extendedSettingsBox, 7, 0, 4, 4);
+    optionsLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
+    optionsLayout->setColumnStretch(1, 10);
+    optionsLayout->setSpacing(KDialog::spacingHint());
+    optionsLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
@@ -286,6 +297,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     settingsBoxLayout->addStretch(10);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
+
+    optionsWidget->adjustSize();
 
     // ------------------------------------------------------------------------
 

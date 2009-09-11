@@ -67,8 +67,7 @@ public:
 public:
     FlickrList(KIPI::Interface *iface,
                QWidget* parent = 0,
-               bool = false,
-               ControlButtonPlacement btnPlace = ControlButtonsRight);
+               bool = false);
 
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);
