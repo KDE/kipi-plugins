@@ -25,4 +25,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> AdvancedSlideshow  : 206976 : Image display time in advanced slideshow.
 016 ==> GPSSync            : 206995 : GPSCorrelator: "Remove" removes from all and does not update digikam-database.
 017 ==> BatchProcessImages : 207108 : Plural used with a in front (wrong English).
-018 ==> 
+018 ==> JPEGLossLess       : 205602 : Picture can't be display top-bottom, it is always rotated to the left or right.
+019 ==> 
