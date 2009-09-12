@@ -80,6 +80,8 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
         return false;
     }
 
+    m_tmpFile.setSuffix("kipiplugin-rotate." + fi.suffix());
+
     if ( !m_tmpFile.open() )
     {
         err = i18n("Error in opening temporary file");

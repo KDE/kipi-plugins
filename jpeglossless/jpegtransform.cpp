@@ -118,9 +118,68 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
 #endif
 }
 
-bool transformJPEG(const QString& src, const QString& destGiven,
+static bool transformJPEG(const QString& src, const QString& destGiven,
+                          JXFORM_CODE flip, JXFORM_CODE rotate, QString& err);
+
+bool transformJPEG(const QString& src, const QString& dest,
                    Matrix &userAction, QString& err, bool updateFileTimeStamp)
 {
+    // Get Exif orientation action to do.
+    KExiv2Iface::KExiv2 exiv2Iface;
+
+    Matrix exifAction, action;
+    JXFORM_CODE flip,rotate;
+
+#if KEXIV2_VERSION >= 0x000600
+    exiv2Iface.setUpdateFileTimeStamp(updateFileTimeStamp);
+#endif
+
+    exiv2Iface.load(src);
+    getExifAction(exifAction, exiv2Iface.getImageOrientation());
+
+    // Compose actions: first exif, then user
+    action*=exifAction;
+    action*=userAction;
+
+    // Convert action into flip+rotate action
+    convertTransform(action, flip, rotate);
+    kDebug(51000) << "Transforming with option " << flip << " " << rotate << endl;
+    if (!transformJPEG(src, dest, flip, rotate, err))
+        return false;
+
+    // And set finaly update the metadata to target file.
+
+    QImage img(dest);
+    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    exiv2Iface.load(dest);
+    exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    exiv2Iface.setImageDimensions(img.size());
+    exiv2Iface.setExifThumbnail(exifThumbnail);
+    exiv2Iface.save(dest);
+
+    return true;
+}
+
+bool transformJPEG(const QString& src, const QString& destGiven,
+                   JXFORM_CODE flip, JXFORM_CODE rotate, QString& err)
+{
+    if (flip == JXFORM_NONE && rotate == JXFORM_NONE)
+    {
+        // no-op, just copy
+        if (src != destGiven)
+        {
+            QFile::remove(destGiven);
+            QFile file(src);
+            if (!file.copy(destGiven))
+            {
+                err = file.errorString();
+                return false;
+            }
+        }
+        return true;
+    }
+
     //may be modified
     QString dest(destGiven);
 
@@ -135,9 +194,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     struct jpegtransform_jpeg_error_mgr jsrcerr, jdsterr;
     jvirt_barray_ptr * src_coef_arrays;
     jvirt_barray_ptr * dst_coef_arrays;
-
-    Matrix exifAction, action;
-    JXFORM_CODE flip,rotate;
 
     // Initialize the JPEG decompression object with default error handling
     srcinfo.err                 = jpeg_std_error(&jsrcerr);
@@ -187,31 +243,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     jcopy_markers_setup(&srcinfo, copyoption);
 
     (void) jpeg_read_header(&srcinfo, true);
-
-    // Get Exif orientation action to do.
-    KExiv2Iface::KExiv2 exiv2Iface;
-
-#if KEXIV2_VERSION >= 0x000600
-    exiv2Iface.setUpdateFileTimeStamp(updateFileTimeStamp);
-#endif
-
-    exiv2Iface.load(src);
-    getExifAction(exifAction, exiv2Iface.getImageOrientation());
-
-    // Compose actions: first exif, then user
-    action*=exifAction;
-    action*=userAction;
-
-    // Convert action into flip+rotate action
-    convertTransform(action, flip, rotate);
-    kDebug(51000) << "Transforming with option " << flip << " " << rotate << endl;
-    if (flip == JXFORM_NONE && rotate == JXFORM_NONE)
-    {
-        err = "nothing to do"; // magic string
-        fclose(output_file);
-        fclose(input_file);
-        return false;
-    }
 
     bool twoPass = (flip != JXFORM_NONE);
 
@@ -345,17 +376,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         // Unlink temp file
         unlink(QFile::encodeName(dest));
     }
-
-    // And set finaly update the metadata to target file.
-
-    QImage img(destGiven);
-    QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    exiv2Iface.load(destGiven);
-    exiv2Iface.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-    exiv2Iface.setImageDimensions(img.size());
-    exiv2Iface.setExifThumbnail(exifThumbnail);
-    exiv2Iface.save(destGiven);
 
     return true;
 }
