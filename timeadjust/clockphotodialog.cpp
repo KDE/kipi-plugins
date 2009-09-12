@@ -170,7 +170,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface,
     // This dialog should be modal with three buttons: Ok, Cancel, and load
     // photo. For this third button, the User1 button from KDialog is used.
     // The Ok button is only enable when a photo is loaded.
-    setCaption(i18n("Determine time diffence with clock photo"));
+    setCaption(i18n("Determine time difference with clock photo"));
     setButtons(User1 | Ok | Cancel);
     button(User1)->setText(i18n("Load different photo"));
     button(User1)->setIcon(KIcon("document-open"));
