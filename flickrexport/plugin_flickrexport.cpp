@@ -67,16 +67,16 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
 
-    m_action = actionCollection()->addAction("flickrexport");
-    m_action->setText(i18n("Export to Flick&r..."));
-    m_action->setIcon(KIcon("flickr"));
-    m_action->setEnabled(false);
-    m_action->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R);
+    m_actionFlickr = actionCollection()->addAction("flickrexport");
+    m_actionFlickr->setText(i18n("Export to Flick&r..."));
+    m_actionFlickr->setIcon(KIcon("flickr"));
+    m_actionFlickr->setEnabled(false);
+    m_actionFlickr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R);
 
-    connect(m_action, SIGNAL(triggered(bool)),
+    connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_action);
+    addAction(m_actionFlickr);
 
     m_action23 = actionCollection()->addAction("23export");
     m_action23->setText(i18n("Export to &23..."));
@@ -89,6 +89,17 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     addAction(m_action23);
 
+    m_actionZooomr = actionCollection()->addAction("Zooomrexport");
+    m_actionZooomr->setText(i18n("Export to &Zooomr..."));
+    m_actionZooomr->setIcon(KIcon("applications-internet"));
+    m_actionZooomr->setEnabled(false);
+    m_actionZooomr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Z);
+
+    connect(m_actionZooomr, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateZooomr()));
+
+    addAction(m_actionZooomr);
+
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
     if (!interface)
@@ -96,8 +107,9 @@ void Plugin_FlickrExport::setup(QWidget* widget)
         kError( 51000 ) << "Kipi interface is null!" << endl;
         return;
     }
-    m_action->setEnabled(true);
+    m_actionFlickr->setEnabled(true);
     m_action23->setEnabled(true);
+    m_actionZooomr->setEnabled(true);
 }
 
 Plugin_FlickrExport::~Plugin_FlickrExport()
@@ -138,9 +150,26 @@ void Plugin_FlickrExport::slotActivate23()
     m_dlg->show();
 }
 
+void Plugin_FlickrExport::slotActivateZooomr()
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    if (!interface)
+    {
+        kError( 51000 ) << "Kipi interface is null!" << endl;
+        return;
+    }
+
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp", "kipi-Zooomrexportplugin-" + QString::number(getpid()) + "/");
+
+    // We clean it up in the close button
+    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
+    m_dlg->show();
+}
+
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
 {
-    if (action == m_action || action == m_action23)
+    if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
         return KIPI::ExportPlugin;
 
     kWarning(51000) << "Unrecognized action for plugin category identification" << endl;

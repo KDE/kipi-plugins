@@ -91,15 +91,30 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
         m_apiUrl = QString("http://www.23hq.com/services/rest/");
         m_authUrl = QString("http://www.23hq.com/services/auth/");
         m_uploadUrl = QString("http://www.23hq.com/services/upload/");
+
+        // bshanks: do 23 and flickr really share API keys? or does 23 not need
+        // one?
+        m_apikey = "49d585bafa0758cb5c58ab67198bf632";
+        m_secret = "34b39925e6273ffd";
+    }
+    else if (serviceName == "Zooomr") 
+    {
+        m_apiUrl = QString("http://api.zooomr.com/services/rest/");
+        m_authUrl = QString("http://www.zooomr.com/services/auth/");
+        m_uploadUrl = QString("http://upload.zooomr.com/services/upload/");
+
+        m_apikey = "18c8db5ce9ed4e15a7b484136f5080c5";
+        m_secret = "1ea4af14e3";
     }
     else
     {
         m_apiUrl = QString("http://www.flickr.com/services/rest/");
         m_authUrl = QString("http://www.flickr.com/services/auth/");
         m_uploadUrl = QString("http://api.flickr.com/services/upload/");
+
+        m_apikey = "49d585bafa0758cb5c58ab67198bf632";
+        m_secret = "34b39925e6273ffd";
     }
-    m_apikey = "49d585bafa0758cb5c58ab67198bf632";
-    m_secret = "34b39925e6273ffd";
 
     /* Initialize selected photo set as empty. */
     m_selectedPhotoSet = FPhotoSet();
@@ -169,10 +184,21 @@ void FlickrTalker::getFrob()
     QString md5 = getApiSig(m_secret, url);
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "Get frob url: " << url << endl;
-    QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
 
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect.
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        QByteArray tmp;
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
+ 
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -205,9 +231,19 @@ void FlickrTalker::checkToken(const QString& token)
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "Check token url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
 
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow the
+        // redirect
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+   }
+   else
+   {
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+   }
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -276,9 +312,20 @@ void FlickrTalker::getToken()
     QString md5 = getApiSig(m_secret, url);
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "Get token url: " << url << endl;
-    QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+ 
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect.
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        QByteArray tmp;
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -306,8 +353,18 @@ void FlickrTalker::listPhotoSets()
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "List photoset URL" << url;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect.
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -344,8 +401,18 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "Get photo property url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect.
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -388,8 +455,20 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "List photo sets url: " << url << endl;
     QByteArray tmp;
-    KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
-    job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    KIO::TransferJob* job;
+    if (m_serviceName == "Zooomr")
+    {
+        // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
+        // the redirect (although this function should never get called when
+        // using Zooomr).
+        job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
+    }
+    else
+    {
+        job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
+        job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+    }
+
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -403,7 +482,8 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     emit signalBusy(true);
 }
 
-void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,  const QString& photoSetId)
+void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
+                                      const QString& photoSetId)
 {
     if (m_job)
     {
@@ -418,9 +498,12 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,  const QString& ph
      * it doesn't exist yet on Flickr and needs to be created. Note that it's
      * not necessary to subsequently add the photo to the photo set, as this
      * is done in the set creation call to Flickr. */
-    if (photoSetId.startsWith("UNDEFINED_")) {
+    if (photoSetId.startsWith("UNDEFINED_"))
+    {
         createPhotoSet("", m_selectedPhotoSet.title, m_selectedPhotoSet.description, photoId);
-    } else {
+    }
+    else
+    {
         url.addQueryItem("auth_token", m_token);
 
         url.addQueryItem("photoset_id", photoSetId);
@@ -971,23 +1054,26 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "photoset")
         {
-          // Parse the id from the response.
-          QString new_id = node.toElement().attribute("id");
+            // Parse the id from the response.
+            QString new_id = node.toElement().attribute("id");
 
-          // Set the new id in the photo sets list.
-          QLinkedList<FPhotoSet>::iterator it = m_photoSetsList->begin();
-          while(it != m_photoSetsList->end()) {
-            if (it->id == m_selectedPhotoSet.id) {
-              it->id = new_id;
-              break;
+            // Set the new id in the photo sets list.
+            QLinkedList<FPhotoSet>::iterator it = m_photoSetsList->begin();
+            while(it != m_photoSetsList->end())
+            {
+                if (it->id == m_selectedPhotoSet.id)
+                {
+                    it->id = new_id;
+                    break;
+                }
+                it++;
             }
-            it++;
-          }
-          // Set the new id in the selected photo set.
-          m_selectedPhotoSet.id = new_id;
+            // Set the new id in the selected photo set.
+            m_selectedPhotoSet.id = new_id;
 
-          kDebug() << "PhotoSet created successfully with id" << new_id << endl;
-          emit signalAddPhotoSetSucceeded();
+            kDebug() << "PhotoSet created successfully with id" << new_id
+                     << endl;
+            emit signalAddPhotoSetSucceeded();
         }
 
         if (node.isElement() && node.nodeName() == "err")
@@ -1169,7 +1255,16 @@ void FlickrTalker::parseResponseAddPhoto(const QByteArray& data)
         }
         else
         {
-            addPhotoToPhotoSet(photoId, photoSetId);
+            if (m_serviceName == "Zooomr")
+            {
+                // addPhotoToPhotoSet not supported by Zooomr (Zooomr only has
+                // smart folder-type photosets); silently fail
+                emit signalAddPhotoSucceeded();
+            }
+            else
+            {
+                addPhotoToPhotoSet(photoId, photoSetId);
+            }
         }
     }
 }

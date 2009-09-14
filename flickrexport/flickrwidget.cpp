@@ -82,6 +82,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                                   "<font color=\"#7CD164\">23</font></a>"
                                   " Export"
                                   "</h2></b>"));
+    else if (serviceName == "Zooomr")
+        headerLabel->setText(i18n("<b><h2><a href='http://www.zooomr.com'>"
+                                  "<font color=\"#7CD164\">zooomr</font></a>"
+                                  " Export"
+                                  "</h2></b>"));
     else
         headerLabel->setText(i18n("<b><h2><a href='http://www.flickr.com'>"
                                   "<font color=\"#0065DE\">flick</font>"
@@ -325,14 +330,32 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     connect(m_publicCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotMainPublicToggled(int)));
 
+    // Zooomr doesn't support explicit Photosets.
+    if (serviceName == "Zooomr")
+    {
+        albumLabel->hide();
+        m_albumsListComboBox->hide();
+        m_newAlbumBtn->setEnabled(false);
+        m_newAlbumBtn->hide();
+    }
+
+    // 23HQ doesn't support the Family and Friends concept.
     if (serviceName != "23")
     {
-        // 23hq.com does not support Family/Friends concept, Safety Level and
-        // Content Type.
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
         connect(m_friendsCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFriendsToggled(int)));
+    }
+    else
+    {
+        m_familyCheckBox->hide();
+        m_friendsCheckBox->hide();
+    }
+
+    // 23HQ and Zooomr don't support the Safety Level and Content Type concept.
+    if ((serviceName != "23") && (serviceName != "Zooomr"))
+    {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
         connect(m_contentTypeComboBox, SIGNAL(currentIndexChanged(int)),
@@ -346,13 +369,10 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     }
     else
     {
-        // 23hq.com does not support Family/Friends concept, Safety Level or
-        // Content Type, so hide it
-        m_familyCheckBox->hide();
-        m_friendsCheckBox->hide();
         m_extendedSettingsBox->hide();
         m_extendedButton->hide();
     }
+    optionsWidget->adjustSize();
 }
 
 FlickrWidget::~FlickrWidget()
@@ -440,7 +460,8 @@ void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox,
     /* Callback for when one of the main permission checkboxes is toggled.
      * checkbox specifies which of the checkboxes is toggled. */
 
-    if (state != Qt::PartiallyChecked) {
+    if (state != Qt::PartiallyChecked)
+    {
         // Set the states for the image list.
         if      (checkbox == FlickrList::PUBLIC)  m_imglst->setPublic(state);
         else if (checkbox == FlickrList::FAMILY)  m_imglst->setFamily(state);

@@ -55,11 +55,13 @@ public slots:
 
     void slotActivate();
     void slotActivate23();
+    void slotActivateZooomr();
 
 private:
 
-    KAction                                 *m_action;
+    KAction                                 *m_actionFlickr;
     KAction                                 *m_action23;
+    KAction                                 *m_actionZooomr;
     KIPIFlickrExportPlugin::FlickrWindow    *m_dlg;
 };
 
