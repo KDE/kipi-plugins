@@ -3,6 +3,7 @@ Kipi-plugins 0.7.0 - Release date: xx/09/2009
 
 NEW FEATURES:
 
+FlickrExport : Plugin is now able to export to Zooomr web service (www.zooomr.com).
 FlickrExport : User can set photo visibility one by one if necessary (public, friends, family).
 TimeAdjust   : A dedicated photo time-stamp can be used to adjust difference of camera clock.
 
@@ -26,4 +27,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> GPSSync            : 206995 : GPSCorrelator: "Remove" removes from all and does not update digikam-database.
 017 ==> BatchProcessImages : 207108 : Plural used with a in front (wrong English).
 018 ==> JPEGLossLess       : 205602 : Picture can't be display top-bottom, it is always rotated to the left or right.
-019 ==> 
+019 ==> FlickrExport       : 139537 : Option to export to zooomr [patch for FlickrExport].
+020 ==> 
