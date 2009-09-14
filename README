@@ -20,7 +20,7 @@ AcquireImages      : A tool to acquire images using flat scanner.
 Calendar           : A tool to create calendars.
 DngConverter       : A tool to convert Raw Image to Digital NeGative (DNG - http://en.wikipedia.org/wiki/Digital_Negative_(file_format)).
 Facebook           : A tool to import/export images to/from a remote Facebook web service (http://www.facebook.com).
-FlickrExport       : A tool to export images to a remote Flickr web service (http://www.flickr.com).
+FlickrExport       : A tool to export images to a remote Flickr based web service (http://www.flickr.com). Also compatible with Zooomr and 23HQ 
 GalleryExport      : A tool to export images to a remote Gallery (and Gallery 2) server (http://gallery.sf.net).
 GPSSync            : A tool to geolocalize pictures.
 HTMLExport         : A tool to export images collections into a static XHTML page.
