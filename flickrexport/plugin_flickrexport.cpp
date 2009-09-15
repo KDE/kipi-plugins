@@ -91,7 +91,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     m_actionZooomr = actionCollection()->addAction("Zooomrexport");
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
-    m_actionZooomr->setIcon(KIcon("applications-internet"));
+    m_actionZooomr->setIcon(KIcon("zooomr"));
     m_actionZooomr->setEnabled(false);
     m_actionZooomr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Z);
 
