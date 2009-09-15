@@ -371,6 +371,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     {
         m_extendedSettingsBox->hide();
         m_extendedButton->hide();
+        m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+                                               false);
+        m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+                                               false);
+
     }
     optionsWidget->adjustSize();
 }
