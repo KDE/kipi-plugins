@@ -11,7 +11,7 @@
  *               The intermediate state is indicated by appending an extra item
  *               with a user specified text (default is "Various"). Whenever an
  *               other item is set, this special state is removed from the list
- *               so it can never be selected explicitely.
+ *               so it can never be selected explicitly.
  *
  * Copyright (C) 2009 by Pieter Edelman <pieter dot edelman at gmx dot net>
  *

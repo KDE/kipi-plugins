@@ -55,9 +55,9 @@ TwainIface::~TwainIface()
     ReleaseTwain();
 }
 
-/** Initializes TWAIN interface . Is already called from the constructor. 
+/** Initializes TWAIN interface . Is already called from the constructor.
     It should be called again if ReleaseTwain is called.
-    hWnd is the window which has to subclassed in order to recieve
+    hWnd is the window which has to subclassed in order to receive
     Twain messaged. Normally - this would be your main application window.
  */
 bool TwainIface::InitTwain(HWND hWnd)
@@ -148,7 +148,7 @@ bool TwainIface::CallTwainProc(pTW_IDENTITY pOrigin, pTW_IDENTITY pDest,
     }
 }
 
-/** This function should ideally be overridden in the derived class . If only a 
+/** This function should ideally be overridden in the derived class . If only a
     few fields need to be updated , call TwainIface::GetIdentity first in your
     derived class
  */
@@ -173,7 +173,7 @@ void TwainIface::GetIdentity()
 /** Called to display a dialog box to select the Twain source to use.
     This can be overridden if a list of all sources is available
     to the application. These sources can be enumerated by Twain.
-    it is not yet supportted by TwainIface.
+    it is not yet supported by TwainIface.
  */
 bool TwainIface::SelectSource()
 {
@@ -246,7 +246,7 @@ bool TwainIface::DSOpen() const
  */
 bool TwainIface::OpenSource(TW_IDENTITY *pSource)
 {
-    if(pSource) 
+    if(pSource)
     {
         m_Source = *pSource;
     }
@@ -372,7 +372,7 @@ bool TwainIface::SetCapability(TW_CAPABILITY& cap)
     return false;
 }
 
-/** Sets the number of images which can be accpeted by the application at one time
+/** Sets the number of images which can be accepted by the application at one time
  */
 bool TwainIface::SetImageCount(TW_INT16 nCount)
 {

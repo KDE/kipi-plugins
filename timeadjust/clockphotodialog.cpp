@@ -204,7 +204,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface,
     d->imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     d->imageLabel->setScaledContents(true);
 
-    // The label is also used to display text (warging and waiting messages).
+    // The label is also used to display text (warning and waiting messages).
     d->imageLabel->setWordWrap(true);
     d->imageLabel->setAlignment(Qt::AlignCenter);
     d->scrollArea->setWidget(d->imageLabel);
@@ -229,7 +229,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface,
     d->zoomInButton->setEnabled(false);
 
     // The date and time entry widget allows the user to enter the date and time
-    // displayed in the image. The format is explicitely set, otherwise seconds
+    // displayed in the image. The format is explicitly set, otherwise seconds
     // might not get displayed.
     QLabel *dtLabel = new QLabel(i18n("The clock date and time:"));
     d->calendar     = new QDateTimeEdit();
@@ -324,9 +324,9 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
                 // If datetime information couldn't be loaded, display a
                 // warning and disable the datetime widget.
                 QString warning = QString(i18n("<font color=\"red\"><b>Couldn't "
-						                  "obtain date and time information "
-						                  "from image %1!</b></font>")).
-						                  arg(imageFile.fileName());
+                                          "obtain date and time information "
+                                          "from image %1!</b></font>")).
+                                          arg(imageFile.fileName());
                 d->imageLabel->setText(warning);
             }
         }
@@ -426,7 +426,7 @@ void ClockPhotoDialog::slotAdjustZoom(int percentage)
     // value and adjust the scrollbars adjusted so that the center of the
     // display remains the same.
 
-    // Remember wat the old width was.
+    // Remember what the old width was.
     float oldWidth = d->scrollArea->widget()->width();
 
     // Convert the percentage to an absolute scale and scale the image.

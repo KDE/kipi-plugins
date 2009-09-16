@@ -132,7 +132,7 @@ void SendImages::sendImages()
     if (d->settings.imagesChangeProp)
     {
         // Resize all images if necessary in a separate threadImgResize.
-        // Attachements list is updated by slotFinishedResize().
+        // Attachments list is updated by slotFinishedResize().
 
         d->threadImgResize->resize(d->settings);
         d->threadImgResize->start();
@@ -307,8 +307,8 @@ bool SendImages::showFailedResizedImages()
 }
 
 /** Returns a list of image urls, whose sum file-size is smaller than the quota set in dialog.
-    The returned list are images than we can send imediatly, and are removed from d->attachementFiles list.
-    Files wich still in d->attachementFiles need to be send by another pass.
+    The returned list are images than we can send immediately, and are removed from d->attachementFiles list.
+    Files which still in d->attachementFiles need to be send by another pass.
 */
 KUrl::List SendImages::divideEmails()
 {
@@ -333,14 +333,14 @@ KUrl::List SendImages::divideEmails()
         }
         else
         {
-		if ((file.size()) >= d->settings.attachementLimitInBytes())
-		{
-			kDebug(51000) << "File \"" << file.fileName() << "\" is out of attachement limit!";
-			QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
-			d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
-		}
-		else
-			todoAttachement.append(*it);
+        if ((file.size()) >= d->settings.attachementLimitInBytes())
+        {
+            kDebug(51000) << "File \"" << file.fileName() << "\" is out of attachment limit!";
+            QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
+            d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
+        }
+        else
+            todoAttachement.append(*it);
         }
     }
 
@@ -366,7 +366,7 @@ bool SendImages::invokeMailAgent()
             {
                 stringFileList << file.path();
             }
-            
+
             switch ((int)d->settings.emailProgram)
             {
                 case EmailSettingsContainer::DEFAULT:

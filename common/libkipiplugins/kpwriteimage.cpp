@@ -171,7 +171,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     cinfo.comp_info[2].h_samp_factor = 1;
     cinfo.comp_info[2].v_samp_factor = 1;
 
-    // B.K.O #154273: use 99 compresion level instead 100 to reduce output JPEG file size.
+    // B.K.O #154273: use 99 compression level instead 100 to reduce output JPEG file size.
     jpeg_set_quality(&cinfo, 99, true);
     jpeg_start_compress(&cinfo, true);
 
@@ -383,7 +383,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
     png_set_compression_level(png_ptr, 9);
 
-    // Write ICC profil.
+    // Write ICC profile.
     if (!d->iccProfile.isEmpty())
     {
         png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
@@ -558,7 +558,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFSetField(tif, TIFFTAG_XMLPACKET, (uint32)ba3.size(), (uchar *)ba3.data());
 #endif
 
-    // Standard Exif Ascii tags (available with libtiff 3.6.1)
+    // Standard Exif ASCII tags (available with libtiff 3.6.1)
 
     tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->metadata, "Exif.Image.DocumentName");
     tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->metadata, "Exif.Image.ImageDescription");
@@ -574,7 +574,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     soft.append(QString(" ( %1 )").arg(libtiffver));
     TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toAscii().data());
 
-    // Write ICC profil.
+    // Write ICC profile.
     if (!d->iccProfile.isEmpty())
     {
 #if defined(TIFFTAG_ICCPROFILE)
@@ -623,7 +623,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
                 if (d->hasAlpha)
                 {
-                    // TIFF makes you pre-mutiply the rgb components by alpha
+                    // TIFF makes you pre-multiply the rgb components by alpha
 
                     a16          = (uint16)(pixel[6]+256*pixel[7]);
                     alpha_factor = ((double)a16 / 65535.0);
@@ -655,7 +655,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
                 if (d->hasAlpha)
                 {
-                    // TIFF makes you pre-mutiply the rgb components by alpha
+                    // TIFF makes you pre-multiply the rgb components by alpha
 
                     a8           = (uint8)(pixel[3]);
                     alpha_factor = ((double)a8 / 255.0);
@@ -742,7 +742,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     TIFFClose(tif);
 
-    // Store metadata (Exiv2 0.18 support tiff writting mode)
+    // Store metadata (Exiv2 0.18 support tiff writing mode)
     d->metadata.save(destPath);
 
     return true;

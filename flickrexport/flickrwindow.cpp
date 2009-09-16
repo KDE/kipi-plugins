@@ -422,7 +422,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
       m_talker->m_photoSetsList->prepend(fps);
       m_talker->m_selectedPhotoSet = fps;
 
-      // Repopulate the photo sets combo box.
+      // Re-populate the photo sets combo box.
       populatePhotoSetComboBox();
    }
    else
@@ -662,7 +662,7 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 
 void FlickrWindow::slotAddPhotoSetSucceeded()
 {
-  /* Method called when a photo set has been succesfully created on Flickr.
+  /* Method called when a photo set has been successfully created on Flickr.
    * It functions to restart the normal flow after a photo set has been created
    * on Flickr. */
   populatePhotoSetComboBox();

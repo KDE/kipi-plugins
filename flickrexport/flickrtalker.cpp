@@ -97,7 +97,7 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
         m_apikey = "49d585bafa0758cb5c58ab67198bf632";
         m_secret = "34b39925e6273ffd";
     }
-    else if (serviceName == "Zooomr") 
+    else if (serviceName == "Zooomr")
     {
         m_apiUrl = QString("http://api.zooomr.com/services/rest/");
         m_authUrl = QString("http://www.zooomr.com/services/auth/");
@@ -198,7 +198,7 @@ void FlickrTalker::getFrob()
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
- 
+
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -312,7 +312,7 @@ void FlickrTalker::getToken()
     QString md5 = getApiSig(m_secret, url);
     url.addQueryItem("api_sig", md5);
     kDebug(51000) << "Get token url: " << url << endl;
- 
+
     KIO::TransferJob* job;
     if (m_serviceName == "Zooomr")
     {
@@ -906,7 +906,7 @@ void FlickrTalker::parseResponseCheckToken(const QByteArray& data)
                         QString	perms = e.text();//this is what is obtained from data.
 
                         if(perms == "write")
-                            transReturn = i18nc("As in the persmission to", "write");
+                            transReturn = i18nc("As in the permission to", "write");
                         else if(perms == "read")
                             transReturn = i18nc("As in the permission to", "read");
                         else if(perms == "delete")
@@ -1038,7 +1038,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
 
 void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
 {
-    kDebug(51000) << "Parse response create photoset recieved " << data << endl;
+    kDebug(51000) << "Parse response create photoset received " << data << endl;
 
     //bool success = false;
 
