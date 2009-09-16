@@ -1,7 +1,19 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Flickr/23/Zooomr Exporter
+Name[bg]=Изнасяне към Flickr, 23 или Zooomr
+Name[pt]=Exportação para o Flickr/23/Zooomr
+Name[pt_BR]=Exportação para o Flickr/23/Zooomr
+Name[sv]=Export till Flickr, 23 eller Zoomr
+Name[uk]=Експорт до Flickr/23/Zooomr
+Name[x-test]=xxFlickr/23/Zooomr Exporterxx
 Comment=A tool to export images to a remote Flickr, 23 and Zooomr web services
+Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Flickr, 23 или Zooomr=
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Flickr, 23 e Zooomr
+Comment[pt_BR]=Uma ferramenta para exportar imagens para o serviço remoto da Internet Flickr, 23 e Zooomr
+Comment[sv]=Ett verktyg för att exportera bilder till en Flickr, 23 eller Zoomr fjärrwebbtjänst
+Comment[uk]=Інструмент для експорту зображень до віддаленої веб-служби Flickr, 23 або Zooomr
+Comment[x-test]=xxA tool to export images to a remote Flickr, 23 and Zooomr web servicesxx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
