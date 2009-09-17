@@ -30,5 +30,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 019 ==> FlickrExport       : 139537 : Option to export to zooomr [patch for FlickrExport].
 020 ==> GPSSync            : 183582 : Crash when trying to geolocate photographs after canceling empty map window.
 021 ==> MetadataEdit       : 193508 : Crash when saving after editing XMP Metadata for a image.
-022 ==> 
+022 ==> TimeAdjust         : 207620 : Adjust Time & Date: Example not updated when Adjustment Type changed.
+023 ==> 
 
