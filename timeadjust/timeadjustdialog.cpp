@@ -325,6 +325,9 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->adjustTypeGrp, SIGNAL( buttonReleased(int) ),
             this, SLOT( slotAdjustmentTypeChanged() ));
 
+    connect(d->adjustTypeGrp, SIGNAL( buttonClicked( int ) ),
+            this, SLOT( slotUpdateExample() ));
+
     connect(d->secs, SIGNAL( valueChanged( int ) ),
             this, SLOT( slotUpdateExample() ));
 
