@@ -42,7 +42,7 @@ public:
     ConvertImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
     ~ConvertImagesDialog();
 
-private slots:
+private Q_SLOTS:
 
     void slotHelp(void);
     void slotOptionsClicked(void);

@@ -56,7 +56,7 @@ public:
     PicasawebWidget(QWidget* parent=0);
     ~PicasawebWidget();
 
-private slots:
+private Q_SLOTS:
 
     void slotResizeChecked();
     void slotSelectionChecked();

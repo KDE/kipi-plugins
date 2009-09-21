@@ -91,7 +91,7 @@ public:
      */
     virtual void setParent(QWidget* parent);
 
-signals:
+Q_SIGNALS:
 
     void signalImageAcquired(const QImage& img);
 

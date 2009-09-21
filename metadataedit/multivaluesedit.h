@@ -50,11 +50,11 @@ public:
     void setValues(const QStringList& values);
     bool getValues(QStringList& oldValues, QStringList& newValues);
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-private slots:
+private Q_SLOTS:
 
     void slotSelectionChanged();
     void slotAddValue();

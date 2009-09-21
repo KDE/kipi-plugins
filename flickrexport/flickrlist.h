@@ -75,7 +75,7 @@ public:
     void setSafetyLevels(SafetyLevel);
     void setContentTypes(ContentType);
 
-signals:
+Q_SIGNALS:
     // Signal for notifying when the states of one of the permission columns has
     // changed. The first argument specifies which permission has changed, the
     // second the state.
@@ -84,7 +84,7 @@ signals:
     void signalSafetyLevelChanged(FlickrList::SafetyLevel);
     void signalContentTypeChanged(FlickrList::ContentType);
 
-public slots:
+public Q_SLOTS:
     virtual void slotAddImages(const KUrl::List& list);
 
 private:
@@ -104,7 +104,7 @@ private:
 
     bool m_is23;
 
-private slots:
+private Q_SLOTS:
     void slotItemChanged(QTreeWidgetItem *, int);
     void slotItemClicked(QTreeWidgetItem *, int);
 };

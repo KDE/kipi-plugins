@@ -41,7 +41,7 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
-private slots:
+private Q_SLOTS:
 
     void slotSetCenter();
     void slotSetTiled();

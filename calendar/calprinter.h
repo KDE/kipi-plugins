@@ -62,13 +62,13 @@ protected:
 
     void run();
 
-signals:
+Q_SIGNALS:
 
     void pageChanged(int page);
     void totalBlocks(int total);
     void blocksFinished(int finished);
 
-public slots:
+public Q_SLOTS:
 
     void cancel();
 

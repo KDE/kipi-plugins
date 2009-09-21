@@ -59,7 +59,7 @@ public:
      */
     KUrl getUrl();
 
-private slots:
+private Q_SLOTS:
 
     /**
      * Opens the browser with the SimpleViewer download page

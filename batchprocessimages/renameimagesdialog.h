@@ -60,7 +60,7 @@ private:
 
     KIPIPlugins::KPAboutData *m_about;
 
-private slots:
+private Q_SLOTS:
 
     void slotHelp();
 };

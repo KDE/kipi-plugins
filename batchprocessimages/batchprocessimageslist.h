@@ -43,7 +43,7 @@ public:
 
     BatchProcessImagesList(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
 
     void addedDropItems(QStringList filesPath);
 

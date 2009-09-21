@@ -56,7 +56,7 @@ public:
     KIntNumInput    *m_frameBevelBorderWidth;
     KColorButton    *m_button_frameBorderColor;
 
-private slots:
+private Q_SLOTS:
 
     void slotFrameBorderWidthChanged(int value);
 };

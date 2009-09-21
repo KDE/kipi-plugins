@@ -73,7 +73,7 @@ public:
                      const QString& caption);
     void    getPhoto(const QString& imgPath);
 
-signals:
+Q_SIGNALS:
     void signalBusy(bool val);
     void signalLoginProgress(int step, int maxStep = 0, 
                              const QString& label = "");
@@ -132,7 +132,7 @@ private:
     void parseResponseListPhotos(const QByteArray& data);
     void parseResponseListFriends(const QByteArray& data);
 
-private slots:
+private Q_SLOTS:
     void data(KIO::Job *job, const QByteArray& data);
     void slotResult(KJob *job);
 

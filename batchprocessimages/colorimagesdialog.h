@@ -42,7 +42,7 @@ public:
     ColorImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
     ~ColorImagesDialog();
 
-private slots:
+private Q_SLOTS:
 
     void slotHelp(void);
     void slotOptionsClicked(void);

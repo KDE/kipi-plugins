@@ -52,7 +52,7 @@ private:
     bool checkBinaries();
     bool isRAWFile(const QString& filePath);
 
-private slots:
+private Q_SLOTS:
 
     void slotActivateSingle();
     void slotActivateBatch();

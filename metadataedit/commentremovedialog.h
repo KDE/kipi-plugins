@@ -53,7 +53,7 @@ public:
     void setCheckedRemoveXMPCaption(bool c);
     void setCheckedRemoveIPTCCaption(bool c);
 
-protected slots:
+protected Q_SLOTS:
 
     void slotOk();
     void slotHelp();

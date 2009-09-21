@@ -71,10 +71,10 @@ public:
     long long getFriendID();
     long long getAlbumID();
 
-signals:
+Q_SIGNALS:
     void reloadAlbums(long long userID);
 
-private slots:
+private Q_SLOTS:
     void slotReloadAlbumsRequest();
     void slotDownloadTypeChanged(int dlType);
     void slotFriendsIndexChanged(int index);

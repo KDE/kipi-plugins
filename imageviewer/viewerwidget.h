@@ -137,7 +137,7 @@ protected:
     virtual void mouseDoubleClickEvent(QMouseEvent * e );
     bool isReallyFullScreen();
 
-private slots:
+private Q_SLOTS:
     void timeoutMouseMove();
 };
 

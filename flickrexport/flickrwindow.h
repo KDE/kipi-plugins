@@ -90,7 +90,7 @@ public:
                  QWidget *parent, const QString& serviceName);
     ~FlickrWindow();
 
-private slots:
+private Q_SLOTS:
 
     void slotTokenObtained(const QString& token);
     void slotDoLogin();

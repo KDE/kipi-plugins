@@ -45,7 +45,7 @@ public:
     void setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction);
     void setZoom(int zoomFactor);
 
-signals:
+Q_SIGNALS:
     void wheelChanged(int delta);
 
 protected:
@@ -56,7 +56,7 @@ protected:
     void paintEvent(QPaintEvent*);
     void resizeEvent(QResizeEvent*);
 
-private slots:
+private Q_SLOTS:
 
     void slotPreviewReadyRead();
     void slotPreviewProcessFinished();

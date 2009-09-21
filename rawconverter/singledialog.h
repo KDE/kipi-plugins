@@ -78,7 +78,7 @@ private:
     void processed(const KUrl& url, const QString& tmpFile);
     void processingFailed(const KUrl& url);
 
-private slots:
+private Q_SLOTS:
 
     void slotDefault();
     void slotClose();

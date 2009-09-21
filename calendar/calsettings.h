@@ -94,11 +94,11 @@ public:
 
     CalParams params;
 
-signals:
+Q_SIGNALS:
 
     void settingsChanged();
 
-public slots:
+public Q_SLOTS:
 
     void setPaperSize(const QString &paperSize);
     void setImagePos(int pos);

@@ -56,7 +56,7 @@ protected:
 
     void closeEvent(QCloseEvent *);
 
-private slots:
+private Q_SLOTS:
 
     void slotOk();
     void slotHelp();

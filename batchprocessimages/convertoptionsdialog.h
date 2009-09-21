@@ -55,7 +55,7 @@ public:
     KComboBox       *m_TIFFCompressionAlgo;
     KComboBox       *m_TGACompressionAlgo;
 
-public slots:
+public Q_SLOTS:
 
     void slotCompressLossLessEnabled(bool val);
 };

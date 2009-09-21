@@ -52,7 +52,7 @@ public:
                  const QString &FileName, QWidget *parent = 0);
     ~ImagePreview();
 
-private slots:
+private Q_SLOTS:
 
     void slotZoomFactorValueChanged(int ZoomFactorValue);
     void slotWheelChanged(int delta);

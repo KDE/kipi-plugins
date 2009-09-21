@@ -72,7 +72,7 @@ public:
     FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QString& serviceName);
     ~FlickrWidget();
 
-private slots:
+private Q_SLOTS:
 
     void slotResizeChecked();
     void slotExportHostTagsChecked();

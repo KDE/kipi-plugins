@@ -67,7 +67,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-private slots:
+private Q_SLOTS:
 
    void gotThumbnail( const KUrl &url, const QPixmap &pix );
 

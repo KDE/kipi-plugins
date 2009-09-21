@@ -55,11 +55,11 @@ public:
 
     QString getXMPCaption();
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-private slots:
+private Q_SLOTS:
 
     void slotSyncOptionsEnabled(bool);
 

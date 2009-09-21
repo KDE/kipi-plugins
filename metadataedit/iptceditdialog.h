@@ -51,11 +51,11 @@ public:
     IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface);
     ~IPTCEditDialog();
 
-public slots:
+public Q_SLOTS:
 
     void slotModified();
 
-protected slots:
+protected Q_SLOTS:
 
     void slotOk();
     void slotHelp();
@@ -66,7 +66,7 @@ protected:
     void closeEvent(QCloseEvent *);
     bool eventFilter(QObject *, QEvent *);
 
-private slots:
+private Q_SLOTS:
 
     void slotItemChanged();
     void slotApply();

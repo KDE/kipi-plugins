@@ -100,7 +100,7 @@ public:
     QLinkedList <FPhotoSet>* m_photoSetsList;
     FPhotoSet  m_selectedPhotoSet;
 
-signals:
+Q_SIGNALS:
 
     void signalError(const QString& msg);
 //  void signalLoginFailed( const QString& msg );
@@ -132,7 +132,7 @@ private:
 
     QString getApiSig(const QString& secret, const KUrl& url);
 
-private slots:
+private Q_SLOTS:
 
     void slotError(const QString& msg);
     void slotAuthenticate();

@@ -57,7 +57,7 @@ public:
 
     QString getEXIFUserComments();
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 

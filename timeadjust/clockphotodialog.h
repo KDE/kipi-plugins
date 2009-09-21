@@ -111,7 +111,7 @@ private:
     QDateTime                photoDateTime;
     ClockPhotoDialogPrivate* const d;
 
-private slots:
+private Q_SLOTS:
 
     void slotLoadPhoto();
     void slotAdjustZoom(int);

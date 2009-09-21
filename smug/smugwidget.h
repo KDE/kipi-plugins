@@ -71,10 +71,10 @@ public:
 
     QString getDestinationPath();
 
-signals:
+Q_SIGNALS:
     void signalUserChangeRequest(bool anonymous);
 
-private slots:
+private Q_SLOTS:
     void slotAnonymousToggled(bool checked);
     void slotChangeUserClicked();
     void slotResizeChecked();

@@ -210,12 +210,12 @@ Q_SIGNALS:
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
 
-public slots:
+public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
 
 
-protected slots:
+protected Q_SLOTS:
 
     virtual void slotAddItems();
     virtual void slotRemoveItems();

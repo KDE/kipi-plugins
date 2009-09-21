@@ -86,7 +86,7 @@ public:
     QString mountPoint() { return m_mountPoint; }
     QString deviceNode() { return m_deviceNode; }
 
-private slots:
+private Q_SLOTS:
 
     void startTransfer();
 

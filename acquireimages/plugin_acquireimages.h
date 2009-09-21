@@ -52,7 +52,7 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
-public slots:
+public Q_SLOTS:
 
     void slotActivate();
 

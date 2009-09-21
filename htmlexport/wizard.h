@@ -41,10 +41,10 @@ public:
 	Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface*);
 	~Wizard();
 
-protected slots:
+protected Q_SLOTS:
 	virtual void accept();
 
-private slots:
+private Q_SLOTS:
 	void updateCollectionSelectorPageValidity();
 	void updateFinishPageValidity();
 	void slotThemeSelectionChanged();

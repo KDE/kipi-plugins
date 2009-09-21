@@ -70,7 +70,7 @@ public:
                bool import, QWidget *parent);
     ~SmugWindow();
 
-private slots:
+private Q_SLOTS:
 
     void slotBusy(bool val);
     void slotLoginProgress(int step, int maxStep, const QString& label);

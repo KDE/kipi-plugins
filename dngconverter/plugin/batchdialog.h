@@ -73,7 +73,7 @@ private:
 
     CListViewItem* findItem(const KUrl& url);
 
-private slots:
+private Q_SLOTS:
 
     void slotDefault();
     void slotClose();

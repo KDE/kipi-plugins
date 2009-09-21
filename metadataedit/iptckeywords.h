@@ -45,11 +45,11 @@ public:
     void applyMetadata(QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-private slots:
+private Q_SLOTS:
 
     void slotKeywordSelectionChanged();
     void slotAddKeyword();

@@ -77,10 +77,10 @@ public:
     BatchProcessImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QString caption, QWidget *parent = 0);
     ~BatchProcessImagesDialog();
 
-protected slots:
+protected Q_SLOTS:
     void slotProcessStop(void);
 
-private slots:
+private Q_SLOTS:
 
     // --------------------------------------------------------------------------------------------------------
     // Standards slots

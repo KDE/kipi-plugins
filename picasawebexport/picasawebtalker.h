@@ -101,7 +101,7 @@ public:
 
     QProgressDialog *authProgressDlg;
 
-signals:
+Q_SIGNALS:
 
     void signalError( const QString& msg );
 //  void signalLoginFailed( const QString& msg );
@@ -128,7 +128,7 @@ private:
     void parseResponseCheckToken(const QByteArray &data);
     void parseResponsePhotoProperty(const QByteArray &data);
 
-private slots:
+private Q_SLOTS:
 
     void slotCheckTokenSuccessful();
     void slotError( const QString& msg );

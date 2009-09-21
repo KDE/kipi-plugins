@@ -51,13 +51,13 @@ public:
     void setImage(const KUrl &imagePath, int angle);
     void paint(int month);
 
-signals:
+Q_SIGNALS:
 
     void signalTotal(int total);
     void signalProgress(int value);
     void signalFinished();
 
-public slots:
+public Q_SLOTS:
 
     void cancel() { cancelled_ = true; }
 

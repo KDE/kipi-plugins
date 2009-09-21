@@ -50,7 +50,7 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
 
-protected slots:
+protected Q_SLOTS:
 
     void slotActivate();
 

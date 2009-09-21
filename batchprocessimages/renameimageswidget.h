@@ -83,13 +83,13 @@ private:
     bool             m_overwriteAll;
     bool             m_autoSkip;
 
-public slots:
+public Q_SLOTS:
 
     void slotStart();
     void slotAbort();
     void slotNext();
 
-private slots:
+private Q_SLOTS:
 
     void slotListViewDoubleClicked(QTreeWidgetItem*);
     void slotImageSelected(QTreeWidgetItem*);

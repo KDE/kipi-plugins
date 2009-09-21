@@ -131,7 +131,7 @@ private:
     KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData                *m_about;
 
-private slots:
+private Q_SLOTS:
 
     void closeEvent(QCloseEvent *e);
     void saveSettings();

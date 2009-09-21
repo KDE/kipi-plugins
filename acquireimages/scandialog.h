@@ -62,7 +62,7 @@ protected:
 
     void closeEvent(QCloseEvent* e);
 
-private slots:
+private Q_SLOTS:
 
     void slotSaveImage(QByteArray&, int, int, int, int);
     void slotClose();

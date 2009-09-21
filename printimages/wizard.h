@@ -62,7 +62,7 @@ typedef struct _TPhotoSize
       ~Wizard();
       void print( KUrl::List fileList, QString tempPath);
 
-    protected slots:
+    protected Q_SLOTS:
       virtual void accept();
       virtual void slotHelp();
       virtual void pageChanged(KPageWidgetItem *, KPageWidgetItem *);
@@ -87,7 +87,7 @@ typedef struct _TPhotoSize
       virtual void crop_selection(int);
       virtual void PageRemoved(KPageWidgetItem *page);
 
-      //private slots:
+      //private Q_SLOTS:
       //	void updateFinishButton();
 
     private:

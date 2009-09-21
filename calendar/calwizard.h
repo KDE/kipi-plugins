@@ -73,7 +73,7 @@ private:
 
     void print();
 
-private slots:
+private Q_SLOTS:
 
     void slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *before);
     void slotHelp();

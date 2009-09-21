@@ -141,7 +141,7 @@ private:
 
     bool extractFile(const KArchiveEntry *entry);
 
-public slots:
+public Q_SLOTS:
 
     void slotProcess();
     void slotCancel();

@@ -87,7 +87,7 @@ public:
     KComboBox       *m_paperSize;
     KComboBox       *m_printDpi;
 
-protected slots:
+protected Q_SLOTS:
 
     void slotCustomSettingsEnabled(bool val);
     void slotOk();

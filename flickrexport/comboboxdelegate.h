@@ -77,7 +77,7 @@ private:
 
     QSize m_size;
 
-private slots:
+private Q_SLOTS:
     void commitAndCloseEditor(int);
     void slotResetEditedState(QObject *);
 };

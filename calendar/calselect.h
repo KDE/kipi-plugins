@@ -55,7 +55,7 @@ private:
 
     void setupView( KIPI::Interface* interface );
 
-private slots:
+private Q_SLOTS:
 
     void yearChanged(int year);
 

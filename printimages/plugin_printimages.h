@@ -49,7 +49,7 @@ class Plugin_PrintImages : public KIPI::Plugin
     virtual KIPI::Category category ( KAction* action ) const;
     virtual void setup ( QWidget* widget );
 
-  public slots:
+  public Q_SLOTS:
 
     void slotPrintImagesActivate();
     void slotPrintAssistantActivate();

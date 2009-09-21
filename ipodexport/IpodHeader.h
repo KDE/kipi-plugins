@@ -49,7 +49,7 @@ class IpodHeader : public QFrame
         void setViewType( ViewType view );
         ViewType viewType() const { return m_viewType; };
 
-    signals:
+    Q_SIGNALS:
         void refreshDevices();
         void updateSysInfo();
 

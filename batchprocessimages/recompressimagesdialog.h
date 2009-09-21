@@ -42,7 +42,7 @@ public:
     RecompressImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
     ~RecompressImagesDialog();
 
-private slots:
+private Q_SLOTS:
 
     void slotOptionsClicked(void);
     void slotHelp(void);

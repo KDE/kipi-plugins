@@ -49,7 +49,7 @@ public:
     virtual void setup( QWidget* widget );
     virtual KIPI::Category category( KAction* action ) const;
 
-public slots:
+public Q_SLOTS:
 
     void  slotActivate();
 

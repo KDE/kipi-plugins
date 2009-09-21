@@ -45,7 +45,7 @@ public:
     void applyMetadata(QByteArray& exifData);
     void readMetadata(QByteArray& exifData);
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 

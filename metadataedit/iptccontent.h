@@ -55,7 +55,7 @@ public:
 
     QString getIPTCCaption();
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 

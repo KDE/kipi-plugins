@@ -61,7 +61,7 @@ protected:
 
     void run();
 
-signals:
+Q_SIGNALS:
 
     void starting(const QString &filePath, int action);
     void finished(const QString &filePath, int action);

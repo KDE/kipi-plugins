@@ -50,7 +50,7 @@ public:
                  QString Messages = QString::null, QString Header = QString::null);
     ~OutputDialog();
 
-private slots:
+private Q_SLOTS:
 
     void slotHelp(void);
     void slotCopyToCliboard(void);

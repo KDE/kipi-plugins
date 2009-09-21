@@ -52,7 +52,7 @@ protected:
 
     KUrl::List images();
 
-private slots:
+private Q_SLOTS:
 
     void slotFlipHorizontally();
     void slotFlipVertically();

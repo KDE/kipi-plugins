@@ -55,13 +55,13 @@ public:
     QString defaultAltLang() const;
     bool    asDefaultAltLang() const;
 
-signals:
+Q_SIGNALS:
 
     void signalToggled(bool);
     void signalModified();
     void signalDefaultLanguageEnabled(bool);
 
-private slots:
+private Q_SLOTS:
 
     void slotSelectionChanged();
     void slotAddValue();

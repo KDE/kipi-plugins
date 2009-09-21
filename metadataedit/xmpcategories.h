@@ -45,11 +45,11 @@ public:
     void applyMetadata(QByteArray& xmpData);
     void readMetadata(QByteArray& xmpData);
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-private slots:
+private Q_SLOTS:
 
     void slotCategorySelectionChanged();
     void slotAddCategory();

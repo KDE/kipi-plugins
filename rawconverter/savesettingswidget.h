@@ -65,11 +65,11 @@ public:
 
     void setDefaultSettings();
 
-public slots:
+public Q_SLOTS:
 
     void slotPopulateImageFormat(bool sixteenBits);
 
-signals:
+Q_SIGNALS:
 
     void signalSaveFormatChanged();
 

@@ -43,7 +43,7 @@ public:
     CalWidget(QWidget *parent);
     ~CalWidget();
 
-public slots:
+public Q_SLOTS:
 
     void recreate();
 

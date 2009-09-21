@@ -51,7 +51,7 @@ private:
 
     bool checkBinaries();
 
-private slots:
+private Q_SLOTS:
 
     void slotActivate();
 

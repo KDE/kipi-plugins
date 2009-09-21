@@ -53,7 +53,7 @@ public:
 
     QSize sizeHint() const;
 
-private slots:
+private Q_SLOTS:
 
     void showPreview();
     void showPreview(const KUrl &url);

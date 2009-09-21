@@ -54,7 +54,7 @@ public:
      * 'unset' when another index is selected. */
     void setIntermediate(bool);
 
-private slots:
+private Q_SLOTS:
     void slotIndexChanged(int);
 
 private:

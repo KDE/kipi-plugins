@@ -57,7 +57,7 @@ public:
 
     QString getComments();
 
-protected slots:
+protected Q_SLOTS:
 
     void slotOk();
     void slotHelp();

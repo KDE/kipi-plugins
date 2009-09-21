@@ -45,7 +45,7 @@ public:
     void setValid(bool v);
     bool isValid() const;
 
-private slots:
+private Q_SLOTS:
 
     void slotValid();
 

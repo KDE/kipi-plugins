@@ -65,7 +65,7 @@ public:
 
     void cancel();
 
-signals:
+Q_SIGNALS:
 
     void starting(const ActionData& ad);
     void finished(const ActionData& ad);

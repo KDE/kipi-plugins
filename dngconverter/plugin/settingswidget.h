@@ -63,7 +63,7 @@ public:
 
     void setDefaultSettings();
 
-private slots:
+private Q_SLOTS:
 
     void processUrl(const QString& url);
 

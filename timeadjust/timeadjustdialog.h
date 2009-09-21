@@ -58,7 +58,7 @@ protected:
 
     void closeEvent(QCloseEvent *);
 
-private slots:
+private Q_SLOTS:
 
     void slotUpdateExample();
     void slotAdjustmentTypeChanged();

@@ -49,7 +49,7 @@ public:
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* );
 
-protected slots:
+protected Q_SLOTS:
 
     void slotEditExif();
     void slotRemoveExif();

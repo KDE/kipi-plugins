@@ -56,11 +56,11 @@ public:
 
     QDateTime getEXIFCreationDate();
 
-signals:
+Q_SIGNALS:
 
     void signalModified();
 
-private slots:
+private Q_SLOTS:
 
     void slotSetTodayCreated();
     void slotSetTodayOriginal();
