@@ -33,6 +33,7 @@
 #include <QPixmap>
 #include <QDataStream>
 #include <QByteArray>
+#include <QPointer>
 
 // KDE includes
 
@@ -64,7 +65,7 @@ TwainController::TwainController(KIPI::Interface* iface, QWidget* parent)
     m_interface = iface;
     setParent(this);
 
-    // This is a dumy widget not visible. We use Qwidget to dispatch Windows event to 
+    // This is a dummy widget not visible. We use QWidget to dispatch Windows event to
     // Twain interface. This is not possible to do it using QObject as well.
     hide();
 
@@ -186,30 +187,31 @@ void TwainController::saveImage(const QImage& img)
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    KUrl uurl = KGlobalSettings::documentPath();
-    if (m_interface) uurl = m_interface->currentAlbum().uploadPath();
+    KUrl url = KGlobalSettings::documentPath();
+    if (m_interface)
+        url = m_interface->currentAlbum().uploadPath();
 
-    KFileDialog imageFileSaveDialog(uurl, QString(), this);
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(url, QString(), this);
 
 /*  FIXME: This line make an eternal loop under Windows. why ???
-    imageFileSaveDialog.setOperationMode(KFileDialog::Saving);*/
+    imageFileSaveDialog->setOperationMode(KFileDialog::Saving);*/
 
-    imageFileSaveDialog.setMode(KFile::File);
-    imageFileSaveDialog.setSelection(defaultFileName);
-    imageFileSaveDialog.setCaption(i18n("New Image File Name"));
-    imageFileSaveDialog.setModal(false);
-    imageFileSaveDialog.setMimeFilter(writableMimetypes, defaultMimeType);
+    imageFileSaveDialog->setMode(KFile::File);
+    imageFileSaveDialog->setSelection(defaultFileName);
+    imageFileSaveDialog->setCaption(i18n("New Image File Name"));
+    imageFileSaveDialog->setModal(false);
+    imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
-    if ( imageFileSaveDialog.exec() != KFileDialog::Accepted )
+    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
        return;
 
-    KUrl newURL = imageFileSaveDialog.selectedUrl();
+    KUrl newURL = imageFileSaveDialog->selectedUrl();
     QFileInfo fi(newURL.path());
 
     // Check if target image format have been selected from Combo List of dialog.
 
-    QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
+    QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog->currentMimeFilter());
     if (!mimes.isEmpty())
     {
         format = mimes.first().toUpper();
@@ -307,6 +309,8 @@ void TwainController::saveImage(const QImage& img)
 
     if (m_interface) m_interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
+
+    delete imageFileSaveDialog;
 }
 
 }  // namespace KIPIAcquireImagesPlugin

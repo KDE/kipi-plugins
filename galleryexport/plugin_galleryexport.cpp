@@ -26,6 +26,10 @@
 #include "plugin_galleryexport.h"
 #include "plugin_galleryexport.moc"
 
+// Qt includes
+
+#include <QPointer>
+
 // KDE includes
 
 #include <kaction.h>
@@ -101,14 +105,22 @@ void Plugin_GalleryExport::slotSync()
         return;
     }
 
+    QPointer<KIPIGalleryExportPlugin::GalleryEdit>   configDlg;
+    QPointer<KIPIGalleryExportPlugin::GalleryWindow> dlg;
+
     KConfig config("kipirc");
     if(!config.hasGroup("Gallery Settings") )
     {
-        KIPIGalleryExportPlugin::GalleryEdit configDlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
-        configDlg.exec();
+        configDlg = new KIPIGalleryExportPlugin::GalleryEdit(kapp->activeWindow(),
+                                                             mpGallery, i18n("Edit Gallery Data") );
+        configDlg->exec();
     }
-    KIPIGalleryExportPlugin::GalleryWindow dlg(interface, kapp->activeWindow(), mpGallery);
-    dlg.exec();
+
+    dlg = new KIPIGalleryExportPlugin::GalleryWindow(interface, kapp->activeWindow(), mpGallery);
+    dlg->exec();
+
+    delete configDlg;
+    delete dlg;
 }
 
 KIPI::Category Plugin_GalleryExport::category(KAction* action) const

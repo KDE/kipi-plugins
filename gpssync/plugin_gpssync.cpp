@@ -25,6 +25,10 @@
 #include "plugin_gpssync.h"
 #include "plugin_gpssync.moc"
 
+// Qt includes
+
+#include <QPointer>
+
 // KDE includes
 
 #include <kaction.h>
@@ -227,12 +231,12 @@ void Plugin_GPSSync::slotGPSEdit()
 
     KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
 
-    KIPIGPSSyncPlugin::GPSEditDialog dlg(kapp->activeWindow(),
-                                         gpsData, img.fileName(), hasGPSInfo);
+    QPointer<KIPIGPSSyncPlugin::GPSEditDialog> dlg = new KIPIGPSSyncPlugin::GPSEditDialog(
+                                                         kapp->activeWindow(), gpsData, img.fileName(), hasGPSInfo);
 
-    if (dlg.exec() == KDialog::Accepted)
+    if (dlg->exec() == KDialog::Accepted)
     {
-        gpsData = dlg.getGPSInfo();
+        gpsData = dlg->getGPSInfo();
 
         for( KUrl::List::iterator it = imageURLs.begin() ;
             it != imageURLs.end(); ++it)
@@ -262,6 +266,8 @@ void Plugin_GPSSync::slotGPSEdit()
             info.addAttributes(attributes);
         }
     }
+
+    delete dlg;
 }
 
 void Plugin_GPSSync::slotGPSTrackListEdit()
@@ -335,11 +341,12 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         id++;
     }
 
-    KIPIGPSSyncPlugin::GPSTrackListEditDialog dlg(m_interface, kapp->activeWindow(), trackList);
+    QPointer<KIPIGPSSyncPlugin::GPSTrackListEditDialog> dlg = new KIPIGPSSyncPlugin::GPSTrackListEditDialog(
+                                                                  m_interface, kapp->activeWindow(), trackList);
 
-    if (dlg.exec() == KDialog::Accepted)
+    if (dlg->exec() == KDialog::Accepted)
     {
-        trackList = dlg.trackList();
+        trackList = dlg->trackList();
 
         for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ;
             it != trackList.end() ; ++it)
@@ -369,6 +376,8 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
             }
         }
     }
+
+    delete dlg;
 }
 
 void Plugin_GPSSync::slotGPSRemove()

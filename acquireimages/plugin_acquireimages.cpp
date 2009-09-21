@@ -23,6 +23,10 @@
 #include "plugin_acquireimages.h"
 #include "plugin_acquireimages.moc"
 
+// Qt includes
+
+#include <QPointer>
+
 // KDE includes
 
 #include <kaction.h>
@@ -120,8 +124,10 @@ void Plugin_AcquireImages::slotActivate()
         return;
     }
 
-    ScanDialog dlg(m_interface, saneWidget, kapp->activeWindow());
-    dlg.exec();
+    QPointer <ScanDialog> dlg = new ScanDialog(m_interface, saneWidget, kapp->activeWindow());
+    dlg->exec();
+
+    delete dlg;
 
 #endif /* WIN32 */
 }

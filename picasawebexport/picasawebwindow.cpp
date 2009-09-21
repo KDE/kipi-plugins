@@ -32,6 +32,7 @@
 #include <QDateTime>
 #include <QLinkedList>
 #include <QStringList>
+#include <QPointer>
 
 // KDE includes
 
@@ -276,7 +277,7 @@ PicasawebWindow::~PicasawebWindow()
 
 void PicasawebWindow::getToken(QString& username, QString& password)
 {
-    PicasawebLogin *loginDialog = new PicasawebLogin(this, i18n("Login"), username, password);
+    QPointer<PicasawebLogin> loginDialog = new PicasawebLogin(this, i18n("Login"), username, password);
     if (!loginDialog)
     {
         return;
@@ -363,7 +364,7 @@ void PicasawebWindow::slotAuthCancel()
 
 void PicasawebWindow::slotCreateNewAlbum()
 {
-    NewAlbumDialog *dlg = new NewAlbumDialog(kapp->activeWindow());
+    QPointer<NewAlbumDialog> dlg = new NewAlbumDialog(kapp->activeWindow());
     dlg->m_dateTimeEdit->setDateTime(QDateTime::currentDateTime());
     QString access;
     int t = dlg->exec();

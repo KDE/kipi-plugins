@@ -55,6 +55,7 @@ extern "C"
 #include <QSpinBox>
 #include <QTimer>
 #include <QToolTip>
+#include <QPointer>
 
 // KDE includes
 
@@ -508,10 +509,13 @@ void RenameImagesWidget::slotNext()
                 break;
             }
 
-            KIO::RenameDialog dlg(this, i18n("Rename File"), src.path(), dst.path(),
-                                  KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
-            int result = dlg.exec();
-            dst        = dlg.newDestUrl();
+            QPointer<KIO::RenameDialog> dlg = new KIO::RenameDialog(this, i18n("Rename File"),
+                                              src.path(), dst.path(),
+                                              KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
+            int result = dlg->exec();
+            dst        = dlg->newDestUrl();
+
+            delete dlg;
 
             switch (result) {
             case KIO::R_CANCEL: {

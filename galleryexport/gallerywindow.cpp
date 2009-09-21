@@ -34,6 +34,7 @@
 #include <QSpinBox>
 #include <Qt>
 #include <QTreeWidgetItem>
+#include <QPointer>
 
 // KDE includes
 #include <kaboutdata.h>
@@ -196,7 +197,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)), 
+    connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
@@ -205,7 +206,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     KPushButton *confButton = button( User1 );
     confButton->setText( i18n("settings") );
     confButton->setIcon( KIcon("applications-system") );
-    connect(confButton, SIGNAL(clicked()), 
+    connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings() ) );
 
     // we need to let m_talker work..
@@ -336,12 +337,14 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    GalleryEdit configDlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
-    if ( configDlg.exec() != QDialog::Accepted )
+    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    if ( configDlg->exec() != QDialog::Accepted )
     {
+        delete configDlg;
         return;
     }
     slotDoLogin();
+    delete configDlg;
 }
 
 
@@ -381,13 +384,13 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     QList<QTreeWidgetItem *> parentItemList;
 
     // fill QTreeWidget
-    while( !workList.isEmpty() ) 
+    while( !workList.isEmpty() )
     {
         // the album to work on
         GAlbum album = workList.takeFirst();
 
         int parentRefNum = album.parent_ref_num;
-        if ( parentRefNum == 0 ) 
+        if ( parentRefNum == 0 )
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.title) );
@@ -482,10 +485,11 @@ void GalleryWindow::slotAlbumSelected()
 
 void GalleryWindow::slotNewAlbum()
 {
-    AlbumDlg *dlg = new AlbumDlg(d->widget);
+    QPointer<AlbumDlg> dlg = new AlbumDlg(d->widget);
     dlg->titleEdit->setFocus();
     if ( dlg->exec() != QDialog::Accepted )
     {
+        delete dlg;
         return;
     }
 
@@ -562,13 +566,13 @@ void GalleryWindow::slotNewAlbum()
 
     QTreeWidgetItem* item = d->albumView->currentItem();
     int column = d->albumView->currentColumn();
-    if (item) 
+    if (item)
     {
         const GAlbum& album = d->albumDict.value( item->text(column) );
         parentAlbumName = album.name;
         m_talker->createAlbum( parentAlbumName, name, title, caption);
-    } 
-    else 
+    }
+    else
     {
         m_talker->createAlbum( firstAlbumName, name, title, caption );
     }
@@ -695,11 +699,12 @@ void GalleryWindow::slotEnableSpinBox(int n)
 void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    GalleryEdit dlg(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
-    if( dlg.exec() == QDialog::Accepted )
+    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    if( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
     }
+    delete dlg;
 }
 
 
@@ -710,7 +715,7 @@ QString GalleryWindow::cleanName(QString str)
     plain.replace("&gt;", ">");
     plain.replace("&quot;", "\"");
     plain.replace("&amp;", "&");
-    
+
     return plain;
 }
 

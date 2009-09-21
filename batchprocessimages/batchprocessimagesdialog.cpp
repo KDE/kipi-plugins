@@ -37,6 +37,7 @@ extern "C"
 #include <QGroupBox>
 #include <QProgressBar>
 #include <QTimer>
+#include <QPointer>
 
 // KDE includes
 
@@ -589,12 +590,13 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(itemClicked);
 
     if (m_convertStatus == PROCESS_DONE) {
-        OutputDialog *infoDialog = new OutputDialog(this, i18n("Image processing error"),
+        QPointer<OutputDialog> infoDialog = new OutputDialog(this, i18n("Image processing error"),
                 item->outputMess(),
                 i18n("Image \"%1\": %2\n\nThe output messages are:\n",
                      item->nameSrc(),
                      item->error()));
         infoDialog->exec();
+        delete infoDialog;
     }
 }
 
@@ -660,35 +662,30 @@ void BatchProcessImagesDialog::slotPreviewFinished()
 
     kDebug() << "Convert exit (" << ValRet << ")";
 
-    if (ValRet == 0) {
+    if (ValRet == 0)
+    {
         QString cropTitle = "";
 
         if (m_ui->m_smallPreview->isChecked())
             cropTitle = i18n(" - small preview");
 
-        ImagePreview *previewDialog = new ImagePreview(
-            item->pathSrc(),
-            m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG",
-            m_tmpFolder,
-            m_ui->m_smallPreview->isChecked(),
-            false,
-            m_Type->currentText() + cropTitle,
-            item->nameSrc(),
-            this);
+        QPointer<ImagePreview> previewDialog = new ImagePreview(item->pathSrc(), m_tmpFolder + "/"
+                + QString::number(getpid()) + "preview.PNG", m_tmpFolder, m_ui->m_smallPreview->isChecked(),
+                false, m_Type->currentText() + cropTitle, item->nameSrc(), this);
         previewDialog->exec();
+        delete previewDialog;
 
         KUrl deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
 
         KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
-    } else {
-        OutputDialog *infoDialog = new OutputDialog(this,
-                i18n("Preview processing error"),
-                m_previewOutput,
-                i18n("Cannot process preview for image \"%1\"."
-                     "\nThe output messages are:\n",
-                     item->nameSrc())
-                                                   );
+    }
+    else
+    {
+        QPointer<OutputDialog> infoDialog = new OutputDialog(this, i18n("Preview processing error"),
+                m_previewOutput, i18n("Cannot process preview for image \"%1\"."
+                                      "\nThe output messages are:\n", item->nameSrc()));
         infoDialog->exec();
+        delete infoDialog;
     }
 
     endPreview();

@@ -30,6 +30,7 @@ extern "C"
 // Qt includes
 
 #include <QImage>
+#include <QPointer>
 
 // KDE includes
 
@@ -199,40 +200,58 @@ void Plugin_BatchProcessImages::slotActivate()
 
     QString from(sender()->name());
 
-    if (from == "batch_convert_images") {
-        m_ConvertImagesDialog = new KIPIBatchProcessImagesPlugin::ConvertImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    if (from == "batch_convert_images")
+    {
+        m_ConvertImagesDialog = new KIPIBatchProcessImagesPlugin::ConvertImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_ConvertImagesDialog->show();
-    } else if (from == "batch_rename_images") {
-        KIPIBatchProcessImagesPlugin::RenameImagesDialog
-        dlg(urlList, interface, kapp->activeWindow());
-        dlg.exec();
-    } else if (from == "batch_border_images") {
-        m_BorderImagesDialog = new KIPIBatchProcessImagesPlugin::BorderImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    }
+    else if (from == "batch_rename_images")
+    {
+        QPointer<KIPIBatchProcessImagesPlugin::RenameImagesDialog> dlg;
+        dlg = new KIPIBatchProcessImagesPlugin::RenameImagesDialog(urlList, interface, kapp->activeWindow());
+        dlg->exec();
+        delete dlg;
+    }
+    else if (from == "batch_border_images")
+    {
+        m_BorderImagesDialog = new KIPIBatchProcessImagesPlugin::BorderImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_BorderImagesDialog->show();
-    } else if (from == "batch_color_images") {
-        m_ColorImagesDialog = new KIPIBatchProcessImagesPlugin::ColorImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    }
+    else if (from == "batch_color_images")
+    {
+        m_ColorImagesDialog = new KIPIBatchProcessImagesPlugin::ColorImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_ColorImagesDialog->show();
-    } else if (from == "batch_filter_images") {
-        m_FilterImagesDialog = new KIPIBatchProcessImagesPlugin::FilterImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    }
+    else if (from == "batch_filter_images")
+    {
+        m_FilterImagesDialog = new KIPIBatchProcessImagesPlugin::FilterImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_FilterImagesDialog->show();
-    } else if (from == "batch_effect_images") {
-        m_EffectImagesDialog = new KIPIBatchProcessImagesPlugin::EffectImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    }
+    else if (from == "batch_effect_images")
+    {
+        m_EffectImagesDialog = new KIPIBatchProcessImagesPlugin::EffectImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_EffectImagesDialog->show();
-    } else if (from == "batch_recompress_images") {
+    }
+    else if (from == "batch_recompress_images")
+    {
         m_RecompressImagesDialog = new KIPIBatchProcessImagesPlugin::RecompressImagesDialog(urlList,
                 interface, kapp->activeWindow());
         m_RecompressImagesDialog->show();
-    } else if (from == "batch_resize_images") {
-        m_ResizeImagesDialog = new KIPIBatchProcessImagesPlugin::ResizeImagesDialog(urlList,
-                interface, kapp->activeWindow());
+    }
+    else if (from == "batch_resize_images")
+    {
+        m_ResizeImagesDialog = new KIPIBatchProcessImagesPlugin::ResizeImagesDialog(urlList, interface,
+                kapp->activeWindow());
         m_ResizeImagesDialog->show();
-    } else {
-        kWarning(51000) << "The impossible happened... unknown batch action specified" ;
+    }
+    else
+    {
+        kWarning(51000) << "The impossible happened... unknown batch action specified";
         return;
     }
 }

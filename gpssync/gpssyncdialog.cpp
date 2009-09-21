@@ -32,6 +32,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QPointer>
 
 // KDE includes
 
@@ -509,18 +510,20 @@ void GPSSyncDialog::slotUser2EditCoordinates()
 
     GPSListViewItem* const item = dynamic_cast<GPSListViewItem*>(d->imagesList->listView()->currentItem());
 
-    GPSEditDialog dlg(this, item->GPSInfo(),
-                      item->url().fileName(),
-                      item->hasGPSInfo());
+    QPointer<GPSEditDialog> dlg = new GPSEditDialog(this, item->GPSInfo(),
+                                                    item->url().fileName(),
+                                                    item->hasGPSInfo());
 
-    if (dlg.exec() == KDialog::Accepted)
+    if (dlg->exec() == KDialog::Accepted)
     {
         for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
         {
             GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(*it);
-            lvItem->setGPSInfo(dlg.getGPSInfo(), true, true);
+            lvItem->setGPSInfo(dlg->getGPSInfo(), true, true);
         }
     }
+
+    delete dlg;
 }
 
 // Remove GPS coordinates from pictures.

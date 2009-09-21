@@ -21,6 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 // Self
 #include "plugin.moc"
 
+// Qt
+#include <QPointer>
+
 // KDE
 #include <kaction.h>
 #include <kactioncollection.h>
@@ -46,74 +49,76 @@ namespace KIPIHTMLExport {
 
 
 struct Plugin::Private {
-	KAction* mAction;
+    KAction* mAction;
 };
 
 
 Plugin::Plugin(QObject *parent, const QVariantList&)
 : KIPI::Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport")
 {
-	d=new Private;
-	d->mAction=0;
+    d=new Private;
+    d->mAction=0;
 }
 
 
 Plugin::~Plugin() {
-	delete d;
+    delete d;
 }
 
 
 void Plugin::setup( QWidget* widget ) {
-	KIPI::Plugin::setup( widget );
-	d->mAction = actionCollection()->addAction("htmlexport");
-	d->mAction->setText(i18n("&HTML Gallery..."));
-	d->mAction->setIcon(KIcon("applications-internet"));
+    KIPI::Plugin::setup( widget );
+    d->mAction = actionCollection()->addAction("htmlexport");
+    d->mAction->setText(i18n("&HTML Gallery..."));
+    d->mAction->setIcon(KIcon("applications-internet"));
     d->mAction->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H);
-	connect(d->mAction, SIGNAL(triggered()),
-		SLOT(slotActivate()) );
-	addAction(d->mAction);
+    connect(d->mAction, SIGNAL(triggered()),
+        SLOT(slotActivate()) );
+    addAction(d->mAction);
 }
 
 
 void Plugin::slotActivate() {
-	KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
-	Q_ASSERT(interface);
+    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+    Q_ASSERT(interface);
 
-	GalleryInfo info;
-	info.readConfig();
-	QWidget* parent=QApplication::activeWindow();
-	Wizard wizard(parent, &info, interface);
-	if (wizard.exec()==QDialog::Rejected) return;
-	info.writeConfig();
-	
-	KIPIPlugins::BatchProgressDialog* progressDialog=new KIPIPlugins::BatchProgressDialog(parent, i18n("Generating gallery..."));
-	
-	Generator generator(interface, &info, progressDialog);
-	progressDialog->show();
-	if (!generator.run()) return;
+    GalleryInfo info;
+    info.readConfig();
+    QWidget* parent=QApplication::activeWindow();
+    QPointer<Wizard> wizard = new Wizard(parent, &info, interface);
+    if (wizard->exec()==QDialog::Rejected) return;
+    info.writeConfig();
 
-	if (generator.warnings()) {
-		progressDialog->addedAction(i18n("Finished, but some warnings occurred."), KIPIPlugins::WarningMessage);
-		progressDialog->setButtons(KDialog::Close);
-	} else {
-		progressDialog->close();
-	}
+    KIPIPlugins::BatchProgressDialog* progressDialog=new KIPIPlugins::BatchProgressDialog(parent, i18n("Generating gallery..."));
 
-	if (info.openInBrowser()) {
-		KUrl url=info.destUrl();
-		url.addPath("index.html");
-		KRun::runUrl(url, "text/html", parent);
-	}
+    Generator generator(interface, &info, progressDialog);
+    progressDialog->show();
+    if (!generator.run()) return;
+
+    if (generator.warnings()) {
+        progressDialog->addedAction(i18n("Finished, but some warnings occurred."), KIPIPlugins::WarningMessage);
+        progressDialog->setButtons(KDialog::Close);
+    } else {
+        progressDialog->close();
+    }
+
+    if (info.openInBrowser()) {
+        KUrl url=info.destUrl();
+        url.addPath("index.html");
+        KRun::runUrl(url, "text/html", parent);
+    }
+
+    delete wizard;
 }
 
 
 KIPI::Category Plugin::category(KAction* action) const {
-	if (action == d->mAction) {
-		return KIPI::ExportPlugin;
-	}
-	
-	kWarning( 51000 ) << "Unrecognized action for plugin category identification";
-	return KIPI::ExportPlugin; // no warning from compiler, please
+    if (action == d->mAction) {
+        return KIPI::ExportPlugin;
+    }
+
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    return KIPI::ExportPlugin; // no warning from compiler, please
 }
 
 } // namespace

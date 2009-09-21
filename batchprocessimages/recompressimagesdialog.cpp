@@ -29,6 +29,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QPointer>
 
 // KDE includes
 
@@ -105,7 +106,7 @@ void RecompressImagesDialog::slotHelp(void)
 
 void RecompressImagesDialog::slotOptionsClicked(void)
 {
-    RecompressOptionsDialog *optionsDialog = new RecompressOptionsDialog(this);
+    QPointer<RecompressOptionsDialog> optionsDialog = new RecompressOptionsDialog(this);
 
     optionsDialog->m_JPEGCompression->setValue(m_JPEGCompression);
     optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);

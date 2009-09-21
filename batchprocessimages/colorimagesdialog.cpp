@@ -29,6 +29,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
+#include <QPointer>
 
 // KDE includes
 
@@ -160,7 +161,7 @@ void ColorImagesDialog::slotTypeChanged(int type)
 void ColorImagesDialog::slotOptionsClicked(void)
 {
     int Type = m_Type->currentItem();
-    ColorOptionsDialog *optionsDialog = new ColorOptionsDialog(this, Type);
+    QPointer<ColorOptionsDialog> optionsDialog = new ColorOptionsDialog(this, Type);
 
     if (Type == 1)  // Depth
         optionsDialog->m_depthValue->setCurrentText(m_depthValue);

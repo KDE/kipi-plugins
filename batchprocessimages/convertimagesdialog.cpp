@@ -31,6 +31,7 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QPushButton>
+#include <QPointer>
 
 // KDE includes
 
@@ -166,7 +167,7 @@ void ConvertImagesDialog::slotTypeChanged(int type)
 void ConvertImagesDialog::slotOptionsClicked(void)
 {
     int Type = m_Type->currentItem();
-    ConvertOptionsDialog *optionsDialog = new ConvertOptionsDialog(this, Type);
+    QPointer<ConvertOptionsDialog> optionsDialog = new ConvertOptionsDialog(this, Type);
 
     if (Type == 0) { // JPEG
         optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);

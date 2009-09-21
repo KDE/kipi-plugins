@@ -27,6 +27,7 @@
 
 #include <QDateTime>
 #include <QPushButton>
+#include <QPointer>
 
 // KDE includes
 
@@ -190,25 +191,26 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    KFileDialog imageFileSaveDialog(d->interface->currentAlbum().uploadPath(), QString(), 0);
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->interface->currentAlbum().uploadPath(),
+                                                                QString(), 0);
 
-    imageFileSaveDialog.setModal(false);
-    imageFileSaveDialog.setOperationMode(KFileDialog::Saving);
-    imageFileSaveDialog.setMode(KFile::File);
-    imageFileSaveDialog.setSelection(defaultFileName);
-    imageFileSaveDialog.setCaption(i18n("New Image File Name"));
-    imageFileSaveDialog.setMimeFilter(writableMimetypes, defaultMimeType);
+    imageFileSaveDialog->setModal(false);
+    imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
+    imageFileSaveDialog->setMode(KFile::File);
+    imageFileSaveDialog->setSelection(defaultFileName);
+    imageFileSaveDialog->setCaption(i18n("New Image File Name"));
+    imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
-    if ( imageFileSaveDialog.exec() != KFileDialog::Accepted )
+    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
        return;
 
-    KUrl newURL = imageFileSaveDialog.selectedUrl();
+    KUrl newURL = imageFileSaveDialog->selectedUrl();
     QFileInfo fi(newURL.path());
 
     // Check if target image format have been selected from Combo List of dialog.
 
-    const QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog.currentMimeFilter());
+    const QStringList mimes = KImageIO::typeForMime(imageFileSaveDialog->currentMimeFilter());
     if (!mimes.isEmpty())
     {
         format = mimes.first().toUpper();
@@ -319,6 +321,8 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
 
     d->interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
+
+    delete imageFileSaveDialog;
 }
 
 }  // namespace KIPIAcquireImagesPlugin

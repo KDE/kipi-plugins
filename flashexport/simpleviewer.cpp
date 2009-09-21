@@ -31,6 +31,7 @@
 #include <QDir>
 #include <QDomText>
 #include <QFile>
+#include <QPointer>
 
 // KDE includes
 
@@ -653,10 +654,10 @@ bool SimpleViewer::checkSimpleViewer() const
 
 bool SimpleViewer::installSimpleViewer()
 {
-    FirstRunDlg firstRunDlg(kapp->activeWindow());
-    if(firstRunDlg.exec() == QDialog::Accepted)
+    QPointer<FirstRunDlg> firstRunDlg = new FirstRunDlg(kapp->activeWindow());
+    if(firstRunDlg->exec() == QDialog::Accepted)
     {
-        KUrl url = firstRunDlg.getUrl();
+        KUrl url = firstRunDlg->getUrl();
 
         if(unzip(url.path()))
         {
@@ -667,6 +668,7 @@ bool SimpleViewer::installSimpleViewer()
             kDebug(51000) << "Archive extraction failed\n";
         }
     }
+    delete firstRunDlg;
 
     return false;
 }

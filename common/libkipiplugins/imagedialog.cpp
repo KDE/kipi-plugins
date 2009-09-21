@@ -27,6 +27,7 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPointer>
 
 // KDE includes
 
@@ -390,27 +391,29 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
     d->fileFormats = patternList.join("\n");
 
-    KFileDialog dlg(d->iface ? d->iface->currentAlbum().path().path()
-                             : KGlobalSettings::documentPath(),
-                    d->fileFormats, parent);
-    ImageDialogPreview *preview = new ImageDialogPreview(d->iface, &dlg);
-    dlg.setPreviewWidget(preview);
-    dlg.setOperationMode(KFileDialog::Opening);
+    QPointer<KFileDialog> dlg = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
+                                                         : KGlobalSettings::documentPath(),
+                                                d->fileFormats, parent);
+    ImageDialogPreview *preview = new ImageDialogPreview(d->iface, dlg);
+    dlg->setPreviewWidget(preview);
+    dlg->setOperationMode(KFileDialog::Opening);
 
     if (singleSelect)
     {
-        dlg.setMode( KFile::File );
-        dlg.setWindowTitle(i18n("Select an Image"));
-        dlg.exec();
-        d->url = dlg.selectedUrl();
+        dlg->setMode( KFile::File );
+        dlg->setWindowTitle(i18n("Select an Image"));
+        dlg->exec();
+        d->url = dlg->selectedUrl();
     }
     else
     {
-        dlg.setMode( KFile::Files );
-        dlg.setWindowTitle(i18n("Select Images"));
-        dlg.exec();
-        d->urls = dlg.selectedUrls();
+        dlg->setMode( KFile::Files );
+        dlg->setWindowTitle(i18n("Select Images"));
+        dlg->exec();
+        d->urls = dlg->selectedUrls();
     }
+
+    delete dlg;
 }
 
 ImageDialog::~ImageDialog()

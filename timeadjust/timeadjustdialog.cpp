@@ -45,6 +45,7 @@ extern "C"
 #include <QSpinBox>
 #include <QToolButton>
 #include <QVBoxLayout>
+#include <QPointer>
 
 // KDE includes
 
@@ -380,7 +381,7 @@ void TimeAdjustDialog::slotClockPhoto()
     /* When the use presses the clock photo button, present a dialog and set the
      * results to the proper widgets. */
 
-    ClockPhotoDialog *dilg = new ClockPhotoDialog(d->interface, this);
+    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(d->interface, this);
     int result = dilg->exec();
     if (result == QDialog::Accepted)
     {
@@ -396,6 +397,8 @@ void TimeAdjustDialog::slotClockPhoto()
         d->minutes->setValue(dilg->deltaMinutes);
         d->secs->setValue(dilg->deltaSeconds);
     }
+
+    delete dilg;
 }
 
 void TimeAdjustDialog::slotResetDateToCurrent()

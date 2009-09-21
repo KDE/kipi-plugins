@@ -23,6 +23,10 @@
 #include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
+// Qt includes
+
+#include <QPointer>
+
 // KDE includes
 
 #include <kaction.h>
@@ -174,9 +178,12 @@ void Plugin_MetadataEdit::slotEditExif()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::EXIFEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
-    dialog.exec();
+    QPointer<KIPIMetadataEditPlugin::EXIFEditDialog> dialog = new KIPIMetadataEditPlugin::EXIFEditDialog(
+                                                                  kapp->activeWindow(), images.images(), m_interface);
+    dialog->exec();
     m_interface->refreshImages(images.images());
+
+    delete dialog;
 }
 
 void Plugin_MetadataEdit::slotRemoveExif()
@@ -331,9 +338,12 @@ void Plugin_MetadataEdit::slotEditIptc()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::IPTCEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
-    dialog.exec();
+    QPointer<KIPIMetadataEditPlugin::IPTCEditDialog> dialog = new KIPIMetadataEditPlugin::IPTCEditDialog(
+                                                                  kapp->activeWindow(), images.images(), m_interface);
+    dialog->exec();
     m_interface->refreshImages(images.images());
+
+    delete dialog;
 }
 
 void Plugin_MetadataEdit::slotRemoveIptc()
@@ -488,9 +498,12 @@ void Plugin_MetadataEdit::slotEditXmp()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::XMPEditDialog dialog(kapp->activeWindow(), images.images(), m_interface);
-    dialog.exec();
+    QPointer<KIPIMetadataEditPlugin::XMPEditDialog> dialog = new KIPIMetadataEditPlugin::XMPEditDialog(
+                                                                 kapp->activeWindow(), images.images(), m_interface);
+    dialog->exec();
     m_interface->refreshImages(images.images());
+
+    delete dialog;
 }
 
 void Plugin_MetadataEdit::slotRemoveXmp()
@@ -652,9 +665,10 @@ void Plugin_MetadataEdit::slotEditComments()
         comment              = info.description();
     }
 
-    KIPIMetadataEditPlugin::CommentEditDialog dlg(comment, kapp->activeWindow());
+    QPointer<KIPIMetadataEditPlugin::CommentEditDialog> dlg = new KIPIMetadataEditPlugin::CommentEditDialog(
+                                                                  comment, kapp->activeWindow());
 
-    if (dlg.exec() != KMessageBox::Ok)
+    if (dlg->exec() != KMessageBox::Ok)
         return;
 
     KUrl::List  imageURLs = images.images();
@@ -668,7 +682,7 @@ void Plugin_MetadataEdit::slotEditComments()
         bool ret = true;
 
         KIPI::ImageInfo info = m_interface->info(url);
-        info.setDescription(dlg.getComments());
+        info.setDescription(dlg->getComments());
 
         KExiv2Iface::KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
@@ -681,26 +695,26 @@ void Plugin_MetadataEdit::slotEditComments()
 
         if (ret)
         {
-            if (dlg.syncJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
-                ret &= exiv2Iface.setComments(dlg.getComments().toUtf8());
+            if (dlg->syncJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
+                ret &= exiv2Iface.setComments(dlg->getComments().toUtf8());
 
-            if (dlg.syncEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
-                ret &= exiv2Iface.setExifComment(dlg.getComments());
+            if (dlg->syncEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
+                ret &= exiv2Iface.setExifComment(dlg->getComments());
 
-            if (exiv2Iface.supportXmp() && dlg.syncXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
+            if (exiv2Iface.supportXmp() && dlg->syncXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
             {
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg.getComments(),
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg->getComments(),
                                                          QString(), false);
 
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg.getComments(),
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg->getComments(),
                                                          QString(), false);
 
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.tiff.ImageDescription", dlg.getComments(),
+                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.tiff.ImageDescription", dlg->getComments(),
                                                          QString(), false);
             }
 
-            if (dlg.syncIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
-                ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg.getComments());
+            if (dlg->syncIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
+                ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg->getComments());
 
             ret &= exiv2Iface.save(url.path());
         }
@@ -724,6 +738,8 @@ void Plugin_MetadataEdit::slotEditComments()
                      errorFiles,
                      i18n("Edit Image Caption"));
     }
+
+    delete dlg;
 }
 
 void Plugin_MetadataEdit::slotRemoveComments()
@@ -733,9 +749,10 @@ void Plugin_MetadataEdit::slotRemoveComments()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KIPIMetadataEditPlugin::CommentRemoveDialog dlg(kapp->activeWindow());
+    QPointer<KIPIMetadataEditPlugin::CommentRemoveDialog> dlg = new KIPIMetadataEditPlugin::CommentRemoveDialog(
+                                                                    kapp->activeWindow());
 
-    if (dlg.exec() != KMessageBox::Ok)
+    if (dlg->exec() != KMessageBox::Ok)
         return;
 
     KUrl::List  imageURLs = images.images();
@@ -748,7 +765,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
         KUrl url = *it;
         bool ret = true;
 
-        if (dlg.removeHOSTCommentIsChecked())
+        if (dlg->removeHOSTCommentIsChecked())
         {
             KIPI::ImageInfo info = m_interface->info(url);
             info.setDescription(QString::null);
@@ -764,20 +781,20 @@ void Plugin_MetadataEdit::slotRemoveComments()
         ret &= exiv2Iface.load(url.path());
         if (ret)
         {
-            if (dlg.removeJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
+            if (dlg->removeJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
                 ret &= exiv2Iface.setComments(QByteArray());
 
-            if (dlg.removeEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
+            if (dlg->removeEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
                 ret &= exiv2Iface.removeExifTag("Exif.Photo.UserComment");
 
-            if (exiv2Iface.supportXmp() && dlg.removeXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
+            if (exiv2Iface.supportXmp() && dlg->removeXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
             {
                 ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
                 ret &= exiv2Iface.removeXmpTag("Xmp.exif.UserComment");
                 ret &= exiv2Iface.removeXmpTag("Xmp.tiff.ImageDescription");
             }
 
-            if (dlg.removeIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
+            if (dlg->removeIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
                 ret &= exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
 
             ret &= exiv2Iface.save(url.path());
@@ -802,6 +819,8 @@ void Plugin_MetadataEdit::slotRemoveComments()
                      errorFiles,
                      i18n("Remove Image Caption"));
     }
+
+    delete dlg;
 }
 
 KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const
