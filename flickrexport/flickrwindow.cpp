@@ -34,6 +34,7 @@
 #include <QCheckBox>
 #include <QStringList>
 #include <QSpinBox>
+#include <QPointer>
 
 // KDE includes
 
@@ -391,7 +392,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
     * Flickr yet. */
 
    // Call the dialog
-   FlickrNewPhotoSetDialog *dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
+   QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
    int resp = dlg->exec();
    if ((resp == QDialog::Accepted) && (dlg->titleEdit->text() != ""))
    {
@@ -429,6 +430,8 @@ void FlickrWindow::slotCreateNewPhotoSet()
    {
        kDebug(51000) << "New Photoset creation aborted ";
    }
+
+   delete dlg;
 }
 
 void FlickrWindow::slotAuthCancel()
