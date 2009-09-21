@@ -47,25 +47,27 @@ extern "C" {
 #include <QPushButton>
 #include <QTreeWidgetItem>
 #include <QTimer>
+#include <QPointer>
 
 // KDE includes
 
+#include <kapplication.h>
+#include <kconfig.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
 #include <kfileitem.h>
+#include <kguiitem.h>
+#include <khelpmenu.h>
 #include <kinputdialog.h>
 #include <kio/previewjob.h>
 #include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kmountpoint.h>
-#include <kstandarddirs.h>
-#include <kurl.h>
-#include <kconfig.h>
-#include <kapplication.h>
 #include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
+#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
-#include <kguiitem.h>
+#include <kurl.h>
 
 namespace KIPIIpodExportPlugin
 {
@@ -118,7 +120,7 @@ UploadDialog::UploadDialog(
 
     QAction *handbook = new QAction( i18n("Plugin Handbook"), this );
     connect( handbook, SIGNAL( triggered(bool) ), this, SLOT( slotHelp() ) );
-    
+
     helpMenu->menu()->removeAction( helpMenu->menu()->actions().first() );
     helpMenu->menu()->insertAction( helpMenu->menu()->actions().first(), handbook );
 
@@ -131,7 +133,7 @@ UploadDialog::UploadDialog(
 
     // Setup widgets and layout for the source
     m_urlListBox = new QGroupBox( i18n("Hard Disk"), box );
-    
+
     QHBoxLayout* urlLayout = new QHBoxLayout;
 
     m_uploadList = new ImageList( ImageList::UploadType, this );
@@ -251,7 +253,7 @@ UploadDialog::UploadDialog(
     connect( m_addImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonAdd() ) );
     connect( m_remImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonRem() ) );
     connect( m_transferImagesButton, SIGNAL( clicked() ), this, SLOT( startTransfer() ) );
-    
+
     connect( m_uploadList, SIGNAL( addedDropItems(QStringList) ), this, SLOT( addDropItems(QStringList) ) );
 
     connect(m_uploadList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
@@ -428,7 +430,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
 
     Itdb_Artwork *artwork = item->artwork();
     GdkPixbuf *gpixbuf = NULL;
-    
+
     // First arg in itdb_artwork_get_pixbuf(...) is pointer to Itdb_Device struct,
     // in kipiplugin-ipodexport it is m_itdb->device. i hope it _is_ initialiezed
     gpixbuf = (GdkPixbuf*) itdb_artwork_get_pixbuf( m_itdb->device, artwork, -1, -1 );
@@ -448,7 +450,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
 //     QPixmap pix;
 //     pix.convertFromImage( image );
 //     m_ipodPreview->setPixmap( pix );
-    
+
     // memory release
     gdk_pixbuf_unref ( gpixbuf );
 }
@@ -509,11 +511,13 @@ void UploadDialog::imagesFilesButtonAdd()
     urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
 #else
     const QString filter = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
-    KFileDialog dlg( QString::null, filter, this, "addImagesDlg", true );
-    dlg.setCaption( i18n("Add Images") );
-    dlg.setMode( KFile::Files | KFile::Directory );
-    dlg.exec();
-    urls = dlg.selectedURLs();
+    QPointer<KFileDialog> dlg = new KFileDialog( QString(), filter, this );
+//    QPointer<KFileDialog> dlg = new KFileDialog( QString::null, filter, this, "addImagesDlg", true );
+    dlg->setCaption( i18n("Add Images") );
+    dlg->setMode( KFile::Files | KFile::Directory );
+    dlg->exec();
+    urls = dlg->selectedUrls();
+    delete dlg;
 #endif
 
     for( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
