@@ -508,7 +508,7 @@ void BatchProcessImagesDialog::slotFinished()
     }
 
     int ValRet = m_ProcessusProc->exitCode();
-    kWarning() << "Convert exit (" << ValRet << ")" << endl;
+    kWarning() << "Convert exit (" << ValRet << ")";
 
     switch (ValRet) {
     case 0: { // Process finished successfully !
@@ -600,7 +600,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
-    kDebug() << "BatchProcessImagesDialog::slotPreview" << endl;
+    kDebug() << "BatchProcessImagesDialog::slotPreview";
 
     if (m_listFiles->currentItem() == 0) {
         KMessageBox::error(this, i18n("You must select an item from the list to calculate the preview."));
@@ -658,7 +658,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
     int ValRet = m_PreviewProc->exitCode();
 
-    kDebug() << "Convert exit (" << ValRet << ")" << endl;
+    kDebug() << "Convert exit (" << ValRet << ")";
 
     if (ValRet == 0) {
         QString cropTitle = "";
@@ -809,7 +809,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    kDebug() << "BatchProcessImagesDialog::processAborted" << endl;
+    kDebug() << "BatchProcessImagesDialog::processAborted";
 
     BatchProcessImagesItem *item =
         static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);

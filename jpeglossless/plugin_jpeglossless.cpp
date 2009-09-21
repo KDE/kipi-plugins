@@ -158,7 +158,7 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -316,7 +316,7 @@ void Plugin_JPEGLossless::slotCancel()
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -452,7 +452,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         if ( !interface )
         {
-           kError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!";
            return;
         }
 
@@ -481,7 +481,7 @@ KUrl::List Plugin_JPEGLossless::images()
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return KUrl::List();
     }
 

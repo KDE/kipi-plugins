@@ -224,7 +224,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     m_talker->m_authProgressDlg = m_authProgressDlg;
     m_widget->setEnabled(false);
 
-    kDebug(51000) << "Calling auth methods" << endl;
+    kDebug(51000) << "Calling auth methods";
 
     if(m_token.length()< 1)
         m_talker->getFrob();
@@ -342,7 +342,7 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_token    = token;
     m_username = m_talker->getUserName();
     m_userId   = m_talker->getUserId();
-    kDebug(51000) << "SlotTokenObtained invoked setting user Display name to " << m_username << endl;
+    kDebug(51000) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
     if (m_serviceName != "Zooomr")
         m_talker->listPhotoSets();
@@ -377,7 +377,7 @@ void FlickrWindow::slotError(const QString& msg)
 
 void FlickrWindow::slotUserChangeRequest()
 {
-    kDebug(51000) << "Slot Change User Request " << endl;
+    kDebug(51000) << "Slot Change User Request ";
     m_talker->getFrob();
 //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
@@ -417,7 +417,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
       }
       fps.id = id;
 
-      kDebug() << "Created new photoset with temporary id " << id << endl;
+      kDebug() << "Created new photoset with temporary id " << id;
       // Append the new photoset to the list.
       m_talker->m_photoSetsList->prepend(fps);
       m_talker->m_selectedPhotoSet = fps;
@@ -427,7 +427,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
    }
    else
    {
-       kDebug(51000) << "New Photoset creation aborted " << endl;
+       kDebug(51000) << "New Photoset creation aborted ";
    }
 }
 
@@ -455,7 +455,7 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 
 void FlickrWindow::populatePhotoSetComboBox()
 {
-    kDebug(51000) << "populatePhotoSetComboBox invoked" << endl;
+    kDebug(51000) << "populatePhotoSetComboBox invoked";
     if (m_talker && m_talker->m_photoSetsList)
     {
         QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
@@ -485,7 +485,7 @@ void FlickrWindow::populatePhotoSetComboBox()
 */
 void FlickrWindow::slotUser1()
 {
-    kDebug(51000) << "SlotUploadImages invoked" << endl;
+    kDebug(51000) << "SlotUploadImages invoked";
 
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
@@ -502,7 +502,7 @@ void FlickrWindow::slotUser1()
                                      (m_imglst->listView()->topLevelItem(i));
 
         KIPI::ImageInfo info = m_interface->info(lvItem->url());
-        kDebug(51000) << "Adding images to the list" << endl;
+        kDebug(51000) << "Adding images to the list";
         FPhotoInfo temp;
 
         temp.title                 = info.title();
@@ -551,7 +551,7 @@ void FlickrWindow::slotUser1()
 
         while(itTags != allTags.end())
         {
-            kDebug(51000) << "Tags list: " << (*itTags) << endl;
+            kDebug(51000) << "Tags list: " << (*itTags);
             ++itTags;
         }
 
@@ -563,7 +563,7 @@ void FlickrWindow::slotUser1()
     m_uploadCount = 0;
     m_progressDlg->reset();
     slotAddPhotoNext();
-    kDebug(51000) << "SlotUploadImages done" << endl;
+    kDebug(51000) << "SlotUploadImages done";
 }
 
 void FlickrWindow::slotAddPhotoNext()

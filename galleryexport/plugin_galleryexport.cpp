@@ -55,8 +55,7 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
                     : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport"),
                       m_action(0), mpGallery(0)
 {
-    kDebug(51001) << "Plugin_GalleryExport plugin loaded"
-                  << endl;
+    kDebug(51001) << "Plugin_GalleryExport plugin loaded";
 }
 
 void Plugin_GalleryExport::setup(QWidget* widget)
@@ -69,7 +68,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!";
         return;
     }
 
@@ -98,7 +97,7 @@ void Plugin_GalleryExport::slotSync()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!" << endl;
+        kError(51000) << "Kipi interface is null!";
         return;
     }
 
@@ -119,6 +118,6 @@ KIPI::Category Plugin_GalleryExport::category(KAction* action) const
 //     if (action == m_action_configure)
 //         return KIPI::ToolsPlugin;
 //
-    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }

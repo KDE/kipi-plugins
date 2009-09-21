@@ -139,7 +139,7 @@ bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction act
         }
         default:
         {
-            qCritical() << "ImageFlip: Nonstandard flip action" << endl;
+            qCritical() << "ImageFlip: Nonstandard flip action";
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -168,7 +168,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
         }
         default:
         {
-            qCritical() << "ImageFlip: Nonstandard flip action" << endl;
+            qCritical() << "ImageFlip: Nonstandard flip action";
             err = i18n("Nonstandard flip action");
             return false;
         }
@@ -176,7 +176,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kDebug(51000) << "ImageMagick Command line: " << process.program() << endl;
+    kDebug(51000) << "ImageMagick Command line: " << process.program();
 
     process.start();
 

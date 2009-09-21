@@ -239,8 +239,7 @@ void ActionThread::run()
                 default:
                 {
                     kError( 51000 ) << "KIPIJPEGLossLessPlugin:ActionThread: "
-                                    << "Unknown action specified"
-                                    << endl;
+                                    << "Unknown action specified";
                 }
             }
 

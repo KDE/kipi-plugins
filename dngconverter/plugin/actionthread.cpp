@@ -314,8 +314,7 @@ void ActionThread::run()
                 default:
                 {
                     kError(51000) << "KIPIDNGConverterPlugin:ActionThread: "
-                                  << "Unknown action specified"
-                                  << endl;
+                                  << "Unknown action specified";
                 }
             }
 

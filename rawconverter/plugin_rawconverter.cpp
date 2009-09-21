@@ -108,7 +108,7 @@ void Plugin_RawConverter::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-           kError( 51000 ) << "Kipi interface is null!" << endl;
+           kError( 51000 ) << "Kipi interface is null!";
            return;
     }
 
@@ -153,7 +153,7 @@ void Plugin_RawConverter::slotActivateSingle()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -186,7 +186,7 @@ void Plugin_RawConverter::slotActivateBatch()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 

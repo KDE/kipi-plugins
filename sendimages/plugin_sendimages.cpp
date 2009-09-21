@@ -95,7 +95,7 @@ void Plugin_SendImages::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -111,7 +111,7 @@ void Plugin_SendImages::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-       kError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!";
        return;
     }
 
@@ -134,7 +134,7 @@ void Plugin_SendImages::slotPrepareEmail()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-       kError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!";
        return;
     }
 

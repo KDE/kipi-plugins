@@ -199,7 +199,7 @@ void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
             KCal::Event::List list = calendar.rawEvents(qFirst, qLast);
             foreach ( KCal::Event *event, list )
             {
-                kDebug(51000) << event->summary() << endl << "--------" << endl;
+                kDebug(51000) << event->summary() << endl << "--------";
                 counter++;
                 if (event->recurs())
                 {

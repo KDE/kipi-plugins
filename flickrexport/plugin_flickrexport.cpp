@@ -58,7 +58,7 @@ K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )
 Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &/*args*/)
                    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
-    kDebug(51001) << "Plugin_FlickrExport plugin loaded" << endl;
+    kDebug(51001) << "Plugin_FlickrExport plugin loaded";
 }
 
 void Plugin_FlickrExport::setup(QWidget* widget)
@@ -104,7 +104,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
     m_actionFlickr->setEnabled(true);
@@ -121,7 +121,7 @@ void Plugin_FlickrExport::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -138,7 +138,7 @@ void Plugin_FlickrExport::slotActivate23()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -155,7 +155,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -172,6 +172,6 @@ KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
     if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
         return KIPI::ExportPlugin;
 
-    kWarning(51000) << "Unrecognized action for plugin category identification" << endl;
+    kWarning(51000) << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }

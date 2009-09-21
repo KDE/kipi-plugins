@@ -112,7 +112,7 @@ void Plugin_WallPaper::setup( QWidget* widget )
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -172,7 +172,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
 
    if ( !interface )
    {
-       kError( 51000 ) << "Kipi interface is null!" << endl;
+       kError( 51000 ) << "Kipi interface is null!";
        return;
    }
 
@@ -211,7 +211,6 @@ KIPI::Category  Plugin_WallPaper::category( KAction* action ) const
     if ( action == m_actionBackground )
        return KIPI::IMAGESPLUGIN;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification"
-                      << endl;
+    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
     return KIPI::IMAGESPLUGIN; // no warning from compiler, please
 }

@@ -64,7 +64,7 @@ void Plugin_viewer::setup( QWidget* widget )
 
     if ( !pv_interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -89,7 +89,7 @@ void  Plugin_viewer::slotActivate()
 
     if ( !pv_interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 
@@ -106,13 +106,13 @@ void  Plugin_viewer::slotActivate()
             break;
 
         case KIPIviewer::oglNoRectangularTexture:
-            kError( 51000 ) << "GL_ARB_texture_rectangle not supported" << endl;
+            kError( 51000 ) << "GL_ARB_texture_rectangle not supported";
             delete widget;
             QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case KIPIviewer::oglNoContext:
-            kError( 51000 ) << "no OpenGL context found" << endl;
+            kError( 51000 ) << "no OpenGL context found";
             delete widget;
             QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("no OpenGL context found"));
     }
@@ -126,7 +126,7 @@ KIPI::Category Plugin_viewer::category( KAction* action ) const
     }
     else
     {
-        kWarning( 51000 ) << "Unrecognized action for plugin category identification" << endl;
+        kWarning( 51000 ) << "Unrecognized action for plugin category identification";
         return KIPI::ToolsPlugin; // no warning from compiler, please
     }
 }

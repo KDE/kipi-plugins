@@ -156,7 +156,7 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
     m_interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !m_interface )
     {
-        kError( 51000 ) << "Kipi interface is null!" << endl;
+        kError( 51000 ) << "Kipi interface is null!";
         return;
     }
 

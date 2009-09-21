@@ -158,7 +158,7 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
 
     process << src + QString("[0]");
 
-    kDebug(51000) << "ImageMagick Command line: " << process.program() << endl;
+    kDebug(51000) << "ImageMagick Command line: " << process.program();
 
     process.start();
 
@@ -247,7 +247,7 @@ bool Utils::MoveFile(const QString& src, const QString& dst)
     struct stat stbuf;
     if (::stat(QFile::encodeName(dst), &stbuf) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to stat src" << endl;
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to stat src";
         return false;
     }
 
@@ -259,12 +259,12 @@ bool Utils::MoveFile(const QString& src, const QString& dst)
     timbuf.modtime = stbuf.st_mtime;
     if (::utime(QFile::encodeName(dst), &timbuf) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to update dst time" << endl;
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to update dst time";
     }
 
     if (::unlink(QFile::encodeName(src).data()) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src" << endl;
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src";
     }
     return true;
 }
