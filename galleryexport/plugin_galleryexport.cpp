@@ -64,12 +64,13 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
 
 void Plugin_GalleryExport::setup(QWidget* widget)
 {
+    KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
+
     mpGallery = new KIPIGalleryExportPlugin::Gallery();
 
     KIPI::Plugin::setup(widget);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-
     if (!interface)
     {
         kError(51000) << "Kipi interface is null!";
@@ -87,7 +88,6 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
     addAction(m_action);
 }
-
 
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
