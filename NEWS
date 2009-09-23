@@ -32,5 +32,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> MetadataEdit       : 193508 : Crash when saving after editing XMP Metadata for a image.
 022 ==> TimeAdjust         : 207620 : Adjust Time & Date: Example not updated when Adjustment Type changed.
 023 ==> AcquireImages      : 208107 : corrupted image when saving a scan.
-024 ==> 
-
+024 ==> MetadataEdit       : 207997 : Let the exif import dialog remember its last location.
+025 ==> MetadataEdit       : 200554 : Import metadata: More sensitive choice of directory in file-open dialog [patch].
+026 ==> 
