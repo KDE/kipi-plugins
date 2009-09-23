@@ -65,7 +65,10 @@ K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
 K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
-                   : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit")
+                   : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
+                     m_actionMetadataEdit(0),
+                     m_interface(0),
+                     m_lastSelectedDirectory()
 {
     kDebug(51001) << "Plugin_MetadataEdit plugin loaded";
 }
@@ -253,11 +256,18 @@ void Plugin_MetadataEdit::slotImportExif()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KUrl importEXIFFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+    // extract the path to the first image:
+    if ( m_lastSelectedDirectory.isEmpty() )
+    {
+        m_lastSelectedDirectory = images.images().first().upUrl();
+    }
+    KUrl importEXIFFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
                                                   QString::null, kapp->activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
+    
+    m_lastSelectedDirectory = importEXIFFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
@@ -413,11 +423,18 @@ void Plugin_MetadataEdit::slotImportIptc()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KUrl importIPTCFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+    // extract the path to the first image:
+    if ( m_lastSelectedDirectory.isEmpty() )
+    {
+        m_lastSelectedDirectory = images.images().first().upUrl();
+    }
+    KUrl importIPTCFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
                                                   QString::null, kapp->activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
+    
+    m_lastSelectedDirectory = importIPTCFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
@@ -573,11 +590,18 @@ void Plugin_MetadataEdit::slotImportXmp()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    KUrl importXMPFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+    // extract the path to the first image:
+    if ( m_lastSelectedDirectory.isEmpty() )
+    {
+        m_lastSelectedDirectory = images.images().first().upUrl();
+    }
+    KUrl importXMPFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
                                                  QString::null, kapp->activeWindow(),
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
+    
+    m_lastSelectedDirectory = importXMPFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importXMPFile.path()))

@@ -27,6 +27,10 @@
 
 #include <QVariant>
 
+// KDE includes
+
+#include <KUrl>
+
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
@@ -71,6 +75,8 @@ private:
     KActionMenu     *m_actionMetadataEdit;
 
     KIPI::Interface *m_interface;
+
+    KUrl             m_lastSelectedDirectory;
 };
 
 #endif // PLUGIN_METADATAEDIT_H
