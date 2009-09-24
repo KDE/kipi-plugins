@@ -58,7 +58,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
-        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent)
+                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent)
 {
     // About data and help button.
 
@@ -133,12 +133,16 @@ void ResizeImagesDialog::slotOptionsClicked(void)
     int Type = m_Type->currentItem();
     ResizeOptionsDialog *optionsDialog = new ResizeOptionsDialog(this, Type);
 
-    if (Type == 0) { // Proportional (1 dim.)
+    if (Type == 0)
+    {
+        // Proportional (1 dim.)
         optionsDialog->m_quality->setValue(m_quality);
         optionsDialog->m_size->setValue(m_size);
         optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
     }
-    if (Type == 1) { // Proportional (2 dim.)
+    if (Type == 1)
+    {
+        // Proportional (2 dim.)
         optionsDialog->m_quality->setValue(m_quality);
         optionsDialog->m_Width->setValue(m_Width);
         optionsDialog->m_Height->setValue(m_Height);
@@ -146,13 +150,17 @@ void ResizeImagesDialog::slotOptionsClicked(void)
         optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
         optionsDialog->m_Border->setValue(m_Border);
     }
-    if (Type == 2) { // Non-proportional
+    if (Type == 2)
+    {
+        // Non-proportional
         optionsDialog->m_quality->setValue(m_quality);
         optionsDialog->m_fixedWidth->setValue(m_fixedWidth);
         optionsDialog->m_fixedHeight->setValue(m_fixedHeight);
         optionsDialog->m_resizeFilter->setCurrentText(m_resizeFilter);
     }
-    if (Type == 3) { // Prepare to print
+    if (Type == 3)
+    {
+        // Prepare to print
         optionsDialog->m_quality->setValue(m_quality);
         optionsDialog->m_paperSize->setCurrentText(m_paperSize);
         optionsDialog->m_printDpi->setCurrentText(m_printDpi);
@@ -165,13 +173,18 @@ void ResizeImagesDialog::slotOptionsClicked(void)
         optionsDialog->m_customSettings->setChecked(m_customSettings);
     }
 
-    if (optionsDialog->exec() == KMessageBox::Ok) {
-        if (Type == 0) { // Proportional (1 dim.)
+    if (optionsDialog->exec() == KMessageBox::Ok)
+    {
+        if (Type == 0)
+        {
+            // Proportional (1 dim.)
             m_quality = optionsDialog->m_quality->value();
             m_size = optionsDialog->m_size->value();
             m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
         }
-        if (Type == 1) { // Proportional (2 dim.)
+        if (Type == 1)
+        {
+            // Proportional (2 dim.)
             m_quality = optionsDialog->m_quality->value();
             m_Width = optionsDialog->m_Width->value();
             m_Height = optionsDialog->m_Height->value();
@@ -179,13 +192,17 @@ void ResizeImagesDialog::slotOptionsClicked(void)
             m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
             m_Border = optionsDialog->m_Border->value();
         }
-        if (Type == 2) { // Non-proportional
+        if (Type == 2)
+        {
+            // Non-proportional
             m_quality = optionsDialog->m_quality->value();
             m_fixedWidth = optionsDialog->m_fixedWidth->value();
             m_fixedHeight = optionsDialog->m_fixedHeight->value();
             m_resizeFilter = optionsDialog->m_resizeFilter->currentText();
         }
-        if (Type == 3) { // Prepare to print
+        if (Type == 3)
+        {
+            // Prepare to print
             m_quality = optionsDialog->m_quality->value();
             m_paperSize = optionsDialog->m_paperSize->currentText();
             m_printDpi = optionsDialog->m_printDpi->currentText();
@@ -286,7 +303,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     bool IncDec;
     int MargingSize;
 
-    if (Type == 0) { // Proportional (1 dim.)
+    if (Type == 0)
+    {
+        // Proportional (1 dim.)
         *proc << "convert";
         IncDec = ResizeImage(w, h, m_size);
 
@@ -301,7 +320,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp3.setNum(m_quality);
         *proc << Temp3;
 
-        if (IncDec == true) {   // If the image is increased, enabled the filter.
+        if (IncDec == true)
+        {
+            // If the image is increased, enabled the filter.
             *proc << "-filter" << m_resizeFilter;
         }
 
@@ -310,63 +331,67 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << albumDest + "/" + item->nameDest();
     }
 
-    if (Type == 1) { // Proportional (2 dim.)
+    if (Type == 1)
+    {
+        // Proportional (2 dim.)
         QString targetBackgroundSize;
         int ResizeCoeff;
-        *proc << "composite";
+        *proc << "convert";
 
         // Get the target image resizing dimensions with using the target size.
+        ResizeCoeff = qMin(m_Width, m_Height);
 
-        if (m_Width < m_Height) {  // Vertically resizing
-            if (w < h)                  // Original size vertically oriented.
-                ResizeCoeff = m_Height;
-            else                        // Original size horizontally oriented.
-                ResizeCoeff = m_Width;
-        } else {                    // Horizontally resizing
-            if (w < h)                  // Original size vertically oriented.
-                ResizeCoeff = m_Height;
-            else                        // Original size horizontally oriented.
-                ResizeCoeff = m_Width;
-        }
-
-        IncDec = ResizeImage(w, h, ResizeCoeff - m_Border);
         targetBackgroundSize = QString::number(m_Width) + "x" + QString::number(m_Height);
 
-        *proc << "-verbose" << "-gravity" << "Center";
+        *proc << "-verbose";
 
+        *proc << item->pathSrc() + "[0]";
+
+        // If the image is increased, enabled the filter.
+        // jwienke: convert always uses a filter, so we can pass this option
+        //          always with an appropriate default
+        *proc << "-filter" << m_resizeFilter;
+
+        // resize original image
         *proc << "-resize";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(w) + "x";
-        Temp2.append(Temp.setNum(h));
+        int MaxSize = qMax(1, ResizeCoeff - (2 * m_Border));
+        QString MaxSizeString = QString::number(MaxSize);
+        Temp2 = MaxSizeString + "x" + MaxSizeString;
         *proc << Temp2;
 
+        // create border as desired
+        *proc << "-bordercolor";
+        Temp2 = "rgb(" + Temp.setNum(m_bgColor.red()) + ",";
+        Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
+        Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
+        *proc << Temp2;
+        *proc << "-border" << QString::number(m_Width) + "x" + QString::number(m_Height);
+
+        // center resized image on canvas
+        *proc << "-gravity" << "Center";
+
+        // set desired quality
         *proc << "-quality";
         QString Temp3;
         Temp3.setNum(m_quality);
         *proc << Temp3;
 
-        if (IncDec == true) {   // If the image is increased, enabled the filter.
-            *proc << "-filter" << m_resizeFilter;
-        }
-
-        *proc << item->pathSrc() + "[0]";
-
         // ImageMagick composite program do not preserve exif data from original.
         // Need to use "-profile" option for that.
-
         *proc << "-profile" << item->pathSrc();
 
-        Temp2 = "xc:rgb(" + Temp.setNum(m_bgColor.red()) + ",";
-        Temp2.append(Temp.setNum(m_bgColor.green()) + ",");
-        Temp2.append(Temp.setNum(m_bgColor.blue()) + ")");
-        *proc << Temp2;
+        // crop image to canvas size
+        *proc << "-crop" << targetBackgroundSize + "+0+0";
 
-        *proc << "-resize" << targetBackgroundSize + "!";
-
+        // set destination
         *proc << albumDest + "/" + item->nameDest();
+
     }
 
-    if (Type == 2) { // Non-proportional
+    if (Type == 2)
+    {
+        // Non-proportional
         *proc << "convert";
 
         *proc << "-resize";
@@ -375,7 +400,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_fixedHeight) + "!");
         *proc << Temp2;
 
-        if (m_fixedWidth > w || m_fixedHeight > h) { // If the image is increased, enabled the filter.
+        if (m_fixedWidth > w || m_fixedHeight > h)
+        {
+            // If the image is increased, enabled the filter.
             *proc << "-filter" << m_resizeFilter;
         }
 
@@ -389,28 +416,41 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << albumDest + "/" + item->nameDest();
     }
 
-    if (Type == 3) { // Prepare to print
-        if (m_customSettings == true) {
+    if (Type == 3)
+    {
+        // Prepare to print
+        if (m_customSettings == true)
+        {
             MargingSize = (int)((float)(m_marging * m_customDpi) / (float)(25.4));
 
-            if (w < h) { // (w < h) because all paper dimensions are vertically gived !
+            if (w < h) 
+            {
+                // (w < h) because all paper dimensions are vertically gived !
                 m_xPixels = (int)((float)(m_customXSize * m_customDpi) / (float)(2.54));
                 m_yPixels = (int)((float)(m_customYSize * m_customDpi) / (float)(2.54));
-            } else {
+            }
+            else
+            {
                 m_yPixels = (int)((float)(m_customXSize * m_customDpi) / (float)(2.54));
                 m_xPixels = (int)((float)(m_customYSize * m_customDpi) / (float)(2.54));
             }
-        } else {
+        }
+        else
+        {
             QString Temp = m_printDpi;
             int Dpi = Temp.toInt();
             MargingSize = (int)((float)(m_marging * Dpi) / (float)(25.4));
 
-            if (w < h) { // (w < h) because all paper dimensions are vertically given !
+            if (w < h)
+            {
+                // (w < h) because all paper dimensions are vertically given !
                 Temp = m_paperSize.left(m_paperSize.find('x'));
                 m_xPixels = (int)((float)(Temp.toInt() * Dpi) / (float)(2.54));
                 Temp = m_paperSize.right(m_paperSize.find('x'));
                 m_yPixels = (int)((float)(Temp.toInt() * Dpi) / (float)(2.54));
-            } else {
+            }
+            else
+            {
                 Temp = m_paperSize.left(m_paperSize.find('x'));
                 m_yPixels = (int)((float)(Temp.toInt() * Dpi) / (float)(2.54));
                 Temp = m_paperSize.right(m_paperSize.find('x'));
@@ -425,11 +465,14 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
         // Get the target image resizing dimensions with using the target paper size.
 
-        if (m_xPixels < m_yPixels) {
+        if (m_xPixels < m_yPixels)
+        {
             RFactor = (float)m_xPixels / (float)w;
             if (RFactor > 1.0) RFactor = (float)m_yPixels / (float)h;
             ResizeCoeff = (int)((float)h * RFactor);
-        } else {
+        }
+        else
+        {
             RFactor = (float)m_yPixels / (float)h;
             if (RFactor > 1.0) RFactor = (float)m_xPixels / (float)w;
             ResizeCoeff = (int)((float)w * RFactor);
@@ -451,7 +494,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp3.setNum(m_quality);
         *proc << Temp3;
 
-        if (IncDec == true) {   // If the image is increased, enabled the filter.
+        if (IncDec == true)
+        {
+            // If the image is increased, enabled the filter.
             *proc << "-filter" << m_resizeFilter;
         }
 
@@ -483,7 +528,8 @@ bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
 {
     QImage img;
 
-    if (img.load(item->pathSrc()) == false) {
+    if (img.load(item->pathSrc()) == false)
+    {
         item->changeResult(i18n("Skipped."));
         item->changeError(i18n("image file format unsupported."));
         return false;
@@ -496,7 +542,8 @@ bool ResizeImagesDialog::ResizeImage(int &w, int &h, int SizeFactor)
 {
     bool valRet;
 
-    if (w > h) {
+    if (w > h)
+    {
         h = (int)((double)(h * SizeFactor) / w);
 
         if (h == 0) h = 1;
@@ -505,7 +552,9 @@ bool ResizeImagesDialog::ResizeImage(int &w, int &h, int SizeFactor)
         else valRet = false;
 
         w = SizeFactor;
-    } else {
+    }
+    else
+    {
         w = (int)((double)(w * SizeFactor) / h);
 
         if (w == 0) w = 1;
@@ -516,7 +565,7 @@ bool ResizeImagesDialog::ResizeImage(int &w, int &h, int SizeFactor)
         h = SizeFactor;
     }
 
-    return (valRet);  // Return true is image increased, else true.
+    return (valRet);  // Return true if image increased, else false.
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin
