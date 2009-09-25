@@ -36,4 +36,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 025 ==> MetadataEdit       : 200554 : Import metadata: More sensitive choice of directory in file-open dialog [patch].
 026 ==> BatchProcessImages : 135411 : Batch resizing: Proportional (2-dim) is not proportional.
 027 ==> BatchProcessImages : 206357 : Tools / Resize - two dimensions are not proportionately resized.
-028 ==> 
+028 ==> BatchProcessImages : 208446 : Gwenview crash when click on CLOSE.
+029 ==> 
+
