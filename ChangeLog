@@ -1,3 +1,967 @@
+0.7.0 2009-09-27
+--------------------------------------------------------------------------------
+
+2009-09-26 08:41  cgilles
+
+    * NEWS: update
+
+2009-09-26 08:39  cgilles
+
+    * timeadjust/timeadjustdialog.cpp: apply pach #37177 from Michael G
+      Hansen
+      BUGS: 204634
+
+2009-09-25 21:14  cgilles
+
+    * NEWS: update
+
+2009-09-25 09:59  cgilles
+
+    * project/CodingSprint2009.ods: add Johannes Wienke as contributor
+      to coding sprint
+      CCMAIL: languitar@semipol.de
+
+2009-09-25 07:55  cgilles
+
+    * CMakeLists.txt, NEWS: cleanup release date for 0.7.0
+
+2009-09-24 11:53  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-24 10:50  aclemens
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-24 10:41  adjam
+
+    * project/CodingSprint2009.ods: Updating availability
+
+2009-09-24 10:28  cgilles
+
+    * NEWS: update
+
+2009-09-24 10:26  cgilles
+
+    * batchprocessimages/resizeimagesdialog.cpp: fix proportionnal
+      resizing rule.with 2 dims
+      BUGS: 206357
+      BUGS: 135411
+
+2009-09-23 10:24  scripty
+
+    * printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/13x18cm.desktop,
+      printimages/templates/20x25cm.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/6x9cm.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/9x13cm.desktop,
+      printimages/templates/Small-Thumbnails.desktop,
+      printimages/templates/Thumbnails.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-23 10:19  cgilles
+
+    * NEWS: update
+
+2009-09-23 10:17  cgilles
+
+    * metadataedit/plugin_metadataedit.cpp,
+      metadataedit/plugin_metadataedit.h: apply patch #37102 from
+      Michael G. Hansen to remember image selected between each
+      metadata import session.
+      BUGS: 200554
+      BUGS: 207997
+
+2009-09-22 22:01  cgilles
+
+    * NEWS: update--Cette ligne, et les suivantes ci-dessous, seront
+      ignorées--
+
+      M NEWS
+
+2009-09-22 20:13  sars
+
+    * acquireimages/scandialog.cpp: Revert commit 998596: "Fix crash
+      when saving images in .tiff format"
+      998596 broke saving 8bit color images.
+
+      This should fix 208107 "corrupted image when saving a scan" and
+      has should not break 200558 again as there was another fix for
+      that.
+
+      I can now save 8 and 16 bit PNG, and 8 bitt TIFF, but the 16bit
+      TIFFs are corrupted.
+
+      BUG:208107
+      CCBUG:200558
+
+2009-09-22 09:08  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-22 08:49  cgilles
+
+    * galleryexport/plugin_galleryexport.cpp: use plugin path for icon
+
+2009-09-21 14:42  aclemens
+
+    * flickrexport/flickrwindow.cpp: QPointer for dialogs, fix memory
+      leak
+
+2009-09-21 14:42  aclemens
+
+    * ipodexport/IpodExportDialog.cpp: QPointer for dialog, fix general
+      compile.
+      The conditional compile was not working properly, KFileDialog was
+      not declared
+      and used incorrectly.
+      I kept the old code commented so if I did something wrong, you
+      might correct it
+      again.
+
+2009-09-21 14:42  aclemens
+
+    * acquireimages/plugin_acquireimages.cpp,
+      acquireimages/scandialog.cpp,
+      acquireimages/twainiface/twaincontroller.cpp,
+      batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/plugin_batchprocessimages.cpp,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/renameimageswidget.cpp,
+      common/libkipiplugins/imagedialog.cpp,
+      flashexport/simpleviewer.cpp, galleryexport/gallerywindow.cpp,
+      galleryexport/plugin_galleryexport.cpp,
+      gpssync/gpssyncdialog.cpp, gpssync/plugin_gpssync.cpp,
+      htmlexport/plugin.cpp, imageviewer/viewerwidget.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      picasawebexport/picasawebtalker.cpp,
+      picasawebexport/picasawebwindow.cpp,
+      timeadjust/timeadjustdialog.cpp: Use QPointers when showing modal
+      dialogs via exec(), as discussed in
+      <http://www.kdedevelopers.org/node/3919>
+
+2009-09-21 12:32  aclemens
+
+    * acquireimages/plugin_acquireimages.h, acquireimages/scandialog.h,
+      acquireimages/twainiface/twaincontroller.h,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/batchprocessimageslist.h,
+      batchprocessimages/borderimagesdialog.h,
+      batchprocessimages/borderoptionsdialog.h,
+      batchprocessimages/colorimagesdialog.h,
+      batchprocessimages/convertimagesdialog.h,
+      batchprocessimages/convertoptionsdialog.h,
+      batchprocessimages/effectimagesdialog.h,
+      batchprocessimages/filterimagesdialog.h,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.h,
+      batchprocessimages/pixmapview.h,
+      batchprocessimages/plugin_batchprocessimages.h,
+      batchprocessimages/recompressimagesdialog.h,
+      batchprocessimages/recompressoptionsdialog.h,
+      batchprocessimages/renameimagesdialog.h,
+      batchprocessimages/renameimageswidget.h,
+      batchprocessimages/resizeimagesdialog.h,
+      batchprocessimages/resizeoptionsdialog.h, calendar/calpainter.h,
+      calendar/calprinter.h, calendar/calselect.h,
+      calendar/calsettings.h, calendar/calwidget.h,
+      calendar/calwizard.h, calendar/monthwidget.h,
+      calendar/plugin_calendar.h, common/libkipiplugins/imagedialog.h,
+      common/libkipiplugins/imageslist.h,
+      dngconverter/plugin/actionthread.h,
+      dngconverter/plugin/batchdialog.h,
+      dngconverter/plugin/plugin_dngconverter.h,
+      dngconverter/plugin/settingswidget.h, facebook/fbtalker.h,
+      facebook/fbwidget.h, facebook/fbwindow.h,
+      facebook/plugin_facebook.h, flashexport/firstrundlg.h,
+      flashexport/plugin_flashexport.h, flashexport/simpleviewer.h,
+      flashexport/svedialog.h, flickrexport/comboboxdelegate.h,
+      flickrexport/comboboxintermediate.h, flickrexport/flickrlist.h,
+      flickrexport/flickrtalker.h, flickrexport/flickrwidget.h,
+      flickrexport/flickrwindow.h, flickrexport/plugin_flickrexport.h,
+      htmlexport/plugin.h, htmlexport/wizard.h,
+      imageviewer/plugin_viewer.h, imageviewer/viewerwidget.h,
+      ipodexport/IpodExportDialog.h, ipodexport/IpodHeader.h,
+      ipodexport/plugin_ipodexport.h, jpeglossless/actionthread.h,
+      jpeglossless/plugin_jpeglossless.h,
+      metadataedit/altlangstringedit.h,
+      metadataedit/commenteditdialog.h,
+      metadataedit/commentremovedialog.h, metadataedit/exifadjust.h,
+      metadataedit/exifcaption.h, metadataedit/exifdatetime.h,
+      metadataedit/exifdevice.h, metadataedit/exifeditdialog.h,
+      metadataedit/exiflens.h, metadataedit/exiflight.h,
+      metadataedit/iptccategories.h, metadataedit/iptccontent.h,
+      metadataedit/iptccredits.h, metadataedit/iptceditdialog.h,
+      metadataedit/iptcenvelope.h, metadataedit/iptckeywords.h,
+      metadataedit/iptcorigin.h, metadataedit/iptcproperties.h,
+      metadataedit/iptcstatus.h, metadataedit/metadatacheckbox.h,
+      metadataedit/multistringsedit.h, metadataedit/multivaluesedit.h,
+      metadataedit/objectattributesedit.h,
+      metadataedit/plugin_metadataedit.h, metadataedit/xmpcategories.h,
+      metadataedit/xmpcontent.h, metadataedit/xmpcredits.h,
+      metadataedit/xmpeditdialog.h, metadataedit/xmpkeywords.h,
+      metadataedit/xmporigin.h, metadataedit/xmpproperties.h,
+      metadataedit/xmpstatus.h, picasawebexport/picasawebtalker.h,
+      picasawebexport/picasawebwidget.h,
+      picasawebexport/picasawebwindow.h,
+      picasawebexport/plugin_picasawebexport.h,
+      printimages/plugin_printimages.h, printimages/wizard.h,
+      rawconverter/actionthread.h, rawconverter/batchdialog.h,
+      rawconverter/plugin_rawconverter.h,
+      rawconverter/savesettingswidget.h, rawconverter/singledialog.h,
+      smug/plugin_smug.h, smug/smugtalker.h, smug/smugwidget.h,
+      smug/smugwindow.h, timeadjust/clockphotodialog.h,
+      timeadjust/plugin_timeadjust.h, timeadjust/timeadjustdialog.h,
+      wallpaper/plugin_wallpaper.h: Like in digiKam, use Q_SIGNALS and
+      Q_SLOTS everywhere to avoid conflicts with
+      boost or python.
+      Normally this is only needed in library headers, but to make life
+      easy, just
+      convert every keyword in every file.
+
+2009-09-21 12:17  aclemens
+
+    * advancedslideshow/slideshowgl.cpp,
+      batchprocessimages/batchprocessimagesdialog.cpp,
+      calendar/calsettings.cpp, calendar/monthwidget.cpp,
+      calendar/plugin_calendar.cpp,
+      dngconverter/plugin/actionthread.cpp,
+      flickrexport/flickrlist.cpp, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrwindow.cpp,
+      flickrexport/plugin_flickrexport.cpp,
+      galleryexport/galleries.cpp,
+      galleryexport/plugin_galleryexport.cpp, htmlexport/generator.cpp,
+      htmlexport/plugin.cpp, imageviewer/plugin_viewer.cpp,
+      jpeglossless/actionthread.cpp,
+      jpeglossless/convert2grayscale.cpp, jpeglossless/imageflip.cpp,
+      jpeglossless/imagerotate.cpp, jpeglossless/jpegtransform.cpp,
+      jpeglossless/plugin_jpeglossless.cpp, jpeglossless/utils.cpp,
+      metadataedit/plugin_metadataedit.cpp,
+      printimages/plugin_printimages.cpp,
+      printimages/printoptionspage.cpp,
+      rawconverter/plugin_rawconverter.cpp,
+      sendimages/plugin_sendimages.cpp,
+      timeadjust/plugin_timeadjust.cpp, wallpaper/plugin_wallpaper.cpp:
+      endl not needed anymore
+
+2009-09-20 09:24  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-18 09:39  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-18 07:13  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-17 09:38  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/dateframes/dateframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/13x18cm.desktop,
+      printimages/templates/20x25cm.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/9x13cm.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      smug/kipiplugin_smug.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-09-17 07:49  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-17 07:04  cgilles
+
+    * NEWS: update
+
+2009-09-17 06:19  pieteredelman
+
+    * timeadjust/timeadjustdialog.cpp: Also call slotUpdateExample when
+      changing the adjustment type, instead of only calling this when
+      changing the adjustment value.
+      BUG: 207620
+
+2009-09-16 17:36  cgilles
+
+    * NEWS: update
+
+2009-09-16 11:40  aclemens
+
+    * acquireimages/twainiface/twainiface.cpp,
+      common/libkipiplugins/kpwriteimage.cpp,
+      flickrexport/comboboxintermediate.h,
+      flickrexport/flickrtalker.cpp, flickrexport/flickrwindow.cpp,
+      htmlexport/wizard.cpp, sendimages/sendimages.cpp,
+      timeadjust/clockphotodialog.cpp: fix some spelling errors, to
+      satisfy krazy2
+
+2009-09-16 09:57  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-15 16:33  cgilles
+
+    * project/CodingSprint2009.ods: polish
+
+2009-09-15 16:07  foerster
+
+    * project/CodingSprint2009.ods: Edited my entry. I prefer the
+      13/15.11 weekend.
+
+2009-09-15 15:42  cgilles
+
+    * project/CodingSprint2009.ods: polish
+
+2009-09-15 14:35  aclemens
+
+    * project/CodingSprint2009.ods: update (date confirmation)
+
+2009-09-15 11:46  scripty
+
+    * flickrexport/kipiplugin_flickrexport.desktop,
+      htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-15 07:37  cgilles
+
+    * AUTHORS: update
+
+2009-09-15 07:36  cgilles
+
+    * AUTHORS: add Pieter Edelman in author list
+
+2009-09-15 07:12  pieteredelman
+
+    * flickrexport/flickrwidget.cpp: Disable the Safety Level and
+      Content Type columns when using Zooomr or 23HQ (which don't
+      support these properties).
+
+2009-09-15 07:02  cgilles
+
+    * flickrexport/icons/hi16-action-zooomr.png,
+      flickrexport/icons/hi22-action-zooomr.png,
+      flickrexport/icons/hi32-action-zooomr.png,
+      flickrexport/icons/hi48-action-zooomr.png,
+      flickrexport/icons/hisc-action-zooomr.svgz: missing svg icon
+
+2009-09-15 06:52  cgilles
+
+    * flickrexport/icons/CMakeLists.txt,
+      flickrexport/icons/hi16-action-zooomr.png,
+      flickrexport/icons/hi22-action-zooomr.png,
+      flickrexport/icons/hi32-action-zooomr.png,
+      flickrexport/icons/hi48-action-zooomr.png,
+      flickrexport/plugin_flickrexport.cpp: add zooomr like icon
+
+2009-09-15 06:51  cgilles
+
+    * NEWS: update
+
+2009-09-14 21:12  cgilles
+
+    * README: update
+
+2009-09-14 21:10  cgilles
+
+    * NEWS: update
+
+2009-09-14 19:08  pieteredelman
+
+    * flickrexport/README, flickrexport/flickrtalker.cpp,
+      flickrexport/flickrwidget.cpp, flickrexport/flickrwindow.cpp,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      flickrexport/plugin_flickrexport.cpp,
+      flickrexport/plugin_flickrexport.h: Apply patch from Bayle Shanks
+      to add Zooomr support to the Flickr export plugin.
+      BUGS: 139537
+
+2009-09-14 16:17  sengels
+
+    * project/CodingSprint2009.ods: one weekend is not possible
+
+2009-09-13 21:06  cgilles
+
+    * project/CodingSprint2009.ods: Mrkus is not available too...
+
+2009-09-13 09:39  cgilles
+
+    * project/CodingSprint2009.ods: Arnd Beacker is open to come at
+      Dusseldorf for coding sprint
+
+2009-09-12 15:38  cgilles
+
+    * NEWS: update
+
+2009-09-12 15:29  mwiesweg
+
+    * jpeglossless/imagerotate.cpp, jpeglossless/jpegtransform.cpp:
+      Resetting the Exif rotation flag to NORMAL was broken for two
+      reasons:
+      - if the rotation was a no-op and only resetting the flag was
+      required,
+      the method just returned, skipping the exif adjustment
+      - libkexiv2 would reject any file without suffix as non-supported
+      RAW image.
+      That is fixed now in libkexiv2 and by setting a suffix on the
+      temp file
+
+      BUG: 205602
+
+2009-09-12 12:17  cgilles
+
+    * timeadjust/clockphotodialog.cpp: typo
+
+2009-09-12 12:15  cgilles
+
+    * project/CodingSprint2009.ods: polish
+
+2009-09-12 11:21  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      calendar/kipiplugin_calendar.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/dateframes/dateframes.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      ipodexport/kipiplugin_ipodexport.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/4x6Album.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      smug/kipiplugin_smug.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-09-12 11:10  jnarboux
+
+    * project/CodingSprint2009.ods: Julien Narboux not available for
+      coding sprint
+
+2009-09-12 11:07  cgilles
+
+    * project/CodingSprint2009.ods: update Julien Pontabry not
+      available
+
+2009-09-11 19:01  cgilles
+
+    * NEWS: update
+
+2009-09-11 19:00  cgilles
+
+    * batchprocessimages/coloroptionsdialog.cpp: fix i18n
+      BUGS: 207108
+
+2009-09-11 18:10  pieteredelman
+
+    * flickrexport/flickrlist.cpp, flickrexport/flickrlist.h,
+      flickrexport/flickrwidget.cpp: - Removed ControlButtonPlacement
+      option from FlickList constructor; it was removed earlier from
+      it's base class ImagesList and now messed up thumbnail size.
+      - Wrapped the users options in a QScrollArea, so that the dialog
+      can be resized without squeezing the contents.
+
+2009-09-11 17:22  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-11 17:05  pieteredelman
+
+    * project/CodingSprint2009.ods: Preferences for Pieter Edelman
+
+2009-09-11 15:00  cgilles
+
+    * NEWS: update
+
+2009-09-11 14:59  cgilles
+
+    * advancedslideshow/maindialog.cpp,
+      common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h, gpssync/gpslistviewitem.cpp,
+      gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+      gpssync/gpstracklisteditdialog.cpp: apply patch #36848 from
+      Michael G.Hansen to fix several issues in GPSSync kipi-plugins
+      BUGS: 206995
+
+2009-09-11 12:53  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-11 12:18  cgilles
+
+    * project/CodingSprint2009.ods: updated
+
+2009-09-11 09:41  scripty
+
+    * htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-11 04:39  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-11 02:04  sengels
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-10 21:03  aclemens
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-10 20:05  anaselli
+
+    * project/CodingSprint2009.ods: I can't come :)
+
+2009-09-10 19:50  cgilles
+
+    * project/CodingSprint2009.ods: update
+
+2009-09-10 15:00  aclemens
+
+    * NEWS: update
+
+2009-09-10 15:00  aclemens
+
+    * advancedslideshow/slideshowconfig.cpp: Setting max delay to 2 min
+      (120 seconds)
+
+      BUG:206976
+
+2009-09-10 14:09  cgilles
+
+    * project/CodingSprint2009.ods: coding sprint 2009 documentation
+
+2009-09-10 11:05  cgilles
+
+    * NEWS: update
+
+2009-09-10 10:46  cgilles
+
+    * NEWS: update
+
+2009-09-10 09:27  cgilles
+
+    * flickrexport/CMakeLists.txt, flickrexport/comboboxdelegate.cpp,
+      flickrexport/comboboxdelegate.h,
+      flickrexport/comboboxintermediate.cpp,
+      flickrexport/comboboxintermediate.h, flickrexport/flickritem.h,
+      flickrexport/flickrlist.cpp, flickrexport/flickrlist.h,
+      flickrexport/flickrtalker.cpp, flickrexport/flickrwidget.cpp,
+      flickrexport/flickrwidget.h, flickrexport/flickrwindow.cpp,
+      flickrexport/flickrwindow.h: apply patch from Pieter Edelman abou
+      to add extented Flickr upload properties.
+      BUGS: 172359
+
+2009-09-10 03:49  cgilles
+
+    * AUTHORS: update
+
+2009-09-09 20:57  cgilles
+
+    * NEWS: --Cette lignupdatee, et les suivantes ci-dessous, seront
+      ignorées--
+
+      M NEWS
+
+2009-09-09 20:54  cgilles
+
+    * timeadjust/CMakeLists.txt, timeadjust/clockphotodialog.cpp,
+      timeadjust/clockphotodialog.h, timeadjust/timeadjustdialog.cpp,
+      timeadjust/timeadjustdialog.h: apply patch from Pieter Edelman to
+      use photo timestamp to work out the time difference of the camera
+      clock.
+      BUGS: 194768
+
+2009-09-09 19:41  rdieter
+
+    * dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: some s390
+      (bigendian) love
+
+2009-09-09 19:39  rdieter
+
+    * common/libkipiplugins/kipiplugins.desktop: pass
+      desktop-file-validate (Categories valid only for
+      Type=Application, not Service)
+
+2009-09-09 19:33  cgilles
+
+    * flickrexport/flickrlist.cpp, flickrexport/flickrlist.h: forget to
+      add new file to svn
+      CCBUGS: 193685
+
+2009-09-09 14:29  cgilles
+
+    * NEWS: update
+
+2009-09-09 14:28  cgilles
+
+    * gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h: fix double
+      confirmation at close dialog
+      BUGS: 193734
+
+2009-09-09 07:10  cgilles
+
+    * NEWS: update
+
+2009-09-09 07:08  cgilles
+
+    * flickrexport/CMakeLists.txt, flickrexport/flickrwidget.cpp,
+      flickrexport/flickrwidget.h, flickrexport/flickrwindow.cpp,
+      flickrexport/flickrwindow.h: apply patch from Pieter Edelman to
+      be able to set image visibility properties one by one (public,
+      family, friends)
+      Tested here with my Flickr Account. it work very well. Thanks for
+      this great patch. Good job.
+      BUGS: 193685
+
+2009-09-09 04:16  cgilles
+
+    * NEWS: update
+
+2009-09-08 09:42  aclemens
+
+    * NEWS: update
+
+2009-09-08 09:36  aclemens
+
+    * common/libkipiplugins/imageslist.cpp,
+      common/libkipiplugins/imageslist.h: Apply patch from Michael G.
+      Hansen: enable extended selection in
+      ImagesList widget.
+
+      BUG:206714
+
+2009-09-08 08:39  scripty
+
+    * htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-07 11:02  cgilles
+
+    * NEWS: update
+
+2009-09-07 07:49  cgilles
+
+    * NEWS: update
+
+2009-09-07 07:25  gateau
+
+    * batchprocessimages/filteroptionsdialog.cpp: Reworked layout to be
+      more compliant with KDE HIG
+
+2009-09-07 07:25  gateau
+
+    * batchprocessimages/filteroptionsdialog.cpp: Show units in labels.
+
+2009-09-07 07:25  gateau
+
+    * batchprocessimages/filteroptionsdialog.cpp: Unsharp "percent" can
+      be made larger than 100%
+
+      cf:
+      http://redskiesatnight.com/2005/04/06/sharpening-using-image-magick/
+
+2009-09-07 07:25  gateau
+
+    * batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filteroptionsdialog.cpp: Turn unsharp
+      "threshold" and "percent" parameters into real percentages.
+
+      BUG:197377
+
+2009-09-06 09:30  scripty
+
+    * htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-05 07:58  cgilles
+
+    * dngconverter/dngwriter/dngwriter.cpp: fix makernotes after DNG
+      creation. This is require to ORF files
+      This fix require libkexiv2 for KDE 4.4 for this moment. I'm
+      waiting
+      confirmation from tester to backport fix to KDE 4.3. and KDE 4.2
+      branches
+      CCBUGS: 204437
+
+2009-09-04 10:55  cgilles
+
+    * NEWS: update
+
+2009-09-04 10:33  scripty
+
+    * htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-04 09:20  gateau
+
+    * batchprocessimages/batchprocessimagesdialog.cpp,
+      batchprocessimages/batchprocessimagesdialog.h,
+      batchprocessimages/batchprocessimagesitem.cpp,
+      batchprocessimages/batchprocessimagesitem.h,
+      batchprocessimages/batchprocessimageslist.cpp,
+      batchprocessimages/batchprocessimageslist.h,
+      batchprocessimages/borderimagesdialog.cpp,
+      batchprocessimages/borderimagesdialog.h,
+      batchprocessimages/borderoptionsdialog.cpp,
+      batchprocessimages/borderoptionsdialog.h,
+      batchprocessimages/colorimagesdialog.cpp,
+      batchprocessimages/colorimagesdialog.h,
+      batchprocessimages/coloroptionsdialog.cpp,
+      batchprocessimages/coloroptionsdialog.h,
+      batchprocessimages/convertimagesdialog.cpp,
+      batchprocessimages/convertimagesdialog.h,
+      batchprocessimages/convertoptionsdialog.cpp,
+      batchprocessimages/convertoptionsdialog.h,
+      batchprocessimages/dialogutils.cpp,
+      batchprocessimages/dialogutils.h,
+      batchprocessimages/effectimagesdialog.cpp,
+      batchprocessimages/effectimagesdialog.h,
+      batchprocessimages/effectoptionsdialog.cpp,
+      batchprocessimages/effectoptionsdialog.h,
+      batchprocessimages/filterimagesdialog.cpp,
+      batchprocessimages/filterimagesdialog.h,
+      batchprocessimages/filteroptionsdialog.cpp,
+      batchprocessimages/filteroptionsdialog.h,
+      batchprocessimages/imagepreview.cpp,
+      batchprocessimages/imagepreview.h,
+      batchprocessimages/outputdialog.cpp,
+      batchprocessimages/outputdialog.h,
+      batchprocessimages/pixmapview.cpp,
+      batchprocessimages/pixmapview.h,
+      batchprocessimages/plugin_batchprocessimages.cpp,
+      batchprocessimages/plugin_batchprocessimages.h,
+      batchprocessimages/recompressimagesdialog.cpp,
+      batchprocessimages/recompressimagesdialog.h,
+      batchprocessimages/recompressoptionsdialog.cpp,
+      batchprocessimages/recompressoptionsdialog.h,
+      batchprocessimages/renameimagesdialog.cpp,
+      batchprocessimages/renameimagesdialog.h,
+      batchprocessimages/renameimageswidget.cpp,
+      batchprocessimages/renameimageswidget.h,
+      batchprocessimages/resizeimagesdialog.cpp,
+      batchprocessimages/resizeimagesdialog.h,
+      batchprocessimages/resizeoptionsdialog.cpp,
+      batchprocessimages/resizeoptionsdialog.h: Applied astyle_kdelibs
+      script
+
+      Please svn up before working on the plugin, otherwise you will
+      get tons of
+      conflicts.
+
+      CCMAIL: kde-imaging@kde.org
+
+2009-09-03 10:36  scripty
+
+    * htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-02 10:32  scripty
+
+    * printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/13x18cm.desktop,
+      printimages/templates/20x25cm.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/6x9cm.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/9x13cm.desktop,
+      printimages/templates/Album-Collage.desktop,
+      printimages/templates/Album-Collage1.desktop,
+      printimages/templates/Photoframe.desktop,
+      printimages/templates/Small-Thumbnails.desktop,
+      printimages/templates/Thumbnails.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-09-02 08:31  cgilles
+
+    * NEWS: update
+
+2009-09-02 08:30  cgilles
+
+    * dngconverter/dngwriter/dngwriter.cpp,
+      dngconverter/plugin/batchdialog.cpp,
+      rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp: use
+      complete base name everywhere
+      BUG: 205833
+
+2009-09-02 08:16  cgilles
+
+    * NEWS: update
+
+2009-09-02 08:08  cgilles
+
+    * NEWS: update
+
+2009-09-02 07:30  gateau
+
+    * htmlexport/themes/dateframes,
+      htmlexport/themes/dateframes/dateframes.desktop,
+      htmlexport/themes/dateframes/template.xsl: Added "Date Frames"
+      theme by Elizabeth Marmorstein
+
+      BUG:199533
+
+2009-09-02 07:30  gateau
+
+    * htmlexport/THEME_HOWTO, htmlexport/generator.cpp,
+      htmlexport/imageelement.h: Export collection comment and image
+      time.
+
+      Patch by Robert Marmorstein
+
+      CCBUG:199533
+
+2009-09-01 17:56  scripty
+
+    * acquireimages/kipiplugin_acquireimages.desktop,
+      advancedslideshow/kipiplugin_advancedslideshow.desktop,
+      batchprocessimages/kipiplugin_batchprocessimages.desktop,
+      dngconverter/plugin/dngconverter.desktop,
+      dngconverter/plugin/kipiplugin_dngconverter.desktop,
+      facebook/kipiplugin_facebook.desktop,
+      flashexport/kipiplugin_flashexport.desktop,
+      flickrexport/kipiplugin_flickrexport.desktop,
+      galleryexport/kipiplugin_galleryexport.desktop,
+      gpssync/kipiplugin_gpssync.desktop,
+      htmlexport/kipiplugin_htmlexport.desktop,
+      htmlexport/themes/classic/classic.desktop,
+      htmlexport/themes/cleanframes/cleanframes.desktop,
+      htmlexport/themes/frames/frames.desktop,
+      htmlexport/themes/matrix/matrix.desktop,
+      htmlexport/themes/s0/s0.desktop,
+      htmlexport/themes/simple/simple.desktop,
+      htmlexport/themes/snow/snow.desktop,
+      imageviewer/kipiplugin_imageviewer.desktop,
+      jpeglossless/kipiplugin_jpeglossless.desktop,
+      metadataedit/kipiplugin_metadataedit.desktop,
+      picasawebexport/kipiplugin_picasawebexport.desktop,
+      printimages/kipiplugin_printimages.desktop,
+      printimages/templates/10.5x14.8cm.desktop,
+      printimages/templates/10x13.33cm.desktop,
+      printimages/templates/10x15cmAlbum.desktop,
+      printimages/templates/11.5x15cmAlbum.desktop,
+      printimages/templates/21x29.7cm.desktop,
+      printimages/templates/3.5x5.desktop,
+      printimages/templates/4x6.desktop,
+      printimages/templates/4x6Album.desktop,
+      printimages/templates/5x7.desktop,
+      printimages/templates/6x9cm.desktop,
+      printimages/templates/8x10.desktop,
+      printimages/templates/Album-Collage.desktop,
+      printimages/templates/Album-Collage1.desktop,
+      printimages/templates/Photoframe.desktop,
+      printimages/templates/Small-Thumbnails.desktop,
+      printimages/templates/Thumbnails.desktop,
+      rawconverter/kipiplugin_rawconverter.desktop,
+      removeredeyes/kipiplugin_removeredeyes.desktop,
+      sendimages/kipiplugin_sendimages.desktop,
+      smug/kipiplugin_smug.desktop,
+      timeadjust/kipiplugin_timeadjust.desktop,
+      wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+      (.desktop file)
+
+2009-08-29 19:14  scripty
+
+    * flashexport/kipiplugin_flashexport.desktop: SVN_SILENT made
+      messages (.desktop file)
+
+2009-08-29 18:28  aclemens
+
+    * NEWS: update
+
+2009-08-29 15:06  cgilles
+
+    * CMakeLists.txt, NEWS: 0.7.0
+
+2009-08-29 15:04  cgilles
+
+    * project/NEWS.0.6.0: update
+
+2009-08-29 10:24  cgilles
+
+    * ChangeLog: prepare 0.6.0
+
 0.6.0 2009-08-29
 --------------------------------------------------------------------------------
 
