@@ -109,7 +109,6 @@ void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 
 void KioExportWidget::slotTargetOkClicked()
 {
-
     m_targetUrl = m_targetDialog->selectedUrl();
     updateTargetLabel();
     emit signalTargetUrlChanged(m_targetUrl);
@@ -117,7 +116,6 @@ void KioExportWidget::slotTargetOkClicked()
 
 void KioExportWidget::updateTargetLabel()
 {
-
     kDebug(51000) << "KioExportWidget::updateTargetLabel called for url "
                   << m_targetUrl.prettyUrl() << ", valid = "
                   << m_targetUrl.isValid();

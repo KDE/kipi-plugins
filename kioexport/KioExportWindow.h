@@ -130,7 +130,6 @@ private:
 
     const static QString TARGET_URL_PROPERTY;
     const static QString CONFIG_GROUP;
-
 };
 
 } // namespace KIPIKioExportPlugin

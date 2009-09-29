@@ -77,12 +77,10 @@ void Plugin_KioExport::setup(QWidget* widget)
         m_action->setEnabled(false);
         return;
     }
-
 }
 
 void Plugin_KioExport::slotActivate()
 {
-
     kDebug(51000) << "Plugin_KioExport::slotImageUpload called";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
@@ -95,7 +93,6 @@ void Plugin_KioExport::slotActivate()
     KioExportWindow *window = new KioExportWindow(kapp->activeWindow(),
                     interface);
     window->show();
-
 }
 
 KIPI::Category Plugin_KioExport::category(KAction* action) const
@@ -109,5 +106,4 @@ KIPI::Category Plugin_KioExport::category(KAction* action) const
         kWarning(51000) << "Received unknown action";
         return KIPI::ExportPlugin;
     }
-
 }

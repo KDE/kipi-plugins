@@ -54,7 +54,6 @@ const QString KioExportWindow::CONFIG_GROUP = "KioExport";
 KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
                : KDialog(parent), m_interface(interface)
 {
-
     if (!interface)
     {
         kFatal(51000) << "KIPI::Interface is empty";
@@ -90,7 +89,6 @@ KioExportWindow::~KioExportWindow()
 
 void KioExportWindow::closeEvent(QCloseEvent *e)
 {
-
     if (!e)
     {
         return;
@@ -102,7 +100,6 @@ void KioExportWindow::closeEvent(QCloseEvent *e)
 
 void KioExportWindow::restoreSettings()
 {
-
     kDebug(51000) << "restoring settings";
 
     KConfigGroup group = KGlobal::config()->group(CONFIG_GROUP);
@@ -110,12 +107,10 @@ void KioExportWindow::restoreSettings()
 
     kDebug(51000) << "target url after restoring: "
                   << m_exportWidget->targetUrl().prettyUrl();
-
 }
 
 void KioExportWindow::saveSettings()
 {
-
     kDebug(51000) << "saving settings";
 
     KConfigGroup group = KGlobal::config()->group(CONFIG_GROUP);
@@ -123,7 +118,6 @@ void KioExportWindow::saveSettings()
 
     kDebug(51000) << "stored target url "
                   << m_exportWidget->targetUrl().prettyUrl();
-
 }
 
 void KioExportWindow::slotImageListChanged()
@@ -139,20 +133,17 @@ void KioExportWindow::slotTargetUrlChanged(KUrl target)
 
 void KioExportWindow::updateUploadButton()
 {
-
     bool listNotEmpty = !m_exportWidget->imageList()->imageUrls().empty();
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
     kDebug(51000) << "Updated upload button with listNotEmpty = "
                     << listNotEmpty << ", targetUrl().isValid() = "
                     << m_exportWidget->targetUrl().isValid();
-
 }
 
 void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl &from,
                 const KUrl &to, time_t mtime, bool directory, bool renamed)
 {
-
     Q_UNUSED(job);
     Q_UNUSED(to);
     Q_UNUSED(mtime);
@@ -162,7 +153,6 @@ void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl &from,
     kDebug(51000) << "copied " << to.prettyUrl();
 
     m_exportWidget->imageList()->removeItemByUrl(from);
-
 }
 
 void KioExportWindow::slotCopyingFinished(KJob *job)
@@ -183,7 +173,6 @@ void KioExportWindow::slotCopyingFinished(KJob *job)
 
 void KioExportWindow::slotUpload()
 {
-
     // start copying and react on signals
     setEnabled(false);
     KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imageList()->imageUrls(),
