@@ -51,8 +51,8 @@ using namespace KIPIKioExportPlugin;
 K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExport>(); )
 K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexport") )
 
-Plugin_KioExport::Plugin_KioExport(QObject *parent, const QVariantList&) :
-    KIPI::Plugin(KioFactory::componentData(), parent, "KioExport")
+Plugin_KioExport::Plugin_KioExport(QObject *parent, const QVariantList&)
+                : KIPI::Plugin(KioFactory::componentData(), parent, "KioExport")
 {
     kDebug(51001) << "Plugin_KioExport plugin loaded";
 }
