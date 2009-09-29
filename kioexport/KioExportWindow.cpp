@@ -64,8 +64,8 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
 
     connect(m_exportWidget->imageList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)), this,
-            SLOT(slotTargetUrlChanged(KUrl)));
+    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)),
+            this, SLOT(slotTargetUrlChanged(KUrl)));
 
     // window setup
     setWindowTitle(i18n("Export using KIO"));
