@@ -82,7 +82,7 @@ public:
      */
     void setTargetUrl(KUrl url);
 
-private slots:
+private Q_SLOTS:
 
     void slotShowTargetDialogClicked(bool checked);
     void slotTargetOkClicked();
