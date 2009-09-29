@@ -1,9 +1,10 @@
 Kipi-plugins 0.8.0 - Release date: xx/10/2009
 ------------------------------------------------------------------------
 
-NEW FEATURES:
+NEW FEATURES: New plugin "KioExport" to export images via FTP, Samba, Fish (SSH) and many more using KIO slaves
 
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> WishList : 187291 : FTP KIPI plugin for uploading a selection of images.
+002 ==>
