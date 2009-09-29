@@ -6,5 +6,5 @@ NEW FEATURES: New plugin "KioExport" to export images via FTP, Samba, Fish (SSH)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> WishList : 187291 : FTP KIPI plugin for uploading a selection of images.
+001 ==> KioExport : 187291 : FTP KIPI plugin for uploading a selection of images.
 002 ==>
