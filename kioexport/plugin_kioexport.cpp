@@ -66,7 +66,8 @@ void Plugin_KioExport::setup(QWidget* widget)
     m_action->setIcon(KIcon("system-file-manager"));
     m_action->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K);
 
-    connect(m_action, SIGNAL(triggered(bool)), this, SLOT(slotActivate()));
+    connect(m_action, SIGNAL(triggered(bool)), 
+            this, SLOT(slotActivate()));
 
     addAction(m_action);
 
@@ -90,8 +91,7 @@ void Plugin_KioExport::slotActivate()
         return;
     }
 
-    KioExportWindow *window = new KioExportWindow(kapp->activeWindow(),
-                    interface);
+    KioExportWindow *window = new KioExportWindow(kapp->activeWindow(), interface);
     window->show();
 }
 

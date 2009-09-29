@@ -76,7 +76,8 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
     setButtonGuiItem(User1, KGuiItem(i18n("Start export"), "network-workgroup",
                      i18n("Start export to the specified target")));
 
-    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotUpload()));
+    connect(this, SIGNAL(user1Clicked()), 
+            this, SLOT(slotUpload()));
 
     // initial sync
     restoreSettings();
@@ -137,12 +138,12 @@ void KioExportWindow::updateUploadButton()
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
     kDebug(51000) << "Updated upload button with listNotEmpty = "
-                    << listNotEmpty << ", targetUrl().isValid() = "
-                    << m_exportWidget->targetUrl().isValid();
+                  << listNotEmpty << ", targetUrl().isValid() = "
+                  << m_exportWidget->targetUrl().isValid();
 }
 
-void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl &from,
-                const KUrl &to, time_t mtime, bool directory, bool renamed)
+void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
+                                      const KUrl& to, time_t mtime, bool directory, bool renamed)
 {
     Q_UNUSED(job);
     Q_UNUSED(to);
@@ -176,10 +177,10 @@ void KioExportWindow::slotUpload()
     // start copying and react on signals
     setEnabled(false);
     KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imageList()->imageUrls(),
-                    m_exportWidget->targetUrl());
+                            m_exportWidget->targetUrl());
 
-    connect( copyJob, SIGNAL(copyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)),
-             this, SLOT(slotCopyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));

@@ -45,7 +45,7 @@ class Plugin_KioExport: public KIPI::Plugin
 
 public:
 
-    Plugin_KioExport(QObject *parent, const QVariantList&args);
+    Plugin_KioExport(QObject *parent, const QVariantList& args);
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget* widget);
