@@ -88,17 +88,20 @@ private slots:
     void slotTargetOkClicked();
 
 Q_SIGNALS:
+
     void signalTargetUrlChanged(KUrl target);
 
 private:
 
     void updateTargetLabel();
 
+    QLabel                  *m_targetLabel;
+
+    KFileDialog             *m_targetDialog;
+    KPushButton             *m_targetSearchButton;
+    KUrl                     m_targetUrl;
+
     KIPIPlugins::ImagesList *m_imageList;
-    QLabel *m_targetLabel;
-    KFileDialog *m_targetDialog;
-    KPushButton *m_targetSearchButton;
-    KUrl m_targetUrl;
 };
 
 } // namespace KIPIKioExportPlugin

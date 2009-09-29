@@ -52,7 +52,7 @@ public:
 
 private Q_SLOTS:
 
-void slotActivate();
+    void slotActivate();
 
 private:
 

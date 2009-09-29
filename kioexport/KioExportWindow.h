@@ -105,7 +105,6 @@ protected:
 
     void closeEvent(QCloseEvent *e);
 
-private:
 
     /**
      * Refresh status (enabled / disabled) of the upload button according to
@@ -122,6 +121,8 @@ private:
      * Saves settings.
      */
     void saveSettings();
+
+private:
 
     KIPI::Interface *m_interface;
 
