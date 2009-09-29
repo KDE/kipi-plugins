@@ -105,7 +105,6 @@ protected:
 
     void closeEvent(QCloseEvent *e);
 
-
     /**
      * Refresh status (enabled / disabled) of the upload button according to
      * contents of the image list and the specified target.
