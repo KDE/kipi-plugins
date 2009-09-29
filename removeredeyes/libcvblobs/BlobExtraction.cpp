@@ -69,7 +69,7 @@ namespace KIPIRemoveRedEyesPlugin
 - MODIFICACI�: Data. Autor. Descripci�.
     - fpinyol@cvc.uab.es, rborras@cvc.uab.es: adaptaci� a les OpenCV
 */
-bool BlobAnalysis(    IplImage* inputImage,
+bool BlobAnalysis(  IplImage* inputImage,
                     uchar threshold,
                     IplImage* maskImage,
                     bool borderColor,
