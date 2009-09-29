@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-01-18
- * Description : factory to create save method objects
+ * Description : factory to create locator objects
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
