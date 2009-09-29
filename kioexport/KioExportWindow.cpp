@@ -25,9 +25,11 @@
 #include "KioExportWindow.moc"
 
 // Qt includes
+
 #include <QCloseEvent>
 
 // KDE includes
+
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
@@ -39,6 +41,7 @@
 #include <kio/copyjob.h>
 
 // Local includes
+
 #include "imageslist.h"
 #include "KioExportWidget.h"
 

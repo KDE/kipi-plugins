@@ -25,12 +25,14 @@
 #define KIOEXPORTWINDOW_H
 
 // KDE includes
+
 #include <KDialog>
 #include <KUrl>
 #include <kio/job.h>
 #include <KConfig>
 
 // Local includes
+
 #include "KioExportWidget.h"
 
 namespace KIPI

@@ -25,16 +25,19 @@
 #include "KioExportWidget.moc"
 
 // Qt includes
+
 #include <QVBoxLayout>
 #include <QLabel>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KFileDialog>
 #include <KDebug>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIKioExportPlugin

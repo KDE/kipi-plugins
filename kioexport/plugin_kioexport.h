@@ -24,7 +24,11 @@
 #ifndef PLUGIN_KIOEXPORT_H
 #define PLUGIN_KIOEXPORT_H
 
+// Qt includes
+
 #include <QVariant>
+
+// LibKIPI includes
 
 #include <libkipi/plugin.h>
 
