@@ -6,10 +6,11 @@ Marcel Wiesweg       <marcel dot wiesweg at gmx dot de>
 Andi Clemens         <andi dot clemens at gmx dot net>
 Pieter Edelman       <p dot edelman at gmx dot net>
 Michael G. Hansen    <mike at mghansen dot de>
+Johannes Wienke      <languitar at semipol dot de>
 Patrick Spendrin     <patrick_spendrin at gmx dot de>
 Luka Renko           <lure at kubuntu dot org>
 Laurent Montel       <montel at kde dot org>
-Aurelien Gateau      <aurelien dot gateau at free.fr>
+Aurelien Gateau      <aurelien dot gateau at free dot fr>
 Angelo Naselli       <anaselli at linux dot it>
 Kare Sars            <kare dot sars at iki dot fi>
 Valerio Fuoglio      <valerio dot fuoglio at gmail dot com>
@@ -34,8 +35,8 @@ Tudor Calin          <tudor at 1xtech dot com>
 Owen Hirst           <n8rider at sbcglobal dot net>
 Todd Shoemaker       <todd at theshoemakers dot net>
 Gregory Kokanosky    <gregory dot kokanosky at free dot fr>
-Richard Groult       <Richard dot Groult at jalix.org>
-Michael Hoechstetter <michael dot hoechstetter at gmx dot de> 
+Richard Groult       <Richard dot Groult at jalix dot org>
+Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
 
 PLUGINS MAINTAINERS
 Acquire images          : Gilles Caulier and Kare Sars
@@ -60,9 +61,10 @@ Sendimages              : Gilles Caulier
 Smug import/export      : Luka Renko
 Time adjust             : Gilles Caulier
 Wallpaper               : Laurent Montel
+KIOExport               : Johannes Wienke
 
-PROJECT COORDINATOR:
-Angelo Naselli      <anaselli at linux dot it>
+PROJECT COORDINATORS:
+Angelo Naselli and Gilles Caulier
 
 FORMER MAINTAINER:
 Renchi Raju         <renchi at pooh dot tam dot uiuc dot edu> 
