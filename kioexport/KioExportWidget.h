@@ -88,6 +88,7 @@ private Q_SLOTS:
 
     void slotShowTargetDialogClicked(bool checked);
     void slotTargetOkClicked();
+    void slotProcessUrl(const QString&);
 
 Q_SIGNALS:
 

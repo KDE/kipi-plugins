@@ -37,6 +37,7 @@
 #include <kdebug.h>
 #include <kurllabel.h>
 #include <khbox.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
@@ -73,6 +74,9 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     connect(m_targetSearchButton, SIGNAL(clicked(bool)),
             this, SLOT(slotShowTargetDialogClicked(bool)));
 
+    connect(m_targetLabel, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotProcessUrl(const QString&)));
+
     // setup image list
     m_imageList = new KIPIPlugins::ImagesList(interface, this);
     m_imageList->setAllowRAW(true);
@@ -106,6 +110,11 @@ void KioExportWidget::setTargetUrl(KUrl url)
     m_targetUrl = url;
     m_targetDialog->setUrl(url);
     updateTargetLabel();
+}
+
+void KioExportWidget::slotProcessUrl(const QString& url)
+{
+    KToolInvocation::self()->invokeBrowser(url);
 }
 
 void KioExportWidget::slotShowTargetDialogClicked(bool checked)
