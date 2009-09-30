@@ -6,6 +6,7 @@ NEW FEATURES: New plugin "KioExport" to export images via FTP, Samba, Fish (SSH)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> KioExport : 187291 : FTP KIPI plugin for uploading a selection of images.
-002 ==> KioExport : 098279 : exporting photos organised in tags into external directories.
-003 ==> 
+001 ==> KioExport  : 187291 : FTP KIPI plugin for uploading a selection of images.
+002 ==> KioExport  : 098279 : Exporting photos organised in tags into external directories.
+003 ==> TimeAdjust : 151346 : Kipi Time Adjust change the wrong date, should be.
+004 ==> 
