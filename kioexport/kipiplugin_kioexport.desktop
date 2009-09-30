@@ -5,4 +5,4 @@ Comment=A tool to export pictures to a remote directory that is accessible via K
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexport
-author=Johannes Wienke, languitar@semipol.de
+author=Johannes Wienke, languitar at semipol dot de
