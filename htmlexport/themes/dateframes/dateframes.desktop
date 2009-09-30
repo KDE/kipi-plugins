@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Date Frames
 Name[bg]=Рамки на датите
+Name[da]=Datér rammer
 Name[et]=Kuupäevapaneelid
 Name[gl]=Molduras de datas
 Name[it]=Riquadri di data
@@ -81,6 +82,7 @@ Url=mailto:purplegamba@cox.net
 [X-HTMLExport Parameter color1]
 Name=Thumbnail Background
 Name[bg]=Фон на умалените копия
+Name[da]=Miniaturebaggrund
 Name[et]=Pisipiltide taust
 Name[gl]=Fondo das miniaturas
 Name[it]=Sfondo delle miniature
@@ -97,6 +99,7 @@ Default=#FFFFFF
 [X-HTMLExport Parameter color2]
 Name=Image Background (contrasting)
 Name[bg]=Фон на изображенията (контрастен)
+Name[da]=Billedbaggrund (med kontrast)
 Name[et]=Piltide taust (kontrastis)
 Name[gl]=Fondo das imaxes (contraste)
 Name[it]=Sfondo dell'immagine (contrastante)
@@ -113,6 +116,7 @@ Default=#000055
 [X-HTMLExport Parameter color3]
 Name=Nav Bar Background (dark)
 Name[bg]=Фон на лентата за управление (тъмен)
+Name[da]=Nav.-linjebaggrund (mørk)
 Name[et]=Liikumisriba taust (tume)
 Name[gl]=Fondo da barra de navegación (escuro)
 Name[it]=Sfondo della barra di navigazione (scuro)
@@ -129,6 +133,7 @@ Default=#000011
 [X-HTMLExport Parameter intro]
 Name=Gallery Introduction
 Name[bg]=Въведение на галерията
+Name[da]=Galleri-introduktion
 Name[et]=Galerii sissejuhatus
 Name[gl]=Introdución á galería
 Name[it]=Introduzione alla galleria
@@ -145,6 +150,7 @@ Default=Welcome to my web gallery!
 [X-HTMLExport Parameter longformat]
 Name=Caption Date Format (see http://xsltsl.sourceforge.net/date-time.html)
 Name[bg]=Формат на датата в заглавията (вижте http://xsltsl.sourceforge.net/date-time.html)
+Name[da]=Datoformat til billedtekst (se http://xsltsl.sourceforge.net/date-time.html)
 Name[et]=Allkirja kuupäevavorming (vt. http://xsltsl.sourceforge.net/date-time.html)
 Name[gl]=Formato das notas de datas (vexa http://xsltsl.sourceforge.net/date-time.html)
 Name[it]=Formato della data delle didascalie (vedi http://xsltsl.sourceforge.net/date-time.html)
@@ -159,6 +165,7 @@ Type=string
 Default=%A, %b %e, %Y   %i:%M%P
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
+Comment[da]=XSL datoformat-streng: Brug den syntaks der oplyses på http://xsltsl.sourceforge.net/date-time.html
 Comment[et]=XSL kuupäevavormingu string: kasuta süntaksit, mille toob ära http://xsltsl.sourceforge.net/date-time.html
 Comment[gl]=Cadea de formato de datas XSL: Empregue a sintaxe que se indica en http://xsltsl.sourceforge.net/date-time.html
 Comment[it]=Stringa del formato di data XSL: usa la sintassi indicata a http://xsltsl.sourceforge.net/date-time.html
@@ -173,6 +180,7 @@ Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.
 [X-HTMLExport Parameter shortformat]
 Name=Image List Date Format
 Name[bg]=Формат на датата за списъка с изображения
+Name[da]=Datoformat for billedliste
 Name[et]=Pildiloendi kuupäevavorming
 Name[gl]=Formato de datas das listas de imaxes
 Name[it]=Formato della data dell'elenco delle immagini
@@ -187,6 +195,7 @@ Type=string
 Default=%m-%d-%Y
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
+Comment[da]=XSL datoformat-streng: Brug den syntaks der oplyses på http://xsltsl.sourceforge.net/date-time.html
 Comment[et]=XSL kuupäevavormingu string: kasuta süntaksit, mille toob ära http://xsltsl.sourceforge.net/date-time.html
 Comment[gl]=Cadea de formato de datas XSL: Empregue a sintaxe que se indica en http://xsltsl.sourceforge.net/date-time.html
 Comment[it]=Stringa del formato di data XSL: usa la sintassi indicata a http://xsltsl.sourceforge.net/date-time.html
