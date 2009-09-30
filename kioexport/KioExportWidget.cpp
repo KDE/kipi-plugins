@@ -31,10 +31,12 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDialog>
-#include <KFileDialog>
-#include <KDebug>
+#include <klocale.h>
+#include <kdialog.h>
+#include <kfiledialog.h>
+#include <kdebug.h>
+#include <kurllabel.h>
+#include <khbox.h>
 
 // Local includes
 
@@ -47,11 +49,17 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
                : QWidget(parent)
 {
     // setup kio target selection
-    m_targetLabel = new QLabel(this);
+
+    KHBox *hbox   = new KHBox(this);
+    QLabel *label = new QLabel(hbox);
+    m_targetLabel = new KUrlLabel(hbox);
+    label->setText(i18n("Target location: "));
+    m_targetLabel->setOpenExternalLinks(true);
     m_targetLabel->setWhatsThis(i18n(
                     "Sets the target address to upload the images to. "
                     "This can be any address as used in Dolphin or Konqueror, "
                     "e.g. ftp://my.server.org/sub/folder."));
+
     m_targetDialog = new KFileDialog(KUrl(), "*", this);
     m_targetDialog->setMode(KFile::Directory);
     m_targetDialog->setWindowTitle(i18n("Select target..."));
@@ -75,7 +83,7 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     // layout dialog
     QVBoxLayout* layout = new QVBoxLayout(this);
 
-    layout->addWidget(m_targetLabel);
+    layout->addWidget(hbox);
     layout->addWidget(m_targetSearchButton);
     layout->addWidget(m_imageList);
     layout->setSpacing(KDialog::spacingHint());
@@ -125,7 +133,8 @@ void KioExportWidget::updateTargetLabel()
         urlString = m_targetUrl.prettyUrl();
     }
 
-    m_targetLabel->setText(i18n("Target address:") + " " + urlString);
+    m_targetLabel->setUrl(urlString);
+    m_targetLabel->setText(urlString);
 }
 
 KIPIPlugins::ImagesList* KioExportWidget::imageList()

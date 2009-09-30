@@ -35,6 +35,8 @@
 #include <KPushButton>
 #include <KUrl>
 
+class KUrlLabel;
+
 namespace KIPI
 {
     class Interface;
@@ -97,8 +99,7 @@ private:
 
 private:
 
-    QLabel                  *m_targetLabel;
-
+    KUrlLabel               *m_targetLabel;
     KFileDialog             *m_targetDialog;
     KPushButton             *m_targetSearchButton;
     KUrl                     m_targetUrl;
