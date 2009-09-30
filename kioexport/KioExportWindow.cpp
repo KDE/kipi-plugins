@@ -23,6 +23,7 @@
 
 #include "KioExportWindow.h"
 #include "KioExportWindow.moc"
+
 // Qt includes
 
 #include <QCloseEvent>
@@ -134,22 +135,31 @@ void KioExportWindow::restoreSettings()
 {
     kDebug(51000) << "restoring settings";
 
-    KConfigGroup group = KGlobal::config()->group(CONFIG_GROUP);
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(CONFIG_GROUP);
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, ""));
 
     kDebug(51000) << "target url after restoring: "
                   << m_exportWidget->targetUrl().prettyUrl();
+
+    KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
+    restoreDialogSize(group2);
 }
 
 void KioExportWindow::saveSettings()
 {
     kDebug(51000) << "saving settings";
 
-    KConfigGroup group = KGlobal::config()->group(CONFIG_GROUP);
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(CONFIG_GROUP);
     group.writeEntry(TARGET_URL_PROPERTY, m_exportWidget->targetUrl().url());
 
     kDebug(51000) << "stored target url "
                   << m_exportWidget->targetUrl().prettyUrl();
+
+    KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
+    saveDialogSize(group2);
+    config.sync();
 }
 
 void KioExportWindow::slotHelp()
