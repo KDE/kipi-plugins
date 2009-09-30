@@ -36,7 +36,12 @@
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
+}
+
+namespace KIPIPlugins
+{
+    class KPAboutData;
 }
 
 namespace KIPIKioExportPlugin
@@ -94,6 +99,11 @@ private Q_SLOTS:
      */
     void slotCopyingFinished(KJob *job);
 
+    /**
+     * Load plugin handbook.
+     */
+    void slotHelp();
+
 protected:
 
     void closeEvent(QCloseEvent *e);
@@ -116,12 +126,14 @@ protected:
 
 private:
 
-    KIPI::Interface *m_interface;
+    KIPI::Interface          *m_interface;
 
-    KioExportWidget *m_exportWidget;
+    KioExportWidget          *m_exportWidget;
 
-    const static QString TARGET_URL_PROPERTY;
-    const static QString CONFIG_GROUP;
+    KIPIPlugins::KPAboutData *m_about;
+
+    const static QString      TARGET_URL_PROPERTY;
+    const static QString      CONFIG_GROUP;
 };
 
 } // namespace KIPIKioExportPlugin

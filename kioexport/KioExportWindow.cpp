@@ -29,16 +29,22 @@
 
 // KDE includes
 
-#include <KDebug>
-#include <KConfig>
-#include <KLocale>
-#include <KPushButton>
-#include <KMessageBox>
-#include <KUrl>
+#include <kdebug.h>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kpushbutton.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kurl.h>
 #include <kio/copyjob.h>
+#include <khelpmenu.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "imageslist.h"
 #include "KioExportWidget.h"
 
@@ -46,7 +52,7 @@ namespace KIPIKioExportPlugin
 {
 
 const QString KioExportWindow::TARGET_URL_PROPERTY = "targetUrl";
-const QString KioExportWindow::CONFIG_GROUP = "KioExport";
+const QString KioExportWindow::CONFIG_GROUP        = "KioExport";
 
 KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
                : KDialog(parent), m_interface(interface)
@@ -59,14 +65,11 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
     m_exportWidget = new KioExportWidget(this, interface);
     setMainWidget(m_exportWidget);
 
-    connect(m_exportWidget->imageList(), SIGNAL(signalImageListChanged()),
-            this, SLOT(slotImageListChanged()));
-    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)),
-            this, SLOT(slotTargetUrlChanged(KUrl)));
+    // -- Window setup ------------------------------------------------------
 
-    // window setup
     setWindowTitle(i18n("Export using KIO"));
-    setButtons(User1 | Close);
+    setDefaultButton(Ok);
+    setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
 
@@ -76,13 +79,44 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
     connect(this, SIGNAL(user1Clicked()), 
             this, SLOT(slotUpload()));
 
-    // initial sync
+    connect(m_exportWidget->imageList(), SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
+
+    connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)),
+            this, SLOT(slotTargetUrlChanged(KUrl)));
+
+    // -- About data and help button ----------------------------------------
+
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Export using KIO"),
+                   0,
+                   KAboutData::License_GPL,
+                   ki18n("A Kipi plugin to export images over network"),
+                   ki18n("(c) 2009, Johannes Wienke"));
+
+    m_about->addAuthor(ki18n("Johannes Wienke"),
+                       ki18n("Developer and maintainer"),
+                       "languitar at semipol dot de");
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setMenu(helpMenu->menu());
+
+    // -- initial sync ------------------------------------------------------
+
     restoreSettings();
     updateUploadButton();
 }
 
 KioExportWindow::~KioExportWindow()
 {
+    delete m_about;
 }
 
 void KioExportWindow::closeEvent(QCloseEvent *e)
@@ -116,6 +150,11 @@ void KioExportWindow::saveSettings()
 
     kDebug(51000) << "stored target url "
                   << m_exportWidget->targetUrl().prettyUrl();
+}
+
+void KioExportWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
 }
 
 void KioExportWindow::slotImageListChanged()
