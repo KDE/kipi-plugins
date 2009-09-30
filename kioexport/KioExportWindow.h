@@ -38,12 +38,6 @@
 namespace KIPI
 {
 class Interface;
-class UploadWidget;
-}
-
-namespace KIPIPlugins
-{
-class ImagesList;
 }
 
 namespace KIPIKioExportPlugin

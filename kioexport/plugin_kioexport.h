@@ -34,10 +34,6 @@
 
 class KAction;
 
-namespace KIPI
-{
-class Interface;
-}
 
 class Plugin_KioExport: public KIPI::Plugin
 {
