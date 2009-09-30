@@ -29,7 +29,6 @@
 #include <KDialog>
 #include <KUrl>
 #include <kio/job.h>
-#include <KConfig>
 
 // Local includes
 

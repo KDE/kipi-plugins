@@ -23,7 +23,6 @@
 
 #include "KioExportWindow.h"
 #include "KioExportWindow.moc"
-
 // Qt includes
 
 #include <QCloseEvent>
@@ -33,10 +32,8 @@
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
-#include <KHelpMenu>
 #include <KPushButton>
 #include <KMessageBox>
-#include <KProgressDialog>
 #include <KUrl>
 #include <kio/copyjob.h>
 
