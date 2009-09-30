@@ -60,19 +60,24 @@ protected:
 
 private Q_SLOTS:
 
-    void slotUpdateExample();
+    void slotSrcTimestampChanged();
+    void slotResetDateToCurrent();
     void slotAdjustmentTypeChanged();
+    void slotDetAdjustmentByClockPhoto();
+    void slotUpdateExample();
+    void slotHelp();
     void slotOk();
     void slotCancel();
-    void slotResetDateToCurrent();
-    void slotHelp();
-    void slotClockPhoto();
 
 private:
 
+    void readExampleTimestamps();
+    void readApplicationTimestamps();
+    void readFileTimestamps();
+    void readMetadataTimestamps();
     void readSettings();
     void saveSettings();
-    QDateTime updateTime(const KUrl& url, const QDateTime& time) const;
+    QDateTime calculateAdjustedTime(const QDateTime& time) const;
 
 private:
 
