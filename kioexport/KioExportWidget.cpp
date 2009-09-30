@@ -66,16 +66,8 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     m_targetDialog->setWindowTitle(i18n("Select target..."));
     m_targetDialog->setOperationMode(KFileDialog::Other);
 
-    m_targetSearchButton = new KPushButton(i18n("Select target..."), this);
-
-    connect(m_targetDialog, SIGNAL(okClicked()),
-            this, SLOT(slotTargetOkClicked()));
-
-    connect(m_targetSearchButton, SIGNAL(clicked(bool)),
-            this, SLOT(slotShowTargetDialogClicked(bool)));
-
-    connect(m_targetLabel, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotProcessUrl(const QString&)));
+    m_targetSearchButton = new KPushButton(i18n("Select target location..."), this);
+    m_targetSearchButton->setIcon(KIcon("folder-remote"));
 
     // setup image list
     m_imageList = new KIPIPlugins::ImagesList(interface, this);
@@ -92,6 +84,19 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     layout->addWidget(m_imageList);
     layout->setSpacing(KDialog::spacingHint());
     layout->setMargin(0);
+
+    // ------------------------------------------------------------------------
+
+    connect(m_targetDialog, SIGNAL(okClicked()),
+            this, SLOT(slotTargetOkClicked()));
+
+    connect(m_targetSearchButton, SIGNAL(clicked(bool)),
+            this, SLOT(slotShowTargetDialogClicked(bool)));
+
+    connect(m_targetLabel, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotProcessUrl(const QString&)));
+
+    // ------------------------------------------------------------------------
 
     updateTargetLabel();
 }
