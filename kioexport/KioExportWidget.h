@@ -95,6 +95,8 @@ private:
 
     void updateTargetLabel();
 
+private:
+
     QLabel                  *m_targetLabel;
 
     KFileDialog             *m_targetDialog;

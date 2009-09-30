@@ -126,14 +126,16 @@ protected:
 
 private:
 
+    const static QString TARGET_URL_PROPERTY;
+    const static QString CONFIG_GROUP;
+
+private:
+
     KIPI::Interface          *m_interface;
 
     KioExportWidget          *m_exportWidget;
 
     KIPIPlugins::KPAboutData *m_about;
-
-    const static QString      TARGET_URL_PROPERTY;
-    const static QString      CONFIG_GROUP;
 };
 
 } // namespace KIPIKioExportPlugin
