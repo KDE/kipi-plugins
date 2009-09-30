@@ -37,12 +37,12 @@
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class ImagesList;
+    class ImagesList;
 }
 
 namespace KIPIKioExportPlugin

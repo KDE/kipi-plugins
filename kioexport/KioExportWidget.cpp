@@ -47,7 +47,7 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
                : QWidget(parent)
 {
     // setup kio target selection
-    m_targetLabel = new QLabel("", this);
+    m_targetLabel = new QLabel(this);
     m_targetLabel->setWhatsThis(i18n(
                     "Sets the target address to upload the images to. "
                     "This can be any address as used in Dolphin or Konqueror, "
@@ -57,10 +57,10 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     m_targetDialog->setWindowTitle(i18n("Select target..."));
     m_targetDialog->setOperationMode(KFileDialog::Other);
 
+    m_targetSearchButton = new KPushButton(i18n("Select target..."), this);
+
     connect(m_targetDialog, SIGNAL(okClicked()),
             this, SLOT(slotTargetOkClicked()));
-
-    m_targetSearchButton = new KPushButton(i18n("Select target..."), this);
 
     connect(m_targetSearchButton, SIGNAL(clicked(bool)),
             this, SLOT(slotShowTargetDialogClicked(bool)));
@@ -78,7 +78,6 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     layout->addWidget(m_targetLabel);
     layout->addWidget(m_targetSearchButton);
     layout->addWidget(m_imageList);
-
     layout->setSpacing(KDialog::spacingHint());
     layout->setMargin(0);
 

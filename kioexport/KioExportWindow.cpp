@@ -67,7 +67,7 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
 
     // -- Window setup ------------------------------------------------------
 
-    setWindowTitle(i18n("Export using KIO"));
+    setWindowTitle(i18n("Export to Remote Computer"));
     setDefaultButton(Ok);
     setButtons(Help | User1 | Close);
     setDefaultButton(Close);
@@ -87,10 +87,10 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
 
     // -- About data and help button ----------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Export using KIO"),
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Export to remote computer"),
                    0,
                    KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to export images over network"),
+                   ki18n("A Kipi plugin to export images over network using KIO-Slave"),
                    ki18n("(c) 2009, Johannes Wienke"));
 
     m_about->addAuthor(ki18n("Johannes Wienke"),

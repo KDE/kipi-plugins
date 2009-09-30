@@ -62,8 +62,8 @@ void Plugin_KioExport::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     m_action = actionCollection()->addAction("kioexport");
-    m_action->setText(i18n("Export using &KIO..."));
-    m_action->setIcon(KIcon("system-file-manager"));
+    m_action->setText(i18n("Export to remote computer..."));
+    m_action->setIcon(KIcon("folder-remote"));
     m_action->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K);
 
     connect(m_action, SIGNAL(triggered(bool)), 
