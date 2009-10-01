@@ -242,7 +242,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->useMetaDateTypeChooser->addItem(i18n("IPTC: created"));
     d->useMetaDateTypeChooser->addItem(i18n("XMP: created"));
 
-    d->useCustomDateBtn = new QRadioButton(i18n(""), d->useGroupBox);
+    d->useCustomDateBtn = new QRadioButton(d->useGroupBox);
     d->useCustDateInput = new QDateEdit(d->useGroupBox);
     d->useCustDateInput->setDisplayFormat("dd MMMM yyyy");
     d->useCustDateInput->setCalendarPopup(true);
