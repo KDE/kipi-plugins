@@ -1,7 +1,7 @@
 Kipi-plugins 0.8.0 - Release date: xx/10/2009
 ------------------------------------------------------------------------
 
-NEW FEATURES: 
+NEW FEATURES:
 
 New plugin "KioExport" to export images via FTP, Samba, Fish (SSH) and many more using KIO slaves.
 
@@ -18,4 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> BatchProcessImages : 195112 : It is not possible to use Module | Batch menu twice.
 009 ==> BatchProcessImages : 126603 : Resize  2-dim. broken (creates just a 2k  file).
 010 ==> DngConverter       : 194736 : Extent dngconvert to set filedate to the dates taken from exif [patch].
-011 ==> 
+011 ==> AdvancedSlideshow  : 186644 : digiKam crashes when exiting slideshow.
+012 ==>
