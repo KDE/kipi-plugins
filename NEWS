@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> GalleryExport      : 194276 : Click on a file name closes the "select pictures" window.
 008 ==> BatchProcessImages : 195112 : It is not possible to use Module | Batch menu twice.
 009 ==> BatchProcessImages : 126603 : Resize  2-dim. broken (creates just a 2k  file).
-010 ==> 
+010 ==> DngConverter       : 194736 : Extent dngconvert to set filedate to the dates taken from exif [patch].
+011 ==> 
