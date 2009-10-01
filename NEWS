@@ -1,7 +1,9 @@
 Kipi-plugins 0.8.0 - Release date: xx/10/2009
 ------------------------------------------------------------------------
 
-NEW FEATURES: New plugin "KioExport" to export images via FTP, Samba, Fish (SSH) and many more using KIO slaves
+NEW FEATURES: 
+
+New plugin "KioExport" to export images via FTP, Samba, Fish (SSH) and many more using KIO slaves.
 
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
@@ -10,4 +12,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> KioExport  : 098279 : Exporting photos organised in tags into external directories.
 003 ==> TimeAdjust : 151346 : Kipi Time Adjust change the wrong date, should be.
 004 ==> libkexiv2  : 204291 : Country of Korea impossible to translate in libexiv2 (kipiplugins).
-005 ==> 
+005 ==> Handbook   : 169543 : Additional docbook ID tags to make outputted docs consistent between compiles.
+006 ==> 
