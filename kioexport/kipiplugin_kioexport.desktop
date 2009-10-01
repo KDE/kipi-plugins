@@ -1,7 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KioExport
+Name[pt]=KioExport
+Name[pt_BR]=KioExport
+Name[uk]=KioExport
+Name[x-test]=xxKioExportxx
 Comment=A tool to export pictures to a remote directory that is accessible via KIO.
+Comment[pt]=Uma ferramenta para exportar imagens para uma pasta remota que esteja acessível por KIO.
+Comment[pt_BR]=Uma ferramenta para exportar imagens para um diretório remoto que é acessível via KIO.
+Comment[uk]=Інструмент для експорту зображень до віддалених каталогів, доступ до яких можна отримати за допомогою KIO.
+Comment[x-test]=xxA tool to export pictures to a remote directory that is accessible via KIO.xx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexport
