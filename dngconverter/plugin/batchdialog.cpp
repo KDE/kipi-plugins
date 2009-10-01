@@ -277,6 +277,7 @@ void BatchDialog::readSettings()
 
     d->settingsBox->setBackupOriginalRawFile(group.readEntry("BackupOriginalRawFile", false));
     d->settingsBox->setCompressLossLess(group.readEntry("CompressLossLess", true));
+    d->settingsBox->setUpdateFileDate(group.readEntry("UpdateFileDate", false));
     d->settingsBox->setCompressLossLess(group.readEntry("PreviewMode", (int)(DNGWriter::MEDIUM)));
     d->settingsBox->setConflictRule(
         (SettingsWidget::ConflictRule)group.readEntry("Conflict",
@@ -293,6 +294,7 @@ void BatchDialog::saveSettings()
 
     group.writeEntry("BackupOriginalRawFile", d->settingsBox->backupOriginalRawFile());
     group.writeEntry("CompressLossLess",      d->settingsBox->compressLossLess());
+    group.writeEntry("UpdateFileDate",        d->settingsBox->updateFileDate());
     group.writeEntry("PreviewMode",           (int)d->settingsBox->previewMode());
     group.writeEntry("Conflict",              (int)d->settingsBox->conflictRule());
 
@@ -448,9 +450,12 @@ void BatchDialog::processOne()
     d->thread->setBackupOriginalRawFile(d->settingsBox->backupOriginalRawFile());
     d->thread->setCompressLossLess(d->settingsBox->compressLossLess());
     d->thread->setPreviewMode(d->settingsBox->previewMode());
+    d->thread->setUpdateFileDate(d->settingsBox->updateFileDate());
     d->thread->processRawFile(KUrl(file));
     if (!d->thread->isRunning())
+    {
         d->thread->start();
+    }
 }
 
 void BatchDialog::busy(bool busy)

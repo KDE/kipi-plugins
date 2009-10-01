@@ -58,6 +58,9 @@ public:
     void setCompressLossLess(bool b);
     bool compressLossLess() const;
 
+    void setUpdateFileDate(bool b);
+    bool updateFileDate() const;
+
     void setBackupOriginalRawFile(bool b);
     bool backupOriginalRawFile() const;
 

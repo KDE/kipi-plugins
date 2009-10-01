@@ -53,6 +53,7 @@ void DNGWriterPrivate::reset()
 {
     cancel                  = false;
     jpegLossLessCompression = true;
+    updateFileDate          = false;
     backupOriginalRawFile   = false;
     previewMode             = DNGWriter::MEDIUM;
 }

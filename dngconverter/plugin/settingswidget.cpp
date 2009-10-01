@@ -70,6 +70,7 @@ public:
         previewModeCB         = 0;
         previewModeLabel      = 0;
         backupOriginalRawFile = 0;
+        updateFileDate        = 0;
     }
 
     QLabel       *conflictLabel;
@@ -82,6 +83,7 @@ public:
 
     QCheckBox    *compressLossLess;
     QCheckBox    *backupOriginalRawFile;
+    QCheckBox    *updateFileDate;
 
     RComboBox    *previewModeCB;
 };
@@ -104,6 +106,10 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     d->backupOriginalRawFile = new QCheckBox(i18n("Embed Original File"), this);
 
     d->compressLossLess      = new QCheckBox(i18n("Lossless Compression"), this);
+
+    d->updateFileDate        = new QCheckBox(i18n("Update File Modification Date"), this);
+    d->updateFileDate->setWhatsThis("Sets the file modification date "
+        "to the creation date provided in the image metadata.");
 
     d->previewModeLabel      = new QLabel(i18n("JPEG Preview:"), this);
     d->previewModeCB         = new RComboBox(this);
@@ -134,12 +140,13 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     settingsBoxLayout->addWidget(dngLogoLabel,             0, 0, 1, 1);
     settingsBoxLayout->addWidget(d->backupOriginalRawFile, 1, 0, 1, 1);
     settingsBoxLayout->addWidget(d->compressLossLess,      2, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->previewModeLabel,      3 ,0, 1, 1);
-    settingsBoxLayout->addWidget(d->previewModeCB,         4 ,0 ,1, 1);
-    settingsBoxLayout->addWidget(line,                     5, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->conflictLabel,         6, 0, 1, 1);
-    settingsBoxLayout->addWidget(conflictBox,              7, 0, 1, 1);
-    settingsBoxLayout->setRowStretch(8, 10);
+    settingsBoxLayout->addWidget(d->updateFileDate,        3, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->previewModeLabel,      4 ,0, 1, 1);
+    settingsBoxLayout->addWidget(d->previewModeCB,         5 ,0 ,1, 1);
+    settingsBoxLayout->addWidget(line,                     6, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->conflictLabel,         7, 0, 1, 1);
+    settingsBoxLayout->addWidget(conflictBox,              8, 0, 1, 1);
+    settingsBoxLayout->setRowStretch(9, 10);
     settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
@@ -183,6 +190,16 @@ void SettingsWidget::setCompressLossLess(bool b)
 bool SettingsWidget::compressLossLess() const
 {
     return d->compressLossLess->isChecked();
+}
+
+void SettingsWidget::setUpdateFileDate(bool b)
+{
+    d->updateFileDate->setChecked(b);
+}
+
+bool SettingsWidget::updateFileDate() const
+{
+    return d->updateFileDate->isChecked();
 }
 
 void SettingsWidget::setBackupOriginalRawFile(bool b)

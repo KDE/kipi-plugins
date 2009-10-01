@@ -52,6 +52,7 @@ public:
 
     void setBackupOriginalRawFile(bool b);
     void setCompressLossLess(bool b);
+    void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
 
     void identifyRawFile(const KUrl& url, bool full=false);

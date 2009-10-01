@@ -61,6 +61,7 @@ public:
     {
         backupOriginalRawFile = false;
         compressLossLess      = true;
+        updateFileDate        = false;
         running               = false;
         previewMode           = DNGWriter::MEDIUM;
     }
@@ -75,6 +76,7 @@ public:
 
     bool           backupOriginalRawFile;
     bool           compressLossLess;
+    bool           updateFileDate;
     bool           running;
 
     int            previewMode;
@@ -112,6 +114,11 @@ void ActionThread::setBackupOriginalRawFile(bool b)
 void ActionThread::setCompressLossLess(bool b)
 {
     d->compressLossLess = b;
+}
+
+void ActionThread::setUpdateFileDate(bool b)
+{
+    d->updateFileDate = b;
 }
 
 void ActionThread::setPreviewMode(int mode)
@@ -299,6 +306,7 @@ void ActionThread::run()
                     d->dngProcessor.setOutputFile(destPath);
                     d->dngProcessor.setBackupOriginalRawFile(d->backupOriginalRawFile);
                     d->dngProcessor.setCompressLossLess(d->compressLossLess);
+                    d->dngProcessor.setUpdateFileDate(d->updateFileDate);
                     d->dngProcessor.setPreviewMode(d->previewMode);
                     int ret = d->dngProcessor.convert();
 

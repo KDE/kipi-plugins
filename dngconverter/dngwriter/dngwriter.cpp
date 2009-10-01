@@ -39,6 +39,14 @@
     ADOBE DNG CONVERTER: ftp://ftp.adobe.com/pub/adobe/photoshop/cameraraw/win/4.x
 */
 
+// C ansi includes
+
+extern "C"
+{
+#include <sys/stat.h>
+#include <utime.h>
+}
+
 // Qt includes
 
 #include <QImage>
@@ -97,6 +105,16 @@ void DNGWriter::setCompressLossLess(bool b)
 bool DNGWriter::compressLossLess() const
 {
     return d->jpegLossLessCompression;
+}
+
+void DNGWriter::setUpdateFileDate(bool b)
+{
+    d->updateFileDate = b;
+}
+
+bool DNGWriter::updateFileDate() const
+{
+    return d->updateFileDate;
 }
 
 void DNGWriter::setBackupOriginalRawFile(bool b)
@@ -812,7 +830,27 @@ int DNGWriter::convert()
             meta.setWriteRawFiles(true);
             meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
             meta.applyChanges();
+
+            // update modification time if desired
+            if (d->updateFileDate)
+            {
+                QDateTime date = meta.getImageDateTime();
+
+                kDebug(51000) << "Setting modification date from meta data: "
+                                << date.toString();
+
+                // don't touch access time
+                struct stat st;
+                stat(QFile::encodeName(dngFilePath), &st);
+
+                struct utimbuf ut;
+                ut.actime = st.st_atime;
+                ut.modtime = date.toTime_t();
+                utime(QFile::encodeName(dngFilePath), &ut);
+            }
+
         }
+
     }
 
     catch (const dng_exception &exception)

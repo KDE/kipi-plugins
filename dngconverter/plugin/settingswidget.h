@@ -55,6 +55,9 @@ public:
     void setCompressLossLess(bool b);
     bool compressLossLess() const;
 
+    void setUpdateFileDate(bool b);
+    bool updateFileDate() const;
+
     void setPreviewMode(int mode);
     int  previewMode() const;
 
