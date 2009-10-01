@@ -16,4 +16,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> AcquireImages      : 192979 : Scanned images are placed in the wrong album.
 007 ==> GalleryExport      : 194276 : Click on a file name closes the "select pictures" window.
 008 ==> BatchProcessImages : 195112 : It is not possible to use Module | Batch menu twice.
-009 ==> 
+009 ==> BatchProcessImages : 126603 : Resize  2-dim. broken (creates just a 2k  file).
+010 ==> 
