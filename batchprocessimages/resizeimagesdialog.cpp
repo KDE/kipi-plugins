@@ -37,6 +37,7 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kconfig.h>
+#include <kdebug.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -311,8 +312,7 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
         *proc << "-resize";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(w) + "x";
-        Temp2.append(Temp.setNum(h));
+        Temp2 = Temp.setNum(m_size) + "x" + QString::number(m_size);
         *proc << Temp2;
 
         *proc << "-quality";
@@ -521,6 +521,9 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
         *proc << albumDest + "/" + item->nameDest();
     }
+
+    kDebug(51000) << "generated command line: " << proc->program();
+
 }
 
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
@@ -564,6 +567,10 @@ bool ResizeImagesDialog::ResizeImage(int &w, int &h, int SizeFactor)
 
         h = SizeFactor;
     }
+
+    kDebug(51000) << "calculated new image size width = " << w
+                    << ", new height = " << h << ", image is increased = "
+                    << valRet;
 
     return (valRet);  // Return true if image increased, else false.
 }
