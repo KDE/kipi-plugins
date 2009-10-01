@@ -8,11 +8,12 @@ New plugin "KioExport" to export images via FTP, Samba, Fish (SSH) and many more
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> KioExport     : 187291 : FTP KIPI plugin for uploading a selection of images.
-002 ==> KioExport     : 098279 : Exporting photos organised in tags into external directories.
-003 ==> TimeAdjust    : 151346 : Kipi Time Adjust change the wrong date, should be.
-004 ==> libkexiv2     : 204291 : Country of Korea impossible to translate in libexiv2 (kipiplugins).
-005 ==> Handbook      : 169543 : Additional docbook ID tags to make outputted docs consistent between compiles.
-006 ==> AcquireImages : 192979 : Scanned images are placed in the wrong album.
-007 ==> GalleryExport : 194276 : Click on a file name closes the "select pictures" window.
-008 ==> 
+001 ==> KioExport          : 187291 : FTP KIPI plugin for uploading a selection of images.
+002 ==> KioExport          : 098279 : Exporting photos organised in tags into external directories.
+003 ==> TimeAdjust         : 151346 : Kipi Time Adjust change the wrong date, should be.
+004 ==> libkexiv2          : 204291 : Country of Korea impossible to translate in libexiv2 (kipiplugins).
+005 ==> Handbook           : 169543 : Additional docbook ID tags to make outputted docs consistent between compiles.
+006 ==> AcquireImages      : 192979 : Scanned images are placed in the wrong album.
+007 ==> GalleryExport      : 194276 : Click on a file name closes the "select pictures" window.
+008 ==> BatchProcessImages : 195112 : It is not possible to use Module | Batch menu twice.
+009 ==> 
