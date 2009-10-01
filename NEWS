@@ -19,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> BatchProcessImages : 126603 : Resize  2-dim. broken (creates just a 2k  file).
 010 ==> DngConverter       : 194736 : Extent dngconvert to set filedate to the dates taken from exif [patch].
 011 ==> AdvancedSlideshow  : 186644 : digiKam crashes when exiting slideshow.
-012 ==>
+012 ==> BatchProcessImages : 158825 : Batch image resizing doesn't use the measures provided.
+013 ==> 
