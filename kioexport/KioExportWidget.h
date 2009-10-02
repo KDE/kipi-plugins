@@ -92,7 +92,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
 
-    void signalTargetUrlChanged(KUrl target);
+    void signalTargetUrlChanged(const KUrl & target);
 
 private:
 

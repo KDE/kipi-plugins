@@ -172,7 +172,7 @@ void KioExportWindow::slotImageListChanged()
     updateUploadButton();
 }
 
-void KioExportWindow::slotTargetUrlChanged(KUrl target)
+void KioExportWindow::slotTargetUrlChanged(const KUrl & target)
 {
     Q_UNUSED(target);
     updateUploadButton();

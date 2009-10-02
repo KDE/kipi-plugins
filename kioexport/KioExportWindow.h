@@ -85,7 +85,7 @@ private Q_SLOTS:
     /**
      * Processes changes in the target url.
      */
-    void slotTargetUrlChanged(KUrl target);
+    void slotTargetUrlChanged(const KUrl & target);
 
     /**
      * Removes the copied image from the image list.
