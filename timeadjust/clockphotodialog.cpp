@@ -78,8 +78,8 @@ ImageDisplay::ImageDisplay(QScrollArea *parentArea) : QLabel()
 {
     currX  = 0;
     currY  = 0;
-    barX = parentArea->horizontalScrollBar();
-    barY = parentArea->verticalScrollBar();
+    barX   = parentArea->horizontalScrollBar();
+    barY   = parentArea->verticalScrollBar();
 }
 
 void ImageDisplay::mousePressEvent(QMouseEvent *event)
@@ -137,11 +137,9 @@ public:
         photoDateTime = 0;
     }
 
-    KIPI::Interface *interface;
 
     QScrollArea     *scrollArea;
     QPixmap         *image;
-    ImageDisplay    *imageLabel;
 
     QSlider         *zoomSlider;
     QPushButton     *zoomOutButton;
@@ -150,13 +148,16 @@ public:
     QDateTimeEdit   *calendar;
 
     QDateTime       *photoDateTime;
+
+    ImageDisplay    *imageLabel;
+
+    KIPI::Interface *interface;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface,
-                                   QWidget* parent)
-                 : KDialog(parent), d(new ClockPhotoDialogPrivate)
+ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
+                : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
-    d->interface = interface;
+    d->interface     = interface;
 
     // Initialize the variables.
     d->image         = new QPixmap();
@@ -295,10 +296,9 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
     {
         // In case of raw images, load the image the a QImage and convert it to
         // the QPixmap for display.
-        QImage tmp = QImage();
-        imageLoaded = KDcrawIface::KDcraw::loadDcrawPreview(tmp,
-                                                            imageFile.path());
-        d->image = new QPixmap(d->image->fromImage(tmp));
+        QImage tmp  = QImage();
+        imageLoaded = KDcrawIface::KDcraw::loadDcrawPreview(tmp, imageFile.path());
+        d->image    = new QPixmap(d->image->fromImage(tmp));
     }
     else
     {
@@ -377,11 +377,12 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
 
 void ClockPhotoDialog::adjustToWindowSize(bool fit)
 {
-    int scroll_width  = d->scrollArea->viewport()->width();
-    int scroll_height = d->scrollArea->viewport()->height();
+    int scroll_width   = d->scrollArea->viewport()->width();
+    int scroll_height  = d->scrollArea->viewport()->height();
     float scale_width  = (float)scroll_width  / d->image->width();
     float scale_height = (float)scroll_height / d->image->height();
-    float scale = scale_width;
+    float scale        = scale_width;
+
     if (scale_height < scale_width) scale = scale_height;
 
     d->zoomSlider->setMinimum(scale * 100);
@@ -439,11 +440,8 @@ void ClockPhotoDialog::slotAdjustZoom(int percentage)
     // Adjust the scrollbars to the size increase.
     QScrollBar *barX = d->scrollArea->horizontalScrollBar();
     QScrollBar *barY = d->scrollArea->verticalScrollBar();
-    barX->setValue(int(relScale * barX->value() +
-                       ((relScale - 1) * barX->pageStep()/2)));
-    barY->setValue(int(relScale * barY->value() +
-                       ((relScale - 1) * barY->pageStep()/2)));
-
+    barX->setValue(int(relScale * barX->value() + ((relScale - 1) * barX->pageStep()/2)));
+    barY->setValue(int(relScale * barY->value() + ((relScale - 1) * barY->pageStep()/2)));
 }
 
 void ClockPhotoDialog::slotZoomOut()
@@ -480,12 +478,12 @@ void ClockPhotoDialog::slotOk()
     }
 
     // Calculate the number of days, hours, minutes and seconds.
-    deltaDays = delta / 86400;
-    delta = delta % 86400;
-    deltaHours = delta / 3600;
-    delta = delta % 3600;
+    deltaDays    = delta / 86400;
+    delta        = delta % 86400;
+    deltaHours   = delta / 3600;
+    delta        = delta % 3600;
     deltaMinutes = delta / 60;
-    delta = delta % 60;
+    delta        = delta % 60;
     deltaSeconds = delta;
 
     // Accept the dialog.

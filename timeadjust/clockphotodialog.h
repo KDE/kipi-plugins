@@ -55,19 +55,25 @@ class ImageDisplay : public QLabel
     Q_OBJECT
 
 public:
+
     ImageDisplay(QScrollArea *);
 
 protected:
-    void mousePressEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void mouseReleaseEvent(QMouseEvent *);
+
+    void mousePressEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
 
 private:
-    int currX;
-    int currY;
+
+    int         currX;
+    int         currY;
+
     QScrollBar *barX;
     QScrollBar *barY;
 };
+
+// -----------------------------------------------------------------------------------
 
 class ClockPhotoDialogPrivate;
 
@@ -100,16 +106,9 @@ public:
      * can't be read or the datetime information can't be read. */
     bool setImage(KUrl);
 
-private:
+protected:
 
-    /* Calculate the minimum value for the scroll slider according to the window
-     * size. If fit is true, the image is made to fit in the viewport. */
-    void adjustToWindowSize(bool);
-
-    void saveSize();
-
-    QDateTime                photoDateTime;
-    ClockPhotoDialogPrivate* const d;
+    void resizeEvent(QResizeEvent *);
 
 private Q_SLOTS:
 
@@ -120,9 +119,18 @@ private Q_SLOTS:
     void slotOk();
     void slotCancel();
 
-protected:
+private:
 
-    void resizeEvent(QResizeEvent *);
+    /* Calculate the minimum value for the scroll slider according to the window
+     * size. If fit is true, the image is made to fit in the viewport. */
+    void adjustToWindowSize(bool);
+
+    void saveSize();
+
+private:
+
+    QDateTime                photoDateTime;
+    ClockPhotoDialogPrivate* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin
