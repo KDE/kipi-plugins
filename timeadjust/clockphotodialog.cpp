@@ -385,12 +385,12 @@ void ClockPhotoDialog::adjustToWindowSize(bool fit)
 
     if (scale_height < scale_width) scale = scale_height;
 
-    d->zoomSlider->setMinimum(scale * 100);
+    d->zoomSlider->setMinimum((int)(scale * 100.0));
 
     if (fit)
     {
-        d->imageLabel->resize(d->image->width() * scale, d->image->height() * scale);
-        d->zoomSlider->setValue(scale * 100);
+        d->imageLabel->resize((int)(d->image->width() * scale), (int)(d->image->height() * scale));
+        d->zoomSlider->setValue((int)(scale * 100.0));
     }
 }
 
