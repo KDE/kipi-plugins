@@ -1,13 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KioExport
+Name[nl]=KioExport
 Name[pt]=KioExport
 Name[pt_BR]=KioExport
+Name[tr]=Kio Dışarıya Aktar
 Name[uk]=KioExport
 Name[x-test]=xxKioExportxx
 Comment=A tool to export pictures to a remote directory that is accessible via KIO.
+Comment[nl]=Een hulpmiddel om afbeeldingen naar een via KIO toegankelijke map te exporteren.
 Comment[pt]=Uma ferramenta para exportar imagens para uma pasta remota que esteja acessível por KIO.
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um diretório remoto que é acessível via KIO.
+Comment[tr]=Resimleri KIO kullanarak uzak bir dizine aktarmak için bir araç.
 Comment[uk]=Інструмент для експорту зображень до віддалених каталогів, доступ до яких можна отримати за допомогою KIO.
 Comment[x-test]=xxA tool to export pictures to a remote directory that is accessible via KIO.xx
 Type=Service
