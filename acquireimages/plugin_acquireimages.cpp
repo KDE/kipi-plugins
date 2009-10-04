@@ -40,14 +40,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#ifdef WIN32
-
-// Twain interface includes
-
-#include "twaincontroller.h"
-
-#else /*  WIN32 */
-
 // LibKSane includes
 
 #include <libksane/ksane.h>
@@ -55,8 +47,6 @@
 // Local includes
 
 #include "scandialog.h"
-
-#endif /*  WIN32 */
 
 // LibKIPI includes
 
@@ -105,12 +95,6 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-#ifdef WIN32
-
-    TwainController *twainCtrl = new TwainController(m_interface);
-
-#else /* WIN32 */
-
     KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
 
     QString dev = saneWidget->selectDevice(0);
@@ -128,8 +112,6 @@ void Plugin_AcquireImages::slotActivate()
     dlg->exec();
 
     delete dlg;
-
-#endif /* WIN32 */
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
