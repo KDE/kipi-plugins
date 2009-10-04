@@ -51,12 +51,12 @@
 using namespace KIPIKioExportPlugin;
 
 K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExportImport>(); )
-K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexport") )
+K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
 
 Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantList&)
-                : KIPI::Plugin(KioFactory::componentData(), parent, "KioExport")
+                : KIPI::Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
-    kDebug(51001) << "Plugin_KioExport plugin loaded";
+    kDebug(51001) << "Plugin_KioExportImport plugin loaded";
 }
 
 void Plugin_KioExportImport::setup(QWidget* widget)
