@@ -527,7 +527,7 @@ void FlickrWindow::slotUser1()
         temp.safety_level          = lvItem->safetyLevel();
         temp.content_type          = lvItem->contentType();
         QStringList tagsFromDialog = m_tagsLineEdit->text().split(",", QString::SkipEmptyParts);
-        QStringList tagsFromList   = lvItem->uniqueTags();
+        QStringList tagsFromList   = lvItem->extraTags();
 
         QStringList           allTags;
         QStringList::Iterator itTags;
