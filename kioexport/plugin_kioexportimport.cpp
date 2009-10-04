@@ -23,7 +23,7 @@
 
 // Local includes
 
-#include "plugin_kioexport.h"
+#include "plugin_kioexportimport.h"
 
 // KDE includes
 
@@ -35,6 +35,7 @@
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
+#include <kfiledialog.h>
 
 // LibKipi includes
 
@@ -45,44 +46,60 @@
 // Local includes
 
 #include "KioExportWindow.h"
+#include "KioImportWindow.h"
 
 using namespace KIPIKioExportPlugin;
 
-K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExport>(); )
+K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExportImport>(); )
 K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexport") )
 
-Plugin_KioExport::Plugin_KioExport(QObject *parent, const QVariantList&)
+Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantList&)
                 : KIPI::Plugin(KioFactory::componentData(), parent, "KioExport")
 {
     kDebug(51001) << "Plugin_KioExport plugin loaded";
 }
 
-void Plugin_KioExport::setup(QWidget* widget)
+void Plugin_KioExportImport::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
-    m_action = actionCollection()->addAction("kioexport");
-    m_action->setText(i18n("Export to remote computer..."));
-    m_action->setIcon(KIcon("folder-remote"));
-    m_action->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K);
+    // export
+    m_actionExport = actionCollection()->addAction("kioexport");
+    m_actionExport->setText(i18n("Export to remote computer..."));
+    m_actionExport->setIcon(KIcon("folder-remote"));
+    m_actionExport->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K);
 
-    connect(m_action, SIGNAL(triggered(bool)), 
-            this, SLOT(slotActivate()));
+    connect(m_actionExport, SIGNAL(triggered(bool)), 
+            this, SLOT(slotActivateExport()));
 
-    addAction(m_action);
+    addAction(m_actionExport);
 
+    // import
+    m_actionImport = actionCollection()->addAction("kioimport");
+    m_actionImport->setText(i18n("Import from remote computer..."));
+    m_actionImport->setIcon(KIcon("folder-remote"));
+    m_actionImport->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I);
+
+    connect(m_actionImport, SIGNAL(triggered(bool)),
+            this, SLOT(slotActivateImport()));
+
+    addAction(m_actionImport);
+
+    // check interface availability
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
         kError(51000) << "KIPI::Interface empty";
-        m_action->setEnabled(false);
+        m_actionExport->setEnabled(false);
+        m_actionImport->setEnabled(false);
         return;
     }
 }
 
-void Plugin_KioExport::slotActivate()
+void Plugin_KioExportImport::slotActivateExport()
 {
-    kDebug(51000) << "Plugin_KioExport::slotImageUpload called";
+
+    kDebug(51000) << "Starting KIO export";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
@@ -93,13 +110,35 @@ void Plugin_KioExport::slotActivate()
 
     KioExportWindow *window = new KioExportWindow(kapp->activeWindow(), interface);
     window->show();
+
 }
 
-KIPI::Category Plugin_KioExport::category(KAction* action) const
+void Plugin_KioExportImport::slotActivateImport()
 {
-    if (action == m_action)
+
+    kDebug(51000) << "Starting KIO import";
+
+    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
+    if (!interface)
+    {
+        kError(51000) << "KIPI::Interface empty";
+        return;
+    }
+
+    KioImportWindow *window = new KioImportWindow(kapp->activeWindow(), interface);
+    window->show();
+
+}
+
+KIPI::Category Plugin_KioExportImport::category(KAction* action) const
+{
+    if (action == m_actionExport)
     {
         return KIPI::ExportPlugin;
+    }
+    else if (action == m_actionImport)
+    {
+        return KIPI::ImportPlugin;
     }
     else
     {

@@ -1,3 +1,3 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_kioexport.pot
+$XGETTEXT *.cpp -o $podir/kipiplugin_kioexportimport.pot
 

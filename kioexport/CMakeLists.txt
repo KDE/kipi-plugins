@@ -1,10 +1,12 @@
 
-SET(PLUGIN_NAME kipiplugin_kioexport)
+SET(PLUGIN_NAME kipiplugin_kioexportimport)
 
 SET(${PLUGIN_NAME}_PART_SRCS
-	plugin_kioexport.cpp
+	plugin_kioexportimport.cpp
 	KioExportWindow.cpp
 	KioExportWidget.cpp
+	KioImportWindow.cpp
+	KioImportWidget.cpp
 )
 
 KDE4_ADD_PLUGIN(${PLUGIN_NAME} ${${PLUGIN_NAME}_PART_SRCS})

@@ -4,10 +4,10 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-09-28
- * Description : a tool to export image to a KIO accessible
+ * Description : a tool to export or import image to a KIO accessible
  *               location
  *
- * Copyright (C) 2006-2009 by Johannes Wienke <languitar at semipol dot de>
+ * Copyright (C) 2009 by Johannes Wienke <languitar at semipol dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,25 +34,36 @@
 
 class KAction;
 
-
-class Plugin_KioExport: public KIPI::Plugin
+/**
+ * Plugin starter class.
+ */
+class Plugin_KioExportImport: public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_KioExport(QObject *parent, const QVariantList& args);
+    Plugin_KioExportImport(QObject *parent, const QVariantList& args);
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget* widget);
 
 private Q_SLOTS:
 
-    void slotActivate();
+    /**
+     * Activates the export tool.
+     */
+    void slotActivateExport();
+
+    /**
+     * Activates the import tool.
+     */
+    void slotActivateImport();
 
 private:
 
-    KAction *m_action;
+    KAction *m_actionExport;
+    KAction *m_actionImport;
 };
 
 #endif //PLUGIN_KIOEXPORT_H
