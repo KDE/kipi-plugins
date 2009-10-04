@@ -30,17 +30,16 @@
 
 // KDE includes
 
-#include <kdebug.h>
 #include <kconfig.h>
+#include <kdebug.h>
+#include <khelpmenu.h>
+#include <kio/copyjob.h>
 #include <klocale.h>
-#include <kpushbutton.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kurl.h>
-#include <kio/copyjob.h>
-#include <khelpmenu.h>
 #include <ktoolinvocation.h>
+#include <kurl.h>
 
 // Local includes
 
@@ -77,7 +76,7 @@ KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
     setButtonGuiItem(User1, KGuiItem(i18n("Start export"), "network-workgroup",
                      i18n("Start export to the specified target")));
 
-    connect(this, SIGNAL(user1Clicked()), 
+    connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUpload()));
 
     connect(m_exportWidget->imageList(), SIGNAL(signalImageListChanged()),

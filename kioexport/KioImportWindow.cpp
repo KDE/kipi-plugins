@@ -23,24 +23,28 @@
 #include "KioImportWindow.h"
 
 // Qt includes
+
 #include <qaction.h>
 
 // KDE includes
+
 #include <kdebug.h>
-#include <klocale.h>
 #include <kdialog.h>
 #include <khelpmenu.h>
+#include <kio/copyjob.h>
+#include <klocale.h>
 #include <kmenu.h>
+#include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-#include <kio/copyjob.h>
-#include <kmessagebox.h>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
+
 #include "KioImportWidget.h"
 #include "kpaboutdata.h"
 #include "imageslist.h"

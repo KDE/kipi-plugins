@@ -20,16 +20,18 @@
  *
  * ============================================================ */
 
-#ifndef KIOIMPORTWINDOW_H_
-#define KIOIMPORTWINDOW_H_
+#ifndef KIOIMPORTWINDOW_H
+#define KIOIMPORTWINDOW_H
 
 // KDE includes
+
 #include <kdialog.h>
 #include <kjob.h>
 #include <kurl.h>
 #include <kio/job.h>
 
 // Local includes
+
 #include "KioImportWidget.h"
 
 namespace KIPI
@@ -107,4 +109,4 @@ private:
 
 }
 
-#endif /* KIOIMPORTWINDOW_H_ */
+#endif /* KIOIMPORTWINDOW_H */

@@ -23,19 +23,23 @@
 #include "KioImportWidget.h"
 
 // Qt includes
+
 #include <qboxlayout.h>
 
 // KDE includes
-#include <klocale.h>
-#include <kpushbutton.h>
+
 #include <kdialog.h>
 #include <kfile.h>
+#include <klocale.h>
+#include <kpushbutton.h>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIKioExportPlugin

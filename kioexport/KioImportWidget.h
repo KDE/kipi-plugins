@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIOIMPORTWIDGET_H_
-#define KIOIMPORTWIDGET_H_
+#ifndef KIOIMPORTWIDGET_H
+#define KIOIMPORTWIDGET_H
 
 // Qt includes
 #include <qwidget.h>
@@ -97,4 +97,4 @@ private:
 
 }
 
-#endif /* KIOIMPORTWIDGET_H_ */
+#endif /* KIOIMPORTWIDGET_H */
