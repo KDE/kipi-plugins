@@ -3,8 +3,8 @@ Kipi-plugins 0.8.0 - Release date: xx/10/2009
 
 NEW FEATURES:
 
-KioExport     : New plugin to export images via FTP, Samba, Fish (SSH) and many more using KIO slaves.
-AcquireImages : Under windows, use Twain interface from libksane to factorize code.
+KioImportExport : New plugin to import or export images via FTP, Samba, Fish (SSH) and many more using KIO slaves.
+AcquireImages   : Under windows, use Twain interface from libksane to factorize code.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -22,5 +22,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 012 ==> BatchProcessImages : 158825 : Batch image resizing doesn't use the measures provided.
 013 ==> PrintWizard        : 209165 : Kipi PrintWizard does not print svgz images.
 014 ==> FlickrExport       : 208410 : Patch: Allow custom tags per image.
-015 ==> 
+015 ==> KioImportExport    : 154183 : Import tool does not recognize Fish KIO Slave.
+016 ==> 
 
