@@ -57,6 +57,7 @@ class KioImportWindow : public KDialog
     Q_OBJECT
 
 public:
+
     /**
      * Constructor.
      *
@@ -70,6 +71,7 @@ public:
     virtual ~KioImportWindow();
 
 private slots:
+
     /**
      * Starts importing the selected images.
      */
@@ -99,14 +101,14 @@ private slots:
     void slotHelp();
 
 private:
+
     KIPI::Interface          *m_interface;
 
     KioImportWidget          *m_importWidget;
 
     KIPIPlugins::KPAboutData *m_about;
-
 };
 
-}
+} // namespace KIPIKioExportPlugin
 
 #endif /* KIOIMPORTWINDOW_H */

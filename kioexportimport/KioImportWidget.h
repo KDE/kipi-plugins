@@ -24,21 +24,23 @@
 #define KIOIMPORTWIDGET_H
 
 // Qt includes
+
 #include <qwidget.h>
 
 // KDE includes
+
 #include <kfiledialog.h>
 #include <kurl.h>
 
 namespace KIPI
 {
-class Interface;
-class UploadWidget;
+    class Interface;
+    class UploadWidget;
 }
 
 namespace KIPIPlugins
 {
-class ImagesList;
+    class ImagesList;
 }
 
 namespace KIPIKioExportPlugin
@@ -49,7 +51,6 @@ namespace KIPIKioExportPlugin
  */
 class KioImportWidget: public QWidget
 {
-
     Q_OBJECT
 
 public:
@@ -90,11 +91,11 @@ public:
     KIPI::UploadWidget* uploadWidget();
 
 private:
+
     KIPIPlugins::ImagesList *m_imageList;
     KIPI::UploadWidget      *m_uploadWidget;
-
 };
 
-}
+} // namespace KIPIKioExportPlugin
 
 #endif /* KIOIMPORTWIDGET_H */

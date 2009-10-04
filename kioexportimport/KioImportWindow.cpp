@@ -52,10 +52,9 @@
 namespace KIPIKioExportPlugin
 {
 
-KioImportWindow::KioImportWindow(QWidget *parent, KIPI::Interface *interface) :
-    KDialog(parent), m_interface(interface)
+KioImportWindow::KioImportWindow(QWidget *parent, KIPI::Interface *interface)
+               : KDialog(parent), m_interface(interface)
 {
-
     if (!interface)
     {
         kFatal(51000) << "KIPI::Interface is empty";
@@ -77,14 +76,18 @@ KioImportWindow::KioImportWindow(QWidget *parent, KIPI::Interface *interface) :
                           "into the currently selected album.")));
 
     // connections
+
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotImport()));
+
     connect(m_importWidget->imageList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotSourceAndTargetUpdated()));
+
     connect(m_importWidget->uploadWidget(), SIGNAL(selectionChanged),
             this, SLOT(slotSourceAndTargetUpdated()));
 
     // about data and help button
+
     m_about = new KIPIPlugins::KPAboutData(ki18n("Import from remote computer"),
                    0,
                    KAboutData::License_GPL,
@@ -107,7 +110,6 @@ KioImportWindow::KioImportWindow(QWidget *parent, KIPI::Interface *interface) :
     button(Help)->setMenu(helpMenu->menu());
 
     slotSourceAndTargetUpdated();
-
 }
 
 KioImportWindow::~KioImportWindow()
@@ -116,7 +118,6 @@ KioImportWindow::~KioImportWindow()
 
 void KioImportWindow::slotImport()
 {
-
     kDebug(51000) << "starting to import urls: " << m_importWidget->sourceUrls();
 
     // start copying and react on signals
@@ -129,7 +130,6 @@ void KioImportWindow::slotImport()
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));
-
 }
 
 void KioImportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
@@ -164,12 +164,11 @@ void KioImportWindow::slotCopyingFinished(KJob *job)
 
 void KioImportWindow::slotSourceAndTargetUpdated()
 {
-
     bool hasUrlToImport = !m_importWidget->sourceUrls().empty();
-    bool hasTarget = m_importWidget->uploadWidget()->selectedImageCollection().uploadPath().isValid();
+    bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadPath().isValid();
 
     kDebug(51000) << "switching import button activity with: hasUrlToImport = "
-                    << hasUrlToImport << ", hasTarget = " << hasTarget;
+                  << hasUrlToImport << ", hasTarget = " << hasTarget;
 
     enableButton(User1, hasUrlToImport && hasTarget);
 }
@@ -179,4 +178,4 @@ void KioImportWindow::slotHelp()
     KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
 }
 
-}
+} // namespace KIPIKioExportPlugin

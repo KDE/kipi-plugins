@@ -54,7 +54,7 @@ K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExportImport>(); )
 K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
 
 Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantList&)
-                : KIPI::Plugin(KioFactory::componentData(), parent, "KioExportImport")
+                      : KIPI::Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
     kDebug(51001) << "Plugin_KioExportImport plugin loaded";
 }
@@ -98,7 +98,6 @@ void Plugin_KioExportImport::setup(QWidget* widget)
 
 void Plugin_KioExportImport::slotActivateExport()
 {
-
     kDebug(51000) << "Starting KIO export";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
@@ -110,12 +109,10 @@ void Plugin_KioExportImport::slotActivateExport()
 
     KioExportWindow *window = new KioExportWindow(kapp->activeWindow(), interface);
     window->show();
-
 }
 
 void Plugin_KioExportImport::slotActivateImport()
 {
-
     kDebug(51000) << "Starting KIO import";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
@@ -127,7 +124,6 @@ void Plugin_KioExportImport::slotActivateImport()
 
     KioImportWindow *window = new KioImportWindow(kapp->activeWindow(), interface);
     window->show();
-
 }
 
 KIPI::Category Plugin_KioExportImport::category(KAction* action) const
