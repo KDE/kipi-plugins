@@ -75,7 +75,6 @@ public:
 private Q_SLOTS:
 
     void slotResizeChecked();
-    void slotExportHostTagsChecked();
     void slotPermissionChanged(FlickrList::FieldType, Qt::CheckState);
     void slotSafetyLevelChanged(FlickrList::SafetyLevel);
     void slotContentTypeChanged(FlickrList::ContentType);
@@ -84,44 +83,51 @@ private Q_SLOTS:
     void slotMainFriendsToggled(int);
     void slotMainSafetyLevelChanged(int);
     void slotMainContentTypeChanged(int);
-    void slotExtendedSettingsToggled(bool);
+    void slotExtendedPublicationToggled(bool);
+    void slotExtendedTagsToggled(bool);
+    void slotAddExtraTagsToggled(bool);
 
-private:
-
-    QPushButton*          m_newAlbumBtn;
-    QPushButton*          m_changeUserButton;
-
-    QCheckBox*            m_resizeCheckBox;
-    QCheckBox*            m_familyCheckBox;
-    QCheckBox*            m_friendsCheckBox;
-    QCheckBox*            m_publicCheckBox;
-    QCheckBox*            m_exportHostTagsCheckBox;
-    QCheckBox*            m_stripSpaceTagsCheckBox;
-
-    QSpinBox*             m_dimensionSpinBox;
-    QSpinBox*             m_imageQualitySpinBox;
-
-    QPushButton*          m_extendedButton;
-
-    ComboBoxIntermediate* m_contentTypeComboBox;
-    ComboBoxIntermediate* m_safetyLevelComboBox;
-
-    QGroupBox*            m_extendedSettingsBox;
-
-    QLabel*               m_userNameDisplayLabel;
-
-    KComboBox*            m_albumsListComboBox;
-    KLineEdit*            m_tagsLineEdit;
-
-    KTabWidget*           m_tab;
-
-    KHTMLPart*            m_photoView;
-
-    KIPIFlickrExportPlugin::FlickrList*   m_imglst;
-
-    friend class FlickrWindow;
+private: // Functions
 
     void mainPermissionToggled(FlickrList::FieldType, Qt::CheckState);
+
+private: // Data
+
+    KTabWidget*                         m_tab;
+
+    KHTMLPart*                          m_photoView;
+
+    QLabel*                             m_userNameDisplayLabel;
+
+    QPushButton*                        m_changeUserButton;
+    QPushButton*                        m_newAlbumBtn;
+    QPushButton*                        m_extendedTagsButton;
+    QPushButton*                        m_extendedPublicationButton;
+
+    KComboBox*                          m_albumsListComboBox;
+
+    QCheckBox*                          m_exportHostTagsCheckBox;
+    QCheckBox*                          m_stripSpaceTagsCheckBox;
+    QCheckBox*                          m_addExtraTagsCheckBox;
+    QCheckBox*                          m_familyCheckBox;
+    QCheckBox*                          m_friendsCheckBox;
+    QCheckBox*                          m_publicCheckBox;
+    QCheckBox*                          m_resizeCheckBox;
+
+    QGroupBox*                          m_extendedTagsBox;
+    QGroupBox*                          m_extendedPublicationBox;
+
+    KLineEdit*                          m_tagsLineEdit;
+
+    ComboBoxIntermediate*               m_contentTypeComboBox;
+    ComboBoxIntermediate*               m_safetyLevelComboBox;
+
+    QSpinBox*                           m_dimensionSpinBox;
+    QSpinBox*                           m_imageQualitySpinBox;
+
+    KIPIFlickrExportPlugin::FlickrList* m_imglst;
+
+    friend class FlickrWindow;
 };
 
 } // namespace KIPIFlickrExportPlugin

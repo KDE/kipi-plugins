@@ -88,30 +88,32 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
     setDefaultButton(Close);
     setModal(false);
 
-    m_tmp                    = tmpFolder;
-    m_interface              = interface;
-    m_uploadCount            = 0;
-    m_uploadTotal            = 0;
-//  m_wallet                 = 0;
-    m_widget                 = new FlickrWidget(this, interface, serviceName);
-    m_photoView              = m_widget->m_photoView;
-    m_albumsListComboBox     = m_widget->m_albumsListComboBox;
-    m_newAlbumBtn            = m_widget->m_newAlbumBtn;
-    m_resizeCheckBox         = m_widget->m_resizeCheckBox;
-    m_publicCheckBox         = m_widget->m_publicCheckBox;
-    m_familyCheckBox         = m_widget->m_familyCheckBox;
-    m_friendsCheckBox        = m_widget->m_friendsCheckBox;
-    m_dimensionSpinBox       = m_widget->m_dimensionSpinBox;
-    m_imageQualitySpinBox    = m_widget->m_imageQualitySpinBox;
-    m_extendedButton         = m_widget->m_extendedButton;
-    m_safetyLevelComboBox    = m_widget->m_safetyLevelComboBox;
-    m_contentTypeComboBox    = m_widget->m_contentTypeComboBox;
-    m_tagsLineEdit           = m_widget->m_tagsLineEdit;
-    m_exportHostTagsCheckBox = m_widget->m_exportHostTagsCheckBox;
-    m_stripSpaceTagsCheckBox = m_widget->m_stripSpaceTagsCheckBox;
-    m_changeUserButton       = m_widget->m_changeUserButton;
-    m_userNameDisplayLabel   = m_widget->m_userNameDisplayLabel;
-    m_imglst                 = m_widget->m_imglst;
+    m_tmp                       = tmpFolder;
+    m_interface                 = interface;
+    m_uploadCount               = 0;
+    m_uploadTotal               = 0;
+//  m_wallet                    = 0;
+    m_widget                    = new FlickrWidget(this, interface, serviceName);
+    m_photoView                 = m_widget->m_photoView;
+    m_albumsListComboBox        = m_widget->m_albumsListComboBox;
+    m_newAlbumBtn               = m_widget->m_newAlbumBtn;
+    m_resizeCheckBox            = m_widget->m_resizeCheckBox;
+    m_publicCheckBox            = m_widget->m_publicCheckBox;
+    m_familyCheckBox            = m_widget->m_familyCheckBox;
+    m_friendsCheckBox           = m_widget->m_friendsCheckBox;
+    m_dimensionSpinBox          = m_widget->m_dimensionSpinBox;
+    m_imageQualitySpinBox       = m_widget->m_imageQualitySpinBox;
+    m_extendedTagsButton        = m_widget->m_extendedTagsButton;
+    m_addExtraTagsCheckBox      = m_widget->m_addExtraTagsCheckBox;
+    m_extendedPublicationButton = m_widget->m_extendedPublicationButton;
+    m_safetyLevelComboBox       = m_widget->m_safetyLevelComboBox;
+    m_contentTypeComboBox       = m_widget->m_contentTypeComboBox;
+    m_tagsLineEdit              = m_widget->m_tagsLineEdit;
+    m_exportHostTagsCheckBox    = m_widget->m_exportHostTagsCheckBox;
+    m_stripSpaceTagsCheckBox    = m_widget->m_stripSpaceTagsCheckBox;
+    m_changeUserButton          = m_widget->m_changeUserButton;
+    m_userNameDisplayLabel      = m_widget->m_userNameDisplayLabel;
+    m_imglst                    = m_widget->m_imglst;
 
     setButtonGuiItem(User1, KGuiItem(i18n("Start Uploading"), KIcon("network-workgroup")));
     setMainWidget(m_widget);
@@ -259,6 +261,36 @@ void FlickrWindow::readSettings()
     KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     m_token = grp.readEntry("token");
 
+    m_exportHostTagsCheckBox->setChecked(
+            grp.readEntry("Export Host Tags", false));
+    m_extendedTagsButton->setChecked(
+            grp.readEntry("Show Extended Tag Options", false));
+    m_addExtraTagsCheckBox->setChecked(
+            grp.readEntry("Add Extra Tags", false));
+    m_stripSpaceTagsCheckBox->setChecked(
+            grp.readEntry("Strip Space From Tags", false));
+    m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
+
+    if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+    {
+        m_exportHostTagsCheckBox->setEnabled(false);
+        m_stripSpaceTagsCheckBox->setEnabled(false);
+    }
+
+    m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
+    m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
+    m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
+    m_extendedPublicationButton->setChecked(
+            grp.readEntry("Show Extended Publication Options", false));
+    int safetyLevel = m_safetyLevelComboBox->findData(
+                          QVariant(grp.readEntry("Safety Level", 0)));
+    if (safetyLevel == -1) safetyLevel = 0;
+    m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
+    int contentType = m_contentTypeComboBox->findData(
+                          QVariant(grp.readEntry("Content Type", 0)));
+    if (contentType == -1) contentType = 0;
+    m_contentTypeComboBox->setCurrentIndex(contentType);
+
     if (grp.readEntry("Resize", false))
     {
         m_resizeCheckBox->setChecked(true);
@@ -272,29 +304,6 @@ void FlickrWindow::readSettings()
 
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width", 1600));
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality", 85));
-    m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags", false));
-    m_stripSpaceTagsCheckBox->setChecked(grp.readEntry("Strip Space Host Tags", false));
-    m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
-
-    if(!m_interface->hasFeature(KIPI::HostSupportsTags))
-    {
-        m_exportHostTagsCheckBox->setEnabled(false);
-        m_stripSpaceTagsCheckBox->setEnabled(false);
-    }
-
-    m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
-    m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
-    m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
-
-    m_extendedButton->setChecked(grp.readEntry("Show Extended Options", false));
-    int safetyLevel = m_safetyLevelComboBox->findData(
-                          QVariant(grp.readEntry("Safety Level", 0)));
-    if (safetyLevel == -1) safetyLevel = 0;
-    m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
-    int contentType = m_contentTypeComboBox->findData(
-                          QVariant(grp.readEntry("Content Type", 0)));
-    if (contentType == -1) contentType = 0;
-    m_contentTypeComboBox->setCurrentIndex(contentType);
 
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     restoreDialogSize(dialogGroup);
@@ -305,19 +314,21 @@ void FlickrWindow::writeSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     grp.writeEntry("token", m_token);
-    grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
-    grp.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
-    grp.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
-    grp.writeEntry("Export Host Tags", m_exportHostTagsCheckBox->isChecked());
-    grp.writeEntry("Strip Space Host Tags", m_stripSpaceTagsCheckBox->isChecked());
-    grp.writeEntry("Public Sharing", m_publicCheckBox->isChecked());
-    grp.writeEntry("Family Sharing", m_familyCheckBox->isChecked());
-    grp.writeEntry("Friends Sharing", m_friendsCheckBox->isChecked());
-    grp.writeEntry("Show Extended Options", m_extendedButton->isChecked());
+    grp.writeEntry("Export Host Tags",                  m_exportHostTagsCheckBox->isChecked());
+    grp.writeEntry("Show Extended Tag Options",         m_extendedTagsButton->isChecked());
+    grp.writeEntry("Add Extra Tags",                    m_addExtraTagsCheckBox->isChecked());
+    grp.writeEntry("Strip Space From Tags",             m_stripSpaceTagsCheckBox->isChecked());
+    grp.writeEntry("Public Sharing",                    m_publicCheckBox->isChecked());
+    grp.writeEntry("Family Sharing",                    m_familyCheckBox->isChecked());
+    grp.writeEntry("Friends Sharing",                   m_friendsCheckBox->isChecked());
+    grp.writeEntry("Show Extended Publication Options", m_extendedPublicationButton->isChecked());
     int safetyLevel = m_safetyLevelComboBox->itemData(m_safetyLevelComboBox->currentIndex()).toInt();
     grp.writeEntry("Safety Level", safetyLevel);
     int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
     grp.writeEntry("Content Type", contentType);
+    grp.writeEntry("Resize",                            m_resizeCheckBox->isChecked());
+    grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
+    grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
     saveDialogSize(dialogGroup );
     config.sync();
@@ -515,7 +526,8 @@ void FlickrWindow::slotUser1()
         temp.is_friend             = lvItem->isFriends() ? 1 : 0;
         temp.safety_level          = lvItem->safetyLevel();
         temp.content_type          = lvItem->contentType();
-        QStringList tagsFromDialog = m_tagsLineEdit->text().split(" ", QString::SkipEmptyParts);
+        QStringList tagsFromDialog = m_tagsLineEdit->text().split(",", QString::SkipEmptyParts);
+        QStringList tagsFromList   = lvItem->uniqueTags();
 
         QStringList           allTags;
         QStringList::Iterator itTags;
@@ -529,27 +541,42 @@ void FlickrWindow::slotUser1()
         }
 
         // Tags from the database
-        QMap <QString, QVariant> attribs = info.attributes();
-        QStringList tagsFromDatabase;
-
         if(m_exportHostTagsCheckBox->isChecked())
         {
+            QMap <QString, QVariant> attribs = info.attributes();
+            QStringList tagsFromDatabase;
+
             tagsFromDatabase = attribs["tags"].toStringList();
-            if (m_stripSpaceTagsCheckBox->isChecked())
+            itTags = tagsFromDatabase.begin();
+
+            while(itTags != tagsFromDatabase.end())
             {
-                for (QStringList::iterator it = tagsFromDatabase.begin(); it != tagsFromDatabase.end() ; ++it)
-                    *it = (*it).trimmed().remove(" ");
+                allTags.append(*itTags);
+                ++itTags;
             }
         }
 
-        itTags = tagsFromDatabase.begin();
+        // Tags from the list view.
+        itTags = tagsFromList.begin();
 
-        while(itTags != tagsFromDatabase.end())
+        while(itTags != tagsFromList.end())
         {
             allTags.append(*itTags);
             ++itTags;
         }
 
+        // Remove spaces if the user doesn't like them.
+        if (m_stripSpaceTagsCheckBox->isChecked())
+        {
+            for (QStringList::iterator it = allTags.begin();
+                 it != allTags.end();
+                 ++it)
+            {
+                *it = (*it).trimmed().remove(" ");
+            }
+        }
+
+        // Debug the tag list.
         itTags = allTags.begin();
 
         while(itTags != allTags.end())

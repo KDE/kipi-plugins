@@ -375,38 +375,51 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView *view,
 
     // Set the tooltips to guide the user to the mass settings options.
     setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-            FlickrList::PUBLIC),
+               FlickrList::PUBLIC),
                i18n("Check if photo should be publicly visible or use Upload "
                     "Options tab to specify this for all images"));
     setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-            FlickrList::FAMILY),
+               FlickrList::FAMILY),
                i18n("Check if photo should be visible to family or use Upload "
                     "Options tab to specify this for all images"));
     setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-            FlickrList::FRIENDS),
+               FlickrList::FRIENDS),
                i18n("Check if photo should be visible to friends or use "
                     "Upload Options tab to specify this for all images"));
     setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-            FlickrList::SAFETYLEVEL),
+               FlickrList::SAFETYLEVEL),
                i18n("Indicate the safety level for the photo or use Upload "
                     "Options tab to specify this for all images"));
     setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-            FlickrList::CONTENTTYPE),
+               FlickrList::CONTENTTYPE),
                i18n("Indicate what kind of image this is or use Upload "
                     "Options tab to specify this for all images"));
 
-    // Set the other checkboxes
+    // Set the other checkboxes.
     setFamily(accessFamily);
     setFriends(accessFriends);
     setPublic(accessPublic);
     setSafetyLevel(safetyLevel);
     setContentType(contentType);
+
+    // Extra per image tags handling.
+    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+               FlickrList::TAGS),
+               i18n("Add extra tags per image or use Upload Options tab to "
+                    "add tags for all images"));
+    m_tagLineEdit = new KLineEdit(view);
+    m_tagLineEdit->setToolTip(i18n("Enter extra tags, separated by commas."));
+    view->setItemWidget(this, static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+                        FlickrList::TAGS), m_tagLineEdit);
+}
+
+QStringList FlickrListViewItem::extraTags()
+{
+    return m_tagLineEdit->text().split(",", QString::SkipEmptyParts);
 }
 
 void FlickrListViewItem::toggled()
 {
-    /* This method should be called when one of the checkboxes is clicked. */
-
     // The m_family and m_friends states should be set first, so that the
     // setPublic method has the proper values to work with.
     if (!m_is23) {

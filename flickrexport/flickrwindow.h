@@ -134,17 +134,19 @@ private:
     QPushButton                           *m_changeUserButton;
 
     KComboBox                             *m_albumsListComboBox;
-    QCheckBox                             *m_resizeCheckBox;
     QCheckBox                             *m_publicCheckBox;
     QCheckBox                             *m_familyCheckBox;
     QCheckBox                             *m_friendsCheckBox;
     QCheckBox                             *m_exportHostTagsCheckBox;
     QCheckBox                             *m_stripSpaceTagsCheckBox;
+    QCheckBox                             *m_addExtraTagsCheckBox;
+    QCheckBox                             *m_resizeCheckBox;
 
     QSpinBox                              *m_dimensionSpinBox;
     QSpinBox                              *m_imageQualitySpinBox;
 
-    QPushButton                           *m_extendedButton;
+    QPushButton                           *m_extendedPublicationButton;
+    QPushButton                           *m_extendedTagsButton;
     ComboBoxIntermediate                  *m_contentTypeComboBox;
     ComboBoxIntermediate                  *m_safetyLevelComboBox;
 

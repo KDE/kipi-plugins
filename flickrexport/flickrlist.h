@@ -23,6 +23,9 @@
 #ifndef FLICKRLIST_H
 #define FLICKRLIST_H
 
+// KDE includes
+#include <klineedit.h>
+
 // Local includes
 
 #include "imageslist.h"
@@ -41,9 +44,10 @@ public:
     {
         SAFETYLEVEL = KIPIPlugins::ImagesListView::User1,
         CONTENTTYPE = KIPIPlugins::ImagesListView::User2,
-        PUBLIC      = KIPIPlugins::ImagesListView::User3,
-        FAMILY      = KIPIPlugins::ImagesListView::User4,
-        FRIENDS     = KIPIPlugins::ImagesListView::User5
+        TAGS        = KIPIPlugins::ImagesListView::User3,
+        PUBLIC      = KIPIPlugins::ImagesListView::User4,
+        FAMILY      = KIPIPlugins::ImagesListView::User5,
+        FRIENDS     = KIPIPlugins::ImagesListView::User6
     };
 
     /* The different possible safety levels recognized by Flickr. */
@@ -117,7 +121,7 @@ public:
     FlickrListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url,
                        bool, bool, bool, bool,
                        FlickrList::SafetyLevel, FlickrList::ContentType);
-//    ~FlickListViewItem();
+    //virtual ~FlickrListViewItem();
 
     void setPublic(bool);
     void setFamily(bool);
@@ -130,6 +134,12 @@ public:
     FlickrList::SafetyLevel safetyLevel();
     FlickrList::ContentType contentType();
 
+    /**
+     * Returns the list of extra tags that the user specified for this image.
+     */
+    QStringList extraTags();
+
+    /* This method should be called when one of the checkboxes is clicked. */
     void toggled();
 
 private:
@@ -140,6 +150,12 @@ private:
     bool m_friends;
     FlickrList::SafetyLevel m_safetyLevel;
     FlickrList::ContentType m_contentType;
+
+    /**
+     * LineEdit used for extra tags per image.
+     */
+    KLineEdit *m_tagLineEdit;
+
 };
 
 } // namespace KIPIFlickrExportPlugin

@@ -94,10 +94,10 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                                   " Export"
                                   "</h2></b>"));
 
-    // -------------------------------------------------------------------
+    // -- The image list tab --------------------------------------------------
 
     m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab,
-                                                     (serviceName == "23"));
+                                                      (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView *hdr = m_imglst->listView()->header();
@@ -108,6 +108,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
     m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18n("Public"), true);
+
+    // Handle extra tags per image.
+    m_imglst->listView()->setColumn(
+                    static_cast<KIPIPlugins::ImagesListView::ColumnType> (FlickrList::TAGS),
+                    i18n("Extra tags"), true);
 
     if (serviceName != "23")
     {
@@ -148,100 +153,123 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                                                        safetyLevelDelegate);
         m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                        contentTypeDelegate);
+
     }
     hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
-    QWidget* settingsBox           = new QWidget(m_tab);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    // -- The upload options tab ----------------------------------------------
 
-    QGridLayout* albumsSettingsLayout = new QGridLayout();
-    QLabel* albumLabel = new QLabel(i18n("PhotoSet:"), settingsBox);
-    m_newAlbumBtn = new QPushButton(settingsBox);
+    // Wrap everything in a scroll area, so that it can be resized without
+    // squeezing the contents.
+
+    QScrollArea* settingsScrollArea = new QScrollArea(m_tab);
+    QWidget*     settingsBox        = new QWidget;
+    QVBoxLayout* settingsBoxLayout  = new QVBoxLayout(settingsBox);
+    settingsScrollArea->setWidget(settingsBox);
+    settingsScrollArea->setWidgetResizable(true);
+    settingsScrollArea->setFrameShadow(QFrame::Plain);
+
+    // -- Layout for account and album ----------------------------------------
+
+    QGroupBox*   accountBox    = new QGroupBox(i18n("Account"), settingsBox);
+    QGridLayout* accountLayout = new QGridLayout(accountBox);
+
+    QLabel *userNameLabel  = new QLabel(i18n("Username: "), accountBox);
+    m_userNameDisplayLabel = new QLabel(accountBox);
+    m_changeUserButton     = new QPushButton(accountBox);
+    m_changeUserButton->setText(i18n("Use a different account"));
+    m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
+
+    QLabel* albumLabel = new QLabel(i18n("PhotoSet:"), accountBox);
+    m_newAlbumBtn = new QPushButton(accountBox);
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_albumsListComboBox = new KComboBox(settingsBox);
-    albumsSettingsLayout->addWidget(albumLabel, 0, 0, 1, 1);
-    albumsSettingsLayout->addWidget(m_albumsListComboBox, 0, 1, 1, 1);
-    albumsSettingsLayout->addWidget(m_newAlbumBtn, 0, 2, 1, 1);
-    albumsSettingsLayout->setColumnStretch(1, 10);
-	
-    QGridLayout* tagsLayout  = new QGridLayout();
-    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "), settingsBox);
-    m_tagsLineEdit           = new KLineEdit(settingsBox);
-    m_exportHostTagsCheckBox = new QCheckBox(settingsBox);
+
+    accountLayout->addWidget(userNameLabel,          0, 0);
+    accountLayout->addWidget(m_userNameDisplayLabel, 0, 1);
+    accountLayout->addWidget(m_changeUserButton,     0, 2);
+    accountLayout->addWidget(albumLabel,             1, 0);
+    accountLayout->addWidget(m_albumsListComboBox,   1, 1);
+    accountLayout->addWidget(m_newAlbumBtn,          1, 2);
+    accountLayout->setColumnStretch(1, 10);
+    accountLayout->setSpacing(KDialog::spacingHint());
+    accountLayout->setMargin(KDialog::spacingHint());
+
+    // -- Layout for the tags -------------------------------------------------
+
+    QGroupBox*   tagsBox       = new QGroupBox(i18n("Tag options"),
+                                               settingsBox);
+    QGridLayout* tagsBoxLayout = new QGridLayout(tagsBox);
+
+    m_exportHostTagsCheckBox = new QCheckBox(tagsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
-    m_stripSpaceTagsCheckBox = new QCheckBox(settingsBox);
-    m_stripSpaceTagsCheckBox->setText(i18n("Strip Space From Host Application Tags"));
-    m_tagsLineEdit->setToolTip(i18n("Enter new tags here, separated by spaces."));
 
-    tagsLayout->addWidget(tagsLabel,                0, 0);
-    tagsLayout->addWidget(m_tagsLineEdit,           0, 1);
-    tagsLayout->addWidget(m_exportHostTagsCheckBox, 1, 1);
-    tagsLayout->addWidget(m_stripSpaceTagsCheckBox, 2, 1);
-
-    // ------------------------------------------------------------------------
-
-    QGroupBox* optionsBox           = new QGroupBox(i18n("Override Default Options"), settingsBox);
-    QGridLayout *optionsBoxLayout   = new QGridLayout;
-    optionsBox->setLayout(optionsBoxLayout);
-
-    // Wrap the options box in a scroll area, so that it can be resized without
-    // squeezing the contents.
-    QScrollArea* optionsScrollArea = new QScrollArea;
-    optionsScrollArea->setFrameShadow(QFrame::Plain);
-    optionsBoxLayout->addWidget(optionsScrollArea, 0, 0);
-    QWidget* optionsWidget = new QWidget;
-    optionsScrollArea->setWidget(optionsWidget);
-    QGridLayout* optionsLayout = new QGridLayout(optionsWidget);
-
-    m_publicCheckBox = new QCheckBox(optionsWidget);
-    m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
-
-    m_familyCheckBox = new QCheckBox(optionsWidget);
-    m_familyCheckBox->setText(i18n("Visible to Family"));
-
-    m_friendsCheckBox = new QCheckBox(optionsWidget);
-    m_friendsCheckBox->setText(i18n("Visible to Friends"));
-
-    m_resizeCheckBox = new QCheckBox(optionsWidget);
-    m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    m_resizeCheckBox->setChecked(false);
-
-    m_dimensionSpinBox = new QSpinBox(optionsWidget);
-    m_dimensionSpinBox->setMinimum(0);
-    m_dimensionSpinBox->setMaximum(5000);
-    m_dimensionSpinBox->setSingleStep(10);
-    m_dimensionSpinBox->setValue(600);
-    m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_dimensionSpinBox->setEnabled(false);
-
-    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), optionsWidget);
-
-    m_imageQualitySpinBox = new QSpinBox(optionsWidget);
-    m_imageQualitySpinBox->setMinimum(0);
-    m_imageQualitySpinBox->setMaximum(100);
-    m_imageQualitySpinBox->setSingleStep(1);
-    m_imageQualitySpinBox->setValue(85);
-    m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), optionsWidget);
-
-    // -- Extended options ----------------------------------------------------
-
-    m_extendedButton = new QPushButton(i18n("Extended options"));
-    m_extendedButton->setCheckable(true);
-    // Initialize this button to checked, because extended options are shown.
+    m_extendedTagsButton = new QPushButton(i18n("More tag options"));
+    m_extendedTagsButton->setCheckable(true);
+    // Initialize this button to checked, so extended options are shown.
     // FlickrWindow::readSettings can change this, but if checked is false it
     // cannot uncheck and subsequently hide the extended options (the toggled
     // signal won't be emitted).
-    m_extendedButton->setChecked(true);
-    m_extendedButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+    m_extendedTagsButton->setChecked(true);
+    m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
+                                        QSizePolicy::Preferred);
 
-    m_extendedSettingsBox = new QGroupBox("", settingsBox);
-    m_extendedSettingsBox->setFlat(true);
-    QGridLayout *extendedSettingsLayout = new QGridLayout(m_extendedSettingsBox);
+    m_extendedTagsBox = new QGroupBox("", settingsBox);
+    m_extendedTagsBox->setFlat(true);
+    QGridLayout *extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
+
+    QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "),
+                                          m_extendedTagsBox);
+    m_tagsLineEdit           = new KLineEdit(m_extendedTagsBox);
+    m_tagsLineEdit->setToolTip(i18n("Enter new tags here, separated by commas."));
+    m_addExtraTagsCheckBox   = new QCheckBox(m_extendedTagsBox);
+    m_addExtraTagsCheckBox->setText(i18n("Add tags per image"));
+    m_addExtraTagsCheckBox->setToolTip(i18n("If checked, you can set extra tags for "
+                                    "each image in the File List tab"));
+    m_addExtraTagsCheckBox->setChecked(true);
+    m_stripSpaceTagsCheckBox = new QCheckBox(m_extendedTagsBox);
+    m_stripSpaceTagsCheckBox->setText(i18n("Strip Spaces From Tags"));
+
+    extendedTagsLayout->addWidget(tagsLabel,                0, 0);
+    extendedTagsLayout->addWidget(m_tagsLineEdit,           0, 1);
+    extendedTagsLayout->addWidget(m_stripSpaceTagsCheckBox, 1, 0, 1, 2);
+    extendedTagsLayout->addWidget(m_addExtraTagsCheckBox,   2, 0, 1, 2);
+
+    tagsBoxLayout->addWidget(m_exportHostTagsCheckBox, 0, 0);
+    tagsBoxLayout->addWidget(m_extendedTagsButton,     0, 1);
+    tagsBoxLayout->addWidget(m_extendedTagsBox,        1, 0, 1, 2);
+
+    // -- Layout for the publication options ----------------------------------
+
+    QGroupBox*   publicationBox       = new QGroupBox(i18n("Publication Options"), settingsBox);
+    QGridLayout *publicationBoxLayout = new QGridLayout;
+    publicationBox->setLayout(publicationBoxLayout);
+
+    m_publicCheckBox = new QCheckBox(publicationBox);
+    m_publicCheckBox->setText(i18nc("As in accessible for people", "Public (anyone can see them)"));
+
+    m_familyCheckBox = new QCheckBox(publicationBox);
+    m_familyCheckBox->setText(i18n("Visible to Family"));
+
+    m_friendsCheckBox = new QCheckBox(publicationBox);
+    m_friendsCheckBox->setText(i18n("Visible to Friends"));
+
+    // Extended publication settings
+    m_extendedPublicationButton = new QPushButton(i18n("More publications options"));
+    m_extendedPublicationButton->setCheckable(true);
+    // Initialize this button to checked, so extended options are shown.
+    // FlickrWindow::readSettings can change this, but if checked is false it
+    // cannot uncheck and subsequently hide the extended options (the toggled
+    // signal won't be emitted).
+    m_extendedPublicationButton->setChecked(true);
+    m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum,
+                                            QSizePolicy::Preferred);
+
+    m_extendedPublicationBox = new QGroupBox("", publicationBox);
+    m_extendedPublicationBox->setFlat(true);
+    QGridLayout *extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
     QLabel *imageSafetyLabel = new QLabel(i18n("Safety level:"));
     m_safetyLevelComboBox = new ComboBoxIntermediate();
@@ -255,57 +283,71 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_contentTypeComboBox->addItem(i18n("Screenshot"), QVariant(FlickrList::SCREENSHOT));
     m_contentTypeComboBox->addItem(i18n("Other"),      QVariant(FlickrList::OTHER));
 
-    extendedSettingsLayout->addWidget(imageSafetyLabel, 1, 0, Qt::AlignLeft);
+    extendedSettingsLayout->addWidget(imageSafetyLabel,      1, 0, Qt::AlignLeft);
     extendedSettingsLayout->addWidget(m_safetyLevelComboBox, 1, 1, Qt::AlignLeft);
-    extendedSettingsLayout->addWidget(imageTypeLabel, 0, 0, Qt::AlignLeft);
+    extendedSettingsLayout->addWidget(imageTypeLabel,        0, 0, Qt::AlignLeft);
     extendedSettingsLayout->addWidget(m_contentTypeComboBox, 0, 1, Qt::AlignLeft);
     extendedSettingsLayout->setColumnStretch(0, 0);
     extendedSettingsLayout->setColumnStretch(1, 1);
 
-    optionsLayout->addWidget(m_publicCheckBox,      0, 0, 1, 4);
-    optionsLayout->addWidget(m_familyCheckBox,      1, 0, 1, 4);
-    optionsLayout->addWidget(m_friendsCheckBox,     2, 0, 1, 4);
-    optionsLayout->addWidget(imageQualityLabel,     3, 0, 1, 3);
-    optionsLayout->addWidget(m_imageQualitySpinBox, 3, 3, 1, 1);
-    optionsLayout->addWidget(m_resizeCheckBox,      4, 0, 1, 4);
-    optionsLayout->addWidget(resizeLabel,           5, 1, 1, 2);
-    optionsLayout->addWidget(m_dimensionSpinBox,    5, 3, 1, 1);
-    optionsLayout->addWidget(m_extendedButton,      6, 0, 1, 1);
-    optionsLayout->addWidget(m_extendedSettingsBox, 7, 0, 4, 4);
-    optionsLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
-    optionsLayout->setColumnStretch(1, 10);
-    optionsLayout->setSpacing(KDialog::spacingHint());
-    optionsLayout->setMargin(KDialog::spacingHint());
+    publicationBoxLayout->addWidget(m_publicCheckBox,         0, 0);
+    publicationBoxLayout->addWidget(m_familyCheckBox,         1, 0);
+    publicationBoxLayout->addWidget(m_friendsCheckBox,        2, 0);
+    publicationBoxLayout->addWidget(m_extendedPublicationButton, 2, 1);
+    publicationBoxLayout->addWidget(m_extendedPublicationBox,    3, 0, 1, 2);
 
-    // ------------------------------------------------------------------------
+    // -- Layout for the resizing options -------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
+    QGroupBox*   resizingBox       = new QGroupBox(i18n("Resizing Options"),
+                                                   settingsBox);
+    QGridLayout *resizingBoxLayout = new QGridLayout;
+    resizingBox->setLayout(resizingBoxLayout);
 
-    QLabel *userNameLabel  = new QLabel(i18n("Username: "), accountBox);
-    m_userNameDisplayLabel = new QLabel(accountBox);
-    m_changeUserButton     = new QPushButton(accountBox);
-    m_changeUserButton->setText(i18n("Use a different account"));
-    m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
+    m_resizeCheckBox = new QCheckBox(resizingBox);
+    m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
+    m_resizeCheckBox->setChecked(false);
 
-    accountBoxLayout->addWidget(userNameLabel,          0, 0, 1, 1);
-    accountBoxLayout->addWidget(m_userNameDisplayLabel, 0, 1, 1, 1);
-    accountBoxLayout->addWidget(m_changeUserButton,     0, 3, 1, 1);
-    accountBoxLayout->setColumnStretch(2, 10);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    m_dimensionSpinBox = new QSpinBox(resizingBox);
+    m_dimensionSpinBox->setMinimum(0);
+    m_dimensionSpinBox->setMaximum(5000);
+    m_dimensionSpinBox->setSingleStep(10);
+    m_dimensionSpinBox->setValue(600);
+    m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_dimensionSpinBox->setEnabled(false);
 
-    settingsBoxLayout->addLayout(albumsSettingsLayout);
-    settingsBoxLayout->addLayout(tagsLayout);
-    settingsBoxLayout->addWidget(optionsBox);
+    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"),
+                                     resizingBox);
+
+    m_imageQualitySpinBox = new QSpinBox(resizingBox);
+    m_imageQualitySpinBox->setMinimum(0);
+    m_imageQualitySpinBox->setMaximum(100);
+    m_imageQualitySpinBox->setSingleStep(1);
+    m_imageQualitySpinBox->setValue(85);
+    m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    // NOTE: The term Compression factor may be to technical to write in the label
+    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"),
+                                           resizingBox);
+
+    resizingBoxLayout->addWidget(imageQualityLabel,     0, 0, 1, 3);
+    resizingBoxLayout->addWidget(m_imageQualitySpinBox, 0, 3, 1, 1);
+    resizingBoxLayout->addWidget(m_resizeCheckBox,      1, 0, 1, 4);
+    resizingBoxLayout->addWidget(resizeLabel,           2, 1, 1, 2);
+    resizingBoxLayout->addWidget(m_dimensionSpinBox,    2, 3, 1, 1);
+    resizingBoxLayout->setColumnMinimumWidth(0, KDialog::spacingHint());
+    resizingBoxLayout->setColumnStretch(1, 10);
+    resizingBoxLayout->setSpacing(KDialog::spacingHint());
+    resizingBoxLayout->setMargin(KDialog::spacingHint());
+
+    // -- Put it all together -------------------------------------------------
+
     settingsBoxLayout->addWidget(accountBox);
+    settingsBoxLayout->addWidget(tagsBox);
+    settingsBoxLayout->addWidget(publicationBox);
+    settingsBoxLayout->addWidget(resizingBox);
     settingsBoxLayout->addStretch(10);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
-
-    optionsWidget->adjustSize();
-
-    // ------------------------------------------------------------------------
 
     flickrWidgetLayout->addWidget(headerLabel);
     flickrWidgetLayout->addWidget(line);
@@ -313,22 +355,25 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
     flickrWidgetLayout->setMargin(0);
 
-    m_tab->insertTab(FILELIST, m_imglst,    i18n("File List"));
-    m_tab->insertTab(UPLOAD,   settingsBox, i18n("Upload Options"));
+    m_tab->insertTab(FILELIST, m_imglst,           i18n("File List"));
+    m_tab->insertTab(UPLOAD,   settingsScrollArea, i18n("Upload Options"));
 
     // ------------------------------------------------------------------------
 
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
-    connect(m_exportHostTagsCheckBox, SIGNAL(clicked()),
-            this, SLOT(slotExportHostTagsChecked()));
-
     connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType, Qt::CheckState)),
             this, SLOT(slotPermissionChanged(FlickrList::FieldType, Qt::CheckState)));
 
     connect(m_publicCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotMainPublicToggled(int)));
+
+    connect(m_extendedTagsButton, SIGNAL(toggled(bool)),
+            this, SLOT(slotExtendedTagsToggled(bool)));
+
+    connect(m_addExtraTagsCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotAddExtraTagsToggled(bool)));
 
     // Zooomr doesn't support explicit Photosets.
     if (serviceName == "Zooomr")
@@ -360,8 +405,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                 this, SLOT(slotMainSafetyLevelChanged(int)));
         connect(m_contentTypeComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainContentTypeChanged(int)));
-        connect(m_extendedButton, SIGNAL(toggled(bool)),
-                this, SLOT(slotExtendedSettingsToggled(bool)));
+        connect(m_extendedPublicationButton, SIGNAL(toggled(bool)),
+                this, SLOT(slotExtendedPublicationToggled(bool)));
         connect(m_imglst, SIGNAL(signalSafetyLevelChanged(FlickrList::SafetyLevel)),
                 this, SLOT(slotSafetyLevelChanged(FlickrList::SafetyLevel)));
         connect(m_imglst, SIGNAL(signalContentTypeChanged(FlickrList::ContentType)),
@@ -369,15 +414,14 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     }
     else
     {
-        m_extendedSettingsBox->hide();
-        m_extendedButton->hide();
+        m_extendedPublicationBox->hide();
+        m_extendedPublicationButton->hide();
         m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
                                                false);
         m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                false);
 
     }
-    optionsWidget->adjustSize();
 }
 
 FlickrWidget::~FlickrWidget()
@@ -387,11 +431,6 @@ FlickrWidget::~FlickrWidget()
 void FlickrWidget::slotResizeChecked()
 {
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
-}
-
-void FlickrWidget::slotExportHostTagsChecked()
-{
-    m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 }
 
 void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox,
@@ -508,13 +547,37 @@ void FlickrWidget::slotMainContentTypeChanged(int index)
     m_imglst->setContentTypes(static_cast<FlickrList::ContentType>(currValue));
 }
 
-void FlickrWidget::slotExtendedSettingsToggled(bool status)
+void FlickrWidget::slotExtendedPublicationToggled(bool status)
 {
-    /* Show or hide the extended settings when the extended settings button
-     * is toggled. */
-    m_extendedSettingsBox->setVisible(status);
+    // Show or hide the extended settings when the extended settings button
+    // is toggled.
+    m_extendedPublicationBox->setVisible(status);
     m_imglst->listView()->setColumnHidden(FlickrList::SAFETYLEVEL, !status);
     m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
+}
+
+void FlickrWidget::slotExtendedTagsToggled(bool status)
+{
+    // Show or hide the extended tag settings when the extended tag option
+    // button is toggled.
+    m_extendedTagsBox->setVisible(status);
+    if (!status)
+    {
+        m_imglst->listView()->setColumnHidden(FlickrList::TAGS, true);
+    }
+    else
+    {
+        m_imglst->listView()->setColumnHidden(FlickrList::TAGS,
+                !m_addExtraTagsCheckBox->isChecked());
+    }
+}
+
+void FlickrWidget::slotAddExtraTagsToggled(bool status)
+{
+    if (m_extendedTagsButton->isChecked())
+    {
+        m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !status);
+    }
 }
 
 } // namespace KIPIFlickrExportPlugin
