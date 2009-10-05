@@ -1,23 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KioExportImport
-Name[da]=KioExportImport
-Name[it]=Esportazione a KIO
-Name[nl]=KioExportImport
-Name[pt]=KioExportImport
-Name[pt_BR]=KioExportImport
-Name[tr]=Kio Dışarıya Aktar
-Name[uk]=KioExportImport
-Name[x-test]=xxKioExportImportxx
 Comment=A tool to export pictures to or import from a remote directory that is accessible via KIO.
-Comment[da]=Et værktøj til at eksportere billeder til en ekstern mappe som er tilgængelig via KIO.
-Comment[it]=Uno strumento per esportare immagini a una cartella remota accessibile con KIO.
-Comment[nl]=Een hulpmiddel om afbeeldingen naar een via KIO toegankelijke map te exporteren.
-Comment[pt]=Uma ferramenta para exportar imagens para uma pasta remota que esteja acessível por KIO.
-Comment[pt_BR]=Uma ferramenta para exportar imagens para um diretório remoto que é acessível via KIO.
-Comment[tr]=Resimleri KIO kullanarak uzak bir dizine aktarmak için bir araç.
-Comment[uk]=Інструмент для експорту зображень до віддалених каталогів, доступ до яких можна отримати за допомогою KIO.
-Comment[x-test]=xxA tool to export pictures to or import from a remote directory that is accessible via KIO.xx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexportimport
