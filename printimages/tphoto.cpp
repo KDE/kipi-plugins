@@ -36,9 +36,6 @@
 
 #include <libkdcraw/kdcraw.h>
 
-// Local includes
-// #include "utils.h"
-
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
 

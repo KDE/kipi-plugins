@@ -24,9 +24,6 @@
 #include "calselect.h"
 #include "calselect.moc"
 
-// Qt includes
-
-
 // KDE includes
 
 #include <kcalendarsystem.h>
