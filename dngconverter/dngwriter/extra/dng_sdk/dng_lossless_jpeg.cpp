@@ -47,7 +47,6 @@
 /*****************************************************************************/
 
 #include "dng_lossless_jpeg.h"
-
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 #include "dng_memory.h"

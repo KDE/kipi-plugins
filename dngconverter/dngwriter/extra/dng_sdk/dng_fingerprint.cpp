@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_fingerprint.h"
-
 #include "dng_assertions.h"
 #include "dng_flags.h"
 

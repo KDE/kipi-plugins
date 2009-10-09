@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_host.h"
-
 #include "dng_abort_sniffer.h"
 #include "dng_area_task.h"
 #include "dng_exceptions.h"

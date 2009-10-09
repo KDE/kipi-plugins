@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_pixel_buffer.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_flags.h"

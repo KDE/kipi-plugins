@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_1d_table.h"
-
 #include "dng_1d_function.h"
 #include "dng_memory.h"
 #include "dng_utils.h"

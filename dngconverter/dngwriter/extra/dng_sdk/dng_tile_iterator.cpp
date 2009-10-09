@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_tile_iterator.h"
-
 #include "dng_exceptions.h"
 #include "dng_image.h"
 #include "dng_pixel_buffer.h"

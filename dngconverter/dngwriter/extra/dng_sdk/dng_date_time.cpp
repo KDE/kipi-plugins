@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_date_time.h"
-
 #include "dng_exceptions.h"
 #include "dng_mutex.h"
 #include "dng_stream.h"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_render.h"
-
 #include "dng_1d_table.h"
 #include "dng_bottlenecks.h"
 #include "dng_camera_profile.h"

@@ -12,7 +12,6 @@
 /* $Author: tknoll $ */
 
 #include "dng_pthread.h"
-
 #include "dng_assertions.h"
 
 /*****************************************************************************/

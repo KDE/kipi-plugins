@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_xmp.h"
-
 #include "dng_assertions.h"
 #include "dng_date_time.h"
 #include "dng_exceptions.h"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_negative.h"
-
 #include "dng_abort_sniffer.h"
 #include "dng_bottlenecks.h"
 #include "dng_camera_profile.h"

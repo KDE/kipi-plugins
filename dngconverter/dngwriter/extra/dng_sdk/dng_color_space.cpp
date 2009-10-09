@@ -12,7 +12,6 @@
 /* $Author: tknoll $ */
 
 #include "dng_color_space.h"
-
 #include "dng_1d_table.h"
 #include "dng_exceptions.h"
 #include "dng_flags.h"

@@ -8,7 +8,6 @@
 
 #include "XMP_Environment.h"	// ! This must be the first include!
 #include "XMPCore_Impl.hpp"
-
 #include "XMPUtils.hpp"
 
 #include "MD5.h"
@@ -20,7 +19,6 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <errno.h>
-
 #include <stdio.h>	// For snprintf.
 
 #if XMP_WinBuild

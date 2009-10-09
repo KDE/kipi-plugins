@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_matrix.h"
-
 #include "dng_exceptions.h"
 #include "dng_utils.h"
 

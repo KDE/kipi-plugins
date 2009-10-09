@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_memory_stream.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_utils.h"

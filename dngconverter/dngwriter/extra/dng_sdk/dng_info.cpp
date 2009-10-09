@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_info.h"
-
 #include "dng_camera_profile.h"
 #include "dng_exceptions.h"
 #include "dng_globals.h"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_string_list.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_string.h"

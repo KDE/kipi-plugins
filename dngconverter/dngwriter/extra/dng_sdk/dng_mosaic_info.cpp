@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_mosaic_info.h"
-
 #include "dng_area_task.h"
 #include "dng_assertions.h"
 #include "dng_bottlenecks.h"

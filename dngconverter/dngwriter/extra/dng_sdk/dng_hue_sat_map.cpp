@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_hue_sat_map.h"
-
 #include "dng_assertions.h"
 #include "dng_auto_ptr.h"
 #include "dng_bottlenecks.h"

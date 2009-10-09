@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_xmp_sdk.h"
-
 #include "dng_auto_ptr.h"
 #include "dng_assertions.h"
 #include "dng_exceptions.h"

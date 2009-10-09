@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_image.h"
-
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 #include "dng_orientation.h"

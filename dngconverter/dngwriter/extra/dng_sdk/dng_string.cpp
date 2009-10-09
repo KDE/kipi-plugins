@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_string.h"
-
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 #include "dng_flags.h"

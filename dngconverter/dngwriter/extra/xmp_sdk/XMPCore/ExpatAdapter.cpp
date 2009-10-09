@@ -8,10 +8,8 @@
 
 #include "XMP_Environment.h"	// ! Must be the first #include!
 #include "XMPCore_Impl.hpp"
-
 #include "ExpatAdapter.hpp"
 #include "XMPMeta.hpp"
-
 #include "expat.h"
 
 #include <string.h>

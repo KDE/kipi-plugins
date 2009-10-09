@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_filter_task.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_image.h"

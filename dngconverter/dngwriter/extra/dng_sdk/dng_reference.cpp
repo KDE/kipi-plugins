@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_reference.h"
-
 #include "dng_1d_table.h"
 #include "dng_hue_sat_map.h"
 #include "dng_matrix.h"

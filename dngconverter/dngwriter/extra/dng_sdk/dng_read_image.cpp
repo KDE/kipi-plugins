@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_read_image.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_host.h"

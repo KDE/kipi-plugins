@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_xy_coord.h"
-
 #include "dng_matrix.h"
 #include "dng_utils.h"
 

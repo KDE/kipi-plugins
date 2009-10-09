@@ -12,7 +12,6 @@
 /* $Author: tknoll $ */
 
 #include "dng_mutex.h"
-
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 

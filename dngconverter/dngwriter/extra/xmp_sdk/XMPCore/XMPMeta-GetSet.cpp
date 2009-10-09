@@ -11,11 +11,9 @@
 
 #include "XMP_Environment.h"	// ! This must be the first include!
 #include "XMPCore_Impl.hpp"
-
 #include "XMPMeta.hpp"
 #include "XMPIterator.hpp"
 #include "XMPUtils.hpp"
-
 #include "XMP_Version.h"
 #include "UnicodeInlines.incl_cpp"
 #include "UnicodeConversions.hpp"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_parse_utils.h"
-
 #include "dng_date_time.h"
 #include "dng_globals.h"
 #include "dng_ifd.h"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_preview.h"
-
 #include "dng_assertions.h"
 #include "dng_image.h"
 #include "dng_image_writer.h"

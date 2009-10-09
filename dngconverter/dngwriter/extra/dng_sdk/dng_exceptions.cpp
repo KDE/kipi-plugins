@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_exceptions.h"
-
 #include "dng_flags.h"
 #include "dng_globals.h"
 

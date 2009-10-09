@@ -8,7 +8,6 @@
 
 #include "XMP_Environment.h"	// ! This must be the first include!
 #include "XMPCore_Impl.hpp"
-
 #include "XMPIterator.hpp"
 #include "client-glue/WXMPIterator.hpp"
 

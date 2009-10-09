@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_tone_curve.h"
-
 #include "dng_assertions.h"
 #include "dng_spline.h"
 #include "dng_utils.h"

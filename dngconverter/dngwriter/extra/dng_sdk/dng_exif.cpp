@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_exif.h"
-
 #include "dng_tag_codes.h"
 #include "dng_tag_types.h"
 #include "dng_parse_utils.h"

@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_resample.h"
-
 #include "dng_assertions.h"
 #include "dng_bottlenecks.h"
 #include "dng_filter_task.h"

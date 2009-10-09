@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_simple_image.h"
-
 #include "dng_memory.h"
 #include "dng_orientation.h"
 #include "dng_tag_types.h"

@@ -12,7 +12,6 @@
 /* $Author: tknoll $ */
 
 #include "dng_color_spec.h"
-
 #include "dng_assertions.h"
 #include "dng_camera_profile.h"
 #include "dng_exceptions.h"

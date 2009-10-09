@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_image_writer.h"
-
 #include "dng_bottlenecks.h"
 #include "dng_camera_profile.h"
 #include "dng_color_space.h"

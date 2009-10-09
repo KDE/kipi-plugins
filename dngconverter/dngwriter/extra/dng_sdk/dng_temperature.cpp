@@ -12,7 +12,6 @@
 /* $Author: tknoll $ */
 
 #include "dng_temperature.h"
-
 #include "dng_xy_coord.h"
 
 /*****************************************************************************/

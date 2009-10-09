@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_area_task.h"
-
 #include "dng_abort_sniffer.h"
 #include "dng_sdk_limits.h"
 #include "dng_tile_iterator.h"

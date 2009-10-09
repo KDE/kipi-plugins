@@ -14,7 +14,6 @@
 /*****************************************************************************/
 
 #include "dng_spline.h"
-
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 

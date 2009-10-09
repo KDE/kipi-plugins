@@ -41,6 +41,7 @@
 
 #include <libkipi/imageinfo.h>
 
+// Local includes
 
 #include "kipiplugins_export.h"
 
@@ -130,7 +131,7 @@ private Q_SLOTS:
 
 public:
     void enableDragAndDrop(const bool enable = true);
-    
+
 private:
 
     void dragEnterEvent(QDragEnterEvent *e);
