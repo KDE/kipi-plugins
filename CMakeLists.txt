@@ -82,14 +82,14 @@ ENDIF(NOT WIN32)
 INCLUDE(MacroOptionalDependPackage)
 
 # LINUX Only.
-IF(NOT WIN32 AND NOT APPLE)
+IF(NOT APPLE)
     MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
         IF(DEPEND_PACKAGE_KSane)
         MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
     ELSE(DEPEND_PACKAGE_KSane)
         SET(KSANE_FOUND FALSE)
     ENDIF(DEPEND_PACKAGE_KSane)
-ENDIF(NOT WIN32 AND NOT APPLE)
+ENDIF(NOT APPLE)
 
 # ==================================================================================================
 # Log messages
@@ -224,13 +224,15 @@ IF(NOT WIN32 AND NOT APPLE)
     ELSE(X11_FOUND AND X11_Xrandr_FOUND)
         MESSAGE(STATUS " libX11 library found................ NO  (optional)")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND)
+ENDIF(NOT WIN32 AND NOT APPLE)
 
+IF(NOT APPLE)
     IF(KSANE_FOUND)
         MESSAGE(STATUS " libksane library found.............. YES (optional)")
     ELSE(KSANE_FOUND)
         MESSAGE(STATUS " libksane library found.............. NO  (optional)")
     ENDIF(KSANE_FOUND)
-ENDIF(NOT WIN32 AND NOT APPLE)
+ENDIF(NOT APPLE)
 
 # Optional plugins results ----------------------------------------------------------------------------
 
@@ -260,12 +262,6 @@ IF(NOT WIN32 AND NOT APPLE)
         MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-    IF(SANE_FOUND AND KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
-    ELSE(SANE_FOUND AND KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-    ENDIF(SANE_FOUND AND KSANE_FOUND)
-
 ELSE(NOT WIN32 AND NOT APPLE)
 
     IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
@@ -277,6 +273,16 @@ ELSE(NOT WIN32 AND NOT APPLE)
     ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
 ENDIF(NOT WIN32 AND NOT APPLE)
+
+IF(NOT APPLE)
+
+    IF(SANE_FOUND AND KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
+    ELSE(SANE_FOUND AND KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
+    ENDIF(SANE_FOUND AND KSANE_FOUND)
+
+ENDIF(NOT APPLE)
 
 IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
     MESSAGE(STATUS " DNGConverter will be compiled....... YES (optional)")
