@@ -113,7 +113,6 @@ void Plugin_AcquireImages::slotActivate()
     if (!m_scanDlg)
     {
         m_scanDlg = new ScanDialog(m_interface, m_saneWidget, kapp->activeWindow());
-        m_scanDlg->show();
     }
     else
     {
@@ -122,6 +121,8 @@ void Plugin_AcquireImages::slotActivate()
 
         KWindowSystem::activateWindow(m_scanDlg->winId());
     }
+
+    m_scanDlg->show();
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
