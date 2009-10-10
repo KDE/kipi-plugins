@@ -23,10 +23,6 @@
 #include "plugin_acquireimages.h"
 #include "plugin_acquireimages.moc"
 
-// Qt includes
-
-#include <QPointer>
-
 // KDE includes
 
 #include <kaction.h>
@@ -60,7 +56,7 @@ K_PLUGIN_FACTORY( AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>(); 
 K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
 
 Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
-                    : KIPI::Plugin( AcquireImagesFactory::componentData(), parent, "AcquireImages")
+                    : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
     m_interface         = 0;
     m_action_scanimages = 0;
@@ -124,7 +120,7 @@ void Plugin_AcquireImages::slotActivate()
         if (m_scanDlg->isMinimized())
             KWindowSystem::unminimizeWindow(m_scanDlg->winId());
 
-	KWindowSystem::activateWindow(m_scanDlg->winId());
+        KWindowSystem::activateWindow(m_scanDlg->winId());
     }
 }
 
