@@ -39,6 +39,7 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kwindowsystem.h>
 
 // LibKSane includes
 
@@ -64,6 +65,8 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
     m_interface         = 0;
     m_action_scanimages = 0;
     m_parentWidget      = 0;
+    m_saneWidget        = 0;
+    m_scanDlg           = 0;
     kDebug(51001) << "Plugin_AcquireImages plugin loaded";
 }
 
@@ -95,23 +98,34 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 
 void Plugin_AcquireImages::slotActivate()
 {
-    KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
-
-    QString dev = saneWidget->selectDevice(0);
-    if (dev.isEmpty())
-        return;
-
-    if (!saneWidget->openDevice(dev))
+    if (!m_saneWidget)
     {
-        // could not open a scanner
-        KMessageBox::sorry(0, i18n("Cannot open scanner device."));
-        return;
+        m_saneWidget = new KSaneIface::KSaneWidget(0);
+
+        QString dev = m_saneWidget->selectDevice(0);
+        if (dev.isEmpty())
+            return;
+
+        if (!m_saneWidget->openDevice(dev))
+        {
+            // could not open a scanner
+            KMessageBox::sorry(0, i18n("Cannot open scanner device."));
+            return;
+        }
     }
 
-    QPointer <ScanDialog> dlg = new ScanDialog(m_interface, saneWidget, kapp->activeWindow());
-    dlg->exec();
+    if (!m_scanDlg)
+    {
+        m_scanDlg = new ScanDialog(m_interface, m_saneWidget, kapp->activeWindow());
+        m_scanDlg->show();
+    }
+    else
+    {
+        if (m_scanDlg->isMinimized())
+            KWindowSystem::unminimizeWindow(m_scanDlg->winId());
 
-    delete dlg;
+	KWindowSystem::activateWindow(m_scanDlg->winId());
+    }
 }
 
 KIPI::Category Plugin_AcquireImages::category( KAction* action ) const

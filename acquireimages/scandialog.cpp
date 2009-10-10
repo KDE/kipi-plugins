@@ -81,15 +81,15 @@ public:
     KSaneIface::KSaneWidget  *m_saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget *saneWidget, QWidget *parent)
-          : KDialog(parent), d(new ScanDialogPriv)
+ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* saneWidget, QWidget* /*parent*/)
+          : KDialog(0), d(new ScanDialogPriv)
 {
     d->m_saneWidget = saneWidget;
     d->m_interface  = kinterface;
 
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
-    setModal(true);
+    setModal(false);
 
     setMainWidget(d->m_saneWidget);
 

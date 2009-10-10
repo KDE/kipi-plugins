@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <QVariant>
+#include <QPointer>
 
 // LibKIPI includes
 
@@ -40,6 +41,16 @@ namespace KIPI
     class Interface;
 }
 
+namespace KSaneIface
+{
+    class KSaneWidget;
+}
+
+namespace KIPIAcquireImagesPlugin
+{
+    class ScanDialog;
+}
+
 class Plugin_AcquireImages : public KIPI::Plugin
 {
     Q_OBJECT
@@ -49,8 +60,8 @@ public:
     Plugin_AcquireImages(QObject *parent, const QVariantList &args);
     virtual ~Plugin_AcquireImages();
 
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    KIPI::Category category( KAction* action ) const;
+    void setup( QWidget* );
 
 public Q_SLOTS:
 
@@ -58,11 +69,15 @@ public Q_SLOTS:
 
 private:
 
-    QWidget         *m_parentWidget;
+    QWidget                                        *m_parentWidget;
 
-    KAction         *m_action_scanimages;
+    KAction                                        *m_action_scanimages;
 
-    KIPI::Interface *m_interface;
+    KSaneIface::KSaneWidget                        *m_saneWidget;
+
+    KIPI::Interface                                *m_interface;
+
+    QPointer <KIPIAcquireImagesPlugin::ScanDialog>  m_scanDlg;
 };
 
 #endif /* PLUGIN_ACQUIREIMAGES_H */
