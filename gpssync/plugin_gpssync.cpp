@@ -105,7 +105,7 @@ void Plugin_GPSSync::setup( QWidget* widget )
     addAction( m_action_geolocation );
 
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
-    m_actionKMLExport->setText(i18n("KML Export..."));
+    m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-internet"));
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
