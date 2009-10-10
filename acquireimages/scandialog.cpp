@@ -69,52 +69,52 @@ public:
 
     ScanDialogPriv()
     {
-        saneWidget = 0;
-        interface  = 0;
-        about      = 0;
+        m_saneWidget = 0;
+        m_interface  = 0;
+        m_about      = 0;
     }
 
-    KIPI::Interface          *interface;
+    KIPI::Interface          *m_interface;
 
-    KIPIPlugins::KPAboutData *about;
+    KIPIPlugins::KPAboutData *m_about;
 
-    KSaneIface::KSaneWidget  *saneWidget;
+    KSaneIface::KSaneWidget  *m_saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget, QWidget *parent)
+ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget *saneWidget, QWidget *parent)
           : KDialog(parent), d(new ScanDialogPriv)
 {
-    d->saneWidget = saneWidget;
-    d->interface  = interface;
+    d->m_saneWidget = saneWidget;
+    d->m_interface  = kinterface;
 
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(true);
 
-    setMainWidget(d->saneWidget);
+    setMainWidget(d->m_saneWidget);
 
     // -- About data and help button ----------------------------------------
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
+    d->m_about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to acquire images using a flat scanner"),
                    ki18n("(c) 2003-2009, Gilles Caulier\n"
                          "(c) 2007-2009, Kare Sars"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Author"),
-                        "caulier dot gilles at gmail dot com");
+    d->m_about->addAuthor(ki18n("Gilles Caulier"),
+                          ki18n("Author"),
+                          "caulier dot gilles at gmail dot com");
 
-    d->about->addAuthor(ki18n("Kare Sars"),
-                        ki18n("Developer"),
-                        "kare dot sars at kolumbus dot fi");
+    d->m_about->addAuthor(ki18n("Kare Sars"),
+                          ki18n("Developer"),
+                          "kare dot sars at kolumbus dot fi");
 
-    d->about->addAuthor(ki18n("Angelo Naselli"),
-                        ki18n("Developer"),
-                        "anaselli at linux dot it");
+    d->m_about->addAuthor(ki18n("Angelo Naselli"),
+                          ki18n("Developer"),
+                          "anaselli at linux dot it");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
@@ -131,13 +131,13 @@ ScanDialog::ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *sane
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->saneWidget, SIGNAL(imageReady(QByteArray &, int, int, int, int)),
+    connect(d->m_saneWidget, SIGNAL(imageReady(QByteArray &, int, int, int, int)),
             this, SLOT(slotSaveImage(QByteArray &, int, int, int, int)));
 }
 
 ScanDialog::~ScanDialog()
 {
-    delete d->about;
+    delete d->m_about;
     delete d;
 }
 
@@ -164,7 +164,7 @@ void ScanDialog::slotClose()
 
 void ScanDialog::closeEvent(QCloseEvent *e)
 {
-    d->saneWidget->scanCancel();
+    d->m_saneWidget->scanCancel();
     saveSettings();
     e->accept();
 }
@@ -191,7 +191,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->interface->currentAlbum().uploadPath(),
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->m_interface->currentAlbum().uploadPath(),
                                                                 QString(), 0);
 
     imageFileSaveDialog->setModal(false);
@@ -269,7 +269,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
 
     KSaneIface::KSaneWidget::ImageFormat frmt = (KSaneIface::KSaneWidget::ImageFormat)ksaneformat;
 
-    QImage img      = d->saneWidget->toQImage(ksane_data, width, height, bytes_per_line, frmt);
+    QImage img      = d->m_saneWidget->toQImage(ksane_data, width, height, bytes_per_line, frmt);
     QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
@@ -281,10 +281,10 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
         meta.setImagePreview(prev);
     meta.setExifThumbnail(thumb);
     meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
-    meta.setExifTagString("Exif.Image.Make", d->saneWidget->make());
-    meta.setXmpTagString("Xmp.tiff.Make", d->saneWidget->make());
-    meta.setExifTagString("Exif.Image.Model", d->saneWidget->model());
-    meta.setXmpTagString("Xmp.tiff.Model", d->saneWidget->model());
+    meta.setExifTagString("Exif.Image.Make", d->m_saneWidget->make());
+    meta.setXmpTagString("Xmp.tiff.Make", d->m_saneWidget->make());
+    meta.setExifTagString("Exif.Image.Model", d->m_saneWidget->model());
+    meta.setXmpTagString("Xmp.tiff.Model", d->m_saneWidget->model());
     meta.setImageDateTime(QDateTime::currentDateTime());
     meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
     meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
@@ -318,7 +318,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
         img.save(newURL.path(), format.toAscii().data());
     }
 
-    d->interface->refreshImages( KUrl::List(newURL) );
+    d->m_interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
 
     delete imageFileSaveDialog;
