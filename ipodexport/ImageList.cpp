@@ -77,5 +77,4 @@ void ImageList::droppedImagesItems(const QList<QUrl>& urls)
     }
 }
 
-
 } // namespace KIPIIpodExportPlugin

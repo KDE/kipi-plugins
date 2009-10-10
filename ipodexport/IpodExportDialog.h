@@ -7,6 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +47,7 @@ extern "C"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "imagedialog.h"
-#endif
+#endif // KIPI_PLUGIN
 
 class QGroupBox;
 class QLabel;
@@ -124,34 +125,34 @@ private:
     bool openDevice(); // connect to the ipod
 
 #if KIPI_PLUGIN
-    Interface       *m_interface;
-    KPAboutData     *m_about;
+    Interface           *m_interface;
+    KPAboutData         *m_about;
 #endif
 
-    Itdb_PhotoDB    *m_itdb;
-    Itdb_IpodInfo   *m_ipodInfo;
-    IpodHeader      *m_ipodHeader;
-    bool             m_transferring;
+    Itdb_PhotoDB        *m_itdb;
+    Itdb_IpodInfo       *m_ipodInfo;
+    IpodHeader          *m_ipodHeader;
+    bool                 m_transferring;
 
-    QGroupBox       *m_destinationBox;
-    QGroupBox       *m_urlListBox;
+    QGroupBox           *m_destinationBox;
+    QGroupBox           *m_urlListBox;
 
-    QPushButton     *m_createAlbumButton;
-    QPushButton     *m_removeAlbumButton;
-    QPushButton     *m_renameAlbumButton;
-    QPushButton     *m_addImagesButton;
-    QPushButton     *m_remImagesButton;
-    QPushButton     *m_transferImagesButton;
+    QPushButton         *m_createAlbumButton;
+    QPushButton         *m_removeAlbumButton;
+    QPushButton         *m_renameAlbumButton;
+    QPushButton         *m_addImagesButton;
+    QPushButton         *m_remImagesButton;
+    QPushButton         *m_transferImagesButton;
 
-    QLabel          *m_imagePreview;
-    QLabel          *m_ipodPreview;
+    QLabel              *m_imagePreview;
+    QLabel              *m_ipodPreview;
 
-    QString          m_mountPoint;
-    QString          m_deviceNode;
+    QString              m_mountPoint;
+    QString              m_deviceNode;
 
-    ImageList       *m_ipodAlbumList;
+    ImageList           *m_ipodAlbumList;
 
-    ImageList       *m_uploadList;
+    ImageList           *m_uploadList;
 
     static UploadDialog *s_instance;
 };

@@ -7,6 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,7 +24,11 @@
 #ifndef PLUGIN_IPODEXPORT_H
 #define PLUGIN_IPODEXPORT_H
 
+// Qt includes.
+
 #include <QVariant>
+
+// libkipi includes.
 
 #include <libkipi/plugin.h>
 
@@ -34,24 +39,34 @@ namespace KIPI
     class Interface;
 }
 
+namespace KIPIIpodExportPlugin
+{
+    class UploadDialog;
+}
+
 class Plugin_iPodExport : public KIPI::Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_iPodExport( QObject *parent, const QVariantList&args);
+    Plugin_iPodExport(QObject *parent, const QVariantList& args);
     ~Plugin_iPodExport() {};
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget* widget);
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget* widget);
 
 private Q_SLOTS:
+
     void slotImageUpload();
 
 private:
-    KAction         *m_actionImageUpload;
-    KIPI::Interface *m_interface;
+
+    KAction                            *m_actionImageUpload;
+
+    KIPI::Interface                    *m_interface;
+
+    KIPIIpodExportPlugin::UploadDialog *m_dlgImageUpload;
 };
 
-#endif //PLUGIN_IPODEXPORT_H
+#endif // PLUGIN_IPODEXPORT_H

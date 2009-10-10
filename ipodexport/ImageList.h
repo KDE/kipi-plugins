@@ -26,7 +26,6 @@
 #include <QTreeWidget>
 
 namespace KIPIIpodExportPlugin
-
 {
 
 class ImageList : public QTreeWidget

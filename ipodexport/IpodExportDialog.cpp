@@ -7,6 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +21,13 @@
  *
  * ============================================================ */
 
+#include "IpodExportDialog.h"
+#include "IpodExportDialog.moc"
+
 // System Includes
-extern "C" {
+
+extern "C"
+{
 #include <gdk-pixbuf/gdk-pixbuf.h>
 }
 
@@ -30,7 +36,6 @@ extern "C" {
 #include "IpodHeader.h"
 #include "ImageList.h"
 #include "ImageListItem.h"
-#include "IpodExportDialog.h"
 #include "IpodListItem.h"
 
 // Qt includes
@@ -74,12 +79,13 @@ namespace KIPIIpodExportPlugin
 
 UploadDialog *UploadDialog::s_instance = 0;
 
-UploadDialog::UploadDialog(
+UploadDialog::UploadDialog
+(
 #if KIPI_PLUGIN
     KIPI::Interface* interface,
 #endif
-    const QString &caption, QWidget *parent )
-    : KDialog( parent )
+    const QString &caption, QWidget* /*parent*/ )
+    : KDialog(0)
 #if KIPI_PLUGIN
     , m_interface( interface )
 #endif
@@ -106,7 +112,8 @@ UploadDialog::UploadDialog(
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A tool to export image to an iPod device"),
-                                           ki18n("(c) 2006-2008, Seb Ruiz"));
+                                           ki18n("(c) 2006-2008, Seb Ruiz\n"
+                                                 "(c) 2008-2009, Gilles Caulier"));
 
     m_about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
                        "ruiz@kde.org");
@@ -114,16 +121,18 @@ UploadDialog::UploadDialog(
     m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
 
-    disconnect( this, SIGNAL( helpClicked() ), this, SLOT( slotHelp() ) );
+    // ------------------------------------------------------------
+
+    disconnect(this, SIGNAL( helpClicked() ),
+               this, SLOT( slotHelp() ) );
 
     KHelpMenu* helpMenu = new KHelpMenu( this, m_about, false );
-
-    QAction *handbook = new QAction( i18n("Plugin Handbook"), this );
-    connect( handbook, SIGNAL( triggered(bool) ), this, SLOT( slotHelp() ) );
+    QAction *handbook   = new QAction( i18n("Plugin Handbook"), this );
+    connect(handbook, SIGNAL( triggered(bool) ),
+            this, SLOT( slotHelp() ) );
 
     helpMenu->menu()->removeAction( helpMenu->menu()->actions().first() );
     helpMenu->menu()->insertAction( helpMenu->menu()->actions().first(), handbook );
-
     button( Help )->setDelayedMenu( helpMenu->menu() );
 
     // ------------------------------------------------------------
@@ -692,7 +701,6 @@ void UploadDialog::addUrlToList( QString file )
     delete fi;
 }
 
-
 bool UploadDialog::openDevice()
 {
     if( m_itdb )
@@ -791,7 +799,9 @@ bool UploadDialog::openDevice()
             itdb_photodb_write( m_itdb, &err );
         }
         else
+        {
             return false;
+        }
     }
 
     return true;
@@ -821,7 +831,6 @@ QString UploadDialog::ipodModel() const
 
     return QString::null;
 }
-
 
 void UploadDialog::refreshDevices()
 {

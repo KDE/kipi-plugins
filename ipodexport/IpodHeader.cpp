@@ -21,7 +21,7 @@
  * ============================================================ */
 
 #include "IpodHeader.h"
-#include "IpodExportDialog.h"
+#include "IpodHeader.moc"
 
 #include <KLocale>
 #include <KPushButton>
@@ -29,6 +29,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFrame>
+
+#include "IpodExportDialog.h"
 
 namespace KIPIIpodExportPlugin
 {
