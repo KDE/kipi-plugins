@@ -7,7 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -26,11 +26,13 @@
 #include "fbwindow.moc"
 
 // Qt includes
+
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
 
 // KDE includes
+
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
@@ -44,9 +46,11 @@
 #include <KToolInvocation>
 
 // LibKExiv2 includes
+
 #include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes
+
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
@@ -55,12 +59,14 @@
 #endif
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
 // Local includes
+
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
@@ -70,16 +76,16 @@ namespace KIPIFacebookPlugin
 {
 
 FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
-                   bool import, QWidget *parent)
-            : KDialog(parent)
+                   bool import, QWidget* /*parent*/)
+        : KDialog(0)
 {
     m_tmpPath.clear();
-    m_tmpDir                 = tmpFolder;
-    m_interface              = interface;
-    m_import                 = import;
-    m_imagesCount            = 0;
-    m_imagesTotal            = 0;
-    m_widget                 = new FbWidget(this, interface, import);
+    m_tmpDir      = tmpFolder;
+    m_interface   = interface;
+    m_import      = import;
+    m_imagesCount = 0;
+    m_imagesTotal = 0;
+    m_widget      = new FbWidget(this, interface, import);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("facebook"));
@@ -104,6 +110,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
         m_widget->setMinimumSize(700, 500);
     }
 
+    // ------------------------------------------------------------------------
 
     connect(m_widget->m_imgList, SIGNAL( signalImageListChanged()),
             this, SLOT( slotImageListChanged()) );
@@ -127,12 +134,13 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
             this, SLOT( slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
+
     m_about = new KIPIPlugins::KPAboutData(ki18n("Facebook Import/Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to import/export image collection "
                             "to/from Facebook web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
-                            "(c) 2008, Gilles Caulier\n"
+                            "(c) 2008-2009, Gilles Caulier\n"
                             "(c) 2008-2009, Luka Renko"));
 
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
@@ -187,9 +195,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalListFriendsDone(int, const QString&, const QList <FbUser>&) ),
             this, SLOT( slotListFriendsDone(int, const QString&, const QList <FbUser>&) ));
 
-
     // ------------------------------------------------------------------------
-
 
     readSettings();
 
@@ -208,8 +214,8 @@ void FbWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
-    m_sessionKey = grp.readEntry("Session Key");
-    m_sessionSecret = grp.readEntry("Session Secret");
+    m_sessionKey     = grp.readEntry("Session Key");
+    m_sessionSecret  = grp.readEntry("Session Secret");
     m_sessionExpires = grp.readEntry("Session Expires", 0);
     m_currentAlbumID = grp.readEntry("Current Album", -1LL);
 
@@ -244,13 +250,13 @@ void FbWindow::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
-    grp.writeEntry("Session Key", m_sessionKey);
-    grp.writeEntry("Session Secret", m_sessionSecret);
+    grp.writeEntry("Session Key",     m_sessionKey);
+    grp.writeEntry("Session Secret",  m_sessionSecret);
     grp.writeEntry("Session Expires", m_sessionExpires);
-    grp.writeEntry("Current Album", m_currentAlbumID);
-    grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
-    grp.writeEntry("Maximum Width",  m_widget->m_dimensionSpB->value());
-    grp.writeEntry("Image Quality",  m_widget->m_imageQualitySpB->value());
+    grp.writeEntry("Current Album",   m_currentAlbumID);
+    grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
+    grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
+    grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Facebook Import Dialog");
@@ -368,6 +374,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     {
         m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
     }
+
     for (int i = 0; i < albumsList.size(); ++i)
     {
         QString albumIcon;
@@ -395,7 +402,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
-void FbWindow::slotListPhotosDone(int errCode, const QString &errMsg,
+void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg,
                                   const QList <FbPhoto>& photosList)
 {
     if (errCode != 0)
@@ -430,7 +437,7 @@ void FbWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     downloadNextPhoto();
 }
 
-void FbWindow::slotListFriendsDone(int errCode, const QString &errMsg,
+void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg,
                                    const QList <FbUser>& friendsList)
 {
     if (errCode != 0)
@@ -621,7 +628,9 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
         KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
     }
     else
+    {
         image.load(imgPath);
+    }
 
     if (image.isNull())
         return false;
@@ -652,7 +661,9 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
         exiv2Iface.save(m_tmpPath);
     }
     else
+    {
         caption.clear();
+    }
 
     return true;
 }

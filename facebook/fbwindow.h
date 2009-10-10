@@ -7,7 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -26,15 +26,19 @@
 #define FBWINDOW_H
 
 // Qt includes
+
 #include <QList>
 
 // KDE includes
+
 #include <KDialog>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 
 // LibKExiv2 includes
+
 #include <libkexiv2/kexiv2.h>
 
 class KProgressDialog;
@@ -117,30 +121,30 @@ private:
 
 private:
 
-    bool                        m_import;
-    unsigned int                m_imagesCount;
-    unsigned int                m_imagesTotal;
-    QString                     m_tmpDir;
-    QString                     m_tmpPath;
+    bool                      m_import;
+    unsigned int              m_imagesCount;
+    unsigned int              m_imagesTotal;
+    QString                   m_tmpDir;
+    QString                   m_tmpPath;
 
-    long long                   m_profileAID;
-    long long                   m_currentAlbumID;
-    QString                     m_sessionKey;
-    QString                     m_sessionSecret;
-    unsigned int                m_sessionExpires;
+    long long                 m_profileAID;
+    long long                 m_currentAlbumID;
+    QString                   m_sessionKey;
+    QString                   m_sessionSecret;
+    unsigned int              m_sessionExpires;
 
-    KProgressDialog            *m_progressDlg;
-    KProgressDialog            *m_authProgressDlg;
+    KProgressDialog          *m_progressDlg;
+    KProgressDialog          *m_authProgressDlg;
 
-    KUrl::List                  m_transferQueue;
+    KUrl::List                m_transferQueue;
 
-    FbTalker                   *m_talker;
-    FbWidget                   *m_widget;
-    FbNewAlbum                 *m_albumDlg;
+    FbTalker                 *m_talker;
+    FbWidget                 *m_widget;
+    FbNewAlbum               *m_albumDlg;
 
-    KIPI::Interface            *m_interface;
+    KIPI::Interface          *m_interface;
 
-    KIPIPlugins::KPAboutData   *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 } // namespace KIPIFacebookPlugin
