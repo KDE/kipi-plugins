@@ -53,6 +53,7 @@ extern "C"
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kwindowsystem.h>
 
 // LibKDcraw includes
 
@@ -76,13 +77,16 @@ K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &)
-                   : KIPI::Plugin( RawConverterFactory::componentData(), parent, "RawConverter")
+                   : KIPI::Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug(51001) << "Plugin_RawConverter plugin loaded";
 }
 
 void Plugin_RawConverter::setup( QWidget* widget )
 {
+    m_singleDlg = 0;
+    m_batchDlg  = 0;
+
     KIPI::Plugin::setup( widget );
 
     KGlobal::locale()->insertCatalog("libkdcraw");
@@ -112,11 +116,11 @@ void Plugin_RawConverter::setup( QWidget* widget )
            return;
     }
 
-    connect( interface, SIGNAL( selectionChanged( bool ) ),
-             m_singleAction, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(selectionChanged(bool)),
+            m_singleAction, SLOT(setEnabled(bool)));
 
-    connect( interface, SIGNAL( currentAlbumChanged( bool ) ),
-             m_batchAction, SLOT( setEnabled( bool ) ) );
+    connect(interface, SIGNAL(currentAlbumChanged(bool)),
+            m_batchAction, SLOT(setEnabled(bool)));
 }
 
 Plugin_RawConverter::~Plugin_RawConverter()
@@ -157,14 +161,14 @@ void Plugin_RawConverter::slotActivateSingle()
         return;
     }
 
-    KIPI::ImageCollection images;
-    images = interface->currentSelection();
+    KIPI::ImageCollection images = interface->currentSelection();
 
     if (!images.isValid())
         return;
 
     if (!checkBinaries())
         return;
+
     if ( images.images().isEmpty() )
         return;
 
@@ -175,10 +179,18 @@ void Plugin_RawConverter::slotActivateSingle()
         return;
     }
 
-    KIPIRawConverterPlugin::SingleDialog *converter =
-        new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface);
+    if (!m_singleDlg)
+    {
+        m_singleDlg = new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface);
+        m_singleDlg->show();
+    }
+    else
+    {
+        if (m_singleDlg->isMinimized())
+            KWindowSystem::unminimizeWindow(m_singleDlg->winId());
 
-    converter->show();
+        KWindowSystem::activateWindow(m_singleDlg->winId());
+    }
 }
 
 void Plugin_RawConverter::slotActivateBatch()
@@ -199,9 +211,6 @@ void Plugin_RawConverter::slotActivateBatch()
     if (!checkBinaries())
         return;
 
-    KIPIRawConverterPlugin::BatchDialog *converter =
-        new KIPIRawConverterPlugin::BatchDialog(interface);
-
     KUrl::List urls = images.images();
     KUrl::List items;
 
@@ -211,8 +220,20 @@ void Plugin_RawConverter::slotActivateBatch()
             items.append((*it));
     }
 
-    converter->addItems(items);
-    converter->show();
+    if (!m_batchDlg)
+    {
+        m_batchDlg = new KIPIRawConverterPlugin::BatchDialog(interface);
+        m_batchDlg->show();
+    }
+    else
+    {
+        if (m_batchDlg->isMinimized())
+            KWindowSystem::unminimizeWindow(m_batchDlg->winId());
+
+        KWindowSystem::activateWindow(m_batchDlg->winId());
+    }
+
+    m_batchDlg->addItems(items);
 }
 
 KIPI::Category Plugin_RawConverter::category( KAction* action ) const

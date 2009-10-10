@@ -35,6 +35,12 @@
 
 class KAction;
 
+namespace KIPIRawConverterPlugin
+{
+    class SingleDialog;
+    class BatchDialog;
+}
+
 class Plugin_RawConverter : public KIPI::Plugin
 {
     Q_OBJECT
@@ -59,8 +65,11 @@ private Q_SLOTS:
 
 private:
 
-    KAction *m_singleAction;
-    KAction *m_batchAction;
+    KAction                              *m_singleAction;
+    KAction                              *m_batchAction;
+
+    KIPIRawConverterPlugin::SingleDialog *m_singleDlg;
+    KIPIRawConverterPlugin::BatchDialog  *m_batchDlg;
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */
