@@ -54,8 +54,8 @@ namespace KIPIKioExportPlugin
 const QString KioExportWindow::TARGET_URL_PROPERTY = "targetUrl";
 const QString KioExportWindow::CONFIG_GROUP        = "KioExport";
 
-KioExportWindow::KioExportWindow(QWidget *parent, KIPI::Interface *interface)
-               : KDialog(parent), m_interface(interface)
+KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface)
+               : KDialog(0), m_interface(interface)
 {
     if (!interface)
     {

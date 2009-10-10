@@ -21,6 +21,7 @@
  * ============================================================ */
 
 #include "KioImportWindow.h"
+#include "KioImportWindow.moc"
 
 // Qt includes
 
@@ -52,8 +53,8 @@
 namespace KIPIKioExportPlugin
 {
 
-KioImportWindow::KioImportWindow(QWidget *parent, KIPI::Interface *interface)
-               : KDialog(parent), m_interface(interface)
+KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface *interface)
+               : KDialog(0), m_interface(interface)
 {
     if (!interface)
     {

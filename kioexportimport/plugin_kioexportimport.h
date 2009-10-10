@@ -34,6 +34,12 @@
 
 class KAction;
 
+namespace KIPIKioExportPlugin
+{
+    class KioExportWindow;
+    class KioImportWindow;
+}
+
 /**
  * Plugin starter class.
  */
@@ -45,8 +51,8 @@ public:
 
     Plugin_KioExportImport(QObject *parent, const QVariantList& args);
 
-    virtual KIPI::Category category(KAction* action) const;
-    virtual void setup(QWidget* widget);
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget* widget);
 
 private Q_SLOTS:
 
@@ -62,8 +68,11 @@ private Q_SLOTS:
 
 private:
 
-    KAction *m_actionExport;
-    KAction *m_actionImport;
+    KAction                              *m_actionExport;
+    KAction                              *m_actionImport;
+
+    KIPIKioExportPlugin::KioExportWindow *m_dlgExport;
+    KIPIKioExportPlugin::KioImportWindow *m_dlgImport;
 };
 
 #endif //PLUGIN_KIOEXPORT_H

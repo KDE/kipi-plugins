@@ -24,6 +24,7 @@
 // Local includes
 
 #include "plugin_kioexportimport.h"
+#include "plugin_kioexportimport.moc"
 
 // KDE includes
 
@@ -36,6 +37,7 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kfiledialog.h>
+#include <kwindowsystem.h>
 
 // LibKipi includes
 
@@ -61,6 +63,9 @@ Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantLi
 
 void Plugin_KioExportImport::setup(QWidget* widget)
 {
+    m_dlgExport = 0;
+    m_dlgImport = 0;
+
     KIPI::Plugin::setup(widget);
 
     // export
@@ -107,8 +112,20 @@ void Plugin_KioExportImport::slotActivateExport()
         return;
     }
 
-    KioExportWindow *window = new KioExportWindow(kapp->activeWindow(), interface);
-    window->show();
+    if (!m_dlgExport)
+    {
+        // We clean it up in the close button
+        m_dlgExport = new KioExportWindow(kapp->activeWindow(), interface);
+    }
+    else
+    {
+        if (m_dlgExport->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgExport->winId());
+
+        KWindowSystem::activateWindow(m_dlgExport->winId());
+    }
+
+    m_dlgExport->show();
 }
 
 void Plugin_KioExportImport::slotActivateImport()
@@ -122,8 +139,20 @@ void Plugin_KioExportImport::slotActivateImport()
         return;
     }
 
-    KioImportWindow *window = new KioImportWindow(kapp->activeWindow(), interface);
-    window->show();
+    if (!m_dlgImport)
+    {
+        // We clean it up in the close button
+        m_dlgImport = new KioImportWindow(kapp->activeWindow(), interface);
+    }
+    else
+    {
+        if (m_dlgImport->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgImport->winId());
+
+        KWindowSystem::activateWindow(m_dlgImport->winId());
+    }
+
+    m_dlgImport->show();
 }
 
 KIPI::Category Plugin_KioExportImport::category(KAction* action) const
