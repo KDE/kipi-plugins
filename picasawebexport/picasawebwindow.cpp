@@ -71,8 +71,7 @@ namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget* /*parent*/)
-               : KDialog(0),
-                 m_tmp(tmpFolder)
+               : KDialog(0), m_tmp(tmpFolder)
 {
     setWindowTitle(i18n("Export to Picasa Web Service"));
     setWindowIcon(KIcon("picasa"));
@@ -190,9 +189,9 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     KConfig config("kipirc");
     KConfigGroup grp = config.group( "PicasawebExport Settings");
     QString token    = grp.readEntry("token");
-    kDebug(51000) << "Read token from database to be " << token ;
     QString username = grp.readEntry("username");
     QString password = grp.readEntry("password");
+    kDebug(51000) << "Read token from database to be " << token ;
 
     //no saving password rt now
     if (grp.readEntry("Resize", false))
@@ -255,23 +254,20 @@ void PicasawebWindow::saveSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("PicasawebExport Settings");
     kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
-    grp.writeEntry("token", m_talker->token());
-    grp.writeEntry("username", m_username);
-    grp.writeEntry("Resize", m_resizeCheckBox->isChecked());
-    grp.writeEntry("Maximum Width",  m_dimensionSpinBox->value());
-    grp.writeEntry("Image Quality",  m_imageQualitySpinBox->value());
+    grp.writeEntry("token",         m_talker->token());
+    grp.writeEntry("username",      m_username);
+    grp.writeEntry("Resize",        m_resizeCheckBox->isChecked());
+    grp.writeEntry("Maximum Width", m_dimensionSpinBox->value());
+    grp.writeEntry("Image Quality", m_imageQualitySpinBox->value());
 }
 
 PicasawebWindow::~PicasawebWindow()
 {
-    // write config
     delete m_urls;
-
     delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;
-
     delete m_about;
 }
 
@@ -313,7 +309,7 @@ void PicasawebWindow::slotGetAlbumsListSucceeded()
         QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
         while(it != list->end())
         {
-            PicasaWebAlbum pwa=*it;
+            PicasaWebAlbum pwa = *it;
             m_albumsListComboBox->addItem(pwa.title, pwa.id);
             it++;
         }
@@ -424,7 +420,6 @@ void PicasawebWindow::slotAddPhotos()
 
 void PicasawebWindow::slotUploadImages()
 {
-
     if (m_albumsListComboBox->currentIndex() == -1) 
     {
         KMessageBox::error(this, 
@@ -508,7 +503,6 @@ void PicasawebWindow::slotUploadImages()
     slotAddPhotoNext();
 }
 
-
 void PicasawebWindow::slotAddPhotoNext()
 {
     if ( m_uploadQueue.isEmpty() )
@@ -524,8 +518,10 @@ void PicasawebWindow::slotAddPhotoNext()
     FPhotoInfo info=pathComments.second;
     m_uploadQueue.pop_front();
 
-/*    int upload_image_size;
-    int upload_image_quality;*/
+/*
+    int upload_image_size;
+    int upload_image_quality;
+*/
 
     bool res = m_talker->addPhoto(pathComments.first,          //the file path
                                   info, m_currentAlbumId,
@@ -583,7 +579,6 @@ void PicasawebWindow::slotAddPhotoCancel()
     m_uploadQueue.clear();
     m_progressDlg->reset();
     m_progressDlg->hide();
-
     m_talker->cancel();
 
     // refresh the thumbnails

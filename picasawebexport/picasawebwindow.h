@@ -47,9 +47,9 @@ class QPushButton;
 class QRadioButton;
 class QSpinBox;
 class QCheckBox;
+
 class KLineEdit;
 class KComboBox;
-
 class KHTMLPart;
 class KUrl;
 
