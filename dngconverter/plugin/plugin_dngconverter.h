@@ -33,6 +33,11 @@
 
 class KAction;
 
+namespace KIPIDNGConverterPlugin
+{
+    class BatchDialog;
+}
+
 class Plugin_DNGConverter : public KIPI::Plugin
 {
     Q_OBJECT
@@ -57,7 +62,9 @@ private Q_SLOTS:
 
 private:
 
-    KAction *m_action;
+    KAction                             *m_action;
+
+    KIPIDNGConverterPlugin::BatchDialog *m_batchDlg;
 };
 
 #endif /* PLUGIN_DNGCONVERTER_H */

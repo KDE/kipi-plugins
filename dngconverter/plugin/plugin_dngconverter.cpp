@@ -38,6 +38,7 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kwindowsystem.h>
 
 // LibKDcraw includes
 
@@ -66,6 +67,8 @@ Plugin_DNGConverter::Plugin_DNGConverter(QObject *parent, const QVariantList &)
 
 void Plugin_DNGConverter::setup( QWidget* widget )
 {
+    m_batchDlg = 0;
+
     KIPI::Plugin::setup( widget );
 
     m_action = actionCollection()->addAction("dngconverter");
@@ -78,10 +81,10 @@ void Plugin_DNGConverter::setup( QWidget* widget )
     addAction(m_action);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
-    if ( !interface )
+    if (!interface)
     {
-           kError( 51000 ) << "Kipi interface is null!";
-           return;
+        kError( 51000 ) << "Kipi interface is null!";
+        return;
     }
 
     connect(interface, SIGNAL(currentAlbumChanged(bool)),
@@ -121,8 +124,6 @@ void Plugin_DNGConverter::slotActivate()
     if (!images.isValid())
         return;
 
-    BatchDialog *converter = new BatchDialog(interface, new DNGConverterAboutData);
-
     KUrl::List urls = images.images();
     KUrl::List items;
 
@@ -132,8 +133,20 @@ void Plugin_DNGConverter::slotActivate()
             items.append((*it));
     }
 
-    converter->addItems(items);
-    converter->show();
+    if (!m_batchDlg)
+    {
+        m_batchDlg = new BatchDialog(interface, new DNGConverterAboutData);
+    }
+    else
+    {
+        if (m_batchDlg->isMinimized())
+            KWindowSystem::unminimizeWindow(m_batchDlg->winId());
+
+        KWindowSystem::activateWindow(m_batchDlg->winId());
+    }
+
+    m_batchDlg->show();
+    m_batchDlg->addItems(items);
 }
 
 KIPI::Category Plugin_DNGConverter::category( KAction* action ) const
