@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -43,6 +43,7 @@ extern "C"
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
+#include <kwindowsystem.h>
 
 // LibKIPI includes
 
@@ -63,6 +64,10 @@ Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &/*
 
 void Plugin_FlickrExport::setup(QWidget* widget)
 {
+    m_dlgFlickr = 0;
+    m_dlg23     = 0;
+    m_dlgZooomr = 0;
+
     KIPI::Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_flickrexport");
@@ -74,7 +79,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionFlickr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R);
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
+            this, SLOT(slotActivateFlickr()));
 
     addAction(m_actionFlickr);
 
@@ -116,7 +121,7 @@ Plugin_FlickrExport::~Plugin_FlickrExport()
 {
 }
 
-void Plugin_FlickrExport::slotActivate()
+void Plugin_FlickrExport::slotActivateFlickr()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -126,11 +131,22 @@ void Plugin_FlickrExport::slotActivate()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-flickrexportplugin-" + QString::number(getpid()) + "/");
+    QString tmp = dir.saveLocation("tmp", QString("kipi-flickrexportplugin-") + QString::number(getpid()) + QString("/"));
 
-    // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
-    m_dlg->show();
+    if (!m_dlgFlickr)
+    {
+        // We clean it up in the close button
+        m_dlgFlickr = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Flickr");
+    }
+    else
+    {
+        if (m_dlgFlickr->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgFlickr->winId());
+
+        KWindowSystem::activateWindow(m_dlgFlickr->winId());
+    }
+
+    m_dlgFlickr->show();
 }
 
 void Plugin_FlickrExport::slotActivate23()
@@ -143,11 +159,22 @@ void Plugin_FlickrExport::slotActivate23()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-23exportplugin-" + QString::number(getpid()) + "/");
+    QString tmp = dir.saveLocation("tmp", QString("kipi-23exportplugin-") + QString::number(getpid()) + QString("/"));
 
-    // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
-    m_dlg->show();
+    if (!m_dlg23)
+    {
+        // We clean it up in the close button
+        m_dlg23 = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "23");
+    }
+    else
+    {
+        if (m_dlg23->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlg23->winId());
+
+        KWindowSystem::activateWindow(m_dlg23->winId());
+    }
+
+    m_dlg23->show();
 }
 
 void Plugin_FlickrExport::slotActivateZooomr()
@@ -160,11 +187,22 @@ void Plugin_FlickrExport::slotActivateZooomr()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-Zooomrexportplugin-" + QString::number(getpid()) + "/");
+    QString tmp = dir.saveLocation("tmp", QString("kipi-Zooomrexportplugin-") + QString::number(getpid()) + QString("/"));
 
-    // We clean it up in the close button
-    m_dlg = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
-    m_dlg->show();
+    if (!m_dlgZooomr)
+    {
+        // We clean it up in the close button
+        m_dlgZooomr = new KIPIFlickrExportPlugin::FlickrWindow(interface, tmp, kapp->activeWindow(), "Zooomr");
+    }
+    else
+    {
+        if (m_dlgZooomr->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgZooomr->winId());
+
+        KWindowSystem::activateWindow(m_dlgZooomr->winId());
+    }
+
+    m_dlgZooomr->show();
 }
 
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const

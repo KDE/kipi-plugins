@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -77,16 +77,18 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent, const QString& serviceName)
-            : KDialog(parent)
+FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* /*parent*/,
+                           const QString& serviceName)
+            : KDialog(0)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
-    if ((serviceName != "23") && (serviceName != "Zooomr"))
-        setWindowIcon(KIcon("flickr"));
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
+
+    if ((serviceName != "23") && (serviceName != "Zooomr"))
+        setWindowIcon(KIcon("flickr"));
 
     m_tmp                       = tmpFolder;
     m_interface                 = interface;
@@ -133,7 +135,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString &tmpFolder,
                                            ki18n("A Kipi plugin to export image collection to "
                                                      "Flickr / 23 / Zooomr web service."),
                                            ki18n( "(c) 2005-2008, Vardhman Jain\n"
-                                           "(c) 2008, Gilles Caulier\n"
+                                           "(c) 2008-2009, Gilles Caulier\n"
                                            "(c) 2009, Luka Renko" ));
 
     m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
@@ -259,16 +261,12 @@ void FlickrWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
-    m_token = grp.readEntry("token");
+    m_token          = grp.readEntry("token");
 
-    m_exportHostTagsCheckBox->setChecked(
-            grp.readEntry("Export Host Tags", false));
-    m_extendedTagsButton->setChecked(
-            grp.readEntry("Show Extended Tag Options", false));
-    m_addExtraTagsCheckBox->setChecked(
-            grp.readEntry("Add Extra Tags", false));
-    m_stripSpaceTagsCheckBox->setChecked(
-            grp.readEntry("Strip Space From Tags", false));
+    m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags", false));
+    m_extendedTagsButton->setChecked(grp.readEntry("Show Extended Tag Options", false));
+    m_addExtraTagsCheckBox->setChecked(grp.readEntry("Add Extra Tags", false));
+    m_stripSpaceTagsCheckBox->setChecked(grp.readEntry("Strip Space From Tags", false));
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 
     if(!m_interface->hasFeature(KIPI::HostSupportsTags))
@@ -280,14 +278,11 @@ void FlickrWindow::readSettings()
     m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
     m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
     m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
-    m_extendedPublicationButton->setChecked(
-            grp.readEntry("Show Extended Publication Options", false));
-    int safetyLevel = m_safetyLevelComboBox->findData(
-                          QVariant(grp.readEntry("Safety Level", 0)));
+    m_extendedPublicationButton->setChecked(grp.readEntry("Show Extended Publication Options", false));
+    int safetyLevel = m_safetyLevelComboBox->findData(QVariant(grp.readEntry("Safety Level", 0)));
     if (safetyLevel == -1) safetyLevel = 0;
     m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
-    int contentType = m_contentTypeComboBox->findData(
-                          QVariant(grp.readEntry("Content Type", 0)));
+    int contentType = m_contentTypeComboBox->findData(QVariant(grp.readEntry("Content Type", 0)));
     if (contentType == -1) contentType = 0;
     m_contentTypeComboBox->setCurrentIndex(contentType);
 
@@ -323,9 +318,9 @@ void FlickrWindow::writeSettings()
     grp.writeEntry("Friends Sharing",                   m_friendsCheckBox->isChecked());
     grp.writeEntry("Show Extended Publication Options", m_extendedPublicationButton->isChecked());
     int safetyLevel = m_safetyLevelComboBox->itemData(m_safetyLevelComboBox->currentIndex()).toInt();
-    grp.writeEntry("Safety Level", safetyLevel);
+    grp.writeEntry("Safety Level",                      safetyLevel);
     int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
-    grp.writeEntry("Content Type", contentType);
+    grp.writeEntry("Content Type",                      contentType);
     grp.writeEntry("Resize",                            m_resizeCheckBox->isChecked());
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());

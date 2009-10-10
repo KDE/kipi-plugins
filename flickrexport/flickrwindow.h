@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,11 +74,11 @@ namespace KIPIFlickrExportPlugin
 
 class FlickrWidget;
 class FlickrTalker;
+class FlickrList;
 class FPhotoInfo;
 class GPhoto;
 class GAlbum;
 //class GAlbumViewItem;
-class FlickrList;
 
 class FlickrWindow : public KDialog
 {
