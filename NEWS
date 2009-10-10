@@ -23,5 +23,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> PrintWizard        : 209165 : Kipi PrintWizard does not print svgz images.
 014 ==> FlickrExport       : 208410 : Patch: Allow custom tags per image.
 015 ==> KioImportExport    : 154183 : Import tool does not recognize Fish KIO Slave.
-016 ==> 
+016 ==> JPEGLossLess       : 200032 : digiKam, inconsistency data about rotation.
+017 ==> 
 
