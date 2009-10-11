@@ -131,8 +131,8 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->m_saneWidget, SIGNAL(imageReady(QByteArray &, int, int, int, int)),
-            this, SLOT(slotSaveImage(QByteArray &, int, int, int, int)));
+    connect(d->m_saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
+            this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
 }
 
 ScanDialog::~ScanDialog()
@@ -174,7 +174,7 @@ void ScanDialog::slotHelp()
     KToolInvocation::invokeHelp("acquireimages", "kipi-plugins");
 }
 
-void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, int bytes_per_line, int ksaneformat)
+void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, int bytes_per_line, int ksaneformat)
 {
     QStringList writableMimetypes = KImageIO::mimeTypes(KImageIO::Writing);
     // Put first class citizens at first place
@@ -191,8 +191,7 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->m_interface->currentAlbum().uploadPath(),
-                                                                QString(), 0);
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->m_interface->currentAlbum().uploadPath(), QString(), 0);
 
     imageFileSaveDialog->setModal(false);
     imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
@@ -262,10 +261,13 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
             return;
     }
 
-    // Perform saving ---------------------------------------------------------------
-
+    delete imageFileSaveDialog;
     kapp->setOverrideCursor( Qt::WaitCursor );
     saveSettings();
+
+    // Perform saving ---------------------------------------------------------------
+
+    // TODO: move this code in a separate thread.
 
     KSaneIface::KSaneWidget::ImageFormat frmt = (KSaneIface::KSaneWidget::ImageFormat)ksaneformat;
 
@@ -318,10 +320,10 @@ void ScanDialog::slotSaveImage(QByteArray &ksane_data, int width, int height, in
         img.save(newURL.path(), format.toAscii().data());
     }
 
+    // All is done ------------------------------------------------------------------
+
     d->m_interface->refreshImages( KUrl::List(newURL) );
     kapp->restoreOverrideCursor();
-
-    delete imageFileSaveDialog;
 }
 
 }  // namespace KIPIAcquireImagesPlugin

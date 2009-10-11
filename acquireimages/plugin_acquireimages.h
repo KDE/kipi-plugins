@@ -57,7 +57,7 @@ class Plugin_AcquireImages : public KIPI::Plugin
 
 public:
 
-    Plugin_AcquireImages(QObject *parent, const QVariantList &args);
+    Plugin_AcquireImages(QObject* parent, const QVariantList& args);
     virtual ~Plugin_AcquireImages();
 
     KIPI::Category category( KAction* action ) const;

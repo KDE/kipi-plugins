@@ -54,13 +54,12 @@ class ScanDialog : public KDialog
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget *saneWidget,
-               QWidget *parent);
+    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget* saneWidget, QWidget* parent);
     ~ScanDialog();
 
 protected:
 
-    void closeEvent(QCloseEvent* e);
+    void closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
 

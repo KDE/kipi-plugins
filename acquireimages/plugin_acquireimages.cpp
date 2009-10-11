@@ -95,9 +95,10 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 void Plugin_AcquireImages::slotActivate()
 {
     if (!m_saneWidget)
-    {
         m_saneWidget = new KSaneIface::KSaneWidget(0);
 
+    if (m_saneWidget)
+    {
         QString dev = m_saneWidget->selectDevice(0);
         if (dev.isEmpty())
             return;
