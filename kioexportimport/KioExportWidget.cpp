@@ -55,7 +55,6 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     QLabel *label = new QLabel(hbox);
     m_targetLabel = new KUrlLabel(hbox);
     label->setText(i18n("Target location: "));
-    m_targetLabel->setOpenExternalLinks(true);
     m_targetLabel->setWhatsThis(i18n(
                     "Sets the target address to upload the images to. "
                     "This can be any address as used in Dolphin or Konqueror, "
@@ -145,9 +144,10 @@ void KioExportWidget::updateTargetLabel()
     if (m_targetUrl.isValid())
     {
         urlString = m_targetUrl.prettyUrl();
+        m_targetLabel->setUrl(urlString);
     }
 
-    m_targetLabel->setUrl(urlString);
+    m_targetLabel->setOpenExternalLinks(m_targetUrl.isValid());
     m_targetLabel->setText(urlString);
 }
 

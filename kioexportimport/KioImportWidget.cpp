@@ -21,6 +21,7 @@
  * ============================================================ */
 
 #include "KioImportWidget.h"
+#include "KioImportWidget.moc"
 
 // Qt includes
 
