@@ -25,6 +25,7 @@
 #include "smugwidget.moc"
 
 // Qt includes
+
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
@@ -35,6 +36,7 @@
 #include <QVBoxLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>
@@ -42,17 +44,19 @@
 #include <KPushButton>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPISmugPlugin
 {
 
 SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
-            : QWidget(parent)
+          : QWidget(parent)
 {
     setObjectName("SmugWidget");
 

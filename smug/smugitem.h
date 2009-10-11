@@ -25,6 +25,7 @@
 #define SMUGITEM_H
 
 // Qt includes
+
 #include <QString>
 
 namespace KIPISmugPlugin
@@ -32,11 +33,14 @@ namespace KIPISmugPlugin
 
 class SmugUser
 {
+
 public:
+
     SmugUser()
     {
         fileSizeLimit = 0;
     }
+
     void clear()
     {
         email.clear();
@@ -55,7 +59,9 @@ public:
 
 class SmugAlbum
 {
+
 public:
+
     SmugAlbum()
     {
         id = -1;
@@ -91,7 +97,9 @@ public:
 
 class SmugPhoto
 {
+
 public:
+
     SmugPhoto()
     {
         id = -1;
@@ -109,7 +117,9 @@ public:
 
 class SmugAlbumTmpl
 {
+
 public:
+
     SmugAlbumTmpl()
     {
         id = -1;
@@ -126,7 +136,9 @@ public:
 
 class SmugCategory
 {
+
 public:
+
     SmugCategory()
     {
         id = -1;

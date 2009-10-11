@@ -25,6 +25,7 @@
 #define SMUGWIDGET_H
 
 // Qt includes
+
 #include <QWidget>
 
 class QLabel;

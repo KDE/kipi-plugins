@@ -25,6 +25,7 @@
 #define SMUGALBUM_H
 
 // KDE includes
+
 #include <KDialog>
 
 class QGroupBox;

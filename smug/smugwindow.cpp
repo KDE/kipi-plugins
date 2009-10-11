@@ -5,7 +5,7 @@
  *
  * Date        : 2005-17-06
  * Description : a kipi plugin to import/export images to/from
-                 SmugMug web service
+ *                SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -27,12 +27,14 @@
 #include "smugwindow.moc"
 
 // Qt includes
+
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
 
 // KDE includes
+
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
@@ -47,9 +49,11 @@
 #include <KToolInvocation>
 
 // LibKExiv2 includes
+
 #include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes
+
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
@@ -58,13 +62,15 @@
 #endif
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
+
+// Local includes
+
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-
-// Local includes
 #include "smugitem.h"
 #include "smugtalker.h"
 #include "smugwidget.h"
@@ -73,17 +79,17 @@
 namespace KIPISmugPlugin
 {
 
-SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder,
-                       bool import, QWidget *parent)
-            : KDialog(parent)
+SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
+                       bool import, QWidget* /*parent*/)
+          : KDialog(0)
 {
     m_tmpPath.clear();
-    m_tmpDir                 = tmpFolder;
-    m_interface              = interface;
-    m_import                 = import;
-    m_imagesCount            = 0;
-    m_imagesTotal            = 0;
-    m_widget                 = new SmugWidget(this, interface, import);
+    m_tmpDir      = tmpFolder;
+    m_interface   = interface;
+    m_import      = import;
+    m_imagesCount = 0;
+    m_imagesTotal = 0;
+    m_widget      = new SmugWidget(this, interface, import);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("smugmug"));
@@ -133,7 +139,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString &tmpFolder,
                       ki18n("A Kipi plugin to import/export image collections "
                             "from/to the SmugMug web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
-                            "(c) 2008, Gilles Caulier\n"
+                            "(c) 2008-2009, Gilles Caulier\n"
                             "(c) 2008-2009, Luka Renko"));
 
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
@@ -255,11 +261,11 @@ void SmugWindow::authenticate(const QString& email, const QString& password)
 void SmugWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("Smug Settings");
+    KConfigGroup grp  = config.group("Smug Settings");
     m_anonymousImport = grp.readEntry("AnonymousImport", true);
-    m_email = grp.readEntry("Email");
-    m_password = grp.readEntry("Password");
-    m_currentAlbumID = grp.readEntry("Current Album", -1);
+    m_email           = grp.readEntry("Email");
+    m_password        = grp.readEntry("Password");
+    m_currentAlbumID  = grp.readEntry("Current Album", -1);
 
     if (grp.readEntry("Resize", false))
     {
@@ -293,12 +299,12 @@ void SmugWindow::writeSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Smug Settings");
     grp.writeEntry("AnonymousImport", m_anonymousImport);
-    grp.writeEntry("Email", m_email);
-    grp.writeEntry("Password", m_password);
-    grp.writeEntry("Current Album", m_currentAlbumID);
-    grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
-    grp.writeEntry("Maximum Width",  m_widget->m_dimensionSpB->value());
-    grp.writeEntry("Image Quality",  m_widget->m_imageQualitySpB->value());
+    grp.writeEntry("Email",           m_email);
+    grp.writeEntry("Password",        m_password);
+    grp.writeEntry("Current Album",   m_currentAlbumID);
+    grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
+    grp.writeEntry("Maximum Width",   m_widget->m_dimensionSpB->value());
+    grp.writeEntry("Image Quality",   m_widget->m_imageQualitySpB->value());
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
@@ -363,8 +369,10 @@ void SmugWindow::slotLoginDone(int errCode, const QString &errMsg)
             }
         }
         else
+        {
             // get albums from current user
             m_talker->listAlbums();
+        }
     }
     else
     {
@@ -392,12 +400,10 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_widget->m_albumsCoB->addItem(
-            KIcon(albumIcon),
-            albumsList.at(i).title,
-            albumsList.at(i).id);
-       if (m_currentAlbumID == albumsList.at(i).id)
-           m_widget->m_albumsCoB->setCurrentIndex(i);
+        m_widget->m_albumsCoB->addItem(KIcon(albumIcon), albumsList.at(i).title, albumsList.at(i).id);
+
+        if (m_currentAlbumID == albumsList.at(i).id)
+            m_widget->m_albumsCoB->setCurrentIndex(i);
     }
 }
 
@@ -459,12 +465,10 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
         else
             albumIcon = "folder";
 
-        m_albumDlg->m_templateCoB->addItem(
-            KIcon(albumIcon),
-            albumTList.at(i).name,
-            albumTList.at(i).id);
-       if (m_currentTmplID == albumTList.at(i).id)
-           m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
+        m_albumDlg->m_templateCoB->addItem(KIcon(albumIcon), albumTList.at(i).name, albumTList.at(i).id);
+
+        if (m_currentTmplID == albumTList.at(i).id)
+            m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
     }
     m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
                           m_albumDlg->m_templateCoB->currentIndex()).toInt();
@@ -483,6 +487,7 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
     }
 
     m_albumDlg->m_categCoB->clear();
+
     for (int i = 0; i < categoriesList.size(); ++i)
     {
         m_albumDlg->m_categCoB->addItem(
@@ -491,6 +496,7 @@ void SmugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
        if (m_currentCategoryID == categoriesList.at(i).id)
            m_albumDlg->m_categCoB->setCurrentIndex(i);
     }
+
     m_currentCategoryID = m_albumDlg->m_categCoB->itemData(
                           m_albumDlg->m_categCoB->currentIndex()).toInt();
     m_talker->listSubCategories(m_currentCategoryID);
@@ -647,7 +653,7 @@ void SmugWindow::slotStartTransfer()
             return;
 
         m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                    m_widget->m_albumsCoB->currentIndex()).toInt();
+                                     m_widget->m_albumsCoB->currentIndex()).toInt();
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
 
@@ -676,16 +682,19 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
         KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
     }
     else
-        image.load(imgPath);
+    {
+       image.load(imgPath);
+    }
 
     if (image.isNull())
         return false;
 
     // get temporary file name
-    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+    m_tmpPath  = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
 
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
+
     if (m_widget->m_resizeChB->isChecked()
         && (image.width() > maxDim || image.width() > maxDim))
     {
@@ -705,6 +714,7 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
         exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
         exiv2Iface.save(m_tmpPath);
     }
+
     return true;
 }
 
@@ -730,6 +740,7 @@ void SmugWindow::uploadNextPhoto()
     QFileInfo fileInfo(imgPath);
     bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
     bool res;
+
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW))
@@ -744,6 +755,7 @@ void SmugWindow::uploadNextPhoto()
         m_tmpPath.clear();
         res = m_talker->addPhoto(imgPath, m_currentAlbumID);
     }
+
     if (!res)
     {
         slotAddPhotoDone(666, i18n("Cannot open file"));

@@ -25,6 +25,7 @@
 #include "smugtalker.moc"
 
 // Qt includes
+
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
@@ -34,12 +35,14 @@
 #include <QProgressDialog>
 
 // KDE includes
+
 #include <KCodecs>
 #include <KDebug>
 #include <KIO/Job>
 #include <KIO/JobUiDelegate>
 
 // Local includes
+
 #include "pluginsversion.h"
 #include "smugitem.h"
 
