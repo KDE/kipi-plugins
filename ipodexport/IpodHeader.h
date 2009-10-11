@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2006-2009 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,7 +23,9 @@
 #ifndef IPOD_HEADER_H
 #define IPOD_HEADER_H
 
-#include <QFrame> //Baseclass
+// Qt includes
+
+#include <QFrame>
 #include <QLabel>
 
 class KPushButton;
@@ -35,34 +37,41 @@ class IpodHeader : public QFrame
 {
     Q_OBJECT
 
-    public:
-        IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
-        ~IpodHeader() {};
+public:
 
-        enum ViewType 
-        {
-            NoIpod, 
-            IncompatibleIpod, 
-            ValidIpod
-        };
+    enum ViewType
+    {
+        NoIpod,
+        IncompatibleIpod,
+        ValidIpod
+    };
 
-        void setViewType( ViewType view );
-        ViewType viewType() const { return m_viewType; };
+public:
 
-    Q_SIGNALS:
-        void refreshDevices();
-        void updateSysInfo();
+    IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
+    ~IpodHeader() {};
 
-    private:
-        void setNoIpod();
-        void setIncompatibleIpod();
-        void setValidIpod();
+    void setViewType( ViewType view );
+    ViewType viewType() const { return m_viewType; };
 
-    private:
-        ViewType     m_viewType;
+Q_SIGNALS:
 
-        KPushButton *m_button;
-        QLabel      *m_messageLabel;
+    void refreshDevices();
+    void updateSysInfo();
+
+private:
+
+    void setNoIpod();
+    void setIncompatibleIpod();
+    void setValidIpod();
+
+private:
+
+    QLabel      *m_messageLabel;
+
+    KPushButton *m_button;
+
+    ViewType     m_viewType;
 };
 
 } // namespace KIPIIpodExportPlugin

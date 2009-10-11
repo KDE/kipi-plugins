@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2006-2009 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,6 +22,8 @@
 
 #include "IpodListItem.h"
 
+// KDE includes.
+
 #include <KIcon>
 #include <KLocale>
 
@@ -29,25 +31,24 @@ namespace KIPIIpodExportPlugin
 {
 
 IpodAlbumItem::IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa )
-    : QTreeWidgetItem( parent )
-    , m_photoAlbum( pa )
+             : QTreeWidgetItem( parent ), m_photoAlbum( pa )
 {
     // don't use setName, as it writes to the ipod
     m_name = pa->name;
+
     if( m_name.isEmpty() )
         m_name = i18n( "Unnamed" );
+
     setText( 0, m_name );
     setIcon( 0, KIcon("folder") );
 }
 
-void
-IpodAlbumItem::setPhotoAlbum( Itdb_PhotoAlbum *pa )
+void IpodAlbumItem::setPhotoAlbum( Itdb_PhotoAlbum *pa )
 {
     m_photoAlbum = pa;
 }
 
-void
-IpodAlbumItem::setName( const QString& name )
+void IpodAlbumItem::setName( const QString& name )
 {
     if( name == m_name )
         return;
@@ -62,8 +63,7 @@ IpodAlbumItem::setName( const QString& name )
 // ---------------------------------------------------------------------------
 
 IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_Artwork *art )
-    : QTreeWidgetItem( parent, prev )
-    , m_artwork(art)
+             : QTreeWidgetItem( parent, prev ), m_artwork(art)
 {
     setIcon( 0, KIcon("image-jp2") );
 }

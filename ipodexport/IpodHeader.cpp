@@ -23,12 +23,18 @@
 #include "IpodHeader.h"
 #include "IpodHeader.moc"
 
-#include <KLocale>
-#include <KPushButton>
+// Qt includes.
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFrame>
+
+// KDE includes.
+
+#include <KLocale>
+#include <KPushButton>
+
+// Locale includes.
 
 #include "IpodExportDialog.h"
 
@@ -106,7 +112,8 @@ void IpodHeader::setIncompatibleIpod()
 {
     const QString modelType = UploadDialog::instance()->ipodModel();
 
-    m_messageLabel->setText( i18n("<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></p>" , modelType ) );
+    m_messageLabel->setText( i18n("<p align=\"center\"><b>Your iPod (%1) "
+                                  "does not seem to support artwork.</b></p>", modelType ) );
 
     QPalette p = palette();
     p.setColor( QPalette::Window, QColor(225,150,0) );

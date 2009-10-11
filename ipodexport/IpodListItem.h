@@ -6,7 +6,7 @@
  * Date        : 2006-12-05
  * Description : a tool to export image to an Ipod device.
  *
- * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
+ * Copyright (C) 2006-2009 by Seb Ruiz <ruiz@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,43 +23,53 @@
 #ifndef IPODLISTITEM_H
 #define IPODLISTITEM_H
 
+// Qt includes.
+
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+
+// libgpod includes.
+
 extern "C"
 {
 #include <gpod/itdb.h>
 }
-
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
 
 namespace KIPIIpodExportPlugin
 {
 
 class IpodAlbumItem : public QTreeWidgetItem
 {
-    public:
-        IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa );
+public:
 
-        QString          name()       const { return m_name;       }
-        Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
+    IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa );
 
-        void setPhotoAlbum( Itdb_PhotoAlbum *pa );
-        void setName( const QString & name );
+    QString          name()       const { return m_name;       }
+    Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
 
-    private:
-        QString          m_name;
-        Itdb_PhotoAlbum *m_photoAlbum;
+    void setPhotoAlbum( Itdb_PhotoAlbum *pa );
+    void setName( const QString & name );
+
+private:
+
+    QString          m_name;
+    Itdb_PhotoAlbum *m_photoAlbum;
 };
+
+// ----------------------------------------------------------------------------
 
 class IpodPhotoItem : public QTreeWidgetItem
 {
-    public:
-       IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_Artwork *art );
+public:
 
-       Itdb_Artwork *artwork() const { return m_artwork; }
-       void          setArtwork( Itdb_Artwork *art );
+    IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_Artwork *art );
 
-    private:
-       Itdb_Artwork *m_artwork;
+    Itdb_Artwork *artwork() const { return m_artwork; }
+    void          setArtwork( Itdb_Artwork *art );
+
+private:
+
+    Itdb_Artwork *m_artwork;
 };
 
 } // namespace KIPIIpodExportPlugin

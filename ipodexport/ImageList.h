@@ -23,6 +23,8 @@
 #ifndef IMAGELIST_H
 #define IMAGELIST_H
 
+// Qt includes.
+
 #include <QTreeWidget>
 
 namespace KIPIIpodExportPlugin

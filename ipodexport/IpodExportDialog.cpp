@@ -24,20 +24,6 @@
 #include "IpodExportDialog.h"
 #include "IpodExportDialog.moc"
 
-// System Includes
-
-extern "C"
-{
-#include <gdk-pixbuf/gdk-pixbuf.h>
-}
-
-// Local includes
-
-#include "IpodHeader.h"
-#include "ImageList.h"
-#include "ImageListItem.h"
-#include "IpodListItem.h"
-
 // Qt includes
 
 #include <QDir>
@@ -74,6 +60,20 @@ extern "C"
 #include <ktoolinvocation.h>
 #include <kurl.h>
 
+// Libgdk includes.
+
+extern "C"
+{
+#include <gdk-pixbuf/gdk-pixbuf.h>
+}
+
+// Local includes
+
+#include "IpodHeader.h"
+#include "ImageList.h"
+#include "ImageListItem.h"
+#include "IpodListItem.h"
+
 namespace KIPIIpodExportPlugin
 {
 
@@ -86,18 +86,18 @@ UploadDialog::UploadDialog
 #endif
     const QString &caption, QWidget* /*parent*/ )
     : KDialog(0)
+    , m_transferring( false )
 #if KIPI_PLUGIN
     , m_interface( interface )
 #endif
     , m_itdb( 0 )
     , m_ipodInfo( 0 )
     , m_ipodHeader( 0 )
-    , m_transferring( false )
     , m_mountPoint( QString::null )
     , m_deviceNode( QString::null )
     , m_ipodAlbumList( 0 )
 {
-    s_instance = this;
+    s_instance   = this;
 
     QWidget *box = new QWidget();
     setMainWidget( box );
@@ -255,18 +255,31 @@ UploadDialog::UploadDialog
     enableButtons();
 
     /// connect the signals & slots
-    connect( m_createAlbumButton, SIGNAL( clicked() ), this, SLOT( createIpodAlbum() ) );
-    connect( m_removeAlbumButton, SIGNAL( clicked() ), this, SLOT( deleteIpodAlbum() ) );
-    connect( m_renameAlbumButton, SIGNAL( clicked() ), this, SLOT( renameIpodAlbum() ) );
 
-    connect( m_addImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonAdd() ) );
-    connect( m_remImagesButton, SIGNAL( clicked() ), this, SLOT( imagesFilesButtonRem() ) );
-    connect( m_transferImagesButton, SIGNAL( clicked() ), this, SLOT( startTransfer() ) );
+    connect(m_createAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( createIpodAlbum() ) );
 
-    connect( m_uploadList, SIGNAL( addedDropItems(QStringList) ), this, SLOT( addDropItems(QStringList) ) );
+    connect(m_removeAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( deleteIpodAlbum() ) );
+
+    connect(m_renameAlbumButton, SIGNAL( clicked() ),
+            this, SLOT( renameIpodAlbum() ) );
+
+    connect(m_addImagesButton, SIGNAL( clicked() ),
+            this, SLOT( imagesFilesButtonAdd() ) );
+
+    connect(m_remImagesButton, SIGNAL( clicked() ),
+            this, SLOT( imagesFilesButtonRem() ) );
+
+    connect(m_transferImagesButton, SIGNAL( clicked() ),
+            this, SLOT( startTransfer() ) );
+
+    connect(m_uploadList, SIGNAL( addedDropItems(QStringList) ),
+            this, SLOT( addDropItems(QStringList) ) );
 
     connect(m_uploadList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
             this, SLOT( imageSelected(QTreeWidgetItem*) ));
+
     connect(m_ipodAlbumList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
             this, SLOT( ipodItemSelected(QTreeWidgetItem*) ));
 }
@@ -317,8 +330,8 @@ void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem *item, Itdb_PhotoAlbum *albu
     for( GList *it = album->members; it; it = it->next )
     {
         Itdb_Artwork *photo = (Itdb_Artwork*) it->data;
-        gint photo_id = photo->id;
-        last = new IpodPhotoItem( item, last, photo );
+        gint photo_id       = photo->id;
+        last                = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
     }
 }
@@ -359,11 +372,11 @@ void UploadDialog::enableButtons()
 
     const QList<QTreeWidgetItem*> ipodSelection = m_ipodAlbumList->selectedItems();
 
-    const bool hasSelection = ipodSelection.count() != 0;
+    const bool hasSelection                     = ipodSelection.count() != 0;
 
-    const bool isMasterLibrary = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
+    const bool isMasterLibrary                  = hasSelection && ipodSelection.first() == m_ipodAlbumList->topLevelItem( 0 );
 
-    const bool isAlbum = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
+    const bool isAlbum                          = hasSelection && ( dynamic_cast<IpodAlbumItem*>( ipodSelection.first() ) != 0 );
 
     m_removeAlbumButton->setEnabled( hasSelection && !isMasterLibrary );
     m_renameAlbumButton->setEnabled( hasSelection && !isMasterLibrary && isAlbum );
@@ -375,12 +388,11 @@ void UploadDialog::startTransfer()
         return;
 
     QTreeWidgetItem *selected = m_ipodAlbumList->currentItem();
-    IpodAlbumItem *ipodAlbum = dynamic_cast<IpodAlbumItem*>( selected );
+    IpodAlbumItem *ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
     if( !selected || !ipodAlbum )
         return;
 
-    m_transferring = true;
-
+    m_transferring         = true;
     Itdb_PhotoAlbum *album = ipodAlbum->photoAlbum();
 
     enableButton(KDialog::User1, false);
@@ -405,7 +417,9 @@ void UploadDialog::startTransfer()
             }
         }
         else
+        {
             itdb_photodb_photoalbum_add_photo( m_itdb, album, art, 0 );
+        }
 
         delete item;
 #undef item
@@ -483,8 +497,8 @@ void UploadDialog::imageSelected( QTreeWidgetItem *item )
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imagePreview->height() );
 
-    connect( m_thumbJob, SIGNAL( gotPreview(const KFileItem*, const QPixmap&) ),
-                   this,   SLOT( gotImagePreview(const KFileItem*, const QPixmap&) ) );
+    connect(m_thumbJob, SIGNAL( gotPreview(const KFileItem*, const QPixmap&) ),
+            this,   SLOT( gotImagePreview(const KFileItem*, const QPixmap&) ) );
 }
 
 void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap )

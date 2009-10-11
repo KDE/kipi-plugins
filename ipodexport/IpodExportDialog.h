@@ -24,11 +24,6 @@
 #ifndef IPOD_EXPORTDIALOG_H
 #define IPOD_EXPORTDIALOG_H
 
-extern "C"
-{
-#include <gpod/itdb.h>
-}
-
 #define KIPI_PLUGIN 1
 
 // Qt includes
@@ -48,6 +43,13 @@ extern "C"
 #include "pluginsversion.h"
 #include "imagedialog.h"
 #endif // KIPI_PLUGIN
+
+// Libgpod includes.
+
+extern "C"
+{
+#include <gpod/itdb.h>
+}
 
 class QGroupBox;
 class QLabel;
@@ -124,6 +126,10 @@ private:
 
     bool openDevice(); // connect to the ipod
 
+private:
+
+    bool                 m_transferring;
+
 #if KIPI_PLUGIN
     Interface           *m_interface;
     KPAboutData         *m_about;
@@ -132,7 +138,6 @@ private:
     Itdb_PhotoDB        *m_itdb;
     Itdb_IpodInfo       *m_ipodInfo;
     IpodHeader          *m_ipodHeader;
-    bool                 m_transferring;
 
     QGroupBox           *m_destinationBox;
     QGroupBox           *m_urlListBox;
