@@ -57,8 +57,8 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "kpwriteimage.h"
 #include "pluginsversion.h"
+#include "saveimgthread.h"
 
 namespace KIPIAcquireImagesPlugin
 {
@@ -69,52 +69,56 @@ public:
 
     ScanDialogPriv()
     {
-        m_saneWidget = 0;
-        m_interface  = 0;
-        m_about      = 0;
+        saneWidget = 0;
+        interface  = 0;
+        about      = 0;
+        saveThread = 0;
     }
 
-    KIPI::Interface          *m_interface;
+    SaveImgThread            *saveThread;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPI::Interface          *interface;
 
-    KSaneIface::KSaneWidget  *m_saneWidget;
+    KIPIPlugins::KPAboutData *about;
+
+    KSaneIface::KSaneWidget  *saneWidget;
 };
 
 ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* saneWidget, QWidget* /*parent*/)
           : KDialog(0), d(new ScanDialogPriv)
 {
-    d->m_saneWidget = saneWidget;
-    d->m_interface  = kinterface;
+    d->saneWidget = saneWidget;
+    d->interface  = kinterface;
+    d->saveThread = new SaveImgThread(this);
 
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(false);
 
-    setMainWidget(d->m_saneWidget);
+    setMainWidget(d->saneWidget);
 
     // -- About data and help button ----------------------------------------
 
-    d->m_about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
+    d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to acquire images using a flat scanner"),
                    ki18n("(c) 2003-2009, Gilles Caulier\n"
                          "(c) 2007-2009, Kare Sars"));
 
-    d->m_about->addAuthor(ki18n("Gilles Caulier"),
-                          ki18n("Author"),
-                          "caulier dot gilles at gmail dot com");
+    d->about->addAuthor(ki18n("Gilles Caulier"),
+                        ki18n("Author"),
+                        "caulier dot gilles at gmail dot com");
 
-    d->m_about->addAuthor(ki18n("Kare Sars"),
-                          ki18n("Developer"),
-                          "kare dot sars at kolumbus dot fi");
+    d->about->addAuthor(ki18n("Kare Sars"),
+                        ki18n("Developer"),
+                        "kare dot sars at kolumbus dot fi");
 
-    d->m_about->addAuthor(ki18n("Angelo Naselli"),
-                          ki18n("Developer"),
-                          "anaselli at linux dot it");
+    d->about->addAuthor(ki18n("Angelo Naselli"),
+                        ki18n("Developer"),
+                        "anaselli at linux dot it");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->m_about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
     QAction *handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
@@ -131,13 +135,19 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(d->m_saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
+    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
             this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
+
+    connect(d->saveThread, SIGNAL(signalComplete(const KUrl&)),
+            this, SLOT(slotThreadDone(const KUrl&)));
+
+    connect(d->saveThread, SIGNAL(signalFailed(const KUrl&)),
+            this, SLOT(slotThreadDone(const KUrl&)));
 }
 
 ScanDialog::~ScanDialog()
 {
-    delete d->m_about;
+    delete d->about;
     delete d;
 }
 
@@ -164,7 +174,7 @@ void ScanDialog::slotClose()
 
 void ScanDialog::closeEvent(QCloseEvent *e)
 {
-    d->m_saneWidget->scanCancel();
+    d->saneWidget->scanCancel();
     saveSettings();
     e->accept();
 }
@@ -191,7 +201,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     QString defaultFileName("image.png");
     QString format("PNG");
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->m_interface->currentAlbum().uploadPath(), QString(), 0);
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->interface->currentAlbum().uploadPath(), QString(), 0);
 
     imageFileSaveDialog->setModal(false);
     imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
@@ -263,67 +273,28 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
 
     delete imageFileSaveDialog;
     kapp->setOverrideCursor( Qt::WaitCursor );
+    setEnabled(false);
     saveSettings();
 
     // Perform saving ---------------------------------------------------------------
 
     // TODO: move this code in a separate thread.
 
-    KSaneIface::KSaneWidget::ImageFormat frmt = (KSaneIface::KSaneWidget::ImageFormat)ksaneformat;
+    d->saveThread->setImageData(ksane_data, width, height, bytes_per_line, ksaneformat);
+    d->saveThread->setPreviewImage(d->saneWidget->toQImage(ksane_data, width, height,
+                                   bytes_per_line, (KSaneIface::KSaneWidget::ImageFormat)ksaneformat));
+    d->saveThread->setTargetFile(newURL, format);
+    d->saveThread->setScannerModel(d->saneWidget->make(), d->saneWidget->model());
+    d->saveThread->start();
+}
 
-    QImage img      = d->m_saneWidget->toQImage(ksane_data, width, height, bytes_per_line, frmt);
-    QImage prev     = img.scaled(1280, 1024, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    QImage thumb    = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::SRGB);
-
-    KExiv2Iface::KExiv2 meta;
-    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-    meta.setImageDimensions(img.size());
-    if (format != QString("JPEG"))
-        meta.setImagePreview(prev);
-    meta.setExifThumbnail(thumb);
-    meta.setExifTagString("Exif.Image.DocumentName", QString("Scanned Image")); // not i18n
-    meta.setExifTagString("Exif.Image.Make", d->m_saneWidget->make());
-    meta.setXmpTagString("Xmp.tiff.Make", d->m_saneWidget->make());
-    meta.setExifTagString("Exif.Image.Model", d->m_saneWidget->model());
-    meta.setXmpTagString("Xmp.tiff.Model", d->m_saneWidget->model());
-    meta.setImageDateTime(QDateTime::currentDateTime());
-    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
-    meta.setImageColorWorkSpace(KExiv2Iface::KExiv2::WORKSPACE_SRGB);
-
-    KIPIPlugins::KPWriteImage wImageIface;
-    if (frmt != KSaneIface::KSaneWidget::FormatRGB_16_C)
-    {
-        QByteArray data((const char*)img.bits(), img.numBytes());
-        wImageIface.setImageData(data, img.width(), img.height(), false, true, prof, meta);
-    }
-    else
-    {
-        // 16 bits color depth image.
-        wImageIface.setImageData(ksane_data, width, height, true, false, prof, meta);
-    }
-
-    if (format == QString("JPEG"))
-    {
-        wImageIface.write2JPEG(newURL.path());
-    }
-    else if (format == QString("PNG"))
-    {
-        wImageIface.write2PNG(newURL.path());
-    }
-    else if (format == QString("TIFF"))
-    {
-        wImageIface.write2TIFF(newURL.path());
-    }
-    else
-    {
-        img.save(newURL.path(), format.toAscii().data());
-    }
-
+void ScanDialog::slotThreadDone(const KUrl& url)
+{
     // All is done ------------------------------------------------------------------
 
-    d->m_interface->refreshImages( KUrl::List(newURL) );
+    d->interface->refreshImages( KUrl::List(url) );
     kapp->restoreOverrideCursor();
+    setEnabled(true);
 }
 
 }  // namespace KIPIAcquireImagesPlugin

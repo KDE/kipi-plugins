@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2007-09-09
- * Description : scanner dialog
+ * Date        : 2009-10-11
+ * Description : save image thread
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,64 +20,54 @@
  *
  * ============================================================ */
 
-#ifndef SCANDIALOG_H
-#define SCANDIALOG_H
+#ifndef SAVEIMGTHREAD_H
+#define SAVEIMGTHREAD_H
 
 // Qt includes
 
-#include <QCloseEvent>
+#include <QObject>
+#include <QThread>
+#include <QString>
+#include <QByteArray>
 
 // KDE includes
 
-#include <kdialog.h>
-
-class QWidget;
-
-namespace KIPI
-{
-    class Interface;
-}
-
-namespace KSaneIface
-{
-    class KSaneWidget;
-}
+#include <kurl.h>
 
 namespace KIPIAcquireImagesPlugin
 {
 
-class ScanDialogPriv;
+class SaveImgThreadPriv;
 
-class ScanDialog : public KDialog
+class SaveImgThread : public QThread
 {
     Q_OBJECT
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget* saneWidget, QWidget* parent);
-    ~ScanDialog();
+    SaveImgThread(QObject *parent);
+    ~SaveImgThread();
 
-protected:
+    void setPreviewImage(const QImage& img);
+    void setTargetFile(const KUrl& url, const QString& format);
+    void setScannerModel(const QString& make, const QString& model);
+    void setImageData(const QByteArray& ksaneData, int width, int height,
+                      int bytesPerLine, int ksaneFormat);
 
-    void closeEvent(QCloseEvent*);
+Q_SIGNALS:
 
-private Q_SLOTS:
-
-    void slotSaveImage(QByteArray&, int, int, int, int);
-    void slotClose();
-    void slotHelp();
-    void slotThreadDone(const KUrl&);
-
-private:
-
-    void readSettings();
-    void saveSettings();
+    void signalComplete(const KUrl&);
+    void signalFailed(const KUrl&);
 
 private:
 
-    ScanDialogPriv* const d;
+    void run();
+
+private:
+
+    SaveImgThreadPriv* const d;
 };
 
 }  // namespace KIPIAcquireImagesPlugin
 
-#endif // SCANDIALOG_H
+#endif // SAVEIMGTHREAD_H

@@ -2,7 +2,9 @@ INCLUDE_DIRECTORIES(${KSANE_INCLUDE_DIR})
 
 SET(kipiplugin_acquireimages_PART_SRCS
     plugin_acquireimages.cpp
-    scandialog.cpp)
+    scandialog.cpp
+    saveimgthread.cpp
+   )
 
 KDE4_ADD_PLUGIN(kipiplugin_acquireimages ${kipiplugin_acquireimages_PART_SRCS})
 
