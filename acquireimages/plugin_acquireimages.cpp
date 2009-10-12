@@ -41,14 +41,15 @@
 
 #include <libksane/ksane.h>
 
-// Local includes
-
-#include "scandialog.h"
-
 // LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+
+// Local includes
+
+#include "aboutdata.h"
+#include "scandialog.h"
 
 using namespace KIPIAcquireImagesPlugin;
 
@@ -113,7 +114,7 @@ void Plugin_AcquireImages::slotActivate()
 
     if (!m_scanDlg)
     {
-        m_scanDlg = new ScanDialog(m_interface, m_saneWidget, kapp->activeWindow());
+        m_scanDlg = new ScanDialog(m_interface, m_saneWidget, kapp->activeWindow(), new ScanDialogAboutData);
     }
     else
     {

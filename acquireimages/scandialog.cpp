@@ -28,6 +28,7 @@
 #include <QDateTime>
 #include <QPushButton>
 #include <QPointer>
+#include <QDir>
 
 // KDE includes
 
@@ -56,7 +57,7 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
+#include "aboutdata.h"
 #include "pluginsversion.h"
 #include "saveimgthread.h"
 
@@ -84,11 +85,13 @@ public:
     KSaneIface::KSaneWidget  *saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* saneWidget, QWidget* /*parent*/)
+ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* saneWidget,
+                       QWidget* /*parent*/, ScanDialogAboutData *about)
           : KDialog(0), d(new ScanDialogPriv)
 {
     d->saneWidget = saneWidget;
     d->interface  = kinterface;
+    d->about      = about;
     d->saveThread = new SaveImgThread(this);
 
     setButtons(Help|Close);
@@ -98,25 +101,6 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
     setMainWidget(d->saneWidget);
 
     // -- About data and help button ----------------------------------------
-
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Acquire images"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin to acquire images using a flat scanner"),
-                   ki18n("(c) 2003-2009, Gilles Caulier\n"
-                         "(c) 2007-2009, Kare Sars"));
-
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Author"),
-                        "caulier dot gilles at gmail dot com");
-
-    d->about->addAuthor(ki18n("Kare Sars"),
-                        ki18n("Developer"),
-                        "kare dot sars at kolumbus dot fi");
-
-    d->about->addAuthor(ki18n("Angelo Naselli"),
-                        ki18n("Developer"),
-                        "anaselli at linux dot it");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -197,8 +181,12 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     QString defaultMimeType("image/png");
     QString defaultFileName("image.png");
     QString format("PNG");
+    QString place = QDir::homePath();
 
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(d->interface->currentAlbum().uploadPath(), QString(), 0);
+    if (d->interface)
+        d->interface->currentAlbum().uploadPath();
+
+    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(place, QString(), 0);
 
     imageFileSaveDialog->setModal(false);
     imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
@@ -288,7 +276,9 @@ void ScanDialog::slotThreadDone(const KUrl& url, bool sucess)
     if (!sucess)
         KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
-    d->interface->refreshImages( KUrl::List(url) );
+    if (d->interface)
+        d->interface->refreshImages( KUrl::List(url) );
+
     unsetCursor();
     setEnabled(true);
 }

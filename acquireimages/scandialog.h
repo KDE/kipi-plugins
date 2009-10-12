@@ -46,6 +46,7 @@ namespace KSaneIface
 namespace KIPIAcquireImagesPlugin
 {
 
+class ScanDialogAboutData;
 class ScanDialogPriv;
 
 class ScanDialog : public KDialog
@@ -54,7 +55,8 @@ class ScanDialog : public KDialog
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget* saneWidget, QWidget* parent);
+    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget* saneWidget,
+               QWidget* parent, ScanDialogAboutData *about);
     ~ScanDialog();
 
 protected:
