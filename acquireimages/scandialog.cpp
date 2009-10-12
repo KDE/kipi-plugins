@@ -138,11 +138,8 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
     connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
             this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
 
-    connect(d->saveThread, SIGNAL(signalComplete(const KUrl&)),
-            this, SLOT(slotThreadDone(const KUrl&)));
-
-    connect(d->saveThread, SIGNAL(signalFailed(const KUrl&)),
-            this, SLOT(slotThreadDone(const KUrl&)));
+    connect(d->saveThread, SIGNAL(signalComplete(const KUrl&, bool)),
+            this, SLOT(slotThreadDone(const KUrl&, bool)));
 }
 
 ScanDialog::~ScanDialog()
@@ -272,13 +269,11 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     }
 
     delete imageFileSaveDialog;
-    kapp->setOverrideCursor( Qt::WaitCursor );
+    setCursor(Qt::WaitCursor);
     setEnabled(false);
     saveSettings();
 
     // Perform saving ---------------------------------------------------------------
-
-    // TODO: move this code in a separate thread.
 
     d->saveThread->setImageData(ksane_data, width, height, bytes_per_line, ksaneformat);
     d->saveThread->setPreviewImage(d->saneWidget->toQImage(ksane_data, width, height,
@@ -288,12 +283,13 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     d->saveThread->start();
 }
 
-void ScanDialog::slotThreadDone(const KUrl& url)
+void ScanDialog::slotThreadDone(const KUrl& url, bool sucess)
 {
-    // All is done ------------------------------------------------------------------
+    if (!sucess)
+        KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
     d->interface->refreshImages( KUrl::List(url) );
-    kapp->restoreOverrideCursor();
+    unsetCursor();
     setEnabled(true);
 }
 

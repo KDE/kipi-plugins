@@ -166,8 +166,7 @@ void SaveImgThread::run()
         ret = d->img.save(d->newUrl.path(), d->format.toAscii().data());
     }
 
-    if (ret) emit signalComplete(d->newUrl);
-    else emit signalFailed(d->newUrl);
+    emit signalComplete(d->newUrl, ret);
 }
 
 }  // namespace KIPIAcquireImagesPlugin

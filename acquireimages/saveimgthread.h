@@ -56,8 +56,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalComplete(const KUrl&);
-    void signalFailed(const KUrl&);
+    void signalComplete(const KUrl&, bool);
 
 private:
 
