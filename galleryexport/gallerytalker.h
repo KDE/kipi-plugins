@@ -65,6 +65,8 @@ public:
         GE_ADDPHOTO
     };
 
+public:
+
     GalleryTalker(QWidget* parent);
     ~GalleryTalker();
 
@@ -85,14 +87,15 @@ public:
 
     bool loggedIn() const;
 
-    void login(const KUrl& url, const QString& name,
-               const QString& passwd);
+    void login(const KUrl& url, const QString& name, const QString& passwd);
     void listAlbums();
     void listPhotos(const QString& albumName);
+
     void createAlbum(const QString& parentAlbumName,
                      const QString& albumName,
                      const QString& albumTitle,
                      const QString& albumCaption);
+
     bool addPhoto(const QString& albumName,
                   const QString& photoPath,
                   const QString& caption = QString(),
@@ -100,7 +103,6 @@ public:
                   bool rescale = false, int maxDim = 600);
 
     void cancel();
-
 
 Q_SIGNALS:
 

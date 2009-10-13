@@ -69,6 +69,9 @@
 namespace KIPIGalleryExportPlugin
 {
 
+bool GalleryTalker::s_using_gallery2 = true;
+QString GalleryTalker::s_authToken   = "";
+
 GalleryTalker::GalleryTalker(QWidget* parent)
              : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
@@ -80,18 +83,12 @@ GalleryTalker::~GalleryTalker()
         m_job->kill();
 }
 
-
-bool GalleryTalker::s_using_gallery2 = true;
-QString GalleryTalker::s_authToken = "";
-
-
 bool GalleryTalker::loggedIn() const
 {
     return m_loggedIn;
 }
 
-void GalleryTalker::login(const KUrl& url, const QString& name,
-                          const QString& passwd)
+void GalleryTalker::login(const KUrl& url, const QString& name, const QString& passwd)
 {
     m_job   = 0;
     m_url   = url;
@@ -177,7 +174,7 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
                                 const QString& albumTitle,
                                 const QString& albumCaption)
 {
-    m_job = 0;
+    m_job   = 0;
     m_state = GE_CREATEALBUM;
     m_talker_buffer.resize(0);
 
@@ -185,12 +182,16 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     form.addPair("cmd", "new-album");
     form.addPair("protocol_version", "2.11");
     form.addPair("set_albumName", parentAlbumName);
+
     if (!albumName.isEmpty())
         form.addPair("newAlbumName", albumName);
+
     if (!albumTitle.isEmpty())
         form.addPair("newAlbumTitle", albumTitle);
+
     if (!albumCaption.isEmpty())
         form.addPair("newAlbumDesc", albumCaption);
+
     form.finish();
 
     m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
@@ -198,8 +199,11 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    connect(m_job, SIGNAL(result(KJob *)), this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+
+    connect(m_job, SIGNAL(result(KJob*)), 
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -207,8 +211,10 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 bool GalleryTalker::addPhoto(const QString& albumName,
                              const QString& photoPath,
                              const QString& caption,
-                             bool  captionIsTitle, bool captionIsDescription,
-                             bool  rescale, int maxDim)
+                             bool  captionIsTitle, 
+                             bool  captionIsDescription,
+                             bool  rescale, 
+                             int   maxDim)
 {
     m_job        = 0;
     QString path = photoPath;
@@ -229,6 +235,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fi(photoPath);
+
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
         KDcrawIface::KDcraw::loadDcrawPreview(image, photoPath);
     else
@@ -239,9 +246,9 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         // image file - see if we need to rescale it
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
         {
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
-                                                 Qt::SmoothTransformation);
+            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
+
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
         kDebug(51000) << "Resizing and saving to temp file: " << path ;
@@ -266,7 +273,6 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     // used for resizing... so I've added it explicitly for now.
     if (!form.addFile(path, caption))
         return false;
-
 
     if (!caption.isEmpty())
     {
@@ -396,8 +402,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-
-    m_loggedIn = false;
+    m_loggedIn         = false;
 
     while (!ts.atEnd())
     {
@@ -605,7 +610,6 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
 
     emit signalPhotos(photoList);
 }
-
 
 void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
 {
