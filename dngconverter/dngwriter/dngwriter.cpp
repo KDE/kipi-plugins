@@ -830,27 +830,25 @@ int DNGWriter::convert()
             meta.setWriteRawFiles(true);
             meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
             meta.applyChanges();
-
-            // update modification time if desired
-            if (d->updateFileDate)
-            {
-                QDateTime date = meta.getImageDateTime();
-
-                kDebug(51000) << "Setting modification date from meta data: "
-                                << date.toString();
-
-                // don't touch access time
-                struct stat st;
-                stat(QFile::encodeName(dngFilePath), &st);
-
-                struct utimbuf ut;
-                ut.actime = st.st_atime;
-                ut.modtime = date.toTime_t();
-                utime(QFile::encodeName(dngFilePath), &ut);
-            }
-
         }
 
+        // update modification time if desired
+        if (d->updateFileDate)
+        {
+            QDateTime date = meta.getImageDateTime();
+
+            kDebug(51000) << "Setting modification date from meta data: "
+                          << date.toString();
+
+            // don't touch access time
+            struct stat st;
+            stat(QFile::encodeName(dngFilePath), &st);
+
+            struct utimbuf ut;
+            ut.actime = st.st_atime;
+            ut.modtime = date.toTime_t();
+            utime(QFile::encodeName(dngFilePath), &ut);
+        }
     }
 
     catch (const dng_exception &exception)
