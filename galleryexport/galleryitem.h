@@ -8,9 +8,8 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
-*
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -45,11 +44,14 @@ public:
 
     int     ref_num;
     int     album_num;
+
     QString name;
     QString caption;
     QString thumbName;
     QString albumURL;
 };
+
+// ------------------------------------------------------------------------
 
 class GAlbum
 {
@@ -59,7 +61,6 @@ public:
     {
         ref_num        = -1;
         parent_ref_num = -1;
-
         add            = false;
         write          = false;
         del_item       = false;
@@ -76,20 +77,21 @@ public:
         return parent_ref_num < rhs.parent_ref_num;
     }
 
-    int                ref_num;         // album reference number
-    int                parent_ref_num;  // parent's album reference number
-    QString            name;            // ?
-    QString            parentName;      // ?
-    QString            title;           // album title
-    QString            summary;         // album summary
-    QString            baseurl;         // album partial (gallery) URL
-
     // permissions
     bool               add;
     bool               write;
     bool               del_item;
     bool               del_alb;
     bool               create_sub;
+
+    int                ref_num;         // album reference number
+    int                parent_ref_num;  // parent's album reference number
+
+    QString            name;            // ?
+    QString            parentName;      // ?
+    QString            title;           // album title
+    QString            summary;         // album summary
+    QString            baseurl;         // album partial (gallery) URL
 };
 
 } // namespace KIPIGalleryExportPlugin
