@@ -20,18 +20,27 @@
  *
  * ============================================================ */
 
+// Local includes.
+
 #include "albumdlg.h"
 
-using namespace KIPIGalleryExportPlugin;
+namespace KIPIGalleryExportPlugin
+{
 
 AlbumDlg::AlbumDlg(QWidget *parent)
-     : QDialog(parent)
+        : QDialog(parent)
 {
     setupUi(this);
 
-    connect(buttonOk, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(buttonOk, SIGNAL(clicked()), 
+            this, SLOT(accept()));
+
+    connect(buttonCancel, SIGNAL(clicked()), 
+            this, SLOT(reject()));
 }
 
 AlbumDlg:: ~AlbumDlg()
-{}
+{
+}
+
+} // namespace KIPIGalleryExportPlugin

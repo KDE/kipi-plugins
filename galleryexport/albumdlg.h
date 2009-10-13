@@ -25,6 +25,8 @@
 
 #include "ui_galleryalbumwidget.h"
 
+// Qt includes.
+
 #include <QDialog>
 #include <QWidget>
 
@@ -41,5 +43,6 @@ public:
     ~AlbumDlg();
 };
 
-}
+} // namespace KIPIGalleryExportPlugin
+
 #endif // ALBUMDLG_H
