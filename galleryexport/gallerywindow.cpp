@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -24,8 +24,10 @@
  * ============================================================ */
 
 #include "gallerywindow.h"
+#include "gallerywindow.moc"
 
 // Qt includes
+
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
@@ -37,6 +39,7 @@
 #include <QPointer>
 
 // KDE includes
+
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -51,9 +54,11 @@
 #include <ktoolinvocation.h>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 
 // Local includes
+
 #include "albumdlg.h"
 #include "galleries.h"
 #include "galleryconfig.h"
@@ -62,13 +67,13 @@
 #include "imagedialog.h"
 #include "kpaboutdata.h"
 
-using namespace KIPIGalleryExportPlugin;
-
-// -------------------------------------------------------------------------------
+namespace KIPIGalleryExportPlugin
+{
 
 class GalleryWindow::Private
 {
 private:
+
     Private(GalleryWindow* parent);
 
     QWidget *widget;
@@ -84,7 +89,6 @@ private:
 
     friend class GalleryWindow;
 };
-
 
 GalleryWindow::Private::Private(GalleryWindow* parent)
 {
@@ -104,7 +108,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. GroupBox optionBox
-    QFrame *optionFrame = new QFrame;
+    QFrame *optionFrame      = new QFrame;
     QVBoxLayout *frameLayout = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
@@ -119,7 +123,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     addPhotoBtn->setEnabled(false);
     frameLayout->addWidget(addPhotoBtn);
 
-    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
+    QGroupBox *optionsBox         = new QGroupBox(i18n("Override Default Options"));
     QVBoxLayout *optionsBoxLayout = new QVBoxLayout();
 
     captTitleCheckBox = new QCheckBox(optionsBox);
@@ -135,8 +139,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     optionsBoxLayout->addWidget(resizeCheckBox);
 
     QHBoxLayout *dimLayout = new QHBoxLayout;
-
-    QLabel *resizeLabel = new QLabel(i18n("Maximum dimension:"));
+    QLabel *resizeLabel    = new QLabel(i18n("Maximum dimension:"));
     dimLayout->addWidget(resizeLabel);
 
     dimensionSpinBox  = new QSpinBox;
@@ -163,10 +166,10 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 // --------------------------------------------------------------------------------------------------------------------------
 
 GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Gallery* pGallery)
-        : KDialog(parent),
-        m_interface(interface),
-        mpGallery(pGallery),
-        d(new Private(this))
+             : KDialog(parent),
+               m_interface(interface),
+               mpGallery(pGallery),
+               d(new Private(this))
 {
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
@@ -179,8 +182,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
                                            ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
                                            ki18n("(c) 2003-2005, Renchi Raju\n"
                                                     "(c) 2006-2007, Colin Guthrie\n"
-                                                    "(c) 2008, Andrea Diamantini\n")
-    );
+                                                    "(c) 2006-2009, Gilles Caulier\n"
+                                                    "(c) 2008, Andrea Diamantini\n"));
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                        "renchi at pooh dot tam dot uiuc dot edu");
@@ -191,8 +194,13 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
                        "adjam7 at gmail dot com");
 
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                       "caulier dot gilles at gmail dot com");
+
     // help button
-    disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
+
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
 
     KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -219,7 +227,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     m_progressDlg->setAutoClose(true);
     m_uploadCount = 0;
     m_uploadTotal = 0;
-    mpUploadList = new QStringList;
+    mpUploadList  = new QStringList;
 
     // connect functions
     connectSignals();
@@ -230,41 +238,59 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     slotDoLogin();
 }
 
-
 GalleryWindow::~GalleryWindow()
 {
     // write config
     KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
-    group.writeEntry("Resize", d->resizeCheckBox->isChecked());
-    group.writeEntry("Set title", d->captTitleCheckBox->isChecked());
+    group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
+    group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
     group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
-    group.writeEntry("Maximum Width",  d->dimensionSpinBox->value());
+    group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
     delete mpUploadList;
     delete d;
     delete m_about;
 }
 
-
 void GalleryWindow::connectSignals()
 {
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), this , SLOT( slotAlbumSelected() ) );
-    connect(d->newAlbumBtn, SIGNAL(clicked()), this, SLOT(slotNewAlbum()));
-    connect(d->addPhotoBtn, SIGNAL(clicked()), this, SLOT(slotAddPhoto()));
-    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(slotEnableSpinBox(int)));
+    connect(d->albumView, SIGNAL(itemSelectionChanged()), 
+            this , SLOT( slotAlbumSelected() ) );
 
-    connect(m_progressDlg, SIGNAL( canceled() ), this, SLOT( slotAddPhotoCancel() ));
+    connect(d->newAlbumBtn, SIGNAL(clicked()), 
+            this, SLOT(slotNewAlbum()));
 
-    connect(m_talker, SIGNAL(signalError(const QString&)), this, SLOT(slotError(const QString&)));
-    connect(m_talker, SIGNAL(signalBusy(bool)), this, SLOT(slotBusy(bool)));
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), this, SLOT(slotLoginFailed(const QString&)));
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), this, SLOT(slotAlbums(const QList<GAlbum>&)));
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), this, SLOT(slotPhotos(const QList<GPhoto>&)));
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), this, SLOT(slotAddPhotoSucceeded()));
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), this, SLOT(slotAddPhotoFailed(const QString&)));
+    connect(d->addPhotoBtn, SIGNAL(clicked()), 
+            this, SLOT(slotAddPhoto()));
+
+    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)), 
+            this, SLOT(slotEnableSpinBox(int)));
+
+    connect(m_progressDlg, SIGNAL( canceled() ), 
+            this, SLOT( slotAddPhotoCancel() ));
+
+    connect(m_talker, SIGNAL(signalError(const QString&)), 
+            this, SLOT(slotError(const QString&)));
+
+    connect(m_talker, SIGNAL(signalBusy(bool)), 
+            this, SLOT(slotBusy(bool)));
+
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
+            this, SLOT(slotLoginFailed(const QString&)));
+
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+            this, SLOT(slotAlbums(const QList<GAlbum>&)));
+
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+            this, SLOT(slotPhotos(const QList<GPhoto>&)));
+
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), 
+            this, SLOT(slotAddPhotoSucceeded()));
+
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+            this, SLOT(slotAddPhotoFailed(const QString&)));
 }
-
 
 void GalleryWindow::readSettings()
 {
@@ -272,11 +298,14 @@ void GalleryWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("GallerySync Galleries");
 
-    if (group.readEntry("Resize", false)) {
+    if (group.readEntry("Resize", false))
+    {
         d->resizeCheckBox->setChecked(true);
         d->dimensionSpinBox->setEnabled(true);
         d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));
-    } else {
+    }
+    else
+    {
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
     }
@@ -293,31 +322,33 @@ void GalleryWindow::readSettings()
 
 }
 
-
 void GalleryWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
-    return;
 }
-
 
 void GalleryWindow::slotDoLogin()
 {
     GalleryTalker::setGallery2((2 == mpGallery->version()));
 
     KUrl url(mpGallery->url());
-    if (url.protocol().isEmpty()) {
+    if (url.protocol().isEmpty())
+    {
         url.setProtocol("http");
         url.setHost(mpGallery->url());
     }
-    if (!url.url().endsWith(".php")) {
+
+    if (!url.url().endsWith(".php"))
+    {
         if (GalleryTalker::isGallery2())
             url.addPath("main.php");
         else
             url.addPath("gallery_remote2.php");
     }
+
     // If we've done something clever, save it back to the gallery.
-    if (mpGallery->url() != url.url()) {
+    if (mpGallery->url() != url.url())
+    {
         mpGallery->setUrl(url.url());
         mpGallery->save();
     }
@@ -325,14 +356,14 @@ void GalleryWindow::slotDoLogin()
     m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
 }
 
-
 void GalleryWindow::slotLoginFailed(const QString& msg)
 {
     if (KMessageBox::warningYesNo(this,
                                   i18n("Failed to login into remote gallery. ")
                                   + msg
                                   + i18n("\nDo you want to check your settings and try again?"))
-            != KMessageBox::Yes) {
+            != KMessageBox::Yes)
+    {
         close();
         return;
     }
@@ -346,7 +377,6 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
     slotDoLogin();
     delete configDlg;
 }
-
 
 void GalleryWindow::slotBusy(bool val)
 {
@@ -365,13 +395,11 @@ void GalleryWindow::slotBusy(bool val)
     }
 }
 
-
 void GalleryWindow::slotError(const QString& msg)
 {
     m_progressDlg->hide();
     KMessageBox::error(this, msg);
 }
-
 
 // FIXME
 void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
@@ -407,7 +435,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         {
             QTreeWidgetItem *parentItem;
             bool found = false;
-            int i = 0;
+            int i      = 0;
 
             while( !found && i < parentItemList.size() )
             {
@@ -435,7 +463,6 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
     }
 }
 
-
 // FIXME: avoid duplications
 void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
 {
@@ -453,7 +480,6 @@ void GalleryWindow::slotPhotos(const QList<GPhoto>& photoList)
         item->setText(2, i18n("Image") );
     }
 }
-
 
 void GalleryWindow::slotAlbumSelected()
 {
@@ -482,7 +508,6 @@ void GalleryWindow::slotAlbumSelected()
     }
 }
 
-
 void GalleryWindow::slotNewAlbum()
 {
     QPointer<AlbumDlg> dlg = new AlbumDlg(d->widget);
@@ -493,8 +518,8 @@ void GalleryWindow::slotNewAlbum()
         return;
     }
 
-    QString name = dlg->nameEdit->text();
-    QString title = dlg->titleEdit->text();
+    QString name    = dlg->nameEdit->text();
+    QString title   = dlg->titleEdit->text();
     QString caption = dlg->captionEdit->text();
 
     delete dlg;
@@ -504,60 +529,96 @@ void GalleryWindow::slotNewAlbum()
     // TODO: Change this to a QRegExp check.
     QChar ch;
     bool  clean = true;
-    for (int i = 0; i < name.length(); ++i) {
+
+    for (int i = 0; i < name.length(); ++i)
+    {
         ch = name[i];
-        if (ch == '\\') {
+        if (ch == '\\')
+        {
             clean = false;
             break;
-        } else if (ch == '/') {
+        }
+        else if (ch == '/')
+        {
             clean = false;
             break;
-        } else if (ch == '*') {
+        }
+        else if (ch == '*')
+        {
             clean = false;
             break;
-        } else if (ch == '?') {
+        }
+        else if (ch == '?')
+        {
             clean = false;
             break;
-        } else if (ch == '"') {
+        }
+        else if (ch == '"')
+        {
             clean = false;
             break;
-        } else if (ch == '\'') {
+        }
+        else if (ch == '\'')
+        {
             clean = false;
             break;
-        } else if (ch == '&') {
+        }
+        else if (ch == '&')
+        {
             clean = false;
             break;
-        } else if (ch == '<') {
+        }
+        else if (ch == '<')
+        {
             clean = false;
             break;
-        } else if (ch == '>') {
+        }
+        else if (ch == '>')
+        {
             clean = false;
             break;
-        } else if (ch == '|') {
+        }
+        else if (ch == '|')
+        {
             clean = false;
             break;
-        } else if (ch == '.') {
+        }
+        else if (ch == '.')
+        {
             clean = false;
             break;
-        } else if (ch == '+') {
+        }
+        else if (ch == '+')
+        {
             clean = false;
             break;
-        } else if (ch == '#') {
+        }
+        else if (ch == '#')
+        {
             clean = false;
             break;
-        } else if (ch == '(') {
+        }
+        else if (ch == '(')
+        {
             clean = false;
             break;
-        } else if (ch == ')') {
+        }
+        else if (ch == ')')
+        {
             clean = false;
             break;
-        } /*else if (ch == ' ') {
+        }
+        /*
+        else if (ch == ' ')
+        {
             clean = false;
             break;
-        }*/
+        }
+        */
     }
 
-    if (!clean) {
+    if (!clean)
+    {
         KMessageBox::error(this, i18n("Sorry, these characters are not allowed in album name: \\ / * ? \" \' & < > | . + # ( ) or spaces"));
         return;
     }
@@ -565,11 +626,11 @@ void GalleryWindow::slotNewAlbum()
     QString parentAlbumName;
 
     QTreeWidgetItem* item = d->albumView->currentItem();
-    int column = d->albumView->currentColumn();
+    int column            = d->albumView->currentColumn();
     if (item)
     {
         const GAlbum& album = d->albumDict.value( item->text(column) );
-        parentAlbumName = album.name;
+        parentAlbumName     = album.name;
         m_talker->createAlbum( parentAlbumName, name, title, caption);
     }
     else
@@ -578,11 +639,10 @@ void GalleryWindow::slotNewAlbum()
     }
 }
 
-
 void GalleryWindow::slotAddPhoto()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
-    int column = d->albumView->currentColumn();
+    int column            = d->albumView->currentColumn();
     if (!item)
         return;     // NO album selected: FIXME: do something
 
@@ -608,7 +668,6 @@ void GalleryWindow::slotAddPhoto()
     slotAddPhotoNext();
 }
 
-
 void GalleryWindow::slotAddPhotoNext()
 {
     if ( mpUploadList->isEmpty() )
@@ -620,17 +679,16 @@ void GalleryWindow::slotAddPhotoNext()
     }
 
     QTreeWidgetItem* item = d->albumView->currentItem();
-    int column = d->albumView->currentColumn();
-    QString albumTitle = item->text(column);
-    const GAlbum& album = d->albumDict.value(albumTitle);
-
-    QString photoPath = mpUploadList->takeFirst();
-    QString photoName = QFileInfo(photoPath).baseName();
-    bool res = m_talker->addPhoto(album.name, photoPath, photoName,
-                                  d->captTitleCheckBox->isChecked(),
-                                  d->captDescrCheckBox->isChecked(),
-                                  d->resizeCheckBox->isChecked(),
-                                  d->dimensionSpinBox->value() );
+    int column            = d->albumView->currentColumn();
+    QString albumTitle    = item->text(column);
+    const GAlbum& album   = d->albumDict.value(albumTitle);
+    QString photoPath     = mpUploadList->takeFirst();
+    QString photoName     = QFileInfo(photoPath).baseName();
+    bool res              = m_talker->addPhoto(album.name, photoPath, photoName,
+                                               d->captTitleCheckBox->isChecked(),
+                                               d->captDescrCheckBox->isChecked(),
+                                               d->resizeCheckBox->isChecked(),
+                                               d->dimensionSpinBox->value() );
 
     if (!res)
     {
@@ -638,11 +696,11 @@ void GalleryWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file ") +  KUrl(photoPath).fileName()  );
+    m_progressDlg->setLabelText( i18n("Uploading file ") +  KUrl(photoPath).fileName() );
+
     if (m_progressDlg->isHidden())
         m_progressDlg->show();
 }
-
 
 void GalleryWindow::slotAddPhotoSucceeded()
 {
@@ -650,7 +708,6 @@ void GalleryWindow::slotAddPhotoSucceeded()
     m_progressDlg->setValue(m_uploadCount);
     slotAddPhotoNext();
 }
-
 
 void GalleryWindow::slotAddPhotoFailed(const QString& msg)
 {
@@ -662,39 +719,39 @@ void GalleryWindow::slotAddPhotoFailed(const QString& msg)
                                                 "remote gallery. ")
                                            + msg
                                            + i18n("\nDo you want to continue?"))
-            != KMessageBox::Continue) {
-    } else {
+            != KMessageBox::Continue)
+    {
+    }
+    else
+    {
         slotAddPhotoNext();
     }
 }
-
 
 void GalleryWindow::slotAddPhotoCancel()
 {
     m_progressDlg->reset();
     m_progressDlg->hide();
-
     m_talker->cancel();
 }
-
 
 void GalleryWindow::slotEnableSpinBox(int n)
 {
     bool b;
-    switch(n) {
-    case 0:
-        b = false;
-        break;
-    case 1:
-    case 2:
-        b = true;
-        break;
-    default:
-        b = false;
+    switch(n)
+    {
+        case 0:
+            b = false;
+            break;
+        case 1:
+        case 2:
+            b = true;
+            break;
+        default:
+            b = false;
     }
     d->dimensionSpinBox->setEnabled(b);
 }
-
 
 void GalleryWindow::slotSettings()
 {
@@ -708,7 +765,7 @@ void GalleryWindow::slotSettings()
 }
 
 
-QString GalleryWindow::cleanName(QString str)
+QString GalleryWindow::cleanName(const QString& str)
 {
     QString plain = str;
     plain.replace("&lt;", "<");
@@ -719,6 +776,4 @@ QString GalleryWindow::cleanName(QString str)
     return plain;
 }
 
-
-
-#include "gallerywindow.moc"
+} // namespace KIPIGalleryExportPlugin
