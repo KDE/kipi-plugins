@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  *
@@ -63,17 +63,14 @@ GalleryMPForm::GalleryMPForm()
     }
 }
 
-
 GalleryMPForm::~GalleryMPForm()
 {
 }
-
 
 void GalleryMPForm::reset()
 {
     m_buffer.resize(0);
 }
-
 
 void GalleryMPForm::finish()
 {
@@ -86,7 +83,6 @@ void GalleryMPForm::finish()
     m_buffer.append(str.toUtf8());
 }
 
-
 bool GalleryMPForm::addPair(const QString& name, const QString& value)
 {
     if (GalleryTalker::isGallery2())
@@ -94,7 +90,6 @@ bool GalleryMPForm::addPair(const QString& name, const QString& value)
 
     return addPairRaw(name, value);
 }
-
 
 bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
 {
@@ -114,7 +109,6 @@ bool GalleryMPForm::addPairRaw(const QString& name, const QString& value)
     return true;
 }
 
-
 bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
 {
 
@@ -122,13 +116,15 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     if (GalleryTalker::isGallery2())
         filename = "g2_userfile_name";
 
-    if (!addPairRaw(filename, displayFilename)) {
+    if (!addPairRaw(filename, displayFilename)) 
+    {
         return false;
     }
 
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime = ptr->name();
-    if (mime.isEmpty()) {
+    if (mime.isEmpty())
+    {
         // if we ourselves can't determine the mime of the local file,
         // very unlikely the remote gallery will be able to identify it
         return false;
@@ -172,24 +168,19 @@ bool GalleryMPForm::addFile(const QString& path, const QString& displayFilename)
     return true;
 }
 
-
-
 QString GalleryMPForm::contentType() const
 {
     return QString("Content-Type: multipart/form-data; boundary=" + m_boundary);
 }
-
   
 QString GalleryMPForm::boundary() const
 {
     return m_boundary;
 }
 
-
 QByteArray GalleryMPForm::formData() const
 {
     return m_buffer;
 }
 
-
-}
+} // namespace KIPIGalleryExportPlugin
