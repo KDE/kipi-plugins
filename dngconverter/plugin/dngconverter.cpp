@@ -47,9 +47,9 @@ using namespace KExiv2Iface;
 
 int main(int argc, char *argv[])
 {
-    DNGConverterAboutData aboutData;
+    DNGConverterAboutData* aboutData = new DNGConverterAboutData;
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    KCmdLineArgs::init(argc, argv, aboutData);
 
     KCmdLineOptions options;
     options.add("+[file(s)]", ki18n("File(s) to convert"));
@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    aboutData.setProgramLogo(KIcon("dngconverter"));
-    BatchDialog *converter = new BatchDialog(0, &aboutData);
+    aboutData->setProgramLogo(KIcon("dngconverter"));
+    BatchDialog *converter = new BatchDialog(0, aboutData);
     app.setTopWidget(converter);
 
     KUrl::List urls;
