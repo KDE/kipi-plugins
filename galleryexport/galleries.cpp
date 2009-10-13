@@ -45,89 +45,75 @@ Gallery::Gallery()
         load();
 }
 
-
 Gallery::~Gallery()
 {
 }
-
 
 QString Gallery::name() const
 {
     return mName;
 }
 
-
 QString Gallery::url() const
 {
     return mUrl;
 }
-
 
 QString Gallery::username() const
 {
     return mUsername;
 }
 
-
 QString Gallery::password() const
 {
     return mPassword;
 }
-
 
 unsigned int Gallery::version() const
 {
     return mVersion;
 }
 
-
 unsigned int Gallery::galleryId() const
 {
     return mGalleryId;
 }
 
-
 // -------------------------------------
 
-void Gallery::setName(QString name)
+void Gallery::setName(const QString& name)
 {
     mName = name;
 }
 
-
-void Gallery::setUrl(QString url)
+void Gallery::setUrl(const QString& url)
 {
     mUrl = url;
 }
 
-
-void Gallery::setUsername(QString username)
+void Gallery::setUsername(const QString& username)
 {
     mUsername = username;
 }
 
-
-void Gallery::setPassword(QString password)
+void Gallery::setPassword(const QString& password)
 {
     mPassword = password;
 }
-
 
 void Gallery::setVersion(unsigned int version)
 {
     mVersion = version;
 }
 
-
 void Gallery::setGalleryId(unsigned int galleryId)
 {
     mGalleryId = galleryId;
 }
 
-
 void Gallery::load()
 {
-// FIXME: sure we need this?? (perhaps YES..)
+    // FIXME: sure we need this?? (perhaps YES..)
     static bool bln_loaded = false;
     if (bln_loaded) return;
     bln_loaded = true;
@@ -138,15 +124,12 @@ void Gallery::load()
 
     kDebug( 51000 ) << "Reading data from kipirc file..";
 
-    mName = group.readEntry("Name", QString() );
-    mUrl = group.readEntry("URL", QString() );
+    mName     = group.readEntry("Name",     QString() );
+    mUrl      = group.readEntry("URL",      QString() );
     mUsername = group.readEntry("Username", QString() );
-    mVersion = group.readEntry("Version", QString().toInt() );
+    mVersion  = group.readEntry("Version",  QString().toInt() );
     mPassword = group.readEntry("Password", QString() );
-
 }
-
-
 
 void Gallery::save()
 {
@@ -155,15 +138,14 @@ void Gallery::save()
 
     kDebug( 51000 ) << "Saving data to kipirc file..";
 
-    group.writeEntry(QString("Name"), name() );
-    group.writeEntry(QString("URL"), url() );
+    group.writeEntry(QString("Name"),     name() );
+    group.writeEntry(QString("URL"),      url() );
     group.writeEntry(QString("Username"), username() );
-    group.writeEntry(QString("Version"), version() );
+    group.writeEntry(QString("Version"),  version() );
     group.writeEntry(QString("Password"), password() );
 
     kDebug( 51000 ) << "syncing..";
     config.sync();
 }
 
-
-} // end NameSpace
+} // namespace KIPIGalleryExportPlugin

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -40,6 +40,7 @@ namespace KIPIGalleryExportPlugin
 
 class Gallery
 {
+
 public:
 
     Gallery();
@@ -52,21 +53,12 @@ public:
     unsigned int version()   const;
     unsigned int galleryId() const;
 
-    void setName(QString name);
-    void setUrl(QString url);
-    void setUsername(QString username);
-    void setPassword(QString password);
+    void setName(const QString& name);
+    void setUrl(const QString& url);
+    void setUsername(const QString& username);
+    void setPassword(const QString& password);
     void setVersion(unsigned int version);
     void setGalleryId(unsigned int galleryId);
-
-private:
-
-    QString mName;
-    QString mUrl;
-    QString mUsername;
-    QString mPassword;
-    unsigned int mVersion;
-    unsigned int mGalleryId;
 
 public:
 
@@ -75,6 +67,17 @@ public:
 private:
 
     void load();
+
+private:
+
+    unsigned int     mVersion;
+    unsigned int     mGalleryId;
+
+    QString          mName;
+    QString          mUrl;
+    QString          mUsername;
+    QString          mPassword;
+
     KWallet::Wallet* mpWallet;
 };
 
