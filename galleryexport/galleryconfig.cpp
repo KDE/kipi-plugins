@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -24,6 +24,7 @@
  * ============================================================ */
 
 #include "galleryconfig.h"
+#include "galleryconfig.moc"
 
 // Qt includes
 
@@ -48,12 +49,10 @@
 namespace KIPIGalleryExportPlugin
 {
 
-GalleryEdit::GalleryEdit(QWidget* pParent,
-                         Gallery* pGallery,
-                         QString title)
-        : KDialog(pParent, Qt::Dialog),
-        mpGallery(pGallery)
+GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title)
+           : KDialog(pParent, Qt::Dialog)
 {
+    mpGallery = pGallery;
 
     setCaption(title);
 
@@ -92,9 +91,11 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     centerLayout->addWidget(passwdLabel, 3, 0);
 
     //---------------------------------------------
+
     mpGalleryVersion = new QCheckBox(i18n("Use &Gallery 2"), this);
     mpGalleryVersion->setChecked(2 == pGallery->version());
     centerLayout->addWidget(mpGalleryVersion, 4, 1);
+
     //---------------------------------------------
 
     page->setLayout(centerLayout);
@@ -107,24 +108,28 @@ GalleryEdit::GalleryEdit(QWidget* pParent,
     mpUsernameEdit->setText(pGallery->username());
     mpPasswordEdit->setText(pGallery->password());
 
-    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+    connect(this, SIGNAL( okClicked() ), 
+            this, SLOT( slotOk() ));
 }
 
-
 GalleryEdit::~GalleryEdit()
-{}
+{
+}
 
-
-void GalleryEdit::slotOk(void)
+void GalleryEdit::slotOk()
 {
     if (mpNameEdit->isModified())
         mpGallery->setName(mpNameEdit->text());
+
     if (mpUrlEdit->isModified())
         mpGallery->setUrl(mpUrlEdit->text());
+
     if (mpUsernameEdit->isModified())
         mpGallery->setUsername(mpUsernameEdit->text());
+
     if (mpPasswordEdit->isModified())
         mpGallery->setPassword(mpPasswordEdit->text());
+
     if (mpGalleryVersion->isChecked())
         mpGallery->setVersion(2);
     else
@@ -134,7 +139,4 @@ void GalleryEdit::slotOk(void)
     accept();
 }
 
-
-}
-
-#include "galleryconfig.moc"
+} // namespace KIPIGalleryExportPlugin
