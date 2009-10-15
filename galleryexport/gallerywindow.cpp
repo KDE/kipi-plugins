@@ -255,40 +255,40 @@ GalleryWindow::~GalleryWindow()
 
 void GalleryWindow::connectSignals()
 {
-    connect(d->albumView, SIGNAL(itemSelectionChanged()), 
+    connect(d->albumView, SIGNAL(itemSelectionChanged()),
             this , SLOT( slotAlbumSelected() ) );
 
-    connect(d->newAlbumBtn, SIGNAL(clicked()), 
+    connect(d->newAlbumBtn, SIGNAL(clicked()),
             this, SLOT(slotNewAlbum()));
 
-    connect(d->addPhotoBtn, SIGNAL(clicked()), 
+    connect(d->addPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotAddPhoto()));
 
-    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)), 
+    connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
 
-    connect(m_progressDlg, SIGNAL( canceled() ), 
+    connect(m_progressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAddPhotoCancel() ));
 
-    connect(m_talker, SIGNAL(signalError(const QString&)), 
+    connect(m_talker, SIGNAL(signalError(const QString&)),
             this, SLOT(slotError(const QString&)));
 
-    connect(m_talker, SIGNAL(signalBusy(bool)), 
+    connect(m_talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)), 
+    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)),
             this, SLOT(slotLoginFailed(const QString&)));
 
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)), 
+    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)),
             this, SLOT(slotAlbums(const QList<GAlbum>&)));
 
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)), 
+    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)),
             this, SLOT(slotPhotos(const QList<GPhoto>&)));
 
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()), 
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
             this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)), 
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
             this, SLOT(slotAddPhotoFailed(const QString&)));
 }
 
@@ -338,7 +338,7 @@ void GalleryWindow::slotDoLogin()
         url.setHost(mpGallery->url());
     }
 
-    if (!url.url().endsWith(".php"))
+    if (!url.url().endsWith(QLatin1String(".php")))
     {
         if (GalleryTalker::isGallery2())
             url.addPath("main.php");
