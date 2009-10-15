@@ -24,5 +24,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> FlickrExport       : 208410 : Patch: Allow custom tags per image.
 015 ==> KioImportExport    : 154183 : Import tool does not recognize Fish KIO Slave.
 016 ==> JPEGLossLess       : 200032 : digiKam, inconsistency data about rotation.
-017 ==> 
+017 ==> GPSSync            : 210611 : Kipi-plugin add gps data crash after write.
+018 ==> 
 
