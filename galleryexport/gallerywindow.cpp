@@ -433,14 +433,14 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
         }
         else
         {
-            QTreeWidgetItem *parentItem;
-            bool found = false;
-            int i      = 0;
+            QTreeWidgetItem *parentItem = 0;
+            bool found                  = false;
+            int i                       = 0;
 
             while( !found && i < parentItemList.size() )
             {
                 parentItem = parentItemList.at(i);
-                if( parentItem->text(1) == QString::number(parentRefNum) )
+                if(parentItem && (parentItem->text(1) == QString::number(parentRefNum)))
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.title) );
