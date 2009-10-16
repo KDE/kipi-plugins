@@ -52,6 +52,9 @@
 #include <kpushbutton.h>
 #include <krun.h>
 #include <ktoolinvocation.h>
+#include <kurllabel.h>
+#include <ktoolinvocation.h>
+#include <kstandarddirs.h>
 
 // LibKIPI includes
 
@@ -72,22 +75,26 @@ namespace KIPIGalleryExportPlugin
 
 class GalleryWindow::Private
 {
-private:
+public:
 
     Private(GalleryWindow* parent);
 
-    QWidget *widget;
-    QTreeWidget *albumView;
-    QPushButton *newAlbumBtn;
-    QPushButton *addPhotoBtn;
-    QCheckBox *captTitleCheckBox;
-    QCheckBox *captDescrCheckBox;
-    QCheckBox *resizeCheckBox;
-    QSpinBox *dimensionSpinBox;
+    QWidget*               widget;
+
+    QTreeWidget*           albumView;
+
+    QPushButton*           newAlbumBtn;
+    QPushButton*           addPhotoBtn;
+
+    QCheckBox*             captTitleCheckBox;
+    QCheckBox*             captDescrCheckBox;
+    QCheckBox*             resizeCheckBox;
+
+    QSpinBox*              dimensionSpinBox;
 
     QHash<QString, GAlbum> albumDict;
 
-    friend class GalleryWindow;
+    KUrlLabel*             logo;
 };
 
 GalleryWindow::Private::Private(GalleryWindow* parent)
@@ -98,25 +105,35 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     QHBoxLayout *hlay = new QHBoxLayout(widget);
 
-    // 1st. QListWidget albumView
+    // ---------------------------------------------------------------------------
+
+    logo = new KUrlLabel;
+    logo->setText(QString());
+    logo->setUrl("http://gallery.menalto.com");
+    logo->setPixmap(QPixmap(KStandardDirs::locate("data", "kipiplugin_galleryexport/pics/gallery_logo.png")));
+    logo->setAlignment(Qt::AlignLeft);
+
+    // ---------------------------------------------------------------------------
 
     albumView = new QTreeWidget;
     QStringList labels;
-    labels << i18n("albums"); // << i18n("ID");
+    labels << i18n("Albums"); // << i18n("ID");
     albumView->setHeaderLabels(labels);
 
-    // 2nd. GroupBox optionBox
+    // ---------------------------------------------------------------------------
 
     QFrame *optionFrame = new QFrame;
     QVBoxLayout *vlay   = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&New Album"));
+    newAlbumBtn->setIcon(KIcon("folder-new"));
     newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     newAlbumBtn->setEnabled(false);
 
     addPhotoBtn = new QPushButton;
     addPhotoBtn->setText(i18n("&Add Photos"));
+    addPhotoBtn->setIcon(KIcon("list-add"));
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
 
@@ -174,6 +191,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     // ---------------------------------------------------------------------------
 
+    hlay->addWidget(logo);
     hlay->addWidget(albumView);
     hlay->addWidget(optionFrame);
     hlay->setSpacing(KDialog::spacingHint());
@@ -182,7 +200,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     widget->setLayout(hlay);
 }
 
-// --------------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------
 
 GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Gallery* pGallery)
              : KDialog(parent),
@@ -231,8 +249,8 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
 
     // User1 Button : to conf gallery settings
     KPushButton *confButton = button( User1 );
-    confButton->setText( i18n("settings") );
-    confButton->setIcon( KIcon("applications-system") );
+    confButton->setText( i18n("Settings") );
+    confButton->setIcon( KIcon("configure") );
     connect(confButton, SIGNAL(clicked()),
             this, SLOT(slotSettings() ) );
 
@@ -267,9 +285,11 @@ GalleryWindow::~GalleryWindow()
     group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
     group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
+
     delete mpUploadList;
-    delete d;
     delete m_about;
+
+    delete d;
 }
 
 void GalleryWindow::connectSignals()
@@ -285,6 +305,9 @@ void GalleryWindow::connectSignals()
 
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
+
+    connect(d->logo, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotProcessUrl(const QString&)));
 
     connect(m_progressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAddPhotoCancel() ));
@@ -309,6 +332,11 @@ void GalleryWindow::connectSignals()
 
     connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
             this, SLOT(slotAddPhotoFailed(const QString&)));
+}
+
+void GalleryWindow::slotProcessUrl(const QString& url)
+{
+    KToolInvocation::self()->invokeBrowser(url);
 }
 
 void GalleryWindow::readSettings()

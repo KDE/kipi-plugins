@@ -86,6 +86,7 @@ private Q_SLOTS:
     void slotHelp();
     void slotEnableSpinBox(int n);
     void slotSettings();
+    void slotProcessUrl(const QString&);
 
 private:
 
