@@ -426,7 +426,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
               id = "UNDEFINED_" + QString::number(++i);
               it = m_talker->m_photoSetsList->begin();
           }
-          it++;
+          ++it;
       }
 
       fps.id = id;
