@@ -146,7 +146,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
         KWindowSystem::activateWindow(m_dlgFlickr->winId());
     }
 
-    m_dlgFlickr->show();
+    m_dlgFlickr->reactivate();
 }
 
 void Plugin_FlickrExport::slotActivate23()
@@ -174,7 +174,7 @@ void Plugin_FlickrExport::slotActivate23()
         KWindowSystem::activateWindow(m_dlg23->winId());
     }
 
-    m_dlg23->show();
+    m_dlg23->reactivate();
 }
 
 void Plugin_FlickrExport::slotActivateZooomr()
@@ -202,7 +202,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
         KWindowSystem::activateWindow(m_dlgZooomr->winId());
     }
 
-    m_dlgZooomr->show();
+    m_dlgZooomr->reactivate();
 }
 
 KIPI::Category Plugin_FlickrExport::category( KAction* action ) const

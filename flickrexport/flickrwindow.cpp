@@ -254,6 +254,12 @@ FlickrWindow::~FlickrWindow()
     delete m_about;
 }
 
+void FlickrWindow::reactivate()
+{
+    m_widget->m_imglst->loadImagesFromCurrentSelection();
+    show();
+}
+
 void FlickrWindow::readSettings()
 {
     KConfig config("kipirc");
