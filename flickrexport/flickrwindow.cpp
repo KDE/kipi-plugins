@@ -225,7 +225,6 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
             this, SLOT( slotAuthCancel() ));
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
-    m_widget->setEnabled(false);
 
     kDebug(51000) << "Calling auth methods";
 
@@ -351,17 +350,11 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     m_userId   = m_talker->getUserId();
     kDebug(51000) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
+
+    // Mutable photosets are not supported by Zooomr (Zooomr only has smart
+    // folder-type photosets).
     if (m_serviceName != "Zooomr")
-    {
         m_talker->listPhotoSets();
-    }
-    else
-    {
-        // Mutable photosets are not supported by Zooomr (Zooomr only has smart
-        // folder-type photosets). So we're done and can active the Flickr
-        // widget.
-        m_widget->setEnabled(true);
-    }
 }
 
 void FlickrWindow::slotBusy(bool val)
@@ -451,7 +444,6 @@ void FlickrWindow::slotAuthCancel()
 {
     m_talker->cancel();
     m_authProgressDlg->hide();
-    m_widget->setEnabled(true);
 }
 
 /*
@@ -499,8 +491,6 @@ void FlickrWindow::populatePhotoSetComboBox()
 
         m_albumsListComboBox->setCurrentIndex(curr_index);
     }
-
-    m_widget->setEnabled(true);
 }
 
 /** This slot is call when 'Start Uploading' button is pressed.
