@@ -174,14 +174,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL( signalAddPhotoSetSucceeded() ),
             this, SLOT( slotAddPhotoSetSucceeded() ));
 
-    connect(m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotCreateNewPhotoSet() ));
-
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded() ),
             this, SLOT( populatePhotoSetComboBox() ));
 
     connect(m_talker, SIGNAL( signalListPhotoSetsFailed(const QString&) ),
             this, SLOT( slotListPhotoSetsFailed(const QString&) ));
+
+    connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
+            this, SLOT( slotTokenObtained(const QString&) ));
 
     //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
     //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
@@ -202,17 +202,15 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     connect(m_changeUserButton, SIGNAL( clicked() ),
             this, SLOT( slotUserChangeRequest() ));
 
-    connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
-            this, SLOT( slotTokenObtained(const QString&) ));
+    connect(m_newAlbumBtn, SIGNAL( clicked() ),
+            this, SLOT( slotCreateNewPhotoSet() ));
+
 
     //connect( m_tagView, SIGNAL( selectionChanged() ),
     //         SLOT( slotTagSelected() ) );
 
     //connect( m_photoView->browserExtension(), SIGNAL( openURLRequest( const KUrl&, const KParts::URLArgs& ) ),
     //         SLOT( slotOpenPhoto( const KUrl& ) ) );
-
-    //connect( m_newAlbumBtn, SIGNAL( clicked() ),
-    //         SLOT( slotNewAlbum() ) );
 
     // --------------------------------------------------------------------------
 
