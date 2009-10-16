@@ -86,8 +86,8 @@ class FlickrWindow : public KDialog
 
 public:
 
-    FlickrWindow(KIPI::Interface *interface, const QString &tmpFolder,
-                 QWidget *parent, const QString& serviceName);
+    FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
+                 QWidget* parent, const QString& serviceName);
     ~FlickrWindow();
 
 private Q_SLOTS:

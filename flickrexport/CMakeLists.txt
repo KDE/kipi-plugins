@@ -1,4 +1,4 @@
-subdirs(icons)
+SUBDIRS(icons)
 
 SET(kipiplugin_flickrexport_PART_SRCS
     plugin_flickrexport.cpp

@@ -38,9 +38,12 @@ namespace KIPIFlickrExportPlugin
 class FlickrNewPhotoSetDialog : public QDialog, public Ui::FlickrAlbumDialog
 {
 public:
-    FlickrNewPhotoSetDialog( QWidget *parent ) : QDialog( parent ) {
-    setupUi( this );
-  }
+
+    FlickrNewPhotoSetDialog(QWidget* parent)
+        : QDialog(parent)
+    {
+        setupUi( this );
+    }
 };
 
 } // namespace KIPIFlickrExportPlugin

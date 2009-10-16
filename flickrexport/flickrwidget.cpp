@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -70,13 +70,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     setObjectName("FlickrWidget");
 
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this);
-
-    m_photoView         = 0; //new KHTMLPart(splitter);
-    KSeparator *line    = new KSeparator(Qt::Horizontal, this);
-    m_tab               = new KTabWidget(this);
-    QLabel *headerLabel = new QLabel(this);
+    m_photoView                     = 0; //new KHTMLPart(splitter);
+    KSeparator *line                = new KSeparator(Qt::Horizontal, this);
+    m_tab                           = new KTabWidget(this);
+    QLabel *headerLabel             = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
+
     if (serviceName == "23")
         headerLabel->setText(i18n("<b><h2><a href='http://www.23hq.com'>"
                                   "<font color=\"#7CD164\">23</font></a>"
@@ -96,13 +96,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     // -- The image list tab --------------------------------------------------
 
-    m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab,
-                                                      (serviceName == "23"));
+    m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
-    QHeaderView *hdr = m_imglst->listView()->header();
+    QHeaderView *hdr     = m_imglst->listView()->header();
     QFontMetrics hdrFont = QFontMetrics(hdr->font());
-    int permColWidth = hdrFont.width(i18n("Public"));
+    int permColWidth     = hdrFont.width(i18n("Public"));
 
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
@@ -110,9 +109,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18n("Public"), true);
 
     // Handle extra tags per image.
-    m_imglst->listView()->setColumn(
-                    static_cast<KIPIPlugins::ImagesListView::ColumnType> (FlickrList::TAGS),
-                    i18n("Extra tags"), true);
+    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType> (FlickrList::TAGS),
+                                    i18n("Extra tags"), true);
 
     if (serviceName != "23")
     {
@@ -181,8 +179,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_changeUserButton->setText(i18n("Use a different account"));
     m_changeUserButton->setIcon(SmallIcon("system-switch-user"));
 
-    QLabel* albumLabel = new QLabel(i18n("PhotoSet:"), accountBox);
-    m_newAlbumBtn = new QPushButton(accountBox);
+    QLabel* albumLabel   = new QLabel(i18n("PhotoSet:"), accountBox);
+    m_newAlbumBtn        = new QPushButton(accountBox);
     m_newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_newAlbumBtn->setText(i18n("&New PhotoSet"));
     m_albumsListComboBox = new KComboBox(settingsBox);
@@ -199,14 +197,13 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     // -- Layout for the tags -------------------------------------------------
 
-    QGroupBox*   tagsBox       = new QGroupBox(i18n("Tag options"),
-                                               settingsBox);
+    QGroupBox*   tagsBox       = new QGroupBox(i18n("Tag options"), settingsBox);
     QGridLayout* tagsBoxLayout = new QGridLayout(tagsBox);
 
-    m_exportHostTagsCheckBox = new QCheckBox(tagsBox);
+    m_exportHostTagsCheckBox   = new QCheckBox(tagsBox);
     m_exportHostTagsCheckBox->setText(i18n("Use Host Application Tags"));
 
-    m_extendedTagsButton = new QPushButton(i18n("More tag options"));
+    m_extendedTagsButton       = new QPushButton(i18n("More tag options"));
     m_extendedTagsButton->setCheckable(true);
     // Initialize this button to checked, so extended options are shown.
     // FlickrWindow::readSettings can change this, but if checked is false it
@@ -216,7 +213,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_extendedTagsButton->setSizePolicy(QSizePolicy::Maximum,
                                         QSizePolicy::Preferred);
 
-    m_extendedTagsBox = new QGroupBox("", settingsBox);
+    m_extendedTagsBox               = new QGroupBox("", settingsBox);
     m_extendedTagsBox->setFlat(true);
     QGridLayout *extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
@@ -264,21 +261,20 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // cannot uncheck and subsequently hide the extended options (the toggled
     // signal won't be emitted).
     m_extendedPublicationButton->setChecked(true);
-    m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum,
-                                            QSizePolicy::Preferred);
+    m_extendedPublicationButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 
-    m_extendedPublicationBox = new QGroupBox("", publicationBox);
+    m_extendedPublicationBox            = new QGroupBox("", publicationBox);
     m_extendedPublicationBox->setFlat(true);
     QGridLayout *extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
     QLabel *imageSafetyLabel = new QLabel(i18n("Safety level:"));
-    m_safetyLevelComboBox = new ComboBoxIntermediate();
+    m_safetyLevelComboBox    = new ComboBoxIntermediate();
     m_safetyLevelComboBox->addItem(i18n("Safe"),       QVariant(FlickrList::SAFE));
     m_safetyLevelComboBox->addItem(i18n("Moderate"),   QVariant(FlickrList::MODERATE));
     m_safetyLevelComboBox->addItem(i18n("Restricted"), QVariant(FlickrList::RESTRICTED));
 
     QLabel *imageTypeLabel = new QLabel(i18n("Content type:"));
-    m_contentTypeComboBox = new ComboBoxIntermediate();
+    m_contentTypeComboBox  = new ComboBoxIntermediate();
     m_contentTypeComboBox->addItem(i18n("Photo"),      QVariant(FlickrList::PHOTO));
     m_contentTypeComboBox->addItem(i18n("Screenshot"), QVariant(FlickrList::SCREENSHOT));
     m_contentTypeComboBox->addItem(i18n("Other"),      QVariant(FlickrList::OTHER));
@@ -290,20 +286,19 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     extendedSettingsLayout->setColumnStretch(0, 0);
     extendedSettingsLayout->setColumnStretch(1, 1);
 
-    publicationBoxLayout->addWidget(m_publicCheckBox,         0, 0);
-    publicationBoxLayout->addWidget(m_familyCheckBox,         1, 0);
-    publicationBoxLayout->addWidget(m_friendsCheckBox,        2, 0);
+    publicationBoxLayout->addWidget(m_publicCheckBox,            0, 0);
+    publicationBoxLayout->addWidget(m_familyCheckBox,            1, 0);
+    publicationBoxLayout->addWidget(m_friendsCheckBox,           2, 0);
     publicationBoxLayout->addWidget(m_extendedPublicationButton, 2, 1);
     publicationBoxLayout->addWidget(m_extendedPublicationBox,    3, 0, 1, 2);
 
     // -- Layout for the resizing options -------------------------------------
 
-    QGroupBox*   resizingBox       = new QGroupBox(i18n("Resizing Options"),
-                                                   settingsBox);
+    QGroupBox*   resizingBox       = new QGroupBox(i18n("Resizing Options"), settingsBox);
     QGridLayout *resizingBoxLayout = new QGridLayout;
     resizingBox->setLayout(resizingBoxLayout);
 
-    m_resizeCheckBox = new QCheckBox(resizingBox);
+    m_resizeCheckBox   = new QCheckBox(resizingBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
     m_resizeCheckBox->setChecked(false);
 
@@ -315,8 +310,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel = new QLabel(i18n("Maximum dimension (pixels):"),
-                                     resizingBox);
+    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), resizingBox);
 
     m_imageQualitySpinBox = new QSpinBox(resizingBox);
     m_imageQualitySpinBox->setMinimum(0);
@@ -326,8 +320,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"),
-                                           resizingBox);
+    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), resizingBox);
 
     resizingBoxLayout->addWidget(imageQualityLabel,     0, 0, 1, 3);
     resizingBoxLayout->addWidget(m_imageQualitySpinBox, 0, 3, 1, 1);
@@ -389,6 +382,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     {
         connect(m_familyCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFamilyToggled(int)));
+
         connect(m_friendsCheckBox, SIGNAL(stateChanged(int)),
                 this, SLOT(slotMainFriendsToggled(int)));
     }
@@ -403,12 +397,16 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     {
         connect(m_safetyLevelComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainSafetyLevelChanged(int)));
+
         connect(m_contentTypeComboBox, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotMainContentTypeChanged(int)));
+
         connect(m_extendedPublicationButton, SIGNAL(toggled(bool)),
                 this, SLOT(slotExtendedPublicationToggled(bool)));
+
         connect(m_imglst, SIGNAL(signalSafetyLevelChanged(FlickrList::SafetyLevel)),
                 this, SLOT(slotSafetyLevelChanged(FlickrList::SafetyLevel)));
+
         connect(m_imglst, SIGNAL(signalContentTypeChanged(FlickrList::ContentType)),
                 this, SLOT(slotContentTypeChanged(FlickrList::ContentType)));
     }
@@ -420,7 +418,6 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                                                false);
         m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                false);
-
     }
 }
 
@@ -433,8 +430,7 @@ void FlickrWidget::slotResizeChecked()
     m_dimensionSpinBox->setEnabled(m_resizeCheckBox->isChecked());
 }
 
-void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox,
-                                         Qt::CheckState state)
+void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::CheckState state)
 {
     /* Slot for handling the signal from the FlickrList that the general
      * permissions have changed, considering the clicks in the checkboxes next
@@ -492,14 +488,21 @@ void FlickrWidget::slotContentTypeChanged(FlickrList::ContentType contentType)
 }
 
 void FlickrWidget::slotMainPublicToggled(int state)
-    {mainPermissionToggled(FlickrList::PUBLIC, static_cast<Qt::CheckState>(state));}
-void FlickrWidget::slotMainFamilyToggled(int state)
-    {mainPermissionToggled(FlickrList::FAMILY, static_cast<Qt::CheckState>(state));}
-void FlickrWidget::slotMainFriendsToggled(int state)
-    {mainPermissionToggled(FlickrList::FRIENDS, static_cast<Qt::CheckState>(state));}
+{
+    mainPermissionToggled(FlickrList::PUBLIC, static_cast<Qt::CheckState>(state));
+}
 
-void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox,
-                                         Qt::CheckState state)
+void FlickrWidget::slotMainFamilyToggled(int state)
+{
+    mainPermissionToggled(FlickrList::FAMILY, static_cast<Qt::CheckState>(state));
+}
+
+void FlickrWidget::slotMainFriendsToggled(int state)
+{
+    mainPermissionToggled(FlickrList::FRIENDS, static_cast<Qt::CheckState>(state));
+}
+
+void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox, Qt::CheckState state)
 {
     /* Callback for when one of the main permission checkboxes is toggled.
      * checkbox specifies which of the checkboxes is toggled. */
@@ -567,8 +570,7 @@ void FlickrWidget::slotExtendedTagsToggled(bool status)
     }
     else
     {
-        m_imglst->listView()->setColumnHidden(FlickrList::TAGS,
-                !m_addExtraTagsCheckBox->isChecked());
+        m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !m_addExtraTagsCheckBox->isChecked());
     }
 }
 

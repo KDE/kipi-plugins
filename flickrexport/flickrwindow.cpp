@@ -24,7 +24,6 @@
 
 #include "flickrwindow.h"
 #include "flickrwindow.moc"
-#include "flickrnewphotosetdialog.h"
 
 // Qt includes
 
@@ -71,6 +70,7 @@
 #include "flickritem.h"
 #include "flickrlist.h"
 //#include "flickrviewitem.h"
+#include "flickrnewphotosetdialog.h"
 #include "flickrwidget.h"
 #include "ui_flickralbumdialog.h"
 
@@ -263,9 +263,9 @@ void FlickrWindow::readSettings()
     KConfigGroup grp = config.group(QString("%1Export Settings").arg(m_serviceName));
     m_token          = grp.readEntry("token");
 
-    m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags", false));
+    m_exportHostTagsCheckBox->setChecked(grp.readEntry("Export Host Tags",      false));
     m_extendedTagsButton->setChecked(grp.readEntry("Show Extended Tag Options", false));
-    m_addExtraTagsCheckBox->setChecked(grp.readEntry("Add Extra Tags", false));
+    m_addExtraTagsCheckBox->setChecked(grp.readEntry("Add Extra Tags",          false));
     m_stripSpaceTagsCheckBox->setChecked(grp.readEntry("Strip Space From Tags", false));
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 
@@ -275,13 +275,15 @@ void FlickrWindow::readSettings()
         m_stripSpaceTagsCheckBox->setEnabled(false);
     }
 
-    m_publicCheckBox->setChecked(grp.readEntry("Public Sharing", false));
-    m_familyCheckBox->setChecked(grp.readEntry("Family Sharing", false));
-    m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing", false));
+    m_publicCheckBox->setChecked(grp.readEntry("Public Sharing",                               false));
+    m_familyCheckBox->setChecked(grp.readEntry("Family Sharing",                               false));
+    m_friendsCheckBox->setChecked(grp.readEntry("Friends Sharing",                             false));
     m_extendedPublicationButton->setChecked(grp.readEntry("Show Extended Publication Options", false));
+
     int safetyLevel = m_safetyLevelComboBox->findData(QVariant(grp.readEntry("Safety Level", 0)));
     if (safetyLevel == -1) safetyLevel = 0;
     m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
+
     int contentType = m_contentTypeComboBox->findData(QVariant(grp.readEntry("Content Type", 0)));
     if (contentType == -1) contentType = 0;
     m_contentTypeComboBox->setCurrentIndex(contentType);
@@ -352,12 +354,16 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     kDebug(51000) << "SlotTokenObtained invoked setting user Display name to " << m_username;
     m_userNameDisplayLabel->setText(QString("<b>%1</b>").arg(m_username));
     if (m_serviceName != "Zooomr")
+    {
         m_talker->listPhotoSets();
+    }
     else
+    {
         // Mutable photosets are not supported by Zooomr (Zooomr only has smart
         // folder-type photosets). So we're done and can active the Flickr
         // widget.
         m_widget->setEnabled(true);
+    }
 }
 
 void FlickrWindow::slotBusy(bool val)
@@ -400,6 +406,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
    // Call the dialog
    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
    int resp = dlg->exec();
+
    if ((resp == QDialog::Accepted) && (dlg->titleEdit->text() != ""))
    {
       // Create a new photoset with title and description from the dialog.
@@ -409,9 +416,10 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
       // Lets find an UNDEFINED_ style id that isn't taken yet.s
       QString id;
-      int i = 0;
-      id = "UNDEFINED_" + QString::number(i);
+      int i                               = 0;
+      id                                  = "UNDEFINED_" + QString::number(i);
       QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
+
       while(it != m_talker->m_photoSetsList->end())
       {
           FPhotoSet fps = *it;
@@ -422,6 +430,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
           }
           it++;
       }
+
       fps.id = id;
 
       kDebug() << "Created new photoset with temporary id " << id;
@@ -444,6 +453,7 @@ void FlickrWindow::slotAuthCancel()
 {
     m_talker->cancel();
     m_authProgressDlg->hide();
+    m_widget->setEnabled(true);
 }
 
 /*
@@ -465,6 +475,7 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 void FlickrWindow::populatePhotoSetComboBox()
 {
     kDebug(51000) << "populatePhotoSetComboBox invoked";
+
     if (m_talker && m_talker->m_photoSetsList)
     {
         QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
@@ -473,22 +484,26 @@ void FlickrWindow::populatePhotoSetComboBox()
         m_albumsListComboBox->insertSeparator(1);
         QLinkedList<FPhotoSet>::iterator it = list->begin();
         int index = 2, curr_index = 0;
+
         while(it != list->end())
         {
-            FPhotoSet photoSet=*it;
-            QString name = photoSet.title;
+            FPhotoSet photoSet = *it;
+            QString name       = photoSet.title;
             // Store the id as user data, because the title is not unique.
-            QVariant id = QVariant(photoSet.id);
+            QVariant id        = QVariant(photoSet.id);
+
             if (id == m_talker->m_selectedPhotoSet.id)
                 curr_index = index;
+
             m_albumsListComboBox->insertItem(index++, name, id);
             it++;
         }
+
         m_albumsListComboBox->setCurrentIndex(curr_index);
     }
+
     m_widget->setEnabled(true);
 }
-
 
 /** This slot is call when 'Start Uploading' button is pressed.
 */
@@ -542,7 +557,7 @@ void FlickrWindow::slotUser1()
             QStringList tagsFromDatabase;
 
             tagsFromDatabase = attribs["tags"].toStringList();
-            itTags = tagsFromDatabase.begin();
+            itTags           = tagsFromDatabase.begin();
 
             while(itTags != tagsFromDatabase.end())
             {
@@ -633,8 +648,8 @@ void FlickrWindow::slotAddPhotoNext()
                                   info,
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
-                                  m_imageQualitySpinBox->value()
-                       );
+                                  m_imageQualitySpinBox->value());
+
     if (!res)
     {
         slotAddPhotoFailed("");
