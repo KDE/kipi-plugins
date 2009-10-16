@@ -140,7 +140,7 @@
     <item row="1" column="0" >
      <widget class="QLabel" name="captionLabel" >
       <property name="text" >
-       <string>Description(optional)</string>
+       <string>Description (optional)</string>
       </property>
       <property name="wordWrap" >
        <bool>false</bool>

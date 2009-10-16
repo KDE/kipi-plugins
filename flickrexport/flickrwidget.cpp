@@ -254,7 +254,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_friendsCheckBox->setText(i18n("Visible to Friends"));
 
     // Extended publication settings
-    m_extendedPublicationButton = new QPushButton(i18n("More publications options"));
+    m_extendedPublicationButton = new QPushButton(i18n("More publication options"));
     m_extendedPublicationButton->setCheckable(true);
     // Initialize this button to checked, so extended options are shown.
     // FlickrWindow::readSettings can change this, but if checked is false it

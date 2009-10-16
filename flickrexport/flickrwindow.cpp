@@ -132,7 +132,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23/Zooomr Export"),
                                            0,
                                            KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collection to "
+                                           ki18n("A Kipi plugin to export an image collection to a "
                                                      "Flickr / 23 / Zooomr web service."),
                                            ki18n( "(c) 2005-2008, Vardhman Jain\n"
                                            "(c) 2008-2009, Gilles Caulier\n"

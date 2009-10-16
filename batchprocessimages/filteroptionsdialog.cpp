@@ -85,7 +85,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         m_blurRadius->setWhatsThis(i18n("Select here the blur radius of the Gaussian, "
                                         "not counting the center pixel. For reasonable results, the "
                                         "radius should be larger than deviation. If you use a radius of 0 "
-                                        "the blur operations selects a suitable radius."));
+                                        "the blur operation selects a suitable radius."));
         layout->addRow(i18n("Radius:"), m_blurRadius);
 
         m_blurDeviation = new KIntNumInput(1, box);
@@ -160,7 +160,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         m_unsharpenThreshold = new KIntNumInput(5, box);
         initInput(m_unsharpenThreshold, 1, 100, i18n("%"));
         m_unsharpenThreshold->setWhatsThis(i18n("Select here the unsharpen threshold value, "
-                                                "as a percentage of the maximum color component value,"
+                                                "as a percentage of the maximum color component value, "
                                                 "needed to apply the difference amount."));
         layout->addRow(i18n("Threshold:"), m_unsharpenThreshold);
     }
