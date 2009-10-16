@@ -199,7 +199,6 @@ void FlickrTalker::getFrob()
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
@@ -238,12 +237,12 @@ void FlickrTalker::checkToken(const QString& token)
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow the
         // redirect
         job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
-   }
-   else
-   {
+    }
+    else
+    {
         job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
-   }
+    }
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));

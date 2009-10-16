@@ -90,15 +90,15 @@ public:
                            const QString& desc,
                            const QString& primaryPhotoId);
 
-    void addPhotoToPhotoSet(const QString& photoId, const QString& photoSetId);
+    void    addPhotoToPhotoSet(const QString& photoId, const QString& photoSetId);
     bool    addPhoto(const QString& photoPath, const FPhotoInfo& info,
                      bool rescale=false, int maxDim=600, int imageQuality=85);
 
 public:
 
-    QProgressDialog *m_authProgressDlg;
+    QProgressDialog*         m_authProgressDlg;
     QLinkedList <FPhotoSet>* m_photoSetsList;
-    FPhotoSet  m_selectedPhotoSet;
+    FPhotoSet                m_selectedPhotoSet;
 
 Q_SIGNALS:
 
@@ -155,6 +155,7 @@ private:
     QString    m_token;
     QString    m_username;
     QString    m_userId;
+    
     KIO::Job*  m_job;
 
     State      m_state;
