@@ -68,6 +68,8 @@ public:
     int                year;
 };
 
+// ---------------------------------------------------------------------------
+
 class CalSettings : public QObject
 {
     Q_OBJECT

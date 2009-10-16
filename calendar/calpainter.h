@@ -59,14 +59,20 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void cancel() { cancelled_ = true; }
+    void cancel()
+    {
+	cancelled_ = true; 
+    };
 
 private:
 
-    QImage        image_;
-    KUrl          imagePath_;
-    int           angle_;
-    bool          cancelled_;
+    QImage image_;
+
+    KUrl   imagePath_;
+
+    int    angle_;
+
+    bool   cancelled_;
 };
 
 }  // NameSpace KIPICalendarPlugin

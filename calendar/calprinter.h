@@ -50,13 +50,12 @@ class CalPrinter : public QThread
 
 public:
 
-    CalPrinter(QPrinter *printer,
-               QMap<int, KUrl> &months,
-               KIPI::Interface *interface,
-               QObject *parent);
+    CalPrinter(QPrinter* printer,
+               QMap<int, KUrl>& months,
+               KIPI::Interface* interface,
+               QObject* parent);
 
     virtual ~CalPrinter();
-
 
 protected:
 
@@ -74,11 +73,14 @@ public Q_SLOTS:
 
 private:
 
-    QMap<int, KUrl> months_;
-    QPrinter *printer_;
-    CalPainter *painter_;
+    QMap<int, KUrl>  months_;
+    QPrinter*        printer_;
+
+    CalPainter*      painter_;
+
     KIPI::Interface* interface_;
-    bool cancelled_;
+
+    bool             cancelled_;
 };
 
 }  // NameSpace KIPICalendarPlugin

@@ -38,15 +38,15 @@
 namespace KIPICalendarPlugin
 {
 
-CalPrinter::CalPrinter(QPrinter *printer,
-                       QMap<int, KUrl> &months,
-                       KIPI::Interface *interface,
-                       QObject *parent)
+CalPrinter::CalPrinter(QPrinter* printer,
+                       QMap<int, KUrl>& months,
+                       KIPI::Interface* interface,
+                       QObject* parent)
     : QThread(parent)
 {
-    printer_ = printer;
-    painter_ = new CalPainter( printer_ );
-    months_ = months;
+    printer_   = printer;
+    painter_   = new CalPainter( printer_ );
+    months_    = months;
     interface_ = interface;
     cancelled_ = false;
 }
@@ -58,15 +58,20 @@ CalPrinter::~CalPrinter()
 
 void CalPrinter::run()
 {
-    connect(painter_, SIGNAL(signalTotal(int)), this, SIGNAL(totalBlocks(int)));
-    connect(painter_, SIGNAL(signalProgress(int)), this, SIGNAL(blocksFinished(int)));
+    connect(painter_, SIGNAL(signalTotal(int)), 
+            this, SIGNAL(totalBlocks(int)));
+
+    connect(painter_, SIGNAL(signalProgress(int)), 
+            this, SIGNAL(blocksFinished(int)));
 
     int currPage = 0;
     foreach (int month, months_.keys())
     {
         emit pageChanged( currPage );
+
         if (currPage)
             printer_->newPage();
+
         ++currPage;
 
         int angle = interface_->info( months_.value(month) ).angle();
