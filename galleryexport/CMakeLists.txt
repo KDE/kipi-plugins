@@ -10,9 +10,9 @@ SET(kipiplugin_galleryexport_PART_SRCS
     gallerympform.cpp
    )
 
-KDE4_ADD_UI_FILES( kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui )
+KDE4_ADD_UI_FILES(kipiplugin_galleryexport_PART_SRCS galleryalbumwidget.ui)
 
-KDE4_ADD_PLUGIN( kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS} )
+KDE4_ADD_PLUGIN(kipiplugin_galleryexport ${kipiplugin_galleryexport_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_galleryexport
                       ${KDCRAW_LIBRARIES}
@@ -25,4 +25,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_galleryexport
 
 INSTALL(TARGETS kipiplugin_galleryexport DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_galleryexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES gallery.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics )
+INSTALL(FILES gallery.png DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_galleryexport/pics)
