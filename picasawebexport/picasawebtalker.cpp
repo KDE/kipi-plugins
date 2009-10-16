@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -110,7 +110,8 @@ QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
 {
     QStringList compressed ;//= new List<string>(headers.Length);
 
-    for ( QStringList::ConstIterator it = headers.constBegin(); it != headers.constEnd(); ++it ) {
+    for ( QStringList::ConstIterator it = headers.constBegin(); it != headers.constEnd(); ++it )
+    {
 	QString str = (*it);
         QStringList strList = str.split("=");
         compressed.append(strList[0].trimmed()+strList[1].trimmed());
@@ -306,7 +307,8 @@ void PicasawebTalker::getPhotoProperty(const QString& method,const QString& argL
 
 void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& tag)
 {
-    //if (m_job && m_state != FE_ADDTAG){ //we shouldn't kill the old tag request
+    //if (m_job && m_state != FE_ADDTAG)
+    //{ // we shouldn't kill the old tag request
     //	m_job->kill();
     //	m_job = 0;
     //}

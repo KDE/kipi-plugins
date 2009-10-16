@@ -78,10 +78,44 @@ class PicasawebWindow : public KDialog
 
 public:
 
-    PicasawebWindow(KIPI::Interface *interface, const QString &tmpFolder,QWidget *parent);
+    PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
     ~PicasawebWindow();
 
     void getToken(QString& username, QString& password);
+
+private Q_SLOTS:
+
+    void closeEvent(QCloseEvent *e);
+    void saveSettings();
+    void slotTokenObtained(const QString& token);
+    void slotDoLogin();
+//  void slotLoginFailed( const QString& msg );
+    void slotBusy( bool val );
+    void slotError( const QString& msg );
+//  void slotAlbums( const QValueList<GAlbum>& albumList );
+//  void slotPhotos( const QValueList<GPhoto>& photoList );
+//  void slotTagSelected();
+//  void slotOpenPhoto( const KUrl& url );
+    void slotUpdateAlbumsList();
+    void slotUserChangeRequest();
+    void slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& photoSetList);
+    void slotAddPhotos();
+    void slotUploadImages();
+    void slotAddPhotoNext();
+    void slotAddPhotoSucceeded();
+    void slotAddPhotoFailed( const QString& msg );
+    void slotAddPhotoCancel();
+    void slotAuthCancel();
+    void slotHelp();
+    void slotCreateNewAlbum();
+    void slotGetAlbumsListSucceeded();
+    void slotGetAlbumsListFailed(const QString& msg);
+    void slotRefreshSizeButtons(bool);
+//  void slotHandleLogin();
+
+protected:
+
+    void slotClose();
 
 private:
 
@@ -130,40 +164,6 @@ private:
 
     KIPI::Interface                         *m_interface;
     KIPIPlugins::KPAboutData                *m_about;
-
-private Q_SLOTS:
-
-    void closeEvent(QCloseEvent *e);
-    void saveSettings();
-    void slotTokenObtained(const QString& token);
-    void slotDoLogin();
-//  void slotLoginFailed( const QString& msg );
-    void slotBusy( bool val );
-    void slotError( const QString& msg );
-//  void slotAlbums( const QValueList<GAlbum>& albumList );
-//  void slotPhotos( const QValueList<GPhoto>& photoList );
-//  void slotTagSelected();
-//  void slotOpenPhoto( const KUrl& url );
-    void slotUpdateAlbumsList();
-    void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& photoSetList);
-    void slotAddPhotos();
-    void slotUploadImages();
-    void slotAddPhotoNext();
-    void slotAddPhotoSucceeded();
-    void slotAddPhotoFailed( const QString& msg );
-    void slotAddPhotoCancel();
-    void slotAuthCancel();
-    void slotHelp();
-    void slotCreateNewAlbum();
-    void slotGetAlbumsListSucceeded();
-    void slotGetAlbumsListFailed(const QString& msg);
-    void slotRefreshSizeButtons(bool);
-//  void slotHandleLogin();
-
-protected:
-
-    void slotClose();
 };
 
 } // namespace KIPIPicasawebExportPlugin

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -92,9 +92,9 @@ public:
                       long long timestamp, const QString& access, const QString& media_keywords, bool isCommentEnabled=true);
     bool addPhoto( const QString& photoPath,
                    FPhotoInfo& info, const QString& albumname,
-			       bool rescale=false, int maxDim=600 , int imageQuality=85 );
-	QString getUserName();
-	QString getUserId();
+                   bool rescale=false, int maxDim=600 , int imageQuality=85 );
+	           QString getUserName();
+	           QString getUserId();
     void cancel();
 
 public:
@@ -160,7 +160,6 @@ private:
     KIO::Job*  m_job;
 
     State      m_state;
-
 };
 
 } // namespace KIPIPicasawebExportPlugin

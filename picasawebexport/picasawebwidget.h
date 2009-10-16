@@ -42,9 +42,11 @@ namespace KIPIPicasawebExportPlugin
 class UploadWidget : public QWidget, public Ui::UploadWidget
 {
 public:
-  UploadWidget( QWidget *parent ) : QWidget( parent ) {
-    setupUi( this );
-  }
+
+    UploadWidget( QWidget *parent ) : QWidget( parent )
+    {
+        setupUi( this );
+    }
 };
 
 class PicasawebWidget : public UploadWidget

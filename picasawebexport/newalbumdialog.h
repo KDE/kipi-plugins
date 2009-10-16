@@ -37,10 +37,13 @@ namespace KIPIPicasawebExportPlugin
 
 class NewAlbumDialog : public QDialog, public Ui::NewAlbumDialog
 {
+
 public:
-    NewAlbumDialog( QWidget *parent ) : QDialog( parent ) {
-    setupUi( this );
-  }
+
+    NewAlbumDialog( QWidget *parent ) : QDialog( parent )
+    {
+	setupUi( this );
+    }
 };
 
 } // namespace KIPIPicasawebExportPlugin
