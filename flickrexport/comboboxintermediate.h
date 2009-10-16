@@ -31,10 +31,12 @@
 #define COMBOBOXINTERMEDIATE_H_
 
 // Qt includes
+
 #include <QComboBox>
 #include <QString>
 
 // KDE includes
+
 #include <klocale.h>
 
 namespace KIPIFlickrExportPlugin
@@ -45,6 +47,7 @@ class ComboBoxIntermediate : public QComboBox
     Q_OBJECT
 
 public:
+
     /* Initialize the combobox with a parent and a string to indicate the
      * intermediate state. */
     ComboBoxIntermediate(QWidget * = 0, QString = i18n("Various"));
@@ -55,9 +58,11 @@ public:
     void setIntermediate(bool);
 
 private Q_SLOTS:
+
     void slotIndexChanged(int);
 
 private:
+
     bool    m_isIntermediate;
     QString m_intermediateText;
 };

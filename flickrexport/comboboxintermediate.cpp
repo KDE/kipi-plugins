@@ -20,19 +20,20 @@
  *
  * ============================================================ */
 
+#include "comboboxintermediate.h"
+#include "comboboxintermediate.moc"
+
 // Qt includes
+
 #include <QComboBox>
 #include <QString>
 #include <QVariant>
 
-// Local includes
-#include "comboboxintermediate.h"
-
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxIntermediate::ComboBoxIntermediate(QWidget *parent, QString text) :
-                      QComboBox(parent),
+ComboBoxIntermediate::ComboBoxIntermediate(QWidget *parent, QString text) 
+                    : QComboBox(parent),
                       m_isIntermediate(false),
                       m_intermediateText(text)
 {

@@ -24,6 +24,7 @@
 #define COMBOBOXDELEGATE_H
 
 // Qt includes
+
 #include <QAbstractItemDelegate>
 #include <QAbstractItemModel>
 #include <QMap>
@@ -35,6 +36,7 @@
 #include <QWidget>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIFlickrExportPlugin
@@ -45,6 +47,7 @@ class ComboBoxDelegate : public QAbstractItemDelegate
     Q_OBJECT
 
 public:
+
     ComboBoxDelegate(KIPIPlugins::ImagesList *, QMap<int, QString>);
 
     /* Whenever an element needs to be edited, this method should be called.
@@ -67,19 +70,22 @@ public:
                       QAbstractItemModel *,
                       const QModelIndex &) const;
 
+
+private Q_SLOTS:
+
+    void commitAndCloseEditor(int);
+    void slotResetEditedState(QObject *);
+
 private:
+
     KIPIPlugins::ImagesList *m_parent;
-    QMap<int, QString>      m_items;
+    QMap<int, QString>       m_items;
 
     /* The row in the view that is currently being edited. Should be -1 to
      * indicate that no row is edited. */
-    int m_rowEdited;
+    int                      m_rowEdited;
 
-    QSize m_size;
-
-private Q_SLOTS:
-    void commitAndCloseEditor(int);
-    void slotResetEditedState(QObject *);
+    QSize                    m_size;
 };
 
 } // namespace KIPIFlickrExportPlugin

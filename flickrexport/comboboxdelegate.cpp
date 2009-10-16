@@ -21,26 +21,30 @@
  * ============================================================ */
 
 #include "comboboxdelegate.h"
+#include "comboboxdelegate.moc"
 
 // Qt includes
+
 #include <QApplication>
 #include <QComboBox>
 #include <QPaintEvent>
 #include <QStyleOption>
 
 // KDE includes
+
 #include <klocale.h>
 #include <kdebug.h>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
 ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList *parent,
-                                   QMap<int, QString> items) :
-                  QAbstractItemDelegate(parent),
+                                   QMap<int, QString> items)
+                : QAbstractItemDelegate(parent),
                   m_parent(parent),
                   m_items(items),
                   m_rowEdited(-1)
@@ -48,8 +52,8 @@ ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList *parent,
     // Figure out the maximum width of a displayed item from the items list and
     // save it in the m_size parameter.
     QFontMetrics listFont = parent->fontMetrics();
-    m_size = QSize(0, listFont.height());
-    int tmpWidth = 0;
+    m_size                = QSize(0, listFont.height());
+    int tmpWidth          = 0;
     QMapIterator<int, QString> i(m_items);
     while (i.hasNext())
     {
