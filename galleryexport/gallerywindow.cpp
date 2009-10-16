@@ -96,71 +96,90 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout *galleryWidgetLayout = new QHBoxLayout(widget);
-
-    // --- creating and setting objects
+    QHBoxLayout *hlay = new QHBoxLayout(widget);
 
     // 1st. QListWidget albumView
+
     albumView = new QTreeWidget;
     QStringList labels;
     labels << i18n("albums"); // << i18n("ID");
     albumView->setHeaderLabels(labels);
-    galleryWidgetLayout->addWidget(albumView);
 
     // 2nd. GroupBox optionBox
-    QFrame *optionFrame      = new QFrame;
-    QVBoxLayout *frameLayout = new QVBoxLayout();
+
+    QFrame *optionFrame = new QFrame;
+    QVBoxLayout *vlay   = new QVBoxLayout();
 
     newAlbumBtn = new QPushButton;
     newAlbumBtn->setText(i18n("&New Album"));
     newAlbumBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     newAlbumBtn->setEnabled(false);
-    frameLayout->addWidget(newAlbumBtn);
 
     addPhotoBtn = new QPushButton;
     addPhotoBtn->setText(i18n("&Add Photos"));
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
-    frameLayout->addWidget(addPhotoBtn);
 
-    QGroupBox *optionsBox         = new QGroupBox(i18n("Override Default Options"));
-    QVBoxLayout *optionsBoxLayout = new QVBoxLayout();
+    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
+    QVBoxLayout *vlay2    = new QVBoxLayout();
 
-    captTitleCheckBox = new QCheckBox(optionsBox);
+    captTitleCheckBox     = new QCheckBox(optionsBox);
     captTitleCheckBox->setText(i18n("Comment sets Title"));
-    optionsBoxLayout->addWidget(captTitleCheckBox);
 
-    captDescrCheckBox = new QCheckBox(optionsBox);
+    captDescrCheckBox     = new QCheckBox(optionsBox);
     captDescrCheckBox->setText(i18n("Comment sets Description"));
-    optionsBoxLayout->addWidget(captDescrCheckBox);
 
-    resizeCheckBox = new QCheckBox(optionsBox);
+    resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
-    optionsBoxLayout->addWidget(resizeCheckBox);
 
-    QHBoxLayout *dimLayout = new QHBoxLayout;
-    QLabel *resizeLabel    = new QLabel(i18n("Maximum dimension:"));
-    dimLayout->addWidget(resizeLabel);
+    QHBoxLayout *hlay2    = new QHBoxLayout;
+    QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
 
-    dimensionSpinBox  = new QSpinBox;
+    dimensionSpinBox      = new QSpinBox;
     dimensionSpinBox->setRange(1,1600);
     dimensionSpinBox->setValue(600);
-    dimLayout->addWidget(dimensionSpinBox);
-
-    optionsBoxLayout->addLayout(dimLayout);
 
     captTitleCheckBox->setChecked(true);
     captDescrCheckBox->setChecked(false);
     resizeCheckBox->setChecked(false);
     dimensionSpinBox->setEnabled(false);
 
-    optionsBox->setLayout(optionsBoxLayout);
-    frameLayout->addWidget(optionsBox);
+    // ---------------------------------------------------------------------------
 
-    optionFrame->setLayout(frameLayout);
-    galleryWidgetLayout->addWidget(optionFrame);
+    hlay2->addWidget(resizeLabel);
+    hlay2->addWidget(dimensionSpinBox);
+    hlay2->setSpacing(KDialog::spacingHint());
+    hlay2->setMargin(KDialog::spacingHint());
 
-    widget->setLayout(galleryWidgetLayout);
+    // ---------------------------------------------------------------------------
+
+    vlay2->addWidget(captTitleCheckBox);
+    vlay2->addWidget(captDescrCheckBox);
+    vlay2->addWidget(resizeCheckBox);
+    vlay2->addLayout(hlay2);
+    vlay2->setSpacing(KDialog::spacingHint());
+    vlay2->setMargin(KDialog::spacingHint());
+
+    optionsBox->setLayout(vlay2);
+
+    // ---------------------------------------------------------------------------
+
+    vlay->addWidget(newAlbumBtn);
+    vlay->addWidget(addPhotoBtn);
+    vlay->addWidget(optionsBox);
+    vlay->setSpacing(KDialog::spacingHint());
+    vlay->setMargin(KDialog::spacingHint());
+
+    optionFrame->setLayout(vlay);
+
+    // ---------------------------------------------------------------------------
+
+    hlay->addWidget(albumView);
+    hlay->addWidget(optionFrame);
+    hlay->setSpacing(KDialog::spacingHint());
+    hlay->setMargin(KDialog::spacingHint());
+
+    widget->setLayout(hlay);
 }
 
 // --------------------------------------------------------------------------------------------------------------------------
