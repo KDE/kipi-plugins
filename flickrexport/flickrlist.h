@@ -24,6 +24,7 @@
 #define FLICKRLIST_H
 
 // KDE includes
+
 #include <klineedit.h>
 
 // Local includes
@@ -69,9 +70,8 @@ public:
     };
 
 public:
-    FlickrList(KIPI::Interface *iface,
-               QWidget* parent = 0,
-               bool = false);
+
+    FlickrList(KIPI::Interface* iface, QWidget* parent = 0, bool = false);
 
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);
@@ -80,6 +80,7 @@ public:
     void setContentTypes(ContentType);
 
 Q_SIGNALS:
+
     // Signal for notifying when the states of one of the permission columns has
     // changed. The first argument specifies which permission has changed, the
     // second the state.
@@ -89,29 +90,37 @@ Q_SIGNALS:
     void signalContentTypeChanged(FlickrList::ContentType);
 
 public Q_SLOTS:
+
     virtual void slotAddImages(const KUrl::List& list);
 
 private:
-    void setPermissionState(FieldType, Qt::CheckState);
-    void singlePermissionChanged(QTreeWidgetItem *, int);
-    void singleComboBoxChanged(QTreeWidgetItem *, int);
 
-    Qt::CheckState m_public;
-    Qt::CheckState m_family;
-    Qt::CheckState m_friends;
+    void setPermissionState(FieldType, Qt::CheckState);
+    void singlePermissionChanged(QTreeWidgetItem*, int);
+    void singleComboBoxChanged(QTreeWidgetItem*, int);
+
+
+private Q_SLOTS:
+
+    void slotItemChanged(QTreeWidgetItem*, int);
+    void slotItemClicked(QTreeWidgetItem*, int);
+
+private:
+
+    Qt::CheckState          m_public;
+    Qt::CheckState          m_family;
+    Qt::CheckState          m_friends;
     FlickrList::SafetyLevel m_safetyLevel;
     FlickrList::ContentType m_contentType;
 
     // Used to separate the ImagesList::itemChanged signals that were caused
     // programmatically from those caused by the user.
-    bool m_userIsEditing;
+    bool                    m_userIsEditing;
 
-    bool m_is23;
-
-private Q_SLOTS:
-    void slotItemChanged(QTreeWidgetItem *, int);
-    void slotItemClicked(QTreeWidgetItem *, int);
+    bool                    m_is23;
 };
+
+// -------------------------------------------------------------------------
 
 class FlickrListViewItem : public KIPIPlugins::ImagesListViewItem
 {
@@ -143,19 +152,20 @@ public:
     void toggled();
 
 private:
-    bool m_is23;
 
-    bool m_public;
-    bool m_family;
-    bool m_friends;
+    bool                    m_is23;
+
+    bool                    m_public;
+    bool                    m_family;
+    bool                    m_friends;
+
     FlickrList::SafetyLevel m_safetyLevel;
     FlickrList::ContentType m_contentType;
 
     /**
      * LineEdit used for extra tags per image.
      */
-    KLineEdit *m_tagLineEdit;
-
+    KLineEdit*              m_tagLineEdit;
 };
 
 } // namespace KIPIFlickrExportPlugin

@@ -424,7 +424,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
 
       fps.id = id;
 
-      kDebug() << "Created new photoset with temporary id " << id;
+      kDebug(51000) << "Created new photoset with temporary id " << id;
       // Append the new photoset to the list.
       m_talker->m_photoSetsList->prepend(fps);
       m_talker->m_selectedPhotoSet = fps;
