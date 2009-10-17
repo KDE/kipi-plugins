@@ -425,7 +425,7 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
             if (w < h) 
             {
-                // (w < h) because all paper dimensions are vertically gived !
+                // (w < h) because all paper dimensions are vertically given !
                 m_xPixels = (int)((float)(m_customXSize * m_customDpi) / (float)(2.54));
                 m_yPixels = (int)((float)(m_customYSize * m_customDpi) / (float)(2.54));
             }
