@@ -1,6 +1,7 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to acquire images using a flat scanner
+Comment[en_GB]=A tool to acquire images using a flat scanner
 Comment[et]=Tööriist piltide hankimiseks skannerist
 Comment[gl]=Unha ferramenta para adquirir imaxes mediante un escáner
 Comment[it]=Uno strumento per acquisire immagini con uno scanner piatto
@@ -11,6 +12,7 @@ Comment[sv]=Ett verktyg för att hämta bilder med en bildläsare
 Comment[uk]=Інструмент для отримання зображень з планшетних сканерів
 Exec=scangui %i -caption "%c" %U
 GenericName=Acquire Images
+GenericName[en_GB]=Acquire Images
 GenericName[et]=Pildihõive
 GenericName[gl]=Adquirir imaxes
 GenericName[it]=Acquisizione di immagini

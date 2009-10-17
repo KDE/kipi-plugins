@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=KioExportImport
 Name[da]=KioExportImport
+Name[en_GB]=KioExportImport
 Name[et]=KIO eksport-import
 Name[gl]=KioExportImport
 Name[it]=Esportazione e importazione con KIO
@@ -14,6 +15,7 @@ Name[uk]=KioExportImport
 Name[x-test]=xxKioExportImportxx
 Comment=A tool to export pictures to or import from a remote directory that is accessible via KIO.
 Comment[da]=Et værktøj til at eksportere billeder til, eller importere fra, en ekstern mappe som er tilgængelig via KIO.
+Comment[en_GB]=A tool to export pictures to or import from a remote directory that is accessible via KIO.
 Comment[et]=Tööriist piltide eksportimiseks või importimiseks võrgukataloogi või võrgukataloogist KIO vahendusel.
 Comment[gl]=Unha ferramenta para exportar ou importar imaxes a un directorio remoto accesíbel a través de KIO.
 Comment[it]=Uno strumento per esportare o importare immagini a o da una cartella remota accessibile con KIO.
