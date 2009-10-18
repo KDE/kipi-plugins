@@ -23,10 +23,17 @@
 #ifndef RESIZEIMAGESDIALOG_H
 #define RESIZEIMAGESDIALOG_H
 
+// Qt includes
+
+#include "qmap.h"
+#include "qpair.h"
+
 // Local includes
 
 #include "batchprocessimagesdialog.h"
 #include "kpaboutdata.h"
+#include "resizeoptionsdialog.h"
+#include "resizecommandbuilder.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -49,29 +56,6 @@ private Q_SLOTS:
 
 protected:
 
-    QString                m_resizeFilter;
-    QString                m_paperSize;
-    QString                m_printDpi;
-
-    QColor                 m_backgroundColor;
-    QColor                 m_bgColor;
-
-    bool                   m_customSettings;
-
-    int                    m_customXSize;
-    int                    m_customYSize;
-    int                    m_marging;
-    int                    m_customDpi;
-    int                    m_size;
-    int                    m_xPixels;
-    int                    m_yPixels;
-    int                    m_Width;
-    int                    m_Height;
-    int                    m_Border;
-    int                    m_fixedWidth;
-    int                    m_fixedHeight;
-    int                    m_quality;
-
     void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                      const QString& albumDest, bool previewMode);
 
@@ -84,7 +68,26 @@ protected:
 
 private:
 
+    const static QString RCNAME;
+    const static QString RC_GROUP_NAME;
+
+    /**
+     * Utility method that fills the type mapping. C defines the command builder
+     * to use for the mapping, D the option dialog for this resize type.
+     *
+     * @param localizedName localized name of the mapping
+     */
+    template<class C, class D>
+    void addResizeType(QString localizedName);
+
+    /**
+     * Maps the localized resize type names to their command builders and option
+     * dialogs.
+     */
+    QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> > m_resizeTypeMapping;
+
     KIPIPlugins::KPAboutData *m_about;
+
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin
