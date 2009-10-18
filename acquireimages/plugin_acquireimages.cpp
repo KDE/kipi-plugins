@@ -73,7 +73,7 @@ void Plugin_AcquireImages::setup(QWidget* widget)
     KIPI::Plugin::setup(m_parentWidget);
 
     m_action_scanimages = actionCollection()->addAction("acquireimages");
-    m_action_scanimages->setText(i18n("Scan Images..."));
+    m_action_scanimages->setText(i18n("Import from Scanner..."));
     m_action_scanimages->setIcon(KIcon("scanner"));
 
     connect(m_action_scanimages, SIGNAL(triggered(bool)),
