@@ -23,6 +23,10 @@
 #include "resizecommandbuilder.h"
 #include "resizecommandbuilder.moc"
 
+// Qt includes
+
+#include <qglobal.h>
+
 // KDE includes
 
 #include <kdebug.h>
@@ -323,8 +327,7 @@ void NonProportionalResizeCommandBuilder::setHeight(unsigned int height)
 PrintPrepareResizeCommandBuilder::PrintPrepareResizeCommandBuilder(
                 QObject *parent) :
     ResizeCommandBuilder(parent), m_paperWidth(10), m_paperHeight(10),
-                    m_dpi(75), m_margin(10), m_backgroundColor(
-                                    QColor(Qt::white))
+                    m_dpi(75), m_stretch(false)
 {
 
 }
@@ -343,14 +346,16 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 
     // Get image information.
     QImage img;
-    img.load(item->pathSrc());
+    bool loaded = img.load(item->pathSrc());
+    if (!loaded)
+    {
+        kError(51000) << "Unable to load image " << item->pathSrc();
+        return;
+    }
     unsigned int w = img.width();
     unsigned int h = img.height();
 
     const float oneInchInMM = 25.4;
-
-    unsigned int marginInPixels = (int)((float)(m_margin * m_dpi) / oneInchInMM);
-    kDebug(51000) << "marginInPixels = " << marginInPixels;
 
     // calculate needed image size as paper size in pixels for the given
     // resolution and rotate the canvas if needed
@@ -371,93 +376,40 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 	kDebug(51000) << "paper size in pixel: " << paperWidthInPixels << "x"
                     << paperHeightInPixels;
 
-	*proc << "composite";
+	*proc << "convert" << "-verbose";
 
-	// Get the target image resizing dimensions with using the target paper size.
-    int ResizeCoeff = 0;
-    float RFactor = 0;
-    if (paperWidthInPixels < paperHeightInPixels)
+    *proc << item->pathSrc();
+
+	// resize image
+    const QString rawPaperDimensions = QString::number(paperWidthInPixels)
+                    + "x" + QString::number(paperHeightInPixels);
+	if (m_stretch)
+	{
+	    // stretching is simple, just force paper dimensions
+	    *proc << "-resize" << rawPaperDimensions + "!";
+	    appendQualityAndFilter(proc);
+	}
+	else
     {
-        RFactor = (float) paperWidthInPixels / (float) w;
-        if (RFactor > 1.0)
-        {
-            RFactor = (float) paperHeightInPixels / (float) h;
-        }
-        ResizeCoeff = (int) ((float) h * RFactor);
+        // if we don't want to stretch the image, some more work is needed
+
+        // first resize the image so that it will fit at least the whole paper
+	    // but one dimension can get bigger
+        *proc << "-resize" << rawPaperDimensions + "^";
+        appendQualityAndFilter(proc);
+
+        // and the crop it to the desired paper size
+        *proc << "-gravity" << "center";
+        *proc << "-crop" << rawPaperDimensions + "+0+0" << "+repage";
+
     }
-    else
-    {
-        RFactor = (float) paperHeightInPixels / (float) h;
-        if (RFactor > 1.0)
-            RFactor = (float) paperWidthInPixels / (float) w;
-        ResizeCoeff = (int) ((float) w * RFactor);
-    }
-
-	resizeImage(w, h, ResizeCoeff - marginInPixels);
-
-	*proc << "-verbose" << "-gravity" << "Center";
-
-	*proc << "-resize";
-	QString Temp, Temp2;
-	Temp2 = Temp.setNum(w) + "x";
-	Temp2.append(Temp.setNum(h));
-	*proc << Temp2;
-
-	appendQualityAndFilter(proc);
-
-	*proc << item->pathSrc();
-
-	Temp2 = "xc:rgb(" + Temp.setNum(m_backgroundColor.red()) + ",";
-	Temp2.append(Temp.setNum(m_backgroundColor.green()) + ",");
-	Temp2.append(Temp.setNum(m_backgroundColor.blue()) + ")");
-	*proc << Temp2;
 
 	// ImageMagick composite program do not preserve exif data from original.
 	// Need to use "-profile" option for that.
-
 	*proc << "-profile" << item->pathSrc();
-
-	QString targetBackgroundSize = QString::number(paperWidthInPixels) + "x" + QString::number(paperHeightInPixels);
-	*proc << "-resize" << targetBackgroundSize + "!";
-
-	appendQualityAndFilter(proc);
 
 	*proc << albumDest + "/" + item->nameDest();
 
-}
-
-bool PrintPrepareResizeCommandBuilder::resizeImage(unsigned int &w, unsigned int &h, unsigned int sizeFactor)
-{
-    bool valRet;
-
-    if (w > h)
-    {
-        h = (int)((double)(h * sizeFactor) / w);
-
-        if (h == 0) h = 1;
-
-        if (w < sizeFactor) valRet = true;
-        else valRet = false;
-
-        w = sizeFactor;
-    }
-    else
-    {
-        w = (int)((double)(w * sizeFactor) / h);
-
-        if (w == 0) w = 1;
-
-        if (h < sizeFactor) valRet = true;
-        else valRet = false;
-
-        h = sizeFactor;
-    }
-
-    kDebug(51000) << "calculated new image size width = " << w
-                    << ", new height = " << h << ", image is increased = "
-                    << valRet;
-
-    return (valRet);  // Return true if image increased, else false.
 }
 
 void PrintPrepareResizeCommandBuilder::setPaperWidth(unsigned int paperWidth)
@@ -476,14 +428,9 @@ void PrintPrepareResizeCommandBuilder::setDpi(unsigned int dpi)
 	m_dpi = dpi;
 }
 
-void PrintPrepareResizeCommandBuilder::setMargin(unsigned int margin)
+void PrintPrepareResizeCommandBuilder::setStretch(bool stretch)
 {
-	m_margin = margin;
-}
-
-void PrintPrepareResizeCommandBuilder::setBackgroundColor(QColor backgroundColor)
-{
-	m_backgroundColor = backgroundColor;
+    m_stretch = stretch;
 }
 
 }

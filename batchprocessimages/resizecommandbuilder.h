@@ -220,22 +220,20 @@ public:
     void setDpi(unsigned int dpi);
 
     /**
-     * Sets the print margin.
+     * Sets whether to stretch the image if it doesn't fit the paper size or
+     * crop it.
      *
-     * @param margin margin in mm
+     * @param stretch if true, image will be stretched to paper size, else it
+     *                will be centered on the paper and cropped
      */
-    void setMargin(unsigned int margin);
-
-    void setBackgroundColor(QColor backgroundColor);
+    void setStretch(bool stretch);
 
 private:
-    bool resizeImage(unsigned int &w, unsigned int &h, unsigned int sizeFactor);
 
     unsigned int m_paperWidth;
     unsigned int m_paperHeight;
     unsigned int m_dpi;
-    unsigned int m_margin;
-    QColor m_backgroundColor;
+    bool m_stretch;
 
 };
 

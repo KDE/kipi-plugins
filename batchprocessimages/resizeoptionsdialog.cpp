@@ -111,6 +111,8 @@ void ResizeOptionsBaseDialog::layout()
 void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
 {
 
+    kDebug(51000) << "reading settings";
+
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
 
@@ -119,12 +121,12 @@ void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
     m_qualityInput->setValue(group.readEntry(OPTION_QUALITY_NAME, 75));
     m_commandBuilder->setQuality(m_qualityInput->value());
 
-    handleOk();
-
 }
 
 void ResizeOptionsBaseDialog::saveSettings(QString rcname, QString groupName)
 {
+
+    kDebug(51000) << "saving settings";
 
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
@@ -457,8 +459,7 @@ const QString PrintPrepareResizeOptionsDialog::OPTION_DPI_NAME = "DPI";
 const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_PAPER_WIDTH_NAME = "CustomPaperWidth";
 const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_PAPTER_HEIGHT_NAME = "CustomPaperHeight";
 const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_DPI_NAME = "CustomDPI";
-const QString PrintPrepareResizeOptionsDialog::OPTION_BACKGROUND_COLOR_NAME = "BackgroundColor";
-const QString PrintPrepareResizeOptionsDialog::OPTION_MARGIN_NAME = "Margin";
+const QString PrintPrepareResizeOptionsDialog::OPTION_STRETCH_NAME = "Stretch";
 const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_SETTINGS_NAME = "CustomSettings";
 
 PrintPrepareResizeOptionsDialog::PrintPrepareResizeOptionsDialog(QWidget *parent,
@@ -486,8 +487,7 @@ void PrintPrepareResizeOptionsDialog::readSettings(QString rcname, QString group
     m_customPaperWidthInput->setValue(group.readEntry(OPTION_CUSTOM_PAPER_WIDTH_NAME, 13));
     m_customPaperHeightInput->setValue(group.readEntry(OPTION_CUSTOM_PAPTER_HEIGHT_NAME, 9));
     m_customDpiInput->setValue(group.readEntry(OPTION_CUSTOM_DPI_NAME, 300));
-    m_backgroundColorButton->setColor(group.readEntry(OPTION_BACKGROUND_COLOR_NAME, QColor(Qt::white)));
-    m_marginInput->setValue(group.readEntry(OPTION_MARGIN_NAME, 10));
+    m_stretchCheckBox->setChecked(group.readEntry(OPTION_STRETCH_NAME, false));
     m_customSettingsCheckBox->setChecked(group.readEntry(OPTION_CUSTOM_SETTINGS_NAME, false));
 
     handleOk();
@@ -507,8 +507,7 @@ void PrintPrepareResizeOptionsDialog::saveSettings(QString rcname, QString group
     group.writeEntry(OPTION_CUSTOM_PAPER_WIDTH_NAME, m_customPaperWidthInput->value());
     group.writeEntry(OPTION_CUSTOM_PAPTER_HEIGHT_NAME, m_customPaperHeightInput->value());
     group.writeEntry(OPTION_CUSTOM_DPI_NAME, m_customDpiInput->value());
-    group.writeEntry(OPTION_BACKGROUND_COLOR_NAME, m_backgroundColorButton->color());
-    group.writeEntry(OPTION_MARGIN_NAME, m_marginInput->value());
+    group.writeEntry(OPTION_STRETCH_NAME, m_stretchCheckBox->isChecked());
     group.writeEntry(OPTION_CUSTOM_SETTINGS_NAME, m_customSettingsCheckBox->isChecked());
 
 }
@@ -555,10 +554,17 @@ void PrintPrepareResizeOptionsDialog::prependWidgets()
 	m_dpiComboBox->setWhatsThis(i18n("The standard print resolutions in dots per inch."));
 	m_dpiLabel->setBuddy(m_dpiComboBox);
 
+	m_stretchCheckBox = new QCheckBox(i18n("Stretch Image"), sizeGroupBox);
+	m_stretchCheckBox->setWhatsThis(i18n("If this is selected, the image will be stretched "
+	                "to fit the paper dimensions. Otherwise it will be centered "
+	                "on the canvas and the borders will get cropped "
+	                "to achieve the desired paper size."));
+
 	sizeGroupBoxLayout->addWidget(m_paperSizeLabel,    0, 0, 1, 1);
 	sizeGroupBoxLayout->addWidget(m_paperSizeComboBox, 0, 1, 1, 1);
 	sizeGroupBoxLayout->addWidget(m_dpiLabel,          1, 0, 1, 1);
 	sizeGroupBoxLayout->addWidget(m_dpiComboBox,       1, 1, 1, 1);
+	sizeGroupBoxLayout->addWidget(m_stretchCheckBox,   2, 0, 1, -1);
 	sizeGroupBox->setLayout(sizeGroupBoxLayout);
 
 	addOptionWidget(sizeGroupBox);
@@ -601,32 +607,6 @@ void PrintPrepareResizeOptionsDialog::prependWidgets()
 
 	addOptionWidget(customGroupBox);
 
-	// ----------------------------------------------------
-
-	QGroupBox *otherGroupBox = new QGroupBox(i18n("Printing Custom Settings"), this);
-	QGridLayout *otherGroupBoxLayout = new QGridLayout(otherGroupBox);
-
-	m_backgroundColorLabel = new QLabel(i18n("Background color:"), otherGroupBox);
-	m_backgroundColorButton = new KColorButton(QColor(Qt::white), otherGroupBox);
-	m_backgroundColorButton->setWhatsThis(i18n("You can select here the background color to "
-										   "be used when adapting the images' sizes."));
-	m_backgroundColorLabel->setBuddy(m_backgroundColorButton);
-
-	m_marginLabel = new QLabel(i18n("Margin size (mm):"), otherGroupBox);
-	m_marginInput = new KIntNumInput(1, otherGroupBox);
-	m_marginInput->setRange(0, 80);
-	m_marginInput->setSliderEnabled(true);
-	m_marginInput->setWhatsThis(i18n("The margin around the images in millimeters."));
-	m_marginLabel->setBuddy(m_marginInput);
-
-	otherGroupBoxLayout->addWidget(m_backgroundColorLabel,  0, 0, 1, 1);
-	otherGroupBoxLayout->addWidget(m_backgroundColorButton, 0, 1, 1, 1);
-	otherGroupBoxLayout->addWidget(m_marginLabel,           1, 0, 1, -1);
-	otherGroupBoxLayout->addWidget(m_marginInput,           2, 0, 1, -1);
-	otherGroupBox->setLayout(otherGroupBoxLayout);
-
-	addOptionWidget(otherGroupBox);
-
 	slotCustomSettingsEnabled(m_customSettingsCheckBox->isChecked());
 
 }
@@ -666,8 +646,7 @@ bool PrintPrepareResizeOptionsDialog::handleOk()
 				paperSize.left(paperSize.indexOf('x')).toInt() * 10);
 	}
 
-	m_commandBuilder->setBackgroundColor(m_backgroundColorButton->color());
-	m_commandBuilder->setMargin(m_marginInput->value());
+	m_commandBuilder->setStretch(m_stretchCheckBox->isChecked());
 
     return true;
 }

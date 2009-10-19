@@ -281,8 +281,7 @@ private:
     const static QString OPTION_CUSTOM_PAPER_WIDTH_NAME;
     const static QString OPTION_CUSTOM_PAPTER_HEIGHT_NAME;
     const static QString OPTION_CUSTOM_DPI_NAME;
-    const static QString OPTION_BACKGROUND_COLOR_NAME;
-    const static QString OPTION_MARGIN_NAME;
+    const static QString OPTION_STRETCH_NAME;
     const static QString OPTION_CUSTOM_SETTINGS_NAME;
 
     void prependWidgets();
@@ -296,20 +295,16 @@ private:
     QLabel          *m_customPaperWidthLabel;
     QLabel          *m_customPaperHeightLabel;
     QLabel          *m_customDpiLabel;
-    QLabel          *m_backgroundColorLabel;
-    QLabel          *m_marginLabel;
 
     KIntNumInput    *m_customPaperWidthInput;
 	KIntNumInput    *m_customPaperHeightInput;
 	KIntNumInput    *m_customDpiInput;
-	KIntNumInput    *m_marginInput;
 
 	KComboBox       *m_paperSizeComboBox;
 	KComboBox       *m_dpiComboBox;
 
 	QCheckBox       *m_customSettingsCheckBox;
-
-	KColorButton    *m_backgroundColorButton;
+	QCheckBox       *m_stretchCheckBox;
 
 };
 
