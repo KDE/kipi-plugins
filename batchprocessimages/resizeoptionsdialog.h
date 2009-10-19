@@ -56,13 +56,19 @@ class ResizeOptionsBaseDialog : public KDialog
 public:
 
     /**
-     * Constructor. All subclasses must have a constructor with these arguments.
+     * Constructor. All subclasses must have a constructor with only the first
+     * two arguments.
      *
      * @param parent parent
      * @param commandBuilder command builder who's options are managed by this
      *                       dialog
+     * @param settingsPrefix prefix prepended to the setting names managed by
+     *                       this base class. This is used to have e.g. separate
+     *                       quality settings per tool
      */
-    ResizeOptionsBaseDialog(QWidget *parent, ResizeCommandBuilder *commandBuilder);
+    ResizeOptionsBaseDialog(QWidget *parent,
+                    ResizeCommandBuilder *commandBuilder,
+                    QString settingsPrefix);
     virtual ~ResizeOptionsBaseDialog();
 
     /**
@@ -141,6 +147,8 @@ private:
 
     const static QString OPTION_QUALITY_NAME;
     const static QString OPTION_FILTER_NAME;
+
+    QString m_settingsPrefix;
 
     QString m_defaultFilterName;
 

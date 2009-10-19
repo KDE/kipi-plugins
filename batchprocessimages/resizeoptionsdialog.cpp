@@ -44,9 +44,9 @@ const QString ResizeOptionsBaseDialog::OPTION_QUALITY_NAME = "Quality";
 const QString ResizeOptionsBaseDialog::OPTION_FILTER_NAME = "ResizeFilter";
 
 ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget *parent,
-                ResizeCommandBuilder *commandBuilder) :
-    KDialog(parent), m_commandBuilder(commandBuilder), m_mainWidget(
-                    new QWidget(this))
+                ResizeCommandBuilder *commandBuilder, QString settingsPrefix) :
+    KDialog(parent), m_settingsPrefix(settingsPrefix), m_commandBuilder(
+                    commandBuilder), m_mainWidget(new QWidget(this))
 {
 
     // general dialog settings
@@ -116,9 +116,11 @@ void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
 
-    m_resizeFilterComboBox->setCurrentIndex(group.readEntry(OPTION_FILTER_NAME, 0));
+    m_resizeFilterComboBox->setCurrentIndex(group.readEntry(m_settingsPrefix
+                    + OPTION_FILTER_NAME, 0));
     m_commandBuilder->setFilterName(m_resizeFilterComboBox->currentText());
-    m_qualityInput->setValue(group.readEntry(OPTION_QUALITY_NAME, 75));
+    m_qualityInput->setValue(group.readEntry(m_settingsPrefix
+                    + OPTION_QUALITY_NAME, 75));
     m_commandBuilder->setQuality(m_qualityInput->value());
 
 }
@@ -131,8 +133,10 @@ void ResizeOptionsBaseDialog::saveSettings(QString rcname, QString groupName)
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
 
-    group.writeEntry(OPTION_FILTER_NAME, m_resizeFilterComboBox->currentIndex());
-    group.writeEntry(OPTION_QUALITY_NAME, m_qualityInput->value());
+    group.writeEntry(m_settingsPrefix + OPTION_FILTER_NAME,
+                    m_resizeFilterComboBox->currentIndex());
+    group.writeEntry(m_settingsPrefix + OPTION_QUALITY_NAME,
+                    m_qualityInput->value());
 
 }
 
@@ -174,7 +178,7 @@ const QString OneDimResizeOptionsDialog::OPTION_SIZE_NAME = "OneDimSize";
 
 OneDimResizeOptionsDialog::OneDimResizeOptionsDialog(QWidget *parent,
                 OneDimResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder), m_commandBuilder(
+    ResizeOptionsBaseDialog(parent, commandBuilder, "OneDim"), m_commandBuilder(
                     commandBuilder)
 {
 
@@ -257,7 +261,7 @@ const QString TwoDimResizeOptionsDialog::OPTION_FILL_COLOR_NAME = "TwoDimFillCol
 
 TwoDimResizeOptionsDialog::TwoDimResizeOptionsDialog(QWidget *parent,
                 TwoDimResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder), m_commandBuilder(
+    ResizeOptionsBaseDialog(parent, commandBuilder, "TwoDim"), m_commandBuilder(
                     commandBuilder)
 {
 
@@ -370,7 +374,7 @@ const QString NonProportionalResizeOptionsDialog::OPTION_HEIGHT_NAME = "NonPropH
 
 NonProportionalResizeOptionsDialog::NonProportionalResizeOptionsDialog(QWidget *parent,
                 NonProportionalResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder), m_commandBuilder(
+    ResizeOptionsBaseDialog(parent, commandBuilder, "NonProp"), m_commandBuilder(
                     commandBuilder)
 {
 
@@ -464,7 +468,7 @@ const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_SETTINGS_NAME = "Cu
 
 PrintPrepareResizeOptionsDialog::PrintPrepareResizeOptionsDialog(QWidget *parent,
                 PrintPrepareResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder), m_commandBuilder(
+    ResizeOptionsBaseDialog(parent, commandBuilder, "Print"), m_commandBuilder(
                     commandBuilder)
 {
 
