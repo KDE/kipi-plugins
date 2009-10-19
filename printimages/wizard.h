@@ -26,6 +26,7 @@
 // QT incudes
 
 #include <QPainter>
+#include <QIcon>
 
 // KDE includes
 
@@ -48,6 +49,7 @@ typedef struct _TPhotoSize
   int dpi;
   bool autoRotate;
   QList<QRect*> layouts;  // first element is page size
+  QIcon         icon;
 } TPhotoSize;
 
 
@@ -67,9 +69,7 @@ typedef struct _TPhotoSize
       virtual void slotHelp();
       virtual void pageChanged(KPageWidgetItem *, KPageWidgetItem *);
       virtual void captionChanged(const QString & text);
-      virtual void outputSettingsClicked(int);
-      virtual void btnBrowseOutputPathClicked(void);
-      virtual void paperSizeChanged(int);
+      virtual void outputChanged ( const QString & );
       virtual void BtnPrintOrderUp_clicked();
       virtual void BtnPrintOrderDown_clicked();
 
@@ -80,25 +80,23 @@ typedef struct _TPhotoSize
       virtual void BtnCropPrev_clicked();
       virtual void ListPrintOrder_selected();
       virtual void ListPhotoOrder_highlighted (int );
-      virtual void EditCopies_valueChanged(int);
       virtual void ListPhotoSizes_selected();
 
       virtual void reject();
       virtual void crop_selection(int);
       virtual void PageRemoved(KPageWidgetItem *page);
 
-      //private Q_SLOTS:
+      virtual void pagesetupclicked();
+      virtual void pagesetupdialogexit();
+      virtual void infopage_imageSelected();
+      virtual void infopage_selectNext();
+      virtual void infopage_selectPrev();
+      virtual void infopage_decreaseCopies();
+      virtual void infopage_increaseCopies();
+      //private slots:
       //	void updateFinishButton();
 
     private:
-      enum PageSize {
-        Unknown = -1,
-        A4      = 0,
-        Letter,
-        A6,
-        P10X15,
-        P13X18
-      };
       enum AvailableCaptions {
         NoCaptions = 0,
         FileNames,
@@ -106,14 +104,14 @@ typedef struct _TPhotoSize
         Comment,
         Free
       };
-      enum {
-        ToPrinter = 0,
-        ToGimp,
-        ToFile
-      };
-      void initPhotoSizes(PageSize pageSize);
+
+      void initPhotoSizes(QSizeF pageSize);  // pageSize in mm
       void previewPhotos();
-      void parseTemplateFile( QString fn, PageSize pageSize );
+      void infopage_enableButtons();
+      void infopage_imagePreview();
+
+      // fn filename, pageSize in mm 
+      void parseTemplateFile( QString fn, QSizeF pageSize );
 
       void updateCropFrame(TPhoto *, int);
       void setBtnCropEnabled();
@@ -135,7 +133,6 @@ typedef struct _TPhotoSize
 
       void saveSettings(QString pageName);
       void readSettings(QString pageName);
-      void readSettings();
 
       struct Private;
       Private* d;

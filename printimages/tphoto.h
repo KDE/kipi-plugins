@@ -54,6 +54,18 @@ namespace KIPIPrintImagesPlugin
                          mAutoRotate(true), mPrintWidth(0.0), mPrintHeight(0.0),
                          mEnlargeSmallerImages(false)
                          {}
+                         
+      AdditionalInfo(const AdditionalInfo& ai)
+      {
+        mUnit          = ai.mUnit;
+        mPrintPosition = ai.mPrintPosition;
+        mScaleMode     = ai.mScaleMode;
+        mKeepRatio     = ai.mKeepRatio;
+        mAutoRotate    = ai.mAutoRotate;
+        mPrintWidth    = ai.mPrintWidth;
+        mPrintHeight   = ai.mPrintHeight;
+        mEnlargeSmallerImages = ai.mEnlargeSmallerImages;
+      }
   };
 
   class TPhoto
@@ -62,6 +74,7 @@ namespace KIPIPrintImagesPlugin
   public:
 
       TPhoto ( int thumbnailSize );
+      TPhoto (const TPhoto& );
       ~TPhoto();
 
       KUrl filename; // full path
@@ -76,6 +89,9 @@ namespace KIPIPrintImagesPlugin
       QSize& size();
 
       QRect cropRegion;
+      // to get first copy quickly
+      bool first;
+      // number of copies
       int copies;
       int rotation;
       AdditionalInfo *pAddInfo;

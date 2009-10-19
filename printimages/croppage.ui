@@ -141,9 +141,27 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="KUrlRequester" name="m_outputPath">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
   <customwidget>
    <class>KIPIPrintImagesPlugin::CropFrame</class>
    <extends>QWidget</extends>

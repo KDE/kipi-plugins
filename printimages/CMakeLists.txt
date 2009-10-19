@@ -9,10 +9,10 @@ SET(kipiplugin_printimages_PART_SRCS
     printoptionspage.cpp
     layouttree.cpp
     atkinspagelayout.cpp 
+    templateicon.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
-                  intropage.ui
                   infopage.ui
                   photopage.ui
                   croppage.ui

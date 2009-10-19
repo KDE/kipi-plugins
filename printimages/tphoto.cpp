@@ -48,6 +48,8 @@ TPhoto::TPhoto(int thumbnailSize)
     m_size = 0;
     cropRegion = QRect(-1, -1, -1, -1);
     rotation = 0;
+    first = false;
+
     copies = 1;
     //TODO mPrintPosition;
     filename = "";
@@ -56,6 +58,25 @@ TPhoto::TPhoto(int thumbnailSize)
     m_thumbnail = NULL;
 
     this->m_thumbnailSize = thumbnailSize;
+}
+
+//to get old photo info
+TPhoto::TPhoto (const TPhoto& photo)
+{
+  m_thumbnailSize = photo.m_thumbnailSize;
+  cropRegion      = photo.cropRegion;
+  filename        = photo.filename;
+  first           = photo.first;
+  copies          = photo.copies;
+  rotation        = photo.rotation;
+  pAddInfo        = NULL;
+  if (photo.pAddInfo)
+  {
+    pAddInfo = new AdditionalInfo(*photo.pAddInfo);
+  }
+  m_size       = 0;
+  m_exiv2Iface = NULL;
+  m_thumbnail  = NULL;
 }
 
 TPhoto::~TPhoto()

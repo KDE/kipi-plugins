@@ -34,6 +34,9 @@
 #include <QtGlobal>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QPageSetupDialog>
+#include <QPrinterInfo>
+#include <QProgressDialog>
 #include <QDomDocument>
 
 // KDE includes
@@ -44,6 +47,7 @@
 #include <kmenu.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
+#include <kfile.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kdeprintdialog.h>
@@ -66,10 +70,10 @@
 #include "kpaboutdata.h"
 #include "ui_croppage.h"
 #include "ui_infopage.h"
-#include "ui_intropage.h"
 #include "ui_photopage.h"
 #include "tphoto.h"
 #include "utils.h"
+#include "templateicon.h"
 
 namespace KIPIPrintImagesPlugin
 {
@@ -98,12 +102,10 @@ namespace KIPIPrintImagesPlugin
   };
 
 
-  const char* introPageName="Introduction";
   const char* infoPageName="Select printing information";
-  const char* photoPageName="Photo information";
+  const char* photoPageName="Select page layout";
   const char* cropPageName="Crop photos";
 
-  typedef WizardPage<Ui_IntroPage> IntroPage;
   typedef WizardPage<Ui_InfoPage>  InfoPage;
   typedef WizardPage<Ui_PhotoPage> PhotoPage;
   typedef WizardPage<Ui_CropPage>  CropPage;
@@ -112,34 +114,42 @@ namespace KIPIPrintImagesPlugin
 // Wizard implementation
   struct Wizard::Private
   {
-    IntroPage *mIntroPage;
     InfoPage  *mInfoPage;
     PhotoPage *mPhotoPage;
     CropPage  *mCropPage;
 
     KPushButton  *m_helpButton;
-    QButtonGroup *m_outputSettings;
-
+    
     KIPI::ImageCollectionSelector* mCollectionSelector;
     KIPI::Interface* mInterface;
 
     KIPIPlugins::KPAboutData* mAbout;
 
-    PageSize           m_pageSize;
+    QSizeF             m_pageSize;
     QList<TPhoto*>     m_photos;
     QList<TPhotoSize*> m_photoSizes;
+    int                m_infopage_currentPhoto;
     int                m_currentPreviewPage;
     int                m_currentCropPhoto;
     bool               m_cancelPrinting;
     QString            m_tempPath;
     QStringList        m_gimpFiles;
+
+    //QPrintDialog      *m_printDialog;
+    QPageSetupDialog    *m_pDlg;
+    QPrinter            *m_printer;
+    QList<QPrinterInfo>  m_printerList;
   };
 
   Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
       : KAssistantDialog ( parent )
   {
     d=new Private;
-    d->mInterface = interface;
+    d->mInterface    = interface;
+    //d->m_printDialog = NULL;
+    d->m_pDlg        = NULL;
+    d->m_printer     = NULL;
+    d->m_infopage_currentPhoto = 0;
 
     // Caption
     setCaption ( i18n ( "Print assistant" ) );
@@ -155,12 +165,9 @@ namespace KIPIPrintImagesPlugin
                            "todd@theshoemakers.net" );
     d->mAbout->addAuthor ( ki18n ( "Angelo Naselli" ), ki18n ( "Developer and maintainer" ),
                            "anaselli@linux.it" );
-    d->mAbout->addAuthor ( ki18n ( "Valerio Fuoglio" ), ki18n ( "Contributor" ),
-                           "valerio.fuoglio@gmail.com" );
     d->mAbout->addAuthor ( ki18n ( "Andreas Trink" ), ki18n ( "Contributor" ),
                            "atrink@nociaro.org" );
 
-    d->mIntroPage = new IntroPage ( this, i18n ( introPageName ) );
     d->mInfoPage  = new InfoPage ( this, i18n ( infoPageName ) );
     d->mPhotoPage = new PhotoPage ( this, i18n ( photoPageName ) );
     d->mCropPage  = new CropPage ( this, i18n ( cropPageName ) ) ;
@@ -170,13 +177,26 @@ namespace KIPIPrintImagesPlugin
     helpMenu->menu()->removeAction ( helpMenu->menu()->actions().first() );
     QAction *handbook   = new QAction ( i18n ( "Handbook" ), this );
 
-    // create a QButtonGroup to manage button ids
-    d->m_outputSettings = new QButtonGroup ( this );
-    d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputPrinter, ToPrinter );
-    d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputGimp,    ToGimp );
-    d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputFile,    ToFile );
+//     // create a QButtonGroup to manage button ids
+//     d->m_outputSettings = new QButtonGroup ( this );
+//     d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputPrinter, ToPrinter );
+//     d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputGimp,    ToGimp );
+//     d->m_outputSettings->addButton ( d->mInfoPage->RdoOutputFile,    ToFile );
 
-    d->m_pageSize = Unknown; // select a different page to force a refresh in initPhotoSizes.
+    //TODO
+    d->m_pageSize = QSizeF(-1,-1); // select a different page to force a refresh in initPhotoSizes.
+
+    QList<QPrinterInfo>::iterator it;
+    d->m_printerList = QPrinterInfo::availablePrinters ();
+    kDebug(51000) << " printers: " << d->m_printerList.count();
+    //d->mInfoPage->m_printer_choice->setInsertPolicy(QComboBox::InsertAtTop/*QComboBox::InsertAlphabetically*/); 
+    
+    for ( it = d->m_printerList.begin();
+          it != d->m_printerList.end(); ++it )
+    {
+      kDebug(51000) << " printer: " << it->printerName ();
+      d->mInfoPage->m_printer_choice->addItem(it->printerName ());
+    }
 
     // connections
     // help
@@ -195,18 +215,24 @@ namespace KIPIPrintImagesPlugin
     connect ( d->mInfoPage->m_captions, SIGNAL ( activated ( const QString & ) ),
               this, SLOT ( captionChanged ( const QString & ) ) );
 
-    // Output
-    connect ( d->m_outputSettings, SIGNAL ( buttonClicked ( int ) ),
-              this, SLOT ( outputSettingsClicked ( int ) ) );
+    connect (d->mInfoPage->m_printer_choice, SIGNAL (activated ( const QString & ) ),
+              this, SLOT ( outputChanged ( const QString & ) ) );
 
-    // Browse path button
-    connect ( d->mInfoPage->BtnBrowseOutputPath, SIGNAL ( clicked ( void ) ),
-              this, SLOT ( btnBrowseOutputPathClicked ( void ) ) );
+    connect ( d->mInfoPage->m_preview_right, SIGNAL ( clicked() ),
+              this, SLOT ( infopage_selectNext()) );
 
-    // Paper Size
-    connect ( d->mInfoPage->CmbPaperSize, SIGNAL ( activated ( int ) ),
-              this, SLOT ( paperSizeChanged ( int ) ) );
-
+    connect ( d->mInfoPage->m_preview_left, SIGNAL ( clicked() ),
+              this, SLOT ( infopage_selectPrev()) );
+              
+    connect ( d->mInfoPage->m_increase_copies, SIGNAL ( clicked() ),
+              this, SLOT ( infopage_increaseCopies() ) );
+    
+    connect ( d->mInfoPage->m_decrease_copies, SIGNAL ( clicked() ),
+              this, SLOT ( infopage_decreaseCopies() ) );
+    
+    connect ( d->mInfoPage->m_PictureInfo, SIGNAL ( itemSelectionChanged() ),
+              this, SLOT ( infopage_imageSelected() ) );
+    
     // Print order (down)
     connect ( d->mPhotoPage->BtnPrintOrderDown, SIGNAL ( clicked ( void ) ),
               this, SLOT ( BtnPrintOrderDown_clicked ( void ) ) );
@@ -236,9 +262,6 @@ namespace KIPIPrintImagesPlugin
     connect ( d->mPhotoPage->ListPrintOrder, SIGNAL ( itemEntered ( QListWidgetItem * ) ),
               this, SLOT ( ListPrintOrder_selected() ) );
 
-    connect ( d->mPhotoPage->EditCopies, SIGNAL ( valueChanged ( int ) ),
-              this, SLOT ( EditCopies_valueChanged ( int ) ) );
-
     connect ( d->mPhotoPage->ListPhotoSizes, SIGNAL ( currentRowChanged ( int ) ),
               this, SLOT ( ListPhotoSizes_selected() ) );
 
@@ -250,32 +273,38 @@ namespace KIPIPrintImagesPlugin
     connect ( this, SIGNAL ( pageRemoved ( KPageWidgetItem * ) ),
               this, SLOT ( PageRemoved ( KPageWidgetItem * ) ) );
 
-    // Default is A4
-    d->mInfoPage->CmbPaperSize->setCurrentIndex ( A4 );
-    initPhotoSizes ( A4 );   // default to A4 for now.
+    connect ( d->mInfoPage->m_pagesetup, SIGNAL ( clicked ( ) ),
+              this, SLOT ( pagesetupclicked (  ) ) );
+
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;
     d->m_cancelPrinting     = false;
 
     helpMenu->menu()->insertAction ( helpMenu->menu()->actions().first(), handbook );
     d->m_helpButton->setMenu ( helpMenu->menu() );
+    
+    //read first page setting
+//     readSettings ( infoPageName );
+//     infopage_imagePreview();
+//     infopage_enableButtons();
 
-    readSettings();
-
-    if ( d->mIntroPage->m_skipIntro->isChecked() )
-    {
-      removePage ( d->mIntroPage->page() );
-    }
   }
 
   Wizard::~Wizard()
   {
+    // TODO private object could be deleted inside private destructor
     delete d->mAbout;
+    delete d->m_pDlg;
+    delete d->m_printer;
+    for ( int i=0; i < d->m_photos.count(); i++ )
+      if ( d->m_photos.at ( i ) )
+        delete d->m_photos.at ( i );
+    d->m_photos.clear();
     delete d;
   }
 
 // create a MxN grid of photos, fitting on the page
-  void createPhotoGrid ( TPhotoSize *p, int pageWidth, int pageHeight, int rows, int columns )
+  void createPhotoGrid ( TPhotoSize *p, int pageWidth, int pageHeight, int rows, int columns,  TemplateIcon *iconpreview )
   {
     int MARGIN = ( int ) ( ( pageWidth + pageHeight ) / 2 * 0.04 + 0.5 );
     int GAP = MARGIN / 4;
@@ -289,6 +318,7 @@ namespace KIPIPrintImagesPlugin
       for ( int x=MARGIN; col < columns && x < pageWidth - MARGIN; x += photoWidth + GAP )
       {
         p->layouts.append ( new QRect ( x, y, photoWidth, photoHeight ) );
+        iconpreview->fillRect( x, y, photoWidth, photoHeight, Qt::color1 );
         col++;
       }
       row++;
@@ -302,28 +332,43 @@ namespace KIPIPrintImagesPlugin
         delete d->m_photos.at ( i );
     d->m_photos.clear();
     d->mPhotoPage->ListPrintOrder->clear();
-
+    d->mInfoPage->m_PictureInfo->setRowCount(fileList.count());
     for ( int i=0; i < fileList.count(); i++ )
     {
       TPhoto *photo = new TPhoto ( 150 );
       photo->filename = fileList[i];
+      photo->first = true;
       d->m_photos.append ( photo );
+      //FileName
+      QTableWidgetItem *newItem = new QTableWidgetItem(photo->filename.fileName());
+      d->mInfoPage->m_PictureInfo->setItem(i, 0, newItem); //setItem(row, column, newItem);
+      // Number of copies
+      newItem = new QTableWidgetItem(tr("%1").arg(photo->copies));
+      d->mInfoPage->m_PictureInfo->setItem(i, 1, newItem);
       // load the print order listbox
-      d->mPhotoPage->ListPrintOrder->addItem ( photo->filename.fileName() );
+//TODO      d->mPhotoPage->ListPrintOrder->addItem ( photo->filename.fileName() );
     }
-    d->mPhotoPage->ListPrintOrder->setCurrentRow ( 0, QItemSelectionModel::Select );
-
+//TODO    d->mPhotoPage->ListPrintOrder->setCurrentRow ( 0, QItemSelectionModel::Select );
+    
+    d->mInfoPage->m_PictureInfo->setCurrentCell(0,0);
+    
     d->m_tempPath = tempPath;
-    d->mPhotoPage->LblPhotoCount->setText ( QString::number ( d->m_photos.count() ) );
+//TODO    d->mPhotoPage->LblPhotoCount->setText ( QString::number ( d->m_photos.count() ) );
 
+// TODO move right to pageChanged()
     d->mCropPage->BtnCropPrev->setEnabled ( false );
 
     if ( d->m_photos.count() == 1 )
       d->mCropPage->BtnCropNext->setEnabled ( false );
+
+    // setCurrentPage should emit currentPageChanged nut it seems not to at the moment
+    // setCurrentPage(d->mInfoPage->page());
+    currentPageChanged(d->mInfoPage->page(), NULL);
+
   }
 
 
-  void Wizard::parseTemplateFile( QString fn, PageSize pageSize )
+  void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
   {
     QDomDocument doc("mydocument"); 
     kDebug(51000) << " XXX: " <<  fn;
@@ -348,68 +393,181 @@ namespace KIPIPrintImagesPlugin
     // of the outermost element.
     QDomElement docElem = doc.documentElement();
     kDebug(51000) << docElem.tagName(); // the node really is an element.
-             
-    QDomNode n = docElem.firstChild();
-    while(!n.isNull()) {
-      QDomElement e = n.toElement(); // try to convert the node to an element.
-      if(!e.isNull()) {
-        if( e.tagName() == "paper" ) {
-          if((e.attribute("name","")=="Letter"  && pageSize==Letter) ||
-             (e.attribute("name","")=="A4"      && pageSize==A4)     ||
-             (e.attribute("name","")=="A6"      && pageSize==A6)     ||
-             (e.attribute("name","")=="10x15cm" && pageSize==P10X15) ||
-             (e.attribute("name","")=="13x18cm" && pageSize==P13X18)
-            ) {
-            kDebug(51000) <<  e.tagName() << " name=" << e.attribute("name","??") 
-                                          << " size=" << e.attribute("size","??");
 
-            QDomNode np = e.firstChild();
-            while(!np.isNull()) {
+    QSizeF size;
+    QString unit;
+    int scaleValue;
+    QDomNode n = docElem.firstChild();
+    while(!n.isNull())
+    {
+      size = QSizeF(0,0);
+      scaleValue = 10; // 0.1 mm
+      QDomElement e = n.toElement(); // try to convert the node to an element.
+      if(!e.isNull())
+      {
+        if( e.tagName() == "paper" )
+        {
+          size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
+          unit = e.attribute("unit", "mm");
+          kDebug(51000) <<  e.tagName() << " name=" << e.attribute("name","??")
+          << " size= " << size
+          << " unit= " << unit;
+
+
+          if (size == QSizeF(0.0,0.0) && size == pageSize)
+          {
+            // skipping templates without page size since pageSize is not set
+            n = n.nextSibling();
+            continue;
+          }
+          else if (unit != "mm" && size != QSizeF(0.0,0.0)) // "cm", "inches" or "inch"
+          {
+            // convert to mm
+            if (unit == "inches" ||  unit == "inch")
+            {
+              size *= 25.4;
+              scaleValue = 1000;
+              kDebug(51000) << "template size " << size << " page size " << pageSize;
+            }
+            else if (unit == "cm")
+            {
+              size *= 10;
+              scaleValue = 100;
+               kDebug(51000) << "template size " << size << " page size " << pageSize;
+            }
+            else
+            {
+              kWarning(51000) << "Wrong unit " << unit << " skipping layout";
+              n = n.nextSibling();
+              continue;
+            }
+          }
+
+          static const float round_value = 0.01;
+          if (size == QSizeF(0,0) )
+          {
+            size = pageSize;
+            unit = "mm";
+          }
+          else if (pageSize     != QSizeF(0,0) &&
+                   (size.height() > (pageSize.height() +round_value) ||
+                   size.width()  > (pageSize.width() +round_value)))
+          {
+            kDebug(51000) << "skipping size " << size << " page size " << pageSize;
+            // skipping layout it can't fit
+            n = n.nextSibling();
+            continue;
+          }
+
+          // Next templates are good we restore size to its unit
+//           if (unit != "mm")
+//           {
+//             size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
+//           }
+
+          kDebug(51000) << "layout size " << size << " page size " << pageSize;
+
+          QDomNode np = e.firstChild();
+          while(!np.isNull())
+          {
             QDomElement ep = np.toElement(); // try to convert the node to an element.
-            if(!ep.isNull()) {
-              if( ep.tagName() == "template" ) {
+            if(!ep.isNull())
+            {
+              if( ep.tagName() == "template" )
+              {
                 p = new TPhotoSize;
+
+                QSizeF sizeManaged;
+                // set page size
+                if (pageSize == QSizeF(0,0))
+                {
+                  sizeManaged = size * scaleValue;
+                  //p->layouts.append ( new QRect ( 0, 0, size.width()*scaleValue, size.height()*scaleValue ) );
+                }
+                else if (unit == "inches" || unit == "inch")
+                {
+                  sizeManaged = pageSize * scaleValue / 25.4;
+//                   p->layouts.append ( new QRect ( 0, 0, (pageSize.width()*scaleValue/25.4),
+//                                                   (pageSize.height()*scaleValue/25.4) ) );
+                }
+                else
+                {
+                  sizeManaged = pageSize * 10;
+//                   p->layouts.append ( new QRect ( 0, 0, pageSize.width()*10, pageSize.height()*10 ) );
+                }
+                
+                p->layouts.append ( new QRect ( 0, 0, sizeManaged.width(), sizeManaged.height() ) );
+                // create a small preview of the template
+                // TODO check if iconsize here is useless
+                TemplateIcon iconpreview( 80, sizeManaged.toSize() );
+                iconpreview.begin();
+                
                 QString desktopFileName = QString("kipiplugin_printimages/templates/") +
-                                          QString(ep.attribute("name","XXX")) +
-                                          ".desktop";
+                QString(ep.attribute("name","XXX")) + ".desktop";
+                
                 kDebug(51000) <<  "template desktop file name" << desktopFileName;
+                
                 const QStringList list=KGlobal::dirs()->findAllResources("data", desktopFileName);
                 QStringList::ConstIterator it=list.constBegin(), end=list.constEnd();
                 if (it != end)
                   p->label = KDesktopFile(*it).readName();
                 else
+                {
                   p->label = ep.attribute("name","XXX");  // FIXME i18n()
+                  kWarning(51000) << "missed template tranlation " << desktopFileName;
+                }
                 p->dpi = ep.attribute("dpi","0").toInt();
                 p->autoRotate = (ep.attribute("autorotate","false") == "true") ? true : false;
-
+                
                 QDomNode nt = ep.firstChild();
-                while(!nt.isNull()) {
+                while(!nt.isNull())
+                {
                   QDomElement et = nt.toElement(); // try to convert the node to an element.
-                  if(!et.isNull()) {
-                    if( et.tagName() == "photo" ) {
-                      p->layouts.append( new QRect ( et.attribute("x","??").toInt(),
-                                                     et.attribute("y","??").toInt(),
-                                                     et.attribute("width","??").toInt(),
-                                                     et.attribute("height","??").toInt() ) );
+                  if(!et.isNull())
+                  {
+                    if( et.tagName() == "photo" )
+                    {
+                      float value = et.attribute("width","0").toFloat();
+                      int width  = (value == 0 ? size.width() : value)*scaleValue;
+                      value = et.attribute("height","0").toFloat();
+                      int height = (value == 0 ? size.height() : value)*scaleValue;
+                      int photoX = (et.attribute("x","0").toFloat()*scaleValue);
+                      int photoY = (et.attribute("y","0").toFloat()*scaleValue);
+                      p->layouts.append( new QRect ( photoX,
+                                                     photoY,
+                                                     width, height) );
+                      iconpreview.fillRect( photoX, photoY, width, height, Qt::color1 );                               
                     }
-                    else if( et.tagName() == "pagesize" ) {
-                      p->layouts.append( new QRect ( et.attribute("x","??").toInt(),
-                                                      et.attribute("y","??").toInt(),
-                                                      et.attribute("width","??").toInt(),
-                                                      et.attribute("height","??").toInt() ) );
-                    }
-                    else if( et.tagName() == "photogrid" ) {
-                      createPhotoGrid( p, et.attribute("pageWidth","??").toInt(), 
-                                          et.attribute("pageHeight","??").toInt(), 
-                                          et.attribute("rows","??").toInt(), 
-                                          et.attribute("columns","??").toInt() );
+                    else if( et.tagName() == "photogrid" )
+                    {
+                      float value = et.attribute("pageWidth","0").toFloat();
+                      int pageWidth  = (value == 0 ? size.width() : value)*scaleValue;
+                      value = et.attribute("pageHeight","0").toFloat();
+                      int pageHeight = (value == 0 ? size.height() : value)*scaleValue;
+                      int rows = et.attribute("rows","0").toInt();
+                      int columns = et.attribute("columns","0").toInt();
+                      if (rows >0 && columns >0 )
+                      {
+                        createPhotoGrid(p, pageWidth,
+                                         pageHeight,
+                                         rows,
+                                         columns,
+                                         &iconpreview);
+                      }
+                      else
+                      {
+                        kWarning(51000) << " Wrong grid configuration, rows " << rows <<
+                        ", columns " << columns;
+                      }
                     }
                     else {
-                        kDebug(51000) << "    " <<  et.tagName();
+                      kDebug(51000) << "    " <<  et.tagName();
                     }
                   }
                   nt = nt.nextSibling();
                 }
+                iconpreview.end();
+                p->icon = iconpreview.getIcon();
                 
                 d->m_photoSizes.append ( p );
               }
@@ -417,17 +575,15 @@ namespace KIPIPrintImagesPlugin
               {
                 kDebug(51000) << "? " <<  ep.tagName() << " attr=" << ep.attribute("name","??");
               }
-
+              
             }
             np = np.nextSibling();
           }
           
         }
-        }
         else
         {
-          kDebug(51000) << "??" << e.tagName() << " name=" << e.attribute("name","??") 
-                                               << " size=" << e.attribute("size","??");
+          kDebug(51000) << "??" << e.tagName() << " name=" << e.attribute("name","??");
         }
       }
       n = n.nextSibling();
@@ -435,9 +591,11 @@ namespace KIPIPrintImagesPlugin
   }
 
 
-// TODO page layout configurable (using XML?)
-  void Wizard::initPhotoSizes ( PageSize pageSize )
+  void Wizard::initPhotoSizes ( QSizeF pageSize )
   {
+    kDebug(51000) << "New page size " << pageSize
+                  << ", old page size " << d->m_pageSize;
+    
     // don't refresh anything if we haven't changed page sizes.
     if ( pageSize == d->m_pageSize )
       return;
@@ -484,7 +642,12 @@ namespace KIPIPrintImagesPlugin
     for ( it = d->m_photoSizes.begin(); it != d->m_photoSizes.end(); ++it )
     {
       TPhotoSize *s = static_cast<TPhotoSize*> ( *it );
-      if ( s ) d->mPhotoPage->ListPhotoSizes->addItem ( s->label );
+      if ( s ) 
+      {
+        QListWidgetItem *pWItem = new QListWidgetItem ( s->label );
+        pWItem->setIcon( s->icon );
+        d->mPhotoPage->ListPhotoSizes->addItem ( pWItem );
+      }
     }
     d->mPhotoPage->ListPhotoSizes->blockSignals ( false );
 
@@ -894,6 +1057,9 @@ namespace KIPIPrintImagesPlugin
 // update the pages to be printed and preview first/last pages
   void Wizard::previewPhotos()
   {
+    //Change cursor to waitCursor during transition
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    
     // get the selected layout
     int curr = d->mPhotoPage->ListPhotoSizes->currentRow();
     TPhotoSize *s = d->m_photoSizes.at ( curr );
@@ -957,6 +1123,7 @@ namespace KIPIPrintImagesPlugin
 
     manageBtnPreviewPage();
     manageBtnPrintOrder();
+    QApplication::restoreOverrideCursor();
   }
 
   void Wizard::manageBtnPreviewPage()
@@ -990,6 +1157,118 @@ namespace KIPIPrintImagesPlugin
       d->mPhotoPage->BtnPrintOrderDown->setEnabled ( false );
     }
   }
+  
+  void Wizard::infopage_enableButtons()
+  {
+      if (d->m_photos.size() == 1)
+      {
+          d->mInfoPage->m_preview_left->setEnabled(false);
+          d->mInfoPage->m_preview_right->setEnabled(false);
+      }
+      else if (d->m_infopage_currentPhoto == 0)
+      {
+          d->mInfoPage->m_preview_left->setEnabled(false);
+          d->mInfoPage->m_preview_right->setEnabled(true);
+      }
+      else if (d->m_infopage_currentPhoto == d->m_photos.size()-1)
+      {
+          d->mInfoPage->m_preview_right->setEnabled(false);
+          d->mInfoPage->m_preview_left->setEnabled(true);
+      }
+      else
+      {
+          d->mInfoPage->m_preview_left->setEnabled(true);
+          d->mInfoPage->m_preview_right->setEnabled(true);
+      }
+  }
+
+
+void Wizard::infopage_imageSelected()
+{
+  d->mInfoPage->m_PictureInfo->blockSignals(true);
+  d->m_infopage_currentPhoto = d->mInfoPage->m_PictureInfo->currentRow();
+  d->mInfoPage->m_PictureInfo->setCurrentCell(d->m_infopage_currentPhoto,0);
+  d->mInfoPage->m_PictureInfo->blockSignals(false);
+  
+  //TODO showAdditionalInfo();
+  infopage_imagePreview();
+  infopage_enableButtons();
+}
+
+void Wizard::infopage_imagePreview()
+{
+//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+    if (d->m_photos.size())
+    {
+      TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
+      d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
+    }
+}
+
+void Wizard::infopage_selectNext()
+{
+//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+
+    if (d->m_infopage_currentPhoto+1 < d->m_photos.size())
+        d->m_infopage_currentPhoto++;
+    
+    d->mInfoPage->m_PictureInfo->blockSignals(true);
+    d->mInfoPage->m_PictureInfo->setCurrentCell(d->m_infopage_currentPhoto,0);
+    d->mInfoPage->m_PictureInfo->blockSignals(false);
+    
+    //TODO showAdditionalInfo();
+    infopage_imagePreview();
+    infopage_enableButtons();
+}
+
+void Wizard::infopage_selectPrev()
+{
+//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+    
+    if (d->m_infopage_currentPhoto-1 >= 0)
+        d->m_infopage_currentPhoto--;
+
+    d->mInfoPage->m_PictureInfo->blockSignals(true);
+    d->mInfoPage->m_PictureInfo->setCurrentCell(d->m_infopage_currentPhoto,0);
+    d->mInfoPage->m_PictureInfo->blockSignals(false);
+    
+    //TODO showAdditionalInfo();
+    infopage_imagePreview();
+    infopage_enableButtons();
+}
+
+void Wizard::infopage_decreaseCopies()
+{
+  if (d->m_photos.size())
+  {
+    TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
+    if (pPhoto->copies>1)
+    {
+      pPhoto->copies--;
+    
+      d->mInfoPage->m_PictureInfo->blockSignals(true);
+      QTableWidgetItem* newItem = new QTableWidgetItem(tr("%1").arg(pPhoto->copies));
+      d->mInfoPage->m_PictureInfo->setItem(d->m_infopage_currentPhoto, 1, newItem);
+      d->mInfoPage->m_PictureInfo->blockSignals(false);
+      //d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
+    }
+  }
+}
+
+void Wizard::infopage_increaseCopies()
+{
+  if (d->m_photos.size())
+  {
+    TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
+    pPhoto->copies++;
+    
+    d->mInfoPage->m_PictureInfo->blockSignals(true);
+    QTableWidgetItem* newItem = new QTableWidgetItem(tr("%1").arg(pPhoto->copies));
+    d->mInfoPage->m_PictureInfo->setItem(d->m_infopage_currentPhoto, 1, newItem);
+    d->mInfoPage->m_PictureInfo->blockSignals(false);
+    //d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
+  }
+}
 
 // Wizard SLOTS
   void Wizard::slotHelp()
@@ -997,33 +1276,11 @@ namespace KIPIPrintImagesPlugin
     KToolInvocation::invokeHelp ( "printwizard","kipi-plugins" );
   }
 
-
-  void Wizard::btnBrowseOutputPathClicked ( void )
-  {
-    QString newPath = KFileDialog::getExistingDirectory ( d->mInfoPage->EditOutputPath->text(), this,
-                      i18n ( "Select Output Folder" ) );
-    if ( newPath.isEmpty() )
-      return;
-    // assume this directory exists
-    d->mInfoPage->EditOutputPath->setText ( newPath );
-    outputSettingsClicked ( d->m_outputSettings->checkedId () );
-  }
-
-  void Wizard::paperSizeChanged ( int index )
-  {
-    PageSize pageSize = ( PageSize ) index;
-    initPhotoSizes ( pageSize );
-
-    if ( pageSize > A6 )
-    {
-      KMessageBox::information ( this,
-                                 i18n ( "Do not forget to set the correct page size according to your printer settings." ),
-                                 i18n ( "Page size settings" ), "pageSizeInfo" );
-    }
-  }
-
   void  Wizard::pageChanged ( KPageWidgetItem *current, KPageWidgetItem *before )
   {
+    //Change cursor to waitCursor during transition
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
     if ( before )
     {
       saveSettings ( before->name() );
@@ -1034,35 +1291,70 @@ namespace KIPIPrintImagesPlugin
       readSettings ( current->name() );
       kDebug(51000) << " current " << current->name();
     }
-    if ( current->name() == i18n ( introPageName ) )
+    
+    if ( current->name() == i18n ( infoPageName ) )
     {
-    }
-    else if ( current->name() == i18n ( infoPageName ) )
-    {
-#ifdef NOT_YET
-      if ( d->mInfoPage->GrpOutputSettings->id ( RdoOutputPrinter ) )
-        this->nextButton()->setEnabled ( true );
-      else if ( id == GrpOutputSettings->id ( RdoOutputFile ) )
+      QList<TPhoto*> photoList;
+      kDebug(51000) << "(1) n. photos: " << d->m_photos.count();
+      for ( int i=0; i < d->m_photos.count(); i++)
       {
-        if ( !EditOutputPath->text().isEmpty() )
+        TPhoto *pCurrentPhoto = d->m_photos.at ( i );
+        kDebug(51000) << "current photo " << pCurrentPhoto->filename.fileName();
+        if (pCurrentPhoto)
         {
-          QFileInfo fileInfo ( EditOutputPath->text() );
-          if ( fileInfo.exists() && fileInfo.isDir() )
-            this->nextButton()->setEnabled ( true );
+          if (pCurrentPhoto->first)
+          {
+            //add back
+            photoList.append ( pCurrentPhoto );
+          }
+          else
+          {
+            // remove copies
+            delete d->m_photos.at ( i );
+          }
         }
       }
-      else
-        if ( id == GrpOutputSettings->id ( RdoOutputGimp ) )
-        {
-          this->nextButton()->setEnabled ( true );
-        }
-      kDebug(51000) << "CCCC" ;
-#endif
+      // restore original photo list but preserve number of copies
+      d->m_photos.clear();
+      d->m_photos.append(photoList);
+      photoList.clear();
+      kDebug(51000) << "(2) n. photos: " << d->m_photos.count();
+      
+      infopage_imagePreview();
+      infopage_enableButtons();
     }
     else if ( current->name() == i18n ( photoPageName ) )
     {
+      d->mPhotoPage->ListPrintOrder->blockSignals(true);
+      d->mPhotoPage->ListPrintOrder->clear();
+      for ( int i=0; i < d->m_photos.count(); )
+      {
+        TPhoto *pCurrentPhoto = d->m_photos.at ( i ); 
+        if ( pCurrentPhoto )
+        {
+          d->mPhotoPage->ListPrintOrder->insertItem ( i, pCurrentPhoto->filename.fileName() );
+          // adding copies
+          for ( int adding = pCurrentPhoto->copies-1; adding >0 ;adding-- )
+          {
+            TPhoto *pPhoto = new TPhoto ( *pCurrentPhoto);
+            pPhoto->first = false;
+            d->m_photos.insert ( i, pPhoto );
+            kDebug(51000) << "FileName: " << pPhoto->filename.fileName();
+            d->mPhotoPage->ListPrintOrder->insertItem ( i, pPhoto->filename.fileName() );
+          }
+          i+=pCurrentPhoto->copies;
+        }
+        else // useless
+          i++;
+      }
+      d->mPhotoPage->LblPhotoCount->setText ( QString::number ( d->m_photos.count() ) );
+      d->mPhotoPage->ListPrintOrder->setCurrentRow ( 0, QItemSelectionModel::Select );
+      
+      d->mPhotoPage->ListPrintOrder->blockSignals(false);
+      
+      // PhotoPage
+      initPhotoSizes ( d->m_printer->paperSize(QPrinter::Millimeter) );
       // create our photo sizes list
-      initPhotoSizes ( d->m_pageSize );
       previewPhotos();
     }
     else if ( current->name() == i18n ( cropPageName ) )
@@ -1070,36 +1362,58 @@ namespace KIPIPrintImagesPlugin
       d->m_currentCropPhoto = 0;
       TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
       setBtnCropEnabled();
+      this->update();
       updateCropFrame ( photo, d->m_currentCropPhoto );
     }
-
+    QApplication::restoreOverrideCursor();
   }
 
-
-  void Wizard::outputSettingsClicked ( int id )
+  void Wizard::outputChanged ( const QString & text)
   {
-    if ( id == d->m_outputSettings->id ( d->mInfoPage->RdoOutputPrinter ) )
-      this->setValid ( d->mCropPage->page(), true );
-    else if ( id == d->m_outputSettings->id ( d->mInfoPage->RdoOutputFile ) )
+    if (text == i18n ( "Print to PDF" ) || 
+        text == i18n ( "Print to JPG" ) || 
+        text == i18n ( "Print to gimp" ) )
     {
-      if ( !d->mInfoPage->EditOutputPath->text().isEmpty() )
-      {
-        QFileInfo fileInfo ( d->mInfoPage->EditOutputPath->text() );
-        if ( ! ( fileInfo.exists() && fileInfo.isDir() ) )
-          this->setValid ( d->mCropPage->page(), false );
-        else
-          this->setValid ( d->mCropPage->page(), true );
-      }
-      else
-        this->setValid ( d->mCropPage->page(), false );
+      if (d->m_printer)
+         delete d->m_printer;
+      d->m_printer = new QPrinter();
+      d->m_printer->setOutputFormat(QPrinter::PdfFormat);
     }
-    else if ( id == d->m_outputSettings->id ( d->mInfoPage->RdoOutputGimp ) )
+    else if (text == i18n ( "Print to PS" ))
     {
-      this->setValid ( d->mCropPage->page(), true );
+      if (d->m_printer)
+         delete d->m_printer;
+      d->m_printer = new QPrinter();
+      d->m_printer->setOutputFormat(QPrinter::PostScriptFormat);
     }
-  }
+    else // real printer
+    {
+      QList<QPrinterInfo>::iterator it;
+      //m_printerList = QPrinterInfo::availablePrinters ();
 
-  void Wizard::captionChanged ( const QString & text )
+      for ( it = d->m_printerList.begin();
+            it != d->m_printerList.end(); ++it )
+      {
+        if (it->printerName () == text)
+        {
+            kDebug(51000) << "Choosen printer: " << it->printerName ();
+            if (d->m_printer)
+              delete d->m_printer;
+            d->m_printer = new QPrinter(*it);
+        }
+      }
+
+      //d->m_printer->setPrinterName(text);
+      d->m_printer->setOutputFormat(QPrinter::NativeFormat);
+    }
+    //default no margins
+    d->m_printer->setFullPage ( true );
+    d->m_printer->setPageMargins ( 0, 0, 0, 0, QPrinter::Millimeter );
+//     this->setValid ( d->mCropPage->page(), true );
+  }
+  
+ 
+ void Wizard::captionChanged ( const QString & text )
   {
     //TODO use QVariant and add them by hands
     bool fontSettingsEnabled;
@@ -1216,97 +1530,13 @@ namespace KIPIPrintImagesPlugin
     previewPhotos();
   }
 
-
-  void Wizard::EditCopies_valueChanged ( int copies )
+  void Wizard::ListPhotoOrder_highlighted ( int /*index*/ )
   {
-    if ( copies < 1 )
-      return;
-
-    int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
-    QString item = d->mPhotoPage->ListPrintOrder->currentItem()->text();
-    TPhoto *pCurPhoto = d->m_photos.at ( currentIndex );
-    KUrl fileName = pCurPhoto->filename;
-
-    if ( pCurPhoto->copies >= copies )
-    {
-      // removing copies
-      if ( pCurPhoto->copies == 1 || pCurPhoto->copies == copies )
-        return;
-
-      d->mPhotoPage->ListPrintOrder->blockSignals ( true );
-      d->mPhotoPage->ListPrintOrder->setCurrentRow ( currentIndex, QItemSelectionModel::Deselect );
-      for ( int removing = pCurPhoto->copies - copies; removing >0 ;removing-- )
-      {
-        for ( int index = 0; index < d->mPhotoPage->ListPrintOrder->count(); index++ )
-        {
-          if ( d->mPhotoPage->ListPrintOrder->item ( index )->text() == item )
-          {
-            TPhoto *pPhoto = d->m_photos.at ( index );
-            d->m_photos.removeAt ( index );
-            delete ( pPhoto );
-            d->mPhotoPage->ListPrintOrder->takeItem ( index );
-            break;
-          }
-        }
-      }
-      d->mPhotoPage->ListPrintOrder->blockSignals ( false );
-      currentIndex = -1;
-    }
-    else
-    {
-      // adding copies
-      for ( int adding = copies - pCurPhoto->copies; adding >0 ;adding-- )
-      {
-        TPhoto *pPhoto = new TPhoto ( 150 );
-        pPhoto->filename = pCurPhoto->filename;
-        d->m_photos.insert ( currentIndex, pPhoto );
-        d->mPhotoPage->ListPrintOrder->insertItem ( currentIndex, pPhoto->filename.fileName() );
-      }
-    }
-
-    d->mPhotoPage->LblPhotoCount->setText ( QString::number ( d->m_photos.count() ) );
-
-    // TODO check if possible to use iterator
-    for ( int index = 0;
-            index < d->m_photos.count();
-            ++index )
-    {
-      TPhoto *pPhoto = d->m_photos[index];
-      if ( pPhoto == 0 )
-        break;
-      if ( pPhoto->filename == fileName )
-      {
-        pPhoto->copies = copies;
-        if ( currentIndex == -1 )
-          currentIndex = index;
-      }
-    }
-    if ( currentIndex != -1 )
-    {
-      d->mPhotoPage->ListPrintOrder->blockSignals ( true );
-      d->mPhotoPage->ListPrintOrder->setCurrentRow ( currentIndex, QItemSelectionModel::Select );
-      d->mPhotoPage->ListPrintOrder->blockSignals ( false );
-    }
-    previewPhotos();
-  }
-
-
-  void Wizard::ListPhotoOrder_highlighted ( int index )
-  {
-    d->mPhotoPage->EditCopies->blockSignals ( true );
-    d->mPhotoPage->EditCopies->setValue ( d->m_photos.at ( index )->copies );
-    d->mPhotoPage->EditCopies->blockSignals ( false );
-
     manageBtnPrintOrder();
   }
 
   void Wizard::ListPrintOrder_selected()
   {
-    int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
-    d->mPhotoPage->EditCopies->blockSignals ( true );
-    d->mPhotoPage->EditCopies->setValue ( d->m_photos.at ( currentIndex )->copies );
-    d->mPhotoPage->EditCopies->blockSignals ( false );
-
     manageBtnPrintOrder();
   }
 
@@ -1364,32 +1594,13 @@ namespace KIPIPrintImagesPlugin
     KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
 
 
-    if ( pageName == i18n ( introPageName ) )
-    {
-      // IntroPage
-      //skip intro
-      group.writeEntry ( "SkipIntro", d->mIntroPage->m_skipIntro->isChecked() );
-    }
-    else if ( pageName == i18n ( infoPageName ) )
+    if ( pageName == i18n ( infoPageName ) )
     {
       // InfoPage
 
-      // Page size
-      group.writeEntry ( "PageSize", ( int ) d->m_pageSize );
-
-      // Margins
-      group.writeEntry ( "NoMargins", d->mInfoPage->m_fullbleed->isChecked() );
-
-      // output
-      int output = d->m_outputSettings->checkedId();
-      if ( output == d->m_outputSettings->id ( d->mInfoPage->RdoOutputFile ) )
-        output = ToFile;
-      else if ( output == d->m_outputSettings->id ( d->mInfoPage->RdoOutputGimp ) )
-        output = ToGimp;
-      else
-        output = ToPrinter;
-      group.writeEntry ( "PrintOutput", output );
-
+      // Printer
+      group.writeEntry("Printer", d->mInfoPage->m_printer_choice->currentText ());
+      
       // image captions
       group.writeEntry ( "Captions", d->mInfoPage->m_captions->currentIndex() );
       // caption color
@@ -1400,71 +1611,46 @@ namespace KIPIPrintImagesPlugin
       group.writeEntry ( "CaptionSize", d->mInfoPage->m_font_size->value() );
       // free caption
       group.writeEntry ( "FreeCaption", d->mInfoPage->m_FreeCaptionFormat->text() );
-
-      // output path
-      group.writePathEntry ( "OutputPath", d->mInfoPage->EditOutputPath->text() );
-
     }
     else if ( pageName == i18n ( photoPageName ) )
     {
       // PhotoPage
       // photo size
       group.writeEntry ( "PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text() );
+      group.writeEntry ( "IconSize",          d->mPhotoPage->ListPhotoSizes->iconSize());
     }
     else if ( pageName == i18n ( cropPageName ) )
     {
       // CropPage
+      if (d->mInfoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
+      {
+        // output path
+        QString outputPath = d->mCropPage->m_outputPath->url().url();
+        group.writePathEntry ( "OutputPath", outputPath );
+      }
     }
-
-
-#ifdef NOT_YET
-    // kjobviewer
-    config.writeEntry ( "KjobViewer", m_kjobviewer->isChecked() );
-#endif //NOT_YET
   }
 
-// global settings
-  void Wizard::readSettings()
-  {
-    KConfig config ( "kipirc" );
-    KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
-
-    //skip intro
-    d->mIntroPage->m_skipIntro->setChecked ( group.readEntry ( "SkipIntro", false ) );
-  }
 
   void Wizard::readSettings ( QString pageName )
   {
     KConfig config ( "kipirc" );
     KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
 
-
-    if ( pageName == i18n ( introPageName ) )
-    {
-      // IntroPage
-      //skip intro
-      d->mIntroPage->m_skipIntro->setChecked ( group.readEntry ( "SkipIntro", false ) );
-    }
-    else if ( pageName == i18n ( infoPageName ) )
+    if ( pageName == i18n ( infoPageName ) )
     {
       // InfoPage
-      //internal PageSize  - default A4
-      PageSize pageSize = ( PageSize ) group.readEntry ( "PageSize", ( int ) A4 );
-      initPhotoSizes ( pageSize );
-      d->mInfoPage->CmbPaperSize->setCurrentIndex ( pageSize );
-
-      // No Margins - default false
-      d->mInfoPage->m_fullbleed->setChecked ( group.readEntry ( "NoMargins", false ) );
-
-      // set the output
-      int id = group.readEntry ( "PrintOutput", d->m_outputSettings->id ( d->mInfoPage->RdoOutputPrinter ) );
-      if ( id == ToFile )
-        d->mInfoPage->RdoOutputFile->setChecked ( true );
-      else if ( id == ToGimp )
-        d->mInfoPage->RdoOutputGimp->setChecked ( true );
-      else
-        d->mInfoPage->RdoOutputPrinter->setChecked ( true );
-
+      QString printerName = group.readEntry ( "Printer", i18n("Print to PDF") );
+      int index = d->mInfoPage->m_printer_choice->findText(printerName);
+      if(index !=-1)
+      {
+        d->mInfoPage->m_printer_choice->setCurrentIndex(index);
+      }
+      // init QPrinter
+      outputChanged(d->mInfoPage->m_printer_choice->currentText());
+  
+      //initPhotoSizes ( d->m_printer.paperSize(QPrinter::Millimeter) );
+      
       // image captions
       d->mInfoPage->m_captions->setCurrentIndex ( group.readEntry ( "Captions", 0 ) );
       // caption color
@@ -1484,13 +1670,12 @@ namespace KIPIPrintImagesPlugin
       //enable right caption stuff
       captionChanged ( d->mInfoPage->m_captions->currentText() );
 
-      // set the last output path
-      QString outputPath = group.readPathEntry ( "OutputPath", d->mInfoPage->EditOutputPath->text() );
-      d->mInfoPage->EditOutputPath->setText ( outputPath );
     }
     else if ( pageName == i18n ( photoPageName ) )
     {
-      // PhotoPage
+      QSize iconSize = group.readEntry  ( "IconSize", QSize(16,16));
+      d->mPhotoPage->ListPhotoSizes->setIconSize(iconSize);
+
       // photo size
       QString photoSize = group.readEntry ( "PhotoSize" );
       QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems ( photoSize, Qt::MatchExactly );
@@ -1502,23 +1687,30 @@ namespace KIPIPrintImagesPlugin
     else if ( pageName == i18n ( cropPageName ) )
     {
       // CropPage
-    }
-
-
-#ifdef NOT_YET
-    // kjobviewer
-    m_kjobviewer->setChecked ( config.readBoolEntry ( "KjobViewer", true ) );
-#endif //NOT_YET
+      if (d->mInfoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
+      {
+        // set the last output path
+        KUrl outputPath; // force to get current directory as default
+        outputPath = group.readPathEntry ( "OutputPath", outputPath.url() );
+        d->mCropPage->m_outputPath->setUrl(outputPath);
+        d->mCropPage->m_outputPath->setVisible(true);
+        d->mCropPage->m_outputPath->setEnabled(true);
+        KFile::Modes mode = KFile::Directory |
+                     KFile::ExistingOnly;
+        d->mCropPage->m_outputPath->setMode(mode);
+      }
+      else
+      {
+        d->mCropPage->m_outputPath->setVisible(false);
+      }
+    }   
   }
 
   void Wizard::printPhotos ( QList<TPhoto*> photos, QList<QRect*> layouts, QPrinter &printer )
   {
     d->m_cancelPrinting = false;
-#ifdef NOT_YET
-    LblPrintProgress->setText ( "" );
-    PrgPrintProgress->setProgress ( 0 );
-    PrgPrintProgress->setTotalSteps ( photos.count() );
-#endif
+    QProgressDialog pbar(this);
+    pbar.setRange ( 0, photos.count() );
     KApplication::kApplication()->processEvents();
 
     QPainter p;
@@ -1533,9 +1725,9 @@ namespace KIPIPrintImagesPlugin
                                 d->mInfoPage->m_captions->currentIndex(), current );
       if ( printing )
         printer.newPage();
-#ifdef NOT_YET
-      PrgPrintProgress->setProgress ( current );
-#endif
+      
+      pbar.setValue(current );
+
       KApplication::kApplication()->processEvents();
       if ( d->m_cancelPrinting )
       {
@@ -1558,11 +1750,9 @@ namespace KIPIPrintImagesPlugin
     Q_ASSERT ( layouts->layouts.count() > 1 );
 
     d->m_cancelPrinting = false;
-#ifdef NOT_YET
-    LblPrintProgress->setText ( "" );
-    PrgPrintProgress->setProgress ( 0 );
-    PrgPrintProgress->setTotalSteps ( photos.count() );
-#endif
+    QProgressDialog pbar(this);
+    pbar.setRange ( 0, photos.count() );
+    
     KApplication::kApplication()->processEvents();
 
     int current = 0;
@@ -1607,18 +1797,20 @@ namespace KIPIPrintImagesPlugin
 
       painter.end();
 
-      QImage img = pixmap.toImage();
-
       if ( saveFile )
       {
         files.append ( filename );
-        img.save ( filename, "JPEG" );
+        if (!pixmap.save ( filename ))
+        {
+          KMessageBox::sorry ( this, 
+                               i18n ( "Could not Save file, please check your output entry." ) );
+          break;
+        }
       }
       pageCount++;
 
-#ifdef NOT_YET
-      PrgPrintProgress->setProgress ( current );
-#endif
+      pbar.setValue(current );
+
       KApplication::kApplication()->processEvents();
       if ( d->m_cancelPrinting )
         break;
@@ -1693,58 +1885,33 @@ namespace KIPIPrintImagesPlugin
       i++;
     }
 
-    if ( d->mInfoPage->RdoOutputPrinter->isChecked() )
+    if( d->mInfoPage->m_printer_choice->currentText() != i18n("Print to JPG") &&
+        d->mInfoPage->m_printer_choice->currentText() != i18n("Print to gimp") )
     {
-      QPrinter printer;
-      std::auto_ptr<QPrintDialog> dialog ( KdePrint::createPrintDialog ( &printer, this ) );
+      // tell him again!
+      d->m_printer->setFullPage ( true );
+
+      qreal left, top, right, bottom;
+      d->m_printer->getPageMargins (&left, &top, &right, &bottom, QPrinter::Millimeter );
+       kDebug(51000) << "Dialog exit, new margins: left " << left
+        << " right " << right << " top " << top << " bottom " << bottom;
+      std::auto_ptr<QPrintDialog> dialog ( KdePrint::createPrintDialog ( d->m_printer, this ) );
       dialog->setWindowTitle ( i18n ( "Print Image" ) );
-      dialog->addEnabledOption ( QAbstractPrintDialog::PrintShowPageSize );
-
-      switch ( d->m_pageSize )
-      {
-        case Letter :
-          printer.setPaperSize ( QPrinter::Letter );
-          break;
-        case A4 :
-          printer.setPaperSize ( QPrinter::A4 );
-          break;
-        case A6 :
-          printer.setPaperSize ( QPrinter::A6 );
-          break;
-        default:
-          break;
-      }
-
-      kDebug(51000) << " page size " << d->m_pageSize
-      << " printer: " << printer.paperSize() << " A6: " << QPrinter::A6 ;
-
-      if ( d->mInfoPage->m_fullbleed->isChecked() )
-      {
-        printer.setFullPage ( true );
-        printer.setPageMargins ( 0, 0, 0, 0, QPrinter::Millimeter );
-      }
-
-      bool wantToPrint = dialog->exec();
-      kDebug(51000) << "full page " << printer.fullPage() ;
-
+      
+      bool wantToPrint = dialog->exec() == QDialog::Accepted;
       if ( !wantToPrint )
       {
+        KAssistantDialog::accept();
         return;
       }
-
-      printPhotos ( d->m_photos, s->layouts, printer );
       kDebug(51000) << "paper page " << dialog->printer()->paperSize() ;
+      
+      QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+      printPhotos ( d->m_photos, s->layouts, *d->m_printer );
+      QApplication::restoreOverrideCursor();
+
     }
-    else if ( d->mInfoPage->RdoOutputFile->isChecked() )
-    {
-      // now output the items
-      QString path = d->mInfoPage->EditOutputPath->text();
-      if ( path.right ( 1 ) != "/" )
-        path = path + "/";
-      path = path + "kipi_printassistant_";
-      printPhotosToFile ( d->m_photos, path, s );
-    }
-    else if ( d->mInfoPage->RdoOutputGimp->isChecked() )
+    else if ( d->mInfoPage->m_printer_choice->currentText() == i18n("Print to gimp") )
     {
       // now output the items
       QString path = d->m_tempPath;
@@ -1767,13 +1934,66 @@ namespace KIPIPrintImagesPlugin
         return;
       }
     }
-
-//   if (d->m_gimpFiles.count() > 0)
-//     removeGimpFiles();
+    else if ( d->mInfoPage->m_printer_choice->currentText() == i18n("Print to JPG"))
+    {
+      // now output the items
+      //TODO manage URL
+      QString path = d->mCropPage->m_outputPath->url().path() ;
+      if (path.isEmpty())
+      {
+        KMessageBox::sorry ( this, 
+                               i18n ( "Empty output path." ) );
+        return;
+      }
+      if ( path.right ( 1 ) != "/" )
+        path = path + "/";
+      path = path + "kipi_printassistant_";
+      kDebug(51000) << path;
+      QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+      printPhotosToFile ( d->m_photos, path, s );
+      QApplication::restoreOverrideCursor();
+    }
 
     saveSettings ( currentPage ()->name() );
 
     KAssistantDialog::accept();
+  }
+
+   void Wizard::pagesetupdialogexit()
+  {
+    QPrinter *printer = d->m_pDlg->printer();
+
+    kDebug(51000) << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
+    << " internal size " << d->m_printer->paperSize(QPrinter::Millimeter);
+    qreal left, top, right, bottom;
+    d->m_printer->getPageMargins (&left, &top, &right, &bottom, QPrinter::Millimeter );
+    kDebug(51000) << "Dialog exit, new margins: left " << left
+    << " right " << right << " top " << top << " bottom " << bottom;
+    // next should be useless invoke once changing wizard page
+    //initPhotoSizes ( d->m_printer.paperSize(QPrinter::Millimeter));
+
+//     d->m_pageSize = d->m_printer.paperSize(QPrinter::Millimeter);
+#ifdef NOT_YET
+    kDebug(51000) << " dialog exited num of copies: " << printer->numCopies ()
+    << " inside:   " << d->m_printer->numCopies ();
+
+    kDebug(51000) << " dialog exited from : " << printer->fromPage ()
+    << " to:   " << d->m_printer->toPage();
+#endif
+  }
+
+  void Wizard::pagesetupclicked()
+  {
+    if (d->m_pDlg)
+      delete d->m_pDlg;
+    d->m_pDlg = new QPageSetupDialog (d->m_printer, this);
+    // TODO next line should work but it doesn't because of a QT bug
+    //d->m_pDlg->open(this, SLOT(pagesetupdialogexit()));
+    int ret = d->m_pDlg->exec();
+    if ( ret == QDialog::Accepted )
+    {
+      pagesetupdialogexit();
+    }   
   }
 
 } // namespace
