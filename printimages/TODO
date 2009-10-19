@@ -26,4 +26,4 @@ Found QT odd behaviors
 - QPrintDialog(Qprinter*) does not care QPrinter margins if OutputFormat
   is set as PdfFormat or PostScriptFormat
 - QPrinterInfo::availablePrinters() seems to be usefull for PageSizes
-  only for default printer :(
+  only for default in case of printers :(
