@@ -6,7 +6,7 @@
  * Date        : 2008-01-11
  * Description : a kipi plugin to print images
  *
- * Copyright 2008 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2008-2009 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,6 +20,7 @@
  *
  * ============================================================ */
 
+#include "wizard.h"
 #include "wizard.moc"
 
 // STD
@@ -101,7 +102,6 @@ namespace KIPIPrintImagesPlugin
       KPageWidgetItem* mPage;
   };
 
-
   const char* infoPageName="Select printing information";
   const char* photoPageName="Select page layout";
   const char* cropPageName="Crop photos";
@@ -142,7 +142,7 @@ namespace KIPIPrintImagesPlugin
   };
 
   Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
-      : KAssistantDialog ( parent )
+        : KAssistantDialog ( parent )
   {
     d=new Private;
     d->mInterface    = interface;
@@ -496,7 +496,7 @@ namespace KIPIPrintImagesPlugin
 //                   p->layouts.append ( new QRect ( 0, 0, pageSize.width()*10, pageSize.height()*10 ) );
                 }
                 
-                p->layouts.append ( new QRect ( 0, 0, sizeManaged.width(), sizeManaged.height() ) );
+                p->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
                 // create a small preview of the template
                 // TODO check if iconsize here is useless
                 TemplateIcon iconpreview( 80, sizeManaged.toSize() );
@@ -1996,4 +1996,4 @@ void Wizard::infopage_increaseCopies()
     }   
   }
 
-} // namespace
+} // namespace KIPIPrintImagesPlugin
