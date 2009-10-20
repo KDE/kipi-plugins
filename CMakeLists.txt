@@ -274,7 +274,7 @@ ELSE(NOT WIN32 AND NOT APPLE)
 
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(NOT APPLE)
+IF(NOT WIN32 AND NOT APPLE)
 
     IF(SANE_FOUND AND KSANE_FOUND)
         MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
@@ -282,7 +282,15 @@ IF(NOT APPLE)
         MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
     ENDIF(SANE_FOUND AND KSANE_FOUND)
 
-ENDIF(NOT APPLE)
+ELSE(NOT WIN32 AND NOT APPLE)
+
+    IF(KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
+    ELSE(KSANE_FOUND)
+        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
+    ENDIF(KSANE_FOUND)
+
+ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
     MESSAGE(STATUS " DNGConverter will be compiled....... YES (optional)")
