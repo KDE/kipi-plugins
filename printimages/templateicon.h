@@ -69,7 +69,7 @@ class TemplateIcon
     QSize &getSize( void );
 
     /**
-        Draw a filled rectangle with color <color> at position <x>/<y> (relative 
+        Draw a filled rectangle with color <color> at position <x>/<y> (relative
         to template-origin) and width <w> and height <h>.
     */
     void fillRect( int x, int y, int w, int h, QColor color );
@@ -86,6 +86,7 @@ class TemplateIcon
     QPainter *painter;
     QIcon    *icon;
 };
-}; // namespace KIPIPrintImagesPlugin
+
+} // namespace KIPIPrintImagesPlugin
 
 #endif /* PREVIEW_ICON_H */
