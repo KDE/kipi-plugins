@@ -34,9 +34,11 @@
 
 namespace KIPIPrintImagesPlugin
 {
+
 class TemplateIcon
 {
   public:
+
     /**
         Constructor: The height of the icon is <icon_height>. The width is computed
         during invocation of method 'begin()' according to the paper-size.
@@ -75,13 +77,15 @@ class TemplateIcon
     void fillRect( int x, int y, int w, int h, QColor color );
 
   private:
-    QSize m_paper_size;
-    QSize m_icon_size;
-    int   m_icon_margin;
 
-    float scale_width;
-    float scale_height;
-    bool  rotate;
+    QSize     m_paper_size;
+    QSize     m_icon_size;
+    int       m_icon_margin;
+
+    float     scale_width;
+    float     scale_height;
+    bool      rotate;
+
     QPixmap  *pixmap;
     QPainter *painter;
     QIcon    *icon;

@@ -21,6 +21,9 @@
  * ============================================================ */
 
 #include "templateicon.h"
+
+// KDE includes
+
 #include <kdebug.h>
 
 //define next to get debug output
@@ -28,18 +31,18 @@
 
 namespace KIPIPrintImagesPlugin
 {
+
 TemplateIcon::TemplateIcon(int height, const QSize &template_size) : m_paper_size(template_size)
 {
     m_icon_margin = 2;
-    m_icon_size = QSize( height-2*m_icon_margin, height-2*m_icon_margin );
+    m_icon_size   = QSize( height-2*m_icon_margin, height-2*m_icon_margin );
     // remark: m_icon_size is the real size of the icon, in the combo-box there is no space
     // between the icons, therefore the variable m_icon_margin
 
-    pixmap = NULL;
+    pixmap  = NULL;
     painter = NULL;
-    icon = NULL;
+    icon    = NULL;
 }
-
 
 TemplateIcon::~TemplateIcon( void )
 {
@@ -48,14 +51,13 @@ TemplateIcon::~TemplateIcon( void )
     delete icon;
 }
 
-
 void TemplateIcon::begin( void )
  {
     // compute scaling values
     m_icon_size.rwidth() = float(m_icon_size.height()) * float(m_paper_size.width()) / float(m_paper_size.height());
 
-    scale_width  = float(m_icon_size.width())  / float(m_paper_size.width());
-    scale_height = float(m_icon_size.height()) / float(m_paper_size.height());
+    scale_width          = float(m_icon_size.width())  / float(m_paper_size.width());
+    scale_height         = float(m_icon_size.height()) / float(m_paper_size.height());
 
 #ifdef DEBUG_OUTPUT
     kDebug(51000) << "begin: m_paper_size.width =" <<  m_paper_size.width();
@@ -74,9 +76,7 @@ void TemplateIcon::begin( void )
 
     painter->setPen( Qt::color1 );
     painter->drawRect(pixmap->rect());
-
 }
-
 
 void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
 {
@@ -94,7 +94,6 @@ void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
                        color );
 }
 
-
 void TemplateIcon::end( void )
 {
     // paint boundary of template
@@ -109,18 +108,14 @@ void TemplateIcon::end( void )
     icon = new QIcon( *pixmap );
 }
 
-
 QIcon &TemplateIcon::getIcon( void )
 {
     return *icon;
 }
-
 
 QSize &TemplateIcon::getSize( void )
 {
     return m_icon_size;
 }
 
-}
-
-// EOF
+} // namespace KIPIPrintImagesPlugin
