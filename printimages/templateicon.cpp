@@ -32,7 +32,8 @@
 namespace KIPIPrintImagesPlugin
 {
 
-TemplateIcon::TemplateIcon(int height, const QSize &template_size) : m_paper_size(template_size)
+TemplateIcon::TemplateIcon(int height, const QSize &template_size)
+            : m_paper_size(template_size)
 {
     m_icon_margin = 2;
     m_icon_size   = QSize( height-2*m_icon_margin, height-2*m_icon_margin );
@@ -54,8 +55,7 @@ TemplateIcon::~TemplateIcon( void )
 void TemplateIcon::begin( void )
  {
     // compute scaling values
-    m_icon_size.rwidth() = float(m_icon_size.height()) * float(m_paper_size.width()) / float(m_paper_size.height());
-
+    m_icon_size.rwidth() = (int)(float(m_icon_size.height()) * float(m_paper_size.width()) / float(m_paper_size.height()));
     scale_width          = float(m_icon_size.width())  / float(m_paper_size.width());
     scale_height         = float(m_icon_size.height()) / float(m_paper_size.height());
 
@@ -87,10 +87,10 @@ void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
     kDebug(51000) << "fillRect: y2=" << h << " => " << (y + h) * scale_height;
 #endif
 
-    painter->fillRect( m_icon_margin + x * scale_width,
-                       m_icon_margin + y * scale_height,
-                       w * scale_width,
-                       h * scale_height,
+    painter->fillRect( (int)(m_icon_margin + x * scale_width),
+                       (int)(m_icon_margin + y * scale_height),
+                       (int)(w * scale_width),
+                       (int)(h * scale_height),
                        color );
 }
 
@@ -101,8 +101,8 @@ void TemplateIcon::end( void )
 
     painter->drawRect( m_icon_margin,
                        m_icon_margin,
-                       m_paper_size.width()  * scale_width,
-                       m_paper_size.height() * scale_height );
+                       (int)(m_paper_size.width()  * scale_width),
+                       (int)(m_paper_size.height() * scale_height) );
 
     painter->end();
     icon = new QIcon( *pixmap );
