@@ -270,7 +270,7 @@
           </property>
           <column>
            <property name="text">
-            <string>File name</string>
+            <string>Filename</string>
            </property>
           </column>
           <column>

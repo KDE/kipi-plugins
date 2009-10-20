@@ -1803,7 +1803,7 @@ void Wizard::infopage_increaseCopies()
         if (!pixmap.save ( filename ))
         {
           KMessageBox::sorry ( this, 
-                               i18n ( "Could not Save file, please check your output entry." ) );
+                               i18n ( "Could not save file, please check your output entry." ) );
           break;
         }
       }
