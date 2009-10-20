@@ -1316,7 +1316,7 @@ void Wizard::infopage_increaseCopies()
       }
       // restore original photo list but preserve number of copies
       d->m_photos.clear();
-      d->m_photos.append(photoList);
+      d->m_photos << photoList;
       photoList.clear();
       kDebug(51000) << "(2) n. photos: " << d->m_photos.count();
       
