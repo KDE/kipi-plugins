@@ -89,7 +89,7 @@ IF(NOT WIN32 AND NOT APPLE)
     ELSE(DEPEND_PACKAGE_KSane)
         SET(KSANE_FOUND FALSE)
     ENDIF(DEPEND_PACKAGE_KSane)
-ENDIF(NOT APPLE)
+ENDIF(NOT WIN32 AND NOT APPLE)
 
 # ==================================================================================================
 # Log messages
