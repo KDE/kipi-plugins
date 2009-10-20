@@ -528,11 +528,11 @@ namespace KIPIPrintImagesPlugin
                     if( et.tagName() == "photo" )
                     {
                       float value = et.attribute("width","0").toFloat();
-                      int width  = (value == 0 ? size.width() : value)*scaleValue;
-                      value = et.attribute("height","0").toFloat();
-                      int height = (value == 0 ? size.height() : value)*scaleValue;
-                      int photoX = (et.attribute("x","0").toFloat()*scaleValue);
-                      int photoY = (et.attribute("y","0").toFloat()*scaleValue);
+                      int width   = (int)(value == 0 ? size.width() : value)*scaleValue;
+                      value       = et.attribute("height","0").toFloat();
+                      int height  = (int)(value == 0 ? size.height() : value)*scaleValue;
+                      int photoX  = (int)(et.attribute("x","0").toFloat()*scaleValue);
+                      int photoY  = (int)(et.attribute("y","0").toFloat()*scaleValue);
                       p->layouts.append( new QRect ( photoX,
                                                      photoY,
                                                      width, height) );
@@ -540,12 +540,12 @@ namespace KIPIPrintImagesPlugin
                     }
                     else if( et.tagName() == "photogrid" )
                     {
-                      float value = et.attribute("pageWidth","0").toFloat();
-                      int pageWidth  = (value == 0 ? size.width() : value)*scaleValue;
-                      value = et.attribute("pageHeight","0").toFloat();
-                      int pageHeight = (value == 0 ? size.height() : value)*scaleValue;
-                      int rows = et.attribute("rows","0").toInt();
-                      int columns = et.attribute("columns","0").toInt();
+                      float value    = et.attribute("pageWidth","0").toFloat();
+                      int pageWidth  = (int)(value == 0 ? size.width() : value)*scaleValue;
+                      value          = et.attribute("pageHeight","0").toFloat();
+                      int pageHeight = (int)(value == 0 ? size.height() : value)*scaleValue;
+                      int rows       = et.attribute("rows","0").toInt();
+                      int columns    = et.attribute("columns","0").toInt();
                       if (rows >0 && columns >0 )
                       {
                         createPhotoGrid(p, pageWidth,
