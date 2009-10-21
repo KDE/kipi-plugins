@@ -45,12 +45,6 @@
 
 #include <kconfig.h>
 
-// Local includes
-
-#include "playbackwidget.h"
-#include "slideplaybackwidget.h"
-#include "slideshowloader.h"
-
 class QColor;
 class QFont;
 class QTimer;
@@ -58,6 +52,9 @@ class QTimer;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
+class SlidePlaybackWidget;
+class PlaybackWidget;
+class SlideShowLoader;
 class SharedContainer;
 
 class SlideShowGL : public QGLWidget
@@ -132,14 +129,14 @@ private:
 
     // config ------------------
 
-    uint     m_cacheSize;
+    uint                              m_cacheSize;
 
     // -------------------------
 
 
     QMap<QString, EffectMethod>       m_effects;
 
-    QList<QPair<QString, int> > m_fileList;
+    QList<QPair<QString, int> >       m_fileList;
     QStringList                       m_commentsList;
     QTimer*                           m_timer;
     int                               m_fileIndex;
@@ -174,7 +171,7 @@ private:
     int                               m_deskWidth;
     int                               m_deskHeight;
 
-    SharedContainer*                       m_sharedData;
+    SharedContainer*                  m_sharedData;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

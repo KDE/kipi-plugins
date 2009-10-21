@@ -66,7 +66,9 @@
 // local includes.
 
 #include "commoncontainer.h"
-
+#include "playbackwidget.h"
+#include "slideplaybackwidget.h"
+#include "slideshowloader.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
