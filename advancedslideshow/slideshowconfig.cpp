@@ -208,7 +208,7 @@ void SlideShowConfig::readSettings()
 
     if (d->sharedData->soundtrackRememberPlaylist)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->interface->currentAlbum().path().path());
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().path().path());
         KConfigGroup soundGrp = d->config->group(groupName);
 
         // load and check playlist files, if valid, add to tracklist widget
@@ -286,7 +286,7 @@ void SlideShowConfig::saveSettings()
     // of older track entries
     if (d->sharedData->soundtrackRememberPlaylist && d->sharedData->soundtrackPlayListNeedsUpdate)
     {
-        QString groupName(objectName() + " Soundtrack " + d->sharedData->interface->currentAlbum().path().path());
+        QString groupName(objectName() + " Soundtrack " + d->sharedData->iface()->currentAlbum().path().path());
         KConfigGroup soundGrp = d->config->group(groupName);
         soundGrp.writeEntry("Tracks", d->sharedData->soundtrackUrls.toStringList());
     }

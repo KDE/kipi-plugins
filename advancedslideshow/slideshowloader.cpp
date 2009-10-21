@@ -130,7 +130,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); i++)
     {
         filePath = KUrl(m_pathList[i].first);
-        angle    = m_sharedData->interface->info(filePath).angle();
+        angle    = m_sharedData->iface()->info(filePath).angle();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                filePath, angle, m_swidth, m_sheight);
@@ -144,7 +144,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     {
         int toLoad = (m_currIndex - i) % m_pathList.count();
         filePath   = KUrl(m_pathList[toLoad].first);
-        angle      = m_sharedData->interface->info(filePath).angle();
+        angle      = m_sharedData->iface()->info(filePath).angle();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                filePath, angle, m_swidth, m_sheight);
@@ -203,7 +203,7 @@ void SlideShowLoader::next()
     m_threadLock->unlock();
 
     KUrl filePath = KUrl(m_pathList[newBorn].first);
-    int  angle    = m_sharedData->interface->info(filePath).angle();
+    int  angle    = m_sharedData->iface()->info(filePath).angle();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
                                            filePath, angle, m_swidth, m_sheight);
@@ -243,7 +243,7 @@ void SlideShowLoader::prev()
     m_threadLock->unlock();
 
     KUrl filePath = KUrl(m_pathList[newBorn].first);
-    int  angle    = m_sharedData->interface->info(filePath).angle();
+    int  angle    = m_sharedData->iface()->info(filePath).angle();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
                                            filePath, angle, m_swidth, m_sheight);
@@ -293,7 +293,7 @@ void SlideShowLoader::checkIsIn(int index)
     else
     {
         KUrl filePath = KUrl(m_pathList[index].first);
-        int  angle    = m_sharedData->interface->info(filePath).angle();
+        int  angle    = m_sharedData->iface()->info(filePath).angle();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
                                                filePath, angle, m_swidth, m_sheight);

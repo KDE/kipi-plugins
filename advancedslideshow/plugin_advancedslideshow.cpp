@@ -128,8 +128,8 @@ void Plugin_AdvancedSlideshow::slotActivate()
 
     m_sharedData = new SharedContainer();
 
+    m_sharedData->setIface(m_interface);
     m_sharedData->showSelectedFilesOnly = true;
-    m_sharedData->interface             = m_interface;
     m_sharedData->ImagesHasComments     = m_interface->hasFeature(KIPI::ImagesHasComments);
     m_sharedData->urlList               = m_urlList;
     KIPI::ImageCollection currSel       = m_interface->currentSelection();

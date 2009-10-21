@@ -74,7 +74,7 @@ MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
     // --------------------------------------------------------
 
     QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
-    m_ImagesFilesListBox                = new ImagesList(m_sharedData->interface, 
+    m_ImagesFilesListBox                = new ImagesList(m_sharedData->iface(),
                                                          m_ImagesFilesListBoxContainer,
                                                          KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
@@ -351,10 +351,10 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     KUrl url;
     url.setPath(pitem->url().path());
 
-    connect(m_sharedData->interface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
 
-    m_sharedData->interface->thumbnail(url, ICONSIZE);
+    m_sharedData->iface()->thumbnail(url, ICONSIZE);
 
     QModelIndex index = m_ImagesFilesListBox->listView()->currentIndex();
     if (index.isValid())
@@ -437,16 +437,16 @@ void MainDialog::slotSelection( void )
     if (m_selectedFilesButton->isChecked())
     {
         m_ImagesFilesListBox->listView()->clear();
-        urlList = m_sharedData->interface->currentSelection().images();
+        urlList = m_sharedData->iface()->currentSelection().images();
     }
     else if (m_allFilesButton->isChecked())
     {
-        KUrl currentPath = m_sharedData->interface->currentAlbum().path();
+        KUrl currentPath = m_sharedData->iface()->currentAlbum().path();
         QList<KIPI::ImageCollection> albumList;
-        albumList = m_sharedData->interface->allAlbums();
+        albumList        = m_sharedData->iface()->allAlbums();
 
         m_ImagesFilesListBox->listView()->clear();
-        urlList = m_sharedData->interface->currentAlbum().images();
+        urlList = m_sharedData->iface()->currentAlbum().images();
 
         QList<KIPI::ImageCollection>::iterator it;
         for (it = albumList.begin(); it != albumList.end(); ++it)
@@ -469,7 +469,7 @@ void MainDialog::slotSelection( void )
     m_ImagesFilesListBox->enableDragAndDrop(customize);
 }
 
-void MainDialog::slotPortfolioDurationChanged ( int )
+void MainDialog::slotPortfolioDurationChanged(int)
 {
     showNumberImages();
     emit totalTimeChanged( m_totalTime );
@@ -482,7 +482,8 @@ void MainDialog::slotThumbnail(const KUrl& /*url*/, const QPixmap& pix)
     else
         m_previewLabel->setPixmap(pix.scaled(ICONSIZE, ICONSIZE, Qt::KeepAspectRatio));
 
-    disconnect(m_sharedData->interface, 0, this, 0);
+    disconnect(m_sharedData->iface(), 0,
+               this, 0);
 }
 
 void MainDialog::slotPrintCommentsToggled( void )

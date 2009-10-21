@@ -42,8 +42,6 @@
 
 #include <libkipi/interface.h>
 
-using namespace KIPI;
-
 namespace KIPIAdvancedSlideshowPlugin
 {
 
@@ -60,9 +58,10 @@ public:
     SharedContainer();
     ~SharedContainer();
 
-public:
+    KIPI::Interface* iface() const;
+    void             setIface(KIPI::Interface* iface);
 
-    Interface*           interface;
+public:
 
     int                  delayMsMaxValue;
     int                  delayMsMinValue;
@@ -117,6 +116,10 @@ public:
     bool                 kbDisableFadeInOut;
     bool                 kbDisableCrossFade;
     uint                 cacheSize;
+
+private :
+
+    KIPI::Interface*     kipiIface;
 };
 
 // ----------------------------------------------------------

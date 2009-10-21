@@ -29,7 +29,8 @@ namespace KIPIAdvancedSlideshowPlugin
 
 SharedContainer::SharedContainer()
 {
-    interface                     = 0;
+    setIface(0);
+
     delayMsMaxValue               = 0;
     delayMsMinValue               = 0;
     delayMsLineStep               = 0;
@@ -75,6 +76,16 @@ SharedContainer::SharedContainer()
 SharedContainer::~SharedContainer()
 {
     delete captionFont;
+}
+
+KIPI::Interface* SharedContainer::iface() const
+{
+    return kipiIface;
+}
+
+void SharedContainer::setIface(KIPI::Interface* iface)
+{
+    kipiIface = iface;
 }
 
 // -------------------------------------------------------------

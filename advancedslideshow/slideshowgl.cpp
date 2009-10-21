@@ -601,8 +601,8 @@ void SlideShowGL::printProgress(QImage& layer)
 void SlideShowGL::printComments(QImage& layer)
 {
 //    QString comments = m_commentsList[m_fileIndex];
-    KIPI::ImageInfo info = m_sharedData->interface->info(m_imageLoader->currPath());
-    QString comments = info.description();
+    KIPI::ImageInfo info = m_sharedData->iface()->info(m_imageLoader->currPath());
+    QString comments     = info.description();
 
     int yPos = 5; // Text Y coordinate
 
