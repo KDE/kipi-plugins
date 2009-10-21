@@ -34,10 +34,6 @@
 #include <libkipi/plugin.h>
 #include <libkipi/interface.h>
 
-// Local includes
-
-#include "commoncontainer.h"
-
 class KAction;
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -51,11 +47,11 @@ class Plugin_AdvancedSlideshow : public KIPI::Plugin
 
 public:
 
-    Plugin_AdvancedSlideshow(QObject *parent, const QVariantList &args);
+    Plugin_AdvancedSlideshow(QObject *parent, const QVariantList& args);
     ~Plugin_AdvancedSlideshow();
 
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 public Q_SLOTS:
 

@@ -59,6 +59,7 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+#include "commoncontainer.h"
 
 using namespace KIPIAdvancedSlideshowPlugin;
 
