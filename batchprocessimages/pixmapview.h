@@ -16,10 +16,12 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef PIXMAPVIEW_H
 #define PIXMAPVIEW_H
 
-// Qt
+// Qt includes
+
 #include <QAbstractScrollArea>
 #include <QImage>
 
@@ -39,16 +41,19 @@ class PixmapView : public QAbstractScrollArea
     Q_OBJECT
 
 public:
+
     PixmapView(QWidget *parent = 0);
     ~PixmapView();
 
-    void setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction);
+    void setImage(const QString& ImagePath, const QString& tmpPath, bool cropAction);
     void setZoom(int zoomFactor);
 
 Q_SIGNALS:
+
     void wheelChanged(int delta);
 
 protected:
+
     void contentsWheelEvent(QWheelEvent * e);
     void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent * e);
@@ -62,6 +67,13 @@ private Q_SLOTS:
     void slotPreviewProcessFinished();
 
 private:
+
+    void PreviewCal(const QString& ImagePath, const QString& tmpPath);
+    void updateScrollBars();
+    void updateView();
+
+private:
+
     QPixmap     *m_pix;
     QImage       m_img;
 
@@ -78,12 +90,8 @@ private:
     bool         m_cropAction;
 
     int          m_zoomFactor;
-
-    void PreviewCal(const QString &ImagePath, const QString &tmpPath);
-    void updateScrollBars();
-    void updateView();
 };
 
-} // namespace
+} // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* PIXMAPVIEW_H */

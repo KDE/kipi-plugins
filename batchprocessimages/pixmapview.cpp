@@ -16,6 +16,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #include "pixmapview.moc"
 
 // C ANSI includes
@@ -24,6 +25,10 @@ extern "C"
 {
 #include <unistd.h>
 }
+
+// C++ includes
+
+#include <cstdlib>
 
 // Qt includes
 
@@ -52,12 +57,11 @@ extern "C"
 namespace KIPIBatchProcessImagesPlugin
 {
 
-
 PixmapView::PixmapView(QWidget *parent)
-        : QAbstractScrollArea(parent)
-        , m_zoomFactor(0)
+          : QAbstractScrollArea(parent),
+            m_zoomFactor(0)
 {
-    m_pix = NULL;
+    m_pix          = NULL;
     m_validPreview = false;
     setMinimumSize(QSize(300, 300));
     horizontalScrollBar()->setLineStep(1);
@@ -72,19 +76,22 @@ PixmapView::~PixmapView()
     delete m_pix;
 }
 
-void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath, bool cropAction)
+void PixmapView::setImage(const QString& ImagePath, const QString& tmpPath, bool cropAction)
 {
-    m_cropAction = cropAction;
-
+    m_cropAction      = cropAction;
     m_previewFileName = tmpPath + "/" + QString::number(getpid()) + "-"
                         + QString::number(random()) + "PreviewImage.PNG";
 
     if (m_cropAction == true)
         PreviewCal(ImagePath, tmpPath);
-    else {
+    else
+    {
         if (m_img.load(ImagePath) == false)
+    	{
             PreviewCal(ImagePath, tmpPath);
-        else {
+	}
+        else 
+        {
             if (!m_pix) m_pix = new QPixmap(m_img.width(), m_img.height());
             m_w = m_img.width();
             m_h = m_img.height();
@@ -96,7 +103,7 @@ void PixmapView::setImage(const QString &ImagePath, const QString &tmpPath, bool
     }
 }
 
-void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/)
+void PixmapView::PreviewCal(const QString& ImagePath, const QString& /*tmpPath*/)
 {
     m_pix = new QPixmap(300, 300);
     QPainter p;
@@ -127,7 +134,8 @@ void PixmapView::PreviewCal(const QString &ImagePath, const QString &/*tmpPath*/
     connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
 
     m_PreviewProc->start();
-    if (!m_PreviewProc->waitForStarted()) {
+    if (!m_PreviewProc->waitForStarted())
+    {
         delete m_PreviewProc;
         KMessageBox::error(this, i18n("Cannot start 'convert' program from 'ImageMagick' package;\n"
                                       "please check your installation."));
@@ -146,8 +154,10 @@ void PixmapView::slotPreviewProcessFinished()
     int ValRet = m_PreviewProc->exitCode();
     kDebug(51000) << "Convert exit (" << ValRet << ")" ;
 
-    if (ValRet == 0) {
-        if (m_img.load(m_previewFileName) == true) {
+    if (ValRet == 0)
+    {
+        if (m_img.load(m_previewFileName) == true)
+        {
             if (!m_pix) m_pix = new QPixmap(300, 300);
             m_w = m_img.width();
             m_h = m_img.height();
@@ -158,7 +168,9 @@ void PixmapView::slotPreviewProcessFinished()
             KUrl deletePreviewImage(m_previewFileName);
 
             KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
-        } else {
+        }
+        else
+        {
             m_pix = new QPixmap(viewport()->size());
             QPainter p;
             p.begin(m_pix);
@@ -175,16 +187,17 @@ void PixmapView::slotPreviewProcessFinished()
 
 void PixmapView::setZoom(int zoomFactor)
 {
-    if (m_zoomFactor == zoomFactor) {
+    if (m_zoomFactor == zoomFactor)
+    {
         return;
     }
     m_zoomFactor = zoomFactor;
-    if (!m_validPreview) {
+    if (!m_validPreview)
+    {
         return;
     }
     updateView();
 }
-
 
 void PixmapView::updateView()
 {
@@ -218,7 +231,8 @@ void PixmapView::contentsWheelEvent(QWheelEvent * e)
 
 void PixmapView::mousePressEvent(QMouseEvent * e)
 {
-    if (e->button() == Qt::LeftButton) {
+    if (e->button() == Qt::LeftButton)
+    {
         viewport()->setCursor(Qt::ClosedHandCursor);
         m_dragPos = e->pos();
     }
@@ -231,7 +245,8 @@ void PixmapView::mouseReleaseEvent(QMouseEvent * /*e*/)
 
 void PixmapView::mouseMoveEvent(QMouseEvent * e)
 {
-    if (e->state() == Qt::LeftButton) {
+    if (e->state() == Qt::LeftButton)
+    {
         QPoint delta = e->pos() - m_dragPos;
         horizontalScrollBar()->setValue(
             horizontalScrollBar()->value() - delta.x());
@@ -247,5 +262,4 @@ void PixmapView::updateScrollBars()
     verticalScrollBar()->setMaximum(m_pix->height() - viewport()->height());
 }
 
-
-} // namespace
+} // namespace KIPIBatchProcessImagesPlugin
