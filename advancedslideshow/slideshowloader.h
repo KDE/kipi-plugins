@@ -52,7 +52,7 @@ class LoadThread : public QThread
 
 public:
 
-    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path,
+    LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
                const int angle, int width, int height);
     ~LoadThread();
 
@@ -72,6 +72,8 @@ private:
     int           m_sheight;
 };
 
+// ----------------------------------------------------------------------------
+
 typedef QMap<KUrl, LoadThread*> LoadingThreads;
 
 class SlideShowLoader
@@ -79,7 +81,7 @@ class SlideShowLoader
 
 public:
 
-    SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
+    SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
                     SharedData* sharedData, int beginAtIndex = 0);
     ~SlideShowLoader();
 

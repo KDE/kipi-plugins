@@ -42,6 +42,10 @@
 
 // LibKIPI includes
 
+#include <libkipi/interface.h>
+
+// local includes
+
 #include "kpaboutdata.h"
 
 namespace KIPIAdvancedSlideshowPlugin

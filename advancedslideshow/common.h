@@ -38,10 +38,6 @@
 
 #include <Phonon/VolumeSlider>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "maindialog.h"
@@ -49,6 +45,11 @@
 #include "soundtrackdialog.h"
 #include "advanceddialog.h"
 #include "playbackwidget.h"
+
+namespace KIPI
+{
+    class Interface;
+}
 
 namespace KIPIAdvancedSlideshowPlugin
 {

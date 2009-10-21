@@ -20,6 +20,10 @@
  *
  * ============================================================ */
 
+// libkipi includes.
+
+#include <libkipi/interface.h>
+
 // Local includes.
 
 #include "common.h"

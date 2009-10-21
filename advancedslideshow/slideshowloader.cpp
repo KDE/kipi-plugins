@@ -44,6 +44,10 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
+// Libkipi includes
+
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "common.h"
@@ -51,16 +55,16 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl path,
+LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
                        const int angle, int width, int height)
           : QThread()
 {
-    m_path          = path;
-    m_angle         = angle;
-    m_swidth        = width;
-    m_sheight       = height;
-    m_imageLock     = imageLock;
-    m_loadedImages  = loadedImages;
+    m_path         = path;
+    m_angle        = angle;
+    m_swidth       = width;
+    m_sheight      = height;
+    m_imageLock    = imageLock;
+    m_loadedImages = loadedImages;
 }
 
 LoadThread::~LoadThread()
@@ -106,7 +110,7 @@ void LoadThread::run()
 
 // -----------------------------------------------------------------------------------------
 
-SlideShowLoader::SlideShowLoader(FileList &pathList, uint cacheSize, int width, int height,
+SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
                                  SharedData* sharedData, int beginAtIndex)
 {
     m_currIndex      = beginAtIndex;
@@ -172,7 +176,6 @@ SlideShowLoader::~SlideShowLoader()
     delete m_loadingThreads;
     delete m_imageLock;
     delete m_threadLock;
-
 }
 
 void SlideShowLoader::next()

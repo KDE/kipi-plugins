@@ -53,6 +53,11 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
+// libkipi includes
+
+#include <libkipi/imageinfo.h>
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "common.h"
@@ -62,8 +67,8 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SlideShow::SlideShow( const FileList& fileList, const QStringList& commentsList, SharedData* sharedData )
-         : QWidget( 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint )
+SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedData* sharedData)
+         : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
