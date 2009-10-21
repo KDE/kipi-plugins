@@ -38,7 +38,7 @@ class KAction;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
-    class SharedData;
+    class SharedContainer;
 }
 
 class Plugin_AdvancedSlideshow : public KIPI::Plugin
@@ -68,7 +68,7 @@ private:
     KIPI::Interface*                         m_interface;
     KUrl::List                               m_urlList;
 
-    KIPIAdvancedSlideshowPlugin::SharedData* m_sharedData;
+    KIPIAdvancedSlideshowPlugin::SharedContainer* m_sharedData;
 };
 
 #endif  // PLUGIN_ADVANCEDSLIDESHOW_H

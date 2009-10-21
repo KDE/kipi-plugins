@@ -44,14 +44,14 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class PlaybackWidget;
 
-class SharedData;
+class SharedContainer;
 
 class SoundtrackPreview : public KDialog
 {
 
 public :
 
-    SoundtrackPreview(QWidget*, KUrl::List&, SharedData*);
+    SoundtrackPreview(QWidget*, KUrl::List&, SharedContainer*);
     ~SoundtrackPreview();
 
 private :
@@ -67,7 +67,7 @@ class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
 
 public:
 
-    SoundtrackDialog(QWidget* parent, SharedData* sharedData);
+    SoundtrackDialog(QWidget* parent, SharedContainer* sharedData);
     ~SoundtrackDialog();
 
     void readSettings();
@@ -99,7 +99,7 @@ private:
 
     KUrl::List              m_urlList;
     int                     m_currIndex;
-    SharedData*             m_sharedData;
+    SharedContainer*             m_sharedData;
     QTime                   m_totalTime;
     QTime                   m_imageTime;
     QMap<KUrl, QTime>*      m_tracksTime;

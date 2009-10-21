@@ -41,7 +41,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedData* sharedData)
+PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedContainer* sharedData)
               : QWidget(parent)
 {
     setupUi(this);

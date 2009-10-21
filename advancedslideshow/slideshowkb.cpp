@@ -158,7 +158,7 @@ Image::~Image()
 // -------------------------------------------------------------------------
 
 SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, SharedData* sharedData)
+                         const QStringList& commentsList, SharedContainer* sharedData)
         : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);

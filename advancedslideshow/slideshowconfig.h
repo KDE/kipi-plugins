@@ -31,7 +31,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class SlideShowConfigPrivate;
 
@@ -41,7 +41,7 @@ class SlideShowConfig : public KPageDialog
 
 public:
 
-    SlideShowConfig (QWidget *parent, SharedData* sharedData);
+    SlideShowConfig (QWidget *parent, SharedContainer* sharedData);
     ~SlideShowConfig();
 
 Q_SIGNALS:

@@ -31,7 +31,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SharedData::SharedData()
+SharedContainer::SharedContainer()
 {
     interface                     = 0;
     delayMsMaxValue               = 0;
@@ -76,7 +76,7 @@ SharedData::SharedData()
     page_advanced                 = 0;
 }
 
-SharedData::~SharedData()
+SharedContainer::~SharedContainer()
 {
     delete captionFont;
 }

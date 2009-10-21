@@ -47,7 +47,7 @@ class ImagesList;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class MainDialog : public QWidget, Ui::MainDialog
 {
@@ -55,7 +55,7 @@ class MainDialog : public QWidget, Ui::MainDialog
 
 public:
 
-    MainDialog(QWidget* parent, SharedData* sharedData);
+    MainDialog(QWidget* parent, SharedContainer* sharedData);
     ~MainDialog();
 
     void readSettings();
@@ -91,7 +91,7 @@ private:
 
 private:
 
-    SharedData*              m_sharedData;
+    SharedContainer*              m_sharedData;
     KIO::PreviewJob*         m_thumbJob;
     QTime                    m_totalTime;
     QPixmap                  m_noPreviewPixmap;

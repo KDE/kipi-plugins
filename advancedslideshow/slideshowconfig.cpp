@@ -65,11 +65,11 @@ public:
     }
 
     KIPIPlugins::KPAboutData* about;
-    SharedData*               sharedData;
+    SharedContainer*          sharedData;
     KConfig*                  config;
 };
 
-SlideShowConfig::SlideShowConfig (QWidget *parent, SharedData* sharedData)
+SlideShowConfig::SlideShowConfig (QWidget *parent, SharedContainer* sharedData)
                : KPageDialog(parent), d(new SlideShowConfigPrivate)
 {
     setObjectName("Advanced Slideshow Settings");

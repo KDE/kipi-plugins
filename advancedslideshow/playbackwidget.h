@@ -46,7 +46,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 {
@@ -54,7 +54,7 @@ class PlaybackWidget : public QWidget, public Ui::PlaybackWidget
 
 public:
 
-    PlaybackWidget(QWidget*, KUrl::List&, SharedData* sharedData);
+    PlaybackWidget(QWidget*, KUrl::List&, SharedContainer* sharedData);
     ~PlaybackWidget();
 
     void enqueue(const KUrl::List);
@@ -87,7 +87,7 @@ private:
 
 private:
 
-    SharedData*             m_sharedData;
+    SharedContainer*             m_sharedData;
     KUrl::List              m_urlList;
     int                     m_currIndex;
     bool                    m_muted;

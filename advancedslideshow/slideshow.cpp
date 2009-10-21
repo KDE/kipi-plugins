@@ -67,7 +67,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedData* sharedData)
+SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* sharedData)
          : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);

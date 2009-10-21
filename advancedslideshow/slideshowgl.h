@@ -58,7 +58,7 @@ class QTimer;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class SlideShowGL : public QGLWidget
 {
@@ -67,7 +67,7 @@ class SlideShowGL : public QGLWidget
 public:
 
     SlideShowGL(const QList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, SharedData* sharedData);
+                const QStringList& commentsList, SharedContainer* sharedData);
     ~SlideShowGL();
 
     void registerEffects();
@@ -174,7 +174,7 @@ private:
     int                               m_deskWidth;
     int                               m_deskHeight;
 
-    SharedData*                       m_sharedData;
+    SharedContainer*                       m_sharedData;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

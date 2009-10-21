@@ -30,7 +30,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class AdvancedDialog : public QWidget, Ui::AdvancedDialog
 {
@@ -38,7 +38,7 @@ class AdvancedDialog : public QWidget, Ui::AdvancedDialog
 
 public:
 
-    AdvancedDialog(QWidget* parent, SharedData* sharedData);
+    AdvancedDialog(QWidget* parent, SharedContainer* sharedData);
     ~AdvancedDialog();
 
     void readSettings();
@@ -55,7 +55,7 @@ private Q_SLOTS:
 
 private:
 
-    SharedData* m_sharedData;
+    SharedContainer* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

@@ -66,7 +66,7 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-MainDialog::MainDialog(QWidget* parent, SharedData* sharedData)
+MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
           : QWidget(parent)
 {
     setupUi(this);

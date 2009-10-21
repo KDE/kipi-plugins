@@ -53,7 +53,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview(QWidget* parent, KUrl::List& urls, SharedData* sharedData)
+SoundtrackPreview::SoundtrackPreview(QWidget* parent, KUrl::List& urls, SharedContainer* sharedData)
                  : KDialog(parent)
 {
     setModal(true);
@@ -70,7 +70,7 @@ SoundtrackPreview::~SoundtrackPreview()
 
 // ------------------------------------------------------------------------------------
 
-SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedData* sharedData)
+SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedContainer* sharedData)
                 : QWidget(parent)
 {
     setupUi(this);
@@ -556,7 +556,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
         return;
     }
 
-    // Update SharedData from interface
+    // Update SharedContainer from interface
     saveSettings();
 
     QPointer<SoundtrackPreview> preview = new SoundtrackPreview(this, urlList, m_sharedData);

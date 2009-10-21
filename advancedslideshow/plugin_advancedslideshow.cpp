@@ -120,7 +120,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
         return;
     }
 
-    m_sharedData = new SharedData();
+    m_sharedData = new SharedContainer();
 
     m_sharedData->showSelectedFilesOnly = true;
     m_sharedData->interface             = m_interface;

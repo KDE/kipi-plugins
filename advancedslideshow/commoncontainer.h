@@ -59,13 +59,13 @@ class CaptionDialog;
 class SoundtrackDialog;
 class AdvancedDialog;
 
-class SharedData
+class SharedContainer
 {
 
 public:
 
-    SharedData();
-    ~SharedData();
+    SharedContainer();
+    ~SharedContainer();
 
 public:
 

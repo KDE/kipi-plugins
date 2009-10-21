@@ -37,7 +37,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-AdvancedDialog::AdvancedDialog(QWidget* parent, SharedData* sharedData)
+AdvancedDialog::AdvancedDialog(QWidget* parent, SharedContainer* sharedData)
               : QWidget(parent)
 {
     setupUi(this);

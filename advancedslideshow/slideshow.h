@@ -50,7 +50,7 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class SlideShowLoader;
 class SlidePlaybackWidget;
-class SharedData;
+class SharedContainer;
 class PlaybackWidget;
 
 class SlideShow : public QWidget
@@ -61,7 +61,7 @@ class SlideShow : public QWidget
 
 public:
 
-    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedData* sharedData);
+    SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* sharedData);
     ~SlideShow();
 
     void registerEffects();
@@ -127,7 +127,7 @@ private:
 
 private:
 
-    SharedData*  m_sharedData;
+    SharedContainer*  m_sharedData;
 
     uint         m_cacheSize;
 

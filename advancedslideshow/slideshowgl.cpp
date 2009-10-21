@@ -73,7 +73,7 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
-                         const QStringList& commentsList, SharedData* sharedData)
+                         const QStringList& commentsList, SharedContainer* sharedData)
            : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);

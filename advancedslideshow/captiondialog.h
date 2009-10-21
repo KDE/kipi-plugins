@@ -30,7 +30,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SharedData;
+class SharedContainer;
 
 class CaptionDialog : public QWidget, Ui::CaptionDialog
 {
@@ -38,7 +38,7 @@ class CaptionDialog : public QWidget, Ui::CaptionDialog
 
 public:
 
-    CaptionDialog(QWidget* parent, SharedData* sharedData);
+    CaptionDialog(QWidget* parent, SharedContainer* sharedData);
     ~CaptionDialog();
 
     void readSettings();
@@ -52,7 +52,7 @@ private Q_SLOTS:
 
 private:
 
-    SharedData* m_sharedData;
+    SharedContainer* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

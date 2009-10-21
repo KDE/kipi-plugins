@@ -111,7 +111,7 @@ void LoadThread::run()
 // -----------------------------------------------------------------------------------------
 
 SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, int height,
-                                 SharedData* sharedData, int beginAtIndex)
+                                 SharedContainer* sharedData, int beginAtIndex)
 {
     m_currIndex      = beginAtIndex;
     m_cacheSize      = cacheSize;

@@ -140,7 +140,7 @@ class SlideShowKB : public QGLWidget
 public:
 
     SlideShowKB(const QList<QPair<QString, int> >& fileList,
-                const QStringList& commentsList, SharedData* sharedData);
+                const QStringList& commentsList, SharedContainer* sharedData);
 
     ~SlideShowKB();
 
@@ -212,7 +212,7 @@ private:
     bool                m_disableCrossFade;
     unsigned            m_forceFrameRate;
 
-    SharedData*         m_sharedData;
+    SharedContainer*         m_sharedData;
 
     PlaybackWidget*     m_playbackWidget;
 
