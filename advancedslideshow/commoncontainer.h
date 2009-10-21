@@ -58,6 +58,7 @@ class MainDialog;
 class CaptionDialog;
 class SoundtrackDialog;
 class AdvancedDialog;
+
 class SharedData
 {
 
