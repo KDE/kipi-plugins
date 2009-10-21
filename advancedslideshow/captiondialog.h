@@ -24,6 +24,7 @@
 #define CAPTIONDIALOG_H
 
 // Local includes
+
 #include "common.h"
 #include "ui_captiondialog.h"
 
@@ -37,6 +38,7 @@ class CaptionDialog : public QWidget, Ui::CaptionDialog
     Q_OBJECT
 
 public:
+
     CaptionDialog(QWidget* parent, SharedData* sharedData);
     ~CaptionDialog();
 
@@ -44,12 +46,14 @@ public:
     void saveSettings();
 
 private Q_SLOTS:
-    void slotCommentsFontColorChanged( void );
-    void slotCommentsBgColorChanged( void );
-    void slotTransparentBgToggled( void );
+
+    void slotCommentsFontColorChanged();
+    void slotCommentsBgColorChanged();
+    void slotTransparentBgToggled();
 
 private:
-    SharedData*       m_sharedData;
+
+    SharedData* m_sharedData;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin
