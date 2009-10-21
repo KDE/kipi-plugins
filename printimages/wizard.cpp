@@ -1201,7 +1201,7 @@ void Wizard::infopage_imagePreview()
     if (d->m_photos.size())
     {
       TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
-      d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
+      d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(), Qt::KeepAspectRatio)) );
     }
 }
 
