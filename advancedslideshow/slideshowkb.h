@@ -49,7 +49,6 @@
 
 // Local includes
 
-#include "commoncontainer.h"
 #include "kbeffect.h"
 #include "playbackwidget.h"
 #include "screenproperties.h"

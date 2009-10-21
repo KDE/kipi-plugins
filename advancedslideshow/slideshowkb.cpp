@@ -54,6 +54,7 @@
 
 // Local includes
 
+#include "commoncontainer.h"
 #include "imageloadthread.h"
 
 namespace KIPIAdvancedSlideshowPlugin
