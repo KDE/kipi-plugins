@@ -30,6 +30,7 @@
 // Qt includes
 
 #include <QPointer>
+#include <QTime>
 
 // KDE includes
 
@@ -38,6 +39,7 @@
 #include <kfiledialog.h>
 #include <kicon.h>
 #include <kmessagebox.h>
+#include <kpagewidget.h>
 
 // Phonon includes
 
@@ -48,6 +50,7 @@
 // Local includes
 
 #include "playbackwidget.h"
+#include "maindialog.h"
 #include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin

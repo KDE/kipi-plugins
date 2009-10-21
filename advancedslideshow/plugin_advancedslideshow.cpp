@@ -25,9 +25,15 @@
 #include "plugin_advancedslideshow.h"
 #include "plugin_advancedslideshow.moc"
 
+// C ANSI includes
+
+extern "C"
+{
+#include <sys/time.h>
+}
+
 // C++ includes
 
-#include <ctime>
 #include <cstdlib>
 
 // Qt includes

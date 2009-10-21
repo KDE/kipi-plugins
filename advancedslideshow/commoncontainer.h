@@ -38,14 +38,6 @@
 
 #include <Phonon/VolumeSlider>
 
-// Local includes
-
-#include "maindialog.h"
-#include "captiondialog.h"
-#include "soundtrackdialog.h"
-#include "advanceddialog.h"
-#include "playbackwidget.h"
-
 namespace KIPI
 {
     class Interface;

@@ -60,6 +60,7 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+#include "advanceddialog.h"
 
 using namespace KIPIPlugins;
 

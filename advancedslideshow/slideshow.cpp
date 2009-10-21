@@ -63,6 +63,7 @@
 #include "commoncontainer.h"
 #include "slideplaybackwidget.h"
 #include "slideshowloader.h"
+#include "playbackwidget.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

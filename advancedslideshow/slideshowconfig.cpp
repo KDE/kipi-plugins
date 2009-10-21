@@ -48,6 +48,10 @@
 
 #include "kpaboutdata.h"
 #include "commoncontainer.h"
+#include "maindialog.h"
+#include "captiondialog.h"
+#include "soundtrackdialog.h"
+#include "advanceddialog.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
