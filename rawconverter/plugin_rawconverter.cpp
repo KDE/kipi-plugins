@@ -67,13 +67,13 @@
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_RawConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 
-Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList &)
+Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList&)
                    : KIPI::Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
     kDebug(51001) << "Plugin_RawConverter plugin loaded";
 }
 
-void Plugin_RawConverter::setup( QWidget* widget )
+void Plugin_RawConverter::setup(QWidget* widget)
 {
     m_singleDlg = 0;
     m_batchDlg  = 0;
@@ -228,7 +228,7 @@ void Plugin_RawConverter::slotActivateBatch()
     m_batchDlg->addItems(items);
 }
 
-KIPI::Category Plugin_RawConverter::category( KAction* action ) const
+KIPI::Category Plugin_RawConverter::category(KAction* action) const
 {
     if ( action == m_singleAction )
        return KIPI::ToolsPlugin;

@@ -47,11 +47,11 @@ class Plugin_RawConverter : public KIPI::Plugin
 
 public:
 
-    Plugin_RawConverter(QObject *parent, const QVariantList &args);
+    Plugin_RawConverter(QObject *parent, const QVariantList& args);
     ~Plugin_RawConverter();
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* widget );
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget* widget);
 
 private:
 
