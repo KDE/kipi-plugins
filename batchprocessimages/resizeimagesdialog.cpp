@@ -25,11 +25,12 @@
 
 // Qt includes
 
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QImage>
-#include <QLabel>
-#include <QPushButton>
+#include <qgroupbox.h>
+#include <qcheckbox.h>
+#include <qimage.h>
+#include <qlabel.h>
+#include <qpushbutton.h>
+#include <qlist.h>
 
 // KDE includes
 
@@ -59,23 +60,106 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-const QString ResizeImagesDialog::RCNAME = "kipirc";
-const QString ResizeImagesDialog::RC_GROUP_NAME = "ResizeImages Settings";
+class ResizeTool
+{
+public:
+
+    ResizeTool(QString localizedName, ResizeCommandBuilder *commandBuilder,
+                    ResizeOptionsBaseDialog *dialog) :
+        localizedName(localizedName), commandBuilder(commandBuilder), dialog(
+                        dialog)
+    {
+    }
+
+    QString localizedName;
+    ResizeCommandBuilder *commandBuilder;
+    ResizeOptionsBaseDialog *dialog;
+};
+
+class ResizeImagesDialogPriv
+{
+
+public:
+
+    const static QString RCNAME;
+    const static QString RC_GROUP_NAME;
+
+    ResizeImagesDialogPriv(ResizeImagesDialog *dialog) :
+        m_dialog(dialog)
+    {
+    }
+
+    /**
+     * Utility method that fills the type mapping. C defines the command builder
+     * to use for the mapping, D the option dialog for this resize type.
+     *
+     * @param localizedName localized name of the mapping
+     */
+    template<class C, class D>
+    void addResizeType(QString localizedName)
+    {
+        C *commandBuilder = new C(m_dialog);
+        D *optionDialog = new D(m_dialog, commandBuilder);
+        optionDialog->layout();
+        // somehow gcc needs these casts. Otherwise the templates will not work
+        resizeTools << ResizeTool(localizedName,
+                        dynamic_cast<ResizeCommandBuilder*> (commandBuilder),
+                        dynamic_cast<ResizeOptionsBaseDialog*> (optionDialog));
+    }
+
+    /**
+     * Returns the resize tool with the given localized name.
+     *
+     * @param name localized name of the resize tool
+     * @return tool with that name or if there is no such tool a default one
+     */
+    ResizeTool getResizeToolByName(QString name)
+    {
+        foreach(ResizeTool tool, resizeTools)
+        {
+            if (tool.localizedName == name)
+            {
+                return tool;
+            }
+        }
+        kError(51000) << "Could not find a resize tool with localized name '"
+                        << name << "'. Using first one.";
+        return resizeTools[0];
+    }
+
+    /**
+     * Maps the localized resize type names to their command builders and option
+     * dialogs.
+     */
+    QList<ResizeTool> resizeTools;
+
+    KIPIPlugins::KPAboutData *aboutData;
+
+private:
+    ResizeImagesDialog *m_dialog;
+
+};
+
+const QString ResizeImagesDialogPriv::RCNAME = "kipirc";
+const QString ResizeImagesDialogPriv::RC_GROUP_NAME = "ResizeImages Settings";
+
+typedef QList<ResizeTool>::iterator ResizeToolIterator;
 
 ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
-                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent)
+                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent),
+                    d(new ResizeImagesDialogPriv(this))
 {
 
     kDebug(51000) << "Creating resize dialog";
 
     // set up resize types
-    addResizeType<OneDimResizeCommandBuilder, OneDimResizeOptionsDialog>(i18n("Proportional (1 dim.)"));
-    addResizeType<TwoDimResizeCommandBuilder, TwoDimResizeOptionsDialog>(i18n("Proportional (2 dim.)"));
-    addResizeType<NonProportionalResizeCommandBuilder, NonProportionalResizeOptionsDialog>(i18n("Non-Proportional"));
-    addResizeType<PrintPrepareResizeCommandBuilder, PrintPrepareResizeOptionsDialog>(i18n("Prepare to Print"));
+    d->addResizeType<OneDimResizeCommandBuilder, OneDimResizeOptionsDialog>(i18n("Proportional (1 dim.)"));
+    d->addResizeType<TwoDimResizeCommandBuilder, TwoDimResizeOptionsDialog>(i18n("Proportional (2 dim.)"));
+    d->addResizeType<NonProportionalResizeCommandBuilder, NonProportionalResizeOptionsDialog>(i18n("Non-Proportional"));
+    d->addResizeType<PrintPrepareResizeCommandBuilder, PrintPrepareResizeOptionsDialog>(i18n("Prepare to Print"));
 
     // About data and help button.
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch resize images"),
+    d->aboutData = new KIPIPlugins::KPAboutData(ki18n("Batch resize images"),
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to batch-resize images.\n"
@@ -83,14 +167,14 @@ ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* inte
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+    d->aboutData->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
                        "caulier dot gilles at gmail dot com");
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+    d->aboutData->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
                        "aurelien dot gateau at free dot fr");
-    m_about->addAuthor(ki18n("Johannes Wienke"), ki18n("Maintainer"),
+    d->aboutData->addAuthor(ki18n("Johannes Wienke"), ki18n("Maintainer"),
                            "languitar at semipol dot de");
 
-    DialogUtils::setupHelpButton(this, m_about);
+    DialogUtils::setupHelpButton(this, d->aboutData);
 
     //---------------------------------------------
 
@@ -100,15 +184,18 @@ ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* inte
 
     setOptionBoxTitle(i18n("Image Resizing Options"));
 
+    // insert resize tools in drop down box
     m_labelType->setText(i18n("Type:"));
-    m_Type->insertItems(0, QStringList(m_resizeTypeMapping.keys()));
-
-    QString whatsThis = i18n("<p>Select here the image-resize type.</p>");
-    for (QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> >::iterator it =
-                    m_resizeTypeMapping.begin(); it
-                    != m_resizeTypeMapping.end(); ++it)
+    foreach(ResizeTool tool, d->resizeTools)
     {
-        whatsThis += it.value().second->getWhatsThis();
+        m_Type->addItem(tool.localizedName);
+    }
+
+    // build what's this text
+    QString whatsThis = i18n("<p>Select here the image-resize type.</p>");
+    foreach(ResizeTool tool, d->resizeTools)
+    {
+        whatsThis += tool.dialog->getWhatsThis();
     }
     m_Type->setWhatsThis(whatsThis);
 
@@ -122,21 +209,8 @@ ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* inte
 
 ResizeImagesDialog::~ResizeImagesDialog()
 {
-    delete m_about;
-}
-
-template<class C, class D>
-void ResizeImagesDialog::addResizeType(QString localizedName)
-{
-
-    C *commandBuilder = new C(this);
-    D *optionDialog = new D(this, commandBuilder);
-    optionDialog->layout();
-    // somehow gcc needs these casts. Otherwise the templates will not work
-    m_resizeTypeMapping.insert(localizedName, qMakePair(
-                    dynamic_cast<ResizeCommandBuilder*> (commandBuilder),
-                    dynamic_cast<ResizeOptionsBaseDialog*> (optionDialog)));
-
+    delete d->aboutData;
+    delete d;
 }
 
 void ResizeImagesDialog::slotHelp(void)
@@ -146,36 +220,22 @@ void ResizeImagesDialog::slotHelp(void)
 
 void ResizeImagesDialog::slotOptionsClicked(void)
 {
-
-    QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> >::iterator
-                    it = m_resizeTypeMapping.find(m_Type->currentText());
-    if (it == m_resizeTypeMapping.end())
-    {
-        kError(51000)
-                        << "Could not find a mapping from the selected resize type "
-                        << "to the appropriate data classes.";
-        return;
-    }
-
-    ResizeOptionsBaseDialog *dialog = it->second;
-    dialog->exec();
-
+    d->getResizeToolByName(m_Type->currentText()).dialog->exec();
 }
 
 void ResizeImagesDialog::readSettings(void)
 {
     // Read all settings from configuration file.
 
-    KConfig config(RCNAME);
-    KConfigGroup group = config.group(RC_GROUP_NAME);
+    KConfig config(ResizeImagesDialogPriv::RCNAME);
+    KConfigGroup group = config.group(ResizeImagesDialogPriv::RC_GROUP_NAME);
 
     m_Type->setCurrentIndex(group.readEntry("ResizeType", 0));
 
-    for (QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> >::iterator
-                    it = m_resizeTypeMapping.begin(); it
-                    != m_resizeTypeMapping.end(); ++it)
+    foreach(ResizeTool tool, d->resizeTools)
     {
-        it.value().second->readSettings(RCNAME, RC_GROUP_NAME);
+        tool.dialog->readSettings(ResizeImagesDialogPriv::RCNAME,
+                        ResizeImagesDialogPriv::RC_GROUP_NAME);
     }
 
     readCommonSettings(group);
@@ -190,11 +250,10 @@ void ResizeImagesDialog::saveSettings(void)
 
     group.writeEntry("ResizeType", m_Type->currentItem());
 
-    for (QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> >::iterator
-                    it = m_resizeTypeMapping.begin(); it
-                    != m_resizeTypeMapping.end(); ++it)
+    foreach(ResizeTool tool, d->resizeTools)
     {
-        it.value().second->saveSettings(RCNAME, RC_GROUP_NAME);
+        tool.dialog->saveSettings(ResizeImagesDialogPriv::RCNAME,
+                        ResizeImagesDialogPriv::RC_GROUP_NAME);
     }
 
     saveCommonSettings(group);
@@ -203,21 +262,9 @@ void ResizeImagesDialog::saveSettings(void)
 void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item,
                                      const QString& albumDest, bool)
 {
-
-    QMap<QString, QPair<ResizeCommandBuilder*, ResizeOptionsBaseDialog*> >::iterator
-                    it = m_resizeTypeMapping.find(m_Type->currentText());
-    if (it == m_resizeTypeMapping.end())
-    {
-        kError(51000) << "Could not find a mapping from the selected resize type "
-                        << "to the appropriate data classes.";
-        // TODO is this a good way to handle this error?
-        return;
-    }
-
-    ResizeCommandBuilder *commandBuilder = it->first;
-    commandBuilder->buildCommand(proc, item, albumDest);
+    d->getResizeToolByName(m_Type->currentText()).commandBuilder->buildCommand(
+                    proc, item, albumDest);
     kDebug(51000) << "generated command line: " << proc->program();
-
 }
 
 bool ResizeImagesDialog::prepareStartProcess(BatchProcessImagesItem *item,
