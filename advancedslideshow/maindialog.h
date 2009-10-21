@@ -35,7 +35,6 @@
 
 // Local includes
 
-#include "commoncontainer.h"
 #include "ui_maindialog.h"
 
 class QTreeWidgetItem;

@@ -49,10 +49,11 @@
 // Local includes
 
 #include "imagedialog.h"
+#include "imageslist.h"
+#include "commoncontainer.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "imageslist.h"
 
 using namespace KIPIPlugins;
 

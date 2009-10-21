@@ -34,6 +34,10 @@
 
 #include <kicon.h>
 
+// Local includes
+
+#include "commoncontainer.h"
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 

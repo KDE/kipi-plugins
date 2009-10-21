@@ -42,7 +42,6 @@
 // Local includes
 
 #include "ui_playbackwidget.h"
-#include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
