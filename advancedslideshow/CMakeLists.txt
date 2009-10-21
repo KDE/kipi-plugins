@@ -9,13 +9,13 @@ SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            slideshowconfig.cpp
                                            slideshowloader.cpp
                                            listsounditems.cpp
-                                           slideshowgl.cpp
                                            slideshow.cpp
                                            kbeffect.cpp
-                                           slideshowkb.cpp
                                            imageloadthread.cpp
-                                           maindialog.cpp
                                            plugin_advancedslideshow.cpp
+                                           slideshowkb.cpp
+                                           slideshowgl.cpp
+                                           maindialog.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
