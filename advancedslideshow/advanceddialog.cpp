@@ -65,12 +65,12 @@ void AdvancedDialog::readSettings()
 
 void AdvancedDialog::saveSettings()
 {
-    m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
-    m_sharedData->enableMouseWheel = m_enableMouseWheelCheckBox->isChecked();
+    m_sharedData->useMilliseconds    = m_useMillisecondsCheckBox->isChecked();
+    m_sharedData->enableMouseWheel   = m_enableMouseWheelCheckBox->isChecked();
     m_sharedData->kbDisableFadeInOut = m_kbDisableFadeCheckBox->isChecked();
     m_sharedData->kbDisableCrossFade = m_kbDisableCrossfadeCheckBox->isChecked();
-    m_sharedData->cacheSize = m_cacheSizeSpinBox->value();
-    m_sharedData->enableCache =  m_cacheCheckBox->isChecked();
+    m_sharedData->cacheSize          = m_cacheSizeSpinBox->value();
+    m_sharedData->enableCache        =  m_cacheCheckBox->isChecked();
 }
 
 // --- Slots
