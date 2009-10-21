@@ -25,5 +25,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> KioImportExport    : 154183 : Import tool does not recognize Fish KIO Slave.
 016 ==> JPEGLossLess       : 200032 : digiKam, inconsistency data about rotation.
 017 ==> GPSSync            : 210611 : Kipi-plugin add gps data crash after write.
-018 ==> 
+018 ==> BatchProcessImages : 210874 : Wish for new option in resize-tool: fit into given dimensions.
+019 ==> 
 
