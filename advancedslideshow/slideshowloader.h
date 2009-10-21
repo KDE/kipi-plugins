@@ -85,8 +85,8 @@ public:
                     SharedContainer* sharedData, int beginAtIndex = 0);
     ~SlideShowLoader();
 
-    void next();
-    void prev();
+    void    next();
+    void    prev();
 
     QImage  getCurrent();
     QString currFileName();
@@ -96,19 +96,19 @@ private:
 
     void checkIsIn(int index);
 
-    LoadingThreads* m_loadingThreads;
-    LoadedImages*   m_loadedImages;
-    FileList        m_pathList;
+    LoadingThreads*  m_loadingThreads;
+    LoadedImages*    m_loadedImages;
+    FileList         m_pathList;
 
-    QMutex*         m_imageLock;
-    QMutex*         m_threadLock;
+    QMutex*          m_imageLock;
+    QMutex*          m_threadLock;
 
-    SharedContainer*     m_sharedData;
+    SharedContainer* m_sharedData;
 
-    uint            m_cacheSize;
-    int             m_currIndex;
-    int             m_swidth;
-    int             m_sheight;
+    uint             m_cacheSize;
+    int              m_currIndex;
+    int              m_swidth;
+    int              m_sheight;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin
