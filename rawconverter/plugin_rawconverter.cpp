@@ -25,15 +25,6 @@
 #include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-}
-
 // C++ includes
 
 #include <cstdlib>
