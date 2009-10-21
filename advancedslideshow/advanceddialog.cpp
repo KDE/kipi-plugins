@@ -23,16 +23,12 @@
 #include "advanceddialog.h"
 #include "advanceddialog.moc"
 
-// libkipi includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
+#include "commoncontainer.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

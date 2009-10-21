@@ -38,10 +38,11 @@
 
 #include <Phonon/VolumeSlider>
 
-namespace KIPI
-{
-    class Interface;
-}
+// libkipi includes
+
+#include <libkipi/interface.h>
+
+using namespace KIPI;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -61,7 +62,7 @@ public:
 
 public:
 
-    KIPI::Interface*     interface;
+    Interface*           interface;
 
     int                  delayMsMaxValue;
     int                  delayMsMinValue;

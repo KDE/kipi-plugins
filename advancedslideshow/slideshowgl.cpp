@@ -61,7 +61,6 @@
 
 // libkipi includes
 
-#include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
 // local includes.

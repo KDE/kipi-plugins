@@ -20,11 +20,7 @@
  *
  * ============================================================ */
 
-// libkipi includes.
-
-#include <libkipi/interface.h>
-
-// Local includes.
+// Local includes
 
 #include "commoncontainer.h"
 
