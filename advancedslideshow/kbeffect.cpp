@@ -23,6 +23,8 @@
  *
  * ============================================================ */
 
+#include "kbeffect.h"
+
 // C ANSI includes
 
 #include <assert.h>
@@ -43,16 +45,13 @@ int KBEffect::m_numKBEffectRepeated = 0;
 KBEffect::KBEffect(SlideShowKB *parent, bool needFadeIn)
 {
 
-    this->slideWidget = parent;
-    this->m_needFadeIn  = needFadeIn;
+    this->slideWidget  = parent;
+    this->m_needFadeIn = needFadeIn;
 }
-
 
 KBEffect::~KBEffect()
 {
-
 }
-
 
 void KBEffect::setupNewImage(int img)
 {
@@ -60,13 +59,11 @@ void KBEffect::setupNewImage(int img)
     slideWidget->setupNewImage(img);
 }
 
-
 void KBEffect::swapImages()
 {
 
     slideWidget->swapImages();
 }
-
 
 Image *KBEffect::image(int img)
 {
@@ -74,7 +71,6 @@ Image *KBEffect::image(int img)
     assert(img >= 0 && img < 2);
     return slideWidget->m_image[img];
 }
-
 
 KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
 {
@@ -95,8 +91,6 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
     return type;
 }
 
-
-
 // -------------------------------------------------------------------------
 
 FadeKBEffect::FadeKBEffect(SlideShowKB *parent, bool needFadeIn):
@@ -105,12 +99,9 @@ FadeKBEffect::FadeKBEffect(SlideShowKB *parent, bool needFadeIn):
     m_img[0] = image(0);
 }
 
-
 FadeKBEffect::~FadeKBEffect()
 {
-
 }
-
 
 bool FadeKBEffect::done()
 {
@@ -123,7 +114,6 @@ bool FadeKBEffect::done()
 
     return false;
 }
-
 
 void FadeKBEffect::advanceTime(float step)
 {
@@ -143,19 +133,16 @@ void FadeKBEffect::advanceTime(float step)
 
 // -------------------------------------------------------------------------
 
-BlendKBEffect::BlendKBEffect(SlideShowKB *parent, bool needFadeIn):
-        KBEffect(parent, needFadeIn)
+BlendKBEffect::BlendKBEffect(SlideShowKB *parent, bool needFadeIn)
+             : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
     m_img[1] = 0;
 }
 
-
 BlendKBEffect::~BlendKBEffect()
 {
-
 }
-
 
 bool BlendKBEffect::done()
 {
@@ -170,10 +157,8 @@ bool BlendKBEffect::done()
     return false;
 }
 
-
 void BlendKBEffect::advanceTime(float step)
 {
-
     m_img[0]->m_pos += step;
 
     if (m_img[0]->m_pos >= 1.0)
@@ -187,7 +172,6 @@ void BlendKBEffect::advanceTime(float step)
 
     else if (m_img[0]->m_pos > 0.9)
     {
-
         m_img[0]->m_opacity = (1.0 - m_img[0]->m_pos) * 10;
 
         if (m_img[1] == 0)
@@ -196,10 +180,11 @@ void BlendKBEffect::advanceTime(float step)
             m_img[1] = image(1);
             m_img[1]->m_opacity = 1.0;
         }
-
     }
     else
+    {
         m_img[0]->m_opacity = 1.0;
+    }
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

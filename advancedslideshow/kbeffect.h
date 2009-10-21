@@ -38,7 +38,13 @@ class KBEffect
 
 public:
 
-    typedef enum { Fade, Blend } Type;
+    typedef enum
+    {
+        Fade,
+        Blend
+    } Type;
+
+public:
 
     KBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
     virtual ~KBEffect();

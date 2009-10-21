@@ -47,16 +47,14 @@
 #include <QTimer>
 #include <QGLWidget>
 
-// Local includes
-
-#include "kbeffect.h"
-#include "playbackwidget.h"
-#include "screenproperties.h"
-
 namespace KIPIAdvancedSlideshowPlugin
 {
 
+class KBEffect;
 class ImageLoadThread;
+class SharedContainer;
+class PlaybackWidget;
+class ScreenProperties;
 
 // -------------------------------------------------------------------------
 
@@ -154,11 +152,11 @@ private:
         return (float)width() / (float)height();
     };
 
-    bool  setupNewImage(int imageIndex);
-    void  startSlideShowOnce();
-    void  swapImages();
-    void  setNewKBEffect();
-    void  endOfShow();
+    bool     setupNewImage(int imageIndex);
+    void     startSlideShowOnce();
+    void     swapImages();
+    void     setNewKBEffect();
+    void     endOfShow();
 
     void     initializeGL();
     void     paintGL();
@@ -167,7 +165,7 @@ private:
     void     paintTexture(Image *img);
     unsigned suggestFrameRate(unsigned forceRate);
 
-    void readSettings();
+    void     readSettings();
 
 protected:
 
@@ -184,10 +182,10 @@ private Q_SLOTS:
 
 private:
 
-    int m_deskX;
-    int m_deskY;
-    int m_deskWidth;
-    int m_deskHeight;
+    int                 m_deskX;
+    int                 m_deskY;
+    int                 m_deskWidth;
+    int                 m_deskHeight;
 
     QStringList         m_commentsList;
 
@@ -212,7 +210,7 @@ private:
     bool                m_disableCrossFade;
     unsigned            m_forceFrameRate;
 
-    SharedContainer*         m_sharedData;
+    SharedContainer*    m_sharedData;
 
     PlaybackWidget*     m_playbackWidget;
 

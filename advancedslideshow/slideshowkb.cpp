@@ -56,6 +56,9 @@
 
 #include "commoncontainer.h"
 #include "imageloadthread.h"
+#include "kbeffect.h"
+#include "playbackwidget.h"
+#include "screenproperties.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
