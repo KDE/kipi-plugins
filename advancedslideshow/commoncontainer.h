@@ -89,6 +89,7 @@ public:
     KPageWidgetItem*     page_advanced;
 
     // Config file data
+
     // --> Main page
     bool                 opengl;
     bool                 openGlFullScale;
@@ -101,12 +102,14 @@ public:
     bool                 showSelectedFilesOnly;
     QString              effectName;
     QString              effectNameGL;
+
     // --> Captions page
     uint                 commentsFontColor;
     uint                 commentsBgColor;
     bool                 transparentBg;
     int                  commentsLinesLength;
     QFont*               captionFont;
+
     // --> Soundtrack page
     bool                 soundtrackLoop;
     bool                 soundtrackRememberPlaylist;
