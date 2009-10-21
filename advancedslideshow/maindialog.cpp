@@ -36,6 +36,7 @@
 #include <QTime>
 #include <QHeaderView>
 #include <QPainter>
+#include <QVBoxLayout>
 
 // KDE includes
 
@@ -45,6 +46,11 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kstandarddirs.h>
+
+// libkipi includes
+
+
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -60,7 +66,7 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
+MainDialog::MainDialog(QWidget* parent, SharedData* sharedData)
           : QWidget(parent)
 {
     setupUi(this);
@@ -71,7 +77,8 @@ MainDialog::MainDialog( QWidget* parent, SharedData* sharedData)
     // --------------------------------------------------------
 
     QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
-    m_ImagesFilesListBox                = new ImagesList(sharedData->interface, m_ImagesFilesListBoxContainer,
+    m_ImagesFilesListBox                = new ImagesList(m_sharedData->interface, 
+                                                         m_ImagesFilesListBoxContainer,
                                                          KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
 

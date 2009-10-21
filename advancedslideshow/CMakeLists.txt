@@ -1,7 +1,6 @@
 
 SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            screenproperties.cpp
-                                           maindialog.cpp
                                            captiondialog.cpp
                                            soundtrackdialog.cpp
                                            advanceddialog.cpp
@@ -16,6 +15,7 @@ SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            kbeffect.cpp
                                            slideshowkb.cpp
                                            imageloadthread.cpp
+                                           maindialog.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS

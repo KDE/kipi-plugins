@@ -47,7 +47,6 @@
 
 // Local includes
 
-#include "commoncontainer.h"
 #include "playbackwidget.h"
 #include "slideplaybackwidget.h"
 #include "slideshowloader.h"
@@ -59,7 +58,7 @@ class QTimer;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlideShowGL;
+class SharedData;
 
 class SlideShowGL : public QGLWidget
 {

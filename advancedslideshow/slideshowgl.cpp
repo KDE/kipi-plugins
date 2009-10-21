@@ -64,6 +64,11 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
+// local includes.
+
+#include "commoncontainer.h"
+
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
