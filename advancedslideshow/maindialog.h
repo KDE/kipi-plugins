@@ -26,7 +26,7 @@
 
 // Qt includes
 
-#include <QSvgRenderer>
+#include <QPixmap>
 
 // KDE includes
 

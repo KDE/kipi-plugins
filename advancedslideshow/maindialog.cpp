@@ -37,6 +37,7 @@
 #include <QHeaderView>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QSvgRenderer>
 
 // KDE includes
 
