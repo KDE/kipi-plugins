@@ -1,6 +1,5 @@
 
 SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
-                                           kbeffect.cpp
                                            screenproperties.cpp
                                            slideshowkb.cpp
                                            imageloadthread.cpp
@@ -16,6 +15,7 @@ SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            plugin_advancedslideshow.cpp
                                            slideshowgl.cpp
                                            slideshow.cpp
+                                           kbeffect.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
