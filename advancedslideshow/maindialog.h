@@ -64,21 +64,21 @@ public:
 
 private Q_SLOTS:
 
-    void slotOpenGLToggled( void );
-    void slotEffectChanged( void );
-    void slotDelayChanged( int );
-    void slotPrintCommentsToggled( void );
-    void slotSelection( void );
-    void slotUseMillisecondsToggled( void );
+    void slotOpenGLToggled();
+    void slotEffectChanged();
+    void slotDelayChanged(int);
+    void slotPrintCommentsToggled();
+    void slotSelection();
+    void slotUseMillisecondsToggled();
     void slotThumbnail(const KUrl&, const QPixmap&);
     void slotImageListChanged();
 
-    void slotPortfolioDurationChanged ( int );
+    void slotPortfolioDurationChanged(int);
     void slotImagesFilesSelected(QTreeWidgetItem* item);
 
 Q_SIGNALS :
 
-    void totalTimeChanged( QTime );
+    void totalTimeChanged(QTime);
 
 private:
 
@@ -91,7 +91,7 @@ private:
 
 private:
 
-    SharedContainer*              m_sharedData;
+    SharedContainer*         m_sharedData;
     KIO::PreviewJob*         m_thumbJob;
     QTime                    m_totalTime;
     QPixmap                  m_noPreviewPixmap;
