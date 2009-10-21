@@ -48,14 +48,14 @@
 // Local includes
 
 #include "playbackwidget.h"
+#include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundtrackPreview::SoundtrackPreview( QWidget* parent, KUrl::List& urls, SharedData* sharedData )
-        : KDialog(parent)
+SoundtrackPreview::SoundtrackPreview(QWidget* parent, KUrl::List& urls, SharedData* sharedData)
+                 : KDialog(parent)
 {
-
     setModal(true);
     setButtons(KDialog::Close);
     setCaption( i18n("Soundtrack preview") );
@@ -68,8 +68,10 @@ SoundtrackPreview::~SoundtrackPreview()
 {
 }
 
-SoundtrackDialog::SoundtrackDialog( QWidget* parent, SharedData* sharedData )
-        : QWidget(parent)
+// ------------------------------------------------------------------------------------
+
+SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedData* sharedData)
+                : QWidget(parent)
 {
     setupUi(this);
 
@@ -522,13 +524,13 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonReset( void )
+void SoundtrackDialog::slotSoundFilesButtonReset()
 {
     m_SoundFilesListBox->clear();
     updateFileList();
 }
 
-void SoundtrackDialog::slotPreviewButtonClicked( void )
+void SoundtrackDialog::slotPreviewButtonClicked()
 {
     KUrl::List urlList;
 

@@ -47,6 +47,7 @@
 // local includes
 
 #include "kpaboutdata.h"
+#include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {

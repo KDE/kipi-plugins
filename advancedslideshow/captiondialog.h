@@ -25,7 +25,6 @@
 
 // Local includes
 
-#include "commoncontainer.h"
 #include "ui_captiondialog.h"
 
 namespace KIPIAdvancedSlideshowPlugin

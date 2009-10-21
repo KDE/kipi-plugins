@@ -24,9 +24,9 @@
 #ifndef SLIDESHOWCONFIG_H
 #define SLIDESHOWCONFIG_H
 
-// Local includes
+// KDE includes.
 
-#include "commoncontainer.h"
+#include <kpagedialog.h>
 
 namespace KIPIAdvancedSlideshowPlugin
 {

@@ -36,7 +36,6 @@
 // Local includes
 
 #include "ui_soundtrackdialog.h"
-#include "commoncontainer.h"
 #include "playbackwidget.h"
 #include "listsounditems.h"
 
@@ -60,13 +59,15 @@ private :
     PlaybackWidget* m_playbackWidget;
 };
 
+// ----------------------------------------------------------------------
+
 class SoundtrackDialog : public QWidget, public Ui::SoundtrackDialog
 {
     Q_OBJECT
 
 public:
 
-    SoundtrackDialog( QWidget* parent, SharedData* sharedData );
+    SoundtrackDialog(QWidget* parent, SharedData* sharedData);
     ~SoundtrackDialog();
 
     void readSettings();

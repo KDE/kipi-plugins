@@ -27,16 +27,20 @@
 
 #include <QFont>
 
+// Local includes
+
+#include "commoncontainer.h"
+
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 CaptionDialog::CaptionDialog( QWidget* parent, SharedData* sharedData)
-        : QWidget(parent)
+             : QWidget(parent)
 {
     setupUi(this);
     m_sharedData = sharedData;
-    m_commentsFontChooser->setSampleText(
-        i18n("AdvancedSlideshow is part of KIPI-Plugins (http://www.kipi-plugins.org)"));
+    m_commentsFontChooser->setSampleText(i18n("AdvancedSlideshow is part of "
+                                              "KIPI-Plugins (http://www.kipi-plugins.org)"));
 }
 
 CaptionDialog::~CaptionDialog()
@@ -45,9 +49,14 @@ CaptionDialog::~CaptionDialog()
 
 void CaptionDialog::readSettings()
 {
-    connect(m_commentsFontColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsFontColorChanged()));
-    connect(m_commentsBgColor, SIGNAL(changed(const QColor &)), this, SLOT(slotCommentsBgColorChanged()));
-    connect(m_transparentBgCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotTransparentBgToggled()));
+    connect(m_commentsFontColor, SIGNAL(changed(const QColor&)), 
+            this, SLOT(slotCommentsFontColorChanged()));
+
+    connect(m_commentsBgColor, SIGNAL(changed(const QColor&)), 
+            this, SLOT(slotCommentsBgColorChanged()));
+
+    connect(m_transparentBgCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotTransparentBgToggled()));
 
     m_commentsLinesLengthSpinBox->setValue(m_sharedData->commentsLinesLength);
     m_commentsFontColor->setColor(QColor(m_sharedData->commentsFontColor));
@@ -62,12 +71,12 @@ void CaptionDialog::readSettings()
 void CaptionDialog::saveSettings()
 {
     delete m_sharedData->captionFont;
-    m_sharedData->captionFont = new QFont(m_commentsFontChooser->font());
-    QColor fontColor = QColor(m_commentsFontColor->color());
-    m_sharedData->commentsFontColor = fontColor.rgb();
-    QColor bgColor = QColor(m_commentsBgColor->color());
-    m_sharedData->commentsBgColor = bgColor.rgb();
-    m_sharedData->transparentBg = m_transparentBgCheckBox->isChecked();
+    m_sharedData->captionFont         = new QFont(m_commentsFontChooser->font());
+    QColor fontColor                  = QColor(m_commentsFontColor->color());
+    m_sharedData->commentsFontColor   = fontColor.rgb();
+    QColor bgColor                    = QColor(m_commentsBgColor->color());
+    m_sharedData->commentsBgColor     = bgColor.rgb();
+    m_sharedData->transparentBg       = m_transparentBgCheckBox->isChecked();
     m_sharedData->commentsLinesLength = m_commentsLinesLengthSpinBox->value();
 }
 
@@ -83,7 +92,7 @@ void CaptionDialog::slotCommentsFontColorChanged()
     m_commentsFontChooser->setColor(m_commentsFontColor->color());
 }
 
-void CaptionDialog::slotTransparentBgToggled( void )
+void CaptionDialog::slotTransparentBgToggled()
 {
     m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
 }

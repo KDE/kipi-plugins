@@ -25,7 +25,6 @@
 
 // Local includes
 
-#include "commoncontainer.h"
 #include "ui_advanceddialog.h"
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -47,12 +46,12 @@ public:
 
 Q_SIGNALS:
 
-    void useMillisecondsToggled( void );
+    void useMillisecondsToggled();
 
 private Q_SLOTS:
 
-    void slotUseMillisecondsToggled( void );
-    void slotCacheToggled( void );
+    void slotUseMillisecondsToggled();
+    void slotCacheToggled();
 
 private:
 

@@ -28,21 +28,23 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+#include "commoncontainer.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-AdvancedDialog::AdvancedDialog( QWidget* parent, SharedData* sharedData)
-        : QWidget(parent)
+AdvancedDialog::AdvancedDialog(QWidget* parent, SharedData* sharedData)
+              : QWidget(parent)
 {
     setupUi(this);
 
     m_sharedData = sharedData;
 
     connect(m_useMillisecondsCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotUseMillisecondsToggled(void)));
+            this, SLOT(slotUseMillisecondsToggled()));
+
     connect(m_cacheCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotCacheToggled(void)));
+            this, SLOT(slotCacheToggled()));
 }
 
 AdvancedDialog::~AdvancedDialog()
@@ -73,13 +75,13 @@ void AdvancedDialog::saveSettings()
 
 // --- Slots
 
-void AdvancedDialog::slotUseMillisecondsToggled( void )
+void AdvancedDialog::slotUseMillisecondsToggled()
 {
     m_sharedData->useMilliseconds = m_useMillisecondsCheckBox->isChecked();
     emit useMillisecondsToggled();
 }
 
-void AdvancedDialog::slotCacheToggled( void )
+void AdvancedDialog::slotCacheToggled()
 {
     bool isEnabled = m_cacheCheckBox->isChecked();
 
