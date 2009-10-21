@@ -23,6 +23,10 @@
 #include "advanceddialog.h"
 #include "advanceddialog.moc"
 
+// libkipi includes
+
+#include "libkipi/interface.h"
+
 // Local includes
 
 #include "slideshow.h"
