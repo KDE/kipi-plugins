@@ -23,8 +23,6 @@
  *
  * ============================================================ */
 
-#include "kbeffect.h"
-
 // C ANSI includes
 
 #include <assert.h>
