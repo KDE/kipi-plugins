@@ -1673,7 +1673,7 @@ void Wizard::infopage_increaseCopies()
     }
     else if ( pageName == i18n ( photoPageName ) )
     {
-      QSize iconSize = group.readEntry  ( "IconSize", QSize(16,16));
+      QSize iconSize = group.readEntry  ( "IconSize", QSize(24,24));
       d->mPhotoPage->ListPhotoSizes->setIconSize(iconSize);
 
       // photo size
