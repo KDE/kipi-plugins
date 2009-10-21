@@ -23,10 +23,10 @@
  *
  * ============================================================ */
 
-// C ANSI includes
-
 #include "actionthread.h"
 #include "actionthread.moc"
+
+// C ANSI includes
 
 extern "C"
 {
