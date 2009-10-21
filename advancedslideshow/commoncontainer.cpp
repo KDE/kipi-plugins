@@ -77,6 +77,8 @@ SharedContainer::~SharedContainer()
     delete captionFont;
 }
 
+// -------------------------------------------------------------
+
 VolumeSlider::VolumeSlider(QWidget* parent)
             : Phonon::VolumeSlider(parent)
 {
