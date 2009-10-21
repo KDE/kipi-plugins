@@ -41,7 +41,7 @@ class QTreeWidgetItem;
 
 namespace KIPIPlugins
 {
-class ImagesList;
+    class ImagesList;
 }
 
 namespace KIPIAdvancedSlideshowPlugin

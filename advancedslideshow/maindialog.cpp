@@ -47,20 +47,15 @@
 #include <kurl.h>
 #include <kstandarddirs.h>
 
-// libkipi includes
-
-
-#include <libkipi/interface.h>
-
 // Local includes
 
-#include "imagedialog.h"
-#include "imageslist.h"
 #include "commoncontainer.h"
+#include "imagedialog.h"
+#include "advanceddialog.h"
+#include "imageslist.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
-#include "advanceddialog.h"
 
 using namespace KIPIPlugins;
 
