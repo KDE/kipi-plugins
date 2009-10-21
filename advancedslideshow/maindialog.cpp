@@ -48,6 +48,7 @@
 #include <kurl.h>
 #include <kstandarddirs.h>
 
+
 // Local includes
 
 #include "commoncontainer.h"
@@ -57,6 +58,8 @@
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+
+#include <libkipi/interface.h>
 
 using namespace KIPIPlugins;
 
