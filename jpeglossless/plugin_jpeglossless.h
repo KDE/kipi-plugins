@@ -42,11 +42,11 @@ class Plugin_JPEGLossless : public KIPI::Plugin
 
 public:
 
-    Plugin_JPEGLossless(QObject *parent, const QVariantList &args);
+    Plugin_JPEGLossless(QObject *parent, const QVariantList& args);
     ~Plugin_JPEGLossless();
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* widget );
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget* widget);
 
 protected:
 
@@ -61,14 +61,14 @@ private Q_SLOTS:
     void slotRotateExif();
     void slotConvert2GrayScale();
     void slotCancel();
-    void slotStarting(const QString &filePath, int action);
-    void slotFinished(const QString &filePath, int action);
-    void slotFailed(const QString &filePath, int action, const QString &errString);
+    void slotStarting(const QString& filePath, int action);
+    void slotFinished(const QString& filePath, int action);
+    void slotFailed(const QString& filePath, int action, const QString& errString);
 
 private:
 
-    void flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString &title);
-    void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title);
+    void flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString& title);
+    void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString& title);
     void oneTaskCompleted();
 
 private:

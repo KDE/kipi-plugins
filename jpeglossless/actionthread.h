@@ -38,6 +38,11 @@
 
 #include "actions.h"
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIJPEGLossLessPlugin
 {
 
@@ -49,7 +54,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread( KIPI::Interface* interface, QObject *parent);
+    ActionThread(KIPI::Interface* interface, QObject *parent);
     ~ActionThread();
 
     void rotate(const KUrl::List& urlList, RotateAction val);

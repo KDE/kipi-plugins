@@ -23,6 +23,9 @@
 
 #define XMD_H
 
+#include "convert2grayscale.h"
+#include "convert2grayscale.moc"
+
 // C++ includes
 
 #include <cstdio>
@@ -58,8 +61,6 @@ extern "C"
 #include "utils.h"
 #include "pluginsversion.h"
 #include "transupp.h"
-#include "convert2grayscale.h"
-#include "convert2grayscale.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -117,7 +118,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool upda
     }
 
     // Move back to original file
-    if (!Utils::MoveFile(tmp, src)) 
+    if (!Utils::moveOneFile(tmp, src)) 
     {
         err = i18n("Cannot update source image");
         return false;

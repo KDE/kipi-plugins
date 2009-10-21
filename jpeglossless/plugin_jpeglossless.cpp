@@ -22,6 +22,9 @@
  *
  * ============================================================ */
 
+#include "plugin_jpeglossless.h"
+#include "plugin_jpeglossless.moc"
+
 // C++ includes
 
 #include <iostream>
@@ -50,8 +53,6 @@
 
 #include "batchprogressdialog.h"
 #include "actionthread.h"
-#include "plugin_jpeglossless.h"
-#include "plugin_jpeglossless.moc"
 
 K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
 K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
@@ -91,8 +92,9 @@ public:
     KIPIJPEGLossLessPlugin::ActionThread *thread;
 };
 
-Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QVariantList &)
-                   : KIPI::Plugin( JPEGLosslessFactory::componentData(), parent, "JPEGLossless"), d(new Plugin_JPEGLosslessPriv)
+Plugin_JPEGLossless::Plugin_JPEGLossless(QObject *parent, const QVariantList&)
+                   : KIPI::Plugin(JPEGLosslessFactory::componentData(), parent, "JPEGLossless"), 
+                     d(new Plugin_JPEGLosslessPriv)
 {
     kDebug(51001) << "Plugin_JPEGLossless plugin loaded";
 }
@@ -103,7 +105,7 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
     delete d;
 }
 
-void Plugin_JPEGLossless::setup( QWidget* widget )
+void Plugin_JPEGLossless::setup(QWidget* widget)
 {
     KIPI::Plugin::setup( widget );
 
@@ -169,14 +171,14 @@ void Plugin_JPEGLossless::setup( QWidget* widget )
 
     d->thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
 
-    connect( d->thread, SIGNAL(starting(const QString &, int)),
-             this, SLOT(slotStarting(const QString &, int)));
+    connect( d->thread, SIGNAL(starting(const QString&, int)),
+             this, SLOT(slotStarting(const QString&, int)));
 
-    connect( d->thread, SIGNAL(finished(const QString &, int)),
-             this, SLOT(slotFinished(const QString &, int)));
+    connect( d->thread, SIGNAL(finished(const QString&, int)),
+             this, SLOT(slotFinished(const QString&, int)));
 
-    connect( d->thread, SIGNAL(failed(const QString &, int, const QString &)),
-             this, SLOT(slotFailed(const QString &, int, const QString &)));
+    connect( d->thread, SIGNAL(failed(const QString&, int, const QString&)),
+             this, SLOT(slotFailed(const QString&, int, const QString&)));
 
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              d->action_AutoExif, SLOT( setEnabled( bool ) ) );
@@ -201,7 +203,7 @@ void Plugin_JPEGLossless::slotFlipVertically()
     flip(KIPIJPEGLossLessPlugin::FlipVertical, i18n("vertically"));
 }
 
-void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString &title)
+void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString& title)
 {
     KUrl::List items = images();
     if (items.count() <= 0) return;
@@ -245,7 +247,7 @@ void Plugin_JPEGLossless::slotRotateExif()
     rotate(KIPIJPEGLossLessPlugin::Rot0, i18n("using Exif orientation tag"));
 }
 
-void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString &title)
+void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString& title)
 {
     KUrl::List items = images();
     if (items.count() <= 0) return;
@@ -278,7 +280,7 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
 {
     KUrl::List items = images();
     if (items.count() <= 0 ||
-        KMessageBox::No==KMessageBox::warningYesNo(kapp->activeWindow(),
+        KMessageBox::No == KMessageBox::warningYesNo(kapp->activeWindow(),
                      i18n("<p>Are you sure you wish to convert the selected image(s) to "
                          "black and white? This operation <b>cannot</b> be undone.</p>")))
         return;
@@ -323,7 +325,7 @@ void Plugin_JPEGLossless::slotCancel()
     interface->refreshImages( d->images );
 }
 
-void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
+void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
 {
     QString text;
 
@@ -353,7 +355,7 @@ void Plugin_JPEGLossless::slotStarting(const QString &filePath, int action)
     d->progressDlg->addedAction(text, KIPIPlugins::StartingMessage);
 }
 
-void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
+void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
 {
     Q_UNUSED(filePath);
 
@@ -387,7 +389,7 @@ void Plugin_JPEGLossless::slotFinished(const QString &filePath, int action)
     oneTaskCompleted();
 }
 
-void Plugin_JPEGLossless::slotFailed(const QString &filePath, int action, const QString &errString)
+void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const QString& errString)
 {
     Q_UNUSED(filePath);
 
@@ -460,7 +462,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
     }
 }
 
-KIPI::Category Plugin_JPEGLossless::category( KAction* action ) const
+KIPI::Category Plugin_JPEGLossless::category(KAction* action) const
 {
     if (action == d->action_AutoExif)
         return KIPI::ImagesPlugin;

@@ -58,8 +58,8 @@ public: // Static methods.
         Can't use KIO based operations as we need to use these in a thread
     */
 
-    static bool CopyFile(const QString& src, const QString& dst);
-    static bool MoveFile(const QString& src, const QString& dst);
+    static bool copyOneFile(const QString& src, const QString& dst);
+    static bool moveOneFile(const QString& src, const QString& dst);
 
     /** Thread-safe recursive dir deletion.
     */

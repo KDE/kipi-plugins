@@ -25,6 +25,9 @@
 
 // C ANSI includes
 
+#include "actionthread.h"
+#include "actionthread.moc"
+
 extern "C"
 {
 #include <unistd.h>
@@ -50,8 +53,6 @@ extern "C"
 #include "imagerotate.h"
 #include "imageflip.h"
 #include "convert2grayscale.h"
-#include "actionthread.h"
-#include "actionthread.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -89,7 +90,7 @@ public:
     KIPI::Interface *interface;
 };
 
-ActionThread::ActionThread( KIPI::Interface* interface, QObject *parent)
+ActionThread::ActionThread(KIPI::Interface* interface, QObject *parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     d->interface = interface;

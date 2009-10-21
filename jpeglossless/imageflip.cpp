@@ -23,6 +23,9 @@
 
 #define XMD_H
 
+#include "imageflip.h"
+#include "imageflip.moc"
+
 // C++ includes
 
 #include <cstdio>
@@ -52,8 +55,6 @@ extern "C"
 #include "transupp.h"
 #include "jpegtransform.h"
 #include "utils.h"
-#include "imageflip.h"
-#include "imageflip.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -111,7 +112,7 @@ bool ImageFlip::flip(const QString& src, FlipAction action, QString& err, bool u
     }
 
     // Move back to original file
-    if (!Utils::MoveFile(tmp, src))
+    if (!Utils::moveOneFile(tmp, src))
     {
         err = i18n("Cannot update source image");
         return false;

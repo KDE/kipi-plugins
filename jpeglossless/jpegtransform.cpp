@@ -69,7 +69,6 @@ const Matrix Matrix::flipVertical           ( 1,  0,  0, -1);
 const Matrix Matrix::rotate90flipHorizontal ( 0,  1,  1,  0);
 const Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
 
-
 // To manage Errors/Warnings handling provide by libjpeg
 
 //#define ENABLE_DEBUG_MESSAGES

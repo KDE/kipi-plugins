@@ -22,6 +22,9 @@
  *
  * ============================================================ */
 
+#include "utils.h"
+#include "utils.moc"
+
 // C ANSI includes
 
 extern "C"
@@ -64,8 +67,6 @@ extern "C"
 // Local includes
 
 #include "pluginsversion.h"
-#include "utils.h"
-#include "utils.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -208,7 +209,7 @@ bool Utils::isRAW(const QString& file)
     return false;
 }
 
-bool Utils::CopyFile(const QString& src, const QString& dst)
+bool Utils::copyOneFile(const QString& src, const QString& dst)
 {
     QFile sFile(src);
     QFile dFile(dst);
@@ -242,29 +243,29 @@ bool Utils::CopyFile(const QString& src, const QString& dst)
     return true;
 }
 
-bool Utils::MoveFile(const QString& src, const QString& dst)
+bool Utils::moveOneFile(const QString& src, const QString& dst)
 {
     struct stat stbuf;
     if (::stat(QFile::encodeName(dst), &stbuf) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to stat src";
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to stat src";
         return false;
     }
 
-    if (!CopyFile(src, dst))
+    if (!copyOneFile(src, dst))
         return false;
 
     struct utimbuf timbuf;
-    timbuf.actime = stbuf.st_atime;
+    timbuf.actime  = stbuf.st_atime;
     timbuf.modtime = stbuf.st_mtime;
     if (::utime(QFile::encodeName(dst), &timbuf) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to update dst time";
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to update dst time";
     }
 
     if (::unlink(QFile::encodeName(src).data()) != 0)
     {
-        kError( 51000 ) << "KIPIJPEGLossLessPlugin:MoveFile: failed to unlink src";
+        kError( 51000 ) << "KIPIJPEGLossLessPlugin:moveOneFile: failed to unlink src";
     }
     return true;
 }

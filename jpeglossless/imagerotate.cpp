@@ -24,6 +24,9 @@
 
 #define XMD_H
 
+#include "imagerotate.h"
+#include "imagerotate.moc"
+
 // C++ includes
 
 #include <cstdio>
@@ -53,8 +56,6 @@ extern "C"
 #include "utils.h"
 #include "transupp.h"
 #include "jpegtransform.h"
-#include "imagerotate.h"
-#include "imagerotate.moc"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -117,7 +118,7 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     }
 
     // Move back to original file
-    if (!Utils::MoveFile(tmp, src)) 
+    if (!Utils::moveOneFile(tmp, src))
     {
         err = i18n("Cannot update source image");
         return false;
