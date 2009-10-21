@@ -1,5 +1,5 @@
 
-SET(kipiplugin_advancedslideshow_PART_SRCS common.cpp
+SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            kbeffect.cpp
                                            screenproperties.cpp
                                            slideshowkb.cpp

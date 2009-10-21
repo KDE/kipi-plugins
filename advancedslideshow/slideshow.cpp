@@ -60,7 +60,7 @@
 
 // Local includes
 
-#include "common.h"
+#include "commoncontainer.h"
 #include "slideplaybackwidget.h"
 #include "slideshowloader.h"
 

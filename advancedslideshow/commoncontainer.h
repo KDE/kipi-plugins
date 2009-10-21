@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef COMMONCONTAINER_H
+#define COMMONCONTAINER_H
 
 // Qt includes
 
@@ -134,4 +134,4 @@ public:
 
 } // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // COMMON_H
+#endif // COMMONCONTAINER_H

@@ -36,7 +36,7 @@
 // Local includes
 
 #include "ui_soundtrackdialog.h"
-#include "common.h"
+#include "commoncontainer.h"
 #include "playbackwidget.h"
 #include "listsounditems.h"
 

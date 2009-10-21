@@ -36,7 +36,7 @@
 
 // Local includes
 
-#include "common.h"
+#include "commoncontainer.h"
 
 class KAction;
 
