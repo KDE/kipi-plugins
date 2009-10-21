@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef SCREEN_H
-#define SCREEN_H
+#ifndef SCREENPROPERTIES_H
+#define SCREENPROPERTIES_H
 
 class QWidget;
 
@@ -49,4 +49,4 @@ protected:
 
 }  // namespace KIPIAdvancedSlideshowPlugin
 
-#endif // SCREEN_H
+#endif // SCREENPROPERTIES_H
