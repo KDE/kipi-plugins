@@ -57,7 +57,7 @@ public:
     PlaybackWidget(QWidget*, KUrl::List&, SharedContainer* sharedData);
     ~PlaybackWidget();
 
-    void enqueue(const KUrl::List);
+    void enqueue(const KUrl::List&);
     bool canHide() const;
     bool isPaused() const;
     void setPaused(bool);
