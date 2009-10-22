@@ -162,17 +162,17 @@ Image::~Image()
 
 SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
                          const QStringList& commentsList, SharedContainer* sharedData)
-        : QGLWidget()
+           : QGLWidget()
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::X11BypassWindowManagerHint |
                    Qt::WindowStaysOnTopHint | Qt::Popup);
 
     QRect deskRect = KGlobalSettings::desktopGeometry(this);
-    m_deskX      = deskRect.x();
-    m_deskY      = deskRect.y();
-    m_deskWidth  = deskRect.width();
-    m_deskHeight = deskRect.height();
+    m_deskX        = deskRect.x();
+    m_deskY        = deskRect.y();
+    m_deskWidth    = deskRect.width();
+    m_deskHeight   = deskRect.height();
 
     move(m_deskX, m_deskY);
     resize(m_deskWidth, m_deskHeight);
@@ -332,7 +332,7 @@ bool SlideShowKB::setupNewImage(int idx)
         // we have the image lock and there is an image
         float imageAspect    = m_imageLoadThread->imageAspect();
         ViewTrans *viewTrans = new ViewTrans(m_zoomIn, aspect() / imageAspect);
-        m_image[idx]           = new Image(viewTrans, imageAspect);
+        m_image[idx]         = new Image(viewTrans, imageAspect);
 
         applyTexture(m_image[idx], m_imageLoadThread->image());
         ok = true;
