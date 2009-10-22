@@ -64,9 +64,9 @@ private Q_SLOTS:
 
 private:
 
-    KAction*                                 m_actionSlideShow;
-    KIPI::Interface*                         m_interface;
-    KUrl::List                               m_urlList;
+    KAction*                                      m_actionSlideShow;
+    KIPI::Interface*                              m_interface;
+    KUrl::List                                    m_urlList;
 
     KIPIAdvancedSlideshowPlugin::SharedContainer* m_sharedData;
 };

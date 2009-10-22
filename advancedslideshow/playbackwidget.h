@@ -70,33 +70,33 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotPlay( void );
-    void slotStop( void );
-    void slotPrev( void );
-    void slotNext( void );
-    void slotTimeUpdaterTimeout( void );
-    void slotError( void );
+    void slotPlay();
+    void slotStop();
+    void slotPrev();
+    void slotNext();
+    void slotTimeUpdaterTimeout();
+    void slotError();
     void slotMediaStateChanged(Phonon::State, Phonon::State);
-    void slotSongFinished( void );
+    void slotSongFinished();
 
 private:
 
-    void checkSkip ( void );
+    void checkSkip ();
     void setGUIPlay( bool );
-    void setZeroTime( void );
+    void setZeroTime();
 
 private:
 
-    SharedContainer*             m_sharedData;
-    KUrl::List              m_urlList;
-    int                     m_currIndex;
-    bool                    m_muted;
-    bool                    m_stopCalled;
-    bool                    m_isZeroTime;
-    bool                    m_canHide;
+    SharedContainer*     m_sharedData;
+    KUrl::List           m_urlList;
+    int                  m_currIndex;
+    bool                 m_muted;
+    bool                 m_stopCalled;
+    bool                 m_isZeroTime;
+    bool                 m_canHide;
 
-    Phonon::MediaObject*    m_mediaObject;
-    Phonon::AudioOutput*    m_audioOutput;
+    Phonon::MediaObject* m_mediaObject;
+    Phonon::AudioOutput* m_audioOutput;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin
