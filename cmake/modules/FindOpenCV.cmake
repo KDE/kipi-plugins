@@ -142,17 +142,17 @@ FIND_PATH(OpenCV_CVCAM_INCLUDE_DIR
           PATH_SUFFIXES ${OpenCV_INCDIR_SUFFIXES} 
          )
 
-# Find sbsolute path to all libraries 
+# Find asbsolute path to all libraries 
 # some are optionally, some may not exist on Linux
 #
 FIND_LIBRARY(OpenCV_CV_LIBRARY
-             NAMES cv opencv
+             NAMES cv cv200 opencv
              PATHS ${OpenCV_ROOT_DIR}
              PATH_SUFFIXES  ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CVAUX_LIBRARY
-             NAMES cvaux
+             NAMES cvaux cvaux200
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
@@ -167,22 +167,22 @@ FIND_LIBRARY(OpenCV_CVHAARTRAINING_LIBRARY
             )
 
 FIND_LIBRARY(OpenCV_CXCORE_LIBRARY
-             NAMES cxcore
+             NAMES cxcore cxcore200
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CXTS_LIBRARY
-             NAMES cxts
+             NAMES cxts cxts200
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_HIGHGUI_LIBRARY
-             NAMES highgui
+             NAMES highgui highgui200
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_ML_LIBRARY
-             NAMES ml
+             NAMES ml ml200
              PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
@@ -212,7 +212,7 @@ FOREACH(NAME ${OpenCV_FIND_REQUIRED_COMPONENTS})
 
     ELSE(OpenCV_${NAME}_INCLUDE_DIR AND OpenCV_${NAME}_LIBRARY)
 
-        MESSAGE(STATUS "OpenCV component NAME=${NAME} not found!"
+        MESSAGE(STATUS "OpenCV component ${NAME} not found!"
                 "\nOpenCV_${NAME}_INCLUDE_DIR=${OpenCV_${NAME}_INCLUDE_DIR}"
                 "\nOpenCV_${NAME}_LIBRARY=${OpenCV_${NAME}_LIBRARY}")
         SET(OpenCV_FOUND OFF)
