@@ -66,10 +66,8 @@ unsigned ScreenProperties::suggestFrameRate()
 
     int screenRate;
 
-    config        = XRRGetScreenInfo(QX11Info::display(), RootWindow(QX11Info::display(),
-                                     activeScreen));
-
-    screenRate    = XRRConfigCurrentRate(config);
+    config     = XRRGetScreenInfo(QX11Info::display(), RootWindow(QX11Info::display(), activeScreen));
+    screenRate = XRRConfigCurrentRate(config);
 
     XRRFreeScreenConfigInfo(config);
 
@@ -90,9 +88,8 @@ unsigned ScreenProperties::suggestFrameRate()
     // because of the high HZ value).
     int candidateRate[3] = { 30, 25, 28 };
 
-    int bestRate = candidateRate[0];
-
-    int smallestError = 1000, i = 0;
+    int bestRate         = candidateRate[0];
+    int smallestError    = 1000, i = 0;
 
     do
     {

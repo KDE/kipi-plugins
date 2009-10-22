@@ -37,7 +37,7 @@ class ScreenProperties
 public:
 
     ScreenProperties(QWidget *mainWidget);
-    virtual ~ScreenProperties() { };
+    virtual ~ScreenProperties() {};
 
     virtual unsigned suggestFrameRate();
     virtual bool     enableVSync();
