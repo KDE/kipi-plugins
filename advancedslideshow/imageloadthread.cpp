@@ -52,18 +52,15 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList,
-                                 int width, int height)
+ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height)
                : QThread()
 {
     m_initialized   = false;
     m_needImage     = true;
     m_haveImages    = false;
     m_quitRequested = false;
-
     m_fileIndex     = 0;
     m_fileList      = fileList;
-
     m_width         = width;
     m_height        = height;
 }
@@ -106,7 +103,7 @@ void ImageLoadThread::run()
             if ( m_fileIndex == (int)m_fileList.count() )
             {
                 m_needImage = false;
-                emit(endOfShow());
+                emit(signalEndOfShow());
                 continue;
             }
 
@@ -128,7 +125,7 @@ void ImageLoadThread::run()
             if ( m_fileIndex == (int)m_fileList.count() )
             {
 
-                emit(endOfShow());
+                emit(signalEndOfShow());
                 m_condLock.lock();
                 continue;
             }
@@ -174,10 +171,13 @@ bool ImageLoadThread::loadImage()
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
     QFileInfo fileInfo(path);
-    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() )) {
+    if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
+    {
         // it's a RAW file, use the libkdcraw loader
         KDcrawIface::KDcraw::loadDcrawPreview(image, path);
-    } else {
+    }
+    else
+    {
         // use the standard loader
         image=QImage(path);
     }
@@ -195,7 +195,6 @@ bool ImageLoadThread::loadImage()
     }
 
     float aspect = (float)image.width() / (float)image.height();
-
     image        = image.scaled(m_width, m_height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_imageLock.lock();

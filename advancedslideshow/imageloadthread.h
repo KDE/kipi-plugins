@@ -41,7 +41,6 @@ namespace KIPIAdvancedSlideshowPlugin
 
 class ImageLoadThread : public QThread
 {
-
     Q_OBJECT
 
 public:
@@ -78,7 +77,7 @@ public:
 
 Q_SIGNALS:
 
-    void endOfShow();
+    void signalEndOfShow();
 
 protected:
 
@@ -89,17 +88,17 @@ protected:
 
 private:
 
-    int                               m_fileIndex;
-    QList<QPair<QString, int> >       m_fileList;
+    int                         m_fileIndex;
+    QList<QPair<QString, int> > m_fileList;
 
-    int                               m_width, m_height;
+    int                         m_width, m_height;
 
-    QWaitCondition                    m_imageRequest;
-    QMutex                            m_condLock, m_imageLock;
-    bool                              m_initialized, m_needImage, m_haveImages, m_quitRequested, m_scanSubdirectories;
+    QWaitCondition              m_imageRequest;
+    QMutex                      m_condLock, m_imageLock;
+    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_scanSubdirectories;
 
-    float                             m_textureAspect;
-    QImage                            m_texture;
+    float                       m_textureAspect;
+    QImage                      m_texture;
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

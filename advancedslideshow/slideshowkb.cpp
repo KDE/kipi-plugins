@@ -214,10 +214,10 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
     m_endOfShow       = false;
     m_showingEnd      = false;
 
-    connect(m_timer, SIGNAL(timeout(void)),
+    connect(m_timer, SIGNAL(timeout()),
             this, SLOT(moveSlot()));
 
-    connect(m_imageLoadThread, SIGNAL(endOfShow(void)),
+    connect(m_imageLoadThread, SIGNAL(signalEndOfShow()),
             this, SLOT(slotEndOfShow()));
 
     // -- hide cursor when not moved --------------------

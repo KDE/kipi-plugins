@@ -132,7 +132,6 @@ public:
 
 class SlideShowKB : public QGLWidget
 {
-
     Q_OBJECT
 
 public:
