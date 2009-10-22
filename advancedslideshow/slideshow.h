@@ -69,7 +69,6 @@ public:
     static QStringList            effectNames();
     static QMap<QString, QString> effectNamesI18N();
 
-
 protected:
 
     void    mousePressEvent(QMouseEvent *event);
@@ -122,14 +121,13 @@ private:
     void         printProgress();
     void         showEndOfShow();
     void         readSettings();
-
     EffectMethod getRandomEffect();
 
 private:
 
-    SharedContainer*  m_sharedData;
+    SharedContainer*            m_sharedData;
 
-    uint         m_cacheSize;
+    uint                        m_cacheSize;
 
     // -------------------------
 
