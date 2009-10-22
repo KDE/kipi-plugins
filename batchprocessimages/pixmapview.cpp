@@ -28,7 +28,7 @@ extern "C"
 
 // C++ includes
 
-#include <cstdlib>
+#include <cstdio>
 
 // Qt includes
 
@@ -39,6 +39,7 @@ extern "C"
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
+#include <QDateTime>
 
 // KDE includes
 
@@ -79,23 +80,26 @@ PixmapView::~PixmapView()
 void PixmapView::setImage(const QString& ImagePath, const QString& tmpPath, bool cropAction)
 {
     m_cropAction      = cropAction;
-    m_previewFileName = tmpPath + "/" + QString::number(getpid()) + "-"
-                        + QString::number(random()) + "PreviewImage.PNG";
+    m_previewFileName = tmpPath + QString("/") + QString::number(getpid()) + QString("-") +
+                        QString::number(QDateTime::currentDateTime().toTime_t()) +
+                        QString("PreviewImage.PNG");
 
     if (m_cropAction == true)
+    {
         PreviewCal(ImagePath, tmpPath);
+    }
     else
     {
         if (m_img.load(ImagePath) == false)
-    	{
+        {
             PreviewCal(ImagePath, tmpPath);
-	}
+    }
         else 
         {
             if (!m_pix) m_pix = new QPixmap(m_img.width(), m_img.height());
-            m_w = m_img.width();
-            m_h = m_img.height();
-            m_validPreview = true;
+            m_w               = m_img.width();
+            m_h               = m_img.height();
+            m_validPreview    = true;
             updateView();
             horizontalScrollBar()->setLineStep(1);
             verticalScrollBar()->setLineStep(1);
@@ -129,9 +133,11 @@ void PixmapView::PreviewCal(const QString& ImagePath, const QString& /*tmpPath*/
     *m_PreviewProc << m_previewFileName;
     m_previewOutput.append(" -verbose " + ImagePath + " " + m_previewFileName + "\n\n");
 
-    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(slotPreviewProcessFinished()));
+    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)),
+            this, SLOT(slotPreviewProcessFinished()));
 
-    connect(m_PreviewProc, SIGNAL(readyRead()), SLOT(slotPreviewReadyRead()));
+    connect(m_PreviewProc, SIGNAL(readyRead()),
+            this, SLOT(slotPreviewReadyRead()));
 
     m_PreviewProc->start();
     if (!m_PreviewProc->waitForStarted())
