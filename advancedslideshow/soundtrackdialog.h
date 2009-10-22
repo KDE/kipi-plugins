@@ -82,7 +82,7 @@ private:
 
 private Q_SLOTS:
 
-    void slotAddDropItems(KUrl::List filesUrl);
+    void slotAddDropItems(const KUrl::List& filesUrl);
     void slotSoundFilesButtonAdd();
     void slotSoundFilesButtonDelete();
     void slotSoundFilesButtonUp();
@@ -92,14 +92,14 @@ private Q_SLOTS:
     void slotSoundFilesButtonReset();
     void slotSoundFilesSelected(int);
     void slotPreviewButtonClicked();
-    void slotImageTotalTimeChanged(QTime);
-    void slotAddNewTime(KUrl, QTime);
+    void slotImageTotalTimeChanged(const QTime&);
+    void slotAddNewTime(const KUrl&, const QTime&);
 
 private:
 
     KUrl::List              m_urlList;
     int                     m_currIndex;
-    SharedContainer*             m_sharedData;
+    SharedContainer*        m_sharedData;
     QTime                   m_totalTime;
     QTime                   m_imageTime;
     QMap<KUrl, QTime>*      m_tracksTime;

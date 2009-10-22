@@ -62,6 +62,11 @@ public:
     void saveSettings();
     bool updateUrlList();
 
+Q_SIGNALS :
+
+    void signalTotalTimeChanged(const QTime&);
+
+
 private Q_SLOTS:
 
     void slotOpenGLToggled();
@@ -75,10 +80,6 @@ private Q_SLOTS:
 
     void slotPortfolioDurationChanged(int);
     void slotImagesFilesSelected(QTreeWidgetItem* item);
-
-Q_SIGNALS :
-
-    void totalTimeChanged(QTime);
 
 private:
 

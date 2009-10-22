@@ -122,8 +122,8 @@ SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedContainer* sharedData)
     connect( m_SoundFilesListBox, SIGNAL( currentRowChanged( int ) ),
              this, SLOT( slotSoundFilesSelected( int ) ) );
 
-    connect( m_SoundFilesListBox, SIGNAL( addedDropItems(KUrl::List) ),
-             this, SLOT( slotAddDropItems(KUrl::List)));
+    connect( m_SoundFilesListBox, SIGNAL( signalAddedDropItems(const KUrl::List&) ),
+             this, SLOT( slotAddDropItems(const KUrl::List&)));
 
     connect( m_SoundFilesButtonAdd, SIGNAL( clicked() ),
              this, SLOT( slotSoundFilesButtonAdd() ) );
@@ -149,8 +149,8 @@ SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedContainer* sharedData)
     connect( m_previewButton, SIGNAL( clicked() ),
              this, SLOT( slotPreviewButtonClicked() ));
 
-    connect( m_sharedData->mainPage, SIGNAL(totalTimeChanged(QTime)),
-             this, SLOT( slotImageTotalTimeChanged(QTime)));
+    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(const QTime&)),
+             this, SLOT( slotImageTotalTimeChanged(const QTime&)));
 }
 
 SoundtrackDialog::~SoundtrackDialog()
@@ -166,8 +166,8 @@ void SoundtrackDialog::readSettings()
     m_rememberSoundtrack->setChecked(m_sharedData->soundtrackRememberPlaylist);
     m_loopCheckBox->setChecked(m_sharedData->soundtrackLoop);
 
-    connect( m_sharedData->mainPage, SIGNAL(totalTimeChanged(QTime)),
-             this, SLOT(slotImageTotalTimeChanged(QTime) ) );
+    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(const QTime&)),
+             this, SLOT(slotImageTotalTimeChanged(const QTime&) ) );
 
     // if tracks are already set in m_sharedData, add them now
     if (!m_sharedData->soundtrackUrls.isEmpty())
@@ -202,8 +202,8 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
 
         m_soundItems->insert(path, item);
 
-        connect(m_soundItems->value(path), SIGNAL(totalTimeReady(KUrl, QTime)),
-                this, SLOT(slotAddNewTime(KUrl, QTime)));
+        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(const KUrl&, const QTime&)),
+                this, SLOT(slotAddNewTime(const KUrl&, const QTime&)));
 
         m_urlList.append(path);
     }
@@ -305,7 +305,7 @@ void SoundtrackDialog::compareTimes()
     m_statusBarLabel->setFont(statusBarFont);
 }
 
-void SoundtrackDialog::slotAddNewTime(KUrl url, QTime trackTime)
+void SoundtrackDialog::slotAddNewTime(const KUrl& url, const QTime& trackTime)
 {
     m_timeMutex->lock();
     m_tracksTime->insert(url, trackTime);
@@ -323,7 +323,7 @@ void SoundtrackDialog::slotSoundFilesSelected( int row )
     }
 }
 
-void SoundtrackDialog::slotAddDropItems(KUrl::List filesUrl)
+void SoundtrackDialog::slotAddDropItems(const KUrl::List& filesUrl)
 {
     if (!filesUrl.isEmpty())
     {
@@ -332,7 +332,7 @@ void SoundtrackDialog::slotAddDropItems(KUrl::List filesUrl)
     }
 }
 
-void SoundtrackDialog::slotSoundFilesButtonAdd( void )
+void SoundtrackDialog::slotSoundFilesButtonAdd()
 {
     QPointer<KFileDialog> dlg = new KFileDialog(m_sharedData->soundtrackPath, "", this);
 
@@ -354,7 +354,7 @@ void SoundtrackDialog::slotSoundFilesButtonAdd( void )
     delete dlg;
 }
 
-void SoundtrackDialog::slotSoundFilesButtonDelete( void )
+void SoundtrackDialog::slotSoundFilesButtonDelete()
 {
     int Index = m_SoundFilesListBox->currentRow();
     if( Index < 0 )
@@ -373,7 +373,7 @@ void SoundtrackDialog::slotSoundFilesButtonDelete( void )
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonUp( void )
+void SoundtrackDialog::slotSoundFilesButtonUp()
 {
     int Cpt = 0;
 
@@ -403,7 +403,7 @@ void SoundtrackDialog::slotSoundFilesButtonUp( void )
     updateFileList();
 }
 
-void SoundtrackDialog::slotSoundFilesButtonDown( void )
+void SoundtrackDialog::slotSoundFilesButtonDown()
 {
     int Cpt = 0;
 
@@ -569,7 +569,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
     return;
 }
 
-void SoundtrackDialog::slotImageTotalTimeChanged( QTime imageTotalTime )
+void SoundtrackDialog::slotImageTotalTimeChanged( const QTime& imageTotalTime )
 {
     m_imageTime = imageTotalTime;
     m_slideTimeLabel->setText(imageTotalTime.toString());

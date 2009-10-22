@@ -64,7 +64,7 @@ public:
 
 Q_SIGNALS:
 
-    void totalTimeReady(KUrl, QTime);
+    void signalTotalTimeReady(const KUrl&, const QTime&);
 
 private Q_SLOTS:
 
@@ -95,7 +95,7 @@ public:
 
 Q_SIGNALS:
 
-    void addedDropItems(KUrl::List filesUrl);
+    void signalAddedDropItems(const KUrl::List& filesUrl);
 
 protected:
 

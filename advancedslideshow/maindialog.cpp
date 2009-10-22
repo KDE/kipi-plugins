@@ -59,8 +59,6 @@
 #include "slideshowgl.h"
 #include "slideshowkb.h"
 
-#include <libkipi/interface.h>
-
 using namespace KIPIPlugins;
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -246,7 +244,7 @@ void MainDialog::showNumberImages()
     m_totalTime = totalDuration;
 
     // Notify total time is changed
-    emit totalTimeChanged(m_totalTime);
+    emit signalTotalTimeChanged(m_totalTime);
 
     m_label6->setText(i18np("%1 image [%2]", "%1 images [%2]", numberOfImages, totalDuration.toString()));
 }
@@ -475,7 +473,7 @@ void MainDialog::slotSelection( void )
 void MainDialog::slotPortfolioDurationChanged(int)
 {
     showNumberImages();
-    emit totalTimeChanged( m_totalTime );
+    emit signalTotalTimeChanged( m_totalTime );
 }
 
 void MainDialog::slotThumbnail(const KUrl& /*url*/, const QPixmap& pix)

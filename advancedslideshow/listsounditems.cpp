@@ -112,7 +112,6 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     int mins       = (int)((total / (long int)( 60 * 1000 )) - (long int)(hours * 60));
     int secs       = (int)((total / (long int)1000) - (long int)(hours * 60 * 60) - (long int)(mins * 60));
     m_totalTime    = QTime(hours, mins, secs);
-
     m_artist       = (m_mediaObject->metaData(Phonon::ArtistMetaData)).join(",");
     m_title        = (m_mediaObject->metaData(Phonon::TitleMetaData)).join(",");
 
@@ -121,7 +120,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
     else
         setText(artist().append(" - ").append(title()));
 
-    emit totalTimeReady(m_url, m_totalTime);
+    emit signalTotalTimeReady(m_url, m_totalTime);
 }
 
 // ------------------------------------------------------------------
@@ -162,7 +161,7 @@ void ListSoundItems::dropEvent(QDropEvent *e)
     e->acceptProposedAction();
 
     if (!urls.isEmpty())
-        emit addedDropItems(urls);
+        emit signalAddedDropItems(urls);
 }
 
 KUrl::List ListSoundItems::fileUrls()
