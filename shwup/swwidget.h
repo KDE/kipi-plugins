@@ -25,6 +25,7 @@
 #define SWWIDGET_H
 
 // Qt includes
+
 #include <QWidget>
 
 class QLabel;
@@ -47,12 +48,13 @@ namespace KIPIPlugins
 
 namespace KIPIShwupPlugin
 {
-    
+
 class SwWidget : public QWidget
 {
     Q_OBJECT
 
 public:
+
     SwWidget(QWidget* parent, KIPI::Interface *iface);
     ~SwWidget();
 
@@ -63,13 +65,16 @@ public:
     long long getAlbumID();
 
 signals:
+
     void reloadAlbums();
 
 private slots:
+
     void slotReloadAlbumsRequest();
     void slotResizeChecked();
 
 private:
+
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;
 

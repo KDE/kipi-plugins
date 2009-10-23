@@ -92,9 +92,8 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
     setModal(false);
 
     setWindowTitle(i18n("Export to Shwup Web Service"));
-    setButtonGuiItem(User1,
-                      KGuiItem(i18n("Start Upload"), "network-workgroup",
-                               i18n("Start upload to Shwup web service")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                            i18n("Start upload to Shwup web service")));
      m_widget->setMinimumSize(700, 500);
 
     connect(m_widget->m_imgList, SIGNAL( signalImageListChanged()),
@@ -119,7 +118,7 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
 
     m_about = new KIPIPlugins::KPAboutData(ki18n("Shwup Export"), 0,
                       KAboutData::License_GPL,
-                      ki18n("A Kipi plugin to export images"
+                      ki18n("A Kipi plugin to export images "
                             "to Shwup web service."),
                       ki18n("(c) 2009, Timothee Groleau"));
 

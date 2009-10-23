@@ -25,6 +25,7 @@
 #include "swwidget.moc"
 
 // Qt includes
+
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
@@ -36,23 +37,26 @@
 #include <QVBoxLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
 #include <KPushButton>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIShwupPlugin
 {
 
 SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
-            : QWidget(parent)
+        : QWidget(parent)
 {
     setObjectName("SwWidget");
 
@@ -64,33 +68,28 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload to your Shwup account."));
-    
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Shwup account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(
-        i18n("This is a clickable link to open the Shwup.com home page in a web browser."));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Shwup.com home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(
-        i18n("This is the Shwup account that is currently logged in."));
+    QGroupBox* accountBox   = new QGroupBox(i18n("Account"), settingsBox);
+    accountBox->setWhatsThis(i18n("This is the Shwup account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     QLabel *userNameLbl     = new QLabel(i18n("Name:"), accountBox);
     m_userNameDisplayLbl    = new QLabel(accountBox);
 
-    m_changeUserBtn         = new KPushButton(
-        KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Change Shwup Account used for transfer")),
-        accountBox);
+    m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
+                                              i18n("Change Shwup Account used for transfer")),
+                                              accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
@@ -101,20 +100,17 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
     // ------------------------------------------------------------------------
 
     QGroupBox* albBox    = new QGroupBox(i18n("Destination"), settingsBox);
-    albBox->setWhatsThis(
-        i18n("This is the Shwup album to which selected photos will be uploaded."));
+    albBox->setWhatsThis(i18n("This is the Shwup album to which selected photos will be uploaded."));
     QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
 
     QLabel* albLbl  = new QLabel(i18n("Album:"), albBox);
     m_albumsCoB     = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    m_newAlbumBtn       = new KPushButton(
-            KGuiItem(i18n("New Album"), "list-add",
-                     i18n("Create new Shwup album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18n("Reload"), "view-refresh",
-                     i18n("Reload album list")), accountBox);
+    m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
+                                          i18n("Create new Shwup album")), accountBox);
+    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18n("Reload"), "view-refresh",
+                                          i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albLbl,              0, 0, 1, 1);
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 1, 1, 4);
@@ -124,8 +120,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
     // ------------------------------------------------------------------------
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(
-        i18n("This is the location to which Shwup images will be downloaded."));
+    uploadBox->setWhatsThis(i18n("This is the location to which Shwup images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
@@ -133,8 +128,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
     // ------------------------------------------------------------------------
 
     QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
-    optionsBox->setWhatsThis(
-        i18n("These are options that will be applied to photos before upload."));
+    optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_resizeChB     = new QCheckBox(optionsBox);
