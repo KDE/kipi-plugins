@@ -254,6 +254,7 @@ void BatchDialog::closeEvent(QCloseEvent *e)
     // Stop current conversion if necessary
     if (d->busy) slotStartStop();
     saveSettings();
+    d->listView->clear();
     e->accept();
 }
 
@@ -262,6 +263,7 @@ void BatchDialog::slotClose()
     // Stop current conversion if necessary
     if (d->busy) slotStartStop();
     saveSettings();
+    d->listView->clear();
     done(Close);
 }
 
