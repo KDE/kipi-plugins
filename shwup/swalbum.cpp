@@ -25,9 +25,11 @@
 #include "swalbum.moc"
 
 // Qt includes
+
 #include <QFormLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>
@@ -35,13 +37,14 @@
 #include <KComboBox>
 
 // local includes
+
 #include "switem.h"
 
 namespace KIPIShwupPlugin
 {
 
 SwNewAlbum::SwNewAlbum(QWidget* parent)
-           : KDialog(parent)
+          : KDialog(parent)
 {
     QString header(i18n("Shwup New Album"));
     setWindowTitle(header);
@@ -55,8 +58,7 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
 
     // ------------------------------------------------------------------------
     m_titleEdt          = new KLineEdit;
-    m_titleEdt->setWhatsThis(
-        i18n("Title of the album that will be created (required)."));
+    m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
     QFormLayout* albumBoxLayout = new QFormLayout;
     albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
@@ -64,8 +66,6 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
     mainWidget->setLayout(albumBoxLayout);
-
-    // ------------------------------------------------------------------------
 }
 
 SwNewAlbum::~SwNewAlbum()

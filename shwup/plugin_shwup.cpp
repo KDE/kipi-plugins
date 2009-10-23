@@ -27,12 +27,14 @@
 #include "plugin_shwup.moc"
 
 // C ANSI includes
+
 extern "C"
 {
 #include <unistd.h>
 }
 
 // KDE includes
+
 #include <KDebug>
 #include <KConfig>
 #include <KApplication>
@@ -43,17 +45,19 @@ extern "C"
 #include <KStandardDirs>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 
 // Local includes
+
 #include "swwindow.h"
 
 K_PLUGIN_FACTORY( ShwupFactory, registerPlugin<Plugin_Shwup>(); )
 K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
 
 Plugin_Shwup::Plugin_Shwup(QObject *parent, const QVariantList &/*args*/)
-                   : KIPI::Plugin(ShwupFactory::componentData(),
-                                  parent, "Shwup Export")
+            : KIPI::Plugin(ShwupFactory::componentData(),
+                          parent, "Shwup Export")
 {
     kDebug(51001) << "Plugin_Shwup plugin loaded";
 }
@@ -99,8 +103,7 @@ void Plugin_Shwup::slotExport()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", "kipi-shwup-"
-                                           + QString::number(getpid()) + '/');
+    QString tmp = dir.saveLocation("tmp", "kipi-shwup-" + QString::number(getpid()) + '/');
 
     m_dlg = new KIPIShwupPlugin::SwWindow(interface, tmp, kapp->activeWindow());
     m_dlg->show();

@@ -72,7 +72,7 @@ public:
     SwWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
     ~SwWindow();
 
-private slots:
+private Q_SLOTS:
 
     void slotBusy(bool val);
     void slotShwupKipiBlackListed();
@@ -96,9 +96,9 @@ private slots:
     void slotImageListChanged();
 
 private:
+
     QString getImageCaption(const KExiv2Iface::KExiv2& ev);
-    bool prepareImageForUpload(const QString& imgPath, bool isRAW,
-                               QString& caption);
+    bool prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
     void uploadNextPhoto();
 
     void readSettings();
@@ -110,28 +110,30 @@ private:
 
 private:
 
-    unsigned int                m_imagesCount;
-    unsigned int                m_imagesTotal;
-    QString                     m_tmpDir;
-    QString                     m_tmpPath;
+    unsigned int              m_imagesCount;
+    unsigned int              m_imagesTotal;
 
-    long long                   m_currentAlbumID;
-    QList<SwAlbum>              m_albumsList;
-    QString                     m_userEmail;
-    QString                     m_userPassword;
+    QString                   m_tmpDir;
+    QString                   m_tmpPath;
 
-    KProgressDialog            *m_progressDlg;
-    SwLogin                    *m_loginDlg;
+    long long                 m_currentAlbumID;
 
-    KUrl::List                  m_transferQueue;
+    QList<SwAlbum>            m_albumsList;
+    QString                   m_userEmail;
+    QString                   m_userPassword;
 
-    SwConnector                *m_connector;
-    SwWidget                   *m_widget;
-    SwNewAlbum                 *m_albumDlg;
+    KProgressDialog          *m_progressDlg;
+    SwLogin                  *m_loginDlg;
 
-    KIPI::Interface            *m_interface;
+    KUrl::List                m_transferQueue;
 
-    KIPIPlugins::KPAboutData   *m_about;
+    SwConnector              *m_connector;
+    SwWidget                 *m_widget;
+    SwNewAlbum               *m_albumDlg;
+
+    KIPI::Interface          *m_interface;
+
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 } // namespace KIPIShwupPlugin

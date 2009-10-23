@@ -27,9 +27,11 @@
 #define PLUGIN_SHWUP_H
 
 // Qt includes
+
 #include <QVariant>
 
 // LibKIPI includes
+
 #include <libkipi/plugin.h>
 
 class KAction;
@@ -45,20 +47,20 @@ class Plugin_Shwup : public KIPI::Plugin
 
 public:
 
-    Plugin_Shwup(QObject *parent, const QVariantList &args);
+    Plugin_Shwup(QObject *parent, const QVariantList& args);
     ~Plugin_Shwup();
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
-public slots:
+public Q_SLOTS:
 
     void slotExport();
 
 private:
 
-    KAction                       *m_actionExport;
-    KIPIShwupPlugin::SwWindow     *m_dlg;
+    KAction                   *m_actionExport;
+    KIPIShwupPlugin::SwWindow *m_dlg;
 };
 
 #endif // PLUGIN_SHWUP_H

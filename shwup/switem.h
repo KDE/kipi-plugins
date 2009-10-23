@@ -25,6 +25,7 @@
 #define SWITEM_H
 
 // Qt includes
+
 #include <QString>
 
 namespace KIPIShwupPlugin
@@ -32,7 +33,9 @@ namespace KIPIShwupPlugin
 
 class SwUser
 {
+
 public:
+
     SwUser()
     {
         id = 0;
@@ -47,56 +50,68 @@ public:
         profileURL.clear();
     }
 
-    long long   id;
-    QString     name;
-    QString     email;
-    QString     password;
-    QString     profileURL;
+    long long id;
+
+    QString   name;
+    QString   email;
+    QString   password;
+    QString   profileURL;
 };
+
+// ------------------------------------------------------
 
 class SwAlbum
 {
+
 public:
+
     SwAlbum()
     {
-        id = -1;
-        description = "";
-        title = "";
-        token = "";
-        albumUrl = "";
+        id                = -1;
+        description       = "";
+        title             = "";
+        token             = "";
+        albumUrl          = "";
         albumThumbnailUrl = "";
-        
-        canUpload = false;
-        canDownload = false;
-        canInvite = false;
+
+        canUpload         = false;
+        canDownload       = false;
+        canInvite         = false;
     }
 
-    long long   id;
-    QString     token;
-    QString     title;
-    QString     description;
-    QString     albumUrl;
-    QString     albumThumbnailUrl;
-    
-    bool        canUpload;
-    bool        canDownload;
-    bool        canInvite;
+    long long id;
+
+    QString   token;
+    QString   title;
+    QString   description;
+    QString   albumUrl;
+    QString   albumThumbnailUrl;
+
+    bool      canUpload;
+    bool      canDownload;
+    bool      canInvite;
 };
+
+// ------------------------------------------------------
 
 class SwPhoto
 {
+
 public:
+
     SwPhoto()
     {
         id = -1;
     }
 
-    long long   id;
-    QString     caption;
-    QString     thumbURL;
-    QString     originalURL;
+    long long id;
+
+    QString   caption;
+    QString   thumbURL;
+    QString   originalURL;
 };
 
 } // namespace KIPIShwupPlugin
 
 #endif /* SWITEM_H */
+

@@ -27,6 +27,7 @@
 // Qt includes
 
 // KDE includes
+
 #include <KDialog>
 
 class KLineEdit;
@@ -43,13 +44,15 @@ class SwNewAlbum : public KDialog
     Q_OBJECT
 
 public:
+
     SwNewAlbum(QWidget* parent);
     ~SwNewAlbum();
 
     void getAlbumProperties(SwAlbum &album);
 
 private:
-    KLineEdit       *m_titleEdt;
+
+    KLineEdit* m_titleEdt;
 
     friend class SwWindow;
 };

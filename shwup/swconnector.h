@@ -65,7 +65,7 @@ public:
  
     void    cancel();
 
-signals:
+Q_SIGNALS:
 
     void signalBusy(bool val);
 
@@ -91,7 +91,7 @@ private:
     void createAlbumResultHandler(KIO::Job* job, const QByteArray &data);
     void addPhotoResultHandler(KIO::Job* job, const QByteArray &data);
 
-private slots:
+private Q_SLOTS:
 
     void slotRequestRestURLRedirection(KIO::Job* job, const KUrl& newUrl);
     void data(KIO::Job *job, const QByteArray& data);
@@ -103,24 +103,24 @@ private:
 
 private:
 
-    QWidget*        m_parent;
+    QWidget*   m_parent;
 
-    QByteArray      m_buffer;
+    QByteArray m_buffer;
 
-    QString         m_userAgent;
-    QString         m_apiStartURL;
-    QString         m_apiDomainURL;
-    QString         m_apiRestPath;
-    QString         m_apiVersion;
-    QString         m_apiKey;
-    QString         m_apiSecretKey;
+    QString    m_userAgent;
+    QString    m_apiStartURL;
+    QString    m_apiDomainURL;
+    QString    m_apiRestPath;
+    QString    m_apiVersion;
+    QString    m_apiKey;
+    QString    m_apiSecretKey;
 
-    QTime           m_callID;
+    QTime      m_callID;
 
-    SwUser          m_user;
-    bool            m_loggedIn;
+    SwUser     m_user;
+    bool       m_loggedIn;
 
-    KIO::Job*       m_job;
+    KIO::Job*  m_job;
 };
 
 } // namespace KIPIFacebookPlugin

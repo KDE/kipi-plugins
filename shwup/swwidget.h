@@ -64,11 +64,11 @@ public:
 
     long long getAlbumID();
 
-signals:
+Q_SIGNALS:
 
     void reloadAlbums();
 
-private slots:
+private Q_SLOTS:
 
     void slotReloadAlbumsRequest();
     void slotResizeChecked();

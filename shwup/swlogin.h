@@ -33,7 +33,7 @@ namespace KIPIShwupPlugin
 {
 
 class SwUser;
-    
+
 class SwLogin : public KDialog
 {
     Q_OBJECT
