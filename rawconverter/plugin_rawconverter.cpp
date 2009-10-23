@@ -180,6 +180,7 @@ void Plugin_RawConverter::slotActivateSingle()
             KWindowSystem::unminimizeWindow(m_singleDlg->winId());
 
         KWindowSystem::activateWindow(m_singleDlg->winId());
+        m_singleDlg->setFile(images.images()[0].path());
     }
 
     m_singleDlg->show();

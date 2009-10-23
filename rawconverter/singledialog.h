@@ -56,6 +56,8 @@ public:
     SingleDialog(const QString& file, KIPI::Interface* iface);
     ~SingleDialog();
 
+    void setFile(const QString& file);
+
 protected:
 
     void closeEvent(QCloseEvent *e);

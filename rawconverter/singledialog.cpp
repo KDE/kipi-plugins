@@ -131,10 +131,7 @@ public:
 SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
             : KDialog(0), d(new SingleDialogPriv)
 {
-    d->iface         = iface;
-    d->inputFile     = file;
-    d->inputFileName = QFileInfo(file).fileName();
-
+    d->iface = iface;
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(KDialog::Close);
     setButtonText(User1, i18n("&Preview"));
@@ -258,7 +255,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     busy(false);
     readSettings();
-    QTimer::singleShot(0, this, SLOT( slotIdentify() ) );
+    setFile(file);
 }
 
 SingleDialog::~SingleDialog()
@@ -266,6 +263,13 @@ SingleDialog::~SingleDialog()
     delete d->about;
     delete d->thread;
     delete d;
+}
+
+void SingleDialog::setFile(const QString& file)
+{
+    d->inputFile     = file;
+    d->inputFileName = QFileInfo(file).fileName();
+    QTimer::singleShot(0, this, SLOT( slotIdentify() ));
 }
 
 void SingleDialog::slotHelp()
