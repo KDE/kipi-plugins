@@ -59,6 +59,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup.
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -217,6 +218,12 @@ ELSE(KDEPIMLIBS_FOUND)
     MESSAGE(STATUS " libkdepim library found............. NO  (optional)")
 ENDIF(KDEPIMLIBS_FOUND)
 
+IF(QCA2_FOUND)
+    MESSAGE(STATUS " qca2 library found.................. YES (optional)")
+ELSE(QCA2_FOUND)
+    MESSAGE(STATUS " qca2 library found.................. NO  (optional)")
+ENDIF(QCA2_FOUND)
+
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     IF(X11_FOUND AND X11_Xrandr_FOUND)
@@ -245,6 +252,12 @@ ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND A
     MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
     SET(KIPIPLUGINS_CAN_BE_COMPILED false)
 ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
+
+IF(QCA2_FOUND)
+    MESSAGE(STATUS " Shwup will be compiled.............. YES (optional)")
+ELSE(QCA2_FOUND)
+    MESSAGE(STATUS " Shwup will be compiled.............. NO  (optional - Look README file for more details about dependencies)")
+ENDIF(QCA2_FOUND)
 
 IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
     MESSAGE(STATUS " HtmlExport will be compiled......... YES (optional)")
@@ -383,6 +396,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     IF(KDEPIMLIBS_FOUND)
        ADD_SUBDIRECTORY(calendar)
     ENDIF(KDEPIMLIBS_FOUND)
+
+    IF(QCA2_FOUND)
+       ADD_SUBDIRECTORY(shwup)
+    ENDIF(QCA2_FOUND)
 
     IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
        ADD_SUBDIRECTORY(ipodexport)

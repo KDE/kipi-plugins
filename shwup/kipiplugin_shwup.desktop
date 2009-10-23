@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Shwup Export
+Comment=A tool to export images to a remote Shwup web service
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_shwup
+author=Timothee Groleau, timothee at muvee dot com
