@@ -74,7 +74,7 @@ void Plugin_Facebook::setup(QWidget* widget)
     m_actionExport = actionCollection()->addAction("facebookexport");
     m_actionExport->setText(i18n("Export to &Facebook..."));
     m_actionExport->setIcon(KIcon("facebook"));
-    m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F);
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_F));
 
     connect(m_actionExport, SIGNAL( triggered(bool) ),
             this, SLOT( slotExport()) );
@@ -84,7 +84,7 @@ void Plugin_Facebook::setup(QWidget* widget)
     m_actionImport = actionCollection()->addAction("facebookimport");
     m_actionImport->setText(i18n("Import from &Facebook..."));
     m_actionImport->setIcon(KIcon("facebook"));
-    m_actionImport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F);
+    m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F));
 
     connect(m_actionImport, SIGNAL( triggered(bool) ),
             this, SLOT( slotImport()) );

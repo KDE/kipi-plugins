@@ -76,7 +76,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("flickr"));
     m_actionFlickr->setEnabled(false);
-    m_actionFlickr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R);
+    m_actionFlickr->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
@@ -87,7 +87,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(KIcon("hq"));
     m_action23->setEnabled(false);
-    m_action23->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2);
+    m_action23->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2));
 
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
@@ -98,7 +98,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(KIcon("zooomr"));
     m_actionZooomr->setEnabled(false);
-    m_actionZooomr->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Z);
+    m_actionZooomr->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Z));
 
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));

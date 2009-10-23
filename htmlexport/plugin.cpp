@@ -71,7 +71,7 @@ void Plugin::setup( QWidget* widget ) {
     d->mAction = actionCollection()->addAction("htmlexport");
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("applications-internet"));
-    d->mAction->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H);
+    d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
     connect(d->mAction, SIGNAL(triggered()),
         SLOT(slotActivate()) );
     addAction(d->mAction);

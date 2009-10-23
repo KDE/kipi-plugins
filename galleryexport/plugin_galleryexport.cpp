@@ -81,7 +81,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
     m_action->setText(i18n("Export to &Gallery..."));
     m_action->setIcon(KIcon("gallery"));
     m_action->setEnabled(true);
-    m_action->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G);
+    m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));

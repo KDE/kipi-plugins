@@ -87,7 +87,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
     m_actionSlideShow = actionCollection()->addAction("advancedslideshow");
     m_actionSlideShow->setText(i18n("Advanced Slideshow..."));
     m_actionSlideShow->setIcon(KIcon("slideshow"));
-    m_actionSlideShow->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9);
+    m_actionSlideShow->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_F9));
     m_actionSlideShow->setEnabled(false);
 
     connect(m_actionSlideShow, SIGNAL(triggered(bool)),

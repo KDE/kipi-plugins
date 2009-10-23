@@ -121,14 +121,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
 
     KAction *left = actionCollection()->addAction("rotate_ccw");
     left->setText(i18n("Left"));
-    left->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left);
+    left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
     connect(left, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateLeft()));
     d->action_RotateImage->addAction(left);
 
     KAction *right = actionCollection()->addAction("rotate_cw");
     right->setText(i18n("Right"));
-    right->setShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right);
+    right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
     connect(right, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateRight()));
     d->action_RotateImage->addAction(right);
@@ -138,14 +138,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
 
     KAction *hori = actionCollection()->addAction("flip_horizontal");
     hori->setText(i18n("Horizontally"));
-    hori->setShortcut(Qt::CTRL+Qt::Key_Asterisk);
+    hori->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Asterisk));
     connect(hori, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipHorizontally()));
     d->action_FlipImage->addAction(hori);
 
     KAction *verti = actionCollection()->addAction("flip_vertical");
     verti->setText(i18n("Vertically"));
-    verti->setShortcut(Qt::CTRL+Qt::Key_Slash);
+    verti->setShortcut(KShortcut(Qt::CTRL+Qt::Key_Slash));
     connect(verti, SIGNAL(triggered(bool)),
             this, SLOT(slotFlipVertically()));
     d->action_FlipImage->addAction(verti);

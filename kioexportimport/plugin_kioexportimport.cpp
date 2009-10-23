@@ -72,7 +72,7 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     m_actionExport = actionCollection()->addAction("kioexport");
     m_actionExport->setText(i18n("Export to remote computer..."));
     m_actionExport->setIcon(KIcon("folder-remote"));
-    m_actionExport->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K);
+    m_actionExport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_K));
 
     connect(m_actionExport, SIGNAL(triggered(bool)), 
             this, SLOT(slotActivateExport()));
@@ -83,7 +83,7 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     m_actionImport = actionCollection()->addAction("kioimport");
     m_actionImport->setText(i18n("Import from remote computer..."));
     m_actionImport->setIcon(KIcon("folder-remote"));
-    m_actionImport->setShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I);
+    m_actionImport->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_I));
 
     connect(m_actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateImport()));

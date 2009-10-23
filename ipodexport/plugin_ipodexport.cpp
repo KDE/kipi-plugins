@@ -72,7 +72,7 @@ void Plugin_iPodExport::setup(QWidget* widget)
     m_actionImageUpload = actionCollection()->addAction("ipodexport");
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
     m_actionImageUpload->setIcon(KIcon("multimedia-player-apple-ipod"));
-    m_actionImageUpload->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I);
+    m_actionImageUpload->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
 
     connect(m_actionImageUpload, SIGNAL(triggered(bool)),
             this, SLOT(slotImageUpload()));

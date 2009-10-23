@@ -72,7 +72,7 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
     m_actionExport = actionCollection()->addAction("picasawebexport");
     m_actionExport->setText(i18n("Export to &PicasaWeb..."));
     m_actionExport->setIcon(KIcon("picasa"));
-    m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P);
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));

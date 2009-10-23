@@ -71,7 +71,7 @@ void Plugin_Shwup::setup(QWidget* widget)
     m_actionExport = actionCollection()->addAction("shwupexport");
     m_actionExport->setText(i18n("Export to Shwup..."));
     m_actionExport->setIcon(KIcon("shwup"));
-    m_actionExport->setShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W);
+    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
 
     connect(m_actionExport, SIGNAL( triggered(bool) ),
             this, SLOT( slotExport()) );
