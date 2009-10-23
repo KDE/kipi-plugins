@@ -64,7 +64,7 @@ SwLogin::SwLogin(QWidget* parent)
 
     QFormLayout* loginBoxLayout = new QFormLayout;
     loginBoxLayout->addRow(i18n("Email:"), m_emailEdt);
-    loginBoxLayout->addRow(i18n("Passord:"), m_passwordEdt);
+    loginBoxLayout->addRow(i18n("Password:"), m_passwordEdt);
     loginBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     loginBoxLayout->setSpacing(KDialog::spacingHint());
     loginBoxLayout->setMargin(KDialog::spacingHint());
