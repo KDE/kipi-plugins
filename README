@@ -73,6 +73,7 @@ Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
 libopencv       >= 1.0                          http://opencv.willowgarage.com
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
+libqca          >= 2.0.0                        http://delta.affinix.com/qca
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -86,7 +87,7 @@ WallPaper          : kdebase (runtime dependency)
 RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs)
-
+Shwup              : libqca
 
 -- CONTACT ------------------------------------------------------------
 
