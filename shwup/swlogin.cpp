@@ -24,9 +24,11 @@
 #include "swlogin.moc"
 
 // Qt includes
+
 #include <QFormLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>
@@ -34,13 +36,14 @@
 #include <KComboBox>
 
 // local includes
+
 #include "switem.h"
 
 namespace KIPIShwupPlugin
 {
 
 SwLogin::SwLogin(QWidget* parent)
-           : KDialog(parent)
+       : KDialog(parent)
 {
     QString header(i18n("Shwup Login"));
     setWindowTitle(header);
@@ -54,13 +57,11 @@ SwLogin::SwLogin(QWidget* parent)
 
     // ------------------------------------------------------------------------
     m_emailEdt          = new KLineEdit;
-    m_emailEdt->setWhatsThis(
-        i18n("Email of shwup account (required)."));
+    m_emailEdt->setWhatsThis(i18n("Email of shwup account (required)."));
 
-    m_passwordEdt          = new KLineEdit;
+    m_passwordEdt       = new KLineEdit;
     m_passwordEdt->setEchoMode( QLineEdit::Password );
-    m_passwordEdt->setWhatsThis(
-        i18n("Password of shwup account (required)."));
+    m_passwordEdt->setWhatsThis(i18n("Password of shwup account (required)."));
 
     QFormLayout* loginBoxLayout = new QFormLayout;
     loginBoxLayout->addRow(i18n("Email:"), m_emailEdt);
@@ -69,8 +70,6 @@ SwLogin::SwLogin(QWidget* parent)
     loginBoxLayout->setSpacing(KDialog::spacingHint());
     loginBoxLayout->setMargin(KDialog::spacingHint());
     mainWidget->setLayout(loginBoxLayout);
-
-    // ------------------------------------------------------------------------
 }
 
 SwLogin::~SwLogin()
@@ -79,7 +78,7 @@ SwLogin::~SwLogin()
 
 void SwLogin::getUserProperties(SwUser &user)
 {
-    user.email = m_emailEdt->text();
+    user.email    = m_emailEdt->text();
     user.password = m_passwordEdt->text();
 }
 

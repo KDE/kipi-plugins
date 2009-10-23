@@ -23,9 +23,8 @@
 #ifndef SWLOGIN_H
 #define SWLOGIN_H
 
-// Qt includes
-
 // KDE includes
+
 #include <KDialog>
 
 class KLineEdit;
@@ -40,14 +39,16 @@ class SwLogin : public KDialog
     Q_OBJECT
 
 public:
+
     SwLogin(QWidget* parent);
     ~SwLogin();
 
-    void getUserProperties(SwUser &user);
+    void getUserProperties(SwUser& user);
 
 private:
-    KLineEdit       *m_emailEdt;
-    KLineEdit       *m_passwordEdt;
+
+    KLineEdit* m_emailEdt;
+    KLineEdit* m_passwordEdt;
 
     friend class SwWindow;
 };
