@@ -37,8 +37,9 @@ SlideShow          : A tool to Slide images with 2D and 3D effects using OpenGL.
 Smug               : A tool to import/export images to/from a remote SmugMug web service (http://www.smugmug.com).
 TimeAdjust         : A tool to adjust date and time.
 IpodExport         : A tool to export pictures to an Ipod device.
-BatchProcess       : A tool to batch process images (convert, resize, rename, etc.)
-KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...)
+BatchProcess       : A tool to batch process images (convert, resize, rename, etc.).
+KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...).
+Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 
 Porting under progress to Qt4/KDE4:
 
