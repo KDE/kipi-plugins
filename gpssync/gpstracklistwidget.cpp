@@ -190,7 +190,7 @@ void GPSTrackListWidget::resized()
     }
 
     openUrl(KUrl(url));
-    kDebug(51001) << url ;
+    kDebug(AREA_CODE_LOADING) << url ;
 }
 
 }  // namespace KIPIGPSSyncPlugin

@@ -372,8 +372,13 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${KDE4_INCLUDES}
                         ${QT4_INCLUDES}
                        )
-                       
-    ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=51000) 
+                     
+    # debug settings
+    SET(AREA_CODE_GENERAL "51000")
+    SET(AREA_CODE_LOADING "51001")
+    ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL}) 
+    ADD_DEFINITIONS(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
+    ADD_DEFINITIONS(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
 
     # Plugins which will be always compiled
 

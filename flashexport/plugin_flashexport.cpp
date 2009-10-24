@@ -50,7 +50,7 @@ K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 Plugin_FlashExport::Plugin_FlashExport(QObject *parent, const QVariantList&)
                    : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
 {
-    kDebug(51001) << "Plugin_FlashExport plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_FlashExport plugin loaded" ;
 }
 
 void Plugin_FlashExport::setup(QWidget* widget)

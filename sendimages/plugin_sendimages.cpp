@@ -71,7 +71,7 @@ Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
                  : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
                    d(new Plugin_SendImagesPriv)
 {
-    kDebug(51001) << "Plugin_SendImages plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
 }
 
 Plugin_SendImages::~Plugin_SendImages()

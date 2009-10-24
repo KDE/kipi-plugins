@@ -68,7 +68,7 @@ K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const QVariantList &)
               : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
-    kDebug(51001) << "Plugin_GPSSync plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
 }
 
 void Plugin_GPSSync::setup( QWidget* widget )

@@ -64,7 +64,7 @@ Plugin_AcquireImages::Plugin_AcquireImages(QObject *parent, const QVariantList&)
     m_parentWidget      = 0;
     m_saneWidget        = 0;
     m_scanDlg           = 0;
-    kDebug(51001) << "Plugin_AcquireImages plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_AcquireImages plugin loaded";
 }
 
 void Plugin_AcquireImages::setup(QWidget* widget)

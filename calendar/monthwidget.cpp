@@ -147,7 +147,7 @@ void MonthWidget::setImage( const KUrl &url )
         // Check if image can be loaded by native Qt loader.
         if ( QImageReader::imageFormat( url.path() ).isEmpty() )
         {
-            kWarning( 51001 ) << "Unknown image format for: " << url.prettyUrl();
+            kWarning( AREA_CODE_LOADING ) << "Unknown image format for: " << url.prettyUrl();
             return;
         }
     }

@@ -52,7 +52,7 @@ Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject *parent, const QVariantList &
                                    parent, "RemoveRedEyes")
 {
 
-    kDebug(51001) << "Plugin_RemoveRedEyes plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
 }
 
 void Plugin_RemoveRedEyes::setup(QWidget* widget)

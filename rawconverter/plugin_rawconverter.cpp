@@ -70,7 +70,7 @@ K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_rawconverter") )
 Plugin_RawConverter::Plugin_RawConverter(QObject *parent, const QVariantList&)
                    : KIPI::Plugin(RawConverterFactory::componentData(), parent, "RawConverter")
 {
-    kDebug(51001) << "Plugin_RawConverter plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_RawConverter plugin loaded";
 }
 
 void Plugin_RawConverter::setup(QWidget* widget)

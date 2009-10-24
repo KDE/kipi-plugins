@@ -59,7 +59,7 @@ K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )
 Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &/*args*/)
                    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
-    kDebug(51001) << "Plugin_FlickrExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_FlickrExport plugin loaded";
 }
 
 void Plugin_FlickrExport::setup(QWidget* widget)

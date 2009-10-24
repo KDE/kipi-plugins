@@ -179,7 +179,7 @@ void GPSMapWidget::resized()
     url.append("&filename=");
     url.append(d->fileName);
     openUrl(KUrl(url));
-    kDebug(51001) << url ;
+    kDebug(AREA_CODE_LOADING) << url ;
 }
 
 }  // namespace KIPIGPSSyncPlugin

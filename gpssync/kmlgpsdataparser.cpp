@@ -87,7 +87,7 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
                                                             int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
-    kDebug(51001) << "creation d'un trackpoint" ;
+    kDebug(AREA_CODE_LOADING) << "creation d'un trackpoint" ;
 
     // create the points
     QDomElement kmlPointsFolder = addKmlElement(parent, "Folder");

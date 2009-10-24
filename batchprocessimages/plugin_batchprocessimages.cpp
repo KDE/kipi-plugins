@@ -74,7 +74,7 @@ Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVar
         : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
                        parent, "BatchProcessImages")
 {
-    kDebug(51001) << "Plugin_BatchProcessImages plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
 }
 
 void Plugin_BatchProcessImages::setup(QWidget* widget)

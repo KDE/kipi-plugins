@@ -62,7 +62,7 @@ Plugin_Smug::Plugin_Smug(QObject *parent, const QVariantList& /*args*/)
     m_dlgImport = 0;
     m_dlgExport = 0;
 
-    kDebug(51001) << "Plugin_Smug plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_Smug plugin loaded";
 }
 
 void Plugin_Smug::setup(QWidget* widget)

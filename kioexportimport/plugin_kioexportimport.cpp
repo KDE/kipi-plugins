@@ -58,7 +58,7 @@ K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
 Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantList&)
                       : KIPI::Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
-    kDebug(51001) << "Plugin_KioExportImport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
 }
 
 void Plugin_KioExportImport::setup(QWidget* widget)

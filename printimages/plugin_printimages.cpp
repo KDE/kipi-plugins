@@ -59,7 +59,7 @@ K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 Plugin_PrintImages::Plugin_PrintImages ( QObject *parent, const QVariantList& /*args*/ )
                   : KIPI::Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
-    kDebug(51001) << "Plugin_PrintImages plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
 }
 
 void Plugin_PrintImages::setup ( QWidget* widget )

@@ -70,7 +70,7 @@ Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
                      m_interface(0),
                      m_lastSelectedDirectory()
 {
-    kDebug(51001) << "Plugin_MetadataEdit plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_MetadataEdit plugin loaded";
 }
 
 void Plugin_MetadataEdit::setup( QWidget* widget )

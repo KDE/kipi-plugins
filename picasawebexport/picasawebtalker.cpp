@@ -956,16 +956,16 @@ void PicasawebTalker::parseResponsePhotoProperty(const QByteArray &data)
 
         if ( node.isElement() && node.nodeName() == "err" )
         {
-            kDebug(51001) << "Checking Error in response" ;
+            kDebug(AREA_CODE_LOADING) << "Checking Error in response" ;
             QString code = node.toElement().attribute("code");
-            kDebug(51001) << "Error code=" << code ;
-            kDebug(51001) << "Msg=" << node.toElement().attribute("msg") ;
+            kDebug(AREA_CODE_LOADING) << "Error code=" << code ;
+            kDebug(AREA_CODE_LOADING) << "Msg=" << node.toElement().attribute("msg") ;
             emit signalError(code);
         }
         node = node.nextSibling();
     }
 
-    kDebug(51001) << "GetToken finished" ;
+    kDebug(AREA_CODE_LOADING) << "GetToken finished" ;
     if (!success)
     {
         emit signalAddPhotoFailed(i18n("Failed to query photo information"));

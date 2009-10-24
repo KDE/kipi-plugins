@@ -53,7 +53,7 @@ K_EXPORT_PLUGIN( viewerFactory("kipiplugin_imageviewer") )
 Plugin_viewer::Plugin_viewer( QObject *parent, const QVariantList & )
              : KIPI::Plugin( viewerFactory::componentData(), parent, "kipiplugin_imageviewer" )
 {
-    kDebug(51001) << "OpenGL viewer plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
 void Plugin_viewer::setup( QWidget* widget )

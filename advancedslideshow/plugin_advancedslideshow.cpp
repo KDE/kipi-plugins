@@ -76,7 +76,7 @@ Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVaria
                         : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
                                        parent, "AdvancedSlideshow")
 {
-    kDebug(51001) << "Plugin_AdvancedSlideshow plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
     m_sharedData = 0;
 }
 

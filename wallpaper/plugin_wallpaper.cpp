@@ -53,7 +53,7 @@ K_EXPORT_PLUGIN ( WallPaperFactory("kipiplugin_wallpaper") )
 Plugin_WallPaper::Plugin_WallPaper(QObject *parent, const QVariantList&)
                 : KIPI::Plugin(WallPaperFactory::componentData(), parent, "WallPaper")
 {
-    kDebug(51001) << "Plugin_WallPaper plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
 }
 
 void Plugin_WallPaper::setup( QWidget* widget )

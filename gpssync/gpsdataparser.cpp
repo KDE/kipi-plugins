@@ -262,7 +262,7 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
         }
     }
 
-    kDebug(51001) << "GPX File " << url.fileName()
+    kDebug(AREA_CODE_LOADING) << "GPX File " << url.fileName()
                     << " parsed with " << numPoints()
                     << " points extracted" ;
     return true;

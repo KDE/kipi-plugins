@@ -59,7 +59,7 @@ K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
 Plugin_Shwup::Plugin_Shwup(QObject *parent, const QVariantList &/*args*/)
             : KIPI::Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
 {
-    kDebug(51001) << "Plugin_Shwup plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_Shwup plugin loaded";
 }
 
 void Plugin_Shwup::setup(QWidget* widget)

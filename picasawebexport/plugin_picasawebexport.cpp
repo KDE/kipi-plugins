@@ -60,7 +60,7 @@ Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const QVariantLi
 {
     m_dlgExport = 0;
 
-    kDebug(51001) << "Plugin_PicasawebExport plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_PicasawebExport plugin loaded" ;
 }
 
 void Plugin_PicasawebExport::setup(QWidget* widget)

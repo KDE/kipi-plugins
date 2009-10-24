@@ -51,7 +51,7 @@ K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QVariantList&)
                  : KIPI::Plugin( TimeAdjustFactory::componentData(), parent, "TimeAdjust")
 {
-    kDebug(51001) << "Plugin_TimeAdjust plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
 }
 
 Plugin_TimeAdjust::~Plugin_TimeAdjust()

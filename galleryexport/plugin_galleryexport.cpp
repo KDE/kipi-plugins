@@ -59,7 +59,7 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
                     : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport"),
                       m_action(0), mpGallery(0)
 {
-    kDebug(51001) << "Plugin_GalleryExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
 }
 
 void Plugin_GalleryExport::setup(QWidget* widget)

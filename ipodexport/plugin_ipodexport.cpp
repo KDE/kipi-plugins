@@ -60,7 +60,7 @@ Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
 {
     m_dlgImageUpload = 0;
 
-    kDebug(51001) << "Plugin_iPodExport plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_iPodExport plugin loaded" ;
 
     g_type_init();
 }
