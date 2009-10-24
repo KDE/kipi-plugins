@@ -249,7 +249,7 @@ void SwWindow::slotRequestRestURLDone(int errCode, const QString& /*errMessage*/
     else
     {
         // unable to contact service
-        KMessageBox::error(this, i18n("The shwup.com service doesn't seem to be availabe at this time, sorry :( ."));
+        KMessageBox::error(this, i18n("The shwup.com service does not seem to be available at this time, please try again later."));
         done(Close);
     }
 }
@@ -286,7 +286,7 @@ void SwWindow::authenticate()
 
 void SwWindow::slotShwupKipiBlackListed()
 {
-    KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service, sorry :( ."));
+    KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
     done(Close);
 }
 
@@ -523,7 +523,7 @@ void SwWindow::uploadNextPhoto()
         {
             SwAlbum album = m_albumsList.at( m_widget->m_albumsCoB->currentIndex() );
             KMessageBox::information(this,
-                i18n("The upload is complete! You may visit \"<a href=\"%1\">%2</a>\" to view the album online and invite people.")
+                i18n("Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online and invite people.")
                     .arg(album.albumUrl)
                     .arg(album.title),
                 i18n("Upload complete"),
