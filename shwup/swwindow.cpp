@@ -59,12 +59,12 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include "imageslist.h"
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 
 // Local includes
 
+#include "imageslist.h"
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "swwindow.h"
 #include "switem.h"
 #include "swconnector.h"
@@ -75,7 +75,7 @@
 namespace KIPIShwupPlugin
 {
 
-SwWindow::SwWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget *parent)
+SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
         : KDialog(parent)
 {
     m_tmpPath.clear();
@@ -172,7 +172,6 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
     connect(m_connector, SIGNAL( signalAddPhotoDone(int, const QString&) ),
             this, SLOT( slotAddPhotoDone(int, const QString&) ));
 
-
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -213,7 +212,7 @@ void SwWindow::readSettings()
         m_widget->m_imageQualitySpB->setEnabled(false);
     }
 
-    m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width", 1600));
+    m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width",    1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 90));
 
     KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
@@ -224,15 +223,14 @@ void SwWindow::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Shwup Settings");
+    SwUser user      = m_connector->getUser();
 
-    SwUser user = m_connector->getUser();
-
-    grp.writeEntry("User Email", user.email);
+    grp.writeEntry("User Email",    user.email);
     grp.writeEntry("user Password", user.password);
     grp.writeEntry("Current Album", m_currentAlbumID);
-    grp.writeEntry("Resize", m_widget->m_resizeChB->isChecked());
-    grp.writeEntry("Maximum Width",  m_widget->m_dimensionSpB->value());
-    grp.writeEntry("Image Quality",  m_widget->m_imageQualitySpB->value());
+    grp.writeEntry("Resize",        m_widget->m_resizeChB->isChecked());
+    grp.writeEntry("Maximum Width", m_widget->m_dimensionSpB->value());
+    grp.writeEntry("Image Quality", m_widget->m_imageQualitySpB->value());
 
     KConfigGroup dialogGroup = config.group("Shwup Export Dialog");
     saveDialogSize(dialogGroup);
@@ -306,8 +304,7 @@ void SwWindow::slotClose()
     done(Close);
 }
 
-void SwWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
-                                  const QList <SwAlbum>& albumsList)
+void SwWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList <SwAlbum>& albumsList)
 {
     if (errCode != 0)
     {
@@ -321,10 +318,8 @@ void SwWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
 
     for (int i = 0; i < albumsList.size(); ++i)
     {
-        m_widget->m_albumsCoB->addItem(
-            KIcon("system-users"),
-            albumsList.at(i).title,
-            albumsList.at(i).id);
+        m_widget->m_albumsCoB->addItem(KIcon("system-users"), albumsList.at(i).title,
+                                       albumsList.at(i).id);
        if (m_currentAlbumID == albumsList.at(i).id)
        {
            m_widget->m_albumsCoB->setCurrentIndex(i);
@@ -410,12 +405,11 @@ void SwWindow::slotStartTransfer()
     if (m_transferQueue.isEmpty())
         return;
 
-    m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                m_widget->m_albumsCoB->currentIndex()).toLongLong();
-    m_imagesTotal = m_transferQueue.count();
-    m_imagesCount = 0;
+    m_currentAlbumID = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toLongLong();
+    m_imagesTotal    = m_transferQueue.count();
+    m_imagesCount    = 0;
 
-    m_progressDlg = new KProgressDialog(this, i18n("Transfer Progress"));
+    m_progressDlg    = new KProgressDialog(this, i18n("Transfer Progress"));
     m_progressDlg->setMinimumDuration(0);
     m_progressDlg->setModal(true);
     m_progressDlg->setAutoReset(true);
@@ -454,7 +448,7 @@ QString SwWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
         caption = ev.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
         if (!caption.isEmpty())
             return caption;
-}
+    }
 
     if (ev.hasIptc())
     {
@@ -476,7 +470,9 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
         KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
     }
     else
+    {
         image.load(imgPath);
+    }
 
     if (image.isNull())
         return false;
@@ -507,7 +503,9 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
         exiv2Iface.save(m_tmpPath);
     }
     else
+    {
         caption.clear();
+    }
 
     return true;
 }
@@ -562,10 +560,12 @@ void SwWindow::uploadNextPhoto()
     else
     {
         KExiv2Iface::KExiv2 exiv2Iface;
+
         if (exiv2Iface.load(imgPath))
             caption = getImageCaption(exiv2Iface);
         else
             caption.clear();
+
         m_tmpPath.clear();
         res = m_connector->addPhoto(imgPath, m_currentAlbumID, caption);
     }
@@ -575,8 +575,7 @@ void SwWindow::uploadNextPhoto()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1",
-                                     m_transferQueue.first().path()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1", m_transferQueue.first().path()));
 }
 
 void SwWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
@@ -617,12 +616,10 @@ void SwWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
     m_progressDlg->hide();
-
     m_connector->cancel();
 }
 
-void SwWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
-                                   const SwAlbum& newAlbum)
+void SwWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const SwAlbum& newAlbum)
 {
     if (errCode != 0)
     {
