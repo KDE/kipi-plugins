@@ -164,12 +164,14 @@ void SendImagesDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
     saveSettings();
+    d->imagesPage->listView()->clear();
     e->accept();
 }
 
 void SendImagesDialog::slotCancel()
 {
     saveSettings();
+    d->imagesPage->listView()->clear();
     reject();
 }
 
