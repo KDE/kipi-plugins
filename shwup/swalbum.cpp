@@ -57,6 +57,7 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
     mainWidget->setMinimumSize(300, 0);
 
     // ------------------------------------------------------------------------
+
     m_titleEdt          = new KLineEdit;
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
@@ -72,7 +73,7 @@ SwNewAlbum::~SwNewAlbum()
 {
 }
 
-void SwNewAlbum::getAlbumProperties(SwAlbum &album)
+void SwNewAlbum::getAlbumProperties(SwAlbum& album)
 {
     album.title = m_titleEdt->text();
 }

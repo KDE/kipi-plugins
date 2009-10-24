@@ -24,8 +24,6 @@
 #ifndef SWALBUM_H
 #define SWALBUM_H
 
-// Qt includes
-
 // KDE includes
 
 #include <KDialog>
@@ -48,7 +46,7 @@ public:
     SwNewAlbum(QWidget* parent);
     ~SwNewAlbum();
 
-    void getAlbumProperties(SwAlbum &album);
+    void getAlbumProperties(SwAlbum& album);
 
 private:
 
