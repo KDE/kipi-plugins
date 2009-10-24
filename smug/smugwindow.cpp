@@ -8,7 +8,7 @@
  *                SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -32,6 +32,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -134,6 +135,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
             this, SLOT( slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
+
     m_about = new KIPIPlugins::KPAboutData(ki18n("Smug Import/Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to import/export image collections "
@@ -244,6 +246,33 @@ SmugWindow::~SmugWindow()
     delete m_about;
 }
 
+void SmugWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("smug", "kipi-plugins");
+}
+
+void SmugWindow::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+
+    if (m_talker->loggedIn())
+        m_talker->logout();
+
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    e->accept();
+}
+
+void SmugWindow::slotClose()
+{
+    if (m_talker->loggedIn())
+        m_talker->logout();
+
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    done(Close);
+}
+
 void SmugWindow::authenticate(const QString& email, const QString& password)
 {
     m_authProgressDlg = new KProgressDialog(this, i18n("Authentication"));
@@ -316,21 +345,6 @@ void SmugWindow::writeSettings()
         saveDialogSize(dialogGroup);
     }
     config.sync();
-}
-
-void SmugWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("smug", "kipi-plugins");
-}
-
-void SmugWindow::slotClose()
-{
-    if (m_talker->loggedIn())
-        m_talker->logout();
-
-    writeSettings();
-
-    done(Close);
 }
 
 void SmugWindow::slotLoginProgress(int step, int maxStep, const QString &label)
@@ -470,8 +484,8 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
         if (m_currentTmplID == albumTList.at(i).id)
             m_albumDlg->m_templateCoB->setCurrentIndex(i+1);
     }
-    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(
-                          m_albumDlg->m_templateCoB->currentIndex()).toInt();
+
+    m_currentTmplID = m_albumDlg->m_templateCoB->itemData(m_albumDlg->m_templateCoB->currentIndex()).toInt();
 
     // now fill in categories
     m_talker->listCategories();

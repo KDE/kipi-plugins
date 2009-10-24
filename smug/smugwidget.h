@@ -55,6 +55,7 @@ class SmugWidget : public QWidget
     Q_OBJECT
 
 public:
+
     SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~SmugWidget();
 
@@ -65,47 +66,55 @@ public:
     void setAnonymous(bool checked);
 
     QString getNickName();
-    void setNickName(const QString& nick);
+    void    setNickName(const QString& nick);
 
     QString getSitePassword();
     QString getAlbumPassword();
-
     QString getDestinationPath();
 
+    KIPIPlugins::ImagesList* imagesList() const;
+
 Q_SIGNALS:
+
     void signalUserChangeRequest(bool anonymous);
 
 private Q_SLOTS:
+
     void slotAnonymousToggled(bool checked);
     void slotChangeUserClicked();
     void slotResizeChecked();
 
 private:
-    KIPIPlugins::ImagesList*   m_imgList;
-    KIPI::UploadWidget*        m_uploadWidget;
 
-    QLabel*       m_headerLbl;
-    QRadioButton* m_anonymousRBtn;
-    QRadioButton* m_accountRBtn;
-    QLabel*       m_userNameLbl;
-    QLabel*       m_userName;
-    QLabel*       m_emailLbl;
-    QLabel*       m_email;
-    KPushButton*  m_changeUserBtn;
+    QLabel*                  m_headerLbl;
+    QLabel*                  m_userNameLbl;
+    QLabel*                  m_userName;
+    QLabel*                  m_emailLbl;
+    QLabel*                  m_email;
+    QLabel*                  m_nickNameLbl;
+    QLabel*                  m_sitePasswordLbl;
+    QLabel*                  m_albumPasswordLbl;
 
-    KComboBox*    m_albumsCoB;
-    KPushButton*  m_newAlbumBtn;
-    KPushButton*  m_reloadAlbumsBtn;
-    QLabel*       m_nickNameLbl;
-    KLineEdit*    m_nickNameEdt;
-    QLabel*       m_sitePasswordLbl;
-    KLineEdit*    m_sitePasswordEdt;
-    QLabel*       m_albumPasswordLbl;
-    KLineEdit*    m_albumPasswordEdt;
+    QRadioButton*            m_anonymousRBtn;
+    QRadioButton*            m_accountRBtn;
 
-    QCheckBox*    m_resizeChB;
-    QSpinBox*     m_dimensionSpB;
-    QSpinBox*     m_imageQualitySpB;
+    QCheckBox*               m_resizeChB;
+
+    QSpinBox*                m_dimensionSpB;
+    QSpinBox*                m_imageQualitySpB;
+
+    KComboBox*               m_albumsCoB;
+
+    KPushButton*             m_newAlbumBtn;
+    KPushButton*             m_reloadAlbumsBtn;
+    KPushButton*             m_changeUserBtn;
+
+    KLineEdit*               m_albumPasswordEdt;
+    KLineEdit*               m_nickNameEdt;
+    KLineEdit*               m_sitePasswordEdt;
+
+    KIPIPlugins::ImagesList* m_imgList;
+    KIPI::UploadWidget*      m_uploadWidget;
 
     friend class SmugWindow;
 };

@@ -256,6 +256,11 @@ SmugWidget::~SmugWidget()
 {
 }
 
+KIPIPlugins::ImagesList* SmugWidget::imagesList() const
+{
+    return m_imgList;
+}
+
 bool SmugWidget::isAnonymous()
 {
     return m_anonymousRBtn->isChecked();
