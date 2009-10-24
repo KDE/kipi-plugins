@@ -1,4 +1,4 @@
-SUBDIRS(pics)
+SUBDIRS(icons)
 
 # enable final triggers: http://bugs.kde.org/show_bug.cgi?id=126326
 # digikam: camera download: auto-rotated images loose EXIF info ...
@@ -16,7 +16,7 @@ SET(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp
                                       imageflip.cpp 
                                       actionthread.cpp
    )
-   
+
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
 if(WIN32)
     set_target_properties( kipiplugin_jpeglossless PROPERTIES COMPILE_FLAGS -DJPEG_STATIC )
