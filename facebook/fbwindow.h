@@ -41,18 +41,19 @@
 
 #include <libkexiv2/kexiv2.h>
 
-class KProgressDialog;
+class QCloseEvent;
 
+class KProgressDialog;
 class KUrl;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
 
 namespace KIPIFacebookPlugin
@@ -71,7 +72,7 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(KIPI::Interface *interface, const QString &tmpFolder,
+    FbWindow(KIPI::Interface *interface, const QString& tmpFolder,
              bool import, QWidget *parent);
     ~FbWindow();
 
@@ -105,19 +106,22 @@ private Q_SLOTS:
     void slotImageListChanged();
 
 private:
-    void setProfileAID(long long userID);
+
+    void    setProfileAID(long long userID);
     QString getImageCaption(const KExiv2Iface::KExiv2& ev);
-    bool prepareImageForUpload(const QString& imgPath, bool isRAW,
-                               QString& caption);
-    void uploadNextPhoto();
-    void downloadNextPhoto();
+    bool    prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
 
-    void readSettings();
-    void writeSettings();
+    void    uploadNextPhoto();
+    void    downloadNextPhoto();
 
-    void authenticate();
+    void    readSettings();
+    void    writeSettings();
 
-    void buttonStateChange(bool state);
+    void    authenticate();
+
+    void    buttonStateChange(bool state);
+
+    void    closeEvent(QCloseEvent*);
 
 private:
 

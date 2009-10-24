@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -210,6 +211,27 @@ FbWindow::~FbWindow()
     delete m_about;
 }
 
+void FbWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("facebook", "kipi-plugins");
+}
+
+void FbWindow::slotClose()
+{
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    done(Close);
+}
+
+void FbWindow::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    e->accept();
+}
+
 void FbWindow::readSettings()
 {
     KConfig config("kipirc");
@@ -285,18 +307,6 @@ void FbWindow::authenticate()
     m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires);
 }
 
-void FbWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("facebook", "kipi-plugins");
-}
-
-void FbWindow::slotClose()
-{
-    writeSettings();
-
-    done(Close);
-}
-
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
     if (!m_authProgressDlg)
@@ -353,8 +363,7 @@ void FbWindow::slotChangePermDone(int errCode, const QString &errMsg)
     }
 }
 
-void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
-                                  const QList <FbAlbum>& albumsList)
+void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList <FbAlbum>& albumsList)
 {
 
     QString albumDebug = "";
@@ -411,8 +420,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
-void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg,
-                                  const QList <FbPhoto>& photosList)
+void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QList <FbPhoto>& photosList)
 {
     if (errCode != 0)
     {
@@ -446,8 +454,7 @@ void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg,
     downloadNextPhoto();
 }
 
-void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg,
-                                   const QList <FbUser>& friendsList)
+void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg, const QList <FbUser>& friendsList)
 {
     if (errCode != 0)
     {

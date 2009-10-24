@@ -60,27 +60,32 @@ class FbWidget : public QWidget
     Q_OBJECT
 
 public:
+
     FbWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~FbWidget();
 
     QString getDestinationPath();
 
-    void updateLabels(const QString& name = "", const QString& url = "",
-                      bool uplPerm = false);
+    void updateLabels(const QString& name = "", const QString& url = "", bool uplPerm = false);
 
     long long getFriendID();
     long long getAlbumID();
 
+    KIPIPlugins::ImagesList* imagesList() const;
+
 Q_SIGNALS:
+
     void reloadAlbums(long long userID);
 
 private Q_SLOTS:
+
     void slotReloadAlbumsRequest();
     void slotDownloadTypeChanged(int dlType);
     void slotFriendsIndexChanged(int index);
     void slotResizeChecked();
 
 private:
+
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;
 

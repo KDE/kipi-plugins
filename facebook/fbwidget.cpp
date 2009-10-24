@@ -24,6 +24,7 @@
 #include "fbwidget.moc"
 
 // Qt includes
+
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
@@ -35,23 +36,26 @@
 #include <QVBoxLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
 #include <KPushButton>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
+
 #include "imageslist.h"
 
 namespace KIPIFacebookPlugin
 {
 
 FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
-            : QWidget(parent)
+        : QWidget(parent)
 {
     setObjectName("FbWidget");
 
@@ -272,13 +276,17 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
         albFrRBtn->hide();
         frLbl->hide();
         m_friendsCoB->hide();
-
         uploadBox->hide();
     }
 }
 
 FbWidget::~FbWidget()
 {
+}
+
+KIPIPlugins::ImagesList* FbWidget::imagesList() const
+{
+    return m_imgList;
 }
 
 QString FbWidget::getDestinationPath()
