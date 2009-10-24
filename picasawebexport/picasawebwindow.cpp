@@ -215,6 +215,24 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_talker->authenticate(token, username, password);
 }
 
+void PicasawebWindow::slotClose()
+{
+    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    saveSettings();
+    delete m_urls;
+    done(Close);
+}
+
+void PicasawebWindow::closeEvent(QCloseEvent *e) 
+{
+    if (!e) return;
+
+    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    saveSettings();
+    delete m_urls;
+    e->accept();
+}
+
 void PicasawebWindow::slotRefreshSizeButtons(bool /*st*/)
 {
     if(m_resizeCheckBox->isChecked())
@@ -232,21 +250,6 @@ void PicasawebWindow::slotRefreshSizeButtons(bool /*st*/)
 void PicasawebWindow::slotUpdateAlbumsList()
 {
     m_talker->listAllAlbums();
-}
-
-void PicasawebWindow::slotClose()
-{
-    //handle the close of the window that is calling the destructor.
-    delete this;
-}
-
-void PicasawebWindow::closeEvent(QCloseEvent *e) 
-{
-    if (!e) return;
-
-    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
-    saveSettings();
-    e->accept();
 }
 
 void PicasawebWindow::saveSettings() 
@@ -305,7 +308,7 @@ void PicasawebWindow::slotGetAlbumsListSucceeded()
     m_albumsListComboBox->clear();
     if (m_talker && m_talker->m_albumsList)
     {
-        QLinkedList <PicasaWebAlbum> *list = m_talker->m_albumsList;
+        QLinkedList <PicasaWebAlbum> *list       = m_talker->m_albumsList;
         QLinkedList<PicasaWebAlbum>::iterator it = list->begin();
         while(it != list->end())
         {
@@ -386,6 +389,7 @@ void PicasawebWindow::slotCreateNewAlbum()
             kDebug(51000) << "Album Creation cancelled" ;
         }
     }
+
     delete dlg;
 }
 
@@ -422,24 +426,21 @@ void PicasawebWindow::slotUploadImages()
 {
     if (m_albumsListComboBox->currentIndex() == -1) 
     {
-        KMessageBox::error(this, 
-            i18n("No album selected - please create and select album."));
+        KMessageBox::error(this, i18n("No album selected - please create and select album."));
         return;
     }
-    m_currentAlbumId = m_albumsListComboBox->itemData(
-                            m_albumsListComboBox->currentIndex()).toString();
+    m_currentAlbumId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
 
     if (m_widget->m_currentSelectionButton->isChecked())
     {
         delete m_urls;
 
-        m_urls=new KUrl::List(m_interface->currentSelection().images());
+        m_urls = new KUrl::List(m_interface->currentSelection().images());
     }
 
     if (m_urls == NULL || m_urls->isEmpty()) 
     {
-        KMessageBox::error(this, 
-            i18n("Nothing to upload - please select photos to upload."));
+        KMessageBox::error(this, i18n("Nothing to upload - please select photos to upload."));
         return;
     }
 
@@ -515,7 +516,7 @@ void PicasawebWindow::slotAddPhotoNext()
 
     typedef QPair<QString,FPhotoInfo> Pair;
     Pair pathComments = m_uploadQueue.first();
-    FPhotoInfo info=pathComments.second;
+    FPhotoInfo info   = pathComments.second;
     m_uploadQueue.pop_front();
 
 /*
