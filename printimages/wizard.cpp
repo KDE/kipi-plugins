@@ -102,9 +102,9 @@ namespace KIPIPrintImagesPlugin
       KPageWidgetItem* mPage;
   };
 
-  const char* infoPageName="Select printing information";
-  const char* photoPageName="Select page layout";
-  const char* cropPageName="Crop photos";
+  const char* infoPageName=  I18N_NOOP("Select printing information");
+  const char* photoPageName=  I18N_NOOP("Select page layout");
+  const char* cropPageName=  I18N_NOOP("Crop photos");
 
   typedef WizardPage<Ui_InfoPage>  InfoPage;
   typedef WizardPage<Ui_PhotoPage> PhotoPage;
