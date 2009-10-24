@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009 by Timothee Groleau <kde at timotheegroleau dot com>
  *
@@ -43,6 +43,7 @@ extern "C"
 #include <KGenericFactory>
 #include <KLibLoader>
 #include <KStandardDirs>
+#include <kwindowsystem.h>
 
 // LibKIPI includes
 
@@ -56,14 +57,15 @@ K_PLUGIN_FACTORY( ShwupFactory, registerPlugin<Plugin_Shwup>(); )
 K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
 
 Plugin_Shwup::Plugin_Shwup(QObject *parent, const QVariantList &/*args*/)
-            : KIPI::Plugin(ShwupFactory::componentData(),
-                          parent, "Shwup Export")
+            : KIPI::Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
 {
     kDebug(51001) << "Plugin_Shwup plugin loaded";
 }
 
 void Plugin_Shwup::setup(QWidget* widget)
 {
+    m_dlgExport = 0;
+
     KIPI::Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_shwup");
@@ -105,8 +107,20 @@ void Plugin_Shwup::slotExport()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", "kipi-shwup-" + QString::number(getpid()) + '/');
 
-    m_dlg = new KIPIShwupPlugin::SwWindow(interface, tmp, kapp->activeWindow());
-    m_dlg->show();
+    if (!m_dlgExport)
+    {
+        // We clean it up in the close button
+        m_dlgExport = new KIPIShwupPlugin::SwWindow(interface, tmp, kapp->activeWindow());
+    }
+    else
+    {
+        if (m_dlgExport->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgExport->winId());
+
+        KWindowSystem::activateWindow(m_dlgExport->winId());
+    }
+
+    m_dlgExport->show();
 }
 
 KIPI::Category Plugin_Shwup::category( KAction* action ) const

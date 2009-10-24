@@ -64,6 +64,8 @@ public:
 
     long long getAlbumID();
 
+    KIPIPlugins::ImagesList* imagesList() const;
+
 Q_SIGNALS:
 
     void reloadAlbums();

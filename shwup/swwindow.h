@@ -39,8 +39,9 @@
 
 #include <libkexiv2/kexiv2.h>
 
-class KProgressDialog;
+class QCloseEvent;
 
+class KProgressDialog;
 class KUrl;
 
 namespace KIPI
@@ -98,15 +99,17 @@ private Q_SLOTS:
 private:
 
     QString getImageCaption(const KExiv2Iface::KExiv2& ev);
-    bool prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
-    void uploadNextPhoto();
+    bool    prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
+    void    uploadNextPhoto();
 
-    void readSettings();
-    void writeSettings();
+    void    readSettings();
+    void    writeSettings();
 
-    void authenticate();
+    void    authenticate();
 
-    void buttonStateChange(bool state);
+    void    buttonStateChange(bool state);
+
+    void    closeEvent(QCloseEvent*);
 
 private:
 

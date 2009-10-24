@@ -28,6 +28,7 @@
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -187,6 +188,27 @@ SwWindow::~SwWindow()
     delete m_about;
 }
 
+void SwWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("shwup", "kipi-plugins");
+}
+
+void SwWindow::slotClose()
+{
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    done(Close);
+}
+
+void SwWindow::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    e->accept();
+}
+
 void SwWindow::readSettings()
 {
     KConfig config("kipirc");
@@ -248,7 +270,6 @@ void SwWindow::slotRequestRestURLDone(int errCode, const QString& /*errMessage*/
     {
         // unable to contact service
         KMessageBox::error(this, i18n("The shwup.com service does not seem to be available at this time, please try again later."));
-        done(Close);
     }
 }
 
@@ -274,34 +295,16 @@ void SwWindow::authenticate()
     {
         buttonStateChange(true);
     }
-    else
-    {
-        // user clicked cancel with no valid user
-        // means user wants out of shwup export plugin
-        done(Close);
-    }
 }
 
 void SwWindow::slotShwupKipiBlackListed()
 {
     KMessageBox::error(this, i18n("This application has been blacklisted by the shwup.com service."));
-    done(Close);
 }
 
 void SwWindow::slotShwupInvalidCredentials()
 {
     authenticate();
-}
-
-void SwWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("shwup", "kipi-plugins");
-}
-
-void SwWindow::slotClose()
-{
-    writeSettings();
-    done(Close);
 }
 
 void SwWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList <SwAlbum>& albumsList)

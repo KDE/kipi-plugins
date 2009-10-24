@@ -195,6 +195,11 @@ SwWidget::~SwWidget()
 {
 }
 
+KIPIPlugins::ImagesList* SwWidget::imagesList() const
+{
+    return m_imgList;
+}
+
 QString SwWidget::getDestinationPath()
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
