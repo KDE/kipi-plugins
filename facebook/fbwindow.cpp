@@ -307,7 +307,7 @@ void FbWindow::authenticate()
     m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires);
 }
 
-void FbWindow::slotLoginProgress(int step, int maxStep, const QString &label)
+void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 {
     if (!m_authProgressDlg)
         return;
@@ -321,7 +321,7 @@ void FbWindow::slotLoginProgress(int step, int maxStep, const QString &label)
     m_authProgressDlg->progressBar()->setValue(step);
 }
 
-void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
+void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
 {
     m_authProgressDlg->hide();
 
@@ -333,8 +333,8 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
     if (!m_import)
         m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
 
-    m_sessionKey = m_talker->getSessionKey();
-    m_sessionSecret = m_talker->getSessionSecret();
+    m_sessionKey     = m_talker->getSessionKey();
+    m_sessionSecret  = m_talker->getSessionSecret();
     m_sessionExpires = m_talker->getSessionExpires();
 
     if (errCode == 0 && m_talker->loggedIn())
@@ -350,7 +350,7 @@ void FbWindow::slotLoginDone(int errCode, const QString &errMsg)
     }
 }
 
-void FbWindow::slotChangePermDone(int errCode, const QString &errMsg)
+void FbWindow::slotChangePermDone(int errCode, const QString& errMsg)
 {
     if (errCode == 0)
     {
@@ -635,8 +635,7 @@ QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
     return caption;
 }
 
-bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
-                                     QString &caption)
+bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
 {
     QImage image;
     if (isRAW)
@@ -720,10 +719,12 @@ void FbWindow::uploadNextPhoto()
     else
     {
         KExiv2Iface::KExiv2 exiv2Iface;
+
         if (exiv2Iface.load(imgPath))
             caption = getImageCaption(exiv2Iface);
         else
             caption.clear();
+
         m_tmpPath.clear();
         res = m_talker->addPhoto(imgPath, m_currentAlbumID, caption);
     }
@@ -789,8 +790,7 @@ void FbWindow::downloadNextPhoto()
     m_progressDlg->setLabelText(i18n("Downloading file %1", imgPath));
 }
 
-void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
-                                const QByteArray& photoData)
+void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
 {
     QString imgPath = m_widget->getDestinationPath() + '/'
                       + QFileInfo(m_transferQueue.first().path()).fileName();
@@ -809,7 +809,9 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             errText = imgFile.errorString();
         }
         else
+        {
             imgFile.close();
+        }
 
         if (errText.isEmpty())
         {
@@ -854,8 +856,7 @@ void FbWindow::slotTransferCancel()
     m_talker->cancel();
 }
 
-void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
-                                   long long newAlbumID)
+void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, long long newAlbumID)
 {
     if (errCode != 0)
     {
