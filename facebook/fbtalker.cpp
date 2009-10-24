@@ -464,6 +464,9 @@ void FbTalker::listFriends()
 
 void FbTalker::listAlbums(long long userID)
 {
+
+    kDebug(51000) << "Requesting albums for user " << userID;
+
     if (m_job)
     {
         m_job->kill();
@@ -598,6 +601,10 @@ bool FbTalker::addPhoto(const QString& imgPath,
                         long long albumID,
                         const QString& caption)
 {
+
+    kDebug(51000) << "Adding photo " << imgPath << " to album with id "
+                  << albumID << " using caption '" << caption << "'";
+
     if (m_job)
     {
         m_job->kill();

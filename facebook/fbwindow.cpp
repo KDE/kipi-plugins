@@ -356,6 +356,15 @@ void FbWindow::slotChangePermDone(int errCode, const QString &errMsg)
 void FbWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
                                   const QList <FbAlbum>& albumsList)
 {
+
+    QString albumDebug = "";
+    foreach(FbAlbum album, albumsList)
+    {
+        albumDebug.append(QString::number(album.id) + ": " + album.title + "\n");
+    }
+    kDebug(51000) << "Received albums (errCode = " << errCode << ", errMsg = "
+                  << errMsg << "): " << albumDebug;
+
     if (errCode != 0)
     {
         KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
@@ -556,6 +565,7 @@ void FbWindow::slotStartTransfer()
 
         m_currentAlbumID = m_widget->m_albumsCoB->itemData(
                                    m_widget->m_albumsCoB->currentIndex()).toLongLong();
+        kDebug(51000) << "upload request got album id from widget: " << m_currentAlbumID;
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
 
