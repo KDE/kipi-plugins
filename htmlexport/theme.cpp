@@ -117,7 +117,7 @@ struct Theme::Private {
 			} else if (type == INT_PARAMETER_TYPE) {
 				parameter = new IntThemeParameter();
 			} else {
-				kWarning( 51000 ) << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
+				kWarning() << "Parameter '" << internalName << "' has unknown type '" << type << "'. Falling back to string type\n";
 				parameter = new StringThemeParameter();
 			}
 			parameter->init(internalName, &group);

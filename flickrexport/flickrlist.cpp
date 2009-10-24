@@ -345,7 +345,7 @@ void FlickrList::slotAddImages(const KUrl::List& list)
 
         if (!found)
         {
-            kDebug(51000) << "Insterting new item " << imageUrl.fileName();
+            kDebug() << "Insterting new item " << imageUrl.fileName();
             new FlickrListViewItem(listView(), imageUrl, m_is23,
                                    isPublic, isFamily, isFriends,
                                    safetyLevel, contentType);
@@ -498,7 +498,7 @@ void FlickrListViewItem::setPublic(bool status)
         setCheckState(FlickrList::PUBLIC, Qt::Unchecked);
     }
 
-    kDebug(51000) << "Public status set to" << m_public;
+    kDebug() << "Public status set to" << m_public;
 }
 
 void FlickrListViewItem::setFamily(bool status)
@@ -512,7 +512,7 @@ void FlickrListViewItem::setFamily(bool status)
         setCheckState(FlickrList::FAMILY, m_family ? Qt::Checked : Qt::Unchecked);
     }
 
-    kDebug(51000) << "Family status set to" << m_family;
+    kDebug() << "Family status set to" << m_family;
 }
 
 void FlickrListViewItem::setFriends(bool status)
@@ -527,21 +527,21 @@ void FlickrListViewItem::setFriends(bool status)
                       m_friends ? Qt::Checked : Qt::Unchecked);
     }
 
-    kDebug(51000) << "Friends status set to" << m_friends;
+    kDebug() << "Friends status set to" << m_friends;
 }
 
 void FlickrListViewItem::setSafetyLevel(FlickrList::SafetyLevel safetyLevel)
 {
     m_safetyLevel = safetyLevel;
     setData(FlickrList::SAFETYLEVEL, Qt::DisplayRole, QVariant(safetyLevel));
-    kDebug(51000) << "Safety level set to" << safetyLevel;
+    kDebug() << "Safety level set to" << safetyLevel;
 }
 
 void FlickrListViewItem::setContentType(FlickrList::ContentType contentType)
 {
     m_contentType = contentType;
     setData(FlickrList::CONTENTTYPE, Qt::DisplayRole, QVariant(contentType));
-    kDebug(51000) << "Content type set to" << contentType;
+    kDebug() << "Content type set to" << contentType;
 }
 
 bool FlickrListViewItem::isPublic()

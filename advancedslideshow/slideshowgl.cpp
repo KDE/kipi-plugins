@@ -754,7 +754,7 @@ void SlideShowGL::slotTimeOut()
 {
     if (!m_effect)
     {
-        kWarning( 51000 ) << "SlideShowGL: No transition method";
+        kWarning() << "SlideShowGL: No transition method";
         m_effect = &SlideShowGL::effectNone;
     }
 

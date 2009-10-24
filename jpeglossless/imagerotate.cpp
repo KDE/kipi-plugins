@@ -156,7 +156,7 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
         }
         default:
         {
-            kError( 51000 ) << "ImageRotate: Nonstandard rotation angle";
+            kError() << "ImageRotate: Nonstandard rotation angle";
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -196,7 +196,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
         }
         default:
         {
-            kError( 51000 ) << "ImageRotate: Nonstandard rotation angle";
+            kError() << "ImageRotate: Nonstandard rotation angle";
             err = i18n("Nonstandard rotation angle");
             return false;
         }
@@ -204,7 +204,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 
     process << src + QString("[0]") << dest;
 
-    kDebug(51000) << "ImageMagick Command line: " << process.program();
+    kDebug() << "ImageMagick Command line: " << process.program();
 
     process.start();
 

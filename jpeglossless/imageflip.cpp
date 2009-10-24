@@ -177,7 +177,7 @@ bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAct
 
     process << src + QString("[0]") << dest;
 
-    kDebug(51000) << "ImageMagick Command line: " << process.program();
+    kDebug() << "ImageMagick Command line: " << process.program();
 
     process.start();
 

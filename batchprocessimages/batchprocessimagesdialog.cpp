@@ -602,7 +602,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
 
 void BatchProcessImagesDialog::slotPreview(void)
 {
-    kDebug(51000) << "BatchProcessImagesDialog::slotPreview";
+    kDebug() << "BatchProcessImagesDialog::slotPreview";
 
     if (m_listFiles->currentItem() == 0) {
         KMessageBox::error(this, i18n("You must select an item from the list to calculate the preview."));
@@ -660,7 +660,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
     int ValRet = m_PreviewProc->exitCode();
 
-    kDebug(51000) << "Convert exit (" << ValRet << ")";
+    kDebug() << "Convert exit (" << ValRet << ")";
 
     if (ValRet == 0)
     {
@@ -806,7 +806,7 @@ int BatchProcessImagesDialog::overwriteMode(void)
 
 void BatchProcessImagesDialog::processAborted(bool removeFlag)
 {
-    kDebug(51000) << "BatchProcessImagesDialog::processAborted";
+    kDebug() << "BatchProcessImagesDialog::processAborted";
 
     BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
     m_listFiles->scrollToItem(m_listFiles->currentItem());

@@ -561,7 +561,7 @@ bool SimpleViewer::createIndex()
     if(indexTemplateName.isEmpty())
     {
         //TODO: errormsg
-        kDebug(51000) << "No indexTemplateName" ;
+        kDebug() << "No indexTemplateName" ;
         return false;
     }
 
@@ -665,7 +665,7 @@ bool SimpleViewer::installSimpleViewer()
         }
         else
         {
-            kDebug(51000) << "Archive extraction failed\n";
+            kDebug() << "Archive extraction failed\n";
         }
     }
     delete firstRunDlg;
@@ -689,7 +689,7 @@ bool SimpleViewer::openArchive(KZip &zip)
 {
     if(!zip.open(QIODevice::ReadOnly))
     {
-        kDebug(51000) << "Open archive failed\n";
+        kDebug() << "Open archive failed\n";
         return false;
     }
     return true;
@@ -701,8 +701,8 @@ bool SimpleViewer::extractArchive(KZip &zip)
     QStringList names = zip.directory()->entries();
     if(names.count() != 1)
     {
-        kDebug(51000) << "Wrong SimpleViewer Version or corrupted archive" ;
-        kDebug(51000) << "Content of the archive root folder" << names ;
+        kDebug() << "Wrong SimpleViewer Version or corrupted archive" ;
+        kDebug() << "Content of the archive root folder" << names ;
         return false;
     }
 
@@ -710,7 +710,7 @@ bool SimpleViewer::extractArchive(KZip &zip)
     const KArchiveEntry *root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
     {
-        kDebug(51000) << "could not open " << names[0] << " of zipname" ;
+        kDebug() << "could not open " << names[0] << " of zipname" ;
         return false;
     }
 
@@ -724,7 +724,7 @@ bool SimpleViewer::extractArchive(KZip &zip)
         if(!extractFile(entry))
         {
             //TODO error msg
-            kDebug(51000) << "could not open " << *it << " of zipname" ;
+            kDebug() << "could not open " << *it << " of zipname" ;
             return false;
         }
     }

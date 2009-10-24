@@ -158,7 +158,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kError( 51000 ) << "Image2GrayScale: Error in opening input file";
+        kError() << "Image2GrayScale: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
@@ -167,7 +167,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     if (!output_file)
     {
         fclose(input_file);
-        kError( 51000 ) << "Image2GrayScale: Error in opening output file";
+        kError() << "Image2GrayScale: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
@@ -244,7 +244,7 @@ bool ImageGrayScale::image2GrayScaleImageMagick(const QString& src, const QStrin
     process << "-type" << "Grayscale";
     process << src + QString("[0]") << dest;
 
-    kDebug(51000) << "ImageMagick Command line: " << process.program();
+    kDebug() << "ImageMagick Command line: " << process.program();
 
     process.start();
 

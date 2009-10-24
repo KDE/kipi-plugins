@@ -109,7 +109,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
 
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
     m_actionFlickr->setEnabled(true);
@@ -126,7 +126,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -154,7 +154,7 @@ void Plugin_FlickrExport::slotActivate23()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -182,7 +182,7 @@ void Plugin_FlickrExport::slotActivateZooomr()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -210,6 +210,6 @@ KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
     if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
         return KIPI::ExportPlugin;
 
-    kWarning(51000) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }

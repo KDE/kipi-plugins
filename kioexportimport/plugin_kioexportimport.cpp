@@ -94,7 +94,7 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
-        kError(51000) << "KIPI::Interface empty";
+        kError() << "KIPI::Interface empty";
         m_actionExport->setEnabled(false);
         m_actionImport->setEnabled(false);
         return;
@@ -103,12 +103,12 @@ void Plugin_KioExportImport::setup(QWidget* widget)
 
 void Plugin_KioExportImport::slotActivateExport()
 {
-    kDebug(51000) << "Starting KIO export";
+    kDebug() << "Starting KIO export";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
-        kError(51000) << "KIPI::Interface empty";
+        kError() << "KIPI::Interface empty";
         return;
     }
 
@@ -130,12 +130,12 @@ void Plugin_KioExportImport::slotActivateExport()
 
 void Plugin_KioExportImport::slotActivateImport()
 {
-    kDebug(51000) << "Starting KIO import";
+    kDebug() << "Starting KIO import";
 
     KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
     if (!interface)
     {
-        kError(51000) << "KIPI::Interface empty";
+        kError() << "KIPI::Interface empty";
         return;
     }
 
@@ -167,7 +167,7 @@ KIPI::Category Plugin_KioExportImport::category(KAction* action) const
     }
     else
     {
-        kWarning(51000) << "Received unknown action";
+        kWarning() << "Received unknown action";
         return KIPI::ExportPlugin;
     }
 }

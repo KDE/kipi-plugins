@@ -255,7 +255,7 @@ void CalPainter::paint(int month)
                              QString::number(days[index]));
 
                     QString descr = settings->getDayDescr(month, days[index]);
-                    kDebug(51000) << "Painting special info: '" << descr
+                    kDebug() << "Painting special info: '" << descr
                                   << "' for date " << days[index] << "/"
                                   << month;
                     rSpecial = rsmall;

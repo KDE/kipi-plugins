@@ -675,7 +675,7 @@ void SingleDialog::slotAction(const ActionData& ad)
             }
             default:
             {
-                kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
+                kWarning() << "KIPIRawConverterPlugin: Unknown action";
                 break;
             }
         }
@@ -703,7 +703,7 @@ void SingleDialog::slotAction(const ActionData& ad)
                 }
                 default:
                 {
-                    kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
                     break;
                 }
             }
@@ -739,7 +739,7 @@ void SingleDialog::slotAction(const ActionData& ad)
                 }
                 default:
                 {
-                    kWarning(51000) << "KIPIRawConverterPlugin: Unknown action";
+                    kWarning() << "KIPIRawConverterPlugin: Unknown action";
                     break;
                 }
             }

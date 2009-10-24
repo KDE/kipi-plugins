@@ -173,7 +173,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         unsigned short lut[65536];
 
         perc = (int)(width * height * 0.01);
-        kDebug(51000) << "White Level: " << perc ;
+        kDebug() << "White Level: " << perc ;
         for (int c =0  ; c < 3 ; c++)
         {
             total = 0;
@@ -185,7 +185,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
 
         white *= 1.0 / rawDecodingSettings.brightness;
-        kDebug(51000) << "White Point: " << white ;
+        kDebug() << "White Point: " << white ;
 
         // Compute the Gamma lut accordingly.
 
@@ -303,7 +303,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         }
         default:
         {
-            kDebug(51000) << "Invalid output file format" ;
+            kDebug() << "Invalid output file format" ;
             return false;
         }
     }

@@ -188,13 +188,13 @@ namespace KIPIPrintImagesPlugin
 
     QList<QPrinterInfo>::iterator it;
     d->m_printerList = QPrinterInfo::availablePrinters ();
-    kDebug(51000) << " printers: " << d->m_printerList.count();
+    kDebug() << " printers: " << d->m_printerList.count();
     //d->mInfoPage->m_printer_choice->setInsertPolicy(QComboBox::InsertAtTop/*QComboBox::InsertAlphabetically*/); 
     
     for ( it = d->m_printerList.begin();
           it != d->m_printerList.end(); ++it )
     {
-      kDebug(51000) << " printer: " << it->printerName ();
+      kDebug() << " printer: " << it->printerName ();
       d->mInfoPage->m_printer_choice->addItem(it->printerName ());
     }
 
@@ -273,8 +273,8 @@ namespace KIPIPrintImagesPlugin
     connect ( this, SIGNAL ( pageRemoved ( KPageWidgetItem * ) ),
               this, SLOT ( PageRemoved ( KPageWidgetItem * ) ) );
 
-    connect ( d->mInfoPage->m_pagesetup, SIGNAL ( clicked ( ) ),
-              this, SLOT ( pagesetupclicked (  ) ) );
+    connect ( d->mInfoPage->m_pagesetup, SIGNAL ( clicked () ),
+              this, SLOT ( pagesetupclicked () ) );
 
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;
@@ -371,7 +371,7 @@ namespace KIPIPrintImagesPlugin
   void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
   {
     QDomDocument doc("mydocument"); 
-    kDebug(51000) << " XXX: " <<  fn;
+    kDebug() << " XXX: " <<  fn;
 
     if(fn.isEmpty()) {
       return;
@@ -392,7 +392,7 @@ namespace KIPIPrintImagesPlugin
     // print out the element names of all elements that are direct children
     // of the outermost element.
     QDomElement docElem = doc.documentElement();
-    kDebug(51000) << docElem.tagName(); // the node really is an element.
+    kDebug() << docElem.tagName(); // the node really is an element.
 
     QSizeF size;
     QString unit;
@@ -409,7 +409,7 @@ namespace KIPIPrintImagesPlugin
         {
           size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
           unit = e.attribute("unit", "mm");
-          kDebug(51000) <<  e.tagName() << " name=" << e.attribute("name","??")
+          kDebug() <<  e.tagName() << " name=" << e.attribute("name","??")
           << " size= " << size
           << " unit= " << unit;
 
@@ -427,17 +427,17 @@ namespace KIPIPrintImagesPlugin
             {
               size *= 25.4;
               scaleValue = 1000;
-              kDebug(51000) << "template size " << size << " page size " << pageSize;
+              kDebug() << "template size " << size << " page size " << pageSize;
             }
             else if (unit == "cm")
             {
               size *= 10;
               scaleValue = 100;
-               kDebug(51000) << "template size " << size << " page size " << pageSize;
+               kDebug() << "template size " << size << " page size " << pageSize;
             }
             else
             {
-              kWarning(51000) << "Wrong unit " << unit << " skipping layout";
+              kWarning() << "Wrong unit " << unit << " skipping layout";
               n = n.nextSibling();
               continue;
             }
@@ -453,7 +453,7 @@ namespace KIPIPrintImagesPlugin
                    (size.height() > (pageSize.height() +round_value) ||
                    size.width()  > (pageSize.width() +round_value)))
           {
-            kDebug(51000) << "skipping size " << size << " page size " << pageSize;
+            kDebug() << "skipping size " << size << " page size " << pageSize;
             // skipping layout it can't fit
             n = n.nextSibling();
             continue;
@@ -465,7 +465,7 @@ namespace KIPIPrintImagesPlugin
 //             size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
 //           }
 
-          kDebug(51000) << "layout size " << size << " page size " << pageSize;
+          kDebug() << "layout size " << size << " page size " << pageSize;
 
           QDomNode np = e.firstChild();
           while(!np.isNull())
@@ -505,7 +505,7 @@ namespace KIPIPrintImagesPlugin
                 QString desktopFileName = QString("kipiplugin_printimages/templates/") +
                 QString(ep.attribute("name","XXX")) + ".desktop";
                 
-                kDebug(51000) <<  "template desktop file name" << desktopFileName;
+                kDebug() <<  "template desktop file name" << desktopFileName;
                 
                 const QStringList list=KGlobal::dirs()->findAllResources("data", desktopFileName);
                 QStringList::ConstIterator it=list.constBegin(), end=list.constEnd();
@@ -514,7 +514,7 @@ namespace KIPIPrintImagesPlugin
                 else
                 {
                   p->label = ep.attribute("name","XXX");  // FIXME i18n()
-                  kWarning(51000) << "missed template tranlation " << desktopFileName;
+                  kWarning() << "missed template tranlation " << desktopFileName;
                 }
                 p->dpi = ep.attribute("dpi","0").toInt();
                 p->autoRotate = (ep.attribute("autorotate","false") == "true") ? true : false;
@@ -556,12 +556,12 @@ namespace KIPIPrintImagesPlugin
                       }
                       else
                       {
-                        kWarning(51000) << " Wrong grid configuration, rows " << rows <<
+                        kWarning() << " Wrong grid configuration, rows " << rows <<
                         ", columns " << columns;
                       }
                     }
                     else {
-                      kDebug(51000) << "    " <<  et.tagName();
+                      kDebug() << "    " <<  et.tagName();
                     }
                   }
                   nt = nt.nextSibling();
@@ -573,7 +573,7 @@ namespace KIPIPrintImagesPlugin
               }
               else
               {
-                kDebug(51000) << "? " <<  ep.tagName() << " attr=" << ep.attribute("name","??");
+                kDebug() << "? " <<  ep.tagName() << " attr=" << ep.attribute("name","??");
               }
               
             }
@@ -583,7 +583,7 @@ namespace KIPIPrintImagesPlugin
         }
         else
         {
-          kDebug(51000) << "??" << e.tagName() << " name=" << e.attribute("name","??");
+          kDebug() << "??" << e.tagName() << " name=" << e.attribute("name","??");
         }
       }
       n = n.nextSibling();
@@ -593,7 +593,7 @@ namespace KIPIPrintImagesPlugin
 
   void Wizard::initPhotoSizes ( QSizeF pageSize )
   {
-    kDebug(51000) << "New page size " << pageSize
+    kDebug() << "New page size " << pageSize
                   << ", old page size " << d->m_pageSize;
     
     // don't refresh anything if we haven't changed page sizes.
@@ -613,15 +613,15 @@ namespace KIPIPrintImagesPlugin
           "kipiplugin_printimages/templates/*templates*.xml");
 
     foreach( const QString& fn, list) {
-        kDebug(51000) << " LIST: " <<  fn;
+        kDebug() << " LIST: " <<  fn;
         parseTemplateFile( fn, pageSize );
     }
 
-    kDebug(51000) << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
-    kDebug(51000) << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
+    kDebug() << "d->m_photoSizes.count()=" << d->m_photoSizes.count();
+    kDebug() << "d->m_photoSizes.isEmpty()=" << d->m_photoSizes.isEmpty();
 
     if( d->m_photoSizes.isEmpty() ) {
-      kDebug(51000) << "Empty photoSize-list, create default size\n";
+      kDebug() << "Empty photoSize-list, create default size\n";
       // There is no valid page size yet.  Create a default page (B10) to prevent crashes.
       TPhotoSize *p;
       p = new TPhotoSize;
@@ -780,7 +780,7 @@ namespace KIPIPrintImagesPlugin
 
     p.setFont ( font );
     p.setPen ( d->mInfoPage->m_font_color->color() );
-    kDebug(51000) << "Number of lines " << ( int ) captionByLines.count() ;
+    kDebug() << "Number of lines " << ( int ) captionByLines.count() ;
 
     // Now draw the caption
     // TODO allow printing captions  per photo and on top, bottom and vertically
@@ -968,11 +968,11 @@ namespace KIPIPrintImagesPlugin
             format = d->mInfoPage->m_FreeCaptionFormat->text();
             break;
           default:
-            kWarning ( 51000 ) << "UNKNOWN caption type " << captionType; 
+            kWarning () << "UNKNOWN caption type " << captionType; 
             break;
         }
         caption = captionFormatter ( photo, format );
-        kDebug(51000) << "Caption " << caption ;
+        kDebug() << "Caption " << caption ;
 
         // draw the text at (0,0), but we will translate and rotate the world
         // before drawing so the text will be in the correct location
@@ -997,7 +997,7 @@ namespace KIPIPrintImagesPlugin
           captionW = h;
         }
         p.rotate ( orientatation );
-        kDebug(51000) << "rotation " << photo->rotation << " orientation " << orientatation ;
+        kDebug() << "rotation " << photo->rotation << " orientation " << orientatation ;
         int tx = left;
         int ty = top;
 
@@ -1197,7 +1197,7 @@ void Wizard::infopage_imageSelected()
 
 void Wizard::infopage_imagePreview()
 {
-//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+//     kDebug() << d->m_infopage_currentPhoto << endl;
     if (d->m_photos.size())
     {
       TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
@@ -1207,7 +1207,7 @@ void Wizard::infopage_imagePreview()
 
 void Wizard::infopage_selectNext()
 {
-//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+//     kDebug() << d->m_infopage_currentPhoto << endl;
 
     if (d->m_infopage_currentPhoto+1 < d->m_photos.size())
         d->m_infopage_currentPhoto++;
@@ -1223,7 +1223,7 @@ void Wizard::infopage_selectNext()
 
 void Wizard::infopage_selectPrev()
 {
-//     kDebug(51000) << d->m_infopage_currentPhoto << endl;
+//     kDebug() << d->m_infopage_currentPhoto << endl;
     
     if (d->m_infopage_currentPhoto-1 >= 0)
         d->m_infopage_currentPhoto--;
@@ -1284,22 +1284,22 @@ void Wizard::infopage_increaseCopies()
     if ( before )
     {
       saveSettings ( before->name() );
-      kDebug(51000) << " before " << before->name();
+      kDebug() << " before " << before->name();
     }
     if ( current )
     {
       readSettings ( current->name() );
-      kDebug(51000) << " current " << current->name();
+      kDebug() << " current " << current->name();
     }
     
     if ( current->name() == i18n ( infoPageName ) )
     {
       QList<TPhoto*> photoList;
-      kDebug(51000) << "(1) n. photos: " << d->m_photos.count();
+      kDebug() << "(1) n. photos: " << d->m_photos.count();
       for ( int i=0; i < d->m_photos.count(); i++)
       {
         TPhoto *pCurrentPhoto = d->m_photos.at ( i );
-        kDebug(51000) << "current photo " << pCurrentPhoto->filename.fileName();
+        kDebug() << "current photo " << pCurrentPhoto->filename.fileName();
         if (pCurrentPhoto)
         {
           if (pCurrentPhoto->first)
@@ -1318,7 +1318,7 @@ void Wizard::infopage_increaseCopies()
       d->m_photos.clear();
       d->m_photos << photoList;
       photoList.clear();
-      kDebug(51000) << "(2) n. photos: " << d->m_photos.count();
+      kDebug() << "(2) n. photos: " << d->m_photos.count();
       
       infopage_imagePreview();
       infopage_enableButtons();
@@ -1339,7 +1339,7 @@ void Wizard::infopage_increaseCopies()
             TPhoto *pPhoto = new TPhoto ( *pCurrentPhoto);
             pPhoto->first = false;
             d->m_photos.insert ( i, pPhoto );
-            kDebug(51000) << "FileName: " << pPhoto->filename.fileName();
+            kDebug() << "FileName: " << pPhoto->filename.fileName();
             d->mPhotoPage->ListPrintOrder->insertItem ( i, pPhoto->filename.fileName() );
           }
           i+=pCurrentPhoto->copies;
@@ -1396,7 +1396,7 @@ void Wizard::infopage_increaseCopies()
       {
         if (it->printerName () == text)
         {
-            kDebug(51000) << "Choosen printer: " << it->printerName ();
+            kDebug() << "Choosen printer: " << it->printerName ();
             if (d->m_printer)
               delete d->m_printer;
             d->m_printer = new QPrinter(*it);
@@ -1503,7 +1503,7 @@ void Wizard::infopage_increaseCopies()
 
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kDebug(51000) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug() << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
 
     d->mPhotoPage->ListPrintOrder->blockSignals(true);
@@ -1549,7 +1549,7 @@ void Wizard::infopage_increaseCopies()
   {
     int currentIndex = d->mPhotoPage->ListPrintOrder->currentRow();
 
-    kDebug(51000) << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
+    kDebug() << "Selected photo " << currentIndex+1 << " of " << d->mPhotoPage->ListPrintOrder->count();
 
     if ( currentIndex == d->mPhotoPage->ListPrintOrder->count() - 1 )
       return;
@@ -1740,7 +1740,7 @@ void Wizard::infopage_increaseCopies()
 #ifdef NOT_YET
     if ( m_kjobviewer->isChecked() )
       if ( !m_Proc->start() )
-        kDebug(51000) << "Error running kjobviewr\n";
+        kDebug() << "Error running kjobviewr\n";
     LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
 #endif
   }
@@ -1824,7 +1824,7 @@ void Wizard::infopage_increaseCopies()
     {
       if ( m_kjobviewer->isChecked() )
         if ( !m_Proc->start() )
-          kDebug(51000) << "Error launching kjobviewr\n";
+          kDebug() << "Error launching kjobviewr\n";
       LblPrintProgress->setText ( i18n ( "Complete. Click Finish to exit the Print Wizard." ) );
     }
 #endif
@@ -1849,7 +1849,7 @@ void Wizard::infopage_increaseCopies()
 //TODO not needed at the moment maybe we can remove it
   void Wizard::PageRemoved ( KPageWidgetItem *page )
   {
-    kDebug(51000) << page->name();
+    kDebug() << page->name();
   }
 
   void Wizard::crop_selection ( int )
@@ -1893,7 +1893,7 @@ void Wizard::infopage_increaseCopies()
 
       qreal left, top, right, bottom;
       d->m_printer->getPageMargins (&left, &top, &right, &bottom, QPrinter::Millimeter );
-       kDebug(51000) << "Dialog exit, new margins: left " << left
+       kDebug() << "Dialog exit, new margins: left " << left
         << " right " << right << " top " << top << " bottom " << bottom;
       std::auto_ptr<QPrintDialog> dialog ( KdePrint::createPrintDialog ( d->m_printer, this ) );
       dialog->setWindowTitle ( i18n ( "Print Image" ) );
@@ -1904,7 +1904,7 @@ void Wizard::infopage_increaseCopies()
         KAssistantDialog::accept();
         return;
       }
-      kDebug(51000) << "paper page " << dialog->printer()->paperSize() ;
+      kDebug() << "paper page " << dialog->printer()->paperSize() ;
       
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       printPhotos ( d->m_photos, s->layouts, *d->m_printer );
@@ -1948,7 +1948,7 @@ void Wizard::infopage_increaseCopies()
       if ( path.right ( 1 ) != "/" )
         path = path + "/";
       path = path + "kipi_printassistant_";
-      kDebug(51000) << path;
+      kDebug() << path;
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       printPhotosToFile ( d->m_photos, path, s );
       QApplication::restoreOverrideCursor();
@@ -1963,21 +1963,21 @@ void Wizard::infopage_increaseCopies()
   {
     QPrinter *printer = d->m_pDlg->printer();
 
-    kDebug(51000) << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
+    kDebug() << "Dialog exit, new size " << printer->paperSize(QPrinter::Millimeter)
     << " internal size " << d->m_printer->paperSize(QPrinter::Millimeter);
     qreal left, top, right, bottom;
     d->m_printer->getPageMargins (&left, &top, &right, &bottom, QPrinter::Millimeter );
-    kDebug(51000) << "Dialog exit, new margins: left " << left
+    kDebug() << "Dialog exit, new margins: left " << left
     << " right " << right << " top " << top << " bottom " << bottom;
     // next should be useless invoke once changing wizard page
     //initPhotoSizes ( d->m_printer.paperSize(QPrinter::Millimeter));
 
 //     d->m_pageSize = d->m_printer.paperSize(QPrinter::Millimeter);
 #ifdef NOT_YET
-    kDebug(51000) << " dialog exited num of copies: " << printer->numCopies ()
+    kDebug() << " dialog exited num of copies: " << printer->numCopies ()
     << " inside:   " << d->m_printer->numCopies ();
 
-    kDebug(51000) << " dialog exited from : " << printer->fromPage ()
+    kDebug() << " dialog exited from : " << printer->fromPage ()
     << " to:   " << d->m_printer->toPage();
 #endif
   }

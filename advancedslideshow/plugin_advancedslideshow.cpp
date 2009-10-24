@@ -99,7 +99,7 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
 
     if (!m_interface)
     {
-        kError(51000) << "Kipi m_interface is null!";
+        kError() << "Kipi m_interface is null!";
         return;
     }
 
@@ -122,7 +122,7 @@ void Plugin_AdvancedSlideshow::slotActivate()
 {
     if (!m_interface)
     {
-        kError(51000) << "Kipi m_interface is null!";
+        kError() << "Kipi m_interface is null!";
         return;
     }
 
@@ -159,7 +159,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
     if (!m_interface)
     {
-        kError(51000) << "Kipi m_interface is null!";
+        kError() << "Kipi m_interface is null!";
         m_actionSlideShow->setEnabled(false);
         return;
     }
@@ -168,7 +168,7 @@ void Plugin_AdvancedSlideshow::slotAlbumChanged(bool anyAlbum)
 
     if (!currAlbum.isValid())
     {
-        kError(51000) << "Current image collection is not valid.";
+        kError() << "Current image collection is not valid.";
         m_actionSlideShow->setEnabled(false);
         return;
     }
@@ -180,7 +180,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 {
     if (!m_interface)
     {
-        kError(51000) << "Kipi m_interface is null!";
+        kError() << "Kipi m_interface is null!";
         return;
     }
 
@@ -271,7 +271,7 @@ KIPI::Category Plugin_AdvancedSlideshow::category(KAction* action) const
     if (action == m_actionSlideShow)
         return KIPI::ToolsPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
 
     return KIPI::ToolsPlugin; // no warning from compiler, please
 }

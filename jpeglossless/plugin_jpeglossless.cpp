@@ -160,7 +160,7 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -318,7 +318,7 @@ void Plugin_JPEGLossless::slotCancel()
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -348,7 +348,7 @@ void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
         }
         default:
         {
-            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
         }
     }
 
@@ -380,7 +380,7 @@ void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
         }
         default:
         {
-            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
         }
     }
 
@@ -415,7 +415,7 @@ void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const 
         }
         default:
         {
-            kWarning( 51000 ) << "KIPIJPEGLossLessPlugin: Unknown event";
+            kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
         }
     }
 
@@ -454,7 +454,7 @@ void Plugin_JPEGLossless::oneTaskCompleted()
 
         if ( !interface )
         {
-           kError( 51000 ) << "Kipi interface is null!";
+           kError() << "Kipi interface is null!";
            return;
         }
 
@@ -473,7 +473,7 @@ KIPI::Category Plugin_JPEGLossless::category(KAction* action) const
     else if ( action == d->action_Convert2GrayScale )
        return KIPI::ImagesPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ImagesPlugin; // no warning from compiler, please
 }
 
@@ -483,7 +483,7 @@ KUrl::List Plugin_JPEGLossless::images()
 
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return KUrl::List();
     }
 

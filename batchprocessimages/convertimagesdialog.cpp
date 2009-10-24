@@ -292,8 +292,8 @@ void ConvertImagesDialog::processDone()
             QString tgt = destinationUrl().path() + "/" + item->nameDest();
             QFileInfo fi(tgt);
 
-            kDebug(51000) << src ;
-            kDebug(51000) << tgt << fi.size();
+            kDebug() << src ;
+            kDebug() << tgt << fi.size();
 
             KExiv2Iface::KExiv2 metaSrc(src);
 

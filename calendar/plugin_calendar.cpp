@@ -70,7 +70,7 @@ void Plugin_Calendar::setup( QWidget* widget )
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
     if (!m_interface)
     {
-       kError( 51000 ) << "Kipi interface is null!";
+       kError() << "Kipi interface is null!";
        return;
     }
 }
@@ -86,6 +86,6 @@ KIPI::Category Plugin_Calendar::category( KAction* action ) const
     if ( action == m_actionCalendar )
        return KIPI::ToolsPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ToolsPlugin; // no warning from compiler, please
 }

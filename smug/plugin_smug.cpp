@@ -94,7 +94,7 @@ void Plugin_Smug::setup(QWidget* widget)
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         m_actionImport->setEnabled(false);
         m_actionExport->setEnabled(false);
         return;
@@ -113,7 +113,7 @@ void Plugin_Smug::slotExport()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -141,7 +141,7 @@ void Plugin_Smug::slotImport()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError(51000) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -171,6 +171,6 @@ KIPI::Category Plugin_Smug::category( KAction* action ) const
     else if (action == m_actionImport)
         return KIPI::ImportPlugin;
 
-    kWarning(51000) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }

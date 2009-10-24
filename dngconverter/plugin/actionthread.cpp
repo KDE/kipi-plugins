@@ -321,7 +321,7 @@ void ActionThread::run()
 
                 default:
                 {
-                    kError(51000) << "KIPIDNGConverterPlugin:ActionThread: "
+                    kError() << "KIPIDNGConverterPlugin:ActionThread: "
                                   << "Unknown action specified";
                 }
             }

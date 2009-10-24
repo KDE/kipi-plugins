@@ -59,7 +59,7 @@ KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface
 {
     if (!interface)
     {
-        kFatal(51000) << "KIPI::Interface is empty";
+        kFatal() << "KIPI::Interface is empty";
     }
 
     m_exportWidget = new KioExportWidget(this, interface);
@@ -132,13 +132,13 @@ void KioExportWindow::closeEvent(QCloseEvent *e)
 
 void KioExportWindow::restoreSettings()
 {
-    kDebug(51000) << "restoring settings";
+    kDebug() << "restoring settings";
 
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
     m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, ""));
 
-    kDebug(51000) << "target url after restoring: "
+    kDebug() << "target url after restoring: "
                   << m_exportWidget->targetUrl().prettyUrl();
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
@@ -147,13 +147,13 @@ void KioExportWindow::restoreSettings()
 
 void KioExportWindow::saveSettings()
 {
-    kDebug(51000) << "saving settings";
+    kDebug() << "saving settings";
 
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
     group.writeEntry(TARGET_URL_PROPERTY, m_exportWidget->targetUrl().url());
 
-    kDebug(51000) << "stored target url "
+    kDebug() << "stored target url "
                   << m_exportWidget->targetUrl().prettyUrl();
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
@@ -182,7 +182,7 @@ void KioExportWindow::updateUploadButton()
     bool listNotEmpty = !m_exportWidget->imageList()->imageUrls().empty();
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
-    kDebug(51000) << "Updated upload button with listNotEmpty = "
+    kDebug() << "Updated upload button with listNotEmpty = "
                   << listNotEmpty << ", targetUrl().isValid() = "
                   << m_exportWidget->targetUrl().isValid();
 }
@@ -196,7 +196,7 @@ void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    kDebug(51000) << "copied " << to.prettyUrl();
+    kDebug() << "copied " << to.prettyUrl();
 
     m_exportWidget->imageList()->removeItemByUrl(from);
 }

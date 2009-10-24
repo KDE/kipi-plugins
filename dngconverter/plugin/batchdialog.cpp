@@ -603,7 +603,7 @@ void BatchDialog::slotAction(const ActionData& ad)
             }
             default:
             {
-                kWarning(51000) << "KIPIDNGConverterPlugin: Unknown action";
+                kWarning() << "KIPIDNGConverterPlugin: Unknown action";
                 break;
             }
         }
@@ -625,7 +625,7 @@ void BatchDialog::slotAction(const ActionData& ad)
                 }
                 default:
                 {
-                    kWarning(51000) << "KIPIDNGConverterPlugin: Unknown action";
+                    kWarning() << "KIPIDNGConverterPlugin: Unknown action";
                     break;
                 }
             }
@@ -664,7 +664,7 @@ void BatchDialog::slotAction(const ActionData& ad)
                 }
                 default:
                 {
-                    kWarning(51000) << "KIPIDNGConverterPlugin: Unknown action";
+                    kWarning() << "KIPIDNGConverterPlugin: Unknown action";
                     break;
                 }
             }

@@ -90,7 +90,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug(51000) << buffer;
+    kDebug() << buffer;
 #endif
 
     longjmp(myerr->setjmp_buffer, 1);
@@ -103,7 +103,7 @@ static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug(51000) << buffer << " (" << msg_level << ")";
+    kDebug() << buffer << " (" << msg_level << ")";
 #endif
 }
 
@@ -113,7 +113,7 @@ static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
     (*cinfo->err->format_message)(cinfo, buffer);
 
 #ifdef ENABLE_DEBUG_MESSAGES
-    kDebug(51000) << buffer;
+    kDebug() << buffer;
 #endif
 }
 
@@ -142,7 +142,7 @@ bool transformJPEG(const QString& src, const QString& dest,
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
-    kDebug(51000) << "Transforming with option " << flip << " " << rotate;
+    kDebug() << "Transforming with option " << flip << " " << rotate;
     if (!transformJPEG(src, dest, flip, rotate, err))
         return false;
 
@@ -212,7 +212,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     input_file = fopen(QFile::encodeName(src), "rb");
     if (!input_file)
     {
-        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening input file";
+        kError() << "ImageRotate/ImageFlip: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
@@ -221,7 +221,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file";
+        kError() << "ImageRotate/ImageFlip: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
@@ -258,7 +258,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     if (!output_file)
     {
         fclose(input_file);
-        kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file";
+        kError() << "ImageRotate/ImageFlip: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
@@ -315,7 +315,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         input_file = fopen(QFile::encodeName(dest), "rb");
         if (!input_file)
         {
-            kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening input file";
+            kError() << "ImageRotate/ImageFlip: Error in opening input file";
             err = i18n("Error in opening input file");
             return false;
         }
@@ -324,7 +324,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         if (!output_file)
         {
             fclose(input_file);
-            kError( 51000 ) << "ImageRotate/ImageFlip: Error in opening output file";
+            kError() << "ImageRotate/ImageFlip: Error in opening output file";
             err = i18n("Error in opening output file");
             return false;
         }

@@ -362,23 +362,23 @@ void SwWindow::slotBusy(bool val)
 
 void SwWindow::slotUserChangeRequest()
 {
-    kDebug(51000) << "Slot Change User Request";
+    kDebug() << "Slot Change User Request";
     authenticate();
 }
 
 void SwWindow::slotReloadAlbumsRequest()
 {
-    kDebug(51000) << "Reload Albums Request";
+    kDebug() << "Reload Albums Request";
     m_connector->listAlbums();
 }
 
 void SwWindow::slotNewAlbumRequest()
 {
-    kDebug(51000) << "Slot New Album Request";
+    kDebug() << "Slot New Album Request";
 
     if (m_albumDlg->exec() == QDialog::Accepted)
     {
-        kDebug(51000) << "Calling New Album method";
+        kDebug() << "Calling New Album method";
         SwAlbum newAlbum;
         m_albumDlg->getAlbumProperties(newAlbum);
         m_connector->createAlbum(newAlbum);
@@ -393,7 +393,7 @@ void SwWindow::slotLoginInvalid()
 
 void SwWindow::slotStartTransfer()
 {
-    kDebug(51000) << "slotStartTransfer invoked";
+    kDebug() << "slotStartTransfer invoked";
 
     m_transferQueue = m_widget->m_imgList->imageUrls();
 
@@ -472,7 +472,7 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
     QImage image;
     if (isRAW)
     {
-        kDebug(51000) << "Get RAW preview " << imgPath;
+        kDebug() << "Get RAW preview " << imgPath;
         KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
     }
     else
@@ -489,12 +489,12 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
     if (m_widget->m_resizeChB->isChecked()
         && (image.width() > maxDim || image.height() > maxDim))
     {
-        kDebug(51000) << "Resizing to " << maxDim;
+        kDebug() << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                              Qt::SmoothTransformation);
     }
 
-    kDebug(51000) << "Saving to temp file: " << m_tmpPath;
+    kDebug() << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image

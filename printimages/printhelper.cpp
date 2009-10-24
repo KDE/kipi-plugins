@@ -77,7 +77,7 @@ PrintHelperDialog::PrintHelperDialog(QPrinter *printer, PrintOptionsPage *option
 
 void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
 {
-    kDebug(51000) << "It has been called!";
+    kDebug() << "It has been called!";
 }
 
 class PrintHelperPrivate
@@ -276,7 +276,7 @@ void PrintHelper::print ( KUrl::List fileList )
         {
           TPhoto *pPhoto = d->m_photos.at(i);
           QImage image   = pPhoto->loadPhoto();
-          kDebug(51000) << "Img size " << image.size() << " viewportSize " << rect.size();
+          kDebug() << "Img size " << image.size() << " viewportSize " << rect.size();
 
           // if horPages is > 0 vertPages is as well
           bool multipagePrinting = optionsPage->mp_horPages() > 0; 
@@ -289,7 +289,7 @@ void PrintHelper::print ( KUrl::List fileList )
             QRect imageRec = image.rect();
             int x1; int y1; int x2; int y2;
             imageRec.getCoords (&x1, &y1, &x2, &y2);
-            kDebug(51000) << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 <<")";
+            kDebug() << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 <<")";
             QRect destRec = QRect(QPoint(0,0), QPoint(x2/horPages,y2/vertPages));
 
             for (int px=1; px <= horPages; px++)
@@ -300,7 +300,7 @@ void PrintHelper::print ( KUrl::List fileList )
                 int sy = ((py-1)*y2/vertPages);
                 int ex = (px*x2/horPages);
                 int ey = (py*y2/vertPages);
-                kDebug(51000) << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey <<")";
+                kDebug() << "Img part coords (" << sx << ", " << sy << ", " << ex << ", " << ey <<")";
                 QImage destImage = image.copy(QRect(QPoint(sx, sy), QPoint(ex, ey)));
                 QSize destSize = destImage.size();
                 destSize.scale(rect.size(), Qt::KeepAspectRatio);

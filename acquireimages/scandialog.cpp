@@ -176,7 +176,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     writableMimetypes.insert(1, "image/jpeg");
     writableMimetypes.insert(2, "image/tiff");
 
-    kDebug(51000) << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
+    kDebug() << "slotSaveImage: Offered mimetypes: " << writableMimetypes;
 
     QString defaultMimeType("image/png");
     QString defaultFileName("image.png");
@@ -226,7 +226,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
         if ( !imgExtList.contains( format ) )
         {
             KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.", format));
-            kWarning( 51000 ) << "target image file format " << format << " is unsupported!";
+            kWarning() << "target image file format " << format << " is unsupported!";
             return;
         }
     }
@@ -236,7 +236,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
         KMessageBox::error(0, i18n("Failed to save file\n\"%1\" to\n\"%2\".",
                               newURL.fileName(),
                               newURL.path().section('/', -2, -2)));
-        kWarning( 51000 ) << "target URL is not valid !";
+        kWarning() << "target URL is not valid !";
         return;
     }
 

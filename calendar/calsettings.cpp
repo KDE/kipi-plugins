@@ -180,10 +180,10 @@ void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
 
     if (!(url.isEmpty()))
     {
-        kDebug(51000) << "Loading calendar from file " << url.path();
+        kDebug() << "Loading calendar from file " << url.path();
         if (!calendar.load(url.path()))
         {
-            kDebug(51000) << "Failed!";
+            kDebug() << "Failed!";
         }
         else
         {
@@ -199,7 +199,7 @@ void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
             KCal::Event::List list = calendar.rawEvents(qFirst, qLast);
             foreach ( KCal::Event *event, list )
             {
-                kDebug(51000) << event->summary() << endl << "--------";
+                kDebug() << event->summary() << endl << "--------";
                 counter++;
                 if (event->recurs())
                 {
@@ -216,7 +216,7 @@ void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
                     addSpecial(event->dtStart().date(), Day(color, event->summary()));
                 }
             }
-            kDebug(51000) << "Loaded " << counter << " events";
+            kDebug() << "Loaded " << counter << " events";
             calendar.close();
         }
     }

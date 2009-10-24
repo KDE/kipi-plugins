@@ -610,8 +610,8 @@ void TimeAdjustDialog::readMetadataTimestamps()
             // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
             curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
                                          QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
-            //kDebug(51000) << "IPTC for " << info.path().path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
-            //kDebug(51000) << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
+            //kDebug() << "IPTC for " << info.path().path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
+            //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
             break;
         case 5:
             curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
@@ -883,12 +883,12 @@ void TimeAdjustDialog::slotOk()
 
                 if (!ret)
                 {
-                    kDebug(51000) << "Failed to update metadata in file " << url.fileName();
+                    kDebug() << "Failed to update metadata in file " << url.fileName();
                 }
             }
             else
             {
-                kDebug(51000) << "Failed to load metadata from file " << url.fileName();
+                kDebug() << "Failed to load metadata from file " << url.fileName();
             }
 
             if (!ret) metaTimeErrorFiles.append(url.fileName());

@@ -461,7 +461,7 @@ void SmugTalker::data(KIO::Job*, const QByteArray& data)
 QString SmugTalker::errorToText(int errCode, const QString &errMsg)
 {
     QString transError;
-    kDebug(51000) << "errorToText: " << errCode << ": " << errMsg;
+    kDebug() << "errorToText: " << errCode << ": " << errMsg;
 
     switch (errCode)
     {
@@ -565,7 +565,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Login response:" << endl << data;
+    kDebug() << "Parse Login response:" << endl << data;
 
     QDomElement e = doc.documentElement();
     for (QDomNode node = e.firstChild();
@@ -603,7 +603,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -627,7 +627,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Logout response:" << endl << data;
+    kDebug() << "Parse Logout response:" << endl << data;
 
     QDomElement e = doc.documentElement();
     for (QDomNode node = e.firstChild();
@@ -645,7 +645,7 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -664,7 +664,7 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Add Photo response:" << endl << data;
+    kDebug() << "Parse Add Photo response:" << endl << data;
 
     QDomElement e = doc.documentElement();
     for (QDomNode node = e.firstChild();
@@ -676,16 +676,16 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
         e = node.toElement();
         if (e.tagName() == "Image")
         {
-            kDebug(51000) << "ImageID: " << e.attribute("id");
-            kDebug(51000) << "Key: " << e.attribute("Key");
-            kDebug(51000) << "URL: " << e.attribute("URL");
+            kDebug() << "ImageID: " << e.attribute("id");
+            kDebug() << "Key: " << e.attribute("Key");
+            kDebug() << "URL: " << e.attribute("URL");
             errCode = 0;
         }
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -702,7 +702,7 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         return;
 
 
-    kDebug(51000) << "Parse Create Album response:" << endl << data;
+    kDebug() << "Parse Create Album response:" << endl << data;
 
     int newAlbumID = -1;
     QDomElement e = doc.documentElement();
@@ -716,15 +716,15 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
         if (e.tagName() == "Album")
         {
             newAlbumID = e.attribute("id").toInt();
-            kDebug(51000) << "AlbumID: " << newAlbumID;
-            kDebug(51000) << "Key: " << e.attribute("Key");
+            kDebug() << "AlbumID: " << newAlbumID;
+            kDebug() << "Key: " << e.attribute("Key");
             errCode = 0;
         }
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -741,7 +741,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Albums response:" << endl << data;
+    kDebug() << "Parse Albums response:" << endl << data;
 
     QList <SmugAlbum> albumsList;
     QDomElement e = doc.documentElement();
@@ -801,7 +801,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -820,7 +820,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Photos response:" << endl << data;
+    kDebug() << "Parse Photos response:" << endl << data;
 
     QList <SmugPhoto> photosList;
     QDomElement e = doc.documentElement();
@@ -880,7 +880,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -899,7 +899,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse AlbumTemplates response:" << endl << data;
+    kDebug() << "Parse AlbumTemplates response:" << endl << data;
 
     QList<SmugAlbumTmpl> albumTList;
     QDomElement e = doc.documentElement();
@@ -936,7 +936,7 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -955,7 +955,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Categories response:" << endl << data;
+    kDebug() << "Parse Categories response:" << endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
@@ -989,7 +989,7 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
@@ -1008,7 +1008,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse SubCategories response:" << endl << data;
+    kDebug() << "Parse SubCategories response:" << endl << data;
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
@@ -1042,7 +1042,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
         {
             errCode = e.attribute("code").toInt();
             errMsg = e.attribute("msg");
-            kDebug(51000) << "Error:" << errCode << errMsg;
+            kDebug() << "Error:" << errCode << errMsg;
         }
     }
 

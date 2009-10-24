@@ -116,7 +116,7 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
         double lng = lngTxt.toDouble();
         double alt = altTxt.toDouble();
         emit signalNewGPSLocationFromMap(id, lat, lng, alt);
-        kDebug(51000) << id << "::" << lat << "::" << lng << "::" << alt ;
+        kDebug() << id << "::" << lat << "::" << lng << "::" << alt ;
     }
 }
 

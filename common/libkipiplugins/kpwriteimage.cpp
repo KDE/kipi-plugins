@@ -144,7 +144,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file)
     {
-        kDebug(51000) << "Failed to open JPEG file for writing" ;
+        kDebug() << "Failed to open JPEG file for writing" ;
         return false;
     }
 
@@ -258,7 +258,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file)
     {
-        kDebug(51000) << "Failed to open ppm file for writing" ;
+        kDebug() << "Failed to open ppm file for writing" ;
         return false;
     }
 
@@ -336,7 +336,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     FILE* file = fopen(QFile::encodeName(destPath), "wb");
     if (!file)
     {
-        kDebug(51000) << "Failed to open PNG file for writing" ;
+        kDebug() << "Failed to open PNG file for writing" ;
         return false;
     }
 
@@ -509,7 +509,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFF *tif = TIFFOpen(QFile::encodeName(destPath), "w");
     if (!tif)
     {
-        kDebug(51000) << "Failed to open TIFF file for writing" ;
+        kDebug() << "Failed to open TIFF file for writing" ;
         return false;
     }
 
@@ -595,7 +595,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     uint8 *buf = (uint8 *)_TIFFmalloc(TIFFScanlineSize(tif));
     if (!buf)
     {
-        kDebug(51000) << "Cannot allocate memory buffer for main TIFF image." ;
+        kDebug() << "Cannot allocate memory buffer for main TIFF image." ;
         TIFFClose(tif);
         return false;
     }
@@ -677,7 +677,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         if (!TIFFWriteScanline(tif, buf, y, 0))
         {
-            kDebug(51000) << "Cannot write main TIFF image to target file." ;
+            kDebug() << "Cannot write main TIFF image to target file." ;
             _TIFFfree(buf);
             TIFFClose(tif);
             return false;
@@ -730,7 +730,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
             if (!TIFFWriteScanline(tif, bufThumb, y, 0))
             {
-                kDebug(51000) << "Cannot write TIFF thumbnail to target file." ;
+                kDebug() << "Cannot write TIFF thumbnail to target file." ;
                 _TIFFfree(bufThumb);
                 TIFFClose(tif);
                 return false;
@@ -809,7 +809,7 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
-    kDebug(51000) << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
+    kDebug() << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
 
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
@@ -989,7 +989,7 @@ void KPWriteImage::kipi_tiff_warning(const char* module, const char* format, va_
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, warnings);
-    kDebug(51000) << module << "::" << message ;
+    kDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);
@@ -1002,7 +1002,7 @@ void KPWriteImage::kipi_tiff_error(const char* module, const char* format, va_li
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, errors);
-    kDebug(51000) << module << "::" << message ;
+    kDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);

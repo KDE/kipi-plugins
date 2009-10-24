@@ -111,7 +111,7 @@ void ResizeOptionsBaseDialog::layout()
 void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
 {
 
-    kDebug(51000) << "reading settings";
+    kDebug() << "reading settings";
 
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
@@ -128,7 +128,7 @@ void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
 void ResizeOptionsBaseDialog::saveSettings(QString rcname, QString groupName)
 {
 
-    kDebug(51000) << "saving settings";
+    kDebug() << "saving settings";
 
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
@@ -152,7 +152,7 @@ void ResizeOptionsBaseDialog::slotOk()
     bool subclassOk = handleOk();
     if (!subclassOk)
     {
-        kDebug(51000) << "subclass indicated an error in gui handling, "
+        kDebug() << "subclass indicated an error in gui handling, "
                       << "stopping own handling here.";
         return;
     }

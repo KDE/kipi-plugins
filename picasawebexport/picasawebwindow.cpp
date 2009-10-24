@@ -191,7 +191,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     QString token    = grp.readEntry("token");
     QString username = grp.readEntry("username");
     QString password = grp.readEntry("password");
-    kDebug(51000) << "Read token from database to be " << token ;
+    kDebug() << "Read token from database to be " << token ;
 
     //no saving password rt now
     if (grp.readEntry("Resize", false))
@@ -217,7 +217,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
 
 void PicasawebWindow::slotClose()
 {
-    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     saveSettings();
     delete m_urls;
     done(Close);
@@ -227,7 +227,7 @@ void PicasawebWindow::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
 
-    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     saveSettings();
     delete m_urls;
     e->accept();
@@ -256,7 +256,7 @@ void PicasawebWindow::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("PicasawebExport Settings");
-    kDebug(51000) << "Writing token value as ########### " << m_talker->token() << " #######" ;
+    kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     grp.writeEntry("token",         m_talker->token());
     grp.writeEntry("username",      m_username);
     grp.writeEntry("Resize",        m_resizeCheckBox->isChecked());
@@ -351,7 +351,7 @@ void PicasawebWindow::slotError( const QString& msg )
 
 void PicasawebWindow::slotUserChangeRequest()
 {
-    kDebug(51000) << "Slot Change User Request ";
+    kDebug() << "Slot Change User Request ";
     m_talker->authenticate();
 }
 
@@ -386,7 +386,7 @@ void PicasawebWindow::slotCreateNewAlbum()
     {
         if (t == QDialog::Rejected)
         {
-            kDebug(51000) << "Album Creation cancelled" ;
+            kDebug() << "Album Creation cancelled" ;
         }
     }
 

@@ -49,7 +49,7 @@ PicasawebWidget::~PicasawebWidget()
 
 void PicasawebWidget::slotSelectionChecked()
 {
-//    kDebug(51000)<<"Slot Selection Checked ";
+//    kDebug()<<"Slot Selection Checked ";
 //    m_addPhotoBtn->setEnabled(m_selectImagesButton->isChecked());
 }
 

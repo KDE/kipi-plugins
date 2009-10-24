@@ -141,7 +141,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     if (!loginDialog)
     {
-        kDebug(51000) << " Out of memory error " ;
+        kDebug() << " Out of memory error " ;
     }
 
     if (loginDialog->exec() == QDialog::Accepted)
@@ -191,7 +191,7 @@ void PicasawebTalker::authenticate(const QString& token, const QString& username
 {
     if (!token.isNull() || token.length() > 0)
     {
-        kDebug(51000) << " Checktoken being called" << token ;
+        kDebug() << " Checktoken being called" << token ;
         m_username = username;
         m_password = password; //this would be needed if the checktoken failed
                                 //we would need to reauthenticate using auth
@@ -213,7 +213,7 @@ void PicasawebTalker::checkToken(const QString& token)
     }
 
     QString url = "http://picasaweb.google.com/data/feed/api/user/" + m_username + "?kind=album";
-    kDebug(51000) << " token value is " << token ;
+    kDebug() << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -478,10 +478,10 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         }
         else
         {
-            kWarning(51000) << "Image " << photoPath << " has no exif data";
+            kWarning() << "Image " << photoPath << " has no exif data";
         }
 
-        kDebug(51000) << "Resizing and saving to temp file: " << tmpPath;
+        kDebug() << "Resizing and saving to temp file: " << tmpPath;
 
         if (!form.addFile("photo", tmpPath))
         {
@@ -636,7 +636,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_CHECKTOKEN) 
         {
-            kDebug(51000) << " Error encountered in checking token, require user credentials" ;
+            kDebug() << " Error encountered in checking token, require user credentials" ;
             return getToken(m_username, "");
         }
     }
@@ -685,7 +685,7 @@ void PicasawebTalker::parseResponseCheckToken(const QByteArray &data)
     // TODO(vardhman): Fix this with proper error handling.
     if(!success)
         getToken(m_username, m_password);
-     // kDebug(51000) << "Return code is " << transReturn ;
+     // kDebug() << "Return code is " << transReturn ;
      emit slotCheckTokenSuccessful();
     // emit signalError(errorString);
 }
@@ -705,7 +705,7 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
         if ( strList.count() > 0 )
         {
             m_token = strList[1].trimmed();
-            kDebug(51000) << " m_token as obtained in token Response " << m_token ;
+            kDebug() << " m_token as obtained in token Response " << m_token ;
             success = true;
         }
     }

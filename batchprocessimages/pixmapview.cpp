@@ -158,7 +158,7 @@ void PixmapView::slotPreviewReadyRead()
 void PixmapView::slotPreviewProcessFinished()
 {
     int ValRet = m_PreviewProc->exitCode();
-    kDebug(51000) << "Convert exit (" << ValRet << ")" ;
+    kDebug() << "Convert exit (" << ValRet << ")" ;
 
     if (ValRet == 0)
     {

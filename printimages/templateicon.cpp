@@ -60,12 +60,12 @@ void TemplateIcon::begin( void )
     scale_height         = float(m_icon_size.height()) / float(m_paper_size.height());
 
 #ifdef DEBUG_OUTPUT
-    kDebug(51000) << "begin: m_paper_size.width =" <<  m_paper_size.width();
-    kDebug(51000) << "begin: m_paper_size.height=" <<  m_paper_size.height();
-    kDebug(51000) << "begin: m_icon_size.width  =" <<  m_icon_size.width();
-    kDebug(51000) << "begin: m_icon_size.height =" <<  m_icon_size.height();
-    kDebug(51000) << "begin: scale_width      =" <<  scale_width;
-    kDebug(51000) << "begin: scale_height     =" <<  scale_height;
+    kDebug() << "begin: m_paper_size.width =" <<  m_paper_size.width();
+    kDebug() << "begin: m_paper_size.height=" <<  m_paper_size.height();
+    kDebug() << "begin: m_icon_size.width  =" <<  m_icon_size.width();
+    kDebug() << "begin: m_icon_size.height =" <<  m_icon_size.height();
+    kDebug() << "begin: scale_width      =" <<  scale_width;
+    kDebug() << "begin: scale_height     =" <<  scale_height;
 #endif
     // icon back ground
     pixmap = new QPixmap( m_icon_size );
@@ -81,10 +81,10 @@ void TemplateIcon::begin( void )
 void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
 {
 #ifdef DEBUG_OUTPUT
-    kDebug(51000) << "fillRect: x1=" << x << " => " << x     * scale_width;
-    kDebug(51000) << "fillRect: y1=" << y << " => " << y     * scale_height;
-    kDebug(51000) << "fillRect: x2=" << w << " => " << (x + w) * scale_width;
-    kDebug(51000) << "fillRect: y2=" << h << " => " << (y + h) * scale_height;
+    kDebug() << "fillRect: x1=" << x << " => " << x     * scale_width;
+    kDebug() << "fillRect: y1=" << y << " => " << y     * scale_height;
+    kDebug() << "fillRect: x2=" << w << " => " << (x + w) * scale_width;
+    kDebug() << "fillRect: y2=" << h << " => " << (y + h) * scale_height;
 #endif
 
     painter->fillRect( (int)(m_icon_margin + x * scale_width),

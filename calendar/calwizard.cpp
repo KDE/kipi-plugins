@@ -243,7 +243,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *befo
             }
         }
 
-        kDebug(51000) << "printing...";
+        kDebug() << "printing...";
         // PageSize
         printer_->setPageSize(params.pageSize);
         QPrintDialog *printDialog = KdePrint::createPrintDialog( printer_, this );

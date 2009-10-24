@@ -58,7 +58,7 @@ KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface *interface
 {
     if (!interface)
     {
-        kFatal(51000) << "KIPI::Interface is empty";
+        kFatal() << "KIPI::Interface is empty";
     }
 
     m_importWidget = new KioImportWidget(this, interface);
@@ -119,7 +119,7 @@ KioImportWindow::~KioImportWindow()
 
 void KioImportWindow::slotImport()
 {
-    kDebug(51000) << "starting to import urls: " << m_importWidget->sourceUrls();
+    kDebug() << "starting to import urls: " << m_importWidget->sourceUrls();
 
     // start copying and react on signals
     setEnabled(false);
@@ -142,7 +142,7 @@ void KioImportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
     Q_UNUSED(directory);
     Q_UNUSED(renamed);
 
-    kDebug(51000) << "copied " << to.prettyUrl();
+    kDebug() << "copied " << to.prettyUrl();
 
     m_importWidget->imageList()->removeItemByUrl(from);
 }
@@ -168,7 +168,7 @@ void KioImportWindow::slotSourceAndTargetUpdated()
     bool hasUrlToImport = !m_importWidget->sourceUrls().empty();
     bool hasTarget      = m_importWidget->uploadWidget()->selectedImageCollection().uploadPath().isValid();
 
-    kDebug(51000) << "switching import button activity with: hasUrlToImport = "
+    kDebug() << "switching import button activity with: hasUrlToImport = "
                   << hasUrlToImport << ", hasTarget = " << hasTarget;
 
     enableButton(User1, hasUrlToImport && hasTarget);

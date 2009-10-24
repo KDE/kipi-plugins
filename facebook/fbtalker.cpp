@@ -154,7 +154,7 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
         concat.append(it.value());
     }
 
-    kDebug(51000) << "CALL: " << concat;
+    kDebug() << "CALL: " << concat;
 
     return concat;
 }
@@ -381,7 +381,7 @@ void FbTalker::changePerm()
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("ext_perm", "photo_upload");
-    kDebug(51000) << "Change Perm URL: " << url;
+    kDebug() << "Change Perm URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -465,7 +465,7 @@ void FbTalker::listFriends()
 void FbTalker::listAlbums(long long userID)
 {
 
-    kDebug(51000) << "Requesting albums for user " << userID;
+    kDebug() << "Requesting albums for user " << userID;
 
     if (m_job)
     {
@@ -602,7 +602,7 @@ bool FbTalker::addPhoto(const QString& imgPath,
                         const QString& caption)
 {
 
-    kDebug(51000) << "Adding photo " << imgPath << " to album with id "
+    kDebug() << "Adding photo " << imgPath << " to album with id "
                   << albumID << " using caption '" << caption << "'";
 
     if (m_job)
@@ -641,7 +641,7 @@ bool FbTalker::addPhoto(const QString& imgPath,
     form.finish();
 
 
-    kDebug(51000) << "FORM: " << endl << form.formData();
+    kDebug() << "FORM: " << endl << form.formData();
 
     KIO::TransferJob* job = KIO::http_post(m_apiURL, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
@@ -695,7 +695,7 @@ void FbTalker::data(KIO::Job*, const QByteArray& data)
 QString FbTalker::errorToText(int errCode, const QString &errMsg)
 {
     QString transError;
-    kDebug(51000) << "errorToText: " << errCode << ": " << errMsg;
+    kDebug() << "errorToText: " << errCode << ": " << errMsg;
 
     switch (errCode)
     {
@@ -833,12 +833,12 @@ int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
         if (node.nodeName() == "error_code")
         {
             errCode = node.toElement().text().toInt();
-            kDebug(51000) << "Error Code:" << errCode;
+            kDebug() << "Error Code:" << errCode;
         }
         else if (node.nodeName() == "error_msg")
         {
             errMsg = node.toElement().text();
-            kDebug(51000) << "Error Text:" << errMsg;
+            kDebug() << "Error Text:" << errMsg;
         }
     }
     return errCode;
@@ -855,7 +855,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
 
     emit signalLoginProgress(2);
 
-    kDebug(51000) << "Parse CreateToken response:" << endl << data;
+    kDebug() << "Parse CreateToken response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "auth_createToken_response")
@@ -876,7 +876,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     url.addQueryItem("api_key", m_apiKey);
     url.addQueryItem("v", m_apiVersion);
     url.addQueryItem("auth_token", m_authToken);
-    kDebug(51000) << "Login URL: " << url;
+    kDebug() << "Login URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
     emit signalBusy(false);
@@ -907,7 +907,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
 
     emit signalLoginProgress(4);
 
-    kDebug(51000) << "Parse GetSession response:" << endl << data;
+    kDebug() << "Parse GetSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "auth_getSession_response")
@@ -955,7 +955,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 
     emit signalLoginProgress(3);
 
-    kDebug(51000) << "Parse GetLoggedInUser response:" << endl << data;
+    kDebug() << "Parse GetLoggedInUser response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "users_getLoggedInUser_response")
@@ -995,7 +995,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
     if (m_state == FB_GETUSERINFO) // during login
         emit signalLoginProgress(6);
 
-    kDebug(51000) << "Parse GetUserInfo response:" << endl << data;
+    kDebug() << "Parse GetUserInfo response:" << endl << data;
 
     QList<FbUser> friendsList;
     QDomElement docElem = doc.documentElement();
@@ -1069,7 +1069,7 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
     if (m_loginInProgress)
         emit signalLoginProgress(8);
 
-    kDebug(51000) << "Parse HasAppPermission response:" << endl << data;
+    kDebug() << "Parse HasAppPermission response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "users_hasAppPermission_response")
@@ -1098,7 +1098,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse ExpireSession response:" << endl << data;
+    kDebug() << "Parse ExpireSession response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "auth_expireSession_response ")
@@ -1126,7 +1126,7 @@ void FbTalker::parseResponseAddPhoto(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Add Photo response:" << endl << data;
+    kDebug() << "Parse Add Photo response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "photos_upload_response")
@@ -1155,7 +1155,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Create Album response:" << endl << data;
+    kDebug() << "Parse Create Album response:" << endl << data;
 
     long long newAlbumID = -1;
     QDomElement docElem = doc.documentElement();
@@ -1170,7 +1170,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
             if (node.nodeName() == "aid")
             {
                 newAlbumID = node.toElement().text().toLongLong();
-                kDebug(51000) << "newAID: " << newAlbumID;
+                kDebug() << "newAID: " << newAlbumID;
             }
         }
         errCode = 0;
@@ -1191,7 +1191,7 @@ void FbTalker::parseResponseListFriends(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Friends response:" << endl << data;
+    kDebug() << "Parse Friends response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QString friendsUIDs;
@@ -1238,7 +1238,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Albums response:" << endl << data;
+    kDebug() << "Parse Albums response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QList <FbAlbum> albumsList;
@@ -1281,7 +1281,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                             album.privacy = FB_EVERYONE;
                     }
                 }
-                kDebug(51000) << "AID: " << album.id;
+                kDebug() << "AID: " << album.id;
                 albumsList.append(album);
             }
         }
@@ -1305,7 +1305,7 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    kDebug(51000) << "Parse Photos response:" << endl << data;
+    kDebug() << "Parse Photos response:" << endl << data;
 
     QDomElement docElem = doc.documentElement();
     QList <FbPhoto> photosList;

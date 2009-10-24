@@ -372,6 +372,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${KDE4_INCLUDES}
                         ${QT4_INCLUDES}
                        )
+                       
+    ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=51000) 
 
     # Plugins which will be always compiled
 

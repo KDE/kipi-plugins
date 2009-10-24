@@ -251,7 +251,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
         path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(path);
-        kDebug(51000) << "Resizing and saving to temp file: " << path ;
+        kDebug() << "Resizing and saving to temp file: " << path ;
 
         // Restore all metadata.
         KExiv2Iface::KExiv2 exiv2Iface;
@@ -264,7 +264,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         }
         else
         {
-            kWarning(51000) << "Image " << photoPath << " has no exif data";
+            kWarning() << "Image " << photoPath << " has no exif data";
         }
     }
 
@@ -637,11 +637,11 @@ void GalleryTalker::parseResponseCreateAlbum(const QByteArray& data)
                 if (key == "status")      // key == "status" NOT FOUND!!!
                 {
                     success = (value == "0");
-                    kWarning( 51000 ) << "Create Album. success: " << success ;
+                    kWarning() << "Create Album. success: " << success ;
                 }
                 else if (key.startsWith(QLatin1String(("status_text"))))
                 {
-                    kDebug(51000) << "STATUS: Create Album: " << value ;
+                    kDebug() << "STATUS: Create Album: " << value ;
                 }
             }
         }
@@ -693,11 +693,11 @@ void GalleryTalker::parseResponseAddPhoto(const QByteArray& data)
                 if (key == "status")
                 {
                     success = (value == "0");
-                    kWarning( 51000 ) << "Add photo. success: " << success ;
+                    kWarning() << "Add photo. success: " << success ;
                 }
                 else if (key.startsWith(QLatin1String(("status_text"))))
                 {
-                    kDebug(51000) << "STATUS: Add Photo: " << value ;
+                    kDebug() << "STATUS: Add Photo: " << value ;
                 }
             }
         }

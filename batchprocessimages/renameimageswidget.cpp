@@ -158,7 +158,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent,
     connect(m_progress, SIGNAL(canceled()),
             SLOT(slotAbort()));
 
-    kDebug(51000) << m_urlList;
+    kDebug() << m_urlList;
     for (KUrl::List::iterator it = m_urlList.begin();
             it != m_urlList.end(); ++it) {
         new BatchProcessImagesItem(m_listView,

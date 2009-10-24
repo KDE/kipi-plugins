@@ -117,7 +117,7 @@ KIPI::Category Plugin::category(KAction* action) const {
         return KIPI::ExportPlugin;
     }
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin; // no warning from compiler, please
 }
 

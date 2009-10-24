@@ -95,7 +95,7 @@ void Plugin_SendImages::setup( QWidget* widget )
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
     if ( !interface )
     {
-        kError( 51000 ) << "Kipi interface is null!";
+        kError() << "Kipi interface is null!";
         return;
     }
 
@@ -111,7 +111,7 @@ void Plugin_SendImages::slotActivate()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-       kError( 51000 ) << "Kipi interface is null!";
+       kError() << "Kipi interface is null!";
        return;
     }
 
@@ -134,7 +134,7 @@ void Plugin_SendImages::slotPrepareEmail()
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
     if ( !interface )
     {
-       kError( 51000 ) << "Kipi interface is null!";
+       kError() << "Kipi interface is null!";
        return;
     }
 
@@ -148,6 +148,6 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
     if ( action == d->action_sendimages )
        return KIPI::ImagesPlugin;
 
-    kWarning( 51000 ) << "Unrecognized action for plugin category identification";
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ImagesPlugin; // no warning from compiler, please
 }
