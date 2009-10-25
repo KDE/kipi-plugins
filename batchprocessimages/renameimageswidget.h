@@ -43,7 +43,7 @@ class KFileItem;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIBatchProcessImagesPlugin
@@ -57,7 +57,8 @@ class RenameImagesWidget : public QWidget, public Ui_RenameImagesBase
 
 public:
 
-    enum SortOrder {
+    enum SortOrder
+    {
         BYNAME = 0,
         BYSIZE,
         BYDATE
@@ -66,22 +67,6 @@ public:
     RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
                        const KUrl::List& urlList);
     ~RenameImagesWidget();
-
-private:
-
-    void readSettings();
-    void saveSettings();
-    void reListImages();
-    void updateListing();
-    QString oldToNewName(BatchProcessImagesItem* item,
-                         int itemPosition);
-
-    KIPI::Interface* m_interface;
-    KUrl::List       m_urlList;
-    QTimer*          m_timer;
-    Q3ProgressDialog* m_progress;
-    bool             m_overwriteAll;
-    bool             m_autoSkip;
 
 public Q_SLOTS:
 
@@ -94,7 +79,7 @@ private Q_SLOTS:
     void slotListViewDoubleClicked(QTreeWidgetItem*);
     void slotImageSelected(QTreeWidgetItem*);
     void slotOptionsChanged();
-    void slotGotPreview(const KFileItem*, const QPixmap&);
+    void slotGotPreview(const KFileItem&, const QPixmap&);
 
     void slotAddImages();
     void slotRemoveImage();
@@ -104,6 +89,23 @@ private Q_SLOTS:
 
     void moveCurrentItemUp();
     void moveCurrentItemDown();
+
+private:
+
+    void readSettings();
+    void saveSettings();
+    void reListImages();
+    void updateListing();
+    QString oldToNewName(BatchProcessImagesItem* item, int itemPosition);
+
+private:
+
+    KIPI::Interface*  m_interface;
+    KUrl::List        m_urlList;
+    QTimer*           m_timer;
+    Q3ProgressDialog* m_progress;
+    bool              m_overwriteAll;
+    bool              m_autoSkip;
 };
 
 } // namespace KIPIBatchProcessImagesPlugin
