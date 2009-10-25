@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <qwidget.h>
+#include <QWidget>
 
 // KDE includes
 
@@ -81,14 +81,14 @@ public:
      *
      * @return pointer to the image list
      */
-    KIPIPlugins::ImagesList* imageList();
+    KIPIPlugins::ImagesList* imagesList() const;
 
     /**
      * Returns the upload widget for specifying the target location.
      *
      * @return pointer to the widget
      */
-    KIPI::UploadWidget* uploadWidget();
+    KIPI::UploadWidget* uploadWidget() const;
 
 private:
 

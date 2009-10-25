@@ -104,8 +104,16 @@ private Q_SLOTS:
      */
     void slotHelp();
 
+    /**
+     * Handle Close button.
+     */
+    void slotClose();
+
 protected:
 
+    /**
+     * Handle Close event from dialog title bar.
+     */
     void closeEvent(QCloseEvent *e);
 
     /**

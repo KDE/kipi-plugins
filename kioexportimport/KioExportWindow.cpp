@@ -79,7 +79,7 @@ KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUpload()));
 
-    connect(m_exportWidget->imageList(), SIGNAL(signalImageListChanged()),
+    connect(m_exportWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
     connect(m_exportWidget, SIGNAL(signalTargetUrlChanged(KUrl)),
@@ -119,6 +119,11 @@ KioExportWindow::~KioExportWindow()
     delete m_about;
 }
 
+void KioExportWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
+}
+
 void KioExportWindow::closeEvent(QCloseEvent *e)
 {
     if (!e)
@@ -127,7 +132,15 @@ void KioExportWindow::closeEvent(QCloseEvent *e)
     }
 
     saveSettings();
+    m_exportWidget->imagesList()->listView()->clear();
     e->accept();
+}
+
+void KioExportWindow::slotClose()
+{
+    saveSettings();
+    m_exportWidget->imagesList()->listView()->clear();
+    done(Close);
 }
 
 void KioExportWindow::restoreSettings()
@@ -161,11 +174,6 @@ void KioExportWindow::saveSettings()
     config.sync();
 }
 
-void KioExportWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
-}
-
 void KioExportWindow::slotImageListChanged()
 {
     updateUploadButton();
@@ -179,7 +187,7 @@ void KioExportWindow::slotTargetUrlChanged(const KUrl & target)
 
 void KioExportWindow::updateUploadButton()
 {
-    bool listNotEmpty = !m_exportWidget->imageList()->imageUrls().empty();
+    bool listNotEmpty = !m_exportWidget->imagesList()->imageUrls().empty();
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
     kDebug() << "Updated upload button with listNotEmpty = "
@@ -198,7 +206,7 @@ void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
 
     kDebug() << "copied " << to.prettyUrl();
 
-    m_exportWidget->imageList()->removeItemByUrl(from);
+    m_exportWidget->imagesList()->removeItemByUrl(from);
 }
 
 void KioExportWindow::slotCopyingFinished(KJob *job)
@@ -207,7 +215,7 @@ void KioExportWindow::slotCopyingFinished(KJob *job)
 
     setEnabled(true);
 
-    if (!m_exportWidget->imageList()->imageUrls().empty())
+    if (!m_exportWidget->imagesList()->imageUrls().empty())
     {
         KMessageBox::sorry(this, i18n(
                            "Some of the images have not been transferred "
@@ -221,7 +229,7 @@ void KioExportWindow::slotUpload()
 {
     // start copying and react on signals
     setEnabled(false);
-    KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imageList()->imageUrls(),
+    KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
                             m_exportWidget->targetUrl());
 
     connect(copyJob, SIGNAL(copyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)),

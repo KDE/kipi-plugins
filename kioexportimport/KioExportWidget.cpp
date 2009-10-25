@@ -151,7 +151,7 @@ void KioExportWidget::updateTargetLabel()
     m_targetLabel->setText(urlString);
 }
 
-KIPIPlugins::ImagesList* KioExportWidget::imageList()
+KIPIPlugins::ImagesList* KioExportWidget::imagesList() const
 {
     return m_imageList;
 }

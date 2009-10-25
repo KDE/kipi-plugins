@@ -72,12 +72,12 @@ KioImportWidget::~KioImportWidget()
 {
 }
 
-KIPIPlugins::ImagesList* KioImportWidget::imageList()
+KIPIPlugins::ImagesList* KioImportWidget::imagesList() const
 {
     return m_imageList;
 }
 
-KIPI::UploadWidget* KioImportWidget::uploadWidget()
+KIPI::UploadWidget* KioImportWidget::uploadWidget() const
 {
     return m_uploadWidget;
 }

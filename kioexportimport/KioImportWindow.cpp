@@ -81,7 +81,7 @@ KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface *interface
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotImport()));
 
-    connect(m_importWidget->imageList(), SIGNAL(signalImageListChanged()),
+    connect(m_importWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotSourceAndTargetUpdated()));
 
     connect(m_importWidget->uploadWidget(), SIGNAL(selectionChanged),
@@ -123,7 +123,7 @@ void KioImportWindow::slotImport()
 
     // start copying and react on signals
     setEnabled(false);
-    KIO::CopyJob *copyJob = KIO::copy(m_importWidget->imageList()->imageUrls(),
+    KIO::CopyJob *copyJob = KIO::copy(m_importWidget->imagesList()->imageUrls(),
                             m_importWidget->uploadWidget()->selectedImageCollection().uploadPath());
 
     connect(copyJob, SIGNAL(copyingDone(KIO::Job*, const KUrl&, const KUrl&, time_t, bool, bool)),
@@ -144,7 +144,7 @@ void KioImportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
 
     kDebug() << "copied " << to.prettyUrl();
 
-    m_importWidget->imageList()->removeItemByUrl(from);
+    m_importWidget->imagesList()->removeItemByUrl(from);
 }
 
 void KioImportWindow::slotCopyingFinished(KJob *job)
@@ -153,7 +153,7 @@ void KioImportWindow::slotCopyingFinished(KJob *job)
 
     setEnabled(true);
 
-    if (!m_importWidget->imageList()->imageUrls().empty())
+    if (!m_importWidget->imagesList()->imageUrls().empty())
     {
         KMessageBox::sorry(this, i18n(
                            "Some of the images have not been transferred "

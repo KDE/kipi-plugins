@@ -72,7 +72,7 @@ public:
     /**
      * Returns a pointer to the imagelist that is displayed.
      */
-    KIPIPlugins::ImagesList* imageList();
+    KIPIPlugins::ImagesList* imagesList() const;
 
     /**
      * Returns the currently selected target url. Maybe invalid.
