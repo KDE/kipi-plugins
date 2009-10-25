@@ -71,7 +71,7 @@ class IpodHeader;
 
 class UploadDialog : public KDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -93,10 +93,10 @@ private Q_SLOTS:
 
     void startTransfer();
 
-    void addDropItems( QStringList filesPath );
+    void addDropItems( const QStringList& filesPath );
 
     void imageSelected( QTreeWidgetItem *item );
-    void gotImagePreview( const KFileItem* , const QPixmap &pixmap );
+    void gotImagePreview( const KFileItem*, const QPixmap &pixmap );
 
     void ipodItemSelected( QTreeWidgetItem *item );
 
@@ -116,7 +116,7 @@ private Q_SLOTS:
 
 private:
 
-    void addUrlToList( QString file );
+    void addUrlToList( const QString& file );
     bool deleteIpodAlbum( IpodAlbumItem *album );
     bool deleteIpodPhoto( IpodPhotoItem *photo );
     void getIpodAlbums();

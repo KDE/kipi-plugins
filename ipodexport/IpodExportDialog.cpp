@@ -274,8 +274,8 @@ UploadDialog::UploadDialog
     connect(m_transferImagesButton, SIGNAL( clicked() ),
             this, SLOT( startTransfer() ) );
 
-    connect(m_uploadList, SIGNAL( addedDropItems(QStringList) ),
-            this, SLOT( addDropItems(QStringList) ) );
+    connect(m_uploadList, SIGNAL( signalAddedDropItems(const QStringList&) ),
+            this, SLOT( addDropItems(const QStringList&) ) );
 
     connect(m_uploadList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
             this, SLOT( imageSelected(QTreeWidgetItem*) ));
@@ -693,7 +693,7 @@ void UploadDialog::deleteIpodAlbum()
     itdb_photodb_write( m_itdb, &err );
 }
 
-void UploadDialog::addDropItems( QStringList filesPath )
+void UploadDialog::addDropItems( const QStringList& filesPath )
 {
     if( filesPath.isEmpty() ) return;
 
@@ -706,7 +706,7 @@ void UploadDialog::addDropItems( QStringList filesPath )
     enableButton( KDialog::User1, m_uploadList->model()->hasChildren() > 0 );
 }
 
-void UploadDialog::addUrlToList( QString file )
+void UploadDialog::addUrlToList( const QString& file )
 {
     QFileInfo *fi = new QFileInfo( file );
 

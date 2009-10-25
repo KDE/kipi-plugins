@@ -36,15 +36,24 @@ class ImageList : public QTreeWidget
 
 public:
 
-    enum ListType { UploadType, IpodType };
+    enum ListType
+    {
+        UploadType, 
+        IpodType
+    };
+
+public:
 
     ImageList( ListType = UploadType, QWidget *parent = 0 );
 
-    ListType getType() const { return m_type; }
+    ListType getType() const
+    {
+        return m_type;
+    };
 
 Q_SIGNALS:
 
-    void addedDropItems( QStringList filesPath );
+    void signalAddedDropItems( const QStringList& filesPath );
 
 protected:
 

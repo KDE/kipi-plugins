@@ -73,7 +73,7 @@ void ImageList::droppedImagesItems(const QList<QUrl>& urls)
 
     if( !filesPath.isEmpty() )
     {
-       emit addedDropItems( filesPath );
+       emit signalAddedDropItems( filesPath );
     }
 }
 
