@@ -28,4 +28,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> GPSSync            : 210611 : Kipi-plugin add gps data crash after write.
 018 ==> BatchProcessImages : 210874 : Wish for new option in resize-tool: fit into given dimensions.
 019 ==> RawConverter       : 211532 : Batch raw converter doesn't clean file list.
-020 ==> 
+020 ==> BatchProcessImages : 211792 : Preview of images is not shown [patch].
+021 ==> 
