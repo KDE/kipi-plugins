@@ -55,6 +55,7 @@ class QGroupBox;
 class QLabel;
 class QPushButton;
 class QTreeWidgetItem;
+class QCloseEvent;
 
 class KFileItem;
 
@@ -110,9 +111,10 @@ private Q_SLOTS:
     void refreshDevices();
     void updateSysInfo();
 
-    void slotHelp();
-
     void enableButtons();
+
+    void slotHelp();
+    void slotClose();
 
 private:
 
@@ -125,6 +127,7 @@ private:
     void reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
 
     bool openDevice(); // connect to the ipod
+    void closeEvent(QCloseEvent*);
 
 private:
 

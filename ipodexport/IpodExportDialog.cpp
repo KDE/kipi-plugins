@@ -39,6 +39,7 @@
 #include <QTreeWidgetItem>
 #include <QTimer>
 #include <QPointer>
+#include <QCloseEvent>
 
 // KDE includes
 
@@ -227,7 +228,6 @@ UploadDialog::UploadDialog
 
     m_destinationBox->setLayout( destinationBoxLayout );
 
-
     // Add sub-layouts to the main layout
     grid->addWidget( m_ipodHeader,     0, 0, 1, 2 ); // colspan=2
     grid->addWidget( m_urlListBox,     1, 0, 1, 1 );
@@ -295,6 +295,20 @@ UploadDialog::~UploadDialog()
 void UploadDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("ipodexport", "kipi-plugins");
+}
+
+void UploadDialog::slotClose()
+{
+    m_uploadList->clear();
+    done(Close);
+}
+
+void UploadDialog::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+
+    m_uploadList->clear();
+    e->accept();
 }
 
 void UploadDialog::getIpodAlbums()
