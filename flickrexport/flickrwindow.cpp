@@ -175,7 +175,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
             this, SLOT( slotAddPhotoSetSucceeded() ));
 
     connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded() ),
-            this, SLOT( populatePhotoSetComboBox() ));
+            this, SLOT( slotPopulatePhotoSetComboBox() ));
 
     connect(m_talker, SIGNAL( signalListPhotoSetsFailed(const QString&) ),
             this, SLOT( slotListPhotoSetsFailed(const QString&) ));
@@ -252,6 +252,27 @@ FlickrWindow::~FlickrWindow()
     delete m_talker;
     delete m_widget;
     delete m_about;
+}
+
+void FlickrWindow::slotHelp()
+{
+    KToolInvocation::invokeHelp("flickrexport", "kipi-plugins");
+}
+
+void FlickrWindow::slotClose()
+{
+    writeSettings();
+    m_imglst->listView()->clear();
+    done(Close);
+}
+
+void FlickrWindow::closeEvent(QCloseEvent *e)
+{
+    if (!e) return;
+
+    writeSettings();
+    m_imglst->listView()->clear();
+    e->accept();
 }
 
 void FlickrWindow::reactivate()
@@ -334,19 +355,8 @@ void FlickrWindow::writeSettings()
     config.sync();
 }
 
-void FlickrWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("flickrexport", "kipi-plugins");
-}
-
 void FlickrWindow::slotDoLogin()
 {
-}
-
-void FlickrWindow::slotClose()
-{
-    writeSettings();
-    done(Close);
 }
 
 void FlickrWindow::slotTokenObtained(const QString& token)
@@ -436,7 +446,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
       m_talker->m_selectedPhotoSet = fps;
 
       // Re-populate the photo sets combo box.
-      populatePhotoSetComboBox();
+      slotPopulatePhotoSetComboBox();
    }
    else
    {
@@ -468,9 +478,9 @@ void FlickrWindow::slotOpenPhoto( const KUrl& url )
 }
 */
 
-void FlickrWindow::populatePhotoSetComboBox()
+void FlickrWindow::slotPopulatePhotoSetComboBox()
 {
-    kDebug() << "populatePhotoSetComboBox invoked";
+    kDebug() << "slotPopulatePhotoSetComboBox invoked";
 
     if (m_talker && m_talker->m_photoSetsList)
     {
@@ -699,7 +709,7 @@ void FlickrWindow::slotAddPhotoSetSucceeded()
   /* Method called when a photo set has been successfully created on Flickr.
    * It functions to restart the normal flow after a photo set has been created
    * on Flickr. */
-  populatePhotoSetComboBox();
+  slotPopulatePhotoSetComboBox();
   slotAddPhotoSucceeded();
 }
 

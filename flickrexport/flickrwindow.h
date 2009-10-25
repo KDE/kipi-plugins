@@ -111,7 +111,7 @@ private Q_SLOTS:
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
-    void populatePhotoSetComboBox();
+    void slotPopulatePhotoSetComboBox();
     void slotAddPhotoNext();
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
@@ -126,6 +126,7 @@ private Q_SLOTS:
 
 private:
 
+    void closeEvent(QCloseEvent*);
     void readSettings();
     void writeSettings();
 
