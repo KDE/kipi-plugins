@@ -29,4 +29,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> BatchProcessImages : 210874 : Wish for new option in resize-tool: fit into given dimensions.
 019 ==> RawConverter       : 211532 : Batch raw converter doesn't clean file list.
 020 ==> BatchProcessImages : 211792 : Preview of images is not shown [patch].
-021 ==> 
+021 ==> DNGConverter       : 206747 : DngConverter temp files not properly renamed.
+022 ==> 
