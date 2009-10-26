@@ -30,4 +30,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 019 ==> RawConverter       : 211532 : Batch raw converter doesn't clean file list.
 020 ==> BatchProcessImages : 211792 : Preview of images is not shown [patch].
 021 ==> DNGConverter       : 206747 : DngConverter temp files not properly renamed.
-022 ==> 
+022 ==> DNGConverter       : 210371 : Converting a CRW file results in an unusable DNG.
+023 ==> 
