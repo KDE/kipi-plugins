@@ -6,7 +6,7 @@
  * Date        : 2003-10-24
  * Description : Raw converter batch dialog
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -226,7 +226,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),
-                             "renchi at pooh dot tam dot uiuc dot edu");
+                             "renchi dot raju at gmail dot com");
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                        ki18n("Developer and maintainer"),
