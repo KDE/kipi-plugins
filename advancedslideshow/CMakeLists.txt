@@ -1,3 +1,4 @@
+SUBDIRS(icons)
 
 SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
                                            screenproperties.cpp
@@ -46,8 +47,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                       kipiplugins
                      )
 
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
-
-INSTALL(FILES KIPIicon.svg DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_advancedslideshow)
 INSTALL(TARGETS kipiplugin_advancedslideshow DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
