@@ -1,4 +1,4 @@
-Kipi-plugins 0.8.0 - Release date: xx/10/2009
+Kipi-plugins 0.8.0 - Release date: 01/11/2009
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -31,4 +31,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> BatchProcessImages : 211792 : Preview of images is not shown [patch].
 021 ==> DNGConverter       : 206747 : DngConverter temp files not properly renamed.
 022 ==> DNGConverter       : 210371 : Converting a CRW file results in an unusable DNG.
-023 ==> 
+023 ==> DNGConverter       : 203959 : Kipi-plugins fails to compile: plugin_dngconverter.o: file not recognized.
+024 ==> 
