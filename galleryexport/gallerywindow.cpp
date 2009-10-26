@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a plugin to export to a remote Gallery server.
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
@@ -223,7 +223,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
                                                     "(c) 2008, Andrea Diamantini\n"));
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
-                       "renchi at pooh dot tam dot uiuc dot edu");
+                       "renchi dot raju at gmail dot com");
 
     m_about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
                        "kde at colin dot guthr dot ie");

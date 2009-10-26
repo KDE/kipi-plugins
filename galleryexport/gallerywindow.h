@@ -6,7 +6,7 @@
 * Date        : 2003-10-01
 * Description : a plugin to export to a remote Gallery server.
 *
-* Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+* Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
