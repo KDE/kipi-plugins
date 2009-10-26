@@ -696,7 +696,7 @@ void SlideShowGL::showEndOfShow()
     p.drawText(20, 50, i18n("Slideshow Completed"));
     p.drawText(20, 100, i18n("Click to Exit..."));
 
-    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-logo.svg") );
+    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-icon.svg") );
     QPixmap kipiLogoPixmap = QPixmap(width()/6, width()/6);
     kipiLogoPixmap.fill(Qt::black);
     QPaintDevice* pdp = &kipiLogoPixmap;

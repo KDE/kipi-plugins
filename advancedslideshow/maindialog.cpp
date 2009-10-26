@@ -93,7 +93,7 @@ MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
     // --------------------------------------------------------
 
     // Prepare a preview pixmap (KIPI logo) for no image selection
-    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-logo.svg") );
+    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-icon.svg") );
     m_noPreviewPixmap = QPixmap(ICONSIZE, ICONSIZE);
     m_noPreviewPixmap.fill(Qt::transparent);
     QPaintDevice* pdp = &m_noPreviewPixmap;
