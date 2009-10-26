@@ -10,7 +10,7 @@
  *
  * Parts of this code are based on
  * smoothslidesaver by Carsten Weinhold <carsten dot weinhold at gmx dot de>
- * and slideshowgl by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * and slideshowgl by Renchi Raju <renchi dot raju at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

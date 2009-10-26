@@ -6,7 +6,7 @@
  * Date        : 2004-01-19
  * Description : a kipi plugin to slide images.
  *
- * Copyright (C) 2004      by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004      by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio.fuoglio@gmail.com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -696,7 +696,7 @@ void SlideShowGL::showEndOfShow()
     p.drawText(20, 50, i18n("Slideshow Completed"));
     p.drawText(20, 100, i18n("Click to Exit..."));
 
-    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipiplugin_advancedslideshow/KIPIicon.svg") );
+    QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-logo.svg") );
     QPixmap kipiLogoPixmap = QPixmap(width()/6, width()/6);
     kipiLogoPixmap.fill(Qt::black);
     QPaintDevice* pdp = &kipiLogoPixmap;

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -1330,7 +1330,7 @@ void SlideShow::paintEvent( QPaintEvent * )
         p.drawText( 100, 100, i18n( "Slideshow Completed" ) );
         p.drawText( 100, 100+10+fn.pointSize(), i18n( "Click to Exit..." ) );
 
-        QSvgRenderer svgRenderer( KStandardDirs::locate( "data", "kipiplugin_advancedslideshow/KIPIicon.svg" ) );
+        QSvgRenderer svgRenderer( KStandardDirs::locate("data", "kipi/data/kipi-logo.svg") );
         QPixmap kipiLogoPixmap = QPixmap( width()/6, width()/6 );
         kipiLogoPixmap.fill( Qt::black );
         QPaintDevice* pdp = &kipiLogoPixmap;

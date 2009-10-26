@@ -58,4 +58,4 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_advancedslideshow
 X-KIPI-MergeMenu=true
-author=Renchi Raju, renchi@pooh.tam.uiuc.edu
+author=Renchi Raju, renchi dot raju at gmail dot com

@@ -112,14 +112,16 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedContainer* sharedData)
     d->sharedData->page_advanced->setIcon(KIcon("configure"));
 
     // --- About --
+
     d->about = new KIPIPlugins::KPAboutData(ki18n("Advanced Slideshow"),
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A Kipi plugin for image slideshows"),
-                                            ki18n("(c) 2003-2004, Renchi Raju\n(c) 2006-2008, Valerio Fuoglio"));
+                                            ki18n("(c) 2003-2004, Renchi Raju\n"
+                                                  "(c) 2006-2008, Valerio Fuoglio"));
 
     d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
-                        "renchi@pooh.tam.uiuc.edu");
+                        "renchi dot raju at gmail dot com");
     d->about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
                         "valerio.fuoglio@gmail.com");
 
