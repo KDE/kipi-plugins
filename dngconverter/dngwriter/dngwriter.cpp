@@ -821,31 +821,36 @@ int DNGWriter::convert()
                         &previewList);
 
         // -----------------------------------------------------------------------------------------
-        // Metadata makernote cleanup using Exiv2. See B.K.O #204437.
+        // Metadata makernote cleanup using Exiv2 for some RAW file types
+        // See B.K.O #204437 and #210371
 
-        kDebug() << "DNGWriter: cleanup makernotes using Exiv2" ;
-
-        if (meta.load(dngFilePath))
+        if (inputInfo.suffix().toUpper() == QString("ORF"))
         {
-            meta.setWriteRawFiles(true);
-            meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
-            meta.applyChanges();
+            kDebug() << "DNGWriter: cleanup makernotes using Exiv2" ;
+
+            if (meta.load(dngFilePath))
+            {
+                meta.setWriteRawFiles(true);
+                meta.removeExifTag("Exif.OlympusIp.BlackLevel", false);
+                meta.applyChanges();
+            }
         }
 
+        // -----------------------------------------------------------------------------------------
         // update modification time if desired
+
         if (d->updateFileDate)
         {
             QDateTime date = meta.getImageDateTime();
 
-            kDebug() << "Setting modification date from meta data: "
-                          << date.toString();
+            kDebug() << "DNGWriter: Setting modification date from meta data: " << date.toString();
 
             // don't touch access time
             struct stat st;
             stat(QFile::encodeName(dngFilePath), &st);
 
             struct utimbuf ut;
-            ut.actime = st.st_atime;
+            ut.actime  = st.st_atime;
             ut.modtime = date.toTime_t();
             utime(QFile::encodeName(dngFilePath), &ut);
         }
