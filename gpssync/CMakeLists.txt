@@ -1,3 +1,5 @@
+SUBDIRS(icons)
+
 SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp 
                                  gpslistviewcontextmenu.cpp 
                                  gpslistviewitem.cpp 
@@ -23,8 +25,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${KEXIV2_LIBRARIES} 
                       kipiplugins
                      )
-
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
 
 INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})
 
