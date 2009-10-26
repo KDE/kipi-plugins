@@ -32,4 +32,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> DNGConverter       : 206747 : DngConverter temp files not properly renamed.
 022 ==> DNGConverter       : 210371 : Converting a CRW file results in an unusable DNG.
 023 ==> DNGConverter       : 203959 : Kipi-plugins fails to compile: plugin_dngconverter.o: file not recognized.
-024 ==> 
+024 ==> DNGConverter       : 210710 : digiKam error when open a dng image for edit after conversion from NEF.
+025 ==> 
