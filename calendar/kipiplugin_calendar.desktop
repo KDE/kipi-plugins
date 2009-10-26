@@ -70,4 +70,4 @@ Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar
 X-KIPI-MergeMenu=false
-author=Orgad Shaneh, orgads@gmail.com
+author=Orgad Shaneh, orgads at gmail dot com

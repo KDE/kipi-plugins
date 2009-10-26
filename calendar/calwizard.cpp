@@ -6,7 +6,7 @@
  * Date        : 2003-11-03
  * Description : main dialog.
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
@@ -114,7 +114,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
                        "tomalbers@kde.nl");
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
-                       "renchi@pooh.tam.uiuc.edu");
+                       "renchi dot raju at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));

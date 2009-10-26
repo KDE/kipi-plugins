@@ -6,7 +6,7 @@
  * Date        : 2003-11-03
  * Description : painter class to draw calendar.
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  *
  * This program is free software; you can redistribute it
