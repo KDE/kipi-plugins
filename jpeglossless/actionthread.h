@@ -68,9 +68,9 @@ protected:
 
 Q_SIGNALS:
 
-    void starting(const QString &filePath, int action);
-    void finished(const QString &filePath, int action);
-    void failed(const QString &filePath, int action, const QString &errString);
+    void starting(const QString& filePath, int action);
+    void finished(const QString& filePath, int action);
+    void failed(const QString& filePath, int action, const QString& errString);
 
 private:
 
