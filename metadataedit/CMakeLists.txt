@@ -1,3 +1,5 @@
+SUBDIRS(icons)
+
 SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp 
                                       subjects.cpp
                                       metadatacheckbox.cpp
@@ -45,8 +47,6 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       kipiplugins
                       kdcraw
                      )
-
-KDE4_INSTALL_ICONS(${ICON_INSTALL_DIR})
 
 INSTALL(TARGETS kipiplugin_metadataedit DESTINATION ${PLUGIN_INSTALL_DIR})
 
