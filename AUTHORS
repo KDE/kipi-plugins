@@ -15,20 +15,21 @@ Angelo Naselli       <anaselli at linux dot it>
 Kare Sars            <kare dot sars at iki dot fi>
 Valerio Fuoglio      <valerio dot fuoglio at gmail dot com>
 Andrea Diamantini    <adjam7 at gmail dot com>
+Timothee Groleau     <kde at timotheegroleau dot com>
 
 CONTRIBUTORS:
 Gerhard Kulzer       <gerhard at kulzer dot net>
 Orgad Shaneh         <orgads at gmail dot com>
 Seb Ruiz             <ruiz at kde dot org>
-Achim Bohnet         <ach at mpe dot mpg dot de>
+Julien Narboux       <Julien at narboux dot fr>
+Nicolas Lécureuil    <neoclust at mandriva dot org>
 Ruediger Bente       <ruediger dot bente at gmx dot de>
 Beth Marmorstein     <purplegamba at cox dot net>
 Robert Marmorstein   <rmmarm at sdf dot lonestar dot org>
 Markus Leuthold      <kusi at forum dot titlis dot org>
-Julien Narboux       <Julien at narboux dot fr>
-Nicolas Lécureuil    <neoclust at mandriva dot org>
 Vardhman Jain        <vardhman at gmail.com>
 Colin Guthrie        <kde at colin dot guthr dot ie>
+Achim Bohnet         <ach at mpe dot mpg dot de>
 
 OLD CONTRIBUTORS:
 Tudor Calin          <tudor at 1xtech dot com>
@@ -62,6 +63,7 @@ Smug import/export      : Luka Renko
 Time adjust             : Gilles Caulier
 Wallpaper               : Laurent Montel
 KIOExport               : Johannes Wienke
+ShwupExport             : Timothee Groleau
 
 PROJECT COORDINATORS:
 Angelo Naselli and Gilles Caulier
