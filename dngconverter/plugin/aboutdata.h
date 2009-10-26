@@ -23,6 +23,14 @@
 #ifndef ABOUTDATA_H
 #define ABOUTDATA_H
 
+#include <QFileInfo>
+#include <QString>
+
+// LibKDcraw includes
+
+#include <libkdcraw/kdcraw.h>
+#include <libkdcraw/version.h>
+
 // Local includes
 
 #include "kpaboutdata.h"
@@ -47,6 +55,20 @@ public:
     }
 
     ~DNGConverterAboutData(){}
+
+    static bool isRAWFile(const QString& filePath)
+    {
+
+        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+        QFileInfo fileInfo(filePath);
+        if (fileInfo.suffix().toUpper() != QString("DNG"))
+        {
+            if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
+                return true;
+        }
+
+        return false;
+    }
 };
 
 } // namespace KIPIDNGConverterPlugin

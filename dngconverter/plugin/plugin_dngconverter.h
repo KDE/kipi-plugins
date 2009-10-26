@@ -44,13 +44,11 @@ class Plugin_DNGConverter : public KIPI::Plugin
 
 public:
 
-    Plugin_DNGConverter(QObject *parent, const QVariantList &args);
+    Plugin_DNGConverter(QObject *parent, const QVariantList& args);
     ~Plugin_DNGConverter();
 
     KIPI::Category category(KAction* action) const;
     void setup(QWidget* widget);
-
-    static bool isRAWFile(const QString& filePath);
 
 private:
 

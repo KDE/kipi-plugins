@@ -38,7 +38,6 @@
 // Local includes
 
 #include "aboutdata.h"
-#include "plugin_dngconverter.h"
 #include "pluginsversion.h"
 #include "batchdialog.h"
 
@@ -70,7 +69,7 @@ int main(int argc, char *argv[])
     for(int i = 0; i < args->count(); i++)
     {
         KUrl url = args->url(i);
-        if (Plugin_DNGConverter::isRAWFile(url.path()))
+        if (DNGConverterAboutData::isRAWFile(url.path()))
             urls.append(url);
     }
     args->clear();

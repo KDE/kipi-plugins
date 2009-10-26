@@ -23,10 +23,6 @@
 #include "plugin_dngconverter.h"
 #include "plugin_dngconverter.moc"
 
-// Qt includes
-
-#include <QFileInfo>
-
 // KDE includes
 
 #include <kaction.h>
@@ -39,11 +35,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kwindowsystem.h>
-
-// LibKDcraw includes
-
-#include <libkdcraw/kdcraw.h>
-#include <libkdcraw/version.h>
 
 // LibKIPI includes
 
@@ -59,7 +50,7 @@ using namespace KIPIDNGConverterPlugin;
 K_PLUGIN_FACTORY( RawConverterFactory, registerPlugin<Plugin_DNGConverter>(); )
 K_EXPORT_PLUGIN ( RawConverterFactory("kipiplugin_dngconverter") )
 
-Plugin_DNGConverter::Plugin_DNGConverter(QObject *parent, const QVariantList &)
+Plugin_DNGConverter::Plugin_DNGConverter(QObject* parent, const QVariantList&)
                    : KIPI::Plugin( RawConverterFactory::componentData(), parent, "DNGConverter")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DNGConverter plugin loaded" ;
@@ -95,20 +86,6 @@ Plugin_DNGConverter::~Plugin_DNGConverter()
 {
 }
 
-bool Plugin_DNGConverter::isRAWFile(const QString& filePath)
-{
-
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-    QFileInfo fileInfo(filePath);
-    if (fileInfo.suffix().toUpper() != QString("DNG"))
-    {
-        if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
-            return true;
-    }
-
-    return false;
-}
-
 void Plugin_DNGConverter::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>( parent() );
@@ -129,7 +106,7 @@ void Plugin_DNGConverter::slotActivate()
 
     for( KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it )
     {
-        if (isRAWFile((*it).path()))
+        if (DNGConverterAboutData::isRAWFile((*it).path()))
             items.append((*it));
     }
 
