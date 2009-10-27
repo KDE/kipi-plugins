@@ -28,6 +28,8 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPointer>
+#include <QMutex>
+#include <QWaitCondition>
 
 // KDE includes
 
@@ -53,6 +55,8 @@
 #include <libkdcraw/dcrawbinary.h>
 #endif
 
+using namespace KDcrawIface;
+
 namespace KIPIPlugins
 {
 
@@ -63,21 +67,22 @@ public:
 
     ImageDialogPreviewPrivate()
     {
-        imageLabel = 0;
-        infoLabel  = 0;
-        iface      = 0;
+        imageLabel   = 0;
+        infoLabel    = 0;
+        iface        = 0;
+        loadRawThumb = 0;
     }
 
     QLabel              *imageLabel;
     QLabel              *infoLabel;
 
-    KUrl                 currentURL;
-
-    KDcrawIface::KDcraw  dcrawIface;
+    KUrl                 currentUrl;
 
     KExiv2Iface::KExiv2  exiv2Iface;
 
     KIPI::Interface     *iface;
+
+    LoadRawThumbThread  *loadRawThumb;
 };
 
 ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
@@ -102,13 +107,19 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+        connect(d->iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
                 this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
     }
+
+    d->loadRawThumb = new LoadRawThumbThread(this);
+
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
+            this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
 }
 
 ImageDialogPreview::~ImageDialogPreview()
 {
+    d->loadRawThumb->cancel();
     delete d;
 }
 
@@ -124,7 +135,7 @@ void ImageDialogPreview::resizeEvent(QResizeEvent *)
 
 void ImageDialogPreview::showPreview()
 {
-    KUrl url(d->currentURL);
+    KUrl url(d->currentUrl);
     clearPreview();
     showPreview(url);
 }
@@ -137,27 +148,30 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         return;
     }
 
-    if (url != d->currentURL)
+    if (url != d->currentUrl)
     {
         QString make, model, dateTime, aperture, focalLength, exposureTime, sensitivity;
         QString unavailable(i18n("<i>unavailable</i>"));
         clearPreview();
-        d->currentURL = url;
+        d->currentUrl = url;
         if (d->iface)
         {
-            d->iface->thumbnail(d->currentURL, 256);
+            d->iface->thumbnail(d->currentUrl, 256);
         }
         else
         {
-            KIO::PreviewJob *job = KIO::filePreview(d->currentURL, 256);
+            KIO::PreviewJob *job = KIO::filePreview(d->currentUrl, 256);
 
-            connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
-                    this, SLOT(slotKDEPreview(const KFileItem &, const QPixmap &)));
+            connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+                    this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+
+            connect(job, SIGNAL(failed(const KFileItem&)),
+                    this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
         }
 
         // Try to use libkexiv2 to identify image.
 
-        d->exiv2Iface.load(d->currentURL.path());
+        d->exiv2Iface.load(d->currentUrl.path());
         if (d->exiv2Iface.hasExif() || d->exiv2Iface.hasXmp())
         {
             make = d->exiv2Iface.getExifTagString("Exif.Image.Make");
@@ -216,8 +230,9 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         {
             // Try to use libkdcraw interface to identify image.
 
-            KDcrawIface::DcrawInfoContainer info;
-            d->dcrawIface.rawFileIdentify(info, d->currentURL.path());
+            DcrawInfoContainer info;
+            KDcraw             dcrawIface;
+            dcrawIface.rawFileIdentify(info, d->currentUrl.path());
             if (info.isDecodable)
             {
                 if (!info.make.isEmpty())
@@ -280,12 +295,23 @@ void ImageDialogPreview::showPreview(const KUrl& url)
 // Used only if Kipi interface is null.
 void ImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
 {
-    slotThumbnail(item.url(), pix);
+    if (!pix.isNull())
+        slotThumbnail(item.url(), pix);
+}
+
+void ImageDialogPreview::slotKDEPreviewFailed(const KFileItem& item)
+{
+    d->loadRawThumb->getRawThumb(item.url());
+}
+
+void ImageDialogPreview::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    if (url == d->currentURL)
+    if (url == d->currentUrl)
     {
         QPixmap pixmap;
         QSize s = d->imageLabel->contentsRect().size();
@@ -303,7 +329,7 @@ void ImageDialogPreview::clearPreview()
 {
     d->imageLabel->clear();
     d->infoLabel->clear();
-    d->currentURL = KUrl();
+    d->currentUrl = KUrl();
 }
 
 // ------------------------------------------------------------------------
@@ -350,14 +376,14 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
 #if KDCRAW_VERSION < 0x000400
         // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
-        if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        if (DcrawBinary::instance()->versionIsRight())
         {
-            allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
+            allPictures.insert(allPictures.indexOf("|"), QString(DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
             patternList.removeAll(patternList[0]);
             patternList.prepend(allPictures);
         }
 #else
-        allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
         patternList.removeAll(patternList[0]);
         patternList.prepend(allPictures);
 #endif
@@ -365,13 +391,13 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
     else
     {
 #if KDCRAW_VERSION < 0x000400
-        if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        if (DcrawBinary::instance()->versionIsRight())
         {
-            allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
+            allPictures.insert(allPictures.indexOf("|"), QString(DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
             patternList.prepend(allPictures);
         }
 #else
-        allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
+        allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
         patternList.prepend(allPictures);
 #endif
     }
@@ -380,13 +406,13 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
     // or unavailable(see file #121242 in B.K.O).
-    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
-        patternList.append(i18n("\n%1|Camera RAW files", QString(KDcrawIface::DcrawBinary::instance()->rawFiles())));
+    if (DcrawBinary::instance()->versionIsRight())
+        patternList.append(i18n("\n%1|Camera RAW files", QString(DcrawBinary::instance()->rawFiles())));
 #else
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
     // or unavailable(see file #121242 in B.K.O).
-    patternList.append(i18n("\n%1|Camera RAW files", QString(KDcrawIface::KDcraw::rawFiles())));
+    patternList.append(i18n("\n%1|Camera RAW files", QString(KDcraw::rawFiles())));
 #endif
 
     d->fileFormats = patternList.join("\n");
@@ -470,6 +496,82 @@ KUrl::List ImageDialog::getImageUrls(QWidget* parent, KIPI::Interface* iface, bo
     else
     {
         return KUrl::List();
+    }
+}
+
+// ------------------------------------------------------------------------
+
+class LoadRawThumbThreadPriv
+{
+public:
+
+    LoadRawThumbThreadPriv()
+    {
+        size    = 256;
+        running = false;
+    }
+
+    bool           running;
+
+    int            size;
+
+    QMutex         mutex;
+
+    QWaitCondition condVar;
+
+    KUrl::List     todo;
+};
+
+LoadRawThumbThread::LoadRawThumbThread(QObject *parent, int size)
+                  : QThread(parent), d(new LoadRawThumbThreadPriv)
+{
+    d->size = size;
+    start();
+}
+
+LoadRawThumbThread::~LoadRawThumbThread()
+{
+    cancel();
+    wait();
+
+    delete d;
+}
+
+void LoadRawThumbThread::cancel()
+{
+    QMutexLocker lock(&d->mutex);
+    d->todo.clear();
+    d->running = false;
+    d->condVar.wakeAll();
+}
+
+void LoadRawThumbThread::getRawThumb(const KUrl& url)
+{
+    QMutexLocker lock(&d->mutex);
+    d->todo << url;
+    d->condVar.wakeAll();
+}
+
+void LoadRawThumbThread::run()
+{
+    d->running = true;
+    while (d->running)
+    {
+        KUrl url;
+        {
+            QMutexLocker lock(&d->mutex);
+            if (!d->todo.isEmpty())
+                url = d->todo.takeFirst();
+            else
+                d->condVar.wait(&d->mutex);
+        }
+
+        if (!url.isEmpty())
+        {
+            QImage img;
+            KDcraw::loadDcrawPreview(img, url.path());
+            emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
     }
 }
 

@@ -23,6 +23,11 @@
 #ifndef IMAGEDIALOG_H
 #define IMAGEDIALOG_H
 
+// Qt includes
+
+#include <QThread>
+#include <QImage>
+
 // KDE includes
 
 #include <kurl.h>
@@ -56,9 +61,11 @@ public:
 private Q_SLOTS:
 
     void showPreview();
-    void showPreview(const KUrl& url);
-    void slotKDEPreview(const KFileItem& item, const QPixmap& pix);
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void showPreview(const KUrl&);
+    void slotThumbnail(const KUrl&, const QPixmap&);
+    void slotKDEPreview(const KFileItem&, const QPixmap&);
+    void slotKDEPreviewFailed(const KFileItem&);
+    void slotRawThumb(const KUrl&, const QImage&);
     void clearPreview();
 
 private:
@@ -93,6 +100,35 @@ public:
 private:
 
     ImageDialogPrivate* const d;
+};
+
+// ------------------------------------------------------------------------
+
+class LoadRawThumbThreadPriv;
+
+class KIPIPLUGINS_EXPORT LoadRawThumbThread : public QThread
+{
+    Q_OBJECT
+
+public:
+
+    LoadRawThumbThread(QObject *parent, int size=256);
+    ~LoadRawThumbThread();
+
+    void getRawThumb(const KUrl& url);
+    void cancel();
+
+Q_SIGNALS:
+
+    void signalRawThumb(const KUrl&, const QImage& img);
+
+private:
+
+    void run();
+
+private:
+
+    LoadRawThumbThreadPriv* const d;
 };
 
 } // namespace KIPIPlugins
