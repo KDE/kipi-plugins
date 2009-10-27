@@ -59,10 +59,11 @@ public:
     void changeNameDest(QString text);
     void changeOutputMess(QString text);
 
-    //void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
 
     void setKey(const QString& val, bool reverseSort);
     QString key(int column, bool ascending) const;
+
+    //void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
     //bool compare (Q3ListViewItem * i, int col, bool ascending) const;
 
 private:

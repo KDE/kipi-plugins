@@ -38,6 +38,7 @@
 
 class QProgressDialog;
 class QTimer;
+class QAction;
 
 class KFileItem;
 
@@ -56,13 +57,6 @@ class RenameImagesWidget : public QWidget, public Ui_RenameImagesBase
     Q_OBJECT
 
 public:
-
-    enum SortOrder
-    {
-        BYNAME = 0,
-        BYSIZE,
-        BYDATE
-    };
 
     RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
                        const KUrl::List& urlList);
@@ -84,7 +78,7 @@ private Q_SLOTS:
     void slotAddImages();
     void slotRemoveImage();
 
-    void sortList(int);
+    void sortList(QAction* action);
     void reverseList();
 
     void moveCurrentItemUp();
@@ -106,6 +100,10 @@ private:
     QProgressDialog* m_progress;
     bool             m_overwriteAll;
     bool             m_autoSkip;
+
+    QAction*         m_byNameAction;
+    QAction*         m_bySizeAction;
+    QAction*         m_byDateAction;
 };
 
 } // namespace KIPIBatchProcessImagesPlugin

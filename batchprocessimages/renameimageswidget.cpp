@@ -40,7 +40,8 @@ extern "C"
 
 // Qt includes
 
-#include <Q3PopupMenu>
+#include <QMenu>
+#include <QAction>
 #include <QProgressDialog>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -91,10 +92,10 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     setupUi(this);
     readSettings();
 
-    Q3PopupMenu* sortMenu = new Q3PopupMenu(this);
-    sortMenu->insertItem(i18n("Sort by Name"), BYNAME);
-    sortMenu->insertItem(i18n("Sort by Size"), BYSIZE);
-    sortMenu->insertItem(i18n("Sort by Date"), BYDATE);
+    QMenu* sortMenu = new QMenu(this);
+    m_byNameAction  = sortMenu->addAction(i18n("Sort by Name"));
+    m_bySizeAction  = sortMenu->addAction(i18n("Sort by Size"));
+    m_byDateAction  = sortMenu->addAction(i18n("Sort by Date"));
     m_sortButton->setPopup(sortMenu);
 
     QToolTip::add(m_useExtraSymbolsCheck,
@@ -146,8 +147,8 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     connect(m_removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveImage()));
 
-    connect(sortMenu, SIGNAL(activated(int)),
-            this, SLOT(sortList(int)));
+    connect(sortMenu, SIGNAL(triggered(QAction* action)),
+            this, SLOT(sortList(QAction* action)));
 
     connect(m_reverseList, SIGNAL(clicked()),
             this, SLOT(reverseList()));
@@ -256,37 +257,32 @@ void RenameImagesWidget::slotImageSelected(QTreeWidgetItem* item)
             this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
 }
 
-void RenameImagesWidget::sortList(int intSortOrder)
+void RenameImagesWidget::sortList(QAction* action)
 {
-    SortOrder sortOrder = static_cast<SortOrder>(intSortOrder);
-
     QTreeWidgetItemIterator it(m_listView->topLevelItem(0));
     for (; *it; ++it)
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(*it);
 
-        switch (sortOrder) 
+        if (action == m_byNameAction)
         {
-            case(BYNAME):
-            {
-                item->setKey(item->text(1), false);
-                break;
-            }
-            case(BYSIZE):
-            {
-                QFileInfo fi(item->pathSrc());
-                item->setKey(QString::number(fi.size()), false);
-                break;
-            }
-            case(BYDATE):
-            {
-                KUrl url(item->pathSrc());
-                KIPI::ImageInfo info = m_interface->info(url);
-                item->setKey(info.time().toString(Qt::ISODate), false);
-                break;
-            }
+            item->setKey(item->text(1), false);
+            break;
         }
-    };
+        else if (action == m_bySizeAction)
+        {
+            QFileInfo fi(item->pathSrc());
+            item->setKey(QString::number(fi.size()), false);
+            break;
+        }
+        else if (action == m_byDateAction)
+        {
+            KUrl url(item->pathSrc());
+            KIPI::ImageInfo info = m_interface->info(url);
+            item->setKey(info.time().toString(Qt::ISODate), false);
+            break;
+        }
+    }
 
     // FIXME: test
     m_listView->sortItems(-1, Qt::AscendingOrder);
