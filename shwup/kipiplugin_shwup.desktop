@@ -21,4 +21,4 @@ Comment[x-test]=xxA tool to export images to a remote Shwup web servicexx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_shwup
-author=Timothee Groleau, timothee at muvee dot com
+author=Timothée Groleau, timothee at muvee dot com

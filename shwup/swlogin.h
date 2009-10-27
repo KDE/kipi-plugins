@@ -6,7 +6,7 @@
  * Date        : 2009-10-23
  * Description : a kipi plugin to export images to shwup.com web service
  *
- * Copyright (C) 2009 by Timothee Groleau <kde at timotheegroleau dot com>
+ * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
