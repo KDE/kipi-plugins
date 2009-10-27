@@ -20,6 +20,9 @@
  *
  * ============================================================ */
 
+#include "plugin_batchprocessimages.h"
+#include "plugin_batchprocessimages.moc"
+
 // C ANSI includes
 
 extern "C"
@@ -64,15 +67,13 @@ extern "C"
 #include "renameimagesdialog.h"
 #include "resizeimagesdialog.h"
 
-#include "plugin_batchprocessimages.h"
-#include "plugin_batchprocessimages.moc"
 
 K_PLUGIN_FACTORY(BatchProcessImagesFactory, registerPlugin<Plugin_BatchProcessImages>();)
 K_EXPORT_PLUGIN(BatchProcessImagesFactory("kipiplugin_batchprocessimages"))
 
 Plugin_BatchProcessImages::Plugin_BatchProcessImages(QObject *parent, const QVariantList&)
-        : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
-                       parent, "BatchProcessImages")
+                         : KIPI::Plugin(BatchProcessImagesFactory::componentData(),
+                                        parent, "BatchProcessImages")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_BatchProcessImages plugin loaded" ;
 }
@@ -124,7 +125,8 @@ void Plugin_BatchProcessImages::setup(QWidget* widget)
 
     KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >(parent());
 
-    if (!interface) {
+    if (!interface)
+    {
         kError() << "Kipi interface is null!" ;
         return;
     }
@@ -174,7 +176,8 @@ void Plugin_BatchProcessImages::slotActivate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
 
-    if (!interface) {
+    if (!interface)
+    {
         kError() << "Kipi interface is null!" ;
         return;
     }
@@ -190,7 +193,8 @@ void Plugin_BatchProcessImages::slotActivate()
     if (!images.isValid())
         return;
 
-    if (images.images().isEmpty()) {
+    if (images.images().isEmpty())
+    {
         KMessageBox::sorry(kapp->activeWindow(),
                            i18n("Please select an album or a selection of images."));
         return;
@@ -198,7 +202,7 @@ void Plugin_BatchProcessImages::slotActivate()
 
     KUrl::List urlList = images.images();
 
-    QString from(sender()->name());
+    QString from(sender()->objectName());
 
     if (from == "batch_convert_images")
     {
@@ -275,6 +279,6 @@ KIPI::Category Plugin_BatchProcessImages::category(KAction* action) const
     else if (action == m_action_resizeimages)
         return KIPI::BatchPlugin;
 
-    kWarning() << "Unrecognized action for plugin category identification" ;
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::BatchPlugin; // no warning from compiler, please
 }

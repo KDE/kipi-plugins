@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <QString>
+#include <QVariant>
 
 // KDE includes
 
@@ -35,14 +36,14 @@ class KAction;
 
 namespace KIPIBatchProcessImagesPlugin
 {
-class BorderImagesDialog;
-class ColorImagesDialog;
-class ConvertImagesDialog;
-class EffectImagesDialog;
-class FilterImagesDialog;
-class RecompressImagesDialog;
-class RenameImagesDialog;
-class ResizeImagesDialog;
+    class BorderImagesDialog;
+    class ColorImagesDialog;
+    class ConvertImagesDialog;
+    class EffectImagesDialog;
+    class FilterImagesDialog;
+    class RecompressImagesDialog;
+    class RenameImagesDialog;
+    class ResizeImagesDialog;
 }
 
 class Plugin_BatchProcessImages : public KIPI::Plugin
@@ -51,7 +52,7 @@ class Plugin_BatchProcessImages : public KIPI::Plugin
 
 public:
 
-    Plugin_BatchProcessImages(QObject *parent, const QVariantList &args);
+    Plugin_BatchProcessImages(QObject* parent, const QVariantList& args);
     virtual ~Plugin_BatchProcessImages();
 
     virtual KIPI::Category category(KAction* action) const;
