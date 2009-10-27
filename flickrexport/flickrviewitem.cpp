@@ -6,7 +6,7 @@
  * Date        : 2004-12-01
  * Description : a kipi plugin to export images to Flickr web service
  *
- * Copyright (C) 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Copyright (C) 2004 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  *
  * This program is free software; you can redistribute it
