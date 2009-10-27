@@ -8,7 +8,7 @@ Author:         caulier dot gilles at gmail dot com (Gilles Caulier)
                 marcel dot wiesweg at gmx dot de (Marcel Wiesweg)
                 aurelien dot gateau at free dot fr (Aurelien Gateau)
                 blackie at kde dot org (Jesper K. Pedersen)
-                renchi at pooh dot tam dot uiuc dot edu (Renchi Raju)
+                renchi dot raju at gmail dot com (Renchi Raju)
 Maintained-by:
 Primary-site:   http://www.kipi-plugins.org
 Alternate-site: http://www.digikam.org
