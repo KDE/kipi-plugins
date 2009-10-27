@@ -36,7 +36,7 @@
 
 #include "ui_renameimagesbase.h"
 
-class Q3ProgressDialog;
+class QProgressDialog;
 class QTimer;
 
 class KFileItem;
@@ -100,12 +100,12 @@ private:
 
 private:
 
-    KIPI::Interface*  m_interface;
-    KUrl::List        m_urlList;
-    QTimer*           m_timer;
-    Q3ProgressDialog* m_progress;
-    bool              m_overwriteAll;
-    bool              m_autoSkip;
+    KIPI::Interface* m_interface;
+    KUrl::List       m_urlList;
+    QTimer*          m_timer;
+    QProgressDialog* m_progress;
+    bool             m_overwriteAll;
+    bool             m_autoSkip;
 };
 
 } // namespace KIPIBatchProcessImagesPlugin

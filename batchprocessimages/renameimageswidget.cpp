@@ -41,7 +41,7 @@ extern "C"
 // Qt includes
 
 #include <Q3PopupMenu>
-#include <Q3ProgressDialog>
+#include <QProgressDialog>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QDir>
@@ -114,58 +114,59 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
                   "[b-:-3..] - base name (small one - all before first '.', last 3 characters)");
 
     connect(m_listView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
-            SLOT(slotListViewDoubleClicked(QTreeWidgetItem*)));
+            this, SLOT(slotListViewDoubleClicked(QTreeWidgetItem*)));
 
     connect(m_listView, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
-            SLOT(slotImageSelected(QTreeWidgetItem*)));
+            this, SLOT(slotImageSelected(QTreeWidgetItem*)));
 
     connect(m_prefixEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_seqSpin, SIGNAL(valueChanged(int)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_addFileNameCheck, SIGNAL(toggled(bool)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_useExtraSymbolsCheck, SIGNAL(toggled(bool)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_addFileDateCheck, SIGNAL(toggled(bool)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_formatDateCheck, SIGNAL(toggled(bool)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_formatDateEdit, SIGNAL(textChanged(const QString&)),
-            SLOT(slotOptionsChanged()));
+            this, SLOT(slotOptionsChanged()));
 
     connect(m_addButton, SIGNAL(clicked()),
-            SLOT(slotAddImages()));
+            this, SLOT(slotAddImages()));
 
     connect(m_removeButton, SIGNAL(clicked()),
-            SLOT(slotRemoveImage()));
+            this, SLOT(slotRemoveImage()));
 
     connect(sortMenu, SIGNAL(activated(int)),
-            SLOT(sortList(int)));
+            this, SLOT(sortList(int)));
 
     connect(m_reverseList, SIGNAL(clicked()),
-            SLOT(reverseList()));
+            this, SLOT(reverseList()));
 
     connect(m_moveUp, SIGNAL(clicked()),
-            SLOT(moveCurrentItemUp()));
+            this, SLOT(moveCurrentItemUp()));
 
     connect(m_moveDown, SIGNAL(clicked()),
-            SLOT(moveCurrentItemDown()));
+            this, SLOT(moveCurrentItemDown()));
 
     m_timer    = new QTimer(this);
-    m_progress = new Q3ProgressDialog(this, 0, true);
+    m_progress = new QProgressDialog(this);
+    m_progress->setModal(true);
 
     connect(m_timer, SIGNAL(timeout()),
-            SLOT(slotNext()));
+            this, SLOT(slotNext()));
 
     connect(m_progress, SIGNAL(canceled()),
-            SLOT(slotAbort()));
+            this, SLOT(slotAbort()));
 
     kDebug() << m_urlList;
     for (KUrl::List::iterator it = m_urlList.begin();
@@ -196,7 +197,6 @@ void RenameImagesWidget::readSettings()
 
     m_prefixEdit->setText(group.readEntry("PrefixString", ""));
     m_seqSpin->setValue(group.readEntry("FirstRenameValue", 1));
-
     m_addFileNameCheck->setChecked(group.readEntry("AddOriginalFileName", false));
     m_useExtraSymbolsCheck->setChecked(group.readEntry("UseExtraSymbolsCheck", false));
     m_addFileDateCheck->setChecked(group.readEntry("AddImageFileDate", false));
@@ -213,7 +213,6 @@ void RenameImagesWidget::saveSettings()
 
     group.writeEntry("PrefixString", m_prefixEdit->text());
     group.writeEntry("FirstRenameValue", m_seqSpin->value());
-
     group.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
     group.writeEntry("UseExtraSymbolsCheck", m_useExtraSymbolsCheck->isChecked());
     group.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
@@ -362,8 +361,7 @@ void RenameImagesWidget::updateListing()
     }
 }
 
-QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item,
-        int itemPosition)
+QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemPosition)
 {
     KUrl url;
     url.setPath(item->pathSrc());
@@ -501,8 +499,8 @@ void RenameImagesWidget::slotStart()
     m_listView->setCurrentItem(item);
     m_listView->scrollToItem(item);
 
-    m_progress->setTotalSteps(m_listView->topLevelItemCount());
-    m_progress->setProgress(0);
+    m_progress->setMaximum(m_listView->topLevelItemCount());
+    m_progress->setValue(0);
     m_progress->show();
 
     m_overwriteAll = false;
@@ -534,7 +532,8 @@ void RenameImagesWidget::slotNext()
     bool skip      = false;
     bool overwrite = false;
 
-    if (!m_overwriteAll) {
+    if (!m_overwriteAll)
+    {
         struct stat info;
         while (::stat(QFile::encodeName(dst.path()), &info) == 0)
         {
@@ -612,7 +611,7 @@ void RenameImagesWidget::slotNext()
         }
     }
 
-    m_progress->setProgress(m_progress->progress() + 1);
+    m_progress->setValue(m_progress->value() + 1);
 
     it = m_listView->itemBelow(it);
     if (it)
