@@ -34,12 +34,15 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-BatchProcessImagesItem::BatchProcessImagesItem(QTreeWidget* parent, QString const & pathSrc,
-        QString const & nameSrc, QString const & nameDest, QString const & result)
-        : QTreeWidgetItem(parent),
-        _overwrote(false),
-        _reverseSort(false),
-        _pathSrc(pathSrc), _nameSrc(nameSrc), _nameDest(nameDest), _result(result)
+BatchProcessImagesItem::BatchProcessImagesItem(QTreeWidget* parent, QString const& pathSrc,
+                                               QString const& nameSrc, QString const& nameDest, QString const& result)
+                      : QTreeWidgetItem(parent),
+                        _overwrote(false),
+                        _reverseSort(false),
+                        _pathSrc(pathSrc), 
+                        _nameSrc(nameSrc), 
+                        _nameDest(nameDest), 
+                        _result(result)
 {
     setText(0, pathSrc.section('/', -2, -2));
     setText(1, nameSrc);
@@ -93,28 +96,6 @@ void BatchProcessImagesItem::changeOutputMess(QString text)
     _outputMess.append(text);
 }
 
-/* FIXME
-void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-{
-    QColorGroup _cg( cg );
-
-    if (text(3) != i18n("OK") && !text(3).isEmpty() )
-       {
-       _cg.setColor( QColorGroup::Text, Qt::red );
-       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-       return;
-       }
-    if (text(3) == i18n("OK") )
-       {
-       _cg.setColor( QColorGroup::Text, Qt::darkGreen );
-       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-       return;
-       }
-
-    K3ListViewItem::paintCell( p, cg, column, width, alignment );
-}
-*/
-
 bool BatchProcessImagesItem::overWrote()
 {
     return _overwrote;
@@ -144,6 +125,26 @@ int BatchProcessImagesItem::compare(Q3ListViewItem * i, int col, bool ascending)
 {
     int weight = _reverseSort ? -1 : 1;
     return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));
+}
+
+void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
+{
+    QColorGroup _cg( cg );
+
+    if (text(3) != i18n("OK") && !text(3).isEmpty() )
+       {
+       _cg.setColor( QColorGroup::Text, Qt::red );
+       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
+       return;
+       }
+    if (text(3) == i18n("OK") )
+       {
+       _cg.setColor( QColorGroup::Text, Qt::darkGreen );
+       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
+       return;
+       }
+
+    K3ListViewItem::paintCell( p, cg, column, width, alignment );
 }
 */
 

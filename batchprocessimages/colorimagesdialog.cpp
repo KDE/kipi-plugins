@@ -58,7 +58,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 ColorImagesDialog::ColorImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
-        : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image-Color Processing"), parent)
+                 : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image-Color Processing"), parent)
 {
     // About data and help button.
 
@@ -141,10 +141,9 @@ ColorImagesDialog::~ColorImagesDialog()
     delete m_about;
 }
 
-void ColorImagesDialog::slotHelp(void)
+void ColorImagesDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("colorimages",
-                                "kipi-plugins");
+    KToolInvocation::invokeHelp("colorimages", "kipi-plugins");
 }
 
 void ColorImagesDialog::slotTypeChanged(int type)
@@ -158,7 +157,7 @@ void ColorImagesDialog::slotTypeChanged(int type)
         m_optionsButton->setEnabled(false);
 }
 
-void ColorImagesDialog::slotOptionsClicked(void)
+void ColorImagesDialog::slotOptionsClicked()
 {
     int Type = m_Type->currentItem();
     QPointer<ColorOptionsDialog> optionsDialog = new ColorOptionsDialog(this, Type);
@@ -190,7 +189,7 @@ void ColorImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-void ColorImagesDialog::readSettings(void)
+void ColorImagesDialog::readSettings()
 {
     // Read all settings from configuration file.
 
@@ -206,7 +205,7 @@ void ColorImagesDialog::readSettings(void)
     readCommonSettings(group);
 }
 
-void ColorImagesDialog::saveSettings(void)
+void ColorImagesDialog::saveSettings()
 {
     // Write all settings in configuration file.
 

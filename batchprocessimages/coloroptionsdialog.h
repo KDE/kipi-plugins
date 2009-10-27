@@ -31,7 +31,6 @@
 
 #include <kdialog.h>
 
-
 class KComboBox;
 class KIntNumInput;
 

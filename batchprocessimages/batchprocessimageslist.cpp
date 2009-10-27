@@ -23,10 +23,12 @@
 #include "batchprocessimageslist.moc"
 
 // Qt includes
+
 #include <QDragEnterEvent>
 #include <QDropEvent>
 
 // KDE includes
+
 #include <klocale.h>
 #include <kurl.h>
 
@@ -34,7 +36,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BatchProcessImagesList::BatchProcessImagesList(QWidget *parent)
-        : QTreeWidget(parent)
+                      : QTreeWidget(parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown(false);

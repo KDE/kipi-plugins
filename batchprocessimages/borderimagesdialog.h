@@ -44,30 +44,32 @@ public:
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotOptionsClicked(void);
+    void slotHelp();
+    void slotOptionsClicked();
 
 protected:
 
-    int                    m_solidWidth;
-    QColor                 m_solidColor;
+    int    m_solidWidth;
+    QColor m_solidColor;
 
-    int                    m_lineNiepceWidth;
-    QColor                 m_lineNiepceColor;
-    int                    m_NiepceWidth;
-    QColor                 m_NiepceColor;
+    int    m_lineNiepceWidth;
+    QColor m_lineNiepceColor;
+    int    m_NiepceWidth;
+    QColor m_NiepceColor;
 
-    int                    m_raiseWidth;
+    int    m_raiseWidth;
 
-    int                    m_frameWidth;
-    int                    m_bevelWidth;
-    QColor                 m_frameColor;
+    int    m_frameWidth;
+    int    m_bevelWidth;
+    QColor m_frameColor;
+
+protected:
 
     void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                      const QString& albumDest, bool previewMode);
 
-    void readSettings(void);
-    void saveSettings(void);
+    void readSettings();
+    void saveSettings();
 
 private:
 

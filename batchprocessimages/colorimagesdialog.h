@@ -44,8 +44,8 @@ public:
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotOptionsClicked(void);
+    void slotHelp();
+    void slotOptionsClicked();
     void slotTypeChanged(int type);
 
 protected:
@@ -55,11 +55,13 @@ protected:
     int                    m_segmentCluster;
     int                    m_segmentSmooth;
 
+protected:
+
     void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                      const QString& albumDest, bool previewMode);
 
-    void readSettings(void);
-    void saveSettings(void);
+    void readSettings();
+    void saveSettings();
 
 private:
 

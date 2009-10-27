@@ -60,7 +60,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BorderImagesDialog::BorderImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
-        : BatchProcessImagesDialog(urlList, interface, i18n("Batch-Bordering Images"), parent)
+                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch-Bordering Images"), parent)
 {
     // About data and help button.
 
@@ -121,12 +121,12 @@ BorderImagesDialog::~BorderImagesDialog()
     delete m_about;
 }
 
-void BorderImagesDialog::slotHelp(void)
+void BorderImagesDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("borderimages", "kipi-plugins");
 }
 
-void BorderImagesDialog::slotOptionsClicked(void)
+void BorderImagesDialog::slotOptionsClicked()
 {
     int Type = m_Type->currentItem();
     BorderOptionsDialog *optionsDialog = new BorderOptionsDialog(this, Type);
@@ -174,7 +174,7 @@ void BorderImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-void BorderImagesDialog::readSettings(void)
+void BorderImagesDialog::readSettings()
 {
     // Read all settings from configuration file.
 
@@ -199,7 +199,7 @@ void BorderImagesDialog::readSettings(void)
     readCommonSettings(group);
 }
 
-void BorderImagesDialog::saveSettings(void)
+void BorderImagesDialog::saveSettings()
 {
     // Write all settings in configuration file.
 

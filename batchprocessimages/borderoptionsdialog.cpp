@@ -44,7 +44,7 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
-        : KDialog(parent)
+                   : KDialog(parent)
 {
     setCaption(i18n("Border Options"));
     setModal(true);
