@@ -35,7 +35,7 @@
 
 #include "kpaboutdata.h"
 
-class Q3TextView;
+class QTextBrowser;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -46,20 +46,20 @@ class OutputDialog : public KDialog
 
 public:
 
-    OutputDialog(QWidget* parent = 0, QString caption = QString::null,
-                 QString Messages = QString::null, QString Header = QString::null);
+    OutputDialog(QWidget* parent = 0, const QString& caption = QString(),
+                 const QString& Messages = QString(), const QString& Header = QString());
     ~OutputDialog();
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotCopyToCliboard(void);
+    void slotHelp();
+    void slotCopyToCliboard();
 
 private:
 
-    Q3TextView *debugView;
+    QTextBrowser*             m_debugView;
 
-    KIPIPlugins::KPAboutData  *m_about;
+    KIPIPlugins::KPAboutData* m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

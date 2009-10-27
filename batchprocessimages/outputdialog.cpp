@@ -25,8 +25,7 @@
 
 // Qt includes
 
-#include <Q3Frame>
-#include <Q3TextView>
+#include <QTextBrowser>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLayout>
@@ -49,14 +48,16 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, QString Header)
-        : KDialog(parent)
+OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
+                           const QString& Messages, const QString& Header)
+            : KDialog(parent)
 {
     setCaption(caption);
     setModal(true);
     setButtons(Ok | Help | User1);
     setButtonText(User1, i18n("Copy to Clip&board"));
     setDefaultButton(Ok);
+
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(ki18n("Batch processes images"),
@@ -79,7 +80,7 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
 
     //---------------------------------------------
 
-    QWidget* box = new QWidget(this);
+    QWidget* box       = new QWidget(this);
     setMainWidget(box);
     QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
 
@@ -88,9 +89,9 @@ OutputDialog::OutputDialog(QWidget* parent, QString caption, QString Messages, Q
     QLabel *labelHeader = new QLabel(Header, box);
     dvlay->addWidget(labelHeader);
 
-    debugView = new Q3TextView(box);
-    debugView->append(Messages);
-    dvlay->addWidget(debugView);
+    m_debugView         = new QTextBrowser(box);
+    m_debugView->append(Messages);
+    dvlay->addWidget(m_debugView);
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotCopyToCliboard()));
@@ -103,16 +104,16 @@ OutputDialog::~OutputDialog()
     delete m_about;
 }
 
-void OutputDialog::slotHelp(void)
+void OutputDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("", "kipi-plugins");
 }
 
-void OutputDialog::slotCopyToCliboard(void)
+void OutputDialog::slotCopyToCliboard()
 {
-    debugView->selectAll(true);
-    debugView->copy();
-    debugView->selectAll(false);
+    m_debugView->selectAll();
+    m_debugView->copy();
+    m_debugView->setPlainText(m_debugView->toPlainText());
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin
