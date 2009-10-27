@@ -56,8 +56,8 @@ public:
 private Q_SLOTS:
 
     void showPreview();
-    void showPreview(const KUrl &url);
-    void slotKDEPreview(const KFileItem& item, const QPixmap &pix);
+    void showPreview(const KUrl& url);
+    void slotKDEPreview(const KFileItem& item, const QPixmap& pix);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void clearPreview();
 
@@ -87,8 +87,8 @@ public:
     bool       singleSelect() const;
     QString    fileFormats() const;
 
-    static KUrl getImageURL(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
-    static KUrl::List getImageURLs(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
+    static KUrl getImageUrl(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
+    static KUrl::List getImageUrls(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
 
 private:
 

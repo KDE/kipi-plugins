@@ -278,7 +278,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
 }
 
 // Used only if Kipi interface is null.
-void ImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap &pix)
+void ImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
 {
     slotThumbnail(item.url(), pix);
 }
@@ -446,7 +446,7 @@ KUrl::List ImageDialog::urls() const
     return d->urls;
 }
 
-KUrl ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
+KUrl ImageDialog::getImageUrl(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
 {
     ImageDialog dlg(parent, iface, true, onlyRaw);
 
@@ -460,7 +460,7 @@ KUrl ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* iface, bool only
     }
 }
 
-KUrl::List ImageDialog::getImageURLs(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
+KUrl::List ImageDialog::getImageUrls(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
 {
     ImageDialog dlg(parent, iface, false, onlyRaw);
     if (!dlg.urls().isEmpty())

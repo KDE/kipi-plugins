@@ -699,7 +699,7 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 

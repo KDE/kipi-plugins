@@ -196,7 +196,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd(void)
 {
     QStringList ImageFilesList;
 
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageURLs(this, m_interface);
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
 
     for (KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it)
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
