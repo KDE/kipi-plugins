@@ -147,8 +147,8 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     connect(m_removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveImage()));
 
-    connect(sortMenu, SIGNAL(triggered(QAction* action)),
-            this, SLOT(sortList(QAction* action)));
+    connect(sortMenu, SIGNAL(triggered(QAction*)),
+            this, SLOT(sortList(QAction*)));
 
     connect(m_reverseList, SIGNAL(clicked()),
             this, SLOT(reverseList()));
