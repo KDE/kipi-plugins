@@ -49,17 +49,34 @@ namespace KIPIRemoveRedEyesPlugin
 {
 struct HaarClassifierLocatorPriv
 {
-    HaarClassifierLocatorPriv()
-    {
-        aChannel       = 0;
-        gray           = 0;
-        lab            = 0;
-        redMask        = 0;
-        original       = 0;
-        possible_eyes  = 0;
-        red_eyes       = 0;
-        settingsWidget = 0;
-    };
+    HaarClassifierLocatorPriv() :
+        configGroupName("RemoveRedEyes %1 Settings"),
+        configSimpleModeEntry("Simple Mode"),
+        configMinimumBlobSizeEntry("Minimum Blob Size"),
+        configMinimumRoundnessEntry("Minimum Roundness"),
+        configNeighborGroupsEntry("Neighbor Groups"),
+        configScalingFactorEntry("Scaling Factor"),
+        configUseStandardClassifierEntry("Use Standard Classifier"),
+        configClassifierEntry("Classifier"),
+
+        aChannel(0),
+        gray(0),
+        lab(0),
+        redMask(0),
+        original(0),
+        possible_eyes(0),
+        red_eyes(0),
+        settingsWidget(0)
+        {};
+
+    const QString       configGroupName;
+    const QString       configSimpleModeEntry;
+    const QString       configMinimumBlobSizeEntry;
+    const QString       configMinimumRoundnessEntry;
+    const QString       configNeighborGroupsEntry;
+    const QString       configScalingFactorEntry;
+    const QString       configUseStandardClassifierEntry;
+    const QString       configClassifierEntry;
 
     IplImage*           aChannel;
     IplImage*           gray;
@@ -310,16 +327,16 @@ int HaarClassifierLocator::startPreview(const QString& src)
 void HaarClassifierLocator::readSettings()
 {
     KConfig config("kipirc");
-    QString configGroup = QString("RemoveRedEyes %1 Settings").arg(this->objectName());
+    QString configGroup = d->configGroupName.arg(this->objectName());
     KConfigGroup group = config.group(configGroup);
 
-    d->settings.simpleMode            = group.readEntry("Simple Mode", (int)SimpleSettings::Standard);
-    d->settings.minBlobsize           = group.readEntry("Minimum Blob Size", 10);
-    d->settings.minRoundness          = group.readEntry("Minimum Roundness", 3.2);
-    d->settings.neighborGroups        = group.readEntry("Neighbor Groups", 2);
-    d->settings.scaleFactor           = group.readEntry("Scaling Factor", 1.2);
-    d->settings.useStandardClassifier = group.readEntry("Use Standard Classifier", true);
-    d->settings.classifierFile        = group.readEntry("Classifier", STANDARD_CLASSIFIER);
+    d->settings.simpleMode            = group.readEntry(d->configSimpleModeEntry,            (int)SimpleSettings::Standard);
+    d->settings.minBlobsize           = group.readEntry(d->configMinimumBlobSizeEntry,       10);
+    d->settings.minRoundness          = group.readEntry(d->configMinimumRoundnessEntry,      3.2);
+    d->settings.neighborGroups        = group.readEntry(d->configNeighborGroupsEntry,        2);
+    d->settings.scaleFactor           = group.readEntry(d->configScalingFactorEntry,         1.2);
+    d->settings.useStandardClassifier = group.readEntry(d->configUseStandardClassifierEntry, true);
+    d->settings.classifierFile        = group.readEntry(d->configClassifierEntry,            STANDARD_CLASSIFIER);
 
     d->settingsWidget->loadSettings(d->settings);
 }
@@ -327,18 +344,18 @@ void HaarClassifierLocator::readSettings()
 void HaarClassifierLocator::writeSettings()
 {
     KConfig config("kipirc");
-    QString configGroup = QString("RemoveRedEyes %1 Settings").arg(this->objectName());
+    QString configGroup = d->configGroupName.arg(this->objectName());
     KConfigGroup group = config.group(configGroup);
 
     d->settings = d->settingsWidget->readSettingsForSave();
 
-    group.writeEntry("Simple Mode",             d->settings.simpleMode);
-    group.writeEntry("Minimum Blob Size",       d->settings.minBlobsize);
-    group.writeEntry("Minimum Roundness",       d->settings.minRoundness);
-    group.writeEntry("Neighbor Groups",         d->settings.neighborGroups);
-    group.writeEntry("Scaling Factor",          d->settings.scaleFactor);
-    group.writeEntry("Use Standard Classifier", d->settings.useStandardClassifier);
-    group.writeEntry("Classifier",              d->settings.classifierFile);
+    group.writeEntry(d->configSimpleModeEntry,            d->settings.simpleMode);
+    group.writeEntry(d->configMinimumBlobSizeEntry,       d->settings.minBlobsize);
+    group.writeEntry(d->configMinimumRoundnessEntry,      d->settings.minRoundness);
+    group.writeEntry(d->configNeighborGroupsEntry,        d->settings.neighborGroups);
+    group.writeEntry(d->configScalingFactorEntry,         d->settings.scaleFactor);
+    group.writeEntry(d->configUseStandardClassifierEntry, d->settings.useStandardClassifier);
+    group.writeEntry(d->configClassifierEntry,            d->settings.classifierFile);
 
     config.sync();
 }
