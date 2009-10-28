@@ -55,7 +55,6 @@
 #include "outputdialog.h"
 #include "pluginsversion.h"
 
-
 namespace KIPIBatchProcessImagesPlugin
 {
 
@@ -90,14 +89,14 @@ BorderImagesDialog::BorderImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
     m_labelType->setText(i18n("Border:"));
 
-    m_Type->insertItem(i18n("Solid"));
+    m_Type->addItem(i18n("Solid"));
 
     // Niepce is Real name. This is the first guy in the world to have build a camera.
-    m_Type->insertItem("Niepce");
+    m_Type->addItem("Niepce");
 
-    m_Type->insertItem(i18n("Raise"));
-    m_Type->insertItem(i18n("Frame"));
-    m_Type->setCurrentText("Niepce");
+    m_Type->addItem(i18n("Raise"));
+    m_Type->addItem(i18n("Frame"));
+    m_Type->setCurrentItem("Niepce");
     QString whatsThis = i18n(
                             "<p>Select here the border type for your images:</p>"
                             "<p>"
@@ -128,7 +127,7 @@ void BorderImagesDialog::slotHelp()
 
 void BorderImagesDialog::slotOptionsClicked()
 {
-    int Type = m_Type->currentItem();
+    int Type = m_Type->currentIndex();
     BorderOptionsDialog *optionsDialog = new BorderOptionsDialog(this, Type);
 
     if (Type == 0)
@@ -214,7 +213,7 @@ void BorderImagesDialog::saveSettings()
 
     KConfig config("kipirc");
     KConfigGroup group = config.group("BorderImages Settings");
-    group.writeEntry("BorderType", m_Type->currentItem());
+    group.writeEntry("BorderType", m_Type->currentIndex());
 
     group.writeEntry("SolidWidth", m_solidWidth);
     group.writeEntry("SolidColor", m_solidColor);
@@ -244,7 +243,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         m_previewOutput.append(" -crop 300x300+0+0 ");
     }
 
-    if (m_Type->currentItem() == 0)
+    if (m_Type->currentIndex() == 0)
     { // Solid
         *proc << "-border";
         QString Temp, Temp2;
@@ -258,7 +257,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 1)
+    if (m_Type->currentIndex() == 1)
     { // Niepce
         QString Temp, Temp2;
 
@@ -285,7 +284,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 2)
+    if (m_Type->currentIndex() == 2)
     { // Raise
         *proc << "-raise";
         QString Temp, Temp2;
@@ -294,7 +293,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 3)
+    if (m_Type->currentIndex() == 3)
     { // Frame
         *proc << "-frame";
         QString Temp, Temp2;
