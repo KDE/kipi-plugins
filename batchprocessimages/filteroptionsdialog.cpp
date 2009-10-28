@@ -54,32 +54,35 @@ static void initInput(KIntNumInput* widget, int min, int max, const QString& suf
 }
 
 FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
-        : KDialog(parent)
+                   : KDialog(parent)
 {
     setCaption(i18n("Filter Options"));
     setModal(true);
     showButtonSeparator(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget(this);
-    setMainWidget(box);
-    QFormLayout* layout = new QFormLayout(box);
+    QWidget* box       = new QWidget(this);
+    QFormLayout *layout = new QFormLayout(box);
+    layout->setSpacing(spacingHint());
     layout->setMargin(0);
+    setMainWidget(box);
 
-    if (FilterType == 0) { // Add noise
+    if (FilterType == 0)
+    { // Add noise
         m_noiseType = new KComboBox(false, box);
-        m_noiseType->insertItem(i18n("Uniform"));
-        m_noiseType->insertItem(i18n("Gaussian"));
-        m_noiseType->insertItem(i18n("Multiplicative"));
-        m_noiseType->insertItem(i18n("Impulse"));
-        m_noiseType->insertItem(i18n("Laplacian"));
-        m_noiseType->insertItem(i18n("Poisson"));
+        m_noiseType->addItem(i18n("Uniform"));
+        m_noiseType->addItem(i18n("Gaussian"));
+        m_noiseType->addItem(i18n("Multiplicative"));
+        m_noiseType->addItem(i18n("Impulse"));
+        m_noiseType->addItem(i18n("Laplacian"));
+        m_noiseType->addItem(i18n("Poisson"));
         m_noiseType->setWhatsThis(i18n("Select here the algorithm method which will used "
                                        "to add random noise to the images."));
         layout->addRow(i18n("Noise algorithm:"), m_noiseType);
     }
 
-    if (FilterType == 2) { // Blur
+    if (FilterType == 2)
+    { // Blur
         m_blurRadius = new KIntNumInput(3, box);
         initInput(m_blurRadius, 0, 20, i18n("px"));
         m_blurRadius->setWhatsThis(i18n("Select here the blur radius of the Gaussian, "
@@ -94,7 +97,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         layout->addRow(i18n("Deviation:"), m_blurDeviation);
     }
 
-    if (FilterType == 5) { // Median
+    if (FilterType == 5)
+    { // Median
         m_medianRadius = new KIntNumInput(3, box);
         initInput(m_medianRadius, 0, 20, i18n("px"));
         m_medianRadius->setWhatsThis(i18n("Select here the median radius of the pixel neighborhood. "
@@ -105,7 +109,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     }
 
 
-    if (FilterType == 6) { // Noise reduction
+    if (FilterType == 6)
+    { // Noise reduction
         m_noiseRadius = new KIntNumInput(3, box);
         initInput(m_noiseRadius, 0, 20, i18n("px"));
         m_noiseRadius->setWhatsThis(i18n("Select here the noise reduction radius value. "
@@ -117,7 +122,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         layout->addRow(i18n("Radius:"), m_noiseRadius);
     }
 
-    if (FilterType == 7) { // Sharpen
+    if (FilterType == 7)
+    { // Sharpen
         m_sharpenRadius = new KIntNumInput(3, box);
         initInput(m_sharpenRadius, 0, 20, i18n("px"));
         m_sharpenRadius->setWhatsThis(i18n("Select here the radius of the sharpen Gaussian, "
@@ -134,7 +140,8 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         layout->addRow(i18n("Deviation:"), m_sharpenDeviation);
     }
 
-    if (FilterType == 8) { // Unsharp
+    if (FilterType == 8)
+    { // Unsharp
         m_unsharpenRadius = new KIntNumInput(3, box);
         initInput(m_unsharpenRadius, 0, 20, i18n("px"));
         m_unsharpenRadius->setWhatsThis(i18n("Select here the radius of the unsharpen Gaussian, "
