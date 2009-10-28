@@ -39,6 +39,7 @@ namespace KIPIBatchProcessImagesPlugin
 class BatchProcessImagesItem : public QTreeWidgetItem
 {
 public:
+    static int columnOfSortKey();
 
     BatchProcessImagesItem(QTreeWidget * parent, QString const & pathSrc, QString const & nameSrc,
                            QString const & nameDest, QString const & result);
@@ -51,6 +52,7 @@ public:
     QString result();
     QString error();
     QString outputMess();
+    QString sortKey();
     bool overWrote();
     void setDidOverWrite(bool b);
 
@@ -58,18 +60,13 @@ public:
     void changeError(QString text);
     void changeNameDest(QString text);
     void changeOutputMess(QString text);
-
-
-    void setKey(const QString& val, bool reverseSort);
-    QString key(int column, bool ascending) const;
+    void changeSortKey(QString text);
 
     //void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
-    //bool compare (Q3ListViewItem * i, int col, bool ascending) const;
 
 private:
 
     bool    _overwrote;
-    bool    _reverseSort;
 
     QString _pathSrc;
     QString _nameSrc;
@@ -77,7 +74,7 @@ private:
     QString _result;
     QString _error;
     QString _outputMess;
-    QString _key;
+    QString _sortKey;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

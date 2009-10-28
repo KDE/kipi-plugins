@@ -40,7 +40,8 @@ BatchProcessImagesList::BatchProcessImagesList(QWidget *parent)
 {
     setAcceptDrops(true);
     setDropIndicatorShown(false);
-    setColumnCount(4);
+    setColumnCount(5);
+    setColumnHidden(4, /*hide=*/true); // Column holding the sort key
     setRootIsDecorated(false);
     setHeaderLabels(QStringList()
                     << i18n("Source Album")

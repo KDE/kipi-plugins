@@ -34,11 +34,15 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
+int BatchProcessImagesItem::columnOfSortKey()
+{
+    return 4;
+}
+
 BatchProcessImagesItem::BatchProcessImagesItem(QTreeWidget* parent, QString const& pathSrc,
                                                QString const& nameSrc, QString const& nameDest, QString const& result)
                       : QTreeWidgetItem(parent),
                         _overwrote(false),
-                        _reverseSort(false),
                         _pathSrc(pathSrc), 
                         _nameSrc(nameSrc), 
                         _nameDest(nameDest), 
@@ -79,6 +83,11 @@ QString BatchProcessImagesItem::outputMess()
     return _outputMess;
 }
 
+QString BatchProcessImagesItem::sortKey()
+{
+    return _sortKey;
+}
+
 void BatchProcessImagesItem::changeResult(QString text)
 {
     setText(3, text);
@@ -96,6 +105,12 @@ void BatchProcessImagesItem::changeOutputMess(QString text)
     _outputMess.append(text);
 }
 
+void BatchProcessImagesItem::changeSortKey(QString text)
+{
+    _sortKey = text;
+    setText(columnOfSortKey(), text);
+}
+
 bool BatchProcessImagesItem::overWrote()
 {
     return _overwrote;
@@ -106,27 +121,7 @@ void BatchProcessImagesItem::setDidOverWrite(bool b)
     _overwrote = b;
 }
 
-void BatchProcessImagesItem::setKey(const QString& val, bool reverseSort)
-{
-    _key = val;
-    _reverseSort = reverseSort;
-}
-
-QString BatchProcessImagesItem::key(int column, bool) const
-{
-    if (_key.isNull())
-        return text(column);
-
-    return _key;
-}
-
 /* FIXME
-int BatchProcessImagesItem::compare(Q3ListViewItem * i, int col, bool ascending) const
-{
-    int weight = _reverseSort ? -1 : 1;
-    return weight * key(col, ascending).localeAwareCompare(i->key( col, ascending));
-}
-
 void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
 {
     QColorGroup _cg( cg );

@@ -266,26 +266,22 @@ void RenameImagesWidget::sortList(QAction* action)
 
         if (action == m_byNameAction)
         {
-            item->setKey(item->text(1), false);
-            break;
+            item->changeSortKey(item->nameSrc());
         }
         else if (action == m_bySizeAction)
         {
             QFileInfo fi(item->pathSrc());
-            item->setKey(QString::number(fi.size()), false);
-            break;
+            item->changeSortKey(QString::number(fi.size()));
         }
         else if (action == m_byDateAction)
         {
             KUrl url(item->pathSrc());
             KIPI::ImageInfo info = m_interface->info(url);
-            item->setKey(info.time().toString(Qt::ISODate), false);
-            break;
+            item->changeSortKey(info.time().toString(Qt::ISODate));
         }
     }
 
-    // FIXME: test
-    m_listView->sortItems(-1, Qt::AscendingOrder);
+    m_listView->sortByColumn(BatchProcessImagesItem::columnOfSortKey(), Qt::Ascending);
 
     updateListing();
 }
