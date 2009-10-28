@@ -71,49 +71,53 @@ class BatchProcessImagesDialog : public KDialog
     Q_OBJECT
 
 public:
+
     // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
     // children dialog class.
 
-    BatchProcessImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QString caption, QWidget *parent = 0);
+    BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
+                             const QString& caption, QWidget *parent = 0);
     ~BatchProcessImagesDialog();
 
 protected Q_SLOTS:
-    void slotProcessStop(void);
+
+    void slotProcessStop();
 
 private Q_SLOTS:
 
     // --------------------------------------------------------------------------------------------------------
     // Standards slots
 
-    void slotOk(void);
+    void slotOk();
 
-    void slotProcessStart(void);
+    void slotProcessStart();
     void slotReadyRead();
     void slotFinished();
 
-    void slotPreview(void);
+    void slotPreview();
     void slotPreviewFinished();
     void slotPreviewReadyRead();
-    void slotPreviewStop(void);
+    void slotPreviewStop();
 
     void slotListDoubleClicked(QTreeWidgetItem *itemClicked);
 
-    void slotAddDropItems(QStringList filesPath);
+    void slotAddDropItems(const QStringList& filesPath);
 
     void slotImageSelected(QTreeWidgetItem * item);
-    void slotGotPreview(const KFileItem&, const QPixmap &pixmap);
+    void slotGotPreview(const KFileItem&, const QPixmap& pixmap);
 
-    void slotImagesFilesButtonAdd(void);
-    void slotImagesFilesButtonRem(void);
+    void slotImagesFilesButtonAdd();
+    void slotImagesFilesButtonRem();
 
     // --------------------------------------------------------------------------------------------------------
     // Standards virtuals slots for re-implementation
 
-    virtual void slotHelp(void) {};                            // Called when 'Help' menu option is actived.
-    virtual void slotOptionsClicked(void) {};                  // Called when 'Options' button is clicked.
-    virtual void slotTypeChanged(int) {};                      // Called when the current type option is changed.
+    virtual void slotHelp() {};                            // Called when 'Help' menu option is actived.
+    virtual void slotOptionsClicked() {};                  // Called when 'Options' button is clicked.
+    virtual void slotTypeChanged(int) {};                  // Called when the current type option is changed.
 
 private:
+
     void setupUi();
     void enableWidgets(bool state);
 
@@ -122,35 +126,39 @@ private:
     Ui::BatchProcessImagesDialog *m_ui;
 
 protected:
+
     virtual QSize sizeHint() const;
+
+protected:
+
     // --------------------------------------------------------------------------------------------------------
     // Widgets used by inherited dialogs
-    QLabel                 *m_labelType;
-    KComboBox              *m_Type;
-    QPushButton            *m_optionsButton;
+    QLabel                  *m_labelType;
+    KComboBox               *m_Type;
+    QPushButton             *m_optionsButton;
 
-    BatchProcessImagesList *m_listFiles;
+    BatchProcessImagesList  *m_listFiles;
     ////
 
-    KConfig                *m_config;
+    KConfig                 *m_config;
 
-    int                     m_convertStatus;
-    int                     m_progressStatus;
-    int                     m_nbItem;
+    int                      m_convertStatus;
+    int                      m_progressStatus;
+    int                      m_nbItem;
 
-    KProcess               *m_ProcessusProc;
-    KProcess               *m_PreviewProc;
+    KProcess                *m_ProcessusProc;
+    KProcess                *m_PreviewProc;
 
     QTreeWidgetItemIterator *m_listFile2Process_iterator;
 
-    QString                 m_ImagesFilesSort;
-    QString                 m_newDir;
-    QString                 m_commandLine;
-    QString                 m_tmpFolder;
-    QString                 m_previewOutput;
-    KUrl::List              m_selectedImageFiles;
+    QString                  m_ImagesFilesSort;
+    QString                  m_newDir;
+    QString                  m_commandLine;
+    QString                  m_tmpFolder;
+    QString                  m_previewOutput;
+    KUrl::List               m_selectedImageFiles;
 
-    KIPI::Interface        *m_interface;
+    KIPI::Interface         *m_interface;
 
     // --------------------------------------------------------------------------------------------------------
     // Standards fonctions
@@ -185,11 +193,11 @@ protected:
     // Fonctions for ImageMAgick call implementations.
 
     void    processAborted(bool removeFlag = false); // Called when ImageMagick process is stopped by user.
-    void    endPreview(void);                      // Called when preview process is done or stopped by user.
+    void    endPreview();                      // Called when preview process is done or stopped by user.
 
     // Called for to parse the files overwriting mode selected by user.
 
-    int     overwriteMode(void);
+    int     overwriteMode();
 
     // Called for rename the target current image file name if already exist.
 
@@ -201,19 +209,20 @@ protected:
     // Called when ImageMagick process is started or for another re-implementation without
     // ImageMagick calls (like 'RenameImages' plugin).
 
-    virtual bool startProcess(void);
+    virtual bool startProcess();
 
     // Called when ImageMagick process is done or stopped by user or for another re-implementation without
     // ImageMagick calls (like 'RenameImages' plugin).
 
-    virtual void endProcess(void);
+    virtual void endProcess();
 
     //  Functions for ImageMagick implementation calls only.
 
     // Called by 'startProcess' function at start. You can checking here some things about the current
     // 'item' before the 'startprocess' function execution.
 
-    virtual bool prepareStartProcess(BatchProcessImagesItem* /*item*/, const QString& /*albumDest*/) {
+    virtual bool prepareStartProcess(BatchProcessImagesItem* /*item*/, const QString& /*albumDest*/)
+    {
         return true;
     };
 
@@ -228,16 +237,17 @@ protected:
 
     // Functions used for to read and to save the settings in the configuration file.
 
-    virtual void readSettings(void) {};
-    virtual void saveSettings(void) {};
+    virtual void readSettings() {};
+    virtual void saveSettings() {};
 
     // Called for add or update the list of images to process in the dialog.
 
-    virtual void listImageFiles(void);
+    virtual void listImageFiles();
 
     // Called by 'listImageFiles' for renamed if necessary the target image file name.
 
-    virtual QString oldFileName2NewFileName(QString fileName) {
+    virtual QString oldFileName2NewFileName(QString fileName)
+    {
         return (fileName);
     };
 };

@@ -27,6 +27,8 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     recompressoptionsdialog.cpp
     resizeoptionsdialog.cpp
 
+    batchprocessimagesdialog.cpp
+
     borderimagesdialog.cpp
     convertimagesdialog.cpp
     filterimagesdialog.cpp
@@ -36,7 +38,6 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     renameimagesdialog.cpp
     renameimageswidget.cpp
     resizeimagesdialog.cpp
-    batchprocessimagesdialog.cpp
     )
 
 KDE4_ADD_UI_FILES(kipiplugin_batchprocessimages_PART_SRCS
