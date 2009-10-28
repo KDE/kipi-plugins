@@ -49,7 +49,7 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget(this);
+    QWidget* box       = new QWidget(this);
     QVBoxLayout *dvlay = new QVBoxLayout(box);
     dvlay->setSpacing(spacingHint());
     dvlay->setMargin(spacingHint());

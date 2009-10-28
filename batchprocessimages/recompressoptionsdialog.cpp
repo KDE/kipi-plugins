@@ -44,21 +44,23 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
-        : KDialog(parent)
+                       : KDialog(parent)
 {
     setCaption(i18n("Recompression Options"));
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget(this);
+    QWidget* box       = new QWidget(this);
+    QVBoxLayout *dvlay = new QVBoxLayout(box);
+    dvlay->setSpacing(spacingHint());
+    dvlay->setMargin(spacingHint());
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
     // JPEG file format.
 
     m_label_JPEGimageCompression = new QLabel(i18n("Image compression level:"));
-    m_JPEGCompression = new KIntNumInput(75);
+    m_JPEGCompression            = new KIntNumInput(75);
     m_JPEGCompression->setRange(1, 100);
     m_JPEGCompression->setSliderEnabled(true);
     whatsThis = i18n("<p>The compression value for JPEG target images:</p>");
@@ -92,7 +94,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     // PNG File format.
 
     m_label_PNGimageCompression = new QLabel(i18n("Image compression level:"));
-    m_PNGCompression = new KIntNumInput(75);
+    m_PNGCompression            = new KIntNumInput(75);
     m_PNGCompression->setRange(1, 100);
     m_PNGCompression->setSliderEnabled(true);
     whatsThis = i18n("<p>The compression value for PNG target images:</p>");
@@ -118,10 +120,10 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     // TIFF File format.
 
     m_label_TIFFimageCompression = new QLabel(i18n("Image compression algorithm:"));
-    m_TIFFCompressionAlgo = new KComboBox;
-    m_TIFFCompressionAlgo->insertItem("LZW");
-    m_TIFFCompressionAlgo->insertItem("JPEG");
-    m_TIFFCompressionAlgo->insertItem(i18n("None"));
+    m_TIFFCompressionAlgo        = new KComboBox;
+    m_TIFFCompressionAlgo->addItem("LZW");
+    m_TIFFCompressionAlgo->addItem("JPEG");
+    m_TIFFCompressionAlgo->addItem(i18n("None"));
     m_TIFFCompressionAlgo->setWhatsThis(i18n("Select here the TIFF compression algorithm."));
     m_label_TIFFimageCompression->setBuddy(m_TIFFCompressionAlgo);
 
@@ -136,9 +138,9 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     // TGA File format.
 
     m_label_TGAimageCompression = new QLabel(i18n("Image compression algorithm:"));
-    m_TGACompressionAlgo = new KComboBox;
-    m_TGACompressionAlgo->insertItem("RLE");
-    m_TGACompressionAlgo->insertItem(i18n("None"));
+    m_TGACompressionAlgo        = new KComboBox;
+    m_TGACompressionAlgo->addItem("RLE");
+    m_TGACompressionAlgo->addItem(i18n("None"));
     m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm."));
     m_label_TGAimageCompression->setBuddy(m_TGACompressionAlgo);
 
