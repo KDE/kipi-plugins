@@ -39,7 +39,7 @@ class BorderImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    BorderImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    BorderImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent = 0);
     ~BorderImagesDialog();
 
 private Q_SLOTS:
@@ -79,4 +79,3 @@ private:
 }  // namespace KIPIBatchProcessImagesPlugin
 
 #endif  // BORDERIMAGESDIALOG_H
-
