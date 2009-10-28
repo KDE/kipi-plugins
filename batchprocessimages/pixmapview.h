@@ -54,10 +54,10 @@ Q_SIGNALS:
 
 protected:
 
-    void contentsWheelEvent(QWheelEvent * e);
-    void mousePressEvent(QMouseEvent * e);
-    void mouseReleaseEvent(QMouseEvent * e);
-    void mouseMoveEvent(QMouseEvent * e);
+    void contentsWheelEvent(QWheelEvent*);
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
     void paintEvent(QPaintEvent*);
     void resizeEvent(QResizeEvent*);
 
@@ -74,22 +74,22 @@ private:
 
 private:
 
-    QPixmap     *m_pix;
-    QImage       m_img;
+    QPixmap  *m_pix;
+    QImage    m_img;
 
-    int          m_w;
-    int          m_h;
-    QPoint       m_dragPos;
+    int       m_w;
+    int       m_h;
+    QPoint    m_dragPos;
 
-    KProcess    *m_PreviewProc;
+    KProcess *m_PreviewProc;
 
-    QString      m_previewOutput;
-    QString      m_previewFileName;
+    QString   m_previewOutput;
+    QString   m_previewFileName;
 
-    bool         m_validPreview;
-    bool         m_cropAction;
+    bool      m_validPreview;
+    bool      m_cropAction;
 
-    int          m_zoomFactor;
+    int       m_zoomFactor;
 };
 
 } // namespace KIPIBatchProcessImagesPlugin

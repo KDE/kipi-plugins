@@ -62,12 +62,12 @@ PixmapView::PixmapView(QWidget *parent)
           : QAbstractScrollArea(parent),
             m_zoomFactor(0)
 {
-    m_pix          = NULL;
+    m_pix          = 0;
     m_validPreview = false;
     setMinimumSize(QSize(300, 300));
-    horizontalScrollBar()->setLineStep(1);
+    horizontalScrollBar()->setSingleStep(1);
     horizontalScrollBar()->setPageStep(1);
-    verticalScrollBar()->setLineStep(1);
+    verticalScrollBar()->setSingleStep(1);
     verticalScrollBar()->setPageStep(1);
     viewport()->setCursor(Qt::OpenHandCursor);
 }
@@ -93,7 +93,7 @@ void PixmapView::setImage(const QString& ImagePath, const QString& tmpPath, bool
         if (m_img.load(ImagePath) == false)
         {
             PreviewCal(ImagePath, tmpPath);
-    }
+        }
         else 
         {
             if (!m_pix) m_pix = new QPixmap(m_img.width(), m_img.height());
@@ -101,8 +101,8 @@ void PixmapView::setImage(const QString& ImagePath, const QString& tmpPath, bool
             m_h               = m_img.height();
             m_validPreview    = true;
             updateView();
-            horizontalScrollBar()->setLineStep(1);
-            verticalScrollBar()->setLineStep(1);
+            horizontalScrollBar()->setSingleStep(1);
+            verticalScrollBar()->setSingleStep(1);
         }
     }
 }
@@ -119,12 +119,13 @@ void PixmapView::PreviewCal(const QString& ImagePath, const QString& /*tmpPath*/
     p.end();
 
     m_previewOutput = "convert";
-    m_PreviewProc = new KProcess(this);
+    m_PreviewProc   = new KProcess(this);
     m_PreviewProc->setOutputChannelMode(KProcess::MergedChannels);
     *m_PreviewProc << "convert";
     *m_PreviewProc << "-verbose";
 
-    if (m_cropAction == true) {
+    if (m_cropAction == true)
+    {
         *m_PreviewProc << "-crop" << "300x300+0+0";
         m_previewOutput.append(" -crop 300x300+0+0 ");
     }
@@ -165,12 +166,12 @@ void PixmapView::slotPreviewProcessFinished()
         if (m_img.load(m_previewFileName) == true)
         {
             if (!m_pix) m_pix = new QPixmap(300, 300);
-            m_w = m_img.width();
-            m_h = m_img.height();
+            m_w            = m_img.width();
+            m_h            = m_img.height();
             m_validPreview = true;
             updateView();
-            horizontalScrollBar()->setLineStep(1);
-            verticalScrollBar()->setLineStep(1);
+            horizontalScrollBar()->setSingleStep(1);
+            verticalScrollBar()->setSingleStep(1);
             KUrl deletePreviewImage(m_previewFileName);
 
             KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
@@ -197,11 +198,14 @@ void PixmapView::setZoom(int zoomFactor)
     {
         return;
     }
+
     m_zoomFactor = zoomFactor;
+
     if (!m_validPreview)
     {
         return;
     }
+
     updateView();
 }
 
@@ -211,7 +215,11 @@ void PixmapView::updateView()
     int h = m_h - (int)((float)m_h * (100 - (float)m_zoomFactor) / 100);
 
     QImage imgTmp = m_img.scaled(w, h);
-    m_pix->convertFromImage(imgTmp);
+
+    if (m_pix) delete m_pix;
+
+    m_pix = new QPixmap(QPixmap::fromImage(imgTmp));
+
     updateScrollBars();
     viewport()->update();
 }
@@ -230,12 +238,12 @@ void PixmapView::resizeEvent(QResizeEvent*)
     updateScrollBars();
 }
 
-void PixmapView::contentsWheelEvent(QWheelEvent * e)
+void PixmapView::contentsWheelEvent(QWheelEvent* e)
 {
     emit wheelChanged(e->delta());
 }
 
-void PixmapView::mousePressEvent(QMouseEvent * e)
+void PixmapView::mousePressEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
@@ -244,20 +252,18 @@ void PixmapView::mousePressEvent(QMouseEvent * e)
     }
 }
 
-void PixmapView::mouseReleaseEvent(QMouseEvent * /*e*/)
+void PixmapView::mouseReleaseEvent(QMouseEvent*)
 {
     viewport()->setCursor(Qt::OpenHandCursor);
 }
 
-void PixmapView::mouseMoveEvent(QMouseEvent * e)
+void PixmapView::mouseMoveEvent(QMouseEvent* e)
 {
-    if (e->state() == Qt::LeftButton)
+    if (e->modifiers() == Qt::LeftButton)
     {
         QPoint delta = e->pos() - m_dragPos;
-        horizontalScrollBar()->setValue(
-            horizontalScrollBar()->value() - delta.x());
-        verticalScrollBar()->setValue(
-            verticalScrollBar()->value() - delta.y());
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() - delta.x());
+        verticalScrollBar()->setValue(verticalScrollBar()->value() - delta.y());
         m_dragPos = e->pos();
     }
 }
