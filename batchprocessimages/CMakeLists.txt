@@ -26,16 +26,16 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     coloroptionsdialog.cpp
     convertimagesdialog.cpp
     convertoptionsdialog.cpp
+    effectimagesdialog.cpp
     effectoptionsdialog.cpp
     filteroptionsdialog.cpp
     recompressimagesdialog.cpp
     recompressoptionsdialog.cpp
     renameimagesdialog.cpp
     renameimageswidget.cpp
+    resizeimagesdialog.cpp
     resizeoptionsdialog.cpp
 
-    effectimagesdialog.cpp
-    resizeimagesdialog.cpp
     filterimagesdialog.cpp
     )
 

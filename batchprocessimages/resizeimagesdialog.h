@@ -40,29 +40,29 @@ class ResizeImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ResizeImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ResizeImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
     ~ResizeImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotOptionsClicked(void);
+    void slotHelp();
+    void slotOptionsClicked();
 
 protected:
 
     void initProcess(KProcess* proc, BatchProcessImagesItem *item,
                      const QString& albumDest, bool previewMode);
 
-    void readSettings(void);
-    void saveSettings(void);
+    void readSettings();
+    void saveSettings();
     bool prepareStartProcess(BatchProcessImagesItem *item,
                              const QString& albumDest);
 
-    bool ResizeImage(int &w, int &h, int SizeFactor);
+    bool ResizeImage(int& w, int& h, int SizeFactor);
 
 private:
-    ResizeImagesDialogPriv *d;
 
+    ResizeImagesDialogPriv *d;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

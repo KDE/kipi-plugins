@@ -39,13 +39,21 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    EffectImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    EffectImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
     ~EffectImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotOptionsClicked(void);
+    void slotHelp();
+    void slotOptionsClicked();
+
+protected:
+
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
+
+    void readSettings();
+    void saveSettings();
 
 protected:
 
@@ -66,12 +74,6 @@ protected:
     int  m_swirlDegrees;
     int  m_waveAmplitude;
     int  m_waveLenght;
-
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                     const QString& albumDest, bool previewMode);
-
-    void readSettings(void);
-    void saveSettings(void);
 
 private:
 

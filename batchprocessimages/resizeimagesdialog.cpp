@@ -64,10 +64,9 @@ class ResizeTool
 {
 public:
 
-    ResizeTool(QString localizedName, ResizeCommandBuilder *commandBuilder,
-                    ResizeOptionsBaseDialog *dialog) :
-        localizedName(localizedName), commandBuilder(commandBuilder), dialog(
-                        dialog)
+    ResizeTool(const QString& localizedName, ResizeCommandBuilder *commandBuilder,
+               ResizeOptionsBaseDialog *dialog) :
+        localizedName(localizedName), commandBuilder(commandBuilder), dialog(dialog)
     {
     }
 
@@ -113,7 +112,7 @@ public:
      * @param name localized name of the resize tool
      * @return tool with that name or if there is no such tool a default one
      */
-    ResizeTool getResizeToolByName(QString name)
+    ResizeTool getResizeToolByName(const QString& name)
     {
         foreach(ResizeTool tool, resizeTools)
         {
@@ -136,6 +135,7 @@ public:
     KIPIPlugins::KPAboutData *aboutData;
 
 private:
+
     ResizeImagesDialog *m_dialog;
 
 };
@@ -145,7 +145,7 @@ const QString ResizeImagesDialogPriv::RC_GROUP_NAME = "ResizeImages Settings";
 
 typedef QList<ResizeTool>::iterator ResizeToolIterator;
 
-ResizeImagesDialog::ResizeImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
                   : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent),
                     d(new ResizeImagesDialogPriv(this))
 {
@@ -213,17 +213,17 @@ ResizeImagesDialog::~ResizeImagesDialog()
     delete d;
 }
 
-void ResizeImagesDialog::slotHelp(void)
+void ResizeImagesDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("resizeimages", "kipi-plugins");
 }
 
-void ResizeImagesDialog::slotOptionsClicked(void)
+void ResizeImagesDialog::slotOptionsClicked()
 {
     d->getResizeToolByName(m_Type->currentText()).dialog->exec();
 }
 
-void ResizeImagesDialog::readSettings(void)
+void ResizeImagesDialog::readSettings()
 {
     // Read all settings from configuration file.
 
@@ -241,14 +241,14 @@ void ResizeImagesDialog::readSettings(void)
     readCommonSettings(group);
 }
 
-void ResizeImagesDialog::saveSettings(void)
+void ResizeImagesDialog::saveSettings()
 {
     // Write all settings in configuration file.
 
     KConfig config("kipirc");
     KConfigGroup group = config.group("ResizeImages Settings");
 
-    group.writeEntry("ResizeType", m_Type->currentItem());
+    group.writeEntry("ResizeType", m_Type->currentIndex());
 
     foreach(ResizeTool tool, d->resizeTools)
     {
@@ -263,7 +263,7 @@ void ResizeImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
                                      const QString& albumDest, bool)
 {
     d->getResizeToolByName(m_Type->currentText()).commandBuilder->buildCommand(
-                    proc, item, albumDest);
+                           proc, item, albumDest);
     kDebug() << "generated command line: " << proc->program();
 }
 
