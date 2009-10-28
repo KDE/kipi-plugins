@@ -119,11 +119,11 @@ void BatchProcessImagesDialog::setupUi()
     m_ui->m_previewButton->setWhatsThis(i18n("This button builds a process "
                                         "preview for the currently selected image on the list."));
 
-    m_ui->m_overWriteMode->insertItem(i18n("Ask"));
-    m_ui->m_overWriteMode->insertItem(i18n("Always Overwrite"));
-    m_ui->m_overWriteMode->insertItem(i18n("Rename"));
-    m_ui->m_overWriteMode->insertItem(i18n("Skip"));
-    m_ui->m_overWriteMode->setCurrentText(i18n("Rename"));
+    m_ui->m_overWriteMode->addItem(i18n("Ask"));
+    m_ui->m_overWriteMode->addItem(i18n("Always Overwrite"));
+    m_ui->m_overWriteMode->addItem(i18n("Rename"));
+    m_ui->m_overWriteMode->addItem(i18n("Skip"));
+    m_ui->m_overWriteMode->setCurrentItem(i18n("Rename"));
     m_ui->m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
                                         "files already exist."));
 
@@ -254,12 +254,12 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
     KIPI::ImageInfo info = m_interface->info(item.url());
     if (info.angle() != 0)
     {
-        QImage img = pix.convertToImage();
+        QImage img = pix.toImage();
         QMatrix matrix;
 
         matrix.rotate(info.angle());
         img = img.transformed(matrix);
-        pix.convertFromImage(img);
+        pix.fromImage(img);
     }
 
     m_ui->m_imageLabel->setPixmap(pix);
@@ -847,7 +847,7 @@ void BatchProcessImagesDialog::endPreview()
 
     // Default status if 'slotTypeChanged' isn't re-implemented.
     m_ui->m_optionsButton->setEnabled(true);
-    slotTypeChanged(m_Type->currentItem());
+    slotTypeChanged(m_Type->currentIndex());
 
     setButtonText(User1, i18n("&Start"));
 
@@ -858,7 +858,7 @@ void BatchProcessImagesDialog::endPreview()
             this, SLOT(slotProcessStart()));
 }
 
-int BatchProcessImagesDialog::overwriteMode(void)
+int BatchProcessImagesDialog::overwriteMode()
 {
     QString OverWrite = m_ui->m_overWriteMode->currentText();
 
@@ -924,7 +924,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
     {
         ++Enumerator;
         Temp = Temp.setNum(Enumerator);
-        NewDestUrl = fi->filePath().left(fi->filePath().findRev('.', -1)) + "_" + Temp + "."
+        NewDestUrl = fi->filePath().left(fi->filePath().lastIndexOf('.', -1)) + "_" + Temp + "."
                      + fi->filePath().section('.', -1);
     }
     while (Enumerator < 100 &&
@@ -969,7 +969,7 @@ void BatchProcessImagesDialog::saveCommonSettings(KConfigGroup& group) const
     {
         group.writeEntry("SmallPreview", m_ui->m_smallPreview->isChecked());
     }
-    group.writeEntry("OverWriteMode", m_ui->m_overWriteMode->currentItem());
+    group.writeEntry("OverWriteMode", m_ui->m_overWriteMode->currentIndex());
     group.writeEntry("RemoveOriginal", m_ui->m_removeOriginal->isChecked());
 }
 

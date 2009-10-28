@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
 SET(kipiplugin_batchprocessimages_PART_SRCS
     plugin_batchprocessimages.cpp
+    batchprocessimagesdialog.cpp
     batchprocessimagesitem.cpp
     batchprocessimageslist.cpp
     outputdialog.cpp
@@ -26,8 +27,6 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     filteroptionsdialog.cpp
     recompressoptionsdialog.cpp
     resizeoptionsdialog.cpp
-
-    batchprocessimagesdialog.cpp
 
     borderimagesdialog.cpp
     convertimagesdialog.cpp
