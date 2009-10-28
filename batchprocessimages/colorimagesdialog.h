@@ -39,7 +39,7 @@ class ColorImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ColorImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ColorImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
     ~ColorImagesDialog();
 
 private Q_SLOTS:
@@ -50,10 +50,10 @@ private Q_SLOTS:
 
 protected:
 
-    QString                m_depthValue;
-    int                    m_fuzzDistance;
-    int                    m_segmentCluster;
-    int                    m_segmentSmooth;
+    QString m_depthValue;
+    int     m_fuzzDistance;
+    int     m_segmentCluster;
+    int     m_segmentSmooth;
 
 protected:
 

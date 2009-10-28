@@ -57,7 +57,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ColorImagesDialog::ColorImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+ColorImagesDialog::ColorImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image-Color Processing"), parent)
 {
     // About data and help button.
@@ -88,18 +88,18 @@ ColorImagesDialog::ColorImagesDialog(KUrl::List urlList, KIPI::Interface* interf
 
     m_labelType->setText(i18n("Filter:"));
 
-    m_Type->insertItem(i18n("Decrease Contrast"));
-    m_Type->insertItem(i18n("Depth"));              // 1
-    m_Type->insertItem(i18n("Equalize"));
-    m_Type->insertItem(i18n("Fuzz"));               // 3
-    m_Type->insertItem(i18n("Gray Scales"));
-    m_Type->insertItem(i18n("Increase Contrast"));
-    m_Type->insertItem(i18n("Monochrome"));
-    m_Type->insertItem(i18n("Negate"));
-    m_Type->insertItem(i18n("Normalize"));
-    m_Type->insertItem(i18n("Segment"));            // 9
-    m_Type->insertItem(i18n("Trim"));
-    m_Type->setCurrentText(i18n("Normalize"));
+    m_Type->addItem(i18n("Decrease Contrast"));
+    m_Type->addItem(i18n("Depth"));              // 1
+    m_Type->addItem(i18n("Equalize"));
+    m_Type->addItem(i18n("Fuzz"));               // 3
+    m_Type->addItem(i18n("Gray Scales"));
+    m_Type->addItem(i18n("Increase Contrast"));
+    m_Type->addItem(i18n("Monochrome"));
+    m_Type->addItem(i18n("Negate"));
+    m_Type->addItem(i18n("Normalize"));
+    m_Type->addItem(i18n("Segment"));            // 9
+    m_Type->addItem(i18n("Trim"));
+    m_Type->setCurrentItem(i18n("Normalize"));
     QString whatsThis = i18n(
                             "<p>Select here the color enhancement type for your images:</p>"
                             "<p>"
@@ -133,7 +133,7 @@ ColorImagesDialog::ColorImagesDialog(KUrl::List urlList, KIPI::Interface* interf
 
     readSettings();
     listImageFiles();
-    slotTypeChanged(m_Type->currentItem());
+    slotTypeChanged(m_Type->currentIndex());
 }
 
 ColorImagesDialog::~ColorImagesDialog()
@@ -149,8 +149,8 @@ void ColorImagesDialog::slotHelp()
 void ColorImagesDialog::slotTypeChanged(int type)
 {
     if (type == 1 ||  // Depth
-            type == 3 || // Fuzz
-            type == 9    // Segment
+        type == 3 || // Fuzz
+        type == 9    // Segment
        )
         m_optionsButton->setEnabled(true);
     else
@@ -159,28 +159,34 @@ void ColorImagesDialog::slotTypeChanged(int type)
 
 void ColorImagesDialog::slotOptionsClicked()
 {
-    int Type = m_Type->currentItem();
+    int Type = m_Type->currentIndex();
     QPointer<ColorOptionsDialog> optionsDialog = new ColorOptionsDialog(this, Type);
 
     if (Type == 1)  // Depth
-        optionsDialog->m_depthValue->setCurrentText(m_depthValue);
+    {
+        int index = optionsDialog->m_depthValue->findText(m_depthValue);
+        if (index != -1) optionsDialog->m_depthValue->setCurrentIndex(index);
+    }
 
     if (Type == 3)  // Fuzz
         optionsDialog->m_fuzzDistance->setValue(m_fuzzDistance);
 
-    if (Type == 9) { // Segment
+    if (Type == 9)
+    { // Segment
         optionsDialog->m_segmentCluster->setValue(m_segmentCluster);
         optionsDialog->m_segmentSmooth->setValue(m_segmentSmooth);
     }
 
-    if (optionsDialog->exec() == KMessageBox::Ok) {
+    if (optionsDialog->exec() == KMessageBox::Ok)
+    {
         if (Type == 1)  // Depth
             m_depthValue = optionsDialog->m_depthValue->currentText();
 
         if (Type == 3)  // Fuzz
             m_fuzzDistance = optionsDialog->m_fuzzDistance->value();
 
-        if (Type == 9) { // Segment
+        if (Type == 9)
+        { // Segment
             m_segmentCluster = optionsDialog->m_segmentCluster->value();
             m_segmentSmooth = optionsDialog->m_segmentSmooth->value();
         }
@@ -197,10 +203,10 @@ void ColorImagesDialog::readSettings()
     KConfigGroup group = config.group("ColorImages Settings");
 
     m_Type->setCurrentIndex(group.readEntry("ColorType", 8)); // Normalize per default.
-    m_depthValue = group.readEntry("DepthValue", "32");
-    m_fuzzDistance = group.readEntry("FuzzDistance", 3);
+    m_depthValue     = group.readEntry("DepthValue", "32");
+    m_fuzzDistance   = group.readEntry("FuzzDistance", 3);
     m_segmentCluster = group.readEntry("SegmentCluster", 3);
-    m_segmentSmooth = group.readEntry("SegmentSmooth", 3);
+    m_segmentSmooth  = group.readEntry("SegmentSmooth", 3);
 
     readCommonSettings(group);
 }
@@ -212,7 +218,7 @@ void ColorImagesDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("ColorImages Settings");
 
-    group.writeEntry("ColorType", m_Type->currentItem());
+    group.writeEntry("ColorType", m_Type->currentIndex());
     group.writeEntry("DepthValue", m_depthValue);
     group.writeEntry("FuzzDistance", m_fuzzDistance);
     group.writeEntry("SegmentCluster", m_segmentCluster);
@@ -226,51 +232,62 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
 {
     *proc << "convert";
 
-    if (previewMode && smallPreview()) {    // Preview mode and small preview enabled !
+    if (previewMode && smallPreview())
+    {    // Preview mode and small preview enabled !
         *m_PreviewProc << "-crop" << "300x300+0+0";
         m_previewOutput.append(" -crop 300x300+0+0 ");
     }
 
-    if (m_Type->currentItem() == 0) { // Decrease contrast"
+    if (m_Type->currentIndex() == 0)
+    { // Decrease contrast"
         *proc << "-contrast";
     }
 
-    if (m_Type->currentItem() == 1) { // Depth
+    if (m_Type->currentIndex() == 1)
+    { // Depth
         *proc << "-depth" << m_depthValue;
     }
 
-    if (m_Type->currentItem() == 2) { // Equalize
+    if (m_Type->currentIndex() == 2)
+    { // Equalize
         *proc << "-equalize";
     }
 
-    if (m_Type->currentItem() == 3) { // Fuzz
+    if (m_Type->currentIndex() == 3)
+    { // Fuzz
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_fuzzDistance);
         *proc << "-fuzz" << Temp2;
     }
 
-    if (m_Type->currentItem() == 4) { // Gray scales
+    if (m_Type->currentIndex() == 4)
+    { // Gray scales
         *proc << "-type";
         *proc << "Grayscale";
     }
 
-    if (m_Type->currentItem() == 5) { // Increase contrast
+    if (m_Type->currentIndex() == 5)
+    { // Increase contrast
         *proc << "+contrast";
     }
 
-    if (m_Type->currentItem() == 6) { // Monochrome
+    if (m_Type->currentIndex() == 6)
+    { // Monochrome
         *proc << "-monochrome";
     }
 
-    if (m_Type->currentItem() == 7) { // Negate
+    if (m_Type->currentIndex() == 7)
+    { // Negate
         *proc << "-negate";
     }
 
-    if (m_Type->currentItem() == 8) { // Normalize
+    if (m_Type->currentIndex() == 8)
+    { // Normalize
         *proc << "-normalize";
     }
 
-    if (m_Type->currentItem() == 9) { // Segment
+    if (m_Type->currentIndex() == 9)
+    { // Segment
         *proc << "-segment";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_segmentCluster) + "x";
@@ -278,7 +295,8 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 10) { // Trim
+    if (m_Type->currentIndex() == 10)
+    { // Trim
         *proc << "-trim";
     }
 
@@ -286,7 +304,8 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
 
     *proc << item->pathSrc();
 
-    if (!previewMode) {   // No preview mode !
+    if (!previewMode)
+    {   // No preview mode !
         *proc << albumDest + "/" + item->nameDest();
     }
 }
