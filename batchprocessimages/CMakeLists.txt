@@ -47,13 +47,12 @@ KDE4_ADD_PLUGIN(kipiplugin_batchprocessimages ${kipiplugin_batchprocessimages_PA
 
 TARGET_LINK_LIBRARIES(
     kipiplugin_batchprocessimages
-    kipiplugins
     ${KIPI_LIBRARIES}
     ${KEXIV2_LIBRARIES}
     ${KDE4_KDECORE_LIBS}
     ${KDE4_KIO_LIBS}
     ${KDE4_KDEUI_LIBS}
-    ${QT_QT3SUPPORT_LIBRARY}
+    kipiplugins
     )
 
 INSTALL(TARGETS kipiplugin_batchprocessimages DESTINATION ${PLUGIN_INSTALL_DIR})

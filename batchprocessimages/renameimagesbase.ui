@@ -95,7 +95,7 @@
        </layout>
       </item>
       <item row="1" column="1">
-       <layout class="QHBoxLayout">
+       <layout class="QHBoxLayout" name="_2">
         <item>
          <widget class="QSpinBox" name="m_seqSpin">
           <property name="minimum">
@@ -263,21 +263,12 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>QGroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>QGroupBox</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>KIPIBatchProcessImagesPlugin::BatchProcessImagesList</class>
    <extends>QFrame</extends>
    <header>batchprocessimageslist.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">k3listview.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

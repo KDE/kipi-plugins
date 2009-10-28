@@ -79,6 +79,7 @@ extern "C"
 // Local includes
 
 #include "batchprocessimagesitem.h"
+#include "ui_renameimagesbase.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -87,18 +88,19 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
                                        const KUrl::List& urlList)
                   : QWidget(parent),
                     m_interface(interface),
-                    m_urlList(urlList)
+                    m_urlList(urlList),
+                    ui(new Ui::RenameImagesBase)
 {
-    setupUi(this);
+    ui->setupUi(this);
     readSettings();
 
     QMenu* sortMenu = new QMenu(this);
     m_byNameAction  = sortMenu->addAction(i18n("Sort by Name"));
     m_bySizeAction  = sortMenu->addAction(i18n("Sort by Size"));
     m_byDateAction  = sortMenu->addAction(i18n("Sort by Date"));
-    m_sortButton->setMenu(sortMenu);
+    ui->m_sortButton->setMenu(sortMenu);
 
-    m_useExtraSymbolsCheck->setToolTip(
+    ui->m_useExtraSymbolsCheck->setToolTip(
                   "[e] - extension (small one - after last '.')\n"
                   "[e-] - extension lower case\n"
                   "[e+] extension upper case\n"
@@ -114,49 +116,49 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
                   "[B:4..-2] - base name (big one - all before last ',', from 4-th to one before last characters)\n"
                   "[b-:-3..] - base name (small one - all before first '.', last 3 characters)");
 
-    connect(m_listView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+    connect(ui->m_listView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotListViewDoubleClicked(QTreeWidgetItem*)));
 
-    connect(m_listView, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
+    connect(ui->m_listView, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
             this, SLOT(slotImageSelected(QTreeWidgetItem*)));
 
-    connect(m_prefixEdit, SIGNAL(textChanged(const QString&)),
+    connect(ui->m_prefixEdit, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_seqSpin, SIGNAL(valueChanged(int)),
+    connect(ui->m_seqSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_addFileNameCheck, SIGNAL(toggled(bool)),
+    connect(ui->m_addFileNameCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_useExtraSymbolsCheck, SIGNAL(toggled(bool)),
+    connect(ui->m_useExtraSymbolsCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_addFileDateCheck, SIGNAL(toggled(bool)),
+    connect(ui->m_addFileDateCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_formatDateCheck, SIGNAL(toggled(bool)),
+    connect(ui->m_formatDateCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_formatDateEdit, SIGNAL(textChanged(const QString&)),
+    connect(ui->m_formatDateEdit, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(m_addButton, SIGNAL(clicked()),
+    connect(ui->m_addButton, SIGNAL(clicked()),
             this, SLOT(slotAddImages()));
 
-    connect(m_removeButton, SIGNAL(clicked()),
+    connect(ui->m_removeButton, SIGNAL(clicked()),
             this, SLOT(slotRemoveImage()));
 
     connect(sortMenu, SIGNAL(triggered(QAction*)),
             this, SLOT(sortList(QAction*)));
 
-    connect(m_reverseList, SIGNAL(clicked()),
+    connect(ui->m_reverseList, SIGNAL(clicked()),
             this, SLOT(reverseList()));
 
-    connect(m_moveUp, SIGNAL(clicked()),
+    connect(ui->m_moveUp, SIGNAL(clicked()),
             this, SLOT(moveCurrentItemUp()));
 
-    connect(m_moveDown, SIGNAL(clicked()),
+    connect(ui->m_moveDown, SIGNAL(clicked()),
             this, SLOT(moveCurrentItemDown()));
 
     m_timer    = new QTimer(this);
@@ -173,7 +175,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     for (KUrl::List::iterator it = m_urlList.begin();
             it != m_urlList.end(); ++it)
     {
-        new BatchProcessImagesItem(m_listView,
+        new BatchProcessImagesItem(ui->m_listView,
                                    (*it).path().section('/', 0, -1),
                                    (*it).fileName(),
                                    QString(),
@@ -189,6 +191,8 @@ RenameImagesWidget::~RenameImagesWidget()
     delete m_progress;
 
     saveSettings();
+
+    delete ui;
 }
 
 void RenameImagesWidget::readSettings()
@@ -196,13 +200,13 @@ void RenameImagesWidget::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("RenameImages Settings");
 
-    m_prefixEdit->setText(group.readEntry("PrefixString", ""));
-    m_seqSpin->setValue(group.readEntry("FirstRenameValue", 1));
-    m_addFileNameCheck->setChecked(group.readEntry("AddOriginalFileName", false));
-    m_useExtraSymbolsCheck->setChecked(group.readEntry("UseExtraSymbolsCheck", false));
-    m_addFileDateCheck->setChecked(group.readEntry("AddImageFileDate", false));
-    m_formatDateCheck->setChecked(group.readEntry("FormatDate", false));
-    m_formatDateEdit->setText(group.readEntry("FormatDateString", "%Y-%m-%d"));
+    ui->m_prefixEdit->setText(group.readEntry("PrefixString", ""));
+    ui->m_seqSpin->setValue(group.readEntry("FirstRenameValue", 1));
+    ui->m_addFileNameCheck->setChecked(group.readEntry("AddOriginalFileName", false));
+    ui->m_useExtraSymbolsCheck->setChecked(group.readEntry("UseExtraSymbolsCheck", false));
+    ui->m_addFileDateCheck->setChecked(group.readEntry("AddImageFileDate", false));
+    ui->m_formatDateCheck->setChecked(group.readEntry("FormatDate", false));
+    ui->m_formatDateEdit->setText(group.readEntry("FormatDateString", "%Y-%m-%d"));
 
     slotOptionsChanged();
 }
@@ -212,23 +216,23 @@ void RenameImagesWidget::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("RenameImages Settings");
 
-    group.writeEntry("PrefixString", m_prefixEdit->text());
-    group.writeEntry("FirstRenameValue", m_seqSpin->value());
-    group.writeEntry("AddOriginalFileName", m_addFileNameCheck->isChecked());
-    group.writeEntry("UseExtraSymbolsCheck", m_useExtraSymbolsCheck->isChecked());
-    group.writeEntry("AddImageFileDate", m_addFileDateCheck->isChecked());
-    group.writeEntry("FormatDate", m_formatDateCheck->isChecked());
-    group.writeEntry("FormatDateString", m_formatDateEdit->text());
+    group.writeEntry("PrefixString", ui->m_prefixEdit->text());
+    group.writeEntry("FirstRenameValue", ui->m_seqSpin->value());
+    group.writeEntry("AddOriginalFileName", ui->m_addFileNameCheck->isChecked());
+    group.writeEntry("UseExtraSymbolsCheck", ui->m_useExtraSymbolsCheck->isChecked());
+    group.writeEntry("AddImageFileDate", ui->m_addFileDateCheck->isChecked());
+    group.writeEntry("FormatDate", ui->m_formatDateCheck->isChecked());
+    group.writeEntry("FormatDateString", ui->m_formatDateEdit->text());
 
     config.sync();
 }
 
 void RenameImagesWidget::slotOptionsChanged()
 {
-    m_formatDateCheck->setEnabled(m_addFileDateCheck->isChecked());
-    m_useExtraSymbolsCheck->setEnabled(m_addFileDateCheck->isChecked());
-    m_formatDateEdit->setEnabled(m_formatDateCheck->isEnabled() &&
-                                 m_formatDateCheck->isChecked());
+    ui->m_formatDateCheck->setEnabled(ui->m_addFileDateCheck->isChecked());
+    ui->m_useExtraSymbolsCheck->setEnabled(ui->m_addFileDateCheck->isChecked());
+    ui->m_formatDateEdit->setEnabled(ui->m_formatDateCheck->isEnabled() &&
+                                 ui->m_formatDateCheck->isChecked());
 
     updateListing();
 }
@@ -242,16 +246,16 @@ void RenameImagesWidget::slotImageSelected(QTreeWidgetItem* item)
 {
     if (!item)
     {
-        m_removeButton->setEnabled(false);
+        ui->m_removeButton->setEnabled(false);
         return;
     }
 
-    m_removeButton->setEnabled(true);
-    m_pixLabel->clear();
+    ui->m_removeButton->setEnabled(true);
+    ui->m_pixLabel->clear();
 
     BatchProcessImagesItem* it = static_cast<BatchProcessImagesItem*>(item);
     KIO::PreviewJob* thumbJob  = KIO::filePreview(KUrl(it->pathSrc()),
-                                 m_pixLabel->height());
+                                 ui->m_pixLabel->height());
 
     connect(thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
             this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
@@ -259,7 +263,7 @@ void RenameImagesWidget::slotImageSelected(QTreeWidgetItem* item)
 
 void RenameImagesWidget::sortList(QAction* action)
 {
-    QTreeWidgetItemIterator it(m_listView->topLevelItem(0));
+    QTreeWidgetItemIterator it(ui->m_listView->topLevelItem(0));
     for (; *it; ++it)
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(*it);
@@ -281,7 +285,7 @@ void RenameImagesWidget::sortList(QAction* action)
         }
     }
 
-    m_listView->sortByColumn(BatchProcessImagesItem::columnOfSortKey(), Qt::AscendingOrder);
+    ui->m_listView->sortByColumn(BatchProcessImagesItem::columnOfSortKey(), Qt::AscendingOrder);
 
     updateListing();
 }
@@ -289,14 +293,14 @@ void RenameImagesWidget::sortList(QAction* action)
 
 void RenameImagesWidget::reverseList()
 {
-    if (m_listView->topLevelItemCount() < 2) return;
+    if (ui->m_listView->topLevelItemCount() < 2) return;
 
     QList<QTreeWidgetItem*> lst;
-    while (m_listView->topLevelItemCount() > 0)
+    while (ui->m_listView->topLevelItemCount() > 0)
     {
-        lst.prepend(m_listView->takeTopLevelItem(0));
+        lst.prepend(ui->m_listView->takeTopLevelItem(0));
     }
-    m_listView->addTopLevelItems(lst);
+    ui->m_listView->addTopLevelItems(lst);
 
     updateListing();
 }
@@ -304,36 +308,36 @@ void RenameImagesWidget::reverseList()
 
 void RenameImagesWidget::moveCurrentItemUp()
 {
-    QTreeWidgetItem* currentItem = m_listView->currentItem();
+    QTreeWidgetItem* currentItem = ui->m_listView->currentItem();
     if (!currentItem) return;
 
-    int index = m_listView->indexOfTopLevelItem(currentItem);
+    int index = ui->m_listView->indexOfTopLevelItem(currentItem);
     if (index == 0)
     {
         return;
     }
 
-    m_listView->takeTopLevelItem(index);
-    m_listView->insertTopLevelItem(index - 1, currentItem);
-    m_listView->setCurrentItem(currentItem);
+    ui->m_listView->takeTopLevelItem(index);
+    ui->m_listView->insertTopLevelItem(index - 1, currentItem);
+    ui->m_listView->setCurrentItem(currentItem);
 
     updateListing();
 }
 
 void RenameImagesWidget::moveCurrentItemDown()
 {
-    QTreeWidgetItem* currentItem = m_listView->currentItem();
+    QTreeWidgetItem* currentItem = ui->m_listView->currentItem();
     if (!currentItem) return;
 
-    int index = m_listView->indexOfTopLevelItem(currentItem);
-    if (index == m_listView->topLevelItemCount() - 1)
+    int index = ui->m_listView->indexOfTopLevelItem(currentItem);
+    if (index == ui->m_listView->topLevelItemCount() - 1)
     {
         return;
     }
 
-    m_listView->takeTopLevelItem(index);
-    m_listView->insertTopLevelItem(index + 1, currentItem);
-    m_listView->setCurrentItem(currentItem);
+    ui->m_listView->takeTopLevelItem(index);
+    ui->m_listView->insertTopLevelItem(index + 1, currentItem);
+    ui->m_listView->setCurrentItem(currentItem);
 
     updateListing();
 }
@@ -341,7 +345,7 @@ void RenameImagesWidget::moveCurrentItemDown()
 void RenameImagesWidget::updateListing()
 {
     int pos = 0;
-    QTreeWidgetItemIterator it(m_listView);
+    QTreeWidgetItemIterator it(ui->m_listView);
     for (; *it; ++it)
     {
         BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(*it);
@@ -362,21 +366,21 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
     KIPI::ImageInfo info = m_interface->info(url);
 
-    bool useExtraSymbols = m_addFileDateCheck->isChecked() &&
-                           m_useExtraSymbolsCheck->isChecked();
+    bool useExtraSymbols = ui->m_addFileDateCheck->isChecked() &&
+                           ui->m_useExtraSymbolsCheck->isChecked();
 
-    QString newName = m_prefixEdit->text();
+    QString newName = ui->m_prefixEdit->text();
 
-    if (m_addFileNameCheck->isChecked())
+    if (ui->m_addFileNameCheck->isChecked())
     {
         newName += fi.baseName();
         newName += "_";
     }
 
-    int seqNumber = itemPosition + m_seqSpin->value();
-    if (m_addFileDateCheck->isChecked())
+    int seqNumber = itemPosition + ui->m_seqSpin->value();
+    if (ui->m_addFileDateCheck->isChecked())
     {
-        QString format = m_formatDateEdit->text();
+        QString format = ui->m_formatDateEdit->text();
         format         = format.simplified();
         if (useExtraSymbols)
         {
@@ -457,7 +461,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
     if (!useExtraSymbols)
     {
         int numDigits = 1;
-        int count = m_listView->topLevelItemCount();
+        int count = ui->m_listView->topLevelItemCount();
         while (count > 0)
         {
             numDigits++;
@@ -480,7 +484,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
 void RenameImagesWidget::slotGotPreview(const KFileItem&, const QPixmap& pix)
 {
-    m_pixLabel->setPixmap(pix);
+    ui->m_pixLabel->setPixmap(pix);
 }
 
 void RenameImagesWidget::slotStart()
@@ -488,11 +492,11 @@ void RenameImagesWidget::slotStart()
     m_timer->setSingleShot(true);
     m_timer->start(0);
 
-    QTreeWidgetItem* item = m_listView->topLevelItem(0);
-    m_listView->setCurrentItem(item);
-    m_listView->scrollToItem(item);
+    QTreeWidgetItem* item = ui->m_listView->topLevelItem(0);
+    ui->m_listView->setCurrentItem(item);
+    ui->m_listView->scrollToItem(item);
 
-    m_progress->setMaximum(m_listView->topLevelItemCount());
+    m_progress->setMaximum(ui->m_listView->topLevelItemCount());
     m_progress->setValue(0);
     m_progress->show();
 
@@ -509,7 +513,7 @@ void RenameImagesWidget::slotAbort()
 
 void RenameImagesWidget::slotNext()
 {
-    QTreeWidgetItem* it = m_listView->selectedItems().first();
+    QTreeWidgetItem* it = ui->m_listView->selectedItems().first();
     if (!it)
     {
         slotAbort();
@@ -606,11 +610,11 @@ void RenameImagesWidget::slotNext()
 
     m_progress->setValue(m_progress->value() + 1);
 
-    it = m_listView->itemBelow(it);
+    it = ui->m_listView->itemBelow(it);
     if (it)
     {
-        m_listView->setCurrentItem(it);
-        m_listView->scrollToItem(it);
+        ui->m_listView->setCurrentItem(it);
+        ui->m_listView->scrollToItem(it);
         m_timer->setSingleShot(true);
         m_timer->start(0);
     }
@@ -625,7 +629,7 @@ void RenameImagesWidget::slotAddImages()
         if (m_urlList.contains(*it))
             continue;
 
-        new BatchProcessImagesItem(m_listView,
+        new BatchProcessImagesItem(ui->m_listView,
                                    (*it).path().section('/', 0, -1),
                                    (*it).fileName(),
                                    QString(),
@@ -638,13 +642,13 @@ void RenameImagesWidget::slotAddImages()
 
 void RenameImagesWidget::slotRemoveImage()
 {
-    if (m_listView->selectedItems().isEmpty())
+    if (ui->m_listView->selectedItems().isEmpty())
         return;
 
-    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(m_listView->selectedItems().first());
+    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(ui->m_listView->selectedItems().first());
     delete item;
 
-    m_pixLabel->clear();
+    ui->m_pixLabel->clear();
 
     updateListing();
 }

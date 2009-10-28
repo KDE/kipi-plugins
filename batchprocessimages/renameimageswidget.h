@@ -27,18 +27,16 @@
 // Qt includes
 
 #include <QPixmap>
+#include <QWidget>
 
 // KDE includes
 
 #include <kurl.h>
 
-// Local includes
-
-#include "ui_renameimagesbase.h"
-
 class QProgressDialog;
 class QTimer;
 class QAction;
+class QTreeWidgetItem;
 
 class KFileItem;
 
@@ -47,12 +45,17 @@ namespace KIPI
     class Interface;
 }
 
+namespace Ui
+{
+    class RenameImagesBase;
+}
+
 namespace KIPIBatchProcessImagesPlugin
 {
 
 class BatchProcessImagesItem;
 
-class RenameImagesWidget : public QWidget, public Ui_RenameImagesBase
+class RenameImagesWidget : public QWidget
 {
     Q_OBJECT
 
@@ -94,16 +97,20 @@ private:
 
 private:
 
-    KIPI::Interface* m_interface;
-    KUrl::List       m_urlList;
-    QTimer*          m_timer;
-    QProgressDialog* m_progress;
-    bool             m_overwriteAll;
-    bool             m_autoSkip;
+    KIPI::Interface*            m_interface;
+    KUrl::List                  m_urlList;
+    QTimer*                     m_timer;
+    QProgressDialog*            m_progress;
+    bool                        m_overwriteAll;
+    bool                        m_autoSkip;
 
-    QAction*         m_byNameAction;
-    QAction*         m_bySizeAction;
-    QAction*         m_byDateAction;
+    QAction*                    m_byNameAction;
+    QAction*                    m_bySizeAction;
+    QAction*                    m_byDateAction;
+
+private:
+
+    Ui::RenameImagesBase* const ui;
 };
 
 } // namespace KIPIBatchProcessImagesPlugin

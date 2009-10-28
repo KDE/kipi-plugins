@@ -20,6 +20,7 @@
  *
  * ============================================================ */
 
+#include "batchprocessimageslist.h"
 #include "batchprocessimageslist.moc"
 
 // Qt includes

@@ -73,7 +73,7 @@ namespace KIPIBatchProcessImagesPlugin
 
 BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
                                                    const QString& caption, QWidget *parent)
-                        : KDialog(parent),
+                        : KDialog(parent), m_ui(new Ui::BatchProcessImagesDialog()),
                           m_listFile2Process_iterator(0),
                           m_selectedImageFiles(urlList),
                           m_interface(interface)
@@ -102,7 +102,6 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KI
 
 void BatchProcessImagesDialog::setupUi()
 {
-    m_ui            = new Ui::BatchProcessImagesDialog;
     QWidget* widget = new QWidget(this);
     m_ui->setupUi(widget);
     setMainWidget(widget);

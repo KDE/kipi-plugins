@@ -123,7 +123,7 @@ private:
 
     // --------------------------------------------------------------------------------------------------------
     // Standards widgets in the dialog
-    Ui::BatchProcessImagesDialog *m_ui;
+    Ui::BatchProcessImagesDialog* const m_ui;
 
 protected:
 
