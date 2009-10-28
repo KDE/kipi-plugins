@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <qgroupbox.h>
+#include <QGroupBox>
 
 // KDE includes
 
@@ -41,14 +41,15 @@ namespace KIPIBatchProcessImagesPlugin
 {
 
 const QString ResizeOptionsBaseDialog::OPTION_QUALITY_NAME = "Quality";
-const QString ResizeOptionsBaseDialog::OPTION_FILTER_NAME = "ResizeFilter";
+const QString ResizeOptionsBaseDialog::OPTION_FILTER_NAME  = "ResizeFilter";
 
-ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget *parent,
-                ResizeCommandBuilder *commandBuilder, QString settingsPrefix) :
-    KDialog(parent), m_settingsPrefix(settingsPrefix), m_commandBuilder(
-                    commandBuilder), m_mainWidget(new QWidget(this))
+ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget* parent,
+                                                 ResizeCommandBuilder* commandBuilder,
+                                                 const QString& settingsPrefix)
+                       : KDialog(parent),
+                         m_settingsPrefix(settingsPrefix), m_commandBuilder(commandBuilder),
+                         m_mainWidget(new QWidget(this))
 {
-
     // general dialog settings
     setCaption(i18n("Image-Resize Options"));
     setModal(true);
@@ -57,33 +58,33 @@ ResizeOptionsBaseDialog::ResizeOptionsBaseDialog(QWidget *parent,
 
     // setup main widget for the dialog
     setMainWidget(m_mainWidget);
-    m_mainWidgetLayout = new QVBoxLayout(m_mainWidget, 10, spacingHint());
+    m_mainWidgetLayout = new QVBoxLayout(m_mainWidget);
+    m_mainWidgetLayout->setSpacing(spacingHint());
+    m_mainWidgetLayout->setMargin(spacingHint());
 
     // connections
-    connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
-
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
 }
 
 ResizeOptionsBaseDialog::~ResizeOptionsBaseDialog()
 {
-
 }
 
 void ResizeOptionsBaseDialog::layout()
 {
-
     // call template method to add widgets before the quality settings
     prependWidgets();
 
     // setup content that every dialog has
-    QGroupBox *qualityGroupBox = new QGroupBox(i18n("Quality Settings"), this);
+    QGroupBox *qualityGroupBox         = new QGroupBox(i18n("Quality Settings"), this);
     QGridLayout *qualityGroupBoxLayout = new QGridLayout(qualityGroupBox);
     qualityGroupBox->setLayout(qualityGroupBoxLayout);
 
-    m_resizeFilterLabel = new QLabel(i18n("Filter:"), qualityGroupBox);
+    m_resizeFilterLabel    = new QLabel(i18n("Filter:"), qualityGroupBox);
     m_resizeFilterComboBox = new KComboBox();
-    m_defaultFilterName = i18nc("Filter name", "<default>");
-    m_resizeFilterComboBox->insertItem(m_defaultFilterName);
+    m_defaultFilterName    = i18nc("Filter name", "<default>");
+    m_resizeFilterComboBox->addItem(m_defaultFilterName);
     // we really don't need to translate these filter names
     m_resizeFilterComboBox->insertItems(1, ResizeCommandBuilder::getAllowedFilters());
     m_resizeFilterComboBox->setWhatsThis(i18n("Select here the filter name for the resize-image process. "
@@ -105,12 +106,10 @@ void ResizeOptionsBaseDialog::layout()
 
     // call template method to append options at the end of the dialog
     appendWidgets();
-
 }
 
-void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
+void ResizeOptionsBaseDialog::readSettings(const QString& rcname, const QString& groupName)
 {
-
     kDebug() << "reading settings";
 
     KConfig config(rcname);
@@ -122,12 +121,10 @@ void ResizeOptionsBaseDialog::readSettings(QString rcname, QString groupName)
     m_qualityInput->setValue(group.readEntry(m_settingsPrefix
                     + OPTION_QUALITY_NAME, 75));
     m_commandBuilder->setQuality(m_qualityInput->value());
-
 }
 
-void ResizeOptionsBaseDialog::saveSettings(QString rcname, QString groupName)
+void ResizeOptionsBaseDialog::saveSettings(const QString& rcname, const QString& groupName)
 {
-
     kDebug() << "saving settings";
 
     KConfig config(rcname);
@@ -137,7 +134,6 @@ void ResizeOptionsBaseDialog::saveSettings(QString rcname, QString groupName)
                     m_resizeFilterComboBox->currentIndex());
     group.writeEntry(m_settingsPrefix + OPTION_QUALITY_NAME,
                     m_qualityInput->value());
-
 }
 
 void ResizeOptionsBaseDialog::addOptionWidget(QWidget *widget)
@@ -147,7 +143,6 @@ void ResizeOptionsBaseDialog::addOptionWidget(QWidget *widget)
 
 void ResizeOptionsBaseDialog::slotOk()
 {
-
     // first ensure that the gui handling of the subclass was ok
     bool subclassOk = handleOk();
     if (!subclassOk)
@@ -169,7 +164,6 @@ void ResizeOptionsBaseDialog::slotOk()
     }
 
     accept();
-
 }
 
 // --- one dimensional resizing ---
@@ -177,20 +171,18 @@ void ResizeOptionsBaseDialog::slotOk()
 const QString OneDimResizeOptionsDialog::OPTION_SIZE_NAME = "OneDimSize";
 
 OneDimResizeOptionsDialog::OneDimResizeOptionsDialog(QWidget *parent,
-                OneDimResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder, "OneDim"), m_commandBuilder(
-                    commandBuilder)
+                           OneDimResizeCommandBuilder *commandBuilder)
+                         : ResizeOptionsBaseDialog(parent, commandBuilder, "OneDim"),
+                           m_commandBuilder(commandBuilder)
 {
-
 }
 
 OneDimResizeOptionsDialog::~OneDimResizeOptionsDialog()
 {
 }
 
-void OneDimResizeOptionsDialog::readSettings(QString rcname, QString groupName)
+void OneDimResizeOptionsDialog::readSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::readSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -198,19 +190,16 @@ void OneDimResizeOptionsDialog::readSettings(QString rcname, QString groupName)
 
     m_sizeInput->setValue(group.readEntry(OPTION_SIZE_NAME, 600));
     m_commandBuilder->setSize(m_sizeInput->value());
-
 }
 
-void OneDimResizeOptionsDialog::saveSettings(QString rcname, QString groupName)
+void OneDimResizeOptionsDialog::saveSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::saveSettings(rcname, groupName);
 
     KConfig config(rcname);
     KConfigGroup group = config.group(groupName);
 
     group.writeEntry(OPTION_SIZE_NAME, m_sizeInput->value());
-
 }
 
 void OneDimResizeOptionsDialog::prependWidgets()
@@ -230,7 +219,6 @@ void OneDimResizeOptionsDialog::prependWidgets()
     sizeGroupBoxLayout->addWidget(m_sizeInput, 0, 0, 1, -1);
 
     addOptionWidget(sizeGroupBox);
-
 }
 
 void OneDimResizeOptionsDialog::appendWidgets()
@@ -260,20 +248,18 @@ const QString TwoDimResizeOptionsDialog::OPTION_FILL_NAME = "TwoDimFill";
 const QString TwoDimResizeOptionsDialog::OPTION_FILL_COLOR_NAME = "TwoDimFillColor";
 
 TwoDimResizeOptionsDialog::TwoDimResizeOptionsDialog(QWidget *parent,
-                TwoDimResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder, "TwoDim"), m_commandBuilder(
-                    commandBuilder)
+                           TwoDimResizeCommandBuilder *commandBuilder)
+                         : ResizeOptionsBaseDialog(parent, commandBuilder, "TwoDim"),
+                           m_commandBuilder(commandBuilder)
 {
-
 }
 
 TwoDimResizeOptionsDialog::~TwoDimResizeOptionsDialog()
 {
 }
 
-void TwoDimResizeOptionsDialog::readSettings(QString rcname, QString groupName)
+void TwoDimResizeOptionsDialog::readSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::readSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -287,12 +273,10 @@ void TwoDimResizeOptionsDialog::readSettings(QString rcname, QString groupName)
     m_commandBuilder->setFill(m_fillCheckBox->isChecked());
     m_fillColorButton->setColor(group.readEntry(OPTION_FILL_COLOR_NAME, QColor(Qt::white)));
     m_commandBuilder->setFillColor(m_fillColorButton->color());
-
 }
 
-void TwoDimResizeOptionsDialog::saveSettings(QString rcname, QString groupName)
+void TwoDimResizeOptionsDialog::saveSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::saveSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -302,12 +286,10 @@ void TwoDimResizeOptionsDialog::saveSettings(QString rcname, QString groupName)
     group.writeEntry(OPTION_HEIGHT_NAME, m_heightInput->value());
     group.writeEntry(OPTION_FILL_NAME, m_fillCheckBox->isChecked());
     group.writeEntry(OPTION_FILL_COLOR_NAME, m_fillColorButton->color());
-
 }
 
 void TwoDimResizeOptionsDialog::prependWidgets()
 {
-
     // prepend size options
     QGroupBox *sizeGroupBox = new QGroupBox(i18n("Size Settings"), this);
     QGridLayout *sizeGroupBoxLayout = new QGridLayout(sizeGroupBox);
@@ -344,7 +326,6 @@ void TwoDimResizeOptionsDialog::prependWidgets()
     sizeGroupBoxLayout->addWidget(m_fillColorButton, 3, 1, 1, 1);
 
     addOptionWidget(sizeGroupBox);
-
 }
 
 void TwoDimResizeOptionsDialog::appendWidgets()
@@ -373,20 +354,18 @@ const QString NonProportionalResizeOptionsDialog::OPTION_WIDTH_NAME = "NonPropWi
 const QString NonProportionalResizeOptionsDialog::OPTION_HEIGHT_NAME = "NonPropHeight";
 
 NonProportionalResizeOptionsDialog::NonProportionalResizeOptionsDialog(QWidget *parent,
-                NonProportionalResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder, "NonProp"), m_commandBuilder(
-                    commandBuilder)
+                                    NonProportionalResizeCommandBuilder *commandBuilder)
+                                  : ResizeOptionsBaseDialog(parent, commandBuilder, "NonProp"),
+                                    m_commandBuilder(commandBuilder)
 {
-
 }
 
 NonProportionalResizeOptionsDialog::~NonProportionalResizeOptionsDialog()
 {
 }
 
-void NonProportionalResizeOptionsDialog::readSettings(QString rcname, QString groupName)
+void NonProportionalResizeOptionsDialog::readSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::readSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -396,12 +375,10 @@ void NonProportionalResizeOptionsDialog::readSettings(QString rcname, QString gr
     m_commandBuilder->setWidth(m_widthInput->value());
     m_heightInput->setValue(group.readEntry(OPTION_HEIGHT_NAME, 480));
     m_commandBuilder->setHeight(m_heightInput->value());
-
 }
 
-void NonProportionalResizeOptionsDialog::saveSettings(QString rcname, QString groupName)
+void NonProportionalResizeOptionsDialog::saveSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::saveSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -409,12 +386,10 @@ void NonProportionalResizeOptionsDialog::saveSettings(QString rcname, QString gr
 
     group.writeEntry(OPTION_WIDTH_NAME, m_widthInput->value());
     group.writeEntry(OPTION_HEIGHT_NAME, m_heightInput->value());
-
 }
 
 void NonProportionalResizeOptionsDialog::prependWidgets()
 {
-
     // prepend size options
     QGroupBox *sizeGroupBox = new QGroupBox(i18n("Size Settings"), this);
     QGridLayout *sizeGroupBoxLayout = new QGridLayout(sizeGroupBox);
@@ -436,7 +411,6 @@ void NonProportionalResizeOptionsDialog::prependWidgets()
     sizeGroupBoxLayout->addWidget(m_heightInput, 1, 0, 1, -1);
 
     addOptionWidget(sizeGroupBox);
-
 }
 
 void NonProportionalResizeOptionsDialog::appendWidgets()
@@ -467,20 +441,18 @@ const QString PrintPrepareResizeOptionsDialog::OPTION_STRETCH_NAME = "Stretch";
 const QString PrintPrepareResizeOptionsDialog::OPTION_CUSTOM_SETTINGS_NAME = "CustomSettings";
 
 PrintPrepareResizeOptionsDialog::PrintPrepareResizeOptionsDialog(QWidget *parent,
-                PrintPrepareResizeCommandBuilder *commandBuilder) :
-    ResizeOptionsBaseDialog(parent, commandBuilder, "Print"), m_commandBuilder(
-                    commandBuilder)
+                                 PrintPrepareResizeCommandBuilder *commandBuilder)
+                               : ResizeOptionsBaseDialog(parent, commandBuilder, "Print"),
+                                 m_commandBuilder(commandBuilder)
 {
-
 }
 
 PrintPrepareResizeOptionsDialog::~PrintPrepareResizeOptionsDialog()
 {
 }
 
-void PrintPrepareResizeOptionsDialog::readSettings(QString rcname, QString groupName)
+void PrintPrepareResizeOptionsDialog::readSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::readSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -495,12 +467,10 @@ void PrintPrepareResizeOptionsDialog::readSettings(QString rcname, QString group
     m_customSettingsCheckBox->setChecked(group.readEntry(OPTION_CUSTOM_SETTINGS_NAME, false));
 
     handleOk();
-
 }
 
-void PrintPrepareResizeOptionsDialog::saveSettings(QString rcname, QString groupName)
+void PrintPrepareResizeOptionsDialog::saveSettings(const QString& rcname, const QString& groupName)
 {
-
     ResizeOptionsBaseDialog::saveSettings(rcname, groupName);
 
     KConfig config(rcname);
@@ -513,106 +483,104 @@ void PrintPrepareResizeOptionsDialog::saveSettings(QString rcname, QString group
     group.writeEntry(OPTION_CUSTOM_DPI_NAME, m_customDpiInput->value());
     group.writeEntry(OPTION_STRETCH_NAME, m_stretchCheckBox->isChecked());
     group.writeEntry(OPTION_CUSTOM_SETTINGS_NAME, m_customSettingsCheckBox->isChecked());
-
 }
 
 void PrintPrepareResizeOptionsDialog::prependWidgets()
 {
 
-	m_customSettingsCheckBox = new QCheckBox(i18n("Use custom settings"), this);
-	m_customSettingsCheckBox->setWhatsThis(i18n("If this option is enabled, "
-										"all printing settings can be customized."));
-	addOptionWidget(m_customSettingsCheckBox);
+    m_customSettingsCheckBox = new QCheckBox(i18n("Use custom settings"), this);
+    m_customSettingsCheckBox->setWhatsThis(i18n("If this option is enabled, "
+                                        "all printing settings can be customized."));
+    addOptionWidget(m_customSettingsCheckBox);
 
-	connect(m_customSettingsCheckBox, SIGNAL(toggled(bool)),
-	        this, SLOT(slotCustomSettingsEnabled(bool)));
+    connect(m_customSettingsCheckBox, SIGNAL(toggled(bool)),
+            this, SLOT(slotCustomSettingsEnabled(bool)));
 
-	QGroupBox *sizeGroupBox = new QGroupBox(i18n("Printing Standard Settings"), this);
-	QGridLayout *sizeGroupBoxLayout = new QGridLayout(sizeGroupBox);
+    QGroupBox *sizeGroupBox         = new QGroupBox(i18n("Printing Standard Settings"), this);
+    QGridLayout *sizeGroupBoxLayout = new QGridLayout(sizeGroupBox);
 
-	m_paperSizeLabel = new QLabel(i18n("Paper size (cm):"), sizeGroupBox);
-	m_paperSizeComboBox = new KComboBox(sizeGroupBox);
-	m_paperSizeComboBox->insertItem("9x13");
-	m_paperSizeComboBox->insertItem("10x15");
-	m_paperSizeComboBox->insertItem("13x19");
-	m_paperSizeComboBox->insertItem("15x21");
-	m_paperSizeComboBox->insertItem("18x24");
-	m_paperSizeComboBox->insertItem("20x30");
-	m_paperSizeComboBox->insertItem("21x30");
-	m_paperSizeComboBox->insertItem("30x40");
-	m_paperSizeComboBox->insertItem("30x45");
-	m_paperSizeComboBox->insertItem("40x50");
-	m_paperSizeComboBox->insertItem("50x75");
-	m_paperSizeComboBox->setWhatsThis(i18n("The standard photographic paper sizes in centimeters."));
-	m_paperSizeLabel->setBuddy(m_paperSizeComboBox);
+    m_paperSizeLabel = new QLabel(i18n("Paper size (cm):"), sizeGroupBox);
+    m_paperSizeComboBox = new KComboBox(sizeGroupBox);
+    m_paperSizeComboBox->addItem("9x13");
+    m_paperSizeComboBox->addItem("10x15");
+    m_paperSizeComboBox->addItem("13x19");
+    m_paperSizeComboBox->addItem("15x21");
+    m_paperSizeComboBox->addItem("18x24");
+    m_paperSizeComboBox->addItem("20x30");
+    m_paperSizeComboBox->addItem("21x30");
+    m_paperSizeComboBox->addItem("30x40");
+    m_paperSizeComboBox->addItem("30x45");
+    m_paperSizeComboBox->addItem("40x50");
+    m_paperSizeComboBox->addItem("50x75");
+    m_paperSizeComboBox->setWhatsThis(i18n("The standard photographic paper sizes in centimeters."));
+    m_paperSizeLabel->setBuddy(m_paperSizeComboBox);
 
-	m_dpiLabel = new QLabel(i18n("Print resolution (dpi):"), sizeGroupBox);
-	m_dpiComboBox = new KComboBox(sizeGroupBox);
-	m_dpiComboBox->insertItem("75");
-	m_dpiComboBox->insertItem("150");
-	m_dpiComboBox->insertItem("300");
-	m_dpiComboBox->insertItem("600");
-	m_dpiComboBox->insertItem("1200");
-	m_dpiComboBox->insertItem("1400");
-	m_dpiComboBox->insertItem("2400");
-	m_dpiComboBox->setWhatsThis(i18n("The standard print resolutions in dots per inch."));
-	m_dpiLabel->setBuddy(m_dpiComboBox);
+    m_dpiLabel = new QLabel(i18n("Print resolution (dpi):"), sizeGroupBox);
+    m_dpiComboBox = new KComboBox(sizeGroupBox);
+    m_dpiComboBox->addItem("75");
+    m_dpiComboBox->addItem("150");
+    m_dpiComboBox->addItem("300");
+    m_dpiComboBox->addItem("600");
+    m_dpiComboBox->addItem("1200");
+    m_dpiComboBox->addItem("1400");
+    m_dpiComboBox->addItem("2400");
+    m_dpiComboBox->setWhatsThis(i18n("The standard print resolutions in dots per inch."));
+    m_dpiLabel->setBuddy(m_dpiComboBox);
 
-	m_stretchCheckBox = new QCheckBox(i18n("Stretch Image"), sizeGroupBox);
-	m_stretchCheckBox->setWhatsThis(i18n("If this is selected, the image will be stretched "
-	                "to fit the paper dimensions. Otherwise it will be centered "
-	                "on the canvas and the borders will get cropped "
-	                "to achieve the desired paper size."));
+    m_stretchCheckBox = new QCheckBox(i18n("Stretch Image"), sizeGroupBox);
+    m_stretchCheckBox->setWhatsThis(i18n("If this is selected, the image will be stretched "
+                    "to fit the paper dimensions. Otherwise it will be centered "
+                    "on the canvas and the borders will get cropped "
+                    "to achieve the desired paper size."));
 
-	sizeGroupBoxLayout->addWidget(m_paperSizeLabel,    0, 0, 1, 1);
-	sizeGroupBoxLayout->addWidget(m_paperSizeComboBox, 0, 1, 1, 1);
-	sizeGroupBoxLayout->addWidget(m_dpiLabel,          1, 0, 1, 1);
-	sizeGroupBoxLayout->addWidget(m_dpiComboBox,       1, 1, 1, 1);
-	sizeGroupBoxLayout->addWidget(m_stretchCheckBox,   2, 0, 1, -1);
-	sizeGroupBox->setLayout(sizeGroupBoxLayout);
+    sizeGroupBoxLayout->addWidget(m_paperSizeLabel,    0, 0, 1, 1);
+    sizeGroupBoxLayout->addWidget(m_paperSizeComboBox, 0, 1, 1, 1);
+    sizeGroupBoxLayout->addWidget(m_dpiLabel,          1, 0, 1, 1);
+    sizeGroupBoxLayout->addWidget(m_dpiComboBox,       1, 1, 1, 1);
+    sizeGroupBoxLayout->addWidget(m_stretchCheckBox,   2, 0, 1, -1);
+    sizeGroupBox->setLayout(sizeGroupBoxLayout);
 
-	addOptionWidget(sizeGroupBox);
+    addOptionWidget(sizeGroupBox);
 
-	// ----------------------------------------------------
+    // ----------------------------------------------------
 
-	QGroupBox *customGroupBox = new QGroupBox(i18n("Printing Custom Settings"), this);
-	QGridLayout *customGroupBoxLayout = new QGridLayout(customGroupBox);
+    QGroupBox *customGroupBox = new QGroupBox(i18n("Printing Custom Settings"), this);
+    QGridLayout *customGroupBoxLayout = new QGridLayout(customGroupBox);
 
-	m_customPaperWidthLabel = new QLabel(i18n("Paper width (cm):"), customGroupBox);
-	m_customPaperWidthInput = new KIntNumInput(10, customGroupBox);
-	m_customPaperWidthInput->setRange(1, 100);
-	m_customPaperWidthInput->setSliderEnabled(true);
-	m_customPaperWidthInput->setWhatsThis(i18n("The customized width of the photographic paper size "
-									 "in centimeters."));
-	m_customPaperWidthLabel->setBuddy(m_customPaperWidthInput);
+    m_customPaperWidthLabel = new QLabel(i18n("Paper width (cm):"), customGroupBox);
+    m_customPaperWidthInput = new KIntNumInput(10, customGroupBox);
+    m_customPaperWidthInput->setRange(1, 100);
+    m_customPaperWidthInput->setSliderEnabled(true);
+    m_customPaperWidthInput->setWhatsThis(i18n("The customized width of the photographic paper size "
+                                     "in centimeters."));
+    m_customPaperWidthLabel->setBuddy(m_customPaperWidthInput);
 
-	m_customPaperHeightLabel = new QLabel(i18n("Paper height (cm):"), customGroupBox);
-	m_customPaperHeightInput = new KIntNumInput(15, customGroupBox);
-	m_customPaperHeightInput->setRange(1, 100);
-	m_customPaperHeightInput->setSliderEnabled(true);
-	m_customPaperHeightInput->setWhatsThis(i18n("The customized height of the photographic paper size "
-									 "in centimeters."));
-	m_customPaperHeightLabel->setBuddy(m_customPaperHeightInput);
+    m_customPaperHeightLabel = new QLabel(i18n("Paper height (cm):"), customGroupBox);
+    m_customPaperHeightInput = new KIntNumInput(15, customGroupBox);
+    m_customPaperHeightInput->setRange(1, 100);
+    m_customPaperHeightInput->setSliderEnabled(true);
+    m_customPaperHeightInput->setWhatsThis(i18n("The customized height of the photographic paper size "
+                                     "in centimeters."));
+    m_customPaperHeightLabel->setBuddy(m_customPaperHeightInput);
 
-	m_customDpiLabel = new QLabel(i18n("Print resolution (dpi):"), customGroupBox);
-	m_customDpiInput = new KIntNumInput(300);
-	m_customDpiInput->setRange(10, 5000, 10);
-	m_customDpiInput->setSliderEnabled(true);
-	m_customDpiInput->setWhatsThis(i18n("The customized print resolution in dots per inch."));
-	m_customDpiLabel->setBuddy(m_customDpiInput);
+    m_customDpiLabel = new QLabel(i18n("Print resolution (dpi):"), customGroupBox);
+    m_customDpiInput = new KIntNumInput(300);
+    m_customDpiInput->setRange(10, 5000, 10);
+    m_customDpiInput->setSliderEnabled(true);
+    m_customDpiInput->setWhatsThis(i18n("The customized print resolution in dots per inch."));
+    m_customDpiLabel->setBuddy(m_customDpiInput);
 
-	customGroupBoxLayout->addWidget(m_customPaperWidthLabel,  0, 0, 1, -1);
-	customGroupBoxLayout->addWidget(m_customPaperWidthInput,  1, 0, 1, -1);
-	customGroupBoxLayout->addWidget(m_customPaperHeightLabel, 2, 0, 1, -1);
-	customGroupBoxLayout->addWidget(m_customPaperHeightInput, 3, 0, 1, -1);
-	customGroupBoxLayout->addWidget(m_customDpiLabel,         4, 0, 1, -1);
-	customGroupBoxLayout->addWidget(m_customDpiInput,         5, 1, 1, -1);
-	customGroupBox->setLayout(customGroupBoxLayout);
+    customGroupBoxLayout->addWidget(m_customPaperWidthLabel,  0, 0, 1, -1);
+    customGroupBoxLayout->addWidget(m_customPaperWidthInput,  1, 0, 1, -1);
+    customGroupBoxLayout->addWidget(m_customPaperHeightLabel, 2, 0, 1, -1);
+    customGroupBoxLayout->addWidget(m_customPaperHeightInput, 3, 0, 1, -1);
+    customGroupBoxLayout->addWidget(m_customDpiLabel,         4, 0, 1, -1);
+    customGroupBoxLayout->addWidget(m_customDpiInput,         5, 1, 1, -1);
+    customGroupBox->setLayout(customGroupBoxLayout);
 
-	addOptionWidget(customGroupBox);
+    addOptionWidget(customGroupBox);
 
-	slotCustomSettingsEnabled(m_customSettingsCheckBox->isChecked());
-
+    slotCustomSettingsEnabled(m_customSettingsCheckBox->isChecked());
 }
 
 void PrintPrepareResizeOptionsDialog::appendWidgets()
@@ -636,21 +604,23 @@ void PrintPrepareResizeOptionsDialog::slotCustomSettingsEnabled(bool enable)
 
 bool PrintPrepareResizeOptionsDialog::handleOk()
 {
-
-	if (m_customSettingsCheckBox->isChecked()) {
-		m_commandBuilder->setDpi(m_customDpiInput->value());
-		m_commandBuilder->setPaperWidth(m_customPaperWidthInput->value() * 10);
-		m_commandBuilder->setPaperHeight(m_customPaperHeightInput->value() * 10);
-	} else {
-		m_commandBuilder->setDpi(m_dpiComboBox->currentText().toInt());
-		QString paperSize = m_paperSizeComboBox->currentText();
-		m_commandBuilder->setPaperWidth(paperSize.right(paperSize.size()
+    if (m_customSettingsCheckBox->isChecked())
+    {
+        m_commandBuilder->setDpi(m_customDpiInput->value());
+        m_commandBuilder->setPaperWidth(m_customPaperWidthInput->value() * 10);
+        m_commandBuilder->setPaperHeight(m_customPaperHeightInput->value() * 10);
+    }
+    else
+    {
+        m_commandBuilder->setDpi(m_dpiComboBox->currentText().toInt());
+        QString paperSize = m_paperSizeComboBox->currentText();
+        m_commandBuilder->setPaperWidth(paperSize.right(paperSize.size()
                         - paperSize.indexOf('x') - 1).toInt() * 10);
         m_commandBuilder->setPaperHeight(
-				paperSize.left(paperSize.indexOf('x')).toInt() * 10);
-	}
+                paperSize.left(paperSize.indexOf('x')).toInt() * 10);
+    }
 
-	m_commandBuilder->setStretch(m_stretchCheckBox->isChecked());
+    m_commandBuilder->setStretch(m_stretchCheckBox->isChecked());
 
     return true;
 }
@@ -658,9 +628,9 @@ bool PrintPrepareResizeOptionsDialog::handleOk()
 QString PrintPrepareResizeOptionsDialog::getWhatsThis()
 {
     return i18n("<p><b>Prepare to print</b>: prepare the image for photographic printing. "
-				"The user can set the print resolution and the photographic paper size. "
-				"The target images will be adapted to the specified dimensions "
-				"(included the background size, margin size, and background color).</p>");
+                "The user can set the print resolution and the photographic paper size. "
+                "The target images will be adapted to the specified dimensions "
+                "(included the background size, margin size, and background color).</p>");
 }
 
-}
+} // namespace KIPIBatchProcessImagesPlugin

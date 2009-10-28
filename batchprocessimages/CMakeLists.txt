@@ -22,9 +22,9 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     borderoptionsdialog.cpp
     effectoptionsdialog.cpp
     recompressoptionsdialog.cpp
-
     resizeoptionsdialog.cpp
     convertoptionsdialog.cpp
+
     filteroptionsdialog.cpp
     coloroptionsdialog.cpp
 

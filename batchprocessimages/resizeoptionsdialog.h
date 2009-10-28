@@ -66,9 +66,9 @@ public:
      *                       this base class. This is used to have e.g. separate
      *                       quality settings per tool
      */
-    ResizeOptionsBaseDialog(QWidget *parent,
-                    ResizeCommandBuilder *commandBuilder,
-                    QString settingsPrefix);
+    ResizeOptionsBaseDialog(QWidget* parent,
+                            ResizeCommandBuilder* commandBuilder,
+                            const QString& settingsPrefix);
     virtual ~ResizeOptionsBaseDialog();
 
     /**
@@ -93,7 +93,7 @@ public:
      * @param rcname name of the rc file for KConfig
      * @param groupName name of the config group to use
      */
-    virtual void readSettings(QString rcname, QString groupName);
+    virtual void readSettings(const QString& rcname, const QString& groupName);
 
     /**
      * Store settings for this resize type. Subclasses must implement this
@@ -102,7 +102,7 @@ public:
      * @param rcname name of the rc file for KConfig
      * @param groupName name of the config group to use
      */
-    virtual void saveSettings(QString rcname, QString groupName);
+    virtual void saveSettings(const QString& rcname, const QString& groupName);
 
 protected:
 
@@ -141,6 +141,7 @@ protected:
     virtual bool handleOk() = 0;
 
 private Q_SLOTS:
+
     void slotOk();
 
 private:
@@ -148,20 +149,19 @@ private:
     const static QString OPTION_QUALITY_NAME;
     const static QString OPTION_FILTER_NAME;
 
-    QString m_settingsPrefix;
+    QString               m_settingsPrefix;
 
-    QString m_defaultFilterName;
+    QString               m_defaultFilterName;
 
     ResizeCommandBuilder *m_commandBuilder;
 
-    QWidget         *m_mainWidget;
-    QVBoxLayout     *m_mainWidgetLayout;
+    QWidget              *m_mainWidget;
+    QVBoxLayout          *m_mainWidgetLayout;
 
     // quality settings
-    QLabel          *m_resizeFilterLabel;
-    KComboBox       *m_resizeFilterComboBox;
-    KIntNumInput    *m_qualityInput;
-
+    QLabel               *m_resizeFilterLabel;
+    KComboBox            *m_resizeFilterComboBox;
+    KIntNumInput         *m_qualityInput;
 };
 
 /**
@@ -169,7 +169,7 @@ private:
  */
 class OneDimResizeOptionsDialog: public ResizeOptionsBaseDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     OneDimResizeOptionsDialog(QWidget *parent, OneDimResizeCommandBuilder *commandBuilder);
@@ -177,21 +177,22 @@ public:
 
     QString getWhatsThis();
 
-    virtual void readSettings(QString rcname, QString groupName);
-    virtual void saveSettings(QString rcname, QString groupName);
+    virtual void readSettings(const QString& rcname, const QString& groupName);
+    virtual void saveSettings(const QString& rcname, const QString& groupName);
 
 private:
-
-    const static QString OPTION_SIZE_NAME;
 
     void prependWidgets();
     void appendWidgets();
     bool handleOk();
 
+private:
+
+    const static QString OPTION_SIZE_NAME;
+
     OneDimResizeCommandBuilder *m_commandBuilder;
 
-    KIntNumInput *m_sizeInput;
-
+    KIntNumInput               *m_sizeInput;
 };
 
 /**
@@ -202,13 +203,20 @@ class TwoDimResizeOptionsDialog: public ResizeOptionsBaseDialog
 Q_OBJECT
 
 public:
+
     TwoDimResizeOptionsDialog(QWidget *parent, TwoDimResizeCommandBuilder *commandBuilder);
     virtual ~TwoDimResizeOptionsDialog();
 
     QString getWhatsThis();
 
-    virtual void readSettings(QString rcname, QString groupName);
-    virtual void saveSettings(QString rcname, QString groupName);
+    virtual void readSettings(const QString& rcname, const QString& groupName);
+    virtual void saveSettings(const QString& rcname, const QString& groupName);
+
+private:
+
+    void prependWidgets();
+    void appendWidgets();
+    bool handleOk();
 
 private:
 
@@ -217,18 +225,13 @@ private:
     const static QString OPTION_FILL_NAME;
     const static QString OPTION_FILL_COLOR_NAME;
 
-    void prependWidgets();
-    void appendWidgets();
-    bool handleOk();
-
     TwoDimResizeCommandBuilder *m_commandBuilder;
 
-    KIntNumInput *m_widthInput;
-    KIntNumInput *m_heightInput;
-    QCheckBox    *m_fillCheckBox;
-    QLabel       *m_fillColorLabel;
-    KColorButton *m_fillColorButton;
-
+    KIntNumInput               *m_widthInput;
+    KIntNumInput               *m_heightInput;
+    QCheckBox                  *m_fillCheckBox;
+    QLabel                     *m_fillColorLabel;
+    KColorButton               *m_fillColorButton;
 };
 
 /**
@@ -236,31 +239,33 @@ private:
  */
 class NonProportionalResizeOptionsDialog: public ResizeOptionsBaseDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     NonProportionalResizeOptionsDialog(QWidget *parent, NonProportionalResizeCommandBuilder *commandBuilder);
     virtual ~NonProportionalResizeOptionsDialog();
 
     QString getWhatsThis();
 
-    virtual void readSettings(QString rcname, QString groupName);
-    virtual void saveSettings(QString rcname, QString groupName);
+    virtual void readSettings(const QString& rcname, const QString& groupName);
+    virtual void saveSettings(const QString& rcname, const QString& groupName);
+
+private:
+
+    void prependWidgets();
+    void appendWidgets();
+    bool handleOk();
 
 private:
 
     const static QString OPTION_WIDTH_NAME;
     const static QString OPTION_HEIGHT_NAME;
 
-    void prependWidgets();
-    void appendWidgets();
-    bool handleOk();
-
     NonProportionalResizeCommandBuilder *m_commandBuilder;
 
-    KIntNumInput *m_widthInput;
-    KIntNumInput *m_heightInput;
-
+    KIntNumInput                        *m_widthInput;
+    KIntNumInput                        *m_heightInput;
 };
 
 /**
@@ -268,54 +273,57 @@ private:
  */
 class PrintPrepareResizeOptionsDialog: public ResizeOptionsBaseDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	PrintPrepareResizeOptionsDialog(QWidget *parent, PrintPrepareResizeCommandBuilder *commandBuilder);
+
+    PrintPrepareResizeOptionsDialog(QWidget *parent, PrintPrepareResizeCommandBuilder *commandBuilder);
     virtual ~PrintPrepareResizeOptionsDialog();
 
     QString getWhatsThis();
 
-    virtual void readSettings(QString rcname, QString groupName);
-    virtual void saveSettings(QString rcname, QString groupName);
+    virtual void readSettings(const QString& rcname, const QString& groupName);
+    virtual void saveSettings(const QString& rcname, const QString& groupName);
 
 private Q_SLOTS:
-	void slotCustomSettingsEnabled(bool enable);
+
+    void slotCustomSettingsEnabled(bool enable);
 
 private:
 
-	const static QString OPTION_PAPER_SIZE_NAME;
-	const static QString OPTION_DPI_NAME;
+    void prependWidgets();
+    void appendWidgets();
+    bool handleOk();
+
+private:
+
+    const static QString OPTION_PAPER_SIZE_NAME;
+    const static QString OPTION_DPI_NAME;
     const static QString OPTION_CUSTOM_PAPER_WIDTH_NAME;
     const static QString OPTION_CUSTOM_PAPTER_HEIGHT_NAME;
     const static QString OPTION_CUSTOM_DPI_NAME;
     const static QString OPTION_STRETCH_NAME;
     const static QString OPTION_CUSTOM_SETTINGS_NAME;
 
-    void prependWidgets();
-    void appendWidgets();
-    bool handleOk();
-
     PrintPrepareResizeCommandBuilder *m_commandBuilder;
 
-    QLabel          *m_paperSizeLabel;
-    QLabel          *m_dpiLabel;
-    QLabel          *m_customPaperWidthLabel;
-    QLabel          *m_customPaperHeightLabel;
-    QLabel          *m_customDpiLabel;
+    QLabel                           *m_paperSizeLabel;
+    QLabel                           *m_dpiLabel;
+    QLabel                           *m_customPaperWidthLabel;
+    QLabel                           *m_customPaperHeightLabel;
+    QLabel                           *m_customDpiLabel;
 
-    KIntNumInput    *m_customPaperWidthInput;
-	KIntNumInput    *m_customPaperHeightInput;
-	KIntNumInput    *m_customDpiInput;
+    KIntNumInput                     *m_customPaperWidthInput;
+    KIntNumInput                     *m_customPaperHeightInput;
+    KIntNumInput                     *m_customDpiInput;
 
-	KComboBox       *m_paperSizeComboBox;
-	KComboBox       *m_dpiComboBox;
+    KComboBox                        *m_paperSizeComboBox;
+    KComboBox                        *m_dpiComboBox;
 
-	QCheckBox       *m_customSettingsCheckBox;
-	QCheckBox       *m_stretchCheckBox;
-
+    QCheckBox                        *m_customSettingsCheckBox;
+    QCheckBox                        *m_stretchCheckBox;
 };
 
-}
+} // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* RESIZEOPTIONSBASEDIALOG_H_ */
