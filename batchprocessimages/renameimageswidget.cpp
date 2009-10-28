@@ -96,9 +96,9 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     m_byNameAction  = sortMenu->addAction(i18n("Sort by Name"));
     m_bySizeAction  = sortMenu->addAction(i18n("Sort by Size"));
     m_byDateAction  = sortMenu->addAction(i18n("Sort by Date"));
-    m_sortButton->setPopup(sortMenu);
+    m_sortButton->setMenu(sortMenu);
 
-    QToolTip::add(m_useExtraSymbolsCheck,
+    m_useExtraSymbolsCheck->setToolTip(
                   "[e] - extension (small one - after last '.')\n"
                   "[e-] - extension lower case\n"
                   "[e+] extension upper case\n"
@@ -281,7 +281,7 @@ void RenameImagesWidget::sortList(QAction* action)
         }
     }
 
-    m_listView->sortByColumn(BatchProcessImagesItem::columnOfSortKey(), Qt::Ascending);
+    m_listView->sortByColumn(BatchProcessImagesItem::columnOfSortKey(), Qt::AscendingOrder);
 
     updateListing();
 }
@@ -377,7 +377,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
     if (m_addFileDateCheck->isChecked())
     {
         QString format = m_formatDateEdit->text();
-        format = format.simplified();
+        format         = format.simplified();
         if (useExtraSymbols)
         {
             QRegExp rxI("\\[i(:(\\d+))?\\]");
@@ -386,12 +386,12 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
             for (int watchDog = 0; watchDog < 100; watchDog++)
             {
                 QString to;
-                int j, i = rxI.search(format);
+                int j, i = rxI.indexIn(format);
                 if (i != -1)
                 {
-                    j = rxI.matchedLength();
+                    j              = rxI.matchedLength();
                     QString digits = rxI.cap(2);
-                    int k = digits.isEmpty() ? 0 : digits.toInt();
+                    int k          = digits.isEmpty() ? 0 : digits.toInt();
                     if (k < 2)
                     {
                         to = QString::number(seqNumber);
@@ -406,28 +406,28 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
                 }
                 else
                 {
-                    if ((i = rxN.search(format)) == -1)
+                    if ((i = rxN.indexIn(format)) == -1)
                     {
                         break;
                     }
-                    j = rxN.matchedLength();
+                    j            = rxN.matchedLength();
                     QString from = rxN.cap(1);
-                    from = (from == "e") ? fi.extension(/*complete=*/false) :
-                           (from == "E") ? fi.extension(/*complete=*/true) :
-                           (from == "b") ? fi.baseName(/*complete=*/false) :
-                           (from == "B") ? fi.baseName(/*complete=*/true) :
+                    from = (from == "e") ? fi.suffix() :
+                           (from == "E") ? fi.completeSuffix() :
+                           (from == "b") ? fi.baseName() :
+                           (from == "B") ? fi.completeBaseName() :
                            (from == "n") ? fi.fileName() :
-                           (from == "a") ? fi.dir(/*absPath=*/true).dirName() :
+                           (from == "a") ? fi.absoluteDir().dirName() :
                            (from == "p") ? fi.absolutePath() :
                            "";
-                    int len = from.length();
-                    QString start = rxN.cap(4);
-                    QString end = rxN.cap(5);
-                    int k = start.isEmpty() ? 1 : start.toInt();
-                    int l = end.isEmpty() ? len : end.toInt();
-                    k = (k < -len) ? 0 : (k < 0) ? (len + k) : (k > 0) ? (k - 1) : 0;
-                    l = (l < -len) ? -1 : (l < 0) ? (len + l) : (l > 0) ? (l - 1) : 0;
-                    to = l < k ? "" : from.mid(k, l - k + 1);
+                    int len            = from.length();
+                    QString start      = rxN.cap(4);
+                    QString end        = rxN.cap(5);
+                    int k              = start.isEmpty() ? 1 : start.toInt();
+                    int l              = end.isEmpty() ? len : end.toInt();
+                    k                  = (k < -len) ? 0 : (k < 0) ? (len + k) : (k > 0) ? (k - 1) : 0;
+                    l                  = (l < -len) ? -1 : (l < 0) ? (len + l) : (l > 0) ? (l - 1) : 0;
+                    to                 = l < k ? "" : from.mid(k, l - k + 1);
                     QString changeCase = rxN.cap(2);
                     if (!changeCase.isEmpty())
                     {
@@ -442,7 +442,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
         format.replace("/", "!");
         format.replace("%[", "% [");
 
-        time_t time = info.time().toTime_t();
+        time_t time        = info.time().toTime_t();
         struct tm* time_tm = ::localtime(&time);
         char s[100];
         ::strftime(s, 100, QFile::encodeName(format), time_tm);
@@ -472,7 +472,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
         seq.sprintf(format.toLatin1(), seqNumber);
         newName += seq;
 
-        newName += QString::fromLatin1(".") + fi.extension();
+        newName += QString::fromLatin1(".") + fi.suffix();
     }
 
     return newName;
@@ -485,7 +485,8 @@ void RenameImagesWidget::slotGotPreview(const KFileItem&, const QPixmap& pix)
 
 void RenameImagesWidget::slotStart()
 {
-    m_timer->start(0, true);
+    m_timer->setSingleShot(true);
+    m_timer->start(0);
 
     QTreeWidgetItem* item = m_listView->topLevelItem(0);
     m_listView->setCurrentItem(item);
@@ -610,7 +611,8 @@ void RenameImagesWidget::slotNext()
     {
         m_listView->setCurrentItem(it);
         m_listView->scrollToItem(it);
-        m_timer->start(0, true);
+        m_timer->setSingleShot(true);
+        m_timer->start(0);
     }
 }
 
