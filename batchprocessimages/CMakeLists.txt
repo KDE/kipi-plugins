@@ -3,7 +3,6 @@ SUBDIRS(icons)
 FIND_PACKAGE(KDE4 REQUIRED)
 
 ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-ADD_DEFINITIONS(-DQT3_SUPPORT)
 
 INCLUDE(KDE4Defaults)
 INCLUDE(MacroLibrary)
@@ -28,6 +27,7 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     convertoptionsdialog.cpp
     effectimagesdialog.cpp
     effectoptionsdialog.cpp
+    filterimagesdialog.cpp
     filteroptionsdialog.cpp
     recompressimagesdialog.cpp
     recompressoptionsdialog.cpp
@@ -35,8 +35,6 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     renameimageswidget.cpp
     resizeimagesdialog.cpp
     resizeoptionsdialog.cpp
-
-    filterimagesdialog.cpp
     )
 
 KDE4_ADD_UI_FILES(kipiplugin_batchprocessimages_PART_SRCS

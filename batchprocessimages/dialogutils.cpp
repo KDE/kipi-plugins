@@ -32,17 +32,20 @@ namespace DialogUtils
 
 void setupHelpButton(KDialog* dialog, KAboutData* aboutData)
 {
-    QObject::disconnect(dialog, SIGNAL(helpClicked()), dialog, SLOT(slotHelp()));
+    QObject::disconnect(dialog, SIGNAL(helpClicked()),
+                        dialog, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(dialog, aboutData, false);
-    KMenu* menu = helpMenu->menu();
+    KMenu* menu         = helpMenu->menu();
     menu->removeAction(menu->actions().first());
 
     QAction* openHandbookAction = new QAction(i18n("Handbook"), dialog);
+
     QObject::connect(openHandbookAction, SIGNAL(triggered(bool)),
                      dialog, SLOT(slotHelp()));
+
     menu->insertAction(menu->actions().first(), openHandbookAction);
     dialog->button(KDialog::Help)->setMenu(menu);
 }
 
-} // namespace
+} // namespace DialogUtils

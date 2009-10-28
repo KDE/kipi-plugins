@@ -28,6 +28,6 @@ namespace DialogUtils
 
 void setupHelpButton(KDialog*, KAboutData*);
 
-} // namespace
+} // namespace DialogUtils
 
 #endif /* DIALOGUTILS_H */
