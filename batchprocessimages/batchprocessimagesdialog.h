@@ -225,7 +225,7 @@ private Q_SLOTS:
     // --------------------------------------------------------------------------------------------------------
     // Standards virtual slots for re-implementation
 
-    virtual void slotHelp() {};                // Called when 'Help' menu option is actived.
+    virtual void slotHelp() {};                // Called when 'Help' menu option is activated.
     virtual void slotOptionsClicked() {};      // Called when 'Options' button is clicked.
     virtual void slotTypeChanged(int) {};      // Called when the current type option is changed.
 
