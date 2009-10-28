@@ -77,55 +77,7 @@ public:
 
     BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
                              const QString& caption, QWidget *parent = 0);
-    ~BatchProcessImagesDialog();
-
-protected Q_SLOTS:
-
-    void slotProcessStop();
-
-private Q_SLOTS:
-
-    // --------------------------------------------------------------------------------------------------------
-    // Standards slots
-
-    void slotOk();
-
-    void slotProcessStart();
-    void slotReadyRead();
-    void slotFinished();
-
-    void slotPreview();
-    void slotPreviewFinished();
-    void slotPreviewReadyRead();
-    void slotPreviewStop();
-
-    void slotListDoubleClicked(QTreeWidgetItem *itemClicked);
-
-    void slotAddDropItems(const QStringList& filesPath);
-
-    void slotImageSelected(QTreeWidgetItem * item);
-    void slotGotPreview(const KFileItem&, const QPixmap& pixmap);
-
-    void slotImagesFilesButtonAdd();
-    void slotImagesFilesButtonRem();
-
-    // --------------------------------------------------------------------------------------------------------
-    // Standards virtuals slots for re-implementation
-
-    virtual void slotHelp() {};                            // Called when 'Help' menu option is actived.
-    virtual void slotOptionsClicked() {};                  // Called when 'Options' button is clicked.
-    virtual void slotTypeChanged(int) {};                  // Called when the current type option is changed.
-
-private:
-
-    void setupUi();
-    void enableWidgets(bool state);
-
-    // --------------------------------------------------------------------------------------------------------
-    // Standards widgets in the dialog
-    Ui::BatchProcessImagesDialog* const m_ui;
-
-protected:
+    ~BatchProcessImagesDialog();protected:
 
     virtual QSize sizeHint() const;
 
@@ -133,23 +85,22 @@ protected:
 
     // --------------------------------------------------------------------------------------------------------
     // Widgets used by inherited dialogs
-    QLabel                  *m_labelType;
-    KComboBox               *m_Type;
-    QPushButton             *m_optionsButton;
+    QLabel*                  m_labelType;
+    KComboBox*               m_Type;
+    QPushButton*             m_optionsButton;
 
-    BatchProcessImagesList  *m_listFiles;
-    ////
+    BatchProcessImagesList*  m_listFiles;
 
-    KConfig                 *m_config;
+    KConfig*                 m_config;
 
     int                      m_convertStatus;
     int                      m_progressStatus;
     int                      m_nbItem;
 
-    KProcess                *m_ProcessusProc;
-    KProcess                *m_PreviewProc;
+    KProcess*                m_ProcessusProc;
+    KProcess*                m_PreviewProc;
 
-    QTreeWidgetItemIterator *m_listFile2Process_iterator;
+    QTreeWidgetItemIterator* m_listFile2Process_iterator;
 
     QString                  m_ImagesFilesSort;
     QString                  m_newDir;
@@ -158,10 +109,10 @@ protected:
     QString                  m_previewOutput;
     KUrl::List               m_selectedImageFiles;
 
-    KIPI::Interface         *m_interface;
+    KIPI::Interface*         m_interface;
 
     // --------------------------------------------------------------------------------------------------------
-    // Standards fonctions
+    // Standards functions
 
     /**
     * Init common widgets from settings
@@ -190,7 +141,7 @@ protected:
      */
     void setOptionBoxTitle(const QString& title);
 
-    // Fonctions for ImageMAgick call implementations.
+    // Functions for ImageMAgick call implementations.
 
     void    processAborted(bool removeFlag = false); // Called when ImageMagick process is stopped by user.
     void    endPreview();                      // Called when preview process is done or stopped by user.
@@ -250,6 +201,52 @@ protected:
     {
         return (fileName);
     };
+
+protected Q_SLOTS:
+
+    void slotProcessStop();
+
+private Q_SLOTS:
+
+    // --------------------------------------------------------------------------------------------------------
+    // Standards slots
+
+    void slotOk();
+
+    void slotProcessStart();
+    void slotReadyRead();
+    void slotFinished();
+
+    void slotPreview();
+    void slotPreviewFinished();
+    void slotPreviewReadyRead();
+    void slotPreviewStop();
+
+    void slotListDoubleClicked(QTreeWidgetItem *itemClicked);
+
+    void slotAddDropItems(const QStringList& filesPath);
+
+    void slotImageSelected(QTreeWidgetItem * item);
+    void slotGotPreview(const KFileItem&, const QPixmap& pixmap);
+
+    void slotImagesFilesButtonAdd();
+    void slotImagesFilesButtonRem();
+
+    // --------------------------------------------------------------------------------------------------------
+    // Standards virtuals slots for re-implementation
+
+    virtual void slotHelp() {};                // Called when 'Help' menu option is actived.
+    virtual void slotOptionsClicked() {};      // Called when 'Options' button is clicked.
+    virtual void slotTypeChanged(int) {};      // Called when the current type option is changed.
+
+private:
+
+    void setupUi();
+    void enableWidgets(bool state);
+
+    // --------------------------------------------------------------------------------------------------------
+    // Standards widgets in the dialog
+    Ui::BatchProcessImagesDialog* const m_ui;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin
