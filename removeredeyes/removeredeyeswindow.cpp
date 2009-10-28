@@ -76,25 +76,46 @@ class RemoveRedEyesWindowPriv
 {
 public:
 
-    RemoveRedEyesWindowPriv()
-    {
-        interface               = 0;
-        about                   = 0;
-        progress                = 0;
-        tabWidget               = 0;
-        imageList               = 0;
-        thread                  = 0;
-        settingsTab             = 0;
-        previewWidget           = 0;
-        locator                 = 0;
-        locatorSettingsWidget   = 0;
-        saveMethod              = 0;
-        unprocessedSettingsBox  = 0;
-        storageSettingsBox      = 0;
-        totalLabel              = 0;
-        processedLabel          = 0;
-        failedLabel             = 0;
-    }
+    RemoveRedEyesWindowPriv() :
+        configGroupName("RemoveRedEyes Settings"),
+        configStorageModeEntry("Storage Mode"),
+        configExtraNameEntry("Extra Name"),
+        configAddkeywordEntry("Add keyword"),
+        configKeywordNameEntry("Keyword Name"),
+        configUnprocessedModeEntry("Unprocessed Mode"),
+        configLocatorTypeEntry("Locator Type"),
+
+        total(0),
+        processed(0),
+        failed(0),
+        totalLabel(0),
+        processedLabel(0),
+        failedLabel(0),
+        busy(false),
+        hasLocator(false),
+        runtype(WorkerThread::Testrun),
+        progress(0),
+        settingsTab(0),
+        locatorSettingsWidget(0),
+        tabWidget(0),
+        imageList(0),
+        previewWidget(0),
+        thread(0),
+        unprocessedSettingsBox(0),
+        storageSettingsBox(0),
+        locator(0),
+        saveMethod(0),
+        interface(0),
+        about(0)
+        {}
+
+    const QString             configGroupName;
+    const QString             configStorageModeEntry;
+    const QString             configExtraNameEntry;
+    const QString             configAddkeywordEntry;
+    const QString             configKeywordNameEntry;
+    const QString             configUnprocessedModeEntry;
+    const QString             configLocatorTypeEntry;
 
     int                       total;
     int                       processed;
@@ -143,8 +164,6 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     setModal(false);
 
     d->interface     = interface;
-    d->busy          = false;
-    d->hasLocator    = false;
     d->thread        = new WorkerThread(this,
                                         d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
     d->runtype       = WorkerThread::Testrun;
@@ -334,20 +353,21 @@ RemoveRedEyesWindow::~RemoveRedEyesWindow()
 void RemoveRedEyesWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group("RemoveRedEyes Settings");
+    KConfigGroup group = config.group(d->configGroupName);
 
-    int storageMode = group.readEntry("Storage Mode", (int)StorageSettingsBox::Subfolder);
+    int storageMode = group.readEntry(d->configStorageModeEntry, (int)StorageSettingsBox::Subfolder);
     d->storageSettingsBox->setStorageMode(storageMode);
-    d->storageSettingsBox->setExtra(group.readEntry("Extra Name", "corrected"));
-    d->storageSettingsBox->setAddKeyword(group.readEntry("Add keyword", false));
-    d->storageSettingsBox->setKeyword(group.readEntry("Keyword Name", "removed_redeyes"));
-    d->unprocessedSettingsBox->setHandleMode(group.readEntry("Unprocessed Mode", (int)UnprocessedSettingsBox::Ask));
+    d->storageSettingsBox->setExtra(group.readEntry(d->configExtraNameEntry,        "corrected"));
+    d->storageSettingsBox->setAddKeyword(group.readEntry(d->configAddkeywordEntry,  false));
+    d->storageSettingsBox->setKeyword(group.readEntry(d->configKeywordNameEntry,    "removed_redeyes"));
+    d->unprocessedSettingsBox->setHandleMode(group.readEntry(d->configUnprocessedModeEntry,
+            (int)UnprocessedSettingsBox::Ask));
 
     // set save method
     d->saveMethod = SaveMethodFactory::create(storageMode);
 
     // load locator
-    QString locatorType = group.readEntry("Locator Type", "HaarClassifierLocator");
+    QString locatorType = group.readEntry(d->configLocatorTypeEntry, "HaarClassifierLocator");
     loadLocator(locatorType);
 
     updateSettings();
@@ -358,15 +378,17 @@ void RemoveRedEyesWindow::writeSettings()
     updateSettings();
 
     KConfig config("kipirc");
-    KConfigGroup grp = config.group("RemoveRedEyes Settings");
+    KConfigGroup group = config.group(d->configGroupName);
 
     if (d->hasLocator)
-        grp.writeEntry("Locator Type", d->locator->objectName());
-    grp.writeEntry("Storage Mode",     d->settings.storageMode);
-    grp.writeEntry("Unprocessed Mode", d->settings.unprocessedMode);
-    grp.writeEntry("Extra Name",       d->settings.extraName);
-    grp.writeEntry("Add keyword",      d->settings.addKeyword);
-    grp.writeEntry("Keyword Name",     d->settings.keywordName);
+    {
+        group.writeEntry(d->configLocatorTypeEntry, d->locator->objectName());
+    }
+    group.writeEntry(d->configStorageModeEntry,     d->settings.storageMode);
+    group.writeEntry(d->configUnprocessedModeEntry, d->settings.unprocessedMode);
+    group.writeEntry(d->configExtraNameEntry,       d->settings.extraName);
+    group.writeEntry(d->configAddkeywordEntry,      d->settings.addKeyword);
+    group.writeEntry(d->configKeywordNameEntry,     d->settings.keywordName);
 
     KConfigGroup dialogGroup = config.group("RemoveRedEyes Dialog");
     saveDialogSize(dialogGroup);
