@@ -23,16 +23,6 @@
 #ifndef BATCHPROCESSIMAGESDIALOG_H
 #define BATCHPROCESSIMAGESDIALOG_H
 
-#define OVERWRITE_ASK    0
-#define OVERWRITE_RENAME 1
-#define OVERWRITE_SKIP   2
-#define OVERWRITE_OVER   3
-
-#define NO_PROCESS       0
-#define UNDER_PROCESS    1
-#define PROCESS_DONE     2
-#define STOP_PROCESS     3
-
 // Qt includes
 
 #include <QString>
@@ -233,7 +223,7 @@ private Q_SLOTS:
     void slotImagesFilesButtonRem();
 
     // --------------------------------------------------------------------------------------------------------
-    // Standards virtuals slots for re-implementation
+    // Standards virtual slots for re-implementation
 
     virtual void slotHelp() {};                // Called when 'Help' menu option is actived.
     virtual void slotOptionsClicked() {};      // Called when 'Options' button is clicked.

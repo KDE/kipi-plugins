@@ -71,6 +71,22 @@ extern "C"
 namespace KIPIBatchProcessImagesPlugin
 {
 
+enum OverWriteMode
+{
+    OVERWRITE_ASK = 0,
+    OVERWRITE_RENAME,
+    OVERWRITE_SKIP,
+    OVERWRITE_OVER
+};
+
+enum ProcessState
+{
+    NO_PROCESS = 0,
+    UNDER_PROCESS,
+    PROCESS_DONE,
+    STOP_PROCESS
+};
+
 BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
                                                    const QString& caption, QWidget *parent)
                         : KDialog(parent),
