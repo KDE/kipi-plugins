@@ -80,18 +80,18 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
 
     //---------------------------------------------
 
-    QWidget* box       = new QWidget(this);
-    setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
-
-    //---------------------------------------------
-
+    QWidget* box        = new QWidget(this);
+    QVBoxLayout *dvlay  = new QVBoxLayout(box);
     QLabel *labelHeader = new QLabel(Header, box);
-    dvlay->addWidget(labelHeader);
-
     m_debugView         = new QTextBrowser(box);
     m_debugView->append(Messages);
+
+    dvlay->addWidget(labelHeader);
     dvlay->addWidget(m_debugView);
+    dvlay->setSpacing(spacingHint());
+    dvlay->setMargin(spacingHint());
+
+    setMainWidget(box);
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotCopyToCliboard()));
