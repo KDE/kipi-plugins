@@ -39,13 +39,22 @@ class RecompressImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    RecompressImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    RecompressImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
     ~RecompressImagesDialog();
 
 private Q_SLOTS:
 
-    void slotOptionsClicked(void);
-    void slotHelp(void);
+    void slotOptionsClicked();
+    void slotHelp();
+
+protected:
+
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item, const QString& albumDest, bool previewMode);
+
+    void readSettings();
+    void saveSettings();
+
+    bool prepareStartProcess(BatchProcessImagesItem *item, const QString& albumDest);
 
 protected:
 
@@ -54,15 +63,6 @@ protected:
     bool    m_compressLossLess;
     QString m_TIFFCompressionAlgo;
     QString m_TGACompressionAlgo;
-
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                     const QString& albumDest, bool previewMode);
-
-    void readSettings(void);
-    void saveSettings(void);
-
-    bool prepareStartProcess(BatchProcessImagesItem *item,
-                             const QString& albumDest);
 
 private:
 
