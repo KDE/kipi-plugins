@@ -50,15 +50,18 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget(this);
+    QWidget* box       = new QWidget(this);
+    QVBoxLayout *dvlay = new QVBoxLayout(box);
+    dvlay->setSpacing(spacingHint());
+    dvlay->setMargin(spacingHint());
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
-    if (BorderType == 0) { // Solid
+    if (BorderType == 0)
+    { // Solid
         QLabel *m_label_solidBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_solidBorderWidth);
-        m_solidBorderWidth = new KIntNumInput(25, box);
+        m_solidBorderWidth               = new KIntNumInput(25, box);
         m_solidBorderWidth->setRange(1, 1000);
         m_solidBorderWidth->setSliderEnabled(true);
         m_solidBorderWidth->setWhatsThis(i18n("Select here the border width in pixels."));
@@ -67,16 +70,17 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
 
         QLabel *m_label_solidColor = new QLabel(i18n("Border color:"), box);
         dvlay->addWidget(m_label_solidColor);
-        QColor solidBorderColor = QColor(0, 0, 0);                           // Black per default.
-        m_button_solidBorderColor = new KColorButton(solidBorderColor, box);
+        QColor solidBorderColor    = QColor(0, 0, 0);                           // Black per default.
+        m_button_solidBorderColor  = new KColorButton(solidBorderColor, box);
         m_button_solidBorderColor->setWhatsThis(i18n("You can select here the border color."));
         dvlay->addWidget(m_button_solidBorderColor);
     }
 
-    if (BorderType == 1) { // Niepce
+    if (BorderType == 1)
+    { // Niepce
         QLabel *m_label_lineNiepceBorderWidth = new QLabel(i18n("Line border width:"), box);
         dvlay->addWidget(m_label_lineNiepceBorderWidth);
-        m_lineNiepceBorderWidth = new KIntNumInput(10, box);
+        m_lineNiepceBorderWidth               = new KIntNumInput(10, box);
         m_lineNiepceBorderWidth->setRange(1, 500);
         m_lineNiepceBorderWidth->setSliderEnabled(true);
         m_lineNiepceBorderWidth->setWhatsThis(i18n("Select here the line border width in pixels."));
@@ -85,14 +89,14 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
 
         QLabel *m_label_lineNiepceColor = new QLabel(i18n("Line border color:"), box);
         dvlay->addWidget(m_label_lineNiepceColor);
-        QColor lineNiepceBorderColor = QColor(0, 0, 0);                           // Black per default.
-        m_button_lineNiepceBorderColor = new KColorButton(lineNiepceBorderColor, box);
+        QColor lineNiepceBorderColor    = QColor(0, 0, 0);                           // Black per default.
+        m_button_lineNiepceBorderColor  = new KColorButton(lineNiepceBorderColor, box);
         m_button_lineNiepceBorderColor->setWhatsThis(i18n("You can select here the line border color."));
         dvlay->addWidget(m_button_lineNiepceBorderColor);
 
         QLabel *m_label_NiepceBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_NiepceBorderWidth);
-        m_NiepceBorderWidth = new KIntNumInput(100, box);
+        m_NiepceBorderWidth               = new KIntNumInput(100, box);
         m_NiepceBorderWidth->setRange(1, 500);
         m_NiepceBorderWidth->setSliderEnabled(true);
         m_NiepceBorderWidth->setWhatsThis(i18n("Select here the border width in pixels."));
@@ -101,16 +105,17 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
 
         QLabel *m_label_NiepceColor = new QLabel(i18n("Border color:"), box);
         dvlay->addWidget(m_label_NiepceColor);
-        QColor NiepceBorderColor = QColor(255, 255, 255);                           // White per default.
-        m_button_NiepceBorderColor = new KColorButton(NiepceBorderColor, box);
+        QColor NiepceBorderColor    = QColor(255, 255, 255);                           // White per default.
+        m_button_NiepceBorderColor  = new KColorButton(NiepceBorderColor, box);
         m_button_NiepceBorderColor->setWhatsThis(i18n("You can select here the border color."));
         dvlay->addWidget(m_button_NiepceBorderColor);
     }
 
-    if (BorderType == 2) { // Raise
+    if (BorderType == 2)
+    { // Raise
         QLabel *m_label_raiseBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_raiseBorderWidth);
-        m_raiseBorderWidth = new KIntNumInput(50, box);
+        m_raiseBorderWidth               = new KIntNumInput(50, box);
         m_raiseBorderWidth->setRange(1, 500);
         m_raiseBorderWidth->setSliderEnabled(true);
         m_raiseBorderWidth->setWhatsThis(i18n("Select here the border width in pixels."));
@@ -118,10 +123,11 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
         dvlay->addWidget(m_raiseBorderWidth);
     }
 
-    if (BorderType == 3) { // Frame
+    if (BorderType == 3)
+    { // Frame
         QLabel *m_label_frameBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_frameBorderWidth);
-        m_frameBorderWidth = new KIntNumInput(25, box);
+        m_frameBorderWidth               = new KIntNumInput(25, box);
         m_frameBorderWidth->setRange(0, 500);
         m_frameBorderWidth->setSliderEnabled(true);
         m_frameBorderWidth->setWhatsThis(i18n("Select here the border width in pixels."));
