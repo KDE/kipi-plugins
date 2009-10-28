@@ -56,7 +56,7 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-FilterImagesDialog::FilterImagesDialog(KUrl::List urlList, KIPI::Interface* interface, QWidget *parent)
+FilterImagesDialog::FilterImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
         : BatchProcessImagesDialog(urlList, interface, i18n("Batch Image Filtering"), parent)
 {
     // About data and help button.
@@ -86,16 +86,16 @@ FilterImagesDialog::FilterImagesDialog(KUrl::List urlList, KIPI::Interface* inte
 
     m_labelType->setText(i18n("Filter:"));
 
-    m_Type->insertItem(i18n("Add Noise"));       // 0
-    m_Type->insertItem(i18n("Antialias"));
-    m_Type->insertItem(i18n("Blur"));
-    m_Type->insertItem(i18n("Despeckle"));
-    m_Type->insertItem(i18n("Enhance"));         // 4
-    m_Type->insertItem(i18n("Median"));
-    m_Type->insertItem(i18n("Noise Reduction"));
-    m_Type->insertItem(i18n("Sharpen"));
-    m_Type->insertItem(i18n("Unsharp"));         // 8
-    m_Type->setCurrentText(i18n("Sharpen"));
+    m_Type->addItem(i18n("Add Noise"));       // 0
+    m_Type->addItem(i18n("Antialias"));
+    m_Type->addItem(i18n("Blur"));
+    m_Type->addItem(i18n("Despeckle"));
+    m_Type->addItem(i18n("Enhance"));         // 4
+    m_Type->addItem(i18n("Median"));
+    m_Type->addItem(i18n("Noise Reduction"));
+    m_Type->addItem(i18n("Sharpen"));
+    m_Type->addItem(i18n("Unsharp"));         // 8
+    m_Type->setCurrentItem(i18n("Sharpen"));
     QString whatsThis = i18n(
                             "<p>Select here the filter type for your images:</p>"
                             "<p>"
@@ -117,7 +117,7 @@ FilterImagesDialog::FilterImagesDialog(KUrl::List urlList, KIPI::Interface* inte
 
     readSettings();
     listImageFiles();
-    slotTypeChanged(m_Type->currentItem());
+    slotTypeChanged(m_Type->currentIndex());
 }
 
 FilterImagesDialog::~FilterImagesDialog()
@@ -125,7 +125,7 @@ FilterImagesDialog::~FilterImagesDialog()
     delete m_about;
 }
 
-void FilterImagesDialog::slotHelp(void)
+void FilterImagesDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("filterimages", "kipi-plugins");
 }
@@ -140,15 +140,19 @@ void FilterImagesDialog::slotTypeChanged(int type)
         m_optionsButton->setEnabled(true);
 }
 
-void FilterImagesDialog::slotOptionsClicked(void)
+void FilterImagesDialog::slotOptionsClicked()
 {
-    int Type = m_Type->currentItem();
+    int Type                           = m_Type->currentIndex();
     FilterOptionsDialog *optionsDialog = new FilterOptionsDialog(this, Type);
 
     if (Type == 0)  // Add noise
-        optionsDialog->m_noiseType->setCurrentText(m_noiseType);
+    {
+        int index = optionsDialog->m_noiseType->findText(m_noiseType);
+        if (index != -1) optionsDialog->m_noiseType->setCurrentIndex(index);
+    }
 
-    if (Type == 2) { // Blur
+    if (Type == 2)
+    { // Blur
         optionsDialog->m_blurRadius->setValue(m_blurRadius);
         optionsDialog->m_blurDeviation->setValue(m_blurDeviation);
     }
@@ -159,23 +163,27 @@ void FilterImagesDialog::slotOptionsClicked(void)
     if (Type == 6)  // Noise reduction
         optionsDialog->m_noiseRadius->setValue(m_noiseRadius);
 
-    if (Type == 7) { // Sharpen
+    if (Type == 7)
+    { // Sharpen
         optionsDialog->m_sharpenRadius->setValue(m_sharpenRadius);
         optionsDialog->m_sharpenDeviation->setValue(m_sharpenDeviation);
     }
 
-    if (Type == 8) { // Unsharp
+    if (Type == 8)
+    { // Unsharp
         optionsDialog->m_unsharpenRadius->setValue(m_unsharpenRadius);
         optionsDialog->m_unsharpenDeviation->setValue(m_unsharpenDeviation);
         optionsDialog->m_unsharpenPercent->setValue(m_unsharpenPercent);
         optionsDialog->m_unsharpenThreshold->setValue(m_unsharpenThreshold);
     }
 
-    if (optionsDialog->exec() == KMessageBox::Ok) {
+    if (optionsDialog->exec() == KMessageBox::Ok)
+    {
         if (Type == 0)  // Add noise
             m_noiseType = optionsDialog->m_noiseType->currentText();
 
-        if (Type == 2) { // Blur
+        if (Type == 2)
+        { // Blur
             m_blurRadius = optionsDialog->m_blurRadius->value();
             m_blurDeviation = optionsDialog->m_blurDeviation->value();
         }
@@ -191,7 +199,8 @@ void FilterImagesDialog::slotOptionsClicked(void)
             m_sharpenDeviation = optionsDialog->m_sharpenDeviation->value();
         }
 
-        if (Type == 8) { // Unsharp
+        if (Type == 8)
+        { // Unsharp
             m_unsharpenRadius = optionsDialog->m_unsharpenRadius->value();
             m_unsharpenDeviation = optionsDialog->m_unsharpenDeviation->value();
             m_unsharpenPercent = optionsDialog->m_unsharpenPercent->value();
@@ -202,7 +211,7 @@ void FilterImagesDialog::slotOptionsClicked(void)
     delete optionsDialog;
 }
 
-void FilterImagesDialog::readSettings(void)
+void FilterImagesDialog::readSettings()
 {
     // Read all settings from configuration file.
 
@@ -210,29 +219,29 @@ void FilterImagesDialog::readSettings(void)
     KConfigGroup group = config.group("FilterImages Settings");
 
     m_Type->setCurrentIndex(group.readEntry("FilterType", 7));      // Sharpen per default
-    m_noiseType = group.readEntry("NoiseType", i18n("Gaussian"));
-    m_blurRadius = group.readEntry("BlurRadius", 3);
-    m_blurDeviation = group.readEntry("BlurDeviation", 1);
-    m_medianRadius = group.readEntry("MedianRadius", 3);
-    m_noiseRadius = group.readEntry("NoiseRadius", 3);
-    m_sharpenRadius = group.readEntry("SharpenRadius", 3);
-    m_sharpenDeviation = group.readEntry("SharpenDeviation", 1);
-    m_unsharpenRadius = group.readEntry("UnsharpenRadius", 3);
+    m_noiseType          = group.readEntry("NoiseType", i18n("Gaussian"));
+    m_blurRadius         = group.readEntry("BlurRadius", 3);
+    m_blurDeviation      = group.readEntry("BlurDeviation", 1);
+    m_medianRadius       = group.readEntry("MedianRadius", 3);
+    m_noiseRadius        = group.readEntry("NoiseRadius", 3);
+    m_sharpenRadius      = group.readEntry("SharpenRadius", 3);
+    m_sharpenDeviation   = group.readEntry("SharpenDeviation", 1);
+    m_unsharpenRadius    = group.readEntry("UnsharpenRadius", 3);
     m_unsharpenDeviation = group.readEntry("UnsharpenDeviation", 1);
-    m_unsharpenPercent = group.readEntry("UnsharpenPercent", 3);
+    m_unsharpenPercent   = group.readEntry("UnsharpenPercent", 3);
     m_unsharpenThreshold = group.readEntry("UnsharpenThreshold", 1);
 
     readCommonSettings(group);
 }
 
-void FilterImagesDialog::saveSettings(void)
+void FilterImagesDialog::saveSettings()
 {
     // Write all settings in configuration file.
 
     KConfig config("kipirc");
     KConfigGroup group = config.group("FilterImages Settings");
 
-    group.writeEntry("FilterType", m_Type->currentItem());
+    group.writeEntry("FilterType", m_Type->currentIndex());
     group.writeEntry("NoiseType", m_noiseType);
     group.writeEntry("BlurRadius", m_blurRadius);
     group.writeEntry("BlurDeviation", m_blurDeviation);
@@ -253,12 +262,14 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 {
     *proc << "convert";
 
-    if (previewMode && smallPreview()) {    // Preview mode and small preview enabled !
+    if (previewMode && smallPreview())
+    {    // Preview mode and small preview enabled !
         *m_PreviewProc << "-crop" << "300x300+0+0";
         m_previewOutput.append(" -crop 300x300+0+0 ");
     }
 
-    if (m_Type->currentItem() == 0) { // Add noise
+    if (m_Type->currentIndex() == 0)
+    { // Add noise
         QString Temp;
         if (m_noiseType == i18n("Uniform")) Temp = "Uniform";
         if (m_noiseType == i18n("Gaussian")) Temp = "Gaussian";
@@ -269,11 +280,13 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << "+noise" << Temp;
     }
 
-    if (m_Type->currentItem() == 1) { // Antialias
+    if (m_Type->currentIndex() == 1)
+    { // Antialias
         *proc << "-antialias";
     }
 
-    if (m_Type->currentItem() == 2) { // Blur
+    if (m_Type->currentIndex() == 2)
+    { // Blur
         *proc << "-blur";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_blurRadius) + "x";
@@ -281,27 +294,32 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 3) { // Despeckle
+    if (m_Type->currentIndex() == 3)
+    { // Despeckle
         *proc << "-despeckle";
     }
 
-    if (m_Type->currentItem() == 4) { // Enhance
+    if (m_Type->currentIndex() == 4)
+    { // Enhance
         *proc << "-enhance";
     }
 
-    if (m_Type->currentItem() == 5) { // Median
+    if (m_Type->currentIndex() == 5)
+    { // Median
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_medianRadius);
         *proc << "-median" << Temp2;
     }
 
-    if (m_Type->currentItem() == 6) { // Noise reduction
+    if (m_Type->currentIndex() == 6)
+    { // Noise reduction
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_noiseRadius);
         *proc << "-noise" << Temp2;
     }
 
-    if (m_Type->currentItem() == 7) { // Sharpen
+    if (m_Type->currentIndex() == 7)
+    { // Sharpen
         *proc << "-sharpen";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_sharpenRadius) + "x";
@@ -309,7 +327,8 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentItem() == 8) { // Unsharp
+    if (m_Type->currentIndex() == 8)
+    { // Unsharp
         QString arg = QString("%1x%2+%3+%4")
             .arg(m_unsharpenRadius)
             .arg(m_unsharpenDeviation)
@@ -322,7 +341,8 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
     *proc << item->pathSrc();
 
-    if (!previewMode) {   // No preview mode !
+    if (!previewMode)
+    {   // No preview mode !
         *proc << albumDest + "/" + item->nameDest();
     }
 }

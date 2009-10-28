@@ -58,6 +58,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
     setButtons(Help | User1 | Close);
     setButtonText(User1, i18n("&Start"));
     setDefaultButton(Close);
+
     // About data and help button.
 
     m_about = new KIPIPlugins::KPAboutData(ki18n("Batch-rename images"),
@@ -74,18 +75,21 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images,
                        "aurelien dot gateau at free dot fr");
 
     DialogUtils::setupHelpButton(this, m_about);
+
     // gui
 
-    QWidget* box = new QWidget(this);
-    setMainWidget(box);
+    QWidget* box     = new QWidget(this);
     QVBoxLayout* lay = new QVBoxLayout(box);
-    m_widget = new RenameImagesWidget(box, interface, images);
+    m_widget         = new RenameImagesWidget(box, interface, images);
     lay->addWidget(m_widget);
+    setMainWidget(box);
 
     connect(this, SIGNAL(user1Clicked()),
             m_widget, SLOT(slotStart()));
+
     connect(this, SIGNAL(helpClicked()),
             this, SLOT(slotHelp()));
+
     adjustSize();
 }
 
