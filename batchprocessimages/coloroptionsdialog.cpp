@@ -51,24 +51,28 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
     setModal(true);
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
-    QWidget* box = new QWidget(this);
+    QWidget* box       = new QWidget(this);
+    QVBoxLayout *dvlay = new QVBoxLayout(box);
+    dvlay->setSpacing(spacingHint());
+    dvlay->setMargin(spacingHint());
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
-    if (ColorType == 1) { // Depth
+    if (ColorType == 1)
+    { // Depth
         QLabel *m_label_depthValue = new QLabel(i18n("Depth value:"), box);
         dvlay->addWidget(m_label_depthValue);
         m_depthValue = new KComboBox(box);
-        m_depthValue->insertItem("8");
-        m_depthValue->insertItem("16");
-        m_depthValue->insertItem("32");
+        m_depthValue->addItem("8");
+        m_depthValue->addItem("16");
+        m_depthValue->addItem("32");
         m_depthValue->setWhatsThis(i18n("Select here the image depth in bits."));
         m_label_depthValue->setBuddy(m_depthValue);
         dvlay->addWidget(m_depthValue);
     }
 
-    if (ColorType == 3) { // Fuzz
+    if (ColorType == 3)
+    { // Fuzz
         QLabel *m_label_fuzzDistance = new QLabel(i18n("Distance:"), box);
         dvlay->addWidget(m_label_fuzzDistance);
         m_fuzzDistance = new KIntNumInput(3, box);
@@ -80,7 +84,8 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
         dvlay->addWidget(m_fuzzDistance);
     }
 
-    if (ColorType == 9) { // Segment
+    if (ColorType == 9)
+    { // Segment
         QLabel *m_label_segmentCluster = new QLabel(i18n("Cluster threshold:"), box);
         dvlay->addWidget(m_label_segmentCluster);
         m_segmentCluster = new KIntNumInput(3, box);
