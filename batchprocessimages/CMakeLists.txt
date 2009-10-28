@@ -20,10 +20,10 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     pixmapview.cpp
     resizecommandbuilder.cpp
     borderoptionsdialog.cpp
+    convertoptionsdialog.cpp
     effectoptionsdialog.cpp
     recompressoptionsdialog.cpp
     resizeoptionsdialog.cpp
-    convertoptionsdialog.cpp
 
     filteroptionsdialog.cpp
     coloroptionsdialog.cpp
