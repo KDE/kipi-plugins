@@ -6,6 +6,7 @@ NEW FEATURES:
 KioImportExport : New plugin to import or export images via FTP, Samba, Fish (SSH) and many more using KIO slaves.
 AcquireImages   : Under windows, use Twain interface from libksane to factorize code.
 Shwup           : New plugin to export images to Shwup web service (http://www.shwup.com)
+General         : All plugind ported to Qt4/KDE4. Qt3 transition class support is now dropped.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -35,3 +36,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> DNGConverter       : 210710 : digiKam error when open a dng image for edit after conversion from NEF.
 025 ==> BatchProcessImages : 212116 : Rename images: sorting does not work [patch].
 026 ==> 
+ 
