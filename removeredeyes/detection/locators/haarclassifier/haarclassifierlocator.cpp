@@ -332,13 +332,13 @@ void HaarClassifierLocator::writeSettings()
 
     d->settings = d->settingsWidget->readSettingsForSave();
 
-    group.writeEntry("Simple Mode",               d->settings.simpleMode);
-    group.writeEntry("Minimum Blob Size",         d->settings.minBlobsize);
-    group.writeEntry("Minimum Roundness",         d->settings.minRoundness);
-    group.writeEntry("Neighbor Groups",           d->settings.neighborGroups);
-    group.writeEntry("Scaling Factor",            d->settings.scaleFactor);
-    group.writeEntry("Use Standard Classifier",   d->settings.useStandardClassifier);
-    group.writeEntry("Classifier",                d->settings.classifierFile);
+    group.writeEntry("Simple Mode",             d->settings.simpleMode);
+    group.writeEntry("Minimum Blob Size",       d->settings.minBlobsize);
+    group.writeEntry("Minimum Roundness",       d->settings.minRoundness);
+    group.writeEntry("Neighbor Groups",         d->settings.neighborGroups);
+    group.writeEntry("Scaling Factor",          d->settings.scaleFactor);
+    group.writeEntry("Use Standard Classifier", d->settings.useStandardClassifier);
+    group.writeEntry("Classifier",              d->settings.classifierFile);
 
     config.sync();
 }
