@@ -50,11 +50,14 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
     QWidget* box = new QWidget(this);
+    QVBoxLayout *dvlay = new QVBoxLayout(box);
+    dvlay->setSpacing(spacingHint());
+    dvlay->setMargin(spacingHint());
     setMainWidget(box);
-    QVBoxLayout *dvlay = new QVBoxLayout(box, 10, spacingHint());
     QString whatsThis;
 
-    if (EffectType == 0) { // Adaptive threshold
+    if (EffectType == 0)
+    { // Adaptive threshold
         QLabel *m_label_latWidth = new QLabel(i18n("Width:"), box);
         dvlay->addWidget(m_label_latWidth);
         m_latWidth = new KIntNumInput(50, box);
@@ -85,7 +88,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_latOffset);
     }
 
-    if (EffectType == 1) { // Charcoal
+    if (EffectType == 1)
+    { // Charcoal
         QLabel *m_label_charcoalRadius = new QLabel(i18n("Radius:"), box);
         dvlay->addWidget(m_label_charcoalRadius);
         m_charcoalRadius = new KIntNumInput(3, box);
@@ -107,7 +111,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_charcoalDeviation);
     }
 
-    if (EffectType == 2) { // Detect edges
+    if (EffectType == 2)
+    { // Detect edges
         QLabel *m_label_edgeRadius = new QLabel(i18n("Radius:"), box);
         dvlay->addWidget(m_label_edgeRadius);
         m_edgeRadius = new KIntNumInput(3, box);
@@ -121,7 +126,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_edgeRadius);
     }
 
-    if (EffectType == 3) { // Emboss
+    if (EffectType == 3)
+    { // Emboss
         QLabel *m_label_embossRadius = new QLabel(i18n("Radius:"), box);
         dvlay->addWidget(m_label_embossRadius);
         m_embossRadius = new KIntNumInput(3, box);
@@ -145,7 +151,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_embossDeviation);
     }
 
-    if (EffectType == 4) { // Implode
+    if (EffectType == 4)
+    { // Implode
         QLabel *m_label_implodeFactor = new QLabel(i18n("Factor:"), box);
         dvlay->addWidget(m_label_implodeFactor);
         m_implodeFactor = new KIntNumInput(1, box);
@@ -157,7 +164,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_implodeFactor);
     }
 
-    if (EffectType == 5) { // Paint
+    if (EffectType == 5)
+    { // Paint
         QLabel *m_label_paintRadius = new QLabel(i18n("Radius:"), box);
         dvlay->addWidget(m_label_paintRadius);
         m_paintRadius = new KIntNumInput(3, box);
@@ -171,7 +179,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_paintRadius);
     }
 
-    if (EffectType == 6) { // Shade light
+    if (EffectType == 6)
+    { // Shade light
         QLabel *m_label_shadeAzimuth = new QLabel(i18n("Azimuth:"), box);
         dvlay->addWidget(m_label_shadeAzimuth);
         m_shadeAzimuth = new KIntNumInput(40, box);
@@ -195,7 +204,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_shadeElevation);
     }
 
-    if (EffectType == 7) { // Solarize
+    if (EffectType == 7)
+    { // Solarize
         QLabel *m_label_solarizeFactor = new QLabel(i18n("Factor:"), box);
         dvlay->addWidget(m_label_solarizeFactor);
         m_solarizeFactor = new KIntNumInput(3, box);
@@ -207,7 +217,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_solarizeFactor);
     }
 
-    if (EffectType == 8) { // Spread
+    if (EffectType == 8)
+    { // Spread
         QLabel *m_label_spreadRadius = new QLabel(i18n("Radius:"), box);
         dvlay->addWidget(m_label_spreadRadius);
         m_spreadRadius = new KIntNumInput(10, box);
@@ -219,7 +230,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_spreadRadius);
     }
 
-    if (EffectType == 9) { // Swirl
+    if (EffectType == 9)
+    { // Swirl
         QLabel *m_label_swirlDegrees = new QLabel(i18n("Degrees:"), box);
         dvlay->addWidget(m_label_swirlDegrees);
         m_swirlDegrees = new KIntNumInput(45, box);
@@ -232,7 +244,8 @@ EffectOptionsDialog::EffectOptionsDialog(QWidget *parent, int EffectType)
         dvlay->addWidget(m_swirlDegrees);
     }
 
-    if (EffectType == 10) { // Wave
+    if (EffectType == 10)
+    { // Wave
         QLabel *m_label_waveAmplitude = new QLabel(i18n("Amplitude:"), box);
         dvlay->addWidget(m_label_waveAmplitude);
         m_waveAmplitude = new KIntNumInput(50, box);
