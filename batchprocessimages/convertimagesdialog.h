@@ -39,14 +39,27 @@ class ConvertImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ConvertImagesDialog(KUrl::List images, KIPI::Interface* interface, QWidget *parent = 0);
+    ConvertImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
     ~ConvertImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp(void);
-    void slotOptionsClicked(void);
+    void slotHelp();
+    void slotOptionsClicked();
     void slotTypeChanged(int type);
+
+protected:
+
+    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+                     const QString& albumDest, bool previewMode);
+
+    void processDone();
+
+    void readSettings();
+    void saveSettings();
+
+    QString oldFileName2NewFileName(const QString& fileName);
+    QString ImageFileExt(const QString& Ext);
 
 protected:
 
@@ -54,17 +67,6 @@ protected:
     bool                   m_compressLossLess;
     QString                m_TIFFCompressionAlgo;
     QString                m_TGACompressionAlgo;
-
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
-                     const QString& albumDest, bool previewMode);
-
-    void processDone();
-
-    void readSettings(void);
-    void saveSettings(void);
-
-    QString oldFileName2NewFileName(QString fileName);
-    QString ImageFileExt(QString Ext);
 
 private:
 

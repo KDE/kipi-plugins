@@ -246,7 +246,7 @@ protected:
 
     // Called by 'listImageFiles' for renamed if necessary the target image file name.
 
-    virtual QString oldFileName2NewFileName(QString fileName)
+    virtual QString oldFileName2NewFileName(const QString& fileName)
     {
         return (fileName);
     };
