@@ -17,9 +17,9 @@ TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       ${KDE4_KDEUI_LIBS}
                       ${GPOD_LIBRARIES}
                       ${GDK_LIBRARIES}
-                      kipiplugins
                       ${KIPI_LIBRARIES}
                       ${KDE4_KIO_LIBRARY}
+                      kipiplugins
                      )
 
 INSTALL(TARGETS kipiplugin_ipodexport DESTINATION ${PLUGIN_INSTALL_DIR})
