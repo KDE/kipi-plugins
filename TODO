@@ -1,1 +1,5 @@
-See plugins dir for details.
+See plugins to see specifics to do list by tools.
+
+Common todo list :
+
+Factoring Image Resize code and widget used in web expor tools to libkipiplugins (flick, PicasaWeb, smug, KIOExportImport, facebook, shwup, etc...)
