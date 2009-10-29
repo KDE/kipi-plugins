@@ -18,6 +18,7 @@ KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
                   croppage.ui
                   printoptionspage.ui
                  )
+
 KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
                     printimagesconfig.kcfgc
                    )
