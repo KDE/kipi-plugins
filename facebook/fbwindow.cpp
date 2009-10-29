@@ -657,7 +657,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
     if (m_widget->m_resizeChB->isChecked()
-        && (image.width() > maxDim || image.width() > maxDim))
+        && (image.width() > maxDim || image.height() > maxDim))
     {
         kDebug() << "Resizing to " << maxDim;
         image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
