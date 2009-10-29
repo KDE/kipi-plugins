@@ -35,5 +35,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> DNGConverter       : 203959 : Kipi-plugins fails to compile: plugin_dngconverter.o: file not recognized.
 024 ==> DNGConverter       : 210710 : digiKam error when open a dng image for edit after conversion from NEF.
 025 ==> BatchProcessImages : 212116 : Rename images: sorting does not work [patch].
-026 ==> 
+026 ==> AcquireImages      : 212295 : Kipi-plugins does not compile under Mac OS X.
+027 ==> 
  
