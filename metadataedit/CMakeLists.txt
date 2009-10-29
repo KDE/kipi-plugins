@@ -39,11 +39,11 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_metadataedit 
-                      ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KIPI_LIBRARIES} 
-                      ${KEXIV2_LIBRARIES} 
+TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
+                      ${KDE4_KPARTS_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KIPI_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
                       kipiplugins
                       kdcraw
                      )
