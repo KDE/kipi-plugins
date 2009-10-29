@@ -1,21 +1,10 @@
-Somewhat immediate implementation needed:
-
-* Implement *.ui files for all dialogs that don't want to be kdialog[base] based
+* add support of ImageList in dialog
 * Return more sensible error strings
 * Implement logging to backtrace problems
 * Abstract the communications layer 100%
 * Rename to websync
 * Add support for other web backends
-
-For the lazy times:
-
 * Polish the html code used to render the thumbnails, better
   fonts sizes and layout
-
-+--------------------------------------------------
-adjam's list
-
-1. substitute QListWidget with QTreeWidget in galleryWindow ui  (DONE)
-2. let work gallerytalker (DONE)
-3. let work galleryviewitem
-4. add widget to connect to gallery when launching galleryexport plugin
+* let work galleryviewitem
+* add widget to connect to gallery when launching galleryexport plugin
