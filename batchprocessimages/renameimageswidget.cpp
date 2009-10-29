@@ -171,6 +171,9 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     connect(m_progress, SIGNAL(canceled()),
             this, SLOT(slotAbort()));
 
+    connect(m_interface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
+            this, SLOT(slotGotPreview(const KUrl&, const QPixmap&)));
+
     kDebug() << m_urlList;
     for (KUrl::List::iterator it = m_urlList.begin();
             it != m_urlList.end(); ++it)
@@ -254,11 +257,7 @@ void RenameImagesWidget::slotImageSelected(QTreeWidgetItem* item)
     ui->m_pixLabel->clear();
 
     BatchProcessImagesItem* it = static_cast<BatchProcessImagesItem*>(item);
-    KIO::PreviewJob* thumbJob  = KIO::filePreview(KUrl(it->pathSrc()),
-                                 ui->m_pixLabel->height());
-
-    connect(thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-            this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
+    m_interface->thumbnail(KUrl(it->pathSrc()), ui->m_pixLabel->height());
 }
 
 void RenameImagesWidget::sortList(QAction* action)
@@ -482,9 +481,9 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
     return newName;
 }
 
-void RenameImagesWidget::slotGotPreview(const KFileItem&, const QPixmap& pix)
+void RenameImagesWidget::slotGotPreview(const KUrl&, const QPixmap& pixmap)
 {
-    ui->m_pixLabel->setPixmap(pix);
+    ui->m_pixLabel->setPixmap(pixmap);
 }
 
 void RenameImagesWidget::slotStart()

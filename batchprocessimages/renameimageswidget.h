@@ -76,7 +76,7 @@ private Q_SLOTS:
     void slotListViewDoubleClicked(QTreeWidgetItem*);
     void slotImageSelected(QTreeWidgetItem*);
     void slotOptionsChanged();
-    void slotGotPreview(const KFileItem&, const QPixmap&);
+    void slotGotPreview(const KUrl&, const QPixmap&);
 
     void slotAddImages();
     void slotRemoveImage();
