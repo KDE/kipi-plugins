@@ -2,23 +2,23 @@ SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 
-SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp 
-                                      previewwidget.cpp 
-                                      savesettingswidget.cpp 
-                                      rawdecodingiface.cpp 
-                                      actionthread.cpp 
-                                      batchdialog.cpp 
+SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp
+                                      previewwidget.cpp
+                                      savesettingswidget.cpp
+                                      rawdecodingiface.cpp
+                                      actionthread.cpp
+                                      batchdialog.cpp
                                       singledialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_rawconverter 
-                      ${KDE4_KPARTS_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${KIPI_LIBRARIES} 
-                      ${KEXIV2_LIBRARIES} 
-                      ${KDCRAW_LIBRARIES} 
+TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
+                      ${KDE4_KPARTS_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KIPI_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )
 
