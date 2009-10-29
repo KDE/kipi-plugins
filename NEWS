@@ -36,5 +36,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> DNGConverter       : 210710 : digiKam error when open a dng image for edit after conversion from NEF.
 025 ==> BatchProcessImages : 212116 : Rename images: sorting does not work [patch].
 026 ==> AcquireImages      : 212295 : Kipi-plugins does not compile under Mac OS X.
-027 ==> 
- 
+027 ==> BatchProcessImages : 212328 : Rename images: use host application to render thumbnails [patch].
+028 ==> 
