@@ -18,7 +18,7 @@ SET(libcvblobs_SRCS
     libcvblobs/BlobResult.cpp
     libcvblobs/BlobExtraction.cpp
    )
-   
+
 SET(locators_haarclassifier_SRCS
     detection/locators/haarclassifier/haarclassifierlocator.cpp
     detection/locators/haarclassifier/widgets/advancedsettings.cpp
@@ -76,6 +76,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                      )
 
 INSTALL(TARGETS kipiplugin_removeredeyes DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES commonwidgets/controlwidget.svg removeredeyes_classifier_eye_20_20.xml 
+
+INSTALL(FILES commonwidgets/controlwidget.svg removeredeyes_classifier_eye_20_20.xml
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
+
 INSTALL(FILES kipiplugin_removeredeyes.desktop DESTINATION ${SERVICES_INSTALL_DIR})
