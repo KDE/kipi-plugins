@@ -52,7 +52,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject *parent, bool updateFileTimeStamp=false);
+    ActionThread(QObject* parent, bool updateFileTimeStamp=false);
     ~ActionThread();
 
     void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
@@ -74,8 +74,8 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const ActionData& ad);
-    void finished(const ActionData& ad);
+    void starting(const KIPIRawConverterPlugin::ActionData& ad);
+    void finished(const KIPIRawConverterPlugin::ActionData& ad);
 
 protected:
 

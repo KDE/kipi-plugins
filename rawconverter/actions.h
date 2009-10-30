@@ -27,6 +27,7 @@
 
 #include <QString>
 #include <QImage>
+#include <QMetaType>
 
 // KDE includes
 
@@ -70,5 +71,7 @@ public:
 };
 
 }  // namespace KIPIRawConverterPlugin
+
+Q_DECLARE_METATYPE(KIPIRawConverterPlugin::ActionData)
 
 #endif /* ACTIONS_H */

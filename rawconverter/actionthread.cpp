@@ -82,10 +82,10 @@ public:
     KDcrawIface::RawDecodingSettings rawDecodingSettings;
 };
 
-ActionThread::ActionThread(QObject *parent, bool updateFileTimeStamp)
+ActionThread::ActionThread(QObject* parent, bool updateFileTimeStamp)
             : QThread(parent), d(new ActionThreadPriv)
 {
-    qRegisterMetaType<ActionData>("ActionData");
+    qRegisterMetaType<ActionData>();
     d->dcrawIface.setUpdateFileTimeStamp(updateFileTimeStamp);
 }
 
@@ -344,7 +344,6 @@ void ActionThread::run()
                                 << endl;
                 }
             }
-
         }
 
         delete t;

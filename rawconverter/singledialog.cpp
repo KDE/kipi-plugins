@@ -245,11 +245,11 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     connect(this, SIGNAL(user3Clicked()),
             this, SLOT(slotUser3()));
 
-    connect(d->thread, SIGNAL(starting(const ActionData&)),
-            this, SLOT(slotAction(const ActionData&)));
+    connect(d->thread, SIGNAL(starting(const KIPIRawConverterPlugin::ActionData&)),
+            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
-    connect(d->thread, SIGNAL(finished(const ActionData&)),
-            this, SLOT(slotAction(const ActionData&)));
+    connect(d->thread, SIGNAL(finished(const KIPIRawConverterPlugin::ActionData&)),
+            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
     // ---------------------------------------------------------------
 
@@ -650,7 +650,7 @@ void SingleDialog::slotConvertBlinkTimerDone()
     d->blinkConvertTimer->start(200);
 }
 
-void SingleDialog::slotAction(const ActionData& ad)
+void SingleDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
 {
     QString text;
 

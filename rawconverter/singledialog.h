@@ -94,7 +94,7 @@ private Q_SLOTS:
     void slotPreviewBlinkTimerDone();
     void slotConvertBlinkTimerDone();
 
-    void slotAction(const ActionData&);
+    void slotAction(const KIPIRawConverterPlugin::ActionData&);
 
     void slotThumbnail(const KUrl&, const QPixmap&);
 

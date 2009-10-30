@@ -277,11 +277,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(this, SIGNAL(user2Clicked()),
             this, SLOT(slotRemoveItems()));
 
-    connect(d->thread, SIGNAL(starting(const ActionData&)),
-            this, SLOT(slotAction(const ActionData&)));
+    connect(d->thread, SIGNAL(starting(const KIPIRawConverterPlugin::ActionData&)),
+            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
-    connect(d->thread, SIGNAL(finished(const ActionData&)),
-            this, SLOT(slotAction(const ActionData&)));
+    connect(d->thread, SIGNAL(finished(const KIPIRawConverterPlugin::ActionData&)),
+            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
@@ -778,7 +778,7 @@ void BatchDialog::processingFailed(const KUrl& /*url*/)
     d->currentConvertItem = 0;
 }
 
-void BatchDialog::slotAction(const ActionData& ad)
+void BatchDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)
 {
     QString text;
 

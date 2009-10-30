@@ -47,7 +47,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject *parent);
+    ActionThread(QObject* parent);
     ~ActionThread();
 
     void setBackupOriginalRawFile(bool b);
@@ -68,8 +68,8 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const ActionData& ad);
-    void finished(const ActionData& ad);
+    void starting(const KIPIDNGConverterPlugin::ActionData& ad);
+    void finished(const KIPIDNGConverterPlugin::ActionData& ad);
 
 protected:
 
