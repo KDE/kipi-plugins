@@ -7,6 +7,9 @@ KioImportExport : New plugin to import or export images via FTP, Samba, Fish (SS
 AcquireImages   : Under windows, use Twain interface from libksane to factorize code.
 Shwup           : New plugin to export images to Shwup web service (http://www.shwup.com)
 General         : All plugind ported to Qt4/KDE4. Qt3 transition class support is now dropped.
+PrintAssistant  : New templates management
+PrintAssistant  : Icon preview for photo size choice
+PrintAssistant  : Caption per photo management
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
