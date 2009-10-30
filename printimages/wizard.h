@@ -69,6 +69,7 @@ typedef struct _TPhotoSize
       virtual void slotHelp();
       virtual void pageChanged(KPageWidgetItem *, KPageWidgetItem *);
       virtual void captionChanged(const QString & text);
+      virtual void saveCaptionSettings();
       virtual void outputChanged ( const QString & );
       virtual void BtnPrintOrderUp_clicked();
       virtual void BtnPrintOrderDown_clicked();
@@ -93,26 +94,25 @@ typedef struct _TPhotoSize
       virtual void infopage_selectPrev();
       virtual void infopage_decreaseCopies();
       virtual void infopage_increaseCopies();
+      virtual void infopage_updateCaptions();
       //private slots:
       //	void updateFinishButton();
 
-    private:
-      enum AvailableCaptions {
-        NoCaptions = 0,
-        FileNames,
-        ExifDateTime,
-        Comment,
-        Free
-      };
+    private:     
 
       void initPhotoSizes(QSizeF pageSize);  // pageSize in mm
       void previewPhotos();
+      
       void infopage_enableButtons();
       void infopage_imagePreview();
-
+      void infopage_blockCaptionButtons(bool block=true);
+      void infopage_setCaptionButtons();
+      void infopage_readCaptionSettings();
+      
       // fn filename, pageSize in mm 
       void parseTemplateFile( QString fn, QSizeF pageSize );
-
+      
+      void updateCaption(TPhoto *);
       void updateCropFrame(TPhoto *, int);
       void setBtnCropEnabled();
       void removeGimpFiles();
@@ -125,7 +125,7 @@ typedef struct _TPhotoSize
       void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
 
       bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int captionType, int &current, bool useThumbnails = false);
+                        int &current, bool useThumbnails = false);
 
       void manageBtnPrintOrder();
       void manageBtnPreviewPage();

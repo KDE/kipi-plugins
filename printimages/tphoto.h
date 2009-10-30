@@ -25,11 +25,11 @@
 #define TPHOTO_H
 
 // Qt includes
-
 #include <QRect>
+#include <QFont>
+#include <QColor>
 
 // KDE includes
-
 #include <kurl.h>
 
 namespace KExiv2Iface
@@ -68,6 +68,39 @@ namespace KIPIPrintImagesPlugin
       }
   };
 
+  class CaptionInfo
+  {
+    public:
+      enum AvailableCaptions {
+        NoCaptions = 0,
+        FileNames,
+        ExifDateTime,
+        Comment,
+        Free
+      };
+      
+      AvailableCaptions m_caption_type;
+      QFont             m_caption_font;
+      QColor            m_caption_color;
+      int               m_caption_size;
+      QString           m_caption_text;
+
+      CaptionInfo() : m_caption_type(NoCaptions), m_caption_font("Sans Serif"), m_caption_color(Qt::yellow),
+                      m_caption_size(2),m_caption_text()
+      {}
+                         
+      CaptionInfo(const CaptionInfo& ci)
+      {
+        m_caption_type   = ci.m_caption_type;
+        m_caption_font   = ci.m_caption_font;
+        m_caption_color  = ci.m_caption_color;
+        m_caption_size   = ci.m_caption_size;
+        m_caption_text   = ci.m_caption_text;
+      }
+      
+      virtual ~CaptionInfo() {}
+  };
+
   class TPhoto
   {
 
@@ -95,6 +128,7 @@ namespace KIPIPrintImagesPlugin
       int copies;
       int rotation;
       AdditionalInfo *pAddInfo;
+      CaptionInfo    *pCaptionInfo;
 
       double scaleWidth(double unitToInches);
       double scaleHeight(double unitToInches);

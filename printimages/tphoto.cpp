@@ -43,7 +43,7 @@ namespace KIPIPrintImagesPlugin
 {
 
 TPhoto::TPhoto(int thumbnailSize)
-      : pAddInfo(NULL)
+      : pAddInfo(NULL), pCaptionInfo(NULL)
 {
     m_size = 0;
     cropRegion = QRect(-1, -1, -1, -1);
@@ -61,7 +61,7 @@ TPhoto::TPhoto(int thumbnailSize)
 }
 
 //to get old photo info
-TPhoto::TPhoto (const TPhoto& photo)
+TPhoto::TPhoto (const TPhoto& photo): pAddInfo(NULL), pCaptionInfo(NULL)
 {
   m_thumbnailSize = photo.m_thumbnailSize;
   cropRegion      = photo.cropRegion;
@@ -69,11 +69,16 @@ TPhoto::TPhoto (const TPhoto& photo)
   first           = photo.first;
   copies          = photo.copies;
   rotation        = photo.rotation;
-  pAddInfo        = NULL;
+  
   if (photo.pAddInfo)
   {
     pAddInfo = new AdditionalInfo(*photo.pAddInfo);
   }
+  if (photo.pCaptionInfo)
+  {
+    pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
+  }
+  
   m_size       = 0;
   m_exiv2Iface = NULL;
   m_thumbnail  = NULL;
@@ -85,6 +90,7 @@ TPhoto::~TPhoto()
     delete m_size;
     delete m_exiv2Iface;
     delete pAddInfo;
+    delete pCaptionInfo;
 }
 
 void TPhoto::loadCache()

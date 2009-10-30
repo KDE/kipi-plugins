@@ -9,7 +9,9 @@
 - cancel printing should terminate wizard               DONE
 - move number of copies to first page                   DONE
 - remove number of copies from second page              DONE
-- add caption per page
+- add caption per page                                  DONE
+- show caption into info page preview
+- set caption data when new photo is selected           DONE
 - add an attribute for desktop file
 - move Atckin's layout to p.a.
 - fix UIs                                               some
