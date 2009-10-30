@@ -54,18 +54,6 @@
 
   <paper name="A4" width="210.0" height="297.0" unit="mm" >
 
-    <!-- template name="21x29.7cm" dpi="0" autorotate="true">
-      <photo x="0" y="0" width="210.0" height="297.0" />
-    </template -->
-
-    <template name="Photoframe" dpi="0" autorotate="true">
-      <photo x="8"   y="8"   width="57"  height="44" />
-      <photo x="8"   y="66"  width="57"  height="44" />
-      <photo x="79"  y="8"   width="113" height="103" />
-      <photo x="8"   y="124" width="85"  height="93" />
-      <photo x="107" y="124" width="85"  height="93" />
-    </template>
-    
     <template name="8_photos_6x9cm" dpi="0" autorotate="true">
       <photo x="10"  y="10"  width="90" height="60" />
       <photo x="110" y="10"  width="90" height="60" />
@@ -97,6 +85,15 @@
       <photo x="30"  y="175" width="150" height="100" />
     </template>
     
+    <template name="2_photos_13x18cm" dpi="0" autorotate="true">
+      <photo x="15" y="15"  width="180" height="130" />
+      <photo x="15" y="152" width="180" height="130" />
+    </template>
+   
+    <template name="1_photo_20x25cm" dpi="0" autorotate="true">
+      <photo x="5" y="23" width="200" height="250" />
+    </template>
+    
     <template name="Album_10x15cm" dpi="0" autorotate="true">
       <photo x="30" y="35"  width="150" height="100" />
       <photo x="30" y="162" width="150" height="100" />
@@ -107,13 +104,12 @@
       <photo x="30" y="157" width="150" height="110" />
     </template>
         
-    <template name="2_photos_13x18cm" dpi="0" autorotate="true">
-      <photo x="15" y="15"  width="180" height="130" />
-      <photo x="15" y="152" width="180" height="130" />
-    </template>
-   
-    <template name="1_photo_20x25cm" dpi="0" autorotate="true">
-      <photo x="5" y="23" width="200" height="250" />
+    <template name="Photoframe" dpi="0" autorotate="true">
+      <photo x="8"   y="8"   width="57"  height="44" />
+      <photo x="8"   y="66"  width="57"  height="44" />
+      <photo x="79"  y="8"   width="113" height="103" />
+      <photo x="8"   y="124" width="85"  height="93" />
+      <photo x="107" y="124" width="85"  height="93" />
     </template>
     
   </paper>
