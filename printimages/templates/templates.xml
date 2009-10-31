@@ -125,6 +125,22 @@
       <photo x="0" y="0" width="105" height="148" />
     </template>
 
+    <template name="4_photos_4.5x5cm" dpi="0" autorotate="true">
+      <photo x="5"  y="5"  width="45" height="50" />
+      <photo x="55" y="5"  width="45" height="50" />
+      <photo x="5"  y="60" width="45" height="50" />
+      <photo x="55" y="60" width="45" height="50" />
+    </template>
+
+    <template name="6_photos_3.5x4cm" dpi="0" autorotate="true">
+      <photo x="10" y="3"  width="35" height="40" />
+      <photo x="55" y="3"  width="35" height="40" />
+      <photo x="10" y="45" width="35" height="40" />
+      <photo x="55" y="45" width="35" height="40" />
+      <photo x="10" y="87" width="35" height="40" />
+      <photo x="55" y="87" width="35" height="40" />
+    </template>
+
   </paper>
 
   <paper name="13x18cm" width="127" height="177.8" unit="mm" >
