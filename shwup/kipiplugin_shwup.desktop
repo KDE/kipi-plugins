@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Shwup Export
 Name[da]=Shwup-eksport
+Name[de]=Shwup-Export
 Name[en_GB]=Shwup Export
 Name[et]=Shwupi eksport
 Name[gl]=Exportador a Shwup
@@ -13,6 +14,7 @@ Name[uk]=Експорт до Shwup
 Name[x-test]=xxShwup Exportxx
 Comment=A tool to export images to a remote Shwup web service
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Shwup-webtjeneste
+Comment[de]=Ein Werkzeug, um Bilder auf einen entfernten Shwup-Web-Service zu exportieren.
 Comment[en_GB]=A tool to export images to a remote Shwup web service
 Comment[et]=Tööriist piltide eksportimiseks Shwupi veebiteenusesse
 Comment[gl]=Unha ferramenta para exportar imaxes a un servizo web Shwup remoto
