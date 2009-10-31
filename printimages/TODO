@@ -10,11 +10,11 @@
 - move number of copies to first page                   DONE
 - remove number of copies from second page              DONE
 - add caption per page                                  DONE
-- show caption into info page preview
+- show caption into info page preview                   DONE
 - set caption data when new photo is selected           DONE
 - add tool tips 
 - add an attribute for desktop file
-- move Atckin's layout to p.a.
+- add Atckin's layout to p.a.
 - fix UIs                                               some
 - first assistant page should be a choice between 
   "one photo per page"   aka p.i.
