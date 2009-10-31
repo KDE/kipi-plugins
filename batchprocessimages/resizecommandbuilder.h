@@ -46,7 +46,7 @@ namespace KIPIBatchProcessImagesPlugin
  */
 class ResizeCommandBuilder: public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -75,8 +75,7 @@ public:
      * @param item the image item for which the command line will be built
      * @param albumDest destination file system path
      */
-    virtual void buildCommand(KProcess *proc, BatchProcessImagesItem *item,
-                    const QString& albumDest) = 0;
+    virtual void buildCommand(KProcess *proc, BatchProcessImagesItem *item, const QString& albumDest) = 0;
 
     /**
      * Sets te desired image quality for compressed images.
@@ -91,7 +90,7 @@ public:
      * @param filterName an empty string uses the default filter, every other
      *                   string must be contained in getAllowedFilters
      */
-    void setFilterName(QString filterName);
+    void setFilterName(const QString& filterName);
 
 protected:
 
@@ -104,9 +103,9 @@ protected:
     void appendQualityAndFilter(KProcess *proc);
 
 private:
+
     unsigned int m_quality;
     QString m_filterName;
-
 };
 
 /**
@@ -117,19 +116,17 @@ class OneDimResizeCommandBuilder : public ResizeCommandBuilder
     Q_OBJECT
 
 public:
+
     OneDimResizeCommandBuilder(QObject *parent);
     virtual ~OneDimResizeCommandBuilder();
 
-    void buildCommand(KProcess *proc, BatchProcessImagesItem *item,
-                    const QString& albumDest);
+    void buildCommand(KProcess *proc, BatchProcessImagesItem *item, const QString& albumDest);
 
     void setSize(unsigned int size);
 
 private:
 
     unsigned int m_size;
-
-
 };
 
 /**
@@ -140,11 +137,11 @@ class TwoDimResizeCommandBuilder : public ResizeCommandBuilder
     Q_OBJECT
 
 public:
+
     TwoDimResizeCommandBuilder(QObject *parent);
     virtual ~TwoDimResizeCommandBuilder();
 
-    void buildCommand(KProcess *proc, BatchProcessImagesItem *item,
-                    const QString& albumDest);
+    void buildCommand(KProcess *proc, BatchProcessImagesItem *item, const QString& albumDest);
 
     void setWidth(unsigned int width);
     void setHeight(unsigned int height);
@@ -155,9 +152,8 @@ private:
 
     unsigned int m_width;
     unsigned int m_height;
-    bool m_fill;
-    QColor m_fillColor;
-
+    bool         m_fill;
+    QColor       m_fillColor;
 };
 
 /**
@@ -168,11 +164,11 @@ class NonProportionalResizeCommandBuilder : public ResizeCommandBuilder
     Q_OBJECT
 
 public:
+
     NonProportionalResizeCommandBuilder(QObject *parent);
     virtual ~NonProportionalResizeCommandBuilder();
 
-    void buildCommand(KProcess *proc, BatchProcessImagesItem *item,
-                    const QString& albumDest);
+    void buildCommand(KProcess *proc, BatchProcessImagesItem *item, const QString& albumDest);
 
     void setWidth(unsigned int width);
     void setHeight(unsigned int height);
@@ -181,7 +177,6 @@ private:
 
     unsigned int m_width;
     unsigned int m_height;
-
 };
 
 /**
@@ -195,8 +190,7 @@ public:
     PrintPrepareResizeCommandBuilder(QObject *parent);
     virtual ~PrintPrepareResizeCommandBuilder();
 
-    void buildCommand(KProcess *proc, BatchProcessImagesItem *item,
-                    const QString& albumDest);
+    void buildCommand(KProcess *proc, BatchProcessImagesItem *item, const QString& albumDest);
 
     /**
      * Sets the target paper width.
@@ -233,10 +227,9 @@ private:
     unsigned int m_paperWidth;
     unsigned int m_paperHeight;
     unsigned int m_dpi;
-    bool m_stretch;
-
+    bool         m_stretch;
 };
 
-}
+} // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* RESIZECOMMANDBUILDER_H_ */
