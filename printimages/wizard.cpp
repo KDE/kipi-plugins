@@ -452,7 +452,7 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
           }
         }
 
-        static const float round_value = 0.01;
+        static const float round_value = 0.01F;
         if (size == QSizeF(0,0) )
         {
           size = pageSize;
