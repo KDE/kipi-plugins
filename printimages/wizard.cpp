@@ -1127,7 +1127,7 @@ void Wizard::previewPhotos()
   p.setCompositionMode( QPainter::CompositionMode_Destination );
   p.fillRect ( img.rect(), Qt::transparent );
   p.setCompositionMode( QPainter::CompositionMode_SourceOver );
-  paintOnePage ( p, d->m_photos, s->layouts, current, true, true );
+  paintOnePage ( p, d->m_photos, s->layouts, current, d->mCropPage->m_disableCrop->isChecked(), true );
   p.end();
   d->mPhotoPage->BmpFirstPagePreview->setPixmap ( QPixmap::fromImage(img) );
   d->mPhotoPage->LblPreview->setText ( i18n ( "Page %1 of %2", d->m_currentPreviewPage + 1, getPageCount() ) );
