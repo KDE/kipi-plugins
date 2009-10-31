@@ -121,11 +121,11 @@ typedef struct _TPhotoSize
 
       int getPageCount();
       QRect *getLayout(int photoIndex);
-      QString captionFormatter(TPhoto *photo, const QString& format);
+      QString captionFormatter(TPhoto *photo);
       void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
 
       bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int &current, bool useThumbnails = false);
+                        int &current, bool cropDisabled, bool useThumbnails = false);
 
       void manageBtnPrintOrder();
       void manageBtnPreviewPage();

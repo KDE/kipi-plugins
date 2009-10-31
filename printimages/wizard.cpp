@@ -215,13 +215,13 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
   // caption information
   connect ( d->mInfoPage->m_captions, SIGNAL ( activated ( const QString & ) ),
             this, SLOT ( captionChanged ( const QString & ) ) );
-  connect ( d->mInfoPage->m_free_label , SIGNAL ( editingFinished () ),
+  connect ( d->mInfoPage->m_FreeCaptionFormat , SIGNAL ( editingFinished () ),
             this, SLOT ( infopage_updateCaptions ( ) ) );
   connect ( d->mInfoPage->m_sameCaption , SIGNAL ( stateChanged (int) ),
             this, SLOT ( infopage_updateCaptions ( ) ) );
   connect ( d->mInfoPage->m_font_name , SIGNAL (  currentFontChanged ( const QFont & ) ),
             this, SLOT ( infopage_updateCaptions ( ) ) );
-  connect ( d->mInfoPage->m_font_size , SIGNAL ( valueChanged() ),
+  connect ( d->mInfoPage->m_font_size , SIGNAL ( valueChanged(int) ),
             this, SLOT ( infopage_updateCaptions ( ) ) );
   connect ( d->mInfoPage->m_font_color , SIGNAL ( changed (const QColor &) ),
             this, SLOT ( infopage_updateCaptions ( ) ) );
@@ -805,9 +805,30 @@ void Wizard::printCaption ( QPainter &p, TPhoto* photo, int captionW, int captio
 
 
 
-QString Wizard::captionFormatter ( TPhoto *photo, const QString& format )
+QString Wizard::captionFormatter (TPhoto *photo)
 {
-  QString str=format;
+  if (!photo->pCaptionInfo)
+    return QString ();
+  
+  QString format;
+  switch ( photo->pCaptionInfo->m_caption_type )
+  {
+    case CaptionInfo::FileNames:
+      format = "%f";
+      break;
+    case CaptionInfo::ExifDateTime:
+      format = "%d";
+      break;
+    case CaptionInfo::Comment:
+      format = "%c";
+      break;
+    case CaptionInfo::Free:
+      format =  photo->pCaptionInfo->m_caption_text;
+      break;
+    default:
+      kWarning () << "UNKNOWN caption type " << photo->pCaptionInfo->m_caption_type; 
+      break;
+  }
 
   QFileInfo fi ( photo->filename.path() );
   QString resolution;
@@ -816,7 +837,7 @@ QString Wizard::captionFormatter ( TPhoto *photo, const QString& format )
   {
     resolution = QString ( "%1x%2" ).arg ( imageSize.width() ).arg ( imageSize.height() );
   }
-  str.replace ( "\\n", "\n" );
+  format.replace ( "\\n", "\n" );
 
   // %f filename
   // %c comment
@@ -826,20 +847,20 @@ QString Wizard::captionFormatter ( TPhoto *photo, const QString& format )
   // %r resolution
   // %a aperture
   // %l focal length
-  str.replace ( "%f", fi.fileName() );
-  str.replace ( "%c", photo->exiv2Iface()->getExifComment() );
-  str.replace ( "%d", KGlobal::locale()->formatDateTime ( photo->exiv2Iface()->getImageDateTime() ) );
-  str.replace ( "%t", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.ExposureTime" ) );
-  str.replace ( "%i", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.ISOSpeedRatings" ) );
-  str.replace ( "%r", resolution );
-  str.replace ( "%a", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.FNumber" ) );
-  str.replace ( "%l", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.FocalLength" ) );
+  format.replace ( "%f", fi.fileName() );
+  format.replace ( "%c", photo->exiv2Iface()->getExifComment() );
+  format.replace ( "%d", KGlobal::locale()->formatDateTime ( photo->exiv2Iface()->getImageDateTime() ) );
+  format.replace ( "%t", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.ExposureTime" ) );
+  format.replace ( "%i", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.ISOSpeedRatings" ) );
+  format.replace ( "%r", resolution );
+  format.replace ( "%a", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.FNumber" ) );
+  format.replace ( "%l", photo->exiv2Iface()->getExifTagString ( "Exif.Photo.FocalLength" ) );
 
-  return str;
+  return format;
 }
 
 bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                              int &current, bool useThumbnails )
+                              int &current, bool cropDisabled, bool useThumbnails )
 {
   Q_ASSERT ( layouts.count() > 1 );
 
@@ -925,7 +946,7 @@ bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> la
 
       img = img.copy ( QRect ( x1, y1, w, h ) );
     }
-    else if ( !d->mCropPage->m_disableCrop->isChecked() )
+    else if ( !cropDisabled)      //d->mCropPage->m_disableCrop->isChecked() )
     {
       img = img.copy ( photo->cropRegion );
     }
@@ -939,7 +960,7 @@ bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> la
     QRect newRectViewPort = QRect ( x1 + left, y1 + top, w, h );
     QSize imageSize = img.size();
     QPoint point;
-    if ( d->mCropPage->m_disableCrop->isChecked() )
+    if ( cropDisabled) //->mCropPage->m_disableCrop->isChecked() )
     {
       imageSize.scale ( newRectViewPort.size(), Qt::KeepAspectRatio );
       p.setViewport ( newRectViewPort.x(), newRectViewPort.y(), imageSize.width(), imageSize.height() );
@@ -961,26 +982,7 @@ bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> la
     {
       p.save();
       QString caption;
-      QString format;
-      switch ( photo->pCaptionInfo->m_caption_type )
-      {
-        case CaptionInfo::FileNames:
-          format = "%f";
-          break;
-        case CaptionInfo::ExifDateTime:
-          format = "%d";
-          break;
-        case CaptionInfo::Comment:
-          format = "%c";
-          break;
-        case CaptionInfo::Free:
-          format =  photo->pCaptionInfo->m_caption_text;
-          break;
-        default:
-          kWarning () << "UNKNOWN caption type " << photo->pCaptionInfo->m_caption_type; 
-          break;
-      }
-      caption = captionFormatter ( photo, format );
+      caption = captionFormatter(photo);
       kDebug() << "Caption " << caption ;
 
       // draw the text at (0,0), but we will translate and rotate the world
@@ -1125,7 +1127,7 @@ void Wizard::previewPhotos()
   p.setCompositionMode( QPainter::CompositionMode_Destination );
   p.fillRect ( img.rect(), Qt::transparent );
   p.setCompositionMode( QPainter::CompositionMode_SourceOver );
-  paintOnePage ( p, d->m_photos, s->layouts, current, true );
+  paintOnePage ( p, d->m_photos, s->layouts, current, true, true );
   p.end();
   d->mPhotoPage->BmpFirstPagePreview->setPixmap ( QPixmap::fromImage(img) );
   d->mPhotoPage->LblPreview->setText ( i18n ( "Page %1 of %2", d->m_currentPreviewPage + 1, getPageCount() ) );
@@ -1221,6 +1223,7 @@ void Wizard::infopage_setCaptionButtons()
 void Wizard::infopage_imageSelected()
 {
   d->mInfoPage->m_PictureInfo->blockSignals(true);
+  kDebug() << " current row now is " << d->mInfoPage->m_PictureInfo->currentRow();
   d->m_infopage_currentPhoto = d->mInfoPage->m_PictureInfo->currentRow();
   d->mInfoPage->m_PictureInfo->setCurrentCell(d->m_infopage_currentPhoto,0);
   d->mInfoPage->m_PictureInfo->blockSignals(false);
@@ -1233,12 +1236,42 @@ void Wizard::infopage_imageSelected()
 
 void Wizard::infopage_imagePreview()
 {
+  //Change cursor to waitCursor during transition
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+
   if (d->m_photos.size())
   {
-      // TODO draw caption
     TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
-    d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(), Qt::KeepAspectRatio)) );
+    //d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mInfoPage->m_preview->size(), Qt::KeepAspectRatio)) );
+    
+    //create a fake layout to get paintOnePage working
+    QImage img ( d->mInfoPage->m_preview->size(), QImage::Format_ARGB32_Premultiplied );
+    //QPixmap pixmap ( d->mInfoPage->m_preview->size() );
+    QList<QRect*> layouts;
+    QRect previewRect =  d->mInfoPage->m_preview->rect();
+    layouts.append(&previewRect);
+    layouts.append(&previewRect);
+    pPhoto->cropRegion.setRect ( -1, -1, -1, -1 );
+    pPhoto->rotation = 0;
+    int w = previewRect.width();
+    int h = previewRect.height();
+    d->mCropPage->cropFrame->init ( pPhoto, w, h, true, false );
+    QList<TPhoto*> photos;
+    photos.append(pPhoto);
+    int current = 0;
+    QPainter p;
+    
+    p.begin ( &img);
+    p.fillRect ( previewRect, Qt::transparent );
+    p.setCompositionMode( QPainter::CompositionMode_SourceOver );
+
+    paintOnePage (p, photos, layouts, current, true, false);
+    p.end();
+    d->mInfoPage->m_preview->setPixmap ( QPixmap::fromImage(img));
+    d->mInfoPage->m_preview->update();
   }
+  
+  QApplication::restoreOverrideCursor();
 }
 
 void Wizard::infopage_selectNext()
@@ -1354,7 +1387,6 @@ void  Wizard::pageChanged ( KPageWidgetItem *current, KPageWidgetItem *before )
     kDebug() << "(2) n. photos: " << d->m_photos.count();
 
     infopage_updateCaptions();    
-    infopage_imagePreview();
     infopage_enableButtons();
   }
   else if ( current->name() == i18n ( photoPageName ) )
@@ -1497,6 +1529,7 @@ void Wizard::infopage_updateCaptions()
     TPhoto *pPhoto = d->m_photos.at ( d->m_infopage_currentPhoto);
     updateCaption(pPhoto);
   }
+  infopage_imagePreview();
 }
 
 void Wizard::captionChanged ( const QString & text )
@@ -1805,7 +1838,7 @@ void Wizard::printPhotos ( QList<TPhoto*> photos, QList<QRect*> layouts, QPrinte
   bool printing = true;
   while ( printing )
   {
-    printing = paintOnePage ( p, photos, layouts, current );
+    printing = paintOnePage ( p, photos, layouts, current, d->mCropPage->m_disableCrop->isChecked() );
     if ( printing )
       printer.newPage();
     
@@ -1874,7 +1907,7 @@ QStringList Wizard::printPhotosToFile ( QList<TPhoto*> photos, QString &baseFile
       }
     }
 
-    printing = paintOnePage ( painter, photos, layouts->layouts, current );
+    printing = paintOnePage ( painter, photos, layouts->layouts, current, d->mCropPage->m_disableCrop->isChecked() );
 
     painter.end();
 
