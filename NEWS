@@ -10,6 +10,7 @@ General         : All plugins ported to Qt4/KDE4. Qt3 transition class support i
 PrintAssistant  : New templates management
 PrintAssistant  : Icon preview for photo size choice
 PrintAssistant  : Caption per photo management
+PrintAssistant  : Added new templates for passport photos (6 photos 3.5x4cm and 4 photos 4.5x5cm)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
