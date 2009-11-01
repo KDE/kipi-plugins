@@ -37,11 +37,18 @@ TARGET_LINK_LIBRARIES(kipiplugin_printimages
                      )
 
 INSTALL(TARGETS kipiplugin_printimages
-        DESTINATION ${PLUGIN_INSTALL_DIR})
+        DESTINATION ${PLUGIN_INSTALL_DIR}
+       )
 
 INSTALL(FILES kipiplugin_printimages.desktop
-        DESTINATION ${SERVICES_INSTALL_DIR})
+        DESTINATION ${SERVICES_INSTALL_DIR}
+       )
 
-install(DIRECTORY templates
+INSTALL(FILES TEMPLATE_HOWTO
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
-        PATTERN ".svn" EXCLUDE)
+       )
+
+INSTALL(DIRECTORY templates
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
+        PATTERN ".svn" EXCLUDE
+       )
