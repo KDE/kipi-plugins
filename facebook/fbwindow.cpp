@@ -223,6 +223,12 @@ void FbWindow::slotClose()
     done(Close);
 }
 
+void FbWindow::reactivate()
+{
+    m_widget->imagesList()->loadImagesFromCurrentSelection();
+    show();
+}
+
 void FbWindow::closeEvent(QCloseEvent *e)
 {
     if (!e) return;

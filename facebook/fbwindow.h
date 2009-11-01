@@ -76,6 +76,12 @@ public:
              bool import, QWidget *parent);
     ~FbWindow();
 
+    /**
+     * Use this method to (re-)activate the dialog after it has been created
+     * to display it. This also loads the currently selected images.
+     */
+    void reactivate();
+
 private Q_SLOTS:
 
     void slotBusy(bool val);
