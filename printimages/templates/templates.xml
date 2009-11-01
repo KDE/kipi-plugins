@@ -125,12 +125,20 @@
       <photo x="0" y="0" width="105" height="148" />
     </template>
 
+  </paper>
+
+  <paper name="passport-1" width="100" height="115" unit="mm" >
+
     <template name="4_photos_4.5x5cm" dpi="0" autorotate="true">
       <photo x="5"  y="5"  width="45" height="50" />
       <photo x="55" y="5"  width="45" height="50" />
       <photo x="5"  y="60" width="45" height="50" />
       <photo x="55" y="60" width="45" height="50" />
     </template>
+
+  </paper>
+
+  <paper name="passport-2" width="90" height="130" unit="mm" >
 
     <template name="6_photos_3.5x4cm" dpi="0" autorotate="true">
       <photo x="10" y="3"  width="35" height="40" />
