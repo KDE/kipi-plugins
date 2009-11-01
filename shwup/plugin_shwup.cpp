@@ -56,7 +56,7 @@ extern "C"
 K_PLUGIN_FACTORY( ShwupFactory, registerPlugin<Plugin_Shwup>(); )
 K_EXPORT_PLUGIN ( ShwupFactory("kipiplugin_shwup") )
 
-Plugin_Shwup::Plugin_Shwup(QObject *parent, const QVariantList &/*args*/)
+Plugin_Shwup::Plugin_Shwup(QObject *parent, const QVariantList& /*args*/)
             : KIPI::Plugin(ShwupFactory::componentData(), parent, "Shwup Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Shwup plugin loaded";
@@ -120,7 +120,7 @@ void Plugin_Shwup::slotExport()
         KWindowSystem::activateWindow(m_dlgExport->winId());
     }
 
-    m_dlgExport->show();
+    m_dlgExport->reactivate();
 }
 
 KIPI::Category Plugin_Shwup::category( KAction* action ) const

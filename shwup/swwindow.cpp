@@ -212,6 +212,12 @@ void SwWindow::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
+void SwWindow::reactivate()
+{
+    m_widget->imagesList()->loadImagesFromCurrentSelection();
+    show();
+}
+
 void SwWindow::readSettings()
 {
     KConfig config("kipirc");

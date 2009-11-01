@@ -73,8 +73,14 @@ class SwWindow : public KDialog
 
 public:
 
-    SwWindow(KIPI::Interface *interface, const QString &tmpFolder, QWidget *parent);
+    SwWindow(KIPI::Interface *interface, const QString& tmpFolder, QWidget *parent);
     ~SwWindow();
+
+    /**
+     * Use this method to (re-)activate the dialog after it has been created
+     * to display it. This also loads the currently selected images.
+     */
+    void reactivate();
 
 private Q_SLOTS:
 
@@ -83,10 +89,8 @@ private Q_SLOTS:
     void slotShwupInvalidCredentials();
 
     void slotRequestRestURLDone(int errCode, const QString& errMsg);
-    void slotListAlbumsDone(int errCode, const QString& errMsg,
-                            const QList <SwAlbum>& albumsList);
-    void slotCreateAlbumDone(int errCode, const QString& errMsg,
-                             const SwAlbum& album);
+    void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <SwAlbum>& albumsList);
+    void slotCreateAlbumDone(int errCode, const QString& errMsg, const SwAlbum& album);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
 
     void slotUserChangeRequest();
