@@ -29,7 +29,6 @@ extern "C"
 #include <glib-object.h> // g_type_init
 }
 
-
 // KDE includes
 
 #include <kactioncollection.h>
@@ -97,7 +96,7 @@ void Plugin_iPodExport::slotImageUpload()
     }
 
     m_dlgImageUpload->setMinimumWidth(650);
-    m_dlgImageUpload->show();
+    m_dlgImageUpload->reactivate();
 }
 
 KIPI::Category Plugin_iPodExport::category(KAction* action) const

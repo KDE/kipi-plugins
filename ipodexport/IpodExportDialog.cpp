@@ -85,7 +85,7 @@ UploadDialog::UploadDialog
 #if KIPI_PLUGIN
     KIPI::Interface* interface,
 #endif
-    const QString &caption, QWidget* /*parent*/ )
+    const QString& caption, QWidget* /*parent*/ )
     : KDialog(0)
     , m_transferring( false )
 #if KIPI_PLUGIN
@@ -238,19 +238,7 @@ UploadDialog::UploadDialog
     /// populate the ipod view with a list of albums etc
     refreshDevices();
 
-#if KIPI_PLUGIN
-    /// add selected items to the ImageList
-    KIPI::ImageCollection images = interface->currentSelection();
-
-    if( images.isValid() )
-    {
-        KUrl::List selected = images.images();
-        for( KUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
-        {
-            addUrlToList( (*it).path() );
-        }
-    }
-#endif
+    loadImagesFromCurrentSelection();
 
     enableButtons();
 
@@ -309,6 +297,29 @@ void UploadDialog::closeEvent(QCloseEvent *e)
 
     m_uploadList->clear();
     e->accept();
+}
+
+void UploadDialog::reactivate()
+{
+    loadImagesFromCurrentSelection();
+    show();
+}
+
+void UploadDialog::loadImagesFromCurrentSelection()
+{
+#if KIPI_PLUGIN
+    /// add selected items to the ImageList
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
+    if( images.isValid() )
+    {
+        KUrl::List selected = images.images();
+        for( KUrl::List::Iterator it = selected.begin(); it != selected.end(); ++it )
+        {
+            addUrlToList( (*it).path() );
+        }
+    }
+#endif
 }
 
 void UploadDialog::getIpodAlbums()

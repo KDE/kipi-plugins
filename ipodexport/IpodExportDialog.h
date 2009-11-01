@@ -90,6 +90,13 @@ public:
     QString mountPoint() { return m_mountPoint; }
     QString deviceNode() { return m_deviceNode; }
 
+    /**
+     * Use this method to (re-)activate the dialog after it has been created
+     * to display it. This also loads the currently selected images.
+     */
+    void reactivate();
+    void loadImagesFromCurrentSelection();
+
 private Q_SLOTS:
 
     void startTransfer();
