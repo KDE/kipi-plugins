@@ -40,52 +40,53 @@ ENDIF(WIN32)
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
 SET(libxmp_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPFiles.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPIterator.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPMeta.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPUtils.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP.incl_cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Const.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Environment.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_BuildInfo.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Version.h
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPFiles.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPIterator.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPMeta.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/TXMPUtils.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Const.h
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Environment.h
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_BuildInfo.h
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP_Version.h
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/XMP.incl_cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPFiles.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPIterator.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPMeta.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPUtils.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMP_Common.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPIterator.incl_cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPUtils.incl_cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPFiles.incl_cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPMeta.incl_cpp
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/EndianUtils.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeInlines.incl_cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XMLParserAdapter.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/ExpatAdapter.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/EndianUtils.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XMLParserAdapter.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/ExpatAdapter.hpp
+#    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeInlines.incl_cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XML_Node.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPCore_Impl.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPCore_Impl.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPIterator.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPCore_Impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/WXMPIterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/WXMPMeta.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/WXMPUtils.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPIterator.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPIterator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-GetSet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-Parse.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta-Serialize.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPMeta.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils-FileInfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/XMPUtils.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/ExpatAdapter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/ParseRDF.cpp
+
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPFiles.incl_cpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPIterator.incl_cpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPMeta.incl_cpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/TXMPUtils.incl_cpp
+
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPFiles.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPIterator.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPMeta.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMPUtils.hpp
+#     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/include/client-glue/WXMP_Common.hpp
    )
 
 # =======================================================
