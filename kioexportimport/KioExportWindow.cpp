@@ -143,6 +143,12 @@ void KioExportWindow::slotClose()
     done(Close);
 }
 
+void KioExportWindow::reactivate()
+{
+    m_exportWidget->imagesList()->loadImagesFromCurrentSelection();
+    show();
+}
+
 void KioExportWindow::restoreSettings()
 {
     kDebug() << "restoring settings";
