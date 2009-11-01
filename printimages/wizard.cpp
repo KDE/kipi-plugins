@@ -619,7 +619,7 @@ void Wizard::initPhotoSizes ( QSizeF pageSize )
 
   // get template-files and parse them
   const QStringList list=KGlobal::dirs()->findAllResources("data", 
-        "kipiplugin_printimages/templates/*templates*.xml");
+        "kipiplugin_printimages/templates/*.xml");
 
   foreach( const QString& fn, list) {
       kDebug() << " LIST: " <<  fn;

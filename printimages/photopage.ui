@@ -14,7 +14,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="TextLabel2_10">
      <property name="text">
-      <string>Photo sizes:</string>
+      <string>Layouts:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
