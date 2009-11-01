@@ -75,6 +75,12 @@ public:
                bool import, QWidget *parent);
     ~SmugWindow();
 
+    /**
+     * Use this method to (re-)activate the dialog after it has been created
+     * to display it. This also loads the currently selected images.
+     */
+    void reactivate();
+
 protected:
 
     void closeEvent(QCloseEvent*);
@@ -85,20 +91,13 @@ private Q_SLOTS:
     void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
-    void slotGetPhotoDone(int errCode, const QString& errMsg,
-                          const QByteArray& photoData);
-    void slotCreateAlbumDone(int errCode, const QString& errMsg,
-                             int newAlbumID);
-    void slotListAlbumsDone(int errCode, const QString& errMsg,
-                            const QList <SmugAlbum>& albumsList);
-    void slotListPhotosDone(int errCode, const QString& errMsg,
-                            const QList <SmugPhoto>& photosList);
-    void slotListAlbumTmplDone(int errCode, const QString& errMsg,
-                               const QList <SmugAlbumTmpl>& albumTList);
-    void slotListCategoriesDone(int errCode, const QString& errMsg,
-                                const QList <SmugCategory>& categoriesList);
-    void slotListSubCategoriesDone(int errCode, const QString& errMsg,
-                                   const QList <SmugCategory>& categoriesList);
+    void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
+    void slotCreateAlbumDone(int errCode, const QString& errMsg, int newAlbumID);
+    void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <SmugAlbum>& albumsList);
+    void slotListPhotosDone(int errCode, const QString& errMsg, const QList <SmugPhoto>& photosList);
+    void slotListAlbumTmplDone(int errCode, const QString& errMsg, const QList <SmugAlbumTmpl>& albumTList);
+    void slotListCategoriesDone(int errCode, const QString& errMsg, const QList <SmugCategory>& categoriesList);
+    void slotListSubCategoriesDone(int errCode, const QString& errMsg, const QList <SmugCategory>& categoriesList);
 
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();

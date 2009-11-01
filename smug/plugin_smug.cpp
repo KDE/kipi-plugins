@@ -133,7 +133,7 @@ void Plugin_Smug::slotExport()
         KWindowSystem::activateWindow(m_dlgExport->winId());
     }
 
-    m_dlgExport->show();
+    m_dlgExport->reactivate();
 }
 
 void Plugin_Smug::slotImport()

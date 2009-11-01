@@ -273,6 +273,12 @@ void SmugWindow::slotClose()
     done(Close);
 }
 
+void SmugWindow::reactivate()
+{
+    m_widget->imagesList()->loadImagesFromCurrentSelection();
+    show();
+}
+
 void SmugWindow::authenticate(const QString& email, const QString& password)
 {
     m_authProgressDlg = new KProgressDialog(this, i18n("Authentication"));
