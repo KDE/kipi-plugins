@@ -103,14 +103,20 @@ SimpleSettings::SimpleSettings(QWidget* parent)
     lStd->setWordWrap(true);
     lFast->setWordWrap(true);
 
-    // FIXME: since I'm not able to use the same object twice
-    //        in a layout, I need two labels here
+    // --------------------------------------------------------
+
+    const QString colorStyle("background: #999999;");
+    const unsigned int maxColorLabelHeight = 1;
+
     QLabel* coloredSpacer = new QLabel;
-    coloredSpacer->setStyleSheet("background: #999999;");
-    coloredSpacer->setMaximumHeight(1);
+    coloredSpacer->setStyleSheet(colorStyle);
+    coloredSpacer->setMaximumHeight(maxColorLabelHeight);
+
     QLabel* coloredSpacer2 = new QLabel;
-    coloredSpacer2->setStyleSheet("background: #999999;");
-    coloredSpacer2->setMaximumHeight(1);
+    coloredSpacer2->setStyleSheet(colorStyle);
+    coloredSpacer2->setMaximumHeight(maxColorLabelHeight);
+
+    // --------------------------------------------------------
 
     QGridLayout* sliderLayout = new QGridLayout;
     sliderLayout->addWidget(d->settingsSlider,  0, 0, 5, 1);
