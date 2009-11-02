@@ -458,7 +458,7 @@ void PicasawebWindow::slotUploadImages()
 
         QStringList allTags;
 
-        QStringList tagsFromDialog = m_tagsLineEdit->text().split(" ", QString::SkipEmptyParts);
+        QStringList tagsFromDialog = m_tagsLineEdit->text().split(' ', QString::SkipEmptyParts);
         QStringList::Iterator itTags;
 
         // Tags from the interface

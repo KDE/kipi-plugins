@@ -47,7 +47,7 @@ class SVEDialog : public KPageDialog
 
 public:
 
-    SVEDialog(KIPI::Interface *interface, QWidget *parent=0);
+    explicit SVEDialog(KIPI::Interface *interface, QWidget *parent=0);
     ~SVEDialog();
 
     SimpleViewerSettingsContainer settings() const;

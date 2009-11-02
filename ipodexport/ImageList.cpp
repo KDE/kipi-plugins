@@ -66,7 +66,7 @@ void ImageList::droppedImagesItems(const QList<QUrl>& urls)
 {
     QStringList filesPath;
 
-    foreach( QUrl u, urls ) 
+    foreach( const QUrl &u, urls )
     {
         filesPath << u.path();
     }

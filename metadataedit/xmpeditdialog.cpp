@@ -361,7 +361,7 @@ void XMPEditDialog::slotItemChanged()
                .arg(d->urls.indexOf(*(d->currItem))+1)
                .arg(d->urls.count())
                .arg(i18n("Edit XMP Metadata")) +
-               (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString::null));
+               (d->isReadOnly ? QString(" - ") + i18n("(read only)") : QString()));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
     enableButton(Apply, false);

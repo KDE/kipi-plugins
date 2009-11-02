@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "layouttree.h"
+
 // C++ includes.
 
 #include <cmath>
@@ -27,10 +29,6 @@
 // Qt includes.
 
 #include <QList>
-
-// Local includes.
-
-#include "layouttree.h"
 
 namespace KIPIPrintImagesPlugin
 {

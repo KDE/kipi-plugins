@@ -79,10 +79,10 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
                           i18n("Everyone"), FB_EVERYONE);
 
     QFormLayout* albumBoxLayout = new QFormLayout;
-    albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
-    albumBoxLayout->addRow(i18n("Location:"), m_locEdt);
-    albumBoxLayout->addRow(i18n("Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18n("Privacy:"), m_privacyCoB);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Title:"), m_titleEdt);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Location:"), m_locEdt);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Privacy:"), m_privacyCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());

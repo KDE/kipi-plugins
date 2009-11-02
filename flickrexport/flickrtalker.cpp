@@ -392,7 +392,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
 
     for (QStringList::const_iterator it = argList.constBegin(); it != argList.constEnd(); ++it)
     {
-        QStringList str = (*it).split("=", QString::SkipEmptyParts);
+        QStringList str = (*it).split('=', QString::SkipEmptyParts);
         url.addQueryItem(str[0], str[1]);
     }
 
@@ -497,7 +497,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
      * it doesn't exist yet on Flickr and needs to be created. Note that it's
      * not necessary to subsequently add the photo to the photo set, as this
      * is done in the set creation call to Flickr. */
-    if (photoSetId.startsWith("UNDEFINED_"))
+    if (photoSetId.startsWith(QLatin1String("UNDEFINED_")))
     {
         createPhotoSet("", m_selectedPhotoSet.title, m_selectedPhotoSet.description, photoId);
     }

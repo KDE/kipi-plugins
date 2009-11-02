@@ -54,7 +54,7 @@ class KIPIPLUGINS_EXPORT BatchProgressDialog : public KDialog
 
 public:
 
-    BatchProgressDialog(QWidget *parent=0, const QString &caption=QString());
+    explicit BatchProgressDialog(QWidget *parent=0, const QString &caption=QString());
     ~BatchProgressDialog();
 
     void addedAction(const QString &text, int type);

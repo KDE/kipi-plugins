@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "atkinspagelayout.h"
+
 // C++ includes.
 
 #include <cmath>
@@ -31,7 +33,6 @@
 // Local includes.
 
 #include "layouttree.h"
-#include "atkinspagelayout.h"
 
 namespace KIPIPrintImagesPlugin
 {

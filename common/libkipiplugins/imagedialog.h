@@ -53,7 +53,7 @@ class KIPIPLUGINS_EXPORT ImageDialogPreview : public KPreviewWidgetBase
 
 public:
 
-    ImageDialogPreview(KIPI::Interface *iface, QWidget *parent=0);
+    explicit ImageDialogPreview(KIPI::Interface *iface, QWidget *parent=0);
     ~ImageDialogPreview();
 
     QSize sizeHint() const;

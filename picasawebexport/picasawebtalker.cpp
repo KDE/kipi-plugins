@@ -113,7 +113,7 @@ QString PicasawebTalker::getApiSig(QString secret, QStringList headers)
     for ( QStringList::ConstIterator it = headers.constBegin(); it != headers.constEnd(); ++it )
     {
 	QString str = (*it);
-        QStringList strList = str.split("=");
+        QStringList strList = str.split('=');
         compressed.append(strList[0].trimmed()+strList[1].trimmed());
     }
 

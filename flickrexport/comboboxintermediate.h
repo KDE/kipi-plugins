@@ -27,8 +27,8 @@
  *
  * ============================================================ */
 
-#ifndef COMBOBOXINTERMEDIATE_H_
-#define COMBOBOXINTERMEDIATE_H_
+#ifndef COMBOBOXINTERMEDIATE_H
+#define COMBOBOXINTERMEDIATE_H
 
 // Qt includes
 
@@ -50,7 +50,7 @@ public:
 
     /* Initialize the combobox with a parent and a string to indicate the
      * intermediate state. */
-    ComboBoxIntermediate(QWidget * = 0, QString = i18n("Various"));
+    explicit ComboBoxIntermediate(QWidget * = 0, QString = i18n("Various"));
     ~ComboBoxIntermediate();
 
     /* Set the state of the combobox to intermediate. The intermediate state is
@@ -69,4 +69,4 @@ private:
 
 } // namespace KIPIFlickrExportPlugin
 
-#endif /* COMBOBOXINTERMEDIATE_H_ */
+#endif /* COMBOBOXINTERMEDIATE_H */

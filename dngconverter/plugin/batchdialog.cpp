@@ -535,7 +535,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
                 case KIO::R_CANCEL:
                 case KIO::R_SKIP:
                 {
-                    destFile = QString();
+                    destFile.clear();
                     d->currentConvertItem->setProgressIcon(SmallIcon("dialog-cancel"));
                     break;
                 }

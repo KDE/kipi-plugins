@@ -111,9 +111,9 @@ void GPSMapWidget::extractGPSPositionfromStatusbar(const QString& txt)
     QString status = txt;
     status.remove(0, 5);
     status.truncate(status.length()-1);
-    d->latitude  = status.section(",", 0, 0);
-    d->longitude = status.section(",", 1, 1);
-    d->altitude = status.section(",", 2, 2);
+    d->latitude  = status.section(',', 0, 0);
+    d->longitude = status.section(',', 1, 1);
+    d->altitude = status.section(',', 2, 2);
     d->longitude.remove(0, 5);
     d->altitude.remove(0, 5);
     emit signalNewGPSLocationFromMap(d->latitude, d->longitude, d->altitude);

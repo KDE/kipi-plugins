@@ -86,18 +86,18 @@ EffectImagesDialog::EffectImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
     m_labelType->setText(i18n("Effect:"));
 
-    m_Type->addItem(i18n("Adaptive Threshold"));  // 0
-    m_Type->addItem(i18n("Charcoal"));
-    m_Type->addItem(i18n("Detect Edges"));
-    m_Type->addItem(i18n("Emboss"));
-    m_Type->addItem(i18n("Implode"));
-    m_Type->addItem(i18n("Paint"));               // 5
-    m_Type->addItem(i18n("Shade Light"));
-    m_Type->addItem(i18n("Solarize"));
-    m_Type->addItem(i18n("Spread"));
-    m_Type->addItem(i18n("Swirl"));
-    m_Type->addItem(i18n("Wave"));                // 10
-    m_Type->setCurrentItem(i18n("Emboss"));
+    m_Type->addItem(i18nc("image effect", "Adaptive Threshold"));  // 0
+    m_Type->addItem(i18nc("image effect", "Charcoal"));
+    m_Type->addItem(i18nc("image effect", "Detect Edges"));
+    m_Type->addItem(i18nc("image effect", "Emboss"));
+    m_Type->addItem(i18nc("image effect", "Implode"));
+    m_Type->addItem(i18nc("image effect", "Paint"));               // 5
+    m_Type->addItem(i18nc("image effect", "Shade Light"));
+    m_Type->addItem(i18nc("image effect", "Solarize"));
+    m_Type->addItem(i18nc("image effect", "Spread"));
+    m_Type->addItem(i18nc("image effect", "Swirl"));
+    m_Type->addItem(i18nc("image effect", "Wave"));                // 10
+    m_Type->setCurrentItem(i18nc("image effect", "Emboss"));
     QString whatsThis = i18n(
                             "<p>Select here the effect type for your images:</p>"
                             "<p>"
@@ -323,8 +323,8 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Adaptive threshold
         *proc << "-lat";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_latWidth) + "x";
-        Temp2.append(Temp.setNum(m_latHeight) + "+");
+        Temp2 = Temp.setNum(m_latWidth) + 'x';
+        Temp2.append(Temp.setNum(m_latHeight) + '+');
         Temp2.append(Temp.setNum(m_latOffset));
         *proc << Temp2;
     }
@@ -333,7 +333,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Charcoal
         *proc << "-charcoal";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_charcoalRadius) + "x";
+        Temp2 = Temp.setNum(m_charcoalRadius) + 'x';
         Temp2.append(Temp.setNum(m_charcoalDeviation));
         *proc << Temp2;
     }
@@ -350,7 +350,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Emboss
         *proc << "-emboss";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_embossRadius) + "x";
+        Temp2 = Temp.setNum(m_embossRadius) + 'x';
         Temp2.append(Temp.setNum(m_embossDeviation));
         *proc << Temp2;
     }
@@ -375,7 +375,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Shade light
         *proc << "-shade";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_shadeAzimuth) + "x";
+        Temp2 = Temp.setNum(m_shadeAzimuth) + 'x';
         Temp2.append(Temp.setNum(m_shadeElevation));
         *proc << Temp2;
     }
@@ -408,7 +408,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Wave
         *proc << "-wave";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_waveAmplitude) + "x";
+        Temp2 = Temp.setNum(m_waveAmplitude) + 'x';
         Temp2.append(Temp.setNum(m_waveLenght));
         *proc << Temp2;
     }
@@ -418,7 +418,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     *proc << item->pathSrc();
 
     if (!previewMode) {   // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
     }
 }
 

@@ -69,7 +69,7 @@ private:
 
 		KConfigSkeleton::ItemEnum* item=dynamic_cast<KConfigSkeleton::ItemEnum*>(tmp);
 		Q_ASSERT(item);
-		if (!item) return QString::null;
+		if (!item) return QString();
 
 		int value=item->value();
 		QList<KConfigSkeleton::ItemEnum::Choice> lst=item->choices();
@@ -81,7 +81,7 @@ private:
 				return (*it).name;
 			}
 		}
-		return QString::null;
+		return QString();
 	}
 };
 

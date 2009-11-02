@@ -745,7 +745,7 @@ void Wizard::printCaption ( QPainter &p, TPhoto* photo, int captionW, int captio
     //TODO fix length, maybe useless
     int captionLineLocalLength = 40;
 
-    for ( currIndex = captionIndex; currIndex < caption.length() && !breakLine; currIndex++ )
+    for ( currIndex = captionIndex; currIndex < caption.length() && !breakLine; ++currIndex )
       if ( caption[currIndex] == QChar ( '\n' ) || caption[currIndex].isSpace() )
         breakLine = true;
 
@@ -757,7 +757,7 @@ void Wizard::printCaption ( QPainter &p, TPhoto* photo, int captionW, int captio
     for ( currIndex = captionIndex;
             currIndex <= captionIndex + captionLineLocalLength &&
             currIndex < caption.length() && !breakLine;
-            currIndex++ )
+            ++currIndex )
     {
       breakLine = ( caption[currIndex] == QChar ( '\n' ) ) ? true : false;
 
@@ -770,7 +770,7 @@ void Wizard::printCaption ( QPainter &p, TPhoto* photo, int captionW, int captio
     captionIndex = currIndex; // The line is ended
 
     if ( captionIndex != caption.length() )
-      while ( !newLine.endsWith ( " " ) )
+      while ( !newLine.endsWith ( ' ' ) )
       {
         newLine.truncate ( newLine.length() - 1 );
         captionIndex--;
@@ -793,7 +793,7 @@ void Wizard::printCaption ( QPainter &p, TPhoto* photo, int captionW, int captio
 
   // Now draw the caption
   // TODO allow printing captions  per photo and on top, bottom and vertically
-  for ( int lineNumber = 0; lineNumber < ( int ) captionByLines.count(); lineNumber++ )
+  for ( int lineNumber = 0; lineNumber < ( int ) captionByLines.count(); ++lineNumber )
   {
     if ( lineNumber > 0 )
       p.translate ( 0, - ( int ) ( pixelsHigh ) );
@@ -2060,7 +2060,7 @@ void Wizard::accept()
       return;
     }
     if ( path.right ( 1 ) != "/" )
-      path = path + "/";
+      path = path + '/';
     path = path + "kipi_printassistant_";
     kDebug() << path;
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

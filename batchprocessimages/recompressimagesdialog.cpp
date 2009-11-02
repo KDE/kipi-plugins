@@ -145,8 +145,8 @@ void RecompressImagesDialog::readSettings()
         m_compressLossLess = false;
 
     m_PNGCompression = group.readEntry("PNGCompression", 75);
-    m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
-    m_TGACompressionAlgo = group.readEntry("TGACompressionAlgo", i18n("None"));
+    m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18nc("image compression", "None"));
+    m_TGACompressionAlgo = group.readEntry("TGACompressionAlgo", i18nc("image compression", "None"));
 
     readCommonSettings(group);
 }
@@ -199,7 +199,7 @@ void RecompressImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem 
     {
         *proc << "-compress";
 
-        if (m_TIFFCompressionAlgo == i18n("None"))
+        if (m_TIFFCompressionAlgo == i18nc("image compression", "None"))
         {
             *proc << "None";
         }
@@ -213,7 +213,7 @@ void RecompressImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem 
     {
         *proc << "-compress";
 
-        if (m_TGACompressionAlgo == i18n("None"))
+        if (m_TGACompressionAlgo == i18nc("image compression", "None"))
         {
             *proc << "None";
         }
@@ -228,7 +228,7 @@ void RecompressImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem 
     *proc << item->pathSrc();
 
     if (!previewMode) {   // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
     }
 }
 

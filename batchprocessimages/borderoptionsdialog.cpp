@@ -140,7 +140,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
         m_frameBevelBorderWidth->setRange(0, 250);
         m_frameBevelBorderWidth->setSliderEnabled(true);
         m_frameBevelBorderWidth->setWhatsThis(i18n("Select here the bevel width in pixels. "
-                                              "This value must be <= Border width / 2"));
+                                              "This value must be &lt;= Border width / 2"));
         m_label_frameBevelBorderWidth->setBuddy(m_frameBevelBorderWidth);
         dvlay->addWidget(m_frameBevelBorderWidth);
 

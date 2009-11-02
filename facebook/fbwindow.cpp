@@ -337,7 +337,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
     if (!m_import)
-        m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
+        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), 0);
 
     m_sessionKey     = m_talker->getSessionKey();
     m_sessionSecret  = m_talker->getSessionSecret();
@@ -373,9 +373,9 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
 {
 
     QString albumDebug = "";
-    foreach(FbAlbum album, albumsList)
+    foreach(const FbAlbum &album, albumsList)
     {
-        albumDebug.append(QString::number(album.id) + ": " + album.title + "\n");
+        albumDebug.append(QString::number(album.id) + ": " + album.title + '\n');
     }
     kDebug() << "Received albums (errCode = " << errCode << ", errMsg = "
                   << errMsg << "): " << albumDebug;
@@ -396,7 +396,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     }
     else
     {
-        m_widget->m_albumsCoB->addItem(i18n("<auto create>"), 0);
+        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), 0);
     }
 
     for (int i = 0; i < albumsList.size(); ++i)

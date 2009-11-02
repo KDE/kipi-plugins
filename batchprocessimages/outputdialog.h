@@ -46,8 +46,8 @@ class OutputDialog : public KDialog
 
 public:
 
-    OutputDialog(QWidget* parent = 0, const QString& caption = QString(),
-                 const QString& Messages = QString(), const QString& Header = QString());
+    explicit OutputDialog(QWidget* parent = 0, const QString& caption = QString(),
+                          const QString& Messages = QString(), const QString& Header = QString());
     ~OutputDialog();
 
 private Q_SLOTS:

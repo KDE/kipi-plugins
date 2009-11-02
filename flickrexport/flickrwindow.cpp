@@ -414,7 +414,7 @@ void FlickrWindow::slotCreateNewPhotoSet()
    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
    int resp = dlg->exec();
 
-   if ((resp == QDialog::Accepted) && (dlg->titleEdit->text() != ""))
+   if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
    {
       // Create a new photoset with title and description from the dialog.
       FPhotoSet fps;
@@ -486,7 +486,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
     {
         QLinkedList <FPhotoSet> *list = m_talker->m_photoSetsList;
         m_albumsListComboBox->clear();
-        m_albumsListComboBox->insertItem(0, i18n("<Photostream Only>"));
+        m_albumsListComboBox->insertItem(0, i18n("&lt;Photostream Only&gt;"));
         m_albumsListComboBox->insertSeparator(1);
         QLinkedList<FPhotoSet>::iterator it = list->begin();
         int index = 2, curr_index = 0;
@@ -540,7 +540,7 @@ void FlickrWindow::slotUser1()
         temp.is_friend             = lvItem->isFriends() ? 1 : 0;
         temp.safety_level          = lvItem->safetyLevel();
         temp.content_type          = lvItem->contentType();
-        QStringList tagsFromDialog = m_tagsLineEdit->text().split(",", QString::SkipEmptyParts);
+        QStringList tagsFromDialog = m_tagsLineEdit->text().split(',', QString::SkipEmptyParts);
         QStringList tagsFromList   = lvItem->extraTags();
 
         QStringList           allTags;
@@ -586,7 +586,7 @@ void FlickrWindow::slotUser1()
                  it != allTags.end();
                  ++it)
             {
-                *it = (*it).trimmed().remove(" ");
+                *it = (*it).trimmed().remove(' ');
             }
         }
 
@@ -629,7 +629,7 @@ void FlickrWindow::slotAddPhotoNext()
     {
         // mutable photosets are not supported by Zooomr (Zooomr only has smart folder-type photosets)
         QString selectedPhotoSetId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
-        if (selectedPhotoSetId == "")
+        if (selectedPhotoSetId.isEmpty())
         {
            m_talker->m_selectedPhotoSet = FPhotoSet();
         }

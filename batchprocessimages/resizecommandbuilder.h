@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef RESIZECOMMANDBUILDER_H_
-#define RESIZECOMMANDBUILDER_H_
+#ifndef RESIZECOMMANDBUILDER_H
+#define RESIZECOMMANDBUILDER_H
 
 // Qt includes
 
@@ -232,4 +232,4 @@ private:
 
 } // namespace KIPIBatchProcessImagesPlugin
 
-#endif /* RESIZECOMMANDBUILDER_H_ */
+#endif /* RESIZECOMMANDBUILDER_H */

@@ -143,8 +143,8 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
                           "<p>Note: at least, gpsbabel version %2 is required by this plugin.</p>",
                           QString("http://www.gpsbabel.org"),
                           gpsBabelBinary.minimalVersion()),
-                     QString::null,
-                     QString::null,
+                     QString(),
+                     QString(),
                      KMessageBox::Notify | KMessageBox::AllowLink);
         return false;
     }
@@ -163,8 +163,8 @@ bool Plugin_GPSSync::checkBinaries(QString &gpsBabelVersion)
                           gpsBabelVersion,
                           QString("http://www.gpsbabel.org"),
                           gpsBabelBinary.minimalVersion()),
-                     QString::null,
-                     QString::null,
+                     QString(),
+                     QString(),
                      KMessageBox::Notify | KMessageBox::AllowLink);
         return false;
     }

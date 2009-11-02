@@ -134,17 +134,17 @@ void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath
     QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
 
     // compute the authorization header line
-    QString authorizationRaw = method + "\n"
-        + md5 + "\n"
-        + type + "\n"
-        + length + "\n"
-        + date + "\n"
+    QString authorizationRaw = method + '\n'
+        + md5 + '\n'
+        + type + '\n'
+        + length + '\n'
+        + date + '\n'
         + requestPath;
 
     if (needsPassword)
     {
         QString encodedPassword = QCA::Hash( "sha1" ).hashToString( m_user.password.toUtf8() );
-        authorizationRaw += ("\n" + encodedPassword);
+        authorizationRaw += ('\n' + encodedPassword);
     }
 
     QCA::SecureArray key( m_apiSecretKey.toUtf8() );

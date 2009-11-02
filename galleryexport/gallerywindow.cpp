@@ -53,7 +53,6 @@
 #include <krun.h>
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
-#include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 
 // LibKIPI includes

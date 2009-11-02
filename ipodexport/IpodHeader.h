@@ -48,7 +48,7 @@ public:
 
 public:
 
-    IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
+    explicit IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
     ~IpodHeader() {};
 
     void setViewType( ViewType view );

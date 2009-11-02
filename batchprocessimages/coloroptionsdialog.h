@@ -43,7 +43,7 @@ class ColorOptionsDialog : public KDialog
 
 public:
 
-    ColorOptionsDialog(QWidget *parent = 0, int ColorType = 0);
+    explicit ColorOptionsDialog(QWidget *parent = 0, int ColorType = 0);
     ~ColorOptionsDialog();
 
     KComboBox       *m_depthValue;

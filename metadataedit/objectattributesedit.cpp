@@ -262,11 +262,11 @@ void ObjectAttributesEdit::slotSelectionChanged()
     if (!d->valueBox->selectedItems().isEmpty())
     {
         bool ok   = false;
-        int index = d->valueBox->selectedItems()[0]->text().section(":", 0, 0).toInt(&ok);
+        int index = d->valueBox->selectedItems()[0]->text().section(':', 0, 0).toInt(&ok);
         if (ok)
         {
             d->dataList->setCurrentIndex(index-1);
-            d->valueEdit->setText(d->valueBox->selectedItems()[0]->text().section(":", -1));
+            d->valueEdit->setText(d->valueBox->selectedItems()[0]->text().section(':', -1));
             d->delValueButton->setEnabled(true);
             d->repValueButton->setEnabled(true);
             return;

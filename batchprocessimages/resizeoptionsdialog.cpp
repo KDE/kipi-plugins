@@ -83,7 +83,7 @@ void ResizeOptionsBaseDialog::layout()
 
     m_resizeFilterLabel    = new QLabel(i18n("Filter:"), qualityGroupBox);
     m_resizeFilterComboBox = new KComboBox();
-    m_defaultFilterName    = i18nc("Filter name", "<default>");
+    m_defaultFilterName    = i18nc("Filter name", "&lt;default&gt;");
     m_resizeFilterComboBox->addItem(m_defaultFilterName);
     // we really don't need to translate these filter names
     m_resizeFilterComboBox->insertItems(1, ResizeCommandBuilder::getAllowedFilters());

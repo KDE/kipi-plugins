@@ -123,13 +123,13 @@ void OneDimResizeCommandBuilder::buildCommand(KProcess *proc, BatchProcessImages
     *proc << "convert";
 
     *proc << "-resize";
-    *proc << QString::number(m_size) + "x" + QString::number(m_size);
+    *proc << QString::number(m_size) + 'x' + QString::number(m_size);
 
     appendQualityAndFilter(proc);
 
     *proc << "-verbose";
     *proc << item->pathSrc() + "[0]";
-    *proc << albumDest + "/" + item->nameDest();
+    *proc << albumDest + '/' + item->nameDest();
 }
 
 void OneDimResizeCommandBuilder::setSize(unsigned int size)
@@ -164,7 +164,7 @@ void TwoDimResizeCommandBuilder::buildCommand(KProcess *proc,
 {
     *proc << "convert";
 
-    QString targetBackgroundSize = QString::number(m_width) + "x" + QString::number(m_height);
+    QString targetBackgroundSize = QString::number(m_width) + 'x' + QString::number(m_height);
 
     *proc << "-verbose";
 
@@ -172,16 +172,16 @@ void TwoDimResizeCommandBuilder::buildCommand(KProcess *proc,
 
     // resize original image
     *proc << "-resize";
-    *proc << QString::number(m_width) + "x" + QString::number(m_height);
+    *proc << QString::number(m_width) + 'x' + QString::number(m_height);
 
     // fill image if desired
     if (m_fill)
     {
         *proc << "-bordercolor"
-              << "rgb(" + QString::number(m_fillColor.red()) + ","
-                        + QString::number(m_fillColor.green()) + ","
-                        + QString::number(m_fillColor.blue()) + ")";
-        *proc << "-border" << QString::number(m_width) + "x" + QString::number(m_height);
+              << "rgb(" + QString::number(m_fillColor.red()) + ','
+                        + QString::number(m_fillColor.green()) + ','
+                        + QString::number(m_fillColor.blue()) + ')';
+        *proc << "-border" << QString::number(m_width) + 'x' + QString::number(m_height);
 
         // center resized image on canvas
         *proc << "-gravity" << "Center";
@@ -200,7 +200,7 @@ void TwoDimResizeCommandBuilder::buildCommand(KProcess *proc,
     }
 
     // set destination
-    *proc << albumDest + "/" + item->nameDest();
+    *proc << albumDest + '/' + item->nameDest();
 }
 
 void TwoDimResizeCommandBuilder::setWidth(unsigned int width)
@@ -258,13 +258,13 @@ void NonProportionalResizeCommandBuilder::buildCommand(KProcess *proc,
     *proc << "convert";
 
     *proc << "-resize";
-    *proc << QString::number(m_width) + "x" + QString::number(m_height) + "!";
+    *proc << QString::number(m_width) + 'x' + QString::number(m_height) + '!';
 
     appendQualityAndFilter(proc);
 
     *proc << "-verbose";
     *proc << item->pathSrc() + "[0]";
-    *proc << albumDest + "/" + item->nameDest();
+    *proc << albumDest + '/' + item->nameDest();
 }
 
 void NonProportionalResizeCommandBuilder::setWidth(unsigned int width)
@@ -354,11 +354,11 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 
 	// resize image
     const QString rawPaperDimensions = QString::number(paperWidthInPixels)
-                    + "x" + QString::number(paperHeightInPixels);
+                    + 'x' + QString::number(paperHeightInPixels);
 	if (m_stretch)
 	{
 	    // stretching is simple, just force paper dimensions
-	    *proc << "-resize" << rawPaperDimensions + "!";
+	    *proc << "-resize" << rawPaperDimensions + '!';
 	    appendQualityAndFilter(proc);
 	}
 	else
@@ -367,7 +367,7 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 
         // first resize the image so that it will fit at least the whole paper
 	    // but one dimension can get bigger
-        *proc << "-resize" << rawPaperDimensions + "^";
+        *proc << "-resize" << rawPaperDimensions + '^';
         appendQualityAndFilter(proc);
 
         // and the crop it to the desired paper size
@@ -379,7 +379,7 @@ void PrintPrepareResizeCommandBuilder::buildCommand(KProcess *proc,
 	// Need to use "-profile" option for that.
 	*proc << "-profile" << item->pathSrc();
 
-	*proc << albumDest + "/" + item->nameDest();
+	*proc << albumDest + '/' + item->nameDest();
 }
 
 void PrintPrepareResizeCommandBuilder::setPaperWidth(unsigned int paperWidth)

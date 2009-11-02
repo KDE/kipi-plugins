@@ -171,7 +171,7 @@ protected:
     // If 'albumDest' = 0L ==> preview process.
 
     virtual void initProcess(KProcess* /*proc*/, BatchProcessImagesItem* /*item*/,
-                             const QString& /*albumDest*/ = QString::null,
+                             const QString& /*albumDest*/ = QString(),
                              bool  /*previewMode*/ = false) = 0;
 
     virtual void processDone() {};

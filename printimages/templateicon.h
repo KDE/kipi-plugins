@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_ICON_H
-#define PREVIEW_ICON_H
+#ifndef TEMPLATEICON_H
+#define TEMPLATEICON_H
 
 // QT incudes
 
@@ -93,4 +93,4 @@ class TemplateIcon
 
 } // namespace KIPIPrintImagesPlugin
 
-#endif /* PREVIEW_ICON_H */
+#endif /* TEMPLATEICON_H */

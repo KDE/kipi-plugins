@@ -62,7 +62,7 @@ class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
 
 public:
 
-    ImagesListViewItem(ImagesListView* view, const KUrl& url);
+    explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
     ~ImagesListViewItem();
 
     void setUrl(const KUrl& url);
@@ -110,8 +110,8 @@ public:
         User6
     };
 
-    ImagesListView(ImagesList *parent = 0);
-    ImagesListView(int iconSize, ImagesList *parent = 0);
+    explicit ImagesListView(ImagesList *parent = 0);
+    explicit ImagesListView(int iconSize, ImagesList *parent = 0);
     ~ImagesListView();
 
     void setColumnLabel(ColumnType column, const QString& label);
@@ -186,7 +186,7 @@ public:
     };
     Q_DECLARE_FLAGS(ControlButtons, ControlButton)
 
-    ImagesList(KIPI::Interface* iface, QWidget* parent = 0, int iconSize = -1);
+    explicit ImagesList(KIPI::Interface* iface, QWidget* parent = 0, int iconSize = -1);
     virtual ~ImagesList();
 
     void               setAllowRAW(bool allow);

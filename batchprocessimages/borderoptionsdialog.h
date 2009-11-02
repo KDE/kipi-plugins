@@ -39,7 +39,7 @@ class BorderOptionsDialog : public KDialog
 
 public:
 
-    BorderOptionsDialog(QWidget *parent = 0, int BorderType = 0);
+    explicit BorderOptionsDialog(QWidget *parent = 0, int BorderType = 0);
     ~BorderOptionsDialog();
 
     KIntNumInput    *m_solidBorderWidth;

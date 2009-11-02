@@ -586,7 +586,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
                 case KIO::R_CANCEL:
                 case KIO::R_SKIP:
                 {
-                    destFile = QString();
+                    destFile.clear();
                     break;
                 }
                 case KIO::R_RENAME:

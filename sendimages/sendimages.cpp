@@ -372,12 +372,12 @@ bool SendImages::invokeMailAgent()
                 case EmailSettingsContainer::DEFAULT:
                 {
                     KToolInvocation::invokeMailer(
-                        QString::null,                     // Destination address.
-                        QString::null,                     // Carbon Copy address.
-                        QString::null,                     // Blind Carbon Copy address
-                        QString::null,                     // Message Subject.
-                        QString::null,                     // Message Body.
-                        QString::null,                     // Message Body File.
+                        QString(),                     // Destination address.
+                        QString(),                     // Carbon Copy address.
+                        QString(),                     // Blind Carbon Copy address
+                        QString(),                     // Message Subject.
+                        QString(),                     // Message Body.
+                        QString(),                     // Message Body File.
                         stringFileList);          // Images attachments (+ image properties file).
 
                     d->progressDlg->addedAction(i18n("Starting default KDE email program..."), KIPIPlugins::StartingMessage);

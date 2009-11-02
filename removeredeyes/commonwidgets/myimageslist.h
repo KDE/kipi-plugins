@@ -43,7 +43,7 @@ class MyImagesList : public KIPIPlugins::ImagesList
 
 public:
 
-    MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
+    explicit MyImagesList(KIPI::Interface *iface, QWidget* parent = 0);
     ~MyImagesList();
 
     bool hasUnprocessedImages();

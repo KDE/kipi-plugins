@@ -431,14 +431,14 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     data = exiv2Iface.getXmpTagString("Xmp.iptc.IntellectualGenre", false);
     if (!data.isNull())
     {
-        QString attrSec = data.section(":", 0, 0);
+        QString attrSec = data.section(':', 0, 0);
         if (!attrSec.isEmpty())
         {
             int attr = attrSec.toInt()-1;
             if (attr >= 0 && attr < 23)
             {
                 d->objectAttributeCB->setCurrentIndex(attr);
-                d->objectAttributeEdit->setText(data.section(":", -1));
+                d->objectAttributeEdit->setText(data.section(':', -1));
                 d->objectAttributeCheck->setChecked(true);
             }
             else

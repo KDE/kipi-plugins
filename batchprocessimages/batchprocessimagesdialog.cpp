@@ -97,7 +97,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KI
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
-    setButtonText(User1, i18n("&Start"));
+    setButtonText(User1, i18nc("start batch process images", "&Start"));
     showButtonSeparator(false);
 
     // Init. Tmp folder
@@ -354,7 +354,7 @@ bool BatchProcessImagesDialog::startProcess()
 
     //TODO check if it is valid also for remote URL's
     // this is a workarond for bug 117397
-    QFileInfo dirInfo(targetAlbum + "/");
+    QFileInfo dirInfo(targetAlbum + '/');
     if (!dirInfo.isDir() || !dirInfo.isWritable())
     {
         KMessageBox::error(this, i18n("You must specify a writable path for your output file."));
@@ -433,12 +433,12 @@ bool BatchProcessImagesDialog::startProcess()
 
             case OVERWRITE_RENAME:
             {
-                QFileInfo Target(targetAlbum + "/" + item->nameDest());
+                QFileInfo Target(targetAlbum + '/' + item->nameDest());
                 QString newFileName = RenameTargetImageFile(&Target);
 
                 if (newFileName.isNull())
                 {
-                    item->changeResult(i18n("Failed."));
+                    item->changeResult(i18nc("batch process result", "Failed."));
                     item->changeError(i18n("destination image file already exists and cannot be renamed."));
                     ++*m_listFile2Process_iterator;
                     ++m_progressStatus;
@@ -555,7 +555,7 @@ void BatchProcessImagesDialog::slotFinished()
         }
         else
         {
-            item->changeResult(i18n("Failed."));
+            item->changeResult(i18nc("batch process result", "Failed."));
             item->changeError(i18n("'convert' program from 'ImageMagick' package "
                                    "has been stopped abnormally."));
             ++*m_listFile2Process_iterator;
@@ -612,7 +612,7 @@ void BatchProcessImagesDialog::slotFinished()
                     }
                     else
                     {
-                        item->changeResult(i18n("Failed."));
+                        item->changeResult(i18nc("batch process result", "Failed."));
                     }
                 }
             }
@@ -630,7 +630,7 @@ void BatchProcessImagesDialog::slotFinished()
 
                 if (KIO::NetAccess::del(deleteImage, kapp->activeWindow()) == false)
                 {
-                    item->changeResult(i18n("Warning:"));
+                    item->changeResult(i18nc("batch process result", "Warning:"));
                     item->changeError(i18n("cannot remove original image file."));
                 }
                 else
@@ -647,7 +647,7 @@ void BatchProcessImagesDialog::slotFinished()
         }
         default :
         { // Processing error !
-            item->changeResult(i18n("Failed."));
+            item->changeResult(i18nc("batch process result", "Failed."));
             item->changeError(i18n("cannot process original image file."));
             break;
         }
@@ -708,8 +708,8 @@ void BatchProcessImagesDialog::slotPreview(void)
 
     m_previewOutput = m_PreviewProc->program().join(" ");
 
-    *m_PreviewProc << m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG";
-    m_previewOutput.append(" "  + m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG\n\n");
+    *m_PreviewProc << m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG";
+    m_previewOutput.append(' '  + m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG\n\n");
 
     connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(slotPreviewFinished()));
@@ -754,13 +754,13 @@ void BatchProcessImagesDialog::slotPreviewFinished()
         if (m_ui->m_smallPreview->isChecked())
             cropTitle = i18n(" - small preview");
 
-        QPointer<ImagePreview> previewDialog = new ImagePreview(item->pathSrc(), m_tmpFolder + "/"
+        QPointer<ImagePreview> previewDialog = new ImagePreview(item->pathSrc(), m_tmpFolder + '/'
                 + QString::number(getpid()) + "preview.PNG", m_tmpFolder, m_ui->m_smallPreview->isChecked(),
                 false, m_Type->currentText() + cropTitle, item->nameSrc(), this);
         previewDialog->exec();
         delete previewDialog;
 
-        KUrl deletePreviewImage(m_tmpFolder + "/" + QString::number(getpid()) + "preview.PNG");
+        KUrl deletePreviewImage(m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG");
 
         KIO::NetAccess::del(deletePreviewImage, kapp->activeWindow());
     }
@@ -865,7 +865,7 @@ void BatchProcessImagesDialog::endPreview()
     m_ui->m_optionsButton->setEnabled(true);
     slotTypeChanged(m_Type->currentIndex());
 
-    setButtonText(User1, i18n("&Start"));
+    setButtonText(User1, i18nc("start batch process images", "&Start"));
 
     disconnect(this, SIGNAL(user1Clicked()),
                this, SLOT(slotPreviewStop()));
@@ -940,7 +940,7 @@ QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
     {
         ++Enumerator;
         Temp = Temp.setNum(Enumerator);
-        NewDestUrl = fi->filePath().left(fi->filePath().lastIndexOf('.', -1)) + "_" + Temp + "."
+        NewDestUrl = fi->filePath().left(fi->filePath().lastIndexOf('.', -1)) + '_' + Temp + '.'
                      + fi->filePath().section('.', -1);
     }
     while (Enumerator < 100 &&

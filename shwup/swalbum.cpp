@@ -62,7 +62,7 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
     m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
     QFormLayout* albumBoxLayout = new QFormLayout;
-    albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
+    albumBoxLayout->addRow(i18nc("album edit", "Title:"), m_titleEdt);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());

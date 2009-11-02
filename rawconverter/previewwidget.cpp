@@ -69,7 +69,7 @@ PreviewWidget::~PreviewWidget()
 
 void PreviewWidget::load(const QString& file)
 {
-    d->text = QString();
+    d->text.clear();
     d->pix.fill(Qt::black);
     d->image.load(file);
 

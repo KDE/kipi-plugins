@@ -52,7 +52,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject* parent, bool updateFileTimeStamp=false);
+    explicit ActionThread(QObject* parent, bool updateFileTimeStamp=false);
     ~ActionThread();
 
     void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 

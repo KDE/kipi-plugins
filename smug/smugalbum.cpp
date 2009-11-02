@@ -86,11 +86,11 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
         i18n("Album template for the new album (optional)."));
 
     QFormLayout* albumBoxLayout = new QFormLayout;
-    albumBoxLayout->addRow(i18n("Title:"), m_titleEdt);
-    albumBoxLayout->addRow(i18n("Category:"), m_categCoB);
-    albumBoxLayout->addRow(i18n("Subcategory:"), m_subCategCoB);
-    albumBoxLayout->addRow(i18n("Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18n("Template:"), m_templateCoB);
+    albumBoxLayout->addRow(i18nc("new smug album dialog", "Title:"), m_titleEdt);
+    albumBoxLayout->addRow(i18nc("new smug album dialog", "Category:"), m_categCoB);
+    albumBoxLayout->addRow(i18nc("new smug album dialog", "Subcategory:"), m_subCategCoB);
+    albumBoxLayout->addRow(i18nc("new smug album dialog", "Description:"), m_descEdt);
+    albumBoxLayout->addRow(i18nc("new smug album dialog", "Template:"), m_templateCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
@@ -102,11 +102,11 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     m_privBox->setWhatsThis(
         i18n("These are security and privacy settings for the new SmugMug album."));
 
-    m_publicRBtn        = new QRadioButton(i18n("Public"));
+    m_publicRBtn        = new QRadioButton(i18nc("smug album privacy", "Public"));
     m_publicRBtn->setChecked(true);
     m_publicRBtn->setWhatsThis(
         i18n("Public album is listed on your public SmugMug page."));
-    m_unlistedRBtn      = new QRadioButton(i18n("Unlisted"));
+    m_unlistedRBtn      = new QRadioButton(i18nc("smug album privacy", "Unlisted"));
     m_unlistedRBtn->setWhatsThis(
         i18n("Unlisted album is only accessible via URL."));
 

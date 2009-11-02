@@ -84,7 +84,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
     accountBox->setWhatsThis(i18n("This is the Shwup account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLbl     = new QLabel(i18n("Name:"), accountBox);
+    QLabel *userNameLbl     = new QLabel(i18nc("account settings", "Name:"), accountBox);
     m_userNameDisplayLbl    = new QLabel(accountBox);
 
     m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
@@ -109,7 +109,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
 
     m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
                                           i18n("Create new Shwup album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18n("Reload"), "view-refresh",
+    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18n("album list", "Reload"), "view-refresh",
                                           i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albLbl,              0, 0, 1, 1);

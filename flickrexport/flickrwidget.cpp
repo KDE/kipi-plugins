@@ -101,12 +101,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // For figuring out the width of the permission columns.
     QHeaderView *hdr     = m_imglst->listView()->header();
     QFontMetrics hdrFont = QFontMetrics(hdr->font());
-    int permColWidth     = hdrFont.width(i18n("Public"));
+    int permColWidth     = hdrFont.width(i18nc("photo permissions", "Public"));
 
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
-    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18n("Public"), true);
+    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18nc("photo permissions", "Public"), true);
 
     // Handle extra tags per image.
     m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType> (FlickrList::TAGS),
@@ -115,19 +115,19 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     if (serviceName != "23")
     {
         int tmpWidth;
-        if ((tmpWidth = hdrFont.width(i18n("Family"))) > permColWidth)
+        if ((tmpWidth = hdrFont.width(i18nc("photo permissions", "Family"))) > permColWidth)
         {
             permColWidth = tmpWidth;
         }
-        if ((tmpWidth = hdrFont.width(i18n("Friends"))) > permColWidth)
+        if ((tmpWidth = hdrFont.width(i18nc("photo permissions", "Friends"))) > permColWidth)
         {
             permColWidth = tmpWidth;
         }
 
         m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY),
-                                        i18n("Family"), true);
+                                        i18nc("photo permissions", "Family"), true);
         m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS),
-                                        i18n("Friends"), true);
+                                        i18nc("photo permissions", "Friends"), true);
         hdr->setResizeMode(FlickrList::FAMILY,  QHeaderView::Interactive);
         hdr->setResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
         hdr->resizeSection(FlickrList::FAMILY,  permColWidth);
@@ -139,12 +139,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
                                         i18n("Content type"), true);
         QMap<int, QString> safetyLevelItems;
         QMap<int, QString> contentTypeItems;
-        safetyLevelItems[FlickrList::SAFE]       = i18n("Safe");
-        safetyLevelItems[FlickrList::MODERATE]   = i18n("Moderate");
-        safetyLevelItems[FlickrList::RESTRICTED] = i18n("Restricted");
-        contentTypeItems[FlickrList::PHOTO]      = i18n("Photo");
-        contentTypeItems[FlickrList::SCREENSHOT] = i18n("Screenshot");
-        contentTypeItems[FlickrList::OTHER]      = i18n("Other");
+        safetyLevelItems[FlickrList::SAFE]       = i18nc("photo safety level", "Safe");
+        safetyLevelItems[FlickrList::MODERATE]   = i18nc("photo safety level", "Moderate");
+        safetyLevelItems[FlickrList::RESTRICTED] = i18nc("photo safety level", "Restricted");
+        contentTypeItems[FlickrList::PHOTO]      = i18nc("photo content type", "Photo");
+        contentTypeItems[FlickrList::SCREENSHOT] = i18nc("photo content type", "Screenshot");
+        contentTypeItems[FlickrList::OTHER]      = i18nc("photo content type", "Other");
         ComboBoxDelegate *safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
         ComboBoxDelegate *contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
         m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
@@ -173,7 +173,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     QGroupBox*   accountBox    = new QGroupBox(i18n("Account"), settingsBox);
     QGridLayout* accountLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLabel  = new QLabel(i18n("Username: "), accountBox);
+    QLabel *userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);
     m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
@@ -275,9 +275,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     QLabel *imageTypeLabel = new QLabel(i18n("Content type:"));
     m_contentTypeComboBox  = new ComboBoxIntermediate();
-    m_contentTypeComboBox->addItem(i18n("Photo"),      QVariant(FlickrList::PHOTO));
-    m_contentTypeComboBox->addItem(i18n("Screenshot"), QVariant(FlickrList::SCREENSHOT));
-    m_contentTypeComboBox->addItem(i18n("Other"),      QVariant(FlickrList::OTHER));
+    m_contentTypeComboBox->addItem(i18nc("photo content type", "Photo"),      QVariant(FlickrList::PHOTO));
+    m_contentTypeComboBox->addItem(i18nc("photo content type", "Screenshot"), QVariant(FlickrList::SCREENSHOT));
+    m_contentTypeComboBox->addItem(i18nc("photo content type", "Other"),      QVariant(FlickrList::OTHER));
 
     extendedSettingsLayout->addWidget(imageSafetyLabel,      1, 0, Qt::AlignLeft);
     extendedSettingsLayout->addWidget(m_safetyLevelComboBox, 1, 1, Qt::AlignLeft);

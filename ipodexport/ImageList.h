@@ -44,7 +44,7 @@ public:
 
 public:
 
-    ImageList( ListType = UploadType, QWidget *parent = 0 );
+    explicit ImageList( ListType = UploadType, QWidget *parent = 0 );
 
     ListType getType() const
     {

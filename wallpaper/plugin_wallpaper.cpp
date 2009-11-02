@@ -194,7 +194,7 @@ void Plugin_WallPaper::setWallpaper(int layout)
       KMessageBox::information( kapp->activeWindow(), i18n(
          "<p>You selected a remote image. It needs to be saved to your local disk to be used as a wallpaper."
          "</p><p>You will now be asked where to save the image.</p>"));
-      path = KFileDialog::getSaveFileName(url.fileName(), QString::null, kapp->activeWindow());
+      path = KFileDialog::getSaveFileName(url.fileName(), QString(), kapp->activeWindow());
 
       if (path.isNull()) return;
       KIO::NetAccess::download(url, path, 0L);

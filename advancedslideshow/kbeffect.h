@@ -46,7 +46,7 @@ public:
 
 public:
 
-    KBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit KBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
     virtual ~KBEffect();
 
     virtual void advanceTime(float step) = 0;
@@ -83,7 +83,7 @@ class FadeKBEffect: public KBEffect
 
 public:
 
-    FadeKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit FadeKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
     virtual ~FadeKBEffect();
 
     virtual void advanceTime(float step);
@@ -102,7 +102,7 @@ class BlendKBEffect: public KBEffect
 
 public:
 
-    BlendKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit BlendKBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
     virtual ~BlendKBEffect();
 
     virtual void advanceTime(float step);

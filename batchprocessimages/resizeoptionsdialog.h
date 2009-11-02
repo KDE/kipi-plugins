@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef RESIZEOPTIONSBASEDIALOG_H_
-#define RESIZEOPTIONSBASEDIALOG_H_
+#ifndef RESIZEOPTIONSDIALOG_H
+#define RESIZEOPTIONSDIALOG_H
 
 // Qt includes
 
@@ -326,4 +326,4 @@ private:
 
 } // namespace KIPIBatchProcessImagesPlugin
 
-#endif /* RESIZEOPTIONSBASEDIALOG_H_ */
+#endif /* RESIZEOPTIONSDIALOG_H */

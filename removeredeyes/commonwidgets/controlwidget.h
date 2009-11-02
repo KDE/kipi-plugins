@@ -59,7 +59,7 @@ public:
 
 public:
 
-    ControlWidget(QWidget* parent = 0, int w = 150, int h = 150);
+    explicit ControlWidget(QWidget* parent = 0, int w = 150, int h = 150);
     ~ControlWidget();
 
     void triggerShow(int ms = 0);

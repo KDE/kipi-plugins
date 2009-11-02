@@ -533,7 +533,7 @@ void SimpleViewer::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem,
     }
     else
     {
-        comment = QString();
+        comment.clear();
     }
 
     QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));

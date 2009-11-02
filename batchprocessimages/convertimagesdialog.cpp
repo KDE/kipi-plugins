@@ -221,8 +221,8 @@ void ConvertImagesDialog::readSettings()
         m_compressLossLess = false;
 
     m_JPEGPNGCompression  = group.readEntry("JPEGPNGCompression", 75);
-    m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18n("None"));
-    m_TGACompressionAlgo  = group.readEntry("TGACompressionAlgo", i18n("None"));
+    m_TIFFCompressionAlgo = group.readEntry("TIFFCompressionAlgo", i18nc("image compression type", "None"));
+    m_TGACompressionAlgo  = group.readEntry("TGACompressionAlgo", i18nc("image compression type", "None"));
 
     readCommonSettings(group);
 }
@@ -273,7 +273,7 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
     { // TIFF
         *proc << "-compress";
 
-        if (m_TIFFCompressionAlgo == i18n("None"))
+        if (m_TIFFCompressionAlgo == i18nc("image compression type", "None"))
         {
             *proc << "None";
         }
@@ -287,7 +287,7 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
     { // TGA
         *proc << "-compress";
 
-        if (m_TGACompressionAlgo == i18n("None"))
+        if (m_TGACompressionAlgo == i18nc("image compression type", "None"))
         {
             *proc << "None";
         }
@@ -301,7 +301,7 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
 
     if (!previewMode)
     {   // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
     }
 }
 
@@ -315,7 +315,7 @@ void ConvertImagesDialog::processDone()
         if (item)
         {
             QString src = item->pathSrc();
-            QString tgt = destinationUrl().path() + "/" + item->nameDest();
+            QString tgt = destinationUrl().path() + '/' + item->nameDest();
             QFileInfo fi(tgt);
 
             kDebug() << src ;
@@ -347,7 +347,7 @@ QString ConvertImagesDialog::oldFileName2NewFileName(const QString& fileName)
     QString Temp;
 
     Temp = fileName.left(fileName.lastIndexOf('.', -1));           // The source file name without extension.
-    Temp = Temp + "." + ImageFileExt(m_Type->currentText());       // Added new file extension.
+    Temp = Temp + '.' + ImageFileExt(m_Type->currentText());       // Added new file extension.
 
     return Temp;
 }

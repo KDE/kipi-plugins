@@ -289,7 +289,7 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Blur
         *proc << "-blur";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_blurRadius) + "x";
+        Temp2 = Temp.setNum(m_blurRadius) + 'x';
         Temp2.append(Temp.setNum(m_blurDeviation));
         *proc << Temp2;
     }
@@ -322,7 +322,7 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Sharpen
         *proc << "-sharpen";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_sharpenRadius) + "x";
+        Temp2 = Temp.setNum(m_sharpenRadius) + 'x';
         Temp2.append(Temp.setNum(m_sharpenDeviation));
         *proc << Temp2;
     }
@@ -343,7 +343,7 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 
     if (!previewMode)
     {   // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
     }
 }
 

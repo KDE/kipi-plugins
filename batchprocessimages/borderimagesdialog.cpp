@@ -89,13 +89,13 @@ BorderImagesDialog::BorderImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
     m_labelType->setText(i18n("Border:"));
 
-    m_Type->addItem(i18n("Solid"));
+    m_Type->addItem(i18nc("image border type", "Solid"));
 
     // Niepce is Real name. This is the first guy in the world to have build a camera.
     m_Type->addItem("Niepce");
 
-    m_Type->addItem(i18n("Raise"));
-    m_Type->addItem(i18n("Frame"));
+    m_Type->addItem(i18nc("image border type", "Raise"));
+    m_Type->addItem(i18nc("image border type", "Frame"));
     m_Type->setCurrentItem("Niepce");
     QString whatsThis = i18n(
                             "<p>Select here the border type for your images:</p>"
@@ -247,13 +247,13 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Solid
         *proc << "-border";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_solidWidth) + "x";
+        Temp2 = Temp.setNum(m_solidWidth) + 'x';
         Temp2.append(Temp.setNum(m_solidWidth));
         *proc << Temp2;
         *proc << "-bordercolor";
-        Temp2 = "rgb(" + Temp.setNum(m_solidColor.red()) + ",";
-        Temp2.append(Temp.setNum(m_solidColor.green()) + ",");
-        Temp2.append(Temp.setNum(m_solidColor.blue()) + ")");
+        Temp2 = "rgb(" + Temp.setNum(m_solidColor.red()) + ',';
+        Temp2.append(Temp.setNum(m_solidColor.green()) + ',');
+        Temp2.append(Temp.setNum(m_solidColor.blue()) + ')');
         *proc << Temp2;
     }
 
@@ -262,25 +262,25 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         QString Temp, Temp2;
 
         *proc << "-border";
-        Temp2 = Temp.setNum(m_lineNiepceWidth) + "x";
+        Temp2 = Temp.setNum(m_lineNiepceWidth) + 'x';
         Temp2.append(Temp.setNum(m_lineNiepceWidth));
         *proc << Temp2;
 
         *proc << "-bordercolor";
-        Temp2 = "rgb(" + Temp.setNum(m_NiepceColor.red()) + ",";
-        Temp2.append(Temp.setNum(m_NiepceColor.green()) + ",");
-        Temp2.append(Temp.setNum(m_NiepceColor.blue()) + ")");
+        Temp2 = "rgb(" + Temp.setNum(m_NiepceColor.red()) + ',';
+        Temp2.append(Temp.setNum(m_NiepceColor.green()) + ',');
+        Temp2.append(Temp.setNum(m_NiepceColor.blue()) + ')');
         *proc << Temp2;
 
         *proc << "-border";
-        Temp2 = Temp.setNum(m_NiepceWidth) + "x";
+        Temp2 = Temp.setNum(m_NiepceWidth) + 'x';
         Temp2.append(Temp.setNum(m_NiepceWidth));
         *proc << Temp2;
 
         *proc << "-bordercolor";
-        Temp2 = "rgb(" + Temp.setNum(m_lineNiepceColor.red()) + ",";
-        Temp2.append(Temp.setNum(m_lineNiepceColor.green()) + ",");
-        Temp2.append(Temp.setNum(m_lineNiepceColor.blue()) + ")");
+        Temp2 = "rgb(" + Temp.setNum(m_lineNiepceColor.red()) + ',';
+        Temp2.append(Temp.setNum(m_lineNiepceColor.green()) + ',');
+        Temp2.append(Temp.setNum(m_lineNiepceColor.blue()) + ')');
         *proc << Temp2;
     }
 
@@ -288,7 +288,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Raise
         *proc << "-raise";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_raiseWidth) + "x";
+        Temp2 = Temp.setNum(m_raiseWidth) + 'x';
         Temp2.append(Temp.setNum(m_raiseWidth));
         *proc << Temp2;
     }
@@ -297,15 +297,15 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Frame
         *proc << "-frame";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_frameWidth) + "x";
-        Temp2.append(Temp.setNum(m_frameWidth) + "+");
-        Temp2.append(Temp.setNum(m_bevelWidth) + "+");
+        Temp2 = Temp.setNum(m_frameWidth) + 'x';
+        Temp2.append(Temp.setNum(m_frameWidth) + '+');
+        Temp2.append(Temp.setNum(m_bevelWidth) + '+');
         Temp2.append(Temp.setNum(m_bevelWidth));
         *proc << Temp2;
         *proc << "-mattecolor";
-        Temp2 = "rgb(" + Temp.setNum(m_frameColor.red()) + ",";
-        Temp2.append(Temp.setNum(m_frameColor.green()) + ",");
-        Temp2.append(Temp.setNum(m_frameColor.blue()) + ")");
+        Temp2 = "rgb(" + Temp.setNum(m_frameColor.red()) + ',';
+        Temp2.append(Temp.setNum(m_frameColor.green()) + ',');
+        Temp2.append(Temp.setNum(m_frameColor.blue()) + ')');
         *proc << Temp2;
     }
 
@@ -314,7 +314,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     *proc << item->pathSrc();
 
     if (!previewMode)     // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

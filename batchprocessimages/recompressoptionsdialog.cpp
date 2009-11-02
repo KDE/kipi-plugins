@@ -123,7 +123,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_TIFFCompressionAlgo        = new KComboBox;
     m_TIFFCompressionAlgo->addItem("LZW");
     m_TIFFCompressionAlgo->addItem("JPEG");
-    m_TIFFCompressionAlgo->addItem(i18n("None"));
+    m_TIFFCompressionAlgo->addItem(i18nc("image compression", "None"));
     m_TIFFCompressionAlgo->setWhatsThis(i18n("Select here the TIFF compression algorithm."));
     m_label_TIFFimageCompression->setBuddy(m_TIFFCompressionAlgo);
 
@@ -140,7 +140,7 @@ RecompressOptionsDialog::RecompressOptionsDialog(QWidget *parent)
     m_label_TGAimageCompression = new QLabel(i18n("Image compression algorithm:"));
     m_TGACompressionAlgo        = new KComboBox;
     m_TGACompressionAlgo->addItem("RLE");
-    m_TGACompressionAlgo->addItem(i18n("None"));
+    m_TGACompressionAlgo->addItem(i18nc("image compression", "None"));
     m_TGACompressionAlgo->setWhatsThis(i18n("Select here the TGA compression algorithm."));
     m_label_TGAimageCompression->setBuddy(m_TGACompressionAlgo);
 

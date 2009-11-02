@@ -93,7 +93,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i) {
         }
 
         // populate QStringList::files
-        for(KUrl::List::Iterator it = myfiles.begin(); it != myfiles.end();it++) {
+        for(KUrl::List::Iterator it = myfiles.begin(); it != myfiles.end(); ++it) {
 
             // find selected image in album in order to determine the first displayed image
             // in case one image was selected and the entire album was loaded

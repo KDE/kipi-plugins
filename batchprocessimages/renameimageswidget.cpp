@@ -373,7 +373,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
     if (ui->m_addFileNameCheck->isChecked())
     {
         newName += fi.baseName();
-        newName += "_";
+        newName += '_';
     }
 
     int seqNumber = itemPosition + ui->m_seqSpin->value();
@@ -403,7 +403,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
                     {
                         QString fmt;
                         fmt.sprintf("0%dd", (k > 10 ? 10 : k));
-                        fmt = "%" + fmt;
+                        fmt = '%' + fmt;
                         to.sprintf(fmt.toLatin1(), seqNumber);
                     }
                 }
@@ -441,8 +441,8 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
             }
         }
         format.replace("%%", "%");
-        format.replace("%s", "");
-        format.replace("/", "!");
+        format.remove("%s");
+        format.replace('/', '!');
         format.replace("%[", "% [");
 
         time_t time        = info.time().toTime_t();
@@ -453,7 +453,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
         newName += QString::fromLocal8Bit(s);
         if (!useExtraSymbols)
         {
-            newName += "_";
+            newName += '_';
         }
     }
 
@@ -469,7 +469,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
         QString format;
         format.sprintf("0%dd", numDigits);
-        format = "%" + format;
+        format = '%' + format;
 
         QString seq;
         seq.sprintf(format.toLatin1(), seqNumber);

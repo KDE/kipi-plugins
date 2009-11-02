@@ -429,7 +429,7 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView *view,
 
 QStringList FlickrListViewItem::extraTags()
 {
-    return m_tagLineEdit->text().split(",", QString::SkipEmptyParts);
+    return m_tagLineEdit->text().split(',', QString::SkipEmptyParts);
 }
 
 void FlickrListViewItem::toggled()

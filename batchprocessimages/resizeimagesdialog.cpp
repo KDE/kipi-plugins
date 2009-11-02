@@ -114,7 +114,7 @@ public:
      */
     ResizeTool getResizeToolByName(const QString& name)
     {
-        foreach(ResizeTool tool, resizeTools)
+        foreach(const ResizeTool &tool, resizeTools)
         {
             if (tool.localizedName == name)
             {
@@ -186,14 +186,14 @@ ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
     // insert resize tools in drop down box
     m_labelType->setText(i18n("Type:"));
-    foreach(ResizeTool tool, d->resizeTools)
+    foreach(const ResizeTool &tool, d->resizeTools)
     {
         m_Type->addItem(tool.localizedName);
     }
 
     // build what's this text
     QString whatsThis = i18n("<p>Select here the image-resize type.</p>");
-    foreach(ResizeTool tool, d->resizeTools)
+    foreach(const ResizeTool &tool, d->resizeTools)
     {
         whatsThis += tool.dialog->getWhatsThis();
     }
@@ -232,7 +232,7 @@ void ResizeImagesDialog::readSettings()
 
     m_Type->setCurrentIndex(group.readEntry("ResizeType", 0));
 
-    foreach(ResizeTool tool, d->resizeTools)
+    foreach(const ResizeTool &tool, d->resizeTools)
     {
         tool.dialog->readSettings(ResizeImagesDialogPriv::RCNAME,
                         ResizeImagesDialogPriv::RC_GROUP_NAME);
@@ -250,7 +250,7 @@ void ResizeImagesDialog::saveSettings()
 
     group.writeEntry("ResizeType", m_Type->currentIndex());
 
-    foreach(ResizeTool tool, d->resizeTools)
+    foreach(const ResizeTool &tool, d->resizeTools)
     {
         tool.dialog->saveSettings(ResizeImagesDialogPriv::RCNAME,
                         ResizeImagesDialogPriv::RC_GROUP_NAME);

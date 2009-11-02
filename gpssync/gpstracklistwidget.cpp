@@ -97,10 +97,10 @@ void GPSTrackListWidget::extractGPSPositionfromStatusbar(const QString& txt)
     QString status = txt;
     status.remove(0, 5);
     status.truncate(status.length()-1);
-    QString idTxt  = status.section(",", 0, 0);
-    QString latTxt = status.section(",", 1, 1);
-    QString lngTxt = status.section(",", 2, 2);
-    QString altTxt = status.section(",", 3, 3);
+    QString idTxt  = status.section(',', 0, 0);
+    QString latTxt = status.section(',', 1, 1);
+    QString lngTxt = status.section(',', 2, 2);
+    QString altTxt = status.section(',', 3, 3);
     int id         = idTxt.toInt();
     if (latTxt.isEmpty() || lngTxt.isEmpty())
     {

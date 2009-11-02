@@ -140,7 +140,7 @@ void KioExportWidget::updateTargetLabel()
                   << m_targetUrl.prettyUrl() << ", valid = "
                   << m_targetUrl.isValid();
 
-    QString urlString = "<" + i18n("not selected") + ">";
+    QString urlString = '<' + i18n("not selected") + '>';
     if (m_targetUrl.isValid())
     {
         urlString = m_targetUrl.prettyUrl();

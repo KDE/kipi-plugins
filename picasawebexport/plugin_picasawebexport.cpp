@@ -105,7 +105,7 @@ void Plugin_PicasawebExport::slotActivate()
     }
 
     KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-picasawebexportplugin-" + QString::number(getpid()) + "/");
+    QString Tmp = dir.saveLocation("tmp", "kipi-picasawebexportplugin-" + QString::number(getpid()) + '/');
 
     if (!m_dlgExport)
     {

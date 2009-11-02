@@ -64,8 +64,8 @@ SwLogin::SwLogin(QWidget* parent)
     m_passwordEdt->setWhatsThis(i18n("Password of shwup account (required)."));
 
     QFormLayout* loginBoxLayout = new QFormLayout;
-    loginBoxLayout->addRow(i18n("Email:"), m_emailEdt);
-    loginBoxLayout->addRow(i18n("Password:"), m_passwordEdt);
+    loginBoxLayout->addRow(i18nc("login settings", "Email:"), m_emailEdt);
+    loginBoxLayout->addRow(i18nc("login settings", "Password:"), m_passwordEdt);
     loginBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     loginBoxLayout->setSpacing(KDialog::spacingHint());
     loginBoxLayout->setMargin(KDialog::spacingHint());

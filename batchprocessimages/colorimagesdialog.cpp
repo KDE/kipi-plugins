@@ -88,17 +88,17 @@ ColorImagesDialog::ColorImagesDialog(const KUrl::List& urlList, KIPI::Interface*
 
     m_labelType->setText(i18n("Filter:"));
 
-    m_Type->addItem(i18n("Decrease Contrast"));
-    m_Type->addItem(i18n("Depth"));              // 1
-    m_Type->addItem(i18n("Equalize"));
-    m_Type->addItem(i18n("Fuzz"));               // 3
-    m_Type->addItem(i18n("Gray Scales"));
-    m_Type->addItem(i18n("Increase Contrast"));
-    m_Type->addItem(i18n("Monochrome"));
-    m_Type->addItem(i18n("Negate"));
-    m_Type->addItem(i18n("Normalize"));
-    m_Type->addItem(i18n("Segment"));            // 9
-    m_Type->addItem(i18n("Trim"));
+    m_Type->addItem(i18nc("color image filter", "Decrease Contrast"));
+    m_Type->addItem(i18nc("color image filter", "Depth"));              // 1
+    m_Type->addItem(i18nc("color image filter", "Equalize"));
+    m_Type->addItem(i18nc("color image filter", "Fuzz"));               // 3
+    m_Type->addItem(i18nc("color image filter", "Gray Scales"));
+    m_Type->addItem(i18nc("color image filter", "Increase Contrast"));
+    m_Type->addItem(i18nc("color image filter", "Monochrome"));
+    m_Type->addItem(i18nc("color image filter", "Negate"));
+    m_Type->addItem(i18nc("color image filter", "Normalize"));
+    m_Type->addItem(i18nc("color image filter", "Segment"));            // 9
+    m_Type->addItem(i18nc("color image filter", "Trim"));
     m_Type->setCurrentItem(i18n("Normalize"));
     QString whatsThis = i18n(
                             "<p>Select here the color enhancement type for your images:</p>"
@@ -290,7 +290,7 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
     { // Segment
         *proc << "-segment";
         QString Temp, Temp2;
-        Temp2 = Temp.setNum(m_segmentCluster) + "x";
+        Temp2 = Temp.setNum(m_segmentCluster) + 'x';
         Temp2.append(Temp.setNum(m_segmentSmooth));
         *proc << Temp2;
     }
@@ -306,7 +306,7 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
 
     if (!previewMode)
     {   // No preview mode !
-        *proc << albumDest + "/" + item->nameDest();
+        *proc << albumDest + '/' + item->nameDest();
     }
 }
 

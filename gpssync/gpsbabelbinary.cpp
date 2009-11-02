@@ -44,7 +44,7 @@ public:
     GPSBabelBinaryPriv()
     {
         available = false;
-        version   = QString::null;
+        version.clear();
     }
 
     bool    available;

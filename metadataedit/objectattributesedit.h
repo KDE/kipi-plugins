@@ -39,7 +39,7 @@ class ObjectAttributesEdit : public QWidget
     
 public:
 
-    ObjectAttributesEdit(QWidget* parent, bool ascii=true, int size=-1);
+    explicit ObjectAttributesEdit(QWidget* parent, bool ascii=true, int size=-1);
     ~ObjectAttributesEdit();
 
     void setValid(bool v);

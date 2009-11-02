@@ -43,7 +43,7 @@ class FilterOptionsDialog : public KDialog
 
 public:
 
-    FilterOptionsDialog(QWidget *parent = 0, int FilterType = 0);
+    explicit FilterOptionsDialog(QWidget *parent = 0, int FilterType = 0);
     ~FilterOptionsDialog();
 
     KComboBox       *m_noiseType;

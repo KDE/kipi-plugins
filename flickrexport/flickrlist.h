@@ -71,7 +71,7 @@ public:
 
 public:
 
-    FlickrList(KIPI::Interface* iface, QWidget* parent = 0, bool = false);
+    explicit FlickrList(KIPI::Interface* iface, QWidget* parent = 0, bool = false);
 
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);

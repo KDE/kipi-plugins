@@ -94,8 +94,8 @@ UploadDialog::UploadDialog
     , m_itdb( 0 )
     , m_ipodInfo( 0 )
     , m_ipodHeader( 0 )
-    , m_mountPoint( QString::null )
-    , m_deviceNode( QString::null )
+    , m_mountPoint( QString() )
+    , m_deviceNode( QString() )
     , m_ipodAlbumList( 0 )
 {
     s_instance   = this;
@@ -722,7 +722,7 @@ void UploadDialog::addDropItems( const QStringList& filesPath )
 {
     if( filesPath.isEmpty() ) return;
 
-    foreach( QString dropFile, filesPath )
+    foreach( const QString &dropFile, filesPath )
     {
         // TODO: Check if the new item already exist in the list.
         addUrlToList( dropFile );
@@ -762,10 +762,10 @@ bool UploadDialog::openDevice()
              mountpoint != m_mountPoint )
             continue;
 
-        if( mountpoint.startsWith( "/proc" ) ||
-            mountpoint.startsWith( "/sys" )  ||
-            mountpoint.startsWith( "/dev" )  ||
-            mountpoint.startsWith( "/boot" ) )
+        if( mountpoint.startsWith( QLatin1String("/proc") ) ||
+            mountpoint.startsWith( QLatin1String("/sys") )  ||
+            mountpoint.startsWith( QLatin1String("/dev") )  ||
+            mountpoint.startsWith( QLatin1String("/boot") ) )
             continue;
 
         if( !m_deviceNode.isEmpty() &&
@@ -868,7 +868,7 @@ QString UploadDialog::ipodModel() const
     if( m_ipodInfo )
         return QString( itdb_info_get_ipod_model_name_string( m_ipodInfo->ipod_model ) );
 
-    return QString::null;
+    return QString();
 }
 
 void UploadDialog::refreshDevices()

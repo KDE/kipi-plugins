@@ -54,7 +54,7 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, KIPI::Interface
     setCaption(i18n("Rename Images"));
     setModal(true);
     setButtons(Help | User1 | Close);
-    setButtonText(User1, i18n("&Start"));
+    setButtonText(User1, i18nc("start batch process images", "&Start"));
     setDefaultButton(Close);
 
     // About data and help button.

@@ -117,7 +117,7 @@ class Image
 
 public:
 
-    Image(ViewTrans *viewTrans, float aspect = 1.0);
+    explicit Image(ViewTrans *viewTrans, float aspect = 1.0);
     ~Image();
 
     ViewTrans* m_viewTrans;

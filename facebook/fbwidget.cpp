@@ -86,7 +86,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
         i18n("This is the Facebook account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLbl     = new QLabel(i18n("Name:"), accountBox);
+    QLabel *userNameLbl     = new QLabel(i18nc("facebook account settings", "Name:"), accountBox);
     m_userNameDisplayLbl    = new QLabel(accountBox);
     QLabel *permissionLbl   = new QLabel(i18n("Permission:"), accountBox);
     permissionLbl->setWhatsThis(
@@ -158,7 +158,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
             KGuiItem(i18n("New Album"), "list-add",
                      i18n("Create new Facebook album")), accountBox);
     m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18n("Reload"), "view-refresh",
+            KGuiItem(i18nc("facebook album list", "Reload"), "view-refresh",
                      i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);

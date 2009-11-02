@@ -478,7 +478,7 @@ void GalleryTalker::parseResponseListAlbums(const QByteArray& data)
                 {
                         GAlbum album;
                         album.name    = value;
-                        album.ref_num = key.section(".", 2, 2).toInt();
+                        album.ref_num = key.section('.', 2, 2).toInt();
                         iter = albumList.insert(iter, album);
                 }
                 else if (key.startsWith(QLatin1String("album.title")))
@@ -577,7 +577,7 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                 {
                         GPhoto photo;
                         photo.name    = value;
-                        photo.ref_num = key.section(".", 2, 2).toInt();
+                        photo.ref_num = key.section('.', 2, 2).toInt();
                         iter = photoList.insert(iter, photo);
                 }
                 else if (key.startsWith(QLatin1String(("image.caption"))))

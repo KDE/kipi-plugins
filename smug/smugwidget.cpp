@@ -87,7 +87,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
         i18n("This is the SmugMug account that will be used to authenticate."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    m_anonymousRBtn     = new QRadioButton(i18n("Anonymous"), accountBox);
+    m_anonymousRBtn     = new QRadioButton(i18nc("smug account login", "Anonymous"), accountBox);
     m_anonymousRBtn->setWhatsThis(
         i18n("Login as anonymous to SmugMug web service."));
 
@@ -95,9 +95,9 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_accountRBtn->setWhatsThis(
         i18n("Login to SmugMug web service using email and password."));
 
-    m_userNameLbl       = new QLabel(i18n("Name:"), accountBox);
+    m_userNameLbl       = new QLabel(i18nc("smug account settings", "Name:"), accountBox);
     m_userName          = new QLabel(accountBox);
-    m_emailLbl          = new QLabel(i18n("Email:"), accountBox);
+    m_emailLbl          = new QLabel(i18nc("smug account settings", "Email:"), accountBox);
     m_email             = new QLabel(accountBox);
     m_changeUserBtn     = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
@@ -139,7 +139,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
             KGuiItem(i18n("New Album"), "list-add",
                      i18n("Create new SmugMug album")), accountBox);
     m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18n("Reload"), "view-refresh",
+            KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
                      i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);

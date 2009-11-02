@@ -66,7 +66,7 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     m_passwdEdit->setEchoMode(KLineEdit::Password);
 
     QLabel* nameLabel = new QLabel(widget);
-    nameLabel->setText(i18n("Username:"));
+    nameLabel->setText(i18nc("flickr login", "Username:"));
 
     QLabel* passwdLabel = new QLabel(widget);
     passwdLabel->setText(i18n("Password:"));

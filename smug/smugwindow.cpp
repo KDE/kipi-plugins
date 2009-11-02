@@ -467,7 +467,7 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
 {
     // always put at least default <none> subcategory
     m_albumDlg->m_templateCoB->clear();
-    m_albumDlg->m_templateCoB->addItem(i18n("<none>"), 0);
+    m_albumDlg->m_templateCoB->addItem(i18n("&lt;none&gt;"), 0);
 
     if (errCode != 0)
     {
@@ -527,7 +527,7 @@ void SmugWindow::slotListSubCategoriesDone(int errCode, const QString &errMsg,
 {
     // always put at least default <none> subcategory
     m_albumDlg->m_subCategCoB->clear();
-    m_albumDlg->m_subCategCoB->addItem(i18n("<none>"), 0);
+    m_albumDlg->m_subCategCoB->addItem(i18n("&lt;none&gt;"), 0);
 
     if (errCode != 0)
     {

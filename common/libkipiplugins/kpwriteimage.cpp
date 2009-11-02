@@ -23,6 +23,8 @@
 
 //#define ENABLE_DEBUG_MESSAGES 1
 
+#include "kpwriteimage.h"
+
 // C ANSI includes
 
 extern "C"
@@ -49,7 +51,6 @@ extern "C"
 #include <kstandarddirs.h>
 
 // Local includes
-#include "kpwriteimage.h"
 #include "pluginsversion.h"
 
 namespace KIPIPlugins
@@ -420,7 +421,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     uchar* ptr = (uchar*)d->data.data();
     uint   x, y, j;
 
-    for (y = 0; y < d->height; y++)
+    for (y = 0; y < d->height; ++y)
     {
         if (cancel())
         {
@@ -600,7 +601,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         return false;
     }
 
-    for (y = 0; y < h; y++)
+    for (y = 0; y < h; ++y)
     {
         if (cancel())
         {
@@ -611,7 +612,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
         i = 0;
 
-        for (x = 0; x < w; x++)
+        for (x = 0; x < w; ++x)
         {
             pixel = &data[((y * w) + x) * bytesDepth()];
 
@@ -714,11 +715,11 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
             return false;
         }
 
-        for (y = 0 ; y < uint32(thumb.height()) ; y++)
+        for (y = 0 ; y < uint32(thumb.height()) ; ++y)
         {
             i = 0;
 
-            for (x = 0 ; x < uint32(thumb.width()) ; x++)
+            for (x = 0 ; x < uint32(thumb.width()) ; ++x)
             {
                 pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
 
@@ -835,7 +836,7 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
 
     dp += 8;
 
-    for (i=0; i < (long) length; i++)
+    for (i=0; i < (long) length; ++i)
     {
         if (i%36 == 0)
             *dp++='\n';

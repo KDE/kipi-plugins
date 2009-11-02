@@ -262,7 +262,7 @@ void Plugin_MetadataEdit::slotImportExif()
         m_lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importEXIFFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
-                                                  QString::null, kapp->activeWindow(),
+                                                  QString(), kapp->activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
@@ -429,7 +429,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         m_lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importIPTCFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
-                                                  QString::null, kapp->activeWindow(),
+                                                  QString(), kapp->activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
@@ -596,7 +596,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         m_lastSelectedDirectory = images.images().first().upUrl();
     }
     KUrl importXMPFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
-                                                 QString::null, kapp->activeWindow(),
+                                                 QString(), kapp->activeWindow(),
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
@@ -792,7 +792,7 @@ void Plugin_MetadataEdit::slotRemoveComments()
         if (dlg->removeHOSTCommentIsChecked())
         {
             KIPI::ImageInfo info = m_interface->info(url);
-            info.setDescription(QString::null);
+            info.setDescription(QString());
         }
 
         KExiv2Iface::KExiv2 exiv2Iface;

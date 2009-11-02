@@ -323,10 +323,10 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
             {
                 // If datetime information couldn't be loaded, display a
                 // warning and disable the datetime widget.
-                QString warning = QString(i18n("<font color=\"red\"><b>Could not "
-                                          "obtain date and time information "
-                                          "from image %1.</b></font>")).
-                                          arg(imageFile.fileName());
+                QString warning = i18n("<font color=\"red\"><b>Could not "
+                                       "obtain date and time information "
+                                       "from image %1.</b></font>").
+                                       arg(imageFile.fileName());
                 d->imageLabel->setText(warning);
             }
         }
@@ -335,9 +335,9 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
     {
         // If the image couldn't be loaded, display a warning, disable all the
         // GUI elements and load an empty photo into d->image.
-        QString warning = QString(i18n("<font color=\"red\"><b>Could not load "
-                                       "image %1.</b></font>")).
-                                       arg(imageFile.fileName());
+        QString warning = i18n("<font color=\"red\"><b>Could not load "
+                               "image %1.</b></font>").
+                               arg(imageFile.fileName());
         d->imageLabel->setText(warning);
     }
 

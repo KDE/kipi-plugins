@@ -113,14 +113,14 @@ void ImageGenerationFunctor::operator()(ImageElement& element) {
 	// Save full
 	QString fullFileName;
 	if (mInfo->useOriginalImageAsFullImage()) {
-		fullFileName = baseFileName + "." + imageFormat.toLower();
-		if (!writeDataToFile(imageData, mDestDir + "/" + fullFileName)) {
+		fullFileName = baseFileName + '.' + imageFormat.toLower();
+		if (!writeDataToFile(imageData, mDestDir + '/' + fullFileName)) {
 			return;
 		}
 
 	} else {
-		fullFileName = baseFileName + "." + mInfo->fullFormatString().toLower();
-		QString destPath = mDestDir + "/" + fullFileName;
+		fullFileName = baseFileName + '.' + mInfo->fullFormatString().toLower();
+		QString destPath = mDestDir + '/' + fullFileName;
 		if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
 			emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
 			return;
@@ -132,7 +132,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element) {
 	// Save original
 	if (mInfo->copyOriginalImage()) {
 		QString originalFileName = "original_" + fullFileName;
-		if (!writeDataToFile(imageData, mDestDir + "/" + originalFileName)) {
+		if (!writeDataToFile(imageData, mDestDir + '/' + originalFileName)) {
 			return;
 		}
 		element.mOriginalFileName = originalFileName;
@@ -140,8 +140,8 @@ void ImageGenerationFunctor::operator()(ImageElement& element) {
 	}
 
 	// Save thumbnail
-	QString thumbnailFileName = "thumb_" + baseFileName + "." + mInfo->thumbnailFormatString().toLower();
-	QString destPath = mDestDir + "/" + thumbnailFileName;
+	QString thumbnailFileName = "thumb_" + baseFileName + '.' + mInfo->thumbnailFormatString().toLower();
+	QString destPath = mDestDir + '/' + thumbnailFileName;
 	if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
 		mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
 		return;

@@ -534,14 +534,14 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);
     if (!data.isNull())
     {
-        QString typeSec = data.section(":", 0, 0);
+        QString typeSec = data.section(':', 0, 0);
         if (!typeSec.isEmpty())
         {
             int type = typeSec.toInt()-1;
             if (type >= 0 && type < 3)
             {
                 d->objectTypeCB->setCurrentIndex(type);
-                d->objectTypeDescEdit->setText(data.section(":", -1));
+                d->objectTypeDescEdit->setText(data.section(':', -1));
                 d->objectTypeCheck->setChecked(true);
             }
             else

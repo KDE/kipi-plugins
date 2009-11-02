@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#include "cropframe.moc"
 #include "cropframe.h"
+#include "cropframe.moc"
 
 // C++ includes
 

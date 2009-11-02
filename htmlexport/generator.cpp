@@ -110,7 +110,7 @@ QByteArray makeXsltParam(const QString& txt) {
             param+= ", \"'\", ";
             param+= apos + *it + apos;
         }
-        param+= ")";
+        param+= ')';
     }
     //kdDebug() << "param: " << txt << " => " << param;
     return param.toUtf8();
@@ -228,7 +228,7 @@ struct Generator::Private {
             KIPI::ImageCollection collection=*collectionIt;
 
             QString collectionFileName = webifyFileName(collection.name());
-            QString destDir = baseDestDir + "/" + collectionFileName;
+            QString destDir = baseDestDir + '/' + collectionFileName;
             if (!createDir(destDir)) return false;
 
             XMLElement collectionX(xmlWriter, "collection");

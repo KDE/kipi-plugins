@@ -258,12 +258,12 @@ void PrintHelper::print ( KUrl::List fileList )
           // create AtkinsPageLayout
           AtkinsPageLayout layout(rect);
           // add all items
-          for (j=0; i+j<fileList.count() && j<pages; j++)
+          for (j=0; i+j<fileList.count() && j<pages; ++j)
           {
               layout.addLayoutItem(j, d->m_photos.at(i+j)->size());
           }
           // retrieve rectangles for all items
-          for (j=0; i+j<fileList.count() && j<pages; j++)
+          for (j=0; i+j<fileList.count() && j<pages; ++j)
           {
               QImage image = d->m_photos.at(i+j)->loadPhoto();
               painter.drawImage (layout.itemRect(j) , image );

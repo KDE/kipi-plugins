@@ -69,7 +69,6 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "swwindow.h"
 #include "switem.h"
 #include "swconnector.h"
 #include "swwidget.h"
