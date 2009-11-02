@@ -109,7 +109,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
 
     m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
                                           i18n("Create new Shwup album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18n("album list", "Reload"), "view-refresh",
+    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18nc("album list", "Reload"), "view-refresh",
                                           i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albLbl,              0, 0, 1, 1);
