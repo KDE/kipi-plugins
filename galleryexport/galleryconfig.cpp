@@ -75,11 +75,11 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     centerLayout->addWidget(mpPasswordEdit, 3, 1);
 
     QLabel* namelabel = new QLabel(this);
-    namelabel->setText(i18n("Name:"));
+    namelabel->setText(i18nc("gallery login settings", "Name:"));
     centerLayout->addWidget(namelabel, 0, 0);
 
     QLabel* urlLabel = new QLabel(this);
-    urlLabel->setText(i18n("URL:"));
+    urlLabel->setText(i18nc("gallery login settings", "URL:"));
     centerLayout->addWidget(urlLabel, 1, 0);
 
     QLabel* usernameLabel = new QLabel(this);
@@ -87,7 +87,7 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     centerLayout->addWidget(usernameLabel, 2, 0);
 
     QLabel* passwdLabel = new QLabel(this);
-    passwdLabel->setText(i18n("Password:"));
+    passwdLabel->setText(i18nc("gallery login settings", "Password:"));
     centerLayout->addWidget(passwdLabel, 3, 0);
 
     //---------------------------------------------

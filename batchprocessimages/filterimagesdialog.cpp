@@ -86,16 +86,16 @@ FilterImagesDialog::FilterImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
     m_labelType->setText(i18n("Filter:"));
 
-    m_Type->addItem(i18n("Add Noise"));       // 0
-    m_Type->addItem(i18n("Antialias"));
-    m_Type->addItem(i18n("Blur"));
-    m_Type->addItem(i18n("Despeckle"));
-    m_Type->addItem(i18n("Enhance"));         // 4
-    m_Type->addItem(i18n("Median"));
-    m_Type->addItem(i18n("Noise Reduction"));
-    m_Type->addItem(i18n("Sharpen"));
-    m_Type->addItem(i18n("Unsharp"));         // 8
-    m_Type->setCurrentItem(i18n("Sharpen"));
+    m_Type->addItem(i18nc("image filter", "Add Noise"));       // 0
+    m_Type->addItem(i18nc("image filter", "Antialias"));
+    m_Type->addItem(i18nc("image filter", "Blur"));
+    m_Type->addItem(i18nc("image filter", "Despeckle"));
+    m_Type->addItem(i18nc("image filter", "Enhance"));         // 4
+    m_Type->addItem(i18nc("image filter", "Median"));
+    m_Type->addItem(i18nc("image filter", "Noise Reduction"));
+    m_Type->addItem(i18nc("image filter", "Sharpen"));
+    m_Type->addItem(i18nc("image filter", "Unsharp"));         // 8
+    m_Type->setCurrentItem(i18nc("image filter", "Sharpen"));
     QString whatsThis = i18n(
                             "<p>Select here the filter type for your images:</p>"
                             "<p>"
@@ -219,7 +219,7 @@ void FilterImagesDialog::readSettings()
     KConfigGroup group = config.group("FilterImages Settings");
 
     m_Type->setCurrentIndex(group.readEntry("FilterType", 7));      // Sharpen per default
-    m_noiseType          = group.readEntry("NoiseType", i18n("Gaussian"));
+    m_noiseType          = group.readEntry("NoiseType", i18nc("image noise type", "Gaussian"));
     m_blurRadius         = group.readEntry("BlurRadius", 3);
     m_blurDeviation      = group.readEntry("BlurDeviation", 1);
     m_medianRadius       = group.readEntry("MedianRadius", 3);
@@ -271,12 +271,12 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     if (m_Type->currentIndex() == 0)
     { // Add noise
         QString Temp;
-        if (m_noiseType == i18n("Uniform")) Temp = "Uniform";
-        if (m_noiseType == i18n("Gaussian")) Temp = "Gaussian";
-        if (m_noiseType == i18n("Multiplicative")) Temp = "Multiplicative";
-        if (m_noiseType == i18n("Impulse")) Temp = "Impulse";
-        if (m_noiseType == i18n("Laplacian")) Temp = "Laplacian";
-        if (m_noiseType == i18n("Poisson")) Temp = "Poisson";
+        if (m_noiseType == i18nc("image noise type", "Uniform")) Temp = "Uniform";
+        if (m_noiseType == i18nc("image noise type", "Gaussian")) Temp = "Gaussian";
+        if (m_noiseType == i18nc("image noise type", "Multiplicative")) Temp = "Multiplicative";
+        if (m_noiseType == i18nc("image noise type", "Impulse")) Temp = "Impulse";
+        if (m_noiseType == i18nc("image noise type", "Laplacian")) Temp = "Laplacian";
+        if (m_noiseType == i18nc("image noise type", "Poisson")) Temp = "Poisson";
         *proc << "+noise" << Temp;
     }
 

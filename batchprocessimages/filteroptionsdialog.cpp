@@ -70,12 +70,12 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
     if (FilterType == 0)
     { // Add noise
         m_noiseType = new KComboBox(false, box);
-        m_noiseType->addItem(i18n("Uniform"));
-        m_noiseType->addItem(i18n("Gaussian"));
-        m_noiseType->addItem(i18n("Multiplicative"));
-        m_noiseType->addItem(i18n("Impulse"));
-        m_noiseType->addItem(i18n("Laplacian"));
-        m_noiseType->addItem(i18n("Poisson"));
+        m_noiseType->addItem(i18nc("image noise type", "Uniform"));
+        m_noiseType->addItem(i18nc("image noise type", "Gaussian"));
+        m_noiseType->addItem(i18nc("image noise type", "Multiplicative"));
+        m_noiseType->addItem(i18nc("image noise type", "Impulse"));
+        m_noiseType->addItem(i18nc("image noise type", "Laplacian"));
+        m_noiseType->addItem(i18nc("image noise type", "Poisson"));
         m_noiseType->setWhatsThis(i18n("Select here the algorithm method which will used "
                                        "to add random noise to the images."));
         layout->addRow(i18n("Noise algorithm:"), m_noiseType);

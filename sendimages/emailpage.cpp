@@ -87,7 +87,7 @@ EmailPage::EmailPage(QWidget* parent)
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new KComboBox(this);
-    d->mailAgentName->insertItem(EmailSettingsContainer::DEFAULT,       i18n("Default"));
+    d->mailAgentName->insertItem(EmailSettingsContainer::DEFAULT,       i18nc("default mail agent", "Default"));
     d->mailAgentName->insertItem(EmailSettingsContainer::BALSA,         "Balsa");
     d->mailAgentName->insertItem(EmailSettingsContainer::CLAWSMAIL,     "Claws Mail");
     d->mailAgentName->insertItem(EmailSettingsContainer::EVOLUTION,     "Evolution");

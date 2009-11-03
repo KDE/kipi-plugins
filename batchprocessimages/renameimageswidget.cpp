@@ -587,7 +587,7 @@ void RenameImagesWidget::slotNext()
 
     if (skip)
     {
-        item->changeResult(i18n("Skipped"));
+        item->changeResult(i18nc("batch process result", "Skipped"));
     }
     else
     {
@@ -599,11 +599,11 @@ void RenameImagesWidget::slotNext()
         {
             srcInfo.setTitle(dst.fileName());
 
-            item->changeResult(i18n("OK"));
+            item->changeResult(i18nc("batch process result", "OK"));
         }
         else
         {
-            item->changeResult(i18n("Failed"));
+            item->changeResult(i18nc("batch process result", "Failed"));
         }
     }
 

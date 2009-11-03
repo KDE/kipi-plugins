@@ -665,7 +665,7 @@ void GalleryWindow::slotNewAlbum()
 
     if (!clean)
     {
-        KMessageBox::error(this, i18n("Sorry, these characters are not allowed in album name: \\ / * ? \" \' & < > | . + # ( ) or spaces"));
+        KMessageBox::error(this, i18n("Sorry, these characters are not allowed in album name: \\ / * ? \" \' & &lt; &gt; | . + # ( ) or spaces"));
         return;
     }
 

@@ -286,7 +286,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->adjDaysInput = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
-    d->adjDaysLabel = new QLabel(i18n("days"), d->adjustGroupBox);
+    d->adjDaysLabel = new QLabel(i18nc("time adjust offset, days value label", "days"), d->adjustGroupBox);
     d->adjTimeInput = new QTimeEdit(d->adjustGroupBox);
     d->adjTimeInput->setDisplayFormat("hh:mm:ss");
     d->adjDetByClockPhotoBtn = new QPushButton(i18n("Determine from clock photo"));
