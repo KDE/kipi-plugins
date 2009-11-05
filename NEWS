@@ -7,4 +7,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> BatchProcessImages : 213164 : kipi convert images: 16 bit png from 8 bit bmp.
+002 ==> 
