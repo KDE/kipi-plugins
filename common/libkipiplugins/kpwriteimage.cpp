@@ -29,8 +29,8 @@
 
 extern "C"
 {
-#include <unistd.h>
 #ifndef _WIN32
+#include <unistd.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #endif
