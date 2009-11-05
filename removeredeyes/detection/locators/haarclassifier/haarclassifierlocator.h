@@ -26,6 +26,9 @@
 
 // OpenCV includes
 
+// To avoid broken compilation with OpenCV >= 2.0
+#undef HAVE_CONFIG_H
+
 #ifdef WIN32
 #include <cv.h>
 #include <highgui.h>
