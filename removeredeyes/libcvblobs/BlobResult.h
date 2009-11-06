@@ -34,7 +34,7 @@
 // C++ includes
 
 #include <cmath>
-#include <vector>        // vectors de la STL
+#include <vector>
 #include <functional>
 
 // OpenCV includes
@@ -51,8 +51,6 @@
 #ifdef MATRIXCV_ACTIU
 #include <opencv/matrixCV.h>
 #else
-// llibreria STL
-#include <vector>
 //! Vector de doubles
 typedef std::vector<double> double_stl_vector;
 #endif // MATRIXCV_ACTIU
@@ -135,6 +133,7 @@ public:
     //! Computes some property on all the blobs of the class
     double_vector GetResult( funcio_calculBlob *evaluador ) const;
 #endif
+
     //! Calcula un valor sobre tots els blobs de la classe retornant un std::vector<double>
     //! Computes some property on all the blobs of the class
     double_stl_vector GetSTLResult( funcio_calculBlob *evaluador ) const;
@@ -167,7 +166,7 @@ public:
     void PrintBlobs( char *nom_fitxer ) const;
 
 
-//Metodes GET/SET
+    //Methodes GET/SET
 
     //! Retorna el total de blobs
     //! Gets the total number of blobs
@@ -186,7 +185,7 @@ protected:
 
     //! Vector amb els blobs
     //! Vector with all the blobs
-    blob_vector        m_blobs;
+    blob_vector m_blobs;
 };
 
 } // namespace KIPIRemoveRedEyesPlugin

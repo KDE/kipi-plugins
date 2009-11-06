@@ -171,8 +171,6 @@ CBlobResult::CBlobResult( const CBlobResult &source )
     }
 }
 
-
-
 /**
 - FUNCI�: ~CBlobResult
 - FUNCIONALITAT: Destructor estandard.
@@ -378,7 +376,8 @@ double_vector CBlobResult::GetResult( funcio_calculBlob *evaluador ) const
     }
     return result;
 }
-#endif
+
+#endif /* MATRIXCV_ACTIU */
 
 /**
 - FUNCI�: GetSTLResult
@@ -459,6 +458,7 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 {
     if( indexBlob < 0 || indexBlob >= GetNumBlobs() )
         RaiseError( EXCEPTION_BLOB_OUT_OF_BOUNDS );
+
     return (*evaluador)( *m_blobs[indexBlob] );
 }
 
@@ -521,7 +521,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                          int condition,
                          double lowLimit, double highLimit /*=0*/)
 {
-    int i, numBlobs;
+    int  i, numBlobs;
     bool resultavaluacio;
     double_stl_vector avaluacioBlobs;
     double_stl_vector::iterator itavaluacioBlobs;
@@ -545,6 +545,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_NOT_EQUAL:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -556,6 +557,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_GREATER:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -567,6 +569,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_LESS:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -578,6 +581,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_GREATER_OR_EQUAL:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -589,6 +593,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_LESS_OR_EQUAL:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -600,6 +605,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_INSIDE:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -611,6 +617,7 @@ void CBlobResult::Filter(CBlobResult &dst,
                 }
             }
             break;
+
         case B_OUTSIDE:
             for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
             {
@@ -631,11 +638,13 @@ void CBlobResult::Filter(CBlobResult &dst,
         // esborrem els primers blobs ( que s�n els originals )
         // ja que els tindrem replicats al final si passen el filtre
         blob_vector::iterator itBlobs = m_blobs.begin();
+
         for( int i = 0; i < numBlobs; ++i )
         {
             delete *itBlobs;
             ++itBlobs;
         }
+
         m_blobs.erase( m_blobs.begin(), itBlobs );
     }
 }
@@ -740,13 +749,14 @@ void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst 
     double_stl_vector::const_iterator itAvaluacio = avaluacioBlobs.begin();
 
     bool trobatBlob = false;
-    int indexBlob = 0;
+    int  indexBlob  = 0;
+    
     while( itAvaluacio != avaluacioBlobs.end() && !trobatBlob )
     {
         if( *itAvaluacio == valorEnessim )
         {
             trobatBlob = true;
-            dst = CBlob( GetBlob(indexBlob));
+            dst        = CBlob( GetBlob(indexBlob));
         }
         ++itAvaluacio;
         ++indexBlob;
@@ -820,17 +830,18 @@ void CBlobResult::RaiseError(const int errorCode) const
     // estem en mode debug?
 #ifdef _DEBUG
 
-	switch (errorCode)
+    switch (errorCode)
     {
-		case EXCEPTION_BLOB_OUT_OF_BOUNDS:
-			kDebug() << "Error en CBlobResult: Intentant accedir a un blob no existent";
-			break;
-		default:
-			kDebug() << "Error en CBlobResult: Codi d'error desconegut";
-			break;
-    }
+        case EXCEPTION_BLOB_OUT_OF_BOUNDS:
+            kDebug() << "Error en CBlobResult: Intentant accedir a un blob no existent";
+        break;
 
+        default:
+            kDebug() << "Error en CBlobResult: Codi d'error desconegut";
+        break;
+    }
 #endif
+
     throw errorCode;
 }
 
@@ -871,14 +882,14 @@ void CBlobResult::PrintBlobs( char *nom_fitxer ) const
     int i;
     FILE *fitxer_sortida;
 
-    area			= GetSTLResult( CBlobGetArea());
-    perimetre		= GetSTLResult( CBlobGetPerimeter());
-    exterior		= GetSTLResult( CBlobGetExterior());
-    mitjana			= GetSTLResult( CBlobGetMean());
+    area            = GetSTLResult(CBlobGetArea());
+    perimetre       = GetSTLResult(CBlobGetPerimeter());
+    exterior        = GetSTLResult(CBlobGetExterior());
+    mitjana         = GetSTLResult(CBlobGetMean());
     compacitat      = GetSTLResult(CBlobGetCompactness());
-    longitud        = GetSTLResult( CBlobGetLength());
-    externPerimeter = GetSTLResult( CBlobGetExternPerimeter());
-    perimetreConvex = GetSTLResult( CBlobGetHullPerimeter());
+    longitud        = GetSTLResult(CBlobGetLength());
+    externPerimeter = GetSTLResult(CBlobGetExternPerimeter());
+    perimetreConvex = GetSTLResult(CBlobGetHullPerimeter());
 
     fitxer_sortida = fopen( nom_fitxer, "w" );
 
