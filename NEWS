@@ -8,4 +8,5 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> BatchProcessImages : 213164 : kipi convert images: 16 bit png from 8 bit bmp.
-002 ==> 
+002 ==> BatchProcessImages : 212118 : Rename images: sorting based on the exif date of an image.
+003 ==> 
