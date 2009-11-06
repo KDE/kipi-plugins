@@ -66,28 +66,28 @@ namespace KIPIRemoveRedEyesPlugin
 */
 CBlob::CBlob()
 {
-    etiqueta = -1;        // Flag indicates null region
-    exterior = 0;
-    area = 0.0f;
-    perimeter = 0.0f;
-    parent = -1;
-    minx = LONG_MAX;
-    maxx = 0;
-    miny = LONG_MAX;
-    maxy = 0;
-    sumx = 0;
-    sumy = 0;
-    sumxx = 0;
-    sumyy = 0;
-    sumxy = 0;
-    mean = 0;
-    stddev = 0;
+    etiqueta        = -1;        // Flag indicates null region
+    exterior        = 0;
+    area            = 0.0f;
+    perimeter       = 0.0f;
+    parent          = -1;
+    minx            = LONG_MAX;
+    maxx            = 0;
+    miny            = LONG_MAX;
+    maxy            = 0;
+    sumx            = 0;
+    sumy            = 0;
+    sumxx           = 0;
+    sumyy           = 0;
+    sumxy           = 0;
+    mean            = 0;
+    stddev          = 0;
     externPerimeter = 0;
 
     m_storage = cvCreateMemStorage(0);
-    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-                          sizeof(CvContour),
-                          sizeof(CvPoint),m_storage);
+    edges     = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                             sizeof(CvContour),
+                             sizeof(CvPoint),m_storage);
 }
 
 /**
@@ -110,25 +110,25 @@ CBlob::CBlob()
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-CBlob::CBlob( const CBlob &src )
+CBlob::CBlob( const CBlob& src )
 {
     // copiem les propietats del blob origen a l'actual
-    etiqueta = src.etiqueta;
-    exterior = src.exterior;
-    area = src.Area();
-    perimeter = src.Perimeter();
-    parent = src.parent;
-    minx = src.minx;
-    maxx = src.maxx;
-    miny = src.miny;
-    maxy = src.maxy;
-    sumx = src.sumx;
-    sumy = src.sumy;
-    sumxx = src.sumxx;
-    sumyy = src.sumyy;
-    sumxy = src.sumxy;
-    mean = src.mean;
-    stddev = src.stddev;
+    etiqueta        = src.etiqueta;
+    exterior        = src.exterior;
+    area            = src.Area();
+    perimeter       = src.Perimeter();
+    parent          = src.parent;
+    minx            = src.minx;
+    maxx            = src.maxx;
+    miny            = src.miny;
+    maxy            = src.maxy;
+    sumx            = src.sumx;
+    sumy            = src.sumy;
+    sumxx           = src.sumxx;
+    sumyy           = src.sumyy;
+    sumxy           = src.sumxy;
+    mean            = src.mean;
+    stddev          = src.stddev;
     externPerimeter = src.externPerimeter;
 
     // copiem els edges del blob origen a l'actual
@@ -138,9 +138,9 @@ CBlob::CBlob( const CBlob &src )
 
     // creem una sequencia buida per als edges
     m_storage = cvCreateMemStorage(0);
-    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-                               sizeof(CvContour),
-                               sizeof(CvPoint),m_storage);
+    edges     = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                             sizeof(CvContour),
+                             sizeof(CvPoint),m_storage);
 
     cvStartReadSeq( src.Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
@@ -156,22 +156,22 @@ CBlob::CBlob( const CBlob &src )
 CBlob::CBlob( const CBlob *src )
 {
     // copiem les propietats del blob origen a l'actual
-    etiqueta = src->etiqueta;
-    exterior = src->exterior;
-    area = src->Area();
-    perimeter = src->Perimeter();
-    parent = src->parent;
-    minx = src->minx;
-    maxx = src->maxx;
-    miny = src->miny;
-    maxy = src->maxy;
-    sumx = src->sumx;
-    sumy = src->sumy;
-    sumxx = src->sumxx;
-    sumyy = src->sumyy;
-    sumxy = src->sumxy;
-    mean = src->mean;
-    stddev = src->stddev;
+    etiqueta        = src->etiqueta;
+    exterior        = src->exterior;
+    area            = src->Area();
+    perimeter       = src->Perimeter();
+    parent          = src->parent;
+    minx            = src->minx;
+    maxx            = src->maxx;
+    miny            = src->miny;
+    maxy            = src->maxy;
+    sumx            = src->sumx;
+    sumy            = src->sumy;
+    sumxx           = src->sumxx;
+    sumyy           = src->sumyy;
+    sumxy           = src->sumxy;
+    mean            = src->mean;
+    stddev          = src->stddev;
     externPerimeter = src->externPerimeter;
 
     // copiem els edges del blob origen a l'actual
@@ -181,9 +181,9 @@ CBlob::CBlob( const CBlob *src )
 
     // creem una sequencia buida per als edges
     m_storage = cvCreateMemStorage(0);
-    edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-                               sizeof(CvContour),
-                               sizeof(CvPoint),m_storage);
+    edges     = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                             sizeof(CvContour),
+                             sizeof(CvPoint),m_storage);
 
     cvStartReadSeq( src->Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
@@ -261,27 +261,27 @@ CBlob& CBlob::operator=(const CBlob &src )
 
         // creem una sequencia buida per als edges
         m_storage = cvCreateMemStorage(0);
-        edges = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
-                                   sizeof(CvContour),
-                                   sizeof(CvPoint),m_storage);
+        edges     = cvCreateSeq( CV_SEQ_KIND_GENERIC|CV_32SC2,
+                                 sizeof(CvContour),
+                                 sizeof(CvPoint),m_storage);
 
         // copiem les propietats del blob origen a l'actual
-        etiqueta = src.etiqueta;
-        exterior = src.exterior;
-        area = src.Area();
-        perimeter = src.Perimeter();
-        parent = src.parent;
-        minx = src.minx;
-        maxx = src.maxx;
-        miny = src.miny;
-        maxy = src.maxy;
-        sumx = src.sumx;
-        sumy = src.sumy;
-        sumxx = src.sumxx;
-        sumyy = src.sumyy;
-        sumxy = src.sumxy;
-        mean = src.mean;
-        stddev = src.stddev;
+        etiqueta        = src.etiqueta;
+        exterior        = src.exterior;
+        area            = src.Area();
+        perimeter       = src.Perimeter();
+        parent          = src.parent;
+        minx            = src.minx;
+        maxx            = src.maxx;
+        miny            = src.miny;
+        maxy            = src.maxy;
+        sumx            = src.sumx;
+        sumy            = src.sumy;
+        sumxx           = src.sumxx;
+        sumyy           = src.sumyy;
+        sumxy           = src.sumxy;
+        mean            = src.mean;
+        stddev          = src.stddev;
         externPerimeter = src.externPerimeter;
 
         // copiem els edges del blob origen a l'actual
@@ -341,7 +341,7 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
     vectorPunts vectorEdges = vectorPunts( edges->total );
     vectorPunts::iterator itEdges, itEdgesSeguent;
     bool dinsBlob;
-    int yActual;
+    int  yActual;
 
     // passem els punts del blob a un vector de punts de les STL
     cvStartReadSeq( edges, &reader);
@@ -356,9 +356,9 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
     std::sort( vectorEdges.begin(), vectorEdges.end(), comparaCvPoint() );
 
     // recorrem el vector ordenat i fem linies entre punts consecutius
-    itEdges = vectorEdges.begin();
+    itEdges        = vectorEdges.begin();
     itEdgesSeguent = vectorEdges.begin() + 1;
-    dinsBlob = true;
+    dinsBlob       = true;
     while( itEdges != (vectorEdges.end() - 1))
     {
         yActual = (*itEdges).y;
@@ -369,7 +369,7 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
         {
             if( dinsBlob )
             {
-                pt1 = *itEdges;
+                pt1   = *itEdges;
                 pt1.x += offsetX;
                 pt1.y += offsetY;
 
@@ -381,9 +381,12 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
             }
             dinsBlob =! dinsBlob;
         }
+        
         ++itEdges;
         ++itEdgesSeguent;
-        if( (*itEdges).y != yActual ) dinsBlob = true;
+        
+        if( (*itEdges).y != yActual )
+            dinsBlob = true;
     }
     vectorEdges.clear();
 }
@@ -520,16 +523,14 @@ CvBox2D CBlob::GetEllipse() const
     }
     else
     {
-        elipse.center.x = 0.0;
-        elipse.center.y = 0.0;
-        elipse.size.width = 0.0;
+        elipse.center.x    = 0.0;
+        elipse.center.y    = 0.0;
+        elipse.size.width  = 0.0;
         elipse.size.height = 0.0;
-        elipse.angle = 0.0;
+        elipse.angle       = 0.0;
     }
     return elipse;
 }
-
-
 
 /***************************************************************************
   Implementaci� de les classes per al c�lcul de caracter�stiques sobre el blob
@@ -940,7 +941,7 @@ double CBlobGetBreadth::operator()(const CBlob &blob) const
     else
         ampladaC = (double) (blob.Perimeter())/4;
 
-    if(ampladaC<=0.0) return 0;
+    if(ampladaC <= 0.0) return 0;
     longitudC = (double) blob.Area()/ampladaC;
 
     return MIN( longitudC , ampladaC );
@@ -1024,9 +1025,9 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
     // recorrem el punts del blob de la mateixa fila que el punt d'entrada
     // i mirem si la X del punt d'entrada est� entre dos coordenades "plenes"
     // del blob
-    itEdges = vectorEdges.begin();
+    itEdges        = vectorEdges.begin();
     itEdgesSeguent = vectorEdges.begin() + 1;
-    dinsBlob = true;
+    dinsBlob       = true;
 
     while( itEdges != (vectorEdges.end() - 1) )
     {
@@ -1115,7 +1116,6 @@ void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob )
 
     // moments
     fabricaOperadorsBlob.Register( CBlobGetMoment().GetNom(), Type2Type<CBlobGetMoment>());
-
 }
 
 #endif /* BLOB_OBJECT_FACTORY */

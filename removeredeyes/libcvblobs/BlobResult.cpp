@@ -325,7 +325,6 @@ void CBlobResult::AddBlob( CBlob *blob )
         m_blobs.push_back( new CBlob( blob ) );
 }
 
-
 #ifdef MATRIXCV_ACTIU
 
 /**
@@ -515,7 +514,7 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlobResult::Filter(CBlobResult &dst,
+void CBlobResult::Filter(CBlobResult& dst,
                          int filterAction,
                          funcio_calculBlob *evaluador,
                          int condition,
@@ -535,7 +534,7 @@ void CBlobResult::Filter(CBlobResult &dst,
     switch(condition)
     {
         case B_EQUAL:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs == lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -547,7 +546,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_NOT_EQUAL:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio = *itavaluacioBlobs != lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -559,7 +558,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_GREATER:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs > lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -571,7 +570,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_LESS:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs < lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -583,7 +582,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_GREATER_OR_EQUAL:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs>= lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -595,7 +594,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_LESS_OR_EQUAL:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs <= lowLimit;
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -607,7 +606,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_INSIDE:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs >= lowLimit) && ( *itavaluacioBlobs <= highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -619,7 +618,7 @@ void CBlobResult::Filter(CBlobResult &dst,
             break;
 
         case B_OUTSIDE:
-            for(i=0;i<numBlobs;++i, ++itavaluacioBlobs)
+            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs < lowLimit) || ( *itavaluacioBlobs > highLimit);
                 if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
@@ -845,12 +844,9 @@ void CBlobResult::RaiseError(const int errorCode) const
     throw errorCode;
 }
 
-
-
 /**************************************************************************
         Auxiliars / Auxiliary functions
 **************************************************************************/
-
 
 /**
 - FUNCI�: PrintBlobs
@@ -875,7 +871,7 @@ void CBlobResult::RaiseError(const int errorCode) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlobResult::PrintBlobs( char *nom_fitxer ) const
+void CBlobResult::PrintBlobs( char* nom_fitxer ) const
 {
     double_stl_vector area, /*perimetre,*/ exterior, mitjana, compacitat, longitud,
                       externPerimeter, perimetreConvex, perimetre;

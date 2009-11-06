@@ -33,15 +33,15 @@
 
 //! si la imatge �s c�clica verticalment (els blobs que toquen
 //! les vores superior i inferior no es consideren externs)
-#define IMATGE_CICLICA_VERTICAL        1
+#define IMATGE_CICLICA_VERTICAL     1
 //! si la imatge �s c�clica horitzontalment (els blobs que toquen
 //! les vores dreta i esquerra no es consideren externs)
-#define IMATGE_CICLICA_HORITZONTAL    0
+#define IMATGE_CICLICA_HORITZONTAL  0
 
-#define PERIMETRE_DIAGONAL (1.41421356237310 - 2)
-#define SQRT2    1.41421356237310
+#define PERIMETRE_DIAGONAL          (1.41421356237310 - 2)
+#define SQRT2                       1.41421356237310
 // color dels p�xels de la m�scara per ser exteriors
-#define PIXEL_EXTERIOR 0
+#define PIXEL_EXTERIOR              0
 
 // -----------------------------------------------------------------
 
@@ -74,7 +74,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                     IplImage* maskImage,
                     bool borderColor,
                     bool findmoments,
-                    blob_vector &RegionData )
+                    blob_vector& RegionData )
 {
     // dimensions of input image taking in account the ROI
     int Cols, Rows, startCol, startRow;

@@ -66,19 +66,19 @@ typedef std::vector<double> double_stl_vector;
 
 //! accions que es poden fer amb els filtres
 //! Actions performed by a filter (include or exclude blobs)
-#define B_INCLUDE                1L
-#define B_EXCLUDE                2L
+#define B_INCLUDE                       1L
+#define B_EXCLUDE                       2L
 
 //! condicions sobre els filtres
 //! Conditions to apply the filters
-#define B_EQUAL                  3L
-#define B_NOT_EQUAL              4L
-#define B_GREATER                5L
-#define B_LESS                   6L
-#define B_GREATER_OR_EQUAL       7L
-#define B_LESS_OR_EQUAL          8L
-#define B_INSIDE                 9L
-#define B_OUTSIDE                10L
+#define B_EQUAL                         3L
+#define B_NOT_EQUAL                     4L
+#define B_GREATER                       5L
+#define B_LESS                          6L
+#define B_GREATER_OR_EQUAL              7L
+#define B_LESS_OR_EQUAL                 8L
+#define B_INSIDE                        9L
+#define B_OUTSIDE                       10L
 
 /**************************************************************************
     Excepcions / Exceptions
@@ -154,8 +154,8 @@ public:
 
     //! Retorna el blob en�ssim
     //! Gets the n-th blob of the class ( without sorting )
-    CBlob GetBlob(int indexblob) const;
-    CBlob *GetBlob(int indexblob);
+    CBlob  GetBlob(int indexblob) const;
+    CBlob* GetBlob(int indexblob);
 
     //! Elimina tots els blobs de l'objecte
     //! Clears all the blobs of the class
@@ -163,8 +163,7 @@ public:
 
     //! Escriu els blobs a un fitxer
     //! Prints some features of all the blobs in a file
-    void PrintBlobs( char *nom_fitxer ) const;
-
+    void PrintBlobs( char* nom_fitxer ) const;
 
     //Methodes GET/SET
 
