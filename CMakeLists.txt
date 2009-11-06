@@ -82,15 +82,15 @@ ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
 
-# LINUX Only.
-IF(NOT WIN32 AND NOT APPLE)
+# Only for platforms where ksane is compiled.
+IF(NOT APPLE)
     MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
-        IF(DEPEND_PACKAGE_KSane)
+    IF(DEPEND_PACKAGE_KSane)
         MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
     ELSE(DEPEND_PACKAGE_KSane)
         SET(KSANE_FOUND FALSE)
     ENDIF(DEPEND_PACKAGE_KSane)
-ENDIF(NOT WIN32 AND NOT APPLE)
+ENDIF(NOT APPLE)
 
 # ==================================================================================================
 # Log messages
