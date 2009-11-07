@@ -50,7 +50,6 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "filteroptionsdialog.h"
-#include "outputdialog.h"
 #include "imagepreview.h"
 
 namespace KIPIBatchProcessImagesPlugin

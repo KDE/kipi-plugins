@@ -51,7 +51,6 @@
 #include "dialogutils.h"
 #include "imagepreview.h"
 #include "kpaboutdata.h"
-#include "outputdialog.h"
 #include "pluginsversion.h"
 
 namespace KIPIBatchProcessImagesPlugin

@@ -49,7 +49,6 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "outputdialog.h"
 #include "pluginsversion.h"
 #include "recompressoptionsdialog.h"
 

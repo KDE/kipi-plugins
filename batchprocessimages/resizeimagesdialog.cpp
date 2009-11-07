@@ -52,7 +52,6 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "outputdialog.h"
 #include "pluginsversion.h"
 #include "resizeoptionsdialog.h"
 #include "resizecommandbuilder.h"
