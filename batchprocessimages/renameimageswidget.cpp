@@ -24,15 +24,6 @@
 #include "renameimageswidget.h"
 #include "renameimageswidget.moc"
 
-// C ANSI includes
-
-extern "C"
-{
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-}
-
 // C++ includes
 
 #include <cstdio>
@@ -66,6 +57,7 @@ extern "C"
 #include <kio/previewjob.h>
 #include <kio/renamedialog.h>
 #include <klocale.h>
+#include <kde_file.h>
 
 // LibKIPI includes
 
@@ -530,8 +522,8 @@ void RenameImagesWidget::slotNext()
 
     if (!m_overwriteAll)
     {
-        struct stat info;
-        while (::stat(QFile::encodeName(dst.path()), &info) == 0)
+        KDE_struct_stat info;
+        while (KDE_stat(QFile::encodeName(dst.path()), &info) == 0)
         {
             if (m_autoSkip)
             {
@@ -594,7 +586,7 @@ void RenameImagesWidget::slotNext()
         // Get the src info
         KIPI::ImageInfo srcInfo = m_interface->info(src);
 
-        if (::rename(QFile::encodeName(src.path()),
+        if (KDE_rename(QFile::encodeName(src.path()),
                      QFile::encodeName(dst.path())) == 0)
         {
             srcInfo.setTitle(dst.fileName());
