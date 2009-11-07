@@ -135,7 +135,7 @@ protected:
      * @return return <code>true</code> if everything of the private handling
      *         was successful so that the base class can continue its own
      *         processing, false means there was an error, the dialog cannot
-     *         be closed and options should not be transfered to the command
+     *         be closed and options should not be transferred to the command
      *         builder
      */
     virtual bool handleOk() = 0;
