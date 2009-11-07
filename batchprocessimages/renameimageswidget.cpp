@@ -53,8 +53,6 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdeversion.h>
-#include <kio/previewjob.h>
 #include <kio/renamedialog.h>
 #include <klocale.h>
 #include <kde_file.h>
