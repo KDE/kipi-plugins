@@ -106,6 +106,7 @@ SET(OpenCV_INCDIR_SUFFIXES
 SET(OpenCV_LIBDIR_SUFFIXES
     lib
     OpenCV/lib
+    OpenCV2.0/lib
     otherlibs/_graphics/lib
    )
 
@@ -155,47 +156,56 @@ FIND_LIBRARY(OpenCV_CV_LIBRARY
 
 FIND_LIBRARY(OpenCV_CVAUX_LIBRARY
              NAMES cvaux cvaux200
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CVCAM_LIBRARY
              NAMES cvcam
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CVHAARTRAINING_LIBRARY
              NAMES cvhaartraining
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CXCORE_LIBRARY
              NAMES cxcore cxcore200
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR} 
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_CXTS_LIBRARY
              NAMES cxts cxts200
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_HIGHGUI_LIBRARY
              NAMES highgui highgui200
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_ML_LIBRARY
              NAMES ml ml200
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_TRS_LIBRARY
              NAMES trs
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 FIND_LIBRARY(OpenCV_BLOB_LIBRARY
              NAMES blob
-             PATHS ${OpenCV_ROOT_DIR}  PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
+             PATHS ${OpenCV_ROOT_DIR}
+	     PATH_SUFFIXES ${OpenCV_LIBDIR_SUFFIXES} 
             )
 
 # Logic selecting required libs and headers
