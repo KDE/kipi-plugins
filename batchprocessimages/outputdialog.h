@@ -35,7 +35,7 @@
 
 #include "kpaboutdata.h"
 
-class QTextBrowser;
+class KTextBrowser;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -57,7 +57,7 @@ private Q_SLOTS:
 
 private:
 
-    QTextBrowser*             m_debugView;
+    KTextBrowser*             m_debugView;
 
     KIPIPlugins::KPAboutData* m_about;
 };

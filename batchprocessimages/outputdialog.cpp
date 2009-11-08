@@ -25,7 +25,6 @@
 
 // Qt includes
 
-#include <QTextBrowser>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLayout>
@@ -39,6 +38,7 @@
 #include <kmenu.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
+#include <ktextbrowser.h>
 
 // Local includes
 
@@ -83,7 +83,7 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
     QWidget* box        = new QWidget(this);
     QVBoxLayout *dvlay  = new QVBoxLayout(box);
     QLabel *labelHeader = new QLabel(Header, box);
-    m_debugView         = new QTextBrowser(box);
+    m_debugView         = new KTextBrowser(box);
     m_debugView->append(Messages);
 
     dvlay->addWidget(labelHeader);
