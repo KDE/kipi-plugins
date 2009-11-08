@@ -52,10 +52,10 @@ SET(kipiplugin_removeredeyes_PART_SRCS
     workerthread.cpp
     workerthreaddata.cpp
     ${savemethods_SRCS}
+    ${commonwidgets_SRCS}
     ${locators_SRCS}
     ${locators_haarclassifier_SRCS}
     ${libcvblobs_SRCS}
-    ${commonwidgets_SRCS}
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
