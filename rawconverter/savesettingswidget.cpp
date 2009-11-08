@@ -163,6 +163,8 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
         d->formatComboBox->insertItem( OUTPUT_JPEG, "JPEG" );
         d->formatComboBox->insertItem( OUTPUT_PPM,  "PPM" );
     }
+    
+    emit signalSaveFormatChanged();
 }
 
 } // namespace KIPIRawConverterPlugin
