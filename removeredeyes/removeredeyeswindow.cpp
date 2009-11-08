@@ -84,6 +84,7 @@ public:
         configKeywordNameEntry("Keyword Name"),
         configUnprocessedModeEntry("Unprocessed Mode"),
         configLocatorTypeEntry("Locator Type"),
+        configLocatorDefaultType("HaarClassifierLocator"),
 
         total(0),
         processed(0),
@@ -116,6 +117,7 @@ public:
     const QString             configKeywordNameEntry;
     const QString             configUnprocessedModeEntry;
     const QString             configLocatorTypeEntry;
+    const QString             configLocatorDefaultType;
 
     int                       total;
     int                       processed;
@@ -367,8 +369,12 @@ void RemoveRedEyesWindow::readSettings()
     d->saveMethod = SaveMethodFactory::create(storageMode);
 
     // load locator
-    QString locatorType = group.readEntry(d->configLocatorTypeEntry, "HaarClassifierLocator");
-    loadLocator(locatorType);
+    QString locatorType = group.readEntry(d->configLocatorTypeEntry, d->configLocatorDefaultType);
+
+    // If config file somehow has been messed up and readEntry() only delivers an empty string,
+    // force loading of the default locator in here (I had trouble with my kipirc once and wondered why the plugin
+    // is not working. I guess the value in the config file was a whitespace, which seems to be a valid entry (weird).
+    loadLocator(locatorType.isEmpty() ? d->configLocatorDefaultType : locatorType);
 
     updateSettings();
 }
