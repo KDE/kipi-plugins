@@ -30,16 +30,18 @@
 #  OpenCV_TRS_LIBRARY
 #  OpenCV_BLOB_LIBRARY
 #
-# 2008/11 Caulier Gilles
-# 2004/05 Jan Woetzel, Friso, Daniel Grest 
-# 2006/01 complete rewrite by Jan Woetzel
-# 1006/09 2nd rewrite introducing ROOT_DIR and PATH_SUFFIXES 
+# 2004/05 Initial rev. by Jan Woetzel, Friso, Daniel Grest 
+# 2006/01 Complete rewrite by Jan Woetzel
+# 2006/09 2nd rewrite introducing ROOT_DIR and PATH_SUFFIXES 
 #         to handle multiple installed versions gracefully by Jan Woetzel
+# 2008/11 Caulier Gilles: port to KDE4 for kdegraphics.
+# 2009/10 Caulier Gilles: support OpenCV 2.0
 #
 # tested with:
 # -OpenCV 0.97 (beta5a): MSVS 7.1, gcc 3.3, gcc 4.1
 # -OpenCV 0.99 (1.0rc1): MSVS 7.1
 # -OpenCV 1.1  (pre1)  : gcc 3.5
+# -OpenCV 2.0          : gcc 4.4 (linux)
 #
 # ------------------------------------------------------------------------------
 
