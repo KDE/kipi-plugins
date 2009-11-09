@@ -149,21 +149,27 @@ void SaveImgThread::run()
 
     bool ret = false;
 
+    QString path;
+    if(d->newUrl.isLocalFile())
+        path = d->newUrl.toLocalFile();
+    else
+        path = d->newUrl.path();
+
     if (d->format == QString("JPEG"))
     {
-        ret = wImageIface.write2JPEG(d->newUrl.path());
+        ret = wImageIface.write2JPEG(path);
     }
     else if (d->format == QString("PNG"))
     {
-        ret = wImageIface.write2PNG(d->newUrl.path());
+        ret = wImageIface.write2PNG(path);
     }
     else if (d->format == QString("TIFF"))
     {
-        ret = wImageIface.write2TIFF(d->newUrl.path());
+        ret = wImageIface.write2TIFF(path);
     }
     else
     {
-        ret = d->img.save(d->newUrl.path(), d->format.toAscii().data());
+        ret = d->img.save(path, d->format.toAscii().data());
     }
 
     emit signalComplete(d->newUrl, ret);
