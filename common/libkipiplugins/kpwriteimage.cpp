@@ -332,10 +332,28 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     return true;
 }
 
+static
+void _write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
+{
+    QIODevice* out = (QIODevice*)png_get_io_ptr(png_ptr);
+
+    uint nr = out->write((char*)data, length);
+    if (nr != length) {
+        png_error(png_ptr, "Write Error");
+        return;
+    }
+}
+
+static
+void _flush_fn(png_structp png_ptr)
+{
+    Q_UNUSED(png_ptr);
+}
+
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
-    FILE* file = fopen(QFile::encodeName(destPath), "wb");
-    if (!file)
+    QFile* file = new QFile(destPath);
+    if (!file->open(QIODevice::ReadWrite))
     {
         kDebug() << "Failed to open PNG file for writing" ;
         return false;
@@ -347,7 +365,8 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_bytep    row_ptr;
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
-    png_init_io(png_ptr, file);
+
+    png_set_write_fn(png_ptr, (void*)file, _write_fn, _flush_fn);
 
     if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)      // Intel
         png_set_bgr(png_ptr);
@@ -426,9 +445,10 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         if (cancel())
         {
             delete [] data;
-            fclose(file);
+            file->close();
             png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
             png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
+            delete file;
             return false;
         }
 
@@ -488,8 +508,8 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
-    fclose(file);
-
+    file->close();
+    delete file;
     return true;
 }
 
