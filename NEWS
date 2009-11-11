@@ -10,4 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> BatchProcessImages : 213164 : kipi convert images: 16 bit png from 8 bit bmp.
 002 ==> BatchProcessImages : 212118 : Rename images: sorting based on the exif date of an image.
 003 ==> RawConverter       : 213681 : Batch RAW converter: Activating 16bit allows jpeg.
-004 ==> 
+004 ==> JPEGLossLess       : 213889 : Segmentation fault at splash screen.
+005 ==> 
