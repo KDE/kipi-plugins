@@ -33,7 +33,7 @@
 
 #include <kurl.h>
 
-class QProgressDialog;
+class KProgressDialog;
 class QTimer;
 class QAction;
 class QTreeWidgetItem;
@@ -100,7 +100,7 @@ private:
     KIPI::Interface*            m_interface;
     KUrl::List                  m_urlList;
     QTimer*                     m_timer;
-    QProgressDialog*            m_progress;
+    KProgressDialog*            m_progress;
     bool                        m_overwriteAll;
     bool                        m_autoSkip;
 

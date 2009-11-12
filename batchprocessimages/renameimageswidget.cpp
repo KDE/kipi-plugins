@@ -33,7 +33,6 @@
 
 #include <QMenu>
 #include <QAction>
-#include <QProgressDialog>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QDir>
@@ -56,6 +55,7 @@
 #include <kio/renamedialog.h>
 #include <klocale.h>
 #include <kde_file.h>
+#include <kprogressdialog.h>
 
 // LibKIPI includes
 
@@ -152,14 +152,9 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
             this, SLOT(moveCurrentItemDown()));
 
     m_timer    = new QTimer(this);
-    m_progress = new QProgressDialog(this);
-    m_progress->setModal(true);
 
     connect(m_timer, SIGNAL(timeout()),
             this, SLOT(slotNext()));
-
-    connect(m_progress, SIGNAL(canceled()),
-            this, SLOT(slotAbort()));
 
     connect(m_interface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
             this, SLOT(slotGotPreview(const KUrl&, const QPixmap&)));
@@ -181,7 +176,6 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
 RenameImagesWidget::~RenameImagesWidget()
 {
     delete m_timer;
-    delete m_progress;
 
     saveSettings();
 
@@ -485,9 +479,16 @@ void RenameImagesWidget::slotStart()
     ui->m_listView->setCurrentItem(item);
     ui->m_listView->scrollToItem(item);
 
-    m_progress->setMaximum(ui->m_listView->topLevelItemCount());
-    m_progress->setValue(0);
-    m_progress->show();
+
+    m_progress = new KProgressDialog(this);
+    m_progress->setAutoReset(true);
+    m_progress->setAutoClose(true);
+    m_progress->progressBar()->setMaximum(ui->m_listView->topLevelItemCount());
+    m_progress->progressBar()->setValue(0);
+
+    connect(m_progress, SIGNAL(cancelClicked()),
+            this, SLOT(slotAbort()));
+
 
     m_overwriteAll = false;
     m_autoSkip     = false;
@@ -496,7 +497,7 @@ void RenameImagesWidget::slotStart()
 void RenameImagesWidget::slotAbort()
 {
     m_timer->stop();
-    m_progress->reset();
+    m_progress->progressBar()->reset();
     m_progress->hide();
 }
 
@@ -597,7 +598,7 @@ void RenameImagesWidget::slotNext()
         }
     }
 
-    m_progress->setValue(m_progress->value() + 1);
+    m_progress->progressBar()->setValue(m_progress->progressBar()->value() + 1);
 
     it = ui->m_listView->itemBelow(it);
     if (it)
