@@ -56,6 +56,7 @@ extern "C"
 #include "pluginsversion.h"
 #include "transupp.h"
 #include "jpegtransform.h"
+#include "kpwritehelp.h"
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -206,21 +207,19 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     dstinfo.err->emit_message   = jpegtransform_jpeg_emit_message;
     dstinfo.err->output_message = jpegtransform_jpeg_output_message;
 
-    FILE *input_file;
-    FILE *output_file;
+    QFile input_file(src);
+    QFile output_file(dest);
 
-    input_file = fopen(QFile::encodeName(src), "rb");
-    if (!input_file)
+    if (!input_file.open(QIODevice::ReadOnly))
     {
         kError() << "ImageRotate/ImageFlip: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
 
-    output_file = fopen(QFile::encodeName(dest), "wb");
-    if (!output_file)
+    if (!output_file.open(QIODevice::ReadWrite))
     {
-        fclose(input_file);
+        input_file.close();
         kError() << "ImageRotate/ImageFlip: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
@@ -230,15 +229,15 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     {
         jpeg_destroy_decompress(&srcinfo);
         jpeg_destroy_compress(&dstinfo);
-        fclose(input_file);
-        fclose(output_file);
+        input_file.close();
+        output_file.close();
         return false;
     }
 
     jpeg_create_decompress(&srcinfo);
     jpeg_create_compress(&dstinfo);
 
-    jpeg_stdio_src(&srcinfo, input_file);
+    kp_jpeg_qiodevice_src(&srcinfo, &input_file);
     jcopy_markers_setup(&srcinfo, copyoption);
 
     (void) jpeg_read_header(&srcinfo, true);
@@ -254,10 +253,10 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         dest = tempFile.fileName();
     }
 
-    output_file = fopen(QFile::encodeName(dest), "wb");
-    if (!output_file)
+    output_file.setFileName(dest);
+    if (!output_file.open(QIODevice::ReadWrite))
     {
-        fclose(input_file);
+        input_file.close();
         kError() << "ImageRotate/ImageFlip: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
@@ -278,7 +277,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
                                                    src_coef_arrays, &transformoption);
 
     // Specify data destination for compression
-    jpeg_stdio_dest(&dstinfo, output_file);
+    kp_jpeg_qiodevice_dest(&dstinfo, &output_file);
 
     // Do not write a JFIF header if previously the image did not contain it
     dstinfo.write_JFIF_header = false;
@@ -298,8 +297,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     (void) jpeg_finish_decompress(&srcinfo);
     jpeg_destroy_decompress(&srcinfo);
 
-    fclose(input_file);
-    fclose(output_file);
+    input_file.close();
+    output_file.close();
 
     // Flip if needed
     if (twoPass) 
@@ -312,24 +311,24 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         dstinfo.err = jpeg_std_error(&jdsterr);
         jpeg_create_compress(&dstinfo);
 
-        input_file = fopen(QFile::encodeName(dest), "rb");
-        if (!input_file)
+        input_file.setFileName(dest);
+        if (!input_file.open(QIODevice::ReadOnly))
         {
             kError() << "ImageRotate/ImageFlip: Error in opening input file";
             err = i18n("Error in opening input file");
             return false;
         }
 
-        output_file = fopen(QFile::encodeName(destGiven), "wb");
-        if (!output_file)
+        output_file.setFileName(destGiven);
+        if (!output_file.open(QIODevice::ReadWrite))
         {
-            fclose(input_file);
+            input_file.close();
             kError() << "ImageRotate/ImageFlip: Error in opening output file";
             err = i18n("Error in opening output file");
             return false;
         }
 
-        jpeg_stdio_src(&srcinfo, input_file);
+        kp_jpeg_qiodevice_src(&srcinfo, &input_file);
         jcopy_markers_setup(&srcinfo, copyoption);
 
         (void) jpeg_read_header(&srcinfo, true);
@@ -349,7 +348,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
                 &transformoption);
 
         // Specify data destination for compression
-        jpeg_stdio_dest(&dstinfo, output_file);
+        kp_jpeg_qiodevice_dest(&dstinfo, &output_file);
 
         // Do not write a JFIF header if previously the image did not contain it
         dstinfo.write_JFIF_header = false;
@@ -369,8 +368,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         (void) jpeg_finish_decompress(&srcinfo);
         jpeg_destroy_decompress(&srcinfo);
 
-        fclose(input_file);
-        fclose(output_file);
+        input_file.close();
+        output_file.close();
 
         // Unlink temp file
         unlink(QFile::encodeName(dest));
