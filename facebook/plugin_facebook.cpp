@@ -51,6 +51,7 @@ extern "C"
 // Local includes
 
 #include "fbwindow.h"
+#include "facebookjob.h"
 
 K_PLUGIN_FACTORY( FacebookFactory, registerPlugin<Plugin_Facebook>(); )
 K_EXPORT_PLUGIN ( FacebookFactory("kipiplugin_facebook") )
@@ -174,4 +175,10 @@ KIPI::Category Plugin_Facebook::category( KAction* action ) const
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
+}
+
+KJob* Plugin_Facebook::exportFiles(const QString& album)
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    return new KIPIFacebookPlugin::FacebookJob(album, interface->currentSelection().images());
 }

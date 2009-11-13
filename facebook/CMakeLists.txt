@@ -7,6 +7,7 @@ SET(kipiplugin_facebook_PART_SRCS
     fbalbum.cpp
     fbtalker.cpp
     mpform.cpp
+    facebookjob.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_facebook ${kipiplugin_facebook_PART_SRCS})

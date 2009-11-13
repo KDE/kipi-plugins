@@ -22,51 +22,37 @@
  *
  * ============================================================ */
 
-#ifndef PLUGIN_FACEBOOK_H
-#define PLUGIN_FACEBOOK_H
+#ifndef FACEBOOK_JOB_H
+#define FACEBOOK_JOB_H
 
-// Qt includes
-
-#include <QVariant>
-
-// LibKIPI includes
-
-#include <libkipi/plugin.h>
-#include <libkipi/exportinterface.h>
-
-class KAction;
+#include <KJob>
+#include "fbalbum.h"
+#include "fbtalker.h"
+class KUrl;
 
 namespace KIPIFacebookPlugin
 {
-    class FbWindow;
-}
 
-class Plugin_Facebook : public KIPI::Plugin, public KIPI::ExportInterface
+class FacebookJob : public KJob
 {
-Q_OBJECT
-Q_INTERFACES( KIPI::ExportInterface )
-
-public:
-
-    Plugin_Facebook(QObject *parent, const QVariantList &args);
-    ~Plugin_Facebook();
-
-    KIPI::Category category(KAction* action) const;
-    void setup(QWidget*);
-    virtual KJob* exportFiles(const QString& album);
-
-public Q_SLOTS:
-
-    void slotImport();
-    void slotExport();
-
-private:
-
-    KAction                      *m_actionImport;
-    KAction                      *m_actionExport;
-
-    KIPIFacebookPlugin::FbWindow *m_dlgImport;
-    KIPIFacebookPlugin::FbWindow *m_dlgExport;
+    Q_OBJECT
+    public:
+        FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
+        virtual void start();
+        
+        virtual QList< KUrl > urls() const;
+        virtual KIcon icon() const;
+    private slots:
+        void albumList(int, const QString&, const QList<FbAlbum>&);
+        void loginDone(int, const QString&);
+        void albumCreated(int, const QString&, long long);
+    private:
+        void sendPhoto(long long album);
+        KUrl::List m_urls;
+        FbTalker talk;
+        QString m_albumName;
 };
 
-#endif // PLUGIN_FACEBOOK_H
+}
+
+#endif

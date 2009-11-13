@@ -57,4 +57,6 @@ Comment[zh_CN]=一个将图像从远程 Facebook 网络服务导入/导出到远
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_facebook
+X-KIPI-Mimetypes=image/*
+X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
 author=Luka Renko, lure@kubuntu.org
