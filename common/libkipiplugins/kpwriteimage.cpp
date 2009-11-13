@@ -24,6 +24,7 @@
 //#define ENABLE_DEBUG_MESSAGES 1
 
 #include "kpwriteimage.h"
+#include "kpwritehelp.h"
 
 // C ANSI includes
 
@@ -142,8 +143,8 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
 {
-    FILE* file = fopen(QFile::encodeName(destPath), "wb");
-    if (!file)
+    QFile file(destPath);
+    if (!file.open(QIODevice::ReadWrite))
     {
         kDebug() << "Failed to open JPEG file for writing" ;
         return false;
@@ -155,7 +156,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     // Init JPEG compressor.
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
-    jpeg_stdio_dest(&cinfo, file);
+    kp_jpeg_qiodevice_dest(&cinfo, &file);
     cinfo.image_width      = d->width;
     cinfo.image_height     = d->height;
     cinfo.input_components = 3;
@@ -194,7 +195,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             {
                 delete [] line;
                 jpeg_destroy_compress(&cinfo);
-                fclose(file);
+                file.close();
                 return false;
             }
 
@@ -223,7 +224,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
             {
                 delete [] line;
                 jpeg_destroy_compress(&cinfo);
-                fclose(file);
+                file.close();
                 return false;
             }
 
@@ -247,7 +248,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
     jpeg_finish_compress(&cinfo);
     jpeg_destroy_compress(&cinfo);
-    fclose(file);
+    file.close();
 
     d->metadata.save(destPath);
 
@@ -332,28 +333,14 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     return true;
 }
 
-static
-void _write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
-{
-    QIODevice* out = (QIODevice*)png_get_io_ptr(png_ptr);
-
-    uint nr = out->write((char*)data, length);
-    if (nr != length) {
-        png_error(png_ptr, "Write Error");
-        return;
-    }
-}
-
-static
-void _flush_fn(png_structp png_ptr)
-{
-    Q_UNUSED(png_ptr);
-}
-
 bool KPWriteImage::write2PNG(const QString& destPath)
 {
-    QFile* file = new QFile(destPath);
-    if (!file->open(QIODevice::ReadWrite))
+    /*
+    check this out for b/w support:
+    http://lxr.kde.org/source/playground/graphics/krita-exp/kis_png_converter.cpp#607
+    */
+    QFile file(destPath);
+    if (!file.open(QIODevice::ReadWrite))
     {
         kDebug() << "Failed to open PNG file for writing" ;
         return false;
@@ -366,7 +353,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
 
-    png_set_write_fn(png_ptr, (void*)file, _write_fn, _flush_fn);
+    png_set_write_fn(png_ptr, (void*)&file, kp_png_write_fn, kp_png_flush_fn);
 
     if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)      // Intel
         png_set_bgr(png_ptr);
@@ -445,10 +432,9 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         if (cancel())
         {
             delete [] data;
-            file->close();
+            file.close();
             png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
             png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
-            delete file;
             return false;
         }
 
@@ -508,8 +494,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
-    file->close();
-    delete file;
+    file.close();
     return true;
 }
 

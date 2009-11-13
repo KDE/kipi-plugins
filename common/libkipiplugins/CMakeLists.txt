@@ -7,6 +7,7 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          batchprogressdialog.cpp
                          imageslist.cpp
                          imagedialog.cpp
+                         kpwritehelp.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
