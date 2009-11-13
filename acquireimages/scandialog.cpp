@@ -116,9 +116,6 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
 
     // ------------------------------------------------------------------------
 
-    connect(this, SIGNAL(closeClicked()),
-            this, SLOT(slotClose()));
-
     connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
             this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
 
@@ -147,15 +144,9 @@ void ScanDialog::saveSettings()
     config.sync();
 }
 
-void ScanDialog::slotClose()
-{
-    saveSettings();
-    done(Close);
-}
-
 void ScanDialog::closeEvent(QCloseEvent *e)
 {
-    d->saneWidget->scanCancel();
+    d->saneWidget->closeDevice();
     saveSettings();
     e->accept();
 }
