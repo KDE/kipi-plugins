@@ -116,7 +116,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         KIPI::ImageInfo info = d->interface->info( *it );
 
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->filePath               = (*it).toLocalFile();
         t->action                 = Rotate;
         t->rotAction              = val;
 
@@ -144,7 +144,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         }
 
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->filePath               = (*it).toLocalFile();
         t->action                 = Flip;
         t->flipAction             = val;
 
@@ -160,7 +160,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
          it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-        t->filePath               = (*it).path();
+        t->filePath               = (*it).toLocalFile();
         t->action                 = GrayScale;
 
         QMutexLocker lock(&d->mutex);
