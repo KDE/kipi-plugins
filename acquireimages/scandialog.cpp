@@ -191,7 +191,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
        return;
 
     KUrl newURL = imageFileSaveDialog->selectedUrl();
-    QFileInfo fi(newURL.path());
+    QFileInfo fi(newURL.toLocalFile());
 
     // Check if target image format have been selected from Combo List of dialog.
 
