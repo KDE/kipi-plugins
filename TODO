@@ -13,6 +13,7 @@ Common todo list :
    * Indicator when image is uploaded (state, like in digikam camera import)
  * Simple single image export mode (Kamoso use-case)
    * quick export mode for single image, no image list, limited options
+   * want to pass options and not expect GUI for options
    * could also be action in digikam on single photo right click
  * Export actions on albums (and not selected images)
    * Allow export of whole album/folder/collection
@@ -29,7 +30,9 @@ Common todo list :
    * Wikimedia: new plugin, need to work on new design
  * Export/Import progress bar:
    * should be integrated into dialog itself - image list and progress bar below
+   * use KJob for easier integration (Kamoso use-case)
  * Standalone tool for Export plugins
    * similar to DNGconverter
+   * may be useful for uploads from Dolphin if .desktop files would be added
    * may introduce upload to multiple destinations
 
