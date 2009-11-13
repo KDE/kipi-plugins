@@ -7,8 +7,13 @@ Common todo list :
    * Resize to new dimension
    * Extract JPG preview from RAW files
    * Convert image to JPG/PNG 
+ * ImageList widget improvements
+   * Thumbnail and List view (user can switch)
+   * Editable fields (use case Wikimedia upload)
+   * Indicator when image is uploaded (state, like in digikam camera import)
  * Simple single image export mode (Kamoso use-case)
    * quick export mode for single image, no image list, limited options
+   * could also be action in digikam on single photo right click
  * Export actions on albums (and not selected images)
    * Allow export of whole album/folder/collection
    * Ask for "new album" options for export
@@ -24,4 +29,5 @@ Common todo list :
    * Wikimedia: new plugin, need to work on new design
  * Standalone tool for Export plugins
    * similar to DNGconverter
+   * may introduce upload to multiple destinations
 
