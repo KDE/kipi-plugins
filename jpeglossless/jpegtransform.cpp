@@ -33,7 +33,6 @@ extern "C"
 {
 #include <sys/types.h>
 #include <unistd.h>
-#include <setjmp.h>
 #include <jpeglib.h>
 }
 
