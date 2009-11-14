@@ -21,9 +21,12 @@
  * ============================================================ */
 
 #include "facebookjob.h"
+#include "facebookjob.moc"
+
 #include <KConfig>
-#include <QDebug>
 #include <KLocale>
+
+#include <QDebug>
 
 using namespace KIPIFacebookPlugin;
 
