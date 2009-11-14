@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QProgressBar>
 #include <QCloseEvent>
 
 // KDE includes
@@ -43,7 +44,6 @@
 #include <KComboBox>
 #include <KPushButton>
 #include <KMessageBox>
-#include <KProgressDialog>
 #include <KToolInvocation>
 
 // LibKExiv2 includes
@@ -219,17 +219,18 @@ void FbWindow::slotButtonClicked(int button)
     switch (button)
     {
         case Cancel:
-            if (m_transferQueue.isEmpty())
+            if (m_widget->progressBar()->isHidden())
             {
                 writeSettings();
                 m_widget->imagesList()->listView()->clear();
                 done(Close);
             }
-            else // cancel transfer
+            else // cancel login/transfer
             {
                 m_talker->cancel();
                 m_transferQueue.clear();
                 m_widget->m_imgList->processed(false);
+                m_widget->progressBar()->hide();
             }
             break;
         case User1:
@@ -317,14 +318,8 @@ void FbWindow::writeSettings()
 
 void FbWindow::authenticate()
 {
-    m_authProgressDlg = new KProgressDialog(this, i18n("Authentication"));
-    m_authProgressDlg->setMinimumDuration(0);
-    m_authProgressDlg->setModal(true);
-    m_authProgressDlg->setAutoReset(true);
-    m_authProgressDlg->setAutoClose(true);
-
-    connect(m_authProgressDlg, SIGNAL( cancelClicked() ),
-            this, SLOT( slotLoginCancel() ));
+    m_widget->progressBar()->show();
+    m_widget->progressBar()->setFormat("");
 
     kDebug() << "Calling Login method";
     m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires);
@@ -332,21 +327,20 @@ void FbWindow::authenticate()
 
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 {
-    if (!m_authProgressDlg)
-        return;
+    QProgressBar* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
-        m_authProgressDlg->setLabelText(label);
+        progressBar->setFormat(label);
 
     if (maxStep > 0)
-        m_authProgressDlg->progressBar()->setMaximum(maxStep);
+        progressBar->setMaximum(maxStep);
 
-    m_authProgressDlg->progressBar()->setValue(step);
+    progressBar->setValue(step);
 }
 
 void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
 {
-    m_authProgressDlg->hide();
+    m_widget->progressBar()->hide();
 
     buttonStateChange(m_talker->loggedIn());
     FbUser user = m_talker->getUser();
@@ -463,6 +457,9 @@ void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QLis
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
 
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(0);
+
     // start download with first photo in queue
     downloadNextPhoto();
 }
@@ -562,18 +559,17 @@ void FbWindow::slotNewAlbumRequest()
     }
 }
 
-void FbWindow::slotLoginCancel()
-{
-    m_talker->cancel();
-    m_authProgressDlg->hide();
-}
-
 void FbWindow::slotStartTransfer()
 {
     kDebug() << "slotStartTransfer invoked";
 
     if (m_import)
     {
+        m_widget->progressBar()->setFormat(i18n("%v / %m"));
+        m_widget->progressBar()->setMaximum(0);
+        m_widget->progressBar()->setValue(0);
+        m_widget->progressBar()->show();
+
         m_talker->listPhotos(m_widget->getFriendID(), m_widget->getAlbumID());
     }
     else
@@ -589,6 +585,11 @@ void FbWindow::slotStartTransfer()
         kDebug() << "upload request got album id from widget: " << m_currentAlbumID;
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
+
+        m_widget->progressBar()->setFormat(i18n("%v / %m"));
+        m_widget->progressBar()->setMaximum(m_imagesTotal);
+        m_widget->progressBar()->setValue(0);
+        m_widget->progressBar()->show();
 
         uploadNextPhoto();
     }
@@ -692,11 +693,15 @@ void FbWindow::uploadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
+        m_widget->progressBar()->hide();
         return;
     }
 
     m_widget->m_imgList->processing(m_transferQueue.first());
     QString imgPath = m_transferQueue.first().path();
+
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
 
     // check if we have to RAW file -> use preview image then
 #if KDCRAW_VERSION < 0x000400
@@ -760,6 +765,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {
+            m_widget->progressBar()->hide();
             m_transferQueue.clear();
             return;
         }
@@ -772,8 +778,12 @@ void FbWindow::downloadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
+        m_widget->progressBar()->hide();
         return;
     }
+
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
 
     QString imgPath = m_transferQueue.first().url();
 
@@ -815,6 +825,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                                   "Do you want to continue?", errText))
                              != KMessageBox::Continue)
             {
+                m_widget->progressBar()->hide();
                 m_transferQueue.clear();
                 return;
             }
@@ -828,6 +839,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {
+            m_widget->progressBar()->hide();
             m_transferQueue.clear();
             return;
         }

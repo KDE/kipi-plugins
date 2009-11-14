@@ -31,6 +31,7 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
+#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -218,6 +219,10 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
+    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_progressBar->hide();
+
     // ------------------------------------------------------------------------
 
     settingsBoxLayout->addWidget(m_headerLbl);
@@ -225,6 +230,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     settingsBoxLayout->addWidget(albBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
+    settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -287,6 +293,11 @@ FbWidget::~FbWidget()
 KIPIPlugins::ImagesList* FbWidget::imagesList() const
 {
     return m_imgList;
+}
+
+QProgressBar* FbWidget::progressBar() const
+{
+    return m_progressBar;
 }
 
 QString FbWidget::getDestinationPath()

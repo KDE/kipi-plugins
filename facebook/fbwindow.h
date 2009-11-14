@@ -104,7 +104,6 @@ private Q_SLOTS:
     void slotPermChangeRequest();
     void slotReloadAlbumsRequest(long long userID);
     void slotNewAlbumRequest();
-    void slotLoginCancel();
     void slotHelp();
     void slotStartTransfer();
     void slotImageListChanged();

@@ -30,6 +30,7 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
+class QProgressBar;
 class KComboBox;
 class KPushButton;
 
@@ -73,6 +74,8 @@ public:
 
     KIPIPlugins::ImagesList* imagesList() const;
 
+    QProgressBar* progressBar() const;
+
 Q_SIGNALS:
 
     void reloadAlbums(long long userID);
@@ -104,6 +107,8 @@ private:
     QCheckBox*               m_resizeChB;
     QSpinBox*                m_dimensionSpB;
     QSpinBox*                m_imageQualitySpB;
+
+    QProgressBar*            m_progressBar;
 
     friend class FbWindow;
 };
