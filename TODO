@@ -27,7 +27,7 @@ Common todo list :
    * Flash: KPageWidgetItem, but with collection selection (NO imagelist)
    * HTML: single dialog, but with collection selection (NO imagelist)
    * Wikimedia: new plugin, need to work on new design
- * Export/Import progress bar (initial implementation for Facebook): 
+ * Export/Import progress bar (initial implementation for Facebook):
    * should be integrated into dialog itself - image list and progress bar below
    * use KJob for easier integration (Kamoso use-case)
  * Standalone tool for Export plugins
