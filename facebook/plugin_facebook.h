@@ -48,6 +48,8 @@ namespace KIPIFacebookPlugin
     class FbWindow;
 }
 
+class KJob;
+
 class Plugin_Facebook
     : public KIPI::Plugin
 #if KDE_IS_VERSION(4,3,60)
