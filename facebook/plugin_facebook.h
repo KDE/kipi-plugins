@@ -29,10 +29,17 @@
 
 #include <QVariant>
 
+// KDE includes
+
+#include <kdeversion.h>
+
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
+
+#if KDE_IS_VERSION(4,3,60)
 #include <libkipi/exportinterface.h>
+#endif
 
 class KAction;
 
@@ -41,10 +48,16 @@ namespace KIPIFacebookPlugin
     class FbWindow;
 }
 
-class Plugin_Facebook : public KIPI::Plugin, public KIPI::ExportInterface
+class Plugin_Facebook
+    : public KIPI::Plugin
+#if KDE_IS_VERSION(4,3,60)
+    , public KIPI::ExportInterface
+#endif
 {
 Q_OBJECT
+#if KDE_IS_VERSION(4,3,60)
 Q_INTERFACES( KIPI::ExportInterface )
+#endif
 
 public:
 
