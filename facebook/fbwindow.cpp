@@ -90,8 +90,8 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("facebook"));
-    setButtons(Help|User1|Close);
-    setDefaultButton(Close);
+    setButtons(Help|User1|Cancel);
+    setDefaultButton(Cancel);
     setModal(false);
 
     if (import)
@@ -127,9 +127,6 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     connect(m_widget, SIGNAL( reloadAlbums(long long) ),
             this, SLOT( slotReloadAlbumsRequest(long long)) );
-
-    connect(this, SIGNAL( closeClicked() ),
-            this, SLOT( slotClose()) );
 
     connect(this, SIGNAL( user1Clicked() ),
             this, SLOT( slotStartTransfer()) );
@@ -216,11 +213,31 @@ void FbWindow::slotHelp()
     KToolInvocation::invokeHelp("facebook", "kipi-plugins");
 }
 
-void FbWindow::slotClose()
+void FbWindow::slotButtonClicked(int button)
 {
-    writeSettings();
-    m_widget->imagesList()->listView()->clear();
-    done(Close);
+    kDebug() << "TODO: FbWindow::slotButtonClicked";
+    switch (button)
+    {
+        case Cancel:
+            if (m_transferQueue.isEmpty())
+            {
+                writeSettings();
+                m_widget->imagesList()->listView()->clear();
+                done(Close);
+            }
+            else // cancel transfer
+            {
+                m_talker->cancel();
+                m_transferQueue.clear();
+                m_widget->m_imgList->processed(false);
+            }
+            break;
+        case User1:
+            slotStartTransfer();
+            break;
+        default:
+             KDialog::slotButtonClicked(button);
+    }
 }
 
 void FbWindow::reactivate()
@@ -446,16 +463,6 @@ void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QLis
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
 
-    m_progressDlg = new KProgressDialog(this, i18n("Transfer Progress"));
-    m_progressDlg->setMinimumDuration(0);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-    m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
-
-    connect(m_progressDlg, SIGNAL( cancelClicked() ),
-            this, SLOT( slotTransferCancel() ));
-
     // start download with first photo in queue
     downloadNextPhoto();
 }
@@ -571,6 +578,7 @@ void FbWindow::slotStartTransfer()
     }
     else
     {
+        m_widget->m_imgList->clearProcessedStatus();
         m_transferQueue = m_widget->m_imgList->imageUrls();
 
         if (m_transferQueue.isEmpty())
@@ -581,16 +589,6 @@ void FbWindow::slotStartTransfer()
         kDebug() << "upload request got album id from widget: " << m_currentAlbumID;
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
-
-        m_progressDlg = new KProgressDialog(this, i18n("Transfer Progress"));
-        m_progressDlg->setMinimumDuration(0);
-        m_progressDlg->setModal(true);
-        m_progressDlg->setAutoReset(true);
-        m_progressDlg->setAutoClose(true);
-        m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
-
-        connect(m_progressDlg, SIGNAL( cancelClicked() ),
-                this, SLOT( slotTransferCancel() ));
 
         uploadNextPhoto();
     }
@@ -694,13 +692,10 @@ void FbWindow::uploadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
-        m_progressDlg->hide();
         return;
     }
 
-    m_progressDlg->progressBar()->setMaximum(m_imagesTotal);
-    m_progressDlg->progressBar()->setValue(m_imagesCount);
-
+    m_widget->m_imgList->processing(m_transferQueue.first());
     QString imgPath = m_transferQueue.first().path();
 
     // check if we have to RAW file -> use preview image then
@@ -739,9 +734,6 @@ void FbWindow::uploadNextPhoto()
         slotAddPhotoDone(666, i18n("Cannot open file"));
         return;
     }
-
-    m_progressDlg->setLabelText(i18n("Uploading file %1",
-                                     m_transferQueue.first().path()));
 }
 
 void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
@@ -753,8 +745,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
         m_tmpPath.clear();
     }
 
-    // Remove photo uploaded from the list
-    m_widget->m_imgList->removeItemByUrl(m_transferQueue.first());
+    m_widget->m_imgList->processed(errCode == 0);
     m_transferQueue.pop_front();
 
     if (errCode == 0)
@@ -770,7 +761,6 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
                          != KMessageBox::Continue)
         {
             m_transferQueue.clear();
-            m_progressDlg->hide();
             return;
         }
     }
@@ -782,18 +772,12 @@ void FbWindow::downloadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
-        m_progressDlg->hide();
         return;
     }
-
-    m_progressDlg->progressBar()->setMaximum(m_imagesTotal);
-    m_progressDlg->progressBar()->setValue(m_imagesCount);
 
     QString imgPath = m_transferQueue.first().url();
 
     m_talker->getPhoto(imgPath);
-
-    m_progressDlg->setLabelText(i18n("Downloading file %1", imgPath));
 }
 
 void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData)
@@ -832,7 +816,6 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                              != KMessageBox::Continue)
             {
                 m_transferQueue.clear();
-                m_progressDlg->hide();
                 return;
             }
         }
@@ -846,20 +829,11 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                          != KMessageBox::Continue)
         {
             m_transferQueue.clear();
-            m_progressDlg->hide();
             return;
         }
     }
 
     downloadNextPhoto();
-}
-
-void FbWindow::slotTransferCancel()
-{
-    m_transferQueue.clear();
-    m_progressDlg->hide();
-
-    m_talker->cancel();
 }
 
 void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, long long newAlbumID)

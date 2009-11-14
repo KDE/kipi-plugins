@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,6 +36,7 @@
 #include <QPainter>
 #include <QPushButton>
 #include <QUrl>
+#include <QTimer>
 
 // KDE includes
 
@@ -150,7 +152,26 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    setIcon(ImagesListView::Thumbnail, QIcon(pixmap));
+    m_thumb = pixmap;
+    setIcon(ImagesListView::Thumbnail, QIcon(m_thumb));
+}
+
+void ImagesListViewItem::setProgressAnimation(const QPixmap& pix)
+{
+    QPixmap overlay = m_thumb;
+    QPixmap mask(overlay.size());
+    mask.fill(QColor(128, 128, 128, 192));
+    QPainter p(&overlay);
+    p.drawPixmap(0, 0, mask);
+    p.drawPixmap((overlay.width()/2) - (pix.width()/2), (overlay.height()/2) - (pix.height()/2), pix);
+    setIcon(ImagesListView::Thumbnail, QIcon(overlay));
+}
+
+void ImagesListViewItem::setProcessedIcon(const QIcon& icon)
+{
+    setIcon(ImagesListView::Filename, icon);
+    // reset thumbnail back to no animation pix
+    setIcon(ImagesListView::Thumbnail, QIcon(m_thumb));
 }
 
 // ---------------------------------------------------------------------------
@@ -249,6 +270,21 @@ void ImagesListView::setColumn(ColumnType column, const QString &label, bool ena
     setColumnEnabled(column, enable);
 }
 
+ImagesListViewItem* ImagesListView::findItem(const KUrl& url)
+{
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        ImagesListViewItem *lvItem = dynamic_cast<ImagesListViewItem*>(*it);
+        if (lvItem && lvItem->url() == url)
+        {
+            return lvItem;
+        }
+        ++it;
+    }
+    return 0;
+}
+
 void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
 {
     QTreeWidget::dragEnterEvent(e);
@@ -326,6 +362,10 @@ public:
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
+        processItem           = 0;
+        progressPix           = SmallIcon("process-working", 22);
+        progressCount         = 0;
+        progressTimer         = 0;
     }
 
     bool            allowRAW;
@@ -339,6 +379,11 @@ public:
     CtrlButton*     clearButton;
     CtrlButton*     loadButton;
     CtrlButton*     saveButton;
+
+    ImagesListViewItem *processItem;
+    QPixmap         progressPix;
+    int             progressCount;
+    QTimer          *progressTimer;
 
     ImagesListView* listView;
     Interface*      iface;
@@ -374,6 +419,8 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     d->clearButton->setToolTip(i18n("Clear the list."));
     d->loadButton->setToolTip(i18n("Load a saved list."));
     d->saveButton->setToolTip(i18n("Save the list."));
+
+    d->progressTimer = new QTimer(this);
 
     // --------------------------------------------------------
 
@@ -424,6 +471,9 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     connect(d->saveButton, SIGNAL(clicked()),
             this, SLOT(slotSaveItems()));
+
+    connect(d->progressTimer, SIGNAL(timeout()),
+            this, SLOT(slotProgressTimerDone()));
 
     // --------------------------------------------------------
 
@@ -713,6 +763,54 @@ KUrl::List ImagesList::imageUrls() const
         ++it;
     }
     return list;
+}
+
+void ImagesList::slotProgressTimerDone()
+{
+    QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
+    d->processItem->setProgressAnimation(pix);
+
+    d->progressCount++;
+    if (d->progressCount == 8)
+        d->progressCount = 0;
+
+    d->progressTimer->start(300);
+}
+
+void ImagesList::processing(const KUrl& url)
+{
+    d->processItem = d->listView->findItem(url);
+    if (d->processItem)
+    {
+        d->listView->setCurrentItem(d->processItem, true);
+        d->listView->scrollToItem(d->processItem);
+        d->progressTimer->start(300);
+    }
+}
+
+void ImagesList::processed(bool success)
+{
+    if (d->processItem)
+    {
+        d->progressTimer->stop();
+        d->processItem->setProcessedIcon(
+            SmallIcon(success ?  "dialog-ok" : "dialog-cancel"));
+        d->processItem = 0;
+    }
+}
+
+void ImagesList::clearProcessedStatus()
+{
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
+    {
+        ImagesListViewItem *lvItem = dynamic_cast<ImagesListViewItem*>(*it);
+        if (lvItem)
+        {
+            lvItem->setProcessedIcon(QIcon());
+        }
+        ++it;
+    }
 }
 
 ImagesListView* ImagesList::listView() const

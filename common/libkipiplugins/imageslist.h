@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -78,6 +79,9 @@ public:
     int rating();
 
     void setThumb(const QPixmap& pix);
+    void setProgressAnimation(const QPixmap& pix);
+
+    void setProcessedIcon(const QIcon& icon);
 
     void updateInformation();
 
@@ -87,6 +91,7 @@ private:
     QString         m_comments;       // Image comments from Kipi host.
     QStringList     m_tags;           // List of keywords from Kipi host.
     KUrl            m_url;            // Image url provided by Kipi host.
+    QPixmap         m_thumb;          // Image thumbnail
     ImagesListView* m_view;
 };
 
@@ -117,6 +122,8 @@ public:
     void setColumnLabel(ColumnType column, const QString& label);
     void setColumnEnabled(ColumnType column, bool enable);
     void setColumn(ColumnType column, const QString& label, bool enable);
+
+    ImagesListViewItem* findItem(const KUrl& url);
 
     KIPI::Interface* iface() const;
 
@@ -200,6 +207,10 @@ public:
     virtual KUrl::List imageUrls() const;
     virtual void       removeItemByUrl(const KUrl& url);
 
+    void               processing(const KUrl& url);
+    void               processed(bool success);
+    void               clearProcessedStatus();
+
     void               setControlButtons(ControlButtons buttonMask);
     void               setControlButtonsPlacement(ControlButtonPlacement placement);
     void               enableControlButtons(bool enable = true);
@@ -226,6 +237,7 @@ protected Q_SLOTS:
     virtual void slotLoadItems() {};
     virtual void slotSaveItems() {};
 
+    void slotProgressTimerDone();
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
 
