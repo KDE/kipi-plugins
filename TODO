@@ -10,7 +10,6 @@ Common todo list :
  * ImageList widget improvements
    * Thumbnail and List view (user can switch)
    * Editable fields (use case Wikimedia upload)
-   * Indicator when image is uploaded (state, like in digikam camera import)
  * Simple single image export mode (Kamoso use-case)
    * quick export mode for single image, no image list, limited options
    * want to pass options and not expect GUI for options
@@ -28,7 +27,7 @@ Common todo list :
    * Flash: KPageWidgetItem, but with collection selection (NO imagelist)
    * HTML: single dialog, but with collection selection (NO imagelist)
    * Wikimedia: new plugin, need to work on new design
- * Export/Import progress bar:
+ * Export/Import progress bar (initial implementation for Facebook): 
    * should be integrated into dialog itself - image list and progress bar below
    * use KJob for easier integration (Kamoso use-case)
  * Standalone tool for Export plugins
