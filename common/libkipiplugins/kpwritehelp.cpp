@@ -223,4 +223,3 @@ void kp_png_flush_fn(png_structp png_ptr)
 {
     Q_UNUSED(png_ptr);
 }
-

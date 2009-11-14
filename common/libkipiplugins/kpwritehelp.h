@@ -20,6 +20,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef KPWRITEHELP_H
 #define KPWRITEHELP_H
  
@@ -65,4 +66,4 @@ KIPIPLUGINS_EXPORT void kp_png_write_fn(png_structp png_ptr, png_bytep data, png
   */
 KIPIPLUGINS_EXPORT void kp_png_flush_fn(png_structp png_ptr);
 
-#endif
+#endif // KPWRITEHELP_H
