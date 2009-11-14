@@ -60,10 +60,10 @@ MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup.
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
-    MACRO_OPTIONAL_FIND_PACKAGE(Sane)  # For AcquireImages.
     MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
@@ -81,16 +81,6 @@ ELSE(NOT WIN32)
 ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
-
-# Only for platforms where ksane is compiled.
-IF(NOT APPLE)
-    MACRO_OPTIONAL_DEPEND_PACKAGE(KSane "ksane")
-    IF(DEPEND_PACKAGE_KSane)
-        MACRO_OPTIONAL_FIND_PACKAGE(KSane)   # For AcquireImages
-    ELSE(DEPEND_PACKAGE_KSane)
-        SET(KSANE_FOUND FALSE)
-    ENDIF(DEPEND_PACKAGE_KSane)
-ENDIF(NOT APPLE)
 
 # ==================================================================================================
 # Log messages
@@ -233,13 +223,11 @@ IF(NOT WIN32 AND NOT APPLE)
     ENDIF(X11_FOUND AND X11_Xrandr_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(NOT APPLE)
-    IF(KSANE_FOUND)
-        MESSAGE(STATUS " libksane library found.............. YES (optional)")
-    ELSE(KSANE_FOUND)
-        MESSAGE(STATUS " libksane library found.............. NO  (optional)")
-    ENDIF(KSANE_FOUND)
-ENDIF(NOT APPLE)
+IF(KSANE_FOUND)
+    MESSAGE(STATUS " libksane library found.............. YES (optional)")
+ELSE(KSANE_FOUND)
+    MESSAGE(STATUS " libksane library found.............. NO  (optional)")
+ENDIF(KSANE_FOUND)
 
 # Optional plugins results ----------------------------------------------------------------------------
 
@@ -287,23 +275,11 @@ ELSE(NOT WIN32 AND NOT APPLE)
 
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(NOT WIN32 AND NOT APPLE)
-
-    IF(SANE_FOUND AND KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
-    ELSE(SANE_FOUND AND KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-    ENDIF(SANE_FOUND AND KSANE_FOUND)
-
-ELSE(NOT WIN32 AND NOT APPLE)
-
-    IF(KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
-    ELSE(KSANE_FOUND)
-        MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-    ENDIF(KSANE_FOUND)
-
-ENDIF(NOT WIN32 AND NOT APPLE)
+IF(KSANE_FOUND)
+    MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
+ELSE(KSANE_FOUND)
+    MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
+ENDIF(KSANE_FOUND)
 
 IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
     MESSAGE(STATUS " DNGConverter will be compiled....... YES (optional)")
@@ -420,6 +396,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(htmlexport)
     ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
 
+    IF(KSANE_FOUND)
+        ADD_SUBDIRECTORY(acquireimages)
+    ENDIF(KSANE_FOUND)
+
     IF(NOT WIN32 AND NOT APPLE)
 
         # Plugins which depend on OpenGL
@@ -429,11 +409,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 
-        # Under Linux, this plugin use KSane interface
-        IF(SANE_FOUND AND KSANE_FOUND)
-            ADD_SUBDIRECTORY(acquireimages)
-        ENDIF(SANE_FOUND AND KSANE_FOUND)
-
     ELSE(NOT WIN32 AND NOT APPLE)
 
         # Plugins which depend on OpenGL
@@ -441,9 +416,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(advancedslideshow)
             ADD_SUBDIRECTORY(imageviewer)
         ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
-        # Under Windows, this plugin use TWAIN interface
-        ADD_SUBDIRECTORY(acquireimages)
 
     ENDIF(NOT WIN32 AND NOT APPLE)
 
