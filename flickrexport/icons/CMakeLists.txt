@@ -1,1 +1,1 @@
-KDE4_INSTALL_ICONS( ${DATA_INSTALL_DIR}/kipiplugin_flickrexport/icons )
+KDE4_INSTALL_ICONS( ${ICON_INSTALL_DIR} )
