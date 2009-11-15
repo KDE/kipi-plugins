@@ -24,9 +24,11 @@
 #include "fbalbum.moc"
 
 // Qt includes
+
 #include <QFormLayout>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KLineEdit>
@@ -34,7 +36,8 @@
 #include <KComboBox>
 
 // local includes
-#include <fbitem.h>
+
+#include "fbitem.h"
 
 namespace KIPIFacebookPlugin
 {

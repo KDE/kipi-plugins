@@ -25,9 +25,15 @@
 #ifndef FACEBOOK_JOB_H
 #define FACEBOOK_JOB_H
 
+// KDE includes
+
 #include <KJob>
+
+// Local includes
+
 #include "fbalbum.h"
 #include "fbtalker.h"
+
 class KUrl;
 
 namespace KIPIFacebookPlugin
@@ -36,23 +42,32 @@ namespace KIPIFacebookPlugin
 class FacebookJob : public KJob
 {
     Q_OBJECT
+
     public:
+
         FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
+
         virtual void start();
-        
         virtual QList< KUrl > urls() const;
         virtual KIcon icon() const;
+
     private slots:
+
         void albumList(int, const QString&, const QList<FbAlbum>&);
         void loginDone(int, const QString&);
         void albumCreated(int, const QString&, long long);
+
     private:
+
         void sendPhoto(long long album);
+
+    private:
+
         KUrl::List m_urls;
-        FbTalker talk;
-        QString m_albumName;
+        FbTalker   talk;
+        QString    m_albumName;
 };
 
-}
+} // namespace KIPIFacebookPlugin
 
-#endif
+#endif // FACEBOOK_JOB_H
