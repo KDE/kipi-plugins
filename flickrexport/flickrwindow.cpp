@@ -88,11 +88,11 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     setModal(false);
 
     if (serviceName == "23") 
-	setWindowIcon(KIcon("hq"));
+        setWindowIcon(KIcon("hq"));
     else if (serviceName == "Zooomr")
-	setWindowIcon(KIcon("zooomr"));
+        setWindowIcon(KIcon("zooomr"));
     else
-	setWindowIcon(KIcon("flickr"));
+        setWindowIcon(KIcon("flickr"));
 
     m_tmp                       = tmpFolder;
     m_interface                 = interface;
