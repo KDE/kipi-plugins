@@ -12,5 +12,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> RawConverter       : 213681 : Batch RAW converter: Activating 16bit allows jpeg.
 004 ==> JPEGLossLess       : 213889 : Segmentation fault at splash screen.
 005 ==> PrintAssisitant    : 124357 : Output resolution of print wizard is very low.
-006 ==>
+006 ==> PrintAssisitant    : 204707 : Printwizard should be able to print uncroped thumbnails.
+007 ==>
 
