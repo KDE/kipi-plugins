@@ -51,7 +51,12 @@ extern "C"
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
+// LibKExiv2 includes
+
+#include <libkexiv2/version.h>
+
 // Local includes
+
 #include "pluginsversion.h"
 
 namespace KIPIPlugins
@@ -154,7 +159,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     struct jpeg_error_mgr       jerr;
 
     // Init JPEG compressor.
-    cinfo.err = jpeg_std_error(&jerr);
+    cinfo.err              = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
     kp_jpeg_qiodevice_dest(&cinfo, &file);
     cinfo.image_width      = d->width;
@@ -400,16 +405,22 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     // Write Software info.
     QString libpngver(PNG_HEADER_VERSION_STRING);
     libpngver.replace('\n', ' ');
-    QString soft = d->kipipluginsVer;
+    QString soft     = d->kipipluginsVer;
     soft.append(QString(" (%1)").arg(libpngver));
     png_text text;
-    text.key  = (png_charp)"Software";
-    text.text = soft.toAscii().data();
+    text.key         = (png_charp)"Software";
+    text.text        = soft.toAscii().data();
     text.compression = PNG_TEXT_COMPRESSION_zTXt;
     png_set_text(png_ptr, info_ptr, &(text), 1);
 
     // Store Exif data.
+
+#if KEXIV2_VERSION >= 0x010000
+    QByteArray ba = d->metadata.getExifEncoded(true);
+#else
     QByteArray ba = d->metadata.getExif(true);
+#endif
+
     writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", ba.data(), (png_uint_32) ba.size());
 
     // Store Iptc data.
