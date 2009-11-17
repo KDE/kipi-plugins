@@ -302,7 +302,7 @@ QProgressBar* FbWidget::progressBar() const
 
 QString FbWidget::getDestinationPath()
 {
-    return m_uploadWidget->selectedImageCollection().uploadPath().path();
+    return m_uploadWidget->selectedImageCollection().uploadPath().toLocalFile();
 }
 
 void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPerm)

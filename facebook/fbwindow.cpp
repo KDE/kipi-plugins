@@ -698,7 +698,7 @@ void FbWindow::uploadNextPhoto()
     }
 
     m_widget->m_imgList->processing(m_transferQueue.first());
-    QString imgPath = m_transferQueue.first().path();
+    QString imgPath = m_transferQueue.first().toLocalFile();
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
