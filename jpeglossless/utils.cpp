@@ -51,9 +51,10 @@ extern "C"
 #include <klocale.h>
 #include <kurl.h>
 
-// LibKExiv2 includes 
+// LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
+#include <libkexiv2/version.h>
 
 // LibKDcraw includes
 
@@ -100,7 +101,13 @@ bool Utils::updateMetadataImageMagick(const QString& src, QString& err)
     meta.setImageDimensions(img.size());
     meta.setExifThumbnail(exifThumbnail);
     meta.setImagePreview(iptcPreview);
+
+#if KEXIV2_VERSION >= 0x010000
+    QByteArray exifData = meta.getExifEncoded(true);
+#else
     QByteArray exifData = meta.getExif(true);
+#endif
+
     QByteArray iptcData = meta.getIptc(true);
     QByteArray xmpData  = meta.getXmp();
 
@@ -273,19 +280,19 @@ bool Utils::moveOneFile(const QString& src, const QString& dst)
 bool Utils::deleteDir(const QString& dirPath)
 {
     QDir dir(dirPath);
-    if (!dir.exists()) 
+    if (!dir.exists())
         return false;
 
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
 
     QFileInfoList infoList = dir.entryInfoList();
-    if (infoList.isEmpty()) 
+    if (infoList.isEmpty())
         return false;
 
     QFileInfoList::iterator it = infoList.begin();
     QFileInfo fi;
 
-    while( it != infoList.end() ) 
+    while( it != infoList.end() )
     {
         fi = *it;
         if(fi.fileName() == "." || fi.fileName() == ".." )
@@ -294,7 +301,7 @@ bool Utils::deleteDir(const QString& dirPath)
             continue;
         }
 
-        if( fi.isDir() ) 
+        if( fi.isDir() )
         {
             deleteDir(fi.absoluteFilePath());
         }
