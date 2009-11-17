@@ -341,7 +341,13 @@ void IPTCEditDialog::slotItemChanged()
 {
     KExiv2Iface::KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
+
+#if KEXIV2_VERSION >= 0x010000
+    d->exifData = exiv2Iface.getExifEncoded();
+#else
     d->exifData = exiv2Iface.getExif();
+#endif
+
     d->iptcData = exiv2Iface.getIptc();
     d->contentPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);

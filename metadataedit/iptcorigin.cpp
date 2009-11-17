@@ -48,6 +48,7 @@
 
 // LibKExiv2 includes
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes
@@ -908,7 +909,12 @@ void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
         exiv2Iface.removeIptcTag("Iptc.Application2.CountryName");
     }
 
+#if KEXIV2_VERSION >= 0x010000
+    exifData = exiv2Iface.getExifEncoded();
+#else
     exifData = exiv2Iface.getExif();
+#endif
+
     iptcData = exiv2Iface.getIptc();
 }
 

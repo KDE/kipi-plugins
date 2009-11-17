@@ -41,6 +41,7 @@
 
 // LibKExiv2 includes
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes
@@ -376,7 +377,11 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
     else if (d->whiteBalanceCheck->isValid())
         exiv2Iface.removeExifTag("Exif.Photo.WhiteBalance");
 
+#if KEXIV2_VERSION >= 0x010000
+    exifData = exiv2Iface.getExifEncoded();
+#else
     exifData = exiv2Iface.getExif();
+#endif
 }
 
 }  // namespace KIPIMetadataEditPlugin

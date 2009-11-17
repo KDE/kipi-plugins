@@ -266,7 +266,7 @@ void Plugin_MetadataEdit::slotImportExif()
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
-    
+
     m_lastSelectedDirectory = importEXIFFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -278,7 +278,12 @@ void Plugin_MetadataEdit::slotImportExif()
         return;
     }
 
+#if KEXIV2_VERSION >= 0x010000
+    QByteArray exifData = exiv2Iface.getExifEncoded();
+#else
     QByteArray exifData = exiv2Iface.getExif();
+#endif
+
     if (exifData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -433,7 +438,7 @@ void Plugin_MetadataEdit::slotImportIptc()
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
-    
+
     m_lastSelectedDirectory = importIPTCFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -600,7 +605,7 @@ void Plugin_MetadataEdit::slotImportXmp()
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
-    
+
     m_lastSelectedDirectory = importXMPFile.upUrl();
 
     KExiv2Iface::KExiv2 exiv2Iface;

@@ -43,6 +43,7 @@
 
 // LibKExiv2 includes
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes
@@ -294,7 +295,12 @@ void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
 
+#if KEXIV2_VERSION >= 0x010000
+    exifData = exiv2Iface.getExifEncoded();
+#else
     exifData = exiv2Iface.getExif();
+#endif
+
     iptcData = exiv2Iface.getIptc();
 }
 

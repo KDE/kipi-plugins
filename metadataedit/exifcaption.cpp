@@ -41,6 +41,7 @@
 
 // LibKExiv2 includes
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // Local includes
@@ -419,9 +420,14 @@ void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByt
 
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
+#if KEXIV2_VERSION >= 0x010000
+    exifData = exiv2Iface.getExifEncoded();
+#else
     exifData = exiv2Iface.getExif();
+#endif
+
     iptcData = exiv2Iface.getIptc();
-    xmpData = exiv2Iface.getXmp();
+    xmpData  = exiv2Iface.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

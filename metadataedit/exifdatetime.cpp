@@ -43,6 +43,7 @@
 
 // LibKExiv2 includes
 
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 namespace KIPIMetadataEditPlugin
@@ -507,7 +508,12 @@ void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QBy
     else
         exiv2Iface.removeExifTag("Exif.Photo.SubSecTimeDigitized");
 
+#if KEXIV2_VERSION >= 0x010000
+    exifData = exiv2Iface.getExifEncoded();
+#else
     exifData = exiv2Iface.getExif();
+#endif
+
     iptcData = exiv2Iface.getIptc();
     xmpData  = exiv2Iface.getXmp();
 }
