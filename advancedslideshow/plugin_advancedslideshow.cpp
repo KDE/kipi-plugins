@@ -204,10 +204,10 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
 
     for (KUrl::List::ConstIterator urlIt = m_urlList.constBegin(); urlIt != m_urlList.constEnd(); ++urlIt)
     {
-        fileList.append(FileAnglePair((*urlIt).path(), 0));
+        fileList.append(FileAnglePair((*urlIt).toLocalFile(), 0));
         commentsList.append(QString());
 //        KIPI::ImageInfo info = m_interface->info( *urlIt );
-//        fileList.append( FileAnglePair((*urlIt).path(), info.angle()) );
+//        fileList.append( FileAnglePair((*urlIt).toLocalFile(), info.angle()) );
 //        commentsList.append(info.description());
     }
 

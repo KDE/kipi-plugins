@@ -321,7 +321,7 @@ bool MainDialog::updateUrlList()
         if (!item)
             continue;
 
-        QString url = item->url().path();
+        QString url = item->url().toLocalFile();
 
         if (!QFile::exists(url))
         {

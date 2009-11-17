@@ -153,7 +153,7 @@ void ListSoundItems::dropEvent(QDropEvent *e)
 
     foreach (const QUrl &url, list)
     {
-        QFileInfo fi(url.path());
+        QFileInfo fi(url.toLocalFile());
         if (fi.isFile() && fi.exists())
             urls.append(KUrl(url));
     }

@@ -540,7 +540,7 @@ void SoundtrackDialog::slotPreviewButtonClicked()
     for (int i = 0 ; i < m_SoundFilesListBox->count() ; ++i)
     {
         SoundItem *pitem = static_cast<SoundItem*>( m_SoundFilesListBox->item(i) );
-        QString path = pitem->url().path();
+        QString path = pitem->url().toLocalFile();
 
         if (!QFile::exists(path))
         {

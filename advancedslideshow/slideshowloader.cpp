@@ -81,16 +81,16 @@ void LoadThread::run()
 #else
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 #endif
-    QFileInfo fileInfo(m_path.path());
+    QFileInfo fileInfo(m_path.toLocalFile());
     if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcrawIface::KDcraw::loadDcrawPreview(newImage, m_path.path());
+        KDcrawIface::KDcraw::loadDcrawPreview(newImage, m_path.toLocalFile());
     }
     else
     {
         // use the standard loader
-        newImage = QImage(m_path.path());
+        newImage = QImage(m_path.toLocalFile());
     }
 
     // Rotate according to angle
@@ -189,7 +189,6 @@ void SlideShowLoader::next()
         return;
 
     m_threadLock->lock();
-    m_imageLock->lock();
 
     LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
     if (oldThread)
@@ -197,8 +196,9 @@ void SlideShowLoader::next()
     delete oldThread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
-    m_loadedImages->remove(m_pathList[victim].first);
 
+    m_imageLock->lock();
+    m_loadedImages->remove(m_pathList[victim].first);
     m_imageLock->unlock();
     m_threadLock->unlock();
 
