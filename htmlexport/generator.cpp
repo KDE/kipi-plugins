@@ -146,7 +146,7 @@ struct Generator::Private {
         KUrl destUrl=mInfo->destUrl();
         destUrl.addPath(srcUrl.fileName());
 
-        if (QFile::exists(destUrl.path())) {
+        if (QFile::exists(destUrl.toLocalFile())) {
             KIO::NetAccess::del(destUrl, mProgressDialog);
         }
         bool ok=KIO::NetAccess::dircopy(srcUrl, destUrl, mProgressDialog);
@@ -209,7 +209,7 @@ struct Generator::Private {
     }
 
     bool generateImagesAndXML() {
-        QString baseDestDir=mInfo->destUrl().path();
+        QString baseDestDir=mInfo->destUrl().toLocalFile();
         if (!createDir(baseDestDir)) return false;
 
         mXMLFileName=baseDestDir + "/gallery.xml";
@@ -244,12 +244,12 @@ struct Generator::Private {
             }
             QList<ImageElement> imageElementList;
             Q_FOREACH(const KUrl& url, imageList) {
-                const QString path = remoteUrlHash.value(url, url.path());
+                const QString path = remoteUrlHash.value(url, url.toLocalFile());
                 if (path.isEmpty()) {
                     continue;
                 }
                 ImageElement element = ImageElement(mInterface->info(url));
-                element.mPath = remoteUrlHash.value(url, url.path());
+                element.mPath = remoteUrlHash.value(url, url.toLocalFile());
                 imageElementList << element;
             }
 
@@ -320,14 +320,14 @@ struct Generator::Private {
         logInfo(i18n("Generating HTML files"));
 
         QString xsltFileName=mTheme->directory() + "/template.xsl";
-        CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) xsltFileName.toLocal8Bit().data() );
+        CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) QDir::toNativeSeparators( xsltFileName ).toLocal8Bit().data() );
 
         if (!xslt) {
             logError(i18n("Could not load XSL file '%1'", xsltFileName));
             return false;
         }
 
-        CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( mXMLFileName.toLocal8Bit().data() );
+        CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( QDir::toNativeSeparators( mXMLFileName ).toLocal8Bit().data() );
         if (!xmlGallery) {
             logError(i18n("Could not load XML file '%1'", mXMLFileName));
             return false;
@@ -353,7 +353,7 @@ struct Generator::Private {
         // Move to the destination dir, so that external documents get correctly
         // produced
         QString oldCD=QDir::currentPath();
-        QDir::setCurrent(mInfo->destUrl().path());
+        QDir::setCurrent(mInfo->destUrl().toLocalFile());
 
         CWrapper<xmlDocPtr, xmlFreeDoc> xmlOutput= xsltApplyStylesheet(xslt, xmlGallery, params);
 
@@ -365,7 +365,13 @@ struct Generator::Private {
             return false;
         }
 
-        QString destFileName=mInfo->destUrl().path() + "/index.html";
+        QString destFileName=QDir::toNativeSeparators( mInfo->destUrl().toLocalFile() + "/index.html" );
+#ifdef Q_CC_MSVC
+        if(-1==xsltSaveResultToFilename(destFileName.toLocal8Bit().data(), xmlOutput, xslt, 0)) {
+            logError(i18n("Could not open '%1' for writing", destFileName));
+            return false;
+        }
+#else
         FILE* file=fopen(destFileName.toLocal8Bit().data(), "w");
         if (!file) {
             logError(i18n("Could not open '%1' for writing", destFileName));
@@ -373,7 +379,7 @@ struct Generator::Private {
         }
         xsltSaveResultToFile(file, xmlOutput, xslt);
         fclose(file);
-
+#endif
         return true;
     }
 
@@ -431,7 +437,7 @@ Generator::~Generator() {
 bool Generator::run() {
     if (!d->init()) return false;
 
-    QString destDir=d->mInfo->destUrl().path();
+    QString destDir=d->mInfo->destUrl().toLocalFile();
     kDebug() << destDir;
     if (!d->createDir(destDir)) return false;
 
