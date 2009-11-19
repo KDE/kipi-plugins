@@ -2,6 +2,7 @@
 Categories=Qt;KDE;Graphics;
 Comment=A tool to acquire images using a flat scanner
 Comment[bg]=Инструмент за сканиране на снимки с плосък скенер
+Comment[cs]=Nástroj pro získání obrázků pomocí plochého skeneru
 Comment[da]=Et værktøj til at hente billeder med en scanner
 Comment[de]=Ein Werkzeug, um Bilder mit einem Flachbettscanner einzulesen.
 Comment[en_GB]=A tool to acquire images using a flat scanner
@@ -20,6 +21,7 @@ Comment[x-test]=xxA tool to acquire images using a flat scannerxx
 Exec=scangui %i -caption "%c" %U
 GenericName=Acquire Images
 GenericName[bg]=Сканиране на снимки
+GenericName[cs]=Získat obrázky
 GenericName[da]=Hent billeder
 GenericName[de]=Bilder einlesen
 GenericName[en_GB]=Acquire Images

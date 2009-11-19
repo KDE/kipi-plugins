@@ -3,6 +3,7 @@
 Encoding=UTF-8
 Name=KIPI Plugins
 Name[bg]=Приставки KIPI
+Name[cs]=Moduly KIPI
 Name[da]=KIPI-plugins
 Name[de]=KIPI-Module
 Name[el]=Πρόσθετα KIPI
@@ -26,6 +27,7 @@ Name[uk]=Додатки Kipi
 Name[x-test]=xxKIPI Pluginsxx
 Comment=KDE Image Plugins Interface
 Comment[bg]=Интерфейс на KDE за приставки за изображения
+Comment[cs]=Rozhraní modulů pro práci s obrázky v KDE
 Comment[da]=KDE grænseflade til billed-plugins (KIPI)
 Comment[de]=Module zur Bildbearbeitung für KDE
 Comment[el]=Διεπαφή πρόσθετων εικόνας KDE

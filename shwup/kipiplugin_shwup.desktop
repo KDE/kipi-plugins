@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Shwup Export
+Name[cs]=Export Shwup
 Name[da]=Shwup-eksport
 Name[de]=Shwup-Export
 Name[en_GB]=Shwup Export
@@ -16,6 +17,7 @@ Name[sv]=Export till Shwup
 Name[uk]=Експорт до Shwup
 Name[x-test]=xxShwup Exportxx
 Comment=A tool to export images to a remote Shwup web service
+Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Shwup
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Shwup-webtjeneste
 Comment[de]=Ein Werkzeug, um Bilder auf einen entfernten Shwup-Web-Service zu exportieren.
 Comment[en_GB]=A tool to export images to a remote Shwup web service
