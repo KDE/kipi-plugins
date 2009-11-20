@@ -495,7 +495,7 @@ void PicasawebWindow::slotUploadImages()
         }
 
         temp.tags=allTags;
-        m_uploadQueue.append( Pair( (*it).path(), temp) );
+        m_uploadQueue.append( Pair( (*it).toLocalFile(), temp) );
     }
 
     m_uploadTotal = m_uploadQueue.count();
