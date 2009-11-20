@@ -652,7 +652,7 @@ void FlickrWindow::slotAddPhotoNext()
         }
     }
 
-    bool res = m_talker->addPhoto(pathComments.first.path(), //the file path
+    bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
