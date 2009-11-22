@@ -15,6 +15,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> PrintAssistant     : 204707 : Printwizard should be able to print uncroped thumbnails.
 007 ==> PrintAssistant     : 124357 : Output resolution of print wizard is very low.
 008 ==> AdvancedSlideShow  : 214744 : Advanced slideshow crash after pressing ok.
-009 ==> GPSSync            : 135387 : stickers of photos on the world map.
-010 ==> 
-
+009 ==> GPSSync            : 135387 : Stickers of photos on the world map.
+010 ==> JPEGLossLess       : 215644 : Rotate image fails under windows.
+011 ==> 
