@@ -17,4 +17,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> AdvancedSlideShow  : 214744 : Advanced slideshow crash after pressing ok.
 009 ==> GPSSync            : 135387 : Stickers of photos on the world map.
 010 ==> JPEGLossLess       : 215644 : Rotate image fails under windows.
-011 ==> 
+011 ==> FlickrExport       : 215646 : Export to flickr fails under windows.
+012 ==> 
