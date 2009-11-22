@@ -50,6 +50,7 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "gpslistviewcontextmenu.h"
+#include "gpsbookmarkowner.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -61,9 +62,11 @@ public:
 
     GPSTrackListEditDialogPrivate()
     {
-        worldMap = 0;
-        about    = 0;
-        imagesList = 0;
+        about         = 0;
+        imagesList    = 0;
+        worldMap      = 0;
+        interface     = 0;
+        bookmarkOwner = 0;
     }
 
     KIPIPlugins::KPAboutData *about;
@@ -74,6 +77,8 @@ public:
     GPSTrackListWidget       *worldMap;
 
     KIPI::Interface          *interface;
+
+    GPSBookmarkOwner         *bookmarkOwner;
 };
 
 GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidget *parent, const GPSTrackList& gpsTrackList)
@@ -108,8 +113,10 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User6,
                                        i18n("Changed"), true);
 
+    d->bookmarkOwner = new GPSBookmarkOwner(this);
+    
     // add the context menu provider to the imagesList:
-    new GPSListViewContextMenu(d->imagesList);
+    new GPSListViewContextMenu(d->imagesList, d->bookmarkOwner);
 
     d->worldMap       = new GPSTrackListWidget(page);
     d->worldMap->show();

@@ -30,6 +30,7 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QValidator>
+#include <QToolButton>
 
 // KDE includes
 
@@ -51,6 +52,7 @@
 #include "gpsmapwidget.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+#include "gpsbookmarkowner.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -68,12 +70,16 @@ public:
         worldMap       = 0;
         about          = 0;
         goButton       = 0;
+        bookmarkButton = 0;
+        bookmarkOwner  = 0;
         hasGPSInfo     = false;
     }
 
     bool                      hasGPSInfo;
 
     QPushButton              *goButton;
+    QToolButton              *bookmarkButton;
+    GPSBookmarkOwner         *bookmarkOwner;
 
     KLineEdit                *altitudeInput;
     KLineEdit                *latitudeInput;
@@ -127,6 +133,14 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->goButton = new QPushButton(i18n("Go to Location"), page);
     d->goButton->setEnabled(false);
 
+    d->bookmarkOwner = new GPSBookmarkOwner(this);
+    d->bookmarkOwner->setPositionProvider(getCurrentPosition, this);
+
+    d->bookmarkButton = new QToolButton(this);
+    d->bookmarkButton->setText(i18n("Bookmarks"));
+    d->bookmarkButton->setPopupMode(QToolButton::InstantPopup);
+    d->bookmarkButton->setMenu(d->bookmarkOwner->getMenu());
+
     d->worldMap = new GPSMapWidget(page);
     d->worldMap->setFileName(fileName);
     d->worldMap->show();
@@ -139,10 +153,11 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     grid->addWidget(longitudeLabel,      5, 0, 1, 3);
     grid->addWidget(d->longitudeInput,   6, 0, 1, 3);
     grid->addWidget(d->goButton,         7, 0, 1, 3);
-    grid->addWidget(d->worldMap->view(), 0, 3, 9, 1);
+    grid->addWidget(d->bookmarkButton,   8, 0, 1, 3);
+    grid->addWidget(d->worldMap->view(), 0, 3, 10, 1);
     grid->setColumnStretch(0, 3);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(8, 10);
+    grid->setRowStretch(9, 10);
     grid->setSpacing(spacingHint());
     grid->setMargin(0);
 
@@ -190,6 +205,9 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     connect(d->goButton, SIGNAL(released()),
             this, SLOT(slotGotoLocation()));
 
+    connect(d->bookmarkOwner, SIGNAL(positionSelected(GPSDataContainer)),
+            this, SLOT(slotBookmarkSelected(GPSDataContainer)));
+
     // ---------------------------------------------------------------
 
     readSettings();
@@ -217,6 +235,16 @@ void GPSEditDialog::closeEvent(QCloseEvent *e)
 void GPSEditDialog::slotGPSPositionChanged()
 {
     d->goButton->setEnabled(true);
+}
+
+void GPSEditDialog::slotBookmarkSelected(GPSDataContainer position)
+{
+    d->altitudeInput->setText(QString::number(position.altitude(),   'g', 12));
+    d->latitudeInput->setText(QString::number(position.latitude(),   'g', 12));
+    d->longitudeInput->setText(QString::number(position.longitude(), 'g', 12));
+
+    // push the go button:
+    slotGotoLocation();
 }
 
 void GPSEditDialog::slotGotoLocation()
@@ -353,6 +381,17 @@ void GPSEditDialog::slotNewGPSLocationFromMap(const QString& lat, const QString&
     d->longitudeInput->setText(lon);
     d->altitudeInput->setText(alt);
     d->goButton->setEnabled(false);
+}
+
+bool GPSEditDialog::getCurrentPosition(GPSDataContainer* position, void* mydata)
+{
+    if (!position || !mydata)
+        return false;
+
+    GPSEditDialog* me = reinterpret_cast<GPSEditDialog*>(mydata);
+    *position = me->getGPSInfo();
+
+    return true;
 }
 
 }  // namespace KIPIGPSSyncPlugin

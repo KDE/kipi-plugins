@@ -1,6 +1,7 @@
 SUBDIRS(icons)
 
-SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp 
+SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp
+                                 gpsbookmarkowner.cpp
                                  gpslistviewcontextmenu.cpp 
                                  gpslistviewitem.cpp 
                                  gpsbabelbinary.cpp 

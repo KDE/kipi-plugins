@@ -3,7 +3,7 @@ Kipi-plugins 0.9.0 - Release date: 29/11/2009
 
 NEW FEATURES:
 
-
+GPSSync                    : Bookmark locations
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -18,4 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> GPSSync            : 135387 : Stickers of photos on the world map.
 010 ==> JPEGLossLess       : 215644 : Rotate image fails under windows.
 011 ==> FlickrExport       : 215646 : Export to flickr fails under windows.
-012 ==> 
+012 ==> GPSSync            : 167279 : Add a list of favorite place to gps locater window (e.g. new drop down menu).
+013 ==> 

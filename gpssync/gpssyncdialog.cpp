@@ -63,6 +63,7 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 #include "gpslistviewcontextmenu.h"
+#include "gpsbookmarkowner.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -106,6 +107,8 @@ public:
 
     GPSDataParser             gpxParser;
     KUrl                      gpxFileOpenLastDirectory;
+
+    GPSBookmarkOwner         *bookmarkOwner;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -152,8 +155,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                                        i18n("Status"), true);
     d->imagesList->setMinimumWidth(450);
 
+    d->bookmarkOwner = new GPSBookmarkOwner(this);
+    
     // add the context menu provider to the imagesList:
-    new GPSListViewContextMenu(d->imagesList);
+    new GPSListViewContextMenu(d->imagesList, d->bookmarkOwner);
 
 //    d->listView->setIconSize(QSize(64, 64));
 //    d->listView->setColumnWidth(0, 70);

@@ -47,6 +47,7 @@
 
 #include <gpslistviewitem.h>
 #include <gpstracklistviewitem.h>
+#include "gpsbookmarkowner.h"
 
 using namespace KIPIPlugins;
 
@@ -59,18 +60,22 @@ public:
 
     GPSListViewContextMenuPriv()
     {
-        imagesList  = 0;
-        actionCopy  = 0;
-        actionPaste = 0;
+        imagesList     = 0;
+        actionCopy     = 0;
+        actionPaste    = 0;
+        actionBookmark = 0;
     }
 
-    KAction    *actionCopy;
-    KAction    *actionPaste;
+    KAction          *actionCopy;
+    KAction          *actionPaste;
+    KAction          *actionBookmark;
 
-    ImagesList *imagesList;
+    GPSBookmarkOwner *bookmarkOwner;
+
+    ImagesList       *imagesList;
 };
 
-GPSListViewContextMenu::GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList)
+GPSListViewContextMenu::GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList, GPSBookmarkOwner* const bookmarkOwner)
                       : QObject(imagesList), d(new GPSListViewContextMenuPriv)
 {
     d->imagesList  = imagesList;
@@ -83,6 +88,18 @@ GPSListViewContextMenu::GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesLi
 
     connect(d->actionPaste, SIGNAL(triggered()),
             this, SLOT(pasteActionTriggered()));
+
+    if (bookmarkOwner)
+    {
+        d->bookmarkOwner = bookmarkOwner;
+        d->bookmarkOwner->setPositionProvider(getCurrentPosition, this);
+        d->actionBookmark = new KAction(i18n("Bookmarks"), this);
+        d->actionBookmark->setMenu(d->bookmarkOwner->getMenu());
+
+        connect(d->bookmarkOwner, SIGNAL(positionSelected(GPSDataContainer)),
+                this, SLOT(slotBookmarkSelected(GPSDataContainer)));
+    }
+
 
     d->imagesList->installEventFilter(this);
 }
@@ -101,7 +118,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         const QList<QTreeWidgetItem*> selectedItems = d->imagesList->listView()->selectedItems();
         const int nSelected = selectedItems.size();
 
-        // "copy" is only available for one selected image with geo data:
+        // "copy" and "Add bookmark" are only available for one selected image with geo data:
         bool copyAvailable = (nSelected == 1);
         if (copyAvailable)
         {
@@ -124,6 +141,8 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
             }
         }
         d->actionCopy->setEnabled(copyAvailable);
+        if (d->bookmarkOwner)
+            d->bookmarkOwner->changeAddBookmark(copyAvailable);
 
         // "paste" is only available if there is geo data in the clipboard
         // and at least one photo is selected:
@@ -140,6 +159,12 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         KMenu * const menu = new KMenu(d->imagesList);
         menu->addAction(d->actionCopy);
         menu->addAction(d->actionPaste);
+        if (d->actionBookmark)
+        {
+            menu->addSeparator();
+            menu->addAction(d->actionBookmark);
+            d->actionBookmark->setEnabled(nSelected>=1);
+        }
 
         QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
         menu->exec(e->globalPos());
@@ -153,27 +178,43 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
 
 }
 
-void GPSListViewContextMenu::copyActionTriggered()
+bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl)
 {
-    GPSDataContainer gpsInfo;
-    KUrl itemUrl;
-
     QTreeWidgetItem * treeItem     = d->imagesList->listView()->currentItem();
     const GPSListViewItem * lvItem = dynamic_cast<GPSListViewItem*>(treeItem);
     if (lvItem)
     {
-        gpsInfo = lvItem->GPSInfo();
-        itemUrl = lvItem->url();
+        if (gpsInfo)
+            *gpsInfo = lvItem->GPSInfo();
+        
+        if (itemUrl)
+            *itemUrl = lvItem->url();
+
+        return true;
     }
     else
     {
         const GPSTrackListViewItem * lvItem = dynamic_cast<GPSTrackListViewItem*>(treeItem);
         if (!lvItem)
-            return;
+            return false;
 
-        gpsInfo = lvItem->gpsInfo().gpsData();
-        itemUrl = lvItem->gpsInfo().url();
+        if (gpsInfo)
+            *gpsInfo = lvItem->gpsInfo().gpsData();
+
+        if (itemUrl)
+            *itemUrl = lvItem->gpsInfo().url();
+
+        return true;
     }
+}
+
+void GPSListViewContextMenu::copyActionTriggered()
+{
+    GPSDataContainer gpsInfo;
+    KUrl itemUrl;
+
+    if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
+        return;
 
     const double lat = gpsInfo.latitude();
     const double lon = gpsInfo.longitude();
@@ -340,6 +381,11 @@ void GPSListViewContextMenu::pasteActionTriggered()
         return;
     }
 
+    setGPSDataForSelectedItems(gpsData);
+}
+
+void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer gpsData)
+{
     const QList<QTreeWidgetItem*> selectedItems = d->imagesList->listView()->selectedItems();
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItems.begin(); it!=selectedItems.end(); ++it)
     {
@@ -360,6 +406,21 @@ void GPSListViewContextMenu::pasteActionTriggered()
             }
         }
     }
+}
+
+void GPSListViewContextMenu::slotBookmarkSelected(GPSDataContainer bookmarkPosition)
+{
+    setGPSDataForSelectedItems(bookmarkPosition);
+}
+
+bool GPSListViewContextMenu::getCurrentPosition(GPSDataContainer* position, void* mydata)
+{
+    if (!position || !mydata)
+        return false;
+
+    GPSListViewContextMenu* me = reinterpret_cast<GPSListViewContextMenu*>(mydata);
+    
+    return me->getCurrentItemPositionAndUrl(position, 0);
 }
 
 } // namespace KIPIGPSSyncPlugin

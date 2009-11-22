@@ -73,4 +73,6 @@ private:
 
 } // namespace KIPIGPSSyncPlugin
 
+Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataContainer)
+
 #endif  // GPSDATACONTAINER_H

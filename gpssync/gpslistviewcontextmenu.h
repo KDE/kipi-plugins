@@ -31,11 +31,15 @@
 // local includes:
 
 #include "imageslist.h"
+#include "gpsdatacontainer.h"
+
+class KUrl;
 
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSListViewContextMenuPriv;
+class GPSBookmarkOwner;
 
 class GPSListViewContextMenu : public QObject
 {
@@ -43,17 +47,21 @@ class GPSListViewContextMenu : public QObject
 
 public:
 
-    GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList);
+    GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
     ~GPSListViewContextMenu();
 
 protected:
 
     virtual bool eventFilter(QObject *watched, QEvent *event);
+    void setGPSDataForSelectedItems(const GPSDataContainer gpsData);
+    static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
+    bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
 
 public Q_SLOTS:
 
     void copyActionTriggered();
     void pasteActionTriggered();
+    void slotBookmarkSelected(GPSDataContainer bookmarkPosition);
 
 private:
 

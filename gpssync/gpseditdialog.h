@@ -58,11 +58,13 @@ protected Q_SLOTS:
     void slotGotoLocation();
     void slotGPSPositionChanged();
     void slotHelp();
+    void slotBookmarkSelected(GPSDataContainer position);
 
 protected:
 
     void resizeEvent(QResizeEvent*);
     void closeEvent(QCloseEvent*);
+    static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
 
 private:
 
