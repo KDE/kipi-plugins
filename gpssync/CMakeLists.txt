@@ -1,6 +1,7 @@
 SUBDIRS(icons)
 
 SET(kipiplugin_gpssync_PART_SRCS plugin_gpssync.cpp
+                                 inputboxnocancel.cpp
                                  gpsbookmarkowner.cpp
                                  gpslistviewcontextmenu.cpp 
                                  gpslistviewitem.cpp 

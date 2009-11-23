@@ -23,16 +23,16 @@
 #include "gpsbookmarkowner.h"
 #include "gpsbookmarkowner.moc"
 
-// Qt includes
-
-#include <QInputDialog>
-
 // KDE includes
 
 #include <kactioncollection.h>
 #include <kbookmarkmenu.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
+
+// local includes
+
+#include "inputboxnocancel.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -90,13 +90,10 @@ bool GPSBookmarkOwner::supportsTabs() const
 QString GPSBookmarkOwner::currentTitle() const
 {
     // TODO: how do we tell the bookmark manager to abort if the user aborts?
-    // right now, even if the user clicks cancel, he cannot abort :-(
-    // we would have to return an empty URL, but the we would get an error-message
-    const QString title = QInputDialog::getText(d->parent, i18n("Bookmark location"), i18n("Title:"), QLineEdit::Normal, currentUrl());
+    // use a dialog that the user can't cancel, this way at least we don't end up
+    // with an empty title
+    const QString title = InputBoxNoCancel::AskForString(i18n("Bookmark location"), i18n("Title:"), currentUrl(), d->parent);
 
-    if (title.isEmpty())
-        return currentUrl();
-    
     return title;
 }
 
