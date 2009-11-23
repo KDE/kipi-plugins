@@ -146,6 +146,9 @@ void GPSListViewItem::eraseGPSInfo()
 {
     d->erase = true;
     d->dirty = true;
+    setText(KIPIPlugins::ImagesListView::User2, QString());
+    setText(KIPIPlugins::ImagesListView::User3, QString());
+    setText(KIPIPlugins::ImagesListView::User4, QString());
     setText(KIPIPlugins::ImagesListView::User5, i18n("Deleted"));
 }
 
