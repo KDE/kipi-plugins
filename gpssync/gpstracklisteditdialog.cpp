@@ -116,7 +116,8 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     d->bookmarkOwner = new GPSBookmarkOwner(this);
     
     // add the context menu provider to the imagesList:
-    new GPSListViewContextMenu(d->imagesList, d->bookmarkOwner);
+    GPSListViewContextMenu* const gpsListViewContextMenu =
+                new GPSListViewContextMenu(d->imagesList, d->bookmarkOwner);
 
     d->worldMap       = new GPSTrackListWidget(page);
     d->worldMap->show();
@@ -154,14 +155,14 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
 
     // ---------------------------------------------------------------
 
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
-
     connect(d->worldMap, SIGNAL(signalNewGPSLocationFromMap(int, double, double, double)),
             this, SLOT(slotNewGPSLocationFromMap(int, double, double, double)));
 
     connect(d->worldMap, SIGNAL(signalMarkerSelectedFromMap(int)),
             this, SLOT(slotMarkerSelectedFromMap(int)));
+
+    connect(gpsListViewContextMenu, SIGNAL(signalItemsChanged(const QList<QTreeWidgetItem*>&)),
+            this, SLOT(slotListItemsChanged(const QList<QTreeWidgetItem*>&)));
 
     // ---------------------------------------------------------------
 
@@ -170,14 +171,14 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
          it != d->gpsTrackList.end() ; ++it)
     {
         GPSTrackListViewItem *item = new GPSTrackListViewItem(d->imagesList->listView(),
-                                                              it.value().url());
-        item->setGPSInfo(it.key(), it.value());
-        urls.append(it.value().url());
+                                                              it->url());
+        item->setGPSInfo(*it);
+        urls.append(it->url());
     }
     d->interface->thumbnails(urls, 64);
 
+    // this loads the settings and forwards the gpsTrackList to the map:
     readSettings();
-    QTimer::singleShot(0, this, SLOT(slotUpdateWorldMap()));
 }
 
 GPSTrackListEditDialog::~GPSTrackListEditDialog()
@@ -203,21 +204,15 @@ void GPSTrackListEditDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void GPSTrackListEditDialog::slotUpdateWorldMap()
+void GPSTrackListEditDialog::updateWorldMap()
 {
-    d->worldMap->resized();
+    QTimer::singleShot(0, d->worldMap, SLOT(slotResized()));
 }
 
 void GPSTrackListEditDialog::resizeEvent(QResizeEvent *e)
 {
     if (!e) return;
-    slotUpdateWorldMap();
-}
-
-void GPSTrackListEditDialog::slotCancel()
-{
-    saveSettings();
-    done(Cancel);
+    updateWorldMap();
 }
 
 void GPSTrackListEditDialog::readSettings()
@@ -237,7 +232,7 @@ void GPSTrackListEditDialog::readSettings()
     d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
     d->worldMap->setTrackList(d->gpsTrackList);
-    d->worldMap->resized();
+    updateWorldMap();
 }
 
 void GPSTrackListEditDialog::saveSettings()
@@ -253,8 +248,14 @@ void GPSTrackListEditDialog::saveSettings()
     config.sync();
 }
 
-void GPSTrackListEditDialog::slotOk()
+void GPSTrackListEditDialog::slotButtonClicked(int button)
 {
+    if (button != KDialog::Ok)
+    {
+        KDialog::slotButtonClicked(button);
+        return;
+    }
+
     saveSettings();
     accept();
 }
@@ -267,7 +268,7 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
         GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
         if (lvItem)
         {
-            if (lvItem->id() == id)
+            if (lvItem->gpsInfo().id() == id)
             {
                 d->imagesList->listView()->setCurrentItem(lvItem);
                 d->imagesList->listView()->scrollToItem(lvItem);
@@ -278,6 +279,33 @@ void GPSTrackListEditDialog::slotMarkerSelectedFromMap(int id)
     }
 }
 
+void GPSTrackListEditDialog::slotListItemsChanged(const QList<QTreeWidgetItem*>& changedItems)
+{
+    for (QList<QTreeWidgetItem*>::const_iterator it = changedItems.constBegin();
+         it!=changedItems.constEnd(); ++it)
+    {
+        GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
+        if (lvItem)
+        {
+            // TODO: this is only valid as long as no items are deleted!
+            const int itemId = lvItem->gpsInfo().id();
+            for (int i = 0; i<d->gpsTrackList.size(); ++i)
+            {
+                if (d->gpsTrackList.at(i).id() == itemId)
+                {
+                    d->gpsTrackList[i] = lvItem->gpsInfo();
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    // re-load the items into the map:
+    d->worldMap->setTrackList(d->gpsTrackList);
+    updateWorldMap();
+}
+
 void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, double lng, double alt)
 {
     QTreeWidgetItemIterator it(d->imagesList->listView());
@@ -286,7 +314,7 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
         GPSTrackListViewItem *lvItem = dynamic_cast<GPSTrackListViewItem*>(*it);
         if (lvItem)
         {
-            if (lvItem->id() == id)
+            if (lvItem->gpsInfo().id() == id)
             {
                 GPSTrackListItem info = lvItem->gpsInfo();
                 GPSDataContainer data = info.gpsData();
@@ -295,11 +323,17 @@ void GPSTrackListEditDialog::slotNewGPSLocationFromMap(int id, double lat, doubl
                 data.setAltitude(alt);
                 info.setGPSData(data);
                 info.setDirty(true);
-                lvItem->setGPSInfo(lvItem->dateTime(), info);
+                lvItem->setGPSInfo(info);
 
                 // Update track list info.
-                d->gpsTrackList.remove(lvItem->dateTime());
-                d->gpsTrackList.insert(lvItem->dateTime(), info);
+                for (int i=0; i<d->gpsTrackList.size(); ++i)
+                {
+                    if (d->gpsTrackList.at(i).id()==id)
+                    {
+                        d->gpsTrackList[i] = info;
+                        break;
+                    }
+                }
 
                 d->imagesList->listView()->setCurrentItem(lvItem);
                 d->imagesList->listView()->scrollToItem(lvItem);

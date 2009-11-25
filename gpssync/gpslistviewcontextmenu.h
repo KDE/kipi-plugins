@@ -63,6 +63,10 @@ public Q_SLOTS:
     void pasteActionTriggered();
     void slotBookmarkSelected(GPSDataContainer bookmarkPosition);
 
+Q_SIGNALS:
+
+    void signalItemsChanged(const QList<QTreeWidgetItem*>& items);
+
 private:
 
     GPSListViewContextMenuPriv* const d;

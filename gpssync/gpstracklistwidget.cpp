@@ -160,7 +160,7 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
     KHTMLPart::khtmlMouseReleaseEvent(e);
 }
 
-void GPSTrackListWidget::resized()
+void GPSTrackListWidget::slotResized()
 {
     QString url = d->gpsTrackListUrl;
     url.append("?width=");
@@ -178,13 +178,13 @@ void GPSTrackListWidget::resized()
     for( GPSTrackList::iterator it = d->gpsTrackList.begin() ;
          it != d->gpsTrackList.end() ; ++it)
     {
-        int id = it.value().id();
+        int id = it->id();
         url.append(QString("&lat%1=").arg(id));
-        url.append(QString::number(it.value().gpsData().latitude()));
+        url.append(QString::number(it->gpsData().latitude()));
         url.append(QString("&lng%1=").arg(id));
-        url.append(QString::number(it.value().gpsData().longitude()));
+        url.append(QString::number(it->gpsData().longitude()));
         url.append(QString("&alt%1=").arg(id));
-        url.append(QString::number(it.value().gpsData().altitude()));
+        url.append(QString::number(it->gpsData().altitude()));
         url.append(QString("&title%1=").arg(id));
         url.append(QString("%1").arg(id));
     }

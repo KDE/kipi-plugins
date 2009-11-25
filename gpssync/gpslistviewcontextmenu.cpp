@@ -402,10 +402,12 @@ void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer g
                 GPSTrackListItem data = lvItem2->gpsInfo();
                 data.setGPSData(gpsData);
                 data.setDirty(true);
-                lvItem2->setGPSInfo(lvItem2->dateTime(), data);
+                lvItem2->setGPSInfo(data);
             }
         }
     }
+
+    emit(signalItemsChanged(selectedItems));
 }
 
 void GPSListViewContextMenu::slotBookmarkSelected(GPSDataContainer bookmarkPosition)

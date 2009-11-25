@@ -35,6 +35,8 @@
 
 #include "gpstracklistcontainer.h"
 
+class QTreeWidgetItem;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -50,15 +52,15 @@ public:
     ~GPSTrackListEditDialog();
 
     GPSTrackList trackList() const;
+    void updateWorldMap();
 
 protected Q_SLOTS:
 
-    void slotOk();
-    void slotCancel();
-    void slotUpdateWorldMap();
+    virtual void slotButtonClicked(int button);
     void slotHelp();
     void slotNewGPSLocationFromMap(int id, double lat, double lng, double alt);
     void slotMarkerSelectedFromMap(int id);
+    void slotListItemsChanged(const QList<QTreeWidgetItem*>& changedItems);
 
 protected:
 

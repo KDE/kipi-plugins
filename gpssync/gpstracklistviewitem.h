@@ -49,16 +49,11 @@ public:
     GPSTrackListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url);
     ~GPSTrackListViewItem();
 
-    void setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data);
+    void setGPSInfo(const GPSTrackListItem& data);
     GPSTrackListItem gpsInfo() const;
 
     void setDirty(bool dirty);
     bool isDirty() const;
-
-    int              id() const;
-    QDateTime        dateTime() const;
-    QString          fileName() const;
-    KUrl             url() const;
 
 private:
 

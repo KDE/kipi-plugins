@@ -42,8 +42,6 @@ public:
     {
     }
 
-    QDateTime        dateTime;
-
     GPSTrackListItem data;
 };
 
@@ -63,13 +61,12 @@ bool GPSTrackListViewItem::isDirty() const
     return d->data.isDirty();
 }
 
-void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListItem& data)
+void GPSTrackListViewItem::setGPSInfo(const GPSTrackListItem& data)
 {
-    d->dateTime = dt;
-    d->data     = data;
+    d->data = data;
     setText(KIPIPlugins::ImagesListView::User1, QString::number(d->data.id()));
     setText(KIPIPlugins::ImagesListView::Filename, d->data.fileName());
-    setText(KIPIPlugins::ImagesListView::User2, d->dateTime.toString(Qt::LocalDate));
+    setText(KIPIPlugins::ImagesListView::User2, d->data.dateTime().toString(Qt::LocalDate));
     setText(KIPIPlugins::ImagesListView::User3, d->data.gpsData().latitudeString());
     setText(KIPIPlugins::ImagesListView::User4, d->data.gpsData().longitudeString());
     setText(KIPIPlugins::ImagesListView::User5, d->data.gpsData().altitudeString());
@@ -79,26 +76,6 @@ void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListIte
 GPSTrackListItem GPSTrackListViewItem::gpsInfo() const
 {
     return d->data;
-}
-
-QDateTime GPSTrackListViewItem::dateTime() const
-{
-    return d->dateTime;
-}
-
-KUrl GPSTrackListViewItem::url() const
-{
-    return d->data.url();
-}
-
-QString GPSTrackListViewItem::fileName() const
-{
-    return d->data.fileName();
-}
-
-int GPSTrackListViewItem::id() const
-{
-    return d->data.id();
 }
 
 } // namespace KIPIGPSSyncPlugin

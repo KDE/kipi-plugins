@@ -317,12 +317,15 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
             if (!dt.isValid())
                 dt = exiv2Iface.getImageDateTime();
 
+            KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
+            KIPIGPSSyncPlugin::GPSTrackListItem trackListItem;
+            trackListItem.setUrl(*it);
+            trackListItem.setGPSData(gpsData);
             if (dt.isValid())
             {
-                KIPIGPSSyncPlugin::GPSDataContainer gpsData(alt, lat, lng, false);
-                KIPIGPSSyncPlugin::GPSTrackListItem trackListItem(*it, gpsData);
-                trackList.insert(dt, trackListItem);
+                trackListItem.setDateTime(dt);
             }
+            trackList.append(trackListItem);
         }
     }
 
@@ -332,12 +335,15 @@ void Plugin_GPSSync::slotGPSTrackListEdit()
         return;
     }
 
+    // sort items by date/time
+    qSort(trackList.begin(), trackList.end(), KIPIGPSSyncPlugin::GPSTrackListItem::earlierThan);
+    
     // Set track list id sorted by datetime.
     int id = 1;
     for( KIPIGPSSyncPlugin::GPSTrackList::iterator it = trackList.begin() ;
          it != trackList.end() ; ++it)
     {
-        it.value().setId(id);
+        it->setId(id);
         id++;
     }
 

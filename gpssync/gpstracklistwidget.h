@@ -57,7 +57,9 @@ public:
     void    setMapType(const QString& mapType);
     QString mapType();
 
-    void    resized();
+public Q_SLOTS:
+
+    void slotResized();
 
 Q_SIGNALS:
 

@@ -60,19 +60,27 @@ public:
         m_id       = data.id();
         m_url      = data.url();
         m_gpsData  = data.gpsData();
+        m_dateTime = data.dateTime();
         return *this;
     };
 
-    void setDirty(bool dirty)                        { m_dirty    = dirty;   };
-    void setId(int id)                               { m_id       = id;      };
-    void setUrl(const KUrl& url)                     { m_url      = url;     };
-    void setGPSData(const GPSDataContainer& gpsData) { m_gpsData  = gpsData; };
+    void setDirty(bool dirty)                        { m_dirty    = dirty;    }
+    void setId(int id)                               { m_id       = id;       }
+    void setUrl(const KUrl& url)                     { m_url      = url;      }
+    void setDateTime(const QDateTime& dateTime)      { m_dateTime = dateTime; }
+    void setGPSData(const GPSDataContainer& gpsData) { m_gpsData  = gpsData;  }
 
-    int       isDirty()  const       { return m_dirty;          };
-    int       id()  const            { return m_id;             };
-    KUrl      url() const            { return m_url;            };
-    QString   fileName() const       { return m_url.fileName(); };
-    GPSDataContainer gpsData() const { return m_gpsData;        };
+    int       isDirty()  const       { return m_dirty;          }
+    int       id()  const            { return m_id;             }
+    KUrl      url() const            { return m_url;            }
+    QString   fileName() const       { return m_url.fileName(); }
+    QDateTime dateTime() const       { return m_dateTime;       }
+    GPSDataContainer gpsData() const { return m_gpsData;        }
+
+    static bool earlierThan(const GPSTrackListItem& a, const GPSTrackListItem& b)
+    {
+        return a.dateTime() < b.dateTime();
+    }
 
 private:
 
@@ -82,10 +90,12 @@ private:
 
     KUrl             m_url;
 
+    QDateTime        m_dateTime;
+
     GPSDataContainer m_gpsData;
 };
 
-typedef QMap<QDateTime, GPSTrackListItem> GPSTrackList;
+typedef QList<GPSTrackListItem> GPSTrackList;
 
 } // namespace KIPIGPSSyncPlugin
 
