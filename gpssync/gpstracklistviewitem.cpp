@@ -70,9 +70,9 @@ void GPSTrackListViewItem::setGPSInfo(const QDateTime& dt, const GPSTrackListIte
     setText(KIPIPlugins::ImagesListView::User1, QString::number(d->data.id()));
     setText(KIPIPlugins::ImagesListView::Filename, d->data.fileName());
     setText(KIPIPlugins::ImagesListView::User2, d->dateTime.toString(Qt::LocalDate));
-    setText(KIPIPlugins::ImagesListView::User3, QString::number(d->data.gpsData().latitude(),  'g', 12));
-    setText(KIPIPlugins::ImagesListView::User4, QString::number(d->data.gpsData().longitude(), 'g', 12));
-    setText(KIPIPlugins::ImagesListView::User5, QString::number(d->data.gpsData().altitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User3, d->data.gpsData().latitudeString());
+    setText(KIPIPlugins::ImagesListView::User4, d->data.gpsData().longitudeString());
+    setText(KIPIPlugins::ImagesListView::User5, d->data.gpsData().altitudeString());
     setText(KIPIPlugins::ImagesListView::User6, isDirty() ? i18n("Yes") : i18n("No"));
 }
 

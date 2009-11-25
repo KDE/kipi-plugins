@@ -115,9 +115,9 @@ void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bo
     d->gpsData    = gpsData;
     d->erase      = false;
     d->hasGPSInfo = true;
-    setText(KIPIPlugins::ImagesListView::User2, QString::number(d->gpsData.latitude(),  'g', 12));
-    setText(KIPIPlugins::ImagesListView::User3, QString::number(d->gpsData.longitude(), 'g', 12));
-    setText(KIPIPlugins::ImagesListView::User4, QString::number(d->gpsData.altitude(),  'g', 12));
+    setText(KIPIPlugins::ImagesListView::User2, d->gpsData.latitudeString());
+    setText(KIPIPlugins::ImagesListView::User3, d->gpsData.longitudeString());
+    setText(KIPIPlugins::ImagesListView::User4, d->gpsData.altitudeString());
 
     if (isDirty())
     {

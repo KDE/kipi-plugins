@@ -216,12 +216,12 @@ void GPSListViewContextMenu::copyActionTriggered()
     if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
         return;
 
-    const double lat = gpsInfo.latitude();
-    const double lon = gpsInfo.longitude();
-    const double altitude = gpsInfo.altitude();
+    const QString lat = gpsInfo.latitudeString();
+    const QString lon = gpsInfo.longitudeString();
+    const QString altitude = gpsInfo.altitudeString();
 
     const QString coordinates = QString::fromLatin1("%1,%2,%3")
-                                .arg(lon, 0, 'f', 10).arg(lat, 0, 'f', 10).arg(altitude, 0, 'f', 10);
+                                .arg(lon).arg(lat).arg(altitude);
 
     // importing this representation into Marble does not show anything,
     // but Merkaartor shows the point
@@ -251,7 +251,7 @@ void GPSListViewContextMenu::copyActionTriggered()
       "   <name>%4</name>\n"
       "  </wpt>\n"
       "</gpx>\n"
-      ).arg(lat, 0, 'f', 10).arg(lon, 0, 'f', 10).arg(altitude, 0, 'f', 10).arg(itemUrl.toLocalFile());
+      ).arg(lat).arg(lon).arg(altitude).arg(itemUrl.toLocalFile());
 
     QMimeData * const myMimeData = new QMimeData();
     myMimeData->setText(coordinates);
