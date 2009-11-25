@@ -106,11 +106,7 @@ QString GPSBookmarkOwner::currentUrl() const
     if (!positionProviderFunction(&position, positionProviderFunctionData))
         return QString();
 
-    const double lat = position.latitude();
-    const double lon = position.longitude();
-    const double altitude = position.altitude();
-
-    return QString::fromLatin1("geo:%1,%2,%3").arg(lat, 0, 'f', 10).arg(lon, 0, 'f', 10).arg(altitude, 0, 'f', 10);
+    return position.geoUrl();
 }
 
 bool GPSBookmarkOwner::enableOption(BookmarkOption option) const
@@ -132,47 +128,11 @@ void GPSBookmarkOwner::openBookmark(const KBookmark& bookmark, Qt::MouseButtons,
 {
     const QString url = bookmark.url().url().toLower();
 
-    // parse geo:-uri according to (only partially implemented):
-    // http://tools.ietf.org/html/draft-ietf-geopriv-geo-uri-04
-    // TODO: verify that we follow the spec fully!
-    if (!url.startsWith("geo:"))
-    {
-        // TODO: error
-        return;
-    }
+    bool okay;
+    const GPSDataContainer position = GPSDataContainer::fromGeoUrl(url, &okay);
 
-    const QStringList parts = url.mid(4).split(',');
-
-    GPSDataContainer position;
-    if ((parts.size()==3)||(parts.size()==2))
-    {
-        bool okay = true;
-        double ptLongitude = 0.0;
-        double ptLatitude  = 0.0;
-        double ptAltitude  = 0.0;
-
-        ptLatitude = parts[0].toDouble(&okay);
-        if (okay)
-            ptLongitude = parts[1].toDouble(&okay);
-
-        if (okay&&(parts.size()==3))
-            ptAltitude = parts[2].toDouble(&okay);
-
-        if (!okay)
-        {
-            // TODO: error
-            return;
-        }
-
-        position = GPSDataContainer(ptAltitude, ptLatitude, ptLongitude, false);
-    }
-    else
-    {
-        // TODO: error
-        return;
-    }
-    
-    emit(positionSelected(position));
+    if (okay)
+        emit(positionSelected(position));
 }
 
 void GPSBookmarkOwner::setPositionProvider(PositionProviderFunction function, void* yourdata)

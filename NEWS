@@ -19,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> JPEGLossLess       : 215644 : Rotate image fails under windows.
 011 ==> FlickrExport       : 215646 : Export to flickr fails under windows.
 012 ==> GPSSync            : 167279 : Add a list of favorite place to gps locater window (e.g. new drop down menu).
-013 ==> 
+013 ==> GPSSync            : 135406 : History for last used GPS coordinates.
+014 ==> 

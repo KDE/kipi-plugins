@@ -51,14 +51,14 @@ public:
 
 protected Q_SLOTS:
 
-    void slotOk();
-    void slotCancel();
+    virtual void slotButtonClicked(int button);
     void slotNewGPSLocationFromMap(const QString& lat, const QString& lon, const QString& alt);
     void slotUpdateWorldMap();
     void slotGotoLocation();
     void slotGPSPositionChanged();
     void slotHelp();
     void slotBookmarkSelected(GPSDataContainer position);
+    void slotRecentSelected(QAction* action);
 
 protected:
 

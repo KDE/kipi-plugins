@@ -23,6 +23,8 @@
 #ifndef GPSDATACONTAINER_H
 #define GPSDATACONTAINER_H
 
+#include <QStringList>
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -52,6 +54,15 @@ public:
         return *this;
     };
 
+    // use this instead of '==', because '==' implies having the
+    // same value for m_interpolated
+    bool sameCoordinatesAs(const GPSDataContainer& a) const
+    {
+        return ( a.m_altitude == m_altitude ) &&
+               ( a.m_latitude == m_latitude ) &&
+               ( a.m_longitude == m_longitude);
+    }
+
     void setInterpolated(bool ite) { m_interpolated = ite; };
     void setAltitude(double alt)   { m_altitude     = alt; };
     void setLatitude(double lat)   { m_latitude     = lat; };
@@ -61,6 +72,62 @@ public:
     double altitude()       const { return m_altitude;     };
     double latitude()       const { return m_latitude;     };
     double longitude()      const { return m_longitude;    };
+
+    QString altitudeString() const { return QString::number(m_altitude, 'g', 12); }
+    QString latitudeString() const { return QString::number(m_latitude, 'g', 12); }
+    QString longitudeString() const { return QString::number(m_longitude, 'g', 12); }
+
+    QString geoUrl() const { return QString::fromLatin1("geo:%1,%2,%3").arg(latitudeString()).arg(longitudeString()).arg(altitudeString()); }
+
+    static GPSDataContainer fromGeoUrl(const QString& url, bool* const parsedOkay)
+    {
+        // parse geo:-uri according to (only partially implemented):
+        // http://tools.ietf.org/html/draft-ietf-geopriv-geo-uri-04
+        // TODO: verify that we follow the spec fully!
+        if (!url.startsWith("geo:"))
+        {
+            // TODO: error
+            if (parsedOkay)
+                *parsedOkay = false;
+            return GPSDataContainer();
+        }
+
+        const QStringList parts = url.mid(4).split(',');
+
+        GPSDataContainer position;
+        if ((parts.size()==3)||(parts.size()==2))
+        {
+            bool okay = true;
+            double ptLongitude = 0.0;
+            double ptLatitude  = 0.0;
+            double ptAltitude  = 0.0;
+
+            ptLatitude = parts[0].toDouble(&okay);
+            if (okay)
+                ptLongitude = parts[1].toDouble(&okay);
+
+            if (okay&&(parts.size()==3))
+                ptAltitude = parts[2].toDouble(&okay);
+
+            if (!okay)
+            {
+                *parsedOkay = false;
+                return GPSDataContainer();
+            }
+
+            position = GPSDataContainer(ptAltitude, ptLatitude, ptLongitude, false);
+        }
+        else
+        {
+            if (parsedOkay)
+                *parsedOkay = false;
+            return GPSDataContainer();
+        }
+
+        if (parsedOkay)
+                *parsedOkay = true;
+        return position;
+    }
 
 private:
 

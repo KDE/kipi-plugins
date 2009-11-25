@@ -34,6 +34,7 @@
 
 // KDE includes
 
+#include <kaction.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -57,6 +58,9 @@
 namespace KIPIGPSSyncPlugin
 {
 
+typedef QPair<GPSDataContainer, QString>    RecentPair;
+typedef QList<RecentPair>                   RecentPairList;
+
 class GPSEditDialogPrivate
 {
 
@@ -72,6 +76,8 @@ public:
         goButton       = 0;
         bookmarkButton = 0;
         bookmarkOwner  = 0;
+        recentButton   = 0;
+        recentMenu     = 0;
         hasGPSInfo     = false;
     }
 
@@ -80,6 +86,8 @@ public:
     QPushButton              *goButton;
     QToolButton              *bookmarkButton;
     GPSBookmarkOwner         *bookmarkOwner;
+    QToolButton              *recentButton;
+    KMenu                    *recentMenu;
 
     KLineEdit                *altitudeInput;
     KLineEdit                *latitudeInput;
@@ -88,6 +96,8 @@ public:
     KIPIPlugins::KPAboutData *about;
 
     GPSDataContainer          gpsData;
+    QString                   fileName;
+    RecentPairList            recentLocations;
 
     GPSMapWidget             *worldMap;
 };
@@ -98,6 +108,7 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 {
     d->hasGPSInfo = hasGPSInfo;
     d->gpsData    = gpsData;
+    d->fileName   = fileName;
 
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
@@ -137,9 +148,22 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->bookmarkOwner->setPositionProvider(getCurrentPosition, this);
 
     d->bookmarkButton = new QToolButton(this);
+    d->bookmarkButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    d->bookmarkButton->setIcon(SmallIcon("bookmarks"));
     d->bookmarkButton->setText(i18n("Bookmarks"));
     d->bookmarkButton->setPopupMode(QToolButton::InstantPopup);
     d->bookmarkButton->setMenu(d->bookmarkOwner->getMenu());
+    d->bookmarkButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+
+    d->recentButton = new QToolButton(this);
+    d->recentButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    d->recentButton->setIcon(SmallIcon("document-open-recent"));
+    d->recentButton->setText(i18n("Recent locations"));
+    d->recentButton->setPopupMode(QToolButton::InstantPopup);
+    d->recentButton->setEnabled(false);
+    d->recentButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+    d->recentMenu = new KMenu(this);
+    d->recentButton->setMenu(d->recentMenu);
 
     d->worldMap = new GPSMapWidget(page);
     d->worldMap->setFileName(fileName);
@@ -154,10 +178,11 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     grid->addWidget(d->longitudeInput,   6, 0, 1, 3);
     grid->addWidget(d->goButton,         7, 0, 1, 3);
     grid->addWidget(d->bookmarkButton,   8, 0, 1, 3);
-    grid->addWidget(d->worldMap->view(), 0, 3, 10, 1);
+    grid->addWidget(d->recentButton,     9, 0, 1, 3);
+    grid->addWidget(d->worldMap->view(), 0, 3, 11, 1);
     grid->setColumnStretch(0, 3);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(9, 10);
+    grid->setRowStretch(10, 10);
     grid->setSpacing(spacingHint());
     grid->setMargin(0);
 
@@ -187,9 +212,6 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     // ---------------------------------------------------------------
 
-    connect(this, SIGNAL(cancelClicked()),
-            this, SLOT(slotCancel()));
-
     connect(d->altitudeInput, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotGPSPositionChanged()));
 
@@ -207,6 +229,9 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     connect(d->bookmarkOwner, SIGNAL(positionSelected(GPSDataContainer)),
             this, SLOT(slotBookmarkSelected(GPSDataContainer)));
+
+    connect(d->recentButton, SIGNAL(triggered(QAction*)),
+            this, SLOT(slotRecentSelected(QAction*)));
 
     // ---------------------------------------------------------------
 
@@ -228,6 +253,7 @@ void GPSEditDialog::slotHelp()
 void GPSEditDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
+
     saveSettings();
     e->accept();
 }
@@ -239,9 +265,9 @@ void GPSEditDialog::slotGPSPositionChanged()
 
 void GPSEditDialog::slotBookmarkSelected(GPSDataContainer position)
 {
-    d->altitudeInput->setText(QString::number(position.altitude(),   'g', 12));
-    d->latitudeInput->setText(QString::number(position.latitude(),   'g', 12));
-    d->longitudeInput->setText(QString::number(position.longitude(), 'g', 12));
+    d->altitudeInput->setText(position.altitudeString());
+    d->latitudeInput->setText(position.latitudeString());
+    d->longitudeInput->setText(position.longitudeString());
 
     // push the go button:
     slotGotoLocation();
@@ -265,12 +291,6 @@ void GPSEditDialog::resizeEvent(QResizeEvent *e)
     slotUpdateWorldMap();
 }
 
-void GPSEditDialog::slotCancel()
-{
-    saveSettings();
-    done(Cancel);
-}
-
 void GPSEditDialog::readSettings()
 {
     KConfig config("kipirc");
@@ -288,22 +308,48 @@ void GPSEditDialog::readSettings()
     d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 8));
 
+    // load recent locations:
+    const int recentCount = qMin(5, group.readEntry("GPS Recent Count", 0));
+    for (int i = 0; i<recentCount; ++i)
+    {
+        const QString recentGeoUrl = group.readEntry(QString("GPS Recent %1 GeoUrl").arg(i+1), QString());
+        const QString recentFilename = group.readEntry(QString("GPS Recent %1 Filename").arg(i+1), QString());
+
+        bool okay;
+        const GPSDataContainer recentLocation = GPSDataContainer::fromGeoUrl(recentGeoUrl, &okay);
+
+        if (okay)
+        {
+            d->recentLocations.append(RecentPair(recentLocation, recentFilename));
+
+            const QString recentActionTitle = QString("%1 (from %2)").arg(recentGeoUrl).arg(recentFilename);
+            KAction* const recentAction = new KAction(recentActionTitle, this);
+            recentAction->setData(recentGeoUrl);
+            d->recentMenu->addAction(recentAction);
+        }
+    }
+    if (!d->recentMenu->actions().isEmpty())
+    {
+        d->recentButton->setEnabled(true);
+    }
+
     d->altitudeInput->blockSignals(true);
     d->latitudeInput->blockSignals(true);
     d->longitudeInput->blockSignals(true);
 
+    // set the initial position:
+    GPSDataContainer initialPosition;
     if (d->hasGPSInfo)
     {
-        d->altitudeInput->setText(QString::number(d->gpsData.altitude(),   'g', 12));
-        d->latitudeInput->setText(QString::number(d->gpsData.latitude(),   'g', 12));
-        d->longitudeInput->setText(QString::number(d->gpsData.longitude(), 'g', 12));
+        initialPosition = d->gpsData;
     }
-    else
+    else if (!d->recentLocations.isEmpty())
     {
-        d->altitudeInput->setText(QString::number(group.readEntry("GPS Last Altitude", 0.0),   'g', 12));
-        d->latitudeInput->setText(QString::number(group.readEntry("GPS Last Latitude", 0.0),   'g', 12));
-        d->longitudeInput->setText(QString::number(group.readEntry("GPS Last Longitude", 0.0), 'g', 12));
+            initialPosition = d->recentLocations.first().first;
     }
+    d->altitudeInput->setText(initialPosition.altitudeString());
+    d->latitudeInput->setText(initialPosition.latitudeString());
+    d->longitudeInput->setText(initialPosition.longitudeString());
 
     d->altitudeInput->blockSignals(false);
     d->latitudeInput->blockSignals(false);
@@ -321,9 +367,15 @@ void GPSEditDialog::saveSettings()
     KConfigGroup group2 = config.group(QString("GPS Edit Dialog"));
     saveDialogSize(group2);
 
-    group.writeEntry("GPS Last Latitude", d->latitudeInput->text().toDouble());
-    group.writeEntry("GPS Last Longitude", d->longitudeInput->text().toDouble());
-    group.writeEntry("GPS Last Altitude", d->altitudeInput->text().toDouble());
+    const int recentCount = qMin(5, d->recentLocations.size());
+    group.writeEntry("GPS Recent Count", recentCount);
+    for (int i=0; i<recentCount; ++i)
+    {
+        const RecentPair recentPair = d->recentLocations.at(i);
+        group.writeEntry(QString("GPS Recent %1 GeoUrl").arg(i+1), recentPair.first.geoUrl());
+        group.writeEntry(QString("GPS Recent %1 Filename").arg(i+1), recentPair.second);
+    }
+
     group.writeEntry("Zoom Level", d->worldMap->zoomLevel());
     group.writeEntry("Map Type", d->worldMap->mapType());
     config.sync();
@@ -368,9 +420,28 @@ bool GPSEditDialog::checkGPSLocation()
     return true;
 }
 
-void GPSEditDialog::slotOk()
+void GPSEditDialog::slotButtonClicked(int button)
 {
+    if (button != KDialog::Ok)
+    {
+        KDialog::slotButtonClicked(button);
+        return;
+    }
+    
     if (!checkGPSLocation()) return;
+
+    // store the current location in the recent list:
+    const GPSDataContainer currentLocation = getGPSInfo();
+    for (int i=0; i<d->recentLocations.size(); ++i)
+    {
+        if (d->recentLocations.at(i).first.sameCoordinatesAs(currentLocation))
+        {
+            d->recentLocations.removeAt(i);
+            break;
+        }
+    }
+    d->recentLocations.prepend(RecentPair(currentLocation, d->fileName));
+
     saveSettings();
     accept();
 }
@@ -392,6 +463,19 @@ bool GPSEditDialog::getCurrentPosition(GPSDataContainer* position, void* mydata)
     *position = me->getGPSInfo();
 
     return true;
+}
+
+void GPSEditDialog::slotRecentSelected(QAction* action)
+{
+    const QString urlString = action->data().toString();
+
+    bool okay;
+    const GPSDataContainer recentLocation = GPSDataContainer::fromGeoUrl(urlString, &okay);
+
+    if (!okay)
+        return;
+
+    slotBookmarkSelected(recentLocation);
 }
 
 }  // namespace KIPIGPSSyncPlugin
