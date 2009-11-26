@@ -306,7 +306,7 @@ void GPSEditDialog::readSettings()
     else if (mapType == QString("G_HYBRID_TYPE")) mapType = QString("G_HYBRID_MAP");
 
     d->worldMap->setMapType(mapType);
-    d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 8));
+    d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 1));
 
     // load recent locations:
     const int recentCount = qMin(5, group.readEntry("GPS Recent Count", 0));

@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> FlickrExport       : 215646 : Export to flickr fails under windows.
 012 ==> GPSSync            : 167279 : Add a list of favorite place to gps locater window (e.g. new drop down menu).
 013 ==> GPSSync            : 135406 : History for last used GPS coordinates.
-014 ==> 
+014 ==> GPSSync            : 206080 : Kipi-plugins gpssync no map when entering.
+015 ==> 
