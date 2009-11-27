@@ -100,7 +100,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Source</string>
+      <string comment="List of images to process">Source</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" rowspan="4">
