@@ -41,7 +41,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          enum LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
-           : KAboutData (QByteArray("kipi-plugins"),
+           : KAboutData (QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
                          QByteArray(),
                          pluginName,
                          kipipluginsVersion().toAscii(),
