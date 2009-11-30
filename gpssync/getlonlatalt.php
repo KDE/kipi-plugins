@@ -81,6 +81,7 @@ type="text/javascript">
 function loadMap()
 {
     var map = new GMap2(document.getElementById("map"));
+
     var searchoptions = {
       suppressInitialResultSelection : true
     };
@@ -103,6 +104,7 @@ include( 'topocoding.inc' );
     map.addControl(new GMapTypeControl());
     map.addControl(new GScaleControl());
     map.addControl(new google.maps.LocalSearch(searchoptions), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10,20)));
+    map.enableScrollWheelZoom();
 
 <?php
     $maptype = $_GET['maptype'];
