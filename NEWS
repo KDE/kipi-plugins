@@ -22,4 +22,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> GPSSync            : 135406 : History for last used GPS coordinates.
 014 ==> GPSSync            : 206080 : Kipi-plugins gpssync no map when entering.
 015 ==> General            : 216622 : digiKam bug report data errors.
-016 ==> 
+016 ==> GPSSync            : 214210 : Don't take the correct position from geolocation file.
+017 ==> 

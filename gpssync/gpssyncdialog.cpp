@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QGroupBox>
@@ -33,6 +34,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QPointer>
+#include <QRadioButton>
 
 // KDE includes
 
@@ -75,7 +77,13 @@ public:
     GPSSyncDialogPriv()
     : gpxPointsLabel(0),
       maxTimeLabel(0),
+      timeZoneGroup(0),
+      timeZoneSystem(0),
+      timeZoneManual(0),
       timeZoneCB(0),
+      offsetSign(0),
+      offsetMin(0),
+      offsetSec(0),
       interpolateBox(0),
       maxGapInput(0),
       maxTimeInput(0),
@@ -91,7 +99,13 @@ public:
     QLabel                   *gpxPointsLabel;
     QLabel                   *maxTimeLabel;
 
+    QButtonGroup             *timeZoneGroup;
+    QRadioButton             *timeZoneSystem;
+    QRadioButton             *timeZoneManual;
     KComboBox                *timeZoneCB;
+    KComboBox                *offsetSign;
+    KIntSpinBox              *offsetMin;
+    KIntSpinBox              *offsetSec;
 
     QCheckBox                *interpolateBox;
 
@@ -181,7 +195,21 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
 
-    QLabel *timeZoneLabel = new QLabel(i18n("Time zone:"), settingsBox);
+    QLabel *timeZoneLabel = new QLabel(i18n("Camera time zone:"), settingsBox);
+    d->timeZoneSystem     = new QRadioButton(i18n("Same as system"), settingsBox);
+    d->timeZoneSystem->setWhatsThis(i18n(
+                    "Use this option if the timezone of the camera "
+                    "is the same as the timezone of this system. "
+                    "The conversion to GMT will be done automatically."));
+    d->timeZoneManual     = new QRadioButton(i18n("Manual:"), settingsBox);
+    d->timeZoneManual->setWhatsThis(i18n(
+                    "Use this option if the timezone of the camera "
+                    "is different from this system and you have to "
+                    "specify the difference to GMT manually."));
+    d->timeZoneGroup = new QButtonGroup(settingsBox);
+    d->timeZoneGroup->addButton(d->timeZoneSystem, 1);
+    d->timeZoneGroup->addButton(d->timeZoneManual, 2);
+    
     d->timeZoneCB         = new KComboBox(settingsBox);
 
     // See list of time zones over the world :
@@ -233,6 +261,36 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                     "<p>Note: positive offsets count eastwards from zero longitude (GMT), "
                     "they are 'ahead of time'.</p>"));
 
+    // additional camera offset to respect
+    QLabel *offsetLabel = new QLabel(i18n("Fine offset (mm:ss):"), settingsBox);
+    offsetLabel->setWhatsThis(i18n(
+                        "Sets an additional offset in minutes and "
+                        "seconds that is used to correlate the photos "
+                        "to the GPS track. "
+                        "This can be used for fine tuning to adjust a "
+                        "wrong camera clock."));
+
+    QWidget *offsetWidget = new QWidget(settingsBox);
+    d->offsetSign = new KComboBox(offsetWidget);
+    d->offsetSign->addItem("+");
+    d->offsetSign->addItem("-");
+    d->offsetSign->setWhatsThis(i18n("Set whether the camera offset "
+        "is negative or positive."));
+
+    d->offsetMin = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
+    d->offsetMin->setWhatsThis(i18n("Minutes to fine tune camera offset."));
+
+    d->offsetSec = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
+    d->offsetSec->setWhatsThis(i18n("Seconds to fine tune camera offset."));
+
+    QGridLayout *offsetLayout = new QGridLayout(offsetWidget);
+    offsetLayout->addWidget(d->offsetSign, 0, 0, 1, 1);
+    offsetLayout->addWidget(d->offsetMin, 0, 1, 1, 1);
+    offsetLayout->addWidget(d->offsetSec, 0, 2, 1, 1);
+    offsetLayout->setSpacing(spacingHint());
+    offsetLayout->setMargin(spacingHint());
+
+    // interpolation options
     d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
     d->interpolateBox->setWhatsThis(i18n("Set this option to interpolate GPS track points "
                     "which are not closely matched to the GPX data file."));
@@ -242,18 +300,35 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
-    settingsBoxLayout->addWidget(loadGPXButton,     0, 0, 1, 2);
-    settingsBoxLayout->addWidget(gpxFileLabel,      1, 0, 1, 2);
-    settingsBoxLayout->addWidget(d->gpxFileName,    2, 0, 1, 2);
-    settingsBoxLayout->addWidget(d->gpxPointsLabel, 3, 0, 1, 2);
-    settingsBoxLayout->addWidget(line,              4, 0, 1, 2);
-    settingsBoxLayout->addWidget(maxGapLabel,       5, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxGapInput,    5, 1, 1, 1);
-    settingsBoxLayout->addWidget(timeZoneLabel,     6, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->timeZoneCB,     6, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->interpolateBox, 7, 0, 1, 2);
-    settingsBoxLayout->addWidget(d->maxTimeLabel,   8, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxTimeInput,   8, 1, 1, 1);
+    // layout form
+    int row = 0;
+    settingsBoxLayout->addWidget(loadGPXButton,     row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(gpxFileLabel,      row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(d->gpxFileName,    row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(d->gpxPointsLabel, row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(line,              row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(maxGapLabel,       row, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxGapInput,    row, 1, 1, 1);
+    row++;
+    settingsBoxLayout->addWidget(timeZoneLabel,     row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(d->timeZoneSystem, row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(d->timeZoneManual, row, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->timeZoneCB,     row, 1, 1, 1);
+    row++;
+    settingsBoxLayout->addWidget(offsetLabel,       row, 0, 1, 1);
+    settingsBoxLayout->addWidget(offsetWidget,      row, 1, 1, 1);
+    row++;
+    settingsBoxLayout->addWidget(d->interpolateBox, row, 0, 1, 2);
+    row++;
+    settingsBoxLayout->addWidget(d->maxTimeLabel,   row, 0, 1, 1);
+    settingsBoxLayout->addWidget(d->maxTimeInput,   row, 1, 1, 1);
     settingsBoxLayout->setSpacing(spacingHint());
     settingsBoxLayout->setMargin(spacingHint());
 
@@ -312,6 +387,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->interpolateBox, SIGNAL(toggled(bool)),
             d->maxTimeInput, SLOT(setEnabled(bool)));
+
+    connect(d->timeZoneGroup, SIGNAL(buttonClicked(int)),
+            this, SLOT(slotTimeZoneModeChanged(int)));
 
     readSettings();
 }
@@ -423,9 +501,15 @@ void GPSSyncDialog::readSettings()
     KConfigGroup group = config.group(QString("GPS Sync Settings"));
 
     d->maxGapInput->setValue(group.readEntry("Max Gap Time", 30));
+    const int timeZoneGroupIndex = qMax(1, qMin(2, group.readEntry("Time Zone Mode", 1)));
+    d->timeZoneGroup->button(timeZoneGroupIndex)->setChecked(true);
+    slotTimeZoneModeChanged(timeZoneGroupIndex);
     d->timeZoneCB->setCurrentIndex(group.readEntry("Time Zone", 16));  // GMT+00:00
     d->interpolateBox->setChecked(group.readEntry("Interpolate", false));
     d->maxTimeInput->setValue(group.readEntry("Max Inter Dist Time", 15));
+    d->offsetSign->setCurrentIndex(group.readEntry("Offset Sign", 0));
+    d->offsetMin->setValue(group.readEntry("Offset Min", 0));
+    d->offsetSec->setValue(group.readEntry("Offset Sec", 0));
 
     d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
@@ -439,9 +523,13 @@ void GPSSyncDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("GPS Sync Settings"));
     group.writeEntry("Max Gap Time", d->maxGapInput->value() );
+    group.writeEntry("Time Zone Mode", d->timeZoneGroup->checkedId() );
     group.writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
     group.writeEntry("Interpolate", d->interpolateBox->isChecked() );
     group.writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
+    group.writeEntry("Offset Sign", d->offsetSign->currentIndex());
+    group.writeEntry("Offset Min", d->offsetMin->value());
+    group.writeEntry("Offset Sec", d->offsetSec->value());
 
     KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
     saveDialogSize(group2);
@@ -452,6 +540,7 @@ void GPSSyncDialog::saveSettings()
 // Correlate the GPS positions from Pictures using a GPX file data.
 void GPSSyncDialog::slotUser1Correlate()
 {
+    const bool cameraHasSystemTimeZone = (d->timeZoneGroup->checkedId() == 1);
     int itemsUpdated      = 0;
     int i                 = 0;
     QTreeWidgetItem *item = 0;
@@ -462,20 +551,36 @@ void GPSSyncDialog::slotUser1Correlate()
         if (lvItem)
         {
             GPSDataContainer gpsData;
-            QString tz = d->timeZoneCB->currentText();
-            int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
-            int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
-            int offset = hh*3600 + mm*60;
 
-            if (tz[3] == QChar('-'))
-                offset = (-1)*offset;
+            int offset = 0;
+
+            if (!cameraHasSystemTimeZone)
+            {
+                QString tz = d->timeZoneCB->currentText();
+                int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
+                int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
+                int timeZoneOffset = hh*3600 + mm*60;
+                if (tz[3] == QChar('-')) {
+                    timeZoneOffset = (-1) * timeZoneOffset;
+                }
+
+                offset+= timeZoneOffset;
+            }
+
+            int userOffset = d->offsetMin->value() * 60 + d->offsetSec->value();
+            if (d->offsetSign->currentText() == "-") {
+                userOffset = (-1) * userOffset;
+            }
+
+            offset+= userOffset;
 
             if (d->gpxParser.matchDate(lvItem->dateTime(),
                                        d->maxGapInput->value(),
                                        offset,
+                                       !cameraHasSystemTimeZone,
                                        d->interpolateBox->isChecked(),
                                        d->maxTimeInput->value()*60,
-                                       gpsData))
+                                       &gpsData))
             {
                 lvItem->setGPSInfo(gpsData);
                 itemsUpdated++;
@@ -570,6 +675,11 @@ void GPSSyncDialog::slotApply()
         i++;
     }
     while (item);
+}
+
+void GPSSyncDialog::slotTimeZoneModeChanged(int id)
+{
+    d->timeZoneCB->setEnabled(id==2);
 }
 
 }  // namespace KIPIGPSSyncPlugin

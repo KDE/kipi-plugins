@@ -52,9 +52,10 @@ public:
 
     void clear();
     int  numPoints();
-    bool matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone, 
-                   bool interpolate, int interpolationDstTime, 
-                   GPSDataContainer& gpsData);
+    bool matchDate(const QDateTime& photoDateTime, int maxGapTime, int secondsOffset,
+                   bool photoHasSystemTimeZone,
+                   bool interpolate, int interpolationDstTime,
+                   GPSDataContainer* const gpsData);
 
 private:
 

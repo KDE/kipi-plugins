@@ -64,6 +64,7 @@ protected Q_SLOTS:
 private Q_SLOTS:
 
     void slotLoadGPXFile();
+    void slotTimeZoneModeChanged(int id);
 
 private:
 

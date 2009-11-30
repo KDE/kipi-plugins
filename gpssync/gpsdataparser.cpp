@@ -56,18 +56,22 @@ int GPSDataParser::numPoints()
     return m_GPSDataMap.count();
 }
 
-bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, int timeZone,
+bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, int secondsOffset,
+                              bool offsetContainsTimeZone,
                               bool interpolate, int interpolationDstTime,
-                              GPSDataContainer& gpsData)
+                              GPSDataContainer* const gpsData)
 {
     // GPS device are sync in time by satelite using GMT time.
-    // If the camera time is different than GMT time, we need to convert it to GMT time
-    // Using the time zone.
-    QDateTime cameraGMTDateTime = photoDateTime.addSecs(timeZone*(-1));
+    QDateTime cameraGMTDateTime = photoDateTime.addSecs(secondsOffset*(-1));
+    if (offsetContainsTimeZone)
+    {
+        cameraGMTDateTime.setTimeSpec(Qt::UTC);
+    }
 
-    kDebug() << "cameraGMTDateTime: " << cameraGMTDateTime ;
+    kDebug() << "    photoDateTime: " << photoDateTime << photoDateTime.timeSpec();
+    kDebug() << "cameraGMTDateTime: " << cameraGMTDateTime << cameraGMTDateTime.timeSpec();
 
-    // We trying to find the right date in the GPS points list.
+    // We are trying to find the right date in the GPS points list.
     bool findItem = false;
     int nbSecItem = maxGapTime;
     int nbSecs;
@@ -79,11 +83,14 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
         // Camera GMT time and the GPS device GMT time.
 
         nbSecs = abs(cameraGMTDateTime.secsTo( it.key() ));
+//         kDebug() << it.key() << cameraGMTDateTime << nbSecs;
+//         kDebug() << it.key().timeSpec() << cameraGMTDateTime.timeSpec() << nbSecs;
 
         // We tring to find the minimal accuracy.
         if( nbSecs < maxGapTime && nbSecs < nbSecItem)
         {
-            gpsData   = m_GPSDataMap[it.key()];
+            if (gpsData)
+                *gpsData = m_GPSDataMap[it.key()];
             findItem  = true;
             nbSecItem = nbSecs;
         }
@@ -118,10 +125,13 @@ bool GPSDataParser::matchDate(const QDateTime& photoDateTime, int maxGapTime, in
 
             if (tCor-t1 != 0)
             {
-                gpsData.setAltitude(alt1  + (alt2-alt1) * (tCor-t1)/(t2-t1));
-                gpsData.setLatitude(lat1  + (lat2-lat1) * (tCor-t1)/(t2-t1));
-                gpsData.setLongitude(lon1 + (lon2-lon1) * (tCor-t1)/(t2-t1));
-                gpsData.setInterpolated(true);
+                if (gpsData)
+                {
+                    gpsData->setAltitude(alt1  + (alt2-alt1) * (tCor-t1)/(t2-t1));
+                    gpsData->setLatitude(lat1  + (lat2-lat1) * (tCor-t1)/(t2-t1));
+                    gpsData->setLongitude(lon1 + (lon2-lon1) * (tCor-t1)/(t2-t1));
+                    gpsData->setInterpolated(true);
+                }
                 return true;
             }
         }
