@@ -1,0 +1,250 @@
+body {
+	background-color: #111;
+	color: #888;
+	margin: 0;
+	font-family: sans-serif;
+}
+
+a {
+	color: #ccc;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #fff;
+}
+
+img {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+/*********************************************************/
+/* back and forward picture selection tabs on page edges */
+
+div.select {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	background-color: #444;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: fixed;
+	width: 0px;
+	height: 33%;
+	top: 33%;
+}
+
+div.select:hover {
+	width: auto;
+	max-width: 80%;
+}
+
+div.select.back {
+	left: 0px;
+	background-image: url('back.png');
+	background-position: left;
+	padding-left: 20px;
+}
+div.select.forward {
+	right: 0px;
+	background-image: url('forward.png');
+	background-position: right;
+	padding-right: 20px;
+}
+
+
+div.select ul {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	display:none;
+	height: 100%;
+}
+
+div.select.back ul {
+	float: left;	
+}
+div.select.forward ul {
+	float: right;
+}
+
+div.select:hover ul {
+	display: inline-block;
+}
+
+
+div.select ul li {
+	margin-top: 16px;
+	margin-bottom: 10000px;		/* hack; prevent other than the first line of cards from showing */
+	margin-left: 2px;
+	margin-right: 2px;
+	vertical-align: text-top;
+	border-bottom-color: #666;
+}
+
+div.select ul li a {
+	border-color: #666;
+}
+
+div.select ul li a:hover {
+	border-color: #fff;
+}
+
+
+div.select.back ul li {
+	float: right;
+	margin-right: 16px;
+}
+div.select.forward ul li {
+	float: left;
+	margin-left: 16px;
+}
+
+
+/*********************************************************/
+/* header and navigation buttons at top of page          */
+
+
+h1,h2 {
+	padding: 0 0 0 0;
+	margin: 0 125px 0 125px;	/* clear the (fixed-size) div.nav buttons in the corners */
+    	font-size: 80%;
+	text-align: center;
+}
+
+h1 {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+h2 {
+	min-height: 1em;		/* 1em here tries to approximate the font height to prevent the picture from moving up when the description is not present */
+	font-weight: normal;
+}
+
+div.nav {
+	position: fixed;
+	top: 0;
+}
+
+div.nav.left {
+	left: 0;
+}
+
+div.nav.right {
+	right: 0;
+}
+
+div.nav a {
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: #444;
+}
+
+
+div.nav a:hover {
+	background-color: #666;
+}
+
+	
+div.nav.right a {
+	margin-left: 5px;
+	float: right;
+}
+
+div.nav.left a {
+	margin-right: 5px;
+	float: left;
+}
+
+
+div.nav img {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	vertical-align: middle;
+}
+
+/*********************************************************/
+/* cards with descriptions                               */
+/* used by: collection, collection list, back/forward    */
+
+li {
+	margin: 24px;
+	float: left;
+	list-style: none;
+	overflow: hidden;
+	
+	/* when not hovered, bottom border of the li is shown */
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #444;
+
+}
+
+li:hover {
+	/* allow the overflow to overlap other cards */
+	position: relative;	
+	overflow: visible;
+}
+
+li a {
+
+	background-color: #000;
+
+	display: block;
+	padding: 9px;
+	
+	text-align: center;
+	font-size: 10px;
+	margin: 0px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: #444;
+
+
+}
+
+li a:hover {
+	border-color: #fff;
+}
+
+
+/*********************************************************/
+/* image page  			  			 */
+
+div.image {
+	padding-top: 0.5em;
+	margin: 0 auto;
+	width: 95%;
+	text-align: center;
+}
+
+
+div.image img {
+	padding: 20px;
+	background-color: #000;
+	border: 1px solid #444;
+}
+
+
+/*********************************************************/
+/* very dark and non-disturbing footer                   */
+
+p.footer {
+	clear: both;
+	border-top: 1px solid #333;
+	font-size: 70%;
+	text-align: right;
+	color: #333;
+}
+
+p.footer a {	
+	color: #444;
+}
+
+p.footer a:hover {	
+	color: #666;
+}
