@@ -1,0 +1,16 @@
+- port Googlemaps widget to API v3 : 
+
+just came across the Google Maps API v3:
+http://code.google.com/intl/de/apis/maps/documentation/v3/
+
+It no longer needs an API key, this means embedding in the GPS sync plugin
+would no longer require using digikam3rdparty (=> faster loading?). Embedding
+in Desktop apps seems to be encouraged:
+http://groups.google.com/group/google-maps-js-api-
+v3/browse_thread/thread/8c187e778ce921c8
+
+- implement automatic tagging of geotagged images using (reverse) geocoding:
+http://code.google.com/intl/de/apis/maps/documentation/v3/services.html
+For functionality like "tag all images here with the name of the city they are
+taken in", or "find all images taken in city <...>"...
+
