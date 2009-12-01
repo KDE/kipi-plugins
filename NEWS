@@ -1,28 +1,9 @@
-Kipi-plugins 0.9.0 - Release date: 29/11/2009
+Kipi-plugins 1.0.0 - Release date: ??/??/????
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-GPSSync                    : Bookmark locations
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> BatchProcessImages : 213164 : kipi convert images: 16 bit png from 8 bit bmp.
-002 ==> BatchProcessImages : 212118 : Rename images: sorting based on the exif date of an image.
-003 ==> RawConverter       : 213681 : Batch RAW converter: Activating 16bit allows jpeg.
-004 ==> JPEGLossLess       : 213889 : Segmentation fault at splash screen.
-005 ==> PrintAssistant     : 124357 : Output resolution of print wizard is very low.
-006 ==> PrintAssistant     : 204707 : Printwizard should be able to print uncroped thumbnails.
-007 ==> PrintAssistant     : 124357 : Output resolution of print wizard is very low.
-008 ==> AdvancedSlideShow  : 214744 : Advanced slideshow crash after pressing ok.
-009 ==> GPSSync            : 135387 : Stickers of photos on the world map.
-010 ==> JPEGLossLess       : 215644 : Rotate image fails under windows.
-011 ==> FlickrExport       : 215646 : Export to flickr fails under windows.
-012 ==> GPSSync            : 167279 : Add a list of favorite place to gps locater window (e.g. new drop down menu).
-013 ==> GPSSync            : 135406 : History for last used GPS coordinates.
-014 ==> GPSSync            : 206080 : Kipi-plugins gpssync no map when entering.
-015 ==> General            : 216622 : digiKam bug report data errors.
-016 ==> GPSSync            : 214210 : Don't take the correct position from geolocation file.
-017 ==> libkipi            : 216790 : Configuration dialogue crashes getting icon for plugins not loaded.
-018 ==> GPSSync            : 216803 : GPSSync ability to zoom with mouse wheel.
-019 ==> SlideShow          : 215798 : slideshow crashes when starting.
+001 ==> 
