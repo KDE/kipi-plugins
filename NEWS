@@ -25,5 +25,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> GPSSync            : 214210 : Don't take the correct position from geolocation file.
 017 ==> libkipi            : 216790 : Configuration dialogue crashes getting icon for plugins not loaded.
 018 ==> GPSSync            : 216803 : GPSSync ability to zoom with mouse wheel.
-019 ==> 
 
