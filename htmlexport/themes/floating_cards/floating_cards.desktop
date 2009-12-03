@@ -1,7 +1,16 @@
 [Desktop Entry]
 Name=Floating Cards
+Name[en_GB]=Floating Cards
+Name[uk]=Картки, що плавають
+Name[x-test]=xxFloating Cardsxx
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
+Comment[en_GB]=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
+Comment[uk]=Темна тема з картками мініатюр або описів, що неначебто плавають панеллю. Пришвидшує орієнтування у галереї.
+Comment[x-test]=xxA dark theme with floating thumbnail/description cards. Fast navigation through the gallery.xx
 
 [X-HTMLExport Author]
 Name=Jiří Boháč
+Name[en_GB]=Jiří Boháč
+Name[uk]=Jiří Boháč
+Name[x-test]=xxJiří Boháčxx
 Url=mailto:jbohac@jikos.cz
