@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "imageslist.h"
 #include "imageslist.moc"
 
 // Qt includes
@@ -251,7 +250,7 @@ void ImagesListView::slotItemClicked(QTreeWidgetItem* item, int column)
     emit signalItemClicked(item);
 }
 
-void ImagesListView::setColumnLabel(ColumnType column, const QString &label)
+void ImagesListView::setColumnLabel(ColumnType column, const QString& label)
 {
     headerItem()->setText(column, label);
 }
@@ -264,7 +263,7 @@ void ImagesListView::setColumnEnabled(ColumnType column, bool enable)
         hideColumn(column);
 }
 
-void ImagesListView::setColumn(ColumnType column, const QString &label, bool enable)
+void ImagesListView::setColumn(ColumnType column, const QString& label, bool enable)
 {
     setColumnLabel(column, label);
     setColumnEnabled(column, enable);
@@ -368,31 +367,31 @@ public:
         progressTimer         = 0;
     }
 
-    bool            allowRAW;
-    bool            controlButtonsEnabled;
-    int             iconSize;
+    bool                allowRAW;
+    bool                controlButtonsEnabled;
+    int                 iconSize;
 
-    CtrlButton*     addButton;
-    CtrlButton*     removeButton;
-    CtrlButton*     moveUpButton;
-    CtrlButton*     moveDownButton;
-    CtrlButton*     clearButton;
-    CtrlButton*     loadButton;
-    CtrlButton*     saveButton;
+    CtrlButton*         addButton;
+    CtrlButton*         removeButton;
+    CtrlButton*         moveUpButton;
+    CtrlButton*         moveDownButton;
+    CtrlButton*         clearButton;
+    CtrlButton*         loadButton;
+    CtrlButton*         saveButton;
 
-    ImagesListViewItem *processItem;
-    QPixmap         progressPix;
-    int             progressCount;
-    QTimer          *progressTimer;
+    ImagesListViewItem* processItem;
+    QPixmap             progressPix;
+    int                 progressCount;
+    QTimer*             progressTimer;
 
-    ImagesListView* listView;
-    Interface*      iface;
+    ImagesListView*     listView;
+    Interface*          iface;
 };
 
 ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
           : QWidget(parent), d(new ImagesListPriv)
 {
-    d->iface    = iface;
+    d->iface = iface;
 
     if (iconSize != -1)  // default = ICONSIZE
         setIconSize(iconSize);
@@ -447,7 +446,6 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     connect(this, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-
 
     // --------------------------------------------------------
 
@@ -682,7 +680,8 @@ void ImagesList::slotAddItems()
 void ImagesList::slotRemoveItems()
 {
     QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
-    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
+    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); 
+         it!=selectedItemsList.constEnd(); ++it)
     {
         d->listView->removeItemWidget( *it, 0);
         delete *it;
@@ -837,9 +836,9 @@ bool ImagesList::isRAWFile(const QString & filePath)
 void ImagesList::slotImageListChanged()
 {
     const QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
-    const bool haveImages               = !(imageUrls().isEmpty()) && d->controlButtonsEnabled;
-    const bool haveSelectedImages       = !(selectedItemsList.isEmpty()) && d->controlButtonsEnabled;
-    const bool haveOnlyOneSelectedImage = (selectedItemsList.count()==1) && d->controlButtonsEnabled;
+    const bool haveImages                           = !(imageUrls().isEmpty())         && d->controlButtonsEnabled;
+    const bool haveSelectedImages                   = !(selectedItemsList.isEmpty())   && d->controlButtonsEnabled;
+    const bool haveOnlyOneSelectedImage             = (selectedItemsList.count() == 1) && d->controlButtonsEnabled;
 
     d->removeButton->setEnabled(haveSelectedImages);
     d->moveUpButton->setEnabled(haveOnlyOneSelectedImage);
