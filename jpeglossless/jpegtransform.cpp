@@ -57,6 +57,8 @@ extern "C"
 #include "jpegtransform.h"
 #include "kpwritehelp.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIJPEGLossLessPlugin
 {
 
