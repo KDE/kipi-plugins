@@ -127,7 +127,7 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sourceCheck = new QCheckBox(i18n("Source:"), this);
+    d->sourceCheck = new QCheckBox(i18nc("original owner of content", "Source:"), this);
     d->sourceEdit  = new KLineEdit(this);
     d->sourceEdit->setClearButtonShown(true);
     d->sourceEdit->setValidator(asciiValidator);

@@ -70,7 +70,7 @@ void GPSTrackListViewItem::setGPSInfo(const GPSTrackListItem& data)
     setText(KIPIPlugins::ImagesListView::User3, d->data.gpsData().latitudeString());
     setText(KIPIPlugins::ImagesListView::User4, d->data.gpsData().longitudeString());
     setText(KIPIPlugins::ImagesListView::User5, d->data.gpsData().altitudeString());
-    setText(KIPIPlugins::ImagesListView::User6, isDirty() ? i18n("Yes") : i18n("No"));
+    setText(KIPIPlugins::ImagesListView::User6, isDirty() ? i18nc("dirty gps info", "Yes") : i18nc("dirty gps info", "No"));
 }
 
 GPSTrackListItem GPSTrackListViewItem::gpsInfo() const

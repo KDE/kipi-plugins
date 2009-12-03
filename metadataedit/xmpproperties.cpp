@@ -90,7 +90,7 @@ public:
         sceneCodeMap.insert( "010600", i18n("Single") );
         sceneCodeMap.insert( "010700", i18n("Couple") );
         sceneCodeMap.insert( "010800", i18n("Two") );
-        sceneCodeMap.insert( "010900", i18n("Group") );
+        sceneCodeMap.insert( "010900", i18nc("group of people", "Group") );
         sceneCodeMap.insert( "011000", i18n("General view") );
         sceneCodeMap.insert( "011100", i18n("Panoramic view") );
         sceneCodeMap.insert( "011200", i18n("Aerial view") );
@@ -111,7 +111,7 @@ public:
         typeCodeMap.insert( "Alert",              i18n("Alert") );
         typeCodeMap.insert( "Catalog",            i18n("Catalog") );
         typeCodeMap.insert( "Data",               i18n("Data") );
-        typeCodeMap.insert( "Document",           i18n("Document") );
+        typeCodeMap.insert( "Document",           i18nc("type is a document", "Document") );
         typeCodeMap.insert( "DTD",                i18n("DTD") );
         typeCodeMap.insert( "Maintenance",        i18n("Maintenance") );
         typeCodeMap.insert( "News",               i18n("News") );
@@ -185,15 +185,15 @@ XMPProperties::XMPProperties(QWidget* parent)
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
     d->priorityCB    = new KComboBox(this);
-    d->priorityCB->insertItem(0, i18n("0: None"));
-    d->priorityCB->insertItem(1, i18n("1: High"));
+    d->priorityCB->insertItem(0, i18nc("editorial urgency of content", "0: None"));
+    d->priorityCB->insertItem(1, i18nc("editorial urgency of content", "1: High"));
     d->priorityCB->insertItem(2, "2");
     d->priorityCB->insertItem(3, "3");
     d->priorityCB->insertItem(4, "4");
-    d->priorityCB->insertItem(5, i18n("5: Normal"));
+    d->priorityCB->insertItem(5, i18nc("editorial urgency of content", "5: Normal"));
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
-    d->priorityCB->insertItem(8, i18n("8: Low"));
+    d->priorityCB->insertItem(8, i18nc("editorial urgency of content", "8: Low"));
     d->priorityCB->setWhatsThis(i18n("Select here the editorial urgency of content."));
 
     // --------------------------------------------------------
@@ -229,28 +229,28 @@ XMPProperties::XMPProperties(QWidget* parent)
     d->objectAttributeEdit->setWhatsThis(i18n("Set here the editorial attribute description of the content."));
 
     d->objectAttributeCB->setWhatsThis(i18n("Select here the editorial attribute of the content."));
-    d->objectAttributeCB->addSqueezedItem(QString("001 - ") + i18n("Current"));
-    d->objectAttributeCB->addSqueezedItem(QString("002 - ") + i18n("Analysis"));
-    d->objectAttributeCB->addSqueezedItem(QString("003 - ") + i18n("Archive material"));
-    d->objectAttributeCB->addSqueezedItem(QString("004 - ") + i18n("Background"));
-    d->objectAttributeCB->addSqueezedItem(QString("005 - ") + i18n("Feature"));
-    d->objectAttributeCB->addSqueezedItem(QString("006 - ") + i18n("Forecast"));
-    d->objectAttributeCB->addSqueezedItem(QString("007 - ") + i18n("History"));
-    d->objectAttributeCB->addSqueezedItem(QString("008 - ") + i18n("Obituary"));
-    d->objectAttributeCB->addSqueezedItem(QString("009 - ") + i18n("Opinion"));
-    d->objectAttributeCB->addSqueezedItem(QString("010 - ") + i18n("Polls & Surveys"));
-    d->objectAttributeCB->addSqueezedItem(QString("011 - ") + i18nc("Content type", "Profile"));
-    d->objectAttributeCB->addSqueezedItem(QString("012 - ") + i18n("Results Listings & Table"));
-    d->objectAttributeCB->addSqueezedItem(QString("013 - ") + i18n("Side bar & Supporting information"));
-    d->objectAttributeCB->addSqueezedItem(QString("014 - ") + i18n("Summary"));
-    d->objectAttributeCB->addSqueezedItem(QString("015 - ") + i18n("Transcript & Verbatim"));
-    d->objectAttributeCB->addSqueezedItem(QString("016 - ") + i18n("Interview"));
-    d->objectAttributeCB->addSqueezedItem(QString("017 - ") + i18n("From the Scene"));
-    d->objectAttributeCB->addSqueezedItem(QString("018 - ") + i18n("Retrospective"));
-    d->objectAttributeCB->addSqueezedItem(QString("019 - ") + i18n("Statistics"));
-    d->objectAttributeCB->addSqueezedItem(QString("020 - ") + i18n("Update"));
-    d->objectAttributeCB->addSqueezedItem(QString("021 - ") + i18n("Wrap-up"));
-    d->objectAttributeCB->addSqueezedItem(QString("022 - ") + i18n("Press Release"));
+    d->objectAttributeCB->addSqueezedItem(QString("001 - ") + i18nc("editorial content attribute", "Current"));
+    d->objectAttributeCB->addSqueezedItem(QString("002 - ") + i18nc("editorial content attribute", "Analysis"));
+    d->objectAttributeCB->addSqueezedItem(QString("003 - ") + i18nc("editorial content attribute", "Archive material"));
+    d->objectAttributeCB->addSqueezedItem(QString("004 - ") + i18nc("editorial content attribute", "Background"));
+    d->objectAttributeCB->addSqueezedItem(QString("005 - ") + i18nc("editorial content attribute", "Feature"));
+    d->objectAttributeCB->addSqueezedItem(QString("006 - ") + i18nc("editorial content attribute", "Forecast"));
+    d->objectAttributeCB->addSqueezedItem(QString("007 - ") + i18nc("editorial content attribute", "History"));
+    d->objectAttributeCB->addSqueezedItem(QString("008 - ") + i18nc("editorial content attribute", "Obituary"));
+    d->objectAttributeCB->addSqueezedItem(QString("009 - ") + i18nc("editorial content attribute", "Opinion"));
+    d->objectAttributeCB->addSqueezedItem(QString("010 - ") + i18nc("editorial content attribute", "Polls & Surveys"));
+    d->objectAttributeCB->addSqueezedItem(QString("011 - ") + i18nc("editorial content attribute", "Profile"));
+    d->objectAttributeCB->addSqueezedItem(QString("012 - ") + i18nc("editorial content attribute", "Results Listings & Table"));
+    d->objectAttributeCB->addSqueezedItem(QString("013 - ") + i18nc("editorial content attribute", "Side bar & Supporting information"));
+    d->objectAttributeCB->addSqueezedItem(QString("014 - ") + i18nc("editorial content attribute", "Summary"));
+    d->objectAttributeCB->addSqueezedItem(QString("015 - ") + i18nc("editorial content attribute", "Transcript & Verbatim"));
+    d->objectAttributeCB->addSqueezedItem(QString("016 - ") + i18nc("editorial content attribute", "Interview"));
+    d->objectAttributeCB->addSqueezedItem(QString("017 - ") + i18nc("editorial content attribute", "From the Scene"));
+    d->objectAttributeCB->addSqueezedItem(QString("018 - ") + i18nc("editorial content attribute", "Retrospective"));
+    d->objectAttributeCB->addSqueezedItem(QString("019 - ") + i18nc("editorial content attribute", "Statistics"));
+    d->objectAttributeCB->addSqueezedItem(QString("020 - ") + i18nc("editorial content attribute", "Update"));
+    d->objectAttributeCB->addSqueezedItem(QString("021 - ") + i18nc("editorial content attribute", "Wrap-up"));
+    d->objectAttributeCB->addSqueezedItem(QString("022 - ") + i18nc("editorial content attribute", "Press Release"));
 
     // --------------------------------------------------------
 

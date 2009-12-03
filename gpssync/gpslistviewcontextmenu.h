@@ -47,7 +47,7 @@ class GPSListViewContextMenu : public QObject
 
 public:
 
-    GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
+    explicit GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
     ~GPSListViewContextMenu();
 
 protected:

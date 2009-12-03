@@ -120,14 +120,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
     addAction(d->action_RotateImage);
 
     KAction *left = actionCollection()->addAction("rotate_ccw");
-    left->setText(i18n("Left"));
+    left->setText(i18nc("rotate image left", "Left"));
     left->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Left));
     connect(left, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateLeft()));
     d->action_RotateImage->addAction(left);
 
     KAction *right = actionCollection()->addAction("rotate_cw");
-    right->setText(i18n("Right"));
+    right->setText(i18nc("rotate image right", "Right"));
     right->setShortcut(KShortcut(Qt::SHIFT+Qt::CTRL+Qt::Key_Right));
     connect(right, SIGNAL(triggered(bool)),
             this, SLOT(slotRotateRight()));

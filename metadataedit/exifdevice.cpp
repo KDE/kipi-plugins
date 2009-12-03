@@ -179,15 +179,15 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->exposureProgramCheck = new MetadataCheckBox(i18n("Exposure program:"), this);
     d->exposureProgramCB    = new KComboBox(this);
-    d->exposureProgramCB->insertItem(0, i18n("Not defined"));
-    d->exposureProgramCB->insertItem(1, i18n("Manual"));
-    d->exposureProgramCB->insertItem(2, i18n("Auto"));
-    d->exposureProgramCB->insertItem(3, i18n("Aperture priority"));
-    d->exposureProgramCB->insertItem(4, i18n("Shutter priority"));
-    d->exposureProgramCB->insertItem(5, i18n("Creative program"));
-    d->exposureProgramCB->insertItem(6, i18n("Action program"));
-    d->exposureProgramCB->insertItem(7, i18n("Portrait mode"));
-    d->exposureProgramCB->insertItem(8, i18n("Landscape mode"));
+    d->exposureProgramCB->insertItem(0, i18nc("exposure program", "Not defined"));
+    d->exposureProgramCB->insertItem(1, i18nc("exposure program", "Manual"));
+    d->exposureProgramCB->insertItem(2, i18nc("exposure program", "Auto"));
+    d->exposureProgramCB->insertItem(3, i18nc("exposure program", "Aperture priority"));
+    d->exposureProgramCB->insertItem(4, i18nc("exposure program", "Shutter priority"));
+    d->exposureProgramCB->insertItem(5, i18nc("exposure program", "Creative program"));
+    d->exposureProgramCB->insertItem(6, i18nc("exposure program", "Action program"));
+    d->exposureProgramCB->insertItem(7, i18nc("exposure program", "Portrait mode"));
+    d->exposureProgramCB->insertItem(8, i18nc("exposure program", "Landscape mode"));
     d->exposureProgramCB->setWhatsThis(i18n("Select here the program used by the camera "
                                             "to set exposure when the picture was taken."));
 
@@ -195,9 +195,9 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->exposureModeCheck = new MetadataCheckBox(i18n("Exposure mode:"), this);
     d->exposureModeCB    = new KComboBox(this);
-    d->exposureModeCB->insertItem(0, i18n("Auto"));
-    d->exposureModeCB->insertItem(1, i18n("Manual"));
-    d->exposureModeCB->insertItem(2, i18n("Auto bracket"));
+    d->exposureModeCB->insertItem(0, i18nc("exposure mode", "Auto"));
+    d->exposureModeCB->insertItem(1, i18nc("exposure mode", "Manual"));
+    d->exposureModeCB->insertItem(2, i18nc("exposure mode", "Auto bracket"));
     d->exposureModeCB->setWhatsThis(i18n("Select here the mode used by the camera "
                                          "to set exposure when the picture was taken. "
                                          "In auto-bracketing mode, the camera shoots a "
@@ -220,14 +220,14 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     d->meteringModeCheck = new MetadataCheckBox(i18n("Metering mode:"), this);
     d->meteringModeCB    = new KComboBox(this);
-    d->meteringModeCB->insertItem(0, i18n("Unknown"));
-    d->meteringModeCB->insertItem(1, i18n("Average"));
-    d->meteringModeCB->insertItem(2, i18n("Center weighted average"));
-    d->meteringModeCB->insertItem(3, i18n("Spot"));
-    d->meteringModeCB->insertItem(4, i18n("Multi-spot"));
-    d->meteringModeCB->insertItem(5, i18n("Multi-segment"));
-    d->meteringModeCB->insertItem(6, i18n("Partial"));
-    d->meteringModeCB->insertItem(7, i18n("Other"));
+    d->meteringModeCB->insertItem(0, i18nc("metering mode", "Unknown"));
+    d->meteringModeCB->insertItem(1, i18nc("metering mode", "Average"));
+    d->meteringModeCB->insertItem(2, i18nc("metering mode", "Center weighted average"));
+    d->meteringModeCB->insertItem(3, i18nc("metering mode", "Spot"));
+    d->meteringModeCB->insertItem(4, i18nc("metering mode", "Multi-spot"));
+    d->meteringModeCB->insertItem(5, i18nc("metering mode", "Multi-segment"));
+    d->meteringModeCB->insertItem(6, i18nc("metering mode", "Partial"));
+    d->meteringModeCB->insertItem(7, i18nc("metering mode", "Other"));
     d->meteringModeCB->setWhatsThis(i18n("Select here the metering mode used by the camera "
                                          "to set exposure when the picture was taken."));
 

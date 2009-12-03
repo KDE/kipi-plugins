@@ -111,7 +111,7 @@ GPSTrackListEditDialog::GPSTrackListEditDialog(KIPI::Interface* interface, QWidg
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User5,
                                        i18n("Altitude"), true);
     d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User6,
-                                       i18n("Changed"), true);
+                                       i18nc("entry changed", "Changed"), true);
 
     d->bookmarkOwner = new GPSBookmarkOwner(this);
     

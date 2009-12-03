@@ -106,11 +106,11 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     d->gainControlCheck = new MetadataCheckBox(i18n("Gain Control:"), this);
     d->gainControlCB    = new KComboBox(this);
-    d->gainControlCB->insertItem(0, i18n("None"));
-    d->gainControlCB->insertItem(1, i18n("Low gain up"));
-    d->gainControlCB->insertItem(2, i18n("High gain up"));
-    d->gainControlCB->insertItem(3, i18n("Low gain down"));
-    d->gainControlCB->insertItem(4, i18n("High gain down"));
+    d->gainControlCB->insertItem(0, i18nc("gain control", "None"));
+    d->gainControlCB->insertItem(1, i18nc("gain control", "Low gain up"));
+    d->gainControlCB->insertItem(2, i18nc("gain control", "High gain up"));
+    d->gainControlCB->insertItem(3, i18nc("gain control", "Low gain down"));
+    d->gainControlCB->insertItem(4, i18nc("gain control", "High gain down"));
     d->gainControlCB->setWhatsThis(i18n("Set here the degree of overall image gain adjustment "
                                         "used by camera to take the picture."));
 
@@ -118,9 +118,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     d->contrastCheck = new MetadataCheckBox(i18n("Contrast:"), this);
     d->contrastCB    = new KComboBox(this);
-    d->contrastCB->insertItem(0, i18n("Normal"));
-    d->contrastCB->insertItem(1, i18n("Soft"));
-    d->contrastCB->insertItem(2, i18n("Hard"));
+    d->contrastCB->insertItem(0, i18nc("contrast mode", "Normal"));
+    d->contrastCB->insertItem(1, i18nc("contrast mode", "Soft"));
+    d->contrastCB->insertItem(2, i18nc("contrast mode", "Hard"));
     d->contrastCB->setWhatsThis(i18n("Set here the direction of contrast processing "
                                      "applied by the camera to take the picture."));
 
@@ -128,9 +128,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     d->saturationCheck = new MetadataCheckBox(i18n("Saturation:"), this);
     d->saturationCB    = new KComboBox(this);
-    d->saturationCB->insertItem(0, i18n("Normal"));
-    d->saturationCB->insertItem(1, i18n("Low"));
-    d->saturationCB->insertItem(2, i18n("High"));
+    d->saturationCB->insertItem(0, i18nc("saturation mode", "Normal"));
+    d->saturationCB->insertItem(1, i18nc("saturation mode", "Low"));
+    d->saturationCB->insertItem(2, i18nc("saturation mode", "High"));
     d->saturationCB->setWhatsThis(i18n("Set here the direction of saturation processing "
                                        "applied by the camera to take the picture."));
 
@@ -138,9 +138,9 @@ EXIFAdjust::EXIFAdjust(QWidget* parent)
 
     d->sharpnessCheck = new MetadataCheckBox(i18n("Sharpness:"), this);
     d->sharpnessCB    = new KComboBox(this);
-    d->sharpnessCB->insertItem(0, i18n("Normal"));
-    d->sharpnessCB->insertItem(1, i18n("Soft"));
-    d->sharpnessCB->insertItem(2, i18n("Hard"));
+    d->sharpnessCB->insertItem(0, i18nc("sharpness mode", "Normal"));
+    d->sharpnessCB->insertItem(1, i18nc("sharpness mode", "Soft"));
+    d->sharpnessCB->insertItem(2, i18nc("sharpness mode", "Hard"));
     d->sharpnessCB->setWhatsThis(i18n("Set here the direction of sharpness processing "
                                       "applied by the camera to take the picture."));
 

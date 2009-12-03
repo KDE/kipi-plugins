@@ -84,7 +84,7 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectNameEdit  = new AltLangStringsEdit(this, i18n("Title:"),
+    d->objectNameEdit  = new AltLangStringsEdit(this, i18nc("short title for the content", "Title:"),
                                                 i18n("Set here a shorthand reference for the content."));
 
     // --------------------------------------------------------

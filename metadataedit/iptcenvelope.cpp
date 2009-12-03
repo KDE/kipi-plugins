@@ -222,15 +222,15 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     d->priorityCheck = new MetadataCheckBox(i18n("Priority:"), this);
     d->priorityCB    = new KComboBox(this);
-    d->priorityCB->insertItem(0, i18n("0: None"));
-    d->priorityCB->insertItem(1, i18n("1: High"));
+    d->priorityCB->insertItem(0, i18nc("priority for the envelope", "0: None"));
+    d->priorityCB->insertItem(1, i18nc("priority for the envelope", "1: High"));
     d->priorityCB->insertItem(2, "2");
     d->priorityCB->insertItem(3, "3");
     d->priorityCB->insertItem(4, "4");
-    d->priorityCB->insertItem(5, i18n("5: Normal"));
+    d->priorityCB->insertItem(5, i18nc("priority for the envelope", "5: Normal"));
     d->priorityCB->insertItem(6, "6");
     d->priorityCB->insertItem(7, "7");
-    d->priorityCB->insertItem(8, i18n("8: Low"));
+    d->priorityCB->insertItem(8, i18nc("priority for the envelope", "8: Low"));
     d->priorityCB->setWhatsThis(i18n("Select here the envelope priority."));
 
     // --------------------------------------------------------

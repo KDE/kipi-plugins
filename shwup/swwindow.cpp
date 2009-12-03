@@ -532,9 +532,9 @@ void SwWindow::uploadNextPhoto()
         {
             SwAlbum album = m_albumsList.at( m_widget->m_albumsCoB->currentIndex() );
             KMessageBox::information(this,
-                i18n("Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online and invite people.")
-                    .arg(album.albumUrl)
-                    .arg(album.title),
+                i18n("Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online and invite people.",
+                    album.albumUrl,
+                    album.title),
                 i18n("Upload complete"),
                 QString(),
                 KMessageBox::AllowLink

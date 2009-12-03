@@ -97,8 +97,8 @@ SlideShowConfig::SlideShowConfig (QWidget *parent, SharedContainer* sharedData)
     d->sharedData->page_main->setIcon(KIcon("view-presentation"));
 
     d->sharedData->captionPage  = new CaptionDialog(this, d->sharedData);
-    d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18n("Caption"));
-    d->sharedData->page_caption->setHeader(i18n("Caption"));
+    d->sharedData->page_caption = addPage(d->sharedData->captionPage, i18nc("captions for the slideshow", "Caption"));
+    d->sharedData->page_caption->setHeader(i18nc("captions for the slideshow", "Caption"));
     d->sharedData->page_caption->setIcon(KIcon("draw-freehand"));
 
     d->sharedData->soundtrackPage  = new SoundtrackDialog(this, d->sharedData);

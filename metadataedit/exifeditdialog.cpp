@@ -146,7 +146,7 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     // ---------------------------------------------------------------
 
     d->captionPage   = new EXIFCaption(this);
-    d->page_caption  = addPage(d->captionPage, i18n("Caption"));
+    d->page_caption  = addPage(d->captionPage, i18nc("image caption", "Caption"));
     d->page_caption->setHeader(i18n("Caption Information"));
     d->page_caption->setIcon(KIcon("edit-rename"));
 

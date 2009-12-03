@@ -201,7 +201,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                     "Use this option if the timezone of the camera "
                     "is the same as the timezone of this system. "
                     "The conversion to GMT will be done automatically."));
-    d->timeZoneManual     = new QRadioButton(i18n("Manual:"), settingsBox);
+    d->timeZoneManual     = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), settingsBox);
     d->timeZoneManual->setWhatsThis(i18n(
                     "Use this option if the timezone of the camera "
                     "is different from this system and you have to "

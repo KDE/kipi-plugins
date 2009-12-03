@@ -95,7 +95,7 @@ XMPContent::XMPContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->captionEdit          = new AltLangStringsEdit(this, i18n("Caption:"),
+    d->captionEdit          = new AltLangStringsEdit(this, i18nc("content description", "Caption:"),
                                                      i18n("Enter the content description."));
 
     QGroupBox *syncOptions  = new QGroupBox(i18n("Default Language Caption Options"), this);

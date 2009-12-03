@@ -241,7 +241,7 @@ void SoundtrackDialog::updateTracksNumber()
         }
     }
 
-    m_timeLabel->setText(i18np("1 track [%2]", "%1 tracks [%2]", number, displayTime.toString()));
+    m_timeLabel->setText(i18ncp("number of tracks and running time", "1 track [%2]", "%1 tracks [%2]", number, displayTime.toString()));
 
     m_soundtrackTimeLabel->setText(displayTime.toString());
 

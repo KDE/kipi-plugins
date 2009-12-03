@@ -83,7 +83,7 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     centerLayout->addWidget(urlLabel, 1, 0);
 
     QLabel* usernameLabel = new QLabel(this);
-    usernameLabel->setText(i18n("Username:"));
+    usernameLabel->setText(i18nc("gallery login settings", "Username:"));
     centerLayout->addWidget(usernameLabel, 2, 0);
 
     QLabel* passwdLabel = new QLabel(this);

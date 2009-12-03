@@ -87,7 +87,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->objectNameCheck = new QCheckBox(i18n("Title:"), this);
+    d->objectNameCheck = new QCheckBox(i18nc("image title", "Title:"), this);
     d->objectNameEdit  = new KLineEdit(this);
     d->objectNameEdit->setClearButtonShown(true);
     d->objectNameEdit->setValidator(asciiValidator);

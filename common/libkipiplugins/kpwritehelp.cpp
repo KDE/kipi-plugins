@@ -101,7 +101,7 @@ boolean empty_output_buffer (j_compress_ptr cinfo)
     dest->pub.next_output_byte = dest->buffer;
     dest->pub.free_in_buffer = BUFFER_SIZE;
 
-    return TRUE;
+    return true;
 }
 
 /**

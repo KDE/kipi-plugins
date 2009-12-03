@@ -92,7 +92,11 @@ QString GPSBookmarkOwner::currentTitle() const
     // TODO: how do we tell the bookmark manager to abort if the user aborts?
     // use a dialog that the user can't cancel, this way at least we don't end up
     // with an empty title
-    const QString title = InputBoxNoCancel::AskForString(i18n("Bookmark location"), i18n("Title:"), currentUrl(), d->parent);
+    const QString title = InputBoxNoCancel::AskForString(
+                    i18n("Bookmark location"),
+                    i18nc("Title of the new gps location bookmark", "Title:"),
+                    currentUrl(),
+                    d->parent);
 
     return title;
 }

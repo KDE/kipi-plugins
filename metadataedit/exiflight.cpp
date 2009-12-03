@@ -136,27 +136,27 @@ EXIFLight::EXIFLight(QWidget* parent)
 
     d->lightSourceCheck = new MetadataCheckBox(i18n("Light source:"), this);
     d->lightSourceCB    = new KComboBox(this);
-    d->lightSourceCB->insertItem(0, i18n("Unknown"));
-    d->lightSourceCB->insertItem(1, i18n("Daylight"));
-    d->lightSourceCB->insertItem(2, i18n("Fluorescent"));
-    d->lightSourceCB->insertItem(3, i18n("Tungsten (incandescent light)"));
-    d->lightSourceCB->insertItem(4, i18n("Flash"));
-    d->lightSourceCB->insertItem(5, i18n("Fine weather"));
-    d->lightSourceCB->insertItem(6, i18n("Cloudy weather"));
-    d->lightSourceCB->insertItem(7, i18n("Shade"));
-    d->lightSourceCB->insertItem(8, i18n("Daylight fluorescent (D 5700 - 7100K)"));
-    d->lightSourceCB->insertItem(9, i18n("Day white fluorescent (N 4600 - 5400K)"));
-    d->lightSourceCB->insertItem(10, i18n("Cool white fluorescent (W 3900 - 4500K)"));
-    d->lightSourceCB->insertItem(11, i18n("White fluorescent (WW 3200 - 3700K)"));
-    d->lightSourceCB->insertItem(12, i18n("Standard light A"));
-    d->lightSourceCB->insertItem(13, i18n("Standard light B"));
-    d->lightSourceCB->insertItem(14, i18n("Standard light C"));
-    d->lightSourceCB->insertItem(15, i18n("D55"));
-    d->lightSourceCB->insertItem(16, i18n("D65"));
-    d->lightSourceCB->insertItem(17, i18n("D75"));
-    d->lightSourceCB->insertItem(18, i18n("D50"));
-    d->lightSourceCB->insertItem(19, i18n("ISO studio tungsten"));
-    d->lightSourceCB->insertItem(20, i18n("Other light source"));
+    d->lightSourceCB->insertItem(0,  i18nc("light source", "Unknown"));
+    d->lightSourceCB->insertItem(1,  i18nc("light source", "Daylight"));
+    d->lightSourceCB->insertItem(2,  i18nc("light source", "Fluorescent"));
+    d->lightSourceCB->insertItem(3,  i18nc("light source", "Tungsten (incandescent light)"));
+    d->lightSourceCB->insertItem(4,  i18nc("light source", "Flash"));
+    d->lightSourceCB->insertItem(5,  i18nc("light source", "Fine weather"));
+    d->lightSourceCB->insertItem(6,  i18nc("light source", "Cloudy weather"));
+    d->lightSourceCB->insertItem(7,  i18nc("light source", "Shade"));
+    d->lightSourceCB->insertItem(8,  i18nc("light source", "Daylight fluorescent (D 5700 - 7100K)"));
+    d->lightSourceCB->insertItem(9,  i18nc("light source", "Day white fluorescent (N 4600 - 5400K)"));
+    d->lightSourceCB->insertItem(10, i18nc("light source", "Cool white fluorescent (W 3900 - 4500K)"));
+    d->lightSourceCB->insertItem(11, i18nc("light source", "White fluorescent (WW 3200 - 3700K)"));
+    d->lightSourceCB->insertItem(12, i18nc("light source", "Standard light A"));
+    d->lightSourceCB->insertItem(13, i18nc("light source", "Standard light B"));
+    d->lightSourceCB->insertItem(14, i18nc("light source", "Standard light C"));
+    d->lightSourceCB->insertItem(15, i18nc("light source", "D55"));
+    d->lightSourceCB->insertItem(16, i18nc("light source", "D65"));
+    d->lightSourceCB->insertItem(17, i18nc("light source", "D75"));
+    d->lightSourceCB->insertItem(18, i18nc("light source", "D50"));
+    d->lightSourceCB->insertItem(19, i18nc("light source", "ISO studio tungsten"));
+    d->lightSourceCB->insertItem(20, i18nc("light source", "Other light source"));
     d->lightSourceCB->setWhatsThis(i18n("Select here the kind of light source used "
                                         "to take the picture."));
 

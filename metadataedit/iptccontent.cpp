@@ -103,7 +103,7 @@ IPTCContent::IPTCContent(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->captionCheck         = new QCheckBox(i18n("Caption:"), this);
+    d->captionCheck         = new QCheckBox(i18nc("content description", "Caption:"), this);
     d->captionEdit          = new KTextEdit(this);
     d->syncJFIFCommentCheck = new QCheckBox(i18n("Sync JFIF Comment section"), this);
     d->syncHOSTCommentCheck = new QCheckBox(i18n("Sync caption entered through %1",

@@ -112,7 +112,7 @@ class KIPIPLUGINS_EXPORT LoadRawThumbThread : public QThread
 
 public:
 
-    LoadRawThumbThread(QObject *parent, int size=256);
+    explicit LoadRawThumbThread(QObject *parent, int size=256);
     ~LoadRawThumbThread();
 
     void getRawThumb(const KUrl& url);

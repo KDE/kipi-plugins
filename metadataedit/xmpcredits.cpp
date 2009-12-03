@@ -124,7 +124,7 @@ XMPCredits::XMPCredits(QWidget* parent)
     QGroupBox *contactBox = new QGroupBox(i18n("Contact"), this);
     QGridLayout* grid2    = new QGridLayout(contactBox);
 
-    d->emailCheck = new QCheckBox(i18n("E-mail:"), contactBox);
+    d->emailCheck = new QCheckBox(i18nc("contact email address", "E-mail:"), contactBox);
     d->emailEdit  = new KLineEdit(contactBox);
     d->emailEdit->setClearButtonShown(true);
     d->emailEdit->setWhatsThis(i18n("Set here the contact e-mail."));
@@ -186,7 +186,7 @@ XMPCredits::XMPCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->sourceCheck = new QCheckBox(i18n("Source:"), this);
+    d->sourceCheck = new QCheckBox(i18nc("original owner of content", "Source:"), this);
     d->sourceEdit  = new KLineEdit(this);
     d->sourceEdit->setClearButtonShown(true);
     d->sourceEdit->setWhatsThis(i18n("Set here the original owner of content."));

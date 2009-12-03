@@ -189,7 +189,7 @@ Subjects::Subjects(QWidget* parent)
 
     d->iprLabel    = new QLabel(i18n("I.P.R:"));
     d->refLabel    = new QLabel(i18n("Reference:"));
-    d->nameLabel   = new QLabel(i18n("Name:"));
+    d->nameLabel   = new QLabel(i18nc("name of the subject", "Name:"));
     d->matterLabel = new QLabel(i18n("Matter:"));
     d->detailLabel = new QLabel(i18n("Detail:"));
 

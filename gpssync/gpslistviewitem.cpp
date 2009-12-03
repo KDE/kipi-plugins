@@ -128,9 +128,9 @@ void GPSListViewItem::setGPSInfo(const GPSDataContainer& gpsData, bool dirty, bo
         else
         {
             if (addedManually)
-                status = i18n("Added");
+                status = i18nc("entry was added manually", "Added");
             else
-                status = i18n("Found");
+                status = i18nc("entry was added automatically", "Found");
         }
 
         setText(KIPIPlugins::ImagesListView::User5, status);
