@@ -24,7 +24,11 @@
 #ifndef KPWRITEHELP_H
 #define KPWRITEHELP_H
  
+// Qt includes 
+ 
 #include <QtCore/QIODevice>
+
+// C ANSI includes
 
 extern "C"
 {
@@ -32,8 +36,13 @@ extern "C"
 #include <png.h>
 }
 
+// Local includes
+
 #include "kipiplugins_export.h"
 
+namespace KIPIPlugins
+{
+  
 /**
   * a replacement function for jpeg_stdio_dest
   * for convenience reasons, it uses a QIODevice instead of a QFile, but the main advantage is to not give over
@@ -43,7 +52,7 @@ extern "C"
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing compression.
   */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice * outfile);
+KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* outfile);
 
 /**
   * a replacement function for jpeg_stdio_src
@@ -54,7 +63,7 @@ KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice 
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing reading.
   */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_src (j_decompress_ptr cinfo, QIODevice * infile);
+KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_src (j_decompress_ptr cinfo, QIODevice* infile);
 
 /**
   * a callback function for writing a png image
@@ -65,5 +74,7 @@ KIPIPLUGINS_EXPORT void kp_png_write_fn(png_structp png_ptr, png_bytep data, png
   * a callback function for flushing the buffers, currently unused, since no buffering happens
   */
 KIPIPLUGINS_EXPORT void kp_png_flush_fn(png_structp png_ptr);
+
+}  // namespace KIPIPlugins
 
 #endif // KPWRITEHELP_H
