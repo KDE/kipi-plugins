@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "timeadjustdialog.h"
 #include "timeadjustdialog.moc"
 
 // C ANSI includes

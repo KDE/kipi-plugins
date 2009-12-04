@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "plugin_timeadjust.h"
 #include "plugin_timeadjust.moc"
 
 // KDE includes
