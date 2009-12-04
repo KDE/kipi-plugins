@@ -23,7 +23,6 @@
 
 #define XMD_H
 
-#include "convert2grayscale.h"
 #include "convert2grayscale.moc"
 
 // C++ includes

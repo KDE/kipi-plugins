@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "plugin_jpeglossless.h"
 #include "plugin_jpeglossless.moc"
 
 // C++ includes
@@ -108,7 +107,6 @@ Plugin_JPEGLossless::~Plugin_JPEGLossless()
 void Plugin_JPEGLossless::setup(QWidget* widget)
 {
     KIPI::Plugin::setup( widget );
-
 
     d->action_RotateImage = new KActionMenu(KIcon("object-rotate-right"), i18n("Rotate"), actionCollection());
     d->action_RotateImage->setObjectName("jpeglossless_rotate");

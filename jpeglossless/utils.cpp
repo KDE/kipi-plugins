@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "utils.h"
 #include "utils.moc"
 
 // C ANSI includes

@@ -23,7 +23,6 @@
 
 #define XMD_H
 
-#include "imageflip.h"
 #include "imageflip.moc"
 
 // C++ includes

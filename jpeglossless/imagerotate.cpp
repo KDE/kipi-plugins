@@ -24,7 +24,6 @@
 
 #define XMD_H
 
-#include "imagerotate.h"
 #include "imagerotate.moc"
 
 // C++ includes
