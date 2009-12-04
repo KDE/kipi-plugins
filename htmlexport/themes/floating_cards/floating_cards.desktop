@@ -1,16 +1,28 @@
 [Desktop Entry]
 Name=Floating Cards
 Name[en_GB]=Floating Cards
+Name[it]=Carte svolazzanti
+Name[nl]=Drijvende kaarten
+Name[pt]=Cartas Flutuantes
+Name[sv]=Svävande kort
 Name[uk]=Картки, що плавають
 Name[x-test]=xxFloating Cardsxx
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[en_GB]=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
+Comment[it]=Un tema scuro con carte descrittive e miniature svolazzanti. Navigazione veloce nella galleria.
+Comment[nl]=Een donket thema met drijvende miniatuur/beschrijvingskaarten. Snelle navigatie door de galerij.
+Comment[pt]=Um tema escuro com cartões com miniaturas/descrições. Navegação rápida pela galeria.
+Comment[sv]=Ett mörkt tema med svävande miniatyrbilder och beskrivningar. Snabb navigering genom galleriet.
 Comment[uk]=Темна тема з картками мініатюр або описів, що неначебто плавають панеллю. Пришвидшує орієнтування у галереї.
 Comment[x-test]=xxA dark theme with floating thumbnail/description cards. Fast navigation through the gallery.xx
 
 [X-HTMLExport Author]
 Name=Jiří Boháč
 Name[en_GB]=Jiří Boháč
+Name[it]=Jiří Boháč
+Name[nl]=Jiří Boháč
+Name[pt]=Jiří Boháč
+Name[sv]=Jiří Boháč
 Name[uk]=Jiří Boháč
 Name[x-test]=xxJiří Boháčxx
 Url=mailto:jbohac@jikos.cz
