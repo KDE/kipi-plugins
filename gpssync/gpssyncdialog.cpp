@@ -510,6 +510,7 @@ void GPSSyncDialog::readSettings()
     d->offsetSign->setCurrentIndex(group.readEntry("Offset Sign", 0));
     d->offsetMin->setValue(group.readEntry("Offset Min", 0));
     d->offsetSec->setValue(group.readEntry("Offset Sec", 0));
+    d->gpxFileOpenLastDirectory = group.readEntry("GPX File Open Last Directory", KGlobalSettings::documentPath());
 
     d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
@@ -530,6 +531,7 @@ void GPSSyncDialog::saveSettings()
     group.writeEntry("Offset Sign", d->offsetSign->currentIndex());
     group.writeEntry("Offset Min", d->offsetMin->value());
     group.writeEntry("Offset Sec", d->offsetSec->value());
+    group.writeEntry("GPX File Open Last Directory", d->gpxFileOpenLastDirectory);
 
     KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
     saveDialogSize(group2);
