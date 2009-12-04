@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "emailpage.h"
 #include "emailpage.moc"
 
 // Qt includes

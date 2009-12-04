@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "imageresize.h"
 #include "imageresize.moc"
 
 // Qt includes

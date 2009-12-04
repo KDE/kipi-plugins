@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "sendimages.h"
 #include "sendimages.moc"
 
 // Qt includes

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_sendimages.h"
 #include "plugin_sendimages.moc"
 
 // KDE includes

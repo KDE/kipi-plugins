@@ -22,7 +22,6 @@
 
 #define ICONSIZE 64
 
-#include "imagespage.h"
 #include "imagespage.moc"
 
 using namespace KIPI;

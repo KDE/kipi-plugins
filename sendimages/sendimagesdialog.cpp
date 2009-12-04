@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "sendimagesdialog.h"
 #include "sendimagesdialog.moc"
 
 // Qt includes
