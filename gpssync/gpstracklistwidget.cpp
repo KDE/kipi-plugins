@@ -171,6 +171,13 @@ void GPSTrackListWidget::slotResized()
     url.append(d->zoomLevel);
     url.append("&maptype=");
     url.append(d->mapType);
+    url.append("&maplang=");
+    url.append(i18nc(
+        "Language code for the embedded Google Maps. "
+        "Please take a look at "
+        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
+        "for supported languages. If your language is not on the list, pick 'en'."
+        , "en"));
 
     int count = d->gpsTrackList.count();
     url.append("&items=");

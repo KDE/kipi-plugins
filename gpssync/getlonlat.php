@@ -16,12 +16,15 @@
  *         web project page.
  *         This script accept these values from url:
  *           - 'altitude'  : picture altitude.
- *           - 'longitude' : picture longitude. 
+ *           - 'longitude' : picture longitude.
  *           - 'width'     : width of map.
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
  *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
  *           - 'filename'  : photo file name as string.
+ *           - 'maplang'   : language of the map. See [1] for a list of supported values.
+ *
+ * [1] http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,6 +37,9 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+$maplang = $_GET['maplang'];
+if ($maplang == "") $maplang = "en";
 ?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -41,7 +47,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;hl=<?=$maplang ?>&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg"
 type="text/javascript">
 </script>
 <style type="text/css">
@@ -49,8 +55,8 @@ type="text/javascript">
       @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
       }
 </style>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
-<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;hl=<?=$maplang ?>" type="text/javascript"></script>
+<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js?hl=<?=$maplang ?>" type="text/javascript"></script>
 
 <style type="text/css">
     /*<![CDATA[*/
@@ -71,12 +77,12 @@ function loadMap()
       suppressInitialResultSelection : true
     };
 
-    var markeroptions = { 
+    var markeroptions = {
       autoPan : true,
       draggable : true,
 <?php
       $filename = $_GET['filename'];
-      if ($filename != "") echo "title : \"$filename\""; 
+      if ($filename != "") echo "title : \"$filename\"";
 ?>
     };
 
@@ -110,37 +116,37 @@ function loadMap()
     echo "map.addOverlay(marker)";
 ?>
 
-    GEvent.addListener(map, "click", 
+    GEvent.addListener(map, "click",
         function(overlay, point)
         {
             if (point)
             {
-                marker.setPoint(point); 
+                marker.setPoint(point);
                 msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
                 window.status=msg;
             }
         }
     );
- 
-    GEvent.addListener(marker, "drag", 
+
+    GEvent.addListener(marker, "drag",
         function()
         {
-            var point = marker.getPoint(); 
+            var point = marker.getPoint();
             msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
             window.status=msg;
         }
     );
 
-    GEvent.addListener(marker, "dragend", 
+    GEvent.addListener(marker, "dragend",
         function()
         {
-            var point = marker.getPoint(); 
+            var point = marker.getPoint();
             msg = "(lat:" + point.lat() + ", lon:" + point.lng() + ")";
             window.status=msg;
         }
     );
 
-    GEvent.addListener(map, "zoomend", 
+    GEvent.addListener(map, "zoomend",
         function(oldLevel, newLevel)
         {
             msg = "newZoomLevel:" + newLevel;
@@ -148,10 +154,10 @@ function loadMap()
         }
     );
 
-    GEvent.addListener(map, "maptypechanged", 
+    GEvent.addListener(map, "maptypechanged",
         function()
         {
-            var myMapType = map.getCurrentMapType(); 
+            var myMapType = map.getCurrentMapType();
             if (myMapType == G_SATELLITE_MAP) {msg = "newMapType:G_SATELLITE_MAP";}
             if (myMapType == G_NORMAL_MAP)    {msg = "newMapType:G_NORMAL_MAP";}
             if (myMapType == G_HYBRID_MAP)    {msg = "newMapType:G_HYBRID_MAP";}
@@ -160,8 +166,8 @@ function loadMap()
     );
 }
 {
-    window.addEventListener("load", 
-        function() 
+    window.addEventListener("load",
+        function()
         {
             loadMap(); // Firefox and standard browsers
         }

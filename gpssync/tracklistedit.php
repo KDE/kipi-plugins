@@ -19,6 +19,7 @@
  *           - 'height'    : height of map.
  *           - 'zoom'      : map zoom level.
  *           - 'maptype'   : type of map (G_NORMAL_MAP, G_SATELLITE_MAP, G_HYBRID_MAP)
+ *           - 'maplang'   : language of the map. See [1] for a list of supported values.
  *           - 'items'     : number of track list items
  *           - 'lat#1'     : latitude for 1th item
  *           - 'lng#1'     : longitude for 1th item
@@ -31,6 +32,8 @@
  *           - 'lng#n'     : longitude for item n
  *           - 'title#n'   : title for item n
  *
+ * [1] http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -42,6 +45,9 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+$maplang = $_GET['maplang'];
+if ($maplang == "") $maplang = "en";
 ?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -49,11 +55,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Track List Editor</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;hl=<?=$maplang ?>&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg" 
 type="text/javascript">
 </script>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0" type="text/javascript"></script>
-<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js" type="text/javascript"></script>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;hl=<?=$maplang ?>" type="text/javascript"></script>
+<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js?hl=<?=$maplang ?>" type="text/javascript"></script>
 <script type="text/javascript" src="http://topocoding.com/api/getapi_v1.php?key=ILOGFVOBCUOSRHC"></script>
 <style type="text/css">
       @import url("http://www.google.com/uds/css/gsearch.css");

@@ -178,6 +178,13 @@ void GPSMapWidget::resized()
     url.append(d->mapType);
     url.append("&filename=");
     url.append(d->fileName);
+    url.append("&maplang=");
+    url.append(i18nc(
+        "Language code for the embedded Google Maps. "
+        "Please take a look at "
+        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
+        "for supported languages. If your language is not on the list, pick 'en'."
+        , "en"));
     openUrl(KUrl(url));
     kDebug(AREA_CODE_LOADING) << url ;
 }
