@@ -168,9 +168,9 @@ include( 'topocoding.inc' );
         function()
         {
             var myMapType = map.getCurrentMapType();
-            if (myMapType == G_SATELLITE_TYPE) {msg = "newMapType:G_SATELLITE_TYPE";}
-            if (myMapType == G_MAP_TYPE)       {msg = "newMapType:G_MAP_TYPE";}
-            if (myMapType == G_HYBRID_TYPE)    {msg = "newMapType:G_HYBRID_TYPE";}
+            if (myMapType == G_SATELLITE_MAP) {msg = "newMapType:G_SATELLITE_MAP";}
+            if (myMapType == G_NORMAL_MAP)    {msg = "newMapType:G_NORMAL_MAP";}
+            if (myMapType == G_HYBRID_MAP)    {msg = "newMapType:G_HYBRID_MAP";}
             window.status=msg;
         }
     );
