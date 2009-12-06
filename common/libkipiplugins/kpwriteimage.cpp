@@ -760,7 +760,9 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     TIFFClose(tif);
 
     // Store metadata (Exiv2 0.18 support tiff writing mode)
-    d->metadata.save(destPath);
+
+    // See B.K.O #211758: disable tiff metadata update until we found where is the problem exactly.
+    //d->metadata.save(destPath);
 
     return true;
 }
