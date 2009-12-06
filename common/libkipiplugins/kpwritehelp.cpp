@@ -24,6 +24,8 @@
  *
  * ============================================================ */
 
+#include "kpwritehelp.h"
+
 // Qt includes
 
 #include <QtCore/QIODevice>
@@ -38,10 +40,6 @@ extern "C"
 {
 #include <jerror.h>
 }
-
-// Local includes
-
-#include "kpwritehelp.h"
 
 #define BUFFER_SIZE  4096	/* choose an efficiently fwrite'able size */
 
