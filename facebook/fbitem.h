@@ -66,11 +66,10 @@ class FbAlbum
 public:
     FbAlbum()
     {
-        id = -1;
         privacy = FB_FRIENDS;
     }
 
-    long long   id;
+    QString     id;
 
     QString     title;
     QString     description;
@@ -84,10 +83,9 @@ class FbPhoto
 public:
     FbPhoto()
     {
-        id = -1;
     }
 
-    long long   id;
+    QString   id;
 
     QString     caption;
     QString     thumbURL;

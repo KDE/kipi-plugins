@@ -181,8 +181,8 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
             this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
 
-    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, long long) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, long long) ));
+    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
+            this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
 
     connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <FbAlbum>&) ),
             this, SLOT( slotListAlbumsDone(int, const QString&, const QList <FbAlbum>&) ));
@@ -263,7 +263,7 @@ void FbWindow::readSettings()
     m_sessionKey     = grp.readEntry("Session Key");
     m_sessionSecret  = grp.readEntry("Session Secret");
     m_sessionExpires = grp.readEntry("Session Expires", 0);
-    m_currentAlbumID = grp.readEntry("Current Album", -1LL);
+    m_currentAlbumID = grp.readEntry("Current Album", QString());
 
     if (grp.readEntry("Resize", false))
     {
@@ -348,7 +348,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
     if (!m_import)
-        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), 0);
+        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
 
     m_sessionKey     = m_talker->getSessionKey();
     m_sessionSecret  = m_talker->getSessionSecret();
@@ -386,7 +386,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     QString albumDebug = "";
     foreach(const FbAlbum &album, albumsList)
     {
-        albumDebug.append(QString::number(album.id) + ": " + album.title + '\n');
+        albumDebug.append(album.id + ": " + album.title + '\n');
     }
     kDebug() << "Received albums (errCode = " << errCode << ", errMsg = "
                   << errMsg << "): " << albumDebug;
@@ -407,7 +407,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     }
     else
     {
-        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), 0);
+        m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
     }
 
     for (int i = 0; i < albumsList.size(); ++i)
@@ -581,7 +581,7 @@ void FbWindow::slotStartTransfer()
             return;
 
         m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                   m_widget->m_albumsCoB->currentIndex()).toLongLong();
+                                   m_widget->m_albumsCoB->currentIndex()).toString();
         kDebug() << "upload request got album id from widget: " << m_currentAlbumID;
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
@@ -848,7 +848,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     downloadNextPhoto();
 }
 
-void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, long long newAlbumID)
+void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QString &newAlbumID)
 {
     if (errCode != 0)
     {

@@ -65,11 +65,11 @@ public:
     void    listFriends();
 
     void    listAlbums(long long userID = 0);
-    void    listPhotos(long long userID, long long albumID);
+    void    listPhotos(long long userID, const QString &albumID);
 
     void    createAlbum(const FbAlbum& album);
 
-    bool    addPhoto(const QString& imgPath, long long albumID, 
+    bool    addPhoto(const QString& imgPath, const QString &albumID,
                      const QString& caption);
     void    getPhoto(const QString& imgPath);
 
@@ -83,7 +83,7 @@ Q_SIGNALS:
     void signalGetPhotoDone(int errCode, const QString& errMsg,
                             const QByteArray& photoData);
     void signalCreateAlbumDone(int errCode, const QString& errMsg,
-                               long long newAlbumID);
+                               const QString &newAlbumID);
     void signalListAlbumsDone(int errCode, const QString& errMsg,
                               const QList <FbAlbum>& albumsList);
     void signalListPhotosDone(int errCode, const QString& errMsg,

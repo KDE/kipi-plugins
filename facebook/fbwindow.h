@@ -92,7 +92,7 @@ private Q_SLOTS:
     void slotGetPhotoDone(int errCode, const QString& errMsg,
                           const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg,
-                             long long newAlbumID);
+                             const QString &newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
                             const QList <FbAlbum>& albumsList);
     void slotListPhotosDone(int errCode, const QString& errMsg,
@@ -135,8 +135,8 @@ private:
     QString                   m_tmpDir;
     QString                   m_tmpPath;
 
-    long long                 m_profileAID;
-    long long                 m_currentAlbumID;
+    QString                   m_profileAID;
+    QString                   m_currentAlbumID;
     QString                   m_sessionKey;
     QString                   m_sessionSecret;
     unsigned int              m_sessionExpires;

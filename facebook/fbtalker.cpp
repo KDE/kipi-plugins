@@ -504,7 +504,7 @@ void FbTalker::listAlbums(long long userID)
 }
 
 
-void FbTalker::listPhotos(long long userID, long long albumID)
+void FbTalker::listPhotos(long long userID, const QString &albumID)
 {
     if (m_job)
     {
@@ -519,8 +519,8 @@ void FbTalker::listPhotos(long long userID, long long albumID)
     args["v"]           = m_apiVersion;
     args["session_key"] = m_sessionKey;
     args["call_id"]     = QString::number(m_callID.elapsed());
-    if (albumID != 0)
-        args["aid"]     = QString::number(albumID);
+    if (!albumID.isEmpty())
+        args["aid"]     = albumID;
     else if (userID != 0)
         args["subj_id"] = QString::number(userID);
     else
@@ -598,7 +598,7 @@ void FbTalker::createAlbum(const FbAlbum& album)
 }
 
 bool FbTalker::addPhoto(const QString& imgPath,
-                        long long albumID,
+                        const QString& albumID,
                         const QString& caption)
 {
 
@@ -620,7 +620,7 @@ bool FbTalker::addPhoto(const QString& imgPath,
     args["session_key"] = m_sessionKey;
     args["name"]        = KUrl(imgPath).fileName();
     if (albumID > 0)
-        args["aid"]     = QString::number(albumID);
+        args["aid"]     = albumID;
     if (!caption.isEmpty())
         args["caption"] = caption;
     args["sig"]         = getApiSig(args);
@@ -1157,7 +1157,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     kDebug() << "Parse Create Album response:" << endl << data;
 
-    long long newAlbumID = -1;
+    QString newAlbumID = QString();
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "photos_createAlbum_response")
     {
@@ -1169,7 +1169,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
                 continue;
             if (node.nodeName() == "aid")
             {
-                newAlbumID = node.toElement().text().toLongLong();
+                newAlbumID = node.toElement().text();
                 kDebug() << "newAID: " << newAlbumID;
             }
         }
@@ -1260,7 +1260,7 @@ void FbTalker::parseResponseListAlbums(const QByteArray& data)
                     if (!nodeA.isElement())
                         continue;
                     if (nodeA.nodeName() == "aid")
-                        album.id = nodeA.toElement().text().toLongLong();
+                        album.id = nodeA.toElement().text().trimmed();
                     else if (nodeA.nodeName() == "name")
                         album.title = nodeA.toElement().text();
                     else if (nodeA.nodeName() == "description")
@@ -1327,7 +1327,7 @@ void FbTalker::parseResponseListPhotos(const QByteArray& data)
                     if (!nodeP.isElement())
                         continue;
                     if (nodeP.nodeName() == "pid")
-                        photo.id = nodeP.toElement().text().toLongLong();
+                        photo.id = nodeP.toElement().text().trimmed();
                     else if (nodeP.nodeName() == "caption")
                         photo.caption = nodeP.toElement().text();
                     else if (nodeP.nodeName() == "src_small")

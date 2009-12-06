@@ -70,7 +70,7 @@ public:
     void updateLabels(const QString& name = "", const QString& url = "", bool uplPerm = false);
 
     long long getFriendID();
-    long long getAlbumID();
+    QString getAlbumID();
 
     KIPIPlugins::ImagesList* imagesList() const;
 

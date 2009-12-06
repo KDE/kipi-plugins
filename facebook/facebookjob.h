@@ -55,11 +55,11 @@ class FacebookJob : public KJob
 
         void albumList(int, const QString&, const QList<FbAlbum>&);
         void loginDone(int, const QString&);
-        void albumCreated(int, const QString&, long long);
+        void albumCreated(int, const QString&, const QString &albumId);
 
     private:
 
-        void sendPhoto(long long album);
+        void sendPhoto(const QString &album);
 
     private:
 

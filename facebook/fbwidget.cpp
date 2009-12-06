@@ -391,11 +391,11 @@ long long FbWidget::getFriendID()
     return 0;
 }
 
-long long FbWidget::getAlbumID()
+QString FbWidget::getAlbumID()
 {
     if (m_dlGrp->checkedId() == FbMyAlbum
         || m_dlGrp->checkedId() == FbFriendAlbum)
-        return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toLongLong();
+        return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toString();
 
     return 0;
 }

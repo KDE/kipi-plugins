@@ -41,7 +41,7 @@ FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObjec
             this, SLOT(albumList(int, QString, QList<KIPIFacebookPlugin::FbAlbum>)));
 
     connect(&talk, SIGNAL(signalCreateAlbumDone(int, QString, long long)),
-            this, SLOT(albumCreated(int, QString, long long)));
+            this, SLOT(albumCreated(int, QString, const QString&)));
 }
 
 void FacebookJob::start()
@@ -88,17 +88,17 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
     }
     
     setPercent(25);
-    long long id = -1;
+    QString id = QString();
     foreach(const FbAlbum& album, albums)
     {
         if(album.title==m_albumName)
         {
-            id=album.id;
+            id = album.id;
             break;
         }
     }
     
-    if(id == -1)
+    if(id.isEmpty())
     {
         FbAlbum album;
         album.title=m_albumName;
@@ -115,7 +115,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
 }
 
 
-void FacebookJob::albumCreated(int errCode, const QString& error, long long albumId)
+void FacebookJob::albumCreated(int errCode, const QString& error, const QString &albumId)
 {
     if(errCode != 0)
     {
@@ -129,7 +129,7 @@ void FacebookJob::albumCreated(int errCode, const QString& error, long long albu
     kDebug() << "album created" << albumId;
 }
 
-void FacebookJob::sendPhoto(long long album)
+void FacebookJob::sendPhoto(const QString &album)
 {
     setPercent(50);
     int step  = 50/m_urls.size();
