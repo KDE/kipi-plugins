@@ -6,7 +6,7 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> GPSSync : 199189 : GPS correlator does not allow offset in seconds.
-002 ==> GPSSync : 165277 : Last gpx directory isn't remembered.
-003 ==> GPSSync : 174086 : GPX time parsing problems.
-004 ==> 
+001 ==> GPSSync         : 199189 : GPS correlator does not allow offset in seconds.
+002 ==> GPSSync         : 165277 : Last gpx directory isn't remembered.
+003 ==> GPSSync         : 174086 : GPX time parsing problems.
+004 ==> PicasaWebExport : 162993 : picasa album list not refreshed.
