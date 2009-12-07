@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Clean Frames
+Name[ast]=Llimpiar marcos
 Name[bg]=Изчистени рамки
 Name[ca]=Marcs nets
 Name[cs]=Vyčistit rámce
@@ -32,6 +33,7 @@ Name[uk]=Чіткі рамки
 Name[x-test]=xxClean Framesxx
 Name[zh_CN]=简洁边框
 Comment=A frame theme based on Ruediger Bente's frame theme
+Comment[ast]=Un tema de marcu basáu nel tema de marcu de Ruediger Bente
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
 Comment[cs]=Motiv rámce založený na motivu Ruediger Bente
@@ -64,6 +66,7 @@ Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
+Name[ast]=Elizabeth Marmorstein
 Name[bg]=Elizabeth Marmorstein
 Name[ca]=Elizabeth Marmorstein
 Name[cs]=Elizabeth Marmorstein
@@ -101,6 +104,7 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[ast]=Estilu
 Name[bg]=Изглед
 Name[ca]=Estil
 Name[cs]=Styl

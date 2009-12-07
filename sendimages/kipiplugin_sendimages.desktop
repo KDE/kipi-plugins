@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=SendImages
+Name[ast]=SendImages
 Name[bg]=Изпращане на изображения
 Name[ca]=SendImages
 Name[cs]=Odeslání obrázků
@@ -37,6 +38,7 @@ Name[uk]=SendImages
 Name[x-test]=xxSendImagesxx
 Name[zh_CN]=发送图像
 Comment=A tool to send images by e-mail
+Comment[ast]=Una ferramienta pa unviar imáxenes per corréu electrónicu
 Comment[bg]=Инструмент за изпращане на изображения по е-поща
 Comment[ca]=Una eina per a enviar imatges per correu electrònic
 Comment[cs]=Nástroj pro odeslání obrázků emailem

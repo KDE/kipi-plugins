@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=JPEGLossless
 Name[ar]=JPEG بدون ضياع
+Name[ast]=JPEGLossless
 Name[bg]=JPEG без загуби
 Name[ca]=JPEGLossless
 Name[cs]=JPEGLossless
@@ -39,6 +40,7 @@ Name[uk]=JPEGLossless
 Name[x-test]=xxJPEGLosslessxx
 Name[zh_CN]=JPEG 无损处理
 Comment=A tool to rotate/flip images without losing quality
+Comment[ast]=Una ferramienta pa rotar/voltiar imáxenes ensin perda de calidá
 Comment[bg]=Инструмент за завъртане и обръщане на изображения без загуба на качество
 Comment[ca]=Una eina per a girar/voltejar imatges sense perdre qualitat
 Comment[cs]=Nástroj na otáčení/převracení obrázků bez ztráty kvality

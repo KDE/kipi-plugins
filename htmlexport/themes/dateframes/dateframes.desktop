@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Date Frames
+Name[ast]=Marcos de data
 Name[bg]=Рамки на датите
 Name[cs]=Rámce dat
 Name[da]=Datér rammer
@@ -18,6 +19,7 @@ Name[tr]=Tarih Çerçeveleri
 Name[uk]=Рамки дат
 Name[x-test]=xxDate Framesxx
 Comment=A frame theme based on Ruediger Bente's frame theme
+Comment[ast]=Un tema de marcu basáu nel tema de marcu de Ruediger Bente
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
 Comment[ca]=Un tema de marcs basat en el tema de marcs del Ruediger Bente
 Comment[cs]=Motiv rámce založený na motivu Ruediger Bente
@@ -50,6 +52,7 @@ Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
+Name[ast]=Elizabeth Marmorstein
 Name[bg]=Elizabeth Marmorstein
 Name[ca]=Elizabeth Marmorstein
 Name[cs]=Elizabeth Marmorstein
@@ -87,6 +90,7 @@ Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter color1]
 Name=Thumbnail Background
+Name[ast]=Miniatura de fondu
 Name[bg]=Фон на умалените копия
 Name[cs]=Pozadí náhledu
 Name[da]=Miniaturebaggrund
@@ -109,6 +113,7 @@ Default=#FFFFFF
 
 [X-HTMLExport Parameter color2]
 Name=Image Background (contrasting)
+Name[ast]=Imaxe de fondu (contraste)
 Name[bg]=Фон на изображенията (контрастен)
 Name[cs]=Pozadí obrázku (kontrastní)
 Name[da]=Billedbaggrund (med kontrast)
@@ -131,6 +136,7 @@ Default=#000055
 
 [X-HTMLExport Parameter color3]
 Name=Nav Bar Background (dark)
+Name[ast]=Color de fondu de la barra de navegación (escuru)
 Name[bg]=Фон на лентата за управление (тъмен)
 Name[cs]=Pozadí navigačního panelu (tmavé)
 Name[da]=Nav.-linjebaggrund (mørk)
@@ -153,6 +159,7 @@ Default=#000011
 
 [X-HTMLExport Parameter intro]
 Name=Gallery Introduction
+Name[ast]=Galería d'entamu
 Name[bg]=Въведение на галерията
 Name[cs]=Představení galerie
 Name[da]=Galleri-introduktion
@@ -175,6 +182,7 @@ Default=Welcome to my web gallery!
 
 [X-HTMLExport Parameter longformat]
 Name=Caption Date Format (see http://xsltsl.sourceforge.net/date-time.html)
+Name[ast]=Formatu de data pa la etiqueta (mira http://xsltsl.sourceforge.net/date-time.html)
 Name[bg]=Формат на датата в заглавията (вижте http://xsltsl.sourceforge.net/date-time.html)
 Name[cs]=Formát data titulku (viz http://xsltsl.sourceforge.net/date-time.html)
 Name[da]=Datoformat til billedtekst (se http://xsltsl.sourceforge.net/date-time.html)
@@ -195,6 +203,7 @@ Name[x-test]=xxCaption Date Format (see http://xsltsl.sourceforge.net/date-time.
 Type=string
 Default=%A, %b %e, %Y   %i:%M%P
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
+Comment[ast]=Cadena XSL de formatu de data: Usa la sintaxis indicada en http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
 Comment[cs]=Řetězec formátu data XSL: Použijte syntaxi určenou na http://xsltsl.sourceforge.net/date-time.html
 Comment[da]=XSL datoformat-streng: Brug den syntaks der oplyses på http://xsltsl.sourceforge.net/date-time.html
@@ -215,6 +224,7 @@ Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.
 
 [X-HTMLExport Parameter shortformat]
 Name=Image List Date Format
+Name[ast]=Formatu de data de la llista d'imáxenes
 Name[bg]=Формат на датата за списъка с изображения
 Name[cs]=Formát data seznamu obrázků
 Name[da]=Datoformat for billedliste
@@ -235,6 +245,7 @@ Name[x-test]=xxImage List Date Formatxx
 Type=string
 Default=%m-%d-%Y
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
+Comment[ast]=Cadena XSL de formatu de data: Usa la sintaxis indicada en http://xsltsl.sourceforge.net/date-time.html
 Comment[bg]=Формат на датата в XSL: използвайте синтаксиса, даден в http://xsltsl.sourceforge.net/date-time.html
 Comment[cs]=Řetězec formátu data XSL: Použijte syntaxi určenou na http://xsltsl.sourceforge.net/date-time.html
 Comment[da]=XSL datoformat-streng: Brug den syntaks der oplyses på http://xsltsl.sourceforge.net/date-time.html

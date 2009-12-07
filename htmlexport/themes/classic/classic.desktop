@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Classic
+Name[ast]=Classic
 Name[bg]=Класически
 Name[ca]=Clàssic
 Name[cs]=Klasický
@@ -37,6 +38,7 @@ Name[uk]=Класичний
 Name[x-test]=xxClassicxx
 Name[zh_CN]=经典
 Comment=A port of the old HTML Export plugin theme
+Comment[ast]=Una adaptación del antiguu tema del complementu d'esportación d'HTML
 Comment[bg]=Вариант на предишния изглед за изнасяне в HTML
 Comment[ca]=Un port de l'antic tema del connector d'exportació a HTML
 Comment[cs]=Port starého motivu pro modul HTML export
@@ -70,6 +72,7 @@ Comment[zh_CN]=旧版 HTML 导出插件主题的移植
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ast]=Aurélien Gâteau
 Name[bg]=Aurélien Gâteau
 Name[ca]=Aurélien Gâteau
 Name[cs]=Aurélien Gâteau
@@ -109,6 +112,7 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter thumbnailPerRow]
 Name=Thumbnails per row
+Name[ast]=Miniatures per filera
 Name[bg]=Умалени копия на ред
 Name[ca]=Miniatures per fila
 Name[cs]=Náhledy na řádek
@@ -148,6 +152,7 @@ Max=100
 
 [X-HTMLExport Parameter bgColor]
 Name=Background Color
+Name[ast]=Color de fondu
 Name[bg]=Фонов цвят
 Name[ca]=Color de fons
 Name[cs]=Barva pozadí
@@ -188,6 +193,7 @@ Default=#333333
 
 [X-HTMLExport Parameter fgColor]
 Name=Foreground Color
+Name[ast]=Color de primer planu
 Name[bg]=Цвят на преден план
 Name[ca]=Color de primer pla
 Name[cs]=Barva popředí
@@ -227,6 +233,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter fontSize]
 Name=Font Size
+Name[ast]=Tamañu de fonte
 Name[bg]=Размер на шрифт
 Name[ca]=Mida del tipus de lletra
 Name[cs]=Velikost písma
@@ -270,6 +277,7 @@ Max=100
 
 [X-HTMLExport Parameter imgBorderSize]
 Name=Image Border Size
+Name[ast]=Tamañu del berbesu de la imaxe
 Name[bg]=Размер на рамката на изображението
 Name[ca]=Mida de la vora de la imatge
 Name[cs]=Velikost rámečku obrázku
@@ -309,6 +317,7 @@ Max=50
 
 [X-HTMLExport Parameter imgBorderColor]
 Name=Image Border Color
+Name[ast]=Color del berbesu de la imaxe
 Name[bg]=Цвят на рамката на изображението
 Name[ca]=Color de la vora de la imatge
 Name[cs]=Barva rámečku obrázku
@@ -346,6 +355,7 @@ Default=#d0ffd0
 
 [X-HTMLExport Parameter linkColor]
 Name=Link Color
+Name[ast]=Color d'enllaz
 Name[bg]=Цвят на препратка
 Name[ca]=Color d'enllaç
 Name[cs]=Barva odkazu
@@ -383,6 +393,7 @@ Default=#b3b3b3
 
 [X-HTMLExport Parameter visitedLinkColor]
 Name=Visited Link Color
+Name[ast]=Color d'enllaz visitáu
 Name[bg]=Цвят на посетена препратка
 Name[ca]=Color d'enllaç visitat
 Name[cs]=Barva navštíveného odkazu

@@ -2,6 +2,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KIPI Plugins
+Name[ast]=Complementos KIPI
 Name[bg]=Приставки KIPI
 Name[cs]=Moduly KIPI
 Name[da]=KIPI-plugins
@@ -26,6 +27,7 @@ Name[tr]=Kipi Eklentileri
 Name[uk]=Додатки Kipi
 Name[x-test]=xxKIPI Pluginsxx
 Comment=KDE Image Plugins Interface
+Comment[ast]=Interfaz de complementos d'imaxe de KDE
 Comment[bg]=Интерфейс на KDE за приставки за изображения
 Comment[cs]=Rozhraní modulů pro práci s obrázky v KDE
 Comment[da]=KDE grænseflade til billed-plugins (KIPI)

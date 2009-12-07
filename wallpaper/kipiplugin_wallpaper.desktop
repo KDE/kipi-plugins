@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=WallPaper
 Name[ar]=الخلفية
+Name[ast]=Fondu d'escritoriu
 Name[be]=Шпалеры
 Name[bg]=Тапет
 Name[ca]=Paper pintat
@@ -39,6 +40,7 @@ Name[uk]=WallPaper
 Name[x-test]=xxWallPaperxx
 Name[zh_CN]=壁纸
 Comment=A tool to set image as background on your desktop
+Comment[ast]=Una ferramienta pa poner una imaxe como fondu de pantalla nel escritoriu
 Comment[bg]=Инструмент за поставяне на изображения като тапет на екрана
 Comment[ca]=Una eina per a definir una imatge com a fons de l'escriptori
 Comment[cs]=Nástroj pro odeslání obrázku jako pozadí vaší plochy

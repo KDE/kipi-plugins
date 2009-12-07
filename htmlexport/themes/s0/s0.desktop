@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=Yet another nice theme. Very simple and clean look with "calligraphics" icons.
+Comment[ast]=Otru tema guapu. Aspeutu mui simple y llimpiu con iconos"caligráficos".
 Comment[bg]=Още един приятен изглед. Опристен и изчистен, с "калиграфски" икони.
 Comment[ca]=Un altre tema agradable. Amb una aparença molt simple i neta amb icones "cal·ligràfiques".
 Comment[cs]=Ještě další hezký motiv. Velmi jednoduchý a dokonale vypadající s "kaligrafickými" ikonami.
@@ -32,6 +33,7 @@ Comment[x-test]=xxYet another nice theme. Very simple and clean look with "calli
 Comment[zh_CN]=另一个漂亮的主题。十分简洁，带有“calligraphics”图标。
 Icon=
 Name=S0
+Name[ast]=S0
 Name[bg]=S0
 Name[ca]=S0
 Name[cs]=S0
@@ -68,6 +70,7 @@ Name[zh_CN]=S0
 
 [X-HTMLExport Author]
 Name=Petr Vaněk
+Name[ast]=Petr Vaněk
 Name[bg]=Petr Vaněk
 Name[ca]=Petr Vaněk
 Name[cs]=Petr Vaněk

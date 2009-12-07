@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=BatchProcessImages
+Name[ast]=BatchProcessImages
 Name[bg]=Пакетна обработка на изображения
 Name[ca]=BatchProcessImages
 Name[cs]=Dávkové zpracování obrázků
@@ -29,6 +30,7 @@ Name[uk]=Пакетна обробка зображень
 Name[x-test]=xxBatchProcessImagesxx
 Name[zh_CN]=批处理图像
 Comment=KIPI Batch Processing Images Plugin
+Comment[ast]=Complementu KIPI de procesamientu d'imáxenes por llotes
 Comment[bg]=Приставка за KIPI за пакетна обработка
 Comment[ca]=Connector KIPI per a processar imatges per lots
 Comment[cs]=KIPI modul pro dávkové zpracování obrázků

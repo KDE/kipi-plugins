@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Imageviewer
+Name[ast]=Imageviewer
 Name[bg]=Преглед на изображения
 Name[ca]=Imageviewer
 Name[cs]=Prohlížeč obrázků
@@ -35,6 +36,7 @@ Name[uk]=Переглядач зображень
 Name[x-test]=xxImageviewerxx
 Name[zh_CN]=图像查看器
 Comment=A tool to preview images using OpenGL
+Comment[ast]=Una ferramienta pa previsualizar imáxenes usando OpenGL
 Comment[bg]=Инструмент за преглед на изображения с OpenGL
 Comment[ca]=Una eina per a previsualitzar imatges utilitzant l'OpenGL
 Comment[cs]=Nástroj na prohlížení obrázků pomocí OpenGL

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to acquire images using a flat scanner
+Comment[ast]=Una ferramienta p'alquirir imáxenes emplegando un escáner planu
 Comment[bg]=Инструмент за сканиране на снимки с плосък скенер
 Comment[cs]=Nástroj pro získání obrázků pomocí plochého skeneru
 Comment[da]=Et værktøj til at hente billeder med en scanner
@@ -20,6 +21,7 @@ Comment[uk]=Інструмент для отримання зображень з
 Comment[x-test]=xxA tool to acquire images using a flat scannerxx
 Exec=scangui %i -caption "%c" %U
 GenericName=Acquire Images
+GenericName[ast]=Alquirir Imaxes
 GenericName[bg]=Сканиране на снимки
 GenericName[cs]=Získat obrázky
 GenericName[da]=Hent billeder
@@ -39,6 +41,7 @@ GenericName[uk]=Отримання зображень
 GenericName[x-test]=xxAcquire Imagesxx
 Icon=scanner
 Name=AcquireImages
+Name[ast]=AcquireImages
 Name[bg]=Сканиране на снимки
 Name[ca]=AcquireImages
 Name[cs]=Získat obrázky

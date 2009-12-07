@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Simple
+Name[ast]=Simple
 Name[bg]=Опростено
 Name[ca]=Simple
 Name[cs]=Jednoduchý
@@ -37,6 +38,7 @@ Name[uk]=Проста
 Name[x-test]=xxSimplexx
 Name[zh_CN]=简洁
 Comment=A simple and light theme
+Comment[ast]=Un tema cenciellu y llixeru
 Comment[bg]=Опростен и лек изглед
 Comment[ca]=Un tema simple i lluminós
 Comment[cs]=Jednoduchý světlý motiv
@@ -73,6 +75,7 @@ Comment[zh_CN]=简洁明快的主题
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ast]=Aurélien Gâteau
 Name[bg]=Aurélien Gâteau
 Name[ca]=Aurélien Gâteau
 Name[cs]=Aurélien Gâteau
@@ -112,6 +115,7 @@ Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter style]
 Name=Style
+Name[ast]=Estilu
 Name[bg]=Изглед
 Name[ca]=Estil
 Name[cs]=Styl

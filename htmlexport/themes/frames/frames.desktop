@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Frames
+Name[ast]=Marcos
 Name[bg]=Рамки
 Name[ca]=Marcs
 Name[cs]=Rámce
@@ -34,6 +35,7 @@ Name[uk]=Рамки
 Name[x-test]=xxFramesxx
 Name[zh_CN]=相框
 Comment=A frame theme
+Comment[ast]=Un tema de marcu
 Comment[bg]=Изглед с рамки
 Comment[ca]=Un tema de marcs
 Comment[cs]=Motiv rámce
@@ -69,6 +71,7 @@ Comment[zh_CN]=一个相框主题
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
+Name[ast]=Ruediger Bente
 Name[bg]=Ruediger Bente
 Name[ca]=Ruediger Bente
 Name[cs]=Ruediger Bente

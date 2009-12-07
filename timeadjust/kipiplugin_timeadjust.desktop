@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=TimeDateAdjust
 Name[ar]=ضبط‌التاريخ‌الوقت
+Name[ast]=TimeDateAdjust
 Name[bg]=Нагласяване на дата и час
 Name[ca]=TimeDateAdjust
 Name[cs]=Úprava data a času
@@ -38,6 +39,7 @@ Name[uk]=TimeDateAdjust
 Name[x-test]=xxTimeDateAdjustxx
 Name[zh_CN]=时间数据调整
 Comment=A tool to adjust date and time
+Comment[ast]=Una ferramienta p'axustar la data y la hora
 Comment[bg]=Инструмент за нагласяване на датата и часа
 Comment[ca]=Una eina per a ajustar la data i la hora
 Comment[cs]=Nástroj pro úpravu data a času

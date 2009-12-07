@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Snow
+Name[ast]=Ñeve
 Name[bg]=Сняг
 Name[ca]=Neu
 Name[cs]=Sníh
@@ -37,6 +38,7 @@ Name[uk]=Сніг
 Name[x-test]=xxSnowxx
 Name[zh_CN]=雪
 Comment=A perfect match for your mountain holidays
+Comment[ast]=La opción más afayadiza pa unes vacaciones na montaña
 Comment[bg]=Подхождащо за снимки от планинските ви почивки
 Comment[ca]=Una coincidència perfecte per a les vostres vacances de muntanya
 Comment[cs]=Perfektně odpovídá vaší dovolené na horách
@@ -71,6 +73,7 @@ Comment[zh_CN]=完美呈现您的游山玩水
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
+Name[ast]=Aurélien Gâteau
 Name[bg]=Aurélien Gâteau
 Name[ca]=Aurélien Gâteau
 Name[cs]=Aurélien Gâteau

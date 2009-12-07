@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Remove Red Eyes
+Name[ast]=Desanicia los güeyos bermeyos
 Name[bg]=Премахване на червени очи
 Name[ca]=Eliminació d'ulls vermells
 Name[cs]=Odstranění červených očí
@@ -30,6 +31,7 @@ Name[uk]=Вилучення «Червоних очей»
 Name[x-test]=xxRemove Red Eyesxx
 Name[zh_CN]=去除红眼
 Comment=A tool to remove red eyes automatically from images
+Comment[ast]=Un ferramienta pa desaniciar los güeyos bermeyos automáticamente de les semeyes
 Comment[bg]=Инструмент за автоматично премахване на червени очи от изображенията
 Comment[ca]=Una eina per a eliminar automàticament els ulls vermells de les imatges
 Comment[cs]=Nástroj pro automatické odstranění červených očí
