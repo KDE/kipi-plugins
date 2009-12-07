@@ -23,6 +23,10 @@
 
 #ifndef KPWRITEHELP_H
 #define KPWRITEHELP_H
+
+// C++ includes.
+
+#include <cstdio>
  
 // Qt includes 
  
