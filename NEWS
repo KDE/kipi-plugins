@@ -10,3 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> GPSSync         : 165277 : Last gpx directory isn't remembered.
 003 ==> GPSSync         : 174086 : GPX time parsing problems.
 004 ==> PicasaWebExport : 162993 : picasa album list not refreshed.
+005 ==> Facebook        : 202045 : Facebook exports always to same album (the one initially selected).
+006 ==> 
