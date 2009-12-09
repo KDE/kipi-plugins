@@ -795,17 +795,16 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
         m_tmpPath.clear();
     }
 
-    // Remove photo uploaded from the list
-    m_widget->m_imgList->removeItemByUrl(m_transferQueue.first());
-    m_transferQueue.pop_front();
-
     if (errCode == 0)
     {
+        // Remove photo uploaded from the list
+        m_widget->m_imgList->removeItemByUrl(m_transferQueue.first());
+        m_transferQueue.pop_front();
+
         m_imagesCount++;
     }
     else
     {
-        m_imagesTotal--;
         if (KMessageBox::warningContinueCancel(this,
                          i18n("Failed to upload photo into SmugMug: %1\n"
                               "Do you want to continue?", errMsg))
@@ -843,7 +842,6 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 {
     QString imgPath = m_widget->getDestinationPath() + '/'
                       + QFileInfo(m_transferQueue.first().path()).fileName();
-    m_transferQueue.pop_front();
 
     if (errCode == 0)
     {
@@ -862,11 +860,11 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 
         if (errText.isEmpty())
         {
+            m_transferQueue.pop_front();
             m_imagesCount++;
         }
         else
         {
-            m_imagesTotal--;
             if (KMessageBox::warningContinueCancel(this,
                              i18n("Failed to save photo: %1\n"
                                   "Do you want to continue?", errText))
@@ -880,7 +878,6 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     }
     else
     {
-        m_imagesTotal--;
         if (KMessageBox::warningContinueCancel(this,
                          i18n("Failed to download photo: %1\n"
                               "Do you want to continue?", errMsg))
