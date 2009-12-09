@@ -751,15 +751,14 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     }
 
     m_widget->m_imgList->processed(errCode == 0);
-    m_transferQueue.pop_front();
 
     if (errCode == 0)
     {
+        m_transferQueue.pop_front();
         m_imagesCount++;
     }
     else
     {
-        m_imagesTotal--;
         if (KMessageBox::warningContinueCancel(this,
                          i18n("Failed to upload photo into Facebook: %1\n"
                               "Do you want to continue?", errMsg))
@@ -794,7 +793,6 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 {
     QString imgPath = m_widget->getDestinationPath() + '/'
                       + QFileInfo(m_transferQueue.first().path()).fileName();
-    m_transferQueue.pop_front();
 
     if (errCode == 0)
     {
@@ -815,11 +813,11 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
 
         if (errText.isEmpty())
         {
+            m_transferQueue.pop_front();
             m_imagesCount++;
         }
         else
         {
-            m_imagesTotal--;
             if (KMessageBox::warningContinueCancel(this,
                              i18n("Failed to save photo: %1\n"
                                   "Do you want to continue?", errText))
@@ -833,7 +831,6 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     }
     else
     {
-        m_imagesTotal--;
         if (KMessageBox::warningContinueCancel(this,
                          i18n("Failed to download photo: %1\n"
                               "Do you want to continue?", errMsg))
