@@ -12,4 +12,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> PicasaWebExport : 162993 : picasa album list not refreshed.
 005 ==> Facebook        : 202045 : Facebook exports always to same album (the one initially selected).
 006 ==> GPSSync         : 217710 : GPSSync unable to modify coordinates.
-007 ==> 
+007 ==> GPSSync         : 217989 : GPSSync randomly no satellite view.
+008 ==> 
+
