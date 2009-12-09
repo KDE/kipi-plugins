@@ -175,7 +175,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     QString place = QDir::homePath();
 
     if (d->interface)
-        d->interface->currentAlbum().uploadPath();
+        place = d->interface->currentAlbum().uploadPath().path();
 
     QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(place, QString(), 0);
 
