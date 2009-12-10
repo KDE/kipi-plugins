@@ -13,5 +13,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> Facebook        : 202045 : Facebook exports always to same album (the one initially selected).
 006 ==> GPSSync         : 217710 : GPSSync unable to modify coordinates.
 007 ==> GPSSync         : 217989 : GPSSync randomly no satellite view.
-008 ==> 
+008 ==> DNGConverter    : 217897 : DNGconverter produces invalid DNG files.
+009 ==> 
 
