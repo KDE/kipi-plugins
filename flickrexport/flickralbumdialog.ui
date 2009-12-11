@@ -111,7 +111,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget" >
+  <widget class="QWidget" name="layoutWidget2" >
    <property name="geometry" >
     <rect>
      <x>11</x>
@@ -153,7 +153,7 @@
    </layout>
   </widget>
   <zorder>layoutWidget</zorder>
-  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget2</zorder>
   <zorder>header</zorder>
   <zorder>hline1</zorder>
  </widget>
