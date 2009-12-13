@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "savesettingswidget.h"
 #include "savesettingswidget.moc"
 
 // Qt includes

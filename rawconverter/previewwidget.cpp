@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "previewwidget.h"
 #include "previewwidget.moc"
 
 // Qt includes

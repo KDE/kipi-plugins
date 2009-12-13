@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "singledialog.h"
 #include "singledialog.moc"
 
 // C ANSI includes

@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "batchdialog.h"
 #include "batchdialog.moc"
 
 // C ANSI includes

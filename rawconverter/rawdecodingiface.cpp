@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "rawdecodingiface.h"
 #include "rawdecodingiface.moc"
 
 // C++ includes

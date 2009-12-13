@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "plugin_rawconverter.h"
 #include "plugin_rawconverter.moc"
 
 // C++ includes
