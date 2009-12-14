@@ -649,6 +649,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
     if (d->iface)
         d->iface->thumbnails(urls, DEFAULTSIZE);
 
+    emit signalAddItems(urls);
     emit signalImageListChanged();
     emit signalFoundRAWImages(raw);
 }

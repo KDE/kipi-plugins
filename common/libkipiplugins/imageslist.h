@@ -220,6 +220,7 @@ public:
 
 Q_SIGNALS:
 
+    void signalAddItems(const KUrl::List&);
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
