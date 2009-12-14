@@ -57,7 +57,6 @@
 
 #include "imagedialog.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPlugins
@@ -432,8 +431,11 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
             this, SLOT(slotAddImages(const KUrl::List&)));
 
-    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    if (d->iface)
+    {
+        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    }
 
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
@@ -597,6 +599,8 @@ int ImagesList::iconSize() const
 
 void ImagesList::loadImagesFromCurrentSelection()
 {
+    if (!d->iface) return;
+
     ImageCollection images = d->iface->currentSelection();
 
     if (images.isValid())
@@ -642,7 +646,8 @@ void ImagesList::slotAddImages(const KUrl::List& list)
         }
     }
 
-    d->iface->thumbnails(urls, DEFAULTSIZE);
+    if (d->iface)
+        d->iface->thumbnails(urls, DEFAULTSIZE);
 
     emit signalImageListChanged();
     emit signalFoundRAWImages(raw);

@@ -51,6 +51,8 @@ namespace KIPI
 class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
@@ -193,7 +195,7 @@ public:
     };
     Q_DECLARE_FLAGS(ControlButtons, ControlButton)
 
-    explicit ImagesList(KIPI::Interface* iface, QWidget* parent = 0, int iconSize = -1);
+    explicit ImagesList(Interface* iface, QWidget* parent = 0, int iconSize = -1);
     virtual ~ImagesList();
 
     void               setAllowRAW(bool allow);
