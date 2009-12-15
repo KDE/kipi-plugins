@@ -32,6 +32,7 @@ Name[tr]=Çerçeveleri Temizle
 Name[uk]=Чіткі рамки
 Name[x-test]=xxClean Framesxx
 Name[zh_CN]=简洁边框
+Name[zh_TW]=清爽外框
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[ast]=Un tema de marcu basáu nel tema de marcu de Ruediger Bente
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
@@ -63,6 +64,7 @@ Comment[tr]=Ruediger Bente'nin çerçeve teması tabanlı bir  tema
 Comment[uk]=Тема рамок на основі теми Ruediger Bente
 Comment[x-test]=xxA frame theme based on Ruediger Bente's frame themexx
 Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
+Comment[zh_TW]=基於 Ruediger Bente 外框主題的主題
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
@@ -100,6 +102,7 @@ Name[tr]=Elizabeth Marmorstein
 Name[uk]=Elizabeth Marmorstein
 Name[x-test]=xxElizabeth Marmorsteinxx
 Name[zh_CN]=Elizabeth Marmorstein
+Name[zh_TW]=Elizabeth Marmorstein
 Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter style]
@@ -142,6 +145,7 @@ Name[tr]=Biçim
 Name[uk]=Стиль
 Name[x-test]=xxStylexx
 Name[zh_CN]=风格
+Name[zh_TW]=樣式
 Type=list
 Default=pink.css
 Value_0=pink.css

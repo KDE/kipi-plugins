@@ -31,6 +31,7 @@ Comment[tr]=Bir diğer hoş tema.  "calligraphics" ikonlarıyla çok sade ve fer
 Comment[uk]=Ще одна гарна тема. Дуже простий і строгий вигляд з "каліграфічними" піктограмами.
 Comment[x-test]=xxYet another nice theme. Very simple and clean look with "calligraphics" icons.xx
 Comment[zh_CN]=另一个漂亮的主题。十分简洁，带有“calligraphics”图标。
+Comment[zh_TW]=還有一個不錯的主題。非常簡單、清爽看起來像「書法」圖示。
 Icon=
 Name=S0
 Name[ast]=S0
@@ -67,6 +68,7 @@ Name[tr]=S0
 Name[uk]=S0
 Name[x-test]=xxS0xx
 Name[zh_CN]=S0
+Name[zh_TW]=S0
 
 [X-HTMLExport Author]
 Name=Petr Vaněk
@@ -106,4 +108,5 @@ Name[tr]=Petr Vaněk
 Name[uk]=Petr Vaněk
 Name[x-test]=xxPetr Vaněkxx
 Name[zh_CN]=Petr Vaněk
+Name[zh_TW]=Petr Vaněk
 Url=mailto:petr@scribus.info

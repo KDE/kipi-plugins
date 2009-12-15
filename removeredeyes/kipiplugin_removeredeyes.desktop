@@ -30,6 +30,7 @@ Name[tr]=Kırmızı Gözleri Düzelt
 Name[uk]=Вилучення «Червоних очей»
 Name[x-test]=xxRemove Red Eyesxx
 Name[zh_CN]=去除红眼
+Name[zh_TW]=移除紅眼
 Comment=A tool to remove red eyes automatically from images
 Comment[ast]=Un ferramienta pa desaniciar los güeyos bermeyos automáticamente de les semeyes
 Comment[bg]=Инструмент за автоматично премахване на червени очи от изображенията
@@ -58,6 +59,7 @@ Comment[tr]=Resimdeki kırmızı gözleri otomatik olarak gidermek için bir ara
 Comment[uk]=Інструмент для автоматичного вилучення наслідків ефекту «червоних очей» з зображень
 Comment[x-test]=xxA tool to remove red eyes automatically from imagesxx
 Comment[zh_CN]=一个自动从图像去除红眼的工具
+Comment[zh_TW]=自動從影像移除紅眼的工具
 
 Icon=
 ServiceTypes=KIPI/Plugin

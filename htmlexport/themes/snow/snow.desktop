@@ -37,6 +37,7 @@ Name[tr]=Kar
 Name[uk]=Сніг
 Name[x-test]=xxSnowxx
 Name[zh_CN]=雪
+Name[zh_TW]=雪
 Comment=A perfect match for your mountain holidays
 Comment[ast]=La opción más afayadiza pa unes vacaciones na montaña
 Comment[bg]=Подхождащо за снимки от планинските ви почивки
@@ -70,6 +71,7 @@ Comment[tr]=Dağ gezintileriniz için mükemmel bir tercih
 Comment[uk]=Прекрасно пасує до вашої відпустки в горах
 Comment[x-test]=xxA perfect match for your mountain holidaysxx
 Comment[zh_CN]=完美呈现您的游山玩水
+Comment[zh_TW]=完美符合您的滑雪假期
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
@@ -109,4 +111,5 @@ Name[tr]=Aurélien Gâteau
 Name[uk]=Aurélien Gâteau
 Name[x-test]=xxAurélien Gâteauxx
 Name[zh_CN]=Aurélien Gâteau
+Name[zh_TW]=Aurélien Gâteau
 Url=mailto:aurelien.gateau@free.fr

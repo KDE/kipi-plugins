@@ -34,6 +34,7 @@ Name[tr]=Çerçeveler
 Name[uk]=Рамки
 Name[x-test]=xxFramesxx
 Name[zh_CN]=相框
+Name[zh_TW]=外框
 Comment=A frame theme
 Comment[ast]=Un tema de marcu
 Comment[bg]=Изглед с рамки
@@ -68,6 +69,7 @@ Comment[tr]=Bir Çerçeve teması
 Comment[uk]=Тема рамок
 Comment[x-test]=xxA frame themexx
 Comment[zh_CN]=一个相框主题
+Comment[zh_TW]=外框主題
 
 [X-HTMLExport Author]
 Name=Ruediger Bente
@@ -105,4 +107,5 @@ Name[tr]=Ruediger Bente
 Name[uk]=Ruediger Bente
 Name[x-test]=xxRuediger Bentexx
 Name[zh_CN]=Ruediger Bente
+Name[zh_TW]=Ruediger Bente
 Url=mailto:ruediger.bente@gmx.de

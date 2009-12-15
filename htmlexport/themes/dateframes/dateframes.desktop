@@ -19,6 +19,7 @@ Name[sv]=Datumramar
 Name[tr]=Tarih Çerçeveleri
 Name[uk]=Рамки дат
 Name[x-test]=xxDate Framesxx
+Name[zh_TW]=日期框
 Comment=A frame theme based on Ruediger Bente's frame theme
 Comment[ast]=Un tema de marcu basáu nel tema de marcu de Ruediger Bente
 Comment[bg]=Изглед с рамки, основан на изгледа с рамки на Ruediger Bente
@@ -50,6 +51,7 @@ Comment[tr]=Ruediger Bente'nin çerçeve teması tabanlı bir  tema
 Comment[uk]=Тема рамок на основі теми Ruediger Bente
 Comment[x-test]=xxA frame theme based on Ruediger Bente's frame themexx
 Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
+Comment[zh_TW]=基於 Ruediger Bente 外框主題的主題
 
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
@@ -87,6 +89,7 @@ Name[tr]=Elizabeth Marmorstein
 Name[uk]=Elizabeth Marmorstein
 Name[x-test]=xxElizabeth Marmorsteinxx
 Name[zh_CN]=Elizabeth Marmorstein
+Name[zh_TW]=Elizabeth Marmorstein
 Url=mailto:purplegamba@cox.net
 
 [X-HTMLExport Parameter color1]
@@ -110,6 +113,7 @@ Name[sv]=Miniatyrbildernas bakgrund
 Name[tr]=Küçük Resim Arkaplanı
 Name[uk]=Тло мініатюр
 Name[x-test]=xxThumbnail Backgroundxx
+Name[zh_TW]=縮圖背景
 Type=color
 Default=#FFFFFF
 
@@ -134,6 +138,7 @@ Name[sv]=Bildens bakgrund (avvikande)
 Name[tr]=Resim Arkaplanı (karşıt renk)
 Name[uk]=Тло зображення (контрастність)
 Name[x-test]=xxImage Background (contrasting)xx
+Name[zh_TW]=影像背景 (對比化)
 Type=color
 Default=#000055
 
@@ -158,6 +163,7 @@ Name[sv]=Navigeringsradens bakgrund (mörk)
 Name[tr]=Gezinme Çubuğu Arkaplanı (koyu)
 Name[uk]=Тло панелі навігації (темне)
 Name[x-test]=xxNav Bar Background (dark)xx
+Name[zh_TW]=導覽列背景 (暗色)
 Type=color
 Default=#000011
 
@@ -182,6 +188,7 @@ Name[sv]=Inledning till galleri
 Name[tr]=Galeriye Giriş
 Name[uk]=Вступ до галереї
 Name[x-test]=xxGallery Introductionxx
+Name[zh_TW]=藝廊介紹
 Type=string
 Default=Welcome to my web gallery!
 
@@ -206,6 +213,7 @@ Name[sv]=Bildtextens datumformat (se http://xsltsl.sourceforge.net/date-time.htm
 Name[tr]=Başlık Tarihi Biçimi (http://xsltsl.sourceforge.net/date-time.html adresine bakın)
 Name[uk]=Формат підпису-дати (див. http://xsltsl.sourceforge.net/date-time.html)
 Name[x-test]=xxCaption Date Format (see http://xsltsl.sourceforge.net/date-time.html)xx
+Name[zh_TW]=標題日期格式 (詳見 http://xsltsl.sourceforge.net/date-time.html)
 Type=string
 Default=%A, %b %e, %Y   %i:%M%P
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
@@ -228,6 +236,7 @@ Comment[sv]=XSL-datumformatsträng. Använd syntaxen angiven på http://xsltsl.s
 Comment[tr]=XSL Tarih Biçimi Dizgisi: http://xsltsl.sourceforge.net/date-time.html adresinde verilen yazım şeklini kullanın
 Comment[uk]=Рядок форматування дати XSL: використовуйте синтаксис, описаний на http://xsltsl.sourceforge.net/date-time.html
 Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.htmlxx
+Comment[zh_TW]=XSL 日期格式字串：使用於 http://xsltsl.sourceforge.net/date-time.html 取得的 syntax
 
 [X-HTMLExport Parameter shortformat]
 Name=Image List Date Format
@@ -250,6 +259,7 @@ Name[sv]=Bildlistans datumformat
 Name[tr]=Resim Listesi Tarih Biçimi
 Name[uk]=Формат дати у списку зображень
 Name[x-test]=xxImage List Date Formatxx
+Name[zh_TW]=影像清單日期格式
 Type=string
 Default=%m-%d-%Y
 Comment=XSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.html
@@ -272,3 +282,4 @@ Comment[sv]=XSL-datumformatsträng. Använd syntaxen angiven på http://xsltsl.s
 Comment[tr]=XSL Tarih Biçimi Dizgisi: http://xsltsl.sourceforge.net/date-time.html adresinde verilen yazım şeklini kullanın
 Comment[uk]=Рядок форматування дати XSL: використовуйте синтаксис, описаний на http://xsltsl.sourceforge.net/date-time.html
 Comment[x-test]=xxXSL Date Format String: Use the syntax given at http://xsltsl.sourceforge.net/date-time.htmlxx
+Comment[zh_TW]=XSL 日期格式字串：使用於 http://xsltsl.sourceforge.net/date-time.html 取得的 syntax

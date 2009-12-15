@@ -14,6 +14,7 @@ Name[pt_BR]=Cartas flutuantes
 Name[sv]=Svävande kort
 Name[uk]=Картки, що плавають
 Name[x-test]=xxFloating Cardsxx
+Name[zh_TW]=紙牌浮空
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[ca]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[da]=Et mørkt tema med flydende kort med miniaturer/beskrivelse. Hurtig navigation gennem galleriet.
@@ -29,6 +30,7 @@ Comment[pt_BR]=Um tema escuro com cartas de miniatura/descrição flutuantes. Na
 Comment[sv]=Ett mörkt tema med svävande miniatyrbilder och beskrivningar. Snabb navigering genom galleriet.
 Comment[uk]=Темна тема з картками мініатюр або описів, що неначебто плавають панеллю. Пришвидшує орієнтування у галереї.
 Comment[x-test]=xxA dark theme with floating thumbnail/description cards. Fast navigation through the gallery.xx
+Comment[zh_TW]=使用浮空縮圖/描述卡的暗色主題。快速瀏覽藝廊。
 
 [X-HTMLExport Author]
 Name=Jiří Boháč
@@ -47,4 +49,5 @@ Name[pt_BR]=Jiří Boháč
 Name[sv]=Jiří Boháč
 Name[uk]=Jiří Boháč
 Name[x-test]=xxJiří Boháčxx
+Name[zh_TW]=Jiří Boháč
 Url=mailto:jbohac@jikos.cz

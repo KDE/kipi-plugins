@@ -37,6 +37,7 @@ Name[tr]=Klasik
 Name[uk]=Класичний
 Name[x-test]=xxClassicxx
 Name[zh_CN]=经典
+Name[zh_TW]=經典
 Comment=A port of the old HTML Export plugin theme
 Comment[ast]=Una adaptación del antiguu tema del complementu d'esportación d'HTML
 Comment[bg]=Вариант на предишния изглед за изнасяне в HTML
@@ -69,6 +70,7 @@ Comment[tr]=Eski HTML Aktarma eklentisinin bir portu
 Comment[uk]=Портування старої теми додатка експорту HTML
 Comment[x-test]=xxA port of the old HTML Export plugin themexx
 Comment[zh_CN]=旧版 HTML 导出插件主题的移植
+Comment[zh_TW]=舊 HTML 匯出外掛程式佈景主題的移植
 
 [X-HTMLExport Author]
 Name=Aurélien Gâteau
@@ -108,6 +110,7 @@ Name[tr]=Aurélien Gâteau
 Name[uk]=Aurélien Gâteau
 Name[x-test]=xxAurélien Gâteauxx
 Name[zh_CN]=Aurélien Gâteau
+Name[zh_TW]=Aurélien Gâteau
 Url=mailto:aurelien.gateau@free.fr
 
 [X-HTMLExport Parameter thumbnailPerRow]
@@ -145,6 +148,7 @@ Name[tr]=Satır başına küçük resimler
 Name[uk]=Мініатюр на ряд
 Name[x-test]=xxThumbnails per rowxx
 Name[zh_CN]=每行缩略图
+Name[zh_TW]=每行縮圖數量
 Type=int
 Default=4
 Min=1
@@ -188,6 +192,7 @@ Name[tr]=Arkaplan Rengi
 Name[uk]=Колір тла
 Name[x-test]=xxBackground Colorxx
 Name[zh_CN]=背景颜色
+Name[zh_TW]=背景顏色
 Type=color
 Default=#333333
 
@@ -228,6 +233,7 @@ Name[tr]=Önplan Rengi
 Name[uk]=Колір переднього плану
 Name[x-test]=xxForeground Colorxx
 Name[zh_CN]=前景颜色
+Name[zh_TW]=前景顏色
 Type=color
 Default=#d0ffd0
 
@@ -270,6 +276,7 @@ Name[tr]=Yazı Tipi Boyutu
 Name[uk]=Розмір шрифту
 Name[x-test]=xxFont Sizexx
 Name[zh_CN]=字体大小
+Name[zh_TW]=字型大小
 Type=int
 Default=14
 Min=1
@@ -310,6 +317,7 @@ Name[tr]=Görüntü Kenarlık Boyutu
 Name[uk]=Розмір рамки зображення
 Name[x-test]=xxImage Border Sizexx
 Name[zh_CN]=图像边框大小
+Name[zh_TW]=影像邊框大小
 Type=int
 Default=1
 Min=1
@@ -350,6 +358,7 @@ Name[tr]=Görüntü Kenarlığı Rengi
 Name[uk]=Колір рамки зображення
 Name[x-test]=xxImage Border Colorxx
 Name[zh_CN]=图像边框颜色
+Name[zh_TW]=影像邊框顏色
 Type=color
 Default=#d0ffd0
 
@@ -388,6 +397,7 @@ Name[tr]=Bağlantı Rengi
 Name[uk]=Колір посилання
 Name[x-test]=xxLink Colorxx
 Name[zh_CN]=链接颜色
+Name[zh_TW]=連結顏色
 Type=color
 Default=#b3b3b3
 
@@ -427,5 +437,6 @@ Name[tr]=Tıklanmış Bağlantı Rengi
 Name[uk]=Колір відвіданого посилання
 Name[x-test]=xxVisited Link Colorxx
 Name[zh_CN]=已访问的链接颜色
+Name[zh_TW]=可見的連結顏色
 Type=color
 Default=#b3b3b3
