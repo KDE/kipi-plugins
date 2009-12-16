@@ -93,10 +93,6 @@ public:
 
     SingleDialogPriv()
     {
-        previewBlink        = false;
-        convertBlink        = false;
-        blinkPreviewTimer   = 0;
-        blinkConvertTimer   = 0;
         previewWidget       = 0;
         thread              = 0;
         saveSettingsBox     = 0;
@@ -105,13 +101,7 @@ public:
         iface               = 0;
     }
 
-    bool                 previewBlink;
-    bool                 convertBlink;
-
     QString              inputFileName;
-
-    QTimer*              blinkPreviewTimer;
-    QTimer*              blinkConvertTimer;
 
     KUrl                 inputFile;
 
@@ -212,17 +202,9 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
 
-    d->blinkPreviewTimer = new QTimer(this);
-    d->blinkConvertTimer = new QTimer(this);
-    d->thread            = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    d->thread = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 
     // ---------------------------------------------------------------
-
-    connect(d->blinkPreviewTimer, SIGNAL(timeout()),
-            this, SLOT(slotPreviewBlinkTimerDone()));
-
-    connect(d->blinkConvertTimer, SIGNAL(timeout()),
-            this, SLOT(slotConvertBlinkTimerDone()));
 
     connect(d->decodingSettingsBox, SIGNAL(signalSixteenBitsImageToggled(bool)),
             d->saveSettingsBox, SLOT(slotPopulateImageFormat(bool)));
@@ -287,8 +269,6 @@ void SingleDialog::slotSixteenBitsImageToggled(bool)
 void SingleDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    d->blinkPreviewTimer->stop();
-    d->blinkConvertTimer->stop();
     d->thread->cancel();
     saveSettings();
     e->accept();
@@ -296,8 +276,6 @@ void SingleDialog::closeEvent(QCloseEvent *e)
 
 void SingleDialog::slotClose()
 {
-    d->blinkPreviewTimer->stop();
-    d->blinkConvertTimer->stop();
     d->thread->cancel();
     saveSettings();
     done(Close);
@@ -506,7 +484,7 @@ void SingleDialog::busy(bool val)
 
 void SingleDialog::setIdentity(const KUrl& /*url*/, const QString& identity)
 {
-    d->previewWidget->setIdentity(d->inputFileName + QString(" :\n") + identity, Qt::white);
+    d->previewWidget->setText(d->inputFileName + QString(" :\n") + identity, Qt::white);
 }
 
 void SingleDialog::setThumbnail(const KUrl& url, const QPixmap& thumbnail)
@@ -517,37 +495,27 @@ void SingleDialog::setThumbnail(const KUrl& url, const QPixmap& thumbnail)
 
 void SingleDialog::previewing(const KUrl& /*url*/)
 {
-    d->previewBlink = false;
-    d->previewWidget->setCursor( Qt::WaitCursor );
-    d->blinkPreviewTimer->start(200);
+    d->previewWidget->setBusy(true, i18n("Generating Preview..."));
 }
 
 void SingleDialog::previewed(const KUrl& /*url*/, const QString& tmpFile)
 {
-    d->previewWidget->unsetCursor();
-    d->blinkPreviewTimer->stop();
     d->previewWidget->load(tmpFile);
     ::remove(QFile::encodeName(tmpFile));
 }
 
 void SingleDialog::previewFailed(const KUrl& /*url*/)
 {
-    d->previewWidget->unsetCursor();
-    d->blinkPreviewTimer->stop();
-    d->previewWidget->setIdentity(i18n("Failed to generate preview"), Qt::red);
+    d->previewWidget->setText(i18n("Failed to generate preview"), Qt::red);    
 }
 
 void SingleDialog::processing(const KUrl& /*url*/)
 {
-    d->convertBlink = false;
-    d->previewWidget->setCursor( Qt::WaitCursor );
-    d->blinkConvertTimer->start(200);
+    d->previewWidget->setBusy(true, i18n("Processing Images..."));
 }
 
 void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 {
-    d->previewWidget->unsetCursor();
-    d->blinkConvertTimer->stop();
     d->previewWidget->load(tmpFile);
     QString filter("*.");
     QString ext;
@@ -619,35 +587,8 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 
 void SingleDialog::processingFailed(const KUrl& /*url*/)
 {
-    d->previewWidget->unsetCursor();
-    d->blinkConvertTimer->stop();
-    d->previewWidget->setIdentity(i18n("Failed to convert RAW image"), Qt::red);
-}
-
-void SingleDialog::slotPreviewBlinkTimerDone()
-{
-    QString preview = i18n("Generating Preview...");
-
-    if (d->previewBlink)
-        d->previewWidget->setIdentity(preview, Qt::green);
-    else
-        d->previewWidget->setIdentity(preview, Qt::darkGreen);
-
-    d->previewBlink = !d->previewBlink;
-    d->blinkPreviewTimer->start(200);
-}
-
-void SingleDialog::slotConvertBlinkTimerDone()
-{
-    QString convert = i18n("Converting RAW Image...");
-
-    if (d->convertBlink)
-        d->previewWidget->setIdentity(convert, Qt::green);
-    else
-        d->previewWidget->setIdentity(convert, Qt::darkGreen);
-
-    d->convertBlink = !d->convertBlink;
-    d->blinkConvertTimer->start(200);
+    d->previewWidget->setBusy(false);
+    d->previewWidget->setText(i18n("Failed to convert RAW image"), Qt::red);
 }
 
 void SingleDialog::slotAction(const KIPIRawConverterPlugin::ActionData& ad)

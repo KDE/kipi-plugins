@@ -3,16 +3,16 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2003-10-22
- * Description : widget to render preview of raw file.
+ * Date        : 2009-12-13
+ * Description : a widget to preview image effect.
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
+ * either version 2, or (at your option)
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,23 +21,27 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEWWIDGET_H
-#define PREVIEWWIDGET_H
+#ifndef PREVIEW_WIDGET_H
+#define PREVIEW_WIDGET_H
 
 // Qt includes
 
-#include <QColor>
 #include <QWidget>
-#include <QPixmap>
+#include <QString>
+#include <QColor>
+
+// Local includes
+
+#include "kipiplugins_export.h"
 
 class QPaintEvent;
 class QResizeEvent;
 
-namespace KIPIRawConverterPlugin
+namespace KIPIPlugins
 {
 class PreviewWidgetPriv;
 
-class PreviewWidget : public QWidget
+class KIPIPLUGINS_EXPORT PreviewWidget : public QWidget
 {
     Q_OBJECT
 
@@ -47,19 +51,24 @@ public:
     ~PreviewWidget();
 
     void load(const QString& file);
-    void setIdentity(const QString& text, const QColor& color=Qt::white);
+    void setText(const QString& text, const QColor& color=Qt::white);
+    void setBusy(bool b, const QString& text=QString());
     void setThumbnail(const QPixmap& preview=QPixmap());
 
 protected:
 
-    void paintEvent(QPaintEvent *e);
-    void resizeEvent(QResizeEvent *e);
+    void paintEvent(QPaintEvent* e);
+    void resizeEvent(QResizeEvent* e);
+
+private Q_SLOTS:
+
+    void slotProgressTimerDone();
 
 private:
 
     PreviewWidgetPriv* const d;
 };
 
-} // namespace KIPIRawConverterPlugin
+} // namespace KIPIPlugins
 
-#endif /* PREVIEWWIDGET_H */
+#endif /* PREVIEW_WIDGET_H */

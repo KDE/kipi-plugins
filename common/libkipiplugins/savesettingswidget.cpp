@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2006-09-13
- * Description : save settings widgets
+ * Description : a widget to provide options to save image.
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
