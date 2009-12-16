@@ -36,7 +36,7 @@
 #include <kdialog.h>
 #include <klocale.h>
 
-namespace KIPIRawConverterPlugin
+namespace KIPIPlugins
 {
 
 class SaveSettingsWidgetPriv
@@ -53,15 +53,15 @@ public:
         promptButton        = 0;
     }
 
-    QLabel       *formatLabel;
-    QLabel       *conflictLabel;
+    QLabel*       formatLabel;
+    QLabel*       conflictLabel;
 
-    QButtonGroup *conflictButtonGroup;
+    QButtonGroup* conflictButtonGroup;
 
-    KComboBox    *formatComboBox;
+    KComboBox*    formatComboBox;
 
-    QRadioButton *overwriteButton;
-    QRadioButton *promptButton;
+    QRadioButton* overwriteButton;
+    QRadioButton* promptButton;
 };
 
 SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
@@ -75,21 +75,18 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     d->formatComboBox = new KComboBox( this );
     d->formatComboBox->setWhatsThis(i18n("<p>Set the output file format to use here:</p>"
                                          "<p><b>JPEG</b>: output the processed image in JPEG format. "
-                                         "This format will give smaller-sized files. Minimum JPEG "
-                                         "compression level will be used during RAW conversion.</p>"
+                                         "This format will give smaller-sized files.</p>"
                                          "<p><b>Warning: Due to the destructive compression algorithm, "
                                          "JPEG is a lossy quality format.</b></p>"
                                          "<p><b>TIFF</b>: output the processed image in TIFF format. "
                                          "This generates large files, without "
-                                         "losing quality. Adobe Deflate compression "
-                                         "will be used during conversion.</p>"
-                                         "<p><b>PPM</b>: output the processed image in PPM format. "
-                                         "This generates the largest files, without "
-                                         "losing quality.</p>"
+                                         "losing quality. Image is compressed.</p>"
                                          "<p><b>PNG</b>: output the processed image in PNG format. "
                                          "This generates large files, without "
-                                         "losing quality. Maximum PNG compression "
-                                         "will be used during conversion.</p>"));
+                                         "losing quality. Image is compressed.</p>"
+                                         "<p><b>PPM</b>: output the processed image in PPM format. "
+                                         "This generates the largest files, without "
+                                         "losing quality. Image is not compressed.</p>"));
     slotPopulateImageFormat(false);
 
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
@@ -166,4 +163,4 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     emit signalSaveFormatChanged();
 }
 
-} // namespace KIPIRawConverterPlugin
+} // namespace KIPIPlugins

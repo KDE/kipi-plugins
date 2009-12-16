@@ -40,6 +40,8 @@
 
 #include "savesettingswidget.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIRawConverterPlugin
 {
 

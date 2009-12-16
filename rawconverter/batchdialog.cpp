@@ -87,6 +87,7 @@ extern "C"
 #include "savesettingswidget.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
@@ -111,30 +112,30 @@ public:
         iface               = 0;
     }
 
-    bool                      busy;
-    bool                      convertBlink;
+    bool                 busy;
+    bool                 convertBlink;
 
-    QTimer                   *blinkConvertTimer;
+    QTimer*              blinkConvertTimer;
 
-    QWidget                  *page;
+    QWidget*             page;
 
-    QStringList               fileList;
+    QStringList          fileList;
 
-    QProgressBar             *progressBar;
+    QProgressBar*        progressBar;
 
-    QTreeWidget              *listView;
+    QTreeWidget*         listView;
 
-    CListViewItem            *currentConvertItem;
+    CListViewItem*       currentConvertItem;
 
-    ActionThread             *thread;
+    ActionThread*        thread;
 
-    SaveSettingsWidget       *saveSettingsBox;
+    SaveSettingsWidget*  saveSettingsBox;
 
-    DcrawSettingsWidget      *decodingSettingsBox;
+    DcrawSettingsWidget* decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData*         about;
 
-    KIPI::Interface          *iface;
+    KIPI::Interface*     iface;
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface)

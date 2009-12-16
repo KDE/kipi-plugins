@@ -82,6 +82,7 @@ extern "C"
 #include "savesettingswidget.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
@@ -104,27 +105,27 @@ public:
         iface               = 0;
     }
 
-    bool                      previewBlink;
-    bool                      convertBlink;
+    bool                 previewBlink;
+    bool                 convertBlink;
 
-    QString                   inputFileName;
+    QString              inputFileName;
 
-    QTimer                   *blinkPreviewTimer;
-    QTimer                   *blinkConvertTimer;
+    QTimer*              blinkPreviewTimer;
+    QTimer*              blinkConvertTimer;
 
-    KUrl                      inputFile;
+    KUrl                 inputFile;
 
-    PreviewWidget            *previewWidget;
+    PreviewWidget*       previewWidget;
 
-    ActionThread             *thread;
+    ActionThread*        thread;
 
-    SaveSettingsWidget       *saveSettingsBox;
+    SaveSettingsWidget*  saveSettingsBox;
 
-    DcrawSettingsWidget      *decodingSettingsBox;
+    DcrawSettingsWidget* decodingSettingsBox;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData*         about;
 
-    KIPI::Interface          *iface;
+    KIPI::Interface*     iface;
 };
 
 SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
@@ -143,15 +144,15 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page);
 
-    d->previewWidget = new PreviewWidget(page);
+    d->previewWidget        = new PreviewWidget(page);
 
     // ---------------------------------------------------------------
 
-    d->decodingSettingsBox = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS |
-                                                           DcrawSettingsWidget::COLORSPACE |
-                                                           DcrawSettingsWidget::POSTPROCESSING |
-                                                           DcrawSettingsWidget::BLACKWHITEPOINTS);
-    d->saveSettingsBox     = new SaveSettingsWidget(d->decodingSettingsBox);
+    d->decodingSettingsBox  = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS |
+                                                            DcrawSettingsWidget::COLORSPACE |
+                                                            DcrawSettingsWidget::POSTPROCESSING |
+                                                            DcrawSettingsWidget::BLACKWHITEPOINTS);
+    d->saveSettingsBox      = new SaveSettingsWidget(d->decodingSettingsBox);
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));

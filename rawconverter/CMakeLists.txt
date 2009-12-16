@@ -4,7 +4,6 @@ INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
 
 SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp
                                       previewwidget.cpp
-                                      savesettingswidget.cpp
                                       rawdecodingiface.cpp
                                       actionthread.cpp
                                       batchdialog.cpp

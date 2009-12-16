@@ -27,12 +27,16 @@
 
 #include <QWidget>
 
-namespace KIPIRawConverterPlugin
+// Local includes
+
+#include "kipiplugins_export.h"
+
+namespace KIPIPlugins
 {
 
 class SaveSettingsWidgetPriv;
 
-class SaveSettingsWidget : public QWidget
+class KIPIPLUGINS_EXPORT SaveSettingsWidget : public QWidget
 {
     Q_OBJECT
 
@@ -78,6 +82,6 @@ private:
     SaveSettingsWidgetPriv* const d;
 };
 
-} // namespace KIPIRawConverterPlugin
+} // namespace KIPIPlugins
 
 #endif /* SAVESETTINGSWIDGET_H */

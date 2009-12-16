@@ -8,6 +8,7 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          imageslist.cpp
                          imagedialog.cpp
                          kpwritehelp.cpp
+                         savesettingswidget.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
@@ -22,12 +23,12 @@ TARGET_LINK_LIBRARIES(kipiplugins
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES} 
-                      ${KIPI_LIBRARIES} 
+                      ${KDCRAW_LIBRARIES}
+                      ${KIPI_LIBRARIES}
                      )
 
-SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION 1.0.0 SOVERSION 1 )
+SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION 1.0.0 SOVERSION 1)
 
-INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS} )
+INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-install( FILES kipiplugins.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES kipiplugins.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR})
