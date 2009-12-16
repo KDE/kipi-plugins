@@ -52,6 +52,7 @@ using namespace KExiv2Iface;
 int main(int argc, char *argv[])
 {
     ScanDialogAboutData *aboutData = new ScanDialogAboutData;
+    aboutData->setProgramLogo(KIcon("scanner"));
 
     KCmdLineArgs::init(argc, argv, aboutData);
 
@@ -60,7 +61,6 @@ int main(int argc, char *argv[])
 #endif
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("scanner"));
 
     KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
     if (!saneWidget)
