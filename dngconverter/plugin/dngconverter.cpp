@@ -47,6 +47,7 @@ using namespace KExiv2Iface;
 int main(int argc, char *argv[])
 {
     DNGConverterAboutData* aboutData = new DNGConverterAboutData;
+    aboutData->setAppName("dngconverter");
 
     KCmdLineArgs::init(argc, argv, aboutData);
 
@@ -60,7 +61,6 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    aboutData->setProgramLogo(KIcon("dngconverter"));
     BatchDialog *converter = new BatchDialog(0, aboutData);
     app.setTopWidget(converter);
 
