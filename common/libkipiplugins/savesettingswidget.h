@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+// KDE includes
+
+#include <kconfig.h>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -42,7 +46,7 @@ class KIPIPLUGINS_EXPORT SaveSettingsWidget : public QWidget
 
 public:
 
-    enum OutputFormat 
+    enum OutputFormat
     {
         OUTPUT_PNG = 0,
         OUTPUT_TIFF,
@@ -50,7 +54,7 @@ public:
         OUTPUT_PPM
     };
 
-    enum ConflictRule 
+    enum ConflictRule
     {
         OVERWRITE = 0,
         ASKTOUSER
@@ -68,6 +72,9 @@ public:
     void setConflictRule(ConflictRule r);
 
     void setDefaultSettings();
+
+    void readSettings(KConfigGroup& group);
+    void writeSettings(KConfigGroup& group);
 
 public Q_SLOTS:
 

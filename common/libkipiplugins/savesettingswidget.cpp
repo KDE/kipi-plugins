@@ -148,6 +148,18 @@ void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
 
+void SaveSettingsWidget::readSettings(KConfigGroup& group)
+{
+    setFileFormat((SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(SaveSettingsWidget::OUTPUT_PNG)));
+    setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
+}
+
+void SaveSettingsWidget::writeSettings(KConfigGroup& group)
+{
+    group.writeEntry("Output Format", (int)fileFormat());
+    group.writeEntry("Conflict",      (int)conflictRule());
+}
+
 void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 {
     d->formatComboBox->clear();
@@ -159,7 +171,7 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
         d->formatComboBox->insertItem( OUTPUT_JPEG, "JPEG" );
         d->formatComboBox->insertItem( OUTPUT_PPM,  "PPM" );
     }
-    
+
     emit signalSaveFormatChanged();
 }
 

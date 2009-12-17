@@ -123,7 +123,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 {
     d->iface = iface;
     setButtons(Help | Default | User1 | User2 | User3 | Close);
-    setDefaultButton(KDialog::Close);
+    setDefaultButton(Close);
     setButtonText(User1, i18n("&Preview"));
     setButtonText(User2, i18n("Con&vert"));
     setButtonText(User3, i18n("&Abort"));
@@ -324,14 +324,7 @@ void SingleDialog::readSettings()
         (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space",
             (int)(KDcrawIface::RawDecodingSettings::SRGB)));
 
-    d->saveSettingsBox->setFileFormat(
-        (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format",
-            (int)(SaveSettingsWidget::OUTPUT_PNG)));
-
-    d->saveSettingsBox->setConflictRule(
-        (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
-            (int)(SaveSettingsWidget::OVERWRITE)));
-
+    d->saveSettingsBox->readSettings(group);
     d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
@@ -366,8 +359,8 @@ void SingleDialog::saveSettings()
 #if KDCRAW_VERSION >= 0x000500
     group.writeEntry("AutoBrightness", d->decodingSettingsBox->useAutoBrightness());
 #endif
-    group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
-    group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
+
+    d->saveSettingsBox->writeSettings(group);
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
     saveDialogSize(group2);
@@ -506,7 +499,7 @@ void SingleDialog::previewed(const KUrl& /*url*/, const QString& tmpFile)
 
 void SingleDialog::previewFailed(const KUrl& /*url*/)
 {
-    d->previewWidget->setText(i18n("Failed to generate preview"), Qt::red);    
+    d->previewWidget->setText(i18n("Failed to generate preview"), Qt::red);
 }
 
 void SingleDialog::processing(const KUrl& /*url*/)

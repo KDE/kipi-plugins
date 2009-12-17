@@ -144,15 +144,15 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     d->iface = iface;
 
     setButtons(Help | Default | Apply | Close | User1 | User2);
-    setDefaultButton(KDialog::Close);
+    setDefaultButton(Close);
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
     setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
-    setButtonIcon(User1, KIcon("list-add"));
-    setButtonText(User1, i18n("&Add"));
+    setButtonIcon(User1,    KIcon("list-add"));
+    setButtonText(User1,    i18n("&Add"));
     setButtonToolTip(User1, i18n("Add new RAW files to the list"));
-    setButtonIcon(User2, KIcon("list-remove"));
-    setButtonText(User2, i18n("&Remove"));
+    setButtonIcon(User2,    KIcon("list-remove"));
+    setButtonText(User2,    i18n("&Remove"));
     setButtonToolTip(User2, i18n("Remove selected RAW files from the list"));
 
     d->page = new QWidget( this );
@@ -373,14 +373,8 @@ void BatchDialog::readSettings()
         (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space",
             (int)(KDcrawIface::RawDecodingSettings::SRGB)));
 
-    d->saveSettingsBox->setFileFormat(
-        (SaveSettingsWidget::OutputFormat)group.readEntry("Output Format",
-            (int)(SaveSettingsWidget::OUTPUT_PNG)));
 
-    d->saveSettingsBox->setConflictRule(
-        (SaveSettingsWidget::ConflictRule)group.readEntry("Conflict",
-            (int)(SaveSettingsWidget::OVERWRITE)));
-
+    d->saveSettingsBox->readSettings(group);
     d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
@@ -418,8 +412,8 @@ void BatchDialog::saveSettings()
 #if KDCRAW_VERSION >= 0x000500
     group.writeEntry("AutoBrightness", d->decodingSettingsBox->useAutoBrightness());
 #endif
-    group.writeEntry("Output Format", (int)d->saveSettingsBox->fileFormat());
-    group.writeEntry("Conflict", (int)d->saveSettingsBox->conflictRule());
+
+    d->saveSettingsBox->writeSettings(group);
 
     KConfigGroup group2 = config.group(QString("Batch Raw Converter Dialog"));
     saveDialogSize(group2);
