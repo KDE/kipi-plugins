@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "batchdialog.h"
 #include "batchdialog.moc"
 
 // Qt includes

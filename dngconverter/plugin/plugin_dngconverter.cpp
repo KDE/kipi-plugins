@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_dngconverter.h"
 #include "plugin_dngconverter.moc"
 
 // KDE includes

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "settingswidget.h"
 #include "settingswidget.moc"
 
 // Qt includes

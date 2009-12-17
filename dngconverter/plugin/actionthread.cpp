@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "actionthread.h"
 #include "actionthread.moc"
 
 // Qt includes
