@@ -77,7 +77,7 @@ extern "C"
 #include "actionthread.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "previewwidget.h"
+#include "previewimage.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
 
@@ -105,7 +105,7 @@ public:
 
     KUrl                 inputFile;
 
-    PreviewWidget*       previewWidget;
+    PreviewImage*        previewWidget;
 
     ActionThread*        thread;
 
@@ -134,7 +134,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page);
 
-    d->previewWidget        = new PreviewWidget(page);
+    d->previewWidget        = new PreviewImage(page);
 
     // ---------------------------------------------------------------
 
