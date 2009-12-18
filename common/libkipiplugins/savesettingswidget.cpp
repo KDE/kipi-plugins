@@ -53,7 +53,7 @@ public:
         overwriteButton     = 0;
         promptButton        = 0;
     }
-    
+
     bool          conflicRules;
 
     QLabel*       formatLabel;
@@ -114,7 +114,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent, bool conflicRules)
         d->conflictLabel->hide();
         conflictBox->hide();
     }
-        
+
     settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
     settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
     settingsBoxLayout->addWidget(d->conflictLabel,  1, 0, 1, 1);
@@ -206,8 +206,31 @@ QString SaveSettingsWidget::extension()
             ext = ".png";
             break;
     }
-    
+
     return ext;
+}
+
+QString SaveSettingsWidget::typeMime()
+{
+    QString mime;
+
+    switch(fileFormat())
+    {
+        case OUTPUT_JPEG:
+            mime = "image/jpeg";
+            break;
+        case OUTPUT_TIFF:
+            mime = "image/tiff";
+            break;
+        case OUTPUT_PPM:
+            mime = "image/ppm";
+            break;
+        case OUTPUT_PNG:
+            mime = "image/png";
+            break;
+    }
+
+    return mime;
 }
 
 } // namespace KIPIPlugins

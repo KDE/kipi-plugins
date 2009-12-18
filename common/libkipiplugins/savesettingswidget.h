@@ -69,7 +69,8 @@ public:
     ConflictRule conflictRule();
 
     QString extension();
-    
+    QString typeMime();
+
     void setFileFormat(SaveSettingsWidget::OutputFormat f);
     void setConflictRule(ConflictRule r);
 
