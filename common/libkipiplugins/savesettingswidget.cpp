@@ -45,6 +45,7 @@ public:
 
     SaveSettingsWidgetPriv()
     {
+        conflicRules        = true;
         formatLabel         = 0;
         conflictLabel       = 0;
         conflictButtonGroup = 0;
@@ -52,6 +53,8 @@ public:
         overwriteButton     = 0;
         promptButton        = 0;
     }
+    
+    bool          conflicRules;
 
     QLabel*       formatLabel;
     QLabel*       conflictLabel;
@@ -64,9 +67,10 @@ public:
     QRadioButton* promptButton;
 };
 
-SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
+SaveSettingsWidget::SaveSettingsWidget(QWidget *parent, bool conflicRules)
                   : QWidget(parent), d(new SaveSettingsWidgetPriv)
 {
+    d->conflicRules = conflicRules;
     setAttribute(Qt::WA_DeleteOnClose);
 
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
@@ -105,6 +109,12 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
+    if (!d->conflicRules)
+    {
+        d->conflictLabel->hide();
+        conflictBox->hide();
+    }
+        
     settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
     settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
     settingsBoxLayout->addWidget(d->conflictLabel,  1, 0, 1, 1);
@@ -151,13 +161,15 @@ void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
 void SaveSettingsWidget::readSettings(KConfigGroup& group)
 {
     setFileFormat((SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(SaveSettingsWidget::OUTPUT_PNG)));
-    setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
+    if (d->conflicRules)
+        setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
 }
 
 void SaveSettingsWidget::writeSettings(KConfigGroup& group)
 {
     group.writeEntry("Output Format", (int)fileFormat());
-    group.writeEntry("Conflict",      (int)conflictRule());
+    if (d->conflicRules)
+        group.writeEntry("Conflict",      (int)conflictRule());
 }
 
 void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
@@ -173,6 +185,29 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     }
 
     emit signalSaveFormatChanged();
+}
+
+QString SaveSettingsWidget::extension()
+{
+    QString ext;
+
+    switch(fileFormat())
+    {
+        case OUTPUT_JPEG:
+            ext = ".jpg";
+            break;
+        case OUTPUT_TIFF:
+            ext = ".tif";
+            break;
+        case OUTPUT_PPM:
+            ext = ".ppm";
+            break;
+        case OUTPUT_PNG:
+            ext = ".png";
+            break;
+    }
+    
+    return ext;
 }
 
 } // namespace KIPIPlugins

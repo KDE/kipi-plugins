@@ -62,12 +62,14 @@ public:
 
 public:
 
-    SaveSettingsWidget(QWidget *parent);
+    SaveSettingsWidget(QWidget *parent, bool conflicRules=true);
     ~SaveSettingsWidget();
 
     SaveSettingsWidget::OutputFormat fileFormat();
     ConflictRule conflictRule();
 
+    QString extension();
+    
     void setFileFormat(SaveSettingsWidget::OutputFormat f);
     void setConflictRule(ConflictRule r);
 
