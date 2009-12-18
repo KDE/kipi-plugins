@@ -9,7 +9,7 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          imagedialog.cpp
                          kpwritehelp.cpp
                          savesettingswidget.cpp
-                         previewwidget.cpp
+                         previewimage.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})

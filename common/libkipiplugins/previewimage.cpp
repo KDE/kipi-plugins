@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "previewwidget.moc"
+#include "previewimage.moc"
 
 // Qt includes
 
@@ -39,11 +39,11 @@
 namespace KIPIPlugins
 {
 
-class PreviewWidgetPriv
+class PreviewImagePriv
 {
 public:
 
-    PreviewWidgetPriv()
+    PreviewImagePriv()
     {
         textColor     = Qt::white;
         progressPix   = SmallIcon("process-working", 22);
@@ -67,8 +67,8 @@ public:
     QTimer*  progressTimer;
 };
 
-PreviewWidget::PreviewWidget(QWidget *parent)
-             : QWidget(parent), d(new PreviewWidgetPriv)
+PreviewImage::PreviewImage(QWidget* parent)
+             : QWidget(parent), d(new PreviewImagePriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(QSize(400, 300));
@@ -79,12 +79,12 @@ PreviewWidget::PreviewWidget(QWidget *parent)
             this, SLOT(slotProgressTimerDone()));
 }
 
-PreviewWidget::~PreviewWidget()
+PreviewImage::~PreviewImage()
 {
     delete d;
 }
 
-void PreviewWidget::load(const QString& file)
+void PreviewImage::load(const QString& file)
 {
     d->text.clear();
     d->thumbnail = QPixmap();
@@ -113,20 +113,20 @@ void PreviewWidget::load(const QString& file)
     update();
 }
 
-void PreviewWidget::setText(const QString& text, const QColor& color)
+void PreviewImage::setText(const QString& text, const QColor& color)
 {
     d->text      = text;
     d->textColor = color;
     update();
 }
 
-void PreviewWidget::setThumbnail(const QPixmap& thumbnail)
+void PreviewImage::setThumbnail(const QPixmap& thumbnail)
 {
     d->thumbnail = thumbnail;
     update();
 }
 
-void PreviewWidget::setBusy(bool b, const QString& text)
+void PreviewImage::setBusy(bool b, const QString& text)
 {
     d->busy = b;
 
@@ -144,7 +144,7 @@ void PreviewWidget::setBusy(bool b, const QString& text)
     }
 }
 
-void PreviewWidget::paintEvent(QPaintEvent*)
+void PreviewImage::paintEvent(QPaintEvent*)
 {
     d->pix = QPixmap(width(), height());
     d->pix.fill(Qt::black);
@@ -195,12 +195,12 @@ void PreviewWidget::paintEvent(QPaintEvent*)
     p.end();
 }
 
-void PreviewWidget::resizeEvent(QResizeEvent*)
+void PreviewImage::resizeEvent(QResizeEvent*)
 {
     update();
 }
 
-void PreviewWidget::slotProgressTimerDone()
+void PreviewImage::slotProgressTimerDone()
 {
     d->processAnim = QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22));
     update();

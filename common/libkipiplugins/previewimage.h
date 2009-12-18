@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_WIDGET_H
-#define PREVIEW_WIDGET_H
+#ifndef PREVIEW_IMAGE_H
+#define PREVIEW_IMAGE_H
 
 // Qt includes
 
@@ -39,16 +39,16 @@ class QResizeEvent;
 
 namespace KIPIPlugins
 {
-class PreviewWidgetPriv;
+class PreviewImagePriv;
 
-class KIPIPLUGINS_EXPORT PreviewWidget : public QWidget
+class KIPIPLUGINS_EXPORT PreviewImage : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    PreviewWidget(QWidget *parent);
-    ~PreviewWidget();
+    PreviewImage(QWidget* parent);
+    ~PreviewImage();
 
     void load(const QString& file);
     void setText(const QString& text, const QColor& color=Qt::white);
@@ -66,9 +66,9 @@ private Q_SLOTS:
 
 private:
 
-    PreviewWidgetPriv* const d;
+    PreviewImagePriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* PREVIEW_WIDGET_H */
+#endif /* PREVIEW_IMAGE_H */
