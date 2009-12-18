@@ -15,5 +15,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> GPSSync         : 217989 : GPSSync randomly no satellite view.
 008 ==> DNGConverter    : 217897 : DNGconverter produces invalid DNG files.
 009 ==> Libkdcraw       : 218762 : Libraw is too old.
-010 ==> 
+010 ==> Common          : 219207 : Compilation error in PreviewWidget.
+011 ==> 
 
