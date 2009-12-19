@@ -10,16 +10,17 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          kpwritehelp.cpp
                          savesettingswidget.cpp
                          previewimage.cpp
+                         wizardpage.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugins
                       ${QT_QTGUI_LIBRARY}
-                      ${KDE4_KDECORE_LIBS} 
+                      ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
                       ${KDE4_KIO_LIBRARY}
-                      ${KDE4_KIO_LIBS} 
+                      ${KDE4_KIO_LIBS}
                       ${JPEG_LIBRARIES}
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
