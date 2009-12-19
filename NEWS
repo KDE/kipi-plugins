@@ -16,5 +16,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> DNGConverter    : 217897 : DNGconverter produces invalid DNG files.
 009 ==> Libkdcraw       : 218762 : Libraw is too old.
 010 ==> Common          : 219207 : Compilation error in PreviewWidget.
-011 ==> 
-
+011 ==> GPSSync         : 192439 : Geolocation position not remembered or initialised consistently.
+012 ==> 
