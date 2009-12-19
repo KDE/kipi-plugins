@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-11-13
- * Description : a plugin to blend bracketed images.
+ * Description : a template to create wizzard page.
  *
  * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
