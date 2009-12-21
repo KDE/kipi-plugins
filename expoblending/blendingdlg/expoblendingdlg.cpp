@@ -79,8 +79,8 @@ extern "C"
 #include "aboutdata.h"
 #include "pluginsversion.h"
 #include "previewimage.h"
-#include "imageslist.h"
 #include "actionthread.h"
+#include "bracketstack.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
@@ -114,7 +114,7 @@ public:
 
     SaveSettingsWidget*   saveSettingsBox;
 
-    ImagesList*           list;
+    BracketStackList*     list;
 
     Manager*              mngr;
 };
@@ -143,17 +143,14 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setButtonToolTip(Close, i18n("Exit this tool"));
     setModal(false);
 
+    // ---------------------------------------------------------------
+
     QWidget *page     = new QWidget(this);
     QGridLayout *grid = new QGridLayout(page);
     setMainWidget(page);
 
-    d->previewWidget = new PreviewImage(page);
-
-    // ---------------------------------------------------------------
-
-    d->list = new ImagesList(d->mngr->iface(), page);
-    d->list->listView()->setColumn(ImagesListView::User1, i18n("Exposure (E.V.)"), true);
-    d->list->setControlButtonsPlacement(ImagesList::NoControlButtons);
+    d->previewWidget  = new PreviewImage(page);
+    d->list           = new BracketStackList(d->mngr->iface(), page);
 
     // ---------------------------------------------------------------
 
@@ -253,16 +250,10 @@ void ExpoBlendingDlg::slotClose()
     clearEnfusedTmpFile();
 }
 
-void ExpoBlendingDlg::loadCurrentSelection()
-{
-    d->list->listView()->clear();
-    d->list->loadImagesFromCurrentSelection();
-}
-
 void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
 {
-    d->list->listView()->clear();
-    d->list->slotAddImages(urls);
+    d->list->clear();
+    d->list->addItems(urls);
 }
 
 void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
@@ -277,9 +268,9 @@ void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
 
 void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
 {
-    ImagesListViewItem* item = d->list->listView()->findItem(url);
+    BracketStackItem* item = d->list->findItem(url);
     if (item)
-        item->setText(ImagesListView::User1, identity);
+        item->setExposure(identity);
 }
 
 void ExpoBlendingDlg::busy(bool val)
@@ -394,7 +385,7 @@ void ExpoBlendingDlg::slotUser1()
 // 'Process' dialog button.
 void ExpoBlendingDlg::slotUser2()
 {
-    if (d->list->imageUrls().isEmpty()) return;
+    if (d->list->urls().isEmpty()) return;
 
     d->mngr->thread()->setSettings(d->enfuseSettingsBox->settings(), d->saveSettingsBox->fileFormat());
     d->mngr->thread()->enfuseFiles(d->mngr->alignedList(), d->mngr->itemsList()[0]);

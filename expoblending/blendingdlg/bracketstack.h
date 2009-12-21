@@ -34,6 +34,13 @@
 
 #include <kurl.h>
 
+namespace KIPI
+{
+class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -48,9 +55,6 @@ public:
     void setUrl(const KUrl& url);
     KUrl url() const;
 
-    void setAlignedUrl(const KUrl& alignedUrl);
-    KUrl alignedUrl() const;
-
     void setOn(bool b);
     bool isOn() const;
 
@@ -60,20 +64,35 @@ public:
 private:
 
     KUrl m_url;
-    KUrl m_alignedUrl;
 };
 
 // ---------------------------------------------------------------------
 
 class BracketStackList : public QTreeWidget
 {
+    Q_OBJECT
 
 public:
 
-    BracketStackList(QWidget *parent);
+    BracketStackList(Interface* iface, QWidget *parent);
     virtual ~BracketStackList();
 
-    KUrl::List itemsList();
+    void addItems(const KUrl::List& list);
+
+    KUrl::List urls();
+    BracketStackItem* findItem(const KUrl& url);
+
+Q_SIGNALS:
+
+    void signalAddItems(const KUrl::List&);
+
+private Q_SLOTS:
+
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+
+private:
+
+    Interface *m_iface;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

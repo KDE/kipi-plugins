@@ -64,7 +64,6 @@ public:
     ExpoBlendingDlg(Manager* mngr, QWidget* parent=0);
     ~ExpoBlendingDlg();
 
-    void loadCurrentSelection();
     void loadItems(const KUrl::List& urls);
 
 private:
