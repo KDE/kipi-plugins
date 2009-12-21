@@ -115,6 +115,12 @@ ActionThread::~ActionThread()
     // wait for the thread to finish
     wait();
 
+    if (d->rawConvertTmpDir)
+        d->rawConvertTmpDir->unlink();
+
+    if (d->alignTmpDir)
+        d->alignTmpDir->unlink();
+
     delete d;
 }
 
@@ -187,9 +193,6 @@ void ActionThread::cancel()
         d->alignProcess->kill();
 
     d->rawdec.cancel();
-
-    if (d->alignTmpDir)
-        d->alignTmpDir->unlink();
 
     d->condVar.wakeAll();
 }
@@ -417,7 +420,6 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     if (!d->alignProcess->waitForFinished(-1))
     {
         errors = getProcessError(d->alignProcess);
-        d->alignTmpDir->unlink();
         return false;
     }
 
@@ -435,7 +437,6 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     }
 
     errors = getProcessError(d->alignProcess);
-    d->alignTmpDir->unlink();
     return false;
 }
 
@@ -507,14 +508,12 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     if (!d->enfuseProcess->waitForFinished(-1))
     {
         errors = getProcessError(d->enfuseProcess);
-        d->alignTmpDir->unlink();
         return false;
     }
 
     kDebug() << "Enfuse output url: "  << outUrl;
     kDebug() << "Enfuse exit status: " << d->enfuseProcess->exitStatus();
     kDebug() << "Enfuse exit code:   " << d->enfuseProcess->exitCode();
-    d->alignTmpDir->unlink();
 
     if (d->enfuseProcess->exitStatus() != QProcess::NormalExit)
         return false;
