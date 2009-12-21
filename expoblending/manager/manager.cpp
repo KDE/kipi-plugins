@@ -56,7 +56,8 @@ public:
     }
 
     KUrl::List             inputUrls;
-    KUrl::List             alignedUrls;
+
+    ItemUrlsMap            alignedUrlsMap;
 
     Interface*             iface;
 
@@ -108,14 +109,14 @@ KUrl::List Manager::itemsList() const
     return d->inputUrls;
 }
 
-void Manager::setAlignedList(const KUrl::List& urls)
+void Manager::setAlignedMap(const ItemUrlsMap& urls)
 {
-    d->alignedUrls = urls;
+    d->alignedUrlsMap = urls;
 }
 
-KUrl::List Manager::alignedList() const
+ItemUrlsMap Manager::alignedMap() const
 {
-    return d->alignedUrls;
+    return d->alignedUrlsMap;
 }
 
 ActionThread* Manager::thread() const

@@ -57,7 +57,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalAligned(const KUrl::List&);
+    void signalAligned(const ItemUrlsMap&);
 
 private Q_SLOTS:
 

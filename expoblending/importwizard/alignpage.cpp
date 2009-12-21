@@ -177,7 +177,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                                            "</qt>"));
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalAligned(KUrl::List());
+                    emit signalAligned(ItemUrlsMap());
                     break;
                 }
                 default:
@@ -195,7 +195,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 {
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalAligned(ad.outUrls);
+                    emit signalAligned(ad.alignedUrlsMap);
                     break;
                 }
                 default:

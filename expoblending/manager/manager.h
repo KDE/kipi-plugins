@@ -31,6 +31,10 @@
 
 #include <kurl.h>
 
+// Local includes
+
+#include "actions.h"
+
 namespace KIPI
 {
     class Interface;
@@ -63,14 +67,12 @@ public:
     void setItemsList(const KUrl::List& urls);
     KUrl::List itemsList() const;
 
-    void setAlignedList(const KUrl::List& urls);
-    KUrl::List alignedList() const;
+    void setAlignedMap(const ItemUrlsMap& urls);
+    ItemUrlsMap alignedMap() const;
 
     ActionThread* thread() const;
 
     void run();
-
-private Q_SLOTS:
 
 private:
 

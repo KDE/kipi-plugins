@@ -385,10 +385,20 @@ void ExpoBlendingDlg::slotUser1()
 // 'Process' dialog button.
 void ExpoBlendingDlg::slotUser2()
 {
-    if (d->list->urls().isEmpty()) return;
+    KUrl::List selectedUrl = d->list->urls();
+    if (selectedUrl.isEmpty()) return;
+
+    ItemUrlsMap map = d->mngr->alignedMap();
+    KUrl::List alignedList;
+
+    foreach(KUrl url, selectedUrl)
+    {
+        KUrl alignedUrl = *(map.find(url));
+        alignedList.append(alignedUrl);
+    }
 
     d->mngr->thread()->setSettings(d->enfuseSettingsBox->settings(), d->saveSettingsBox->fileFormat());
-    d->mngr->thread()->enfuseFiles(d->mngr->alignedList(), d->mngr->itemsList()[0]);
+    d->mngr->thread()->enfuseFiles(alignedList, d->mngr->itemsList()[0]);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }

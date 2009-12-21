@@ -103,8 +103,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
             this, SLOT(slotItemsPageIsValid(bool)));
 
-    connect(d->alignPage, SIGNAL(signalAligned(const KUrl::List&)),
-            this, SLOT(slotAligned(const KUrl::List&)));
+    connect(d->alignPage, SIGNAL(signalAligned(const ItemUrlsMap&)),
+            this, SLOT(slotAligned(const ItemUrlsMap&)));
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -154,9 +154,9 @@ void ImportWizardDlg::back()
     }
 }
 
-void ImportWizardDlg::slotAligned(const KUrl::List& alignedUrls)
+void ImportWizardDlg::slotAligned(const ItemUrlsMap& alignedUrlsMap)
 {
-    if (alignedUrls.isEmpty())
+    if (alignedUrlsMap.isEmpty())
     {
         // Alignement failed.
         setValid(d->alignPage->page(), false);
@@ -164,7 +164,7 @@ void ImportWizardDlg::slotAligned(const KUrl::List& alignedUrls)
     else
     {
         // Alignement Done.
-        d->mngr->setAlignedList(alignedUrls);
+        d->mngr->setAlignedMap(alignedUrlsMap);
         KAssistantDialog::next();
     }
 }

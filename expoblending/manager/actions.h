@@ -28,6 +28,7 @@
 #include <QString>
 #include <QImage>
 #include <QMetaType>
+#include <QMap>
 
 // KDE includes
 
@@ -45,6 +46,8 @@ enum Action
     ENFUSE
 };
 
+typedef QMap<KUrl, KUrl> ItemUrlsMap;   // Map between original Url and processed temp Url.
+
 class ActionData
 {
 
@@ -56,17 +59,19 @@ public:
         success  = false;
     }
 
-    bool       starting;
-    bool       success;
+    bool        starting;
+    bool        success;
 
-    QString    message;
+    QString     message;
 
-    QImage     image;
+    QImage      image;
 
-    KUrl::List inUrls;
-    KUrl::List outUrls;
+    KUrl::List  inUrls;
+    KUrl::List  outUrls;
 
-    Action     action;
+    ItemUrlsMap alignedUrlsMap;
+
+    Action      action;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

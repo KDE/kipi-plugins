@@ -33,6 +33,10 @@
 #include <kurl.h>
 #include <kassistantdialog.h>
 
+// Local includes
+
+#include "actions.h"
+
 class KPageWidgetItem;
 
 namespace KIPI
@@ -68,7 +72,7 @@ private Q_SLOTS:
     void back();
 
     void slotItemsPageIsValid(bool);
-    void slotAligned(const KUrl::List&);
+    void slotAligned(const ItemUrlsMap&);
     void slotFinishPressed();
     void slotHelp();
 

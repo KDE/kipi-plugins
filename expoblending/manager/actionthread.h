@@ -40,6 +40,7 @@
 
 #include "savesettingswidget.h"
 #include "enfusesettings.h"
+#include "actions.h"
 
 using namespace KIPIPlugins;
 using namespace KExiv2Iface;
@@ -65,7 +66,7 @@ public:
     void alignFiles(const KUrl::List& urlList);
     void enfuseFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl);
     void convertRawFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl);
-    
+
     void cancel();
 
 Q_SIGNALS:
@@ -77,7 +78,7 @@ private:
 
     void    run();
 
-    bool    startAlign(const KUrl::List& inUrls, KUrl::List& outUrls,
+    bool    startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
                        QString& errors);
 
     bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,

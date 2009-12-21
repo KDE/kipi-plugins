@@ -49,7 +49,6 @@
 
 // Local includes
 
-#include "actions.h"
 #include "kpwriteimage.h"
 #include "pluginsversion.h"
 
@@ -94,7 +93,7 @@ public:
     KProcess*                        alignProcess;
 
     KDcraw                           rawdec;
-        
+
     KTempDir*                        rawConvertTmpDir;
     KTempDir*                        alignTmpDir;
 
@@ -255,7 +254,7 @@ void ActionThread::run()
                     emit finished(ad2);
                     break;
                 }
-                
+
                 case ALIGN:
                 {
                     ActionData ad1;
@@ -264,17 +263,17 @@ void ActionThread::run()
                     ad1.starting = true;
                     emit starting(ad1);
 
-                    KUrl::List alignedUrls;
-                    QString    errors;
+                    ItemUrlsMap alignedUrlsMap;
+                    QString     errors;
 
-                    bool result  = startAlign(t->urls, alignedUrls, errors);
+                    bool result  = startAlign(t->urls, alignedUrlsMap, errors);
 
                     ActionData ad2;
-                    ad2.action   = ALIGN;
-                    ad2.inUrls   = t->urls;
-                    ad2.outUrls  = alignedUrls;
-                    ad2.success  = result;
-                    ad2.message  = errors;
+                    ad2.action         = ALIGN;
+                    ad2.inUrls         = t->urls;
+                    ad2.alignedUrlsMap = alignedUrlsMap;
+                    ad2.success        = result;
+                    ad2.message        = errors;
                     emit finished(ad2);
                     break;
                 }
@@ -330,7 +329,7 @@ bool ActionThread::startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls
                                                      QString::number(QDateTime::currentDateTime().toTime_t()));
 
     d->rawConvertTmpDir = new KTempDir(prefix);
-    
+
     foreach(const KUrl url, inUrls)
     {
         if (d->rawdec.decodeRAWImage(url.path(), settings, imageData, width, height, rgbmax))
@@ -377,13 +376,13 @@ bool ActionThread::startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls
             return false;
         }
     }
-            
+
     kDebug() << "Convert RAW output urls: "  << outUrls;
 
     return true;
 }
 
-bool ActionThread::startAlign(const KUrl::List& inUrls, KUrl::List& outUrls, QString& errors)
+bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap, QString& errors)
 {
     QString prefix  = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
                                                         QString::number(QDateTime::currentDateTime().toTime_t()));
@@ -400,8 +399,14 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, KUrl::List& outUrls, QSt
     args << "-a";
     args << "aligned";
 
+    uint    i=0;
+    QString temp;
     foreach(const KUrl url, inUrls)
+    {
         args << url.path();
+        alignedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
+        i++;
+    }
 
     d->alignProcess->setProgram(args);
 
@@ -416,17 +421,9 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, KUrl::List& outUrls, QSt
         return false;
     }
 
-    uint    i=0;
-    QString temp;
-    foreach(const KUrl url, inUrls)
-    {
-        outUrls << d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif");
-        i++;
-    }
-
-    kDebug() << "Align output urls: " << outUrls;
-    kDebug() << "Align exit status: " << d->alignProcess->exitStatus();
-    kDebug() << "Align exit code:   " << d->alignProcess->exitCode();
+    kDebug() << "Align output urls map: " << alignedUrlsMap;
+    kDebug() << "Align exit status    : " << d->alignProcess->exitStatus();
+    kDebug() << "Align exit code      : " << d->alignProcess->exitCode();
 
     if (d->alignProcess->exitStatus() != QProcess::NormalExit)
         return false;
