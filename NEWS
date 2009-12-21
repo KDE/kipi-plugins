@@ -1,9 +1,6 @@
 Kipi-plugins 1.0.0 - Release date: 21/12/2009
 ------------------------------------------------------------------------
 
-NEW FEATURES:
-
-
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> GPSSync         : 199189 : GPS correlator does not allow offset in seconds.
@@ -17,4 +14,3 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> Libkdcraw       : 218762 : Libraw is too old.
 010 ==> Common          : 219207 : Compilation error in PreviewWidget.
 011 ==> GPSSync         : 192439 : Geolocation position not remembered or initialised consistently.
-012 ==> 
