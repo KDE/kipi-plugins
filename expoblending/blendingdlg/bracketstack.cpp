@@ -46,6 +46,7 @@ BracketStackItem::BracketStackItem(QTreeWidget* parent)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
+    setThumbnail(SmallIcon("image-x-generic", treeWidget()->iconSize().width(), KIconLoader::DisabledState));
 }
 
 BracketStackItem::~BracketStackItem()
