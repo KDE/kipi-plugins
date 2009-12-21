@@ -348,7 +348,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${KDE4_INCLUDES}
                         ${QT4_INCLUDES}
                        )
-                     
+ 
     # debug settings
     SET(AREA_CODE_GENERAL "51000")
     SET(AREA_CODE_LOADING "51001")
@@ -373,6 +373,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(facebook)
     ADD_SUBDIRECTORY(printimages)
+    ADD_SUBDIRECTORY(expoblending)
 
     # Plugins which are optional depencies.
 

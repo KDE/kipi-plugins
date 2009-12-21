@@ -1,0 +1,20 @@
+[Desktop Entry]
+Categories=Qt;KDE;Graphics;
+Comment=A tool to blend bracketed images
+Comment[x-test]=xxA tool to blend bracketed imagesxx
+Exec=expoblending %i -caption "%c" %U
+GenericName=Exposure Blending
+GenericName[x-test]=xxExposure Blendingxx
+Icon=expoblending
+Name=ExpoBlending
+Name[x-test]=xxExpoBlendingxx
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-DocPath=kipi-plugins/index.html#expoblending
+X-KDE-SubstituteUID=false
+X-KDE-Username=
