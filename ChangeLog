@@ -1,4 +1,559 @@
+1.0.0   2009-12-21 
+
+2009-12-20 16:34  anaselli
+
+	* printimages/printhelper.cpp, printimages/printoptionspage.cpp:
+	  Added
+	  - cursor busy
+	  - better dialog transition
+	  - a progress bar
+
+2009-12-19 21:06  cgilles
+
+	* common/libkipiplugins/wizardpage.cpp,
+	  common/libkipiplugins/wizardpage.h: polish
+
+2009-12-19 15:02  cgilles
+
+	* CMakeLists.txt: compile
+
+2009-12-19 15:02  cgilles
+
+	* CMakeLists.txt, common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/wizardpage.cpp,
+	  common/libkipiplugins/wizardpage.h: factorize
+
+2009-12-19 13:37  cgilles
+
+	* NEWS: update
+
+2009-12-18 18:36  cgilles
+
+	* common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h: new method to get
+	  typemime
+
+2009-12-18 17:18  cgilles
+
+	* NEWS: update
+
+2009-12-18 17:16  cgilles
+
+	* rawconverter/singledialog.cpp: compile
+
+2009-12-18 17:15  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h,
+	  common/libkipiplugins/previewwidget.cpp,
+	  common/libkipiplugins/previewwidget.h: rename preview widget as
+	  preview image to prevent conflict with item from Red Eyes Removal
+	  tool...
+	  BUGS: 219207
+
+2009-12-18 14:11  cgilles
+
+	* common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h: polish
+
+2009-12-17 23:24  woebbe
+
+	* CMakeLists.txt: there is no folder expoblending
+
+2009-12-17 20:06  cgilles
+
+	* CMakeLists.txt, common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h,
+	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+	  factorize
+
+2009-12-17 11:05  cgilles
+
+	* dngconverter/plugin/actionthread.cpp,
+	  dngconverter/plugin/batchdialog.cpp,
+	  dngconverter/plugin/plugin_dngconverter.cpp,
+	  dngconverter/plugin/settingswidget.cpp: .moc => no need .h
+
+2009-12-17 09:59  cgilles
+
+	* acquireimages/scangui.cpp: set application name
+
+2009-12-17 09:58  cgilles
+
+	* dngconverter/plugin/dngconverter.cpp: add application name
+
+2009-12-16 08:58  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/previewwidget.cpp,
+	  common/libkipiplugins/previewwidget.h,
+	  common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h,
+	  rawconverter/CMakeLists.txt, rawconverter/previewwidget.cpp,
+	  rawconverter/previewwidget.h, rawconverter/singledialog.cpp,
+	  rawconverter/singledialog.h: factorize
+
+2009-12-16 07:48  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h,
+	  rawconverter/CMakeLists.txt, rawconverter/actionthread.h,
+	  rawconverter/batchdialog.cpp, rawconverter/rawdecodingiface.h,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/savesettingswidget.h, rawconverter/singledialog.cpp:
+	  factorize save settings widget.
+
+2009-12-16 05:08  cgilles
+
+	* acquireimages/scangui.cpp: polish
+
+2009-12-15 10:11  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2009-12-15 07:54  cgilles
+
+	* NEWS: update
+
+2009-12-14 17:24  jnarboux
+
+	* CMakeLists.txt: remove expoblending in CMakeLists as the plugin
+	  is not checked in yet
+
+2009-12-14 14:36  cgilles
+
+	* common/libkipiplugins/imageslist.cpp,
+	  common/libkipiplugins/imageslist.h: new signal when items are
+	  added to the list
+
+2009-12-14 12:46  cgilles
+
+	* CMakeLists.txt: fix release ID
+
+2009-12-14 12:44  cgilles
+
+	* common/libkipiplugins/imageslist.cpp,
+	  common/libkipiplugins/imageslist.h: fix crash if KIPI interface
+	  is null
+
+2009-12-14 10:54  scripty
+
+	* acquireimages/scangui.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2009-12-13 10:44  cgilles
+
+	* rawconverter/actionthread.cpp, rawconverter/batchdialog.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/previewwidget.cpp,
+	  rawconverter/rawdecodingiface.cpp,
+	  rawconverter/savesettingswidget.cpp,
+	  rawconverter/singledialog.cpp: -.h if .moc
+
+2009-12-13 10:20  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-11 22:11  cgilles
+
+	* facebook/fbwindow.cpp: polish
+
+2009-12-11 22:02  cgilles
+
+	* flickrexport/flickralbumdialog.ui: fix duplicate layoutWidget
+	  name
+
+2009-12-10 15:25  cgilles
+
+	* NEWS: update
+
+2009-12-10 11:12  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-09 15:32  cgilles
+
+	* NEWS: update
+
+2009-12-09 12:38  lure
+
+	* facebook/fbwindow.cpp: On transfer error, do not remove current
+	  image from transfer list.
+	  This will allow the user to Continue (will retry) or Cancel (may
+	  review the image list again and start again).
+
+2009-12-09 12:37  lure
+
+	* smug/smugwindow.cpp: On transfer error, do not remove current
+	  photo from transfer
+	  queue, as the failure is probably only temporary. User can
+	  either Continue (will retry the same photo) or Cancel (in
+	  which case it can remove the photo manually).
+
+2009-12-09 09:08  cgilles
+
+	* acquireimages/scandialog.cpp: broken place dir assignation with
+	  KIPI interface
+
+2009-12-08 10:55  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-07 15:56  cgilles
+
+	* NEWS: update
+
+2009-12-07 10:19  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2009-12-07 07:45  cgilles
+
+	* common/libkipiplugins/kpwritehelp.h: missing C ansi header to
+	  compile fine under Linux (else FILE is not defined)
+
+2009-12-07 00:20  jwienke
+
+	* NEWS: news update
+
+2009-12-06 21:37  jwienke
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h,
+	  facebook/fbitem.h, facebook/fbtalker.cpp, facebook/fbtalker.h,
+	  facebook/fbwidget.cpp, facebook/fbwidget.h,
+	  facebook/fbwindow.cpp, facebook/fbwindow.h: Make album and photo
+	  ids QStrings, as this seems to appear sometimes.
+	  
+	  Ian, can you test it again with this version?
+	  
+	  CCBUG: 202045
+
+2009-12-06 21:22  jwienke
+
+	* common/libkipiplugins/kpwritehelp.cpp: krazy include order
+
+2009-12-06 20:51  cgilles
+
+	* common/libkipiplugins/kpwriteimage.cpp: disable temporaly tiff
+	  metadata using Exiv2.
+	  CCBUGS: 211758
+
+2009-12-06 12:39  cgilles
+
+	* NEWS: update
+
+2009-12-06 12:39  cgilles
+
+	* NEWS: update
+
+2009-12-05 16:22  mghansen
+
+	* gpssync/getlonlat.php, gpssync/getlonlatalt.php,
+	  gpssync/gpsmapwidget.cpp, gpssync/gpstracklistwidget.cpp,
+	  gpssync/tracklistedit.php: Make it possible to adjust the
+	  language of Google Maps to the user's language if supported by
+	  Google Maps.
+	  
+	  CCBUG: 147921
+
+2009-12-05 15:16  mghansen
+
+	* gpssync/getlonlat.php, gpssync/getlonlatalt.php,
+	  gpssync/tracklistedit.php: Fix map type not being remembered
+	  between sessions.
+
+2009-12-05 12:18  jwienke
+
+	* NEWS: Closing bug 174086.
+	  
+	  BUG: 174086
+
+2009-12-05 10:23  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-04 19:54  cgilles
+
+	* sendimages/emailpage.cpp, sendimages/imageresize.cpp,
+	  sendimages/imagespage.cpp, sendimages/plugin_sendimages.cpp,
+	  sendimages/sendimages.cpp, sendimages/sendimagesdialog.cpp:
+	  remove unnecessary headers
+
+2009-12-04 19:53  cgilles
+
+	* timeadjust/clockphotodialog.cpp,
+	  timeadjust/plugin_timeadjust.cpp,
+	  timeadjust/timeadjustdialog.cpp: remove unnecessary headers
+
+2009-12-04 19:02  cgilles
+
+	* jpeglossless/actionthread.cpp,
+	  jpeglossless/convert2grayscale.cpp, jpeglossless/imageflip.cpp,
+	  jpeglossless/imagerotate.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp, jpeglossless/utils.cpp: no
+	  need .h if .moc are there
+
+2009-12-04 19:00  cgilles
+
+	* jpeglossless/plugin_jpeglossless.cpp: fix action order
+
+2009-12-04 17:50  mghansen
+
+	* NEWS, gpssync/gpssyncdialog.cpp: Remember last gpx directory when
+	  the GPSSync dialog is closed.
+	  
+	  BUG: 165277
+
+2009-12-04 10:07  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-03 23:52  jwienke
+
+	* .krazy: ignore external toolkits in krazy checks
+
+2009-12-03 22:29  jwienke
+
+	* advancedslideshow/slideshowconfig.cpp,
+	  advancedslideshow/soundtrackdialog.cpp, calendar/calprinter.cpp,
+	  common/libkipiplugins/imagedialog.h,
+	  common/libkipiplugins/imageslist.h,
+	  common/libkipiplugins/kpwritehelp.cpp,
+	  galleryexport/galleryconfig.cpp, gpssync/gpsbookmarkowner.cpp,
+	  gpssync/gpslistviewcontextmenu.h, gpssync/gpslistviewitem.cpp,
+	  gpssync/gpssyncdialog.cpp, gpssync/gpstracklisteditdialog.cpp,
+	  gpssync/gpstracklistviewitem.cpp,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  metadataedit/exifadjust.cpp, metadataedit/exifcaption.cpp,
+	  metadataedit/exifdevice.cpp, metadataedit/exifeditdialog.cpp,
+	  metadataedit/exiflight.cpp, metadataedit/iptccontent.cpp,
+	  metadataedit/iptccredits.cpp, metadataedit/iptcenvelope.cpp,
+	  metadataedit/iptcproperties.cpp, metadataedit/iptcstatus.cpp,
+	  metadataedit/objectattributesedit.cpp, metadataedit/subjects.cpp,
+	  metadataedit/xmpcontent.cpp, metadataedit/xmpcredits.cpp,
+	  metadataedit/xmpproperties.cpp, metadataedit/xmpstatus.cpp,
+	  shwup/swwindow.cpp, timeadjust/clockphotodialog.cpp: make
+	  translators and krazy2 happy
+
+2009-12-03 21:22  cgilles
+
+	* jpeglossless/jpegtransform.cpp: compile
+
+2009-12-03 20:13  jwienke
+
+	* NEWS: news file
+	  
+	  SVN_SILENT
+
+2009-12-03 10:10  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-03 07:53  cgilles
+
+	* common/libkipiplugins/batchprogressdialog.cpp,
+	  common/libkipiplugins/imagedialog.cpp,
+	  common/libkipiplugins/kpwritehelp.cpp,
+	  common/libkipiplugins/kpwritehelp.h: using KipiPlugins namesapce
+	  Fix coding style
+	  remove .h if .moc is used
+
+2009-12-03 07:39  cgilles
+
+	* common/libkipiplugins/imageslist.cpp: polish
+
+2009-12-02 12:08  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-01 21:08  gateau
+
+	* htmlexport/themes/floating_cards,
+	  htmlexport/themes/floating_cards/back.png,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/floating_cards/forward.png,
+	  htmlexport/themes/floating_cards/next.png,
+	  htmlexport/themes/floating_cards/prev.png,
+	  htmlexport/themes/floating_cards/style.css,
+	  htmlexport/themes/floating_cards/template.xsl,
+	  htmlexport/themes/floating_cards/up.png: New theme by Jiri Bohac
+
+2009-12-01 16:10  cgilles
+
+	* project/MainTask1.0.0.ods: obsolete
+
+2009-12-01 16:10  cgilles
+
+	* project/NEWS.0.9.0: archive
+
+2009-12-01 15:59  nlecureuil
+
+	* NEWS: 1.0.0 is open now
+
+2009-12-01 15:34  nlecureuil
+
+	* ChangeLog: Update Changelog for 0.9.0 Release
+
 0.9.0 2009-12-01
+
 9-12-01 13:02  cgilles
 
 	* NEWS: update
