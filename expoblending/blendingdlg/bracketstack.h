@@ -63,6 +63,19 @@ private:
     KUrl m_alignedUrl;
 };
 
+// ---------------------------------------------------------------------
+
+class BracketStackList : public QTreeWidget
+{
+
+public:
+
+    BracketStackList(QWidget *parent);
+    virtual ~BracketStackList();
+
+    KUrl::List itemsList();
+};
+
 }  // namespace KIPIExpoBlendingPlugin
 
 #endif /* BRACKETSTACK_H */

@@ -25,7 +25,7 @@
 
 // Qt includes
 
-#include <QTreeWidget>
+#include <QHeaderView>
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -77,6 +77,43 @@ bool BracketStackItem::isOn() const
 void BracketStackItem::setOn(bool b)
 {
     setCheckState(0, b ? Qt::Checked : Qt::Unchecked);
+}
+
+// -------------------------------------------------------------------------
+
+BracketStackList::BracketStackList(QWidget *parent)
+                : QTreeWidget(parent)
+{
+    setIconSize(QSize(64, 64));
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSortingEnabled(false);
+    setAllColumnsShowFocus(true);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setColumnCount(3);
+    setHeaderHidden(false);
+    setDragEnabled(false);
+    header()->setResizeMode(QHeaderView::Stretch);
+}
+
+BracketStackList::~BracketStackList()
+{
+}
+
+KUrl::List BracketStackList::itemsList()
+{
+    KUrl::List list;
+
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        BracketStackItem* item = dynamic_cast<BracketStackItem*>(*it);
+        if (item && item->isOn())
+            list.append(item->alignedUrl());
+
+        ++it;
+    }
+
+    return list;
 }
 
 }  // namespace KIPIExpoBlendingPlugin
