@@ -68,6 +68,7 @@ IF(NOT WIN32 AND NOT APPLE)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 IF(NOT WIN32)
+
     # Check KDcraw version installed to compile fine DngConverter plugin.
     FIND_PACKAGE(PkgConfig)
     PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
@@ -76,8 +77,19 @@ IF(NOT WIN32)
     ELSE(Kdcraw_FOUND)
         SET(KDCRAW_FOR_DNGCONVERTER FALSE)
     ENDIF(Kdcraw_FOUND)
+    
+    # And also for exposure blending
+    PKG_CHECK_MODULES(KdcrawExpo libkdcraw>=1.0.0)
+    IF(KdcrawExpo_FOUND)
+        SET(KDCRAW_FOR_EXPOBLENDING TRUE)
+    ELSE(KdcrawExpo_FOUND)
+        SET(KDCRAW_FOR_EXPOBLENDING FALSE)
+    ENDIF(KdcrawExpo_FOUND)
+    
 ELSE(NOT WIN32)
     SET(KDCRAW_FOR_DNGCONVERTER TRUE)
+    # TODO jwienke: does this work?
+    SET(KDCRAW_FOR_EXPOBLENDING TRUE)
 ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
@@ -305,6 +317,12 @@ ELSE(KDEPIMLIBS_FOUND)
     MESSAGE(STATUS " Calendar will be compiled........... NO  (optional - Look README file for more details about dependencies)")
 ENDIF(KDEPIMLIBS_FOUND)
 
+IF(KDCRAW_FOR_EXPOBLENDING)
+    MESSAGE(STATUS " ExposureBlending will be compiled... YES (optional)")
+ELSE(KDCRAW_FOR_EXPOBLENDING)
+    MESSAGE(STATUS " ExposureBlending will be compiled... NO  (optional - Look README file for more details about dependencies)")
+ENDIF(KDCRAW_FOR_EXPOBLENDING)
+
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
 
@@ -373,7 +391,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(facebook)
     ADD_SUBDIRECTORY(printimages)
-    ADD_SUBDIRECTORY(expoblending)
 
     # Plugins which are optional depencies.
 
@@ -425,6 +442,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(dngconverter)
         ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     ENDIF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
+
+    IF(KDCRAW_FOR_EXPOBLENDING)
+        ADD_SUBDIRECTORY(expoblending)
+    ENDIF(KDCRAW_FOR_EXPOBLENDING)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2 
 #
