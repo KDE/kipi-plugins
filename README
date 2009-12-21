@@ -40,6 +40,7 @@ IpodExport         : A tool to export pictures to an Ipod device.
 BatchProcess       : A tool to batch process images (convert, resize, rename, etc.).
 KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...).
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
+ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 
 Porting under progress to Qt4/KDE4:
 
@@ -62,6 +63,8 @@ libkipi         >= 0.2.0                        http://www.digikam.org/sharedlib
 libkexiv2       >= 0.5.0                        http://www.digikam.org/sharedlibs
 libkdcraw       >= 0.4.0                        http://www.digikam.org/sharedlibs          Using LibRaw decoder instead dcraw.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
+Hugin           >= 0.8.0  (runtime dependency)  http://hugin.sourceforge.net
+Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
 
@@ -87,8 +90,9 @@ JpegLossless       : imagemagick (runtime dependency)
 WallPaper          : kdebase (runtime dependency)
 RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
-Calendar           : libkcal (kdepimlibs)
-Shwup              : libqca
+Calendar           : libkcal (kdepimlibs).
+Shwup              : libqca.
+ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency).
 
 -- CONTACT ------------------------------------------------------------
 
