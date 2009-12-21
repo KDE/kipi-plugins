@@ -1,16 +1,8 @@
-Kipi-plugins 1.0.0 - Release date: 21/12/2009
+Kipi-plugins 1.1.0 - Release date: 31/01/2010
 ------------------------------------------------------------------------
+
+NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> GPSSync         : 199189 : GPS correlator does not allow offset in seconds.
-002 ==> GPSSync         : 165277 : Last gpx directory isn't remembered.
-003 ==> GPSSync         : 174086 : GPX time parsing problems.
-004 ==> PicasaWebExport : 162993 : picasa album list not refreshed.
-005 ==> Facebook        : 202045 : Facebook exports always to same album (the one initially selected).
-006 ==> GPSSync         : 217710 : GPSSync unable to modify coordinates.
-007 ==> GPSSync         : 217989 : GPSSync randomly no satellite view.
-008 ==> DNGConverter    : 217897 : DNGconverter produces invalid DNG files.
-009 ==> Libkdcraw       : 218762 : Libraw is too old.
-010 ==> Common          : 219207 : Compilation error in PreviewWidget.
-011 ==> GPSSync         : 192439 : Geolocation position not remembered or initialised consistently.
+001 ==> 
