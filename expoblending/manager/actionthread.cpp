@@ -60,7 +60,7 @@ public:
 
     ActionThreadPriv()
     {
-        running          = false;
+        cancel           = false;
         enfuseProcess    = 0;
         alignProcess     = 0;
         alignTmpDir      = 0;
@@ -78,7 +78,7 @@ public:
             EnfuseSettings                   enfuseSettings;
     };
 
-    bool                             running;
+    bool                             cancel;
 
     QMutex                           mutex;
 
@@ -174,7 +174,7 @@ void ActionThread::cancel()
 {
     QMutexLocker lock(&d->mutex);
     d->todo.clear();
-    d->running = false;
+    d->cancel = true;
 
     if (d->enfuseProcess)
         d->enfuseProcess->kill();
@@ -189,8 +189,8 @@ void ActionThread::cancel()
 
 void ActionThread::run()
 {
-    d->running = true;
-    while (d->running)
+    d->cancel = false;
+    while (!d->cancel)
     {
         ActionThreadPriv::Task *t = 0;
         {
@@ -290,7 +290,7 @@ void ActionThread::run()
     }
 }
 
-bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap, 
+bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
                               const RawDecodingSettings& settings,
                               QString& errors)
 {
@@ -387,7 +387,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         unsigned short tmp16[3];
 
         // Set RGB color components.
-        for (int i = 0 ; d->running && (i < width * height) ; i++)
+        for (int i = 0 ; !d->cancel && (i < width * height) ; i++)
         {
             // Swap Red and Blue and re-ajust color component values
             tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
@@ -409,7 +409,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
 
         KPWriteImage wImageIface;
-        wImageIface.setCancel(&d->running);
+        wImageIface.setCancel(&d->cancel);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->alignTmpDir->name();
         QFileInfo fi(inUrl.path());
