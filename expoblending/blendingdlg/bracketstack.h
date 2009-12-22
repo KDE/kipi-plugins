@@ -30,9 +30,14 @@
 #include <QString>
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
+#include <kfileitem.h>
+
+// Local includes
+
+#include "imagedialog.h"
 
 namespace KIPI
 {
@@ -40,6 +45,7 @@ class Interface;
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -88,11 +94,15 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
+    void slotKDEPreview(const KFileItem&, const QPixmap&);
+    void slotKDEPreviewFailed(const KFileItem&);
+    void slotRawThumb(const KUrl&, const QImage&);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
-
+    
 private:
 
-    Interface *m_iface;
+    Interface*          m_iface;
+    LoadRawThumbThread* m_loadRawThumb;    
 };
 
 }  // namespace KIPIExpoBlendingPlugin

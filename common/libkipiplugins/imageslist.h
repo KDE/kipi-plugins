@@ -34,6 +34,7 @@
 
 // KDE includes
 
+#include <kfileitem.h>
 #include <kurl.h>
 #include <kicon.h>
 #include <kiconloader.h>
@@ -237,12 +238,18 @@ protected Q_SLOTS:
     virtual void slotMoveUpItems();
     virtual void slotMoveDownItems();
     virtual void slotClearItems();
-    virtual void slotLoadItems() {};
-    virtual void slotSaveItems() {};
+    virtual void slotLoadItems(){};
+    virtual void slotSaveItems(){};
 
     void slotProgressTimerDone();
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
+
+private Q_SLOTS:
+
+    void slotKDEPreview(const KFileItem&, const QPixmap&);
+    void slotKDEPreviewFailed(const KFileItem&);
+    void slotRawThumb(const KUrl&, const QImage&);
 
 private:
 

@@ -43,6 +43,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>
+#include <kio/previewjob.h>
 
 // LibKIPI includes
 
@@ -364,6 +365,7 @@ public:
         progressPix           = SmallIcon("process-working", 22);
         progressCount         = 0;
         progressTimer         = 0;
+        loadRawThumb          = 0;
     }
 
     bool                allowRAW;
@@ -385,6 +387,7 @@ public:
 
     ImagesListView*     listView;
     Interface*          iface;
+    LoadRawThumbThread* loadRawThumb;
 };
 
 ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
@@ -437,6 +440,11 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
                 this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
     }
 
+    d->loadRawThumb = new LoadRawThumbThread(this);
+
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
+            this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
+            
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
@@ -647,11 +655,40 @@ void ImagesList::slotAddImages(const KUrl::List& list)
     }
 
     if (d->iface)
+    {
         d->iface->thumbnails(urls, DEFAULTSIZE);
+    }
+    else
+    {
+        KIO::PreviewJob *job = KIO::filePreview(urls, DEFAULTSIZE);
+
+        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+
+        connect(job, SIGNAL(failed(const KFileItem&)),
+                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+    }    
 
     emit signalAddItems(urls);
     emit signalImageListChanged();
     emit signalFoundRAWImages(raw);
+}
+
+// Used only if Kipi interface is null.
+void ImagesList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
+{
+    if (!pix.isNull())
+        slotThumbnail(item.url(), pix);
+}
+
+void ImagesList::slotKDEPreviewFailed(const KFileItem& item)
+{
+    d->loadRawThumb->getRawThumb(item.url());
+}
+
+void ImagesList::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)

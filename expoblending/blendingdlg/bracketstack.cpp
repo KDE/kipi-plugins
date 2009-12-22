@@ -33,6 +33,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kio/previewjob.h>
 
 // LibKIPI includes
 
@@ -112,12 +113,17 @@ BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
     labels.append( i18n("File Name") );
     labels.append( i18n("Exposure (E.V)") );
     setHeaderLabels(labels);
-
+   
     if (m_iface)
     {
         connect(m_iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
                 this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
     }
+
+    m_loadRawThumb = new LoadRawThumbThread(this);
+
+    connect(m_loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
+            this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
 }
 
 BracketStackList::~BracketStackList()
@@ -191,9 +197,38 @@ void BracketStackList::addItems(const KUrl::List& list)
     }
 
     if (m_iface)
+    {
         m_iface->thumbnails(urls, iconSize().width());
+    }
+    else
+    {
+        KIO::PreviewJob *job = KIO::filePreview(urls, iconSize().width());
+
+        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+
+        connect(job, SIGNAL(failed(const KFileItem&)),
+                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+    }       
 
     emit signalAddItems(urls);
+}
+
+// Used only if Kipi interface is null.
+void BracketStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
+{
+    if (!pix.isNull())
+        slotThumbnail(item.url(), pix);
+}
+
+void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)
+{
+    m_loadRawThumb->getRawThumb(item.url());
+}
+
+void BracketStackList::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    slotThumbnail(url, QPixmap::fromImage(img));
 }
 
 void BracketStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
