@@ -1,9 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Expo Blending
-Name[x-test]=xxExpoBlendingxx
+Name[uk]=Злиття експозиції
 Comment=A tool to blend bracketed images
-Comment[x-test]=xxA tool to blend bracketed imagesxx
+Comment[uk]=Інструмент для злиття зображень «вилки»
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service

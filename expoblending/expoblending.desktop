@@ -1,13 +1,13 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to blend bracketed images
-Comment[x-test]=xxA tool to blend bracketed imagesxx
+Comment[uk]=Інструмент для злиття зображень «вилки»
 Exec=expoblending %i -caption "%c" %U
 GenericName=Exposure Blending
-GenericName[x-test]=xxExposure Blendingxx
+GenericName[uk]=Злиття експозиції
 Icon=expoblending
 Name=ExpoBlending
-Name[x-test]=xxExpoBlendingxx
+Name[uk]=Злиття експозиції
 Path=
 StartupNotify=true
 Terminal=false
