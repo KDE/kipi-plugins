@@ -81,8 +81,8 @@ RawPage::RawPage(KAssistantDialog* dlg)
                            "<p>Please set the right settings to import Raw files.</p>"
                            "</qt>"));
 
-    d->rawSettings = new DcrawSettingsWidget(vbox, DcrawSettingsWidget::SIXTEENBITS |
-                                                   DcrawSettingsWidget::COLORSPACE |
+    d->rawSettings = new DcrawSettingsWidget(vbox, DcrawSettingsWidget::SIXTEENBITS    |
+                                                   DcrawSettingsWidget::COLORSPACE     |
                                                    DcrawSettingsWidget::POSTPROCESSING |
                                                    DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->rawSettings->setObjectName("RawSettingsBox Expander"); 
