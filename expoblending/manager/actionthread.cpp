@@ -387,7 +387,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         unsigned short tmp16[3];
 
         // Set RGB color components.
-        for (int i = 0 ; i < width * height ; i++)
+        for (int i = 0 ; d->running && (i < width * height) ; i++)
         {
             // Swap Red and Blue and re-ajust color component values
             tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
