@@ -28,6 +28,68 @@ SET(KIPIPLUGINS_VERSION_STRING
    )
 
 # =======================================================
+# some useful macros
+
+SET(PRINT_COMPILE_LENGTH "40")
+MACRO(FILL_WITH_DOTS VAR)
+    
+    STRING(LENGTH ${${VAR}} NAME_LENGTH)
+    
+    MATH(EXPR DOT_LENGTH "${PRINT_COMPILE_LENGTH} - ${NAME_LENGTH}")
+    IF(${DOT_LENGTH} LESS 0)
+        SET(DOT_LENGTH 0)
+    ENDIF(${DOT_LENGTH} LESS 0)
+    
+    FOREACH(COUNT RANGE ${DOT_LENGTH})
+        SET(${VAR} "${${VAR}}.")
+    ENDFOREACH(COUNT)
+
+ENDMACRO(FILL_WITH_DOTS)
+
+MACRO(PRINT_PLUGIN_COMPILE_STATUS NAME)
+
+    SET(COMPILE_MESSAGE "${NAME} will be compiled")
+    FILL_WITH_DOTS(COMPILE_MESSAGE)
+
+    IF(${ARGN})
+        MESSAGE(STATUS " ${COMPILE_MESSAGE} YES (optional)")
+    ELSE(${ARGN})
+        MESSAGE(STATUS " ${COMPILE_MESSAGE} NO  (optional - Look README file for more details about dependencies)")
+    ENDIF(${ARGN})
+
+ENDMACRO(PRINT_PLUGIN_COMPILE_STATUS)
+
+MACRO(PRINT_OPTIONAL_LIBRARY_STATUS NAME)
+
+    SET(LIB_MESSAGE "${NAME} library found")
+    FILL_WITH_DOTS(LIB_MESSAGE)
+
+    IF(${ARGN})
+        MESSAGE(STATUS " ${LIB_MESSAGE} YES (optional)")
+    ELSE(${ARGN})
+        MESSAGE(STATUS " ${LIB_MESSAGE} NO  (optional)")
+    ENDIF(${ARGN})
+
+ENDMACRO(PRINT_OPTIONAL_LIBRARY_STATUS)
+
+MACRO(PRINT_LIBRARY_STATUS NAME WEBSITE VERSIONHINT)
+
+    SET(LIB_MESSAGE "${NAME} library found")
+    FILL_WITH_DOTS(LIB_MESSAGE)
+
+    IF(${ARGN})
+        MESSAGE(STATUS " ${LIB_MESSAGE} YES")
+    ELSE(${ARGN})
+        MESSAGE(STATUS " ${LIB_MESSAGE} NO")
+        MESSAGE(STATUS "")
+        MESSAGE(SEND_ERROR " kipi-plugins needs ${NAME}. You need to install the ${NAME}${VERSIONHINT} library development package.")
+        MESSAGE(STATUS " ${NAME} website is at ${WEBSITE}")
+        MESSAGE(STATUS "")
+    ENDIF(${ARGN})
+
+ENDMACRO(PRINT_LIBRARY_STATUS)
+
+# =======================================================
 
 FIND_PACKAGE(KDE4 REQUIRED)
 
@@ -104,224 +166,64 @@ MESSAGE(STATUS "")
 
 # Require shared libraries results.
 
-IF(JPEG_FOUND)
-    MESSAGE(STATUS " libjpeg library found............... YES")
-ELSE(JPEG_FOUND)
-    MESSAGE(STATUS " libjpeg library found............... NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libjpeg. You need to install the libjpeg development package.")
-    MESSAGE(STATUS " libjpeg website is at http://www.ijg.org")
-    MESSAGE(STATUS "")
-ENDIF(JPEG_FOUND)
-
-IF(TIFF_FOUND)
-    MESSAGE(STATUS " libtiff library found............... YES")
-ELSE(TIFF_FOUND)
-    MESSAGE(STATUS " libtiff library found............... NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libtiff. You need to install the libtiff development package.")
-    MESSAGE(STATUS " libtiff website is at http://www.remotesensing.org/libtiff")
-    MESSAGE(STATUS "")
-ENDIF(TIFF_FOUND)
-
-IF(PNG_FOUND)
-    MESSAGE(STATUS " libpng library found................ YES")
-ELSE(PNG_FOUND)
-    MESSAGE(STATUS " libpng library found................ NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libpng. You need to install the correct version (>= 1.2.7).")
-    MESSAGE(STATUS " Libpng website is at http://www.libpng.org/pub/png/libpng.html")
-    MESSAGE(STATUS "")
-ENDIF(PNG_FOUND)
-
-IF(KIPI_FOUND)
-    MESSAGE(STATUS " libkipi library found............... YES")
-ELSE(KIPI_FOUND)
-    MESSAGE(STATUS " libkipi library found............... NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libkipi library >= 0.2.0. You need to install libkipi first")
-    MESSAGE(STATUS " libkipi website is at http://www.digikam.org/sharedlibs")
-    MESSAGE(STATUS "")
-ENDIF(KIPI_FOUND)
-
-IF(KEXIV2_FOUND)
-    MESSAGE(STATUS " libkexiv2 library found............. YES")
-ELSE(KEXIV2_FOUND)
-    MESSAGE(STATUS " libkexiv2 library found............. NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libkexiv2 library >= 0.2.0. You need to install libkexiv2 first")
-    MESSAGE(STATUS " libkexiv2 website is at http://www.digikam.org/sharedlibs")
-    MESSAGE(STATUS "")
-ENDIF(KEXIV2_FOUND)
-
-IF(KDCRAW_FOUND)
-    MESSAGE(STATUS " libkdcraw library found............. YES")
-ELSE(KDCRAW_FOUND)
-    MESSAGE(STATUS " libkdcraw library found............. NO")
-    MESSAGE(STATUS "")
-    MESSAGE(SEND_ERROR " kipi-plugins needs libkdcraw library >= 0.4.0. You need to install libkdcraw first")
-    MESSAGE(STATUS " libkdcraw website is at http://www.digikam.org/sharedlibs")
-    MESSAGE(STATUS "")
-ENDIF(KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libjpeg" "http://www.ijg.org" "" JPEG_FOUND)
+PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FOUND)
+PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
+PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KIPI_FOUND)
+PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KEXIV2_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 0.4.0)" KDCRAW_FOUND)
 
 # Optional shared libraries results.
 
-IF(LIBXML2_FOUND)
-    MESSAGE(STATUS " libxml2 library found............... YES (optional)")
-ELSE(LIBXML2_FOUND)
-    MESSAGE(STATUS " libxml2 library found............... NO  (optional)")
-ENDIF(LIBXML2_FOUND)
-
-IF(LIBXSLT_FOUND)
-    MESSAGE(STATUS " libxslt library found............... YES (optional)")
-ELSE(LIBXSLT_FOUND)
-    MESSAGE(STATUS " libxslt library found............... NO  (optional)")
-ENDIF(LIBXSLT_FOUND)
-
-IF(EXPAT_FOUND)
-    MESSAGE(STATUS " libexpat library found.............. YES (optional)")
-ELSE(EXPAT_FOUND)
-    MESSAGE(STATUS " libexpat library found.............. NO  (optional)")
-ENDIF(EXPAT_FOUND)
-
-IF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-    MESSAGE(STATUS " native threads support found........ YES (optional)")
-ELSE(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-    MESSAGE(STATUS " native threads support found........ NO  (optional)")
-ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
-
-IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-    MESSAGE(STATUS " libopengl library found............. YES (optional)")
-ELSE(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-    MESSAGE(STATUS " libopengl library found............. NO  (optional)")
-ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
-IF(OPENCV_FOUND)
-    MESSAGE(STATUS " libopencv library found............. YES (optional)")
-ELSE(OPENCV_FOUND)
-    MESSAGE(STATUS " libopencv library found............. NO  (optional)")
-ENDIF(OPENCV_FOUND)
-
-IF(GPOD_FOUND)
-    MESSAGE(STATUS " libgpod library found............... YES (optional)")
-ELSE(GPOD_FOUND)
-    MESSAGE(STATUS " libgpod library found............... NO  (optional)")
-ENDIF(GPOD_FOUND)
-
-IF(GDK_FOUND)
-    MESSAGE(STATUS " Gdk library found................... YES (optional)")
-ELSE(GDK_FOUND)
-    MESSAGE(STATUS " Gdk library found................... NO  (optional)")
-ENDIF(GDK_FOUND)
-
-IF(KDEPIMLIBS_FOUND)
-    MESSAGE(STATUS " libkdepim library found............. YES (optional)")
-ELSE(KDEPIMLIBS_FOUND)
-    MESSAGE(STATUS " libkdepim library found............. NO  (optional)")
-ENDIF(KDEPIMLIBS_FOUND)
-
-IF(QCA2_FOUND)
-    MESSAGE(STATUS " qca2 library found.................. YES (optional)")
-ELSE(QCA2_FOUND)
-    MESSAGE(STATUS " qca2 library found.................. NO  (optional)")
-ENDIF(QCA2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libxml2" LIBXML2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libxslt" LIBXSLT_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libexpat" EXPAT_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
+PRINT_OPTIONAL_LIBRARY_STATUS("libopengl" OPENGL_FOUND AND OPENGL_GLU_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libopencv" OPENCV_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libgpod" GPOD_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
 
 # LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
-    IF(X11_FOUND AND X11_Xrandr_FOUND)
-        MESSAGE(STATUS " libX11 library found................ YES (optional)")
-    ELSE(X11_FOUND AND X11_Xrandr_FOUND)
-        MESSAGE(STATUS " libX11 library found................ NO  (optional)")
-    ENDIF(X11_FOUND AND X11_Xrandr_FOUND)
+    PRINT_OPTIONAL_LIBRARY_STATUS("libX11" X11_FOUND AND X11_Xrandr_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(KSANE_FOUND)
-    MESSAGE(STATUS " libksane library found.............. YES (optional)")
-ELSE(KSANE_FOUND)
-    MESSAGE(STATUS " libksane library found.............. NO  (optional)")
-ENDIF(KSANE_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libksane" KSANE_FOUND)
 
 # Optional plugins results ----------------------------------------------------------------------------
 
 MESSAGE(STATUS "")
 
 IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
-    MESSAGE(STATUS " kipi-plugins will be compiled....... YES")
+    SET(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
+    FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
+    MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
     SET(KIPIPLUGINS_CAN_BE_COMPILED true)
 ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
     SET(KIPIPLUGINS_CAN_BE_COMPILED false)
 ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
 
-IF(QCA2_FOUND)
-    MESSAGE(STATUS " Shwup will be compiled.............. YES (optional)")
-ELSE(QCA2_FOUND)
-    MESSAGE(STATUS " Shwup will be compiled.............. NO  (optional - Look README file for more details about dependencies)")
-ENDIF(QCA2_FOUND)
-
-IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
-    MESSAGE(STATUS " HtmlExport will be compiled......... YES (optional)")
-ELSE(LIBXML2_FOUND AND LIBXSLT_FOUND)
-    MESSAGE(STATUS " HtmlExport will be compiled......... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Shwup" QCA2_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("HtmlExport" LIBXML2_FOUND AND LIBXSLT_FOUND)
 
 IF(NOT WIN32 AND NOT APPLE)
-
-    IF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. YES (optional)")
-        MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
-    ELSE(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. NO  (optional - Look README file for more details about dependencies)")
-        MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
-    ENDIF(X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
+    PRINT_PLUGIN_COMPILE_STATUS("AdvancedSlideshow" X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
+    PRINT_PLUGIN_COMPILE_STATUS("ImageViewer" X11_FOUND AND X11_Xrandr_FOUND AND OPENGL_FOUND AND OPENGL_GLU_FOUND)
 ELSE(NOT WIN32 AND NOT APPLE)
-
-    IF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. YES (optional)")
-        MESSAGE(STATUS " ImageViewer will be compiled........ YES (optional)")
-    ELSE(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-        MESSAGE(STATUS " AdvancedSlideshow will be compiled.. NO  (optional - Look README file for more details about dependencies)")
-        MESSAGE(STATUS " ImageViewer will be compiled........ NO  (optional - Look README file for more details about dependencies)")
-    ENDIF(OPENGL_FOUND AND OPENGL_GLU_FOUND)
-
+    PRINT_PLUGIN_COMPILE_STATUS("AdvancedSlideshow" OPENGL_FOUND AND OPENGL_GLU_FOUND)
+    PRINT_PLUGIN_COMPILE_STATUS("ImageViewer" OPENGL_FOUND AND OPENGL_GLU_FOUND)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(KSANE_FOUND)
-    MESSAGE(STATUS " AcquireImages will be compiled...... YES (optional)")
-ELSE(KSANE_FOUND)
-    MESSAGE(STATUS " AcquireImages will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(KSANE_FOUND)
-
-IF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
-    MESSAGE(STATUS " DNGConverter will be compiled....... YES (optional)")
-ELSE(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
-    MESSAGE(STATUS " DNGConverter will be compiled....... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
-
-IF(OPENCV_FOUND)
-    MESSAGE(STATUS " RemoveRedEyes will be compiled...... YES (optional)")
-ELSE(OPENCV_FOUND)
-    MESSAGE(STATUS " RemoveRedEyes will be compiled...... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(OPENCV_FOUND)
-
-IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-    MESSAGE(STATUS " IpodExport will be compiled......... YES (optional)")
-ELSE(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-    MESSAGE(STATUS " IpodExport will be compiled......... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
-
-IF(KDEPIMLIBS_FOUND)
-    MESSAGE(STATUS " Calendar will be compiled........... YES (optional)")
-ELSE(KDEPIMLIBS_FOUND)
-    MESSAGE(STATUS " Calendar will be compiled........... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(KDEPIMLIBS_FOUND)
-
-IF(KDCRAW_FOR_EXPOBLENDING)
-    MESSAGE(STATUS " ExposureBlending will be compiled... YES (optional)")
-ELSE(KDCRAW_FOR_EXPOBLENDING)
-    MESSAGE(STATUS " ExposureBlending will be compiled... NO  (optional - Look README file for more details about dependencies)")
-ENDIF(KDCRAW_FOR_EXPOBLENDING)
+PRINT_PLUGIN_COMPILE_STATUS("AcquireImages" KSANE_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("DNGConverter" EXPAT_FOUND AND KDCRAW_FOR_DNGCONVERTER)
+PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OPENCV_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("IpodExport" GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("ExposureBlending" KDCRAW_FOR_EXPOBLENDING)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
