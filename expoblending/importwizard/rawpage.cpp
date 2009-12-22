@@ -65,21 +65,14 @@ RawPage::RawPage(KAssistantDialog* dlg)
        : WizardPage(dlg, i18n("<b>RAW Decoding Settings</b>")),
          d(new RawPagePriv)
 {
-    QScrollArea *sa = new QScrollArea(this);
-    KVBox *vbox     = new KVBox(sa->viewport());
-    sa->setWidget(vbox);
-    sa->setWidgetResizable(true);
-    sa->setAutoFillBackground(false);
-    sa->viewport()->setAutoFillBackground(false);
-    vbox->setAutoFillBackground(false);
-
-    d->title = new QLabel(vbox);
+    KVBox *vbox = new KVBox(this);
+    d->title    = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     d->title->setText(i18n("<qt>"
                            "<p>Your bracketed images stack contain Raw images.</p>"
-                           "<p>Please set the right settings to import Raw files.</p>"
-                           "</qt>"));
+                           "<p>Please set the right decoding settings to import Raw files.</p>"
+                           "<p></p></qt>"));
 
     d->rawSettings = new DcrawSettingsWidget(vbox, DcrawSettingsWidget::SIXTEENBITS    |
                                                    DcrawSettingsWidget::COLORSPACE     |
@@ -98,8 +91,9 @@ RawPage::~RawPage()
     delete d;
 }
 
-RawDecodingSettings RawPage::rawdecodingSettings() const
+RawDecodingSettings RawPage::rawDecodingSettings() const
 {
+    return RawDecodingSettings();
 }
 
 }   // namespace KIPIExpoBlendingPlugin

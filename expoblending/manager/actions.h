@@ -41,7 +41,6 @@ enum Action
 {
     NONE = 0,
     IDENTIFY,
-    CONVERTRAW,
     ALIGN,
     ENFUSE
 };

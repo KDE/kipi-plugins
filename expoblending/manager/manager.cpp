@@ -72,6 +72,8 @@ Manager::Manager(QObject* parent)
        : QObject(parent), d(new ManagerPriv)
 {
     d->thread = new ActionThread(this);
+    
+    d->rawDecodingSettings.sixteenBitsImage = true;
 }
 
 Manager::~Manager()

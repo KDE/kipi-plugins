@@ -41,6 +41,7 @@
 #include "aboutdata.h"
 #include "intropage.h"
 #include "itemspage.h"
+#include "rawpage.h"
 #include "alignpage.h"
 #include "lastpage.h"
 
@@ -56,6 +57,7 @@ public:
         mngr      = 0;
         introPage = 0;
         itemsPage = 0;
+        rawPage   = 0;
         alignPage = 0;
         lastPage  = 0;
     }
@@ -64,6 +66,7 @@ public:
 
     IntroPage* introPage;
     ItemsPage* itemsPage;
+    RawPage*   rawPage;
     AlignPage* alignPage;
     LastPage*  lastPage;
 };
@@ -74,6 +77,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     d->mngr      = mngr;
     d->introPage = new IntroPage(this);
     d->itemsPage = new ItemsPage(d->mngr, this);
+    //d->rawPage   = new RawPage(this);
     d->alignPage = new AlignPage(d->mngr, this);
     d->lastPage  = new LastPage(this);
 
@@ -131,6 +135,12 @@ void ImportWizardDlg::next()
     {
         d->mngr->setItemsList(d->itemsPage->itemUrls());
     }
+/*
+    else if (currentPage() == d->rawPage->page())
+    {
+        d->mngr->setRawDecodingSettings(d->rawPage->rawDecodingSettings());
+    }
+*/
     else if (currentPage() == d->alignPage->page())
     {
         // Do not give acces to Next button during alignment process.

@@ -123,7 +123,8 @@ void AlignPage::resetTitle()
 void AlignPage::processAlignement()
 {
     d->title->setText(i18n("<qt>"
-                           "<p>Auto-alignment is under progress, please wait. This can take a while...</p>"
+                           "<p>Pre-processing and auto-alignment is under progress, please wait.<p>"
+                           "<p>This can take a while...</p>"
                            "</qt>"));
 
     d->progressTimer->start(300);
@@ -131,6 +132,7 @@ void AlignPage::processAlignement()
     connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
 
+    d->mngr->thread()->setAlignSettings(d->mngr->rawDecodingSettings());
     d->mngr->thread()->alignFiles(d->mngr->itemsList());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
@@ -138,7 +140,6 @@ void AlignPage::processAlignement()
 
 void AlignPage::cancelAlignement()
 {
-
     disconnect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
                this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
 

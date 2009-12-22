@@ -45,14 +45,11 @@
 // LibKDcraw includes
 
 #include <libkdcraw/kdcraw.h>
-#include <libkdcraw/rawdecodingsettings.h>
 
 // Local includes
 
 #include "kpwriteimage.h"
 #include "pluginsversion.h"
-
-using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -67,7 +64,6 @@ public:
         enfuseProcess    = 0;
         alignProcess     = 0;
         alignTmpDir      = 0;
-        rawConvertTmpDir = 0;
     }
 
     class Task
@@ -78,6 +74,7 @@ public:
             KUrl                             outputUrl;
             Action                           action;
             SaveSettingsWidget::OutputFormat outputFormat;
+            RawDecodingSettings              rawDecodingSettings;
             EnfuseSettings                   enfuseSettings;
     };
 
@@ -94,11 +91,12 @@ public:
 
     KDcraw                           rawdec;
 
-    KTempDir*                        rawConvertTmpDir;
     KTempDir*                        alignTmpDir;
 
     SaveSettingsWidget::OutputFormat outputFormat;
 
+    RawDecodingSettings              rawDecodingSettings;
+    
     EnfuseSettings                   enfuseSettings;
 };
 
@@ -115,18 +113,20 @@ ActionThread::~ActionThread()
     // wait for the thread to finish
     wait();
 
-    if (d->rawConvertTmpDir)
-        d->rawConvertTmpDir->unlink();
-
     if (d->alignTmpDir)
         d->alignTmpDir->unlink();
 
     delete d;
 }
 
-void ActionThread::setSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt)
+void ActionThread::setAlignSettings(const RawDecodingSettings& settings)
 {
-    d->enfuseSettings = enfuseSettings;
+    d->rawDecodingSettings = settings;
+}
+
+void ActionThread::setEnfuseSettings(const EnfuseSettings& settings, SaveSettingsWidget::OutputFormat frmt)
+{
+    d->enfuseSettings = settings;
     d->outputFormat   = frmt;
 }
 
@@ -144,23 +144,13 @@ void ActionThread::identifyFiles(const KUrl::List& urlList)
     }
 }
 
-void ActionThread::convertRawFiles(const KUrl::List& urlList)
-{
-    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-    t->action                 = CONVERTRAW;
-    t->urls                   = urlList;
-
-    QMutexLocker lock(&d->mutex);
-    d->todo << t;
-    d->condVar.wakeAll();
-}
-
 void ActionThread::alignFiles(const KUrl::List& urlList)
 {
     ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
     t->action                 = ALIGN;
     t->urls                   = urlList;
-
+    t->rawDecodingSettings    = d->rawDecodingSettings;
+    
     QMutexLocker lock(&d->mutex);
     d->todo << t;
     d->condVar.wakeAll();
@@ -237,27 +227,6 @@ void ActionThread::run()
                     break;
                 }
 
-                case CONVERTRAW:
-                {
-                    ActionData ad1;
-                    ad1.action   = CONVERTRAW;
-                    ad1.inUrls   = t->urls;
-                    ad1.starting = true;
-                    emit starting(ad1);
-
-                    KUrl::List convertedUrls;
-
-                    bool result  = startConvertRaw(t->urls, convertedUrls);
-
-                    ActionData ad2;
-                    ad2.action   = CONVERTRAW;
-                    ad2.inUrls   = t->urls;
-                    ad2.outUrls  = convertedUrls;
-                    ad2.success  = result;
-                    emit finished(ad2);
-                    break;
-                }
-
                 case ALIGN:
                 {
                     ActionData ad1;
@@ -269,7 +238,7 @@ void ActionThread::run()
                     ItemUrlsMap alignedUrlsMap;
                     QString     errors;
 
-                    bool result  = startAlign(t->urls, alignedUrlsMap, errors);
+                    bool result  = startAlign(t->urls, alignedUrlsMap, t->rawDecodingSettings, errors);
 
                     ActionData ad2;
                     ad2.action         = ALIGN;
@@ -321,87 +290,38 @@ void ActionThread::run()
     }
 }
 
-bool ActionThread::startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls)
+bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap, 
+                              const RawDecodingSettings& settings,
+                              QString& errors)
 {
-    int                 width, height, rgbmax;
-    QByteArray          imageData;
-    RawDecodingSettings settings;
-    settings.sixteenBitsImage = true;
+    QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
+                                                       QString::number(QDateTime::currentDateTime().toTime_t()));
 
-    QString prefix      = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-rawconvert-tmp-") +
-                                                     QString::number(QDateTime::currentDateTime().toTime_t()));
+    d->alignTmpDir = new KTempDir(prefix);
 
-    d->rawConvertTmpDir = new KTempDir(prefix);
-
+    // Pre-process RAW files if necessary.
+    
+    KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.                                                          
+                                                       
     foreach(const KUrl url, inUrls)
     {
-        if (d->rawdec.decodeRAWImage(url.path(), settings, imageData, width, height, rgbmax))
+        if (isRawFile(url.path()))
         {
-            uchar* sptr  = (uchar*)imageData.data();
-            float factor = 65535.0 / rgbmax;
-            unsigned short tmp16[3];
-
-            // Set RGB color components.
-            for (int i = 0 ; i < width * height ; i++)
-            {
-                // Swap Red and Blue and re-ajust color component values
-                tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
-                tmp16[1] = (unsigned short)((sptr[3]*256 + sptr[2]) * factor);      // Green
-                tmp16[2] = (unsigned short)((sptr[1]*256 + sptr[0]) * factor);      // Red
-                memcpy(&sptr[0], &tmp16[0], 6);
-                sptr += 6;
-            }
-
-            KExiv2 meta;
-            meta.load(url.path());
-            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            meta.setImageDimensions(QSize(width, height));
-            meta.setExifTagString("Exif.Image.DocumentName", url.fileName());
-            meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
-            meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
-            meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
-
-            QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
-
-            KPWriteImage wImageIface;
-            wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
-            KUrl outUrl = d->alignTmpDir->name();
-            QFileInfo fi(url.path());
-            outUrl.setFileName(QString(".") + fi.completeBaseName() + QString(".tiff"));
-
-            if (!wImageIface.write2TIFF(outUrl.path()))
+          KUrl outUrl;
+          
+          if (!convertRaw(url, outUrl, settings))
                 return false;
 
-            outUrls << outUrl;
+            mixedUrls.append(outUrl);
         }
         else
         {
-            return false;
+            mixedUrls.append(url);
         }
     }
-
-    kDebug() << "Convert RAW output urls: "  << outUrls;
-
-    return true;
-}
-
-bool ActionThread::isRAWFile(const KUrl& url)
-{
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-
-    QFileInfo fileInfo(url.path());
-    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
-        return true;
-
-    return false;
-}
-
-bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap, QString& errors)
-{
-    QString prefix  = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
-                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
-
-    d->alignTmpDir  = new KTempDir(prefix);
+    
+    // Re-align images
+    
     d->alignProcess = new KProcess;
     d->alignProcess->clearProgram();
     d->alignProcess->clearEnvironment();
@@ -413,13 +333,9 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     args << "-a";
     args << "aligned";
 
-    uint    i=0;
-    QString temp;
-    foreach(const KUrl url, inUrls)
+    foreach(const KUrl url, mixedUrls)
     {
         args << url.path();
-        alignedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
-        i++;
     }
 
     d->alignProcess->setProgram(args);
@@ -432,6 +348,14 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     {
         errors = getProcessError(d->alignProcess);
         return false;
+    }
+
+    uint    i=0;
+    QString temp;
+    foreach(const KUrl url, inUrls)
+    {
+        alignedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
+        i++;
     }
 
     kDebug() << "Align output urls map: " << alignedUrlsMap;
@@ -448,6 +372,69 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     }
 
     errors = getProcessError(d->alignProcess);
+    return false;
+}
+
+bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings)
+{
+    int        width, height, rgbmax;
+    QByteArray imageData;
+
+    if (d->rawdec.decodeRAWImage(inUrl.path(), settings, imageData, width, height, rgbmax))
+    {
+        uchar* sptr  = (uchar*)imageData.data();
+        float factor = 65535.0 / rgbmax;
+        unsigned short tmp16[3];
+
+        // Set RGB color components.
+        for (int i = 0 ; i < width * height ; i++)
+        {
+            // Swap Red and Blue and re-ajust color component values
+            tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
+            tmp16[1] = (unsigned short)((sptr[3]*256 + sptr[2]) * factor);      // Green
+            tmp16[2] = (unsigned short)((sptr[1]*256 + sptr[0]) * factor);      // Red
+            memcpy(&sptr[0], &tmp16[0], 6);
+            sptr += 6;
+        }
+
+        KExiv2 meta;
+        meta.load(inUrl.path());
+        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        meta.setImageDimensions(QSize(width, height));
+        meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
+        meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
+        meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
+        meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+
+        QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
+
+        KPWriteImage wImageIface;
+        wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
+        outUrl = d->alignTmpDir->name();
+        QFileInfo fi(inUrl.path());
+        outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString(".tif"));
+
+        if (!wImageIface.write2TIFF(outUrl.path()))
+            return false;
+    }
+    else
+    {
+        return false;
+    }
+
+    kDebug() << "Convert RAW output url: "  << outUrl;
+
+    return true;
+}
+
+bool ActionThread::isRawFile(const KUrl& url)
+{
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+
+    QFileInfo fileInfo(url.path());
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+        return true;
+
     return false;
 }
 

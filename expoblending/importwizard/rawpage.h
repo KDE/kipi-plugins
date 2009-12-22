@@ -51,7 +51,7 @@ class RawPage : public WizardPage
     RawPage(KAssistantDialog* dlg);
     ~RawPage();
 
-    RawDecodingSettings rawdecodingSettings() const;
+    RawDecodingSettings rawDecodingSettings() const;
 
 private:
 

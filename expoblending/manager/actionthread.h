@@ -36,6 +36,10 @@
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKDcraw includes
+
+#include <libkdcraw/rawdecodingsettings.h>
+
 // Local includes
 
 #include "savesettingswidget.h"
@@ -44,6 +48,7 @@
 
 using namespace KIPIPlugins;
 using namespace KExiv2Iface;
+using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -60,12 +65,12 @@ public:
     explicit ActionThread(QObject* parent);
     ~ActionThread();
 
-    void setSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt);
+    void setAlignSettings(const RawDecodingSettings& settings);
+    void setEnfuseSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt);
     void identifyFiles(const KUrl::List& urlList);
     void convertRawFiles(const KUrl::List& urlList);
     void alignFiles(const KUrl::List& urlList);
     void enfuseFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl);
-    void convertRawFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl);
 
     void cancel();
 
@@ -79,15 +84,15 @@ private:
     void    run();
 
     bool    startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
+                       const RawDecodingSettings& settings,
                        QString& errors);
+    bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
+    bool    isRawFile(const KUrl& url);
 
     bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                         const EnfuseSettings& enfuseSettings,
                         SaveSettingsWidget::OutputFormat frmt,
                         QString& errors);
-
-    bool    startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls);
-    bool    isRAWFile(const KUrl& url);
 
     QString getProcessError(KProcess* proc) const;
 
