@@ -42,11 +42,17 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
     KVBox *vbox   = new KVBox(this);
     QLabel *title = new QLabel(vbox);
     title->setWordWrap(true);
+    title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
                         "<p><h1><b>Welcome to Exposure Blending tool</b></h1></p>"
-                        "<p>This tool fuse bracketed image to make pseudo HDR.</p>"
+                        "<p>This tool fuse bracketed images with different exposure to make pseudo "
+                        "<a href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>.</p>"
                         "<p>This assistant will help you to configure how to import images before "
                         "to merge it to a single one.</p>"
+                        "<p>Bracketed images must be taken with the same camera, "
+                        "in same conditions, and if possible using a tripod.</p>"
+                        "<p>For more informations, please take a look at "
+                        "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
 
     setPageWidget(vbox);
