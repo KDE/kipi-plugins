@@ -39,6 +39,12 @@
 
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "imagedialog.h"
+
+using namespace KIPIPlugins;
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -92,10 +98,24 @@ void BracketStackItem::setOn(bool b)
 
 // -------------------------------------------------------------------------
 
-BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
-                : QTreeWidget(parent)
+class BracketStackListPriv
 {
-    m_iface = iface;
+public:
+
+    BracketStackListPriv()
+    {
+        iface        = 0;
+        loadRawThumb = 0;
+    }
+  
+    Interface*          iface;
+    LoadRawThumbThread* loadRawThumb;    
+};  
+
+BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
+                : QTreeWidget(parent), d(new BracketStackListPriv)
+{
+    d->iface = iface;
 
     setIconSize(QSize(64, 64));
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -114,20 +134,21 @@ BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
     labels.append( i18n("Exposure (E.V)") );
     setHeaderLabels(labels);
    
-    if (m_iface)
+    if (d->iface)
     {
-        connect(m_iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
+        connect(d->iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
                 this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
     }
 
-    m_loadRawThumb = new LoadRawThumbThread(this);
+    d->loadRawThumb = new LoadRawThumbThread(this);
 
-    connect(m_loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
             this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
 }
 
 BracketStackList::~BracketStackList()
 {
+    delete d;
 }
 
 KUrl::List BracketStackList::urls()
@@ -196,9 +217,9 @@ void BracketStackList::addItems(const KUrl::List& list)
         }
     }
 
-    if (m_iface)
+    if (d->iface)
     {
-        m_iface->thumbnails(urls, iconSize().width());
+        d->iface->thumbnails(urls, iconSize().width());
     }
     else
     {
@@ -223,7 +244,7 @@ void BracketStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
 
 void BracketStackList::slotKDEPreviewFailed(const KFileItem& item)
 {
-    m_loadRawThumb->getRawThumb(item.url());
+    d->loadRawThumb->getRawThumb(item.url());
 }
 
 void BracketStackList::slotRawThumb(const KUrl& url, const QImage& img)

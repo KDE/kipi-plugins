@@ -35,21 +35,18 @@
 #include <kurl.h>
 #include <kfileitem.h>
 
-// Local includes
-
-#include "imagedialog.h"
-
 namespace KIPI
 {
 class Interface;
 }
 
 using namespace KIPI;
-using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
 
+class BracketStackListPriv;
+  
 class BracketStackItem : public QTreeWidgetItem
 {
 
@@ -101,8 +98,7 @@ private Q_SLOTS:
     
 private:
 
-    Interface*          m_iface;
-    LoadRawThumbThread* m_loadRawThumb;    
+    BracketStackListPriv* const d;
 };
 
 }  // namespace KIPIExpoBlendingPlugin
