@@ -31,6 +31,10 @@
 
 #include <kurl.h>
 
+// Libkdcraw includes
+
+#include <libkdcraw/rawdecodingsettings.h>
+
 // Local includes
 
 #include "actions.h"
@@ -41,6 +45,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+using namespace KDcrawIface;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -67,6 +72,9 @@ public:
     void setItemsList(const KUrl::List& urls);
     KUrl::List itemsList() const;
 
+    void setRawDecodingSettings(const RawDecodingSettings& settings);
+    RawDecodingSettings rawDecodingSettings() const;
+    
     void setAlignedMap(const ItemUrlsMap& urls);
     ItemUrlsMap alignedMap() const;
 

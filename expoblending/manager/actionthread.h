@@ -87,6 +87,7 @@ private:
                         QString& errors);
 
     bool    startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls);
+    bool    isRAWFile(const KUrl& url);
 
     QString getProcessError(KProcess* proc) const;
 

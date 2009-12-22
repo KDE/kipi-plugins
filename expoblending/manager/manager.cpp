@@ -59,6 +59,8 @@ public:
 
     ItemUrlsMap            alignedUrlsMap;
 
+    RawDecodingSettings    rawDecodingSettings;
+    
     Interface*             iface;
 
     ExpoBlendingAboutData* about;
@@ -107,6 +109,16 @@ void Manager::setItemsList(const KUrl::List& urls)
 KUrl::List Manager::itemsList() const
 {
     return d->inputUrls;
+}
+
+void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)
+{
+    d->rawDecodingSettings = settings;
+}
+
+RawDecodingSettings Manager::rawDecodingSettings() const
+{
+    return d->rawDecodingSettings;
 }
 
 void Manager::setAlignedMap(const ItemUrlsMap& urls)

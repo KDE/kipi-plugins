@@ -385,6 +385,17 @@ bool ActionThread::startConvertRaw(const KUrl::List& inUrls, KUrl::List& outUrls
     return true;
 }
 
+bool ActionThread::isRAWFile(const KUrl& url)
+{
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+
+    QFileInfo fileInfo(url.path());
+    if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
+        return true;
+
+    return false;
+}
+
 bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap, QString& errors)
 {
     QString prefix  = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
