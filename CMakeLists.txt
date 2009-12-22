@@ -32,14 +32,14 @@ SET(KIPIPLUGINS_VERSION_STRING
 
 SET(PRINT_COMPILE_LENGTH "40")
 MACRO(FILL_WITH_DOTS VAR)
-    
+
     STRING(LENGTH ${${VAR}} NAME_LENGTH)
-    
+
     MATH(EXPR DOT_LENGTH "${PRINT_COMPILE_LENGTH} - ${NAME_LENGTH}")
     IF(${DOT_LENGTH} LESS 0)
         SET(DOT_LENGTH 0)
     ENDIF(${DOT_LENGTH} LESS 0)
-    
+
     FOREACH(COUNT RANGE ${DOT_LENGTH})
         SET(${VAR} "${${VAR}}.")
     ENDFOREACH(COUNT)
@@ -124,35 +124,27 @@ MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 
-# LINUX Only.
+# X11 check, LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-IF(NOT WIN32)
-
-    # Check KDcraw version installed to compile fine DngConverter plugin.
-    FIND_PACKAGE(PkgConfig)
-    PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
-    IF(Kdcraw_FOUND)
-        SET(KDCRAW_FOR_DNGCONVERTER TRUE)
-    ELSE(Kdcraw_FOUND)
-        SET(KDCRAW_FOR_DNGCONVERTER FALSE)
-    ENDIF(Kdcraw_FOUND)
-    
-    # And also for exposure blending
-    PKG_CHECK_MODULES(KdcrawExpo libkdcraw>=1.0.0)
-    IF(KdcrawExpo_FOUND)
-        SET(KDCRAW_FOR_EXPOBLENDING TRUE)
-    ELSE(KdcrawExpo_FOUND)
-        SET(KDCRAW_FOR_EXPOBLENDING FALSE)
-    ENDIF(KdcrawExpo_FOUND)
-    
-ELSE(NOT WIN32)
+# Check KDcraw version installed to compile fine DngConverter plugin.
+FIND_PACKAGE(PkgConfig)
+PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
+IF(Kdcraw_FOUND)
     SET(KDCRAW_FOR_DNGCONVERTER TRUE)
-    # TODO jwienke: does this work?
+ELSE(Kdcraw_FOUND)
+    SET(KDCRAW_FOR_DNGCONVERTER FALSE)
+ENDIF(Kdcraw_FOUND)
+
+# And also for exposure blending
+PKG_CHECK_MODULES(KdcrawExpo libkdcraw>=1.0.0)
+IF(KdcrawExpo_FOUND)
     SET(KDCRAW_FOR_EXPOBLENDING TRUE)
-ENDIF(NOT WIN32)
+ELSE(KdcrawExpo_FOUND)
+    SET(KDCRAW_FOR_EXPOBLENDING FALSE)
+ENDIF(KdcrawExpo_FOUND)
 
 INCLUDE(MacroOptionalDependPackage)
 
