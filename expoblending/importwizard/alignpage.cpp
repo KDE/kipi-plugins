@@ -116,7 +116,7 @@ void AlignPage::resetTitle()
                            "<a href='http://hugin.sourceforge.net'>Hugin</a> "
                            "project will be used. Please, take a sure that it's installed "
                            "on your computer.</p>"
-                           "<p>Press \"Next\" button to start auto-alignment process.</p>"
+                           "<p>Press \"Next\" button to start pre-processing and auto-alignment.</p>"
                            "</qt>"));
 }
 
