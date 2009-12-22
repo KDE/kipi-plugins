@@ -27,6 +27,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPixmap>
+#include <QTimer>
 
 // KDE includes
 
@@ -98,7 +99,8 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-    slotImageListChanged();
+            
+    QTimer::singleShot(0, this, SLOT(slotImageListChanged()));
 }
 
 ItemsPage::~ItemsPage()
