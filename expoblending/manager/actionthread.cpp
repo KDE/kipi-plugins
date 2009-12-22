@@ -96,7 +96,7 @@ public:
     SaveSettingsWidget::OutputFormat outputFormat;
 
     RawDecodingSettings              rawDecodingSettings;
-    
+
     EnfuseSettings                   enfuseSettings;
 };
 
@@ -150,7 +150,7 @@ void ActionThread::alignFiles(const KUrl::List& urlList)
     t->action                 = ALIGN;
     t->urls                   = urlList;
     t->rawDecodingSettings    = d->rawDecodingSettings;
-    
+
     QMutexLocker lock(&d->mutex);
     d->todo << t;
     d->condVar.wakeAll();
@@ -300,16 +300,16 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     d->alignTmpDir = new KTempDir(prefix);
 
     // Pre-process RAW files if necessary.
-    
-    KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.                                                          
-                                                       
+
+    KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.
+
     foreach(const KUrl url, inUrls)
     {
         if (isRawFile(url.path()))
         {
-          KUrl outUrl;
-          
-          if (!convertRaw(url, outUrl, settings))
+            KUrl outUrl;
+
+            if (!convertRaw(url, outUrl, settings))
                 return false;
 
             mixedUrls.append(outUrl);
@@ -319,9 +319,9 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
             mixedUrls.append(url);
         }
     }
-    
+
     // Re-align images
-    
+
     d->alignProcess = new KProcess;
     d->alignProcess->clearProgram();
     d->alignProcess->clearEnvironment();
@@ -409,6 +409,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
 
         KPWriteImage wImageIface;
+        wImageIface.setCancel(&d->running);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->alignTmpDir->name();
         QFileInfo fi(inUrl.path());
