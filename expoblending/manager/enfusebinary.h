@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-12-23
- * Description : Autodetect align_image_stack binary program and version
+ * Description : Autodetect enfuse binary program and version
  *
  * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef ALIGNBINARY_H
-#define ALIGNBINARY_H
+#ifndef ENFUSEBINARY_H
+#define ENFUSEBINARY_H
 
 // Qt includes
 
@@ -30,15 +30,15 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class AlignBinaryPriv;
+class EnfuseBinaryPriv;
 
-class AlignBinary
+class EnfuseBinary
 {
 
 public:
 
-    AlignBinary();
-    ~AlignBinary();
+    EnfuseBinary();
+    ~EnfuseBinary();
 
     static const char* path();
     bool               isAvailable()    const;
@@ -50,9 +50,9 @@ public:
 
 private:
 
-    AlignBinaryPriv* const d;
+    EnfuseBinaryPriv* const d;
 };
 
 } // namespace KIPIExpoBlendingPlugin
 
-#endif  // ALIGNBINARY_H
+#endif  // ENFUSEBINARY_H

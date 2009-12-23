@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-12-23
- * Description : Autodetect align_image_stack binary program and version
+ * Description : Autodetect enfuse binary program and version
  *
  * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "alignbinary.h"
+#include "enfusebinary.h"
 
 // Qt includes
 
@@ -34,11 +34,11 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class AlignBinaryPriv
+class EnfuseBinaryPriv
 {
 public:
 
-    AlignBinaryPriv()
+    EnfuseBinaryPriv()
     {
         available = false;
         version.clear();
@@ -49,52 +49,52 @@ public:
     QString version;
 };
 
-AlignBinary::AlignBinary()
-           : d(new AlignBinaryPriv)
+EnfuseBinary::EnfuseBinary()
+           : d(new EnfuseBinaryPriv)
 {
     checkSystem();
 }
 
-AlignBinary::~AlignBinary()
+EnfuseBinary::~EnfuseBinary()
 {
     delete d;
 }
 
-void AlignBinary::checkSystem()
+void EnfuseBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
     d->available = process.waitForFinished();
 
-    // The output look like this : align_image_stack version 2009.2.0.4461
-    QString headerStarts("align_image_stack version ");
+    // The output look like this : ==== enfuse, version 3.2 ====
+    QString headerStarts("==== enfuse, version ");
 
     QString stdOut(process.readAll());
-    QString firstLine = stdOut.section('\n', 1, 1);
+    QString firstLine = stdOut.section('\n', 0, 0);
 
     if (firstLine.startsWith(headerStarts))
     {
-        d->version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
-        kDebug(AREA_CODE_LOADING) << "Found align_image_stack version: " << version() ;
+        d->version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 1);
+        kDebug(AREA_CODE_LOADING) << "Found enfuse version: " << version() ;
     }
 }
 
-const char *AlignBinary::path()
+const char *EnfuseBinary::path()
 {
-    return "align_image_stack";
+    return "enfuse";
 }
 
-bool AlignBinary::isAvailable() const
+bool EnfuseBinary::isAvailable() const
 {
     return d->available;
 }
 
-QString AlignBinary::version() const
+QString EnfuseBinary::version() const
 {
     return d->version;
 }
 
-bool AlignBinary::versionIsRight() const
+bool EnfuseBinary::versionIsRight() const
 {
     if (d->version.isNull() || !isAvailable())
         return false;
@@ -105,9 +105,9 @@ bool AlignBinary::versionIsRight() const
     return false;
 }
 
-QString AlignBinary::minimalVersion() const
+QString EnfuseBinary::minimalVersion() const
 {
-    return QString("2009.2");
+    return QString("3.2");
 }
 
 }  // namespace KIPIExpoBlendingPlugin
