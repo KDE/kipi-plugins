@@ -131,7 +131,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
     QStringList labels;
     labels.append( i18n("Thumbnail") );
     labels.append( i18n("File Name") );
-    labels.append( i18n("Exposure (E.V)") );
+    labels.append( i18n("Exposure (EV)") );
     setHeaderLabels(labels);
    
     if (d->iface)

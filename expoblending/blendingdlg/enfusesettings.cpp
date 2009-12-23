@@ -88,44 +88,46 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     // ------------------------------------------------------------------------
 
     d->autoLevelsCB = new QCheckBox(i18n("Auto Levels"), this);
-    d->autoLevelsCB->setWhatsThis( i18n("Set on this option to use an automatic levels for pyramid blending."));
+    d->autoLevelsCB->setWhatsThis( i18n("Set automatic level selection (maximized) for pyramid blending."));
 
     d->levelsLabel  = new QLabel(i18n("Levels:"));
     d->levelsInput  = new RIntNumInput();
     d->levelsInput->setRange(1, 50, 1);
     d->levelsInput->setSliderEnabled(true);
     d->levelsInput->setDefaultValue(20);
-    d->levelsInput->setWhatsThis(i18n("Set here the levels adjustment for pyramid blending."));
+    d->levelsInput->setWhatsThis(i18n("Set the number levels for pyramid blending."));
 
     d->hardMaskCB = new QCheckBox(i18n("Hard Mask"), this);
     d->hardMaskCB->setWhatsThis(i18n("Force hard blend masks and no averaging on finest "
                                      "scale. This is especially useful for focus "
                                      "stacks with thin and high contrast features, "
-                                     "but leads to increased noise."));
+                                     "improves sharpness at the expense of increased noise."));
 
     d->exposureLabel = new QLabel(i18n("Exposure:"));
     d->exposureInput = new RDoubleNumInput();
     d->exposureInput->setDecimals(2);
     d->exposureInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->exposureInput->setDefaultValue(1.0);
-    d->exposureInput->setWhatsThis( i18n("Set here the exposure adjustment for fusion process."));
+    d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
+                                          "Higher values will favour well-exposed pixels."));
 
     d->saturationLabel = new QLabel(i18n("Saturation:"));
     d->saturationInput = new RDoubleNumInput();
     d->saturationInput->setDecimals(2);
     d->saturationInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->saturationInput->setDefaultValue(0.2);
-    d->saturationInput->setWhatsThis( i18n("Set here the saturation adjustment for fusion process."));
+    d->saturationInput->setWhatsThis( i18n("Increasing this value makes pixels with high "
+                                           "saturation contribute more to the final output."));
 
     d->contrastLabel = new QLabel(i18n("Contrast:"));
     d->contrastInput = new RDoubleNumInput();
     d->contrastInput->setDecimals(2);
     d->contrastInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->contrastInput->setDefaultValue(0.0);
-    d->contrastInput->setWhatsThis( i18n("Set here the contrast adjustment for fusion process."));
+    d->contrastInput->setWhatsThis( i18n("Sets the relative weight of high-contrast pixels."));
 
     d->ciecam02CB = new QCheckBox(i18n("Use Color Appearance Modelling"), this);
-    d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render details colors."));
+    d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render detailed colors."));
 
     // ------------------------------------------------------------------------
 

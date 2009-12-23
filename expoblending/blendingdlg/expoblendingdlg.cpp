@@ -129,7 +129,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setCaption(i18n("Exposure Blending"));
 
     setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Save Current Processed image."));
+    setButtonToolTip(User1, i18n("Save currently processed image."));
     setButtonIcon(   User1, KIcon("document-save"));
 
     setButtonText(   User2, i18n("Pro&cess"));
@@ -413,7 +413,7 @@ void ExpoBlendingDlg::slotUser3()
 
 void ExpoBlendingDlg::processing(const KUrl& /*url*/)
 {
-    d->previewWidget->setBusy(true, i18n("Processing Bracketed Images..."));
+    d->previewWidget->setBusy(true, i18n("Processing bracketed images..."));
 }
 
 void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
@@ -424,7 +424,7 @@ void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
 void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)
 {
     d->previewWidget->setBusy(false);
-    d->previewWidget->setText(i18n("Failed to Process Bracketed Images"), Qt::red);
+    d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
 }
 
 void ExpoBlendingDlg::clearEnfusedTmpFile()
