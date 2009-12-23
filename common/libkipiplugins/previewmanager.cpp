@@ -105,7 +105,7 @@ PreviewManager::PreviewManager(QWidget* parent)
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
 
     d->preview = new PreviewImage(this);
-    
+
     insertWidget(MessageMode, vbox);
     insertWidget(PreviewMode, d->preview);
 
@@ -163,12 +163,6 @@ void PreviewManager::setBusy(bool b, const QString& text)
         setText(text);
     }
 }
-
-/*
-void PreviewManager::resizeEvent(QResizeEvent*)
-{
-}
-*/
 
 void PreviewManager::slotProgressTimerDone()
 {

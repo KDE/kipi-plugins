@@ -73,7 +73,7 @@ public:
     QAction*              zoomInAction;
     QAction*              zoomOutAction;
     QAction*              zoom2FitAction;
-    
+
     QToolBar*             toolBar;
 };
 
@@ -92,7 +92,7 @@ PreviewImage::PreviewImage(QWidget* parent)
     setScene(d->scene);
 
     // create context menu
-    
+
     d->zoomInAction = new QAction(KIcon("zoom-in"), i18n("Zoom In"), this);
     d->zoomInAction->setShortcut(Qt::Key_Plus);
     connect(d->zoomInAction, SIGNAL(triggered()),
@@ -112,9 +112,9 @@ PreviewImage::PreviewImage(QWidget* parent)
     addAction(d->zoomOutAction);
     addAction(d->zoom2FitAction);
     setContextMenuPolicy(Qt::ActionsContextMenu);
-    
+
     // Create ToolBar
-    
+
     d->toolBar = new QToolBar(this);
     d->toolBar->addAction(d->zoomInAction);
     d->toolBar->addAction(d->zoomOutAction);

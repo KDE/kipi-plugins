@@ -49,7 +49,7 @@ public:
         MessageMode = 0,
         PreviewMode
     };
-    
+
 public:
 
     PreviewManager(QWidget* parent);

@@ -53,7 +53,7 @@ public:
     ~PreviewImage();
 
     bool load(const QString& file);
-    
+
 public Q_SLOTS:
 
     void slotZoomIn();
