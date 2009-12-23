@@ -77,7 +77,7 @@ extern "C"
 #include "actionthread.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "previewimage.h"
+#include "previewmanager.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
 
@@ -105,7 +105,7 @@ public:
 
     KUrl                 inputFile;
 
-    PreviewImage*        previewWidget;
+    PreviewManager*      previewWidget;
 
     ActionThread*        thread;
 
@@ -134,12 +134,12 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     setMainWidget( page );
     QGridLayout *mainLayout = new QGridLayout(page);
 
-    d->previewWidget        = new PreviewImage(page);
+    d->previewWidget        = new PreviewManager(page);
 
     // ---------------------------------------------------------------
 
-    d->decodingSettingsBox  = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS |
-                                                            DcrawSettingsWidget::COLORSPACE |
+    d->decodingSettingsBox  = new DcrawSettingsWidget(page, DcrawSettingsWidget::SIXTEENBITS    |
+                                                            DcrawSettingsWidget::COLORSPACE     |
                                                             DcrawSettingsWidget::POSTPROCESSING |
                                                             DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->saveSettingsBox      = new SaveSettingsWidget(d->decodingSettingsBox);

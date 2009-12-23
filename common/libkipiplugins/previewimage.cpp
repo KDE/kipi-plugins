@@ -25,58 +25,85 @@
 
 // Qt includes
 
+#include <QAction>
+#include <QLabel>
 #include <QTimer>
 #include <QImage>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
+#include <QWheelEvent>
+#include <QScrollBar>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kicon.h>
+#include <kvbox.h>
 
 namespace KIPIPlugins
 {
 
 class PreviewImagePriv
 {
+
 public:
 
     PreviewImagePriv()
     {
-        textColor     = Qt::white;
-        progressPix   = SmallIcon("process-working", 22);
-        progressCount = 0;
-        progressTimer = 0;
-        busy          = false;
+        pixmapItem     = 0;
+        scene          = 0;
+        zoomInAction   = 0;
+        zoomOutAction  = 0;
+        zoom2FitAction = 0;
     }
 
-    bool     busy;
+    int                   lastdx;
+    int                   lastdy;
 
-    QPixmap  pix;
-    QPixmap  thumbnail;
+    QGraphicsScene*       scene;
+    QGraphicsPixmapItem*  pixmapItem;
 
-    QString  text;
-    QColor   textColor;
-    QImage   image;
-
-    QPixmap  processAnim;
-    QPixmap  progressPix;
-    int      progressCount;
-    QTimer*  progressTimer;
+    QAction*              zoomInAction;
+    QAction*              zoomOutAction;
+    QAction*              zoom2FitAction;
 };
 
 PreviewImage::PreviewImage(QWidget* parent)
-             : QWidget(parent), d(new PreviewImagePriv)
+            : QGraphicsView(parent), d(new PreviewImagePriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setMinimumSize(QSize(400, 300));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->progressTimer = new QTimer(this);
+    setMouseTracking(true);
+    setCacheMode(QGraphicsView::CacheBackground);
 
-    connect(d->progressTimer, SIGNAL(timeout()),
-            this, SLOT(slotProgressTimerDone()));
+    d->scene      = new QGraphicsScene;
+    d->pixmapItem = new QGraphicsPixmapItem;
+
+    d->scene->addItem(d->pixmapItem);
+    setScene(d->scene);
+
+    // create context menu
+    d->zoomInAction = new QAction(KIcon("zoom-in"), i18n("Zoom In"), this);
+    connect(d->zoomInAction, SIGNAL(triggered()),
+            this, SLOT(slotZoomIn()));
+
+    d->zoomOutAction = new QAction(KIcon("zoom-out"), i18n("Zoom Out"), this);
+    connect(d->zoomOutAction, SIGNAL(triggered()),
+            this, SLOT(SlotZoomOut()));
+
+    d->zoom2FitAction = new QAction(KIcon("zoom-fit-best"), i18n("Zoom to Fit"), this);
+    connect(d->zoom2FitAction, SIGNAL(triggered()),
+            this, SLOT(slotZoom2Fit()));
+
+    addAction(d->zoomInAction);
+    addAction(d->zoomOutAction);
+    addAction(d->zoom2FitAction);
+    setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
 PreviewImage::~PreviewImage()
@@ -84,132 +111,86 @@ PreviewImage::~PreviewImage()
     delete d;
 }
 
-void PreviewImage::load(const QString& file)
+bool PreviewImage::load(const QString& file)
 {
-    d->text.clear();
-    d->thumbnail = QPixmap();
-    d->pix.fill(Qt::black);
-    d->image.load(file);
-    setBusy(false);
+    QImage image(file);
 
-    if (!d->image.isNull())
+    if (!image.isNull())
     {
-        QImage img = d->image.scaled(width(), height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        int x      = d->pix.width()/2  - img.width()/2;
-        int y      = d->pix.height()/2 - img.height()/2;
+        d->pixmapItem->setPixmap(QPixmap::fromImage(image));
+        d->pixmapItem->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+        d->scene->setSceneRect(0, 0, image.width(), image.height());
+        return true;
+    }
 
-        QPainter p(&d->pix);
-        p.drawImage(x, y, img);
-        p.setPen(QPen(Qt::white));
-        p.drawRect(x, y, img.width(), img.height());
-        p.end();
+    return false;
+}
+
+void PreviewImage::slotZoomIn()
+{
+    scale(1.5, 1.5);
+}
+
+void PreviewImage::slotZoomOut()
+{
+    scale(1.0 / 1.5, 1.0 / 1.5);
+}
+
+void PreviewImage::slotZoom2Fit()
+{
+    fitInView(d->pixmapItem->boundingRect(), Qt::KeepAspectRatio);
+}
+
+void PreviewImage::wheelEvent(QWheelEvent *e)
+{
+    if(e->modifiers() == Qt::ControlModifier)
+    {
+        if(e->delta() > 0)
+        {
+            slotZoomIn();
+        }
+        else
+        {
+            slotZoomOut();
+        }
     }
     else
     {
-        setText(i18n( "Failed to load image after processing" ));
-        return;
+        QGraphicsView::wheelEvent(e);
     }
-
-    update();
 }
 
-void PreviewImage::setText(const QString& text, const QColor& color)
+void PreviewImage::mousePressEvent(QMouseEvent* e)
 {
-    d->text      = text;
-    d->textColor = color;
-    update();
-}
-
-void PreviewImage::setThumbnail(const QPixmap& thumbnail)
-{
-    d->thumbnail = thumbnail;
-    update();
-}
-
-void PreviewImage::setBusy(bool b, const QString& text)
-{
-    d->busy = b;
-
-    if (d->busy)
+    if (e->button() == Qt::LeftButton)
     {
-        setCursor( Qt::WaitCursor );
-        d->text      = text;
-        d->textColor = Qt::white;
-        d->progressTimer->start(300);
+        d->lastdx = e->x();
+        d->lastdy = e->y();
+        setCursor(Qt::ClosedHandCursor);
     }
-    else
-    {
+}
+
+void PreviewImage::mouseReleaseEvent(QMouseEvent* e)
+{
+    if (e->button() == Qt::LeftButton)
         unsetCursor();
-        d->progressTimer->stop();
-    }
 }
 
-void PreviewImage::paintEvent(QPaintEvent*)
+void PreviewImage::mouseMoveEvent(QMouseEvent* e)
 {
-    d->pix = QPixmap(width(), height());
-    d->pix.fill(Qt::black);
-
-    if (!d->text.isEmpty() || d->busy || !d->thumbnail.isNull())
+    if (e->buttons() & Qt::LeftButton)
     {
-        QPainter p(&d->pix);
-
-        if (d->busy)
-        {
-            p.drawPixmap((d->pix.width()/2)  - (d->processAnim.width()/2),
-                         (d->pix.height()/3) - (d->processAnim.height()/2),
-                         d->processAnim);
-        }
-        else if (!d->thumbnail.isNull())
-        {
-            p.drawPixmap(d->pix.width()/2-d->thumbnail.width()/2, d->pix.height()/4-d->thumbnail.height()/2,
-                         d->thumbnail, 0, 0, d->thumbnail.width(), d->thumbnail.height());
-            p.setPen(QPen(Qt::white));
-            p.drawRect(d->pix.width()/2-d->thumbnail.width()/2, d->pix.height()/4-d->thumbnail.height()/2,
-                       d->thumbnail.width()-1, d->thumbnail.height()-1);
-        }
-
-        p.setPen(QPen(d->textColor));
-        p.drawText(0, 0, d->pix.width(), d->pix.height(),
-                    Qt::AlignCenter|Qt::TextWordWrap, d->text);
-
-        p.end();
+        int dx        = e->x() - d->lastdx;
+        int dy        = e->y() - d->lastdy;
+        verticalScrollBar()->setValue(verticalScrollBar()->value() - dy);
+        horizontalScrollBar()->setValue(horizontalScrollBar()->value() - dx);
+        d->lastdx = e->x();
+        d->lastdy = e->y();
     }
     else
     {
-        if (!d->image.isNull())
-        {
-            QImage img = d->image.scaled(width(),height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            int x      = d->pix.width()/2  - img.width()/2;
-            int y      = d->pix.height()/2 - img.height()/2;
-
-            QPainter p(&d->pix);
-            p.drawImage(x, y, img);
-            p.setPen(QPen(Qt::white));
-            p.drawRect(x, y, img.width()-1, img.height()-1);
-            p.end();
-        }
+        setCursor(Qt::OpenHandCursor);
     }
-
-    QPainter p(this);
-    p.drawPixmap(0, 0, d->pix);
-    p.end();
-}
-
-void PreviewImage::resizeEvent(QResizeEvent*)
-{
-    update();
-}
-
-void PreviewImage::slotProgressTimerDone()
-{
-    d->processAnim = QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22));
-    update();
-
-    d->progressCount++;
-    if (d->progressCount == 8)
-        d->progressCount = 0;
-
-    d->progressTimer->start(300);
 }
 
 } // namespace KIPIPlugins

@@ -78,7 +78,7 @@ extern "C"
 #include "savesettingswidget.h"
 #include "aboutdata.h"
 #include "pluginsversion.h"
-#include "previewimage.h"
+#include "previewmanager.h"
 #include "actionthread.h"
 #include "bracketstack.h"
 
@@ -106,7 +106,7 @@ public:
 
     KUrl                  enfusedTmpUrl;
 
-    PreviewImage*         previewWidget;
+    PreviewManager*       previewWidget;
 
     RExpanderBox*         settingsExpander;
 
@@ -149,7 +149,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     QGridLayout *grid = new QGridLayout(page);
     setMainWidget(page);
 
-    d->previewWidget  = new PreviewImage(page);
+    d->previewWidget  = new PreviewManager(page);
     d->list           = new BracketStackList(d->mngr->iface(), page);
 
     // ---------------------------------------------------------------

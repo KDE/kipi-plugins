@@ -9,6 +9,7 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          imagedialog.cpp
                          kpwritehelp.cpp
                          savesettingswidget.cpp
+                         previewmanager.cpp
                          previewimage.cpp
                          wizardpage.cpp
                          )

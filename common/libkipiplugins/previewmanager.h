@@ -3,8 +3,8 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2009-12-13
- * Description : a widget to preview image effect.
+ * Date        : 2009-12-23
+ * Description : a widget to manage preview.
  *
  * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -21,12 +21,12 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_IMAGE_H
-#define PREVIEW_IMAGE_H
+#ifndef PREVIEW_MANAGER_H
+#define PREVIEW_MANAGER_H
 
 // Qt includes
 
-#include <QGraphicsView>
+#include <QStackedWidget>
 #include <QString>
 #include <QColor>
 
@@ -34,43 +34,41 @@
 
 #include "kipiplugins_export.h"
 
-class QResizeEvent;
-class QWheelEvent;
-class QMouseEvent;
-
 namespace KIPIPlugins
 {
-class PreviewImagePriv;
+class PreviewManagerPriv;
 
-class KIPIPLUGINS_EXPORT PreviewImage : public QGraphicsView
+class KIPIPLUGINS_EXPORT PreviewManager : public QStackedWidget
 {
     Q_OBJECT
 
 public:
 
-    PreviewImage(QWidget* parent);
-    ~PreviewImage();
+    enum DisplayMode
+    {
+        MessageMode = 0,
+        PreviewMode
+    };
+    
+public:
 
-    bool load(const QString& file);
+    PreviewManager(QWidget* parent);
+    ~PreviewManager();
 
-public Q_SLOTS:
+    void load(const QString& file);
+    void setText(const QString& text, const QColor& color=Qt::white);
+    void setBusy(bool b, const QString& text=QString());
+    void setThumbnail(const QPixmap& preview=QPixmap());
 
-    void slotZoomIn();
-    void slotZoomOut();
-    void slotZoom2Fit();
+private Q_SLOTS:
 
-protected:
-
-    void wheelEvent(QWheelEvent*);
-    void mousePressEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
-    void mouseMoveEvent(QMouseEvent*);
+    void slotProgressTimerDone();
 
 private:
 
-    PreviewImagePriv* const d;
+    PreviewManagerPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* PREVIEW_IMAGE_H */
+#endif /* PREVIEW_MANAGER_H */
