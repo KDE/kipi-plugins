@@ -37,6 +37,7 @@
 #include <QGraphicsProxyWidget>
 #include <QWheelEvent>
 #include <QScrollBar>
+#include <QToolBar>
 
 // KDE includes
 
@@ -60,6 +61,7 @@ public:
         zoomInAction   = 0;
         zoomOutAction  = 0;
         zoom2FitAction = 0;
+        toolBar        = 0;
     }
 
     int                   lastdx;
@@ -71,6 +73,8 @@ public:
     QAction*              zoomInAction;
     QAction*              zoomOutAction;
     QAction*              zoom2FitAction;
+    
+    QToolBar*             toolBar;
 };
 
 PreviewImage::PreviewImage(QWidget* parent)
@@ -88,15 +92,19 @@ PreviewImage::PreviewImage(QWidget* parent)
     setScene(d->scene);
 
     // create context menu
+    
     d->zoomInAction = new QAction(KIcon("zoom-in"), i18n("Zoom In"), this);
+    d->zoomInAction->setShortcut(Qt::Key_Plus);
     connect(d->zoomInAction, SIGNAL(triggered()),
             this, SLOT(slotZoomIn()));
 
     d->zoomOutAction = new QAction(KIcon("zoom-out"), i18n("Zoom Out"), this);
+    d->zoomOutAction->setShortcut(Qt::Key_Minus);
     connect(d->zoomOutAction, SIGNAL(triggered()),
-            this, SLOT(SlotZoomOut()));
+            this, SLOT(slotZoomOut()));
 
     d->zoom2FitAction = new QAction(KIcon("zoom-fit-best"), i18n("Zoom to Fit"), this);
+    d->zoom2FitAction->setShortcut(Qt::Key_Asterisk);
     connect(d->zoom2FitAction, SIGNAL(triggered()),
             this, SLOT(slotZoom2Fit()));
 
@@ -104,6 +112,14 @@ PreviewImage::PreviewImage(QWidget* parent)
     addAction(d->zoomOutAction);
     addAction(d->zoom2FitAction);
     setContextMenuPolicy(Qt::ActionsContextMenu);
+    
+    // Create ToolBar
+    
+    d->toolBar = new QToolBar(this);
+    d->toolBar->addAction(d->zoomInAction);
+    d->toolBar->addAction(d->zoomOutAction);
+    d->toolBar->addAction(d->zoom2FitAction);
+    d->toolBar->hide();
 }
 
 PreviewImage::~PreviewImage()
@@ -180,8 +196,8 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
 {
     if (e->buttons() & Qt::LeftButton)
     {
-        int dx        = e->x() - d->lastdx;
-        int dy        = e->y() - d->lastdy;
+        int dx    = e->x() - d->lastdx;
+        int dy    = e->y() - d->lastdy;
         verticalScrollBar()->setValue(verticalScrollBar()->value() - dy);
         horizontalScrollBar()->setValue(horizontalScrollBar()->value() - dx);
         d->lastdx = e->x();
@@ -191,6 +207,16 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
     {
         setCursor(Qt::OpenHandCursor);
     }
+}
+
+void PreviewImage::enterEvent(QEvent*)
+{
+    d->toolBar->show();
+}
+
+void PreviewImage::leaveEvent(QEvent*)
+{
+    d->toolBar->hide();
 }
 
 } // namespace KIPIPlugins

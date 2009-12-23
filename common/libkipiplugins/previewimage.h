@@ -37,6 +37,7 @@
 class QResizeEvent;
 class QWheelEvent;
 class QMouseEvent;
+class QEvent;
 
 namespace KIPIPlugins
 {
@@ -52,7 +53,7 @@ public:
     ~PreviewImage();
 
     bool load(const QString& file);
-
+    
 public Q_SLOTS:
 
     void slotZoomIn();
@@ -65,7 +66,9 @@ protected:
     void mousePressEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
-
+    void enterEvent(QEvent*);
+    void leaveEvent(QEvent*);
+    
 private:
 
     PreviewImagePriv* const d;

@@ -51,14 +51,14 @@ public:
 
     PreviewManagerPriv()
     {
-        progressPix    = SmallIcon("process-working", 22);
-        progressCount  = 0;
-        progressTimer  = 0;
-        progressLabel  = 0;
-        thumbLabel     = 0;
-        busy           = false;
-        textLabel      = 0;
-        preview        = 0;
+        progressPix   = SmallIcon("process-working", 22);
+        progressCount = 0;
+        progressTimer = 0;
+        progressLabel = 0;
+        thumbLabel    = 0;
+        busy          = false;
+        textLabel     = 0;
+        preview       = 0;
     }
 
     bool          busy;
@@ -105,7 +105,7 @@ PreviewManager::PreviewManager(QWidget* parent)
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
 
     d->preview = new PreviewImage(this);
-
+    
     insertWidget(MessageMode, vbox);
     insertWidget(PreviewMode, d->preview);
 
