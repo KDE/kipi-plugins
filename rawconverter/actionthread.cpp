@@ -238,29 +238,29 @@ void ActionThread::run()
                             identify = info.make + QString("-") + info.model;
                         else
                         {
-                            identify = i18n("Make: %1\n", info.make);
-                            identify.append(i18n("Model: %1\n", info.model));
+                            identify = i18n("<br>Make: %1<br>", info.make);
+                            identify.append(i18n("Model: %1<br>", info.model));
 
                             if (info.dateTime.isValid())
                             {
-                                identify.append(i18n("Created: %1\n",
+                                identify.append(i18n("Created: %1<br>",
                                          KGlobal::locale()->formatDateTime(info.dateTime,
                                                                            KLocale::ShortDate, true)));
                             }
 
                             if (info.aperture != -1.0)
                             {
-                                identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
+                                identify.append(i18n("Aperture: f/%1<br>", QString::number(info.aperture)));
                             }
 
                             if (info.focalLength != -1.0)
                             {
-                                identify.append(i18n("Focal: %1 mm\n", info.focalLength));
+                                identify.append(i18n("Focal: %1 mm<br>", info.focalLength));
                             }
 
                             if (info.exposureTime != -1.0)
                             {
-                                identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
+                                identify.append(i18n("Exposure: 1/%1 s<br>", info.exposureTime));
                             }
 
                             if (info.sensitivity != -1)
