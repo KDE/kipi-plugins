@@ -8,6 +8,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
 SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/alignbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
