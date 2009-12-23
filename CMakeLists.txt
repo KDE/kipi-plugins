@@ -28,7 +28,7 @@ SET(KIPIPLUGINS_VERSION_STRING
    )
 
 # =======================================================
-# some useful macros
+# some useful macros for printing status information
 
 SET(PRINT_COMPILE_LENGTH "40")
 MACRO(FILL_WITH_DOTS VAR)
