@@ -2,13 +2,25 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to blend bracketed images
+Comment[en_GB]=A tool to blend bracketed images
+Comment[pt]=Uma ferramenta para mostrar imagens delimitadas
+Comment[sv]=Ett verktyg för att blanda avgränsade bilder
 Comment[uk]=Інструмент для злиття зображень «вилки»
+Comment[x-test]=xxA tool to blend bracketed imagesxx
 Exec=expoblending %i -caption "%c" %U
 GenericName=Exposure Blending
+GenericName[en_GB]=Exposure Blending
+GenericName[pt]=Mistura da Exposição
+GenericName[sv]=Exponeringsblandning
 GenericName[uk]=Злиття експозиції
+GenericName[x-test]=xxExposure Blendingxx
 Icon=expoblending
 Name=ExpoBlending
+Name[en_GB]=ExpoBlending
+Name[pt]=Mistura da Exposição
+Name[sv]=Exponeringsblandning
 Name[uk]=Злиття експозиції
+Name[x-test]=xxExpoBlendingxx
 Path=
 StartupNotify=true
 Terminal=false
