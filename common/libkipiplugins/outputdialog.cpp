@@ -55,6 +55,7 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
     setButtons(Ok | Help | User1);
     setButtonText(User1, i18n("Copy to Clip&board"));
     setDefaultButton(Ok);
+    showButton(Help, false);
 
     //---------------------------------------------
 
@@ -94,6 +95,7 @@ void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
     m_handbookName = handbookName;
+    showButton(Help, true);
 }
 
 void OutputDialog::slotHelp()
