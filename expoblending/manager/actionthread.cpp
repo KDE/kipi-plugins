@@ -326,6 +326,7 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
     d->alignProcess->clearProgram();
     d->alignProcess->clearEnvironment();
     d->alignProcess->setWorkingDirectory(d->alignTmpDir->name());
+    d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
     QStringList args;
     args << "align_image_stack";
@@ -469,6 +470,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     d->enfuseProcess = new KProcess;
     d->enfuseProcess->clearProgram();
     d->enfuseProcess->clearEnvironment();
+    d->enfuseProcess->setOutputChannelMode(KProcess::MergedChannels);
     QStringList args;
     args << "enfuse";
 

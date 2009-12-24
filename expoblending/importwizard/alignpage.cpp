@@ -28,6 +28,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QPixmap>
+#include <QPushButton>
 
 // KDE includes
 
@@ -46,9 +47,12 @@
 
 // Local includes
 
+#include "outputdialog.h"
 #include "alignbinary.h"
 #include "manager.h"
 #include "actionthread.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -65,16 +69,21 @@ public:
         progressLabel = 0,
         mngr          = 0;
         title         = 0;
+        detailsBtn    = 0;
     }
 
-    int      progressCount;
-    QLabel*  progressLabel;
-    QPixmap  progressPix;
-    QTimer*  progressTimer;
+    int          progressCount;
+    QLabel*      progressLabel;
+    QPixmap      progressPix;
+    QTimer*      progressTimer;
 
-    QLabel*  title;
+    QLabel*      title;
 
-    Manager* mngr;
+    QString      output;
+
+    QPushButton* detailsBtn;
+
+    Manager*     mngr;
 };
 
 AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
@@ -89,8 +98,17 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
     d->title->setOpenExternalLinks(true);
     resetTitle();
 
+    KHBox* hbox = new KHBox(vbox);
+    d->detailsBtn    = new QPushButton(hbox);
+    d->detailsBtn->setText(i18n("Details..."));
+    d->detailsBtn->hide();
+    QLabel* space1   = new QLabel(hbox);
+    hbox->setStretchFactor(space1, 10);
+
     d->progressLabel = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
+    QLabel* space2   = new QLabel(vbox);
+    vbox->setStretchFactor(space2, 10);
 
     setPageWidget(vbox);
 
@@ -102,6 +120,9 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
+
+    connect(d->detailsBtn, SIGNAL(clicked()),
+            this, SLOT(slotShowDetails()));
 }
 
 AlignPage::~AlignPage()
@@ -162,6 +183,16 @@ void AlignPage::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
+void AlignPage::slotShowDetails()
+{
+    OutputDialog dlg(kapp->activeWindow(),
+                     i18n("Alignment Processing Messages"),
+                     d->output);
+                     i18n("Alignment Processing Messages"),
+    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
+    dlg.exec();
+}
+
 void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
 {
     QString text;
@@ -176,10 +207,13 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 {
                     d->title->setText(i18n("<qt>"
                                            "<p>Auto-alignment has failed !</p>"
-                                           "<p>Please check your bracketed images...</p>"
+                                           "<p>Please check your bracketed images stack...</p>"
+                                           "<p>Press \"Details\" button to show processing messages.</p>"
                                            "</qt>"));
                     d->progressTimer->stop();
+                    d->detailsBtn->show();
                     d->progressLabel->clear();
+                    d->output = ad.message;
                     emit signalAligned(ItemUrlsMap());
                     break;
                 }
