@@ -27,6 +27,10 @@
 
 #include <QString>
 
+// KDE includes
+
+#include <kurl.h>
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -45,6 +49,7 @@ public:
     QString            version()        const;
     bool               versionIsRight() const;
     QString            minimalVersion() const;
+    KUrl               url()            const;
 
     void               checkSystem();
 

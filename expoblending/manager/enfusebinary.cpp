@@ -74,9 +74,14 @@ void EnfuseBinary::checkSystem()
 
     if (firstLine.startsWith(headerStarts))
     {
-        d->version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 1);
-        kDebug(AREA_CODE_LOADING) << "Found enfuse version: " << version() ;
+        d->version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
+        kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
     }
+}
+
+KUrl EnfuseBinary::url() const
+{
+    return KUrl("http://enblend.sourceforge.net");
 }
 
 const char *EnfuseBinary::path()

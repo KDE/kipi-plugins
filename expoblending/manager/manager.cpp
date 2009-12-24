@@ -40,6 +40,8 @@
 #include "importwizarddlg.h"
 #include "expoblendingdlg.h"
 #include "actionthread.h"
+#include "alignbinary.h"
+#include "enfusebinary.h"
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -60,19 +62,22 @@ public:
     ItemUrlsMap            alignedUrlsMap;
 
     RawDecodingSettings    rawDecodingSettings;
-    
+
     Interface*             iface;
 
     ExpoBlendingAboutData* about;
 
     ActionThread*          thread;
+
+    AlignBinary            alignBinary;
+    EnfuseBinary           enfuseBinary;
 };
 
 Manager::Manager(QObject* parent)
        : QObject(parent), d(new ManagerPriv)
 {
     d->thread = new ActionThread(this);
-    
+
     d->rawDecodingSettings.sixteenBitsImage = true;
 }
 
@@ -81,6 +86,51 @@ Manager::~Manager()
     delete d->about;
     delete d->thread;
     delete d;
+}
+
+bool Manager::checkBinaries()
+{
+    if (!d->alignBinary.isAvailable() || !d->alignBinary.versionIsRight())
+    {
+        KMessageBox::information(
+                kapp->activeWindow(),
+                i18n("<p>Unable to find %1 executable:<br/> "
+                    "This program is required by this plugin to align bracketed images. "
+                    "Please install this program as a package from your distributor "
+                    "or <a href=\"%2\">download the source</a>.</p>"
+                    "<p>Note: at least, %3 version %4 is required by this plugin.</p>",
+                    QString(d->alignBinary.path()),
+                    d->alignBinary.url().url(),
+                    QString(d->alignBinary.path()),
+                    d->alignBinary.minimalVersion()),
+                QString(),
+                QString(),
+                KMessageBox::Notify | KMessageBox::AllowLink);
+
+        return false;
+    }
+
+    if (!d->enfuseBinary.isAvailable() || !d->enfuseBinary.versionIsRight())
+    {
+        KMessageBox::information(
+                kapp->activeWindow(),
+                i18n("<p>Unable to find %1 executable:<br/> "
+                    "This program is required by this plugin to fuse bracketed images. "
+                    "Please install this program as a package from your distributor "
+                    "or <a href=\"%2\">download the source</a>.</p>"
+                    "<p>Note: at least, %3 version %4 is required by this plugin.</p>",
+                    QString(d->enfuseBinary.path()),
+                    d->enfuseBinary.url().url(),
+                    QString(d->enfuseBinary.path()),
+                    d->enfuseBinary.minimalVersion()),
+                QString(),
+                QString(),
+                KMessageBox::Notify | KMessageBox::AllowLink);
+
+        return false;
+    }
+
+    return true;
 }
 
 void Manager::setAbout(ExpoBlendingAboutData* about)

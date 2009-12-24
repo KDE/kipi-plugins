@@ -69,14 +69,19 @@ void AlignBinary::checkSystem()
     // The output look like this : align_image_stack version 2009.2.0.4461
     QString headerStarts("align_image_stack version ");
 
-    QString stdOut(process.readAll());
-    QString firstLine = stdOut.section('\n', 1, 1);
+    QString stdOut(process.readAllStandardError());
+    QString firstLine = stdOut.section('\n', 1, 2);
 
     if (firstLine.startsWith(headerStarts))
     {
         d->version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
-        kDebug(AREA_CODE_LOADING) << "Found align_image_stack version: " << version() ;
+        kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
     }
+}
+
+KUrl AlignBinary::url() const
+{
+    return KUrl("http://hugin.sourceforge.net");
 }
 
 const char *AlignBinary::path()

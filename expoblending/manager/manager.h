@@ -63,6 +63,8 @@ public:
     Manager(QObject* parent=0);
     ~Manager();
 
+    bool checkBinaries();
+
     void setAbout(ExpoBlendingAboutData* about);
     ExpoBlendingAboutData* about() const;
 
@@ -74,7 +76,7 @@ public:
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings rawDecodingSettings() const;
-    
+
     void setAlignedMap(const ItemUrlsMap& urls);
     ItemUrlsMap alignedMap() const;
 

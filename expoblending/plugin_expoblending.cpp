@@ -102,6 +102,8 @@ void Plugin_ExpoBlending::slotActivate()
         return;
 
     Manager mngr;
+    if (!mngr.checkBinaries())
+        return;
     mngr.setItemsList(images.images());
     mngr.setAbout(new ExpoBlendingAboutData);
     mngr.setIface(m_interface);
