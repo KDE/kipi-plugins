@@ -34,7 +34,6 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
-#include <QGraphicsProxyWidget>
 #include <QWheelEvent>
 #include <QScrollBar>
 #include <QToolBar>
@@ -64,17 +63,17 @@ public:
         toolBar        = 0;
     }
 
-    int                   lastdx;
-    int                   lastdy;
+    int                  lastdx;
+    int                  lastdy;
 
-    QGraphicsScene*       scene;
-    QGraphicsPixmapItem*  pixmapItem;
+    QGraphicsScene*      scene;
+    QGraphicsPixmapItem* pixmapItem;
 
-    QAction*              zoomInAction;
-    QAction*              zoomOutAction;
-    QAction*              zoom2FitAction;
+    QAction*             zoomInAction;
+    QAction*             zoomOutAction;
+    QAction*             zoom2FitAction;
 
-    QToolBar*             toolBar;
+    QToolBar*            toolBar;
 };
 
 PreviewImage::PreviewImage(QWidget* parent)
