@@ -114,7 +114,10 @@ ActionThread::~ActionThread()
     wait();
 
     if (d->alignTmpDir)
+    {
         d->alignTmpDir->unlink();
+        delete d->alignTmpDir;
+    }
 
     delete d;
 }
@@ -296,6 +299,13 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
 {
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
+
+
+    if (d->alignTmpDir)
+    {
+        d->alignTmpDir->unlink();
+        delete d->alignTmpDir;
+    }
 
     d->alignTmpDir = new KTempDir(prefix);
 
