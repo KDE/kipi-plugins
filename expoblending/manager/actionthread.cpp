@@ -533,7 +533,7 @@ QString ActionThread::getProcessError(KProcess* proc) const
 {
     if (!proc) return QString();
 
-    QString std = proc->readAllStandardError();
+    QString std = proc->readAll();
     return (i18n("Cannot run %1 : %2", proc->program()[0], std.replace('\n', ' ')));
 }
 

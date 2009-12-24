@@ -98,17 +98,24 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
     d->title->setOpenExternalLinks(true);
     resetTitle();
 
-    KHBox* hbox = new KHBox(vbox);
+    QLabel* space1   = new QLabel(vbox);
+    KHBox* hbox      = new KHBox(vbox);
     d->detailsBtn    = new QPushButton(hbox);
     d->detailsBtn->setText(i18n("Details..."));
     d->detailsBtn->hide();
-    QLabel* space1   = new QLabel(hbox);
-    hbox->setStretchFactor(space1, 10);
+    QLabel* space2   = new QLabel(hbox);
+    hbox->setStretchFactor(space2, 10);
 
+    QLabel* space3   = new QLabel(vbox);
     d->progressLabel = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
-    QLabel* space2   = new QLabel(vbox);
-    vbox->setStretchFactor(space2, 10);
+    QLabel* space4   = new QLabel(vbox);
+
+    vbox->setStretchFactor(space1, 2);
+    vbox->setStretchFactor(space3, 2);
+    vbox->setStretchFactor(space4, 10);
+    vbox->setSpacing(KDialog::spacingHint());
+    vbox->setMargin(KDialog::spacingHint());
 
     setPageWidget(vbox);
 
