@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2004-10-01
- * Description : a kipi plugin to batch process images
+ * Date        : 2009-12-24
+ * Description : a dialog to display processed messages in background
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,22 +33,28 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
+#include "kipiplugins_export.h"
 
 class KTextBrowser;
 
-namespace KIPIBatchProcessImagesPlugin
+namespace KIPIPlugins
 {
 
-class OutputDialog : public KDialog
+class KPAboutData;
+
+class KIPIPLUGINS_EXPORT OutputDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit OutputDialog(QWidget* parent = 0, const QString& caption = QString(),
-                          const QString& Messages = QString(), const QString& Header = QString());
+    explicit OutputDialog(QWidget* parent=0,
+                          const QString& caption=QString(),
+                          const QString& Messages=QString(),
+                          const QString& Header=QString());
     ~OutputDialog();
+
+    void setAboutData(KPAboutData* about, const QString& handbookName);
 
 private Q_SLOTS:
 
@@ -57,11 +63,10 @@ private Q_SLOTS:
 
 private:
 
-    KTextBrowser*             m_debugView;
-
-    KIPIPlugins::KPAboutData* m_about;
+    QString       m_handbookName;
+    KTextBrowser* m_debugView;
 };
 
-}  // namespace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIPlugins
 
 #endif  // OUTPUTDIALOG_H

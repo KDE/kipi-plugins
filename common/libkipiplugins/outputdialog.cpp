@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2004-10-01
- * Description : a kipi plugin to batch process images
+ * Date        : 2009-12-24
+ * Description : a dialog to display processed messages in background
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,15 +20,12 @@
  *
  * ============================================================ */
 
-#include "outputdialog.h"
 #include "outputdialog.moc"
 
 // Qt includes
 
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QLayout>
-#include <QPushButton>
 
 // KDE includes
 
@@ -39,13 +36,14 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <ktextbrowser.h>
+#include <khelpmenu.h>
+#include <kpushbutton.h>
 
 // Local includes
 
-#include "dialogutils.h"
-#include "pluginsversion.h"
+#include "kpaboutdata.h"
 
-namespace KIPIBatchProcessImagesPlugin
+namespace KIPIPlugins
 {
 
 OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
@@ -57,26 +55,6 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
     setButtons(Ok | Help | User1);
     setButtonText(User1, i18n("Copy to Clip&board"));
     setDefaultButton(Ok);
-
-    // About data and help button.
-
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch processes images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("An interface to show the output of the \"Batch Process "
-                                                 "Images\" Kipi plugin.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" "
-                                                 "package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
-
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
-                       "caulier dot gilles at gmail dot com");
-
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
-                       "aurelien dot gateau at free dot fr");
-
-    DialogUtils::setupHelpButton(this, m_about);
 
     //---------------------------------------------
 
@@ -101,12 +79,26 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
 
 OutputDialog::~OutputDialog()
 {
-    delete m_about;
+}
+
+void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
+{
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setMenu(helpMenu->menu());
+    m_handbookName = handbookName;
 }
 
 void OutputDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("", "kipi-plugins");
+    KToolInvocation::invokeHelp(m_handbookName, "kipi-plugins");
 }
 
 void OutputDialog::slotCopyToCliboard()
@@ -116,4 +108,4 @@ void OutputDialog::slotCopyToCliboard()
     m_debugView->setPlainText(m_debugView->toPlainText());
 }
 
-}  // namespace KIPIBatchProcessImagesPlugin
+}  // namespace KIPIPlugins

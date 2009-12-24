@@ -68,6 +68,8 @@ extern "C"
 #include "pluginsversion.h"
 #include "ui_batchprocessimagesdialog.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIBatchProcessImagesPlugin
 {
 

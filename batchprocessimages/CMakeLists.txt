@@ -14,7 +14,6 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     batchprocessimagesdialog.cpp
     batchprocessimagesitem.cpp
     batchprocessimageslist.cpp
-    outputdialog.cpp
     imagepreview.cpp
     dialogutils.cpp
     pixmapview.cpp
