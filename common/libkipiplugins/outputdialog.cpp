@@ -24,7 +24,6 @@
 
 // Qt includes
 
-#include <QVBoxLayout>
 #include <QLabel>
 
 // KDE includes
@@ -38,6 +37,7 @@
 #include <ktextbrowser.h>
 #include <khelpmenu.h>
 #include <kpushbutton.h>
+#include <kvbox.h>
 
 // Local includes
 
@@ -46,9 +46,22 @@
 namespace KIPIPlugins
 {
 
+class OutputDialogPriv
+{
+public:
+
+    OutputDialogPriv()
+    {
+        debugView = 0;
+    }
+
+    QString       handbookName;
+    KTextBrowser* debugView;
+};
+
 OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
                            const QString& Messages, const QString& Header)
-            : KDialog(parent)
+            : KDialog(parent), d(new OutputDialogPriv)
 {
     setCaption(caption);
     setModal(true);
@@ -59,18 +72,15 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
 
     //---------------------------------------------
 
-    QWidget* box        = new QWidget(this);
-    QVBoxLayout *dvlay  = new QVBoxLayout(box);
-    QLabel *labelHeader = new QLabel(Header, box);
-    m_debugView         = new KTextBrowser(box);
-    m_debugView->append(Messages);
+    KVBox* vbox     = new KVBox(this);
+    QLabel *lHeader = new QLabel(vbox);
+    d->debugView    = new KTextBrowser(vbox);
+    d->debugView->append(Messages);
+    lHeader->setText(Header);
+    vbox->setSpacing(spacingHint());
+    vbox->setMargin(spacingHint());
 
-    dvlay->addWidget(labelHeader);
-    dvlay->addWidget(m_debugView);
-    dvlay->setSpacing(spacingHint());
-    dvlay->setMargin(spacingHint());
-
-    setMainWidget(box);
+    setMainWidget(vbox);
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotCopyToCliboard()));
@@ -80,6 +90,7 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
 
 OutputDialog::~OutputDialog()
 {
+    delete d;
 }
 
 void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
@@ -94,20 +105,20 @@ void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
-    m_handbookName = handbookName;
+    d->handbookName = handbookName;
     showButton(Help, true);
 }
 
 void OutputDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp(m_handbookName, "kipi-plugins");
+    KToolInvocation::invokeHelp(d->handbookName, "kipi-plugins");
 }
 
 void OutputDialog::slotCopyToCliboard()
 {
-    m_debugView->selectAll();
-    m_debugView->copy();
-    m_debugView->setPlainText(m_debugView->toPlainText());
+    d->debugView->selectAll();
+    d->debugView->copy();
+    d->debugView->setPlainText(d->debugView->toPlainText());
 }
 
 }  // namespace KIPIPlugins

@@ -35,12 +35,11 @@
 
 #include "kipiplugins_export.h"
 
-class KTextBrowser;
-
 namespace KIPIPlugins
 {
 
 class KPAboutData;
+class OutputDialogPriv;
 
 class KIPIPLUGINS_EXPORT OutputDialog : public KDialog
 {
@@ -63,8 +62,7 @@ private Q_SLOTS:
 
 private:
 
-    QString       m_handbookName;
-    KTextBrowser* m_debugView;
+    OutputDialogPriv* const d;
 };
 
 }  // namespace KIPIPlugins
