@@ -149,6 +149,7 @@ void ImportWizardDlg::next()
         // Next is handled with signals/slots
         return;
     }
+
     KAssistantDialog::next();
 }
 
@@ -159,7 +160,10 @@ void ImportWizardDlg::back()
         d->alignPage->cancelAlignement();
         KAssistantDialog::back();
         setValid(d->alignPage->page(), true);
+        return;
     }
+
+    KAssistantDialog::back();
 }
 
 void ImportWizardDlg::slotAligned(const ItemUrlsMap& alignedUrlsMap)
