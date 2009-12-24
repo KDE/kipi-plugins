@@ -46,6 +46,7 @@
 
 // Local includes
 
+#include "alignbinary.h"
 #include "manager.h"
 #include "actionthread.h"
 
@@ -112,12 +113,13 @@ void AlignPage::resetTitle()
 {
     d->title->setText(i18n("<qt>"
                            "<p>Now, we will align bracketed images before to fuse it.</p>"
-                           "<p>To do it, <b>align_image_stack</b> program from "
-                           "<a href='http://hugin.sourceforge.net'>Hugin</a> "
-                           "project will be used. Please, take a sure that it's installed "
-                           "on your computer.</p>"
+                           "<p>To do it, <b>%1</b> program from "
+                           "<a href='%2'>Hugin</a> "
+                           "project will be used.</p>"
                            "<p>Press \"Next\" button to start pre-processing and auto-alignment.</p>"
-                           "</qt>"));
+                           "</qt>",
+                           QString(d->mngr->alignBinary().path()),
+                           d->mngr->alignBinary().url().url()));
 }
 
 void AlignPage::processAlignement()

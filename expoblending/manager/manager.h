@@ -52,6 +52,8 @@ namespace KIPIExpoBlendingPlugin
 
 class ActionThread;
 class ExpoBlendingAboutData;
+class AlignBinary;
+class EnfuseBinary;
 class ManagerPriv;
 
 class Manager : public QObject
@@ -81,6 +83,8 @@ public:
     ItemUrlsMap alignedMap() const;
 
     ActionThread* thread() const;
+    AlignBinary&  alignBinary() const;
+    EnfuseBinary& enfuseBinary() const;
 
     void run();
 

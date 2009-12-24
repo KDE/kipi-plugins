@@ -143,6 +143,16 @@ ExpoBlendingAboutData* Manager::about() const
     return d->about;
 }
 
+AlignBinary& Manager::alignBinary() const
+{
+    return d->alignBinary;
+}
+
+EnfuseBinary& Manager::enfuseBinary() const
+{
+    return d->enfuseBinary;
+}
+
 void Manager::setIface(Interface* iface)
 {
     d->iface = iface;

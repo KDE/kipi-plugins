@@ -79,7 +79,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     d->itemsPage = new ItemsPage(d->mngr, this);
     //d->rawPage   = new RawPage(this);
     d->alignPage = new AlignPage(d->mngr, this);
-    d->lastPage  = new LastPage(this);
+    d->lastPage  = new LastPage(d->mngr, this);
 
     // ---------------------------------------------------------------
     // About data and help button.

@@ -30,12 +30,19 @@
 namespace KIPIExpoBlendingPlugin
 {
 
+class Manager;
+class LastPagePriv;
+
 class LastPage : public KIPIPlugins::WizardPage
 {
 public:
 
-    LastPage(KAssistantDialog* dlg);
+    LastPage(Manager* mngr, KAssistantDialog* dlg);
     ~LastPage();
+
+private:
+
+    LastPagePriv* const d;
 };
 
 }   // namespace KIPIExpoBlendingPlugin

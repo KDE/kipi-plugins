@@ -33,12 +33,31 @@
 #include <kvbox.h>
 #include <klocale.h>
 
+// Local includes
+
+#include "enfusebinary.h"
+#include "manager.h"
+
 namespace KIPIExpoBlendingPlugin
 {
 
-LastPage::LastPage(KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Alignement is Complete"))
+class LastPagePriv
 {
+public:
+
+    LastPagePriv()
+    {
+        mngr          = 0;
+    }
+
+    Manager* mngr;
+};
+
+LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
+        : KIPIPlugins::WizardPage(dlg, i18n("Alignement is Complete")),
+          d(new LastPagePriv)
+{
+    d->mngr       = mngr;
     KVBox *vbox   = new KVBox(this);
     QLabel *title = new QLabel(vbox);
     title->setOpenExternalLinks(true);
@@ -46,12 +65,13 @@ LastPage::LastPage(KAssistantDialog* dlg)
     title->setText(i18n("<qt>"
                         "<p><h1><b>Bracketed Images Alignement is Done</b></h1></p>"
                         "<p>Congratulation. Your images are aligned and ready to be fusioned. </p>"
-                        "To perform this operation, <b>enfuse</b> program from "
-                        "<a href='http://enblend.sourceforge.net'>Enblend</a> "
-                        "project will be used. Please, take a sure that it's installed "
-                        "on your computer.</p>"
+                        "To perform this operation, <b>%1</b> program from "
+                        "<a href='%2'>Enblend</a> "
+                        "project will be used.</p>"
                         "<p>Press \"Finish\" button to fuse your items and make a pseudo HDR image.</p>"
-                        "</qt>"));
+                        "</qt>",
+                        QString(d->mngr->enfuseBinary().path()),
+                        d->mngr->enfuseBinary().url().url()));
 
     setPageWidget(vbox);
 
@@ -61,6 +81,7 @@ LastPage::LastPage(KAssistantDialog* dlg)
 
 LastPage::~LastPage()
 {
+    delete d;
 }
 
 }   // namespace KIPIExpoBlendingPlugin
