@@ -122,6 +122,7 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->toolBar->addAction(d->zoomOutAction);
     d->toolBar->addAction(d->zoom2FitAction);
     d->toolBar->hide();
+    d->toolBar->installEventFilter(this);
 }
 
 PreviewImage::~PreviewImage()
@@ -222,6 +223,25 @@ void PreviewImage::enterEvent(QEvent*)
 void PreviewImage::leaveEvent(QEvent*)
 {
     d->toolBar->hide();
+}
+
+bool PreviewImage::eventFilter(QObject *obj, QEvent *ev)
+{
+    if ( obj == d->toolBar )
+    {
+        if ( ev->type() == QEvent::Enter)
+        {
+            setCursor(Qt::ArrowCursor);
+            return false;
+        }
+        else if ( ev->type() == QEvent::Leave)
+        {
+            unsetCursor();
+            return false;
+        }
+    }
+
+    return QGraphicsView::eventFilter(obj, ev);
 }
 
 } // namespace KIPIPlugins

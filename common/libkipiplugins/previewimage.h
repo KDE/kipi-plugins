@@ -68,7 +68,8 @@ protected:
     void mouseMoveEvent(QMouseEvent*);
     void enterEvent(QEvent*);
     void leaveEvent(QEvent*);
-    
+    bool eventFilter(QObject *obj, QEvent *ev);
+
 private:
 
     PreviewImagePriv* const d;
