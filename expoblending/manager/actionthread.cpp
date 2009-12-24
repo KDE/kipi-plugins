@@ -92,6 +92,7 @@ public:
     KDcraw                           rawdec;
 
     KTempDir*                        alignTmpDir;
+    KUrl::List                       enfuseTmpUrls;
 
     SaveSettingsWidget::OutputFormat outputFormat;
 
@@ -118,6 +119,10 @@ ActionThread::~ActionThread()
         d->alignTmpDir->unlink();
         delete d->alignTmpDir;
     }
+
+    // Cleanup all tmp files created by Enfuse process.
+    foreach(const KUrl url, d->enfuseTmpUrls)
+        KTempDir::removeDir(url.path());
 
     delete d;
 }
@@ -271,6 +276,9 @@ void ActionThread::run()
                     KExiv2 meta;
                     meta.load(t->urls[0].path());
                     meta.save(destUrl.path());
+
+                    // To be cleaned in destructor.
+                    d->enfuseTmpUrls << destUrl;
 
                     ActionData ad2;
                     ad2.action   = ENFUSE;
