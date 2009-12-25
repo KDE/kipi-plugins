@@ -22,14 +22,12 @@
 
 #include "binaryiface.h"
 
-// Qt includes
-
-#include <QProcess>
-
 // KDE includes
 
+#include <kapplication.h>
+#include <kmessagebox.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <klocale.h>
 
 namespace KIPIPlugins
 {
@@ -47,6 +45,32 @@ void BinaryIface::checkSystem()
 {
 }
 
+bool BinaryIface::showResults() const
+{
+    if (!isAvailable() || !versionIsRight())
+    {
+        KMessageBox::information(
+                kapp->activeWindow(),
+                i18n("<p>Unable to find %1 executable:<br/> "
+                    "This program is required by this plugin to align bracketed images. "
+                    "Please install this program from %2 package from your distributor "
+                    "or <a href=\"%3\">download the source</a>.</p>"
+                    "<p>Note: at least, %4 version %5 is required.</p>",
+                    path(),
+                    projectName(),
+                    url().url(),
+                    path(),
+                    minimalVersion()),
+                QString(),
+                QString(),
+                KMessageBox::Notify | KMessageBox::AllowLink);
+
+        return false;
+    }
+
+    return true;
+}
+
 bool BinaryIface::isAvailable() const
 {
     return m_available;
@@ -59,10 +83,10 @@ QString BinaryIface::version() const
 
 bool BinaryIface::versionIsRight() const
 {
-    if (m_version.isNull() || !isAvailable())
+    if (version().isNull() || !isAvailable())
         return false;
 
-    if (m_version.toFloat() >= minimalVersion().toFloat())
+    if (version().toFloat() >= minimalVersion().toFloat())
         return true;
 
     return false;
