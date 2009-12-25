@@ -75,8 +75,8 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
     QLabel *label1 = new QLabel(vbox);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
-                         "<p>Set here the list of your backeted images to fuse.</p>"
-                         "<p>At least 2 images must be added to the stack.</p>"
+                         "<p>Set here the list of your bracketed images to fuse.</p>"
+                         "<p>At least 2 images from the same subject must be added to the stack.</p>"
                          "<p>Do not mix images with different color depth.</p>"
                          "<p>All images must have the same dimensions.</p>"
                          "</qt>"));
