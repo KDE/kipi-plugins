@@ -96,10 +96,11 @@ bool Manager::checkBinaries()
                 kapp->activeWindow(),
                 i18n("<p>Unable to find %1 executable:<br/> "
                     "This program is required by this plugin to align bracketed images. "
-                    "Please install this program as a package from your distributor "
-                    "or <a href=\"%2\">download the source</a>.</p>"
-                    "<p>Note: at least, %3 version %4 is required by this plugin.</p>",
+                    "Please install this program from %2 package from your distributor "
+                    "or <a href=\"%3\">download the source</a>.</p>"
+                    "<p>Note: at least, %4 version %5 is required.</p>",
                     QString(d->alignBinary.path()),
+                    d->alignBinary.projectName(),
                     d->alignBinary.url().url(),
                     QString(d->alignBinary.path()),
                     d->alignBinary.minimalVersion()),
@@ -115,11 +116,12 @@ bool Manager::checkBinaries()
         KMessageBox::information(
                 kapp->activeWindow(),
                 i18n("<p>Unable to find %1 executable:<br/> "
-                    "This program is required by this plugin to fuse bracketed images. "
-                    "Please install this program as a package from your distributor "
-                    "or <a href=\"%2\">download the source</a>.</p>"
-                    "<p>Note: at least, %3 version %4 is required by this plugin.</p>",
+                    "This program is required by this plugin to align bracketed images. "
+                    "Please install this program from %2 package from your distributor "
+                    "or <a href=\"%3\">download the source</a>.</p>"
+                    "<p>Note: at least, %4 version %5 is required.</p>",
                     QString(d->enfuseBinary.path()),
+                    d->enfuseBinary.projectName(),
                     d->enfuseBinary.url().url(),
                     QString(d->enfuseBinary.path()),
                     d->enfuseBinary.minimalVersion()),

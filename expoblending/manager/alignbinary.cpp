@@ -84,6 +84,11 @@ KUrl AlignBinary::url() const
     return KUrl("http://hugin.sourceforge.net");
 }
 
+QString AlignBinary::projectName() const
+{
+    return QString("Hugin");
+}
+
 const char *AlignBinary::path()
 {
     return "align_image_stack";

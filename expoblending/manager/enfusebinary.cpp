@@ -84,6 +84,11 @@ KUrl EnfuseBinary::url() const
     return KUrl("http://enblend.sourceforge.net");
 }
 
+QString EnfuseBinary::projectName() const
+{
+    return QString("Enblend");
+}
+
 const char *EnfuseBinary::path()
 {
     return "enfuse";
