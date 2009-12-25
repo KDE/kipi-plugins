@@ -245,7 +245,6 @@ void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
     d->mngr->thread()->cancel();
     saveSettings();
     e->accept();
-    clearEnfusedTmpFile();
 }
 
 void ExpoBlendingDlg::slotClose()
@@ -253,7 +252,6 @@ void ExpoBlendingDlg::slotClose()
     d->mngr->thread()->cancel();
     saveSettings();
     done(Close);
-    clearEnfusedTmpFile();
 }
 
 void ExpoBlendingDlg::slotPreviewButtonClicked()
@@ -425,7 +423,6 @@ void ExpoBlendingDlg::slotUser2()
 void ExpoBlendingDlg::slotUser3()
 {
     d->mngr->thread()->cancel();
-    clearEnfusedTmpFile();
 }
 
 
@@ -444,12 +441,6 @@ void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)
     d->previewWidget->setBusy(false);
     d->previewWidget->setButtonVisible(true);
     d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
-}
-
-void ExpoBlendingDlg::clearEnfusedTmpFile()
-{
-    ::remove(QFile::encodeName(d->enfusedTmpUrl.path()));
-    d->enfusedTmpUrl.clear();
 }
 
 void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
@@ -491,7 +482,6 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(ENFUSE):
                 {
-                    clearEnfusedTmpFile();
                     d->output = ad.message;
                     processingFailed(ad.inUrls[0]);
                     busy(false);

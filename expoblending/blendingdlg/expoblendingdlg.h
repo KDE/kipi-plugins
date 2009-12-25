@@ -81,8 +81,6 @@ private:
     void processed(const KUrl& url, const KUrl& tmpFile);
     void processingFailed(const KUrl& url);
 
-    void clearEnfusedTmpFile();
-
 private Q_SLOTS:
 
     void slotDefault();
