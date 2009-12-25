@@ -27,6 +27,7 @@
 
 #include <QHeaderView>
 #include <QPainter>
+#include <QFileInfo>
 
 // KDE includes
 
@@ -57,7 +58,8 @@ EnfuseStackItem::~EnfuseStackItem()
 void EnfuseStackItem::setUrl(const KUrl& url)
 {
     m_url = url;
-    setText(1, m_url.fileName());
+    QFileInfo fi(m_url.path());
+    setText(1, fi.suffix());
 }
 
 KUrl EnfuseStackItem::url() const
@@ -73,11 +75,6 @@ void EnfuseStackItem::setThumbnail(const QPixmap& pix)
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
     setIcon(0, QIcon(pixmap));
-}
-
-void EnfuseStackItem::setExposure(const QString& exp)
-{
-    setText(2, exp);
 }
 
 bool EnfuseStackItem::isOn() const
@@ -115,15 +112,14 @@ EnfuseStackList::EnfuseStackList(Interface* iface, QWidget *parent)
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setColumnCount(3);
+    setColumnCount(2);
     setHeaderHidden(false);
     setDragEnabled(false);
     header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
     labels.append( i18n("Thumbnail") );
-    labels.append( i18n("File Name") );
-    labels.append( i18n("Exposure (EV)") );
+    labels.append( i18n("Format") );
     setHeaderLabels(labels);
 
     if (d->iface)

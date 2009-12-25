@@ -62,7 +62,6 @@ public:
     bool isOn() const;
 
     void setThumbnail(const QPixmap& pix);
-    void setExposure(const QString& exp);
 
 private:
 
