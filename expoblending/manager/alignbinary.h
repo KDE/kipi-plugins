@@ -23,20 +23,16 @@
 #ifndef ALIGNBINARY_H
 #define ALIGNBINARY_H
 
-// Qt includes
+// Local includes
 
-#include <QString>
+#include "binaryiface.h"
 
-// KDE includes
-
-#include <kurl.h>
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
 
-class AlignBinaryPriv;
-
-class AlignBinary
+class AlignBinary : public BinaryIface
 {
 
 public:
@@ -44,19 +40,12 @@ public:
     AlignBinary();
     ~AlignBinary();
 
-    static const char* path();
-    bool               isAvailable()    const;
-    QString            version()        const;
-    bool               versionIsRight() const;
-    QString            minimalVersion() const;
-    KUrl               url()            const;
-    QString            projectName()    const;
+    QString path()           const;
+    QString minimalVersion() const;
+    KUrl    url()            const;
+    QString projectName()    const;
 
-    void               checkSystem();
-
-private:
-
-    AlignBinaryPriv* const d;
+    void    checkSystem();
 };
 
 } // namespace KIPIExpoBlendingPlugin

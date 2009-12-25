@@ -23,20 +23,16 @@
 #ifndef ENFUSEBINARY_H
 #define ENFUSEBINARY_H
 
-// Qt includes
+// Local includes
 
-#include <QString>
+#include "binaryiface.h"
 
-// KDE includes
-
-#include <kurl.h>
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseBinaryPriv;
-
-class EnfuseBinary
+class EnfuseBinary : public BinaryIface
 {
 
 public:
@@ -44,19 +40,12 @@ public:
     EnfuseBinary();
     ~EnfuseBinary();
 
-    static const char* path();
-    bool               isAvailable()    const;
-    QString            version()        const;
-    bool               versionIsRight() const;
-    QString            minimalVersion() const;
-    KUrl               url()            const;
-    QString            projectName()    const;
+    QString path()           const;
+    QString minimalVersion() const;
+    KUrl    url()            const;
+    QString projectName()    const;
 
-    void               checkSystem();
-
-private:
-
-    EnfuseBinaryPriv* const d;
+    void    checkSystem();
 };
 
 } // namespace KIPIExpoBlendingPlugin

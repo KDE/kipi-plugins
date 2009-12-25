@@ -34,37 +34,20 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseBinaryPriv
-{
-public:
-
-    EnfuseBinaryPriv()
-    {
-        available = false;
-        version.clear();
-    }
-
-    bool    available;
-
-    QString version;
-};
-
 EnfuseBinary::EnfuseBinary()
-           : d(new EnfuseBinaryPriv)
+            : BinaryIface()
 {
-    checkSystem();
 }
 
 EnfuseBinary::~EnfuseBinary()
 {
-    delete d;
 }
 
 void EnfuseBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
-    d->available = process.waitForFinished();
+    m_available = process.waitForFinished();
 
     // The output look like this : ==== enfuse, version 3.2 ====
     QString headerStarts("==== enfuse, version ");
@@ -74,7 +57,7 @@ void EnfuseBinary::checkSystem()
 
     if (firstLine.startsWith(headerStarts))
     {
-        d->version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
+        m_version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
         kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
     }
 }
@@ -89,30 +72,9 @@ QString EnfuseBinary::projectName() const
     return QString("Enblend");
 }
 
-const char *EnfuseBinary::path()
+QString EnfuseBinary::path() const
 {
-    return "enfuse";
-}
-
-bool EnfuseBinary::isAvailable() const
-{
-    return d->available;
-}
-
-QString EnfuseBinary::version() const
-{
-    return d->version;
-}
-
-bool EnfuseBinary::versionIsRight() const
-{
-    if (d->version.isNull() || !isAvailable())
-        return false;
-
-    if (d->version.toFloat() >= minimalVersion().toFloat())
-        return true;
-
-    return false;
+    return QString("enfuse");
 }
 
 QString EnfuseBinary::minimalVersion() const

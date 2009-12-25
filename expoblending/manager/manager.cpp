@@ -24,11 +24,7 @@
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kwindowsystem.h>
 
 // LibKIPI includes
 
@@ -90,47 +86,11 @@ Manager::~Manager()
 
 bool Manager::checkBinaries()
 {
-    if (!d->alignBinary.isAvailable() || !d->alignBinary.versionIsRight())
-    {
-        KMessageBox::information(
-                kapp->activeWindow(),
-                i18n("<p>Unable to find %1 executable:<br/> "
-                    "This program is required by this plugin to align bracketed images. "
-                    "Please install this program from %2 package from your distributor "
-                    "or <a href=\"%3\">download the source</a>.</p>"
-                    "<p>Note: at least, %4 version %5 is required.</p>",
-                    QString(d->alignBinary.path()),
-                    d->alignBinary.projectName(),
-                    d->alignBinary.url().url(),
-                    QString(d->alignBinary.path()),
-                    d->alignBinary.minimalVersion()),
-                QString(),
-                QString(),
-                KMessageBox::Notify | KMessageBox::AllowLink);
-
+    if (!d->alignBinary.showResults())
         return false;
-    }
 
-    if (!d->enfuseBinary.isAvailable() || !d->enfuseBinary.versionIsRight())
-    {
-        KMessageBox::information(
-                kapp->activeWindow(),
-                i18n("<p>Unable to find %1 executable:<br/> "
-                    "This program is required by this plugin to align bracketed images. "
-                    "Please install this program from %2 package from your distributor "
-                    "or <a href=\"%3\">download the source</a>.</p>"
-                    "<p>Note: at least, %4 version %5 is required.</p>",
-                    QString(d->enfuseBinary.path()),
-                    d->enfuseBinary.projectName(),
-                    d->enfuseBinary.url().url(),
-                    QString(d->enfuseBinary.path()),
-                    d->enfuseBinary.minimalVersion()),
-                QString(),
-                QString(),
-                KMessageBox::Notify | KMessageBox::AllowLink);
-
+    if (!d->enfuseBinary.showResults())
         return false;
-    }
 
     return true;
 }

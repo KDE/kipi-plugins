@@ -34,37 +34,20 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-class AlignBinaryPriv
-{
-public:
-
-    AlignBinaryPriv()
-    {
-        available = false;
-        version.clear();
-    }
-
-    bool    available;
-
-    QString version;
-};
-
 AlignBinary::AlignBinary()
-           : d(new AlignBinaryPriv)
+           : BinaryIface()
 {
-    checkSystem();
 }
 
 AlignBinary::~AlignBinary()
 {
-    delete d;
 }
 
 void AlignBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
-    d->available = process.waitForFinished();
+    m_available = process.waitForFinished();
 
     // The output look like this : align_image_stack version 2009.2.0.4461
     QString headerStarts("align_image_stack version ");
@@ -74,7 +57,7 @@ void AlignBinary::checkSystem()
 
     if (firstLine.startsWith(headerStarts))
     {
-        d->version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
+        m_version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
         kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
     }
 }
@@ -89,30 +72,9 @@ QString AlignBinary::projectName() const
     return QString("Hugin");
 }
 
-const char *AlignBinary::path()
+QString AlignBinary::path() const
 {
-    return "align_image_stack";
-}
-
-bool AlignBinary::isAvailable() const
-{
-    return d->available;
-}
-
-QString AlignBinary::version() const
-{
-    return d->version;
-}
-
-bool AlignBinary::versionIsRight() const
-{
-    if (d->version.isNull() || !isAvailable())
-        return false;
-
-    if (d->version.toFloat() >= minimalVersion().toFloat())
-        return true;
-
-    return false;
+    return QString("align_image_stack");
 }
 
 QString AlignBinary::minimalVersion() const
