@@ -254,6 +254,12 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins
+                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/dialogs
+                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/dialogs
+                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/widgets
+                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/widgets
+                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
+                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools
                         ${KEXIV2_INCLUDE_DIR}
                         ${KDCRAW_INCLUDE_DIR}
                         ${KIPI_INCLUDE_DIR}

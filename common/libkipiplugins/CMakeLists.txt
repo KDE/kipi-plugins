@@ -1,19 +1,19 @@
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/pluginsversion.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/pluginsversion.h)
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
-SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
-                         kpwriteimage.cpp
-                         iccjpeg.c
-                         batchprogressdialog.cpp
-                         imageslist.cpp
-                         imagedialog.cpp
-                         kpwritehelp.cpp
-                         savesettingswidget.cpp
-                         previewmanager.cpp
-                         previewimage.cpp
-                         wizardpage.cpp
-                         outputdialog.cpp
-                         binaryiface.cpp
+SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/outputdialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewmanager.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewimage.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
