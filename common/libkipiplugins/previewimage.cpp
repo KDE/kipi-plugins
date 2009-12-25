@@ -123,6 +123,9 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->toolBar->addAction(d->zoom2FitAction);
     d->toolBar->hide();
     d->toolBar->installEventFilter(this);
+
+    horizontalScrollBar()->installEventFilter(this);
+    verticalScrollBar()->installEventFilter(this);
 }
 
 PreviewImage::~PreviewImage()
@@ -230,15 +233,29 @@ bool PreviewImage::eventFilter(QObject *obj, QEvent *ev)
     if ( obj == d->toolBar )
     {
         if ( ev->type() == QEvent::Enter)
-        {
             setCursor(Qt::ArrowCursor);
-            return false;
-        }
         else if ( ev->type() == QEvent::Leave)
-        {
             unsetCursor();
-            return false;
-        }
+
+        return false;
+    }
+    else if ( obj == verticalScrollBar() && verticalScrollBar()->isVisible())
+    {
+        if ( ev->type() == QEvent::Enter)
+            setCursor(Qt::ArrowCursor);
+        else if ( ev->type() == QEvent::Leave)
+            unsetCursor();
+
+        return false;
+    }
+    else if ( obj == horizontalScrollBar() && horizontalScrollBar()->isVisible())
+    {
+        if ( ev->type() == QEvent::Enter)
+            setCursor(Qt::ArrowCursor);
+        else if ( ev->type() == QEvent::Leave)
+            unsetCursor();
+
+        return false;
     }
 
     return QGraphicsView::eventFilter(obj, ev);
