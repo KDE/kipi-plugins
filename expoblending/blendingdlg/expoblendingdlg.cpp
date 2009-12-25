@@ -81,6 +81,7 @@ extern "C"
 #include "previewmanager.h"
 #include "actionthread.h"
 #include "bracketstack.h"
+#include "outputdialog.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
@@ -103,6 +104,7 @@ public:
     }
 
     QString               inputFileName;
+    QString               output;
 
     KUrl                  enfusedTmpUrl;
 
@@ -150,6 +152,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setMainWidget(page);
 
     d->previewWidget  = new PreviewManager(page);
+    d->previewWidget->setButtonText(i18n("Details..."));
     d->list           = new BracketStackList(d->mngr->iface(), page);
 
     // ---------------------------------------------------------------
@@ -216,6 +219,9 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     connect(d->list, SIGNAL(signalAddItems(const KUrl::List&)),
             this, SLOT(slotAddItems(const KUrl::List&)));
 
+    connect(d->previewWidget, SIGNAL(signalButtonClicked()),
+            this, SLOT(slotPreviewButtonClicked()));
+
     // ---------------------------------------------------------------
 
     busy(false);
@@ -250,6 +256,16 @@ void ExpoBlendingDlg::slotClose()
     clearEnfusedTmpFile();
 }
 
+void ExpoBlendingDlg::slotPreviewButtonClicked()
+{
+    OutputDialog dlg(kapp->activeWindow(),
+                     i18n("Enfuse Processing Messages"),
+                     d->output);
+                     i18n("Enfuse Processing Messages"),
+    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
+    dlg.exec();
+}
+
 void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
 {
     d->list->clear();
@@ -282,6 +298,8 @@ void ExpoBlendingDlg::busy(bool val)
     enableButton(User2, !val);
     enableButton(User3, val);
     enableButton(Close, !val);
+    if (val)
+        d->previewWidget->setButtonVisible(false);
 }
 
 void ExpoBlendingDlg::slotDefault()
@@ -424,6 +442,7 @@ void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
 void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)
 {
     d->previewWidget->setBusy(false);
+    d->previewWidget->setButtonVisible(true);
     d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
 }
 
@@ -473,6 +492,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 case(ENFUSE):
                 {
                     clearEnfusedTmpFile();
+                    d->output = ad.message;
                     processingFailed(ad.inUrls[0]);
                     busy(false);
                     break;

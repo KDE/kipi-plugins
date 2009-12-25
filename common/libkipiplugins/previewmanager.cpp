@@ -188,6 +188,7 @@ void PreviewManager::setBusy(bool b, const QString& text)
         unsetCursor();
         d->progressTimer->stop();
         setText(text);
+        d->progressLabel->setPixmap(QPixmap());
     }
 }
 

@@ -95,6 +95,8 @@ private Q_SLOTS:
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
     void slotAddItems(const KUrl::List& urls);
 
+    void slotPreviewButtonClicked();
+
 private:
 
     ExpoBlendingDlgPriv* const d;
