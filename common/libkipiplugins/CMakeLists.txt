@@ -13,6 +13,7 @@ SET(kipiplugins_LIB_SRCS kpaboutdata.cpp
                          previewimage.cpp
                          wizardpage.cpp
                          outputdialog.cpp
+                         binaryiface.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
