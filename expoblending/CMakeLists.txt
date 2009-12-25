@@ -19,6 +19,7 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/expoblendingdlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusesettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
    )
 
 INSTALL(DIRECTORY pics
