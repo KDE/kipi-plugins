@@ -78,6 +78,7 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "<p>Set here the list of your backeted images to fuse.</p>"
                          "<p>At least 2 images must be added to the stack.</p>"
                          "<p>Do not mix images with different color depth.</p>"
+                         "<p>All images must have the same dimensions.</p>"
                          "</qt>"));
 
     d->list = new ImagesList(d->mngr->iface(), vbox);
@@ -100,7 +101,7 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-            
+
     QTimer::singleShot(0, this, SLOT(slotImageListChanged()));
 }
 
