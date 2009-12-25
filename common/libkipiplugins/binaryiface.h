@@ -51,8 +51,7 @@ public:
     bool    versionIsRight() const;
     bool    showResults()    const;
 
-    virtual void checkSystem();
-
+    virtual void checkSystem() = 0;
     virtual QString path() const = 0;
     virtual QString minimalVersion() const = 0;
     virtual KUrl url() const = 0;

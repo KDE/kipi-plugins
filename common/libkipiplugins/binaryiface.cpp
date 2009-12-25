@@ -34,14 +34,9 @@ namespace KIPIPlugins
 
 BinaryIface::BinaryIface()
 {
-    checkSystem();
 }
 
 BinaryIface::~BinaryIface()
-{
-}
-
-void BinaryIface::checkSystem()
 {
 }
 
@@ -51,11 +46,11 @@ bool BinaryIface::showResults() const
     {
         KMessageBox::information(
                 kapp->activeWindow(),
-                i18n("<p>Unable to find %1 executable:<br/> "
-                    "This program is required by this plugin to align bracketed images. "
-                    "Please install this program from %2 package from your distributor "
-                    "or <a href=\"%3\">download the source</a>.</p>"
-                    "<p>Note: at least, %4 version %5 is required.</p>",
+                i18n("<qt><p>Unable to find <i>%1</i> executable.</p>"
+                    "<p>This program is required to continue. "
+                    "Please install it from <b>%2</b> package provided by your distributor "
+                    "or download and install <a href=\"%3\">the source</a>.</p>"
+                    "<p>Note: at least, <i>%4</i> version <b>%5</b> is required.</p></qt>",
                     path(),
                     projectName(),
                     url().url(),

@@ -37,6 +37,7 @@ namespace KIPIExpoBlendingPlugin
 AlignBinary::AlignBinary()
            : BinaryIface()
 {
+    checkSystem();
 }
 
 AlignBinary::~AlignBinary()

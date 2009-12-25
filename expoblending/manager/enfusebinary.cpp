@@ -37,6 +37,7 @@ namespace KIPIExpoBlendingPlugin
 EnfuseBinary::EnfuseBinary()
             : BinaryIface()
 {
+    checkSystem();
 }
 
 EnfuseBinary::~EnfuseBinary()
