@@ -107,10 +107,10 @@ public:
         iface        = 0;
         loadRawThumb = 0;
     }
-  
+
     Interface*          iface;
-    LoadRawThumbThread* loadRawThumb;    
-};  
+    LoadRawThumbThread* loadRawThumb;
+};
 
 BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
                 : QTreeWidget(parent), d(new BracketStackListPriv)
@@ -133,7 +133,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
     labels.append( i18n("File Name") );
     labels.append( i18n("Exposure (EV)") );
     setHeaderLabels(labels);
-   
+
     if (d->iface)
     {
         connect(d->iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
@@ -230,7 +230,7 @@ void BracketStackList::addItems(const KUrl::List& list)
 
         connect(job, SIGNAL(failed(const KFileItem&)),
                 this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
-    }       
+    }
 
     emit signalAddItems(urls);
 }

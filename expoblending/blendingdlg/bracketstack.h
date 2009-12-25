@@ -46,7 +46,7 @@ namespace KIPIExpoBlendingPlugin
 {
 
 class BracketStackListPriv;
-  
+
 class BracketStackItem : public QTreeWidgetItem
 {
 
@@ -95,7 +95,7 @@ private Q_SLOTS:
     void slotKDEPreviewFailed(const KFileItem&);
     void slotRawThumb(const KUrl&, const QImage&);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
-    
+
 private:
 
     BracketStackListPriv* const d;
