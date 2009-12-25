@@ -31,12 +31,14 @@
 #include <QImage>
 #include <QPixmap>
 #include <QFrame>
+#include <QPushButton>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kvbox.h>
+#include <khbox.h>
 
 // Local includes
 
@@ -59,17 +61,20 @@ public:
         busy          = false;
         textLabel     = 0;
         preview       = 0;
+        button        = 0;
     }
 
-    bool          busy;
+    bool         busy;
 
-    QLabel*       textLabel;
-    QLabel*       thumbLabel;
+    QLabel*      textLabel;
+    QLabel*      thumbLabel;
 
-    int           progressCount;
-    QPixmap       progressPix;
-    QTimer*       progressTimer;
-    QLabel*       progressLabel;
+    QPushButton* button;
+
+    int          progressCount;
+    QPixmap      progressPix;
+    QTimer*      progressTimer;
+    QLabel*      progressLabel;
 
     PreviewImage* preview;
 };
@@ -92,7 +97,14 @@ PreviewManager::PreviewManager(QWidget* parent)
     d->textLabel     = new QLabel(vbox);
     d->textLabel->setScaledContents(true);
     d->textLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    QLabel* space4   = new QLabel(vbox);
+    KHBox *hbox      = new KHBox(vbox);
+    QLabel* space4   = new QLabel(hbox);
+    d->button        = new QPushButton(hbox);
+    d->button->hide();
+    QLabel* space5   = new QLabel(hbox);
+    hbox->setStretchFactor(space4, 10);
+    hbox->setStretchFactor(space5, 10);
+    QLabel* space6   = new QLabel(vbox);
 
     vbox->setStretchFactor(space1, 10);
     vbox->setStretchFactor(d->progressLabel, 5);
@@ -100,7 +112,9 @@ PreviewManager::PreviewManager(QWidget* parent)
     vbox->setStretchFactor(d->thumbLabel, 5);
     vbox->setStretchFactor(space3, 1);
     vbox->setStretchFactor(d->textLabel, 5);
-    vbox->setStretchFactor(space4, 10);
+    vbox->setStretchFactor(space3, 1);
+    vbox->setStretchFactor(hbox, 5);
+    vbox->setStretchFactor(space6, 10);
     vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
 
@@ -113,6 +127,9 @@ PreviewManager::PreviewManager(QWidget* parent)
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
+
+    connect(d->button, SIGNAL(clicked()),
+            this, SIGNAL(signalButtonClicked()));
 }
 
 PreviewManager::~PreviewManager()
@@ -138,6 +155,16 @@ void PreviewManager::setThumbnail(const QPixmap& thumbnail)
 {
     d->thumbLabel->setPixmap(thumbnail);
     setCurrentIndex(MessageMode);
+}
+
+void PreviewManager::setButtonText(const QString& text)
+{
+    d->button->setText(text);
+}
+
+void PreviewManager::setButtonVisible(bool b)
+{
+    d->button->setVisible(b);
 }
 
 void PreviewManager::setText(const QString& text, const QColor& color)

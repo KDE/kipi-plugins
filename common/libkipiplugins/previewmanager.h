@@ -59,6 +59,12 @@ public:
     void setText(const QString& text, const QColor& color=Qt::white);
     void setBusy(bool b, const QString& text=QString());
     void setThumbnail(const QPixmap& preview=QPixmap());
+    void setButtonText(const QString& text);
+    void setButtonVisible(bool b);
+
+Q_SIGNALS:
+
+    void signalButtonClicked();
 
 private Q_SLOTS:
 
