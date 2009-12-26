@@ -8,3 +8,5 @@ ExpoBlending         : New tool to make pseudo HDR image with a stack of bracket
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> ExpoBlending : 144593 : New High Dynamic Range (HDR) plugin.
+002 ==> GalleyExport : 219998 : Export to Gallery plugin crashes when adding files.
+003 ==> 
