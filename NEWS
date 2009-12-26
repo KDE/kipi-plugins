@@ -3,10 +3,11 @@ Kipi-plugins 1.1.0 - Release date: 31/01/2010
 
 NEW FEATURES:
 
-ExpoBlending         : New tool to make pseudo HDR image with a stack of bracketed images.
+ExpoBlending              : New tool to make pseudo HDR image with a stack of bracketed images.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> ExpoBlending : 144593 : New High Dynamic Range (HDR) plugin.
-002 ==> GalleyExport : 219998 : Export to Gallery plugin crashes when adding files.
-003 ==> 
+001 ==> ExpoBlending      : 144593 : New High Dynamic Range (HDR) plugin.
+002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.
+003 ==> AdvancedSlideShow : 215798 : Slideshow crashes when starting.
+004 ==> 
