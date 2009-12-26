@@ -134,6 +134,9 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
     labels.append( i18n("Target File Name") );
     setHeaderLabels(labels);
 
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*)));
+
     if (d->mngr->iface())
     {
         connect(d->mngr->iface(), SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
@@ -176,7 +179,7 @@ void EnfuseStackList::addItem(const KUrl& url)
     while (*iter)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*iter);
-        if (item->url() == url)
+        if (item && item->url() == url)
             found = true;
 
         ++iter;
@@ -188,10 +191,11 @@ void EnfuseStackList::addItem(const KUrl& url)
         EnfuseStackItem* item = new EnfuseStackItem(this);
         item->setUrl(url);
         item->setOn(true);
+        item->setSelected(true);
 
         QFileInfo fi(url.path());
         QString   temp;
-        item->setTargetFileName(temp.sprintf("enfused%02i.", count+1).append(fi.suffix()));
+        item->setTargetFileName(temp.sprintf("enfused-%02i.", count+1).append(fi.suffix()));
 
         if (d->mngr->iface())
         {
@@ -204,6 +208,8 @@ void EnfuseStackList::addItem(const KUrl& url)
             connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
                     this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
         }
+
+        emit signalItemClicked(url);
     }
 }
 
@@ -220,7 +226,7 @@ void EnfuseStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
-        if (item->url() == url)
+        if (item && item->url() == url)
         {
             if (pix.isNull())
                 item->setThumbnail(SmallIcon("image-x-generic", iconSize().width(), KIconLoader::DisabledState));
@@ -231,6 +237,13 @@ void EnfuseStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
         }
         ++it;
     }
+}
+
+void EnfuseStackList::slotItemClicked(QTreeWidgetItem* item)
+{
+    EnfuseStackItem* eItem = dynamic_cast<EnfuseStackItem*>(item);
+    if (eItem)
+        emit signalItemClicked(eItem->url());
 }
 
 }  // namespace KIPIExpoBlendingPlugin

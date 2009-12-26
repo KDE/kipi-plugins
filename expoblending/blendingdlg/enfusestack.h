@@ -88,10 +88,15 @@ public:
 
     QMap<KUrl, QString> urlsMap();
 
+Q_SIGNALS:
+
+    void signalItemClicked(const KUrl&);
+
 private Q_SLOTS:
 
     void slotKDEPreview(const KFileItem&, const QPixmap&);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void slotItemClicked(QTreeWidgetItem*);
 
 private:
 

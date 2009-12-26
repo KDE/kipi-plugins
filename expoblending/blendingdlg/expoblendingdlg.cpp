@@ -225,6 +225,9 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
             this, SLOT(slotPreviewButtonClicked()));
 
+    connect(d->enfuseStack, SIGNAL(signalItemClicked(const KUrl&)),
+            d->previewWidget, SLOT(slotLoad(const KUrl&)));
+
     // ---------------------------------------------------------------
 
     busy(false);
@@ -374,6 +377,8 @@ void ExpoBlendingDlg::slotSaveItems()
 
     enableButton(User1, false);
 
+    // TODO : clear selected item from enfuse stack.
+
 /*
     QString typeMime(d->saveSettingsBox->typeMime());
     QString defaultFileName(QString("expoblending") + d->saveSettingsBox->extension());
@@ -442,7 +447,6 @@ void ExpoBlendingDlg::processing(const KUrl& /*url*/)
 
 void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
 {
-    d->previewWidget->load(tmpFile.path());
     d->enfuseStack->addItem(tmpFile);
 }
 
