@@ -30,6 +30,10 @@
 #include <QString>
 #include <QColor>
 
+// KDE includes
+
+#include <kurl.h>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -59,6 +63,7 @@ public Q_SLOTS:
     void slotZoomIn();
     void slotZoomOut();
     void slotZoom2Fit();
+    void slotLoad(const KUrl& url);
 
 protected:
 
