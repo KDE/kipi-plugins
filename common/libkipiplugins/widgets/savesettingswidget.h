@@ -62,7 +62,7 @@ public:
 
 public:
 
-    SaveSettingsWidget(QWidget *parent, bool conflicRules=true);
+    SaveSettingsWidget(QWidget *parent);
     ~SaveSettingsWidget();
 
     SaveSettingsWidget::OutputFormat fileFormat();

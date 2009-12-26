@@ -24,6 +24,7 @@ TARGET_LINK_LIBRARIES(kipiplugins
                       ${KDE4_KDEUI_LIBS}
                       ${KDE4_KIO_LIBRARY}
                       ${KDE4_KIO_LIBS}
+                      ${KDE4_KFILE_LIBS}
                       ${JPEG_LIBRARIES}
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}

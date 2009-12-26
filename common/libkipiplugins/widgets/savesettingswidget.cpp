@@ -45,7 +45,6 @@ public:
 
     SaveSettingsWidgetPriv()
     {
-        conflicRules        = true;
         formatLabel         = 0;
         conflictLabel       = 0;
         conflictButtonGroup = 0;
@@ -53,8 +52,6 @@ public:
         overwriteButton     = 0;
         promptButton        = 0;
     }
-
-    bool          conflicRules;
 
     QLabel*       formatLabel;
     QLabel*       conflictLabel;
@@ -67,10 +64,9 @@ public:
     QRadioButton* promptButton;
 };
 
-SaveSettingsWidget::SaveSettingsWidget(QWidget *parent, bool conflicRules)
+SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
                   : QWidget(parent), d(new SaveSettingsWidgetPriv)
 {
-    d->conflicRules = conflicRules;
     setAttribute(Qt::WA_DeleteOnClose);
 
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
@@ -109,11 +105,8 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent, bool conflicRules)
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
-    if (!d->conflicRules)
-    {
-        d->conflictLabel->hide();
-        conflictBox->hide();
-    }
+    d->conflictLabel->hide();
+    conflictBox->hide();
 
     settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
     settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
@@ -161,15 +154,13 @@ void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
 void SaveSettingsWidget::readSettings(KConfigGroup& group)
 {
     setFileFormat((SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(SaveSettingsWidget::OUTPUT_PNG)));
-    if (d->conflicRules)
-        setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
+    setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
 }
 
 void SaveSettingsWidget::writeSettings(KConfigGroup& group)
 {
     group.writeEntry("Output Format", (int)fileFormat());
-    if (d->conflicRules)
-        group.writeEntry("Conflict",      (int)conflictRule());
+    group.writeEntry("Conflict",      (int)conflictRule());
 }
 
 void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
