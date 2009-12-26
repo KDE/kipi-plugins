@@ -75,6 +75,7 @@ extern "C"
 
 #include "manager.h"
 #include "enfusesettings.h"
+#include "enfusestack.h"
 #include "savesettingswidget.h"
 #include "aboutdata.h"
 #include "pluginsversion.h"
@@ -97,7 +98,8 @@ public:
     {
         previewWidget     = 0;
         saveSettingsBox   = 0;
-        list              = 0;
+        bracketStack      = 0;
+        enfuseStack       = 0;
         enfuseSettingsBox = 0;
         settingsExpander  = 0;
         mngr              = 0;
@@ -116,7 +118,8 @@ public:
 
     SaveSettingsWidget*   saveSettingsBox;
 
-    BracketStackList*     list;
+    BracketStackList*     bracketStack;
+    EnfuseStackList*      enfuseStack;
 
     Manager*              mngr;
 };
@@ -153,7 +156,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
 
     d->previewWidget  = new PreviewManager(page);
     d->previewWidget->setButtonText(i18n("Details..."));
-    d->list           = new BracketStackList(d->mngr->iface(), page);
+    d->bracketStack   = new BracketStackList(d->mngr->iface(), page);
 
     // ---------------------------------------------------------------
 
@@ -163,17 +166,19 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
     d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander, false);
 
+    d->enfuseStack       = new EnfuseStackList(d->mngr, page);
+
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
     d->settingsExpander->setItemIcon(0, SmallIcon("expoblending"));
     d->settingsExpander->setItemIcon(1, SmallIcon("document-save"));
-    d->settingsExpander->addStretch();
 
     // ---------------------------------------------------------------
 
-    grid->addWidget(d->previewWidget,    0, 0, 2, 1);
-    grid->addWidget(d->list,             0, 1, 1, 1);
+    grid->addWidget(d->previewWidget,    0, 0, 3, 1);
+    grid->addWidget(d->bracketStack,     0, 1, 1, 1);
     grid->addWidget(d->settingsExpander, 1, 1, 1, 1);
+    grid->addWidget(d->enfuseStack,      2, 1, 1, 1);
     grid->setMargin(0);
     grid->setSpacing(spacingHint());
     grid->setColumnStretch(0, 10);
@@ -216,7 +221,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
 
-    connect(d->list, SIGNAL(signalAddItems(const KUrl::List&)),
+    connect(d->bracketStack, SIGNAL(signalAddItems(const KUrl::List&)),
             this, SLOT(slotAddItems(const KUrl::List&)));
 
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
@@ -266,8 +271,8 @@ void ExpoBlendingDlg::slotPreviewButtonClicked()
 
 void ExpoBlendingDlg::loadItems(const KUrl::List& urls)
 {
-    d->list->clear();
-    d->list->addItems(urls);
+    d->bracketStack->clear();
+    d->bracketStack->addItems(urls);
 }
 
 void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
@@ -282,7 +287,7 @@ void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
 
 void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
 {
-    BracketStackItem* item = d->list->findItem(url);
+    BracketStackItem* item = d->bracketStack->findItem(url);
     if (item)
         item->setExposure(identity);
 }
@@ -291,7 +296,7 @@ void ExpoBlendingDlg::busy(bool val)
 {
     d->enfuseSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
-    d->list->setEnabled(!val);
+    d->bracketStack->setEnabled(!val);
     enableButton(User1, !val ? !d->enfusedTmpUrl.isEmpty() : false);
     enableButton(User2, !val);
     enableButton(User3, val);
@@ -401,7 +406,7 @@ void ExpoBlendingDlg::slotUser1()
 // 'Process' dialog button.
 void ExpoBlendingDlg::slotUser2()
 {
-    KUrl::List selectedUrl = d->list->urls();
+    KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->alignedMap();
@@ -425,7 +430,6 @@ void ExpoBlendingDlg::slotUser3()
     d->mngr->thread()->cancel();
 }
 
-
 void ExpoBlendingDlg::processing(const KUrl& /*url*/)
 {
     d->previewWidget->setBusy(true, i18n("Processing bracketed images..."));
@@ -434,6 +438,7 @@ void ExpoBlendingDlg::processing(const KUrl& /*url*/)
 void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
 {
     d->previewWidget->load(tmpFile.path());
+    d->enfuseStack->addItems(KUrl::List() << tmpFile);
 }
 
 void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)

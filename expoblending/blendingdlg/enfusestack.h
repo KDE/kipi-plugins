@@ -45,6 +45,7 @@ using namespace KIPI;
 namespace KIPIExpoBlendingPlugin
 {
 
+class Manager;
 class EnfuseStackListPriv;
 
 class EnfuseStackItem : public QTreeWidgetItem
@@ -76,13 +77,12 @@ class EnfuseStackList : public QTreeWidget
 
 public:
 
-    EnfuseStackList(Interface* iface, QWidget *parent);
+    EnfuseStackList(Manager* mngr, QWidget *parent);
     virtual ~EnfuseStackList();
 
     void addItems(const KUrl::List& list);
 
     KUrl::List urls();
-    EnfuseStackItem* findItem(const KUrl& url);
 
 Q_SIGNALS:
 

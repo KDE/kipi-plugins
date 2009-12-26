@@ -40,6 +40,10 @@
 
 #include <libkipi/interface.h>
 
+// Local include
+
+#include "manager.h"
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -95,16 +99,16 @@ public:
 
     EnfuseStackListPriv()
     {
-        iface        = 0;
+        mngr = 0;
     }
 
-    Interface* iface;
+    Manager* mngr;
 };
 
-EnfuseStackList::EnfuseStackList(Interface* iface, QWidget *parent)
-                : QTreeWidget(parent), d(new EnfuseStackListPriv)
+EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget *parent)
+               : QTreeWidget(parent), d(new EnfuseStackListPriv)
 {
-    d->iface = iface;
+    d->mngr = mngr;
 
     setIconSize(QSize(64, 64));
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -122,9 +126,9 @@ EnfuseStackList::EnfuseStackList(Interface* iface, QWidget *parent)
     labels.append( i18n("Format") );
     setHeaderLabels(labels);
 
-    if (d->iface)
+    if (d->mngr->iface())
     {
-        connect(d->iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
+        connect(d->mngr->iface(), SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
                 this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
     }
 }
@@ -149,21 +153,6 @@ KUrl::List EnfuseStackList::urls()
     }
 
     return list;
-}
-
-EnfuseStackItem* EnfuseStackList::findItem(const KUrl& url)
-{
-    QTreeWidgetItemIterator it(this);
-    while (*it)
-    {
-        EnfuseStackItem *lvItem = dynamic_cast<EnfuseStackItem*>(*it);
-        if (lvItem && lvItem->url() == url)
-        {
-            return lvItem;
-        }
-        ++it;
-    }
-    return 0;
 }
 
 void EnfuseStackList::addItems(const KUrl::List& list)
@@ -200,9 +189,9 @@ void EnfuseStackList::addItems(const KUrl::List& list)
         }
     }
 
-    if (d->iface)
+    if (d->mngr->iface())
     {
-        d->iface->thumbnails(urls, iconSize().width());
+        d->mngr->iface()->thumbnails(urls, iconSize().width());
     }
     else
     {
