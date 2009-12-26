@@ -438,7 +438,7 @@ void ExpoBlendingDlg::processing(const KUrl& /*url*/)
 void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
 {
     d->previewWidget->load(tmpFile.path());
-    d->enfuseStack->addItems(KUrl::List() << tmpFile);
+    d->enfuseStack->addItem(tmpFile);
 }
 
 void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)

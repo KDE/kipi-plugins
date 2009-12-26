@@ -77,16 +77,12 @@ class EnfuseStackList : public QTreeWidget
 
 public:
 
-    EnfuseStackList(Manager* mngr, QWidget *parent);
+    EnfuseStackList(Manager* mngr, QWidget* parent);
     virtual ~EnfuseStackList();
 
-    void addItems(const KUrl::List& list);
+    void addItem(const KUrl& url);
 
     KUrl::List urls();
-
-Q_SIGNALS:
-
-    void signalAddItems(const KUrl::List&);
 
 private Q_SLOTS:
 

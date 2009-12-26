@@ -105,7 +105,7 @@ public:
     Manager* mngr;
 };
 
-EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget *parent)
+EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
                : QTreeWidget(parent), d(new EnfuseStackListPriv)
 {
     d->mngr = mngr;
@@ -155,53 +155,42 @@ KUrl::List EnfuseStackList::urls()
     return list;
 }
 
-void EnfuseStackList::addItems(const KUrl::List& list)
+void EnfuseStackList::addItem(const KUrl& url)
 {
-    if (list.count() == 0)
+    if (!url.isValid())
         return;
 
-    KUrl::List urls;
+    // Check if the new item already exist in the list.
+    bool found = false;
 
-    for ( KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
+    QTreeWidgetItemIterator iter(this);
+    while (*iter)
     {
-        KUrl imageUrl = *it;
+        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*iter);
+        if (item->url() == url)
+            found = true;
 
-        // Check if the new item already exist in the list.
-        bool found = false;
+        ++iter;
+    }
 
-        QTreeWidgetItemIterator iter(this);
-        while (*iter)
-        {
-            EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*iter);
-
-            if (item->url() == imageUrl)
-                found = true;
-
-            ++iter;
-        }
-
-        if (!found)
-        {
-            EnfuseStackItem* item = new EnfuseStackItem(this);
-            item->setUrl(imageUrl);
-            item->setOn(true);
-            urls.append(imageUrl);
-        }
+    if (!found)
+    {
+        EnfuseStackItem* item = new EnfuseStackItem(this);
+        item->setUrl(url);
+        item->setOn(true);
     }
 
     if (d->mngr->iface())
     {
-        d->mngr->iface()->thumbnails(urls, iconSize().width());
+        d->mngr->iface()->thumbnails(url, iconSize().width());
     }
     else
     {
-        KIO::PreviewJob *job = KIO::filePreview(urls, iconSize().width());
+        KIO::PreviewJob *job = KIO::filePreview(url, iconSize().width());
 
         connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
                 this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
     }
-
-    emit signalAddItems(urls);
 }
 
 // Used only if Kipi interface is null.

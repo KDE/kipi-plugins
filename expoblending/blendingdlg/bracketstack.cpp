@@ -112,7 +112,7 @@ public:
     LoadRawThumbThread* loadRawThumb;
 };
 
-BracketStackList::BracketStackList(Interface* iface, QWidget *parent)
+BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
                 : QTreeWidget(parent), d(new BracketStackListPriv)
 {
     d->iface = iface;
@@ -173,7 +173,7 @@ BracketStackItem* BracketStackList::findItem(const KUrl& url)
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
-        BracketStackItem *lvItem = dynamic_cast<BracketStackItem*>(*it);
+        BracketStackItem* lvItem = dynamic_cast<BracketStackItem*>(*it);
         if (lvItem && lvItem->url() == url)
         {
             return lvItem;

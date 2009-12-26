@@ -77,7 +77,7 @@ class BracketStackList : public QTreeWidget
 
 public:
 
-    BracketStackList(Interface* iface, QWidget *parent);
+    BracketStackList(Interface* iface, QWidget* parent);
     virtual ~BracketStackList();
 
     void addItems(const KUrl::List& list);
