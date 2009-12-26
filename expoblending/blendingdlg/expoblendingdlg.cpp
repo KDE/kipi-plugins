@@ -207,13 +207,13 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
             this, SLOT(slotDefault()));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1()));
+            this, SLOT(slotSaveItems()));
 
     connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotUser2()));
+            this, SLOT(slotProcess()));
 
     connect(this, SIGNAL(user3Clicked()),
-            this, SLOT(slotUser3()));
+            this, SLOT(slotAbort()));
 
     connect(d->mngr->thread(), SIGNAL(starting(const KIPIExpoBlendingPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
@@ -338,8 +338,7 @@ void ExpoBlendingDlg::saveSettings()
     config.sync();
 }
 
-// 'SaveAs' dialog button.
-void ExpoBlendingDlg::slotUser1()
+void ExpoBlendingDlg::slotSaveItems()
 {
     if (d->enfusedTmpUrl.isEmpty()) return;
 
@@ -403,8 +402,7 @@ void ExpoBlendingDlg::slotUser1()
     d->enfusedTmpUrl.clear();
 }
 
-// 'Process' dialog button.
-void ExpoBlendingDlg::slotUser2()
+void ExpoBlendingDlg::slotProcess()
 {
     KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
@@ -424,8 +422,7 @@ void ExpoBlendingDlg::slotUser2()
         d->mngr->thread()->start();
 }
 
-// 'Abort' dialog button.
-void ExpoBlendingDlg::slotUser3()
+void ExpoBlendingDlg::slotAbort()
 {
     d->mngr->thread()->cancel();
 }

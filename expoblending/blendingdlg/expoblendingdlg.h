@@ -86,9 +86,9 @@ private Q_SLOTS:
     void slotDefault();
     void slotClose();
     void slotHelp();
-    void slotUser1();
-    void slotUser2();
-    void slotUser3();
+    void slotSaveItems();
+    void slotProcess();
+    void slotAbort();
 
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
     void slotAddItems(const KUrl::List& urls);
