@@ -137,6 +137,11 @@ PreviewManager::~PreviewManager()
     delete d;
 }
 
+void PreviewManager::slotLoad(const KUrl& url)
+{
+    load(url.path());
+}
+
 void PreviewManager::load(const QString& file)
 {
     setBusy(false);

@@ -30,6 +30,10 @@
 #include <QString>
 #include <QColor>
 
+// KDE includes
+
+#include <kurl.h>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -65,6 +69,10 @@ public:
 Q_SIGNALS:
 
     void signalButtonClicked();
+
+public Q_SLOTS:
+
+    void slotLoad(const KUrl& url);
 
 private Q_SLOTS:
 

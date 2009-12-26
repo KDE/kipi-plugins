@@ -148,11 +148,6 @@ bool PreviewImage::load(const QString& file)
     return false;
 }
 
-void PreviewImage::slotLoad(const KUrl& url)
-{
-    load(url.path());
-}
-
 void PreviewImage::slotZoomIn()
 {
     scale(1.5, 1.5);
