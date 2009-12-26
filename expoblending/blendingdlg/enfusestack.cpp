@@ -62,13 +62,21 @@ EnfuseStackItem::~EnfuseStackItem()
 void EnfuseStackItem::setUrl(const KUrl& url)
 {
     m_url = url;
-    QFileInfo fi(m_url.path());
-    setText(1, fi.suffix());
 }
 
 KUrl EnfuseStackItem::url() const
 {
     return m_url;
+}
+
+void EnfuseStackItem::setTargetFileName(const QString& fn)
+{
+    m_fileName = fn;
+}
+
+QString EnfuseStackItem::targetFileName() const
+{
+    return m_fileName;
 }
 
 void EnfuseStackItem::setThumbnail(const QPixmap& pix)

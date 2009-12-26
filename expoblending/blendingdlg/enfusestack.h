@@ -59,6 +59,9 @@ public:
     void setUrl(const KUrl& url);
     KUrl url() const;
 
+    void setTargetFileName(const QString& fn);
+    QString targetFileName() const;
+
     void setOn(bool b);
     bool isOn() const;
 
@@ -66,7 +69,9 @@ public:
 
 private:
 
-    KUrl m_url;
+    QString m_fileName;
+
+    KUrl    m_url;
 };
 
 // ---------------------------------------------------------------------
