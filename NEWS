@@ -10,4 +10,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> ExpoBlending      : 144593 : New High Dynamic Range (HDR) plugin.
 002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.
 003 ==> AdvancedSlideShow : 215798 : Slideshow crashes when starting.
-004 ==> 
+004 ==> JPEGLossLess      : 200031 : Photo is rotated but not thumbnail.
+005 ==> 
