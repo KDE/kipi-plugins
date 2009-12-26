@@ -146,21 +146,21 @@ EnfuseStackList::~EnfuseStackList()
     delete d;
 }
 
-KUrl::List EnfuseStackList::urls()
+QMap<KUrl, QString> EnfuseStackList::urlsMap()
 {
-    KUrl::List list;
+    QMap<KUrl, QString> map;
 
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
         if (item && item->isOn())
-            list.append(item->url());
+            map.insert(item->url(), item->targetFileName());
 
         ++it;
     }
 
-    return list;
+    return map;
 }
 
 void EnfuseStackList::addItem(const KUrl& url)
@@ -193,17 +193,17 @@ void EnfuseStackList::addItem(const KUrl& url)
         QString   temp;
         item->setTargetFileName(temp.sprintf("enfused%02i.", count+1).append(fi.suffix()));
 
-	if (d->mngr->iface())
+        if (d->mngr->iface())
         {
-	    d->mngr->iface()->thumbnails(url, iconSize().width());
-	}
-	else
-	{
+            d->mngr->iface()->thumbnails(url, iconSize().width());
+        }
+        else
+        {
             KIO::PreviewJob *job = KIO::filePreview(url, iconSize().width());
 
-	    connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-    	            this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
-	}
+            connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+                    this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+        }
     }
 }
 

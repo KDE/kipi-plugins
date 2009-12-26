@@ -108,8 +108,6 @@ public:
     QString               inputFileName;
     QString               output;
 
-    KUrl                  enfusedTmpUrl;
-
     PreviewManager*       previewWidget;
 
     RExpanderBox*         settingsExpander;
@@ -134,15 +132,15 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setCaption(i18n("Exposure Blending"));
 
     setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Save currently processed image."));
+    setButtonToolTip(User1, i18n("Save selected enfused items processed."));
     setButtonIcon(   User1, KIcon("document-save"));
 
     setButtonText(   User2, i18n("Pro&cess"));
-    setButtonToolTip(User2, i18n("Process bracketed images stack."));
+    setButtonToolTip(User2, i18n("Process bracketed images stack with current settings."));
     setButtonIcon(   User2, KIcon("system-run"));
 
     setButtonText(   User3, i18n("&Abort"));
-    setButtonToolTip(User3, i18n("Abort the process"));
+    setButtonToolTip(User3, i18n("Abort current process"));
     setButtonIcon(   User3, KIcon("dialog-cancel"));
 
     setButtonToolTip(Close, i18n("Exit this tool"));
@@ -297,7 +295,7 @@ void ExpoBlendingDlg::busy(bool val)
     d->enfuseSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
     d->bracketStack->setEnabled(!val);
-    enableButton(User1, !val ? !d->enfusedTmpUrl.isEmpty() : false);
+    enableButton(User1, !val ? !d->enfuseStack->urlsMap().isEmpty() : false);
     enableButton(User2, !val);
     enableButton(User3, val);
     enableButton(Close, !val);
@@ -340,8 +338,43 @@ void ExpoBlendingDlg::saveSettings()
 
 void ExpoBlendingDlg::slotSaveItems()
 {
-    if (d->enfusedTmpUrl.isEmpty()) return;
+    QMap<KUrl, QString> map = d->enfuseStack->urlsMap();
+    if (map.isEmpty()) return;
 
+    QMap<KUrl, QString>::iterator it;
+
+    for (it = map.begin() ; it != map.end(); ++it)
+    {
+        KUrl newUrl = it.key();
+        newUrl.setFileName(it.value());
+        QFileInfo fi(newUrl.toLocalFile());
+
+        // Check for overwrite ----------------------------------------------------------
+
+        if ( fi.exists() )
+        {
+            int result = KMessageBox::warningYesNo(0, i18n("A file named \"%1\" already "
+                                                        "exists. Are you sure you want "
+                                                        "to overwrite it?",
+                                                newUrl.fileName()),
+                                                i18n("Overwrite File?"),
+                                                KStandardGuiItem::overwrite(),
+                                                KStandardGuiItem::cancel());
+
+            if (result != KMessageBox::Yes)
+                return;
+        }
+
+        if (::rename(QFile::encodeName(it.key().path()), QFile::encodeName(newUrl.path())) != 0)
+        {
+            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.path()));
+            return;
+        }
+    }
+
+    enableButton(User1, false);
+
+/*
     QString typeMime(d->saveSettingsBox->typeMime());
     QString defaultFileName(QString("expoblending") + d->saveSettingsBox->extension());
     QString place(QDir::homePath());
@@ -363,7 +396,6 @@ void ExpoBlendingDlg::slotSaveItems()
        return;
 
     KUrl newUrl = imageFileSaveDialog->selectedUrl();
-    QFileInfo fi(newUrl.toLocalFile());
 
     if (!newUrl.isValid())
     {
@@ -374,32 +406,8 @@ void ExpoBlendingDlg::slotSaveItems()
         return;
     }
 
-    // Check for overwrite ----------------------------------------------------------
-
-    if ( fi.exists() )
-    {
-        int result = KMessageBox::warningYesNo(0, i18n("A file named \"%1\" already "
-                                                       "exists. Are you sure you want "
-                                                       "to overwrite it?",
-                                               newUrl.fileName()),
-                                               i18n("Overwrite File?"),
-                                               KStandardGuiItem::overwrite(),
-                                               KStandardGuiItem::cancel());
-
-        if (result != KMessageBox::Yes)
-            return;
-    }
-
     delete imageFileSaveDialog;
-
-    if (::rename(QFile::encodeName(d->enfusedTmpUrl.path()), QFile::encodeName(newUrl.path())) != 0)
-    {
-        KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.path()));
-        return;
-    }
-
-    enableButton(User1, false);
-    d->enfusedTmpUrl.clear();
+*/
 }
 
 void ExpoBlendingDlg::slotProcess()
@@ -508,7 +516,6 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(ENFUSE):
                 {
-                    d->enfusedTmpUrl = ad.outUrls[0];
                     processed(ad.inUrls[0], ad.outUrls[0]);
                     busy(false);
                     break;

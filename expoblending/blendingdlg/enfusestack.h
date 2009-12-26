@@ -29,6 +29,7 @@
 #include <QTreeWidget>
 #include <QString>
 #include <QPixmap>
+#include <QMap>
 
 // KDE includes
 
@@ -69,7 +70,7 @@ public:
 
 private:
 
-    KUrl    m_url;
+    KUrl m_url;
 };
 
 // ---------------------------------------------------------------------
@@ -85,7 +86,7 @@ public:
 
     void addItem(const KUrl& url);
 
-    KUrl::List urls();
+    QMap<KUrl, QString> urlsMap();
 
 private Q_SLOTS:
 
