@@ -64,7 +64,7 @@ public:
     QRadioButton* promptButton;
 };
 
-SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
+SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
                   : QWidget(parent), d(new SaveSettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -104,9 +104,6 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget *parent)
     vlay->setSpacing(KDialog::spacingHint());
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
-
-    d->conflictLabel->hide();
-    conflictBox->hide();
 
     settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
     settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
