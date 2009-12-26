@@ -1,1 +1,2 @@
-SKIP /dngwriter/
+SKIP /dngconverter/dngwriter/\|/jpeglossless/transupp\|/jpeglossless/jinclude\|/jpeglossless/jpegint\|/jpeglossless/jpegtransform\|/common/libkipiplugins/tools/iccjpeg\.
+
