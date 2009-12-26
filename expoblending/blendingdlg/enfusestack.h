@@ -69,8 +69,6 @@ public:
 
 private:
 
-    QString m_fileName;
-
     KUrl    m_url;
 };
 

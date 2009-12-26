@@ -71,12 +71,12 @@ KUrl EnfuseStackItem::url() const
 
 void EnfuseStackItem::setTargetFileName(const QString& fn)
 {
-    m_fileName = fn;
+    setText(1, fn);
 }
 
 QString EnfuseStackItem::targetFileName() const
 {
-    return m_fileName;
+    return text(1);
 }
 
 void EnfuseStackItem::setThumbnail(const QPixmap& pix)
@@ -131,7 +131,7 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
 
     QStringList labels;
     labels.append( i18n("Thumbnail") );
-    labels.append( i18n("Format") );
+    labels.append( i18n("Target File Name") );
     setHeaderLabels(labels);
 
     if (d->mngr->iface())
@@ -170,6 +170,7 @@ void EnfuseStackList::addItem(const KUrl& url)
 
     // Check if the new item already exist in the list.
     bool found = false;
+    int count  = 0;
 
     QTreeWidgetItemIterator iter(this);
     while (*iter)
@@ -179,6 +180,7 @@ void EnfuseStackList::addItem(const KUrl& url)
             found = true;
 
         ++iter;
+        count++;
     }
 
     if (!found)
@@ -186,18 +188,22 @@ void EnfuseStackList::addItem(const KUrl& url)
         EnfuseStackItem* item = new EnfuseStackItem(this);
         item->setUrl(url);
         item->setOn(true);
-    }
 
-    if (d->mngr->iface())
-    {
-        d->mngr->iface()->thumbnails(url, iconSize().width());
-    }
-    else
-    {
-        KIO::PreviewJob *job = KIO::filePreview(url, iconSize().width());
+        QFileInfo fi(url.path());
+        QString   temp;
+        item->setTargetFileName(temp.sprintf("enfused%02i.", count+1).append(fi.suffix()));
 
-        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+	if (d->mngr->iface())
+        {
+	    d->mngr->iface()->thumbnails(url, iconSize().width());
+	}
+	else
+	{
+            KIO::PreviewJob *job = KIO::filePreview(url, iconSize().width());
+
+	    connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+    	            this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+	}
     }
 }
 
