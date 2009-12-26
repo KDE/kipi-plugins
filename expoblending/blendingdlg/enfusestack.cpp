@@ -28,6 +28,7 @@
 #include <QHeaderView>
 #include <QPainter>
 #include <QFileInfo>
+#include <QList>
 
 // KDE includes
 
@@ -164,6 +165,26 @@ QMap<KUrl, QString> EnfuseStackList::urlsMap()
     }
 
     return map;
+}
+
+void EnfuseStackList::clearSelected()
+{
+    QList<QTreeWidgetItem*> list;
+    QTreeWidgetItemIterator it(this);
+
+    while (*it)
+    {
+        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        if (item && item->isOn())
+        {
+            list.append(item);
+            break;
+        }
+        ++it;
+    }
+
+    foreach(QTreeWidgetItem* item, list)
+        delete item;
 }
 
 void EnfuseStackList::addItem(const KUrl& url)

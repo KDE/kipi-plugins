@@ -377,7 +377,7 @@ void ExpoBlendingDlg::slotSaveItems()
 
     enableButton(User1, false);
 
-    // TODO : clear selected item from enfuse stack.
+    d->enfuseStack->clearSelected();
 
 /*
     QString typeMime(d->saveSettingsBox->typeMime());

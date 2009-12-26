@@ -84,6 +84,7 @@ public:
     EnfuseStackList(Manager* mngr, QWidget* parent);
     virtual ~EnfuseStackList();
 
+    void clearSelected();
     void addItem(const KUrl& url);
 
     QMap<KUrl, QString> urlsMap();
