@@ -50,18 +50,29 @@ void EnfuseBinary::checkSystem()
     process.start(path(), QStringList() << "-V");
     m_available = process.waitForFinished();
 
+    QString stdOut = process.readAll();
+
+    // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
+
     QString headerStarts("==== enfuse, version ");
-
-    QString stdOut    = process.readAll();
     QString firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
-
-    kDebug(AREA_CODE_LOADING) << path() << " help header line: \n" << firstLine;
-
-    if (firstLine.startsWith(headerStarts))
+    if (firstLine.isEmpty())
     {
+        // Work around Enfuse >= 4.0
+        // The output look like this : enfuse 4.0-753b534c819d
+
+        headerStarts = QString("enfuse ");
+        firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
+        kDebug() << path() << " help header line: \n" << firstLine;
+        m_version = firstLine.remove(0, headerStarts.length()).section("-", 0, 0);
+        kDebug() << "Found " << path() << " version: " << version();
+    }
+    else
+    {
+        kDebug() << path() << " help header line: \n" << firstLine;
         m_version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
-        kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version();
+        kDebug() << "Found " << path() << " version: " << version();
     }
 }
 
