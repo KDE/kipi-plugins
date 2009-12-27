@@ -87,4 +87,14 @@ bool BinaryIface::versionIsRight() const
     return false;
 }
 
+QString BinaryIface::findHeader(const QStringList& output, const QString& header) const
+{
+    foreach(QString s, output)
+    {
+        if (s.startsWith(header))
+            return s;
+    }
+    return QString();
+}
+
 }  // namespace KIPIPlugins

@@ -47,14 +47,14 @@ EnfuseBinary::~EnfuseBinary()
 void EnfuseBinary::checkSystem()
 {
     QProcess process;
-    process.start(path(), QStringList() << "-h");
+    process.start(path(), QStringList() << "-V");
     m_available = process.waitForFinished();
 
     // The output look like this : ==== enfuse, version 3.2 ====
     QString headerStarts("==== enfuse, version ");
 
-    QString stdOut(process.readAll());
-    QString firstLine = stdOut.section('\n', 0, 0);
+    QString stdOut    = process.readAll();
+    QString firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
 
     kDebug(AREA_CODE_LOADING) << path() << " help header line: \n" << firstLine;
 

@@ -59,6 +59,10 @@ public:
 
 protected:
 
+    QString findHeader(const QStringList& output, const QString& header) const;
+
+protected:
+
     bool    m_available;
 
     QString m_version;
