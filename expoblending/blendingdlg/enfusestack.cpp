@@ -226,7 +226,7 @@ void EnfuseStackList::addItem(const KUrl& url)
         EnfuseStackItem* item = new EnfuseStackItem(this);
         item->setUrl(url);
         item->setOn(true);
-        item->setSelected(true);
+        setCurrentItem(item);
 
         QFileInfo fi(url.path());
         QString   temp;
