@@ -56,6 +56,8 @@ void AlignBinary::checkSystem()
     QString stdOut(process.readAllStandardError());
     QString firstLine = stdOut.section('\n', 1, 2);
 
+    kDebug(AREA_CODE_LOADING) << path() << " help header line: \n" << firstLine;
+
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);

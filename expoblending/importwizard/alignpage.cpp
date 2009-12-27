@@ -96,7 +96,6 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
     d->title         = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    resetTitle();
 
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
@@ -118,6 +117,8 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
     vbox->setMargin(KDialog::spacingHint());
 
     setPageWidget(vbox);
+
+    resetTitle();
 
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-align.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));

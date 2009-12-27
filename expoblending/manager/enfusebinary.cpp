@@ -56,10 +56,12 @@ void EnfuseBinary::checkSystem()
     QString stdOut(process.readAll());
     QString firstLine = stdOut.section('\n', 0, 0);
 
+    kDebug(AREA_CODE_LOADING) << path() << " help header line: \n" << firstLine;
+
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
-        kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
+        kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version();
     }
 }
 
