@@ -148,6 +148,7 @@ void AlignPage::resetTitle()
                            "</qt>",
                            QString(d->mngr->alignBinary().path()),
                            d->mngr->alignBinary().url().url()));
+    d->detailsBtn->hide();
 }
 
 void AlignPage::processAlignement()
@@ -177,7 +178,6 @@ void AlignPage::cancelAlignement()
     d->progressTimer->stop();
     d->progressLabel->clear();
     resetTitle();
-    d->detailsBtn->hide();
 }
 
 void AlignPage::slotProgressTimerDone()
