@@ -178,7 +178,6 @@ void EnfuseStackList::clearSelected()
         if (item && item->isOn())
         {
             list.append(item);
-            break;
         }
         ++it;
     }

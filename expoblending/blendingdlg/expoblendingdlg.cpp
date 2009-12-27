@@ -391,6 +391,8 @@ void ExpoBlendingDlg::slotSaveItems()
             }
         }
 
+        kDebug() << "Renaming " << it.key() << " to " << newUrl;
+
         if (!newUrl.isEmpty())
         {
             if (::rename(QFile::encodeName(it.key().path()), QFile::encodeName(newUrl.path())) != 0)
