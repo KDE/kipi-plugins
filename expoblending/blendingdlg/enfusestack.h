@@ -29,6 +29,7 @@
 #include <QTreeWidget>
 #include <QString>
 #include <QPixmap>
+#include <QPoint>
 #include <QMap>
 
 // KDE includes
@@ -100,6 +101,8 @@ Q_SIGNALS:
 private Q_SLOTS:
 
     void slotItemClicked(QTreeWidgetItem*);
+    void slotContextMenu(const QPoint&);
+    void slotRemoveItem();
 
 private:
 

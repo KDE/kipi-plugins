@@ -32,6 +32,8 @@
 
 // KDE includes
 
+#include <kmenu.h>
+#include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -126,6 +128,7 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
 {
     d->mngr = mngr;
 
+    setContextMenuPolicy(Qt::CustomContextMenu);
     setIconSize(QSize(64, 64));
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSortingEnabled(false);
@@ -144,11 +147,43 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
 
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked(QTreeWidgetItem*)));
+
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
+            this, SLOT(slotContextMenu(const QPoint&)));
 }
 
 EnfuseStackList::~EnfuseStackList()
 {
     delete d;
+}
+
+void EnfuseStackList::slotContextMenu(const QPoint& p)
+{
+    KMenu popmenu(this);
+
+    EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(itemAt(p));
+    if (item)
+    {
+        KAction* rmItem = new KAction(KIcon("dialog-close"), i18n("Remove item"), this);
+        connect(rmItem, SIGNAL(triggered(bool) ),
+                this, SLOT(slotRemoveItem()));
+        popmenu.addAction(rmItem);
+        popmenu.addSeparator();
+    }
+
+    KAction* rmAll = new KAction(KIcon("edit-delete-shred"), i18n("Clear All"), this);
+    connect(rmAll, SIGNAL(triggered(bool) ),
+            this, SLOT(clear()));
+
+    popmenu.addAction(rmAll);
+    popmenu.exec(QCursor::pos());
+}
+
+void EnfuseStackList::slotRemoveItem()
+{
+    EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(currentItem());
+    if (item)
+        delete item;
 }
 
 QMap<KUrl, QString> EnfuseStackList::urlsMap()
