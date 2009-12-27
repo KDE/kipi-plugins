@@ -152,6 +152,17 @@ void ActionThread::identifyFiles(const KUrl::List& urlList)
     }
 }
 
+void ActionThread::loadProcessed(const KUrl& url)
+{
+    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    t->action                 = LOAD;
+    t->urls.append(url);
+
+    QMutexLocker lock(&d->mutex);
+    d->todo << t;
+    d->condVar.wakeAll();
+}
+
 void ActionThread::alignFiles(const KUrl::List& urlList)
 {
     ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
@@ -254,6 +265,26 @@ void ActionThread::run()
                     ad2.alignedUrlsMap = alignedUrlsMap;
                     ad2.success        = result;
                     ad2.message        = errors;
+                    emit finished(ad2);
+                    break;
+                }
+
+                case LOAD:
+                {
+                    ActionData ad1;
+                    ad1.action   = LOAD;
+                    ad1.inUrls   = t->urls;
+                    ad1.starting = true;
+                    emit starting(ad1);
+
+                    QImage image;
+                    bool result  = image.load(t->urls[0].path());;
+
+                    ActionData ad2;
+                    ad2.action         = LOAD;
+                    ad2.inUrls         = t->urls;
+                    ad2.success        = result;
+                    ad2.image          = image;
                     emit finished(ad2);
                     break;
                 }

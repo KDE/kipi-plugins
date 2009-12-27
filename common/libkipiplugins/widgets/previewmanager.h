@@ -29,6 +29,7 @@
 #include <QStackedWidget>
 #include <QString>
 #include <QColor>
+#include <QImage>
 
 // KDE includes
 
@@ -60,6 +61,7 @@ public:
     ~PreviewManager();
 
     void load(const QString& file);
+    void setImage(const QImage& img);
     void setText(const QString& text, const QColor& color=Qt::white);
     void setBusy(bool b, const QString& text=QString());
     void setThumbnail(const QPixmap& preview=QPixmap());

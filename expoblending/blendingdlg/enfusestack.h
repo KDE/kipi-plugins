@@ -84,6 +84,7 @@ public:
     EnfuseStackList(Manager* mngr, QWidget* parent);
     virtual ~EnfuseStackList();
 
+    void setOnItem(const KUrl& url, bool on);
     void clearSelected();
     void addItem(const KUrl& url);
 

@@ -53,6 +53,7 @@ public:
     ~PreviewImage();
 
     bool load(const QString& file);
+    bool setImage(const QImage& img);
 
 public Q_SLOTS:
 

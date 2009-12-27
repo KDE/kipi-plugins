@@ -187,6 +187,21 @@ void EnfuseStackList::clearSelected()
         delete item;
 }
 
+void EnfuseStackList::setOnItem(const KUrl& url, bool on)
+{
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        EnfuseStackItem* lvItem = dynamic_cast<EnfuseStackItem*>(*it);
+        if (lvItem && lvItem->url() == url)
+        {
+            lvItem->setOn(on);
+            break;
+        }
+        ++it;
+    }
+}
+
 void EnfuseStackList::addItem(const KUrl& url)
 {
     if (!url.isValid())

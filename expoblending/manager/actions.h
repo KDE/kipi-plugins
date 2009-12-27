@@ -42,7 +42,8 @@ enum Action
     NONE = 0,
     IDENTIFY,
     ALIGN,
-    ENFUSE
+    ENFUSE,
+    LOAD
 };
 
 typedef QMap<KUrl, KUrl> ItemUrlsMap;   // Map between original Url and processed temp Url.

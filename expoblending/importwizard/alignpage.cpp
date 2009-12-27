@@ -177,6 +177,7 @@ void AlignPage::cancelAlignement()
     d->progressTimer->stop();
     d->progressLabel->clear();
     resetTitle();
+    d->detailsBtn->hide();
 }
 
 void AlignPage::slotProgressTimerDone()

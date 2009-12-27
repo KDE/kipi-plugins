@@ -61,6 +61,7 @@ extern "C"
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
+#include <kio/renamedialog.h>
 
 // LibKIPI includes
 
@@ -162,7 +163,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
 
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
-    d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander, false);
+    d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
 
     d->enfuseStack       = new EnfuseStackList(d->mngr, page);
 
@@ -226,7 +227,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
             this, SLOT(slotPreviewButtonClicked()));
 
     connect(d->enfuseStack, SIGNAL(signalItemClicked(const KUrl&)),
-            d->previewWidget, SLOT(slotLoad(const KUrl&)));
+            this, SLOT(slotLoadProcessed(const KUrl&)));
 
     // ---------------------------------------------------------------
 
@@ -284,6 +285,13 @@ void ExpoBlendingDlg::slotAddItems(const KUrl::List& urls)
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }
+}
+
+void ExpoBlendingDlg::slotLoadProcessed(const KUrl& url)
+{
+    d->mngr->thread()->loadProcessed(url);
+    if (!d->mngr->thread()->isRunning())
+        d->mngr->thread()->start();
 }
 
 void ExpoBlendingDlg::setIdentity(const KUrl& url, const QString& identity)
@@ -352,67 +360,50 @@ void ExpoBlendingDlg::slotSaveItems()
         newUrl.setFileName(it.value());
         QFileInfo fi(newUrl.toLocalFile());
 
-        // Check for overwrite ----------------------------------------------------------
-
-        if ( fi.exists() )
+        if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
         {
-            int result = KMessageBox::warningYesNo(0, i18n("A file named \"%1\" already "
-                                                        "exists. Are you sure you want "
-                                                        "to overwrite it?",
-                                                newUrl.fileName()),
-                                                i18n("Overwrite File?"),
-                                                KStandardGuiItem::overwrite(),
-                                                KStandardGuiItem::cancel());
+            if (fi.exists())
+            {
+                KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
+                                                 "exists. Are you sure you want "
+                                                 "to overwrite it?",
+                                                 newUrl.fileName()),
+                                      it.key(), newUrl,
+                                      KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
-            if (result != KMessageBox::Yes)
-                return;
+                switch (dlg.exec())
+                {
+                    case KIO::R_CANCEL:
+                    case KIO::R_SKIP:
+                    {
+                        newUrl.clear();
+                        d->enfuseStack->setOnItem(it.key(), false);
+                        break;
+                    }
+                    case KIO::R_RENAME:
+                    {
+                        newUrl = dlg.newDestUrl();
+                        break;
+                    }
+                    default:    // Overwrite.
+                        break;
+                }
+            }
         }
 
-        if (::rename(QFile::encodeName(it.key().path()), QFile::encodeName(newUrl.path())) != 0)
+        if (!newUrl.isEmpty())
         {
-            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.path()));
-            return;
+            if (::rename(QFile::encodeName(it.key().path()), QFile::encodeName(newUrl.path())) != 0)
+            {
+                KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.path()));
+                return;
+            }
         }
     }
 
     enableButton(User1, false);
 
     d->enfuseStack->clearSelected();
-
-/*
-    QString typeMime(d->saveSettingsBox->typeMime());
-    QString defaultFileName(QString("expoblending") + d->saveSettingsBox->extension());
-    QString place(QDir::homePath());
-
-    if (d->mngr->iface())
-        place = d->mngr->iface()->currentAlbum().uploadPath().path();
-
-    QPointer<KFileDialog> imageFileSaveDialog = new KFileDialog(place, QString(), 0);
-
-    imageFileSaveDialog->setModal(false);
-    imageFileSaveDialog->setOperationMode(KFileDialog::Saving);
-    imageFileSaveDialog->setMode(KFile::File);
-    imageFileSaveDialog->setSelection(defaultFileName);
-    imageFileSaveDialog->setCaption(i18n("New Image File Name"));
-    imageFileSaveDialog->setMimeFilter(QStringList() << typeMime, typeMime);
-
-    // Start dialog and check if canceled.
-    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
-       return;
-
-    KUrl newUrl = imageFileSaveDialog->selectedUrl();
-
-    if (!newUrl.isValid())
-    {
-        KMessageBox::error(0, i18n("Failed to save file\n\"%1\" to\n\"%2\".",
-                              newUrl.fileName(),
-                              newUrl.path().section('/', -2, -2)));
-        kWarning() << "target Url is not valid !";
-        return;
-    }
-
-    delete imageFileSaveDialog;
-*/
 }
 
 void ExpoBlendingDlg::slotProcess()
@@ -440,23 +431,6 @@ void ExpoBlendingDlg::slotAbort()
     d->mngr->thread()->cancel();
 }
 
-void ExpoBlendingDlg::processing(const KUrl& /*url*/)
-{
-    d->previewWidget->setBusy(true, i18n("Processing bracketed images..."));
-}
-
-void ExpoBlendingDlg::processed(const KUrl& /*url*/, const KUrl& tmpFile)
-{
-    d->enfuseStack->addItem(tmpFile);
-}
-
-void ExpoBlendingDlg::processingFailed(const KUrl& /*url*/)
-{
-    d->previewWidget->setBusy(false);
-    d->previewWidget->setButtonVisible(true);
-    d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
-}
-
 void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
 {
     QString text;
@@ -469,10 +443,16 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
             {
                 break;
             }
+            case(LOAD):
+            {
+                busy(true);
+                d->previewWidget->setBusy(true, i18n("Loading processed image..."));
+                break;
+            }
             case(ENFUSE):
             {
                 busy(true);
-                processing(ad.inUrls[0]);
+                d->previewWidget->setBusy(true, i18n("Processing bracketed images..."));
                 break;
             }
             default:
@@ -494,10 +474,19 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
+                case(LOAD):
+                {
+                    d->previewWidget->setBusy(false);
+                    d->previewWidget->setText(i18n("Failed to Load processed image"), Qt::red);
+                    busy(false);
+                    break;
+                }
                 case(ENFUSE):
                 {
                     d->output = ad.message;
-                    processingFailed(ad.inUrls[0]);
+                    d->previewWidget->setBusy(false);
+                    d->previewWidget->setButtonVisible(true);
+                    d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
                     busy(false);
                     break;
                 }
@@ -518,9 +507,15 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
+                case(LOAD):
+                {
+                    d->previewWidget->setImage(ad.image);
+                    busy(false);
+                    break;
+                }
                 case(ENFUSE):
                 {
-                    processed(ad.inUrls[0], ad.outUrls[0]);
+                    d->enfuseStack->addItem(ad.outUrls[0]);
                     busy(false);
                     break;
                 }

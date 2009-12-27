@@ -133,19 +133,23 @@ PreviewImage::~PreviewImage()
     delete d;
 }
 
-bool PreviewImage::load(const QString& file)
+bool PreviewImage::setImage(const QImage& img)
 {
-    QImage image(file);
-
-    if (!image.isNull())
+    if (!img.isNull())
     {
-        d->pixmapItem->setPixmap(QPixmap::fromImage(image));
+        d->pixmapItem->setPixmap(QPixmap::fromImage(img));
         d->pixmapItem->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-        d->scene->setSceneRect(0, 0, image.width(), image.height());
+        d->scene->setSceneRect(0, 0, img.width(), img.height());
         return true;
     }
 
     return false;
+}
+
+bool PreviewImage::load(const QString& file)
+{
+    QImage image(file);
+    return setImage(image);
 }
 
 void PreviewImage::slotZoomIn()

@@ -67,6 +67,7 @@ public:
 
     void setAlignSettings(const RawDecodingSettings& settings);
     void setEnfuseSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt);
+    void loadProcessed(const KUrl& url);
     void identifyFiles(const KUrl::List& urlList);
     void convertRawFiles(const KUrl::List& urlList);
     void alignFiles(const KUrl::List& urlList);

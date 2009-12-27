@@ -142,13 +142,27 @@ void PreviewManager::slotLoad(const KUrl& url)
     load(url.path());
 }
 
+void PreviewManager::setImage(const QImage& img)
+{
+    setBusy(false);
+
+    if (!d->preview->setImage(img))
+    {
+        setText(i18n( "Failed to load image" ));
+        return;
+    }
+
+    setCurrentIndex(PreviewMode);
+    d->preview->slotZoom2Fit();
+}
+
 void PreviewManager::load(const QString& file)
 {
     setBusy(false);
 
     if (!d->preview->load(file))
     {
-        setText(i18n( "Failed to load image after processing" ));
+        setText(i18n( "Failed to load image" ));
         return;
     }
 

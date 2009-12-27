@@ -77,10 +77,6 @@ private:
 
     void setIdentity(const KUrl& url, const QString& identity);
 
-    void processing(const KUrl& url);
-    void processed(const KUrl& url, const KUrl& tmpFile);
-    void processingFailed(const KUrl& url);
-
 private Q_SLOTS:
 
     void slotDefault();
@@ -90,6 +86,7 @@ private Q_SLOTS:
     void slotProcess();
     void slotAbort();
 
+    void slotLoadProcessed(const KUrl&);
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
     void slotAddItems(const KUrl::List& urls);
 
