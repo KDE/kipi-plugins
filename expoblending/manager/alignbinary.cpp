@@ -59,6 +59,8 @@ void AlignBinary::checkSystem()
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
+        m_version.remove("Pre-Release ");            // Special case with Hugin beta.
+
         kDebug(AREA_CODE_LOADING) << "Found " << path() << " version: " << version() ;
     }
 }
