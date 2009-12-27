@@ -67,9 +67,11 @@ public:
     bool isOn() const;
 
     void setThumbnail(const QPixmap& pix);
+    bool asThumbnail();
 
 private:
 
+    bool m_asThumbnail;
     KUrl m_url;
 };
 
@@ -84,6 +86,7 @@ public:
     EnfuseStackList(Manager* mngr, QWidget* parent);
     virtual ~EnfuseStackList();
 
+    void setThumbnail(const KUrl& url, const QImage& img);
     void setOnItem(const KUrl& url, bool on);
     void clearSelected();
     void addItem(const KUrl& url);
@@ -96,8 +99,6 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotKDEPreview(const KFileItem&, const QPixmap&);
-    void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void slotItemClicked(QTreeWidgetItem*);
 
 private:

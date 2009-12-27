@@ -45,11 +45,13 @@ extern "C"
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QScrollArea>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <kconfig.h>
+#include <kvbox.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -155,17 +157,26 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
 
     d->previewWidget  = new PreviewManager(page);
     d->previewWidget->setButtonText(i18n("Details..."));
-    d->bracketStack   = new BracketStackList(d->mngr->iface(), page);
 
     // ---------------------------------------------------------------
 
-    d->settingsExpander  = new RExpanderBox(page);
+    QScrollArea *sv      = new QScrollArea(page);
+    KVBox *panel         = new KVBox(sv->viewport());
+    panel->setAutoFillBackground(false);
+    sv->setWidget(panel);
+    sv->setWidgetResizable(true);
+    sv->setAutoFillBackground(false);
+    sv->viewport()->setAutoFillBackground(false);
+
+    d->bracketStack      = new BracketStackList(d->mngr->iface(), panel);
+
+    d->settingsExpander  = new RExpanderBox(panel);
     d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
 
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
     d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
 
-    d->enfuseStack       = new EnfuseStackList(d->mngr, page);
+    d->enfuseStack       = new EnfuseStackList(d->mngr, panel);
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);
@@ -174,10 +185,8 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    grid->addWidget(d->previewWidget,    0, 0, 3, 1);
-    grid->addWidget(d->bracketStack,     0, 1, 1, 1);
-    grid->addWidget(d->settingsExpander, 1, 1, 1, 1);
-    grid->addWidget(d->enfuseStack,      2, 1, 1, 1);
+    grid->addWidget(d->previewWidget, 0, 0, 3, 1);
+    grid->addWidget(sv,               0, 1, 3, 1);
     grid->setMargin(0);
     grid->setSpacing(spacingHint());
     grid->setColumnStretch(0, 10);
@@ -512,6 +521,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 case(LOAD):
                 {
                     d->previewWidget->setImage(ad.image);
+                    d->enfuseStack->setThumbnail(ad.inUrls[0], ad.image);
                     busy(false);
                     break;
                 }

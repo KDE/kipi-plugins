@@ -54,6 +54,7 @@ EnfuseStackItem::EnfuseStackItem(QTreeWidget* parent)
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
     setThumbnail(SmallIcon("image-x-generic", treeWidget()->iconSize().width(), KIconLoader::DisabledState));
+    m_asThumbnail = false;
 }
 
 EnfuseStackItem::~EnfuseStackItem()
@@ -88,6 +89,12 @@ void EnfuseStackItem::setThumbnail(const QPixmap& pix)
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
     setIcon(0, QIcon(pixmap));
+    m_asThumbnail = true;
+}
+
+bool EnfuseStackItem::asThumbnail()
+{
+    return m_asThumbnail;
 }
 
 bool EnfuseStackItem::isOn() const
@@ -137,12 +144,6 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
 
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked(QTreeWidgetItem*)));
-
-    if (d->mngr->iface())
-    {
-        connect(d->mngr->iface(), SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-    }
 }
 
 EnfuseStackList::~EnfuseStackList()
@@ -232,42 +233,21 @@ void EnfuseStackList::addItem(const KUrl& url)
         QString   temp;
         item->setTargetFileName(temp.sprintf("enfused-%02i.", count+1).append(fi.suffix()));
 
-        if (d->mngr->iface())
-        {
-            d->mngr->iface()->thumbnails(url, iconSize().width());
-        }
-        else
-        {
-            KIO::PreviewJob *job = KIO::filePreview(url, iconSize().width());
-
-            connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-                    this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
-        }
-
         emit signalItemClicked(url);
     }
 }
 
-// Used only if Kipi interface is null.
-void EnfuseStackList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
+void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
 {
-    if (!pix.isNull())
-        slotThumbnail(item.url(), pix);
-}
+    if (img.isNull()) return;
 
-void EnfuseStackList::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
-        if (item && item->url() == url)
+        if (item && (item->url() == url) && (!item->asThumbnail()))
         {
-            if (pix.isNull())
-                item->setThumbnail(SmallIcon("image-x-generic", iconSize().width(), KIconLoader::DisabledState));
-            else
-                item->setThumbnail(pix.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio));
-
+            item->setThumbnail(QPixmap::fromImage(img.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio)));
             return;
         }
         ++it;
