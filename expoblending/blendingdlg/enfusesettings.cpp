@@ -92,7 +92,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
 
     d->levelsLabel  = new QLabel(i18n("Levels:"));
     d->levelsInput  = new RIntNumInput();
-    d->levelsInput->setRange(1, 50, 1);
+    d->levelsInput->setRange(1, 29, 1);
     d->levelsInput->setSliderEnabled(true);
     d->levelsInput->setDefaultValue(20);
     d->levelsInput->setWhatsThis(i18n("Set the number levels for pyramid blending."));
