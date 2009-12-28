@@ -101,13 +101,13 @@ void Plugin_ExpoBlending::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    Manager mngr;
-    if (!mngr.checkBinaries())
+    Manager* mngr = new Manager;
+    if (!mngr->checkBinaries())
         return;
-    mngr.setItemsList(images.images());
-    mngr.setAbout(new ExpoBlendingAboutData);
-    mngr.setIface(m_interface);
-    mngr.run();
+    mngr->setItemsList(images.images());
+    mngr->setAbout(new ExpoBlendingAboutData);
+    mngr->setIface(m_interface);
+    mngr->run();
 }
 
 KIPI::Category Plugin_ExpoBlending::category( KAction* action ) const

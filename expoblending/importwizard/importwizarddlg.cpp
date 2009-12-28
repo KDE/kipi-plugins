@@ -74,6 +74,8 @@ public:
 ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
                : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
 {
+    setModal(false);
+
     d->mngr      = mngr;
     d->introPage = new IntroPage(this);
     d->itemsPage = new ItemsPage(d->mngr, this);

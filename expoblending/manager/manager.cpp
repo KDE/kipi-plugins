@@ -51,6 +51,8 @@ public:
         iface  = 0;
         about  = 0;
         thread = 0;
+        wizard = 0;
+        dlg    = 0;
     }
 
     KUrl::List             inputUrls;
@@ -67,6 +69,9 @@ public:
 
     AlignBinary            alignBinary;
     EnfuseBinary           enfuseBinary;
+
+    ImportWizardDlg*       wizard;
+    ExpoBlendingDlg*       dlg;
 };
 
 Manager::Manager(QObject* parent)
@@ -81,6 +86,13 @@ Manager::~Manager()
 {
     delete d->about;
     delete d->thread;
+
+    if (d->wizard)
+        delete d->wizard;
+
+    if (d->dlg)
+        delete d->dlg;
+
     delete d;
 }
 
@@ -162,24 +174,26 @@ ActionThread* Manager::thread() const
 
 void Manager::run()
 {
-    startImportWizard();
+    startWizard();
 }
 
-void Manager::startImportWizard()
+void Manager::startWizard()
 {
-    ImportWizardDlg *wz = new ImportWizardDlg(this, 0);
+    d->wizard = new ImportWizardDlg(this);
+    d->wizard->show();
 
-    if (wz->exec() != QDialog::Rejected)
-    {
-        d->inputUrls = wz->itemUrls();
-        startExpoBlendingDlg();
-    }
+    connect(d->wizard, SIGNAL(accepted()),
+            this, SLOT(slotStartDialog()));
 }
 
-void Manager::startExpoBlendingDlg()
+void Manager::slotStartDialog()
 {
-    ExpoBlendingDlg *dlg = new ExpoBlendingDlg(this);
-    dlg->exec();
+    d->inputUrls = d->wizard->itemUrls();
+    d->dlg = new ExpoBlendingDlg(this);
+    d->dlg->show();
+
+    connect(d->dlg, SIGNAL(finished()),
+            this, SLOT(slotDialogClosed()));
 }
 
 } // namespace KIPIExpoBlendingPlugin

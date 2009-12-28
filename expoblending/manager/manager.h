@@ -88,10 +88,13 @@ public:
 
     void run();
 
+private Q_SLOTS:
+
+    void slotStartDialog();
+
 private:
 
-    void startImportWizard();
-    void startExpoBlendingDlg();
+    void startWizard();
 
 private:
 

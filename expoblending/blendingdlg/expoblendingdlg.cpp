@@ -130,6 +130,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
 {
     d->mngr = mngr;
 
+    setModal(false);
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);
     setCaption(i18n("Exposure Blending"));

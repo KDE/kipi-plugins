@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     mngr.setAbout(aboutData);
     mngr.setIface(0);
     mngr.run();
-
+    app.exec();
 #if KEXIV2_VERSION >= 0x000300
     KExiv2::cleanupExiv2();
 #endif
