@@ -1,19 +1,23 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Expo Blending
+Name[ca]=Barreja d'exposició
 Name[en_GB]=Expo Blending
 Name[nl]=Belichting mengen
 Name[pt]=Mistura da Exposição
 Name[sv]=Exponeringsblandning
 Name[uk]=Злиття експозиції
 Name[x-test]=xxExpo Blendingxx
+Name[zh_TW]=曝光混合
 Comment=A tool to blend bracketed images
+Comment[ca]=Una eina per barrejar imatges fetes amb bràqueting
 Comment[en_GB]=A tool to blend bracketed images
 Comment[nl]=Een hulpmiddel voor het mengen van afbeeldingen tussen haakjes
 Comment[pt]=Uma ferramenta para mostrar imagens delimitadas
 Comment[sv]=Ett verktyg för att blanda avgränsade bilder
 Comment[uk]=Інструмент для злиття зображень «вилки»
 Comment[x-test]=xxA tool to blend bracketed imagesxx
+Comment[zh_TW]=混合括弧內的影像的工具
 Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service
