@@ -276,7 +276,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
         item->setEnfuseSettings(settings);
         setCurrentItem(item);
 
-        QFileInfo fi(url.path());
+        QFileInfo fi(url.toLocalFile());
         QString   temp;
         item->setTargetFileName(temp.sprintf("enfused-%02i.", count+1).append(fi.suffix()));
 

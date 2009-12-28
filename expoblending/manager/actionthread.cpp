@@ -122,7 +122,7 @@ ActionThread::~ActionThread()
 
     // Cleanup all tmp files created by Enfuse process.
     foreach(const KUrl url, d->enfuseTmpUrls)
-        KTempDir::removeDir(url.path());
+        KTempDir::removeDir(url.toLocalFile());
 
     delete d;
 }
@@ -232,7 +232,7 @@ void ActionThread::run()
 
                     if (!t->urls.isEmpty())
                     {
-                        float val = getAverageSceneLuminance(t->urls[0].path());
+                        float val = getAverageSceneLuminance(t->urls[0].toLocalFile());
                         if (val != -1)
                             avLum.setNum(log2f(val), 'g', 2);
                     }
@@ -278,7 +278,7 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QImage image;
-                    bool result  = image.load(t->urls[0].path());;
+                    bool result  = image.load(t->urls[0].toLocalFile());;
 
                     ActionData ad2;
                     ad2.action         = LOAD;
@@ -305,10 +305,10 @@ void ActionThread::run()
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KExiv2 meta;
-                    meta.load(t->urls[0].path());
+                    meta.load(t->urls[0].toLocalFile());
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
-                    meta.save(destUrl.path());
+                    meta.save(destUrl.toLocalFile());
 
                     // To be cleaned in destructor.
                     d->enfuseTmpUrls << destUrl;
@@ -357,7 +357,7 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
 
     foreach(const KUrl url, inUrls)
     {
-        if (isRawFile(url.path()))
+        if (isRawFile(url.toLocalFile()))
         {
             KUrl outUrl;
 
@@ -388,7 +388,7 @@ bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrls
 
     foreach(const KUrl url, mixedUrls)
     {
-        args << url.path();
+        args << url.toLocalFile();
     }
 
     d->alignProcess->setProgram(args);
@@ -433,7 +433,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    if (d->rawdec.decodeRAWImage(inUrl.path(), settings, imageData, width, height, rgbmax))
+    if (d->rawdec.decodeRAWImage(inUrl.toLocalFile(), settings, imageData, width, height, rgbmax))
     {
         uchar* sptr  = (uchar*)imageData.data();
         float factor = 65535.0 / rgbmax;
@@ -451,7 +451,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         }
 
         KExiv2 meta;
-        meta.load(inUrl.path());
+        meta.load(inUrl.toLocalFile());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(QSize(width, height));
         meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
@@ -465,10 +465,10 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         wImageIface.setCancel(&d->cancel);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->alignTmpDir->name();
-        QFileInfo fi(inUrl.path());
+        QFileInfo fi(inUrl.toLocalFile());
         outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString(".tif"));
 
-        if (!wImageIface.write2TIFF(outUrl.path()))
+        if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
     }
     else
@@ -485,7 +485,7 @@ bool ActionThread::isRawFile(const KUrl& url)
 {
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 
-    QFileInfo fileInfo(url.path());
+    QFileInfo fileInfo(url.toLocalFile());
     if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
         return true;
 
@@ -547,10 +547,10 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
 
     args << "-v";
     args << "-o";
-    args << outUrl.path();
+    args << outUrl.toLocalFile();
 
     foreach(const KUrl url, inUrls)
-        args << url.path();
+        args << url.toLocalFile();
 
     d->enfuseProcess->setProgram(args);
 
@@ -614,7 +614,7 @@ QString ActionThread::getProcessError(KProcess* proc) const
 float ActionThread::getAverageSceneLuminance(const KUrl& url)
 {
     KExiv2 meta;
-    meta.load(url.path());
+    meta.load(url.toLocalFile());
     if (!meta.hasExif())
         return -1;
 

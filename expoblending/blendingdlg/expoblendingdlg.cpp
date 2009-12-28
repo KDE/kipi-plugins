@@ -405,9 +405,9 @@ void ExpoBlendingDlg::slotSaveItems()
 
         if (!newUrl.isEmpty())
         {
-            if (::rename(QFile::encodeName(it.key().path()), QFile::encodeName(newUrl.path())) != 0)
+            if (::rename(QFile::encodeName(it.key().toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
             {
-                KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.path()));
+                KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
                 return;
             }
         }
