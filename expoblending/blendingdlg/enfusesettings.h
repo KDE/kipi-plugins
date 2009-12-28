@@ -53,6 +53,27 @@ public:
     {
     }
 
+    QString hasCommentString() const
+    {
+        // This string must still in English.
+        // There will be recorded in comments metadata.
+        return QString("Enfuse Settings: "
+                       "Hardmask: %1 "
+                       "AutoLevels: %2 "
+                       "CIECAM02: %3 "
+                       "Level: %4 "
+                       "Exposure: %5 "
+                       "Saturation: %6 "
+                       "Contrast: %7")
+                       .arg(hardMask)
+                       .arg(autoLevels)
+                       .arg(ciecam02)
+                       .arg(levels)
+                       .arg(exposure)
+                       .arg(saturation)
+                       .arg(contrast);
+    }
+
     bool  autoLevels;
     bool  hardMask;
     bool  ciecam02;
