@@ -34,6 +34,10 @@
 
 #include <kurl.h>
 
+// Local includes
+
+#include "enfusesettings.h"
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -59,19 +63,21 @@ public:
         success  = false;
     }
 
-    bool        starting;
-    bool        success;
+    bool           starting;
+    bool           success;
 
-    QString     message;
+    QString        message;
 
-    QImage      image;
+    QImage         image;
 
-    KUrl::List  inUrls;
-    KUrl::List  outUrls;
+    KUrl::List     inUrls;
+    KUrl::List     outUrls;
 
-    ItemUrlsMap alignedUrlsMap;
+    EnfuseSettings enfuseSettings;
 
-    Action      action;
+    ItemUrlsMap    alignedUrlsMap;
+
+    Action         action;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

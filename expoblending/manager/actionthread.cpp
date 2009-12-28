@@ -306,17 +306,20 @@ void ActionThread::run()
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KExiv2 meta;
                     meta.load(t->urls[0].path());
+                    meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
+                    meta.setImageDateTime(QDateTime::currentDateTime());
                     meta.save(destUrl.path());
 
                     // To be cleaned in destructor.
                     d->enfuseTmpUrls << destUrl;
 
                     ActionData ad2;
-                    ad2.action   = ENFUSE;
-                    ad2.inUrls   = t->urls;
-                    ad2.outUrls  = KUrl::List() << destUrl;
-                    ad2.success  = result;
-                    ad2.message  = errors;
+                    ad2.action         = ENFUSE;
+                    ad2.inUrls         = t->urls;
+                    ad2.outUrls        = KUrl::List() << destUrl;
+                    ad2.success        = result;
+                    ad2.message        = errors;
+                    ad2.enfuseSettings = t->enfuseSettings;
                     emit finished(ad2);
                     break;
                 }

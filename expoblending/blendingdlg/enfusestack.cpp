@@ -63,6 +63,17 @@ EnfuseStackItem::~EnfuseStackItem()
 {
 }
 
+void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
+{
+    m_settings = settings;
+    setToolTip(1, m_settings.asCommentString());
+}
+
+EnfuseSettings EnfuseStackItem::enfuseSettings() const
+{
+    return m_settings;
+}
+
 void EnfuseStackItem::setUrl(const KUrl& url)
 {
     m_url = url;
@@ -237,7 +248,7 @@ void EnfuseStackList::setOnItem(const KUrl& url, bool on)
     }
 }
 
-void EnfuseStackList::addItem(const KUrl& url)
+void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
 {
     if (!url.isValid())
         return;
@@ -262,6 +273,7 @@ void EnfuseStackList::addItem(const KUrl& url)
         EnfuseStackItem* item = new EnfuseStackItem(this);
         item->setUrl(url);
         item->setOn(true);
+        item->setEnfuseSettings(settings);
         setCurrentItem(item);
 
         QFileInfo fi(url.path());

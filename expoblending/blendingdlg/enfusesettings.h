@@ -30,6 +30,7 @@
 // KDE includes
 
 #include <kconfig.h>
+#include <klocale.h>
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -53,25 +54,23 @@ public:
     {
     }
 
-    QString hasCommentString() const
+    QString asCommentString() const
     {
-        // This string must still in English.
-        // There will be recorded in comments metadata.
-        return QString("Enfuse Settings: "
-                       "Hardmask: %1 "
-                       "AutoLevels: %2 "
-                       "CIECAM02: %3 "
-                       "Level: %4 "
-                       "Exposure: %5 "
-                       "Saturation: %6 "
-                       "Contrast: %7")
-                       .arg(hardMask)
-                       .arg(autoLevels)
-                       .arg(ciecam02)
-                       .arg(levels)
-                       .arg(exposure)
-                       .arg(saturation)
-                       .arg(contrast);
+        QString ret;
+
+        ret.append(i18n("Hardmask: %1",   hardMask ? i18n("enabled") : i18n("disabled")));
+        ret.append("\n");
+        ret.append(i18n("CIECAM02: %1",   ciecam02 ? i18n("enabled") : i18n("disabled")));
+        ret.append("\n");
+        ret.append(i18n("Levels: %1",     autoLevels ? i18n("auto") : QString::number(levels)));
+        ret.append("\n");
+        ret.append(i18n("Exposure: %1",   exposure));
+        ret.append("\n");
+        ret.append(i18n("Saturation: %1", saturation));
+        ret.append("\n");
+        ret.append(i18n("Contrast: %1",   contrast));
+
+        return ret;
     }
 
     bool  autoLevels;

@@ -527,7 +527,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(ENFUSE):
                 {
-                    d->enfuseStack->addItem(ad.outUrls[0]);
+                    d->enfuseStack->addItem(ad.outUrls[0], ad.enfuseSettings);
                     busy(false);
                     break;
                 }

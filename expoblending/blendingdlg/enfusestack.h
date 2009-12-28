@@ -37,6 +37,10 @@
 #include <kurl.h>
 #include <kfileitem.h>
 
+// Local includes
+
+#include "enfusesettings.h"
+
 namespace KIPI
 {
 class Interface;
@@ -61,6 +65,9 @@ public:
     void setUrl(const KUrl& url);
     KUrl url() const;
 
+    void setEnfuseSettings(const EnfuseSettings& settings);
+    EnfuseSettings enfuseSettings() const;
+
     void setTargetFileName(const QString& fn);
     QString targetFileName() const;
 
@@ -72,8 +79,9 @@ public:
 
 private:
 
-    bool m_asThumbnail;
-    KUrl m_url;
+    bool           m_asThumbnail;
+    KUrl           m_url;
+    EnfuseSettings m_settings;
 };
 
 // ---------------------------------------------------------------------
@@ -90,7 +98,7 @@ public:
     void setThumbnail(const KUrl& url, const QImage& img);
     void setOnItem(const KUrl& url, bool on);
     void clearSelected();
-    void addItem(const KUrl& url);
+    void addItem(const KUrl& url, const EnfuseSettings& settings);
 
     QMap<KUrl, QString> urlsMap();
 
