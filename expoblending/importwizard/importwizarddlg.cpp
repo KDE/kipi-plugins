@@ -72,6 +72,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
                : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
+    setWindowTitle(i18n("Exposure Blending Import Wizard"));
 
     d->mngr              = mngr;
     d->introPage         = new IntroPage(this);
