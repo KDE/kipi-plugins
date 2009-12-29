@@ -306,6 +306,7 @@ void ActionThread::run()
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KExiv2 meta;
                     meta.load(t->urls[0].toLocalFile());
+                    meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
                     meta.save(destUrl.toLocalFile());

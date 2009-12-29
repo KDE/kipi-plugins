@@ -66,6 +66,7 @@ EnfuseStackItem::~EnfuseStackItem()
 void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
 {
     m_settings = settings;
+    setText(2, m_settings.inputImagesList());
     setToolTip(1, m_settings.asCommentString());
 }
 
@@ -146,14 +147,15 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setColumnCount(2);
+    setColumnCount(3);
     setHeaderHidden(false);
     setDragEnabled(false);
     header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
     labels.append( i18n("Thumbnail") );
-    labels.append( i18n("Target File Name") );
+    labels.append( i18n("Target") );
+    labels.append( i18n("Inputs") );
     setHeaderLabels(labels);
 
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),

@@ -31,6 +31,7 @@
 
 #include <kconfig.h>
 #include <klocale.h>
+#include <kurl.h>
 
 namespace KIPIExpoBlendingPlugin
 {
@@ -73,15 +74,28 @@ public:
         return ret;
     }
 
-    bool  autoLevels;
-    bool  hardMask;
-    bool  ciecam02;
+    QString inputImagesList() const
+    {
+        QString ret;
 
-    int   levels;
+        foreach(const KUrl url, inputUrls)
+            ret.append(url.fileName() + " ; ");
 
-    float exposure;
-    float saturation;
-    float contrast;
+        ret.truncate(ret.length()-3);
+        return ret;
+    }
+
+    bool       autoLevels;
+    bool       hardMask;
+    bool       ciecam02;
+
+    int        levels;
+
+    float      exposure;
+    float      saturation;
+    float      contrast;
+
+    KUrl::List inputUrls;
 };
 
 // ------------------------------------------------------------------------

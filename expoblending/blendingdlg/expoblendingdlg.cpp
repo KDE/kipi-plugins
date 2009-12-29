@@ -432,7 +432,9 @@ void ExpoBlendingDlg::slotProcess()
         alignedList.append(alignedUrl);
     }
 
-    d->mngr->thread()->setEnfuseSettings(d->enfuseSettingsBox->settings(), d->saveSettingsBox->fileFormat());
+    EnfuseSettings settings = d->enfuseSettingsBox->settings();
+    settings.inputUrls      = d->bracketStack->urls();
+    d->mngr->thread()->setEnfuseSettings(settings, d->saveSettingsBox->fileFormat());
     d->mngr->thread()->enfuseFiles(alignedList, d->mngr->itemsList()[0]);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
