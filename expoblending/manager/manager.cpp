@@ -190,9 +190,6 @@ void Manager::slotStartDialog()
     d->inputUrls = d->wizard->itemUrls();
     d->dlg = new ExpoBlendingDlg(this);
     d->dlg->show();
-
-    connect(d->dlg, SIGNAL(finished()),
-            this, SLOT(slotDialogClosed()));
 }
 
 } // namespace KIPIExpoBlendingPlugin
