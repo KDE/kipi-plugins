@@ -127,7 +127,7 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setAlignSettings(const RawDecodingSettings& settings)
+void ActionThread::setPreProcessingSettings(const RawDecodingSettings& settings)
 {
     d->rawDecodingSettings = settings;
 }
@@ -166,7 +166,7 @@ void ActionThread::loadProcessed(const KUrl& url)
 void ActionThread::alignFiles(const KUrl::List& urlList)
 {
     ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-    t->action                 = ALIGN;
+    t->action                 = PREPROCESSING;
     t->urls                   = urlList;
     t->rawDecodingSettings    = d->rawDecodingSettings;
 
@@ -246,10 +246,10 @@ void ActionThread::run()
                     break;
                 }
 
-                case ALIGN:
+                case PREPROCESSING:
                 {
                     ActionData ad1;
-                    ad1.action   = ALIGN;
+                    ad1.action   = PREPROCESSING;
                     ad1.inUrls   = t->urls;
                     ad1.starting = true;
                     emit starting(ad1);
@@ -257,10 +257,10 @@ void ActionThread::run()
                     ItemUrlsMap alignedUrlsMap;
                     QString     errors;
 
-                    bool result  = startAlign(t->urls, alignedUrlsMap, t->rawDecodingSettings, errors);
+                    bool result  = startPreProcessing(t->urls, alignedUrlsMap, t->rawDecodingSettings, errors);
 
                     ActionData ad2;
-                    ad2.action         = ALIGN;
+                    ad2.action         = PREPROCESSING;
                     ad2.inUrls         = t->urls;
                     ad2.alignedUrlsMap = alignedUrlsMap;
                     ad2.success        = result;
@@ -335,9 +335,9 @@ void ActionThread::run()
     }
 }
 
-bool ActionThread::startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
-                              const RawDecodingSettings& settings,
-                              QString& errors)
+bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
+                                      const RawDecodingSettings& settings,
+                                      QString& errors)
 {
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));

@@ -164,7 +164,7 @@ void AlignPage::processAlignement()
     connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
 
-    d->mngr->thread()->setAlignSettings(d->mngr->rawDecodingSettings());
+    d->mngr->thread()->setPreProcessingSettings(d->mngr->rawDecodingSettings());
     d->mngr->thread()->alignFiles(d->mngr->itemsList());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
@@ -212,7 +212,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case(ALIGN):
+                case(PREPROCESSING):
                 {
                     d->title->setText(i18n("<qt>"
                                            "<p>Auto-alignment has failed !</p>"
@@ -237,7 +237,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case(ALIGN):
+                case(PREPROCESSING):
                 {
                     d->progressTimer->stop();
                     d->progressLabel->clear();

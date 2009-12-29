@@ -45,7 +45,7 @@ enum Action
 {
     NONE = 0,
     IDENTIFY,
-    ALIGN,
+    PREPROCESSING,
     ENFUSE,
     LOAD
 };

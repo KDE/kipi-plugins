@@ -65,7 +65,7 @@ public:
     explicit ActionThread(QObject* parent);
     ~ActionThread();
 
-    void setAlignSettings(const RawDecodingSettings& settings);
+    void setPreProcessingSettings(const RawDecodingSettings& settings);
     void setEnfuseSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt);
     void loadProcessed(const KUrl& url);
     void identifyFiles(const KUrl::List& urlList);
@@ -84,9 +84,9 @@ private:
 
     void    run();
 
-    bool    startAlign(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
-                       const RawDecodingSettings& settings,
-                       QString& errors);
+    bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
+                               const RawDecodingSettings& settings,
+                               QString& errors);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
 
