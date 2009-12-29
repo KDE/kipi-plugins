@@ -102,12 +102,17 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
-    QTimer::singleShot(0, this, SLOT(slotImageListChanged()));
+    QTimer::singleShot(0, this, SLOT(slotSetupList()));
 }
 
 ItemsPage::~ItemsPage()
 {
     delete d;
+}
+
+void ItemsPage::slotSetupList()
+{
+    slotAddItems(d->mngr->itemsList());
 }
 
 void ItemsPage::slotAddItems(const KUrl::List& urls)

@@ -55,15 +55,16 @@ public:
     KUrl::List itemUrls() const;
 
 Q_SIGNALS:
-    
+
     void signalItemsPageIsValid(bool);
-    
+
 private:
 
     void setIdentity(const KUrl& url, const QString& identity);
 
 private Q_SLOTS:
 
+    void slotSetupList();
     void slotImageListChanged();
     void slotAddItems(const KUrl::List&);
     void slotAction(const KIPIExpoBlendingPlugin::ActionData&);
