@@ -13,8 +13,7 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/rawpage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/alignpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/lastpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/expoblendingdlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusesettings.cpp
@@ -73,5 +72,3 @@ TARGET_LINK_LIBRARIES(expoblending
 
 INSTALL(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(FILES expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-
-

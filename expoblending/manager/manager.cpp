@@ -57,7 +57,7 @@ public:
 
     KUrl::List             inputUrls;
 
-    ItemUrlsMap            alignedUrlsMap;
+    ItemUrlsMap            preProcessedUrlsMap;
 
     RawDecodingSettings    rawDecodingSettings;
 
@@ -77,8 +77,7 @@ public:
 Manager::Manager(QObject* parent)
        : QObject(parent), d(new ManagerPriv)
 {
-    d->thread = new ActionThread(this);
-
+    d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
 }
 
@@ -157,14 +156,14 @@ RawDecodingSettings Manager::rawDecodingSettings() const
     return d->rawDecodingSettings;
 }
 
-void Manager::setAlignedMap(const ItemUrlsMap& urls)
+void Manager::setPreProcessedMap(const ItemUrlsMap& urls)
 {
-    d->alignedUrlsMap = urls;
+    d->preProcessedUrlsMap = urls;
 }
 
-ItemUrlsMap Manager::alignedMap() const
+ItemUrlsMap Manager::preProcessedMap() const
 {
-    return d->alignedUrlsMap;
+    return d->preProcessedUrlsMap;
 }
 
 ActionThread* Manager::thread() const

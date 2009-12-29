@@ -79,8 +79,8 @@ public:
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings rawDecodingSettings() const;
 
-    void setAlignedMap(const ItemUrlsMap& urls);
-    ItemUrlsMap alignedMap() const;
+    void setPreProcessedMap(const ItemUrlsMap& urls);
+    ItemUrlsMap preProcessedMap() const;
 
     ActionThread* thread() const;
     AlignBinary&  alignBinary() const;

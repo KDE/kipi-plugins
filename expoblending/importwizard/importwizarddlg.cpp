@@ -41,8 +41,7 @@
 #include "aboutdata.h"
 #include "intropage.h"
 #include "itemspage.h"
-#include "rawpage.h"
-#include "alignpage.h"
+#include "preprocessingpage.h"
 #include "lastpage.h"
 
 namespace KIPIExpoBlendingPlugin
@@ -54,21 +53,19 @@ public:
 
     ImportWizardDlgPriv()
     {
-        mngr      = 0;
-        introPage = 0;
-        itemsPage = 0;
-        rawPage   = 0;
-        alignPage = 0;
-        lastPage  = 0;
+        mngr              = 0;
+        introPage         = 0;
+        itemsPage         = 0;
+        preProcessingPage = 0;
+        lastPage          = 0;
     }
 
-    Manager*   mngr;
+    Manager*           mngr;
 
-    IntroPage* introPage;
-    ItemsPage* itemsPage;
-    RawPage*   rawPage;
-    AlignPage* alignPage;
-    LastPage*  lastPage;
+    IntroPage*         introPage;
+    ItemsPage*         itemsPage;
+    PreProcessingPage* preProcessingPage;
+    LastPage*          lastPage;
 };
 
 ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
@@ -76,12 +73,11 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 {
     setModal(false);
 
-    d->mngr      = mngr;
-    d->introPage = new IntroPage(this);
-    d->itemsPage = new ItemsPage(d->mngr, this);
-    //d->rawPage   = new RawPage(this);
-    d->alignPage = new AlignPage(d->mngr, this);
-    d->lastPage  = new LastPage(d->mngr, this);
+    d->mngr              = mngr;
+    d->introPage         = new IntroPage(this);
+    d->itemsPage         = new ItemsPage(d->mngr, this);
+    d->preProcessingPage = new PreProcessingPage(d->mngr, this);
+    d->lastPage          = new LastPage(d->mngr, this);
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -101,14 +97,11 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     resize(600, 500);
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotFinishPressed()));
-
     connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
             this, SLOT(slotItemsPageIsValid(bool)));
 
-    connect(d->alignPage, SIGNAL(signalAligned(const ItemUrlsMap&)),
-            this, SLOT(slotAligned(const ItemUrlsMap&)));
+    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(const ItemUrlsMap&)),
+            this, SLOT(slotPreProcessed(const ItemUrlsMap&)));
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -143,11 +136,11 @@ void ImportWizardDlg::next()
         d->mngr->setRawDecodingSettings(d->rawPage->rawDecodingSettings());
     }
 */
-    else if (currentPage() == d->alignPage->page())
+    else if (currentPage() == d->preProcessingPage->page())
     {
         // Do not give acces to Next button during alignment process.
-        setValid(d->alignPage->page(), false);
-        d->alignPage->processAlignement();
+        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->process();
         // Next is handled with signals/slots
         return;
     }
@@ -157,28 +150,28 @@ void ImportWizardDlg::next()
 
 void ImportWizardDlg::back()
 {
-    if (currentPage() == d->alignPage->page())
+    if (currentPage() == d->preProcessingPage->page())
     {
-        d->alignPage->cancelAlignement();
+        d->preProcessingPage->cancel();
         KAssistantDialog::back();
-        setValid(d->alignPage->page(), true);
+        setValid(d->preProcessingPage->page(), true);
         return;
     }
 
     KAssistantDialog::back();
 }
 
-void ImportWizardDlg::slotAligned(const ItemUrlsMap& alignedUrlsMap)
+void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
 {
-    if (alignedUrlsMap.isEmpty())
+    if (map.isEmpty())
     {
-        // Alignement failed.
-        setValid(d->alignPage->page(), false);
+        // pre-processing failed.
+        setValid(d->preProcessingPage->page(), false);
     }
     else
     {
-        // Alignement Done.
-        d->mngr->setAlignedMap(alignedUrlsMap);
+        // pre-processing Done.
+        d->mngr->setPreProcessedMap(map);
         KAssistantDialog::next();
     }
 }
@@ -186,10 +179,6 @@ void ImportWizardDlg::slotAligned(const ItemUrlsMap& alignedUrlsMap)
 void ImportWizardDlg::slotItemsPageIsValid(bool valid)
 {
     setValid(d->itemsPage->page(), valid);
-}
-
-void ImportWizardDlg::slotFinishPressed()
-{
 }
 
 } // namespace KIPIExpoBlendingPlugin

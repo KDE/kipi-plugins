@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef ALIGN_PAGE_H
-#define ALIGN_PAGE_H
+#ifndef PREPROCESSING_PAGE_H
+#define PREPROCESSING_PAGE_H
 
 // Local includes
 
@@ -41,23 +41,23 @@ namespace KIPIExpoBlendingPlugin
 {
 
 class Manager;
-class AlignPagePriv;
+class PreProcessingPagePriv;
 
-class AlignPage : public WizardPage
+class PreProcessingPage : public WizardPage
 {
     Q_OBJECT
 
 public:
 
-    AlignPage(Manager* mngr, KAssistantDialog* dlg);
-    ~AlignPage();
+    PreProcessingPage(Manager* mngr, KAssistantDialog* dlg);
+    ~PreProcessingPage();
 
-    void processAlignement();
-    void cancelAlignement();
+    void process();
+    void cancel();
 
 Q_SIGNALS:
 
-    void signalAligned(const ItemUrlsMap&);
+    void signalPreProcessed(const ItemUrlsMap&);
 
 private Q_SLOTS:
 
@@ -71,9 +71,9 @@ private:
 
 private:
 
-    AlignPagePriv* const d;
+    PreProcessingPagePriv* const d;
 };
 
 }   // namespace KIPIExpoBlendingPlugin
 
-#endif /* ALIGN_PAGE_H */
+#endif /* PREPROCESSING_PAGE_H */

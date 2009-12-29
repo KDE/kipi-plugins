@@ -423,7 +423,7 @@ void ExpoBlendingDlg::slotProcess()
     KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
 
-    ItemUrlsMap map = d->mngr->alignedMap();
+    ItemUrlsMap map = d->mngr->preProcessedMap();
     KUrl::List alignedList;
 
     foreach(KUrl url, selectedUrl)

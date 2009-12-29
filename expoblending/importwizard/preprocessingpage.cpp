@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "alignpage.moc"
+#include "preprocessingpage.moc"
 
 // Qt includes
 
@@ -57,11 +57,11 @@ using namespace KIPIPlugins;
 namespace KIPIExpoBlendingPlugin
 {
 
-class AlignPagePriv
+class PreProcessingPagePriv
 {
 public:
 
-    AlignPagePriv()
+    PreProcessingPagePriv()
     {
         progressPix   = SmallIcon("process-working", 22);
         progressCount = 0;
@@ -86,9 +86,9 @@ public:
     Manager*     mngr;
 };
 
-AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
-         : WizardPage(dlg, i18n("<b>Align Bracketed Images</b>")),
-           d(new AlignPagePriv)
+PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
+                 : WizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
+                   d(new PreProcessingPagePriv)
 {
     d->mngr          = mngr;
     d->progressTimer = new QTimer(this);
@@ -133,29 +133,30 @@ AlignPage::AlignPage(Manager* mngr, KAssistantDialog* dlg)
             this, SLOT(slotShowDetails()));
 }
 
-AlignPage::~AlignPage()
+PreProcessingPage::~PreProcessingPage()
 {
     delete d;
 }
 
-void AlignPage::resetTitle()
+void PreProcessingPage::resetTitle()
 {
     d->title->setText(i18n("<qt>"
-                           "<p>Now, we will align bracketed images before to fuse it.</p>"
-                           "<p>To do it, <b>%1</b> program from "
-                           "<a href='%2'>Hugin</a> "
+                           "<p>Now, we will pre-process bracketed images before to fuse it.</p>"
+                           "<p>To perform auto-alignment, <b>%1</b> program from "
+                           "<a href='%2'>%3</a> "
                            "project will be used.</p>"
-                           "<p>Press \"Next\" button to start pre-processing and auto-alignment.</p>"
+                           "<p>Press \"Next\" button to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->alignBinary().path()),
-                           d->mngr->alignBinary().url().url()));
+                           d->mngr->alignBinary().url().url(),
+                           d->mngr->alignBinary().projectName()));
     d->detailsBtn->hide();
 }
 
-void AlignPage::processAlignement()
+void PreProcessingPage::process()
 {
     d->title->setText(i18n("<qt>"
-                           "<p>Pre-processing and auto-alignment is under progress, please wait.<p>"
+                           "<p>Pre-processing is under progress, please wait.<p>"
                            "<p>This can take a while...</p>"
                            "</qt>"));
 
@@ -170,7 +171,7 @@ void AlignPage::processAlignement()
         d->mngr->thread()->start();
 }
 
-void AlignPage::cancelAlignement()
+void PreProcessingPage::cancel()
 {
     disconnect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
                this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
@@ -181,7 +182,7 @@ void AlignPage::cancelAlignement()
     resetTitle();
 }
 
-void AlignPage::slotProgressTimerDone()
+void PreProcessingPage::slotProgressTimerDone()
 {
     d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
 
@@ -192,17 +193,17 @@ void AlignPage::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-void AlignPage::slotShowDetails()
+void PreProcessingPage::slotShowDetails()
 {
     OutputDialog dlg(kapp->activeWindow(),
-                     i18n("Alignment Processing Messages"),
+                     i18n("Pre-Processing Messages"),
                      d->output);
-                     i18n("Alignment Processing Messages"),
+                     i18n("Pre-Processing Messages"),
     dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
     dlg.exec();
 }
 
-void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
+void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
 {
     QString text;
 
@@ -215,7 +216,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 case(PREPROCESSING):
                 {
                     d->title->setText(i18n("<qt>"
-                                           "<p>Auto-alignment has failed !</p>"
+                                           "<p>Pre-processing has failed !</p>"
                                            "<p>Please check your bracketed images stack...</p>"
                                            "<p>Press \"Details\" button to show processing messages.</p>"
                                            "</qt>"));
@@ -223,7 +224,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;
-                    emit signalAligned(ItemUrlsMap());
+                    emit signalPreProcessed(ItemUrlsMap());
                     break;
                 }
                 default:
@@ -241,7 +242,7 @@ void AlignPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 {
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalAligned(ad.alignedUrlsMap);
+                    emit signalPreProcessed(ad.alignedUrlsMap);
                     break;
                 }
                 default:
