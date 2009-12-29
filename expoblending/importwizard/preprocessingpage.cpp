@@ -151,7 +151,7 @@ void PreProcessingPage::resetTitle()
                            "<a href='%2'>%3</a> project will be used. "
                            "Alignment must be performed if you haven't used a tripod to take bracketed images. "
                            "Alignment operation can take a while.</p>"
-                           "<p>Pre-Processing operations included Raw demosaicing. Raw image will be converted "
+                           "<p>Pre-Processing operations included Raw demosaicing. Raw images will be converted "
                            "to sixteenbits sRGB images with auto-gamma."
                            "<p>Press \"Next\" button to start pre-processing.</p>"
                            "</qt>",
