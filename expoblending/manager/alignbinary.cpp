@@ -84,7 +84,7 @@ QString AlignBinary::path() const
 
 QString AlignBinary::minimalVersion() const
 {
-    return QString("2009.2");
+    return QString("0.8");
 }
 
 }  // namespace KIPIExpoBlendingPlugin
