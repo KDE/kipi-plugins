@@ -47,14 +47,14 @@ public:
 
     LastPagePriv()
     {
-        mngr          = 0;
+        mngr = 0;
     }
 
     Manager* mngr;
 };
 
 LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Alignement is Complete")),
+        : KIPIPlugins::WizardPage(dlg, i18n("Pre-Processing is Complete")),
           d(new LastPagePriv)
 {
     d->mngr       = mngr;
@@ -63,8 +63,8 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
-                        "<p><h1><b>Bracketed Images Alignement is Done</b></h1></p>"
-                        "<p>Congratulation. Your images are aligned and ready to be fusioned. </p>"
+                        "<p><h1><b>Bracketed Images Pre-Processing is Done</b></h1></p>"
+                        "<p>Congratulation. Your images are ready to be fusioned. </p>"
                         "To perform this operation, <b>%1</b> program from "
                         "<a href='%2'>Enblend</a> "
                         "project will be used.</p>"
