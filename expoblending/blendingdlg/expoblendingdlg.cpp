@@ -267,6 +267,7 @@ void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
 void ExpoBlendingDlg::slotClose()
 {
     d->mngr->thread()->cancel();
+    d->mngr->cleanUp();
     saveSettings();
     done(Close);
 }

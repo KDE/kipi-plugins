@@ -88,6 +88,11 @@ public:
 
     void run();
 
+    /**
+     * Clean up all temporary files produced so far.
+     */
+    void cleanUp();
+
 private Q_SLOTS:
 
     void slotStartDialog();

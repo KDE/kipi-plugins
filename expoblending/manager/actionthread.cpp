@@ -95,13 +95,30 @@ public:
     KDcraw                           rawdec;
 
     KTempDir*                        alignTmpDir;
+
+    /**
+     * List of results files produced by enfuse that may need cleaning.
+     * Only access this through the provided mutex.
+     */
     KUrl::List                       enfuseTmpUrls;
+    QMutex                           enfuseTmpUrlsMutex;
 
     SaveSettingsWidget::OutputFormat outputFormat;
 
     RawDecodingSettings              rawDecodingSettings;
 
     EnfuseSettings                   enfuseSettings;
+
+    void cleanAlignTmpDir()
+    {
+        if (alignTmpDir)
+        {
+            alignTmpDir->unlink();
+            delete alignTmpDir;
+            alignTmpDir = 0;
+        }
+    }
+
 };
 
 ActionThread::ActionThread(QObject* parent)
@@ -112,22 +129,34 @@ ActionThread::ActionThread(QObject* parent)
 
 ActionThread::~ActionThread()
 {
+
+    kDebug() << "ActionThread shutting down."
+             << "Canceling all actions and waiting for them";
+
     // cancel the thread
     cancel();
     // wait for the thread to finish
     wait();
 
-    if (d->alignTmpDir)
-    {
-        d->alignTmpDir->unlink();
-        delete d->alignTmpDir;
-    }
+    kDebug() << "Thread finished";
 
-    // Cleanup all tmp files created by Enfuse process.
-    foreach(const KUrl url, d->enfuseTmpUrls)
-        KTempDir::removeDir(url.toLocalFile());
+    d->cleanAlignTmpDir();
+
+    cleanUpResultFiles();
 
     delete d;
+}
+
+void ActionThread::cleanUpResultFiles()
+{
+    // Cleanup all tmp files created by Enfuse process.
+    QMutexLocker(&d->enfuseTmpUrlsMutex);
+    foreach(const KUrl url, d->enfuseTmpUrls)
+    {
+        kDebug() << "Removing temp file " << url.toLocalFile();
+        KTempDir::removeDir(url.toLocalFile());
+    }
+    d->enfuseTmpUrls.clear();
 }
 
 void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSettings& settings)
@@ -317,7 +346,10 @@ void ActionThread::run()
                     meta.save(destUrl.toLocalFile());
 
                     // To be cleaned in destructor.
-                    d->enfuseTmpUrls << destUrl;
+                    {
+                        QMutexLocker(&d->enfuseTmpUrlsMutex);
+                        d->enfuseTmpUrls << destUrl;
+                    }
 
                     ActionData ad2;
                     ad2.action         = ENFUSE;
@@ -349,11 +381,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
 
 
-    if (d->alignTmpDir)
-    {
-        d->alignTmpDir->unlink();
-        delete d->alignTmpDir;
-    }
+    d->cleanAlignTmpDir();
 
     d->alignTmpDir = new KTempDir(prefix);
 

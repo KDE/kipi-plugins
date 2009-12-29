@@ -65,7 +65,6 @@ Plugin_ExpoBlending::Plugin_ExpoBlending(QObject *parent, const QVariantList&)
 
 Plugin_ExpoBlending::~Plugin_ExpoBlending()
 {
-    delete m_manager;
 }
 
 void Plugin_ExpoBlending::setup(QWidget* widget)
@@ -105,7 +104,7 @@ void Plugin_ExpoBlending::slotActivate()
 
     if (!m_manager)
     {
-        m_manager = new Manager;
+        m_manager = new Manager(this);
         m_manager->setAbout(new ExpoBlendingAboutData());
     }
 

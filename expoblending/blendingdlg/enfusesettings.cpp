@@ -87,10 +87,10 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
 
     // ------------------------------------------------------------------------
 
-    d->autoLevelsCB = new QCheckBox(i18n("Auto Levels"), this);
+    d->autoLevelsCB = new QCheckBox(i18nc("enfuse settings", "Auto Levels"), this);
     d->autoLevelsCB->setWhatsThis( i18n("Set automatic level selection (maximized) for pyramid blending."));
 
-    d->levelsLabel  = new QLabel(i18n("Levels:"));
+    d->levelsLabel  = new QLabel(i18nc("enfuse settings", "Levels:"));
     d->levelsInput  = new RIntNumInput();
     d->levelsInput->setRange(1, 29, 1);
     d->levelsInput->setSliderEnabled(true);
@@ -103,7 +103,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
                                      "stacks with thin and high contrast features, "
                                      "improves sharpness at the expense of increased noise."));
 
-    d->exposureLabel = new QLabel(i18n("Exposure:"));
+    d->exposureLabel = new QLabel(i18nc("enfuse settings", "Exposure:"));
     d->exposureInput = new RDoubleNumInput();
     d->exposureInput->setDecimals(2);
     d->exposureInput->input()->setRange(0.0, 1.0, 0.01, true);
@@ -111,7 +111,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
                                           "Higher values will favour well-exposed pixels."));
 
-    d->saturationLabel = new QLabel(i18n("Saturation:"));
+    d->saturationLabel = new QLabel(i18nc("enfuse settings", "Saturation:"));
     d->saturationInput = new RDoubleNumInput();
     d->saturationInput->setDecimals(2);
     d->saturationInput->input()->setRange(0.0, 1.0, 0.01, true);
@@ -119,7 +119,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->saturationInput->setWhatsThis( i18n("Increasing this value makes pixels with high "
                                            "saturation contribute more to the final output."));
 
-    d->contrastLabel = new QLabel(i18n("Contrast:"));
+    d->contrastLabel = new QLabel(i18nc("enfuse settings", "Contrast:"));
     d->contrastInput = new RDoubleNumInput();
     d->contrastInput->setDecimals(2);
     d->contrastInput->input()->setRange(0.0, 1.0, 0.01, true);

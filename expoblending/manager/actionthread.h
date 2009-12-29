@@ -75,6 +75,11 @@ public:
 
     void cancel();
 
+    /**
+     * Clean up all temporary results produced so far.
+     */
+    void cleanUpResultFiles();
+
 Q_SIGNALS:
 
     void starting(const KIPIExpoBlendingPlugin::ActionData& ad);

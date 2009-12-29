@@ -176,6 +176,11 @@ void Manager::run()
     startWizard();
 }
 
+void Manager::cleanUp()
+{
+    d->thread->cleanUpResultFiles();
+}
+
 void Manager::startWizard()
 {
     d->wizard = new ImportWizardDlg(this);
