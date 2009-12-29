@@ -129,22 +129,27 @@ IF(NOT WIN32 AND NOT APPLE)
     MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
 
-# Check KDcraw version installed to compile fine DngConverter plugin.
-FIND_PACKAGE(PkgConfig)
-PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
-IF(Kdcraw_FOUND)
-    SET(KDCRAW_FOR_DNGCONVERTER TRUE)
-ELSE(Kdcraw_FOUND)
-    SET(KDCRAW_FOR_DNGCONVERTER FALSE)
-ENDIF(Kdcraw_FOUND)
+IF(NOT WIN32)
+    FIND_PACKAGE(PkgConfig)
+    # Check KDcraw version installed to compile fine DngConverter plugin.
+    PKG_CHECK_MODULES(Kdcraw libkdcraw>=0.4.0)
+    IF(Kdcraw_FOUND)
+        SET(KDCRAW_FOR_DNGCONVERTER TRUE)
+    ELSE(Kdcraw_FOUND)
+        SET(KDCRAW_FOR_DNGCONVERTER FALSE)
+    ENDIF(Kdcraw_FOUND)
 
-# And also for exposure blending
-PKG_CHECK_MODULES(KdcrawExpo libkdcraw>=1.0.0)
-IF(KdcrawExpo_FOUND)
+    # And also for exposure blending
+    PKG_CHECK_MODULES(KdcrawExpo libkdcraw>=1.0.0)
+    IF(KdcrawExpo_FOUND)
+        SET(KDCRAW_FOR_EXPOBLENDING TRUE)
+    ELSE(KdcrawExpo_FOUND)
+        SET(KDCRAW_FOR_EXPOBLENDING FALSE)
+    ENDIF(KdcrawExpo_FOUND)
+ELSE(NOT WIN32)
+    SET(KDCRAW_FOR_DNGCONVERTER TRUE)
     SET(KDCRAW_FOR_EXPOBLENDING TRUE)
-ELSE(KdcrawExpo_FOUND)
-    SET(KDCRAW_FOR_EXPOBLENDING FALSE)
-ENDIF(KdcrawExpo_FOUND)
+ENDIF(NOT WIN32)
 
 INCLUDE(MacroOptionalDependPackage)
 
@@ -266,11 +271,11 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${KDE4_INCLUDES}
                         ${QT4_INCLUDES}
                        )
- 
+
     # debug settings
     SET(AREA_CODE_GENERAL "51000")
     SET(AREA_CODE_LOADING "51001")
-    ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL}) 
+    ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})
     ADD_DEFINITIONS(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
     ADD_DEFINITIONS(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
 
@@ -347,7 +352,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(expoblending)
     ENDIF(KDCRAW_FOR_EXPOBLENDING)
 
-#   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2 
+#   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #
 #   FIND_FILE(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
 #
