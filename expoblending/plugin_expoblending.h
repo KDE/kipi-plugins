@@ -37,6 +37,11 @@ class QWidget;
 
 class KAction;
 
+namespace KIPIExpoBlendingPlugin
+{
+class Manager;
+}
+
 namespace KIPI
 {
     class Interface;
@@ -60,11 +65,13 @@ public Q_SLOTS:
 
 private:
 
-    QWidget*         m_parentWidget;
+    QWidget*                         m_parentWidget;
 
-    KAction*         m_action;
+    KAction*                         m_action;
 
-    KIPI::Interface* m_interface;
+    KIPIExpoBlendingPlugin::Manager* m_manager;
+
+    KIPI::Interface*                 m_interface;
 };
 
 #endif /* PLUGIN_EXPOBLENDING_H */

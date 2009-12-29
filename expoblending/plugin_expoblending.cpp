@@ -58,12 +58,14 @@ Plugin_ExpoBlending::Plugin_ExpoBlending(QObject *parent, const QVariantList&)
     m_interface    = 0;
     m_action       = 0;
     m_parentWidget = 0;
+    m_manager      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_ExpoBlending plugin loaded";
 }
 
 Plugin_ExpoBlending::~Plugin_ExpoBlending()
 {
+    delete m_manager;
 }
 
 void Plugin_ExpoBlending::setup(QWidget* widget)
@@ -101,13 +103,17 @@ void Plugin_ExpoBlending::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    Manager* mngr = new Manager;
-    if (!mngr->checkBinaries())
+    if (!m_manager)
+    {
+        m_manager = new Manager;
+        m_manager->setAbout(new ExpoBlendingAboutData());
+    }
+
+    if (!m_manager->checkBinaries())
         return;
-    mngr->setItemsList(images.images());
-    mngr->setAbout(new ExpoBlendingAboutData);
-    mngr->setIface(m_interface);
-    mngr->run();
+    m_manager->setItemsList(images.images());
+    m_manager->setIface(m_interface);
+    m_manager->run();
 }
 
 KIPI::Category Plugin_ExpoBlending::category( KAction* action ) const
