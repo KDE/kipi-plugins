@@ -125,7 +125,7 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
 
     resetTitle();
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-align.png");
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-preprocessing.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(const KIPIExpoBlendingPlugin::ActionData&)),
