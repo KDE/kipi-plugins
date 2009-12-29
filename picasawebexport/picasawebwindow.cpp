@@ -476,7 +476,7 @@ void PicasawebWindow::slotUploadImages()
 
         if(m_exportApplicationTags->isChecked())
         {
-            // tagsFromDatabase=attribs["tags"].asStringList();
+            tagsFromDatabase=attribs["tags"].toStringList();
         }
 
         itTags = tagsFromDatabase.begin();

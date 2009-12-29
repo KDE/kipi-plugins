@@ -141,7 +141,7 @@ private:
 
     KLineEdit                               *m_tagsLineEdit;
 
-    QRadioButton                            *m_exportApplicationTags;
+    QCheckBox                               *m_exportApplicationTags;
 
     QProgressDialog                         *m_progressDlg;
     QProgressDialog                         *m_authProgressDlg;

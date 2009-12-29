@@ -121,9 +121,12 @@
        </layout>
       </item>
       <item>
-       <widget class="QRadioButton" name="m_exportApplicationTags" >
+       <widget class="QCheckBox" name="m_exportApplicationTags" >
         <property name="text" >
          <string>E&amp;xport Application Tags</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

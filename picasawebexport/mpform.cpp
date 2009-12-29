@@ -71,7 +71,7 @@ void MPForm::finish()
 
 bool MPForm::addPair(const QString& name, const QString& value, const QString& contentType)
 {
-    QString str;
+    QByteArray str;
     QString  content_length = QString("%1").arg(value.length());
     str += "--";
     str += m_boundary;
@@ -98,7 +98,7 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += value.toUtf8();
     str += "\r\n";
 
-    m_buffer.append(str.toUtf8());
+    m_buffer.append(str);
     return true;
 }
 

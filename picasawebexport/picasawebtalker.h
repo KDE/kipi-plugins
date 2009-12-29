@@ -29,6 +29,7 @@
 #include <QProgressDialog>
 #include <QLinkedList>
 #include <QMap>
+#include <QHash>
 #include <QObject>
 
 // KDE includes
@@ -80,7 +81,7 @@ public:
     QLinkedList <PicasaWebAlbum> * m_albumsList;
     QString token() { return m_token;}
     QString getApiSig(QString,QStringList) ;
-    void addPhotoTag(const QString& photoURI, const QString& tag);
+    void addPhotoTag(const QString& photoURI, const QByteArray& metadataXML);
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
@@ -134,12 +135,11 @@ private Q_SLOTS:
     void slotError( const QString& msg );
 //  void slotAuthenticate() ;
     void data(KIO::Job *job, const QByteArray &data);
+    void dataReq(KIO::Job* job, QByteArray &data);
     void info(KIO::Job *job, const QString& str);
     void slotResult (KJob *job);
 
 private:
-
-    int        remaining_tags_count;
 
     QWidget*   m_parent;
 
@@ -155,6 +155,7 @@ private:
     QString    m_userId;
 
     QMap<QString, QStringList > tags_map;
+    QHash<KIO::Job*, QByteArray> m_data_hash;
 
 //  KUrl       m_url;
     KIO::Job*  m_job;
