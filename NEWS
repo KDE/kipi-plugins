@@ -11,4 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.
 003 ==> AdvancedSlideShow : 215798 : Slideshow crashes when starting.
 004 ==> JPEGLossLess      : 200031 : Photo is rotated but not thumbnail.
-005 ==> 
+005 ==> PicasaWebExport   : 199145 : tags not exported to picasaweb [patch].
+006 ==> 
