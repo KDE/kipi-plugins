@@ -312,7 +312,14 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QImage image;
-                    bool result  = image.load(t->urls[0].toLocalFile());;
+                    bool result  = image.load(t->urls[0].toLocalFile());
+
+                    // rotate image
+                    if (result)
+                    {
+                        KExiv2 meta(t->urls[0].toLocalFile());
+                        meta.rotateExifQImage(image, meta.getImageOrientation());
+                    }
 
                     ActionData ad2;
                     ad2.action         = LOAD;
