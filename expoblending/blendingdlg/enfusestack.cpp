@@ -68,7 +68,7 @@ void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
     m_settings = settings;
     setText(2, m_settings.inputImagesList());
     setToolTip(1, m_settings.asCommentString());
-    setToolTip(2, m_settings.asCommentString());
+    setToolTip(2, m_settings.inputImagesList().replace(" ; ", "\n"));
 }
 
 EnfuseSettings EnfuseStackItem::enfuseSettings() const
