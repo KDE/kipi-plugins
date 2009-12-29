@@ -190,7 +190,7 @@ EnfuseSettings EnfuseSettingsWidget::settings() const
     settings.hardMask   = d->hardMaskCB->isChecked();
     settings.exposure   = d->exposureInput->value();
     settings.saturation = d->saturationInput->value();
-    settings.saturation = d->contrastInput->value();
+    settings.contrast   = d->contrastInput->value();
     settings.ciecam02   = d->ciecam02CB->isChecked();
     return settings;
 }
