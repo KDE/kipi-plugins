@@ -41,6 +41,7 @@
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <kconfig.h>
 
 // LibKIPI includes
 
@@ -100,7 +101,9 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
     d->alignCheckBox = new QCheckBox(i18n("Align bracketed images"), vbox);
-    d->alignCheckBox->setChecked(true);
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    d->alignCheckBox->setChecked(group.readEntry("Auto Alignment", true));
 
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
@@ -140,6 +143,11 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
 
 PreProcessingPage::~PreProcessingPage()
 {
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("ExpoBlending Settings"));
+    group.writeEntry("Auto Alignment", d->alignCheckBox->isChecked());
+    config.sync();
+
     delete d;
 }
 
