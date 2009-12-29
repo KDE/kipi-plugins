@@ -29,6 +29,7 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QPushButton>
+#include <QCheckBox>
 
 // KDE includes
 
@@ -79,6 +80,8 @@ public:
 
     QLabel*      title;
 
+    QCheckBox*   alignCheckBox;
+
     QString      output;
 
     QPushButton* detailsBtn;
@@ -96,6 +99,8 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
     d->title         = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
+    d->alignCheckBox = new QCheckBox(i18n("Align bracketed images"), vbox);
+    d->alignCheckBox->setChecked(true);
 
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
@@ -143,14 +148,18 @@ void PreProcessingPage::resetTitle()
     d->title->setText(i18n("<qt>"
                            "<p>Now, we will pre-process bracketed images before to fuse it.</p>"
                            "<p>To perform auto-alignment, <b>%1</b> program from "
-                           "<a href='%2'>%3</a> "
-                           "project will be used.</p>"
+                           "<a href='%2'>%3</a> project will be used. "
+                           "Alignment must be performed if you haven't used a tripod to take bracketed images. "
+                           "Alignment operation can take a while.</p>"
+                           "<p>Pre-Processing operations included Raw demosaicing. Raw image will be converted "
+                           "to sixteenbits sRGB images with auto-gamma."
                            "<p>Press \"Next\" button to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->alignBinary().path()),
                            d->mngr->alignBinary().url().url(),
                            d->mngr->alignBinary().projectName()));
     d->detailsBtn->hide();
+    d->alignCheckBox->show();
 }
 
 void PreProcessingPage::process()
@@ -160,13 +169,14 @@ void PreProcessingPage::process()
                            "<p>This can take a while...</p>"
                            "</qt>"));
 
+    d->alignCheckBox->hide();
     d->progressTimer->start(300);
 
     connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
 
-    d->mngr->thread()->setPreProcessingSettings(d->mngr->rawDecodingSettings());
-    d->mngr->thread()->alignFiles(d->mngr->itemsList());
+    d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings());
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -221,6 +231,7 @@ void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                                            "<p>Press \"Details\" button to show processing messages.</p>"
                                            "</qt>"));
                     d->progressTimer->stop();
+                    d->alignCheckBox->hide();
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;

@@ -60,16 +60,18 @@ public:
 
     ActionThreadPriv()
     {
-        cancel           = false;
-        enfuseProcess    = 0;
-        alignProcess     = 0;
-        alignTmpDir      = 0;
+        align         = true;
+        cancel        = false;
+        enfuseProcess = 0;
+        alignProcess  = 0;
+        alignTmpDir   = 0;
     }
 
     class Task
     {
         public:
 
+            bool                             align;
             KUrl::List                       urls;
             KUrl                             outputUrl;
             Action                           action;
@@ -79,6 +81,7 @@ public:
     };
 
     bool                             cancel;
+    bool                             align;
 
     QMutex                           mutex;
 
@@ -127,8 +130,9 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setPreProcessingSettings(const RawDecodingSettings& settings)
+void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSettings& settings)
 {
+    d->align               = align;
     d->rawDecodingSettings = settings;
 }
 
@@ -163,12 +167,13 @@ void ActionThread::loadProcessed(const KUrl& url)
     d->condVar.wakeAll();
 }
 
-void ActionThread::alignFiles(const KUrl::List& urlList)
+void ActionThread::preProcessFiles(const KUrl::List& urlList)
 {
     ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
     t->action                 = PREPROCESSING;
     t->urls                   = urlList;
     t->rawDecodingSettings    = d->rawDecodingSettings;
+    t->align                  = d->align;
 
     QMutexLocker lock(&d->mutex);
     d->todo << t;
@@ -257,7 +262,7 @@ void ActionThread::run()
                     ItemUrlsMap alignedUrlsMap;
                     QString     errors;
 
-                    bool result  = startPreProcessing(t->urls, alignedUrlsMap, t->rawDecodingSettings, errors);
+                    bool result  = startPreProcessing(t->urls, alignedUrlsMap, t->align, t->rawDecodingSettings, errors);
 
                     ActionData ad2;
                     ad2.action         = PREPROCESSING;
@@ -336,8 +341,8 @@ void ActionThread::run()
     }
 }
 
-bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& alignedUrlsMap,
-                                      const RawDecodingSettings& settings,
+bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
+                                      bool align, const RawDecodingSettings& settings,
                                       QString& errors)
 {
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
@@ -366,67 +371,82 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& ali
                 return false;
 
             mixedUrls.append(outUrl);
+            // In case of alignment is not performed.
+            preProcessedUrlsMap.insert(url, outUrl);
         }
         else
         {
             mixedUrls.append(url);
+            // In case of alignment is not performed.
+            preProcessedUrlsMap.insert(url, url);
         }
     }
 
-    // Re-align images
-
-    d->alignProcess = new KProcess;
-    d->alignProcess->clearProgram();
-    d->alignProcess->clearEnvironment();
-    d->alignProcess->setWorkingDirectory(d->alignTmpDir->name());
-    d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
-
-    QStringList args;
-    args << "align_image_stack";
-    args << "-v";
-    args << "-a";
-    args << "aligned";
-
-    foreach(const KUrl url, mixedUrls)
+    if (align)
     {
-        args << url.toLocalFile();
-    }
+        // Re-align images
 
-    d->alignProcess->setProgram(args);
+        d->alignProcess = new KProcess;
+        d->alignProcess->clearProgram();
+        d->alignProcess->clearEnvironment();
+        d->alignProcess->setWorkingDirectory(d->alignTmpDir->name());
+        d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
-    kDebug() << "Align command line: " << d->alignProcess->program();
+        QStringList args;
+        args << "align_image_stack";
+        args << "-v";
+        args << "-a";
+        args << "aligned";
 
-    d->alignProcess->start();
+        foreach(const KUrl url, mixedUrls)
+        {
+            args << url.toLocalFile();
+        }
 
-    if (!d->alignProcess->waitForFinished(-1))
-    {
+        d->alignProcess->setProgram(args);
+
+        kDebug() << "Align command line: " << d->alignProcess->program();
+
+        d->alignProcess->start();
+
+        if (!d->alignProcess->waitForFinished(-1))
+        {
+            errors = getProcessError(d->alignProcess);
+            return false;
+        }
+
+        uint    i=0;
+        QString temp;
+        preProcessedUrlsMap.clear();
+
+        foreach(const KUrl url, inUrls)
+        {
+            preProcessedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
+            i++;
+        }
+
+        kDebug() << "Pre-processed output urls map: " << preProcessedUrlsMap;
+        kDebug() << "Align exit status    : "         << d->alignProcess->exitStatus();
+        kDebug() << "Align exit code      : "         << d->alignProcess->exitCode();
+
+        if (d->alignProcess->exitStatus() != QProcess::NormalExit)
+            return false;
+
+        if (d->alignProcess->exitCode() == 0)
+        {
+            // Process finished successfully !
+            return true;
+        }
+
         errors = getProcessError(d->alignProcess);
         return false;
     }
-
-    uint    i=0;
-    QString temp;
-    foreach(const KUrl url, inUrls)
+    else
     {
-        alignedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
-        i++;
-    }
-
-    kDebug() << "Align output urls map: " << alignedUrlsMap;
-    kDebug() << "Align exit status    : " << d->alignProcess->exitStatus();
-    kDebug() << "Align exit code      : " << d->alignProcess->exitCode();
-
-    if (d->alignProcess->exitStatus() != QProcess::NormalExit)
-        return false;
-
-    if (d->alignProcess->exitCode() == 0)
-    {
-        // Process finished successfully !
+        kDebug() << "Pre-processed output urls map: " << preProcessedUrlsMap;
+        kDebug() << "Alignment not performed.";
         return true;
     }
-
-    errors = getProcessError(d->alignProcess);
-    return false;
 }
 
 bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings)
