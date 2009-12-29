@@ -130,12 +130,6 @@ void ImportWizardDlg::next()
     {
         d->mngr->setItemsList(d->itemsPage->itemUrls());
     }
-/*
-    else if (currentPage() == d->rawPage->page())
-    {
-        d->mngr->setRawDecodingSettings(d->rawPage->rawDecodingSettings());
-    }
-*/
     else if (currentPage() == d->preProcessingPage->page())
     {
         // Do not give acces to Next button during alignment process.
