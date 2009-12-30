@@ -349,6 +349,12 @@ void ActionThread::run()
                     meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
+                    if (t->outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
+                    {
+                        QImage img;
+                        if (img.load(destUrl.toLocalFile()))
+                            meta.setImagePreview(img);
+                    }
                     meta.save(destUrl.toLocalFile());
 
                     // To be cleaned in destructor.
