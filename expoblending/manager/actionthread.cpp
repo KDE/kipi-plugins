@@ -60,11 +60,11 @@ public:
 
     ActionThreadPriv()
     {
-        align         = true;
-        cancel        = false;
-        enfuseProcess = 0;
-        alignProcess  = 0;
-        alignTmpDir   = 0;
+        align               = true;
+        cancel              = false;
+        enfuseProcess       = 0;
+        alignProcess        = 0;
+        preprocessingTmpDir = 0;
     }
 
     class Task
@@ -94,7 +94,7 @@ public:
 
     KDcraw                           rawdec;
 
-    KTempDir*                        alignTmpDir;
+    KTempDir*                        preprocessingTmpDir;
 
     /**
      * List of results files produced by enfuse that may need cleaning.
@@ -111,14 +111,13 @@ public:
 
     void cleanAlignTmpDir()
     {
-        if (alignTmpDir)
+        if (preprocessingTmpDir)
         {
-            alignTmpDir->unlink();
-            delete alignTmpDir;
-            alignTmpDir = 0;
+            preprocessingTmpDir->unlink();
+            delete preprocessingTmpDir;
+            preprocessingTmpDir = 0;
         }
     }
-
 };
 
 ActionThread::ActionThread(QObject* parent)
@@ -384,13 +383,13 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
                                       bool align, const RawDecodingSettings& settings,
                                       QString& errors)
 {
-    QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-align-tmp-") +
+    QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-preprocessing-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
 
 
     d->cleanAlignTmpDir();
 
-    d->alignTmpDir = new KTempDir(prefix);
+    d->preprocessingTmpDir = new KTempDir(prefix);
 
     // Pre-process RAW files if necessary.
 
@@ -424,7 +423,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         d->alignProcess = new KProcess;
         d->alignProcess->clearProgram();
         d->alignProcess->clearEnvironment();
-        d->alignProcess->setWorkingDirectory(d->alignTmpDir->name());
+        d->alignProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
         d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
         QStringList args;
@@ -456,7 +455,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
         foreach(const KUrl url, inUrls)
         {
-            preProcessedUrlsMap.insert(url, KUrl(d->alignTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
+            preProcessedUrlsMap.insert(url, KUrl(d->preprocessingTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
             i++;
         }
 
@@ -520,7 +519,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         KPWriteImage wImageIface;
         wImageIface.setCancel(&d->cancel);
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
-        outUrl = d->alignTmpDir->name();
+        outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
         outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString(".tif"));
 
