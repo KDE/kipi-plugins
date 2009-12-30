@@ -353,7 +353,7 @@ void ActionThread::run()
                     {
                         QImage img;
                         if (img.load(destUrl.toLocalFile()))
-                            meta.setImagePreview(img);
+                            meta.setImagePreview(img.scaled(1280, 1024, Qt::KeepAspectRatio));
                     }
                     meta.save(destUrl.toLocalFile());
 
