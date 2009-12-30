@@ -82,7 +82,7 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "</qt>"));
 
     d->list = new ImagesList(d->mngr->iface(), vbox);
-    d->list->listView()->setColumn(ImagesListView::User1, i18n("Exposure (E.V.)"), true);
+    d->list->listView()->setColumn(ImagesListView::User1, i18n("Exposure (EV)"), true);
     d->list->slotAddImages(d->mngr->itemsList());
 
     setPageWidget(vbox);

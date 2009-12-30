@@ -64,7 +64,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
                         "<p><h1><b>Bracketed Images Pre-Processing is Done</b></h1></p>"
-                        "<p>Congratulation. Your images are ready to be fusioned. </p>"
+                        "<p>Congratulations. Your images are ready to be fused. </p>"
                         "To perform this operation, <b>%1</b> program from "
                         "<a href='%2'>Enblend</a> "
                         "project will be used.</p>"

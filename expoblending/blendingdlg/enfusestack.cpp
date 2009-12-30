@@ -185,7 +185,7 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
         popmenu.addSeparator();
     }
 
-    KAction* rmAll = new KAction(KIcon("edit-delete-shred"), i18n("Clear All"), this);
+    KAction* rmAll = new KAction(KIcon("edit-delete-shred"), i18n("Clear all"), this);
     connect(rmAll, SIGNAL(triggered(bool) ),
             this, SLOT(clear()));
 

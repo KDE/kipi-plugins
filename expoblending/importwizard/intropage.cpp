@@ -45,13 +45,15 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
                         "<p><h1><b>Welcome to Exposure Blending tool</b></h1></p>"
-                        "<p>This tool fuse bracketed images with different exposure to make pseudo "
+                        "<p>This tool fuses bracketed images with different exposure to make pseudo "
                         "<a href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>.</p>"
+                        "<p>It can also be used to merge focus bracketed stack to get a single image "
+                        "with increased depth of field.</p>"
                         "<p>This assistant will help you to configure how to import images before "
-                        "to merge it to a single one.</p>"
+                        "merging them to a single one.</p>"
                         "<p>Bracketed images must be taken with the same camera, "
-                        "in same conditions, and if possible using a tripod.</p>"
-                        "<p>For more informations, please take a look at "
+                        "in the same conditions, and if possible using a tripod.</p>"
+                        "<p>For more information, please take a look at "
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
 

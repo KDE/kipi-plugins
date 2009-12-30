@@ -136,7 +136,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setCaption(i18n("Exposure Blending"));
 
     setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Save selected enfused items processed."));
+    setButtonToolTip(User1, i18n("Save selected processed items."));
     setButtonIcon(   User1, KIcon("document-save"));
 
     setButtonText(   User2, i18n("Pro&cess"));
@@ -492,7 +492,7 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 case(LOAD):
                 {
                     d->previewWidget->setBusy(false);
-                    d->previewWidget->setText(i18n("Failed to Load processed image"), Qt::red);
+                    d->previewWidget->setText(i18n("Failed to load processed image"), Qt::red);
                     busy(false);
                     break;
                 }

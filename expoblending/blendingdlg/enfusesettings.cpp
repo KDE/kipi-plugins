@@ -95,7 +95,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->levelsInput->setRange(1, 29, 1);
     d->levelsInput->setSliderEnabled(true);
     d->levelsInput->setDefaultValue(20);
-    d->levelsInput->setWhatsThis(i18n("Set the number levels for pyramid blending."));
+    d->levelsInput->setWhatsThis(i18n("Set the number of levels for pyramid blending."));
 
     d->hardMaskCB = new QCheckBox(i18n("Hard Mask"), this);
     d->hardMaskCB->setWhatsThis(i18n("Force hard blend masks and no averaging on finest "

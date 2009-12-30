@@ -274,7 +274,7 @@ void ActionThread::run()
                     ActionData ad;
                     ad.action  = t->action;
                     ad.inUrls  = t->urls;
-                    ad.message = avLum.isEmpty() ? i18n("unknow") : avLum;
+                    ad.message = avLum.isEmpty() ? i18n("unknown") : avLum;
                     ad.success = avLum.isEmpty();
                     emit finished(ad);
                     break;
