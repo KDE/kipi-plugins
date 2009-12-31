@@ -852,7 +852,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray &data)
     // Raise a popup informing success
 }
 
-void PicasawebTalker::parseResponseAddTag(__attribute__((__unused__)) const QByteArray &data)
+void PicasawebTalker::parseResponseAddTag(const QByteArray & /*data*/)
 {
     emit signalBusy( false );
     emit signalAddPhotoSucceeded();
