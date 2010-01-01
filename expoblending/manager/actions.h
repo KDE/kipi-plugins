@@ -75,7 +75,7 @@ public:
 
     EnfuseSettings enfuseSettings;
 
-    ItemUrlsMap    alignedUrlsMap;
+    ItemUrlsMap    preProcessedUrlsMap;
 
     Action         action;
 };

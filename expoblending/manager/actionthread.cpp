@@ -287,17 +287,17 @@ void ActionThread::run()
                     ad1.starting = true;
                     emit starting(ad1);
 
-                    ItemUrlsMap alignedUrlsMap;
+                    ItemUrlsMap preProcessedUrlsMap;
                     QString     errors;
 
-                    bool result  = startPreProcessing(t->urls, alignedUrlsMap, t->align, t->rawDecodingSettings, errors);
+                    bool result  = startPreProcessing(t->urls, preProcessedUrlsMap, t->align, t->rawDecodingSettings, errors);
 
                     ActionData ad2;
-                    ad2.action         = PREPROCESSING;
-                    ad2.inUrls         = t->urls;
-                    ad2.alignedUrlsMap = alignedUrlsMap;
-                    ad2.success        = result;
-                    ad2.message        = errors;
+                    ad2.action              = PREPROCESSING;
+                    ad2.inUrls              = t->urls;
+                    ad2.preProcessedUrlsMap = preProcessedUrlsMap;
+                    ad2.success             = result;
+                    ad2.message             = errors;
                     emit finished(ad2);
                     break;
                 }

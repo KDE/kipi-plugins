@@ -261,7 +261,7 @@ void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 {
                     d->progressTimer->stop();
                     d->progressLabel->clear();
-                    emit signalPreProcessed(ad.alignedUrlsMap);
+                    emit signalPreProcessed(ad.preProcessedUrlsMap);
                     break;
                 }
                 default:
