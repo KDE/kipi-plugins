@@ -425,7 +425,6 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
                 case KIO::R_SKIP:
                 {
                     newUrl.clear();
-                    d->enfuseStack->setOnItem(settings.previewUrl, false);
                     d->enfuseStack->processedItem(settings.previewUrl, false);
 
                     break;
@@ -448,6 +447,7 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
         if (::rename(QFile::encodeName(temp.toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+            d->enfuseStack->processedItem(settings.previewUrl, false);
             return;
         }
         else
