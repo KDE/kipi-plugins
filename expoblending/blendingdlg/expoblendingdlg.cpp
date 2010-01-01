@@ -426,6 +426,8 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
                 {
                     newUrl.clear();
                     d->enfuseStack->setOnItem(settings.previewUrl, false);
+                    d->enfuseStack->processedItem(settings.previewUrl, false);
+
                     break;
                 }
                 case KIO::R_RENAME:
