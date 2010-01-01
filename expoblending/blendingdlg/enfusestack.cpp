@@ -263,32 +263,16 @@ void EnfuseStackList::clearSelected()
 
 void EnfuseStackList::setOnItem(const KUrl& url, bool on)
 {
-    QTreeWidgetItemIterator it(this);
-    while (*it)
-    {
-        EnfuseStackItem* lvItem = dynamic_cast<EnfuseStackItem*>(*it);
-        if (lvItem && lvItem->url() == url)
-        {
-            lvItem->setOn(on);
-            break;
-        }
-        ++it;
-    }
+    EnfuseStackItem* item = findItemByUrl(url);
+    if (item)
+        item->setOn(on);
 }
 
 void EnfuseStackList::removeItem(const KUrl& url)
 {
-    QTreeWidgetItemIterator it(this);
-    while (*it)
-    {
-        EnfuseStackItem* lvItem = dynamic_cast<EnfuseStackItem*>(*it);
-        if (lvItem && lvItem->url() == url)
-        {
-            delete lvItem;
-            return;
-        }
-        ++it;
-    }
+    EnfuseStackItem* item = findItemByUrl(url);
+    if (item)
+        delete item;
 }
 
 void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
@@ -346,17 +330,9 @@ void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
 {
     if (img.isNull()) return;
 
-    QTreeWidgetItemIterator it(this);
-    while (*it)
-    {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
-        if (item && (item->url() == url) && (!item->asValidThumb()))
-        {
-            item->setThumbnail(QPixmap::fromImage(img.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio)));
-            return;
-        }
-        ++it;
-    }
+    EnfuseStackItem* item = findItemByUrl(url);
+    if (item && (!item->asValidThumb()))
+        item->setThumbnail(QPixmap::fromImage(img.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio)));
 }
 
 void EnfuseStackList::slotItemClicked(QTreeWidgetItem* item)
@@ -378,22 +354,23 @@ void EnfuseStackList::slotProgressTimerDone()
     d->progressTimer->start(300);
 }
 
-void EnfuseStackList::processingItem(const KUrl& url, bool run)
+EnfuseStackItem* EnfuseStackList::findItemByUrl(const KUrl& url)
 {
-    d->processItem = 0;
-
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
         if (item && (item->url() == url))
-        {
-            d->processItem = item;
-            break;
-        }
+            return item;
+
         ++it;
     }
+    return 0;
+}
 
+void EnfuseStackList::processingItem(const KUrl& url, bool run)
+{
+    d->processItem = findItemByUrl(url);
     if (d->processItem)
     {
         if (run)
@@ -408,6 +385,13 @@ void EnfuseStackList::processingItem(const KUrl& url, bool run)
             d->processItem = 0;
         }
     }
+}
+
+void EnfuseStackList::processedItem(const KUrl& url, bool success)
+{
+    EnfuseStackItem* item = findItemByUrl(url);
+    if (item)
+        item->setProcessedIcon(SmallIcon(success ? "dialog-ok" : "dialog-cancel"));
 }
 
 }  // namespace KIPIExpoBlendingPlugin

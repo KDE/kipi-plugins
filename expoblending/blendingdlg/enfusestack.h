@@ -100,12 +100,17 @@ public:
     void clearSelected();
     void addItem(const KUrl& url, const EnfuseSettings& settings);
     void processingItem(const KUrl& url, bool run);
+    void processedItem(const KUrl& url, bool success);
 
     QList<EnfuseSettings> settingsList();
 
 Q_SIGNALS:
 
     void signalItemClicked(const KUrl&);
+
+private:
+
+    EnfuseStackItem* findItemByUrl(const KUrl& url);
 
 private Q_SLOTS:
 
