@@ -29,6 +29,7 @@
 #include <QPainter>
 #include <QFileInfo>
 #include <QList>
+#include <QTimer>
 
 // KDE includes
 
@@ -66,6 +67,7 @@ EnfuseStackItem::~EnfuseStackItem()
 void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
 {
     m_settings = settings;
+    setText(1, m_settings.targetFileName);
     setText(2, m_settings.inputImagesList());
     setToolTip(1, m_settings.asCommentString());
     setToolTip(2, m_settings.inputImagesList().replace(" ; ", "\n"));
@@ -76,24 +78,20 @@ EnfuseSettings EnfuseStackItem::enfuseSettings() const
     return m_settings;
 }
 
-void EnfuseStackItem::setUrl(const KUrl& url)
-{
-    m_url = url;
-}
-
 KUrl EnfuseStackItem::url() const
 {
-    return m_url;
+    return m_settings.previewUrl;
 }
 
-void EnfuseStackItem::setTargetFileName(const QString& fn)
+void EnfuseStackItem::setProgressAnimation(const QPixmap& pix)
 {
-    setText(1, fn);
-}
-
-QString EnfuseStackItem::targetFileName() const
-{
-    return text(1);
+    QPixmap overlay = m_thumb;
+    QPixmap mask(overlay.size());
+    mask.fill(QColor(128, 128, 128, 192));
+    QPainter p(&overlay);
+    p.drawPixmap(0, 0, mask);
+    p.drawPixmap((overlay.width()/2) - (pix.width()/2), (overlay.height()/2) - (pix.height()/2), pix);
+    setIcon(0, QIcon(overlay));
 }
 
 void EnfuseStackItem::setThumbnail(const QPixmap& pix)
@@ -103,11 +101,18 @@ void EnfuseStackItem::setThumbnail(const QPixmap& pix)
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
+    m_thumb = pixmap;
     setIcon(0, QIcon(pixmap));
     m_asThumbnail = true;
 }
 
-bool EnfuseStackItem::asThumbnail()
+void EnfuseStackItem::setProcessedIcon(const QIcon& icon)
+{
+    setIcon(1, icon);
+    setIcon(0, QIcon(m_thumb));
+}
+
+bool EnfuseStackItem::asValidThumb()
 {
     return m_asThumbnail;
 }
@@ -130,16 +135,25 @@ public:
 
     EnfuseStackListPriv()
     {
-        mngr = 0;
+        mngr          = 0;
+        progressPix   = SmallIcon("process-working", 22);
+        progressCount = 0;
+        progressTimer = 0;
+        processItem   = 0;
     }
 
-    Manager* mngr;
+    Manager*         mngr;
+    EnfuseStackItem* processItem;
+    QPixmap          progressPix;
+    int              progressCount;
+    QTimer*          progressTimer;
 };
 
 EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
                : QTreeWidget(parent), d(new EnfuseStackListPriv)
 {
-    d->mngr = mngr;
+    d->mngr          = mngr;
+    d->progressTimer = new QTimer(this);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     setIconSize(QSize(64, 64));
@@ -164,6 +178,9 @@ EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
 
     connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(slotContextMenu(const QPoint&)));
+
+    connect(d->progressTimer, SIGNAL(timeout()),
+            this, SLOT(slotProgressTimerDone()));
 }
 
 EnfuseStackList::~EnfuseStackList()
@@ -200,21 +217,21 @@ void EnfuseStackList::slotRemoveItem()
         delete item;
 }
 
-QMap<KUrl, QString> EnfuseStackList::urlsMap()
+QList<EnfuseSettings> EnfuseStackList::settingsList()
 {
-    QMap<KUrl, QString> map;
+    QList<EnfuseSettings> list;
 
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
         if (item && item->isOn())
-            map.insert(item->url(), item->targetFileName());
+            list.append(item->enfuseSettings());
 
         ++it;
     }
 
-    return map;
+    return list;
 }
 
 void EnfuseStackList::clearSelected()
@@ -251,6 +268,21 @@ void EnfuseStackList::setOnItem(const KUrl& url, bool on)
     }
 }
 
+void EnfuseStackList::removeItem(const KUrl& url)
+{
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        EnfuseStackItem* lvItem = dynamic_cast<EnfuseStackItem*>(*it);
+        if (lvItem && lvItem->url() == url)
+        {
+            delete lvItem;
+            return;
+        }
+        ++it;
+    }
+}
+
 void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
 {
     if (!url.isValid())
@@ -273,15 +305,30 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
 
     if (!found)
     {
-        EnfuseStackItem* item = new EnfuseStackItem(this);
-        item->setUrl(url);
-        item->setOn(true);
-        item->setEnfuseSettings(settings);
-        setCurrentItem(item);
+        QString temp, ext;
+        EnfuseSettings enfusePrms = settings;
+        switch(enfusePrms.outputFormat)
+        {
+            case SaveSettingsWidget::OUTPUT_JPEG:
+                ext = ".jpg";
+                break;
+            case SaveSettingsWidget::OUTPUT_TIFF:
+                ext  = ".tif";
+                break;
+            case SaveSettingsWidget::OUTPUT_PPM:
+                ext = ".ppm";
+                break;
+            case SaveSettingsWidget::OUTPUT_PNG:
+                ext = ".png";
+                break;
+        }
+        enfusePrms.targetFileName = temp.sprintf("enfused-%02i.", count+1).append(ext);
+        enfusePrms.previewUrl     = url;
 
-        QFileInfo fi(url.toLocalFile());
-        QString   temp;
-        item->setTargetFileName(temp.sprintf("enfused-%02i.", count+1).append(fi.suffix()));
+        EnfuseStackItem* item = new EnfuseStackItem(this);
+        item->setEnfuseSettings(enfusePrms);
+        item->setOn(true);
+        setCurrentItem(item);
 
         emit signalItemClicked(url);
     }
@@ -295,7 +342,7 @@ void EnfuseStackList::setThumbnail(const KUrl& url, const QImage& img)
     while (*it)
     {
         EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
-        if (item && (item->url() == url) && (!item->asThumbnail()))
+        if (item && (item->url() == url) && (!item->asValidThumb()))
         {
             item->setThumbnail(QPixmap::fromImage(img.scaled(iconSize().width(), iconSize().height(), Qt::KeepAspectRatio)));
             return;
@@ -309,6 +356,50 @@ void EnfuseStackList::slotItemClicked(QTreeWidgetItem* item)
     EnfuseStackItem* eItem = dynamic_cast<EnfuseStackItem*>(item);
     if (eItem)
         emit signalItemClicked(eItem->url());
+}
+
+void EnfuseStackList::slotProgressTimerDone()
+{
+    QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
+    d->processItem->setProgressAnimation(pix);
+
+    d->progressCount++;
+    if (d->progressCount == 8)
+        d->progressCount = 0;
+
+    d->progressTimer->start(300);
+}
+
+void EnfuseStackList::processingItem(const KUrl& url, bool run)
+{
+    d->processItem = 0;
+
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        if (item && (item->url() == url))
+        {
+            d->processItem = item;
+            break;
+        }
+        ++it;
+    }
+
+    if (d->processItem)
+    {
+        if (run)
+        {
+            setCurrentItem(d->processItem, true);
+            scrollToItem(d->processItem);
+            d->progressTimer->start(300);
+        }
+        else
+        {
+            d->progressTimer->stop();
+            d->processItem = 0;
+        }
+    }
 }
 
 }  // namespace KIPIExpoBlendingPlugin

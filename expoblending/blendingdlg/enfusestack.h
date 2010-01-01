@@ -30,7 +30,8 @@
 #include <QString>
 #include <QPixmap>
 #include <QPoint>
-#include <QMap>
+#include <QList>
+#include <QIcon>
 
 // KDE includes
 
@@ -62,25 +63,23 @@ public:
     EnfuseStackItem(QTreeWidget* parent);
     virtual ~EnfuseStackItem();
 
-    void setUrl(const KUrl& url);
     KUrl url() const;
 
     void setEnfuseSettings(const EnfuseSettings& settings);
     EnfuseSettings enfuseSettings() const;
 
-    void setTargetFileName(const QString& fn);
-    QString targetFileName() const;
-
     void setOn(bool b);
     bool isOn() const;
 
+    void setProgressAnimation(const QPixmap& pix);
     void setThumbnail(const QPixmap& pix);
-    bool asThumbnail();
+    void setProcessedIcon(const QIcon& icon);
+    bool asValidThumb();
 
 private:
 
     bool           m_asThumbnail;
-    KUrl           m_url;
+    QPixmap        m_thumb;
     EnfuseSettings m_settings;
 };
 
@@ -97,10 +96,12 @@ public:
 
     void setThumbnail(const KUrl& url, const QImage& img);
     void setOnItem(const KUrl& url, bool on);
+    void removeItem(const KUrl& url);
     void clearSelected();
     void addItem(const KUrl& url, const EnfuseSettings& settings);
+    void processingItem(const KUrl& url, bool run);
 
-    QMap<KUrl, QString> urlsMap();
+    QList<EnfuseSettings> settingsList();
 
 Q_SIGNALS:
 
@@ -111,6 +112,7 @@ private Q_SLOTS:
     void slotItemClicked(QTreeWidgetItem*);
     void slotContextMenu(const QPoint&);
     void slotRemoveItem();
+    void slotProgressTimerDone();
 
 private:
 

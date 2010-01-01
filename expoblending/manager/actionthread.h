@@ -42,7 +42,6 @@
 
 // Local includes
 
-#include "savesettingswidget.h"
 #include "enfusesettings.h"
 #include "actions.h"
 
@@ -66,12 +65,12 @@ public:
     ~ActionThread();
 
     void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
-    void setEnfuseSettings(const EnfuseSettings& enfuseSettings, SaveSettingsWidget::OutputFormat frmt);
     void loadProcessed(const KUrl& url);
     void identifyFiles(const KUrl::List& urlList);
     void convertRawFiles(const KUrl::List& urlList);
     void preProcessFiles(const KUrl::List& urlList);
-    void enfuseFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl);
+    void enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings);
+    void enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings);
 
     void cancel();
 
@@ -97,8 +96,7 @@ private:
     bool    isRawFile(const KUrl& url);
 
     bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
-                        const EnfuseSettings& enfuseSettings,
-                        SaveSettingsWidget::OutputFormat frmt,
+                        const EnfuseSettings& settings,
                         QString& errors);
 
     QString getProcessError(KProcess* proc) const;

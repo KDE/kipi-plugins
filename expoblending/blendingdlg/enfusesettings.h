@@ -33,6 +33,12 @@
 #include <klocale.h>
 #include <kurl.h>
 
+// Locale includes
+
+#include "savesettingswidget.h"
+
+using namespace KIPIPlugins;
+
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -85,17 +91,22 @@ public:
         return ret;
     }
 
-    bool       autoLevels;
-    bool       hardMask;
-    bool       ciecam02;
+    bool                             autoLevels;
+    bool                             hardMask;
+    bool                             ciecam02;
 
-    int        levels;
+    int                              levels;
 
-    float      exposure;
-    float      saturation;
-    float      contrast;
+    float                            exposure;
+    float                            saturation;
+    float                            contrast;
 
-    KUrl::List inputUrls;
+    QString                          targetFileName;
+
+    KUrl::List                       inputUrls;
+    KUrl                             previewUrl;
+
+    SaveSettingsWidget::OutputFormat outputFormat;
 };
 
 // ------------------------------------------------------------------------

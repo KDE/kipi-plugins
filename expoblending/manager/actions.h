@@ -46,7 +46,8 @@ enum Action
     NONE = 0,
     IDENTIFY,
     PREPROCESSING,
-    ENFUSE,
+    ENFUSEPREVIEW,
+    ENFUSEFINAL,
     LOAD
 };
 

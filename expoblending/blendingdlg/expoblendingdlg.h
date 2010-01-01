@@ -74,6 +74,7 @@ private:
     void saveSettings();
 
     void busy(bool busy);
+    void saveItem(const KUrl& temp, const EnfuseSettings& settings);
 
     void setIdentity(const KUrl& url, const QString& identity);
 
@@ -82,7 +83,7 @@ private Q_SLOTS:
     void slotDefault();
     void slotClose();
     void slotHelp();
-    void slotSaveItems();
+    void slotPreview();
     void slotProcess();
     void slotAbort();
 

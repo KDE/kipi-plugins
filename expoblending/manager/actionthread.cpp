@@ -71,13 +71,12 @@ public:
     {
         public:
 
-            bool                             align;
-            KUrl::List                       urls;
-            KUrl                             outputUrl;
-            Action                           action;
-            SaveSettingsWidget::OutputFormat outputFormat;
-            RawDecodingSettings              rawDecodingSettings;
-            EnfuseSettings                   enfuseSettings;
+            bool                align;
+            KUrl::List          urls;
+            KUrl                outputUrl;
+            Action              action;
+            RawDecodingSettings rawDecodingSettings;
+            EnfuseSettings      enfuseSettings;
     };
 
     bool                             cancel;
@@ -103,11 +102,7 @@ public:
     KUrl::List                       enfuseTmpUrls;
     QMutex                           enfuseTmpUrlsMutex;
 
-    SaveSettingsWidget::OutputFormat outputFormat;
-
     RawDecodingSettings              rawDecodingSettings;
-
-    EnfuseSettings                   enfuseSettings;
 
     void cleanAlignTmpDir()
     {
@@ -164,12 +159,6 @@ void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSetting
     d->rawDecodingSettings = settings;
 }
 
-void ActionThread::setEnfuseSettings(const EnfuseSettings& settings, SaveSettingsWidget::OutputFormat frmt)
-{
-    d->enfuseSettings = settings;
-    d->outputFormat   = frmt;
-}
-
 void ActionThread::identifyFiles(const KUrl::List& urlList)
 {
     foreach(const KUrl url, urlList)
@@ -208,14 +197,26 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
     d->condVar.wakeAll();
 }
 
-void ActionThread::enfuseFiles(const KUrl::List& alignedUrls, const KUrl& outputUrl)
+void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
 {
     ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
-    t->action                 = ENFUSE;
+    t->action                 = ENFUSEPREVIEW;
     t->urls                   = alignedUrls;
     t->outputUrl              = outputUrl;
-    t->outputFormat           = d->outputFormat;
-    t->enfuseSettings         = d->enfuseSettings;
+    t->enfuseSettings         = settings;
+
+    QMutexLocker lock(&d->mutex);
+    d->todo << t;
+    d->condVar.wakeAll();
+}
+
+void ActionThread::enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
+{
+    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    t->action                 = ENFUSEFINAL;
+    t->urls                   = alignedUrls;
+    t->outputUrl              = outputUrl;
+    t->enfuseSettings         = settings;
 
     QMutexLocker lock(&d->mutex);
     d->todo << t;
@@ -329,19 +330,50 @@ void ActionThread::run()
                     break;
                 }
 
-                case ENFUSE:
+                case ENFUSEPREVIEW:
                 {
                     ActionData ad1;
-                    ad1.action   = ENFUSE;
-                    ad1.inUrls   = t->urls;
-                    ad1.starting = true;
+                    ad1.action         = ENFUSEPREVIEW;
+                    ad1.inUrls         = t->urls;
+                    ad1.starting       = true;
+                    ad1.enfuseSettings = t->enfuseSettings;
+                    emit starting(ad1);
+
+                    QString errors;
+                    KUrl    destUrl         = t->outputUrl;
+                    EnfuseSettings settings = t->enfuseSettings;
+                    settings.outputFormat   = SaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
+                    bool result             = startEnfuse(t->urls, destUrl, settings, errors);
+
+                    // To be cleaned in destructor.
+                    QMutexLocker(&d->enfuseTmpUrlsMutex);
+                    d->enfuseTmpUrls << destUrl;
+
+                    ActionData ad2;
+                    ad2.action         = ENFUSEPREVIEW;
+                    ad2.inUrls         = t->urls;
+                    ad2.outUrls        = KUrl::List() << destUrl;
+                    ad2.success        = result;
+                    ad2.message        = errors;
+                    ad2.enfuseSettings = t->enfuseSettings;
+                    emit finished(ad2);
+                    break;
+                }
+
+                case ENFUSEFINAL:
+                {
+                    ActionData ad1;
+                    ad1.action         = ENFUSEFINAL;
+                    ad1.inUrls         = t->urls;
+                    ad1.starting       = true;
+                    ad1.enfuseSettings = t->enfuseSettings;
                     emit starting(ad1);
 
                     KUrl    destUrl = t->outputUrl;
                     bool    result  = false;
                     QString errors;
 
-                    result = startEnfuse(t->urls, destUrl, t->enfuseSettings, t->outputFormat, errors);
+                    result = startEnfuse(t->urls, destUrl, t->enfuseSettings, errors);
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KExiv2 meta;
@@ -349,7 +381,7 @@ void ActionThread::run()
                     meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
-                    if (t->outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
+                    if (t->enfuseSettings.outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
                     {
                         QImage img;
                         if (img.load(destUrl.toLocalFile()))
@@ -358,13 +390,11 @@ void ActionThread::run()
                     meta.save(destUrl.toLocalFile());
 
                     // To be cleaned in destructor.
-                    {
-                        QMutexLocker(&d->enfuseTmpUrlsMutex);
-                        d->enfuseTmpUrls << destUrl;
-                    }
+                    QMutexLocker(&d->enfuseTmpUrlsMutex);
+                    d->enfuseTmpUrls << destUrl;
 
                     ActionData ad2;
-                    ad2.action         = ENFUSE;
+                    ad2.action         = ENFUSEFINAL;
                     ad2.inUrls         = t->urls;
                     ad2.outUrls        = KUrl::List() << destUrl;
                     ad2.success        = result;
@@ -593,14 +623,13 @@ bool ActionThread::isRawFile(const KUrl& url)
 }
 
 bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
-                               const EnfuseSettings& enfuseSettings,
-                               SaveSettingsWidget::OutputFormat frmt,
+                               const EnfuseSettings& settings,
                                QString& errors)
 {
     QString comp;
     QString ext;
 
-    switch(frmt)
+    switch(settings.outputFormat)
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
             ext = ".jpg";
@@ -626,24 +655,24 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     QStringList args;
     args << "enfuse";
 
-    if (!enfuseSettings.autoLevels)
+    if (!settings.autoLevels)
     {
         args << "-l";
-        args << QString::number(enfuseSettings.levels);
+        args << QString::number(settings.levels);
     }
 
-    if (enfuseSettings.ciecam02)
+    if (settings.ciecam02)
         args << "-c";
 
     if (!comp.isEmpty())
         args << comp;
 
-    if (enfuseSettings.hardMask)
+    if (settings.hardMask)
         args << "--HardMask";
 
-    args << QString("--wExposure=%1").arg(enfuseSettings.exposure);
-    args << QString("--wSaturation=%1").arg(enfuseSettings.saturation);
-    args << QString("--wContrast=%1").arg(enfuseSettings.contrast);
+    args << QString("--wExposure=%1").arg(settings.exposure);
+    args << QString("--wSaturation=%1").arg(settings.saturation);
+    args << QString("--wContrast=%1").arg(settings.contrast);
 
     args << "-v";
     args << "-o";

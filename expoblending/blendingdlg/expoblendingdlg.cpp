@@ -136,11 +136,11 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     setCaption(i18n("Exposure Blending"));
 
     setButtonText(   User1, i18n("&Save"));
-    setButtonToolTip(User1, i18n("Save selected processed items."));
+    setButtonToolTip(User1, i18n("Process and save selected processed items."));
     setButtonIcon(   User1, KIcon("document-save"));
 
-    setButtonText(   User2, i18n("Pro&cess"));
-    setButtonToolTip(User2, i18n("Process bracketed images stack with current settings."));
+    setButtonText(   User2, i18n("&Preview"));
+    setButtonToolTip(User2, i18n("Process a preview of bracketed images stack with current settings."));
     setButtonIcon(   User2, KIcon("system-run"));
 
     setButtonText(   User3, i18n("&Abort"));
@@ -216,10 +216,10 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
             this, SLOT(slotDefault()));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotSaveItems()));
+            this, SLOT(slotProcess()));
 
     connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotProcess()));
+            this, SLOT(slotPreview()));
 
     connect(this, SIGNAL(user3Clicked()),
             this, SLOT(slotAbort()));
@@ -317,7 +317,7 @@ void ExpoBlendingDlg::busy(bool val)
     d->enfuseSettingsBox->setEnabled(!val);
     d->saveSettingsBox->setEnabled(!val);
     d->bracketStack->setEnabled(!val);
-    enableButton(User1, !val ? !d->enfuseStack->urlsMap().isEmpty() : false);
+    enableButton(User1, !val ? !d->enfuseStack->settingsList().isEmpty() : false);
     enableButton(User2, !val);
     enableButton(User3, val);
     enableButton(Close, !val);
@@ -358,87 +358,108 @@ void ExpoBlendingDlg::saveSettings()
     config.sync();
 }
 
-void ExpoBlendingDlg::slotSaveItems()
-{
-    QMap<KUrl, QString> map = d->enfuseStack->urlsMap();
-    if (map.isEmpty()) return;
-
-    QMap<KUrl, QString>::iterator it;
-
-    for (it = map.begin() ; it != map.end(); ++it)
-    {
-        KUrl newUrl = it.key();
-        newUrl.setFileName(it.value());
-        QFileInfo fi(newUrl.toLocalFile());
-
-        if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
-        {
-            if (fi.exists())
-            {
-                KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
-                                                 "exists. Are you sure you want "
-                                                 "to overwrite it?",
-                                                 newUrl.fileName()),
-                                      it.key(), newUrl,
-                                      KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
-
-                switch (dlg.exec())
-                {
-                    case KIO::R_CANCEL:
-                    case KIO::R_SKIP:
-                    {
-                        newUrl.clear();
-                        d->enfuseStack->setOnItem(it.key(), false);
-                        break;
-                    }
-                    case KIO::R_RENAME:
-                    {
-                        newUrl = dlg.newDestUrl();
-                        break;
-                    }
-                    default:    // Overwrite.
-                        break;
-                }
-            }
-        }
-
-        kDebug() << "Renaming " << it.key() << " to " << newUrl;
-
-        if (!newUrl.isEmpty())
-        {
-            if (::rename(QFile::encodeName(it.key().toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
-            {
-                KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
-                return;
-            }
-        }
-    }
-
-    enableButton(User1, false);
-
-    d->enfuseStack->clearSelected();
-}
-
-void ExpoBlendingDlg::slotProcess()
+void ExpoBlendingDlg::slotPreview()
 {
     KUrl::List selectedUrl = d->bracketStack->urls();
     if (selectedUrl.isEmpty()) return;
 
     ItemUrlsMap map = d->mngr->preProcessedMap();
-    KUrl::List alignedList;
+    KUrl::List preprocessedList;
 
     foreach(KUrl url, selectedUrl)
     {
         ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
-        alignedList.append(preprocessedUrls.preprocessedUrl);
+        preprocessedList.append(preprocessedUrls.previewUrl);
     }
 
     EnfuseSettings settings = d->enfuseSettingsBox->settings();
     settings.inputUrls      = d->bracketStack->urls();
-    d->mngr->thread()->setEnfuseSettings(settings, d->saveSettingsBox->fileFormat());
-    d->mngr->thread()->enfuseFiles(alignedList, d->mngr->itemsList()[0]);
+    settings.outputFormat   = d->saveSettingsBox->fileFormat();
+    d->mngr->thread()->enfusePreview(preprocessedList, d->mngr->itemsList()[0], settings);
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
+}
+
+void ExpoBlendingDlg::slotProcess()
+{
+    QList<EnfuseSettings> list = d->enfuseStack->settingsList();
+    if (list.isEmpty()) return;
+
+    ItemUrlsMap map = d->mngr->preProcessedMap();
+    KUrl::List preprocessedList;
+
+    foreach(EnfuseSettings settings, list)
+    {
+        foreach(KUrl url, settings.inputUrls)
+        {
+            ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
+            preprocessedList.append(preprocessedUrls.preprocessedUrl);
+        }
+
+        d->mngr->thread()->enfuseFinal(preprocessedList, d->mngr->itemsList()[0], settings);
+        if (!d->mngr->thread()->isRunning())
+            d->mngr->thread()->start();
+    }
+}
+
+void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
+{
+    KUrl newUrl = temp;
+    newUrl.setFileName(settings.targetFileName);
+    QFileInfo fi(newUrl.toLocalFile());
+
+    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    {
+        if (fi.exists())
+        {
+            KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
+                                                "exists. Are you sure you want "
+                                                "to overwrite it?",
+                                                newUrl.fileName()),
+                                    temp, newUrl,
+                                    KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
+
+            switch (dlg.exec())
+            {
+                case KIO::R_CANCEL:
+                case KIO::R_SKIP:
+                {
+                    newUrl.clear();
+                    d->enfuseStack->setOnItem(settings.previewUrl, false);
+                    break;
+                }
+                case KIO::R_RENAME:
+                {
+                    newUrl = dlg.newDestUrl();
+                    break;
+                }
+                default:    // Overwrite.
+                    break;
+            }
+        }
+    }
+
+    kDebug() << "Renaming " << temp << " to " << newUrl;
+
+    if (!newUrl.isEmpty())
+    {
+        if (::rename(QFile::encodeName(temp.toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
+        {
+            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+            return;
+        }
+        else
+        {
+            d->enfuseStack->removeItem(settings.previewUrl);
+        }
+    }
+
+    if (d->enfuseStack->settingsList().isEmpty())
+    {
+        enableButton(User1, false);
+        busy(false);
+        d->previewWidget->setBusy(false);
+    }
 }
 
 void ExpoBlendingDlg::slotAbort()
@@ -461,13 +482,19 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
             case(LOAD):
             {
                 busy(true);
-                d->previewWidget->setBusy(true, i18n("Loading processed image..."));
                 break;
             }
-            case(ENFUSE):
+            case(ENFUSEPREVIEW):
             {
                 busy(true);
-                d->previewWidget->setBusy(true, i18n("Processing bracketed images..."));
+                d->previewWidget->setBusy(true, i18n("Processing preview of bracketed images..."));
+                break;
+            }
+            case(ENFUSEFINAL):
+            {
+                busy(true);
+                d->previewWidget->setBusy(true, i18n("Processing targets of bracketed images..."));
+                d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, true);
                 break;
             }
             default:
@@ -491,17 +518,27 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(LOAD):
                 {
-                    d->previewWidget->setBusy(false);
                     d->previewWidget->setText(i18n("Failed to load processed image"), Qt::red);
                     busy(false);
                     break;
                 }
-                case(ENFUSE):
+                case(ENFUSEPREVIEW):
                 {
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewWidget->setButtonVisible(true);
-                    d->previewWidget->setText(i18n("Failed to process bracketed images"), Qt::red);
+                    d->previewWidget->setText(i18n("Failed to process preview of bracketed images"), Qt::red);
+                    busy(false);
+                    break;
+                }
+                case(ENFUSEFINAL):
+                {
+                    slotAbort();
+                    d->output = ad.message;
+                    d->previewWidget->setBusy(false);
+                    d->previewWidget->setButtonVisible(true);
+                    d->previewWidget->setText(i18n("Failed to process targets of bracketed images"), Qt::red);
+                    d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, false);
                     busy(false);
                     break;
                 }
@@ -529,10 +566,16 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                     busy(false);
                     break;
                 }
-                case(ENFUSE):
+                case(ENFUSEPREVIEW):
                 {
                     d->enfuseStack->addItem(ad.outUrls[0], ad.enfuseSettings);
                     busy(false);
+                    break;
+                }
+                case(ENFUSEFINAL):
+                {
+                    d->enfuseStack->processingItem(ad.enfuseSettings.previewUrl, false);
+                    saveItem(ad.outUrls[0], ad.enfuseSettings);
                     break;
                 }
                 default:
