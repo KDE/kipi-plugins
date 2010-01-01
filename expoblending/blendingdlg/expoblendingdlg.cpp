@@ -429,8 +429,8 @@ void ExpoBlendingDlg::slotProcess()
 
     foreach(KUrl url, selectedUrl)
     {
-        KUrl alignedUrl = *(map.find(url));
-        alignedList.append(alignedUrl);
+        ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
+        alignedList.append(preprocessedUrls.preprocessedUrl);
     }
 
     EnfuseSettings settings = d->enfuseSettingsBox->settings();

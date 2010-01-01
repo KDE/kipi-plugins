@@ -50,7 +50,25 @@ enum Action
     LOAD
 };
 
-typedef QMap<KUrl, KUrl> ItemUrlsMap;   // Map between original Url and processed temp Url.
+class ItemPreprocessedUrls
+{
+public:
+
+    ItemPreprocessedUrls(){};
+
+    ItemPreprocessedUrls(const KUrl& preprocessed, const KUrl& preview)
+    {
+        preprocessedUrl = preprocessed;
+        previewUrl      = preview;
+    };
+
+    virtual ~ItemPreprocessedUrls(){};
+
+    KUrl preprocessedUrl;              // Can be original file or aligned version, depanding of user choice.
+    KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
+};
+
+typedef QMap<KUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original Url and processed temp Urls.
 
 class ActionData
 {
@@ -83,5 +101,6 @@ public:
 }  // namespace KIPIExpoBlendingPlugin
 
 Q_DECLARE_METATYPE(KIPIExpoBlendingPlugin::ActionData)
+Q_DECLARE_METATYPE(KIPIExpoBlendingPlugin::ItemPreprocessedUrls)
 
 #endif /* ACTIONS_H */

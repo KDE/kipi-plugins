@@ -392,7 +392,6 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-preprocessing-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
 
-
     d->cleanAlignTmpDir();
 
     d->preprocessingTmpDir = new KTempDir(prefix);
@@ -405,20 +404,28 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     {
         if (isRawFile(url.toLocalFile()))
         {
-            KUrl outUrl;
+            KUrl preprocessedUrl, previewUrl;
 
-            if (!convertRaw(url, outUrl, settings))
+            if (!convertRaw(url, preprocessedUrl, settings))
                 return false;
 
-            mixedUrls.append(outUrl);
+            if (!computePreview(url, previewUrl))
+                return false;
+
+            mixedUrls.append(preprocessedUrl);
             // In case of alignment is not performed.
-            preProcessedUrlsMap.insert(url, outUrl);
+            preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(preprocessedUrl, previewUrl));
         }
         else
         {
+            // NOTE: in this case, preprocessed Url is original file Url.
+            KUrl previewUrl;
+            if (!computePreview(url, previewUrl))
+                return false;
+
             mixedUrls.append(url);
             // In case of alignment is not performed.
-            preProcessedUrlsMap.insert(url, url);
+            preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(url, previewUrl));
         }
     }
 
@@ -461,11 +468,21 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
         foreach(const KUrl url, inUrls)
         {
-            preProcessedUrlsMap.insert(url, KUrl(d->preprocessingTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif")));
+            KUrl previewUrl;
+            KUrl alignedUrl = KUrl(d->preprocessingTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif"));
+            if (!computePreview(alignedUrl, previewUrl))
+                return false;
+
+            preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(alignedUrl, previewUrl));
             i++;
         }
 
-        kDebug() << "Pre-processed output urls map: " << preProcessedUrlsMap;
+        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.begin() ; it != preProcessedUrlsMap.end(); ++it)
+        {
+            kDebug() << "Pre-processed output urls map: " << it.key() << " , "
+                                                          << it.value().preprocessedUrl << " , "
+                                                          << it.value().previewUrl << " ; ";
+        }
         kDebug() << "Align exit status    : "         << d->alignProcess->exitStatus();
         kDebug() << "Align exit code      : "         << d->alignProcess->exitCode();
 
@@ -483,10 +500,31 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     }
     else
     {
-        kDebug() << "Pre-processed output urls map: " << preProcessedUrlsMap;
+        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.begin() ; it != preProcessedUrlsMap.end(); ++it)
+        {
+            kDebug() << "Pre-processed output urls map: " << it.key() << " , "
+                                                          << it.value().preprocessedUrl << " , "
+                                                          << it.value().previewUrl << " ; ";
+        }
         kDebug() << "Alignment not performed.";
         return true;
     }
+}
+
+bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
+{
+    outUrl = d->preprocessingTmpDir->name();
+    QFileInfo fi(inUrl.toLocalFile());
+    outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
+
+    QImage preview;
+    if (preview.load(inUrl.toLocalFile()))
+    {
+        preview.scaled(1280, 1024, Qt::KeepAspectRatio);
+        preview.save(outUrl.toLocalFile(), "JPEG");
+        return true;
+    }
+    return false;
 }
 
 bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings)
