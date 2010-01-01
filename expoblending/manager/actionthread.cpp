@@ -517,11 +517,12 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
     QFileInfo fi(inUrl.toLocalFile());
     outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
 
-    QImage preview;
-    if (preview.load(inUrl.toLocalFile()))
+    QImage img;
+    if (img.load(inUrl.toLocalFile()))
     {
-        preview.scaled(1280, 1024, Qt::KeepAspectRatio);
+        QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
         preview.save(outUrl.toLocalFile(), "JPEG");
+        kDebug() << "Preview Image url: " << outUrl;
         return true;
     }
     return false;
@@ -575,7 +576,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         return false;
     }
 
-    kDebug() << "Convert RAW output url: "  << outUrl;
+    kDebug() << "Convert RAW output url: " << outUrl;
 
     return true;
 }
