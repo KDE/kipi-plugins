@@ -330,7 +330,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
                 ext = ".png";
                 break;
         }
-        enfusePrms.targetFileName = temp.sprintf("enfused-%02i.", count+1).append(ext);
+        enfusePrms.targetFileName = temp.sprintf("enfused-%02i", count+1).append(ext);
         enfusePrms.previewUrl     = url;
 
         EnfuseStackItem* item = new EnfuseStackItem(this);
