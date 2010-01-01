@@ -51,41 +51,56 @@
 namespace KIPIExpoBlendingPlugin
 {
 
+class EnfuseStackItemPriv
+{
+public:
+
+    EnfuseStackItemPriv()
+    {
+        asValidThumb = false;
+    }
+
+    bool           asValidThumb;
+    QPixmap        thumb;
+    EnfuseSettings settings;
+};
+
 EnfuseStackItem::EnfuseStackItem(QTreeWidget* parent)
-               : QTreeWidgetItem(parent)
+               : QTreeWidgetItem(parent), d(new EnfuseStackItemPriv)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
     setThumbnail(SmallIcon("image-x-generic", treeWidget()->iconSize().width(), KIconLoader::DisabledState));
-    m_asThumbnail = false;
+    d->asValidThumb = false;
 }
 
 EnfuseStackItem::~EnfuseStackItem()
 {
+    delete d;
 }
 
 void EnfuseStackItem::setEnfuseSettings(const EnfuseSettings& settings)
 {
-    m_settings = settings;
-    setText(1, m_settings.targetFileName);
-    setText(2, m_settings.inputImagesList());
-    setToolTip(1, m_settings.asCommentString());
-    setToolTip(2, m_settings.inputImagesList().replace(" ; ", "\n"));
+    d->settings = settings;
+    setText(1, d->settings.targetFileName);
+    setText(2, d->settings.inputImagesList());
+    setToolTip(1, d->settings.asCommentString());
+    setToolTip(2, d->settings.inputImagesList().replace(" ; ", "\n"));
 }
 
 EnfuseSettings EnfuseStackItem::enfuseSettings() const
 {
-    return m_settings;
+    return d->settings;
 }
 
 KUrl EnfuseStackItem::url() const
 {
-    return m_settings.previewUrl;
+    return d->settings.previewUrl;
 }
 
 void EnfuseStackItem::setProgressAnimation(const QPixmap& pix)
 {
-    QPixmap overlay = m_thumb;
+    QPixmap overlay = d->thumb;
     QPixmap mask(overlay.size());
     mask.fill(QColor(128, 128, 128, 192));
     QPainter p(&overlay);
@@ -101,20 +116,20 @@ void EnfuseStackItem::setThumbnail(const QPixmap& pix)
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    m_thumb = pixmap;
+    d->thumb = pixmap;
     setIcon(0, QIcon(pixmap));
-    m_asThumbnail = true;
+    d->asValidThumb = true;
 }
 
 void EnfuseStackItem::setProcessedIcon(const QIcon& icon)
 {
     setIcon(1, icon);
-    setIcon(0, QIcon(m_thumb));
+    setIcon(0, QIcon(d->thumb));
 }
 
 bool EnfuseStackItem::asValidThumb()
 {
-    return m_asThumbnail;
+    return d->asValidThumb;
 }
 
 bool EnfuseStackItem::isOn() const

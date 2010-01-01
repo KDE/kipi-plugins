@@ -53,6 +53,7 @@ namespace KIPIExpoBlendingPlugin
 {
 
 class Manager;
+class EnfuseStackItemPriv;
 class EnfuseStackListPriv;
 
 class EnfuseStackItem : public QTreeWidgetItem
@@ -78,9 +79,7 @@ public:
 
 private:
 
-    bool           m_asThumbnail;
-    QPixmap        m_thumb;
-    EnfuseSettings m_settings;
+    EnfuseStackItemPriv* const d;
 };
 
 // ---------------------------------------------------------------------
