@@ -52,7 +52,6 @@ using namespace KIPI;
 namespace KIPIExpoBlendingPlugin
 {
 
-class Manager;
 class EnfuseStackItemPriv;
 class EnfuseStackListPriv;
 
@@ -64,6 +63,8 @@ public:
     EnfuseStackItem(QTreeWidget* parent);
     virtual ~EnfuseStackItem();
 
+    /** Return the preview image url assigned to item.
+     */
     KUrl url() const;
 
     void setEnfuseSettings(const EnfuseSettings& settings);
@@ -90,7 +91,7 @@ class EnfuseStackList : public QTreeWidget
 
 public:
 
-    EnfuseStackList(Manager* mngr, QWidget* parent);
+    EnfuseStackList(QWidget* parent);
     virtual ~EnfuseStackList();
 
     void setThumbnail(const KUrl& url, const QImage& img);

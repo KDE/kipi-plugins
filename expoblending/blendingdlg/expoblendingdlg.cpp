@@ -177,7 +177,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
     d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
 
-    d->enfuseStack       = new EnfuseStackList(d->mngr, panel);
+    d->enfuseStack       = new EnfuseStackList(panel);
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
     d->settingsExpander->addItem(d->saveSettingsBox,   i18n("Save Settings"),   QString("savesettings"), true);

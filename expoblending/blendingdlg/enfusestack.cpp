@@ -44,10 +44,6 @@
 
 #include <libkipi/interface.h>
 
-// Local include
-
-#include "manager.h"
-
 namespace KIPIExpoBlendingPlugin
 {
 
@@ -150,24 +146,21 @@ public:
 
     EnfuseStackListPriv()
     {
-        mngr          = 0;
         progressPix   = SmallIcon("process-working", 22);
         progressCount = 0;
         progressTimer = 0;
         processItem   = 0;
     }
 
-    Manager*         mngr;
-    EnfuseStackItem* processItem;
-    QPixmap          progressPix;
     int              progressCount;
+    QPixmap          progressPix;
     QTimer*          progressTimer;
+    EnfuseStackItem* processItem;
 };
 
-EnfuseStackList::EnfuseStackList(Manager* mngr, QWidget* parent)
+EnfuseStackList::EnfuseStackList(QWidget* parent)
                : QTreeWidget(parent), d(new EnfuseStackListPriv)
 {
-    d->mngr          = mngr;
     d->progressTimer = new QTimer(this);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
