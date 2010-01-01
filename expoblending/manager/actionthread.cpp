@@ -409,7 +409,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
             if (!convertRaw(url, preprocessedUrl, settings))
                 return false;
 
-            if (!computePreview(url, previewUrl))
+            if (!computePreview(preprocessedUrl, previewUrl))
                 return false;
 
             mixedUrls.append(preprocessedUrl);
