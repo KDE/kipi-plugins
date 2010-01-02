@@ -20,6 +20,10 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
    )
+   
+IF(OPENMP_FOUND)
+    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS}) 
+ENDIF(OPENMP_FOUND)
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
@@ -45,6 +49,13 @@ TARGET_LINK_LIBRARIES(kipiplugin_expoblending
                       ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )
+                     
+IF(OPENMP_FOUND)
+    IF(CMAKE_COMPILER_IS_GNUCXX)
+        TARGET_LINK_LIBRARIES(kipiplugin_expoblending
+                              "gomp")
+    ENDIF(CMAKE_COMPILER_IS_GNUCXX)
+ENDIF(OPENMP_FOUND)
 
 INSTALL(TARGETS kipiplugin_expoblending DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})

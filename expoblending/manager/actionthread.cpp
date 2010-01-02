@@ -34,6 +34,7 @@
 #include <QtDebug>
 #include <QDateTime>
 #include <QFileInfo>
+#include <QPointer>
 
 // KDE includes
 
@@ -91,7 +92,11 @@ public:
     KProcess*                        enfuseProcess;
     KProcess*                        alignProcess;
 
-    KDcraw                           rawdec;
+    /**
+     * A list of all running raw instances. Only access this variable via
+     * <code>mutex</code>.
+     */
+    QList<QPointer<KDcraw> >         rawProcesses;
 
     KTempDir*                        preprocessingTmpDir;
 
@@ -235,7 +240,13 @@ void ActionThread::cancel()
     if (d->alignProcess)
         d->alignProcess->kill();
 
-    d->rawdec.cancel();
+    foreach (QPointer<KDcraw> rawProcess, d->rawProcesses)
+    {
+        if (rawProcess)
+        {
+            rawProcess->cancel();
+        }
+    }
 
     d->condVar.wakeAll();
 }
@@ -441,33 +452,64 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
     KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.
 
-    foreach(const KUrl url, inUrls)
+    volatile bool error = false;
+    #pragma omp parallel for
+    for (int i = 0; i < inUrls.size(); ++i)
     {
+
+        if (error)
+        {
+            continue;
+        }
+
+        KUrl url = inUrls.at(i);
+
         if (isRawFile(url.toLocalFile()))
         {
             KUrl preprocessedUrl, previewUrl;
 
             if (!convertRaw(url, preprocessedUrl, settings))
-                return false;
+            {
+                error = true;
+                continue;
+            }
 
             if (!computePreview(preprocessedUrl, previewUrl))
-                return false;
+            {
+                error = true;
+                continue;
+            }
 
-            mixedUrls.append(preprocessedUrl);
-            // In case of alignment is not performed.
-            preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(preprocessedUrl, previewUrl));
+
+            #pragma omp critical (listAppend)
+            {
+                mixedUrls.append(preprocessedUrl);
+                // In case of alignment is not performed.
+                preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(preprocessedUrl, previewUrl));
+            }
         }
         else
         {
             // NOTE: in this case, preprocessed Url is original file Url.
             KUrl previewUrl;
             if (!computePreview(url, previewUrl))
-                return false;
+            {
+                error = true;
+                continue;
+            }
 
-            mixedUrls.append(url);
-            // In case of alignment is not performed.
-            preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(url, previewUrl));
+            #pragma omp critical (listAppend)
+            {
+                mixedUrls.append(url);
+                // In case of alignment is not performed.
+                preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(url, previewUrl));
+            }
         }
+    }
+
+    if (error)
+    {
+        return false;
     }
 
     if (align)
@@ -581,7 +623,21 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
     int        width, height, rgbmax;
     QByteArray imageData;
 
-    if (d->rawdec.decodeRAWImage(inUrl.toLocalFile(), settings, imageData, width, height, rgbmax))
+    QPointer<KDcraw> rawdec = new KDcraw;
+
+    {
+        QMutexLocker lock(&d->mutex);
+        d->rawProcesses << rawdec;
+    }
+
+    bool decoded = rawdec->decodeRAWImage(inUrl.toLocalFile(), settings, imageData, width, height, rgbmax);
+
+    {
+        QMutexLocker lock(&d->mutex);
+        d->rawProcesses.removeAll(rawdec);
+    }
+
+    if (decoded)
     {
         uchar* sptr  = (uchar*)imageData.data();
         float factor = 65535.0 / rgbmax;
