@@ -345,6 +345,16 @@ void ActionThread::run()
                     settings.outputFormat   = SaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
                     bool result             = startEnfuse(t->urls, destUrl, settings, errors);
 
+                    kDebug() << "Preview result was: " << result;
+
+                    // preserve exif information for auto rotation
+                    if (result)
+                    {
+                        KExiv2 meta;
+                        meta.load(t->urls[0].toLocalFile());
+                        meta.save(destUrl.toLocalFile());
+                    }
+
                     // To be cleaned in destructor.
                     QMutexLocker(&d->enfuseTmpUrlsMutex);
                     d->enfuseTmpUrls << destUrl;
@@ -551,9 +561,16 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-        preview.save(outUrl.toLocalFile(), "JPEG");
-        kDebug() << "Preview Image url: " << outUrl;
-        return true;
+        bool saved = preview.save(outUrl.toLocalFile(), "JPEG");
+        // save exif information also to preview image for auto rotation
+        if (saved)
+        {
+            KExiv2 meta;
+            meta.load(inUrl.toLocalFile());
+            meta.save(outUrl.toLocalFile());
+        }
+        kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
+        return saved;
     }
     return false;
 }
