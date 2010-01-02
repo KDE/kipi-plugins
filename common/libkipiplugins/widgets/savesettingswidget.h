@@ -65,6 +65,8 @@ public:
     SaveSettingsWidget(QWidget *parent);
     ~SaveSettingsWidget();
 
+    void setCustomSettingsWidget(QWidget* custom);
+
     OutputFormat fileFormat();
     ConflictRule conflictRule();
 

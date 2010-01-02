@@ -51,10 +51,13 @@ public:
         formatComboBox      = 0;
         overwriteButton     = 0;
         promptButton        = 0;
+        grid                = 0;
     }
 
     QLabel*       formatLabel;
     QLabel*       conflictLabel;
+
+    QGridLayout*  grid;
 
     QButtonGroup* conflictButtonGroup;
 
@@ -69,8 +72,7 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QGridLayout* settingsBoxLayout = new QGridLayout(this);
-
+    d->grid           = new QGridLayout(this);
     d->formatLabel    = new QLabel(i18n("Output file format:"), this);
     d->formatComboBox = new KComboBox( this );
     d->formatComboBox->setWhatsThis(i18n("<p>Set the output file format to use here:</p>"
@@ -105,13 +107,13 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
     vlay->addWidget(d->overwriteButton);
     vlay->addWidget(d->promptButton);
 
-    settingsBoxLayout->addWidget(d->formatLabel,    0, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->formatComboBox, 0, 1, 1, 1);
-    settingsBoxLayout->addWidget(d->conflictLabel,  1, 0, 1, 1);
-    settingsBoxLayout->addWidget(conflictBox,       2, 0, 1, 1);
-    settingsBoxLayout->setRowStretch(3, 10);
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
+    d->grid->addWidget(d->formatLabel,    0, 0, 1, 1);
+    d->grid->addWidget(d->formatComboBox, 0, 1, 1, 1);
+    d->grid->addWidget(d->conflictLabel,  1, 0, 1, 1);
+    d->grid->addWidget(conflictBox,       2, 0, 1, 1);
+    d->grid->setRowStretch(4, 10);
+    d->grid->setMargin(KDialog::spacingHint());
+    d->grid->setSpacing(KDialog::spacingHint());
 
     connect(d->formatComboBox, SIGNAL(activated(int)),
             this, SIGNAL(signalSaveFormatChanged()));
@@ -120,6 +122,11 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
 SaveSettingsWidget::~SaveSettingsWidget()
 {
     delete d;
+}
+
+void SaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
+{
+    d->grid->addWidget(custom, 3, 0, 1, 1);
 }
 
 void SaveSettingsWidget::setDefaultSettings()
