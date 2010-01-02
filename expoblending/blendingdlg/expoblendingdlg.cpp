@@ -281,7 +281,7 @@ void ExpoBlendingDlg::slotPreviewButtonClicked()
                      i18n("Enfuse Processing Messages"),
                      d->output);
                      i18n("Enfuse Processing Messages"),
-    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
+    dlg.setAboutData(d->mngr->about(), QString("expoblending"));
     dlg.exec();
 }
 
