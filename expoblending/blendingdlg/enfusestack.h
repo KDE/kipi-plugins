@@ -108,6 +108,10 @@ Q_SIGNALS:
 
     void signalItemClicked(const KUrl&);
 
+public Q_SLOTS:
+
+    void slotTemplateFileNameChanged(const QString&);
+
 private:
 
     EnfuseStackItem* findItemByUrl(const KUrl& url);

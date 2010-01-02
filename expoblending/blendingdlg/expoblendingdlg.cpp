@@ -49,6 +49,7 @@ extern "C"
 
 // KDE includes
 
+#include <klineedit.h>
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kvbox.h>
@@ -107,10 +108,13 @@ public:
         settingsExpander    = 0;
         mngr                = 0;
         firstImageDisplayed = false;
+        templateFileName  = 0;
     }
 
     QString               inputFileName;
     QString               output;
+
+    KLineEdit*            templateFileName;
 
     PreviewManager*       previewWidget;
 
@@ -180,6 +184,12 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
     d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
 
+    KHBox* hbox          = new KHBox(d->saveSettingsBox);
+    QLabel* customLabel  = new QLabel(hbox);
+    d->templateFileName  = new KLineEdit(hbox);
+    customLabel->setText(i18n("File Name Template: "));
+    d->saveSettingsBox->setCustomSettingsWidget(hbox);
+
     d->enfuseStack       = new EnfuseStackList(panel);
 
     d->settingsExpander->addItem(d->enfuseSettingsBox, i18n("Enfuse Settings"), QString("expoblending"), true);
@@ -241,6 +251,9 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
 
     connect(d->enfuseStack, SIGNAL(signalItemClicked(const KUrl&)),
             this, SLOT(slotLoadProcessed(const KUrl&)));
+
+    connect(d->templateFileName, SIGNAL(textChanged(const QString&)),
+            d->enfuseStack, SLOT(slotTemplateFileNameChanged(const QString&)));
 
     // ---------------------------------------------------------------
 
@@ -342,6 +355,7 @@ void ExpoBlendingDlg::readSettings()
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
     d->settingsExpander->readSettings();
+    d->templateFileName->setText(group.readEntry("Template File Name", QString("enfuse")));
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
     restoreDialogSize(group2);
@@ -355,6 +369,7 @@ void ExpoBlendingDlg::saveSettings()
     d->enfuseSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
     d->settingsExpander->writeSettings();
+    group.writeEntry("Template File Name", d->templateFileName->text());
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
     saveDialogSize(group2);

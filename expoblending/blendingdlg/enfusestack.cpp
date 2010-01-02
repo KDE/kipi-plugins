@@ -152,6 +152,8 @@ public:
         processItem   = 0;
     }
 
+    QString          templateFileName;
+
     int              progressCount;
     QPixmap          progressPix;
     QTimer*          progressTimer;
@@ -281,32 +283,17 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
         return;
 
     // Check if the new item already exist in the list.
-    bool found = false;
-    int count  = 0;
-
-    QTreeWidgetItemIterator iter(this);
-    while (*iter)
+    if (!findItemByUrl(url))
     {
-        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*iter);
-        if (item && item->url() == url)
-            found = true;
-
-        ++iter;
-        count++;
-    }
-
-    if (!found)
-    {
-        QString temp;
         EnfuseSettings enfusePrms = settings;
         QString ext               = SaveSettingsWidget::extensionForFormat(enfusePrms.outputFormat);
-        enfusePrms.targetFileName = temp.sprintf("enfused-%02i", count+1).append(ext);
         enfusePrms.previewUrl     = url;
 
         EnfuseStackItem* item = new EnfuseStackItem(this);
         item->setEnfuseSettings(enfusePrms);
         item->setOn(true);
         setCurrentItem(item);
+        slotTemplateFileNameChanged(d->templateFileName);
 
         emit signalItemClicked(url);
     }
@@ -378,6 +365,28 @@ void EnfuseStackList::processedItem(const KUrl& url, bool success)
     EnfuseStackItem* item = findItemByUrl(url);
     if (item)
         item->setProcessedIcon(SmallIcon(success ? "dialog-ok" : "dialog-cancel"));
+}
+
+void EnfuseStackList::slotTemplateFileNameChanged(const QString& string)
+{
+    d->templateFileName = string;
+    int count           = 0;
+
+    QTreeWidgetItemIterator it(this);
+    while (*it)
+    {
+        EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(*it);
+        if (item)
+        {
+            QString temp;
+            EnfuseSettings settings = item->enfuseSettings();
+            QString ext             = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
+            settings.targetFileName = d->templateFileName + temp.sprintf("-%02i", count+1).append(ext);
+            item->setEnfuseSettings(settings);
+        }
+        ++it;
+        count++;
+    }
 }
 
 }  // namespace KIPIExpoBlendingPlugin
