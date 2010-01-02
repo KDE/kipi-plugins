@@ -218,7 +218,8 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
     }
     else
     {
-        setCursor(Qt::OpenHandCursor);
+        if (verticalScrollBar()->isVisible() || horizontalScrollBar()->isVisible())
+            setCursor(Qt::OpenHandCursor);
     }
 }
 
