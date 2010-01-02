@@ -142,7 +142,7 @@ void PreviewManager::slotLoad(const KUrl& url)
     load(url.path());
 }
 
-void PreviewManager::setImage(const QImage& img)
+void PreviewManager::setImage(const QImage& img, bool fit)
 {
     setBusy(false);
 
@@ -153,10 +153,13 @@ void PreviewManager::setImage(const QImage& img)
     }
 
     setCurrentIndex(PreviewMode);
-    d->preview->slotZoom2Fit();
+    if (fit)
+    {
+        d->preview->slotZoom2Fit();
+    }
 }
 
-void PreviewManager::load(const QString& file)
+void PreviewManager::load(const QString& file, bool fit)
 {
     setBusy(false);
 
@@ -167,7 +170,10 @@ void PreviewManager::load(const QString& file)
     }
 
     setCurrentIndex(PreviewMode);
-    d->preview->slotZoom2Fit();
+    if (fit)
+    {
+        d->preview->slotZoom2Fit();
+    }
 }
 
 void PreviewManager::setThumbnail(const QPixmap& thumbnail)

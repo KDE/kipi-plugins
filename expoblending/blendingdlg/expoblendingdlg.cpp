@@ -99,13 +99,14 @@ public:
 
     ExpoBlendingDlgPriv()
     {
-        previewWidget     = 0;
-        saveSettingsBox   = 0;
-        bracketStack      = 0;
-        enfuseStack       = 0;
-        enfuseSettingsBox = 0;
-        settingsExpander  = 0;
-        mngr              = 0;
+        previewWidget       = 0;
+        saveSettingsBox     = 0;
+        bracketStack        = 0;
+        enfuseStack         = 0;
+        enfuseSettingsBox   = 0;
+        settingsExpander    = 0;
+        mngr                = 0;
+        firstImageDisplayed = false;
     }
 
     QString               inputFileName;
@@ -123,6 +124,8 @@ public:
     EnfuseStackList*      enfuseStack;
 
     Manager*              mngr;
+
+    bool                  firstImageDisplayed;
 };
 
 ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
@@ -260,6 +263,7 @@ void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     d->mngr->thread()->cancel();
+    d->mngr->cleanUp();
     saveSettings();
     e->accept();
 }
@@ -267,7 +271,6 @@ void ExpoBlendingDlg::closeEvent(QCloseEvent* e)
 void ExpoBlendingDlg::slotClose()
 {
     d->mngr->thread()->cancel();
-    d->mngr->cleanUp();
     saveSettings();
     done(Close);
 }
@@ -566,7 +569,8 @@ void ExpoBlendingDlg::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 }
                 case(LOAD):
                 {
-                    d->previewWidget->setImage(ad.image);
+                    d->previewWidget->setImage(ad.image, !d->firstImageDisplayed);
+                    d->firstImageDisplayed |= true;
                     d->enfuseStack->setThumbnail(ad.inUrls[0], ad.image);
                     busy(false);
                     break;
