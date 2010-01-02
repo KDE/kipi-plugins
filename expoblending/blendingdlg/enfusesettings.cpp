@@ -95,7 +95,9 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->levelsInput->setRange(1, 29, 1);
     d->levelsInput->setSliderEnabled(true);
     d->levelsInput->setDefaultValue(20);
-    d->levelsInput->setWhatsThis(i18n("Set the number of levels for pyramid blending."));
+    d->levelsInput->setWhatsThis(i18n("Set the number of levels for pyramid blending. "
+                                      "A low number trades off quality of results for faster "
+                                      "execution time and lower memory usage."));
 
     d->hardMaskCB = new QCheckBox(i18n("Hard Mask"), this);
     d->hardMaskCB->setWhatsThis(i18n("Force hard blend masks and no averaging on finest "
@@ -109,7 +111,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->exposureInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->exposureInput->setDefaultValue(1.0);
     d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
-                                          "Higher values will favour well-exposed pixels."));
+                                         "Higher values will favour well-exposed pixels."));
 
     d->saturationLabel = new QLabel(i18nc("enfuse settings", "Saturation:"));
     d->saturationInput = new RDoubleNumInput();
@@ -124,10 +126,16 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
     d->contrastInput->setDecimals(2);
     d->contrastInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->contrastInput->setDefaultValue(0.0);
-    d->contrastInput->setWhatsThis( i18n("Sets the relative weight of high-contrast pixels."));
+    d->contrastInput->setWhatsThis(i18n("Sets the relative weight of high-contrast pixels. "
+                                        "Increasing this weight makes pixels with neighboring differently colored "
+                                        "pixels contribute more to the final output. Particularly useful for focus stacks."));
 
     d->ciecam02CB = new QCheckBox(i18n("Use Color Appearance Modelling"), this);
-    d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render detailed colors."));
+    d->ciecam02CB->setWhatsThis(i18n("Use Color Appearance Modelling (CIECAM02) to render detailed colors. "
+                                     "Your input files should have embedded ICC profiles. If no ICC profile is present, "
+                                     "sRGB color space will be used instead. The difference between using this option "
+                                     "and default color blending algorithm is very slight, and will be most noticeable "
+                                     "when you need to blend areas of different primary colors together."));
 
     // ------------------------------------------------------------------------
 
