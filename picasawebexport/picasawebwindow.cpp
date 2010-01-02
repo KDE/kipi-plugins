@@ -82,7 +82,6 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_uploadCount            = 0;
     m_uploadTotal            = 0;
 //  m_wallet                 = 0;
-    m_urls                   = 0;
     m_widget                 = new PicasawebWidget(this);
     m_photoView              = m_widget->m_photoView;
     m_newAlbumButton         = m_widget->m_newAlbumButton;
@@ -215,21 +214,13 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString &tmpF
     m_talker->authenticate(token, username, password);
 }
 
-void PicasawebWindow::slotClose()
-{
-    kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
-    saveSettings();
-    delete m_urls;
-    done(Close);
-}
-
-void PicasawebWindow::closeEvent(QCloseEvent *e) 
+void PicasawebWindow::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
 
     kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     saveSettings();
-    delete m_urls;
+    m_urls.clear();
     e->accept();
 }
 
@@ -266,7 +257,7 @@ void PicasawebWindow::saveSettings()
 
 PicasawebWindow::~PicasawebWindow()
 {
-    delete m_urls;
+    m_urls.clear();
     delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
@@ -418,8 +409,8 @@ void PicasawebWindow::slotAddPhotos()
 {
     //m_talker->listPhotoSets();
     KIPIPlugins::ImageDialog dlg(this, m_interface);
-    delete m_urls;
-    m_urls = new KUrl::List( dlg.urls() );
+    m_urls.clear();
+    m_urls = dlg.urls();
 }
 
 void PicasawebWindow::slotUploadImages()
@@ -433,12 +424,11 @@ void PicasawebWindow::slotUploadImages()
 
     if (m_widget->m_currentSelectionButton->isChecked())
     {
-        delete m_urls;
-
-        m_urls = new KUrl::List(m_interface->currentSelection().images());
+        m_urls.clear();
+        m_urls = m_interface->currentSelection().images();
     }
 
-    if (m_urls == NULL || m_urls->isEmpty()) 
+    if (m_urls.isEmpty())
     {
         KMessageBox::error(this, i18n("Nothing to upload - please select photos to upload."));
         return;
@@ -448,7 +438,7 @@ void PicasawebWindow::slotUploadImages()
 
     m_uploadQueue.clear();
 
-    for (KUrl::List::ConstIterator it = m_urls->constBegin(); it != m_urls->constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = m_urls.constBegin(); it != m_urls.constEnd(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info( *it );
         FPhotoInfo temp;

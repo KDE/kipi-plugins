@@ -113,10 +113,6 @@ private Q_SLOTS:
     void slotRefreshSizeButtons(bool);
 //  void slotHandleLogin();
 
-protected:
-
-    void slotClose();
-
 private:
 
     unsigned int                             m_uploadCount;
@@ -153,7 +149,7 @@ private:
 //  KWallet::Wallet                         *m_wallet;
 
     KHTMLPart                               *m_photoView;
-    KUrl::List                              *m_urls;
+    KUrl::List                               m_urls;
 
     QString                                  m_currentAlbumId;
 
