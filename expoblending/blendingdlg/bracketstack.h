@@ -66,6 +66,10 @@ public:
 
 private:
 
+    bool operator< (const QTreeWidgetItem& other) const;
+
+private:
+
     KUrl m_url;
 };
 

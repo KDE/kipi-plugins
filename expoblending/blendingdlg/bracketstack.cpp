@@ -96,6 +96,14 @@ void BracketStackItem::setOn(bool b)
     setCheckState(0, b ? Qt::Checked : Qt::Unchecked);
 }
 
+bool BracketStackItem::operator< (const QTreeWidgetItem& other) const
+{
+    int column     = treeWidget()->sortColumn();
+    double thisEv  = text(column).toDouble();
+    double otherEv = other.text(column).toDouble();
+    return thisEv < otherEv;
+}
+
 // -------------------------------------------------------------------------
 
 class BracketStackListPriv
@@ -119,7 +127,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
 
     setIconSize(QSize(64, 64));
     setSelectionMode(QAbstractItemView::SingleSelection);
-    setSortingEnabled(false);
+    setSortingEnabled(true);
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -144,6 +152,8 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
 
     connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
             this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
+
+    sortItems(2, Qt::DescendingOrder);
 }
 
 BracketStackList::~BracketStackList()
