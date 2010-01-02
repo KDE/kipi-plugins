@@ -350,9 +350,10 @@ void ActionThread::run()
                     // preserve exif information for auto rotation
                     if (result)
                     {
-                        KExiv2 meta;
-                        meta.load(t->urls[0].toLocalFile());
-                        meta.save(destUrl.toLocalFile());
+                        KExiv2 metai(t->urls[0].toLocalFile());
+                        KExiv2 metao(destUrl.toLocalFile());
+                        metao.setImageOrientation(metai.getImageOrientation());
+                        metao.applyChanges();
                     }
 
                     // To be cleaned in destructor.
@@ -630,7 +631,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
 
 bool ActionThread::isRawFile(const KUrl& url)
 {
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
 
     QFileInfo fileInfo(url.toLocalFile());
     if (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()))
