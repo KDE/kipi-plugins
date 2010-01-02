@@ -297,23 +297,9 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
 
     if (!found)
     {
-        QString temp, ext;
+        QString temp;
         EnfuseSettings enfusePrms = settings;
-        switch(enfusePrms.outputFormat)
-        {
-            case SaveSettingsWidget::OUTPUT_JPEG:
-                ext = ".jpg";
-                break;
-            case SaveSettingsWidget::OUTPUT_TIFF:
-                ext  = ".tif";
-                break;
-            case SaveSettingsWidget::OUTPUT_PPM:
-                ext = ".ppm";
-                break;
-            case SaveSettingsWidget::OUTPUT_PNG:
-                ext = ".png";
-                break;
-        }
+        QString ext               = SaveSettingsWidget::extensionForFormat(enfusePrms.outputFormat);
         enfusePrms.targetFileName = temp.sprintf("enfused-%02i", count+1).append(ext);
         enfusePrms.previewUrl     = url;
 
