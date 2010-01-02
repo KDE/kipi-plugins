@@ -133,7 +133,7 @@ SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat()
     return(OutputFormat)(d->formatComboBox->currentIndex());
 }
 
-void SaveSettingsWidget::setFileFormat(SaveSettingsWidget::OutputFormat f)
+void SaveSettingsWidget::setFileFormat(OutputFormat f)
 {
     d->formatComboBox->setCurrentIndex((int)f);
 }
@@ -143,7 +143,7 @@ SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule()
     return((ConflictRule)(d->conflictButtonGroup->checkedId()));
 }
 
-void SaveSettingsWidget::setConflictRule(SaveSettingsWidget::ConflictRule r)
+void SaveSettingsWidget::setConflictRule(ConflictRule r)
 {
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
@@ -177,25 +177,7 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 
 QString SaveSettingsWidget::extension()
 {
-    QString ext;
-
-    switch(fileFormat())
-    {
-        case OUTPUT_JPEG:
-            ext = ".jpg";
-            break;
-        case OUTPUT_TIFF:
-            ext = ".tif";
-            break;
-        case OUTPUT_PPM:
-            ext = ".ppm";
-            break;
-        case OUTPUT_PNG:
-            ext = ".png";
-            break;
-    }
-
-    return ext;
+    return extensionForFormat(fileFormat());
 }
 
 QString SaveSettingsWidget::typeMime()
@@ -219,6 +201,29 @@ QString SaveSettingsWidget::typeMime()
     }
 
     return mime;
+}
+
+QString SaveSettingsWidget::extensionForFormat(SaveSettingsWidget::OutputFormat format)
+{
+    QString ext;
+
+    switch(format)
+    {
+        case OUTPUT_JPEG:
+            ext = ".jpg";
+            break;
+        case OUTPUT_TIFF:
+            ext = ".tif";
+            break;
+        case OUTPUT_PPM:
+            ext = ".ppm";
+            break;
+        case OUTPUT_PNG:
+            ext = ".png";
+            break;
+    }
+
+    return ext;
 }
 
 } // namespace KIPIPlugins

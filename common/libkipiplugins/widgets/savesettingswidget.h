@@ -65,19 +65,21 @@ public:
     SaveSettingsWidget(QWidget *parent);
     ~SaveSettingsWidget();
 
-    SaveSettingsWidget::OutputFormat fileFormat();
+    OutputFormat fileFormat();
     ConflictRule conflictRule();
 
     QString extension();
     QString typeMime();
 
-    void setFileFormat(SaveSettingsWidget::OutputFormat f);
+    void setFileFormat(OutputFormat f);
     void setConflictRule(ConflictRule r);
 
     void setDefaultSettings();
 
     void readSettings(KConfigGroup& group);
     void writeSettings(KConfigGroup& group);
+
+    static QString extensionForFormat(OutputFormat format);
 
 public Q_SLOTS:
 
