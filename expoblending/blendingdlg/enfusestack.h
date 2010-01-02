@@ -94,6 +94,8 @@ public:
     EnfuseStackList(QWidget* parent);
     virtual ~EnfuseStackList();
 
+    void setTemplateFileName(SaveSettingsWidget::OutputFormat, const QString&);
+
     void setThumbnail(const KUrl& url, const QImage& img);
     void setOnItem(const KUrl& url, bool on);
     void removeItem(const KUrl& url);
@@ -107,10 +109,6 @@ public:
 Q_SIGNALS:
 
     void signalItemClicked(const KUrl&);
-
-public Q_SLOTS:
-
-    void slotTemplateFileNameChanged(const QString&);
 
 private:
 

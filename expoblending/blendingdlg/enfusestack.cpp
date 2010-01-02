@@ -152,12 +152,14 @@ public:
         processItem   = 0;
     }
 
-    QString          templateFileName;
+    SaveSettingsWidget::OutputFormat outputFormat;
 
-    int              progressCount;
-    QPixmap          progressPix;
-    QTimer*          progressTimer;
-    EnfuseStackItem* processItem;
+    QString                          templateFileName;
+
+    int                              progressCount;
+    QPixmap                          progressPix;
+    QTimer*                          progressTimer;
+    EnfuseStackItem*                 processItem;
 };
 
 EnfuseStackList::EnfuseStackList(QWidget* parent)
@@ -293,7 +295,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
         item->setEnfuseSettings(enfusePrms);
         item->setOn(true);
         setCurrentItem(item);
-        slotTemplateFileNameChanged(d->templateFileName);
+        setTemplateFileName(d->outputFormat, d->templateFileName);
 
         emit signalItemClicked(url);
     }
@@ -367,8 +369,9 @@ void EnfuseStackList::processedItem(const KUrl& url, bool success)
         item->setProcessedIcon(SmallIcon(success ? "dialog-ok" : "dialog-cancel"));
 }
 
-void EnfuseStackList::slotTemplateFileNameChanged(const QString& string)
+void EnfuseStackList::setTemplateFileName(SaveSettingsWidget::OutputFormat frm, const QString& string)
 {
+    d->outputFormat     = frm;
     d->templateFileName = string;
     int count           = 0;
 
@@ -380,7 +383,8 @@ void EnfuseStackList::slotTemplateFileNameChanged(const QString& string)
         {
             QString temp;
             EnfuseSettings settings = item->enfuseSettings();
-            QString ext             = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
+            QString ext             = SaveSettingsWidget::extensionForFormat(d->outputFormat);
+            settings.outputFormat   = d->outputFormat;
             settings.targetFileName = d->templateFileName + temp.sprintf("-%02i", count+1).append(ext);
             item->setEnfuseSettings(settings);
         }

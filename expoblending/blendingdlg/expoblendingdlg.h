@@ -92,6 +92,7 @@ private Q_SLOTS:
     void slotAddItems(const KUrl::List& urls);
 
     void slotPreviewButtonClicked();
+    void slotFileFormatChanged();
 
 private:
 

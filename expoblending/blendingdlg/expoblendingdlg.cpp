@@ -253,7 +253,10 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
             this, SLOT(slotLoadProcessed(const KUrl&)));
 
     connect(d->templateFileName, SIGNAL(textChanged(const QString&)),
-            d->enfuseStack, SLOT(slotTemplateFileNameChanged(const QString&)));
+            this, SLOT(slotFileFormatChanged()));
+
+    connect(d->saveSettingsBox, SIGNAL(signalSaveFormatChanged()),
+            this, SLOT(slotFileFormatChanged()));
 
     // ---------------------------------------------------------------
 
@@ -286,6 +289,11 @@ void ExpoBlendingDlg::slotClose()
     d->mngr->thread()->cancel();
     saveSettings();
     done(Close);
+}
+
+void ExpoBlendingDlg::slotFileFormatChanged()
+{
+    d->enfuseStack->setTemplateFileName(d->saveSettingsBox->fileFormat(), d->templateFileName->text());
 }
 
 void ExpoBlendingDlg::slotPreviewButtonClicked()
