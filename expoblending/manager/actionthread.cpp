@@ -608,9 +608,10 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
         // save exif information also to preview image for auto rotation
         if (saved)
         {
-            KExiv2 meta;
-            meta.load(inUrl.toLocalFile());
-            meta.save(outUrl.toLocalFile());
+            KExiv2 metai(inUrl.toLocalFile());
+            KExiv2 metao(outUrl.toLocalFile());
+            metao.setImageOrientation(metai.getImageOrientation());
+            metao.applyChanges();
         }
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
