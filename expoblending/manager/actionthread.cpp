@@ -627,24 +627,10 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                                QString& errors)
 {
     QString comp;
-    QString ext;
+    QString ext = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
 
-    switch(settings.outputFormat)
-    {
-        case SaveSettingsWidget::OUTPUT_JPEG:
-            ext = ".jpg";
-            break;
-        case SaveSettingsWidget::OUTPUT_TIFF:
-            ext  = ".tif";
-            comp = "--compression=DEFLATE";
-            break;
-        case SaveSettingsWidget::OUTPUT_PPM:
-            ext = ".ppm";
-            break;
-        case SaveSettingsWidget::OUTPUT_PNG:
-            ext = ".png";
-            break;
-    }
+    if (ext == QString(".tif"))
+        comp = QString("--compression=DEFLATE");
 
     outUrl.setFileName(QString(".kipi-expoblending-tmp-") + QString::number(QDateTime::currentDateTime().toTime_t()) + ext);
 
