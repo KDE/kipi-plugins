@@ -126,7 +126,7 @@ SaveSettingsWidget::~SaveSettingsWidget()
 
 void SaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
 {
-    d->grid->addWidget(custom, 3, 0, 1, 1);
+    d->grid->addWidget(custom, 3, 0, 1, 2);
 }
 
 void SaveSettingsWidget::setDefaultSettings()
