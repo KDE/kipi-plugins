@@ -6,9 +6,9 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -199,7 +199,7 @@ void ImagesListView::setup(int iconSize)
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     enableDragAndDrop(true);
-    
+
     setSortingEnabled(false);
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
@@ -444,7 +444,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
             this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
-            
+
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
@@ -667,7 +667,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
 
         connect(job, SIGNAL(failed(const KFileItem&)),
                 this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
-    }    
+    }
 
     emit signalAddItems(urls);
     emit signalImageListChanged();
@@ -723,7 +723,7 @@ void ImagesList::slotAddItems()
 void ImagesList::slotRemoveItems()
 {
     QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
-    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); 
+    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it!=selectedItemsList.constEnd(); ++it)
     {
         d->listView->removeItemWidget( *it, 0);
