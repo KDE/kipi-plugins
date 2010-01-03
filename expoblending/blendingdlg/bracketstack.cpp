@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -137,7 +137,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
     header()->setResizeMode(QHeaderView::Stretch);
 
     QStringList labels;
-    labels.append( i18n("Thumbnail") );
+    labels.append( i18n("To process") );
     labels.append( i18n("File Name") );
     labels.append( i18n("Exposure (EV)") );
     setHeaderLabels(labels);
