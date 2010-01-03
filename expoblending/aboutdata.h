@@ -39,11 +39,15 @@ public:
         : KPAboutData(ki18n("Exposure Blending"), 0,
                       KAboutData::License_GPL,
                       ki18n("A tool to blend bracketed images"),
-                      ki18n("(c) 2009, Gilles Caulier"))
+                      ki18n("(c) 2009-2010, Gilles Caulier"))
     {
          addAuthor(ki18n("Gilles Caulier"),
                    ki18n("Author"),
                    "caulier dot gilles at gmail dot com");
+
+         addAuthor(ki18n("Johannes Wienke"),
+                   ki18n("Developer"),
+                   "languitar at semipol dot de");
     }
 
     ~ExpoBlendingAboutData(){}
