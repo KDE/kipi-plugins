@@ -63,7 +63,7 @@ libkipi         >= 0.2.0                        http://www.digikam.org/sharedlib
 libkexiv2       >= 0.5.0                        http://www.digikam.org/sharedlibs
 libkdcraw       >= 0.4.0                        http://www.digikam.org/sharedlibs          Using LibRaw decoder instead dcraw.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
-Hugin           >= 0.8.0  (runtime dependency)  http://hugin.sourceforge.net
+Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
 
 Optional:
@@ -78,6 +78,7 @@ libopencv       >= 1.0                          http://opencv.willowgarage.com
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
+libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -92,7 +93,7 @@ RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
-ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency).
+ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 
 -- CONTACT ------------------------------------------------------------
 
