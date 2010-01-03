@@ -11,6 +11,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.
 003 ==> AdvancedSlideShow : 215798 : Slideshow crashes when starting.
 004 ==> JPEGLossLess      : 200031 : Photo is rotated but not thumbnail.
-005 ==> PicasaWebExport   : 199145 : tags not exported to picasaweb [patch].
-006 ==> PicasaWebExport   : 215846 : PicasaWeb plugin crashes Digikam after start sending the pic [delete, KIPIPicasawebExportPlugin::PicasawebWindow::slotUploadImages] (double deletion)
-007 ==> 
+005 ==> PicasaWebExport   : 199145 : Tags not exported to picasaweb [patch].
+006 ==> PicasaWebExport   : 215846 : PicasaWeb plugin crashes digiKam after start sending the pic [delete, KIPIPicasawebExportPlugin::PicasawebWindow::slotUploadImages] (double deletion)
+007 ==> ExpoBlending      : 221056 : Expoblending.app causes digiKam compile to fail.
+008 ==> 
