@@ -83,6 +83,7 @@ public:
 
     bool                             cancel;
     bool                             align;
+    bool                             enfuseVersion4x;
 
     QMutex                           mutex;
 
@@ -145,6 +146,11 @@ ActionThread::~ActionThread()
     cleanUpResultFiles();
 
     delete d;
+}
+
+void ActionThread::setEnfuseVersion(const QString& version)
+{
+    d->enfuseVersion4x = (version.toDouble() >= 4.0);
 }
 
 void ActionThread::cleanUpResultFiles()
@@ -730,11 +736,25 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
         args << comp;
 
     if (settings.hardMask)
-        args << "--HardMask";
+    {
+        if (d->enfuseVersion4x)
+            args << "--hard-mask";
+        else
+            args << "--HardMask";
+    }
 
-    args << QString("--wExposure=%1").arg(settings.exposure);
-    args << QString("--wSaturation=%1").arg(settings.saturation);
-    args << QString("--wContrast=%1").arg(settings.contrast);
+    if (d->enfuseVersion4x)
+    {
+        args << QString("--exposure-weight=%1").arg(settings.exposure);
+        args << QString("--saturation-weight=%1").arg(settings.saturation);
+        args << QString("--contrast-weight=%1").arg(settings.contrast);
+    }
+    else
+    {
+        args << QString("--wExposure=%1").arg(settings.exposure);
+        args << QString("--wSaturation=%1").arg(settings.saturation);
+        args << QString("--wContrast=%1").arg(settings.contrast);
+    }
 
     args << "-v";
     args << "-o";

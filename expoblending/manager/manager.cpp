@@ -103,6 +103,7 @@ bool Manager::checkBinaries()
     if (!d->enfuseBinary.showResults())
         return false;
 
+    d->thread->setEnfuseVersion(d->enfuseBinary.version());
     return true;
 }
 
