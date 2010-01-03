@@ -20,7 +20,7 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/bracketstack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
    )
-   
+
 IF(OPENMP_FOUND)
     ADD_DEFINITIONS(${OpenMP_CXX_FLAGS}) 
 ENDIF(OPENMP_FOUND)
@@ -49,11 +49,10 @@ TARGET_LINK_LIBRARIES(kipiplugin_expoblending
                       ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )
-                     
+
 IF(OPENMP_FOUND)
     IF(CMAKE_COMPILER_IS_GNUCXX)
-        TARGET_LINK_LIBRARIES(kipiplugin_expoblending
-                              "gomp")
+        TARGET_LINK_LIBRARIES(kipiplugin_expoblending "gomp")
     ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 ENDIF(OPENMP_FOUND)
 
@@ -80,6 +79,12 @@ TARGET_LINK_LIBRARIES(expoblending
                       ${KDCRAW_LIBRARIES}
                       kipiplugins
                      )
+
+IF(OPENMP_FOUND)
+    IF(CMAKE_COMPILER_IS_GNUCXX)
+        TARGET_LINK_LIBRARIES(expoblending "gomp")
+    ENDIF(CMAKE_COMPILER_IS_GNUCXX)
+ENDIF(OPENMP_FOUND)
 
 INSTALL(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(FILES expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
