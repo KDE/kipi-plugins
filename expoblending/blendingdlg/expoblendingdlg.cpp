@@ -187,6 +187,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     KHBox* hbox          = new KHBox(d->saveSettingsBox);
     QLabel* customLabel  = new QLabel(hbox);
     d->templateFileName  = new KLineEdit(hbox);
+    d->templateFileName->setClearButtonShown(true);
     customLabel->setText(i18n("File Name Template: "));
     d->saveSettingsBox->setCustomSettingsWidget(hbox);
 
