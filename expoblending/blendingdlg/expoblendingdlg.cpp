@@ -108,7 +108,7 @@ public:
         settingsExpander    = 0;
         mngr                = 0;
         firstImageDisplayed = false;
-        templateFileName  = 0;
+        templateFileName    = 0;
     }
 
     QString               inputFileName;
@@ -353,6 +353,7 @@ void ExpoBlendingDlg::slotDefault()
 {
     d->enfuseSettingsBox->setDefaultSettings();
     d->saveSettingsBox->setDefaultSettings();
+    d->templateFileName->setText("enfuse");
 }
 
 void ExpoBlendingDlg::readSettings()
