@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> PicasaWebExport   : 215846 : PicasaWeb plugin crashes digiKam after start sending the pic [delete, KIPIPicasawebExportPlugin::PicasawebWindow::slotUploadImages] (double deletion)
 007 ==> ExpoBlending      : 221056 : Expoblending.app causes digiKam compile to fail.
 008 ==> PicasaWebExport   : 205903 : accentuated chars are converted into a mess during picasa web export [patch]
-009 ==>
+009 ==> PicasaWebExport   : 220433 : digiKam crash when has long time working on it.
+010 ==> 
