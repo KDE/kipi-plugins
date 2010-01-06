@@ -24,6 +24,10 @@
 #include "gpsmapwidget.h"
 #include "gpsmapwidget.moc"
 
+// Qt includes
+
+#include <QTimer>
+
 // KDE includes
 
 #include <kdebug.h>
@@ -50,6 +54,9 @@ public:
     QString zoomLevel;
     QString mapType;
     QString fileName;
+
+    QString lastKHTMLStatus;
+    QTimer* statusTimer;
 };
 
 GPSMapWidget::GPSMapWidget(QWidget* parent)
@@ -63,6 +70,13 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
     view()->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view()->setMinimumSize(480, 360);
     view()->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+
+    d->statusTimer = new QTimer(this);
+    d->statusTimer->setSingleShot(false);
+    d->statusTimer->start(100);
+
+    connect(d->statusTimer, SIGNAL(timeout()),
+            this, SLOT(slotReadKHTMLStatus()));
 }
 
 GPSMapWidget::~GPSMapWidget()
@@ -121,40 +135,14 @@ void GPSMapWidget::extractGPSPositionfromStatusbar(const QString& txt)
 
 void GPSMapWidget::khtmlMouseMoveEvent(khtml::MouseMoveEvent *e)
 {
-    QString status = jsStatusBarText();
-
-    // If a new point to the map have been moved, the Status
-    // string is like : "(lat:25.5894748, lon:47.6897455478, alt:211)"
-    if (status.startsWith(QString("(lat:")))
-        extractGPSPositionfromStatusbar(status);
+    slotReadKHTMLStatus();
 
     KHTMLPart::khtmlMouseMoveEvent(e);
 }
 
 void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 {
-    QString status = jsStatusBarText();
-
-    // If a new point to the map have been moved, the Status
-    // string is like : "(lat:25.5894748, lon:47.6897455478, alt:211)"
-    if (status.startsWith(QString("(lat:")))
-        extractGPSPositionfromStatusbar(status);
-
-    // If a new map zoom level have been selected, the Status
-    // string is like : "newZoomLevel:5"
-    if (status.startsWith(QString("newZoomLevel:")))
-    {
-        status.remove(0, 13);
-        d->zoomLevel = status;
-    }
-
-    // If a new map type have been selected, the Status
-    // string is like : "newMapType:G_SATELLITE_MAP"
-    if (status.startsWith(QString("newMapType:")))
-    {
-        status.remove(0, 11);
-        d->mapType = status;
-    }
+    slotReadKHTMLStatus();
 
     KHTMLPart::khtmlMouseReleaseEvent(e);
 }
@@ -187,6 +175,41 @@ void GPSMapWidget::resized()
         , "en"));
     openUrl(KUrl(url));
     kDebug(AREA_CODE_LOADING) << url ;
+}
+
+void GPSMapWidget::slotReadKHTMLStatus()
+{
+    QString status = jsStatusBarText();
+
+    // did the status change?
+    if (status==d->lastKHTMLStatus)
+        return;
+
+    kDebug()<<status;
+    d->lastKHTMLStatus = status;
+
+    // If a marker has been moved to another point on the map, the status
+    // string is like : "(lat:25.5894748, lon:47.6897455478, alt:211)"
+    if (status.startsWith(QString("(lat:")))
+    {
+        extractGPSPositionfromStatusbar(status);
+    }
+
+    // If a new map zoom level has been selected, the status
+    // string is like : "newZoomLevel:5"
+    if (status.startsWith(QString("newZoomLevel:")))
+    {
+        status.remove(0, 13);
+        d->zoomLevel = status;
+    }
+
+    // If a new map type has been selected, the status
+    // string is like : "newMapType:G_SATELLITE_MAP"
+    if (status.startsWith(QString("newMapType:")))
+    {
+        status.remove(0, 11);
+        d->mapType = status;
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

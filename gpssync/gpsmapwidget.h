@@ -68,6 +68,9 @@ protected:
     void khtmlMouseMoveEvent(khtml::MouseMoveEvent*);
     void khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *);
 
+private Q_SLOTS:
+    void slotReadKHTMLStatus();
+
 private:
 
     void extractGPSPositionfromStatusbar(const QString& txt);

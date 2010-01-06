@@ -54,6 +54,15 @@
 
 $maplang = $_GET['maplang'];
 if ($maplang == "") $maplang = "en";
+
+$maptype = $_GET['maptype'];
+if ($maptype == "") $maptype = "G_NORMAL_MAP";
+$maptypetranslator = array(
+    'G_NORMAL_MAP'=>'google.maps.MapTypeId.ROADMAP',
+    'G_SATELLITE_MAP'=>'google.maps.MapTypeId.SATELLITE',
+    'G_HYBRID_MAP'=>'google.maps.MapTypeId.HYBRID',
+    'G_TERRAIN_MAP'=>'google.maps.MapTypeId.TERRAIN'
+    );
 ?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -61,15 +70,10 @@ if ($maplang == "") $maplang = "en";
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;hl=<?=$maplang ?>&amp;key=ABQIAAAAy_Vv5rc03ctmYvwfsuTH6RSK29CRGKrdb78LNYpP1_riKtR3zRRxy4unyuWAi2vp7m1isLwuHObXDg"
-type="text/javascript">
+<script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=<?=$maplang ?>" type="text/javascript">
 </script>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;hl=<?=$maplang ?>" type="text/javascript"></script>
-<script src="http://www.google.com/uds/solutions/localsearch/gmlocalsearch.js?hl=<?=$maplang ?>" type="text/javascript"></script>
-<script type="text/javascript" src="http://topocoding.com/api/getapi_v1.php?key=ILOGFVOBCUOSRHC"></script>
+
 <style type="text/css">
-      @import url("http://www.google.com/uds/css/gsearch.css");
-      @import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
 
     /*<![CDATA[*/
     body {
@@ -83,117 +87,123 @@ type="text/javascript">
 
 //<![CDATA[
 
+var jsonScriptCounter = 1;
+
+function performJSONRequest(url)
+{
+    // create a new script object:
+    var scriptObject = document.createElement("script");
+    scriptObject.setAttribute("type", "text/javascript");
+    scriptObject.setAttribute("charset", "utf-8");
+    scriptObject.setAttribute("id", jsonScriptCounter++);
+
+    // make sure no caching of the request can occur:
+    var cacheBreak = (new Date()).getTime();
+    scriptObject.setAttribute("src", url+'&cacheBreak='+cacheBreak);
+
+    // add the script object to the header:
+    var theHeader = document.getElementsByTagName("head").item(0);
+    theHeader.appendChild(scriptObject);
+}
+
+function altitudeCallback(jData)
+{
+    if (jData == null) {
+        return;
+    }
+
+    // jData should be: {"srtm3":206,"lng":10.2,"lat":50.01}
+    window.status = "(lat:" + jData.lat + ", lon:" + jData.lng + ", alt:" + jData.srtm3  + ")" ;
+}
+
+function getAltitudeForPoint(point)
+{
+    var requestUrl = 'http://ws.geonames.org/srtm3JSON?lat='+point.lat()+'&lng='+point.lng()+'&callback=altitudeCallback';
+
+    performJSONRequest(requestUrl);
+}
+
 function loadMap()
 {
-    var map = new GMap2(document.getElementById("map"));
-
-    var searchoptions = {
-      suppressInitialResultSelection : true
+<?
+    printf("var mapCenter = new google.maps.LatLng(%s,%s);\n", $_GET['latitude'], $_GET['longitude']);
+    printf("var mapZoom = %s;\n", $_GET['zoom']);
+    printf("var mapType = %s;\n", $maptypetranslator[$maptype]);
+    ?>
+    var myOptions = {
+        zoom: mapZoom,
+        center: mapCenter,
+        MapTypeId: mapType
     };
+    var mapDiv = document.getElementById("map");
+    var map = new google.maps.Map(mapDiv, myOptions);
 
-    var markeroptions = {
-      autoPan : true,
-      draggable : true,
-<?php
-$topoKey = 'COMBBKMQQYCKMMK';
-include( 'topocoding.inc' );
+    var myMarker = new google.maps.Marker({
+        position: mapCenter,
+        map: map,
+        draggable: true
+    });
 
-      // Gets data from URL parameters
-      $filename = $_GET['filename'];
-      if ($filename != "") echo "title : \"$filename\"";
-
-?>
-    };
-
-    map.addControl(new GLargeMapControl());
-    map.addControl(new GMapTypeControl());
-    map.addControl(new GScaleControl());
-    map.addControl(new google.maps.LocalSearch(searchoptions), new GControlPosition(G_ANCHOR_BOTTOM_RIGHT, new GSize(10,20)));
-    map.enableScrollWheelZoom();
-
-<?php
-    $maptype = $_GET['maptype'];
-    if ($maptype == "") $maptype = "G_NORMAL_MAP";
-
-    echo "map.setCenter(new GLatLng(";
-    echo $_GET['latitude'];
-    echo ", ";
-    echo $_GET['longitude'];
-    echo "), ";
-    echo $_GET['zoom'];
-    echo ", ";
-    echo $maptype;
-    echo ");\n";
-
-    echo "var marker = new GMarker(new GLatLng(";
-    echo $_GET['latitude'];
-    echo ", ";
-    echo $_GET['longitude'];
-    echo "), markeroptions";
-    echo ");\n";
-    echo "map.addOverlay(marker)";
-?>
-
-    GEvent.addListener(map, "click",
-        function(overlay, point)
+    google.maps.event.addListener(map, "click",
+        function(mouseEvent)
         {
-            if (point)
+            if (mouseEvent)
             {
-                marker.setPoint(point);
-                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
+                var latLng = mouseEvent.latLng;
+                if (latLng)
+                {
+                    myMarker.setPosition(latLng);
+                    getAltitudeForPoint(latLng);
+                }
             }
         }
     );
 
-    GEvent.addListener(marker, "drag",
+    // do not update the coordinates while dragging,
+    // to reduce the load on geonames.org
+//     google.maps.event.addListener(myMarker, "drag",
+//         function()
+//         {
+//             var latLng = myMarker.getPosition();
+//             getAltitudeForPoint(latLng);
+//         }
+//     );
+
+    google.maps.event.addListener(myMarker, "dragend",
         function()
         {
-            var point = marker.getPoint();
-                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
+            var latLng = myMarker.getPosition();
+            getAltitudeForPoint(latLng);
         }
     );
 
-    GEvent.addListener(marker, "dragend",
+    google.maps.event.addListener(map, "zoom_changed",
         function()
         {
-            var point = marker.getPoint();
-                topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = "(lat:" + point.lat() + ", lon:" + point.lng() + ", alt:" + altitude  + ")" ; } );
-        }
-    );
-
-    GEvent.addListener(map, "zoomend",
-        function(oldLevel, newLevel)
-        {
-            msg = "newZoomLevel:" + newLevel;
+            msg = "newZoomLevel:" + map.getZoom();
             window.status=msg;
         }
     );
 
-    GEvent.addListener(map, "maptypechanged",
+    google.maps.event.addListener(map, "maptypeid_changed",
         function()
         {
-            var myMapType = map.getCurrentMapType();
-            if (myMapType == G_SATELLITE_MAP) {msg = "newMapType:G_SATELLITE_MAP";}
-            if (myMapType == G_NORMAL_MAP)    {msg = "newMapType:G_NORMAL_MAP";}
-            if (myMapType == G_HYBRID_MAP)    {msg = "newMapType:G_HYBRID_MAP";}
+            var myMapType = map.getMapTypeId();
+            if (myMapType == google.maps.MapTypeId.SATELLITE ) {msg = "newMapType:G_SATELLITE_MAP";}
+            if (myMapType == google.maps.MapTypeId.ROADMAP   ) {msg = "newMapType:G_NORMAL_MAP";}
+            if (myMapType == google.maps.MapTypeId.HYBRID    ) {msg = "newMapType:G_HYBRID_MAP";}
+            if (myMapType == google.maps.MapTypeId.TERRAIN   ) {msg = "newMapType:G_TERRAIN_MAP";}
             window.status=msg;
         }
     );
 }
-{
-    window.addEventListener("load",
-        function()
-        {
-            loadMap(); // Firefox and standard browsers
-        }
-    , false);
-}
+
 //]]>
 
 </script>
 </head>
 
-<body onLoad="loadMap()">
+<body onload="loadMap()">
 <div>
 <?php
 // print_r ( topoGetAltitudes( array( array( 'latitude', 'longitude' ) ) ) );
