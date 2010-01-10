@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Floating Cards
 Name[ca]=Cartes flotants
+Name[ca@valencia]=Cartes flotants
 Name[da]=Flydende kort
 Name[en_GB]=Floating Cards
 Name[et]=Hõljuvad kaardid
@@ -17,6 +18,7 @@ Name[x-test]=xxFloating Cardsxx
 Name[zh_TW]=紙牌浮空
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[ca]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
+Comment[ca@valencia]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[da]=Et mørkt tema med flydende kort med miniaturer/beskrivelse. Hurtig navigation gennem galleriet.
 Comment[en_GB]=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[et]=Tume teema hõljuvate pisipildi/kirjelduskaartidega. Kiire liikumine galeriis.
@@ -36,6 +38,7 @@ Comment[zh_TW]=使用浮空縮圖/描述卡的暗色主題。快速瀏覽藝廊�
 Name=Jiří Boháč
 Name[ast]=Jiří Boháč
 Name[ca]=Jiří Boháč
+Name[ca@valencia]=Jiří Boháč
 Name[cs]=Jiří Boháč
 Name[da]=Jiří Boháč
 Name[de]=Jiří Boháč
