@@ -75,6 +75,7 @@
 #include "tphoto.h"
 #include "utils.h"
 #include "templateicon.h"
+#include "customdlg.h"
 
 namespace KIPIPrintImagesPlugin
 {
@@ -102,9 +103,12 @@ class WizardPage : public QWidget, public Ui_Class
     KPageWidgetItem* mPage;
 };
 
-const char* infoPageName=  I18N_NOOP("Select printing information");
-const char* photoPageName=  I18N_NOOP("Select page layout");
-const char* cropPageName=  I18N_NOOP("Crop photos");
+// some title name definitions (managed for translators)
+const char* infoPageName  =  I18N_NOOP("Select printing information");
+const char* photoPageName =  I18N_NOOP("Select page layout");
+const char* cropPageName  =  I18N_NOOP("Crop photos");
+// custom page layout
+const char* customPageLayoutName = I18N_NOOP("Custom");
 
 typedef WizardPage<Ui_InfoPage>  InfoPage;
 typedef WizardPage<Ui_PhotoPage> PhotoPage;
@@ -468,12 +472,7 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
           continue;
         }
 
-        // Next templates are good we restore size to its unit
-//           if (unit != "mm")
-//           {
-//             size = QSizeF(e.attribute("width", "0").toFloat(), e.attribute("height", "0").toFloat());
-//           }
-
+        // Next templates are good
         kDebug() << "layout size " << size << " page size " << pageSize;
 
         QDomNode np = e.firstChild();
@@ -491,18 +490,14 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
               if (pageSize == QSizeF(0,0))
               {
                 sizeManaged = size * scaleValue;
-                //p->layouts.append ( new QRect ( 0, 0, size.width()*scaleValue, size.height()*scaleValue ) );
               }
               else if (unit == "inches" || unit == "inch")
               {
                 sizeManaged = pageSize * scaleValue / 25.4;
-//                   p->layouts.append ( new QRect ( 0, 0, (pageSize.width()*scaleValue/25.4),
-//                                                   (pageSize.height()*scaleValue/25.4) ) );
               }
               else
               {
                 sizeManaged = pageSize * 10;
-//                   p->layouts.append ( new QRect ( 0, 0, pageSize.width()*10, pageSize.height()*10 ) );
               }
               
               p->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
@@ -522,7 +517,7 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
                 p->label = KDesktopFile(*it).readName();
               else
               {
-                p->label = ep.attribute("name","XXX");  // FIXME i18n()
+                p->label = ep.attribute("name","XXX");
                 kWarning() << "missed template tranlation " << desktopFileName;
               }
               p->dpi = ep.attribute("dpi","0").toInt();
@@ -658,11 +653,35 @@ void Wizard::initPhotoSizes ( QSizeF pageSize )
       d->mPhotoPage->ListPhotoSizes->addItem ( pWItem );
     }
   }
+  // Adding custom choice
+  QListWidgetItem *pWItem = new QListWidgetItem ( i18n(customPageLayoutName) );
+  //TODO FREE STYLE ICON 
+  
+    QPixmap pixmap( d->mPhotoPage->ListPhotoSizes->iconSize() );
+    pixmap.fill( Qt::color0);
+    QPainter painter;
+    painter.begin( &pixmap );
+    painter.setPen( Qt::color1 );
+    painter.drawRect(pixmap.rect());
+    painter.setPen( Qt::color1 );
+    painter.drawText(10,10,"?") ;
+
+    painter.end();
+  
+  ////////////////
+  
+  
+  
+  
+  
+  
+  
+  pWItem->setIcon( QIcon(pixmap) );
+  d->mPhotoPage->ListPhotoSizes->addItem ( pWItem );
+  // 
   d->mPhotoPage->ListPhotoSizes->blockSignals ( false );
 
   d->mPhotoPage->ListPhotoSizes->setCurrentRow ( 0, QItemSelectionModel::Select );
-
-//   d->mPhotoPage->ListPhotoSizes->setCurrentItem(0);
 }
 
 double getMaxDPI ( QList<TPhoto*> photos, QList<QRect*> layouts, /*unsigned*/ int current )
@@ -1421,11 +1440,18 @@ void  Wizard::pageChanged ( KPageWidgetItem *current, KPageWidgetItem *before )
     // PhotoPage
     initPhotoSizes ( d->m_printer->paperSize(QPrinter::Millimeter) );
     // restore photoSize 
-    QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems ( d->m_savedPhotoSize, Qt::MatchExactly );
-    if ( list.count() )
-      d->mPhotoPage->ListPhotoSizes->setCurrentItem ( list[0] );
-    else
+    if (d->m_savedPhotoSize == i18n(customPageLayoutName))
+    {
       d->mPhotoPage->ListPhotoSizes->setCurrentRow ( 0 );
+    }
+    else
+    {
+      QList<QListWidgetItem *> list = d->mPhotoPage->ListPhotoSizes->findItems ( d->m_savedPhotoSize, Qt::MatchExactly );
+      if ( list.count() )
+        d->mPhotoPage->ListPhotoSizes->setCurrentItem ( list[0] );
+      else
+        d->mPhotoPage->ListPhotoSizes->setCurrentRow ( 0 );
+    }
     // create our photo sizes list
     previewPhotos();
   }
@@ -1663,7 +1689,96 @@ void Wizard::ListPrintOrder_selected()
 
 void Wizard::ListPhotoSizes_selected()
 {
+  TPhotoSize *s = NULL;
+  int scaleValue;
+  QSizeF size, sizeManaged;
+
+  // TODO FREE STYLE
+  // check if layout is managed by templates or free one
+  // get the selected layout
+  int curr = d->mPhotoPage->ListPhotoSizes->currentRow();
+  QListWidgetItem * item = d->mPhotoPage->ListPhotoSizes->item(curr);
+  // if custom page layout we launch a dialog to choose what kind
+  if ( item->text() == i18n ( customPageLayoutName ) )
+  {
+    // check if a custom layout has already been added
+    if (curr >= 0 && curr < d->m_photoSizes.size())
+    {
+      s = d->m_photoSizes.at ( curr );
+      d->m_photoSizes.removeAt ( curr );
+      delete s;
+      s = NULL;
+    }
+    CustomLayoutDlg custDlg(this);
+    custDlg.exec();
+    
+    // get parameters from dialog
+    size = d->m_pageSize;
+    scaleValue = 10; // 0.1 mm
+    
+    // convert to mm
+    if (custDlg.m_photoUnits->currentText() == i18n("inches"))
+    {
+      size *= 25.4;
+      scaleValue = 1000;
+    }
+    else if (custDlg.m_photoUnits->currentText() == i18n("cm"))
+    {
+      size *= 10;
+      scaleValue = 100;
+    }
+    sizeManaged = size * scaleValue;
+
+    s = new TPhotoSize;
+    TemplateIcon iconpreview( 80, sizeManaged.toSize() );
+    iconpreview.begin();
+    if (custDlg.m_photoGridCheck->isChecked())
+    {
+      // custom photo grid
+      int rows       = custDlg.m_gridRows->value();
+      int columns    = custDlg.m_gridColumns->value();
+ 
+      s->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
+      s->autoRotate = custDlg.m_autorotate->isChecked();
+      s->label      = item->text();
+      s->dpi        = 0;
+      
+      int pageWidth  = (int)(size.width())*scaleValue;
+      int pageHeight = (int)(size.height())*scaleValue;
+      createPhotoGrid(s, pageWidth,
+                      pageHeight,
+                      rows,
+                      columns,
+                      &iconpreview);
+    }
+    else if (custDlg.m_fitAsManyCheck->isChecked())
+    {
+      // fit as many photos of given size as possible
+    }
+    else
+    {
+      // Atckin's layout
+    }
+    iconpreview.end();
+    s->icon = iconpreview.getIcon();
+    d->m_photoSizes.append ( s );
+  }
+  else
+  {
+    s = d->m_photoSizes.at ( curr );
+  }
+      
+  
+  if (!s)
+  {
+    // change position to top
+    d->mPhotoPage->ListPhotoSizes->blockSignals ( true);
+    d->mPhotoPage->ListPhotoSizes->setCurrentRow ( 0, QItemSelectionModel::Select );
+    d->mPhotoPage->ListPhotoSizes->blockSignals ( false );
+  }
+  
   previewPhotos();
+  
 }
 
 void Wizard::BtnPrintOrderDown_clicked()

@@ -100,7 +100,8 @@ typedef struct _TPhotoSize
 
     private:     
 
-      void initPhotoSizes(QSizeF pageSize);  // pageSize in mm
+      // Initialize page layout to the given pageSize in mm
+      void initPhotoSizes(QSizeF pageSize);
       void previewPhotos();
       
       void infopage_enableButtons();

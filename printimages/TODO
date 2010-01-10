@@ -12,6 +12,8 @@
 - add caption per page                                  DONE
 - show caption into info page preview                   DONE
 - set caption data when new photo is selected           DONE
+- add a template how-to file                            DONE
+- add fit as many option                                In progress
 - add tool tips 
 - add an attribute for desktop file
 - add Atckin's layout to p.a.
@@ -20,7 +22,6 @@
   "one photo per page"   aka p.i.
   "more photos per page" aka p.a.
 - clean code
-- Add a template how-to file                            DONE
 - evaluate if removing p.i. after merging.
 
 Found QT odd behaviors
