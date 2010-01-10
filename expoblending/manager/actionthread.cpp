@@ -567,7 +567,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
             i++;
         }
 
-        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.begin() ; it != preProcessedUrlsMap.end(); ++it)
+        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.constBegin() ; it != preProcessedUrlsMap.constEnd(); ++it)
         {
             kDebug() << "Pre-processed output urls map: " << it.key() << " , "
                                                           << it.value().preprocessedUrl << " , "
@@ -590,7 +590,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     }
     else
     {
-        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.begin() ; it != preProcessedUrlsMap.end(); ++it)
+        for (QMap<KUrl, ItemPreprocessedUrls>::const_iterator it = preProcessedUrlsMap.constBegin() ; it != preProcessedUrlsMap.constEnd(); ++it)
         {
             kDebug() << "Pre-processed output urls map: " << it.key() << " , "
                                                           << it.value().preprocessedUrl << " , "
