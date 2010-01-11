@@ -391,13 +391,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
                                const QString& albumId, bool rescale,
                                int maxDim, int imageQuality)
 {
-    // Disabling this totally may be checking the m_state and doing selecting
-    // disabling is a better idea
-    /*if (m_job)
+    if (m_job)
     {
         m_job->kill();
         m_job = 0;
-    }*/
+    }
 
     QString album_id = albumId;
 
@@ -714,8 +712,6 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray &data)
     {
         emit signalError(errorString);
     }
-
-    emit signalBusy(false);
 }
 
 void PicasawebTalker::getHTMLResponseCode(const QString& /*str*/)
@@ -854,7 +850,6 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray &data)
 
 void PicasawebTalker::parseResponseAddTag(const QByteArray & /*data*/)
 {
-    emit signalBusy( false );
     emit signalAddPhotoSucceeded();
     m_buffer.resize(0);
 }
@@ -909,12 +904,16 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
         QStringList tags = tags_map[title];
 
         if (tags.count() == 0)
+        {
             emit signalAddPhotoSucceeded();
-
-        // Add our tags to the keyword element. Then send the whole XML
-        // back.
-        keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
-        addPhotoTag(photoURI, doc.toString(-1).toUtf8());
+        }
+        else
+        {
+            // Add our tags to the keyword element. Then send the whole XML
+            // back.
+            keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
+            addPhotoTag(photoURI, doc.toString(-1).toUtf8());
+        }
     }
 }
 
