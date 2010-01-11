@@ -18,4 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> PicasaWebExport   : 205903 : accentuated chars are converted into a mess during picasa web export [patch]
 009 ==> PicasaWebExport   : 220433 : digiKam crash when has long time working on it.
 010 ==> PicasaWebExport   : 208426 : Exporting images fails with : "Could not connect to host xxxx.xxxx.xxxx.xxxx: Unknown error."
-011 ==>
+011 ==> ExpoBlending      : 222297 : Overwriting on Windows and multiple saves fixes [patch].
+012 ==> 
