@@ -65,6 +65,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kio/renamedialog.h>
+#include <kde_file.h>
 
 // LibKIPI includes
 
@@ -418,6 +419,8 @@ void ExpoBlendingDlg::slotProcess()
 
     foreach(EnfuseSettings settings, list)
     {
+        preprocessedList.clear();
+        
         foreach(KUrl url, settings.inputUrls)
         {
             ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
@@ -473,7 +476,7 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
 
     if (!newUrl.isEmpty())
     {
-        if (::rename(QFile::encodeName(temp.toLocalFile()), QFile::encodeName(newUrl.toLocalFile())) != 0)
+        if (KDE::rename(temp.toLocalFile(), newUrl.toLocalFile()) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
             d->enfuseStack->setOnItem(settings.previewUrl, false);
