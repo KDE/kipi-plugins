@@ -15,6 +15,7 @@
 - add a template how-to file                            DONE
 - add fit as many option                                In progress
 - FIX custom layout icon
+- save custom layout data into config file
 - add tool tips 
 - add an attribute for desktop file
 - add Atckin's layout to p.a.

@@ -6,7 +6,7 @@
  * Date        : 2008-01-11
  * Description : a kipi plugin to print images
  *
- * Copyright 2008-2009 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2008-2010 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -1754,6 +1754,25 @@ void Wizard::ListPhotoSizes_selected()
     else if (custDlg.m_fitAsManyCheck->isChecked())
     {
       // fit as many photos of given size as possible
+      int width       = custDlg.m_photoWidth->value();
+      int height      = custDlg.m_photoHeight->value();
+      int nColumns    = int(size.width()  / width);
+      int nRows       = int(size.height() / height);
+      int spareWidth  = int(size.width())  % width;
+      // check if there's no room left to separate photos
+      if (nColumns > 1 &&  spareWidth == 0)
+      {
+          nColumns -= 1;
+          spareWidth = width;
+      }
+      int spareHeight = int(size.height()) % height;
+      // check if there's no room left to separate photos
+      if (nRows > 1 && spareHeight == 0)
+      {
+          nRows -= 1;
+          spareHeight = height;
+      }
+
     }
     else
     {
