@@ -721,7 +721,6 @@ void PicasawebTalker::getHTMLResponseCode(const QString& /*str*/)
 void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
 {
     bool success = false;
-    QString str(data);
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
@@ -814,9 +813,13 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray &data)
 void PicasawebTalker::parseResponseCreateAlbum(const QByteArray &data)
 {
     bool success = false;
-    QString errorString;
-    QString response(data);
+
     QDomDocument doc( "AddPhoto Response" );
+    if ( !doc.setContent( data ) )
+    {
+        return;
+    }
+
     // parse the new album name
     QDomElement docElem = doc.documentElement();
     QString title, photo_id, album_id, photoURI;
@@ -843,6 +846,11 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray &data)
         }
 
         node = node.nextSibling();
+    }
+
+    if(success == true)
+    {
+        listAllAlbums();
     }
 
     // Raise a popup informing success
