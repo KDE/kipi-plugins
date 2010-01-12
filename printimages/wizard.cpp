@@ -129,6 +129,7 @@ struct Wizard::Private
 
   KIPIPlugins::KPAboutData* mAbout;
 
+  // Page Size in mm
   QSizeF             m_pageSize;
   QList<TPhoto*>     m_photos;
   QList<TPhotoSize*> m_photoSizes;
@@ -1719,12 +1720,12 @@ void Wizard::ListPhotoSizes_selected()
     // convert to mm
     if (custDlg.m_photoUnits->currentText() == i18n("inches"))
     {
-      size *= 25.4;
+      size /= 25.4;
       scaleValue = 1000;
     }
     else if (custDlg.m_photoUnits->currentText() == i18n("cm"))
     {
-      size *= 10;
+      size /= 10;
       scaleValue = 100;
     }
     sizeManaged = size * scaleValue;
@@ -1754,6 +1755,11 @@ void Wizard::ListPhotoSizes_selected()
     else if (custDlg.m_fitAsManyCheck->isChecked())
     {
       // fit as many photos of given size as possible
+      s->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
+      s->autoRotate = custDlg.m_autorotate->isChecked();
+      s->label      = item->text();
+      s->dpi        = 0;
+
       int width       = custDlg.m_photoWidth->value();
       int height      = custDlg.m_photoHeight->value();
       int nColumns    = int(size.width()  / width);
@@ -1766,13 +1772,33 @@ void Wizard::ListPhotoSizes_selected()
           spareWidth = width;
       }
       int spareHeight = int(size.height()) % height;
+      // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
+      int dx = spareWidth / (nColumns+1);
+      int dy = spareHeight / (nRows+1);
+      
       // check if there's no room left to separate photos
       if (nRows > 1 && spareHeight == 0)
       {
           nRows -= 1;
           spareHeight = height;
       }
+      int photoX = 0;
+      int photoY = 0;
+      width  *= scaleValue;
+      height *= scaleValue;
+      for (int row=0; row<nRows; ++row)
+      {
+        photoY = dy*(nRows+1) + (nRows*height);
+        for (int col=0; col < nColumns; ++col)
+        {
+          photoX = dx*(nColumns+1) +(nColumns*width);
+          kDebug() << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
 
+          s->layouts.append(new QRect(photoX,photoY,
+                                      width, height));
+          iconpreview.fillRect( photoX, photoY, width, height, Qt::color1 );
+        }
+      }  
     }
     else
     {
