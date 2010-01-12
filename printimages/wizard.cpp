@@ -1788,10 +1788,10 @@ void Wizard::ListPhotoSizes_selected()
       height *= scaleValue;
       for (int row=0; row<nRows; ++row)
       {
-        photoY = dy*(nRows+1) + (nRows*height);
+        photoY = dy*(row+1) + (row*height);
         for (int col=0; col < nColumns; ++col)
         {
-          photoX = dx*(nColumns+1) +(nColumns*width);
+          photoX = dx*(col+1) +(col*width);
           kDebug() << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
 
           s->layouts.append(new QRect(photoX,photoY,
