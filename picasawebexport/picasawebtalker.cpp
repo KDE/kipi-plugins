@@ -34,6 +34,7 @@
 
 // Qt includes
 
+#include <QTextDocument>
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
@@ -413,8 +414,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     //Create the Body in atom-xml
     QStringList body_xml;
     body_xml.append("<entry xmlns=\'http://www.w3.org/2005/Atom\'>");
-    body_xml.append("<title>"+ info.title +"</title>");
-    body_xml.append("<summary>"+ info.description +"</summary>");
+    body_xml.append("<title>"+ Qt::escape(info.title) +"</title>");
+    body_xml.append("<summary>"+ Qt::escape(info.description) +"</summary>");
     body_xml.append("<category scheme=\"http://schemas.google.com/g/2005#kind\" "
                     "term=\"http://schemas.google.com/photos/2007#photo\" />");
     body_xml.append("</entry>");
