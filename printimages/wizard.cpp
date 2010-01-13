@@ -1754,59 +1754,87 @@ void Wizard::ListPhotoSizes_selected()
     }
     else if (custDlg.m_fitAsManyCheck->isChecked())
     {
-      // fit as many photos of given size as possible
-      s->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
-      s->autoRotate = custDlg.m_autorotate->isChecked();
-      s->label      = item->text();
-      s->dpi        = 0;
-
       int width       = custDlg.m_photoWidth->value();
       int height      = custDlg.m_photoHeight->value();
-      int nColumns    = int(size.width()  / width);
-      int nRows       = int(size.height() / height);
-      int spareWidth  = int(size.width())  % width;
-      // check if there's no room left to separate photos
-      if (nColumns > 1 &&  spareWidth == 0)
-      {
-          nColumns -= 1;
-          spareWidth = width;
-      }
-      int spareHeight = int(size.height()) % height;
-      
-      // check if there's no room left to separate photos
-      if (nRows > 1 && spareHeight == 0)
-      {
-          nRows -= 1;
-          spareHeight = height;
-      }
-      // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
-      int dx = spareWidth * scaleValue / (nColumns+1);
-      int dy = spareHeight * scaleValue / (nRows+1);
-      int photoX = 0;
-      int photoY = 0;
-      width  *= scaleValue;
-      height *= scaleValue;
-      for (int row=0; row<nRows; ++row)
-      {
-        photoY = dy*(row+1) + (row*height);
-        for (int col=0; col < nColumns; ++col)
-        {
-          photoX = dx*(col+1) +(col*width);
-          kDebug() << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
 
-          s->layouts.append(new QRect(photoX,photoY,
-                                      width, height));
-          iconpreview.fillRect( photoX, photoY, width, height, Qt::color1 );
+      //photo size must be less than page size
+      static const float round_value = 0.01F;
+      if ((height > (size.height() +round_value) ||
+           width  > (size.width() +round_value)))
+      {
+        kDebug() << "photo size " << QSize(width,height) << "> page size " << size;
+        delete s;
+        s = NULL;
+      }
+      else
+      {
+        // fit as many photos of given size as possible
+        s->layouts.append ( new QRect ( 0, 0, (int)sizeManaged.width(), (int)sizeManaged.height() ) );
+        s->autoRotate = custDlg.m_autorotate->isChecked();
+        s->label      = item->text();
+        s->dpi        = 0;
+
+
+        int nColumns    = int(size.width()  / width);
+        int nRows       = int(size.height() / height);
+        int spareWidth  = int(size.width())  % width;
+        // check if there's no room left to separate photos
+        if (nColumns > 1 &&  spareWidth == 0)
+        {
+            nColumns -= 1;
+            spareWidth = width;
         }
-      }  
+        int spareHeight = int(size.height()) % height;
+        
+        // check if there's no room left to separate photos
+        if (nRows > 1 && spareHeight == 0)
+        {
+            nRows -= 1;
+            spareHeight = height;
+        }
+        if (nRows >0 && nColumns >0)
+        {
+          // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
+          int dx = spareWidth * scaleValue / (nColumns+1);
+          int dy = spareHeight * scaleValue / (nRows+1);
+          int photoX = 0;
+          int photoY = 0;
+          width  *= scaleValue;
+          height *= scaleValue;
+          for (int row=0; row<nRows; ++row)
+          {
+            photoY = dy*(row+1) + (row*height);
+            for (int col=0; col < nColumns; ++col)
+            {
+              photoX = dx*(col+1) +(col*width);
+              kDebug() << "photo at P(" << photoX << ", " << photoY << ") size(" << width << ", " << height;
+
+              s->layouts.append(new QRect(photoX,photoY,
+                                          width, height));
+              iconpreview.fillRect( photoX, photoY, width, height, Qt::color1 );
+            }
+          }
+        }
+        else
+        {
+          kDebug() << "I can't go on, rows " << nRows << "> columns " << nColumns;
+          delete s;
+          s = NULL;
+
+        }
+      }
     }
     else
     {
       // Atckin's layout
     }
+    // TODO not for Atckin's layout
     iconpreview.end();
-    s->icon = iconpreview.getIcon();
-    d->m_photoSizes.append ( s );
+    if (s)
+    {
+      s->icon = iconpreview.getIcon();
+      d->m_photoSizes.append ( s );
+    }
   }
   else
   {
