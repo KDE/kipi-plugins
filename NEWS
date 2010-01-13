@@ -5,6 +5,7 @@ NEW FEATURES:
 
 ExpoBlending              : New tool to make pseudo HDR image with a stack of bracketed images.
 PrintAssistant            : New custom grid layout
+PrintAssistant            : Filling page with custom size images
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
