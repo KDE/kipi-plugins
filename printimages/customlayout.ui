@@ -55,7 +55,7 @@
        <item>
         <widget class="QRadioButton" name="m_fitAsManyCheck">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -189,7 +189,7 @@
          <item>
           <spacer name="horizontalSpacer_2">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -231,7 +231,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QSpinBox" name="m_photoWidth">
+            <widget class="QSpinBox" name="m_photoHeight">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -266,7 +266,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="m_photoHeight">
+            <widget class="QSpinBox" name="m_photoWidth">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -300,12 +300,12 @@
              </property>
              <item>
               <property name="text">
-               <string>mm</string>
+               <string>cm</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>cm</string>
+               <string>mm</string>
               </property>
              </item>
              <item>
@@ -397,7 +397,7 @@
          <item>
           <spacer name="horizontalSpacer">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

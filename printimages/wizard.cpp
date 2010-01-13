@@ -1772,9 +1772,6 @@ void Wizard::ListPhotoSizes_selected()
           spareWidth = width;
       }
       int spareHeight = int(size.height()) % height;
-      // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
-      int dx = spareWidth / (nColumns+1);
-      int dy = spareHeight / (nRows+1);
       
       // check if there's no room left to separate photos
       if (nRows > 1 && spareHeight == 0)
@@ -1782,6 +1779,9 @@ void Wizard::ListPhotoSizes_selected()
           nRows -= 1;
           spareHeight = height;
       }
+      // n photos => dx1, photo1, dx2, photo2,... photoN, dxN+1
+      int dx = spareWidth * scaleValue / (nColumns+1);
+      int dy = spareHeight * scaleValue / (nRows+1);
       int photoX = 0;
       int photoY = 0;
       width  *= scaleValue;
