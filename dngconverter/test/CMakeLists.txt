@@ -3,14 +3,14 @@
 # DNGVALIDATE tool from DNG SDK
 
 # Disable DNG SDK warnings: we will never touch this code.
-FOREACH(_curentfile ${libdng_SRCS})
-    SET_SOURCE_FILES_PROPERTIES(${_curentfile} PROPERTIES COMPILE_FLAGS -w)
-ENDFOREACH(_curentfile ${libdng_SRCS})
+FOREACH(_currentfile ${libdng_SRCS})
+    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS -w)
+ENDFOREACH(_currentfile ${libdng_SRCS})
 
 # Disable XMP SDK warnings: we will never touch this code.
-FOREACH(_curentfile ${libxmp_SRCS})
-    SET_SOURCE_FILES_PROPERTIES(${_curentfile} PROPERTIES COMPILE_FLAGS -w)
-ENDFOREACH(_curentfile ${libxmp_SRCS})
+FOREACH(_currentfile ${libxmp_SRCS})
+    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS -w)
+ENDFOREACH(_currentfile ${libxmp_SRCS})
 
 ADD_DEFINITIONS(-DqDNGValidateTarget=1)
 
