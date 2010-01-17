@@ -22,6 +22,7 @@
  * ============================================================ */
 
 #include "gpsdataparser.h"
+#include "gpsdataparser_time.h"
 
 // C++ includes
 
@@ -250,9 +251,9 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
                     if (trkptMetaElem.tagName() == QString("time"))
                     {
                         // Get GPS point time stamp. If not available continue to next point.
-                        QString time = trkptMetaElem.text();
+                        const QString time = trkptMetaElem.text();
                         if (time.isEmpty()) continue;
-                        ptDateTime = QDateTime::fromString(time, Qt::ISODate);
+                        ptDateTime = GPSDataParserParseTime(time);
                     }
                     if (trkptMetaElem.tagName() == QString("ele"))
                     {
