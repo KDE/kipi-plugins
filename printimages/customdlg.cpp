@@ -29,6 +29,12 @@
 namespace KIPIPrintImagesPlugin
 {
 
+enum CustomChoice {
+  PHOTO_GRID=1,
+  FIT_AS_MANY_AS_POSSIBLE=2,
+  PHOTOS_PER_PAGE = 3
+};
+
 CustomLayoutDlg::CustomLayoutDlg ( QWidget *parent )
     : QDialog ( parent )
 {
@@ -58,4 +64,56 @@ CustomLayoutDlg:: ~CustomLayoutDlg()
 {
 }
 
+void CustomLayoutDlg::readSettings()
+{
+  KConfig config ( "kipirc" );
+  KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
+
+  QSize gridSize = group.readEntry  ( "Custom-gridSize", QSize(3,8));
+  m_gridRows->setValue(gridSize.width());
+  m_gridColumns->setValue(gridSize.height());
+  
+  QSize photoSize = group.readEntry  ( "Custom-photoSize", QSize(5,4));
+  m_photoHeight->setValue(photoSize.height());
+  m_photoWidth->setValue(photoSize.width());
+  
+  int index = group.readEntry  ( "Custom-photoUnits", 0);
+  m_photoUnits->setCurrentIndex(index);
+  
+  bool autorotate = group.readEntry ( "Custom-autorotate", 0 ) == 1;
+  m_autorotate->setChecked(autorotate);
+  
+  int choice = group.readEntry  ( "Custom-choice", (int)PHOTO_GRID);
+  if (choice == PHOTOS_PER_PAGE)
+  {
+    m_photosXPageCheck->setChecked(true);
+  }
+  else if (choice == FIT_AS_MANY_AS_POSSIBLE)
+  {
+     m_fitAsManyCheck->setChecked(true);
+  }
+  else
+  {
+     m_photoGridCheck->setChecked(true);
+  }
+    
+}
+
+void CustomLayoutDlg::saveSettings()
+{
+  KConfig config ( "kipirc" );
+  KConfigGroup group = config.group ( QString ( "PrintAssistant" ) );
+  
+  int choice = PHOTO_GRID;
+  if (m_fitAsManyCheck->isChecked())
+    choice = FIT_AS_MANY_AS_POSSIBLE;
+  else if (m_photosXPageCheck->isChecked())
+    choice = PHOTOS_PER_PAGE;
+  group.writeEntry("Custom-choice", choice);
+  group.writeEntry ("Custom-gridSize",  QSize(m_gridRows->value(), m_gridColumns->value()));
+  group.writeEntry ("Custom-photoSize", QSize(m_photoWidth->value(), m_photoHeight->value()));
+  group.writeEntry ("Custom-photoUnits", m_photoUnits->currentIndex());
+  group.writeEntry( "Custom-autorotate", (m_autorotate->isChecked() ? 1 : 0));
+}
+  
 } // namespace KIPIGalleryExportPlugin

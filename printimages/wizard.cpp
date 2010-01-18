@@ -1711,7 +1711,9 @@ void Wizard::ListPhotoSizes_selected()
       s = NULL;
     }
     CustomLayoutDlg custDlg(this);
+    custDlg.readSettings();
     custDlg.exec();
+    custDlg.saveSettings();
     
     // get parameters from dialog
     size = d->m_pageSize;

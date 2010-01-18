@@ -42,6 +42,12 @@ public:
 
   CustomLayoutDlg ( QWidget *parent = 0 );
   ~CustomLayoutDlg();
+  
+  // retrieve last used data  
+  void readSettings();
+  // save used data
+  void saveSettings();
+  
 };
 
 } // namespace KIPIPrintImagesPlugin
