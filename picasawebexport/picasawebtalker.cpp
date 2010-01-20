@@ -427,17 +427,29 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
     // save the tags for this photo in to the tags hashmap
     tags_map.insert(info.title, info.tags);
 
-    // Check if RAW file.
-#if KDCRAW_VERSION < 0x000400
-    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-#else
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-#endif
-    QFileInfo fileInfo(photoPath);
-    bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
-
-    if (isRAW || rescale)
+    KMimeType::Ptr ptr = KMimeType::findByUrl(photoPath);
+    if(((ptr->is("image/bmp") ||
+         ptr->is("image/gif") ||
+         ptr->is("image/jpeg") ||
+         ptr->is("image/png")) &&
+        !rescale) ||
+       ptr->name().startsWith("video"))
     {
+        // use original file
+        if (!form.addFile("photo", photoPath))
+            return false;
+    }
+    else
+    {
+        // Check if RAW file.
+#if KDCRAW_VERSION < 0x000400
+        QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
+#else
+        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+#endif
+        QFileInfo fileInfo(photoPath);
+        bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
+
         // use temporary file for upload
         QImage image;
         if (isRAW)
@@ -475,12 +487,6 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
         }
 
         QFile::remove(tmpPath);
-    }
-    else
-    {
-        // use original file
-        if (!form.addFile("photo", photoPath))
-            return false;
     }
 
     form.finish();
@@ -725,6 +731,7 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray &data)
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
+        emit signalGetAlbumsListFailed(i18n("Failed to fetch photo-set list"));
         return;
     }
 
@@ -873,6 +880,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray &data)
 
     if ( !doc.setContent( data ) )
     {
+        emit signalAddPhotoFailed(i18n("Failed to upload photo"));
         return;
     }
 
