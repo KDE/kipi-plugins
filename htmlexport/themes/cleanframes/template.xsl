@@ -10,7 +10,7 @@
 	extension-element-prefixes="exsl">
 
 <!-- ********************************************************************* -->
-<!-- ** Create single image page for each imag                          ** -->
+<!-- ** Create single image page for each image                         ** -->
 <!-- ********************************************************************* -->
 <xsl:template name="createImagePage">
 	<html>
@@ -32,7 +32,7 @@
 					(<xsl:value-of select="original/@width"/>x<xsl:value-of select="original/@height"/>)
 					</p>
 				</xsl:if>
-´			</td>
+            </td>
 		</tr>
 		</table>
 	<div id="caption">
