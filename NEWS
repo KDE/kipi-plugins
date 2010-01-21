@@ -24,4 +24,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> PicasaWebExport   : 200469 : Ampersand character in caption causes Picasa export to freeze
 014 ==> JPEGLossLess      : 222328 : In-place rotation converts 16 bit TIFF to 8 bit.
 015 ==> PrintAssistant    : 219381 : fill page with images of certain size
-016 ==> 
+016 ==> HTMLExport        : 194946 - Simple Fix - extra " ' " in cleanframes/themes/template.xsl.
+017 ==> 
+
