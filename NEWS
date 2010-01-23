@@ -26,6 +26,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> PrintAssistant    : 219381 : fill page with images of certain size
 016 ==> HTMLExport        : 194946 : Simple Fix - extra " ' " in cleanframes/themes/template.xsl.
 017 ==> GPSSync           : 182326 : Remember last position when geotagging images.
-018 ==> 
+018 ==> GPSSync	          : 165613 : Crash when GPS altitude is negative.
+019 ==> 
 
 
