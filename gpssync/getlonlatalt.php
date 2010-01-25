@@ -64,7 +64,7 @@
 $parPluginVersion = '1.0';
 if (isset($_GET['pluginversion']))
 {
-    $parPluginVersion = stripslashes($_GET['pluginversion']));
+    $parPluginVersion = stripslashes($_GET['pluginversion']);
 }
 
 // determine the extra options (not used yet):
