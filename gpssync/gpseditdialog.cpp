@@ -171,12 +171,13 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     d->configButton = new QToolButton(this);
     d->configButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    d->configButton->setIcon(SmallIcon("configuration"));
+    d->configButton->setIcon(SmallIcon("configure"));
     d->configButton->setText(i18n("Configuration"));
     d->configButton->setPopupMode(QToolButton::InstantPopup);
     d->configButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     KMenu* const configMenu = new KMenu(this);
     d->configButton->setMenu(configMenu);
+    d->configButton->setWhatsThis(i18n("<p>Allows you to configure some aspects of the map: The Google Maps API version to be used and the service to be used for altitude lookup.</p><p>Use the Google Maps API V2 if you want the search bar which is not yet available in version 3. If you do not need the search bar, you can use version 3 to try out the new terrain map.</p><p>If you use no altitude lookup, all altitudes will be set to zero. The <a href=\"http://geonames.org\">geonames.org</a> service has no limits on the number of lookups which we can make, but has limited coverage. The <a href=\"http://topocoding.com/\">topocoding.com</a> service has better coverage, but the number of altitude lookups which we can perform per day is limited. If you get error messages while using it, switch to <a href=\"http://geonames.org\">geonames.org</a>.</p>"));
 
     d->configApiGroup = new QActionGroup(configMenu);
     d->configApiGroup->setExclusive(true);
