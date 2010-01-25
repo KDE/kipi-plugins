@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Gerhard Kulzer <gerhard at kulzer dot net>
+ * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,6 +55,8 @@ public:
     QString zoomLevel;
     QString mapType;
     QString fileName;
+    int     apiVersion;
+    QString altitudeService;
 
     QString lastKHTMLStatus;
     QTimer* statusTimer;
@@ -82,6 +85,26 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
 GPSMapWidget::~GPSMapWidget()
 {
     delete d;
+}
+
+void GPSMapWidget::setApiVersion(const int apiVersion)
+{
+    d->apiVersion = apiVersion;
+}
+
+int GPSMapWidget::apiVersion()
+{
+    return d->apiVersion;
+}
+
+void GPSMapWidget::setAltitudeService(const QString& altitudeService)
+{
+    d->altitudeService = altitudeService;
+}
+
+QString GPSMapWidget::altitudeService()
+{
+    return d->altitudeService;
 }
 
 void GPSMapWidget::setFileName(const QString& fileName)
@@ -166,6 +189,10 @@ void GPSMapWidget::resized()
     url.append(d->mapType);
     url.append("&filename=");
     url.append(d->fileName);
+    url.append("&altitudeservice=");
+    url.append(d->altitudeService);
+    url.append("&gmapsversion=");
+    url.append(QString::number(d->apiVersion));
     url.append("&maplang=");
     url.append(i18nc(
         "Language code for the embedded Google Maps. "

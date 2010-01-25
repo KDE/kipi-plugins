@@ -57,6 +57,12 @@ public:
     void    setFileName(const QString& fileName);
     QString fileName();
 
+    void    setApiVersion(const int apiVersion);
+    int     apiVersion();
+
+    void    setAltitudeService(const QString& altitudeService);
+    QString altitudeService();
+
     void    resized();
 
 Q_SIGNALS:

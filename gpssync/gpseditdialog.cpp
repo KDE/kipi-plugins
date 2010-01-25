@@ -7,6 +7,7 @@
  * Description : a dialog to edit GPS positions
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -88,6 +89,9 @@ public:
     GPSBookmarkOwner         *bookmarkOwner;
     QToolButton              *recentButton;
     KMenu                    *recentMenu;
+    QToolButton              *configButton;
+    QActionGroup             *configApiGroup;
+    QActionGroup             *configAltitudeGroup;
 
     KLineEdit                *altitudeInput;
     KLineEdit                *latitudeInput;
@@ -165,6 +169,48 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     d->recentMenu = new KMenu(this);
     d->recentButton->setMenu(d->recentMenu);
 
+    d->configButton = new QToolButton(this);
+    d->configButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    d->configButton->setIcon(SmallIcon("configuration"));
+    d->configButton->setText(i18n("Configuration"));
+    d->configButton->setPopupMode(QToolButton::InstantPopup);
+    d->configButton->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+    KMenu* const configMenu = new KMenu(this);
+    d->configButton->setMenu(configMenu);
+
+    d->configApiGroup = new QActionGroup(configMenu);
+    d->configApiGroup->setExclusive(true);
+    KAction* const configActionMapsApi2 = new KAction(i18n("Google Maps API V2"), configMenu);
+    configActionMapsApi2->setCheckable(true);
+    configActionMapsApi2->setData(2);
+    d->configApiGroup->addAction(configActionMapsApi2);
+    configMenu->addAction(configActionMapsApi2);
+    KAction* const configActionMapsApi3 = new KAction(i18n("Google Maps API V3"), configMenu);
+    configActionMapsApi3->setCheckable(true);
+    configActionMapsApi3->setData(3);
+    d->configApiGroup->addAction(configActionMapsApi3);
+    configMenu->addAction(configActionMapsApi3);
+
+    configMenu->addSeparator();
+
+    d->configAltitudeGroup = new QActionGroup(configMenu);
+    d->configAltitudeGroup->setExclusive(true);
+    KAction* const configActionAltitudeNone = new KAction(i18n("No altitude lookup"), configMenu);
+    configActionAltitudeNone->setCheckable(true);
+    configActionAltitudeNone->setData("none");
+    d->configAltitudeGroup->addAction(configActionAltitudeNone);
+    configMenu->addAction(configActionAltitudeNone);
+    KAction* const configActionAltitudeGeoNames = new KAction(i18n("Use geonames.org for altitude lookup"), configMenu);
+    configActionAltitudeGeoNames->setCheckable(true);
+    configActionAltitudeGeoNames->setData("geonames");
+    d->configAltitudeGroup->addAction(configActionAltitudeGeoNames);
+    configMenu->addAction(configActionAltitudeGeoNames);
+    KAction* const configActionAltitudeTopocoding = new KAction(i18n("Use topocoding for altitude lookup"), configMenu);
+    configActionAltitudeTopocoding->setCheckable(true);
+    configActionAltitudeTopocoding->setData("topocoding");
+    d->configAltitudeGroup->addAction(configActionAltitudeTopocoding);
+    configMenu->addAction(configActionAltitudeTopocoding);
+
     d->worldMap = new GPSMapWidget(page);
     d->worldMap->setFileName(fileName);
     d->worldMap->show();
@@ -179,10 +225,11 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
     grid->addWidget(d->goButton,         7, 0, 1, 3);
     grid->addWidget(d->bookmarkButton,   8, 0, 1, 3);
     grid->addWidget(d->recentButton,     9, 0, 1, 3);
-    grid->addWidget(d->worldMap->view(), 0, 3, 11, 1);
+    grid->addWidget(d->configButton,    10, 0, 1, 3);
+    grid->addWidget(d->worldMap->view(), 0, 3, 12, 1);
     grid->setColumnStretch(0, 3);
     grid->setColumnStretch(3, 10);
-    grid->setRowStretch(10, 10);
+    grid->setRowStretch(11, 10);
     grid->setSpacing(spacingHint());
     grid->setMargin(0);
 
@@ -232,6 +279,9 @@ GPSEditDialog::GPSEditDialog(QWidget* parent, const GPSDataContainer& gpsData,
 
     connect(d->recentButton, SIGNAL(triggered(QAction*)),
             this, SLOT(slotRecentSelected(QAction*)));
+
+    connect(configMenu, SIGNAL(triggered(QAction*)),
+            this, SLOT(slotConfigActionTriggered(QAction*)));
 
     // ---------------------------------------------------------------
 
@@ -307,6 +357,24 @@ void GPSEditDialog::readSettings()
 
     d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(group.readEntry("Zoom Level", 1));
+    d->worldMap->setApiVersion(group.readEntry("API Version", 2));
+    for (int i=0; i<d->configApiGroup->actions().size(); ++i)
+    {
+        if (d->configApiGroup->actions().at(i)->data().toInt()==d->worldMap->apiVersion())
+        {
+            d->configApiGroup->actions().at(i)->setChecked(true);
+            break;
+        }
+    }
+    d->worldMap->setAltitudeService(group.readEntry("Altitude Service", "geonames"));
+    for (int i=0; i<d->configAltitudeGroup->actions().size(); ++i)
+    {
+        if (d->configAltitudeGroup->actions().at(i)->data().toString()==d->worldMap->altitudeService())
+        {
+            d->configAltitudeGroup->actions().at(i)->setChecked(true);
+            break;
+        }
+    }
 
     // load recent locations:
     const int recentCount = qMin(5, group.readEntry("GPS Recent Count", 0));
@@ -378,6 +446,8 @@ void GPSEditDialog::saveSettings()
 
     group.writeEntry("Zoom Level", d->worldMap->zoomLevel());
     group.writeEntry("Map Type", d->worldMap->mapType());
+    group.writeEntry("API Version", d->worldMap->apiVersion());
+    group.writeEntry("Altitude Service", d->worldMap->altitudeService());
     config.sync();
 }
 
@@ -476,6 +546,22 @@ void GPSEditDialog::slotRecentSelected(QAction* action)
         return;
 
     slotBookmarkSelected(recentLocation);
+}
+
+void GPSEditDialog::slotConfigActionTriggered(QAction* action)
+{
+    if (QMetaType::Type(action->data().type())==QMetaType::QString)
+    {
+        const QString altitudeService = action->data().toString();
+        d->worldMap->setAltitudeService(altitudeService);
+        d->worldMap->resized();
+    }
+    else
+    {
+        const int apiVersion = action->data().toInt();
+        d->worldMap->setApiVersion(apiVersion);
+        d->worldMap->resized();
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

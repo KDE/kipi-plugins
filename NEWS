@@ -29,6 +29,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> GPSSync	          : 165613 : Crash when GPS altitude is negative.
 019 ==> GPSSync		  : 167286 : GPS tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
 020 ==> GPSSync		  : 224205 : Geolocation correlator: GPX date/time format.
-021 ==> 
+021 ==> GPSSync	          : 222067 : GPSSync no more search field to fill with a town.
+022 ==> 
+
 
 
