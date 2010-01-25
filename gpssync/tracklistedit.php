@@ -144,14 +144,16 @@ function loadMap()
         echo ".getPoint();";
         echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
 
-        // Post drag-move marker position events.
-        echo "GEvent.addListener(marker";
-        echo $i;
-        echo ", \"drag\", function(){";
-        echo "var point = marker";
-        echo $i;
-        echo ".getPoint();";
-        echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
+        // do not post drag-move marker events to ease the load on topocoding and prevent
+        // too many API calls
+//         // Post drag-move marker position events.
+//         echo "GEvent.addListener(marker";
+//         echo $i;
+//         echo ", \"drag\", function(){";
+//         echo "var point = marker";
+//         echo $i;
+//         echo ".getPoint();";
+//         echo "topoGetAltitude( point.lat(), point.lng(), function( altitude ) { window.status = \"(mkr:\" + $i + \", lat:\" + point.lat() + \", lon:\" + point.lng() + \", alt:\" + altitude  + \")\"; });});\n";
 
         // Post drag-end marker position event.
         echo "GEvent.addListener(marker";
