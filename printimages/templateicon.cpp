@@ -108,14 +108,18 @@ void TemplateIcon::end( void )
     icon = new QIcon( *pixmap );
 }
 
-QIcon &TemplateIcon::getIcon( void )
+QIcon& TemplateIcon::getIcon( void )
 {
     return *icon;
 }
 
-QSize &TemplateIcon::getSize( void )
+QSize& TemplateIcon::getSize( void )
 {
     return m_icon_size;
 }
 
+QPainter& TemplateIcon::getPainter( void )
+{
+    return *painter;
+}
 } // namespace KIPIPrintImagesPlugin

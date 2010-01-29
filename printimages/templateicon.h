@@ -69,6 +69,11 @@ class TemplateIcon
         Returns the size of the icon.
     */
     QSize &getSize( void );
+    
+    /**
+        Returns the painter.
+    */
+    QPainter& getPainter( void );
 
     /**
         Draw a filled rectangle with color <color> at position <x>/<y> (relative
