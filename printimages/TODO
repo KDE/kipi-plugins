@@ -13,10 +13,10 @@
 - show caption into info page preview                   DONE
 - set caption data when new photo is selected           DONE
 - add a template how-to file                            DONE
-- add fit as many option                                In progress
-- FIX custom layout icon
-- save custom layout data into config file
-- add tool tips 
+- add fit as many option                                DONE
+- FIX custom layout icon                                almost DONE
+- save custom layout data into config file              DONE
+- add tool tips                                         some
 - add an attribute for desktop file
 - add Atckin's layout to p.a.
 - fix UIs                                               some
