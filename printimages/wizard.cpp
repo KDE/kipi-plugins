@@ -656,28 +656,16 @@ void Wizard::initPhotoSizes ( QSizeF pageSize )
   }
   // Adding custom choice
   QListWidgetItem *pWItem = new QListWidgetItem ( i18n(customPageLayoutName) );
+  
   //TODO FREE STYLE ICON 
-  
-    QPixmap pixmap( d->mPhotoPage->ListPhotoSizes->iconSize() );
-    pixmap.fill( Qt::color0);
-    QPainter painter;
-    painter.begin( &pixmap );
-    painter.setPen( Qt::color1 );
-    painter.drawRect(pixmap.rect());
-    painter.setPen( Qt::color1 );
-    painter.drawText(10,10,"?") ;
+  TemplateIcon ti(80, pageSize.toSize());
+  ti.begin();
+  QPainter& painter = ti.getPainter();
+  painter.setPen( Qt::color1 );
+  painter.drawText(painter.viewport(), Qt::AlignCenter, i18n("Free"));
+  ti.end();
 
-    painter.end();
-  
-  ////////////////
-  
-  
-  
-  
-  
-  
-  
-  pWItem->setIcon( QIcon(pixmap) );
+  pWItem->setIcon( ti.getIcon());
   d->mPhotoPage->ListPhotoSizes->addItem ( pWItem );
   // 
   d->mPhotoPage->ListPhotoSizes->blockSignals ( false );
