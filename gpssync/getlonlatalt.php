@@ -68,10 +68,21 @@ if (isset($_GET['pluginversion']))
 }
 
 // determine the extra options (not used yet):
-$parExtraOptions = '';
+$parExtraOptions = array();
 if (isset($_GET['extraoptions']))
 {
-    $parExtraOptions = stripslashes($_GET['extraoptions']);
+    $extraOptionsString = stripslashes($_GET['extraoptions']);
+    if (strlen($parExtraOptions!=0))
+    {
+        $extraOptionsPairs = explode(",", $extraOptionsString);
+        foreach ($extraOptionsPairs as $pairValues)
+        {
+            list($entryKey, $entryValue) = split("=", $pairValues);
+            $parExtraOptions[$entryKey] = $entryValue;
+        }
+        unset($extraOptionsPairs);
+    }
+    unset($extraOptionsString);
 }
 
 // determine the Google Maps API version to be used:
@@ -178,6 +189,11 @@ if (isset($_GET['filename']))
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <title>GPSSync Kipi-plugin Geographical Location Editor</title><?
+
+if (isset($parExtraOptions['dumpversion']))
+{
+    printf('<script type="text/javascript">alert("Your version of kipi-plugins is: %s");</script>', htmlentities($parPluginVersion));
+}
 
 // now include the script for the appropriate Google Maps API:
 if ($parGoogleMapsAPIVersion==3)

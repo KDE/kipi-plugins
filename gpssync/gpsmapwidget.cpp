@@ -35,6 +35,10 @@
 #include <khtmlview.h>
 #include <kurl.h>
 
+// local includes
+
+#include "pluginsversion.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -57,6 +61,7 @@ public:
     QString fileName;
     int     apiVersion;
     QString altitudeService;
+    QString extraOptions;
 
     QString lastKHTMLStatus;
     QTimer* statusTimer;
@@ -85,6 +90,11 @@ GPSMapWidget::GPSMapWidget(QWidget* parent)
 GPSMapWidget::~GPSMapWidget()
 {
     delete d;
+}
+
+void GPSMapWidget::setExtraOptions(const QString& extraOptions)
+{
+    d->extraOptions = extraOptions;
 }
 
 void GPSMapWidget::setApiVersion(const int apiVersion)
@@ -172,36 +182,28 @@ void GPSMapWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 
 void GPSMapWidget::resized()
 {
-    QString url = d->gpsLocalorUrl;
-    url.append("?latitude=");
-    url.append(d->latitude);
-    url.append("&longitude=");
-    url.append(d->longitude);
-    url.append("&altitude=");
-    url.append(d->altitude);
-    url.append("&width=");
-    url.append(QString::number(view()->width()));
-    url.append("&height=");
-    url.append(QString::number(view()->height()));
-    url.append("&zoom=");
-    url.append(d->zoomLevel);
-    url.append("&maptype=");
-    url.append(d->mapType);
-    url.append("&filename=");
-    url.append(d->fileName);
-    url.append("&altitudeservice=");
-    url.append(d->altitudeService);
-    url.append("&gmapsversion=");
-    url.append(QString::number(d->apiVersion));
-    url.append("&maplang=");
-    url.append(i18nc(
-        "Language code for the embedded Google Maps. "
-        "Please take a look at "
-        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
-        "for supported languages. If your language is not on the list, pick 'en'."
-        , "en"));
-    openUrl(KUrl(url));
-    kDebug(AREA_CODE_LOADING) << url ;
+    KUrl url = d->gpsLocalorUrl;
+    url.addQueryItem("latitude", d->latitude);
+    url.addQueryItem("longitude", d->longitude);
+    url.addQueryItem("altitude", d->altitude);
+    url.addQueryItem("width", QString::number(view()->width()));
+    url.addQueryItem("height", QString::number(view()->height()));
+    url.addQueryItem("zoom", d->zoomLevel);
+    url.addQueryItem("maptype", d->mapType);
+    url.addQueryItem("filename", d->fileName);
+    url.addQueryItem("altitudeservice", d->altitudeService);
+    url.addQueryItem("gmapsversion", QString::number(d->apiVersion));
+    url.addQueryItem("pluginversion", QString(kipiplugins_version));
+    url.addQueryItem("extraoptions", d->extraOptions);
+    url.addQueryItem("maplang", 
+                    i18nc(
+                        "Language code for the embedded Google Maps. "
+                        "Please take a look at "
+                        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
+                        "for supported languages. If your language is not on the list, pick 'en'."
+                        , "en"));
+    openUrl(url);
+    kDebug(AREA_CODE_LOADING) << url;
 }
 
 void GPSMapWidget::slotReadKHTMLStatus()

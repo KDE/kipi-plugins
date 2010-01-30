@@ -377,6 +377,10 @@ void GPSEditDialog::readSettings()
         }
     }
 
+    // This parameter is reserved for future use in case we need to quickly add options
+    // between releases. They can be added relatively easily by the users without recompiling.
+    d->worldMap->setExtraOptions(group.readEntry("Extra Options", ""));
+
     // load recent locations:
     const int recentCount = qMin(5, group.readEntry("GPS Recent Count", 0));
     for (int i = 0; i<recentCount; ++i)
