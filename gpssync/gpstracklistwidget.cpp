@@ -29,6 +29,10 @@
 #include <khtmlview.h>
 #include <kurl.h>
 
+// local includes
+
+#include "pluginsversion.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -45,6 +49,7 @@ public:
     QString      gpsTrackListUrl;
     QString      zoomLevel;
     QString      mapType;
+    QString      extraOptions;
 
     GPSTrackList gpsTrackList;
 };
@@ -65,6 +70,11 @@ GPSTrackListWidget::GPSTrackListWidget(QWidget* parent)
 GPSTrackListWidget::~GPSTrackListWidget()
 {
     delete d;
+}
+
+void GPSTrackListWidget::setExtraOptions(const QString& extraOptions)
+{
+    d->extraOptions = extraOptions;
 }
 
 void GPSTrackListWidget::setTrackList(const GPSTrackList& gpsTrackList)
@@ -162,42 +172,35 @@ void GPSTrackListWidget::khtmlMouseReleaseEvent(khtml::MouseReleaseEvent *e)
 
 void GPSTrackListWidget::slotResized()
 {
-    QString url = d->gpsTrackListUrl;
-    url.append("?width=");
-    url.append(QString::number(view()->width()));
-    url.append("&height=");
-    url.append(QString::number(view()->height()));
-    url.append("&zoom=");
-    url.append(d->zoomLevel);
-    url.append("&maptype=");
-    url.append(d->mapType);
-    url.append("&maplang=");
-    url.append(i18nc(
-        "Language code for the embedded Google Maps. "
-        "Please take a look at "
-        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
-        "for supported languages. If your language is not on the list, pick 'en'."
-        , "en"));
+    KUrl url = d->gpsTrackListUrl;
+    url.addQueryItem("width", QString::number(view()->width()));
+    url.addQueryItem("height", QString::number(view()->height()));
+    url.addQueryItem("zoom", d->zoomLevel);
+    url.addQueryItem("maptype", d->mapType);
+    url.addQueryItem("pluginversion", QString(kipiplugins_version));
+    url.addQueryItem("extraoptions", d->extraOptions);
+    url.addQueryItem("maplang",
+                    i18nc(
+                        "Language code for the embedded Google Maps. "
+                        "Please take a look at "
+                        "http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 "
+                        "for supported languages. If your language is not on the list, pick 'en'."
+                        , "en"));
 
     int count = d->gpsTrackList.count();
-    url.append("&items=");
-    url.append(QString::number(count));
+    url.addQueryItem("items", QString::number(count));
     for( GPSTrackList::iterator it = d->gpsTrackList.begin() ;
          it != d->gpsTrackList.end() ; ++it)
     {
         int id = it->id();
-        url.append(QString("&lat%1=").arg(id));
-        url.append(QString::number(it->gpsData().latitude()));
-        url.append(QString("&lng%1=").arg(id));
-        url.append(QString::number(it->gpsData().longitude()));
-        url.append(QString("&alt%1=").arg(id));
-        url.append(QString::number(it->gpsData().altitude()));
-        url.append(QString("&title%1=").arg(id));
-        url.append(QString("%1").arg(id));
+        url.addQueryItem(QString("&lat%1").arg(id), QString::number(it->gpsData().latitude()));
+        url.addQueryItem(QString("&lng%1").arg(id), QString::number(it->gpsData().longitude()));
+        url.addQueryItem(QString("&alt%1").arg(id), QString::number(it->gpsData().altitude()));
+        url.addQueryItem(QString("&title%1").arg(id), QString("%1").arg(id));
     }
 
-    openUrl(KUrl(url));
-    kDebug(AREA_CODE_LOADING) << url ;
+    openUrl(url);
+    kDebug(AREA_CODE_LOADING) << url;
 }
 
 }  // namespace KIPIGPSSyncPlugin

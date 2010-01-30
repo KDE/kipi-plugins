@@ -229,6 +229,10 @@ void GPSTrackListEditDialog::readSettings()
     else if (mapType == QString("G_MAP_TYPE"))    mapType = QString("G_NORMAL_MAP");
     else if (mapType == QString("G_HYBRID_TYPE")) mapType = QString("G_HYBRID_MAP");
 
+    // This parameter is reserved for future use in case we need to quickly add options
+    // between releases. They can be added relatively easily by the users without recompiling.
+    d->worldMap->setExtraOptions(group.readEntry("Extra Options", ""));
+
     d->worldMap->setMapType(mapType);
     d->worldMap->setZoomLevel(group.readEntry("Track List Zoom Level", 8));
     d->worldMap->setTrackList(d->gpsTrackList);

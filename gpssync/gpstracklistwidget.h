@@ -49,6 +49,7 @@ public:
     GPSTrackListWidget(QWidget* parent);
     ~GPSTrackListWidget();
 
+    void    setExtraOptions(const QString& extraOptions);
     void    setTrackList(const GPSTrackList& trackList);
 
     void    setZoomLevel(int zoomLevel);
