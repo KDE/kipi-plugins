@@ -1,3 +1,1708 @@
+1.1.0   2010-01-31 
+
+2010-01-30 21:07  mghansen
+
+	* gpssync/gpstracklisteditdialog.cpp,
+	  gpssync/gpstracklistwidget.cpp, gpssync/gpstracklistwidget.h:
+	  Make the track list editor report its version and a reserved
+	  parameter to the script providing the map. Not yet used by the
+	  script, though.
+
+2010-01-30 20:53  mghansen
+
+	* gpssync/getlonlatalt.php, gpssync/gpseditdialog.cpp,
+	  gpssync/gpsmapwidget.cpp, gpssync/gpsmapwidget.h: Report the
+	  plugin version and a reserved parameter to the script used for
+	  embedding the map.
+
+2010-01-30 10:48  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-29 22:54  anaselli
+
+	* printimages/TODO: SVN_SILENT: updated
+
+2010-01-29 22:54  anaselli
+
+	* printimages/wizard.cpp: Fixed custom layout icon size (now icon
+	  show the text Free... for those who can read it :) )
+
+2010-01-29 22:53  anaselli
+
+	* printimages/templateicon.cpp, printimages/templateicon.h: Added
+	  getPainter to allow free drawing
+
+2010-01-29 07:45  cgilles
+
+	* NEWS: update
+
+2010-01-27 11:05  scripty
+
+	* printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-01-25 21:19  mghansen
+
+	* gpssync/gpseditdialog.cpp: Fix the icon and add a WhatsThis text
+	  for the configuration menu.
+
+2010-01-25 20:51  mghansen
+
+	* gpssync/getlonlatalt.php: Fix syntax error.
+
+2010-01-25 20:50  mghansen
+
+	* gpssync/tracklistedit.php: Look up altitudes only when dropping
+	  the marker and not while moving it. This should reduce the number
+	  of calls to topocoding and give us more time before we get
+	  blocked.
+	  
+	  CCBUG: 209365
+
+2010-01-25 20:45  mghansen
+
+	* NEWS, gpssync/getlonlatalt.php, gpssync/gpseditdialog.cpp,
+	  gpssync/gpseditdialog.h, gpssync/gpsmapwidget.cpp,
+	  gpssync/gpsmapwidget.h: Make it possible to choose between the V2
+	  and V3 Google Maps API and between topocoding, geonames and no
+	  altitude lookup service. For old versions of the plugin, revert
+	  to V2 API to make the search field available. Left to do: Do the
+	  same for the track list editor.
+	  
+	  BUG: 222067
+	  CCBUG: 209365
+
+2010-01-25 19:55  mghansen
+
+	* NEWS: Update news.
+
+2010-01-25 10:41  scripty
+
+	* acquireimages/scangui.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-23 19:56  mghansen
+
+	* NEWS: Updating news again ;-)
+
+2010-01-23 19:52  mghansen
+
+	* NEWS: Update news.
+
+2010-01-23 19:48  mghansen
+
+	* NEWS: Update news.
+
+2010-01-23 10:57  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-01-21 08:34  cgilles
+
+	* NEWS: update
+
+2010-01-20 20:34  mghansen
+
+	* htmlexport/themes/cleanframes/template.xsl: Remove extra "'".
+	  
+	  BUG:194946
+
+2010-01-20 19:38  jmueller
+
+	* picasawebexport/picasawebtalker.cpp: - do not try to scale videos
+	  via a QImage
+	  - emit missig signals in case of failure
+	  - upload only image types handled by picasa directly
+	  
+	  For full video support there is need in selection dialog
+	  (filechooser), tracked by #216539 and get rid of timeout in
+	  KIO::http_post on large files.
+	  CCBUGS: 223375
+
+2010-01-20 11:35  scripty
+
+	* acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-19 12:40  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-01-18 22:48  anaselli
+
+	* NEWS: updated
+
+2010-01-18 22:43  anaselli
+
+	* printimages/customdlg.cpp, printimages/customdlg.h,
+	  printimages/wizard.cpp: Added and managed Custom-xxx entries to
+	  config file
+
+2010-01-18 10:59  scripty
+
+	* batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  facebook/kipiplugin_facebook.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-17 18:56  mghansen
+
+	* gpssync/CMakeLists.txt, gpssync/gpsdataparser.cpp,
+	  gpssync/gpsdataparser_time.h, gpssync/tests,
+	  gpssync/tests/CMakeLists.txt, gpssync/tests/test_gpxparsing.cpp,
+	  gpssync/tests/test_gpxparsing.h: Parse the timezone offset
+	  manually.
+
+2010-01-17 16:39  mghansen
+
+	* dngconverter/test/CMakeLists.txt: Fix typo.
+
+2010-01-17 10:27  scripty
+
+	* flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-13 22:48  anaselli
+
+	* NEWS: SVN_SILENT: updated
+
+2010-01-13 22:38  anaselli
+
+	* printimages/wizard.cpp: photo size must be less than page size,
+	  avoid crashing :)
+
+2010-01-13 22:37  anaselli
+
+	* printimages/customlayout.ui: increased hxw to 999x999 at least
+	  valid for mm units
+
+2010-01-13 22:36  anaselli
+
+	* printimages/customdlg.cpp: Added tool tips and whatis strings
+	  GUI:
+
+2010-01-13 17:42  anaselli
+
+	* printimages/customlayout.ui, printimages/wizard.cpp: fit as many
+	  option base implementation added
+
+2010-01-13 07:49  cgilles
+
+	* NEWS: update
+
+2010-01-12 23:32  anaselli
+
+	* printimages/wizard.cpp: wrong photo position
+
+2010-01-12 23:16  anaselli
+
+	* printimages/wizard.cpp: improved fit as many implementation
+
+2010-01-12 17:55  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp: fix encoding of title
+	  and caption
+	  BUGS: 200469
+
+2010-01-11 22:06  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp: update albumlist after
+	  album creation
+	  BUGS: 198045
+
+2010-01-11 21:54  cgilles
+
+	* NEWS: update
+
+2010-01-11 21:53  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: fix renaming under
+	  windows
+	  BUGS: 222297
+
+2010-01-11 21:02  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp: create only one new
+	  http job after finished previous job
+	  BUGS 208426
+
+2010-01-11 17:55  anaselli
+
+	* printimages/TODO, printimages/wizard.cpp: started managing -fit
+	  as many as possible option-
+
+2010-01-10 22:20  anaselli
+
+	* printimages/TODO: SVN_SILENT: updated
+
+2010-01-10 22:19  anaselli
+
+	* NEWS: updated
+
+2010-01-10 22:17  anaselli
+
+	* printimages/CMakeLists.txt, printimages/TODO,
+	  printimages/customdlg.cpp, printimages/customdlg.h,
+	  printimages/customlayout.ui, printimages/wizard.cpp,
+	  printimages/wizard.h: - added a custom entry to page layout
+	  - managed custom photo grid
+	  - released full gui (hope) to make translations possible
+
+2010-01-10 10:54  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-10 07:45  mlaurent
+
+	* expoblending/manager/actionthread.cpp: Fix iterator
+
+2010-01-06 19:54  mghansen
+
+	* gpssync/getlonlatalt.php, gpssync/gpsmapwidget.cpp,
+	  gpssync/gpsmapwidget.h: Update Coordinates Editor to Google Maps
+	  V3 and geonames.org.
+
+2010-01-05 10:47  scripty
+
+	* acquireimages/scangui.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-01-05 10:19  cgilles
+
+	* NEWS: update
+
+2010-01-04 15:07  aspotashev
+
+	* metadataedit/altlangstringedit.cpp: ko-KR stands for "Korean
+	  (South Korea)", not "Korean (Korea)"
+	  CCMAIL: kde-i18n-doc@kde.org
+
+2010-01-04 13:27  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2010-01-04 13:23  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: reset template file
+	  name with default button
+
+2010-01-04 10:28  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-01-03 18:30  jmueller
+
+	* NEWS: update of already solved bug 205903
+
+2010-01-03 11:16  cgilles
+
+	* expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp: support enfuse 4.x options
+	  format
+
+2010-01-03 08:59  cgilles
+
+	* README: update
+
+2010-01-03 08:51  cgilles
+
+	* NEWS: update
+
+2010-01-03 08:49  cgilles
+
+	* expoblending/expoblending.cpp,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/importwizarddlg.h,
+	  expoblending/importwizard/intropage.cpp,
+	  expoblending/importwizard/intropage.h,
+	  expoblending/importwizard/itemspage.cpp,
+	  expoblending/importwizard/itemspage.h,
+	  expoblending/importwizard/lastpage.cpp,
+	  expoblending/importwizard/lastpage.h,
+	  expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/importwizard/preprocessingpage.h,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h,
+	  expoblending/manager/enfusebinary.cpp,
+	  expoblending/manager/enfusebinary.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	  expoblending/plugin_expoblending.cpp,
+	  expoblending/plugin_expoblending.h: fix headers
+
+2010-01-03 08:49  cgilles
+
+	* expoblending/CMakeLists.txt: don"t forget to link expovlending
+	  stand alone program to libgomp
+	  BUGS: 221056
+
+2010-01-03 08:34  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h,
+	  expoblending/manager/actions.h: fix header
+
+2010-01-03 08:34  cgilles
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	  common/libkipiplugins/widgets/imageslist.h,
+	  common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h,
+	  common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h,
+	  common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h: fix headers
+
+2010-01-03 08:30  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: more explicit header
+	  title to colunm 0 in stack lists
+
+2010-01-03 08:27  cgilles
+
+	* expoblending/aboutdata.h: give credits
+
+2010-01-03 08:27  cgilles
+
+	* expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: give credits
+
+2010-01-03 08:26  cgilles
+
+	* common/libkipiplugins/pluginsversion.h.cmake: polish
+
+2010-01-02 22:01  cgilles
+
+	* common/libkipiplugins/widgets/previewimage.cpp: only change
+	  cursor is vertical or horizontal scrollbar is visible
+
+2010-01-02 21:54  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: no need model view there
+	  to sort bracketed item by EV. reimplement operator < is enough
+
+2010-01-02 17:26  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.cpp: more settings
+	  description
+
+2010-01-02 17:06  cgilles
+
+	* expoblending/manager/actionthread.cpp: speed up : no need to
+	  restore whole Exif. Only rotation flag is enough here
+
+2010-01-02 15:47  jwienke
+
+	* CMakeLists.txt, expoblending/CMakeLists.txt,
+	  expoblending/manager/actionthread.cpp: parallelize raw decoding
+	  and preview generation with omp
+
+2010-01-02 15:38  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h: changing file format,
+	  change all enfuse items
+
+2010-01-02 14:50  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: now, template file
+	  name can be customized
+
+2010-01-02 14:18  jwienke
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: remove unnecessary
+	  cast
+
+2010-01-02 14:12  jwienke
+
+	* common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: * Preserve image
+	  zoom and scroll position for better result comparison
+	  * fix file clean up
+
+2010-01-02 13:51  cgilles
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp: fix layout
+
+2010-01-02 13:42  cgilles
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h: new function
+	  to setup a custom file save settings view
+
+2010-01-02 13:28  jmueller
+
+	* NEWS, picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h: fix wrong deleting of m_urls
+	  variable
+	  BUGS: 215846
+
+2010-01-02 13:17  cgilles
+
+	* expoblending/manager/actionthread.cpp: it's better to only
+	  restore Exif orientation flag to speed up preview operation.
+
+2010-01-02 13:01  jwienke
+
+	* expoblending/manager/actionthread.cpp: Save exif information also
+	  in scaled images to preserve rotation for the preview.
+
+2010-01-02 11:39  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-01-02 11:11  cgilles
+
+	* expoblending/manager/actionthread.cpp: factorize
+
+2010-01-02 11:09  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp: factorize
+
+2010-01-02 11:04  cgilles
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h: factorize
+
+2010-01-02 10:36  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2010-01-01 22:23  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2010-01-01 22:22  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2010-01-01 22:20  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: factoring
+
+2010-01-01 21:42  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp: polish
+
+2010-01-01 21:39  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: Manager is not used
+	  there
+
+2010-01-01 21:36  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: use d private container
+
+2010-01-01 19:39  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: preview management for
+	  enfuse settings.
+	  reduced JPEG images are used now to see settings changes.
+
+2010-01-01 11:57  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2010-01-01 11:50  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2010-01-01 11:30  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: now plugin compute reduced
+	  JPEG preview of preprocessed items.
+	  This is not yet used. Next todo stage
+
+2010-01-01 10:42  cgilles
+
+	* expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp: polish
+
+2009-12-31 01:05  pino
+
+	* picasawebexport/picasawebtalker.cpp: use another (safer, more
+	  portable) way for an "unused parameter"
+
+2009-12-30 20:11  cgilles
+
+	* expoblending/manager/actionthread.cpp: missing to recale preview
+
+2009-12-30 20:01  cgilles
+
+	* expoblending/manager/actionthread.cpp: save preview in target
+	  file
+
+2009-12-30 19:51  cgilles
+
+	* expoblending/manager/actionthread.cpp: align => preprocessing
+
+2009-12-30 11:45  scripty
+
+	* htmlexport/themes/s0/s0.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2009-12-30 11:00  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/importwizard/intropage.cpp,
+	  expoblending/importwizard/itemspage.cpp,
+	  expoblending/importwizard/lastpage.cpp,
+	  expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/manager/actionthread.cpp: apply patch from Milan
+	  Knizek to fix English Words
+
+2009-12-29 18:27  cgilles
+
+	* CMakeLists.txt: under windows, there is no pkg-config. We set
+	  libkdcraw fine as well. This will require libkdcraw from trunk.
+
+2009-12-29 18:05  jwienke
+
+	* expoblending/manager/actionthread.cpp: rotate result image
+	  according to exif information
+
+2009-12-29 17:52  cgilles
+
+	* expoblending/importwizard/preprocessingpage.cpp: remember align
+	  settings between sessions
+
+2009-12-29 17:28  jwienke
+
+	* expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	  expoblending/plugin_expoblending.cpp: * use parent child
+	  mechanism for deleting the manager
+	  * clean up generate enfuse images after each plugin run
+
+2009-12-29 16:54  jwienke
+
+	* expoblending/plugin_expoblending.cpp,
+	  expoblending/plugin_expoblending.h: * delete temp images in
+	  plugin mode
+	  * fix strange trannslation problem
+
+2009-12-29 14:35  jwienke
+
+	* expoblending/importwizard/importwizarddlg.cpp: add a window title
+	  for the import dialog
+
+2009-12-29 14:16  cgilles
+
+	* expoblending/importwizard/itemspage.cpp,
+	  expoblending/importwizard/itemspage.h: compute Exposure with kipi
+	  host app item selection
+
+2009-12-29 14:12  jwienke
+
+	* expoblending/blendingdlg/enfusesettings.cpp: fix contrast setting
+
+2009-12-29 14:06  cgilles
+
+	* expoblending/importwizard/importwizarddlg.cpp: polish
+
+2009-12-29 13:43  jwienke
+
+	* expoblending/manager/alignbinary.cpp: minor version 0.8 also
+	  works
+
+2009-12-29 12:28  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2009-12-29 12:07  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp: polish
+
+2009-12-29 11:58  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp: polish
+
+2009-12-29 11:51  cgilles
+
+	* expoblending/importwizard/preprocessingpage.cpp: typo
+
+2009-12-29 11:49  cgilles
+
+	* expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/pics/assistant-align.png,
+	  expoblending/pics/assistant-preprocessing.png,
+	  expoblending/pics/assistant-raw.png: merge raw and align
+
+2009-12-29 11:42  cgilles
+
+	* expoblending/importwizard/lastpage.cpp: polish
+
+2009-12-29 11:37  cgilles
+
+	* expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: now, alignment can be
+	  dropped.
+
+2009-12-29 11:01  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/manager/actionthread.cpp: show enfused input files
+
+2009-12-29 10:36  cgilles
+
+	* expoblending/manager/manager.cpp: fix slot
+
+2009-12-29 10:33  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/alignpage.h,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/importwizarddlg.h,
+	  expoblending/importwizard/preprocessingpage.cpp,
+	  expoblending/importwizard/preprocessingpage.h,
+	  expoblending/importwizard/rawpage.cpp,
+	  expoblending/importwizard/rawpage.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h:
+	  fix API : Aligned => PreProcessed
+
+2009-12-29 09:53  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: align -> preprocessing
+
+2009-12-29 08:42  cgilles
+
+	* NEWS: update
+
+2009-12-29 08:41  cgilles
+
+	* picasawebexport/mpform.cpp, picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h,
+	  picasawebexport/uploadwidget.ui: apply pâtch #38547 from Siu
+	  Chung to export Tags to PicasaWeb
+	  BUGS: 199145
+
+2009-12-28 22:29  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/manager/actionthread.cpp: KUrl::path() =>
+	  localPath()
+
+2009-12-28 20:01  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/expoblending.cpp,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	  expoblending/plugin_expoblending.cpp: set ExpoBlending dialogs
+	  non modal
+
+2009-12-28 17:15  cgilles
+
+	* expoblending/importwizard/itemspage.cpp: use stylesheet
+
+2009-12-28 15:30  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp: show enfuse settings as
+	  tool tip.
+	  record enfuse settings in XMP
+
+2009-12-28 11:04  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.h: new method to create a
+	  string to reccord settins as comment in metadata
+
+2009-12-28 10:31  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2009-12-28 09:25  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.cpp: fix levels range
+
+2009-12-27 22:58  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: add option to manage
+	  enfused items from context menu
+
+2009-12-27 19:03  cgilles
+
+	* expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/enfusebinary.cpp: more hack to detect enfuse
+	  version
+
+2009-12-27 17:42  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2009-12-27 16:59  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp: polish
+
+2009-12-27 15:26  cgilles
+
+	* common/libkipiplugins/tools/binaryiface.cpp,
+	  common/libkipiplugins/tools/binaryiface.h,
+	  expoblending/manager/enfusebinary.cpp: work around -V option of
+	  enfuse
+
+2009-12-27 14:26  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2009-12-27 13:47  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/enfusebinary.cpp: fix crash
+	  more debug info
+
+2009-12-27 11:19  cgilles
+
+	* expoblending/importwizard/alignpage.cpp: polish
+
+2009-12-27 11:18  cgilles
+
+	* common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h,
+	  common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h,
+	  expoblending/importwizard/alignpage.cpp,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h: now loading processed images
+	  is done in a separate thread
+
+2009-12-27 10:24  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2009-12-27 09:12  cgilles
+
+	* expoblending/manager/alignbinary.cpp: polish
+
+2009-12-26 23:27  jwienke
+
+	* .krazy: updated krazy excludes
+
+2009-12-26 22:54  cgilles
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp: polish
+
+2009-12-26 22:34  cgilles
+
+	* NEWS: update
+
+2009-12-26 21:33  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h: we always
+	  need conflict rules
+
+2009-12-26 20:59  cgilles
+
+	* NEWS: update
+
+2009-12-26 18:04  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: when user save
+	  selected enfuse files, clear list of selected items
+
+2009-12-26 17:52  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: click on enfuse
+	  stack item load it on preview
+
+2009-12-26 17:51  cgilles
+
+	* common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h,
+	  common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h: adjust API
+
+2009-12-26 16:37  cgilles
+
+	* common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h: polish API
+
+2009-12-26 10:59  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: now, Save button
+	  write selected enfused items from stack automatically
+
+2009-12-26 10:39  pino
+
+	* Messages.sh: adapt to the new source structure
+
+2009-12-26 10:12  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h: rename slot
+
+2009-12-26 09:04  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: polish
+
+2009-12-26 08:34  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: polish
+
+2009-12-26 08:24  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2009-12-26 08:14  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: polish
+
+2009-12-26 07:46  cgilles
+
+	* NEWS: update
+
+2009-12-25 22:48  cgilles
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: polish
+
+2009-12-25 22:16  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/blendingdlg/enfusestack.cpp,
+	  expoblending/blendingdlg/enfusestack.h: start to implement
+	  enfused files stack. Not yet suitable
+
+2009-12-25 19:41  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: polish
+
+2009-12-25 17:02  cgilles
+
+	* CMakeLists.txt, common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/batchprogressdialog.cpp,
+	  common/libkipiplugins/batchprogressdialog.h,
+	  common/libkipiplugins/binaryiface.cpp,
+	  common/libkipiplugins/binaryiface.h,
+	  common/libkipiplugins/dialogs,
+	  common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	  common/libkipiplugins/dialogs/batchprogressdialog.h,
+	  common/libkipiplugins/dialogs/imagedialog.cpp,
+	  common/libkipiplugins/dialogs/imagedialog.h,
+	  common/libkipiplugins/dialogs/outputdialog.cpp,
+	  common/libkipiplugins/dialogs/outputdialog.h,
+	  common/libkipiplugins/dialogs/wizardpage.cpp,
+	  common/libkipiplugins/dialogs/wizardpage.h,
+	  common/libkipiplugins/iccjpeg.c, common/libkipiplugins/iccjpeg.h,
+	  common/libkipiplugins/imagedialog.cpp,
+	  common/libkipiplugins/imagedialog.h,
+	  common/libkipiplugins/imageslist.cpp,
+	  common/libkipiplugins/imageslist.h,
+	  common/libkipiplugins/kpaboutdata.cpp,
+	  common/libkipiplugins/kpaboutdata.h,
+	  common/libkipiplugins/kpwritehelp.cpp,
+	  common/libkipiplugins/kpwritehelp.h,
+	  common/libkipiplugins/kpwriteimage.cpp,
+	  common/libkipiplugins/kpwriteimage.h,
+	  common/libkipiplugins/outputdialog.cpp,
+	  common/libkipiplugins/outputdialog.h,
+	  common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h,
+	  common/libkipiplugins/previewmanager.cpp,
+	  common/libkipiplugins/previewmanager.h,
+	  common/libkipiplugins/savesettingswidget.cpp,
+	  common/libkipiplugins/savesettingswidget.h,
+	  common/libkipiplugins/tools,
+	  common/libkipiplugins/tools/binaryiface.cpp,
+	  common/libkipiplugins/tools/binaryiface.h,
+	  common/libkipiplugins/tools/iccjpeg.c,
+	  common/libkipiplugins/tools/iccjpeg.h,
+	  common/libkipiplugins/tools/kpaboutdata.cpp,
+	  common/libkipiplugins/tools/kpaboutdata.h,
+	  common/libkipiplugins/tools/kpwritehelp.cpp,
+	  common/libkipiplugins/tools/kpwritehelp.h,
+	  common/libkipiplugins/tools/kpwriteimage.cpp,
+	  common/libkipiplugins/tools/kpwriteimage.h,
+	  common/libkipiplugins/widgets,
+	  common/libkipiplugins/widgets/imageslist.cpp,
+	  common/libkipiplugins/widgets/imageslist.h,
+	  common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h,
+	  common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h,
+	  common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h,
+	  common/libkipiplugins/wizardpage.cpp,
+	  common/libkipiplugins/wizardpage.h: re-organize dirs contents
+
+2009-12-25 11:34  cgilles
+
+	* common/libkipiplugins/previewimage.cpp: fix cursor side effect
+	  with scrollbars
+
+2009-12-25 11:17  cgilles
+
+	* expoblending/importwizard/itemspage.cpp: polish
+
+2009-12-25 11:16  cgilles
+
+	* expoblending/importwizard/itemspage.cpp: polish
+
+2009-12-25 11:09  cgilles
+
+	* common/libkipiplugins/binaryiface.cpp,
+	  common/libkipiplugins/binaryiface.h,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/enfusebinary.cpp: polish
+
+2009-12-25 11:00  cgilles
+
+	* expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h,
+	  expoblending/manager/enfusebinary.cpp,
+	  expoblending/manager/enfusebinary.h,
+	  expoblending/manager/manager.cpp: factoring
+
+2009-12-25 10:54  cgilles
+
+	* common/libkipiplugins/binaryiface.cpp,
+	  common/libkipiplugins/binaryiface.h: polish API
+
+2009-12-25 10:27  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/binaryiface.cpp,
+	  common/libkipiplugins/binaryiface.h: prepapre to factory binary
+	  detection
+
+2009-12-25 10:12  cgilles
+
+	* expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h,
+	  expoblending/manager/enfusebinary.cpp,
+	  expoblending/manager/enfusebinary.h,
+	  expoblending/manager/manager.cpp: polish
+
+2009-12-25 09:57  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h: no need to clear
+	  there, it done on actions thread
+
+2009-12-25 09:52  cgilles
+
+	* common/libkipiplugins/previewmanager.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h: if enfuse process
+	  failed, show details button to see console messages
+
+2009-12-25 08:31  cgilles
+
+	* common/libkipiplugins/previewmanager.cpp,
+	  common/libkipiplugins/previewmanager.h: add new details button
+
+2009-12-24 23:16  cgilles
+
+	* common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h: to be over toolbar, reset
+	  cursor
+
+2009-12-24 22:55  cgilles
+
+	* common/libkipiplugins/previewimage.cpp: polish
+
+2009-12-24 22:47  cgilles
+
+	* expoblending/manager/actionthread.cpp: cleanup all Enfuse tmp
+	  files
+
+2009-12-24 22:39  cgilles
+
+	* common/libkipiplugins/outputdialog.cpp,
+	  common/libkipiplugins/outputdialog.h: use d private
+
+2009-12-24 22:27  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2009-12-24 20:22  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2009-12-24 20:19  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/manager/actionthread.cpp: polish
+
+2009-12-24 18:48  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/alignpage.h,
+	  expoblending/manager/actionthread.cpp: show proceing message in
+	  dialog.
+	  Fix layout
+
+2009-12-24 17:32  cgilles
+
+	* common/libkipiplugins/outputdialog.cpp: polish
+
+2009-12-24 17:29  cgilles
+
+	* batchprocessimages/CMakeLists.txt,
+	  batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/outputdialog.cpp,
+	  batchprocessimages/outputdialog.h,
+	  common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/outputdialog.cpp,
+	  common/libkipiplugins/outputdialog.h: factoring aboutdailog with
+	  the rest of kipi-plugins
+
+2009-12-24 15:23  cgilles
+
+	* expoblending/importwizard/importwizarddlg.cpp: polish
+
+2009-12-24 12:09  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/lastpage.cpp,
+	  expoblending/importwizard/lastpage.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h:
+	  use binaries info from manager
+
+2009-12-24 11:43  cgilles
+
+	* expoblending/expoblending.cpp,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h,
+	  expoblending/manager/enfusebinary.cpp,
+	  expoblending/manager/enfusebinary.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	  expoblending/plugin_expoblending.cpp: check enfuse and
+	  align_image_stack at startup
+
+2009-12-23 22:58  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h,
+	  expoblending/manager/enfusebinary.cpp,
+	  expoblending/manager/enfusebinary.h: enfuse detection class
+
+2009-12-23 22:32  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/manager/alignbinary.cpp,
+	  expoblending/manager/alignbinary.h: wrapper to detect
+	  align_image_stack program and version
+
+2009-12-23 14:45  cgilles
+
+	* common/libkipiplugins/previewimage.cpp: polish
+
+2009-12-23 14:32  cgilles
+
+	* common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h,
+	  common/libkipiplugins/previewmanager.cpp,
+	  common/libkipiplugins/previewmanager.h: polish
+
+2009-12-23 14:30  cgilles
+
+	* common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h,
+	  common/libkipiplugins/previewmanager.cpp: add tool bar for
+	  preview
+
+2009-12-23 12:16  cgilles
+
+	* rawconverter/actionthread.cpp: use stylesheet
+
+2009-12-23 12:10  cgilles
+
+	* common/libkipiplugins/CMakeLists.txt,
+	  common/libkipiplugins/previewimage.cpp,
+	  common/libkipiplugins/previewimage.h,
+	  common/libkipiplugins/previewmanager.cpp,
+	  common/libkipiplugins/previewmanager.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  rawconverter/singledialog.cpp: new tool shared widget to preview
+	  image with zoom in zoom out and pan feature. Used in ExpoBlending
+	  and RawConverter (single mode) tools
+
+2009-12-23 11:59  jwienke
+
+	* CMakeLists.txt: better comment
+
+2009-12-23 11:08  scripty
+
+	* common/libkipiplugins/kipiplugins.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file, second try)
+
+2009-12-23 08:59  gkulzer
+
+	* expoblending/expoblending.desktop: i18 cleanup
+
+2009-12-23 08:59  gkulzer
+
+	* expoblending/plugin_expoblending.cpp: i18 cleanup
+
+2009-12-23 08:56  gkulzer
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.cpp: i18 explanation
+	  improvement
+
+2009-12-22 18:16  cgilles
+
+	* expoblending/manager/actionthread.cpp: wrong logic
+
+2009-12-22 18:02  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2009-12-22 17:37  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2009-12-22 14:42  cgilles
+
+	* CMakeLists.txt: check KDCRAW for all systems
+
+2009-12-22 14:37  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/intropage.cpp: polish
+
+2009-12-22 14:34  cgilles
+
+	* expoblending/pics/assistant-tripod.png: tripod
+
+2009-12-22 14:21  cgilles
+
+	* expoblending/importwizard/intropage.cpp: add wikipedia links
+
+2009-12-22 14:09  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp: compile
+
+2009-12-22 13:45  cgilles
+
+	* expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/itemspage.cpp,
+	  expoblending/importwizard/rawpage.cpp,
+	  expoblending/importwizard/rawpage.h,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp: preporcessing RAW images before
+	  to align bracketed images
+
+2009-12-22 11:47  cgilles
+
+	* expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h:
+	  add raw decoding
+
+2009-12-22 11:16  cgilles
+
+	* expoblending/importwizard/rawpage.cpp: polish
+
+2009-12-22 11:16  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/importwizard/rawpage.cpp,
+	  expoblending/importwizard/rawpage.h: raw page
+
+2009-12-22 10:11  cgilles
+
+	* expoblending/pics/assistant-raw.png: next one for raw convert
+
+2009-12-22 10:06  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2009-12-22 10:02  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: use d private internal
+	  class
+
+2009-12-22 09:27  cgilles
+
+	* expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/intropage.cpp,
+	  expoblending/importwizard/itemspage.cpp: use Qtimer to post item
+	  list validity
+
+2009-12-22 09:13  cgilles
+
+	* common/libkipiplugins/imageslist.cpp,
+	  common/libkipiplugins/imageslist.h,
+	  expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: if kipi interface is
+	  null, use KIO to render thumbs
+
+2009-12-22 00:23  jwienke
+
+	* CMakeLists.txt: Some macros for printing library and plugin
+	  status information
+
+2009-12-21 22:17  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp: polish
+
+2009-12-21 22:13  cgilles
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2009-12-21 22:02  cgilles
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/alignpage.h,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/importwizarddlg.h,
+	  expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h:
+	  braketed items filtering working now with enfuse
+
+2009-12-21 21:49  jwienke
+
+	* CMakeLists.txt: check correct kdcraw-version for exposureblending
+	  plugin
+
+2009-12-21 20:36  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h: selectable bracket
+	  list implemented
+
+2009-12-21 19:06  cgilles
+
+	* expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: progress
+
+2009-12-21 18:48  cgilles
+
+	* expoblending/CMakeLists.txt,
+	  expoblending/blendingdlg/bracketstack.cpp,
+	  expoblending/blendingdlg/bracketstack.h: prepare a bracketed
+	  stack of selectable items
+
+2009-12-21 15:19  cgilles
+
+	* README: update
+
+2009-12-21 15:14  cgilles
+
+	* NEWS: update
+
+2009-12-21 15:10  cgilles
+
+	* CMakeLists.txt, expoblending, expoblending/CMakeLists.txt,
+	  expoblending/Messages.sh, expoblending/TODO,
+	  expoblending/aboutdata.h, expoblending/blendingdlg,
+	  expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  expoblending/blendingdlg/expoblendingdlg.h,
+	  expoblending/expoblending.cpp, expoblending/expoblending.desktop,
+	  expoblending/icons, expoblending/icons/CMakeLists.txt,
+	  expoblending/icons/hi16-action-expoblending.png,
+	  expoblending/icons/hi22-action-expoblending.png,
+	  expoblending/icons/hi32-action-expoblending.png,
+	  expoblending/icons/hi48-action-expoblending.png,
+	  expoblending/importwizard,
+	  expoblending/importwizard/alignpage.cpp,
+	  expoblending/importwizard/alignpage.h,
+	  expoblending/importwizard/importwizarddlg.cpp,
+	  expoblending/importwizard/importwizarddlg.h,
+	  expoblending/importwizard/intropage.cpp,
+	  expoblending/importwizard/intropage.h,
+	  expoblending/importwizard/itemspage.cpp,
+	  expoblending/importwizard/itemspage.h,
+	  expoblending/importwizard/lastpage.cpp,
+	  expoblending/importwizard/lastpage.h,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  expoblending/manager, expoblending/manager/actions.h,
+	  expoblending/manager/actionthread.cpp,
+	  expoblending/manager/actionthread.h,
+	  expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	  expoblending/pics, expoblending/pics/assistant-align.png,
+	  expoblending/pics/assistant-enfuse.png,
+	  expoblending/pics/assistant-stack.png,
+	  expoblending/plugin_expoblending.cpp,
+	  expoblending/plugin_expoblending.h: New tool to create pseudo HDR
+	  image using align_images_stack (Hugin project) and Enfuse
+	  (Enblend project).
+	  It use a set of bracketed image, aligned automatically and fused
+	  BUGS: 144593
+
+2009-12-21 14:57  cgilles
+
+	* CMakeLists.txt, NEWS, project/NEWS.1.0.0: kipi-plugins 1.1.0 is
+	  open to commit
+	  next release is planed at 31/01/2010
+
+2009-12-21 14:54  cgilles
+
+	* NEWS: update
+
+2009-12-21 10:18  nlecureuil
+
+	* ChangeLog: Prepare for 1.0.0
+
 1.0.0   2009-12-21 
 
 2009-12-20 16:34  anaselli
