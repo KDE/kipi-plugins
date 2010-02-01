@@ -1,0 +1,33 @@
+Kipi-plugins 1.1.0 - Release date: 31/01/2010
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+ExpoBlending              : New tool to make pseudo HDR image with a stack of bracketed images.
+PrintAssistant            : New custom grid layout
+PrintAssistant            : Filling page with custom size images
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> ExpoBlending      : 144593 : New High Dynamic Range (HDR) plugin.
+002 ==> GalleyExport      : 219998 : Export to Gallery plugin crashes when adding files.
+003 ==> AdvancedSlideShow : 215798 : Slideshow crashes when starting.
+004 ==> JPEGLossLess      : 200031 : Photo is rotated but not thumbnail.
+005 ==> PicasaWebExport   : 199145 : Tags not exported to picasaweb [patch].
+006 ==> PicasaWebExport   : 215846 : PicasaWeb plugin crashes digiKam after start sending the pic [delete, KIPIPicasawebExportPlugin::PicasawebWindow::slotUploadImages] (double deletion)
+007 ==> ExpoBlending      : 221056 : Expoblending.app causes digiKam compile to fail.
+008 ==> PicasaWebExport   : 205903 : accentuated chars are converted into a mess during picasa web export [patch]
+009 ==> PicasaWebExport   : 220433 : digiKam crash when has long time working on it.
+010 ==> PicasaWebExport   : 208426 : Exporting images fails with : "Could not connect to host xxxx.xxxx.xxxx.xxxx: Unknown error."
+011 ==> ExpoBlending      : 222297 : Overwriting on Windows and multiple saves fixes [patch].
+012 ==> PicasaWebExport   : 198045 : New albums don't appear in list
+013 ==> PicasaWebExport   : 200469 : Ampersand character in caption causes Picasa export to freeze
+014 ==> JPEGLossLess      : 222328 : In-place rotation converts 16 bit TIFF to 8 bit.
+015 ==> PrintAssistant    : 219381 : fill page with images of certain size
+016 ==> HTMLExport        : 194946 : Simple Fix - extra " ' " in cleanframes/themes/template.xsl.
+017 ==> GPSSync           : 182326 : Remember last position when geotagging images.
+018 ==> GPSSync	          : 165613 : Crash when GPS altitude is negative.
+019 ==> GPSSync		  : 167286 : GPS tagging fails with message titled "digikam3rdparty.free.fr" and text "unauthorized call of the API" when starting the gps tagger window.
+020 ==> GPSSync		  : 224205 : Geolocation correlator: GPX date/time format.
+021 ==> GPSSync	          : 222067 : GPSSync no more search field to fill with a town.
+022 ==> AdvancedSlideShow : 224379 : digiKam doesn't compile (problem with advanced slideshow).
