@@ -314,7 +314,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(facebook)
     ADD_SUBDIRECTORY(printimages)
-    ADD_SUBDIRECTORY(hdrcreator)
 
     # Plugins which are optional depencies.
 
