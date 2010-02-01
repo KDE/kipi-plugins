@@ -8,7 +8,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> 225001 : Google map is empty.
 002 ==> 225162 : picasaweb export no progress bar
 003 ==> 225164 : picasaweb export waiting mouse cursor without ending
-004 ==>
+004 ==> 203541 : picasa export: select images to upload
+005 ==>
 
 
 
