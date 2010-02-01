@@ -110,7 +110,7 @@ void Plugin_PicasawebExport::slotActivate()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIPicasawebExportPlugin::PicasawebWindow(interface, Tmp, kapp->activeWindow());
+        m_dlgExport = new KIPIPicasawebExportPlugin::PicasawebWindow(interface, Tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -120,7 +120,7 @@ void Plugin_PicasawebExport::slotActivate()
         KWindowSystem::activateWindow(m_dlgExport->winId());
     }
 
-    m_dlgExport->show();
+    m_dlgExport->reactivate();
 }
 
 KIPI::Category Plugin_PicasawebExport::category( KAction* action ) const

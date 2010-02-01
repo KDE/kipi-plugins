@@ -46,9 +46,6 @@ class KUrl;
 
 namespace KIPIPicasawebExportPlugin
 {
-
-class GAlbum;
-// class GPhoto;
 class FPhotoInfo;
 class PicasaWebAlbum;
 
@@ -78,48 +75,32 @@ public:
     PicasawebTalker(QWidget* parent);
     ~PicasawebTalker();
 
-    QLinkedList <PicasaWebAlbum> * m_albumsList;
     QString token() { return m_token;}
-    QString getApiSig(QString,QStringList) ;
     void addPhotoTag(const QString& photoURI, const QByteArray& metadataXML);
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
-    void getPhotoProperty(const QString& method, const QString& argList) ;
-    void getHTMLResponseCode(const QString& str);
     void listAllAlbums();
     void listPhotos( const QString& albumName );
-    void createAlbum( const QString& albumTitle, const QString& albumDesc, const QString& location,
-                      long long timestamp, const QString& access, const QString& media_keywords, bool isCommentEnabled=true);
-    bool addPhoto( const QString& photoPath,
-                   FPhotoInfo& info, const QString& albumname,
-                   bool rescale=false, int maxDim=600 , int imageQuality=85 );
+    void createAlbum( const PicasaWebAlbum& newAlbum );
+    bool addPhoto( const QString& photoPath, FPhotoInfo& info, const QString& albumname);
 	           QString getUserName();
-	           QString getUserId();
     void cancel();
 
 public:
 
-    QProgressDialog *authProgressDlg;
-
 Q_SIGNALS:
 
     void signalError( const QString& msg );
-//  void signalLoginFailed( const QString& msg );
     void signalBusy( bool val );
-    void signalAlbums( const QLinkedList<GAlbum>& albumList );
-    // void signalPhotos( const QLinkedList<GPhoto>& photoList );
-    void signalAddPhotoSucceeded( );
-    void signalGetAlbumsListSucceeded();
-    void signalGetAlbumsListFailed( const QString& msg );
-    void signalAddPhotoFailed( const QString& msg );
-    void signalAuthenticate() ;
-    void signalTokenObtained(const QString& token);
-    void signalCheckTokenSuccessful();
+    void signalLoginProgress(int, int, const QString&);
+    void signalLoginDone(int, const QString&);
+    void signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&);
+    void signalCreateAlbumDone(int, const QString&, int);
+    void signalAddPhotoDone(int, const QString&);
 
 private:
 
-//  void parseResponseLogin(const QByteArray &data);
     void parseResponseListAlbums(const QByteArray &data);
     void parseResponseListPhotos(const QByteArray &data);
     void parseResponseCreateAlbum(const QByteArray &data);
@@ -127,13 +108,10 @@ private:
     void parseResponseAddTag(const QByteArray &data);
     void parseResponseGetToken(const QByteArray &data);
     void parseResponseCheckToken(const QByteArray &data);
-    void parseResponsePhotoProperty(const QByteArray &data);
 
 private Q_SLOTS:
 
-    void slotCheckTokenSuccessful();
     void slotError( const QString& msg );
-//  void slotAuthenticate() ;
     void data(KIO::Job *job, const QByteArray &data);
     void dataReq(KIO::Job* job, QByteArray &data);
     void info(KIO::Job *job, const QString& str);
@@ -142,22 +120,13 @@ private Q_SLOTS:
 private:
 
     QWidget*   m_parent;
-
     QByteArray m_buffer;
-
-//  QString    m_cookie;
-    QString    m_apikey;
-    QString    m_secret;
-    QString    m_frob;
     QString    m_token;
     QString    m_username;
     QString    m_password;
-    QString    m_userId;
 
     QMap<QString, QStringList > tags_map;
     QHash<KIO::Job*, QByteArray> m_data_hash;
-
-//  KUrl       m_url;
     KIO::Job*  m_job;
 
     State      m_state;

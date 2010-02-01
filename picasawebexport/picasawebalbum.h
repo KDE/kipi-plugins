@@ -6,8 +6,7 @@
  * Date        : 2008-10-27
  * Description : a kipi plugin to export images to Picasa web service
  *
- * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
- * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,31 +20,51 @@
  *
  * ============================================================ */
 
-#ifndef NEWALBUMDIALOG_H
-#define NEWALBUMDIALOG_H
+#ifndef PICASAWEBALBUM_H
+#define PICASAWEBALBUM_H
 
 // Qt includes
+#include <QRadioButton>
+#include <QDateTimeEdit>
 
-#include <QDialog>
+// KDE includes
+#include <KLocale>
+#include <KDialog>
+#include <KComboBox>
+#include <KLineEdit>
+#include <KTextEdit>
 
 // Local includes
-
-//#include "ui_picasawebnewalbumdialog.h"
 
 namespace KIPIPicasawebExportPlugin
 {
 
-class NewAlbumDialog : public QDialog//, public Ui::NewAlbumDialog
+class PicasaWebAlbum;
+
+class PicasawebNewAlbum : public KDialog
 {
+    Q_OBJECT
 
 public:
 
-    NewAlbumDialog( QWidget *parent ) : QDialog( parent )
-    {
-        //setupUi( this );
-    }
+    PicasawebNewAlbum(QWidget* parent);
+    ~PicasawebNewAlbum();
+
+    void getAlbumProperties(PicasaWebAlbum &album);
+    
+private:
+    KLineEdit       *m_titleEdt;
+    KTextEdit       *m_descEdt;
+    KLineEdit       *m_locEdt;
+    QDateTimeEdit   *m_dtEdt;
+  
+    QRadioButton    *m_publicRBtn;
+    QRadioButton    *m_unlistedRBtn;
+    QRadioButton    *m_protectedRBtn;
+
+    friend class PicasawebWindow;
 };
 
 } // namespace KIPIPicasawebExportPlugin
 
-#endif // NEWALBUMDIALOG_H
+#endif // PICASAWEBALBUM_H

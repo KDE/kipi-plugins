@@ -32,7 +32,6 @@ namespace KIPIPicasawebExportPlugin
 {
 
 // ------------------------------------------------------
-
 class FPhotoInfo
 {
 
@@ -40,53 +39,11 @@ public:
 
     FPhotoInfo()
     {
-        is_public = false;
-        is_family = false;
-        is_friend = false;
     }
-
-    bool        is_public;
-    bool        is_friend;
-    bool        is_family;
 
     QString     title;
     QString     description;
     QStringList tags;
-};
-
-// ------------------------------------------------------
-
-class GAlbum
-{
-
-public:
-
-    GAlbum()
-    {
-        ref_num        = -1;
-        parent_ref_num = -1;
-
-        add            = false;
-        write          = false;
-        del_item       = false;
-        del_alb        = false;
-        create_sub     = false;
-    }
-
-    int                ref_num;
-    int                parent_ref_num;
-
-    bool               add;
-    bool               write;
-    bool               del_item;
-    bool               del_alb;
-    bool               create_sub;
-
-    QString            name;
-    QString            parentName;
-    QString            title;
-    QString            summary;
-    QString            baseurl;
 };
 
 // ------------------------------------------------------
@@ -99,15 +56,17 @@ public:
     PicasaWebAlbum()
     {
         id="-1";
+        canComment = true;
     }
 
-    QString  id;
-    QString primary;  //="2483"
-    QString secret;   //="abcdef"
-    QString server;
-    QString photos;
-    QString title;
-    QString description;
+    QString   id;
+    QString   title;
+    QString   timestamp;
+    QString   description;
+    QString   location;
+    QString   access;
+    bool      canComment;
+    QString   keywords;
 };
 
 } // namespace KIPIPicasawebExportPlugin

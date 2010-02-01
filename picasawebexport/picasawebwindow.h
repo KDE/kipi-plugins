@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,45 +27,41 @@
 
 // Qt includes
 
-#include <QLabel>
+#include <QList>
 #include <QLinkedList>
 #include <QPair>
 
 // KDE includes
 
-#include <kdialog.h>
+#include <KDialog>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes
+// local includes
 
-#include "kpaboutdata.h"
+class QCloseEvent;
 
-class QProgressDialog;
-class QPushButton;
-class QRadioButton;
-class QSpinBox;
-class QCheckBox;
-
-class KLineEdit;
-class KComboBox;
-class KHTMLPart;
 class KUrl;
+class KProgressDialog;
+class KPasswordDialog;
 
 namespace KIPI
 {
 class Interface;
 }
 
-namespace KWallet
+namespace KIPIPlugins
 {
-class Wallet;
+class KPAboutData;
 }
 
 namespace KIPIPicasawebExportPlugin
 {
+
+class PicasaWebAlbum;
+class PicasawebNewAlbum;
 class PicasawebWidget;
 class PicasawebTalker;
 class GAlbum;
@@ -78,88 +75,68 @@ class PicasawebWindow : public KDialog
 
 public:
 
-    PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
+                    bool import, QWidget *parent);
     ~PicasawebWindow();
 
-    void getToken(QString& username, QString& password);
+    /**
+     * Use this method to (re-)activate the dialog after it has been created
+     * to display it. This also loads the currently selected images.
+     */
+    void reactivate();
 
 private Q_SLOTS:
 
-    void closeEvent(QCloseEvent *e);
-    void saveSettings();
-    void slotTokenObtained(const QString& token);
-    void slotDoLogin();
-//  void slotLoginFailed( const QString& msg );
-    void slotBusy( bool val );
-    void slotError( const QString& msg );
-//  void slotAlbums( const QValueList<GAlbum>& albumList );
-//  void slotPhotos( const QValueList<GPhoto>& photoList );
-//  void slotTagSelected();
-//  void slotOpenPhoto( const KUrl& url );
-    void slotUpdateAlbumsList();
-    void slotUserChangeRequest();
-    void slotListPhotoSetsResponse(const QLinkedList <FPhotoSet>& photoSetList);
-    void slotAddPhotos();
-    void slotUploadImages();
-    void slotAddPhotoNext();
-    void slotAddPhotoSucceeded();
-    void slotAddPhotoFailed( const QString& msg );
-    void slotAddPhotoCancel();
-    void slotAuthCancel();
+    void slotBusy(bool val);
+    void slotLoginProgress(int step, int maxStep, const QString& label);
+    void slotLoginDone(int errCode, const QString& errMsg);
+    void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotCreateAlbumDone(int errCode, const QString& errMsg, int newAlbumID);
+    void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <PicasaWebAlbum>& albumsList);
+
+    void slotUserChangeRequest(bool anonymous);
+    void slotReloadAlbumsRequest();
+    void slotNewAlbumRequest();
+    void slotTransferCancel();
     void slotHelp();
-    void slotCreateNewAlbum();
-    void slotGetAlbumsListSucceeded();
-    void slotGetAlbumsListFailed(const QString& msg);
-    void slotRefreshSizeButtons(bool);
-//  void slotHandleLogin();
+    void slotStartTransfer();
+    void slotImageListChanged();
+    void slotButtonClicked(int button);
 
 private:
 
-    unsigned int                             m_uploadCount;
-    unsigned int                             m_uploadTotal;
+    bool prepareImageForUpload(const QString& imgPath, bool isRAW);
+    void uploadNextPhoto();
 
-    QSpinBox                                *m_dimensionSpinBox;
-    QSpinBox                                *m_imageQualitySpinBox;
+    void readSettings();
+    void writeSettings();
 
-    QPushButton                             *m_newAlbumButton;
-    QPushButton                             *m_addPhotoButton;
-    QPushButton                             *m_startUploadButton;
-    QPushButton                             *m_reloadAlbumsListButton;
-    QPushButton                             *m_changeUserButton;
+    void authenticate(const QString& token = "", const QString& username = "", const QString& password = "");
 
-    QString                                  m_tmp;
-    QString                                  m_token;
-    QString                                  m_username;
-    QString                                  m_userId;
-    QString                                  m_lastSelectedAlbum;
+    void buttonStateChange(bool state);
 
-    QCheckBox                               *m_resizeCheckBox;
+private:
 
-    KLineEdit                               *m_tagsLineEdit;
+    bool                      m_import;
+    unsigned int              m_imagesCount;
+    unsigned int              m_imagesTotal;
+    QString                   m_tmpDir;
+    QString                   m_tmpPath;
 
-    QCheckBox                               *m_exportApplicationTags;
+    QString                   m_token;
+    QString                   m_username;
+    QString                   m_password;
+    QString                   m_currentAlbumID;
 
-    QProgressDialog                         *m_progressDlg;
-    QProgressDialog                         *m_authProgressDlg;
+    QLinkedList< QPair<KUrl,FPhotoInfo> >  m_transferQueue;
 
-    KComboBox                               *m_albumsListComboBox;
+    PicasawebTalker          *m_talker;
+    PicasawebWidget          *m_widget;
+    PicasawebNewAlbum        *m_albumDlg;
 
-    QLabel                                  *m_userNameDisplayLabel;
+    KIPI::Interface          *m_interface;
 
-//  KWallet::Wallet                         *m_wallet;
-
-    KHTMLPart                               *m_photoView;
-    KUrl::List                               m_urls;
-
-    QString                                  m_currentAlbumId;
-
-    PicasawebWidget                         *m_widget;
-    PicasawebTalker                         *m_talker;
-
-    QLinkedList< QPair<QString,FPhotoInfo> > m_uploadQueue;
-
-    KIPI::Interface                         *m_interface;
-    KIPIPlugins::KPAboutData                *m_about;
+    KIPIPlugins::KPAboutData *m_about;
 };
 
 } // namespace KIPIPicasawebExportPlugin

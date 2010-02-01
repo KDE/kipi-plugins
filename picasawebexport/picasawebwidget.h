@@ -7,6 +7,8 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,48 +29,85 @@
 
 #include <QWidget>
 
-// Local includes
-
-#include "ui_uploadwidget.h"
-
+class QLabel;
+class QSpinBox;
 class QCheckBox;
+class QRadioButton;
+class QProgressBar;
+class KPushButton;
+class KComboBox;
+class KLineEdit;
 
-class KHTMLPart;
+namespace KIPI
+{
+    class Interface;
+    class UploadWidget;
+}
+
+namespace KIPIPlugins
+{
+    class ImagesList;
+}
 
 namespace KIPIPicasawebExportPlugin
 {
 
-
-class UploadWidget : public QWidget, public Ui::UploadWidget
-{
-public:
-
-    UploadWidget( QWidget *parent ) : QWidget( parent )
-    {
-        setupUi( this );
-    }
-};
-
-class PicasawebWidget : public UploadWidget
+class PicasawebWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    PicasawebWidget(QWidget* parent=0);
+    PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~PicasawebWidget();
+
+    void updateLabels(const QString& name = "");
+
+    QString getDestinationPath();
+
+    KIPIPlugins::ImagesList* imagesList() const;
+
+    QProgressBar* progressBar() const;
+
+Q_SIGNALS:
+
+    void signalUserChangeRequest(bool anonymous);
 
 private Q_SLOTS:
 
+    void slotChangeUserClicked();
     void slotResizeChecked();
-    void slotSelectionChecked();
 
 private:
 
-//  QCheckBox*    m_resizeCheckBox;
-//  QCheckBox*    m_exportApplicationTags;
+    QLabel*                  m_headerLbl;
+    QLabel*                  m_userNameLbl;
+    QLabel*                  m_userName;
+    QLabel*                  m_sitePasswordLbl;
+    QLabel*                  m_albumPasswordLbl;
 
-    KHTMLPart*    m_photoView;
+    QRadioButton*            m_anonymousRBtn;
+    QRadioButton*            m_accountRBtn;
+
+    QCheckBox*               m_resizeChB;
+
+    QSpinBox*                m_dimensionSpB;
+    QSpinBox*                m_imageQualitySpB;
+
+    KComboBox*               m_albumsCoB;
+
+    KPushButton*             m_newAlbumBtn;
+    KPushButton*             m_reloadAlbumsBtn;
+    KPushButton*             m_changeUserBtn;
+
+    KLineEdit*               m_albumPasswordEdt;
+    KLineEdit*               m_nickNameEdt;
+    KLineEdit*               m_sitePasswordEdt;
+
+    KIPIPlugins::ImagesList* m_imgList;
+    KIPI::UploadWidget*      m_uploadWidget;
+
+    QProgressBar*            m_progressBar;
 
     friend class PicasawebWindow;
 };
