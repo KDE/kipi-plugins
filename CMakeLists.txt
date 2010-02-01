@@ -5,11 +5,11 @@ PROJECT(kipi-plugins)
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "1")
-SET(KIPIPLUGINS_MINOR_VERSION "1")
+SET(KIPIPLUGINS_MINOR_VERSION "2")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2010-01-31")
+SET (KIPIPLUGINS_RELEASE_DATE "2010-XX-XX")
 
 # Suffix to add at end of version string. Usual values are:
 # "-svn"   : alpha code unstable from svn. Do not use in production
@@ -314,6 +314,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(facebook)
     ADD_SUBDIRECTORY(printimages)
+    ADD_SUBDIRECTORY(hdrcreator)
 
     # Plugins which are optional depencies.
 
