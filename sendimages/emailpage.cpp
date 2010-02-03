@@ -92,7 +92,6 @@ EmailPage::EmailPage(QWidget* parent)
     d->mailAgentName->insertItem(EmailSettingsContainer::EVOLUTION,     "Evolution");
     d->mailAgentName->insertItem(EmailSettingsContainer::GMAILAGENT,    "Gmail-Agent");
     d->mailAgentName->insertItem(EmailSettingsContainer::KMAIL,         "KMail");
-    d->mailAgentName->insertItem(EmailSettingsContainer::MOZILLA,       "Mozilla");
     d->mailAgentName->insertItem(EmailSettingsContainer::NETSCAPE,      "Netscape");
     d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEED,      "Sylpheed");
     d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEEDCLAWS, "Sylpheed-Claws");

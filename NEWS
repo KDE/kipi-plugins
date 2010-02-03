@@ -11,9 +11,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 225162 : PicasaWebExport : Picasaweb export no progress bar.
 003 ==> 225164 : PicasaWebExport : Picasaweb export waiting mouse cursor without ending.
 004 ==> 203541 : PicasaWebExport : Select images to upload.
-005 ==> 225316 : General         : ExpoBlend won't compile even with dependencies all right
-006 ==> 
-
-
-
-
+005 ==> 225316 : General         : ExpoBlend won't compile even with dependencies all right.
+006 ==> 225396 : SendImages      : "Mozilla" MUA option is broken.
+007 ==> 

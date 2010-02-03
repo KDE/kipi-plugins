@@ -64,7 +64,6 @@ public:
         EVOLUTION,
         GMAILAGENT,
         KMAIL,
-        MOZILLA,
         NETSCAPE,
         SYLPHEED,
         SYLPHEEDCLAWS,

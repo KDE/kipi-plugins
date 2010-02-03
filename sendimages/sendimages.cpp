@@ -486,15 +486,12 @@ bool SendImages::invokeMailAgent()
                 // More info about command lines options with Mozilla & co:
                 // http://www.mozilla.org/docs/command-line-args.html#Syntax_Rules
 
-                case EmailSettingsContainer::MOZILLA:
                 case EmailSettingsContainer::NETSCAPE:
                 case EmailSettingsContainer::THUNDERBIRD:
                 case EmailSettingsContainer::GMAILAGENT:
                 {
                     QString prog;
-                    if (d->settings.emailProgram == EmailSettingsContainer::MOZILLA)
-                        prog = QString("mozila");
-                    else if (d->settings.emailProgram == EmailSettingsContainer::NETSCAPE)
+                    if (d->settings.emailProgram == EmailSettingsContainer::NETSCAPE)
                         prog = QString("netscape");
                     else if (d->settings.emailProgram == EmailSettingsContainer::THUNDERBIRD)
                         prog = QString("thunderbird");
