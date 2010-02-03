@@ -295,10 +295,17 @@ void Wizard::slotThemeSelectionChanged() {
             author=QString("<a href='%1'>%2</a>").arg(url).arg(author);
         }
 
+        QString preview=theme->previewUrl();
+        QString image= "";
+        if (!preview.isEmpty()) {
+            image=QString("<img src='%1/%2' /><br/><br/>").arg(theme->directory(), theme->previewUrl());
+        }
+
         QString txt=
-            QString("<b>%1</b><br/><br/>%2<br/><br/>").arg(theme->name(), theme->comment())
+            image +
+            QString("<b>%3</b><br/><br/>%4<br/><br/>").arg(theme->name(), theme->comment())
             + i18n("Author: %1", author);
-        browser->setText(txt);
+        browser->setHtml(txt);
         setValid(d->mThemePage->page(), true);
 
         // Enable theme parameter page if there is any parameter

@@ -53,6 +53,9 @@ public:
 
 	QString authorName() const;
 	QString authorUrl() const;
+	
+	QString previewName() const;
+	QString previewUrl() const;
 
 	/**
 	 * Theme directory on hard disk

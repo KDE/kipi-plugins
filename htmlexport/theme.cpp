@@ -45,6 +45,7 @@ namespace KIPIHTMLExport {
 static const char* AUTHOR_GROUP = "X-HTMLExport Author";
 static const char* PARAMETER_GROUP_PREFIX = "X-HTMLExport Parameter ";
 static const char* PARAMETER_TYPE_KEY = "Type";
+static const char* PREVIEW_GROUP = "X-HTMLExport Preview";
 
 static const char* STRING_PARAMETER_TYPE = "string";
 static const char* LIST_PARAMETER_TYPE = "list";
@@ -199,6 +200,15 @@ QString Theme::authorName() const {
 
 QString Theme::authorUrl() const {
 	return d->mDesktopFile->group(AUTHOR_GROUP).readEntry("Url");
+}
+
+QString Theme::previewName() const {
+        return d->mDesktopFile->group(PREVIEW_GROUP).readEntry("Name");
+}
+
+
+QString Theme::previewUrl() const {
+        return d->mDesktopFile->group(PREVIEW_GROUP).readEntry("Url");
 }
 
 
