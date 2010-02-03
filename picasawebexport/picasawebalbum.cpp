@@ -90,7 +90,7 @@ PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
 
     m_publicRBtn        = new QRadioButton(i18nc("picasaweb album privacy", "Public"));
     m_publicRBtn->setChecked(true);
-    m_publicRBtn->setWhatsThis(i18n("Public album is listed on your public SmugMug page."));
+    m_publicRBtn->setWhatsThis(i18n("Public album is listed on your public Picasaweb page."));
     m_unlistedRBtn      = new QRadioButton(i18nc("picasaweb album privacy", "Unlisted / Private"));
     m_unlistedRBtn->setWhatsThis(i18n("Unlisted album is only accessible via URL."));
     m_protectedRBtn     = new QRadioButton(i18nc("picasaweb album privacy", "Sign-In Required to View"));
