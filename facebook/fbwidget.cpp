@@ -397,7 +397,7 @@ QString FbWidget::getAlbumID()
         || m_dlGrp->checkedId() == FbFriendAlbum)
         return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toString();
 
-    return 0;
+    return QString();
 }
 
 } // namespace KIPIFacebookPlugin
