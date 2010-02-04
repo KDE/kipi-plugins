@@ -65,57 +65,28 @@
 /// \def qDNGBigEndian 1 if this target platform is big endian (e.g. PowerPC Macintosh), else 0
 /// \def qDNGLittleEndian 1 if this target platform is little endian (e.g. x86 processors), else 0
 
-#ifndef qDNGBigEndian
+#if !defined(qDNGBigEndian) 
 
-#if defined(qDNGLittleEndian)
-#define qDNGBigEndian !qDNGLittleEndian
+#include <endian.h>
 
-#elif defined(__hppa__)
-#define qDNGBigEndian 1
-
-#elif defined(__sparc__)
-#define qDNGBigEndian 1
-
-#elif defined(__s390x__)
-#define qDNGBigEndian 1
-
-#elif defined(__s390__)
-#define qDNGBigEndian 1
-
-#elif defined(__POWERPC__)
-#define qDNGBigEndian 1
-
-#elif defined(__INTEL__)
+#if __BYTE_ORDER == __LITTLE_ENDIAN
 #define qDNGBigEndian 0
 
-#elif defined(_M_IX86)
-#define qDNGBigEndian 0
-
-#elif defined(_M_X64)
-#define qDNGBigEndian 0
-
-#elif defined(__LITTLE_ENDIAN__)
-#define qDNGBigEndian 0
-
-#elif defined(__BIG_ENDIAN__)
+#elif __BYTE_ORDER == __BIG_ENDIAN
 #define qDNGBigEndian 1
 
 #else
 
-#ifndef qXCodeRez
 #error Unable to figure out byte order.
+
 #endif
 
 #endif
-#endif
 
-#ifndef qXCodeRez
-
-#ifndef qDNGLittleEndian
+#if !defined(qDNGLittleEndian) 
 #define qDNGLittleEndian !qDNGBigEndian
 #endif
 
-#endif
 
 /*****************************************************************************/
 

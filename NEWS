@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 225316 : General         : ExpoBlend won't compile even with dependencies all right.
 006 ==> 225396 : SendImages      : "Mozilla" MUA option is broken.
 007 ==> 223492 : HtmlExport	 : Show screenshot alongside theme description.
-008 ==>
+008 ==> 225407 : DNGConverter    : Dngconverter fix endian detection [patch].
+009 ==> 
