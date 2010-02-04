@@ -120,14 +120,6 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
 
     m_albumsCoB         = new KComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
-    m_sitePasswordLbl   = new QLabel(i18n("Site Password:"), albumsBox);
-    m_sitePasswordEdt   = new KLineEdit(albumsBox);
-    m_sitePasswordEdt->setWhatsThis(
-        i18n("Site-wide password for specified Picasaweb nick/user."));
-    m_albumPasswordLbl  = new QLabel(i18n("Album Password:"), albumsBox);
-    m_albumPasswordEdt  = new KLineEdit(albumsBox);
-    m_albumPasswordEdt->setWhatsThis(
-        i18n("Password for Picasaweb album."));
 
     m_newAlbumBtn       = new KPushButton(
             KGuiItem(i18n("New Album"), "list-add",
@@ -139,10 +131,6 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_newAlbumBtn,       1, 3, 1, 1);
     albumsBoxLayout->addWidget(m_reloadAlbumsBtn,   1, 4, 1, 1);
-    albumsBoxLayout->addWidget(m_sitePasswordLbl,   2, 0, 1, 1);
-    albumsBoxLayout->addWidget(m_sitePasswordEdt,   2, 1, 1, 4);
-    albumsBoxLayout->addWidget(m_albumPasswordLbl,  3, 0, 1, 1);
-    albumsBoxLayout->addWidget(m_albumPasswordEdt,  3, 1, 1, 4);
 
     // ------------------------------------------------------------------------
 
@@ -229,6 +217,9 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
 
     if (import)
     {
+        m_anonymousRBtn->hide();
+        m_accountRBtn->hide();
+
         m_imgList->hide();
         m_newAlbumBtn->hide();
         optionsBox->hide();
@@ -237,11 +228,6 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
     {
         m_anonymousRBtn->hide();
         m_accountRBtn->hide();
-
-        m_sitePasswordLbl->hide();
-        m_sitePasswordEdt->hide();
-        m_albumPasswordLbl->hide();
-        m_albumPasswordEdt->hide();
 
         uploadBox->hide();
     }

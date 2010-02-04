@@ -83,8 +83,6 @@ private:
     QLabel*                  m_headerLbl;
     QLabel*                  m_userNameLbl;
     QLabel*                  m_userName;
-    QLabel*                  m_sitePasswordLbl;
-    QLabel*                  m_albumPasswordLbl;
 
     QRadioButton*            m_anonymousRBtn;
     QRadioButton*            m_accountRBtn;
@@ -99,10 +97,6 @@ private:
     KPushButton*             m_newAlbumBtn;
     KPushButton*             m_reloadAlbumsBtn;
     KPushButton*             m_changeUserBtn;
-
-    KLineEdit*               m_albumPasswordEdt;
-    KLineEdit*               m_nickNameEdt;
-    KLineEdit*               m_sitePasswordEdt;
 
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;

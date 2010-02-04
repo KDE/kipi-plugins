@@ -59,6 +59,7 @@ Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const QVariantLi
                       : KIPI::Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
 {
     m_dlgExport = 0;
+    m_dlgImport = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_PicasawebExport plugin loaded" ;
 }
@@ -75,19 +76,30 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_P));
 
     connect(m_actionExport, SIGNAL(triggered(bool)),
-            this, SLOT(slotActivate()));
+            this, SLOT(slotExport()));
 
     addAction(m_actionExport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    m_actionImport = actionCollection()->addAction("picasawebimport");
+    m_actionImport->setText(i18n("Import from &PicasaWeb..."));
+    m_actionImport->setIcon(KIcon("picasa"));
+    m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
+    connect(m_actionImport, SIGNAL( triggered(bool) ),
+            this, SLOT( slotImport()) );
+
+    addAction(m_actionImport);
+
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
     {
-        kError() << "Kipi interface is null!" ;
+        kError() << "Kipi interface is null!";
+        m_actionImport->setEnabled(false);
         m_actionExport->setEnabled(false);
         return;
     }
 
+    m_actionImport->setEnabled(true);
     m_actionExport->setEnabled(true);
 }
 
@@ -95,7 +107,7 @@ Plugin_PicasawebExport::~Plugin_PicasawebExport()
 {
 }
 
-void Plugin_PicasawebExport::slotActivate()
+void Plugin_PicasawebExport::slotExport()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -123,10 +135,40 @@ void Plugin_PicasawebExport::slotActivate()
     m_dlgExport->reactivate();
 }
 
+void Plugin_PicasawebExport::slotImport()
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    if (!interface)
+    {
+        kError() << "Kipi interface is null!";
+        return;
+    }
+
+    KStandardDirs dir;
+    QString tmp = dir.saveLocation("tmp", QString("kipi-picasawebexportplugin-") + QString::number(getpid()) + QString("/"));
+
+    if (!m_dlgImport)
+    {
+        // We clean it up in the close button
+        m_dlgImport = new KIPIPicasawebExportPlugin::PicasawebWindow(interface, tmp, true, kapp->activeWindow());
+    }
+    else
+    {
+        if (m_dlgImport->isMinimized())
+            KWindowSystem::unminimizeWindow(m_dlgImport->winId());
+
+        KWindowSystem::activateWindow(m_dlgImport->winId());
+    }
+
+    m_dlgImport->show();
+}
+
 KIPI::Category Plugin_PicasawebExport::category( KAction* action ) const
 {
     if (action == m_actionExport)
         return KIPI::ExportPlugin;
+    else if (action == m_actionImport)
+        return KIPI::ImportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;
     return KIPI::ExportPlugin;

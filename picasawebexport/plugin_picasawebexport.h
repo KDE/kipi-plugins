@@ -50,13 +50,16 @@ public:
 
 public Q_SLOTS:
 
-    void slotActivate();
+    void slotExport();
+    void slotImport();
 
 private:
 
-    KAction         *m_actionExport;
+    KAction *m_actionExport;
+    KAction *m_actionImport;
 
-    PicasawebWindow *m_dlgExport;
+    KIPIPicasawebExportPlugin::PicasawebWindow *m_dlgExport;
+    KIPIPicasawebExportPlugin::PicasawebWindow *m_dlgImport;
 };
 
 #endif // PLUGIN_PICASAWEBEXPORT_H

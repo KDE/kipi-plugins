@@ -61,13 +61,11 @@ namespace KIPIPicasawebExportPlugin
 {
 
 class PicasaWebAlbum;
+class PicasaWebPhoto;
 class PicasawebNewAlbum;
 class PicasawebWidget;
 class PicasawebTalker;
-class GAlbum;
-// class GPhoto;
 class FPhotoInfo;
-class FPhotoSet;
 
 class PicasawebWindow : public KDialog
 {
@@ -91,8 +89,10 @@ private Q_SLOTS:
     void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, int newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <PicasaWebAlbum>& albumsList);
+    void slotListPhotosDone(int errCode, const QString& errMsg, const QList <PicasaWebPhoto>& photosList);
 
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
@@ -107,6 +107,7 @@ private:
 
     bool prepareImageForUpload(const QString& imgPath, bool isRAW);
     void uploadNextPhoto();
+    void downloadNextPhoto();
 
     void readSettings();
     void writeSettings();

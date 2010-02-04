@@ -48,6 +48,7 @@ namespace KIPIPicasawebExportPlugin
 {
 class FPhotoInfo;
 class PicasaWebAlbum;
+class PicasaWebPhoto;
 
 class PicasawebTalker : public QObject
 {
@@ -61,13 +62,11 @@ public:
         FE_LISTALBUMS,
         FE_ADDTAG,
         FE_LISTPHOTOS,
-        FE_GETPHOTOPROPERTY,
         FE_ADDPHOTO,
-        FE_GETFROB,
+        FE_GETPHOTO,
         FE_CHECKTOKEN,
         FE_GETTOKEN,
         FE_CREATEALBUM,
-        FE_GETAUTHORIZED
     };
 
 public:
@@ -80,11 +79,12 @@ public:
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
-    void listAllAlbums();
-    void listPhotos( const QString& albumName );
-    void createAlbum( const PicasaWebAlbum& newAlbum );
-    bool addPhoto( const QString& photoPath, FPhotoInfo& info, const QString& albumname);
-	           QString getUserName();
+    void listAlbums(const QString& username);
+    void listPhotos(const QString& username, const QString& albumName);
+    void createAlbum(const PicasaWebAlbum& newAlbum);
+    bool addPhoto(const QString& photoPath, FPhotoInfo& info, const QString& albumname);
+    void getPhoto(const QString& imgPath);
+    QString getUserName();
     void cancel();
 
 public:
@@ -96,8 +96,11 @@ Q_SIGNALS:
     void signalLoginProgress(int, int, const QString&);
     void signalLoginDone(int, const QString&);
     void signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&);
+    void signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&);
     void signalCreateAlbumDone(int, const QString&, int);
     void signalAddPhotoDone(int, const QString&);
+    void signalGetPhotoDone(int errCode, const QString& errMsg,
+                            const QByteArray& photoData);
 
 private:
 

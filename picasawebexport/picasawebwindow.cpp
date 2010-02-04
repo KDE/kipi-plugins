@@ -189,6 +189,11 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
     connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ),
             this, SLOT( slotListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ));
 
+    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&) ),
+            this, SLOT( slotListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&) ));
+
+    connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
+            this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -259,8 +264,8 @@ void PicasawebWindow::readSettings()
     KConfigGroup grp = config.group( "PicasawebExport Settings");
     m_token          = grp.readEntry("token");
     m_username       = grp.readEntry("username");
-    m_password       = grp.readEntry("password");
-    m_currentAlbumID  = grp.readEntry("Current Album", -1);
+    //m_password       = grp.readEntry("password");
+    m_currentAlbumID  = grp.readEntry("Current Album");
 
     if (grp.readEntry("Resize", false))
     {
@@ -286,6 +291,7 @@ void PicasawebWindow::writeSettings()
     kDebug() << "Writing token value as ########### " << m_talker->token() << " #######" ;
     grp.writeEntry("token",         m_talker->token());
     grp.writeEntry("username",      m_username);
+    grp.writeEntry("Current Album", m_currentAlbumID);
     grp.writeEntry("Resize",        m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width", m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality", m_widget->m_imageQualitySpB->value());
@@ -315,7 +321,7 @@ void PicasawebWindow::slotLoginDone(int errCode, const QString& errMsg)
         m_token = m_talker->token();
         m_widget->updateLabels(m_username);
         m_widget->m_albumsCoB->clear();
-        m_talker->listAllAlbums();
+        m_talker->listAlbums(m_username);
     }
     else
     {
@@ -350,6 +356,38 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
+void PicasawebWindow::slotListPhotosDone(int errCode, const QString &errMsg,
+                                    const QList <PicasaWebPhoto>& photosList)
+{
+    if (errCode != 0)
+    {
+        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        return;
+    }
+
+    typedef QPair<KUrl,FPhotoInfo> Pair;
+    m_transferQueue.clear();
+    for (int i = 0; i < photosList.size(); ++i)
+    {
+        FPhotoInfo info;
+        info.title = photosList.at(i).title;
+        info.description = photosList.at(i).description;
+        m_transferQueue.push_back(Pair(photosList.at(i).originalURL, info));
+    }
+
+    if (m_transferQueue.isEmpty())
+        return;
+
+    m_imagesTotal = m_transferQueue.count();
+    m_imagesCount = 0;
+
+    m_widget->progressBar()->setFormat(i18n("%v / %m"));
+    m_widget->progressBar()->show();
+
+    // start download with first photo in queue
+    downloadNextPhoto();
+}
+
 void PicasawebWindow::buttonStateChange(bool state)
 {
     m_widget->m_newAlbumBtn->setEnabled(state);
@@ -379,7 +417,7 @@ void PicasawebWindow::slotUserChangeRequest(bool /*anonymous*/)
 
 void PicasawebWindow::slotReloadAlbumsRequest()
 {
-    m_talker->listAllAlbums();
+    m_talker->listAlbums(m_username);
 }
 
 void PicasawebWindow::slotNewAlbumRequest()
@@ -400,7 +438,9 @@ void PicasawebWindow::slotStartTransfer()
 
     if (m_import)
     {
-        //TODO
+        // list photos of the album, then start download
+        m_talker->listPhotos(m_username,
+                             m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
     }
     else
     {
@@ -617,6 +657,77 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
     uploadNextPhoto();
 }
 
+void PicasawebWindow::downloadNextPhoto()
+{
+    if (m_transferQueue.isEmpty())
+    {
+        m_widget->progressBar()->hide();
+        return;
+    }
+
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
+
+    QString imgPath = m_transferQueue.first().first.url();
+
+    m_talker->getPhoto(imgPath);
+}
+
+void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
+                                  const QByteArray& photoData)
+{
+    QString imgPath = m_widget->getDestinationPath() + '/'
+                      + QFileInfo(m_transferQueue.first().first.path()).fileName();
+
+    if (errCode == 0)
+    {
+        QString errText;
+        QFile imgFile(imgPath);
+        if (!imgFile.open(QIODevice::WriteOnly))
+        {
+            errText = imgFile.errorString();
+        }
+        else if (imgFile.write(photoData) != photoData.size())
+        {
+            errText = imgFile.errorString();
+        }
+        else
+            imgFile.close();
+
+        if (errText.isEmpty())
+        {
+            m_transferQueue.pop_front();
+            m_imagesCount++;
+        }
+        else
+        {
+            if (KMessageBox::warningContinueCancel(this,
+                             i18n("Failed to save photo: %1\n"
+                                  "Do you want to continue?", errText))
+                             != KMessageBox::Continue)
+            {
+                m_transferQueue.clear();
+                m_widget->progressBar()->hide();
+                return;
+            }
+        }
+    }
+    else
+    {
+        if (KMessageBox::warningContinueCancel(this,
+                         i18n("Failed to download photo: %1\n"
+                              "Do you want to continue?", errMsg))
+                         != KMessageBox::Continue)
+        {
+            m_transferQueue.clear();
+            m_widget->progressBar()->hide();
+            return;
+        }
+    }
+
+    downloadNextPhoto();
+}
+
 void PicasawebWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
@@ -636,7 +747,7 @@ void PicasawebWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
 
     // reload album list and automatically select new album
     m_currentAlbumID = newAlbumID;
-    m_talker->listAllAlbums();
+    m_talker->listAlbums(m_username);
 }
 
 void PicasawebWindow::slotImageListChanged()

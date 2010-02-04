@@ -69,6 +69,30 @@ public:
     QString   keywords;
 };
 
+class PicasaWebPhoto
+{
+
+public:
+
+    PicasaWebPhoto()
+    {
+        id="-1";
+        canComment = true;
+    }
+
+    QString   id;
+    QString   title;
+    QString   timestamp;
+    QString   description;
+    QString   location;
+    QString   access;
+    bool      canComment;
+    QString   keywords;
+    QString   mimeType;
+    KUrl      originalURL;
+    KUrl      thumbURL;
+};
+
 } // namespace KIPIPicasawebExportPlugin
 
 #endif /* PICASAWEBITEM_H */
