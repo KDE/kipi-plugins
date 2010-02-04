@@ -4,7 +4,7 @@ Kipi-plugins 1.2.0 - Release date: XX/XX/2010
 NEW FEATURES:
 
 PicasaWebExport : Tool dialog redesigned with same layout than Flickr, Facebook, etc.
-HTMLExport : Show screenshot alongside theme description
+HTMLExport      : Show screenshot alongside theme description.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -14,5 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 203541 : PicasaWebExport : Select images to upload.
 005 ==> 225316 : General         : ExpoBlend won't compile even with dependencies all right.
 006 ==> 225396 : SendImages      : "Mozilla" MUA option is broken.
-007 ==> 223492 : HtmlExport	 : Show screenshot alongside theme description
+007 ==> 223492 : HtmlExport	 : Show screenshot alongside theme description.
 008 ==>
