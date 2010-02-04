@@ -60,6 +60,7 @@ Comment[ja]=写真を Matrix スタイルで表示
 Comment[km]=បង្ហាញ​រូបថត​របស់​​អ្នក​ក្នុង​រចនាប័ទ្ម​ម៉ាទ្រីស
 Comment[lv]=Parādiet savas fotogrāfijas Matrix stilā
 Comment[nb]=Vis bildene i Matrix-stil
+Comment[nds]=Dien Fotos in den Matrix-Stil wiesen
 Comment[nl]=Toon uw foto's in matrix-stijl
 Comment[pa]=ਆਪਣੀਆਂ ਫੋਟੋ ਨੂੰ ਮੈਟਰਿਕਸ ਸਟਾਈਲ ਵਿੱਚ ਵੇਖੋ
 Comment[pt]=Mostrar as suas fotografias ao estilo Matrix
@@ -105,7 +106,6 @@ Name[pa]=Aurélien Gâteau
 Name[pt]=Aurélien Gâteau
 Name[pt_BR]=Aurélien Gâteau
 Name[ro]=Aurélien Gâteau
-Name[ru]=Aurélien Gâteau
 Name[sk]=Aurélien Gâteau
 Name[sv]=Aurélien Gâteau
 Name[th]=Aurélien Gâteau
@@ -115,3 +115,7 @@ Name[x-test]=xxAurélien Gâteauxx
 Name[zh_CN]=Aurélien Gâteau
 Name[zh_TW]=Aurélien Gâteau
 Url=mailto:aurelien.gateau@free.fr
+
+[X-HTMLExport Preview]
+Name=Matrix
+Url=preview.png

@@ -38,6 +38,10 @@ It's a .ini-style file and looks like this:
 	Name=The Author
 	Url=http://example.com/themes/helloworld
 
+	[X-HTMLExport Preview]
+	Name=Preview's Caption
+	Url=preview.png
+
 We use a desktop file format so that entries can be translated. If you look at
 the desktop file for one of the themes shipped with the plugin, you will find
 something like this:
@@ -52,6 +56,8 @@ something like this:
 
 The nice thing is that when your theme get integrated into HTML export default
 themes, KDE translators will translate the desktop file for you.
+
+Image preview file will be placed in the root theme folder.
 
 ## Getting started: creating one theme from another
 
