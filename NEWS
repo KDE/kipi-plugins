@@ -16,5 +16,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 225396 : SendImages      : "Mozilla" MUA option is broken.
 007 ==> 223492 : HtmlExport	 : Show screenshot alongside theme description.
 008 ==> 225407 : DNGConverter    : Dngconverter fix endian detection [patch].
-009 ==> 225161 : PicasaWebExport : picasaweb export does not export photo geotag
-010 ==>
+009 ==> 225161 : PicasaWebExport : Picasaweb export does not export photo geotag
+010 ==> 225665 : PicasaWebExport : Digikam crashed when cancelling transfer to Picasa
+011 ==>
