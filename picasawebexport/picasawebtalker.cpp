@@ -574,6 +574,7 @@ void PicasawebTalker::slotResult(KJob *job)
             break;
         case(FE_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
+            break;
         case(FE_GETPHOTO):
             // all we get is data of the image
             emit signalGetPhotoDone(0, QString(), m_buffer);
