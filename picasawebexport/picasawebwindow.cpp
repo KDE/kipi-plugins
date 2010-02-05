@@ -563,6 +563,9 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     {
         exiv2Iface.setImageDimensions(image.size());
         exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        // #225161 Picasaweb do not like XMP (exif-GPS is ignored if set)
+        // follow Picasa 3 and remove XMP
+        exiv2Iface.clearXmp();
         exiv2Iface.save(m_tmpPath);
     }
 
