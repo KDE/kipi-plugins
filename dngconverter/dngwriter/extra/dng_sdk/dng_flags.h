@@ -67,7 +67,9 @@
 
 #if !defined(qDNGBigEndian) 
 
+#ifndef _WIN32
 #include <endian.h>
+#endif
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #define qDNGBigEndian 0
