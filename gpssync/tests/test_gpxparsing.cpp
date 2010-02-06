@@ -33,7 +33,7 @@
 using namespace KIPIGPSSyncPlugin;
 
 // TODO: use QTEST_KDEMAIN instead, but somehow linking does not work for now
-QTEST_MAIN(TestGPXParsing);
+QTEST_MAIN(TestGPXParsing)
 
 /**
  * @brief Test how well QDateTime deals with various string representations

@@ -66,7 +66,7 @@ public:
         FE_GETPHOTO,
         FE_CHECKTOKEN,
         FE_GETTOKEN,
-        FE_CREATEALBUM,
+        FE_CREATEALBUM
     };
 
 public:
