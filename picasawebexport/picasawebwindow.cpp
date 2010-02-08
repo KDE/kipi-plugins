@@ -183,8 +183,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
     connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
             this, SLOT( slotAddPhotoDone(int, const QString&) ));
 
-    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, int) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, int) ));
+    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
+            this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
 
     connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ),
             this, SLOT( slotListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ));
@@ -740,7 +740,7 @@ void PicasawebWindow::slotTransferCancel()
 }
 
 void PicasawebWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
-                                     int newAlbumID)
+                                          const QString& newAlbumID)
 {
     if (errCode != 0)
     {

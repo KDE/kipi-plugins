@@ -80,9 +80,9 @@ public:
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
     void listAlbums(const QString& username);
-    void listPhotos(const QString& username, const QString& albumName);
+    void listPhotos(const QString& username, const QString& albumId);
     void createAlbum(const PicasaWebAlbum& newAlbum);
-    bool addPhoto(const QString& photoPath, FPhotoInfo& info, const QString& albumname);
+    bool addPhoto(const QString& photoPath, FPhotoInfo& info, const QString& albumId);
     void getPhoto(const QString& imgPath);
     QString getUserName();
     void cancel();
@@ -97,7 +97,7 @@ Q_SIGNALS:
     void signalLoginDone(int, const QString&);
     void signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&);
     void signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&);
-    void signalCreateAlbumDone(int, const QString&, int);
+    void signalCreateAlbumDone(int, const QString&, const QString&);
     void signalAddPhotoDone(int, const QString&);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
                             const QByteArray& photoData);
