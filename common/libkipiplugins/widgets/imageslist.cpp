@@ -515,9 +515,9 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
     QHBoxLayout *hBtnLayout = new QHBoxLayout;
     hBtnLayout->addStretch(10);
     hBtnLayout->addWidget(d->moveUpButton);
+    hBtnLayout->addWidget(d->moveDownButton);
     hBtnLayout->addWidget(d->addButton);
     hBtnLayout->addWidget(d->removeButton);
-    hBtnLayout->addWidget(d->moveDownButton);
     hBtnLayout->addWidget(d->loadButton);
     hBtnLayout->addWidget(d->saveButton);
     hBtnLayout->addWidget(d->clearButton);
@@ -528,9 +528,9 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
     QVBoxLayout *vBtnLayout = new QVBoxLayout;
     vBtnLayout->addStretch(10);
     vBtnLayout->addWidget(d->moveUpButton);
+    vBtnLayout->addWidget(d->moveDownButton);
     vBtnLayout->addWidget(d->addButton);
     vBtnLayout->addWidget(d->removeButton);
-    vBtnLayout->addWidget(d->moveDownButton);
     vBtnLayout->addWidget(d->loadButton);
     vBtnLayout->addWidget(d->saveButton);
     vBtnLayout->addWidget(d->clearButton);
