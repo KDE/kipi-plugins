@@ -65,7 +65,7 @@ class PicasaWebPhoto;
 class PicasawebNewAlbum;
 class PicasawebWidget;
 class PicasawebTalker;
-class FPhotoInfo;
+//class FPhotoInfo;
 
 class PicasawebWindow : public KDialog
 {
@@ -88,12 +88,14 @@ private Q_SLOTS:
     void slotBusy(bool val);
     void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
-    void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotAddPhotoDone(int errCode, const QString& errMsg, const QString& photoID);
     void slotGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
     void slotCreateAlbumDone(int errCode, const QString& errMsg, const QString& newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg, const QList <PicasaWebAlbum>& albumsList);
-    void slotListPhotosDone(int errCode, const QString& errMsg, const QList <PicasaWebPhoto>& photosList);
-
+    void slotListPhotosDoneForUpload(int errCode, const QString& errMsg,
+                                     const QList <PicasaWebPhoto>& photosList);
+    void slotListPhotosDoneForDownload(int errCode, const QString& errMsg,
+                                       const QList <PicasaWebPhoto>& photosList);
     void slotUserChangeRequest(bool anonymous);
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
@@ -129,7 +131,7 @@ private:
     QString                   m_password;
     QString                   m_currentAlbumID;
 
-    QLinkedList< QPair<KUrl,FPhotoInfo> >  m_transferQueue;
+    QLinkedList< QPair<KUrl,PicasaWebPhoto> >  m_transferQueue;
 
     PicasawebTalker          *m_talker;
     PicasawebWidget          *m_widget;

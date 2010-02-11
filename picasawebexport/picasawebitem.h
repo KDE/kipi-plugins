@@ -32,22 +32,6 @@ namespace KIPIPicasawebExportPlugin
 {
 
 // ------------------------------------------------------
-class FPhotoInfo
-{
-
-public:
-
-    FPhotoInfo()
-    {
-    }
-
-    QString     title;
-    QString     description;
-    QStringList tags;
-};
-
-// ------------------------------------------------------
-
 class PicasaWebAlbum
 {
 
@@ -66,7 +50,7 @@ public:
     QString   location;
     QString   access;
     bool      canComment;
-    QString   keywords;
+    QStringList tags;
 };
 
 class PicasaWebPhoto
@@ -87,10 +71,11 @@ public:
     QString   location;
     QString   access;
     bool      canComment;
-    QString   keywords;
+    QStringList tags;
     QString   mimeType;
     KUrl      originalURL;
     KUrl      thumbURL;
+    KUrl      editUrl;
 };
 
 } // namespace KIPIPicasawebExportPlugin

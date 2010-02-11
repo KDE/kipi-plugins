@@ -180,17 +180,14 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
     connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
             this, SLOT( slotLoginDone(int, const QString&) ));
 
-    connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
-            this, SLOT( slotAddPhotoDone(int, const QString&) ));
+    connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&, const QString&) ),
+            this, SLOT( slotAddPhotoDone(int, const QString&, const QString&) ));
 
     connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
             this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
 
     connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ),
             this, SLOT( slotListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ));
-
-    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&) ),
-            this, SLOT( slotListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&) ));
 
     connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
             this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
@@ -356,23 +353,27 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 }
 
-void PicasawebWindow::slotListPhotosDone(int errCode, const QString &errMsg,
-                                    const QList <PicasaWebPhoto>& photosList)
+void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &errMsg,
+                                                    const QList <PicasaWebPhoto>& photosList)
 {
+    disconnect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
+               this, SLOT(slotListPhotosDoneForDownload(int, const QString&, const QList <PicasaWebPhoto>&)));
+
     if (errCode != 0)
     {
         KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
         return;
     }
 
-    typedef QPair<KUrl,FPhotoInfo> Pair;
+    typedef QPair<KUrl,PicasaWebPhoto> Pair;
     m_transferQueue.clear();
-    for (int i = 0; i < photosList.size(); ++i)
+    QList<PicasaWebPhoto>::const_iterator itPWP;
+    for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
     {
-        FPhotoInfo info;
-        info.title = photosList.at(i).title;
-        info.description = photosList.at(i).description;
-        m_transferQueue.push_back(Pair(photosList.at(i).originalURL, info));
+        PicasaWebPhoto info;
+        info.title = (*itPWP).title;
+        info.description = (*itPWP).description;
+        m_transferQueue.push_back(Pair((*itPWP).originalURL, info));
     }
 
     if (m_transferQueue.isEmpty())
@@ -386,6 +387,114 @@ void PicasawebWindow::slotListPhotosDone(int errCode, const QString &errMsg,
 
     // start download with first photo in queue
     downloadNextPhoto();
+}
+
+void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &errMsg,
+                                                  const QList <PicasaWebPhoto>& photosList)
+{
+    disconnect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
+               this, SLOT(slotListPhotosDoneForUpload(int, const QString&, const QList <PicasaWebPhoto>&)));
+
+    if (errCode != 0)
+    {
+        KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
+        return;
+    }
+
+    typedef QPair<KUrl,PicasaWebPhoto> Pair;
+
+    m_transferQueue.clear();
+
+    KUrl::List urlList = m_widget->m_imgList->imageUrls();
+
+    if (urlList.isEmpty())
+        return;
+
+    for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
+    {
+        KIPI::ImageInfo info = m_interface->info(*it);
+        PicasaWebPhoto temp;
+
+        temp.title=info.title();
+        temp.description=info.description();
+
+        // check for existing items
+        QString localId;
+        KExiv2Iface::KExiv2 exiv2Iface;
+        if (exiv2Iface.load((*it).toLocalFile()))
+        {
+            localId = exiv2Iface.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
+        }
+        QList<PicasaWebPhoto>::const_iterator itPWP;
+        for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
+        {
+            if ((*itPWP).id == localId)
+            {
+                temp.id = localId;
+                temp.editUrl = (*itPWP).editUrl;
+                break;
+            }
+        }
+
+        QStringList allTags;
+        QStringList::Iterator itTags;
+        /*TODO
+        QStringList tagsFromDialog = m_tagsLineEdit->text().split(' ', QString::SkipEmptyParts);
+
+        // Tags from the interface
+        itTags = tagsFromDialog.begin();
+
+        while( itTags != tagsFromDialog.end() )
+        {
+            allTags.append( *itTags );
+            ++itTags;
+        }
+        */
+
+        //Tags from the database
+        QMap <QString, QVariant> attribs = info.attributes();
+        QStringList tagsFromDatabase;
+
+        //TODOif(m_exportApplicationTags->isChecked())
+        {
+            tagsFromDatabase=attribs["tags"].toStringList();
+        }
+
+        itTags = tagsFromDatabase.begin();
+
+        while( itTags != tagsFromDatabase.end() )
+        {
+            allTags.append( *itTags );
+            ++itTags;
+        }
+
+        itTags = allTags.begin();
+
+        while( itTags != allTags.end() )
+        {
+            ++itTags;
+        }
+
+        temp.tags=allTags;
+        m_transferQueue.append( Pair( (*it), temp) );
+    }
+
+    if (m_transferQueue.isEmpty())
+        return;
+
+    m_currentAlbumID = m_widget->m_albumsCoB->itemData(
+                                 m_widget->m_albumsCoB->currentIndex()).toString();
+    m_imagesTotal = m_transferQueue.count();
+    m_imagesCount = 0;
+
+    m_widget->progressBar()->setFormat(i18n("%v / %m"));
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(0);
+    m_widget->progressBar()->show();
+
+    kDebug() << "m_currentAlbumID" << m_currentAlbumID;
+    uploadNextPhoto();
+    kDebug() << "slotStartTransfer done";
 }
 
 void PicasawebWindow::buttonStateChange(bool state)
@@ -439,88 +548,22 @@ void PicasawebWindow::slotStartTransfer()
     if (m_import)
     {
         // list photos of the album, then start download
+        connect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
+                this, SLOT(slotListPhotosDoneForDownload(int, const QString&, const QList <PicasaWebPhoto>&)));
+
         m_talker->listPhotos(m_username,
                              m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
+
     }
     else
     {
-        typedef QPair<KUrl,FPhotoInfo> Pair;
+        // list photos of the album, then start upload with add/update items
+        connect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
+                this, SLOT(slotListPhotosDoneForUpload(int, const QString&, const QList <PicasaWebPhoto>&)));
 
-        m_transferQueue.clear();
+        m_talker->listPhotos(m_username,
+                             m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
 
-        KUrl::List urlList = m_widget->m_imgList->imageUrls();
-
-        if (urlList.isEmpty())
-            return;
-
-        for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
-        {
-            KIPI::ImageInfo info = m_interface->info( *it );
-            FPhotoInfo temp;
-
-            temp.title=info.title();
-            temp.description=info.description();
-
-            QStringList allTags;
-
-            QStringList::Iterator itTags;
-            /*TODO
-            QStringList tagsFromDialog = m_tagsLineEdit->text().split(' ', QString::SkipEmptyParts);
-
-            // Tags from the interface
-            itTags = tagsFromDialog.begin();
-
-            while( itTags != tagsFromDialog.end() )
-            {
-                allTags.append( *itTags );
-                ++itTags;
-            }
-            */
-
-            //Tags from the database
-            QMap <QString, QVariant> attribs = info.attributes();
-            QStringList tagsFromDatabase;
-
-            //TODOif(m_exportApplicationTags->isChecked())
-            {
-                tagsFromDatabase=attribs["tags"].toStringList();
-            }
-
-            itTags = tagsFromDatabase.begin();
-
-            while( itTags != tagsFromDatabase.end() )
-            {
-                allTags.append( *itTags );
-                ++itTags;
-            }
-
-            itTags = allTags.begin();
-
-            while( itTags != allTags.end() )
-            {
-                ++itTags;
-            }
-
-            temp.tags=allTags;
-            m_transferQueue.append( Pair( (*it), temp) );
-        }
-
-        if (m_transferQueue.isEmpty())
-            return;
-
-        m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                     m_widget->m_albumsCoB->currentIndex()).toString();
-        m_imagesTotal = m_transferQueue.count();
-        m_imagesCount = 0;
-
-        m_widget->progressBar()->setFormat(i18n("%v / %m"));
-        m_widget->progressBar()->setMaximum(m_imagesTotal);
-        m_widget->progressBar()->setValue(0);
-        m_widget->progressBar()->show();
-
-        kDebug() << "m_currentAlbumID" << m_currentAlbumID;
-        uploadNextPhoto();
-        kDebug() << "slotStartTransfer done";
     }
 }
 
@@ -580,9 +623,9 @@ void PicasawebWindow::uploadNextPhoto()
         return;
     }
 
-    typedef QPair<KUrl,FPhotoInfo> Pair;
+    typedef QPair<KUrl,PicasaWebPhoto> Pair;
     Pair pathComments = m_transferQueue.first();
-    FPhotoInfo info   = m_transferQueue.first().second;
+    PicasaWebPhoto info = m_transferQueue.first().second;
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
@@ -615,7 +658,7 @@ void PicasawebWindow::uploadNextPhoto()
 
         if (!prepareImageForUpload(imgPath, isRAW))
         {
-            slotAddPhotoDone(666, i18n("Cannot open file"));
+            slotAddPhotoDone(666, i18n("Cannot open file"), "");
             return;
         }
         res = m_talker->addPhoto(m_tmpPath, info, m_currentAlbumID);
@@ -623,18 +666,27 @@ void PicasawebWindow::uploadNextPhoto()
 
     if (!res)
     {
-        slotAddPhotoDone(666, i18n("Cannot open file"));
+        slotAddPhotoDone(666, i18n("Cannot open file"), "");
         return;
     }
 }
 
-void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
+void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const QString& photoId)
 {
     // Remove temporary file if it was used
     if (!m_tmpPath.isEmpty())
     {
         QFile::remove(m_tmpPath);
         m_tmpPath.clear();
+    }
+
+    KExiv2Iface::KExiv2 exiv2Iface;
+    bool bRet = false;
+    QString fileName = m_transferQueue.first().first.path();
+    if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(fileName) && exiv2Iface.load(fileName))
+    {
+        bRet = exiv2Iface.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
+        bRet = exiv2Iface.save(fileName);
     }
 
     m_widget->m_imgList->processed(errCode == 0);

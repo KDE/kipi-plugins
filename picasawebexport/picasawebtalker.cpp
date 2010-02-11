@@ -247,7 +247,8 @@ void PicasawebTalker::listAlbums(const QString& username)
     emit signalBusy( true );
 }
 
-void PicasawebTalker::addPhotoTag(const QString& photoURI, const QByteArray& metadataXML)
+void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& photoId,
+                                  const QByteArray& metadataXML)
 {
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::put(photoURI, -1, KIO::HideProgressInfo);
@@ -255,7 +256,11 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QByteArray& met
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
     job->addMetaData("content-length", QString("Content-Length: %1").arg(metadataXML.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
-    m_data_hash.insert(job, metadataXML);
+
+    JobData dataTmp;
+    dataTmp.data = metadataXML;
+    dataTmp.id = photoId;
+    m_jobData.insert(job, dataTmp);
 
     connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
             this, SLOT(dataReq(KIO::Job*, QByteArray&)));
@@ -329,7 +334,7 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
                                     .arg(album.access)
                                     .arg(album.canComment ? "true" : "false")
                                     .arg(album.timestamp)
-                                    .arg(album.keywords);
+                                    .arg(album.tags.join(","));
 
     QByteArray buffer;
     buffer.append(newAlbumXML.toUtf8());
@@ -355,7 +360,7 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     emit signalBusy(true);
 }
 
-bool PicasawebTalker::addPhoto(const QString& photoPath, FPhotoInfo& info,
+bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
                                const QString& albumId)
 {
     if (m_job)
@@ -471,10 +476,9 @@ void PicasawebTalker::data(KIO::Job*, const QByteArray& data)
 
 void PicasawebTalker::dataReq(KIO::Job* job, QByteArray& data)
 {
-    if (m_data_hash.contains(job))
+    if (m_jobData.contains(job))
     {
-        data = m_data_hash.value(job);
-        m_data_hash.remove(job);
+        data = m_jobData.value(job).data;
     }
 }
 
@@ -536,7 +540,7 @@ void PicasawebTalker::slotResult(KJob *job)
     {
         if (m_state == FE_ADDPHOTO)
         {
-            emit signalAddPhotoDone(job->error(), job->errorText());
+            emit signalAddPhotoDone(job->error(), job->errorText(), "");
         }
         else
         {
@@ -545,7 +549,7 @@ void PicasawebTalker::slotResult(KJob *job)
 
         return;
     }
-    if (static_cast<KIO::TransferJob*>(job)->isErrorPage()) 
+    if (static_cast<KIO::TransferJob*>(job)->isErrorPage())
     {
         if (m_state == FE_CHECKTOKEN) 
         {
@@ -581,7 +585,16 @@ void PicasawebTalker::slotResult(KJob *job)
             emit signalGetPhotoDone(0, QString(), m_buffer);
             break;
         case(FE_ADDTAG):
-            parseResponseAddTag(m_buffer);
+            {
+                QString photoId;
+                KIO::Job* jobKIO = qobject_cast<KIO::Job *>(job);
+                if ((jobKIO != 0) && (m_jobData.contains(jobKIO)))
+                {
+                    photoId = m_jobData.value(jobKIO).id;
+                    m_jobData.remove(jobKIO);
+                }
+                emit signalAddPhotoDone(0, "", photoId);
+            }
             break;
     }
 }
@@ -627,7 +640,6 @@ void PicasawebTalker::parseResponseGetToken(const QByteArray& data)
 
 void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 {
-    bool success = false;
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
@@ -645,7 +657,6 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "entry")
         {
-            success = true;
             e = node.toElement();
             QDomNode details=e.firstChild();
             PicasaWebAlbum fps;
@@ -677,19 +688,11 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    if (!success)
-    {
-        emit signalListAlbumsDone(1, i18n("Failed to fetch photo-set list"), QList<PicasaWebAlbum>());
-    }
-    else
-    {
-        emit signalListAlbumsDone(0, "", albumList);
-    }
+    emit signalListAlbumsDone(0, "", albumList);
 }
 
 void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
 {
-    bool success = false;
     QDomDocument doc( "feed" );
     if ( !doc.setContent( data ) )
     {
@@ -706,7 +709,6 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
     {
         if (node.isElement() && node.nodeName() == "entry")
         {
-            success = true;
             QDomNode details = node.firstChild();
             PicasaWebPhoto fps;
             QDomNode detailsNode = details;
@@ -714,33 +716,37 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
             while(!detailsNode.isNull())
             {
                 if(detailsNode.isElement())
-                {                  
+                {
+                    QDomElement detailsElem = detailsNode.toElement();
                     if(detailsNode.nodeName() == "gphoto:id")
                     {
-                        fps.id = detailsNode.toElement().text();
+                        fps.id = detailsElem.text();
                     }
 
                     if(detailsNode.nodeName() == "title")
                     {
-                        fps.title = detailsNode.toElement().text();
+                        fps.title = detailsElem.text();
                     }
 
                     if(detailsNode.nodeName()=="gphoto:access")
                     {
-                        fps.access = detailsNode.toElement().text();
+                        fps.access = detailsElem.text();
                     }
 
                     if(detailsNode.nodeName()=="content")
                     {
-                        QDomElement detailsElem = detailsNode.toElement();
                         fps.originalURL = detailsElem.attribute("src", "");
                         fps.mimeType = detailsElem.attribute("type", "");
                     }
 
-                    if(detailsNode.nodeName()=="media:group")
+                    if (detailsNode.nodeName() == "link" && detailsElem.attribute("rel") == "edit")
                     {
-                        QDomElement detailsElem = detailsNode.toElement();
-                        QDomNode mediaNode=detailsElem.namedItem("media:thumbnail");
+                        fps.editUrl = detailsElem.attribute("href");
+                    }
+
+                   if(detailsNode.nodeName()=="media:group")
+                    {
+                        QDomNode mediaNode = detailsElem.namedItem("media:thumbnail");
                         if (!mediaNode.isNull() && mediaNode.isElement())
                         {
                             QDomElement mediaElem = mediaNode.toElement();
@@ -755,14 +761,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
         node = node.nextSibling();
     }
 
-    if (!success)
-    {
-        emit signalListPhotosDone(1, i18n("Failed to fetch photo list"), QList<PicasaWebPhoto>());
-    }
-    else
-    {
-        emit signalListPhotosDone(0, "", photoList);
-    }
+    emit signalListPhotosDone(0, "", photoList);
 }
 
 void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
@@ -806,12 +805,6 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
     }
 }
 
-void PicasawebTalker::parseResponseAddTag(const QByteArray& /*data*/)
-{
-    emit signalAddPhotoDone(0, 0);
-    m_buffer.resize(0);
-}
-
 void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     bool success = false;
@@ -822,7 +815,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if ( !doc.setContent( data ) )
     {
-        emit signalAddPhotoDone(1, i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(1, i18n("Failed to upload photo"), "");
         return;
     }
 
@@ -870,7 +863,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
     if (!success)
     {
-        emit signalAddPhotoDone(1, i18n("Failed to upload photo"));
+        emit signalAddPhotoDone(1, i18n("Failed to upload photo"), "");
     }
     else
     {
@@ -879,14 +872,14 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
         if (tags.count() == 0)
         {
-            emit signalAddPhotoDone(0, "");
+            emit signalAddPhotoDone(0, "", photoId);
         }
         else
         {
             // Add our tags to the keyword element. Then send the whole XML
             // back.
             keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
-            addPhotoTag(photoUri, doc.toString(-1).toUtf8());
+            addPhotoTag(photoUri, photoId, doc.toString(-1).toUtf8());
         }
     }
 }

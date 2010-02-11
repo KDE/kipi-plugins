@@ -46,7 +46,7 @@ class KUrl;
 
 namespace KIPIPicasawebExportPlugin
 {
-class FPhotoInfo;
+//class FPhotoInfo;
 class PicasaWebAlbum;
 class PicasaWebPhoto;
 
@@ -69,20 +69,29 @@ public:
         FE_CREATEALBUM
     };
 
+private:
+
+    struct JobData
+    {
+        QByteArray data;
+        QString id;
+        QStringList tags;
+    };
+
 public:
 
     PicasawebTalker(QWidget* parent);
     ~PicasawebTalker();
 
     QString token() { return m_token;}
-    void addPhotoTag(const QString& photoURI, const QByteArray& metadataXML);
+    void addPhotoTag(const QString& photoURI, const QString& photoId, const QByteArray& metadataXML);
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
     void listAlbums(const QString& username);
     void listPhotos(const QString& username, const QString& albumId);
     void createAlbum(const PicasaWebAlbum& newAlbum);
-    bool addPhoto(const QString& photoPath, FPhotoInfo& info, const QString& albumId);
+    bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     void getPhoto(const QString& imgPath);
     QString getUserName();
     void cancel();
@@ -98,7 +107,7 @@ Q_SIGNALS:
     void signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&);
     void signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&);
     void signalCreateAlbumDone(int, const QString&, const QString&);
-    void signalAddPhotoDone(int, const QString&);
+    void signalAddPhotoDone(int, const QString&, const QString&);
     void signalGetPhotoDone(int errCode, const QString& errMsg,
                             const QByteArray& photoData);
 
@@ -108,7 +117,6 @@ private:
     void parseResponseListPhotos(const QByteArray &data);
     void parseResponseCreateAlbum(const QByteArray &data);
     void parseResponseAddPhoto(const QByteArray &data);
-    void parseResponseAddTag(const QByteArray &data);
     void parseResponseGetToken(const QByteArray &data);
     void parseResponseCheckToken(const QByteArray &data);
 
@@ -129,7 +137,7 @@ private:
     QString    m_password;
 
     QMap<QString, QStringList > tags_map;
-    QHash<KIO::Job*, QByteArray> m_data_hash;
+    QMap<KIO::Job*, JobData> m_jobData;
     KIO::Job*  m_job;
 
     State      m_state;
