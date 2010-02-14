@@ -253,10 +253,8 @@ void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& photoI
     job->addMetaData("content-length", QString("Content-Length: %1").arg(metadataXML.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
-    JobData dataTmp;
-    dataTmp.data = metadataXML;
-    dataTmp.id = photoId;
-    m_jobData.insert(job, dataTmp);
+    m_jobData.insert(job, metadataXML);
+    m_jobInfo.insert(job, photoId);
 
     connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
             this, SLOT(dataReq(KIO::Job*, QByteArray&)));
@@ -385,7 +383,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     form.addPair("descr", body, "application/atom+xml");
 
     // save the tags for this photo in to the tags hashmap
-    tags_map.insert(info.title, info.tags);
+    m_photoInfo.insert(info.title, info);
 
     if (!form.addFile("photo", photoPath))
         return false;
@@ -434,7 +432,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     form.addPair("descr", body, "application/atom+xml");
 
     // save the tags for this photo in to the tags hashmap
-    tags_map.insert(info.title, info.tags);
+    m_photoInfo.insert(info.title, info);
 
     if (!form.addFile("photo", photoPath))
         return false;
@@ -518,7 +516,8 @@ void PicasawebTalker::dataReq(KIO::Job* job, QByteArray& data)
 {
     if (m_jobData.contains(job))
     {
-        data = m_jobData.value(job).data;
+        data = m_jobData.value(job);
+        m_jobData.remove(job);
     }
 }
 
@@ -633,7 +632,7 @@ void PicasawebTalker::slotResult(KJob *job)
                 KIO::Job* jobKIO = qobject_cast<KIO::Job *>(job);
                 if ((jobKIO != 0) && (m_jobData.contains(jobKIO)))
                 {
-                    photoId = m_jobData.value(jobKIO).id;
+                    photoId = m_jobInfo.value(jobKIO);
                     m_jobData.remove(jobKIO);
                 }
                 emit signalAddPhotoDone(0, "", photoId);
@@ -890,6 +889,7 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
     QString photoId("");
     QString title("");
     QDomElement keywordElem;
+    QDomElement gpsElem;
     if (docElem.nodeName() == "entry")
     {
         success = true;
@@ -921,7 +921,16 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
                     keywordElem = node.firstChildElement("media:keywords");
                 }
 
-             }
+                if (node.nodeName() == "georss:where")
+                {
+                    QDomElement pointElem = node.firstChildElement("gml:Point");
+                    if (!pointElem.isNull())
+                    {
+                        gpsElem = pointElem.firstChildElement("gml:pos");
+                    }
+                }
+
+            }
             node = node.nextSibling();
         }
     }
@@ -933,9 +942,10 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
     else
     {
         // Update the tags information from the tags_map
-        QStringList tags = tags_map[title];
+        QStringList tags = m_photoInfo[title].tags;
 
-        if (tags.count() == 0)
+        if ((tags.count() == 0) /*&&
+            (m_photoInfo[title].gpsLat.isEmpty() || m_photoInfo[title].gpsLon.isEmpty() || !gpsElem.isNull())*/)
         {
             emit signalAddPhotoDone(0, "", photoId);
         }
@@ -943,9 +953,29 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         {
             // Add our tags to the keyword element. Then send the whole XML
             // back.
-            keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
+            if (tags.count() > 0)
+            {
+                keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
+            }
+            /*
+            //jmueller does not work right now
+            if (!m_photoInfo[title].gpsLat.isEmpty() && !m_photoInfo[title].gpsLon.isEmpty()
+                && gpsElem.isNull())
+            {
+                QDomElement whereElem = doc.createElement("georss:where");
+                docElem.appendChild(whereElem);
+                QDomElement pointElem = doc.createElement("gml:Point");
+                whereElem.appendChild(pointElem);
+                QDomElement gpsElem = doc.createElement("gml:pos");
+                pointElem.appendChild(gpsElem);
+                QDomText gpsVal = doc.createTextNode(m_photoInfo[title].gpsLat + " " + m_photoInfo[title].gpsLon);
+                gpsElem.appendChild(gpsVal);
+            }
+            */
+
             addPhotoTag(photoUri, photoId, doc.toString(-1).toUtf8());
         }
+        m_photoInfo.clear();
     }
 }
 

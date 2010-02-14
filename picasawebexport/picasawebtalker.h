@@ -70,15 +70,6 @@ public:
         FE_CREATEALBUM
     };
 
-private:
-
-    struct JobData
-    {
-        QByteArray data;
-        QString id;
-        QStringList tags;
-    };
-
 public:
 
     PicasawebTalker(QWidget* parent);
@@ -138,8 +129,9 @@ private:
     QString    m_username;
     QString    m_password;
 
-    QMap<QString, QStringList > tags_map;
-    QMap<KIO::Job*, JobData> m_jobData;
+    QMap<QString, PicasaWebPhoto> m_photoInfo;
+    QMap<KIO::Job*, QByteArray> m_jobData;
+    QMap<KIO::Job*, QString> m_jobInfo;
     KIO::Job*  m_job;
 
     State      m_state;

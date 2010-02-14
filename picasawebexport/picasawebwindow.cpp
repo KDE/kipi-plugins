@@ -453,6 +453,9 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
         //Tags from the database
         QMap <QString, QVariant> attribs = info.attributes();
+        temp.gpsLat = attribs["latitude"].toString();
+        temp.gpsLon = attribs["longitude"].toString();
+
         QStringList tagsFromDatabase;
 
         //TODOif(m_exportApplicationTags->isChecked())
