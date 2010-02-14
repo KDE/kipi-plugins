@@ -18,7 +18,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 *
 * ============================================================ */
@@ -55,10 +55,6 @@
 
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
-
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
 
 // Local includes
 
@@ -229,11 +225,7 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     QImage image;
 
     // Check if RAW file.
-#if KDCRAW_VERSION < 0x000400
-    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-#else
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-#endif
     QFileInfo fi(photoPath);
 
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))

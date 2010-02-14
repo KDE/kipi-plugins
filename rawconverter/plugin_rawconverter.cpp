@@ -50,10 +50,6 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -119,11 +115,7 @@ Plugin_RawConverter::~Plugin_RawConverter()
 
 bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 {
-#if KDCRAW_VERSION < 0x000400
-    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-#else
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-#endif
     QFileInfo fileInfo(filePath);
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
         return true;
@@ -133,13 +125,7 @@ bool Plugin_RawConverter::isRAWFile(const QString& filePath)
 
 bool Plugin_RawConverter::checkBinaries()
 {
-#if KDCRAW_VERSION < 0x000400
-    KDcrawIface::DcrawBinary::instance()->checkSystem();
-    KDcrawIface::DcrawBinary::instance()->checkReport();
-    return KDcrawIface::DcrawBinary::instance()->isAvailable();
-#else
     return true;
-#endif
 }
 
 void Plugin_RawConverter::slotActivateSingle()

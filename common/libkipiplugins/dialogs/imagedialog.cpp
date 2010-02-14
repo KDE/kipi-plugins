@@ -50,10 +50,6 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
-
 using namespace KDcrawIface;
 
 namespace KIPIPlugins
@@ -373,46 +369,20 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
         // All Images from list must been always the first entry given by KDE API
         allPictures = patternList[0];
 
-#if KDCRAW_VERSION < 0x000400
-        // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
-        if (DcrawBinary::instance()->versionIsRight())
-        {
-            allPictures.insert(allPictures.indexOf("|"), QString(DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
-            patternList.removeAll(patternList[0]);
-            patternList.prepend(allPictures);
-        }
-#else
         allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
         patternList.removeAll(patternList[0]);
         patternList.prepend(allPictures);
-#endif
     }
     else
     {
-#if KDCRAW_VERSION < 0x000400
-        if (DcrawBinary::instance()->versionIsRight())
-        {
-            allPictures.insert(allPictures.indexOf("|"), QString(DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
-            patternList.prepend(allPictures);
-        }
-#else
         allPictures.insert(allPictures.indexOf("|"), QString(KDcraw::rawFiles()) + QString(" *.JPE *.TIF"));
         patternList.prepend(allPictures);
-#endif
     }
 
-#if KDCRAW_VERSION < 0x000400
-    // Added RAW file formats supported by dcraw program like a type mime.
-    // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
-    // or unavailable(see file #121242 in B.K.O).
-    if (DcrawBinary::instance()->versionIsRight())
-        patternList.append(i18n("\n%1|Camera RAW files", QString(DcrawBinary::instance()->rawFiles())));
-#else
     // Added RAW file formats supported by dcraw program like a type mime.
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete
     // or unavailable(see file #121242 in B.K.O).
     patternList.append(i18n("\n%1|Camera RAW files", QString(KDcraw::rawFiles())));
-#endif
 
     d->fileFormats = patternList.join("\n");
 

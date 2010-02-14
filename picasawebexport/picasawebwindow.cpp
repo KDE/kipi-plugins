@@ -58,10 +58,6 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -648,11 +644,7 @@ void PicasawebWindow::uploadNextPhoto()
     else
     {
         // check if we have to RAW file -> use preview image then
-#if KDCRAW_VERSION < 0x000400
-        QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-#else
         QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-#endif
         QFileInfo fileInfo(imgPath);
         bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
 

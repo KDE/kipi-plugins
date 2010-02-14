@@ -62,10 +62,6 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
-
 // Local includes
 
 #include "imagedialog.h"
@@ -282,11 +278,7 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
     bool success = false;
 
     // Raw housekeeping.
-#if KDCRAW_VERSION < 0x000400
-    QString rawFilesExt(KDcrawIface::DcrawBinary::instance()->rawFiles());
-#else
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-#endif
     QFileInfo info(imageFile.path());
 
     // Try to load the image into the d->image variable.

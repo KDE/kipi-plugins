@@ -128,87 +128,15 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
         {
             // Swap Red and Blue and re-ajust color component values
 
-#if KDCRAW_VERSION < 0x000400
-            tmp16[0] = (unsigned short)((sptr[4]*256 + sptr[5]) * factor);      // Blue
-            tmp16[1] = (unsigned short)((sptr[2]*256 + sptr[3]) * factor);      // Green
-            tmp16[2] = (unsigned short)((sptr[0]*256 + sptr[1]) * factor);      // Red
-#else
             tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
             tmp16[1] = (unsigned short)((sptr[3]*256 + sptr[2]) * factor);      // Green
             tmp16[2] = (unsigned short)((sptr[1]*256 + sptr[0]) * factor);      // Red
-#endif
 
             memcpy(&sptr[0], &tmp16[0], 6);
 
             sptr += 6;
         }
     }
-
-#if KDCRAW_VERSION < 0x000400
-
-    // Special case: RAW decoded image is a linear-histogram image with 16 bits color depth.
-    // No auto white balance and no gamma adjustemnts are performed. Image is a black hole.
-    // We need to reproduce all dcraw 8 bits color depth adjustements here.
-
-    if (sixteenBits && 
-        rawDecodingSettings.outputColorSpace != KDcrawIface::RawDecodingSettings::RAWCOLOR)
-    {
-        // Compute histogram.
-
-        unsigned short* image = (unsigned short*)imageData.data();
-        int histogram[3][65536];
-        memset(histogram, 0, sizeof(histogram));
-        for (int i = 0 ; i < width * height ; i++)
-        {
-            for (int c = 0 ; c < 3 ; c++)
-                histogram[c][image[c]]++;
-            image += 3;
-        }
-
-        // Search 99th percentile white level.
-
-        int perc, val, total;
-        float white=0.0, r;
-        unsigned short lut[65536];
-
-        perc = (int)(width * height * 0.01);
-        kDebug() << "White Level: " << perc ;
-        for (int c =0  ; c < 3 ; c++)
-        {
-            total = 0;
-            for (val = 65535 ; val > 256 ; --val)
-                if ((total += histogram[c][val]) > perc) 
-                    break;
-
-            if (white < val) white = (float)val;
-        }
-
-        white *= 1.0 / rawDecodingSettings.brightness;
-        kDebug() << "White Point: " << white ;
-
-        // Compute the Gamma lut accordingly.
-
-        for (int i=0; i < 65536; i++) 
-        {
-            r = i / white;
-            val = (int)(65536.0 * (r <= 0.018 ? r*4.5 : pow(r,0.45)*1.099-0.099));
-            if (val > 65535) val = 65535;
-            lut[i] = val;
-        }
-
-        //  Apply Gamma lut to the whole image.
-
-        unsigned short *im = (unsigned short *)imageData.data();
-        for (int i = 0; i < width*height; i++)
-        {
-            im[0] = lut[im[0]];      // Blue
-            im[1] = lut[im[1]];      // Green
-            im[2] = lut[im[2]];      // Red
-            im += 3;
-        }
-    }
-
-#endif
 
     // Use a QImage instance to write IPTC preview and Exif thumbnail
     // and adapt color component order to KPWriteImage data format (RGB ==> BGR)
