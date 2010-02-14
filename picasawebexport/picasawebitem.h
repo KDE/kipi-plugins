@@ -62,6 +62,8 @@ public:
     {
         id="-1";
         canComment = true;
+        gpsLon = "";
+        gpsLat = "";
     }
 
     QString   id;
@@ -73,6 +75,8 @@ public:
     bool      canComment;
     QStringList tags;
     QString   mimeType;
+    QString   gpsLon;
+    QString   gpsLat;
     KUrl      originalURL;
     KUrl      thumbURL;
     KUrl      editUrl;

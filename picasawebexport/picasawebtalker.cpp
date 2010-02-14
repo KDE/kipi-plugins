@@ -365,16 +365,10 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
         m_job = 0;
     }
 
-    QString album_id = albumId;
-
-    if (album_id.length() == 0)
-        album_id = "test";
-
     QString url = "http://picasaweb.google.com/data/feed/api";
     url.append("/user/" + QUrl::toPercentEncoding(m_username));
     url.append("/albumid/" + albumId);
     QString     auth_string = "GoogleLogin auth=" + m_token;
-    QStringList headers;
     MPForm      form;
 
     //Create the Body in atom-xml
@@ -410,6 +404,56 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
             this, SLOT(slotResult(KJob *)));
 
     m_state = FE_ADDPHOTO;
+    m_job   = job;
+    m_buffer.resize(0);
+    emit signalBusy(true);
+    return true;
+}
+
+bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info)
+{
+    if (m_job)
+    {
+        m_job->kill();
+        m_job = 0;
+    }
+
+    MPForm      form;
+
+    //Create the Body in atom-xml
+    QStringList body_xml;
+    body_xml.append("<entry xmlns=\'http://www.w3.org/2005/Atom\'>");
+    body_xml.append("<title>"+ Qt::escape(info.title) +"</title>");
+    body_xml.append("<summary>"+ Qt::escape(info.description) +"</summary>");
+    body_xml.append("<category scheme=\"http://schemas.google.com/g/2005#kind\" "
+                    "term=\"http://schemas.google.com/photos/2007#photo\" />");
+    body_xml.append("</entry>");
+
+    QString body = body_xml.join("");
+
+    form.addPair("descr", body, "application/atom+xml");
+
+    // save the tags for this photo in to the tags hashmap
+    tags_map.insert(info.title, info.tags);
+
+    if (!form.addFile("photo", photoPath))
+        return false;
+
+    form.finish();
+
+    QString auth_string = "GoogleLogin auth=" + m_token;
+    KIO::TransferJob* job = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
+    job->ui()->setWindow(m_parent);
+    job->addMetaData("content-type", form.contentType());
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
+
+    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+    connect(job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
+
+    m_state = FE_UPDATEPHOTO;
     m_job   = job;
     m_buffer.resize(0);
     emit signalBusy(true);
@@ -576,6 +620,9 @@ void PicasawebTalker::slotResult(KJob *job)
         case(FE_ADDPHOTO):
             parseResponseAddPhoto(m_buffer);
             break;
+        case(FE_UPDATEPHOTO):
+            //TODO
+            break;
         case(FE_GETPHOTO):
             // all we get is data of the image
             emit signalGetPhotoDone(0, QString(), m_buffer);
@@ -740,13 +787,35 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         fps.editUrl = detailsElem.attribute("href");
                     }
 
-                   if(detailsNode.nodeName()=="media:group")
+                    if(detailsNode.nodeName()=="georss:where")
                     {
-                        QDomNode mediaNode = detailsElem.namedItem("media:thumbnail");
-                        if (!mediaNode.isNull() && mediaNode.isElement())
+                        QDomNode geoPointNode = detailsElem.namedItem("gml:Point");
+                        if (!geoPointNode.isNull() && geoPointNode.isElement())
                         {
-                            QDomElement mediaElem = mediaNode.toElement();
-                            fps.thumbURL = mediaElem.attribute("url", "");
+                            QDomNode geoPosNode = geoPointNode.toElement().namedItem("gml:pos");
+                            if (!geoPosNode.isNull() && geoPosNode.isElement())
+                            {
+                                QStringList value = geoPosNode.toElement().text().split(" ");
+                                if (value.size() == 2)
+                                {
+                                    fps.gpsLat = value[0];
+                                    fps.gpsLon = value[1];
+                                }
+                            }
+                        }
+                    }
+
+                    if(detailsNode.nodeName()=="media:group")
+                    {
+                        QDomNode thumbNode = detailsElem.namedItem("media:thumbnail");
+                        if (!thumbNode.isNull() && thumbNode.isElement())
+                        {
+                            fps.thumbURL = thumbNode.toElement().attribute("url", "");
+                        }
+                        QDomNode keywordNode = detailsElem.namedItem("media:keywords");
+                        if (!keywordNode.isNull() && keywordNode.isElement())
+                        {
+                            fps.tags = keywordNode.toElement().text().split(",");
                         }
                     }
                 }

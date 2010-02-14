@@ -36,6 +36,8 @@
 
 // KDE includes
 
+#include <kdeversion.h>
+#include <kde_file.h>
 #include <KDebug>
 #include <KConfig>
 #include <KLocale>
@@ -48,6 +50,7 @@
 #include <KPasswordDialog>
 #include <KProgressDialog>
 #include <KToolInvocation>
+#include <KIO/RenameDialog>
 
 // LibKExiv2 includes
 
@@ -366,20 +369,21 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     QList<PicasaWebPhoto>::const_iterator itPWP;
     for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
     {
-        PicasaWebPhoto info;
-        info.title = (*itPWP).title;
-        info.description = (*itPWP).description;
-        m_transferQueue.push_back(Pair((*itPWP).originalURL, info));
+        m_transferQueue.push_back(Pair((*itPWP).originalURL, (*itPWP)));
     }
 
     if (m_transferQueue.isEmpty())
         return;
 
+    m_currentAlbumID = m_widget->m_albumsCoB->itemData(
+                                 m_widget->m_albumsCoB->currentIndex()).toString();
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
 
     m_widget->progressBar()->setFormat(i18n("%v / %m"));
     m_widget->progressBar()->show();
+
+    m_renamingOpt = 0;
 
     // start download with first photo in queue
     downloadNextPhoto();
@@ -411,8 +415,8 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         KIPI::ImageInfo info = m_interface->info(*it);
         PicasaWebPhoto temp;
 
-        temp.title=info.title();
-        temp.description=info.description();
+        temp.title = info.title();
+        temp.description = info.description();
 
         // check for existing items
         QString localId;
@@ -639,7 +643,14 @@ void PicasawebWindow::uploadNextPhoto()
        ptr->name().startsWith("video"))
     {
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
+        if (!info.id.isEmpty() && !info.editUrl.isEmpty())
+        {
+            res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
+        }
+        else
+        {
+            res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
+        }
     }
     else
     {
@@ -723,13 +734,13 @@ void PicasawebWindow::downloadNextPhoto()
 void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   const QByteArray& photoData)
 {
-    QString imgPath = m_widget->getDestinationPath() + '/'
-                      + QFileInfo(m_transferQueue.first().first.path()).fileName();
+    PicasaWebPhoto item = m_transferQueue.first().second;
+    KUrl tmpUrl = m_tmpDir + QFileInfo(m_transferQueue.first().first.path()).fileName();
 
     if (errCode == 0)
     {
         QString errText;
-        QFile imgFile(imgPath);
+        QFile imgFile(tmpUrl.toLocalFile());
         if (!imgFile.open(QIODevice::WriteOnly))
         {
             errText = imgFile.errorString();
@@ -743,6 +754,25 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 
         if (errText.isEmpty())
         {
+            KExiv2Iface::KExiv2 exiv2Iface;
+            bool bRet = false;
+            if (exiv2Iface.load(tmpUrl.toLocalFile()))
+            {
+                if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(tmpUrl.toLocalFile()))
+                {
+                    bRet = exiv2Iface.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
+                    bRet = exiv2Iface.setXmpKeywords(item.tags, false);
+                }
+
+
+                if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
+                {
+                    bRet = exiv2Iface.setGPSInfo(0.0, item.gpsLat.toDouble(),
+                                          item.gpsLon.toDouble(), false);
+                }
+                bRet = exiv2Iface.save(tmpUrl.toLocalFile());
+            }
+
             m_transferQueue.pop_front();
             m_imagesCount++;
         }
@@ -769,6 +799,101 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             m_transferQueue.clear();
             m_widget->progressBar()->hide();
             return;
+        }
+    }
+
+    KUrl newUrl = m_widget->getDestinationPath() + tmpUrl.fileName();
+    bool bSkip = false;
+
+    QFileInfo targetInfo(newUrl.toLocalFile());
+    if (targetInfo.exists())
+    {
+        switch (m_renamingOpt)
+        {
+        case KIO::R_AUTO_SKIP:
+            bSkip = true;
+            break;
+
+        case KIO::R_OVERWRITE_ALL:
+            break;
+
+        default:
+            {
+                KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
+                                                 "exists. Are you sure you want "
+                                                 "to overwrite it?",
+                                                 newUrl.fileName()),
+                                      tmpUrl, newUrl,
+                                      KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
+
+                switch (dlg.exec())
+                {
+                case KIO::R_CANCEL:
+                    m_transferQueue.clear();
+                    bSkip = true;
+                    break;
+
+                case KIO::R_AUTO_SKIP:
+                    m_renamingOpt = KIO::R_AUTO_SKIP;
+                case KIO::R_SKIP:
+                    bSkip = true;
+                    break;
+
+                case KIO::R_RENAME:
+                    newUrl = dlg.newDestUrl();
+                    break;
+
+                case KIO::R_OVERWRITE_ALL:
+                    m_renamingOpt = KIO::R_OVERWRITE_ALL;
+                case KIO::R_OVERWRITE:
+                default:    // Overwrite.
+                    break;
+                }
+            }
+        }
+    }
+
+    if ((bSkip == true))
+    {
+        QFile::remove(tmpUrl.toLocalFile());
+    }
+    else
+    {
+        if (QFile::exists(newUrl.toLocalFile()))
+        {
+            QFile::remove(newUrl.toLocalFile());
+        }
+        //jmueller: rename from tmpDir to home does not work for me
+        /*
+        int ret;
+#if KDE_IS_VERSION(4,2,85)
+        // KDE 4.3.0
+        // KDE::rename() takes care of QString -> bytestring encoding
+        ret = KDE::rename(tmpUrl.toLocalFile(),
+                          newUrl.toLocalFile());
+#else
+        // KDE 4.2.x or 4.1.x
+        ret = KDE_rename(QFile::encodeName(tmpUrl.toLocalFile()),
+                         newUrl.toLocalFile());
+#endif
+        if (ret != 0)
+        */
+        if (QFile::rename(tmpUrl.toLocalFile(), newUrl.toLocalFile()) == false)
+        {
+            KMessageBox::error(this, i18n("Failed to save image to %1", newUrl.toLocalFile()));
+        }
+        else
+        {
+            QMap<QString, QVariant> attributes;
+            KIPI::ImageInfo info = m_interface->info(newUrl);
+            info.setTitle(item.description);
+            attributes.insert("tagspath", item.tags);
+            if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
+            {
+                attributes.insert("latitude",  item.gpsLat);
+                attributes.insert("longitude", item.gpsLon);
+            }
+            info.addAttributes(attributes);
         }
     }
 

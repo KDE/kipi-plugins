@@ -63,6 +63,7 @@ public:
         FE_ADDTAG,
         FE_LISTPHOTOS,
         FE_ADDPHOTO,
+        FE_UPDATEPHOTO,
         FE_GETPHOTO,
         FE_CHECKTOKEN,
         FE_GETTOKEN,
@@ -92,6 +93,7 @@ public:
     void listPhotos(const QString& username, const QString& albumId);
     void createAlbum(const PicasaWebAlbum& newAlbum);
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
+    bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
     void getPhoto(const QString& imgPath);
     QString getUserName();
     void cancel();

@@ -131,6 +131,8 @@ private:
     QString                   m_password;
     QString                   m_currentAlbumID;
 
+    int                       m_renamingOpt;
+
     QLinkedList< QPair<KUrl,PicasaWebPhoto> >  m_transferQueue;
 
     PicasawebTalker          *m_talker;
