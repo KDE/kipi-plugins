@@ -944,8 +944,8 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
         // Update the tags information from the tags_map
         QStringList tags = m_photoInfo[title].tags;
 
-        if ((tags.count() == 0) /*&&
-            (m_photoInfo[title].gpsLat.isEmpty() || m_photoInfo[title].gpsLon.isEmpty() || !gpsElem.isNull())*/)
+        if ((tags.count() == 0) &&
+            (m_photoInfo[title].gpsLat.isEmpty() || m_photoInfo[title].gpsLon.isEmpty() || !gpsElem.isNull()))
         {
             emit signalAddPhotoDone(0, "", photoId);
         }
@@ -957,21 +957,20 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
             {
                 keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
             }
-            /*
-            //jmueller does not work right now
+
             if (!m_photoInfo[title].gpsLat.isEmpty() && !m_photoInfo[title].gpsLon.isEmpty()
                 && gpsElem.isNull())
             {
-                QDomElement whereElem = doc.createElement("georss:where");
+                QDomElement whereElem = doc.createElementNS("http://www.georss.org/georss", "georss:where");
                 docElem.appendChild(whereElem);
-                QDomElement pointElem = doc.createElement("gml:Point");
+                QDomElement pointElem = doc.createElementNS("http://www.opengis.net/gml", "gml:Point");
                 whereElem.appendChild(pointElem);
-                QDomElement gpsElem = doc.createElement("gml:pos");
+                QDomElement gpsElem = doc.createElementNS("http://www.opengis.net/gml", "gml:pos");
                 pointElem.appendChild(gpsElem);
                 QDomText gpsVal = doc.createTextNode(m_photoInfo[title].gpsLat + " " + m_photoInfo[title].gpsLon);
                 gpsElem.appendChild(gpsVal);
             }
-            */
+
 
             addPhotoTag(photoUri, photoId, doc.toString(-1).toUtf8());
         }
