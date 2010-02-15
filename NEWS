@@ -5,6 +5,7 @@ NEW FEATURES:
 
 PicasaWebExport : Tool dialog redesigned with same layout than Flickr, Facebook, etc.
 HTMLExport      : Show screenshot alongside theme description.
+PiwigoExport    : New tool to export images to Piwigo server (aka PhpWebGallery).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -21,4 +22,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 225646 : PicasaWebExport : Picasaweb does not export movie.
 012 ==> 196593 : PicasaWebExport : EXIF Geotags not recognised by Picasa
 013 ==> 226799 : Libkdcraw       : Libkdcraw should use all CPU cores when converting images.
-014 ==> 
+014 ==> 224872 : PiwigoExport    : Export plugin for Piwigo.
+015 ==> 
