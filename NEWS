@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 225665 : PicasaWebExport : digiKam crashed when cancelling transfer to Picasa.
 011 ==> 225646 : PicasaWebExport : Picasaweb does not export movie.
 012 ==> 196593 : PicasaWebExport : EXIF Geotags not recognised by Picasa
-013 ==>
+013 ==> 226799 : Libkdcraw       : Libkdcraw should use all CPU cores when converting images.
+014 ==> 
