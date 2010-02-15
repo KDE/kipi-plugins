@@ -60,7 +60,6 @@ public:
     {
         FE_LOGIN = 0,
         FE_LISTALBUMS,
-        FE_ADDTAG,
         FE_LISTPHOTOS,
         FE_ADDPHOTO,
         FE_UPDATEPHOTO,
@@ -76,7 +75,6 @@ public:
     ~PicasawebTalker();
 
     QString token() { return m_token;}
-    void addPhotoTag(const QString& photoURI, const QString& photoId, const QByteArray& metadataXML);
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
@@ -131,7 +129,6 @@ private:
 
     QMap<QString, PicasaWebPhoto> m_photoInfo;
     QMap<KIO::Job*, QByteArray> m_jobData;
-    QMap<KIO::Job*, QString> m_jobInfo;
     KIO::Job*  m_job;
 
     State      m_state;

@@ -243,31 +243,6 @@ void PicasawebTalker::listAlbums(const QString& username)
     emit signalBusy( true );
 }
 
-void PicasawebTalker::addPhotoTag(const QString& photoURI, const QString& photoId,
-                                  const QByteArray& metadataXML)
-{
-    QString auth_string = "GoogleLogin auth=" + m_token;
-    KIO::TransferJob* job = KIO::put(photoURI, -1, KIO::HideProgressInfo);
-    job->ui()->setWindow(m_parent);
-    job->addMetaData("content-type", "Content-Type: application/atom+xml");
-    job->addMetaData("content-length", QString("Content-Length: %1").arg(metadataXML.length()));
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
-
-    m_jobData.insert(job, metadataXML);
-    m_jobInfo.insert(job, photoId);
-
-    connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
-            this, SLOT(dataReq(KIO::Job*, QByteArray&)));
-
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
-
-    m_state = FE_ADDTAG;
-    m_job   = job;
-    m_buffer.resize(0);
-    emit signalBusy(true);
-}
-
 void PicasawebTalker::listPhotos(const QString& username,
                                  const QString& albumId)
 {
@@ -308,40 +283,61 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
         m_job = 0;
     }
 
-    QString newAlbumXML = QString("<entry xmlns='http://www.w3.org/2005/Atom' "
-                                "xmlns:media='http://search.yahoo.com/mrss/' "
-                                "xmlns:gphoto='http://schemas.google.com/photos/2007'> "
-                                "<title type='text'>%1</title> "
-                                "<summary type='text'>%2</summary> "
-                                "<gphoto:location>%3</gphoto:location> "
-                                "<gphoto:access>%4</gphoto:access> "
-                "<gphoto:commentingEnabled>%5</gphoto:commentingEnabled> "
-                "<gphoto:timestamp>%6</gphoto:timestamp> "
-                "<media:group> "
-                "<media:keywords>%7</media:keywords> "
-                "</media:group> "
-                "<category scheme='http://schemas.google.com/g/2005#kind' "
-                        "term='http://schemas.google.com/photos/2007#album'></category> "
-                        "</entry> ").arg(album.title)
-                                    .arg(album.description)
-                                    .arg(album.location)
-                                    .arg(album.access)
-                                    .arg(album.canComment ? "true" : "false")
-                                    .arg(album.timestamp)
-                                    .arg(album.tags.join(","));
+    //Create the Body in atom-xml
+    QDomDocument docMeta;
+    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
+                      "xml", "version='1.0' encoding='UTF-8'");
+    docMeta.appendChild(instr);
+    QDomElement entryElem = docMeta.createElement("entry");
+    docMeta.appendChild(entryElem);
+    entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
+    QDomElement titleElem = docMeta.createElement("title");
+    entryElem.appendChild(titleElem);
+    QDomText titleText = docMeta.createTextNode(Qt::escape(album.title));
+    titleElem.appendChild(titleText);
+    QDomElement summaryElem = docMeta.createElement("summary");
+    entryElem.appendChild(summaryElem);
+    QDomText summaryText = docMeta.createTextNode(Qt::escape(album.description));
+    summaryElem.appendChild(summaryText);
+    QDomElement locationElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:location");
+    entryElem.appendChild(locationElem);
+    QDomText locationText = docMeta.createTextNode(Qt::escape(album.location));
+    locationElem.appendChild(locationText);
+    QDomElement accessElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:access");
+    entryElem.appendChild(accessElem);
+    QDomText accessText = docMeta.createTextNode(Qt::escape(album.access));
+    accessElem.appendChild(accessText);
+    QDomElement commentElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:commentingEnabled");
+    entryElem.appendChild(commentElem);
+    QDomText commentText = docMeta.createTextNode(Qt::escape(album.canComment ? "true" : "false"));
+    commentElem.appendChild(commentText);
+    QDomElement timestampElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:timestamp");
+    entryElem.appendChild(timestampElem);
+    QDomText timestampText = docMeta.createTextNode(Qt::escape(album.timestamp));
+    timestampElem.appendChild(timestampText);
+    QDomElement categoryElem = docMeta.createElement("category");
+    entryElem.appendChild(categoryElem);
+    categoryElem.setAttribute("scheme", "http://schemas.google.com/g/2005#kind");
+    categoryElem.setAttribute("term", "http://schemas.google.com/photos/2007#album");
+    QDomElement mediaGroupElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:group");
+    entryElem.appendChild(mediaGroupElem);
+    QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
+    mediaGroupElem.appendChild(mediaKeywordsElem);
+    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(album.tags.join(",")));
+    mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     QByteArray buffer;
-    buffer.append(newAlbumXML.toUtf8());
+    buffer.append(docMeta.toString().toUtf8());
 
-    MPForm form;
     QString url = "http://picasaweb.google.com/data/feed/api";
     url.append("/user/" + QUrl::toPercentEncoding(m_username));
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/atom+xml");
-    job->addMetaData("content-length", QString("Content-Length: %1").arg(newAlbumXML.length()));
+    job->addMetaData("content-length", QString("Content-Length: %1").arg(buffer.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string ); 
+
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
@@ -370,20 +366,44 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     MPForm      form;
 
     //Create the Body in atom-xml
-    QStringList body_xml;
-    body_xml.append("<entry xmlns=\'http://www.w3.org/2005/Atom\'>");
-    body_xml.append("<title>"+ Qt::escape(info.title) +"</title>");
-    body_xml.append("<summary>"+ Qt::escape(info.description) +"</summary>");
-    body_xml.append("<category scheme=\"http://schemas.google.com/g/2005#kind\" "
-                    "term=\"http://schemas.google.com/photos/2007#photo\" />");
-    body_xml.append("</entry>");
+    QDomDocument docMeta;
+    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
+                      "xml", "version='1.0' encoding='UTF-8'");
+    docMeta.appendChild(instr);
+    QDomElement entryElem = docMeta.createElement("entry");
+    docMeta.appendChild(entryElem);
+    entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
+    QDomElement titleElem = docMeta.createElement("title");
+    entryElem.appendChild(titleElem);
+    QDomText titleText = docMeta.createTextNode(Qt::escape(info.title));
+    titleElem.appendChild(titleText);
+    QDomElement summaryElem = docMeta.createElement("summary");
+    entryElem.appendChild(summaryElem);
+    QDomText summaryText = docMeta.createTextNode(Qt::escape(info.description));
+    summaryElem.appendChild(summaryText);
+    QDomElement categoryElem = docMeta.createElement("category");
+    entryElem.appendChild(categoryElem);
+    categoryElem.setAttribute("scheme", "http://schemas.google.com/g/2005#kind");
+    categoryElem.setAttribute("term", "http://schemas.google.com/photos/2007#photo");
+    QDomElement mediaGroupElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:group");
+    entryElem.appendChild(mediaGroupElem);
+    QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
+    mediaGroupElem.appendChild(mediaKeywordsElem);
+    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(info.tags.join(",")));
+    mediaKeywordsElem.appendChild(mediaKeywordsText);
+    if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
+    {
+        QDomElement whereElem = docMeta.createElementNS("http://www.georss.org/georss", "georss:where");
+        entryElem.appendChild(whereElem);
+        QDomElement pointElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:Point");
+        whereElem.appendChild(pointElem);
+        QDomElement gpsElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:pos");
+        pointElem.appendChild(gpsElem);
+        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + " " + info.gpsLon);
+        gpsElem.appendChild(gpsVal);
+    }
 
-    QString body = body_xml.join("");
-
-    form.addPair("descr", body, "application/atom+xml");
-
-    // save the tags for this photo in to the tags hashmap
-    m_photoInfo.insert(info.title, info);
+    form.addPair("descr", docMeta.toString(), "application/atom+xml");
 
     if (!form.addFile("photo", photoPath))
         return false;
@@ -419,20 +439,44 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     MPForm      form;
 
     //Create the Body in atom-xml
-    QStringList body_xml;
-    body_xml.append("<entry xmlns=\'http://www.w3.org/2005/Atom\'>");
-    body_xml.append("<title>"+ Qt::escape(info.title) +"</title>");
-    body_xml.append("<summary>"+ Qt::escape(info.description) +"</summary>");
-    body_xml.append("<category scheme=\"http://schemas.google.com/g/2005#kind\" "
-                    "term=\"http://schemas.google.com/photos/2007#photo\" />");
-    body_xml.append("</entry>");
+    QDomDocument docMeta;
+    QDomProcessingInstruction instr = docMeta.createProcessingInstruction(
+                      "xml", "version='1.0' encoding='UTF-8'");
+    docMeta.appendChild(instr);
+    QDomElement entryElem = docMeta.createElement("entry");
+    docMeta.appendChild(entryElem);
+    entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
+    QDomElement titleElem = docMeta.createElement("title");
+    entryElem.appendChild(titleElem);
+    QDomText titleText = docMeta.createTextNode(Qt::escape(info.title));
+    titleElem.appendChild(titleText);
+    QDomElement summaryElem = docMeta.createElement("summary");
+    entryElem.appendChild(summaryElem);
+    QDomText summaryText = docMeta.createTextNode(Qt::escape(info.description));
+    summaryElem.appendChild(summaryText);
+    QDomElement categoryElem = docMeta.createElement("category");
+    entryElem.appendChild(categoryElem);
+    categoryElem.setAttribute("scheme", "http://schemas.google.com/g/2005#kind");
+    categoryElem.setAttribute("term", "http://schemas.google.com/photos/2007#photo");
+    QDomElement mediaGroupElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:group");
+    entryElem.appendChild(mediaGroupElem);
+    QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
+    mediaGroupElem.appendChild(mediaKeywordsElem);
+    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(info.tags.join(",")));
+    mediaKeywordsElem.appendChild(mediaKeywordsText);
+    if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
+    {
+        QDomElement whereElem = docMeta.createElementNS("http://www.georss.org/georss", "georss:where");
+        entryElem.appendChild(whereElem);
+        QDomElement pointElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:Point");
+        whereElem.appendChild(pointElem);
+        QDomElement gpsElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:pos");
+        pointElem.appendChild(gpsElem);
+        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + " " + info.gpsLon);
+        gpsElem.appendChild(gpsVal);
+    }
 
-    QString body = body_xml.join("");
-
-    form.addPair("descr", body, "application/atom+xml");
-
-    // save the tags for this photo in to the tags hashmap
-    m_photoInfo.insert(info.title, info);
+    form.addPair("descr", docMeta.toString(), "application/atom+xml");
 
     if (!form.addFile("photo", photoPath))
         return false;
@@ -443,10 +487,12 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     KIO::TransferJob* job = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nIf-Match: *");
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    m_jobData.insert(job, form.formData());
+
+    connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
+            this, SLOT(dataReq(KIO::Job*, QByteArray&)));
 
     connect(job, SIGNAL(result(KJob *)),
             this, SLOT(slotResult(KJob *)));
@@ -620,23 +666,11 @@ void PicasawebTalker::slotResult(KJob *job)
             parseResponseAddPhoto(m_buffer);
             break;
         case(FE_UPDATEPHOTO):
-            //TODO
+            emit signalAddPhotoDone(0, "", "");
             break;
         case(FE_GETPHOTO):
             // all we get is data of the image
             emit signalGetPhotoDone(0, QString(), m_buffer);
-            break;
-        case(FE_ADDTAG):
-            {
-                QString photoId;
-                KIO::Job* jobKIO = qobject_cast<KIO::Job *>(job);
-                if ((jobKIO != 0) && (m_jobData.contains(jobKIO)))
-                {
-                    photoId = m_jobInfo.value(jobKIO);
-                    m_jobData.remove(jobKIO);
-                }
-                emit signalAddPhotoDone(0, "", photoId);
-            }
             break;
     }
 }
@@ -871,12 +905,7 @@ void PicasawebTalker::parseResponseCreateAlbum(const QByteArray& data)
 
 void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 {
-    bool success = false;
-    QString     line;
-    QString str(data);
-    success = 1;
     QDomDocument doc( "AddPhoto Response" );
-
     if ( !doc.setContent( data ) )
     {
         emit signalAddPhotoDone(1, i18n("Failed to upload photo"), "");
@@ -885,97 +914,24 @@ void PicasawebTalker::parseResponseAddPhoto(const QByteArray& data)
 
     // parse the new album name
     QDomElement docElem = doc.documentElement();
-    QString photoUri("");
     QString photoId("");
-    QString title("");
-    QDomElement keywordElem;
-    QDomElement gpsElem;
     if (docElem.nodeName() == "entry")
     {
-        success = true;
         QDomNode node = docElem.firstChild(); //this should mean <entry>
         while(!node.isNull())
         {
             if (node.isElement())
             {
-                QDomElement e = node.toElement();
-
-                if (node.nodeName() == "link" && e.attribute("rel") == "edit")
-                {
-                    photoUri = e.attribute("href");
-                }
-
                 if (node.nodeName() == "gphoto:id")
                 {
-                    photoId = e.text();
+                    photoId = node.toElement().text();
                 }
-
-                if(node.nodeName() == "title")
-                {
-                    success = true;
-                    title = e.text();
-                }
-
-                if (node.nodeName() == "media:group")
-                {
-                    keywordElem = node.firstChildElement("media:keywords");
-                }
-
-                if (node.nodeName() == "georss:where")
-                {
-                    QDomElement pointElem = node.firstChildElement("gml:Point");
-                    if (!pointElem.isNull())
-                    {
-                        gpsElem = pointElem.firstChildElement("gml:pos");
-                    }
-                }
-
             }
             node = node.nextSibling();
         }
     }
 
-    if (!success)
-    {
-        emit signalAddPhotoDone(1, i18n("Failed to upload photo"), "");
-    }
-    else
-    {
-        // Update the tags information from the tags_map
-        QStringList tags = m_photoInfo[title].tags;
-
-        if ((tags.count() == 0) &&
-            (m_photoInfo[title].gpsLat.isEmpty() || m_photoInfo[title].gpsLon.isEmpty() || !gpsElem.isNull()))
-        {
-            emit signalAddPhotoDone(0, "", photoId);
-        }
-        else
-        {
-            // Add our tags to the keyword element. Then send the whole XML
-            // back.
-            if (tags.count() > 0)
-            {
-                keywordElem.appendChild(doc.createTextNode(tags.join(", ")));
-            }
-
-            if (!m_photoInfo[title].gpsLat.isEmpty() && !m_photoInfo[title].gpsLon.isEmpty()
-                && gpsElem.isNull())
-            {
-                QDomElement whereElem = doc.createElementNS("http://www.georss.org/georss", "georss:where");
-                docElem.appendChild(whereElem);
-                QDomElement pointElem = doc.createElementNS("http://www.opengis.net/gml", "gml:Point");
-                whereElem.appendChild(pointElem);
-                QDomElement gpsElem = doc.createElementNS("http://www.opengis.net/gml", "gml:pos");
-                pointElem.appendChild(gpsElem);
-                QDomText gpsVal = doc.createTextNode(m_photoInfo[title].gpsLat + " " + m_photoInfo[title].gpsLon);
-                gpsElem.appendChild(gpsVal);
-            }
-
-
-            addPhotoTag(photoUri, photoId, doc.toString(-1).toUtf8());
-        }
-        m_photoInfo.clear();
-    }
+    emit signalAddPhotoDone(0, "", photoId);
 }
 
 } // KIPIPicasawebExportPlugin

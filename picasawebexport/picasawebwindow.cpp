@@ -646,11 +646,13 @@ void PicasawebWindow::uploadNextPhoto()
        ptr->name().startsWith("video"))
     {
         m_tmpPath.clear();
+        /*
         if (!info.id.isEmpty() && !info.editUrl.isEmpty())
         {
-            res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
+            res = m_talker->updatePhoto(imgPath, info);
         }
         else
+        */
         {
             res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
         }
@@ -689,7 +691,8 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
     KExiv2Iface::KExiv2 exiv2Iface;
     bool bRet = false;
     QString fileName = m_transferQueue.first().first.path();
-    if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(fileName) && exiv2Iface.load(fileName))
+    if (!photoId.isEmpty() &&
+        exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(fileName) && exiv2Iface.load(fileName))
     {
         bRet = exiv2Iface.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
         bRet = exiv2Iface.save(fileName);
