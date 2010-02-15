@@ -33,7 +33,7 @@
 
 // KDE includes
 #include <KApplication>
-#include <KDebug>
+#include <kdebug.h>
 #include <KMimeType>
 #include <KUrl>
 #include <KRandom>

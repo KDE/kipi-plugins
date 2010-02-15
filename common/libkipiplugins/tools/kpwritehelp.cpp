@@ -32,7 +32,7 @@
 
 // KDE includes
 
-#include <KDebug>
+#include <kdebug.h>
 
 // LibJPEG includes
 

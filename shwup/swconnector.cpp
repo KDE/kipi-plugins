@@ -46,7 +46,7 @@
 // KDE includes
 
 #include <KCodecs>
-#include <KDebug>
+#include <kdebug.h>
 #include <KUrl>
 #include <KIO/Job>
 #include <KIO/JobUiDelegate>

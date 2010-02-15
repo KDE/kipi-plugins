@@ -34,7 +34,7 @@ extern "C"
 
 // KDE includes
 
-#include <KDebug>
+#include <kdebug.h>
 #include <KConfig>
 #include <KApplication>
 #include <KAction>

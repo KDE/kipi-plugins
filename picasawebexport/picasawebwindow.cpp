@@ -38,7 +38,7 @@
 
 #include <kdeversion.h>
 #include <kde_file.h>
-#include <KDebug>
+#include <kdebug.h>
 #include <KConfig>
 #include <KLocale>
 #include <KMenu>
