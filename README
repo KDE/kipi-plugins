@@ -41,6 +41,7 @@ BatchProcess       : A tool to batch process images (convert, resize, rename, et
 KIOExport          : A tool to export images to remote computer using network protocol (FTP, SSH, SAMBA, etc...).
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
+PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 
 Porting under progress to Qt4/KDE4:
 
