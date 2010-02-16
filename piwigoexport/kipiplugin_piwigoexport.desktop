@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=Remote Piwigo Export
 Name[fr]=Module externe pour l'export vers Piwigo
-Comment=A tool to export images to a remote Pwigo
+Comment=A tool to export images to a remote Piwigo
 Comment[fr]=Outil pour l'exportation vers Piwigo
 Type=Service
 ServiceTypes=KIPI/Plugin
