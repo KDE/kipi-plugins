@@ -1,0 +1,18 @@
+[Desktop Entry]
+Comment=Yet another simple theme. Clean look with more image details.
+Icon=
+Name=Details
+
+[X-HTMLExport Author]
+Name=Gianluca Urgese
+Url=mailto:g.urgese@jaone.it
+
+[X-HTMLExport Preview]
+Name=Details screenshot
+Url=preview.png
+
+[X-HTMLExport Parameter footer]
+Name=Footer information
+
+Type=string
+Default=My personal gallery <a href="mailto:email@mydomain.tld">email@mydomain.tld</a> - Powered by <a href="http://www.kipi-plugins.org/drupal/node/17">Kipi Plugins - HTMLExport</a>

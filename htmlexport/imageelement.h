@@ -31,6 +31,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // Local
 #include "xmlutils.h"
 
+namespace KExiv2Iface {
+class KExiv2;
+}
+
 namespace KIPIHTMLExport {
 
 /**
@@ -64,6 +68,23 @@ public:
 	QString mOriginalFileName;
 	QSize mOriginalSize;
 
+        // Exif Metadata
+        QString mExifImageMake;
+        QString mExifImageModel;
+        QString mExifImageOrientation;
+        QString mExifImageXResolution;
+        QString mExifImageYResolution;
+        QString mExifImageResolutionUnit;
+        QString mExifImageDateTime;
+        QString mExifImageYCbCrPositioning;
+        QString mExifPhotoExposureTime;
+        QString mExifPhotoFNumber;
+        QString mExifPhotoExposureProgram;
+        QString mExifPhotoISOSpeedRatings;
+        QString mExifPhotoShutterSpeedValue;
+        QString mExifPhotoApertureValue;
+        QString mExifPhotoFocalLength;
+
 	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) const {
 		if (!mValid) {
 			return;
@@ -72,12 +93,31 @@ public:
 		xmlWriter.writeElement("title", mTitle);
 		xmlWriter.writeElement("description", mDescription);
 		xmlWriter.writeElement("date", mTime.toString("yyyy-MM-ddThh:mm:ss"));
+                appendImageElementToXML(xmlWriter, "full", mFullFileName, mFullSize);
+                appendImageElementToXML(xmlWriter, "thumbnail", mThumbnailFileName, mThumbnailSize);
+                if (copyOriginalImage) {
+                        appendImageElementToXML(xmlWriter, "original", mOriginalFileName, mOriginalSize);
+                }
+                //Exif
+                // TODO put all exif tags in a sub level
+                XMLElement imageExif(xmlWriter, "exif");
+                xmlWriter.writeElement("exifimagemake", mExifImageMake);
+                xmlWriter.writeElement("exifimagemodel", mExifImageModel);
+                xmlWriter.writeElement("exifimageorientation", mExifImageOrientation);
+                xmlWriter.writeElement("exifimagexresolution", mExifImageXResolution);
+                xmlWriter.writeElement("exifimageyresolution", mExifImageYResolution);
+                xmlWriter.writeElement("exifimageresolutionunit", mExifImageResolutionUnit);
+                xmlWriter.writeElement("exifimagedatetime", mExifImageDateTime);
+                xmlWriter.writeElement("exifimageycbcrpositioning", mExifImageYCbCrPositioning);
+                xmlWriter.writeElement("exifphotoexposuretime", mExifPhotoExposureTime);
+                xmlWriter.writeElement("exifphotofnumber", mExifPhotoFNumber);
+                xmlWriter.writeElement("exifphotoexposureprogram", mExifPhotoExposureProgram);
+                xmlWriter.writeElement("exifphotoisospeedratings", mExifPhotoISOSpeedRatings);
+                xmlWriter.writeElement("exifphotoshutterspeedvalue", mExifPhotoShutterSpeedValue);
+                xmlWriter.writeElement("exifphotoaperturevalue", mExifPhotoApertureValue);
+                xmlWriter.writeElement("exifphotofocallength", mExifPhotoFocalLength);
 
-		appendImageElementToXML(xmlWriter, "full", mFullFileName, mFullSize);
-		appendImageElementToXML(xmlWriter, "thumbnail", mThumbnailFileName, mThumbnailSize);
-		if (copyOriginalImage) {
-			appendImageElementToXML(xmlWriter, "original", mOriginalFileName, mOriginalSize);
-		}
+
 	}
 
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) const {

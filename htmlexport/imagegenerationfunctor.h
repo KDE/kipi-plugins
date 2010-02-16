@@ -23,12 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "uniquenamehelper.h"
 
-
 namespace KIPIHTMLExport {
 
 class GalleryInfo;
 class Generator;
 class ImageElement;
+
 
 /**
  * This functor generates images (full and thumbnail) for an url and returns an

@@ -60,35 +60,6 @@ Comment[x-test]=xxA frame theme based on Ruediger Bente's frame themexx
 Comment[zh_CN]=基于 Ruediger Bente 边框主题的边框主题
 Comment[zh_TW]=基於 Ruediger Bente 外框主題的主題
 
-[X-HTMLExport Preview]
-Name=Date Frames
-Name[ast]=Marcos de data
-Name[bg]=Рамки на датите
-Name[ca]=Marcs de data
-Name[ca@valencia]=Marcs de data
-Name[cs]=Rámce dat
-Name[da]=Datér rammer
-Name[en_GB]=Date Frames
-Name[es]=Molduras de fechas
-Name[et]=Kuupäevapaneelid
-Name[gl]=Molduras de datas
-Name[is]=Dagsetningarammar
-Name[it]=Riquadri di data
-Name[lv]=Datumu ietvari
-Name[nb]=Datorammer
-Name[nds]=Datenrahmens
-Name[nl]=Datumframes
-Name[pa]=ਡਾਟਾ ਫਰੇਮ
-Name[pt]=Molduras de Datas
-Name[pt_BR]=Molduras de datas
-Name[ru]=С фреймами и датами
-Name[sv]=Datumramar
-Name[tr]=Tarih Çerçeveleri
-Name[uk]=Рамки дат
-Name[x-test]=xxDate Framesxx
-Name[zh_TW]=日期框
-Url=preview.png
-
 [X-HTMLExport Author]
 Name=Elizabeth Marmorstein
 Name[ast]=Elizabeth Marmorstein

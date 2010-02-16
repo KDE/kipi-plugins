@@ -47,6 +47,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // libkipiplugins
 #include <batchprogressdialog.h>
 
+
 // libxslt
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
@@ -291,6 +292,22 @@ struct Generator::Private {
         map["i18nCollectionList"] = makeXsltParam(i18n("Collection List"));
         map["i18nOriginalImage"] = makeXsltParam(i18n("Original Image"));
         map["i18nUp"] = makeXsltParam(i18n("Go Up"));
+        // Exif Tag
+        map["i18nexifimagemake"] = makeXsltParam(i18n("Make"));
+        map["i18nexifimagemodel"] = makeXsltParam(i18n("Model"));
+        map["i18nexifimageorientation"] = makeXsltParam(i18n("Image Orientation"));
+        map["i18nexifimagexresolution"] = makeXsltParam(i18n("Image X Resolution"));
+        map["i18nexifimageyresolution"] = makeXsltParam(i18n("Image Y Resolution"));
+        map["i18nexifimageresolutionunit"] = makeXsltParam(i18n("Image Resolution Unit"));
+        map["i18nexifimagedatetime"] = makeXsltParam(i18n("Image Date Time"));
+        map["i18nexifimageycbcrpositioning"] = makeXsltParam(i18n("YCBCR Positioning"));
+        map["i18nexifphotoexposuretime"] = makeXsltParam(i18n("Exposure Time"));
+        map["i18nexifphotofnumber"] = makeXsltParam(i18n("F Number"));
+        map["i18nexifphotoexposureprogram"] = makeXsltParam(i18n("Exposure Index"));
+        map["i18nexifphotoisospeedratings"] = makeXsltParam(i18n("ISO Speed Ratings"));
+        map["i18nexifphotoshutterspeedvalue"] = makeXsltParam(i18n("Shutter Speed Value"));
+        map["i18nexifphotoaperturevalue"] = makeXsltParam(i18n("Aperture Value"));
+        map["i18nexifphotofocallength"] = makeXsltParam(i18n("Focal Length"));
     }
 
 

@@ -31,10 +31,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // KIPI
 #include <libkipi/interface.h>
 
+// LibKExiv2 includes
+#include <libkexiv2/kexiv2.h>
+#include <libkexiv2/version.h>
+
+// LibKDcraw includes
+
+#include <libkdcraw/dcrawinfocontainer.h>
+#include <libkdcraw/version.h>
+#include <libkdcraw/kdcraw.h>
+
+#if KDCRAW_VERSION < 0x000400
+#include <libkdcraw/dcrawbinary.h>
+#endif
+
 // Local
 #include "galleryinfo.h"
 #include "generator.h"
 #include "imageelement.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIHTMLExport {
 
@@ -64,7 +80,6 @@ ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, GalleryInfo
 , mInfo(info)
 , mDestDir(destDir)
 {}
-
 
 void ImageGenerationFunctor::operator()(ImageElement& element) {
 	// Load image
@@ -148,7 +163,172 @@ void ImageGenerationFunctor::operator()(ImageElement& element) {
 	}
 	element.mThumbnailFileName = thumbnailFileName;
 	element.mThumbnailSize = thumbnail.size();
+
 	element.mValid = true;
+
+        // Read Exif Metadata
+        QString unavailable(i18n("unavailable"));
+        KExiv2Iface::KExiv2 exiv2Iface;
+        exiv2Iface.load(path);
+        if (exiv2Iface.hasExif() || exiv2Iface.hasXmp())
+        {
+            // Try to use libkexiv2 to get image info
+
+            element.mExifImageMake = exiv2Iface.getExifTagString("Exif.Image.Make");
+            if (element.mExifImageMake.isEmpty())
+            {
+                element.mExifImageMake = exiv2Iface.getXmpTagString("Xmp.tiff.Make");
+            }
+
+            element.mExifImageModel = exiv2Iface.getExifTagString("Exif.Image.Model");
+            if (element.mExifImageModel.isEmpty())
+            {
+                element.mExifImageModel = exiv2Iface.getXmpTagString("Xmp.tiff.Model");
+            }
+
+            element.mExifImageOrientation = exiv2Iface.getExifTagString("Exif.Image.Orientation");
+            if (element.mExifImageOrientation.isEmpty())
+            {
+                element.mExifImageOrientation = exiv2Iface.getXmpTagString("Xmp.tiff.Orientation");
+            }
+
+            element.mExifImageXResolution = exiv2Iface.getExifTagString("Exif.Image.XResolution");
+            if (element.mExifImageXResolution.isEmpty())
+            {
+                element.mExifImageXResolution = exiv2Iface.getXmpTagString("Xmp.tiff.XResolution");
+            }
+
+            element.mExifImageYResolution = exiv2Iface.getExifTagString("Exif.Image.YResolution");
+            if (element.mExifImageYResolution.isEmpty())
+            {
+                element.mExifImageYResolution = exiv2Iface.getXmpTagString("Xmp.tiff.YResolution");
+            }
+
+            element.mExifImageResolutionUnit = exiv2Iface.getExifTagString("Exif.Image.ResolutionUnit");
+            if (element.mExifImageResolutionUnit.isEmpty())
+            {
+                element.mExifImageResolutionUnit = exiv2Iface.getXmpTagString("Xmp.tiff.ResolutionUnit");
+            }
+
+            if (exiv2Iface.getImageDateTime().isValid())
+            {
+                element.mExifImageDateTime = KGlobal::locale()->formatDateTime(exiv2Iface.getImageDateTime(),
+                                                             KLocale::ShortDate, true);
+            }
+
+            element.mExifImageYCbCrPositioning = exiv2Iface.getExifTagString("Exif.Image.YCbCrPositioning");
+            if (element.mExifImageYCbCrPositioning.isEmpty())
+            {
+                element.mExifImageYCbCrPositioning = exiv2Iface.getXmpTagString("Xmp.tiff.YCbCrPositioning");
+            }
+
+            element.mExifPhotoFNumber = exiv2Iface.getExifTagString("Exif.Photo.FNumber");
+            if (element.mExifPhotoFNumber.isEmpty())
+            {
+                element.mExifPhotoFNumber = exiv2Iface.getXmpTagString("Xmp.exif.FNumber");
+            }
+
+            element.mExifPhotoApertureValue = exiv2Iface.getExifTagString("Exif.Photo.ApertureValue");
+            if (element.mExifPhotoApertureValue.isEmpty())
+            {
+                element.mExifPhotoApertureValue = exiv2Iface.getXmpTagString("Xmp.exif.ApertureValue");
+            }
+
+            element.mExifPhotoFocalLength = exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
+            if (element.mExifPhotoFocalLength.isEmpty())
+            {
+                element.mExifPhotoFocalLength = exiv2Iface.getXmpTagString("Xmp.exif.FocalLength");
+            }
+
+            element.mExifPhotoExposureTime = exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
+            if (element.mExifPhotoExposureTime.isEmpty())
+            {
+                element.mExifPhotoExposureTime = exiv2Iface.getXmpTagString("Xmp.exif.ExposureTime");
+            }
+
+            element.mExifPhotoShutterSpeedValue = exiv2Iface.getExifTagString("Exif.Photo.ShutterSpeedValue");
+            if (element.mExifPhotoShutterSpeedValue.isEmpty())
+            {
+                element.mExifPhotoShutterSpeedValue = exiv2Iface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
+            }
+
+            element.mExifPhotoISOSpeedRatings = exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+            if (element.mExifPhotoISOSpeedRatings.isEmpty())
+            {
+                element.mExifPhotoISOSpeedRatings = exiv2Iface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
+            }
+
+            element.mExifPhotoExposureProgram = exiv2Iface.getExifTagString("Exif.Photo.ExposureIndex");
+            if (element.mExifPhotoExposureProgram.isEmpty())
+            {
+                element.mExifPhotoExposureProgram = exiv2Iface.getXmpTagString("Xmp.exif.ExposureIndex");
+            }
+
+        }
+        else
+        {
+            // Try to use libkdcraw interface to identify image.
+
+            DcrawInfoContainer info;
+            KDcraw             dcrawIface;
+            dcrawIface.rawFileIdentify(info, path);
+
+            if (info.isDecodable)
+            {
+                if (!info.make.isEmpty())
+                    element.mExifImageMake = info.make;
+
+                if (!info.model.isEmpty())
+                    element.mExifImageModel = info.model;
+
+                if (info.dateTime.isValid())
+                    element.mExifImageDateTime = KGlobal::locale()->formatDateTime(info.dateTime, KLocale::ShortDate, true);
+
+                if (info.aperture != -1.0)
+                    element.mExifPhotoApertureValue = QString::number(info.aperture);
+
+                if (info.focalLength != -1.0)
+                    element.mExifPhotoFocalLength = QString::number(info.focalLength);
+
+                if (info.exposureTime != -1.0)
+                    element.mExifPhotoExposureTime = QString::number(info.exposureTime);
+
+                if (info.sensitivity != -1)
+                    element.mExifPhotoISOSpeedRatings = QString::number(info.sensitivity);
+            }
+        }
+
+           if (element.mExifImageMake.isEmpty()) element.mExifImageMake = unavailable;
+
+           if (element.mExifImageModel.isEmpty()) element.mExifImageModel   = unavailable;
+
+           if (element.mExifImageOrientation.isEmpty()) element.mExifImageOrientation = unavailable;
+
+           if (element.mExifImageXResolution.isEmpty()) element.mExifImageXResolution = unavailable;
+
+           if (element.mExifImageYResolution.isEmpty()) element.mExifImageYResolution = unavailable;
+
+           if (element.mExifImageResolutionUnit.isEmpty()) element.mExifImageResolutionUnit = unavailable;
+
+           if (element.mExifImageDateTime.isEmpty()) element.mExifImageDateTime = unavailable;
+
+           if (element.mExifImageYCbCrPositioning.isEmpty()) element.mExifImageYCbCrPositioning = unavailable;
+
+           if (element.mExifPhotoApertureValue.isEmpty()) element.mExifPhotoApertureValue   = unavailable;
+
+           if (element.mExifPhotoFocalLength.isEmpty()) element.mExifPhotoFocalLength   = unavailable;
+
+           if (element.mExifPhotoFNumber.isEmpty()) element.mExifPhotoFNumber   = unavailable;
+
+           if (element.mExifPhotoExposureTime.isEmpty()) element.mExifPhotoExposureTime = unavailable;
+
+           if (element.mExifPhotoShutterSpeedValue.isEmpty()) element.mExifPhotoShutterSpeedValue = unavailable;
+
+           if (element.mExifPhotoISOSpeedRatings.isEmpty()) element.mExifPhotoISOSpeedRatings   = unavailable;
+
+           if (element.mExifPhotoExposureProgram.isEmpty()) element.mExifPhotoExposureProgram   = unavailable;
+
+
 }
 
 
