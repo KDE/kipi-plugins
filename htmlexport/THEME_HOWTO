@@ -170,13 +170,31 @@ If you want to use "i18n parameters" in attributes, do it like this:
 	<a href="previous" title="{$i18nPrevious}"><img src="previous.png"/></a>
 	| <a href="next" title="{$i18nNext}"><img src="next.png"/></a>
 
-For now, the available "i18n parameters" are:
+For now, the available general "i18n parameters" are:
 
 - i18nPrevious
 - i18nNext
 - i18nCollectionList
 - i18nOriginalImage
 - i18nUp
+
+and for the image details are:
+
+- i18nexifimagemake ("Make")
+- i18nexifimagemodel ("Model")
+- i18nexifimageorientation ("Image Orientation")
+- i18nexifimagexresolution ("Image X Resolution")
+- i18nexifimageyresolution ("Image Y Resolution")
+- i18nexifimageresolutionunit ("Image Resolution Unit")
+- i18nexifimagedatetime ("Image Date Time")
+- i18nexifimageycbcrpositioning ("YCBCR Positioning")
+- i18nexifphotoexposuretime ("Exposure Time")
+- i18nexifphotofnumber ("F Number")
+- i18nexifphotoexposureprogram ("Exposure Index")
+- i18nexifphotoisospeedratings ("ISO Speed Ratings")
+- i18nexifphotoshutterspeedvalue ("Shutter Speed Value")
+- i18nexifphotoaperturevalue ("Aperture Value")
+- i18nexifphotofocallength ("Focal Length")
 
 *generated from 'grep \"i18n generator.cpp'*
 

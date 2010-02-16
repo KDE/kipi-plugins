@@ -1,7 +1,5 @@
 # Would be nice
 - Support for remote URLs
-- Keep EXIF information
-- Make EXIF information available to themes
 - Implement an "update" mode which would only generate files for new or
   modified images
 - Support for videos.
