@@ -127,7 +127,6 @@ private:
     QString    m_username;
     QString    m_password;
 
-    QMap<QString, PicasaWebPhoto> m_photoInfo;
     QMap<KIO::Job*, QByteArray> m_jobData;
     KIO::Job*  m_job;
 

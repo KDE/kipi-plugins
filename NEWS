@@ -25,5 +25,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> 226799 : Libkdcraw       : Libkdcraw should use all CPU cores when converting images.
 014 ==> 224872 : PiwigoExport    : Export plugin for Piwigo.
 015 ==> 226916 : HTMLExport	 : Get metadata from image files and new detailed theme.
-016 ==> 
+016 ==> 217539 : PicasaWebExport : picasaweb ability to choose add or update photo
+017 ==>
 

@@ -76,6 +76,7 @@
 #include "picasawebtalker.h"
 #include "picasawebwidget.h"
 #include "pluginsversion.h"
+#include "picasawebreplacedialog.h"
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -214,7 +215,6 @@ void PicasawebWindow::slotHelp()
 
 void PicasawebWindow::slotButtonClicked(int button)
 {
-    kDebug() << "TODO: FbWindow::slotButtonClicked";
     switch (button)
     {
         case Cancel:
@@ -226,10 +226,7 @@ void PicasawebWindow::slotButtonClicked(int button)
             }
             else // cancel login/transfer
             {
-                m_talker->cancel();
-                m_transferQueue.clear();
-                m_widget->m_imgList->processed(false);
-                m_widget->progressBar()->hide();
+                cancelProcessing();
             }
             break;
         case User1:
@@ -238,6 +235,14 @@ void PicasawebWindow::slotButtonClicked(int button)
         default:
              KDialog::slotButtonClicked(button);
     }
+}
+
+void PicasawebWindow::cancelProcessing()
+{
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->processed(false);
+    m_widget->progressBar()->hide();
 }
 
 void PicasawebWindow::reactivate()
@@ -432,6 +437,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
             {
                 temp.id = localId;
                 temp.editUrl = (*itPWP).editUrl;
+                temp.thumbURL = (*itPWP).thumbURL;
                 break;
             }
         }
@@ -495,9 +501,9 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->show();
 
-    kDebug() << "m_currentAlbumID" << m_currentAlbumID;
+    m_renamingOpt = 0;
+
     uploadNextPhoto();
-    kDebug() << "slotStartTransfer done";
 }
 
 void PicasawebWindow::buttonStateChange(bool state)
@@ -635,8 +641,9 @@ void PicasawebWindow::uploadNextPhoto()
 
     m_widget->m_imgList->processing(pathComments.first);
     QString imgPath = pathComments.first.toLocalFile();
+    QString itemPath = imgPath;
 
-    bool res;
+    bool res = false;
     KMimeType::Ptr ptr = KMimeType::findByUrl(imgPath);
     if(((ptr->is("image/bmp") ||
          ptr->is("image/gif") ||
@@ -646,16 +653,6 @@ void PicasawebWindow::uploadNextPhoto()
        ptr->name().startsWith("video"))
     {
         m_tmpPath.clear();
-        /*
-        if (!info.id.isEmpty() && !info.editUrl.isEmpty())
-        {
-            res = m_talker->updatePhoto(imgPath, info);
-        }
-        else
-        */
-        {
-            res = m_talker->addPhoto(imgPath, info, m_currentAlbumID);
-        }
     }
     else
     {
@@ -669,7 +666,62 @@ void PicasawebWindow::uploadNextPhoto()
             slotAddPhotoDone(666, i18n("Cannot open file"), "");
             return;
         }
-        res = m_talker->addPhoto(m_tmpPath, info, m_currentAlbumID);
+        itemPath = m_tmpPath;
+    }
+
+    bool bCancel = false;
+    bool bAdd = true;
+
+    if (!info.id.isEmpty() && !info.editUrl.isEmpty())
+    {
+        switch(m_renamingOpt)
+        {
+        case PWR_ADD_ALL:
+            bAdd = true;
+            break;
+        case PWR_REPLACE_ALL:
+            bAdd = false;
+            break;
+        default:
+            {
+                PicasawebReplaceDialog dlg(this, "", m_interface, imgPath, info.thumbURL);
+                switch(dlg.exec())
+                {
+                case PWR_ADD_ALL:
+                    m_renamingOpt = PWR_ADD_ALL;
+                case PWR_ADD:
+                    bAdd = true;
+                    break;
+                case PWR_REPLACE_ALL:
+                    m_renamingOpt = PWR_REPLACE_ALL;
+                case PWR_REPLACE:
+                    bAdd = false;
+                    break;
+                case PWR_CANCEL:
+                default:
+                    bCancel = true;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if (bCancel)
+    {
+        cancelProcessing();;
+        res = true;
+    }
+    else
+    {
+        if(bAdd)
+        {
+            res = m_talker->addPhoto(itemPath, info, m_currentAlbumID);
+        }
+        else
+        {
+            res = m_talker->updatePhoto(itemPath, info);
+        }
     }
 
     if (!res)
@@ -789,8 +841,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   "Do you want to continue?", errText))
                              != KMessageBox::Continue)
             {
-                m_transferQueue.clear();
-                m_widget->progressBar()->hide();
+                cancelProcessing();
                 return;
             }
         }
@@ -802,8 +853,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {
-            m_transferQueue.clear();
-            m_widget->progressBar()->hide();
+            cancelProcessing();
             return;
         }
     }

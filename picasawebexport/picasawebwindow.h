@@ -110,6 +110,7 @@ private:
     bool prepareImageForUpload(const QString& imgPath, bool isRAW);
     void uploadNextPhoto();
     void downloadNextPhoto();
+    void cancelProcessing();
 
     void readSettings();
     void writeSettings();

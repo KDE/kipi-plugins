@@ -8,6 +8,7 @@ SET(kipiplugin_picasawebexport_PART_SRCS
     picasawebwidget.cpp
     picasawebwindow.cpp
     picasawebalbum.cpp
+    picasawebreplacedialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_picasawebexport ${kipiplugin_picasawebexport_PART_SRCS})

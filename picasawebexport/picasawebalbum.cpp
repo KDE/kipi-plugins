@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-10-27
+ * Date        : 2010-02-01
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
@@ -138,4 +138,4 @@ void PicasawebNewAlbum::getAlbumProperties(PicasaWebAlbum &album)
     album.timestamp = QString("%1").arg(timestamp * 1000);
 }
 
-} // namespace KIPISmugPlugin
+} // namespace KIPIPicasawebExportPlugin

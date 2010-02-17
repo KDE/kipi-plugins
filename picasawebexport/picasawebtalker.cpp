@@ -184,8 +184,8 @@ void PicasawebTalker::checkToken(const QString& token)
         m_job = 0;
     }
 
-    QString url = "http://picasaweb.google.com/data/feed/api";
-    url.append("/user/" + QUrl::toPercentEncoding(m_username));
+    KUrl url("http://picasaweb.google.com/data/feed/api");
+    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
     kDebug() << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
@@ -220,8 +220,8 @@ void PicasawebTalker::listAlbums(const QString& username)
         m_job->kill();
         m_job = 0;
     }
-    QString url = "http://picasaweb.google.com/data/feed/api";
-    url.append("/user/" + QUrl::toPercentEncoding(username));
+    KUrl url("http://picasaweb.google.com/data/feed/api");
+    url.addPath("/user/" + QUrl::toPercentEncoding(username));
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -251,9 +251,10 @@ void PicasawebTalker::listPhotos(const QString& username,
         m_job->kill();
         m_job = 0;
     }
-    QString url = "http://picasaweb.google.com/data/feed/api";
-    url.append("/user/" + QUrl::toPercentEncoding(username));
-    url.append("/albumid/" + albumId);
+    KUrl url("http://picasaweb.google.com/data/feed/api");
+    url.addPath("/user/" + QUrl::toPercentEncoding(username));
+    url.addPath("/albumid/" + albumId);
+    url.addQueryItem("thumbsize", "200");
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -329,8 +330,8 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     QByteArray buffer;
     buffer.append(docMeta.toString().toUtf8());
 
-    QString url = "http://picasaweb.google.com/data/feed/api";
-    url.append("/user/" + QUrl::toPercentEncoding(m_username));
+    KUrl url("http://picasaweb.google.com/data/feed/api");
+    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -359,9 +360,9 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
         m_job = 0;
     }
 
-    QString url = "http://picasaweb.google.com/data/feed/api";
-    url.append("/user/" + QUrl::toPercentEncoding(m_username));
-    url.append("/albumid/" + albumId);
+    KUrl url("http://picasaweb.google.com/data/feed/api");
+    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
+    url.addPath("/albumid/" + albumId);
     QString     auth_string = "GoogleLogin auth=" + m_token;
     MPForm      form;
 
@@ -413,7 +414,8 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
-    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
+    job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
+    job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nMIME-version: 1.0" );
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -487,6 +489,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     KIO::TransferJob* job = KIO::put(info.editUrl, -1, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", form.contentType());
+    job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nIf-Match: *");
 
     m_jobData.insert(job, form.formData());
@@ -554,7 +557,6 @@ void PicasawebTalker::data(KIO::Job*, const QByteArray& data)
 
     int oldSize = m_buffer.size();
     m_buffer.resize(m_buffer.size() + data.size());
-    QString output_data = QString(data);
     memcpy(m_buffer.data()+oldSize, data.data(), data.size());
 }
 
@@ -815,7 +817,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         fps.mimeType = detailsElem.attribute("type", "");
                     }
 
-                    if (detailsNode.nodeName() == "link" && detailsElem.attribute("rel") == "edit")
+                    if (detailsNode.nodeName() == "link" && detailsElem.attribute("rel") == "edit-media")
                     {
                         fps.editUrl = detailsElem.attribute("href");
                     }
