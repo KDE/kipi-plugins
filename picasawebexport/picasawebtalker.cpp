@@ -778,6 +778,12 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
         return;
     }
 
+    QFile file("/tmp/picasaaddphoto.txt");
+    file.open(QIODevice::WriteOnly);
+    QTextStream ts(&file);
+    doc.save(ts, 2);
+    file.close();
+
     QDomElement docElem = doc.documentElement();
     QDomNode node = docElem.firstChild();
 
@@ -809,12 +815,6 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                     if(detailsNode.nodeName()=="gphoto:access")
                     {
                         fps.access = detailsElem.text();
-                    }
-
-                    if(detailsNode.nodeName()=="content")
-                    {
-                        fps.originalURL = detailsElem.attribute("src", "");
-                        fps.mimeType = detailsElem.attribute("type", "");
                     }
 
                     if (detailsNode.nodeName() == "link" && detailsElem.attribute("rel") == "edit-media")
@@ -851,6 +851,28 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         if (!keywordNode.isNull() && keywordNode.isElement())
                         {
                             fps.tags = keywordNode.toElement().text().split(",");
+                        }
+
+                        QDomNodeList contentsList = detailsElem.elementsByTagName("media:content");
+                        for(int i = 0; i < contentsList.size(); i++)
+                        {
+                            QDomElement contentElem = contentsList.at(i).toElement();
+                            if (!contentElem.isNull())
+                            {
+                                if ((contentElem.attribute("medium") == "image") &&
+                                    fps.originalURL.isEmpty())
+                                {
+                                    fps.originalURL = contentElem.attribute("url");
+                                    fps.mimeType = contentElem.attribute("type");
+                                }
+
+                                if ((contentElem.attribute("medium") == "video") &&
+                                    (contentElem.attribute("type") == "video/mpeg4"))
+                                {
+                                    fps.originalURL = contentElem.attribute("url");
+                                    fps.mimeType = contentElem.attribute("type");
+                                }
+                            }
                         }
                     }
                 }

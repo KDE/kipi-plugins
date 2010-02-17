@@ -793,7 +793,11 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   const QByteArray& photoData)
 {
     PicasaWebPhoto item = m_transferQueue.first().second;
-    KUrl tmpUrl = m_tmpDir + QFileInfo(m_transferQueue.first().first.path()).fileName();
+    KUrl tmpUrl = m_tmpDir + item.title;
+    if (item.mimeType == "video/mpeg4")
+    {
+        tmpUrl.setFileName(item.title + ".mp4");
+    }
 
     if (errCode == 0)
     {
