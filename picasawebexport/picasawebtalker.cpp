@@ -778,12 +778,6 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
         return;
     }
 
-    QFile file("/tmp/picasaaddphoto.txt");
-    file.open(QIODevice::WriteOnly);
-    QTextStream ts(&file);
-    doc.save(ts, 2);
-    file.close();
-
     QDomElement docElem = doc.documentElement();
     QDomNode node = docElem.firstChild();
 
