@@ -1,5 +1,6 @@
 [Desktop Entry]
 Comment=Yet another simple theme. Clean look with more image details.
+Comment[is]=Enn eitt einfalt þema. Hreinlegt útlit með meiri myndupplýsingum.
 Comment[it]=Un altro tema semplice. Aspetto pulito con più dettagli nelle immagini.
 Comment[pt]=Ainda mais outro tema bonito. De aparência sóbria e com mais detalhes de imagem.
 Comment[pt_BR]=Ainda mais outro tema simples. Visual limpo, com mais detalhes de imagem.
@@ -8,7 +9,9 @@ Comment[uk]=Ще одна проста тема. Строгий вигляд з 
 Comment[x-test]=xxYet another simple theme. Clean look with more image details.xx
 Icon=
 Name=Details
+Name[is]=Nánar
 Name[it]=Dettagli
+Name[nb]=Detaljer
 Name[nn]=Detaljar
 Name[pt]=Detalhes
 Name[pt_BR]=Detalhes
@@ -18,6 +21,7 @@ Name[x-test]=xxDetailsxx
 
 [X-HTMLExport Author]
 Name=Gianluca Urgese
+Name[is]=Gianluca Urgese
 Name[it]=Gianluca Urgese
 Name[pt]=Gianluca Urgese
 Name[pt_BR]=Gianluca Urgese
@@ -28,6 +32,7 @@ Url=mailto:g.urgese@jaone.it
 
 [X-HTMLExport Preview]
 Name=Details screenshot
+Name[is]=Skjámynd af ítarlegu
 Name[it]=Schermata di Dettagli
 Name[pt]=Imagem dos deetalhes
 Name[pt_BR]=Imagem dos detalhes
@@ -38,6 +43,7 @@ Url=preview.png
 
 [X-HTMLExport Parameter footer]
 Name=Footer information
+Name[is]=Upplýsingar í neðanmáli
 Name[it]=Informazioni sul piè di pagina
 Name[pt]=Informação do rodapé
 Name[pt_BR]=Informação do rodapé
