@@ -26,5 +26,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> 224872 : PiwigoExport    : Export plugin for Piwigo.
 015 ==> 226916 : HTMLExport	 : Get metadata from image files and new detailed theme.
 016 ==> 217539 : PicasaWebExport : picasaweb ability to choose add or update photo
-017 ==>
+017 ==> 227920 : RemoveRedEyes   : Cannot compile: opencv/highgui.h missing for removeredeyes plugin.
+018 ==> 
 
