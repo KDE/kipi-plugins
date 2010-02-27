@@ -6,7 +6,8 @@
  * Date        : 2007-11-09
  * Description : a class to resize image in a separate thread.
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,6 +25,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QImage>
 #include <QFile>
 #include <QFileInfo>
@@ -33,7 +35,10 @@
 
 // KDE includes
 
+#include <kdebug.h>
 #include <klocale.h>
+#include <kstandarddirs.h>
+#include <ktempdir.h>
 
 // LibKExiv2 includes
 
@@ -110,7 +115,11 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
         ImageResizePriv::Task *t = new ImageResizePriv::Task;
         t->orgUrl                = (*it).orgUrl;
         t->settings              = settings;
-        t->destName              = QString("%1.%2").arg(tmp.sprintf("%03i", i)).arg(t->settings.format().toLower());
+
+        KTempDir tmpDir(KStandardDirs::locateLocal("tmp", t->settings.tempFolderName + t->settings.tempPath), 0700);
+        tmpDir.setAutoRemove(false);
+        QFileInfo fi(t->orgUrl.fileName());
+        t->destName = tmpDir.name() + QString("%1.%2").arg(fi.baseName()).arg(t->settings.format().toLower());
 
         QMutexLocker lock(&d->mutex);
         d->todo << t;
@@ -152,7 +161,7 @@ void ImageResize::run()
 
             if (imageResize(t->settings, t->orgUrl, t->destName, errString))
             {
-                KUrl emailUrl(t->settings.tempPath + t->destName);
+                KUrl emailUrl(t->destName);
                 emit finishedResize(t->orgUrl, emailUrl, percent);
             }
             else
@@ -183,9 +192,12 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
         return false;
     }
 
-    QFileInfo tmp(emailSettings.tempPath);
+    QFileInfo tmp(destName);
+    QFileInfo tmpDir(tmp.dir().absolutePath());
 
-    if (!tmp.exists() || !tmp.isWritable())
+    kDebug() << "tmpDir: " << tmp.dir().absolutePath();
+
+    if (!tmpDir.exists() || !tmpDir.isWritable())
     {
         err = i18n("Error opening temporary folder");
         return false;
@@ -239,7 +251,7 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
             img = scaledImg;
         }
 
-        QString destPath = emailSettings.tempPath + destName;
+        QString destPath = destName;
 
         KExiv2Iface::KExiv2 meta;
 

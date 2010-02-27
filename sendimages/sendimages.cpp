@@ -6,7 +6,8 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -26,22 +27,23 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QFile>
-#include <QTextStream>
+#include <QProcess>
 #include <QStringList>
 #include <QTextCodec>
-#include <QProcess>
+#include <QTextStream>
 
 // KDE includes
 
-#include <kguiitem.h>
-#include <ktoolinvocation.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <ktempdir.h>
-#include <klocale.h>
 #include <kapplication.h>
+#include <kdebug.h>
+#include <kguiitem.h>
+#include <klocale.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
+#include <ktempdir.h>
+#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -50,8 +52,8 @@
 // Local includes
 
 #include "batchprogressdialog.h"
-#include "imageresize.h"
 #include "emailsettingscontainer.h"
+#include "imageresize.h"
 
 namespace KIPISendimagesPlugin
 {
@@ -116,6 +118,13 @@ void SendImages::sendImages()
     KTempDir tmpDir(KStandardDirs::locateLocal("tmp", "kipiplugin-sendimages"), 0700);
     tmpDir.setAutoRemove(false);
     d->settings.tempPath = tmpDir.name();
+
+    QDir tmp(d->settings.tempPath);
+    QStringList folders = tmp.absolutePath().split('/', QString::SkipEmptyParts);
+    if (!folders.isEmpty())
+    {
+        d->settings.tempFolderName = folders.last();
+    }
 
     d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                                       i18n("Email images"));
