@@ -43,7 +43,6 @@
 
 class QCloseEvent;
 
-class KProgressDialog;
 class KUrl;
 
 namespace KIPI
@@ -140,9 +139,6 @@ private:
     QString                   m_sessionKey;
     QString                   m_sessionSecret;
     unsigned int              m_sessionExpires;
-
-    KProgressDialog          *m_progressDlg;
-    KProgressDialog          *m_authProgressDlg;
 
     KUrl::List                m_transferQueue;
 
