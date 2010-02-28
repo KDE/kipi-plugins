@@ -90,8 +90,8 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("smugmug"));
-    setButtons(Help|User1|Close);
-    setDefaultButton(Close);
+    setButtons(Help|User1|Cancel);
+    setDefaultButton(Cancel);
     setModal(false);
 
     if (import)
@@ -123,9 +123,6 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
             this, SLOT( slotNewAlbumRequest()) );
-
-    connect(this, SIGNAL( closeClicked() ),
-            this, SLOT( slotClose()) );
 
     connect(this, SIGNAL( user1Clicked() ),
             this, SLOT( slotStartTransfer()) );
@@ -259,14 +256,31 @@ void SmugWindow::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void SmugWindow::slotClose()
+void SmugWindow::slotButtonClicked(int button)
 {
-    if (m_talker->loggedIn())
-        m_talker->logout();
-
-    writeSettings();
-    m_widget->imagesList()->listView()->clear();
-    done(Close);
+    switch (button)
+    {
+        case Cancel:
+            if (m_widget->progressBar()->isHidden())
+            {
+                writeSettings();
+                m_widget->imagesList()->listView()->clear();
+                done(Close);
+            }
+            else // cancel login/transfer
+            {
+                m_talker->cancel();
+                m_transferQueue.clear();
+                m_widget->m_imgList->processed(false);
+                m_widget->progressBar()->hide();
+            }
+            break;
+        case User1:
+            slotStartTransfer();
+            break;
+        default:
+             KDialog::slotButtonClicked(button);
+    }
 }
 
 void SmugWindow::reactivate()
@@ -648,6 +662,7 @@ void SmugWindow::slotStartTransfer()
     }
     else
     {
+        m_widget->m_imgList->clearProcessedStatus();
         m_transferQueue = m_widget->m_imgList->imageUrls();
 
         if (m_transferQueue.isEmpty())
@@ -722,10 +737,12 @@ void SmugWindow::uploadNextPhoto()
         return;
     }
 
-    m_widget->progressBar()->setMaximum(m_imagesTotal);
-    m_widget->progressBar()->setValue(m_imagesCount);
+    m_widget->m_imgList->processing(m_transferQueue.first());
     
     QString imgPath = m_transferQueue.first().path();
+
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
 
     // check if we have to RAW file -> use preview image then
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
@@ -764,12 +781,11 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
         m_tmpPath.clear();
     }
 
+    m_widget->m_imgList->processed(errCode == 0);
+
     if (errCode == 0)
     {
-        // Remove photo uploaded from the list
-        m_widget->m_imgList->removeItemByUrl(m_transferQueue.first());
         m_transferQueue.pop_front();
-
         m_imagesCount++;
     }
     else
@@ -857,14 +873,6 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     }
 
     downloadNextPhoto();
-}
-
-void SmugWindow::slotTransferCancel()
-{
-    m_transferQueue.clear();
-    m_widget->progressBar()->hide();
-
-    m_talker->cancel();
 }
 
 void SmugWindow::slotCreateAlbumDone(int errCode, const QString& errMsg,
