@@ -595,8 +595,8 @@ void FbWindow::setProfileAID(long long userID)
 {
     // store AID of Profile Photos album
     // http://wiki.developers.facebook.com/index.php/Profile_archive_album
-    m_profileAID = (userID << 32) +
-                   (-3 & 0xFFFFFFFF);
+    m_profileAID = QString::number((userID << 32) 
+                                   + (-3 & 0xFFFFFFFF));
 }
 
 QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
