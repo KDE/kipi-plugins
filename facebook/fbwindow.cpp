@@ -211,7 +211,6 @@ void FbWindow::slotHelp()
 
 void FbWindow::slotButtonClicked(int button)
 {
-    kDebug() << "TODO: FbWindow::slotButtonClicked";
     switch (button)
     {
         case Cancel:
