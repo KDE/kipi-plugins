@@ -31,6 +31,7 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -197,6 +198,10 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
+    
+    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_progressBar->hide();
 
     // ------------------------------------------------------------------------
 
@@ -205,6 +210,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     settingsBoxLayout->addWidget(albumsBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
+    settingsBoxLayout->addWidget(m_progressBar);    
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -259,6 +265,11 @@ SmugWidget::~SmugWidget()
 KIPIPlugins::ImagesList* SmugWidget::imagesList() const
 {
     return m_imgList;
+}
+
+QProgressBar* SmugWidget::progressBar() const
+{
+    return m_progressBar;
 }
 
 bool SmugWidget::isAnonymous()

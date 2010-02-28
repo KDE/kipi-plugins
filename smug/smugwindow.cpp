@@ -31,6 +31,7 @@
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QProgressBar>
 #include <QGroupBox>
 #include <QCloseEvent>
 
@@ -46,7 +47,6 @@
 #include <KMessageBox>
 #include <KPushButton>
 #include <KPasswordDialog>
-#include <KProgressDialog>
 #include <KToolInvocation>
 
 // LibKExiv2 includes
@@ -277,14 +277,8 @@ void SmugWindow::reactivate()
 
 void SmugWindow::authenticate(const QString& email, const QString& password)
 {
-    m_authProgressDlg = new KProgressDialog(this, i18n("Authentication"));
-    m_authProgressDlg->setMinimumDuration(0);
-    m_authProgressDlg->setModal(true);
-    m_authProgressDlg->setAutoReset(true);
-    m_authProgressDlg->setAutoClose(true);
-
-    connect(m_authProgressDlg, SIGNAL( cancelClicked() ),
-            this, SLOT( slotLoginCancel() ));
+    m_widget->progressBar()->show();
+    m_widget->progressBar()->setFormat("");
 
     m_talker->login(email, password);
 }
@@ -351,21 +345,20 @@ void SmugWindow::writeSettings()
 
 void SmugWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
-    if (!m_authProgressDlg)
-        return;
+    QProgressBar* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
-        m_authProgressDlg->setLabelText(label);
+        progressBar->setFormat(label);
 
     if (maxStep > 0)
-        m_authProgressDlg->progressBar()->setMaximum(maxStep);
+        progressBar->setMaximum(maxStep);
 
-    m_authProgressDlg->progressBar()->setValue(step);
+    progressBar->setValue(step);
 }
 
 void SmugWindow::slotLoginDone(int errCode, const QString &errMsg)
 {
-    m_authProgressDlg->hide();
+    m_widget->progressBar()->hide();
 
     buttonStateChange(m_talker->loggedIn());
     SmugUser user = m_talker->getUser();
@@ -444,16 +437,9 @@ void SmugWindow::slotListPhotosDone(int errCode, const QString &errMsg,
     m_imagesTotal = m_transferQueue.count();
     m_imagesCount = 0;
 
-    m_progressDlg = new KProgressDialog(this, i18n("Transfer Progress"));
-    m_progressDlg->setMinimumDuration(0);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-    m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
-
-    connect(m_progressDlg, SIGNAL( cancelClicked() ),
-            this, SLOT( slotTransferCancel() ));
-
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(0);
+    
     // start download with first photo in queue
     downloadNextPhoto();
 }
@@ -643,21 +629,20 @@ void SmugWindow::slotNewAlbumRequest()
     }
 }
 
-void SmugWindow::slotLoginCancel()
-{
-    m_talker->cancel();
-    m_authProgressDlg->hide();
-}
-
 void SmugWindow::slotStartTransfer()
 {
     kDebug() << "slotStartTransfer invoked";
 
     if (m_import)
     {
+        m_widget->progressBar()->setFormat(i18n("%v / %m"));
+        m_widget->progressBar()->setMaximum(0);
+        m_widget->progressBar()->setValue(0);
+        m_widget->progressBar()->show();
+
         // list photos of the album, then start download
         m_talker->listPhotos(m_widget->m_albumsCoB->itemData(
-                                  m_widget->m_albumsCoB->currentIndex()).toInt(),
+                             m_widget->m_albumsCoB->currentIndex()).toInt(),
                              m_widget->getAlbumPassword(),
                              m_widget->getSitePassword());
     }
@@ -673,15 +658,10 @@ void SmugWindow::slotStartTransfer()
         m_imagesTotal = m_transferQueue.count();
         m_imagesCount = 0;
 
-        m_progressDlg = new KProgressDialog(this, i18n("Transfer Progress"));
-        m_progressDlg->setMinimumDuration(0);
-        m_progressDlg->setModal(true);
-        m_progressDlg->setAutoReset(true);
-        m_progressDlg->setAutoClose(true);
-        m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
-
-        connect(m_progressDlg, SIGNAL( cancelClicked() ),
-                this, SLOT( slotTransferCancel() ));
+        m_widget->progressBar()->setFormat(i18n("%v / %m"));
+        m_widget->progressBar()->setMaximum(m_imagesTotal);
+        m_widget->progressBar()->setValue(0);
+        m_widget->progressBar()->show();
 
         kDebug() << "m_currentAlbumID" << m_currentAlbumID;
         uploadNextPhoto();
@@ -738,13 +718,13 @@ void SmugWindow::uploadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
-        m_progressDlg->hide();
+        m_widget->progressBar()->hide();
         return;
     }
 
-    m_progressDlg->progressBar()->setMaximum(m_imagesTotal);
-    m_progressDlg->progressBar()->setValue(m_imagesCount);
-
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
+    
     QString imgPath = m_transferQueue.first().path();
 
     // check if we have to RAW file -> use preview image then
@@ -773,9 +753,6 @@ void SmugWindow::uploadNextPhoto()
         slotAddPhotoDone(666, i18n("Cannot open file"));
         return;
     }
-
-    m_progressDlg->setLabelText(i18n("Uploading file %1",
-                                     m_transferQueue.first().path()));
 }
 
 void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
@@ -802,8 +779,8 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {
+            m_widget->progressBar()->hide();
             m_transferQueue.clear();
-            m_progressDlg->hide();
             return;
         }
     }
@@ -815,18 +792,16 @@ void SmugWindow::downloadNextPhoto()
 {
     if (m_transferQueue.isEmpty())
     {
-        m_progressDlg->hide();
+        m_widget->progressBar()->hide();
         return;
     }
 
-    m_progressDlg->progressBar()->setMaximum(m_imagesTotal);
-    m_progressDlg->progressBar()->setValue(m_imagesCount);
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
 
     QString imgPath = m_transferQueue.first().url();
 
     m_talker->getPhoto(imgPath);
-
-    m_progressDlg->setLabelText(i18n("Downloading file %1", imgPath));
 }
 
 void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
@@ -863,7 +838,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                              != KMessageBox::Continue)
             {
                 m_transferQueue.clear();
-                m_progressDlg->hide();
+                m_widget->progressBar()->hide();
                 return;
             }
         }
@@ -876,7 +851,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                          != KMessageBox::Continue)
         {
             m_transferQueue.clear();
-            m_progressDlg->hide();
+            m_widget->progressBar()->hide();
             return;
         }
     }
@@ -887,7 +862,7 @@ void SmugWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 void SmugWindow::slotTransferCancel()
 {
     m_transferQueue.clear();
-    m_progressDlg->hide();
+    m_widget->progressBar()->hide();
 
     m_talker->cancel();
 }

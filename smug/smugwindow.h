@@ -103,7 +103,6 @@ private Q_SLOTS:
     void slotReloadAlbumsRequest();
     void slotNewAlbumRequest();
     void slotTransferCancel();
-    void slotLoginCancel();
     void slotHelp();
     void slotClose();
     void slotStartTransfer();
@@ -140,8 +139,6 @@ private:
     int                       m_currentTmplID;
     int                       m_currentCategoryID;
 
-    KProgressDialog          *m_progressDlg;
-    KProgressDialog          *m_authProgressDlg;
     KPasswordDialog          *m_loginDlg;
 
     KUrl::List                m_transferQueue;

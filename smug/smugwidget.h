@@ -32,6 +32,7 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
+class QProgressBar;
 class KPushButton;
 class KComboBox;
 class KLineEdit;
@@ -73,6 +74,8 @@ public:
     QString getDestinationPath();
 
     KIPIPlugins::ImagesList* imagesList() const;
+    
+    QProgressBar* progressBar() const;
 
 Q_SIGNALS:
 
@@ -113,6 +116,8 @@ private:
     KLineEdit*               m_nickNameEdt;
     KLineEdit*               m_sitePasswordEdt;
 
+    QProgressBar*            m_progressBar;
+    
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;
 
