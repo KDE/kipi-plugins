@@ -90,6 +90,7 @@ void Plugin_ImgurExport::slotActivate()
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
 
+    kDebug() << "We have activated imgur exporter!";
     //m_dlgExport->reactivate();
 }
 

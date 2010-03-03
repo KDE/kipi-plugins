@@ -25,8 +25,6 @@
 // api key from imgur
 #define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
 
-#include "plugin_imgurexport.h"
-
 // Qt
 #include <QObject>
 #include <QFileInfo>
@@ -64,21 +62,27 @@ namespace KIPIImgurExportPlugin
             INVALID_RESPONSE_FORMAT
         };
     public:
-        WebService (QObject *parent = 0);
+        WebService (QWidget *parent = 0);
+        ~WebService();
+
         const QString getStatusError (WebService::ServerStatusCode code);
-        bool imageUpload (QFileInfo* info);
-        bool imageDelete (QString hash);
+        bool imageUpload (QFile* file);
+//        bool imageDelete (QString hash);
+        void cancel ();
+        QString data (QFile *file);
 
 
     Q_SIGNALS:
         void signalError( const QString& msg );
         void signalBusy( bool val );
-        void signalAddPhotoDone(int, const QString&);
+        void signalUploadDone(int, const QString&);
 
     private:
-        static const QString apiKey;
-        QString postUrl;
-        KIO::Job*  m_job;
+        QString   m_apiKey;
+        QString   m_exportUrl;
+        QString   m_userAgent;
+        KIO::Job*       m_job;
+        QWidget*        m_parent;
 
     private Q_SLOTS:
     //    void slotResult (KJob *job);

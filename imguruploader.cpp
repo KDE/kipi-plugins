@@ -39,40 +39,9 @@ ImgurUploader::ImgurUploader(QObject *parent) :
 
 bool ImgurUploader::addPhoto (const QString& photoPath)
 {
-//    KIO::KJob* m_job;
-//    if (m_job)
-//    {
-//        m_job->kill();
-//        m_job = 0;
-//    }
-
     QFile* photoFile = new QFile(photoPath);
     QByteArray picturedata = photoFile->readAll().toBase64();
 
     emit signalBusy(true);
     return true;
 }
-
-/* void ImgurUploader::slotResult(KJob *job)
-{
-    m_job = 0;
-    emit signalBusy(false);
-
-    if (job->error())
-    {
-        // todo
-    }
-
-    switch(m_state)
-    {
-    case IE_ADDPHOTO:
-        break;
-    case IE_RESPONSE_RECEIVED:
-        break;
-    case IE_OK:
-        break;
-    case IE_FAILED:
-    default:
-        break;
-    }
-} */

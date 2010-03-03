@@ -21,12 +21,17 @@
  * ============================================================ */
 #include "webservice.h"
 
+#include <KDebug>
+#include <KIO/Job>
+
 namespace KIPIImgurExportPlugin {
+    WebService::WebService (QWidget *parent) {
+        m_parent        = parent;
 
-    const QString WebService::apiKey =_IMGUR_API_KEY;
-
-    WebService::WebService (QObject *parent) {
-
+        m_job           = 0;
+        m_userAgent     = QString("KIPI-Plugin-ImgurExport/0.0.1");
+        m_exportUrl     = QString("http://imgur.com/api/upload");
+        m_apiKey          = _IMGUR_API_KEY;
     }
 
     const QString WebService::getStatusError (WebService::ServerStatusCode code) {
@@ -79,5 +84,60 @@ namespace KIPIImgurExportPlugin {
         default:
             return tr ("Unimplemented");
         }
+    }
+
+    WebService::~WebService()
+    {
+        if (m_job) {
+            kDebug() << "Killing job";
+            m_job->kill();
+        }
+    }
+
+    QString WebService::data (QFile* file)
+    {
+        return file->readAll().toBase64();
+    }
+
+    bool WebService::imageUpload (QFile* file)
+    {
+        KUrl url(m_exportUrl);
+        url.addQueryItem("key", m_apiKey);
+        QString imgData = data (file);
+        url.addQueryItem("data", imgData);
+        QByteArray postData;
+        //postData["key"] = m_apiKey;
+        //QByteArray encodedImage = data (file);
+
+        int imgSize = imgData.size();
+        //postData["data"] = encodedImage;
+
+        KIO::TransferJob* job = KIO::http_post(url, postData, KIO::HideProgressInfo);
+        job->addMetaData("UserAgent", m_userAgent);
+        job->addMetaData("content-length", QString("Content-Length: %1").arg(QString::number(imgSize)));
+
+        connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+                this, SLOT(data(KIO::Job*, const QByteArray&)));
+
+        connect(job, SIGNAL(result(KJob *)),
+                this, SLOT(slotResult(KJob *)));
+
+         m_job   = job;
+
+         return true;
+    }
+
+//    bool WebService::imageDelete (QString hash)
+//    {
+//     /* TODO */
+//    }
+
+    void WebService::cancel()
+    {
+        if (m_job) {
+            m_job->kill();
+            m_job = 0;
+        }
+        emit signalBusy(false);
     }
 }

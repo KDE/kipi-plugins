@@ -27,7 +27,7 @@
 // LibKIPI includes
 #include <libkipi/plugin.h>
 
-#include "imguruploader.h"
+#include "webservice.h"
 
 namespace KIPIImgurExportPlugin
 {
