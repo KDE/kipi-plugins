@@ -4,7 +4,7 @@ KDE4_ADD_EXECUTABLE(test_gpxparsing
                    )
 
 TARGET_LINK_LIBRARIES(test_gpxparsing
-                        ${KDE4_UI_LIBS}
+                        ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
                      )
