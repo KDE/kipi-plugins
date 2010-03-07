@@ -133,8 +133,8 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     QString accountType = "GOOGLE";
 
     QStringList qsl;
-    qsl.append("Email="+username_edit);
-    qsl.append("Passwd="+password_edit);
+    qsl.append("Email="+QUrl::toPercentEncoding(username_edit));
+    qsl.append("Passwd="+QUrl::toPercentEncoding(password_edit));
     qsl.append("accountType="+accountType);
     qsl.append("service=lh2");
     qsl.append("source=kipi-picasaweb-client");
