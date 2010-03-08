@@ -27,7 +27,7 @@
 // LibKIPI includes
 #include <libkipi/plugin.h>
 
-#include "webservice.h"
+#include "imgurexportwidget.h"
 
 namespace KIPIImgurExportPlugin
 {
@@ -39,12 +39,10 @@ class Plugin_ImgurExport : public KIPI::Plugin
 
 public:
         explicit Plugin_ImgurExport(QObject *parent, const QVariantList &args);
-
-        KIPI::Category category(KAction* action) const;
         void setup(QWidget*);
+        KIPI::Category category(KAction* action) const;
 
 public Q_SLOTS:
-
         void slotActivate();
 
 private:

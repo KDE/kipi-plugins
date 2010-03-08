@@ -91,15 +91,12 @@ void Plugin_ImgurExport::slotActivate()
     QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
 
     kDebug() << "We have activated imgur exporter!";
-    //m_dlgExport->reactivate();
 }
 
 KIPI::Category Plugin_ImgurExport::category( KAction* action ) const
 {
-    if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+    return KIPI::ExportPlugin;
 
-    kWarning() << "Unrecognized action for plugin category identification" ;
+    kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }
-
