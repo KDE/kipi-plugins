@@ -20,28 +20,18 @@
  *
  * ============================================================ */
 
-#include "plugin_imgurexport.h"
-#include "imguruploader.h"
+#include "imgurexportwidget.h"
 // Qt include
 #include <QFile>
 
-// KDE include
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kio/jobuidelegate.h>
-
+namespace KIPIPlugins
+{
+    class ImagesList;
+}
 using namespace KIPIImgurExportPlugin;
 
-ImgurUploader::ImgurUploader(QObject *parent) :
+ImgurExportWidget::ImgurExportWidget(QObject *parent) :
     QObject(parent)
 {
-}
-
-bool ImgurUploader::addPhoto (const QString& photoPath)
-{
-    QFile* photoFile = new QFile(photoPath);
-    QByteArray picturedata = photoFile->readAll().toBase64();
-
-    emit signalBusy(true);
-    return true;
+    m_parent = parent;
 }

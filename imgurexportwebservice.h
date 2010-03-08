@@ -19,8 +19,8 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-#ifndef WEBSERVICE_H
-#define WEBSERVICE_H
+#ifndef  IMGUREXPORTWEBSERVICE_H
+#define IMGUREXPORTWEBSERVICE_H
 
 // api key from imgur
 #define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
@@ -40,7 +40,7 @@ namespace KIO
 
 namespace KIPIImgurExportPlugin
 {
-    class WebService : public QObject
+    class ImgurExportWebservice : public QObject
     {
         Q_OBJECT
 
@@ -62,10 +62,10 @@ namespace KIPIImgurExportPlugin
             INVALID_RESPONSE_FORMAT
         };
     public:
-        WebService (QWidget *parent = 0);
-        ~WebService();
+        ImgurExportWebservice (QWidget *parent = 0);
+        ~ImgurExportWebservice();
 
-        const QString getStatusError (WebService::ServerStatusCode code);
+        const QString getStatusError (ImgurExportWebservice::ServerStatusCode code);
         bool imageUpload (QFile* file);
 //        bool imageDelete (QString hash);
         void cancel ();
@@ -89,4 +89,4 @@ namespace KIPIImgurExportPlugin
 
     };
 } // namespace KIPIImgurExportPlugin
-#endif // WEBSERVICE_H
+#endif // IMGUREXPORTWEBSERVICE_H

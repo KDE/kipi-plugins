@@ -19,13 +19,13 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-#include "webservice.h"
+#include "imgurexportwebservice.h"
 
 #include <KDebug>
 #include <KIO/Job>
 
 namespace KIPIImgurExportPlugin {
-    WebService::WebService (QWidget *parent) {
+    ImgurExportWebservice::ImgurExportWebservice (QWidget *parent) {
         m_parent        = parent;
 
         m_job           = 0;
@@ -34,7 +34,7 @@ namespace KIPIImgurExportPlugin {
         m_apiKey          = _IMGUR_API_KEY;
     }
 
-    const QString WebService::getStatusError (WebService::ServerStatusCode code) {
+    const QString ImgurExportWebservice::getStatusError (ImgurExportWebservice::ServerStatusCode code) {
         switch (code) {
         case NO_IMAGE:
             return tr ("No image selected");
@@ -86,7 +86,7 @@ namespace KIPIImgurExportPlugin {
         }
     }
 
-    WebService::~WebService()
+    ImgurExportWebservice::~ImgurExportWebservice()
     {
         if (m_job) {
             kDebug() << "Killing job";
@@ -94,12 +94,12 @@ namespace KIPIImgurExportPlugin {
         }
     }
 
-    QString WebService::data (QFile* file)
+    QString ImgurExportWebservice::data (QFile* file)
     {
         return file->readAll().toBase64();
     }
 
-    bool WebService::imageUpload (QFile* file)
+    bool ImgurExportWebservice::imageUpload (QFile* file)
     {
         KUrl url(m_exportUrl);
         url.addQueryItem("key", m_apiKey);
@@ -124,15 +124,16 @@ namespace KIPIImgurExportPlugin {
 
          m_job   = job;
 
+         kDebug() << job;
          return true;
     }
 
-//    bool WebService::imageDelete (QString hash)
+//    bool ImgurExportWebservice::imageDelete (QString hash)
 //    {
 //     /* TODO */
 //    }
 
-    void WebService::cancel()
+    void ImgurExportWebservice::cancel()
     {
         if (m_job) {
             m_job->kill();

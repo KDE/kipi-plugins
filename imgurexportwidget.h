@@ -19,54 +19,33 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-#ifndef IMGURUPLOADER_H
-#define IMGURUPLOADER_H
-
-// api key from imgur
-#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
-#define _IMGUR_UPLOAD_URL "http://imgur.com/api/upload";
-
-#include "plugin_imgurexport.h"
+#ifndef IMGUREXPORTWIDGET_H
+#define IMGUREXPORTWIDGET_H
 
 // Qt
 #include <QObject>
 
-// KDE
-#include <kurl.h>
-#include <kio/jobclasses.h>
+// LibKIPI includes
 
-namespace KIO
-{
-    class Job;
-}
+/* #include <libkipi/interface.h>
+#include <libkipi/uploadwidget.h>
+#include <libkipi/imagecollection.h>*/
+
+#include "imageslist.h"
+
 namespace KIPIImgurExportPlugin
 {
-class ImgurUploader : public QObject
+class ImgurExportWidget : public QObject
 {
 Q_OBJECT
-enum State
-{
-    IE_ADDPHOTO = 0,
-    IE_RESPONSE_RECEIVED,
-    IE_OK,
-    IE_FAILED
-};
 
 public:
-    ImgurUploader(QObject *parent = 0);
-
-Q_SIGNALS:
-    void signalError( const QString& msg );
-    void signalBusy( bool val );
-    void signalAddPhotoDone(int, const QString&);
+    ImgurExportWidget(QObject *parent = 0);
 
 private:
-    QString apiKey;
-    QString postUrl;
-    bool addPhoto(const QString& photoPath);
-
-    State      m_state;
+    KIPIPlugins::ImagesList* m_imgList;
+    QObject *m_parent;
 
 };
 } // namespace KIPIImgurExportPlugin
-#endif // IMGURUPLOADER_H
+#endif // IMGUREXPORTWIDGET_H
