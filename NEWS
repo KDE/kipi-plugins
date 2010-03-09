@@ -30,5 +30,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> 219603 : SendImages      : Renaming images to send.
 019 ==> 229068 : PicasaWebExport : digiKam repeatedly crashes when uploading several pictures to Picasaweb.
 020 ==> 229826 : PicasaWebExport : PicasaWeb Export won't login with certain chars in password.
-021 ==>
+021 ==> 196236 : FaceBookExport  : Facebook upload unreliable, and fails in unsafe fashion.
+022 ==> 
 
