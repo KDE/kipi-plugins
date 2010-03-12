@@ -32,5 +32,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> 229826 : PicasaWebExport : PicasaWeb Export won't login with certain chars in password.
 021 ==> 196236 : FaceBookExport  : Facebook upload unreliable, and fails in unsafe fashion.
 022 ==> 229169 : PrintAssistant  : Print Assistant on the page preview shows screen corruption
-023 ==>
+023 ==> 221298 : FlickrExport    : digiKam segfaults on Flickr export.
+024 ==> 
 
