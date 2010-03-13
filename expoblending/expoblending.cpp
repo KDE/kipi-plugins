@@ -56,9 +56,7 @@ int main(int argc, char *argv[])
     options.add("+[file(s)]", ki18n("File(s) to open"));
     KCmdLineArgs::addCmdLineOptions( options );
 
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::initializeExiv2();
-#endif
 
     KApplication app;
     aboutData->setProgramLogo(KIcon("expoblending"));
@@ -79,9 +77,7 @@ int main(int argc, char *argv[])
     mngr.setIface(0);
     mngr.run();
     app.exec();
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::cleanupExiv2();
-#endif
 
     return 0;
 }

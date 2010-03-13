@@ -55,9 +55,7 @@ int main(int argc, char *argv[])
     options.add("+[file(s)]", ki18n("File(s) to convert"));
     KCmdLineArgs::addCmdLineOptions(options);
 
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::initializeExiv2();
-#endif
 
     KApplication app;
 
@@ -79,9 +77,7 @@ int main(int argc, char *argv[])
 
     int ret = app.exec();
 
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::cleanupExiv2();
-#endif
 
     return ret;
 }
