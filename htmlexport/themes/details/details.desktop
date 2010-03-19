@@ -1,6 +1,7 @@
 [Desktop Entry]
 Comment=Yet another simple theme. Clean look with more image details.
 Comment[ca]=Un altre tema senzill. Una aparença neta amb més detalls d'imatges.
+Comment[ca@valencia]=Un altre tema senzill. Una aparença neta amb més detalls d'imatges.
 Comment[et]=Veel üks lihtne teema. Puhas välimus täiendavate pildi üksikasjadega.
 Comment[gl]=Outro tema simple. Aspecto limpo con máis detalles das imaxes.
 Comment[is]=Enn eitt einfalt þema. Hreinlegt útlit með meiri myndupplýsingum.
@@ -16,6 +17,7 @@ Comment[x-test]=xxYet another simple theme. Clean look with more image details.x
 Icon=
 Name=Details
 Name[ca]=Detalls
+Name[ca@valencia]=Detalls
 Name[et]=Üksikasjad
 Name[gl]=Detalles
 Name[is]=Nánar
@@ -34,6 +36,7 @@ Name[x-test]=xxDetailsxx
 [X-HTMLExport Author]
 Name=Gianluca Urgese
 Name[ca]=Gianluca Urgese
+Name[ca@valencia]=Gianluca Urgese
 Name[et]=Gianluca Urgese
 Name[gl]=Gianluca Urgese
 Name[is]=Gianluca Urgese
@@ -51,6 +54,7 @@ Url=mailto:g.urgese@jaone.it
 [X-HTMLExport Preview]
 Name=Details screenshot
 Name[ca]=Captura de pantalla dels detalls
+Name[ca@valencia]=Captura de pantalla dels detalls
 Name[et]=Üksikasjade pilt
 Name[gl]=Detalles da captura de pantalla
 Name[is]=Skjámynd af ítarlegu
@@ -68,6 +72,7 @@ Url=preview.png
 [X-HTMLExport Parameter footer]
 Name=Footer information
 Name[ca]=Informació del peu
+Name[ca@valencia]=Informació del peu
 Name[et]=Jaluse teave
 Name[gl]=Información do rodapé
 Name[is]=Upplýsingar í neðanmáli
