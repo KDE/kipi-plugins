@@ -34,5 +34,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> 229169 : PrintAssistant  : Print Assistant on the page preview shows screen corruption
 023 ==> 221298 : FlickrExport    : digiKam segfaults on Flickr export.
 024 ==> 213921 : DngConverter    : DNG Converter lost exif info about ISO.
-025 ==>
+025 ==> 228524 : JPEGLossLess    : Failed to rotate image [patch].
+026 ==> 
+
 

@@ -7,8 +7,8 @@
  * Description : batch image rotation
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,6 +43,7 @@ extern "C"
 
 #include <QFile>
 #include <QFileInfo>
+#include <QFSFileEngine>
 
 // KDE includes
 
@@ -89,6 +90,11 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     }
 
     QString tmp = m_tmpFile.fileName();
+
+//Workaround to close the file
+#ifdef _WIN32
+    static_cast<QFSFileEngine*>(m_tmpFile.fileEngine())->rename(tmp);
+#endif
 
     if (Utils::isRAW(src))
     {

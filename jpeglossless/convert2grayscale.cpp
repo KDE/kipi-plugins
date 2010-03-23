@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright (C) 2004-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,6 +42,7 @@ extern "C"
 
 #include <QFile>
 #include <QFileInfo>
+#include <QFSFileEngine>
 
 // KDE includes
 
@@ -60,6 +61,9 @@ extern "C"
 #include "utils.h"
 #include "pluginsversion.h"
 #include "transupp.h"
+#include "kpwritehelp.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -92,6 +96,11 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool upda
     }
 
     QString tmp = m_tmpFile.fileName();
+
+//Workaround to close the file
+#ifdef _WIN32
+    static_cast<QFSFileEngine*>(m_tmpFile.fileEngine())->rename(tmp);
+#endif
 
     if (Utils::isRAW(src))
     {
@@ -151,28 +160,25 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     dstinfo.err = jpeg_std_error(&jdsterr);
     jpeg_create_compress(&dstinfo);
 
-    FILE *input_file;
-    FILE *output_file;
+    QFile input_file(src);
+    QFile output_file(dest);
 
-    input_file = fopen(QFile::encodeName(src), "rb");
-    if (!input_file)
+    if (!input_file.open(QIODevice::ReadOnly))
     {
         kError() << "Image2GrayScale: Error in opening input file";
         err = i18n("Error in opening input file");
         return false;
     }
 
-    output_file = fopen(QFile::encodeName(dest), "wb");
-    if (!output_file)
+    if (!output_file.open(QIODevice::ReadWrite))
     {
-        fclose(input_file);
+        input_file.close();
         kError() << "Image2GrayScale: Error in opening output file";
         err = i18n("Error in opening output file");
         return false;
     }
 
-    // Open jpeglib stream
-    jpeg_stdio_src(&srcinfo, input_file);
+    kp_jpeg_qiodevice_src(&srcinfo, &input_file);
 
     // Setup decompression object to save desired markers in memory
     jcopy_markers_setup(&srcinfo, copyoption);
@@ -193,7 +199,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     dst_coef_arrays = jtransform_adjust_parameters(&srcinfo, &dstinfo, src_coef_arrays, &transformoption);
 
     // Specify data destination for compression
-    jpeg_stdio_dest(&dstinfo, output_file);
+    kp_jpeg_qiodevice_dest(&dstinfo, &output_file);
 
     // Do not write a JFIF header if previously the image did not contain it
     dstinfo.write_JFIF_header = false;
@@ -213,8 +219,8 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     (void) jpeg_finish_decompress(&srcinfo);
     jpeg_destroy_decompress(&srcinfo);
 
-    fclose(input_file);
-    fclose(output_file);
+    input_file.close();
+    output_file.close();
 
     // And set finaly update the metadata to target file.
 
@@ -224,10 +230,9 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     exiv2Iface.setUpdateFileTimeStamp(updateFileTimeStamp);
 #endif
 
-    exiv2Iface.load(dest);
-
     QImage img(dest);
     QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    exiv2Iface.load(dest);
     exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     exiv2Iface.setExifThumbnail(exifThumbnail);
     exiv2Iface.save(dest);
