@@ -35,6 +35,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> 221298 : FlickrExport    : digiKam segfaults on Flickr export.
 024 ==> 213921 : DngConverter    : DNG Converter lost exif info about ISO.
 025 ==> 228524 : JPEGLossLess    : Failed to rotate image [patch].
-026 ==> 
+026 ==> 232339 : SimpleViewer    : Wrong flash export url in digiKam.
+027 ==> 
+
 
 
