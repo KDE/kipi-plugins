@@ -136,7 +136,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
     d->about->addCredit(ki18n("Felix Turner"),
                        ki18n("Author of the Simple Viewer Flash component"),
                        0,
-                       "http://www.airtightinteractive.com/simpleviewer");
+                       "http://www.simpleviewer.net");
 
     d->about->addCredit(ki18n("Mikkel B. Stegmann"),
                        ki18n("Basis for the index.html template"),

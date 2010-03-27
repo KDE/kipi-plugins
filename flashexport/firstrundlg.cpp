@@ -103,7 +103,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     d->about->addCredit(ki18n("Felix Turner"),
                         ki18n("Author of the Simple Viewer Flash component"),
                         0,
-                        "http://www.airtightinteractive.com/simpleviewer");
+                        "http://www.simpleviewer.net");
 
     d->about->addCredit(ki18n("Mikkel B. Stegmann"),
                         ki18n("Basis for the index.html template"),
@@ -138,8 +138,8 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     info2->setText(i18n("<p>1.) Download SimpleViewer Version 1.9.x</p>"));
 
     KUrlLabel *link = new KUrlLabel(page);
-    link->setText("http://www.airtightinteractive.com/simpleviewer");
-    link->setUrl("http://www.airtightinteractive.com/simpleviewer");
+    link->setText("http://www.simpleviewer.net");
+    link->setUrl("http://www.simpleviewer.net");
 
     connect(link, SIGNAL(leftClickedUrl(const QString&)),
             this, SLOT(slotDownload(const QString&)));
