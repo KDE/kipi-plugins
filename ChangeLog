@@ -1,3 +1,730 @@
+1.2.0   2010-03-28
+
+2010-03-27 18:48  cgilles
+
+	* NEWS: update
+
+2010-03-27 12:14  jwienke
+
+	* flashexport/firstrundlg.cpp, flashexport/svedialog.cpp: Fix
+	  simpleviewer url
+	  
+	  BUG: 232339
+
+2010-03-23 09:09  cgilles
+
+	* NEWS, jpeglossless/actions.h, jpeglossless/actionthread.cpp,
+	  jpeglossless/actionthread.h, jpeglossless/convert2grayscale.cpp,
+	  jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	  jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	  jpeglossless/imagerotate.h, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/jpegtransform.h,
+	  jpeglossless/plugin_jpeglossless.cpp,
+	  jpeglossless/plugin_jpeglossless.h, jpeglossless/utils.cpp,
+	  jpeglossless/utils.h: apply patch #42186 from David Eriksson to
+	  fix jpeg files operation under windows
+	  BUGS: 228524
+
+2010-03-22 07:03  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-21 17:34  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-21 00:38  scripty
+
+	* htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-19 08:12  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-15 21:11  jmueller
+
+	* NEWS, dngconverter/dngwriter/dngwriter.cpp: transfer iso speed
+	  rating
+	  
+	  BUGS: 213921
+
+2010-03-13 14:19  jmueller
+
+	* dngconverter/plugin/dngconverter.cpp,
+	  expoblending/expoblending.cpp: fix kexiv2 define in
+	  imagepropertiessidebarcamgui
+	  cleanup, remove old kexiv2 defines
+
+2010-03-12 22:23  cgilles
+
+	* NEWS: update
+
+2010-03-12 15:49  anaselli
+
+	* NEWS: SVN_SILENT: updated
+
+2010-03-12 14:38  anaselli
+
+	* printimages/wizard.cpp: changed setCompositionMode BUG: 229169
+
+2010-03-12 07:34  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-09 11:55  cgilles
+
+	* NEWS: update
+
+2010-03-07 17:06  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp: fix encoding of
+	  username and password at login
+	  BUGS: 229826
+
+2010-03-07 06:56  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-03-04 16:48  scripty
+
+	* acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2010-03-04 01:07  pino
+
+	* gpssync/tests/CMakeLists.txt, gpssync/tests/test_gpxparsing.cpp:
+	  use QTEST_KDEMAIN_CORE (as the comment suggested), and fix
+	  linking accordingly
+
+2010-03-03 19:28  mghansen
+
+	* project/kipicmd: Import command line tool into the project
+	  directory.
+
+2010-03-03 11:15  cgilles
+
+	* CMakeLists.txt: fix 1.2.0 release date
+
+2010-03-03 11:12  cgilles
+
+	* NEWS: update
+
+2010-03-02 09:31  scripty
+
+	* dngconverter/plugin/dngconverter.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-28 00:06  lure
+
+	* smug/smugwindow.cpp, smug/smugwindow.h: SmugMug now also uses
+	  ImagesList progress indication
+	  window can now transfer images in background (no modal progress
+	  dialog)
+
+2010-02-28 00:06  lure
+
+	* facebook/fbwindow.cpp: Obsolete comment
+
+2010-02-28 00:06  lure
+
+	* smug/smugwidget.cpp, smug/smugwidget.h, smug/smugwindow.cpp,
+	  smug/smugwindow.h: Implement progress bar inside main widget, use
+	  it for login and transfer
+
+2010-02-28 00:06  lure
+
+	* facebook/fbwindow.cpp: Fix long long -> string conversion which
+	  was broken with recent
+	  conversion of profileAID variable
+
+2010-02-28 00:06  lure
+
+	* facebook/fbwindow.h: Remove obsolete KProgressDialog
+
+2010-02-27 08:57  aclemens
+
+	* NEWS: update
+
+2010-02-27 08:56  aclemens
+
+	* sendimages/emailsettingscontainer.h, sendimages/imageresize.cpp,
+	  sendimages/sendimages.cpp: Use the original file names, also when
+	  resizing (changing the properties of an
+	  image). To avoid overwriting images with the same name in the
+	  temp folder (this can happen since
+	  we can work on digiKam searches or other virtual folders), create
+	  a folder for
+	  every single file.
+	  
+	  BUG:219603
+
+2010-02-22 11:32  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-21 21:57  cgilles
+
+	* NEWS: update
+
+2010-02-19 19:35  jmueller
+
+	* picasawebexport/picasawebtalker.cpp: remove debug output
+
+2010-02-19 12:25  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-18 11:24  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-17 21:43  jmueller
+
+	* picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebwindow.cpp: fix video download
+
+2010-02-17 19:58  jmueller
+
+	* NEWS, picasawebexport/CMakeLists.txt,
+	  picasawebexport/picasawebalbum.cpp,
+	  picasawebexport/picasawebalbum.h,
+	  picasawebexport/picasawebreplacedialog.cpp,
+	  picasawebexport/picasawebreplacedialog.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h: finalize update option of
+	  existing photos
+	  
+	  BUGS: 217539
+	  CCBUGS: 215787
+
+2010-02-17 12:10  scripty
+
+	* piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-16 13:25  gurgese
+
+	* NEWS, htmlexport/THEME_HOWTO, htmlexport/TODO: Update
+	  documentation and News file BUG: 226916
+
+2010-02-16 13:11  gurgese
+
+	* htmlexport/CMakeLists.txt, htmlexport/generator.cpp,
+	  htmlexport/imageelement.h, htmlexport/imagegenerationfunctor.cpp,
+	  htmlexport/imagegenerationfunctor.h,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/details/next.png,
+	  htmlexport/themes/details/next_disabled.png,
+	  htmlexport/themes/details/preview.png,
+	  htmlexport/themes/details/previous.png,
+	  htmlexport/themes/details/previous_disabled.png,
+	  htmlexport/themes/details/style.css,
+	  htmlexport/themes/details/template.xsl,
+	  htmlexport/themes/details/up.png: BUG: 226916
+
+2010-02-16 11:30  scripty
+
+	* piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file, second try)
+
+2010-02-16 09:05  cgilles
+
+	* AUTHORS: update
+
+2010-02-16 08:30  cgilles
+
+	* README: update
+
+2010-02-16 08:28  cgilles
+
+	* piwigoexport/Messages.sh: enable i18n
+
+2010-02-16 07:08  yurchor
+
+	* piwigoexport/kipiplugin_piwigoexport.desktop: typo: Pwigo->Piwigo
+
+2010-02-15 21:14  aclemens
+
+	* common/libkipiplugins/tools/kpwritehelp.cpp,
+	  facebook/facebookjob.cpp, facebook/fbtalker.cpp,
+	  facebook/fbwindow.cpp, facebook/mpform.cpp,
+	  facebook/plugin_facebook.cpp,
+	  picasawebexport/picasawebwindow.cpp, shwup/plugin_shwup.cpp,
+	  shwup/swconnector.cpp, shwup/swwindow.cpp, smug/plugin_smug.cpp,
+	  smug/smugtalker.cpp, smug/smugwindow.cpp: fix huge number of
+	  strange compile warnings ("empty macro arguments are
+	  undefined in ISO C90 and ISO C++98")
+
+2010-02-15 21:07  jmueller
+
+	* picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp: cleanup
+
+2010-02-15 18:24  cgilles
+
+	* NEWS: update
+
+2010-02-15 18:19  cgilles
+
+	* NEWS: update
+
+2010-02-15 17:34  fcoiffier
+
+	* CMakeLists.txt, piwigoexport, piwigoexport/CMakeLists.txt,
+	  piwigoexport/icons, piwigoexport/icons/CMakeLists.txt,
+	  piwigoexport/icons/hi16-action-piwigo.png,
+	  piwigoexport/icons/hi22-action-piwigo.png,
+	  piwigoexport/icons/hi32-action-piwigo.png,
+	  piwigoexport/icons/hi48-action-piwigo.png,
+	  piwigoexport/icons/hisc-action-piwigo.svgz,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  piwigoexport/piwigo_logo.png, piwigoexport/piwigoconfig.cpp,
+	  piwigoexport/piwigoconfig.h, piwigoexport/piwigoitem.h,
+	  piwigoexport/piwigos.cpp, piwigoexport/piwigos.h,
+	  piwigoexport/piwigotalker.cpp, piwigoexport/piwigotalker.h,
+	  piwigoexport/piwigowindow.cpp, piwigoexport/piwigowindow.h,
+	  piwigoexport/plugin_piwigoexport.cpp,
+	  piwigoexport/plugin_piwigoexport.h: Basic export plugin for
+	  Piwigo remote galleries
+	  This first version allows to connect to a Piwigo website, to list
+	  categories and to upload selected pictures. This version is
+	  mainly inspired by galleryexport code.
+	  FEATURE: 224872
+
+2010-02-15 17:16  jmueller
+
+	* picasawebexport/picasawebtalker.cpp: Upload gps location of video
+	  files. Unfortunately this information is gone after video
+	  processing, but visible before. I need to find out if this is a
+	  picasawb bug or not.
+	  
+	  CCBUGS: 215664
+
+2010-02-14 21:58  jmueller
+
+	* picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp: fix uploading items with
+	  tags, prepare video gps info
+
+2010-02-14 19:06  jmueller
+
+	* picasawebexport/picasawebitem.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h: Picasaweb download: offer
+	  options override|skip|cancel on existing files; write title, gps
+	  & tags to downloaded files
+
+2010-02-14 14:50  jmueller
+
+	* advancedslideshow/imageloadthread.cpp,
+	  advancedslideshow/slideshowloader.cpp, calendar/calpainter.cpp,
+	  calendar/monthwidget.cpp,
+	  common/libkipiplugins/dialogs/imagedialog.cpp,
+	  facebook/fbwindow.cpp, flashexport/simpleviewer.cpp,
+	  flickrexport/flickrtalker.cpp, galleryexport/gallerytalker.cpp,
+	  imageviewer/texture.cpp, jpeglossless/utils.cpp,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebwindow.cpp,
+	  rawconverter/plugin_rawconverter.cpp,
+	  rawconverter/rawdecodingiface.cpp, sendimages/imageresize.cpp,
+	  shwup/swwindow.cpp, smug/smugwindow.cpp,
+	  timeadjust/clockphotodialog.cpp: code cleanpup, remove
+	  unsupported kdcraw versions
+
+2010-02-12 10:39  cgilles
+
+	* README: update
+
+2010-02-11 21:50  jmueller
+
+	* picasawebexport/picasawebitem.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h: store unique gphoto:id of
+	  uploaded images
+	  
+	  CCBUGS: 215787
+	  CCBUGS: 217539
+
+2010-02-09 17:48  jmueller
+
+	* NEWS: update
+
+2010-02-09 16:56  cgilles
+
+	* NEWS: update
+
+2010-02-09 06:47  aclemens
+
+	* common/libkipiplugins/widgets/imageslist.cpp: Change the
+	  horizontal layout of the imagelist buttons (up / down arrows
+	  should
+	  be next to each other).
+	  Actually I liked the layout for vertical alignment, but we should
+	  be consistent with the horizontal layout as well.
+
+2010-02-08 22:17  jmueller
+
+	* picasawebexport/picasawebwindow.cpp: revert commit 1085802, as
+	  picasaweb is not confused by xmp tags anymore
+	  
+	  CCBUGS: 225161
+
+2010-02-08 20:47  jmueller
+
+	* picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h: cleanup
+
+2010-02-06 15:57  aclemens
+
+	* gpssync/tests/test_gpxparsing.cpp,
+	  picasawebexport/picasawebtalker.h: pedantic
+
+2010-02-06 10:50  cgilles
+
+	* NEWS: polish
+
+2010-02-06 10:48  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: apply patch
+	  #40559
+	  CCBUGS: 225407
+
+2010-02-05 23:32  jmueller
+
+	* NEWS: update NEWS file
+
+2010-02-05 23:16  jmueller
+
+	* NEWS, picasawebexport/picasawebwindow.cpp: do not send XMP data
+	  in upload as Picasa do
+	  
+	  BUGS: 225161
+
+2010-02-05 22:39  jmueller
+
+	* picasawebexport/picasawebtalker.cpp: fix new introduced crash in
+	  upload
+
+2010-02-04 20:35  jmueller
+
+	* picasawebexport/picasawebitem.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwidget.cpp,
+	  picasawebexport/picasawebwidget.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h,
+	  picasawebexport/plugin_picasawebexport.cpp,
+	  picasawebexport/plugin_picasawebexport.h: Added basic import
+	  support. Need to find a better ui (anonymous support, other
+	  poeple support, custom uri support (private collections),
+	  selection of images to download (showing readed thumbUrls), ...)
+	  
+	  CCBUGS: 163991
+
+2010-02-04 11:23  scripty
+
+	* htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-02-04 09:23  cgilles
+
+	* NEWS, dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: apply
+	  patch from Mark Purcel to fix endianess detection with Debian
+	  BUGS: 225407
+
+2010-02-04 07:40  cgilles
+
+	* NEWS: update
+
+2010-02-04 01:36  gurgese
+
+	* NEWS, htmlexport/THEME_HOWTO, htmlexport/TODO,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/classic/preview.png,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/cleanframes/preview.png,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/dateframes/preview.png,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/floating_cards/preview.png,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/frames/preview.png,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/matrix/preview.png,
+	  htmlexport/themes/s0/preview.png,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/preview.png,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/preview.png,
+	  htmlexport/themes/snow/snow.desktop: BUG: 223492
+
+2010-02-03 23:41  gurgese
+
+	* htmlexport/theme.cpp, htmlexport/theme.h, htmlexport/wizard.cpp:
+	  BUG: 223492
+
+2010-02-03 18:15  yurchor
+
+	* picasawebexport/picasawebalbum.cpp: SmugMug->Picasaweb
+
+2010-02-03 17:36  jwienke
+
+	* facebook/fbtalker.cpp, facebook/fbwidget.cpp: Changed wrong
+	  comparison and default value for strings.
+	  
+	  Mickaël, can you have a look if this resolves your issue?
+	  
+	  CCBUGS: 225174
+
+2010-02-03 17:03  jwienke
+
+	* NEWS, sendimages/emailpage.cpp,
+	  sendimages/emailsettingscontainer.h, sendimages/sendimages.cpp:
+	  Removed obsolete and buggy mozilla mail client option.
+	  
+	  BUG: 225396
+
+2010-02-03 16:36  jwienke
+
+	* CMakeLists.txt, NEWS: Warn about libkdcraw too old for
+	  expoblending
+	  
+	  BUG: 225316
+
+2010-02-03 11:05  scripty
+
+	* acquireimages/scangui.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-02-02 10:42  scripty
+
+	* acquireimages/scangui.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-02-02 08:22  cgilles
+
+	* NEWS: update
+
+2010-02-01 20:00  jmueller
+
+	* NEWS: update NEWS file
+
+2010-02-01 19:55  jmueller
+
+	* NEWS: update NEWS file
+
+2010-02-01 19:14  jmueller
+
+	* NEWS: update NEWS file
+
+2010-02-01 18:36  cgilles
+
+	* NEWS: update
+
+2010-02-01 17:21  jmueller
+
+	* picasawebexport/picasawebnewalbumdialog.ui,
+	  picasawebexport/uploadwidget.ui: remove old ui files, not needed
+	  anymore
+
+2010-02-01 17:20  jmueller
+
+	* picasawebexport/CMakeLists.txt, picasawebexport/newalbumdialog.h,
+	  picasawebexport/picasawebalbum.cpp,
+	  picasawebexport/picasawebalbum.h,
+	  picasawebexport/picasawebitem.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwidget.cpp,
+	  picasawebexport/picasawebwidget.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h,
+	  picasawebexport/plugin_picasawebexport.cpp: unify picasa web
+	  exporter ui with other export plugins like facebook, smug, ...
+
+2010-02-01 16:30  cgilles
+
+	* NEWS: update
+
+2010-02-01 10:58  cgilles
+
+	* CMakeLists.txt: compile
+
+2010-02-01 07:55  cgilles
+
+	* NEWS: update
+
+2010-02-01 07:34  cgilles
+
+	* project/NEWS.1.1.0: backup
+
+2010-02-01 07:32  cgilles
+
+	* CMakeLists.txt, NEWS: 1.2 is open
+
+2010-01-31 15:27  nlecureuil
+
+	* NEWS: Commits are open for release 1.2.0
+
+2010-01-31 15:16  nlecureuil
+
+	* ChangeLog: Prepare for 1.1.0
+
 1.1.0   2010-01-31 
 
 2010-01-30 21:07  mghansen
