@@ -132,7 +132,7 @@ ENDIF(NOT WIN32 AND NOT APPLE)
 IF(NOT WIN32)
     FIND_PACKAGE(PkgConfig)
     # Check KDcraw version.
-    PKG_CHECK_MODULES(Kdcraw libkdcraw>=1.2.0)
+    PKG_CHECK_MODULES(Kdcraw libkdcraw>=1.1.0)
     IF(Kdcraw_FOUND)
         SET(KDCRAW_FOR_KIPIPLUGINS TRUE)
     ELSE(Kdcraw_FOUND)
@@ -173,7 +173,7 @@ PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FO
 PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
 PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KIPI_FOUND)
 PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KEXIV2_FOUND)
-PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.1.0)" KDCRAW_FOUND)
 
 # Optional shared libraries results.
 
