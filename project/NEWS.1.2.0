@@ -1,0 +1,38 @@
+Kipi-plugins 1.2.0 - Release date: 28/03/2010
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+PicasaWebExport : Tool dialog redesigned with same layout than Flickr, Facebook, etc.
+HTMLExport      : Show screenshot alongside theme description.
+PiwigoExport    : New tool to export images to Piwigo server (aka PhpWebGallery).
+HTMLExport      : Get metadata from image files and new detailed theme
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 225001 : GPSSync         : Google map is empty.
+002 ==> 225162 : PicasaWebExport : Picasaweb export no progress bar.
+003 ==> 225164 : PicasaWebExport : Picasaweb export waiting mouse cursor without ending.
+004 ==> 203541 : PicasaWebExport : Select images to upload.
+005 ==> 225316 : General         : ExpoBlend won't compile even with dependencies all right.
+006 ==> 225396 : SendImages      : "Mozilla" MUA option is broken.
+007 ==> 223492 : HtmlExport      : Show screenshot alongside theme description.
+008 ==> 225407 : DNGConverter    : Dngconverter fix endian detection [patch].
+009 ==> 225161 : PicasaWebExport : Picasaweb export does not export photo geotag.
+010 ==> 225665 : PicasaWebExport : digiKam crashed when cancelling transfer to Picasa.
+011 ==> 225646 : PicasaWebExport : Picasaweb does not export movie.
+012 ==> 196593 : PicasaWebExport : EXIF Geotags not recognised by Picasa
+013 ==> 226799 : Libkdcraw       : Libkdcraw should use all CPU cores when converting images.
+014 ==> 224872 : PiwigoExport    : Export plugin for Piwigo.
+015 ==> 226916 : HTMLExport      : Get metadata from image files and new detailed theme.
+016 ==> 217539 : PicasaWebExport : picasaweb ability to choose add or update photo
+017 ==> 227920 : RemoveRedEyes   : Cannot compile: opencv/highgui.h missing for removeredeyes plugin.
+018 ==> 219603 : SendImages      : Renaming images to send.
+019 ==> 229068 : PicasaWebExport : digiKam repeatedly crashes when uploading several pictures to Picasaweb.
+020 ==> 229826 : PicasaWebExport : PicasaWeb Export won't login with certain chars in password.
+021 ==> 196236 : FaceBookExport  : Facebook upload unreliable, and fails in unsafe fashion.
+022 ==> 229169 : PrintAssistant  : Print Assistant on the page preview shows screen corruption
+023 ==> 221298 : FlickrExport    : digiKam segfaults on Flickr export.
+024 ==> 213921 : DngConverter    : DNG Converter lost exif info about ISO.
+025 ==> 228524 : JPEGLossLess    : Failed to rotate image [patch].
+026 ==> 232339 : SimpleViewer    : Wrong flash export url in digiKam.
