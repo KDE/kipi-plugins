@@ -292,38 +292,7 @@ void SingleDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    d->decodingSettingsBox->setSixteenBits(group.readEntry("Sixteen Bits", false));
-    d->decodingSettingsBox->setWhiteBalance((KDcrawIface::RawDecodingSettings::WhiteBalance)
-                                            group.readEntry("White Balance",
-                                            (int)KDcrawIface::RawDecodingSettings::CAMERA));
-    d->decodingSettingsBox->setCustomWhiteBalance(group.readEntry("Custom White Balance", 6500));
-    d->decodingSettingsBox->setCustomWhiteBalanceGreen(group.readEntry("Custom White Balance Green", 1.0));
-    d->decodingSettingsBox->setFourColor(group.readEntry("Four Color RGB", false));
-    d->decodingSettingsBox->setUnclipColor(group.readEntry("Unclip Color", 0));
-    d->decodingSettingsBox->setDontStretchPixels(group.readEntry("Dont Stretch Pixels", false));
-    d->decodingSettingsBox->setNoiseReduction(group.readEntry("Use Noise Reduction", false));
-    d->decodingSettingsBox->setBrightness(group.readEntry("Brightness Multiplier", 1.0));
-    d->decodingSettingsBox->setUseBlackPoint(group.readEntry("Use Black Point", false));
-    d->decodingSettingsBox->setBlackPoint(group.readEntry("Black Point", 0));
-    d->decodingSettingsBox->setUseWhitePoint(group.readEntry("Use White Point", false));
-    d->decodingSettingsBox->setWhitePoint(group.readEntry("White Point", 0));
-    d->decodingSettingsBox->setMedianFilterPasses(group.readEntry("Median Filter Passes", 0));
-    d->decodingSettingsBox->setNRThreshold(group.readEntry("NR Threshold", 100));
-    d->decodingSettingsBox->setUseCACorrection(group.readEntry("EnableCACorrection", false));
-    d->decodingSettingsBox->setcaRedMultiplier(group.readEntry("caRedMultiplier", 1.0));
-    d->decodingSettingsBox->setcaBlueMultiplier(group.readEntry("caBlueMultiplier", 1.0));
-#if KDCRAW_VERSION >= 0x000500
-    d->decodingSettingsBox->setAutoBrightness(group.readEntry("AutoBrightness", true));
-#endif
-
-    d->decodingSettingsBox->setQuality(
-        (KDcrawIface::RawDecodingSettings::DecodingQuality)group.readEntry("Decoding Quality",
-            (int)(KDcrawIface::RawDecodingSettings::BILINEAR)));
-
-    d->decodingSettingsBox->setOutputColorSpace(
-        (KDcrawIface::RawDecodingSettings::OutputColorSpace)group.readEntry("Output Color Space",
-            (int)(KDcrawIface::RawDecodingSettings::SRGB)));
-
+    d->decodingSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
     d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
 
@@ -336,30 +305,7 @@ void SingleDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("RawConverter Settings"));
 
-    group.writeEntry("Sixteen Bits", d->decodingSettingsBox->sixteenBits());
-    group.writeEntry("White Balance", (int)d->decodingSettingsBox->whiteBalance());
-    group.writeEntry("Custom White Balance", d->decodingSettingsBox->customWhiteBalance());
-    group.writeEntry("Custom White Balance Green", d->decodingSettingsBox->customWhiteBalanceGreen());
-    group.writeEntry("Four Color RGB", d->decodingSettingsBox->useFourColor());
-    group.writeEntry("Unclip Color", d->decodingSettingsBox->unclipColor());
-    group.writeEntry("Dont Stretch Pixels", d->decodingSettingsBox->useDontStretchPixels());
-    group.writeEntry("Use Noise Reduction", d->decodingSettingsBox->useNoiseReduction());
-    group.writeEntry("Brightness Multiplier", d->decodingSettingsBox->brightness());
-    group.writeEntry("Use Black Point", d->decodingSettingsBox->useBlackPoint());
-    group.writeEntry("Black Point", d->decodingSettingsBox->blackPoint());
-    group.writeEntry("Use White Point", d->decodingSettingsBox->useWhitePoint());
-    group.writeEntry("White Point", d->decodingSettingsBox->whitePoint());
-    group.writeEntry("Median Filter Passes", d->decodingSettingsBox->medianFilterPasses());
-    group.writeEntry("NR Threshold", d->decodingSettingsBox->NRThreshold());
-    group.writeEntry("EnableCACorrection", d->decodingSettingsBox->useCACorrection());
-    group.writeEntry("caRedMultiplier", d->decodingSettingsBox->caRedMultiplier());
-    group.writeEntry("caBlueMultiplier", d->decodingSettingsBox->caBlueMultiplier());
-    group.writeEntry("Decoding Quality", (int)d->decodingSettingsBox->quality());
-    group.writeEntry("Output Color Space", (int)d->decodingSettingsBox->outputColorSpace());
-#if KDCRAW_VERSION >= 0x000500
-    group.writeEntry("AutoBrightness", d->decodingSettingsBox->useAutoBrightness());
-#endif
-
+    d->decodingSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
