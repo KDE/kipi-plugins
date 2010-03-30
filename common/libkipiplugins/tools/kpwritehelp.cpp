@@ -118,7 +118,7 @@ void term_destination (j_compress_ptr cinfo)
     /* Write any data remaining in the buffer */
     if (datacount > 0)
     {
-        if (dest->outDevice->write((char*)dest->buffer, datacount) != datacount)
+        if (dest->outDevice->write((char*)dest->buffer, datacount) != (ssize_t) datacount)
             ERREXIT(cinfo, JERR_FILE_WRITE);
     }
 }
