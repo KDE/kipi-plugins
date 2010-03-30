@@ -168,7 +168,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to convert RAW images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2009, Gilles Caulier"));
+                         "(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),
@@ -266,7 +266,7 @@ void SingleDialog::slotSixteenBitsImageToggled(bool)
     d->decodingSettingsBox->setEnabledBrightnessSettings(true);
 }
 
-void SingleDialog::closeEvent(QCloseEvent *e)
+void SingleDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     d->thread->cancel();
@@ -283,7 +283,7 @@ void SingleDialog::slotClose()
 
 void SingleDialog::slotDefault()
 {
-    d->decodingSettingsBox->setDefaultSettings();
+    d->decodingSettingsBox->resetToDefault();
     d->saveSettingsBox->setDefaultSettings();
 }
 
@@ -294,7 +294,7 @@ void SingleDialog::readSettings()
 
     d->decodingSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
-    d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->sixteenBits());
+    d->saveSettingsBox->slotPopulateImageFormat(d->decodingSettingsBox->settings().sixteenBitsImage);
 
     KConfigGroup group2 = config.group(QString("Single Raw Converter Dialog"));
     restoreDialogSize(group2);
@@ -316,32 +316,7 @@ void SingleDialog::saveSettings()
 // 'Preview' dialog button.
 void SingleDialog::slotUser1()
 {
-    KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.whiteBalance               = d->decodingSettingsBox->whiteBalance();
-    rawDecodingSettings.customWhiteBalance         = d->decodingSettingsBox->customWhiteBalance();
-    rawDecodingSettings.customWhiteBalanceGreen    = d->decodingSettingsBox->customWhiteBalanceGreen();
-    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
-    rawDecodingSettings.enableWhitePoint           = d->decodingSettingsBox->useWhitePoint();
-    rawDecodingSettings.whitePoint                 = d->decodingSettingsBox->whitePoint();
-    rawDecodingSettings.medianFilterPasses         = d->decodingSettingsBox->medianFilterPasses();
-    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
-#if KDCRAW_VERSION >= 0x000500
-        rawDecodingSettings.autoBrightness         = d->decodingSettingsBox->useAutoBrightness();
-#endif
-
-    d->thread->setRawDecodingSettings(rawDecodingSettings, SaveSettingsWidget::OUTPUT_PNG);
+    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), SaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
@@ -350,32 +325,7 @@ void SingleDialog::slotUser1()
 // 'Convert' dialog button.
 void SingleDialog::slotUser2()
 {
-    KDcrawIface::RawDecodingSettings rawDecodingSettings;
-    rawDecodingSettings.sixteenBitsImage           = d->decodingSettingsBox->sixteenBits();
-    rawDecodingSettings.whiteBalance               = d->decodingSettingsBox->whiteBalance();
-    rawDecodingSettings.customWhiteBalance         = d->decodingSettingsBox->customWhiteBalance();
-    rawDecodingSettings.customWhiteBalanceGreen    = d->decodingSettingsBox->customWhiteBalanceGreen();
-    rawDecodingSettings.RGBInterpolate4Colors      = d->decodingSettingsBox->useFourColor();
-    rawDecodingSettings.unclipColors               = d->decodingSettingsBox->unclipColor();
-    rawDecodingSettings.DontStretchPixels          = d->decodingSettingsBox->useDontStretchPixels();
-    rawDecodingSettings.enableNoiseReduction       = d->decodingSettingsBox->useNoiseReduction();
-    rawDecodingSettings.brightness                 = d->decodingSettingsBox->brightness();
-    rawDecodingSettings.enableBlackPoint           = d->decodingSettingsBox->useBlackPoint();
-    rawDecodingSettings.blackPoint                 = d->decodingSettingsBox->blackPoint();
-    rawDecodingSettings.enableWhitePoint           = d->decodingSettingsBox->useWhitePoint();
-    rawDecodingSettings.whitePoint                 = d->decodingSettingsBox->whitePoint();
-    rawDecodingSettings.medianFilterPasses         = d->decodingSettingsBox->medianFilterPasses();
-    rawDecodingSettings.NRThreshold                = d->decodingSettingsBox->NRThreshold();
-    rawDecodingSettings.enableCACorrection         = d->decodingSettingsBox->useCACorrection();
-    rawDecodingSettings.caMultiplier[0]            = d->decodingSettingsBox->caRedMultiplier();
-    rawDecodingSettings.caMultiplier[1]            = d->decodingSettingsBox->caBlueMultiplier();
-    rawDecodingSettings.RAWQuality                 = d->decodingSettingsBox->quality();
-    rawDecodingSettings.outputColorSpace           = d->decodingSettingsBox->outputColorSpace();
-#if KDCRAW_VERSION >= 0x000500
-        rawDecodingSettings.autoBrightness         = d->decodingSettingsBox->useAutoBrightness();
-#endif
-
-    d->thread->setRawDecodingSettings(rawDecodingSettings, d->saveSettingsBox->fileFormat());
+    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), d->saveSettingsBox->fileFormat());
     d->thread->processRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
