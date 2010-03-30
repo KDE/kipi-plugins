@@ -168,7 +168,7 @@ EnfuseSettingsWidget::~EnfuseSettingsWidget()
     delete d;
 }
 
-void EnfuseSettingsWidget::setDefaultSettings()
+void EnfuseSettingsWidget::resetToDefault()
 {
     d->autoLevelsCB->setChecked(true);
     d->levelsInput->slotReset();

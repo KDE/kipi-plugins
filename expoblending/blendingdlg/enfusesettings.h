@@ -125,7 +125,7 @@ public:
     void           setSettings(const EnfuseSettings& settings);
     EnfuseSettings settings() const;
 
-    void           setDefaultSettings();
+    void           resetToDefault();
 
     void readSettings(KConfigGroup& group);
     void writeSettings(KConfigGroup& group);

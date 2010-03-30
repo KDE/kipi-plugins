@@ -333,7 +333,7 @@ void BatchDialog::slotClose()
 void BatchDialog::slotDefault()
 {
     d->decodingSettingsBox->resetToDefault();
-    d->saveSettingsBox->setDefaultSettings();
+    d->saveSettingsBox->resetToDefault();
 }
 
 void BatchDialog::readSettings()

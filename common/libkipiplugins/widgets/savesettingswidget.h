@@ -76,7 +76,7 @@ public:
     void setFileFormat(OutputFormat f);
     void setConflictRule(ConflictRule r);
 
-    void setDefaultSettings();
+    void resetToDefault();
 
     void readSettings(KConfigGroup& group);
     void writeSettings(KConfigGroup& group);

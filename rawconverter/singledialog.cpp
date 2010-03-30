@@ -284,7 +284,7 @@ void SingleDialog::slotClose()
 void SingleDialog::slotDefault()
 {
     d->decodingSettingsBox->resetToDefault();
-    d->saveSettingsBox->setDefaultSettings();
+    d->saveSettingsBox->resetToDefault();
 }
 
 void SingleDialog::readSettings()

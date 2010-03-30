@@ -353,8 +353,8 @@ void ExpoBlendingDlg::busy(bool val)
 
 void ExpoBlendingDlg::slotDefault()
 {
-    d->enfuseSettingsBox->setDefaultSettings();
-    d->saveSettingsBox->setDefaultSettings();
+    d->enfuseSettingsBox->resetToDefault();
+    d->saveSettingsBox->resetToDefault();
     d->templateFileName->setText("enfuse");
 }
 

@@ -129,7 +129,7 @@ void SaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
     d->grid->addWidget(custom, 3, 0, 1, 2);
 }
 
-void SaveSettingsWidget::setDefaultSettings()
+void SaveSettingsWidget::resetToDefault()
 {
     setFileFormat(OUTPUT_PNG);
     setConflictRule(OVERWRITE);
