@@ -7,6 +7,7 @@ General             : libkdcraw dependency set to 1.1.0 release.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> PrintWizard : 232382 : Setting custom page size is impossible.
-002 ==> Libkdcraw   : 221542 : Build fails due to ambiguities.
-003 ==> 
+001 ==> PrintWizard  : 232382 : Setting custom page size is impossible.
+002 ==> Libkdcraw    : 221542 : Build fails due to ambiguities.
+003 ==> DngConverter : 191907 : DNG Converter damages white balance metadata
+004 ==>

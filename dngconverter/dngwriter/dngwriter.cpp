@@ -478,11 +478,9 @@ int DNGWriter::convert()
 
         // -------------------------------------------------------------------------------
 
-        // Clear "Camera WhiteXY"
-        negative->SetCameraWhiteXY(dng_xy_coord());
-
-        // This settings break color on preview and thumbnail
-        //negative->SetCameraNeutral(dng_vector_3(1.0, 1.0, 1.0));
+        negative->SetCameraNeutral(dng_vector_3(1/identify.cameraMult[0],
+                                                1/identify.cameraMult[1],
+                                                1/identify.cameraMult[2]));
 
         if (d->cancel) return -2;
 
@@ -516,6 +514,12 @@ int DNGWriter::convert()
         if (meta.load(inputFile()))
         {
             // String Tags
+
+            str = meta.getExifTagString("Exif.Image.Make");
+            if (!str.isEmpty()) exif->fMake.Set_ASCII(str.toAscii());
+
+            str = meta.getExifTagString("Exif.Image.Model");
+            if (!str.isEmpty()) exif->fModel.Set_ASCII(str.toAscii());
 
             str = meta.getExifTagString("Exif.Image.Software");
             if (!str.isEmpty()) exif->fSoftware.Set_ASCII(str.toAscii());
@@ -641,6 +645,43 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))                 exif->fGPSVersionID             = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))               exif->fGPSAltitudeRef           = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))              exif->fGPSDifferential          = (uint32)val;
+
+            // Nikon Markernotes
+
+            if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 0))              exif->fLensInfo[0]              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 1))              exif->fLensInfo[1]              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 2))              exif->fLensInfo[2]              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 3))              exif->fLensInfo[3]              = dng_urational(num, den);
+
+            str = meta.getExifTagString("Exif.Nikon3.SerialNumber");
+            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
+
+            if (meta.getExifTagLong("Exif.Nikon3.ShutterCount", val))                  exif->fImageNumber              = (uint32)val;
+            if (meta.getExifTagLong("Exif.NikonLd3.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
+
+            // Canon Markernotes
+
+            if (meta.getExifTagLong("Exif.Canon.SerialNumber", val))                   exif->fCameraSerialNumber.Set_ASCII((QString("%1").arg(val)).toAscii());
+            if (meta.getExifTagLong("Exif.CanonCs.LensType", val))                     exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
+            if (meta.getExifTagLong("Exif.CanonCs.FlashActivity", val))                exif->fFlash                    = (uint32)val;
+
+            if (meta.getExifTagRational("Exif.Canon.FocalLength", num, den, 1))        exif->fFocalLength              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.CanonCs.Lens", num, den, 0))             exif->fLensInfo[1]              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.CanonCs.Lens", num, den, 1))             exif->fLensInfo[0]              = dng_urational(num, den);
+
+            str = meta.getExifTagString("Exif.Canon.OwnerName");
+            if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.toAscii());
+
+            str = meta.getExifTagString("Exif.Canon.FirmwareVersion");
+            if (!str.isEmpty()) exif->fFirmware.Set_ASCII(str.toAscii());
+
+            str = meta.getExifTagString("Exif.CanonSi.ISOSpeed");
+            if (!str.isEmpty()) exif->fISOSpeedRatings[0] = str.toInt();
+
+            // Olympus Markernotes
+
+            str = meta.getExifTagString("Exif.OlympusEq.SerialNumber");
+            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
 
             // Markernote backup.
 
