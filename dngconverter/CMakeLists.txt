@@ -125,6 +125,7 @@ SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_exif.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_image_writer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_preview.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_misc_opcodes.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_mosaic_info.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_read_image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_stream.cpp
@@ -137,6 +138,7 @@ SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_string.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_xy_coord.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_bottlenecks.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_bad_pixels.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_filter_task.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_iptc.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_negative.cpp
@@ -144,12 +146,16 @@ SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_string_list.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_camera_profile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_fingerprint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_lens_correction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_linearization_info.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_opcode_list.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_opcodes.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_orientation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_render.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_tag_types.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_color_space.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_globals.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_gain_map.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_lossless_jpeg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_parse_utils.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_resample.cpp

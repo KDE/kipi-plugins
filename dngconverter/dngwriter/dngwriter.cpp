@@ -296,13 +296,11 @@ int DNGWriter::convert()
         dng_rect rect(height, width);
         DNGWriterHost host(d, &memalloc);
 
-        // Unprocessed raw data.
-        host.SetKeepStage1(true);
+        host.SetSaveDNGVersion(dngVersion_SaveDefault);
+        host.SetSaveLinearDNG(false);
+        host.SetKeepOriginalFile(true);
 
-        // Linearized, tone curve processed data.
-        host.SetKeepStage2(true);
-
-        AutoPtr<dng_image> image(new dng_simple_image(rect, 1, ttShort, 1<<pixelRange, memalloc));
+        AutoPtr<dng_image> image(new dng_simple_image(rect, 1, ttShort, memalloc));
 
         if (d->cancel) return -2;
 
@@ -475,8 +473,6 @@ int DNGWriter::convert()
         prof->SetColorMatrix1((dng_matrix) matrix);
         prof->SetCalibrationIlluminant1(lsD65);
         negative->AddProfile(prof);
-
-        // -------------------------------------------------------------------------------
 
         negative->SetCameraNeutral(dng_vector_3(1/identify.cameraMult[0],
                                                 1/identify.cameraMult[1],
@@ -762,7 +758,7 @@ int DNGWriter::convert()
         negative->BuildStage3Image(host);
 
         negative->SynchronizeMetadata();
-        negative->RebuildIPTC();
+        negative->RebuildIPTC(true, false);
 
         if (d->cancel) return -2;
 
