@@ -38,7 +38,6 @@
 #include <kvbox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kconfig.h>
