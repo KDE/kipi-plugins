@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_iptc.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_iptc.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -37,6 +37,8 @@ class dng_iptc
 	{
 	
 	public:
+	
+		bool fForceUTF8;
 	
 		dng_string fTitle;
 
@@ -140,9 +142,11 @@ class dng_iptc
 
 		/// Serialize IPTC data to a memory block.
 		/// \param allocator Memory allocator used to acquire memory block.
+		/// \param padForTIFF Forces length of block to be a multiple of four bytes in accordance with TIFF standard.
 		/// \retval Memory block 
 
-		dng_memory_block * Spool (dng_memory_allocator &allocator);
+		dng_memory_block * Spool (dng_memory_allocator &allocator,
+								  bool padForTIFF);
 					
 	protected:
 	

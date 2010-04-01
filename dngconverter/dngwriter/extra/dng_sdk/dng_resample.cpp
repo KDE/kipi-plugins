@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_resample.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_resample.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_resample.h"
+
 #include "dng_assertions.h"
 #include "dng_bottlenecks.h"
 #include "dng_filter_task.h"
@@ -254,6 +255,179 @@ void dng_resample_weights::Initialize (real64 scale,
 		
 		}
 		
+	}
+
+/*****************************************************************************/
+
+dng_resample_weights_2d::dng_resample_weights_2d ()
+	
+	:	fRadius (0)
+	
+	,	fRowStep (0)
+	,	fColStep (0)
+	
+	,	fWeights32 ()
+	,	fWeights16 ()
+	
+	{
+	
+	}
+
+/*****************************************************************************/
+
+dng_resample_weights_2d::~dng_resample_weights_2d ()
+	{
+	
+	}
+
+/*****************************************************************************/
+
+void dng_resample_weights_2d::Initialize (const dng_resample_function &kernel,
+										  dng_memory_allocator &allocator)
+	{
+	
+	// Find radius of this kernel. Unlike with 1d resample weights (see
+	// dng_resample_weights), we never scale up the kernel size.
+	
+	fRadius = (uint32) (kernel.Extent () + 0.9999);
+	
+	// Width is twice the radius.
+	
+	const uint32 width    = fRadius * 2;
+	const uint32 widthSqr = width * width;
+	
+	const uint32 step = RoundUp8 (width * width);
+
+	fRowStep = step * kResampleSubsampleCount2D;
+	fColStep = step;
+	
+	// Allocate and zero weight tables.
+	
+	fWeights32.Reset (allocator.Allocate (step * 
+										  kResampleSubsampleCount2D *
+										  kResampleSubsampleCount2D *
+										  sizeof (real32)));
+	
+	DoZeroBytes (fWeights32->Buffer		 (),
+				 fWeights32->LogicalSize ());
+				 
+	fWeights16.Reset (allocator.Allocate (step * 
+										  kResampleSubsampleCount2D *
+										  kResampleSubsampleCount2D *
+										  sizeof (int16)));
+									  
+	DoZeroBytes (fWeights16->Buffer		 (),
+				 fWeights16->LogicalSize ());
+				 
+	// Compute kernel for each subsample values.
+	
+	for (uint32 y = 0; y < kResampleSubsampleCount2D; y++)
+		{
+		
+		real64 yFract = y * (1.0 / (real64) kResampleSubsampleCount2D);
+		
+		for (uint32 x = 0; x < kResampleSubsampleCount2D; x++)
+			{
+		
+			real64 xFract = x * (1.0 / (real64) kResampleSubsampleCount2D);
+		
+			real32 *w32 = (real32 *) Weights32 (dng_point ((int32) y, 
+														   (int32) x));
+		
+			// Evaluate kernel function for 32 bit weights.
+		
+				{
+		
+				real64 t32 = 0.0;
+
+				uint32 index = 0;
+
+				for (uint32 i = 0; i < width; i++)
+					{
+		
+					int32 yInt = ((int32) i) - fRadius + 1;
+					real64 yPos = yInt - yFract;
+
+					for (uint32 j = 0; j < width; j++)
+						{
+				
+						int32 xInt = ((int32) j) - fRadius + 1;
+						real64 xPos = xInt - xFract;
+
+						#if 0
+
+						// Radial.
+				
+						real64 dy2 = yPos * yPos;
+						real64 dx2 = xPos * xPos;
+
+						real64 r = sqrt (dx2 + dy2);
+
+						w32 [index] = (real32) kernel.Evaluate (r);
+
+						#else
+
+						// Separable.
+
+						w32 [index] = (real32) kernel.Evaluate (xPos) *
+							          (real32) kernel.Evaluate (yPos);
+				
+						#endif
+
+						t32 += w32 [index];
+
+						index++;
+		
+						}
+
+					}
+				
+				// Scale 32 bit weights so total of weights is 1.0.
+				
+				const real32 s32 = (real32) (1.0 / t32);
+				
+				for (uint32 i = 0; i < widthSqr; i++)
+					{
+					
+					w32 [i] *= s32;
+					
+					}
+				
+				}
+		
+			// Round off 32 bit weights to 16 bit weights.
+		
+				{
+		
+				int16 *w16 = (int16 *) Weights16 (dng_point ((int32) y, 
+															 (int32) x));
+
+				int32 t16 = 0;
+			
+				for (uint32 j = 0; j < widthSqr; j++)
+					{
+				
+					w16 [j] = (int16) Round_int32 (w32 [j] * 16384.0);
+				
+					t16 += w16 [j];
+				
+					}
+				
+				// Adjust one of the center entries for any round off error so total
+				// is exactly 16384.
+
+				const uint32 xOffset      = fRadius - ((xFract >= 0.5) ? 0 : 1);
+				const uint32 yOffset      = fRadius - ((yFract >= 0.5) ? 0 : 1);
+				const uint32 centerOffset = width * yOffset + xOffset;
+			
+				w16 [centerOffset] += (int16) (16384 - t16);
+						
+				}
+		
+			}
+		
+		}
+
 	}
 
 /*****************************************************************************/
@@ -534,6 +708,8 @@ void dng_resample_task::ProcessArea (uint32 threadIndex,
 		
 		uint16 *ttPtr = tPtr + offsetH - srcArea.l;
 		
+		uint32 pixelRange = fDstImage.PixelRange ();
+		
 		for (int32 dstRow = dstArea.t; dstRow < dstArea.b; dstRow++)
 			{
 			
@@ -558,7 +734,7 @@ void dng_resample_task::ProcessArea (uint32 threadIndex,
 								  srcBuffer.fRowStep,
 								  weightsV,
 								  widthV,
-								  dstBuffer.fPixelRange);
+								  pixelRange);
 
 				uint16 *dPtr = dstBuffer.DirtyPixel_uint16 (dstRow,
 															dstArea.l,
@@ -571,7 +747,7 @@ void dng_resample_task::ProcessArea (uint32 threadIndex,
 									weightsH,
 									widthH,
 									stepH,
-									dstBuffer.fPixelRange);
+									pixelRange);
 
 				}
 			

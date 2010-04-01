@@ -6,13 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_flags.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_flags.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
- * Connditional compilation flags for DNG SDK.
+ * Conditional compilation flags for DNG SDK.
  *
  * All conditional compilation macros for the DNG SDK begin with a lowercase 'q'.
  */
@@ -65,30 +65,45 @@
 /// \def qDNGBigEndian 1 if this target platform is big endian (e.g. PowerPC Macintosh), else 0
 /// \def qDNGLittleEndian 1 if this target platform is little endian (e.g. x86 processors), else 0
 
-#if !defined(qDNGBigEndian) 
+#ifndef qDNGBigEndian
 
-#ifndef _WIN32
-#include <endian.h>
-#endif
+#if defined(qDNGLittleEndian)
+#define qDNGBigEndian !qDNGLittleEndian
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#elif defined(__POWERPC__)
+#define qDNGBigEndian 1
+
+#elif defined(__INTEL__)
 #define qDNGBigEndian 0
 
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#elif defined(_M_IX86)
+#define qDNGBigEndian 0
+
+#elif defined(_M_X64)
+#define qDNGBigEndian 0
+
+#elif defined(__LITTLE_ENDIAN__)
+#define qDNGBigEndian 0
+
+#elif defined(__BIG_ENDIAN__)
 #define qDNGBigEndian 1
 
 #else
 
+#ifndef qXCodeRez
 #error Unable to figure out byte order.
-
 #endif
 
 #endif
+#endif
 
-#if !defined(qDNGLittleEndian) 
+#ifndef qXCodeRez
+
+#ifndef qDNGLittleEndian
 #define qDNGLittleEndian !qDNGBigEndian
 #endif
 
+#endif
 
 /*****************************************************************************/
 

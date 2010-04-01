@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_exif.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_exif.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_exif.h"
+
 #include "dng_tag_codes.h"
 #include "dng_tag_types.h"
 #include "dng_parse_utils.h"
@@ -1039,6 +1040,27 @@ bool dng_exif::Parse_ifd0 (dng_stream &stream,
 			fLensInfo [2] = stream.TagValue_urational (tagType);
 			fLensInfo [3] = stream.TagValue_urational (tagType);
 			
+			// Some third party software wrote zero rather and undefined values
+			// for unknown entries.  Work around this bug.
+			
+			for (uint32 j = 0; j < 4; j++)
+				{
+			
+				if (fLensInfo [j].IsValid () && fLensInfo [j].As_real64 () <= 0.0)
+					{
+					
+					fLensInfo [j] = dng_urational (0, 0);
+					
+					#if qDNGValidate
+					
+					ReportWarning ("Zero entry in LensInfo tag--should be undefined");
+					
+					#endif
+
+					}
+					
+				}
+				
 			#if qDNGValidate
 
 			if (gVerbose)

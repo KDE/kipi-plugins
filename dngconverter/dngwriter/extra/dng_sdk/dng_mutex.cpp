@@ -6,12 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_mutex.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_mutex.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 #include "dng_mutex.h"
+
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 
@@ -21,43 +22,67 @@
 
 #if qDNGThreadSafe
 
-static pthread_once_t gInnermostMutexInited = PTHREAD_ONCE_INIT;
-
-static pthread_key_t gInnermostMutexKey;
-
-static void InitInnermostMutex ()
+namespace
 	{
+
+	class InnermostMutexHolder
+		{
+		
+		private:
+
+			pthread_key_t fInnermostMutexKey;
+
+		public:
+
+			InnermostMutexHolder ()
+			
+				:	fInnermostMutexKey ()
+				
+				{
+
+				int result = pthread_key_create (&fInnermostMutexKey, NULL);
+
+				DNG_ASSERT (result == 0, "pthread_key_create failed.");
+
+				if (result != 0)
+					ThrowProgramError ();
+
+				}
+
+			~InnermostMutexHolder ()
+				{
+				
+				pthread_key_delete (fInnermostMutexKey);
+				
+				}
+
+			void SetInnermostMutex (dng_mutex *mutex)
+				{
+
+				int result;
+
+				result = pthread_setspecific (fInnermostMutexKey, (void *)mutex);
+
+				DNG_ASSERT (result == 0, "pthread_setspecific failed.");
+
+				if (result != 0)
+					ThrowProgramError ();
+
+				}
+
+			dng_mutex *GetInnermostMutex ()
+				{
+
+				void *result = pthread_getspecific (fInnermostMutexKey);
+
+				return reinterpret_cast<dng_mutex *> (result);
+
+				}
+
+		};
+
+	InnermostMutexHolder gInnermostMutexHolder;
 	
-	int result = pthread_key_create (&gInnermostMutexKey, NULL);
-
-	DNG_ASSERT (result == 0, "pthread_key_create failed.");
-
-	if (result != 0)
-		ThrowProgramError ();
-
-	}
-
-static void SetInnermostMutex (dng_mutex *mutex)
-	{
-
-	int result;
-
-	result = pthread_setspecific (gInnermostMutexKey, (void *)mutex);
-
-	DNG_ASSERT (result == 0, "pthread_setspecific failed.");
-
-	if (result != 0)
-		ThrowProgramError ();
-
-	}
-
-static dng_mutex *GetInnermostMutex ()
-	{
-
-	void *result = pthread_getspecific (gInnermostMutexKey);
-
-	return reinterpret_cast<dng_mutex *> (result);
-
 	}
 
 #endif
@@ -79,8 +104,6 @@ dng_mutex::dng_mutex (const char *mutexName, uint32 mutexLevel)
 	{
 	
 	#if qDNGThreadSafe
-	
-	pthread_once (&gInnermostMutexInited, InitInnermostMutex);
 
 	if (pthread_mutex_init (&fPthreadMutex, NULL) != 0)
 		{
@@ -111,7 +134,7 @@ void dng_mutex::Lock ()
 	
 	#if qDNGThreadSafe
 
-	dng_mutex *innermostMutex = GetInnermostMutex ();
+	dng_mutex *innermostMutex = gInnermostMutexHolder.GetInnermostMutex ();
 
 	if (innermostMutex != NULL)
 		{
@@ -149,7 +172,7 @@ void dng_mutex::Lock ()
 
 	fPrevHeldMutex = innermostMutex;
 
-	SetInnermostMutex (this);
+	gInnermostMutexHolder.SetInnermostMutex (this);
 
 	#endif
 	
@@ -162,7 +185,7 @@ void dng_mutex::Unlock ()
 	
 	#if qDNGThreadSafe
 	
-	DNG_ASSERT (GetInnermostMutex () == this, "Mutexes unlocked out of order!!!");
+	DNG_ASSERT (gInnermostMutexHolder.GetInnermostMutex () == this, "Mutexes unlocked out of order!!!");
 
 	if (fRecursiveLockCount > 0)
 		{
@@ -173,7 +196,7 @@ void dng_mutex::Unlock ()
 
 		}
 
-	SetInnermostMutex (fPrevHeldMutex);
+	gInnermostMutexHolder.SetInnermostMutex (fPrevHeldMutex);
 
 	fPrevHeldMutex = NULL;
 
@@ -224,6 +247,29 @@ dng_lock_mutex::~dng_lock_mutex ()
 
 /*****************************************************************************/
 
+dng_unlock_mutex::dng_unlock_mutex (dng_mutex *mutex)
+
+	:	fMutex (mutex)
+	
+	{
+	
+	if (fMutex)
+		fMutex->Unlock ();
+		
+	}
+
+/*****************************************************************************/
+
+dng_unlock_mutex::~dng_unlock_mutex ()
+	{
+	
+	if (fMutex)
+		fMutex->Lock ();
+		
+	}
+
+/*****************************************************************************/
+
 #if qDNGThreadSafe
 
 /*****************************************************************************/
@@ -263,13 +309,13 @@ bool dng_condition::Wait (dng_mutex &mutex, double timeoutSecs)
 
 	bool timedOut = false;
 
-	dng_mutex *innermostMutex = GetInnermostMutex ();
+	dng_mutex *innermostMutex = gInnermostMutexHolder.GetInnermostMutex ();
 
 	DNG_ASSERT (innermostMutex == &mutex, "Attempt to wait on non-innermost mutex.");
 
 	innermostMutex = mutex.fPrevHeldMutex;
 
-	SetInnermostMutex (innermostMutex);
+	gInnermostMutexHolder.SetInnermostMutex (innermostMutex);
 
 	mutex.fPrevHeldMutex = NULL;
 
@@ -299,7 +345,7 @@ bool dng_condition::Wait (dng_mutex &mutex, double timeoutSecs)
 
 	mutex.fPrevHeldMutex = innermostMutex;
 
-	SetInnermostMutex (&mutex);
+	gInnermostMutexHolder.SetInnermostMutex (&mutex);
 
 	return !timedOut;
 

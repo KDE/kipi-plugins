@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_classes.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_classes.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*** \file
@@ -56,6 +56,10 @@ class dng_memory_data;
 class dng_memory_stream;
 class dng_mosaic_info;
 class dng_mutex;
+class dng_noise_function;
+class dng_noise_profile;
+class dng_opcode;
+class dng_opcode_list;
 class dng_orientation;
 class dng_negative;
 class dng_pixel_buffer;

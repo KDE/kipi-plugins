@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_simple_image.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_simple_image.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -35,24 +35,23 @@ class dng_simple_image : public dng_image
 		
 		AutoPtr<dng_memory_block> fMemory;
 		
+		dng_memory_allocator &fAllocator;
+		
 	public:
 	
 		dng_simple_image (const dng_rect &bounds,
 				  		  uint32 planes,
 				  		  uint32 pixelType,
-				  		  uint32 pixelRange,
 				  		  dng_memory_allocator &allocator);
 		
 		virtual ~dng_simple_image ();
 	
+		virtual dng_image * Clone () const;
+
 		/// Setter for pixel type.
 		
 		virtual void SetPixelType (uint32 pixelType);
 		
-		/// Setter for pixel range.
-		
-		virtual void SetPixelRange (uint32 pixelRange);
-
 		/// Trim image data outside of given bounds. Memory is not reallocated or freed.
 
 		virtual void Trim (const dng_rect &r);
@@ -65,9 +64,7 @@ class dng_simple_image : public dng_image
 		
 		void GetPixelBuffer (dng_pixel_buffer &buffer)
 			{
-			
 			buffer = fBuffer;
-			
 			}
 
 	protected:

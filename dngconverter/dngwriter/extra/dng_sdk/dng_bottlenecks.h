@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_bottlenecks.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_bottlenecks.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -514,6 +514,43 @@ typedef bool (EqualArea32Proc)
 
 /*****************************************************************************/
 
+typedef void (VignetteMask16Proc)
+			 (uint16 *mPtr,
+			  uint32 rows,
+			  uint32 cols,
+			  int32 rowStep,
+			  int64 offsetH,
+			  int64 offsetV,
+			  int64 stepH,
+			  int64 stepV,
+			  uint32 tBits,
+			  const uint16 *table);
+
+typedef void (Vignette16Proc)
+			 (int16 *sPtr,
+			  const uint16 *mPtr,
+			  uint32 rows,
+			  uint32 cols,
+			  uint32 planes,
+			  int32 sRowStep,
+			  int32 sPlaneStep,
+			  int32 mRowStep,
+			  uint32 mBits);
+
+/*****************************************************************************/
+
+typedef void (MapArea16Proc)
+			 (uint16 *dPtr,
+			  uint32 count0,
+			  uint32 count1,
+			  uint32 count2,
+			  int32 step0,
+			  int32 step1,
+			  int32 step2,
+			  const uint16 *map);
+
+/*****************************************************************************/
+
 struct dng_suite	
 	{
 	ZeroBytesProc			*ZeroBytes;
@@ -558,6 +595,9 @@ struct dng_suite
 	EqualArea8Proc			*EqualArea8;
 	EqualArea16Proc			*EqualArea16;
 	EqualArea32Proc			*EqualArea32;
+	VignetteMask16Proc		*VignetteMask16;
+	Vignette16Proc			*Vignette16;
+	MapArea16Proc			*MapArea16;
 	};
 
 /*****************************************************************************/
@@ -1546,6 +1586,81 @@ inline bool DoEqualArea32 (const uint32 *sPtr,
 									dColStep,
 									dPlaneStep);
 	
+	}
+
+/*****************************************************************************/
+
+inline void DoVignetteMask16 (uint16 *mPtr,
+							  uint32 rows,
+							  uint32 cols,
+							  int32 rowStep,
+							  int64 offsetH,
+							  int64 offsetV,
+							  int64 stepH,
+							  int64 stepV,
+							  uint32 tBits,
+							  const uint16 *table)
+	{
+	
+	(gDNGSuite.VignetteMask16) (mPtr,
+								rows,
+								cols,
+								rowStep,
+								offsetH,
+								offsetV,
+								stepH,
+								stepV,
+								tBits,
+								table);
+
+	}
+
+/*****************************************************************************/
+
+inline void DoVignette16 (int16 *sPtr,
+						  const uint16 *mPtr,
+						  uint32 rows,
+						  uint32 cols,
+						  uint32 planes,
+						  int32 sRowStep,
+						  int32 sPlaneStep,
+						  int32 mRowStep,
+						  uint32 mBits)
+	{
+	
+	(gDNGSuite.Vignette16) (sPtr,
+							mPtr,
+							rows,
+							cols,
+							planes,
+							sRowStep,
+							sPlaneStep,
+							mRowStep,
+							mBits);
+
+	}
+
+/*****************************************************************************/
+
+inline void DoMapArea16 (uint16 *dPtr,
+						 uint32 count0,
+						 uint32 count1,
+						 uint32 count2,
+						 int32 step0,
+						 int32 step1,
+						 int32 step2,
+						 const uint16 *map)
+	{
+	
+	(gDNGSuite.MapArea16) (dPtr,
+						   count0,
+						   count1,
+						   count2,
+						   step0,
+						   step1,
+						   step2,
+						   map);
+
 	}
 
 /*****************************************************************************/

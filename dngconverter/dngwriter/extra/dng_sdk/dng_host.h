@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2008 Adobe Systems Incorporated
+// Copyright 2006-2009 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_host.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_host.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -23,6 +23,7 @@
 
 /*****************************************************************************/
 
+#include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_errors.h"
 #include "dng_types.h"
@@ -92,17 +93,13 @@ class dng_host
 		
 		real64 fCropFactor;
 		
-		// Keep the stage 1 (original raw) image?
+		// What DNG version should we keep enough data to save?
 		
-		bool fKeepStage1;
+		uint32 fSaveDNGVersion;
 		
-		// Keep the stage 2 (linearized) image?
+		// Do we want to force saving to a linear DNG?
 		
-		bool fKeepStage2;
-		
-		// Keep the DNG private data block?
-		
-		bool fKeepDNGPrivate;
+		bool fSaveLinearDNG;
 		
 		// Keep the original raw file data block?
 		
@@ -276,56 +273,31 @@ class dng_host
 		/// Makes sures minimum, preferred, and maximum sizes are reasonable.
 			
 		void ValidateSizes ();
+						
+		/// Setter for what version to save DNG file compatible with.	
+		/// \param version What version to save DNG file compatible with.
+
+		void SetSaveDNGVersion (uint32 version)
+			{
+			fSaveDNGVersion = version;
+			}
 			
-		/// Setter for flag determining whether	to keep stage 1, unprocessed raw
-		/// data, after processing all stages.	
-		/// \param keep If true, stage 1 data will be kept.
+		/// Getter for what version to save DNG file compatible with.	
 
-		void SetKeepStage1 (bool keep)
+		virtual uint32 SaveDNGVersion () const;
+
+		/// Setter for flag determining whether to force saving a linear DNG file.	
+		/// \param linear If true, we should force saving a linear DNG file.
+
+		void SetSaveLinearDNG (bool linear)
 			{
-			fKeepStage1 = keep;
+			fSaveLinearDNG = linear;
 			}
+			
+		/// Getter for flag determining whether to save a linear DNG file.	
 
-		/// Getter for flag determining whether	to keep stage 1, unprocessed raw
-		/// data, after processing all stages.	
-
-		bool KeepStage1 () const
-			{
-			return fKeepStage1;
-			}
-
-		/// Setter for flag determining whether	to keep stage 2, linearized,
-		/// tone curve processed data, after processing all stages.	
-		/// \param keep If true, stage 2 data will be kept.
-
-		void SetKeepStage2 (bool keep)
-			{
-			fKeepStage2 = keep;
-			}
-
-		/// Getter for flag determining whether	to keep stage 2, linearized, 
-		/// tone curve processed data, after processing all stages.	
-
-		bool KeepStage2 () const
-			{
-			return fKeepStage2;
-			}
-
-		/// Setter for flag determining whether DNG private data will be kept.	
-		/// \param keep If true, DNG private data will be kept.
-
-		void SetKeepDNGPrivate (bool keep)
-			{
-			fKeepDNGPrivate = keep;
-			}
-
-		/// Getter for flag determining whether all	DNG private data will be kept.
-
-		bool KeepDNGPrivate ()
-			{
-			return fKeepDNGPrivate;
-			}
-
+		virtual bool SaveLinearDNG (const dng_negative &negative) const;
+			
 		/// Setter for flag determining whether to keep original RAW file data.	
 		/// \param keep If true, origianl RAW data will be kept.
 
@@ -381,13 +353,26 @@ class dng_host
 
 		virtual dng_negative * Make_dng_negative ();
 		
-		/// Factor method for dng_image class. Can be used to customize allocation
+		/// Factory method for dng_image class. Can be used to customize allocation
 		/// or to ensure a derived class is used instead of dng_simple_image.
 		
 		virtual dng_image * Make_dng_image (const dng_rect &bounds,
 											uint32 planes,
 											uint32 pixelType);
 					      		 
+		/// Factory method for parsing dng_opcode based classs. Can be used to 
+		/// override opcode implementations.
+		
+		virtual dng_opcode * Make_dng_opcode (uint32 opcodeID,
+											  dng_stream &stream);
+											  
+		/// Factory method to apply a dng_opcode_list. Can be used to override
+		/// opcode list applications.
+		
+		virtual void ApplyOpcodeList (dng_opcode_list &list,
+									  dng_negative &negative,
+									  AutoPtr<dng_image> &image);
+		
 	private:
 	
 		// Hidden copy constructor and assignment operator.

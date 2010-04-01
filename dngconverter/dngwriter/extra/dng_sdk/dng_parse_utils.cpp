@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_parse_utils.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_parse_utils.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_parse_utils.h"
+
 #include "dng_date_time.h"
 #include "dng_globals.h"
 #include "dng_ifd.h"
@@ -76,6 +77,7 @@ const char * LookupParentCode (uint32 parentCode)
 		{	tcCanonMakerNote,			"Canon MakerNote"				},
 		{	tcEpsonMakerNote,			"Epson MakerNote"				},
 		{	tcFujiMakerNote,			"Fuji MakerNote"				},
+		{	tcHasselbladMakerNote,		"Hasselblad MakerNote"			},
 		{	tcKodakMakerNote,			"Kodak MakerNote"				},
 		{	tcKodakMakerNote65280,		"Kodak MakerNote 65280"			},
 		{	tcLeicaMakerNote,			"Leica MakerNote"				},
@@ -374,6 +376,10 @@ const char * LookupTagCode (uint32 parentCode,
 		{	tcRowInterleaveFactor,				"RowInterleaveFactor"			},
 		{	tcProfileLookTableDims,				"ProfileLookTableDims"			},
 		{	tcProfileLookTableData,				"ProfileLookTableData"			},
+		{	tcOpcodeList1,						"OpcodeList1"					},
+		{	tcOpcodeList2,						"OpcodeList2"					},
+		{	tcOpcodeList3,						"OpcodeList3"					},
+		{	tcNoiseProfile,						"NoiseProfile"					},
 		{	tcKodakKDCPrivateIFD,				"KodakKDCPrivateIFD"			}
 		};
 
@@ -621,7 +627,8 @@ const char * LookupCompression (uint32 key)
 		{	ccOldJPEG,			"Old JPEG"		},
 		{	ccJPEG,				"JPEG"			},
 		{	ccDeflate,			"Deflate"		},
-		{	ccPackBits,			"PackBits"		}
+		{	ccPackBits,			"PackBits"		},
+		{	ccOldDeflate,		"OldDeflate"	}
 		};
 
 	const char *name = LookupName (key,
@@ -1347,11 +1354,15 @@ const char * LookupCFALayout (uint32 key)
 	
 	const dng_name_table kCFALayoutNames [] =
 		{
-		{	1,	"Rectangular (or square) layout"								},
-		{	2,	"Staggered layout A: even columns are offset down by 1/2 row"	},
-		{	3,	"Staggered layout B: even columns are offset up by 1/2 row"		},
-		{	4,	"Staggered layout C: even rows are offset right by 1/2 column"	},
-		{	5,	"Staggered layout D: even rows are offset left by 1/2 column"	}
+		{	1,	"Rectangular (or square) layout"																		},
+		{	2,	"Staggered layout A: even columns are offset down by 1/2 row"											},
+		{	3,	"Staggered layout B: even columns are offset up by 1/2 row"												},
+		{	4,	"Staggered layout C: even rows are offset right by 1/2 column"											},
+		{	5,	"Staggered layout D: even rows are offset left by 1/2 column"											},
+		{	6,	"Staggered layout E: even rows are offset up by 1/2 row, even columns are offset left by 1/2 column"	},
+		{	7,	"Staggered layout F: even rows are offset up by 1/2 row, even columns are offset right by 1/2 column"	},
+		{	8,	"Staggered layout G: even rows are offset down by 1/2 row, even columns are offset left by 1/2 column"	},
+		{	9,	"Staggered layout H: even rows are offset down by 1/2 row, even columns are offset right by 1/2 column"	}
 		};
 
 	const char *name = LookupName (key,

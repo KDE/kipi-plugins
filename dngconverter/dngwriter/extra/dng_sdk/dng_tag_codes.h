@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_tag_codes.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_tag_codes.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -30,7 +30,7 @@
 // http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
 // on 2004-12-06, purpose "Digital Negative".
 
-// TIFF tags 50879 registered at:
+// TIFF tag number 50879 registered at:
 // http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
 // on 2006-03-23, purpose "Digital Negative".
 
@@ -49,6 +49,18 @@
 // TIFF tags numbers 50981 through 50982 registered at:
 // http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
 // on 2008-04-01, purpose "Digital Negative".
+
+// TIFF tags numbers 51008 through 51009 registered at:
+// http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
+// on 2008-10-15, purpose "Digital Negative".
+
+// TIFF tag number 51022 registered at:
+// http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
+// on 2008-12-15, purpose "Digital Negative".
+
+// TIFF tag number 51041 registered at:
+// http://partners.adobe.com/asn/tech/tiff/tiffregister.jsp
+// on 2009-5-7, purpose "Digital Negative".
 
 /*****************************************************************************/
 
@@ -275,6 +287,10 @@ enum
 	tcRowInterleaveFactor			= 50975,
 	tcProfileLookTableDims			= 50981,
 	tcProfileLookTableData			= 50982,
+	tcOpcodeList1					= 51008,
+	tcOpcodeList2					= 51009,
+	tcOpcodeList3					= 51022,
+	tcNoiseProfile					= 51041,
 	tcKodakKDCPrivateIFD			= 65024
 	};
 
@@ -297,6 +313,7 @@ enum
 	tcCanonMakerNote				= tcFirstMakerNoteIFD,
 	tcEpsonMakerNote,
 	tcFujiMakerNote,
+	tcHasselbladMakerNote,
 	tcKodakMakerNote,
 	tcKodakMakerNote65280,
 	tcLeicaMakerNote,

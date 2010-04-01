@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_image_writer.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_image_writer.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_image_writer.h"
+
 #include "dng_bottlenecks.h"
 #include "dng_camera_profile.h"
 #include "dng_color_space.h"
@@ -24,6 +25,7 @@
 #include "dng_ifd.h"
 #include "dng_image.h"
 #include "dng_lossless_jpeg.h"
+#include "dng_memory_stream.h"
 #include "dng_negative.h"
 #include "dng_pixel_buffer.h"
 #include "dng_preview.h"
@@ -53,6 +55,129 @@ dng_resolution::dng_resolution ()
 	,	fResolutionUnit (0)
 	
 	{
+	
+	}
+
+/******************************************************************************/
+
+static void SpoolAdobeData (dng_stream &stream,
+							const dng_negative *negative,
+							const dng_jpeg_preview *preview,
+							const dng_memory_block *imageResources)
+	{
+	
+	TempBigEndian tempEndian (stream);
+	
+	if (negative && negative->GetXMP ())
+		{
+		
+		bool marked = false;
+		
+		if (negative->GetXMP ()->GetBoolean ("http://ns.adobe.com/xap/1.0/rights/",
+											 "Marked",
+											 marked))
+			{
+			
+			stream.Put_uint32 (DNG_CHAR4 ('8','B','I','M'));
+			stream.Put_uint16 (1034);
+			stream.Put_uint16 (0);
+			
+			stream.Put_uint32 (1);
+			
+			stream.Put_uint8 (marked ? 1 : 0);
+			
+			stream.Put_uint8 (0);
+			
+			}
+			
+		dng_string webStatement;
+		
+		if (negative->GetXMP ()->GetString ("http://ns.adobe.com/xap/1.0/rights/",
+											"WebStatement",
+											webStatement))
+			{
+			
+			dng_memory_data buffer;
+			
+			uint32 size = webStatement.Get_SystemEncoding (buffer);
+			
+			if (size > 0)
+				{
+				
+				stream.Put_uint32 (DNG_CHAR4 ('8','B','I','M'));
+				stream.Put_uint16 (1035);
+				stream.Put_uint16 (0);
+				
+				stream.Put_uint32 (size);
+				
+				stream.Put (buffer.Buffer (), size);
+				
+				if (size & 1)
+					stream.Put_uint8 (0);
+					
+				}
+			
+			}
+		
+		}
+	
+	if (preview)
+		{
+		
+		preview->SpoolAdobeThumbnail (stream);
+				
+		}
+		
+	if (negative)
+		{
+		
+		dng_fingerprint iptcDigest = negative->IPTCDigest ();
+
+		if (iptcDigest.IsValid ())
+			{
+			
+			stream.Put_uint32 (DNG_CHAR4 ('8','B','I','M'));
+			stream.Put_uint16 (1061);
+			stream.Put_uint16 (0);
+			
+			stream.Put_uint32 (16);
+			
+			stream.Put (iptcDigest.data, 16);
+			
+			}
+			
+		}
+		
+	if (imageResources)
+		{
+		
+		uint32 size = imageResources->LogicalSize ();
+		
+		stream.Put (imageResources->Buffer (), size);
+		
+		if (size & 1)
+			stream.Put_uint8 (0);
+		
+		}
+		
+	}
+
+/******************************************************************************/
+
+static dng_memory_block * BuildAdobeData (dng_host &host,
+										  const dng_negative *negative,
+										  const dng_jpeg_preview *preview,
+										  const dng_memory_block *imageResources)
+	{
+	
+	dng_memory_stream stream (host.Allocator ());
+	
+	SpoolAdobeData (stream,
+					negative,
+					preview,
+					imageResources);
+					
+	return stream.AsMemoryBlock (host.Allocator ());
 	
 	}
 
@@ -415,108 +540,6 @@ tag_xmp::tag_xmp (const dng_xmp *xmp)
 
 /******************************************************************************/
 
-tag_adobe_data::tag_adobe_data (const dng_jpeg_preview *preview,
-					    		const dng_fingerprint &iptcDigest,
-								const dng_memory_block *imageResources)
-			
-	:	tiff_tag (tcAdobeData, ttByte, 0)
-	
-	,	fPreview		(preview	   )
-	,	fIPTCDigest		(iptcDigest	   )
-	,	fImageResources (imageResources)
-	
-	{
-	
-	if (fPreview)
-		{
-	
-		fCount = fPreview->fCompressedData->LogicalSize () + 40;
-		
-		if (fCount & 1)
-			{
-			fCount++;
-			}
-			
-		}
-		
-	if (fIPTCDigest.IsValid ())
-		{
-		
-		fCount += 28;
-		
-		}
-		
-	if (fImageResources)
-		{
-		
-		uint32 size = fImageResources->LogicalSize ();
-		
-		if (size)
-			{
-			
-			fCount += size;
-			
-			if (fCount & 1)
-				{
-				fCount++;
-				}
-			
-			}
-			
-		else
-			{
-			
-			fImageResources = NULL;
-			
-			}
-		
-		}
-	
-	}
-
-/******************************************************************************/
-
-void tag_adobe_data::Put (dng_stream &stream) const
-	{
-	
-	TempBigEndian tempEndian (stream);
-	
-	if (fPreview)
-		{
-		
-		fPreview->SpoolAdobeThumbnail (stream);
-				
-		}
-		
-	if (fIPTCDigest.IsValid ())
-		{
-		
-		stream.Put_uint32 (DNG_CHAR4 ('8','B','I','M'));
-		stream.Put_uint16 (1061);
-		stream.Put_uint16 (0);
-		
-		stream.Put_uint32 (16);
-		
-		stream.Put (fIPTCDigest.data, 16);
-		
-		}
-		
-	if (fImageResources)
-		{
-		
-		uint32 size = fImageResources->LogicalSize();
-		
-		stream.Put (fImageResources->Buffer(), size);
-		
-		if (size & 1)
-			stream.Put_uint8 (0);
-		
-		}
-		
-	}
-
-/******************************************************************************/
-
 void dng_tiff_directory::Add (const tiff_tag *tag)
 	{
 	
@@ -636,7 +659,7 @@ void dng_tiff_directory::Put (dng_stream &stream,
 		
 		}
 		
-	stream.Put_uint32 (0);		// Next IFD offset
+	stream.Put_uint32 (fChained);		// Next IFD offset
 	
 	for (index = 0; index < fEntries; index++)
 		{
@@ -1903,8 +1926,7 @@ mosaic_tag_set::mosaic_tag_set (dng_tiff_directory &directory,
 		// BayerGreenSplit:  (only include if the pattern is a Bayer pattern)
 			
 		if (info.fCFAPatternSize == dng_point (2, 2) &&
-			info.fColorPlanes    == 3 &&
-			info.fCFALayout      == 1)
+			info.fColorPlanes    == 3)
 			{
 			
 			directory.Add (&fGreenSplit);
@@ -2147,16 +2169,19 @@ profile_tag_set::profile_tag_set (dng_tiff_directory &directory,
 						   profile.ReductionMatrix2 ())
 						   
 	,	fProfileName (tcProfileName,
-					  profile.Name ())
+					  profile.Name (),
+					  false)
 						   
 	,	fProfileCalibrationSignature (tcProfileCalibrationSignature,
-									  profile.ProfileCalibrationSignature ())
+									  profile.ProfileCalibrationSignature (),
+									  false)
 						
 	,	fEmbedPolicyTag (tcProfileEmbedPolicy,
 						 profile.EmbedPolicy ())
 						 
 	,	fCopyrightTag (tcProfileCopyright,
-					   profile.Copyright ())
+					   profile.Copyright (),
+					   false)
 					   
 	,	fHueSatMapDims (tcProfileHueSatMapDims, 
 						fHueSatMapDimData,
@@ -2418,6 +2443,30 @@ void tiff_dng_extended_color_profile::Put (dng_stream &stream,
 
 	}
 
+/*****************************************************************************/
+
+tag_dng_noise_profile::tag_dng_noise_profile (const dng_noise_profile &profile)
+
+	:	tag_data_ptr (tcNoiseProfile,
+					  ttDouble,
+					  2 * profile.NumFunctions (),
+					  fValues)
+
+	{
+
+	DNG_REQUIRE (profile.NumFunctions () <= kMaxColorPlanes,
+				 "Too many noise functions in tag_dng_noise_profile.");
+
+	for (uint32 i = 0; i < profile.NumFunctions (); i++)
+		{
+
+		fValues [(2 * i)	] = profile.NoiseFunction (i).Scale	 ();
+		fValues [(2 * i) + 1] = profile.NoiseFunction (i).Offset ();
+
+		}
+	
+	}
+		
 /*****************************************************************************/
 
 dng_image_writer::dng_image_writer ()
@@ -2688,7 +2737,6 @@ void dng_image_writer::WriteTile (dng_host &host,
 						          dng_stream &stream,
 						          const dng_image &image,
 						          const dng_rect &tileArea,
-						          bool mapRange,
 						          uint32 fakeChannels)
 	{
 	
@@ -2705,13 +2753,10 @@ void dng_image_writer::WriteTile (dng_host &host,
 	buffer.fColStep   = buffer.fPlanes;
 	buffer.fPlaneStep = 1;
 	
-	buffer.fPixelType  = image.PixelType  ();
-	buffer.fPixelSize  = image.PixelSize  ();
-	buffer.fPixelRange = image.PixelRange ();
+	buffer.fPixelType = image.PixelType ();
+	buffer.fPixelSize = image.PixelSize ();
 	
 	buffer.fData = fUncompressedBuffer->Buffer ();
-	
-	uint32 pixels = buffer.fRowStep * tileArea.H ();
 	
 	// Get the uncompressed data.
 	
@@ -2726,71 +2771,6 @@ void dng_image_writer::WriteTile (dng_host &host,
 		
 		}
 	
-	// Range mapping if required.
-	
-	if (mapRange)
-		{
-		
-		uint32 range = buffer.fPixelRange;
-				
-		switch (buffer.fPixelType)
-			{
-			
-			case ttShort:
-				{
-				
-				if (range != 0x0FFFF)
-					{
-					
-					uint16 *p = (uint16 *) buffer.fData;
-					
-					if (buffer.fPixelRange == 0x08000)
-						{
-						
-						for (uint32 j = 0; j < pixels; j++)
-							{
-							
-							uint32 x = p [j];
-							
-							x = (x * 0x0FFFF + 0x04000) >> 15;
-							
-							p [j] = (uint16) x;
-							
-							}
-						
-						}
-						
-					else
-						{
-						
-						uint32 half = range >> 1;
-						
-						for (uint32 j = 0; j < pixels; j++)
-							{
-							
-							uint32 x = p [j];
-							
-							x = (x * 0x0FFFF + half) / range;
-							
-							p [j] = (uint16) x;
-							
-							}
-						
-						}
-					
-					}
-				
-				break;
-				
-				}
-			
-			default:
-				break;
-			
-			}
-		
-		}
-		
 	// Run predictor.
 	
 	EncodePredictor (host,
@@ -2825,7 +2805,6 @@ void dng_image_writer::WriteImage (dng_host &host,
 						           dng_basic_tag_set &basic,
 						           dng_stream &stream,
 						           const dng_image &image,
-						           bool mapRange,
 						           uint32 fakeChannels)
 	{
 	
@@ -2847,7 +2826,6 @@ void dng_image_writer::WriteImage (dng_host &host,
 					basic,
 					stream,
 					tempImage,
-					mapRange,
 					fakeChannels);
 			  
 		return;
@@ -2952,7 +2930,6 @@ void dng_image_writer::WriteImage (dng_host &host,
 						   stream,
 						   image,
 						   subArea,
-						   mapRange,
 						   fakeChannels);
 						   
 				}
@@ -2990,7 +2967,7 @@ void dng_image_writer::WriteTIFF (dng_host &host,
 								  const dng_image &image,
 								  uint32 photometricInterpretation,
 								  uint32 compression,
-								  const dng_negative *negative,
+								  dng_negative *negative,
 								  const dng_color_space *space,
 								  const dng_resolution *resolution,
 								  const dng_jpeg_preview *thumbnail,
@@ -3032,7 +3009,7 @@ void dng_image_writer::WriteTIFFWithProfile (dng_host &host,
 											 const dng_image &image,
 											 uint32 photometricInterpretation,
 											 uint32 compression,
-											 const dng_negative *negative,
+											 dng_negative *negative,
 											 const void *profileData,
 											 uint32 profileSize,
 											 const dng_resolution *resolution,
@@ -3146,6 +3123,15 @@ void dng_image_writer::WriteTIFFWithProfile (dng_host &host,
 		mainIFD.Add (&iccProfileTag);
 		}
 		
+	// Rebuild IPTC with TIFF padding bytes.
+	
+	if (negative && negative->GetXMP ())
+		{
+		
+		negative->RebuildIPTC (true, false);
+		
+		}
+		
 	// XMP metadata.
 	
 	AutoPtr<dng_xmp> xmp;
@@ -3194,15 +3180,15 @@ void dng_image_writer::WriteTIFFWithProfile (dng_host &host,
 		
 	// Adobe data (thumbnail and IPTC digest)
 	
-	dng_fingerprint iptcDigest;
-	
-	if (negative)
-		{
-		iptcDigest = negative->IPTCDigest ();
-		}
-	
-	tag_adobe_data tagAdobe (thumbnail, iptcDigest, imageResources);
-						     
+	AutoPtr<dng_memory_block> adobeData (BuildAdobeData (host,
+														 negative,
+														 thumbnail,
+														 imageResources));
+														 
+	tag_uint8_ptr tagAdobe (tcAdobeData,
+							adobeData->Buffer_uint8 (),
+							adobeData->LogicalSize ());
+							     
 	if (tagAdobe.Count ())
 		{
 		mainIFD.Add (&tagAdobe);
@@ -3236,12 +3222,18 @@ void dng_image_writer::WriteTIFFWithProfile (dng_host &host,
 				ifd,
 				basic,
 				stream,
-				image,
-				true);
-		
+				image);
+				
 	// Trim the file to this length.
 	
 	stream.SetLength (stream.Position ());
+	
+	// TIFF has a 4G size limit.
+	
+	if (stream.Length () > 0x0FFFFFFFFL)
+		{
+		ThrowImageTooBigTIFF ();
+		}
 	
 	// Write TIFF Header.
 	
@@ -3275,35 +3267,63 @@ void dng_image_writer::WriteDNG (dng_host &host,
 	
 	uint32 j;
 	
+	// Figure out what main version to use.
+	
+	uint32 dngVersion = dngVersion_Current;
+	
+	// Figure out what backward version to use.
+	
+	uint32 dngBackwardVersion = dngVersion_1_1_0_0;
+	
+	#if defined(qTestRowInterleave) || defined(qTestSubTileBlockRows) || defined(qTestSubTileBlockCols)
+	dngBackwardVersion = Max_uint32 (dngBackwardVersion, dngVersion_1_2_0_0);
+	#endif
+	
+	dngBackwardVersion = Max_uint32 (dngBackwardVersion,
+									 negative.OpcodeList1 ().MinVersion (false));
+
+	dngBackwardVersion = Max_uint32 (dngBackwardVersion,
+									 negative.OpcodeList2 ().MinVersion (false));
+
+	dngBackwardVersion = Max_uint32 (dngBackwardVersion,
+									 negative.OpcodeList3 ().MinVersion (false));
+									 
+	if (negative.GetMosaicInfo () &&
+		negative.GetMosaicInfo ()->fCFALayout >= 6)
+		{
+		dngBackwardVersion = Max_uint32 (dngBackwardVersion, dngVersion_1_3_0_0);
+		}
+									 
+	if (dngBackwardVersion > dngVersion)
+		{
+		ThrowProgramError ();
+		}
+
 	// Create the main IFD
 										 
 	dng_tiff_directory mainIFD;
 	
 	// Include DNG version tags.
 	
-	uint8 dngVersion [4];
+	uint8 dngVersionData [4];
 	
-	dngVersion [0] = 1;
-	dngVersion [1] = 2;
-	dngVersion [2] = 0;
-	dngVersion [3] = 0;
+	dngVersionData [0] = (uint8) (dngVersion >> 24);
+	dngVersionData [1] = (uint8) (dngVersion >> 16);
+	dngVersionData [2] = (uint8) (dngVersion >>  8);
+	dngVersionData [3] = (uint8) (dngVersion      );
 	
-	tag_uint8_ptr tagDNGVersion (tcDNGVersion, dngVersion, 4);
+	tag_uint8_ptr tagDNGVersion (tcDNGVersion, dngVersionData, 4);
 	
 	mainIFD.Add (&tagDNGVersion);
 	
-	uint8 dngVersion2 [4];
+	uint8 dngBackwardVersionData [4];
 
-	dngVersion2 [0] = 1;
-	dngVersion2 [1] = 1;
-	dngVersion2 [2] = 0;
-	dngVersion2 [3] = 0;
+	dngBackwardVersionData [0] = (uint8) (dngBackwardVersion >> 24);
+	dngBackwardVersionData [1] = (uint8) (dngBackwardVersion >> 16);
+	dngBackwardVersionData [2] = (uint8) (dngBackwardVersion >>  8);
+	dngBackwardVersionData [3] = (uint8) (dngBackwardVersion      );
 	
-	#if defined(qTestRowInterleave) || defined(qTestSubTileBlockRows) || defined(qTestSubTileBlockCols)
-	dngVersion2 [1] = 2;
-	#endif
-	
-	tag_uint8_ptr tagDNGBackwardVersion (tcDNGBackwardVersion, dngVersion2, 4);
+	tag_uint8_ptr tagDNGBackwardVersion (tcDNGBackwardVersion, dngBackwardVersionData, 4);
 	
 	mainIFD.Add (&tagDNGBackwardVersion);
 	
@@ -3650,6 +3670,15 @@ void dng_image_writer::WriteDNG (dng_host &host,
 	
 		}
 
+	tag_dng_noise_profile tagNoiseProfile (negative.NoiseProfile ());
+		
+	if (negative.NoiseProfile ().IsValidForNegative (negative))
+		{
+
+		mainIFD.Add (&tagNoiseProfile);
+		
+		}
+
 	tag_urational tagBaselineSharpness (tcBaselineSharpness,
 								        negative.BaselineSharpnessR ());
 										  
@@ -3793,6 +3822,54 @@ void dng_image_writer::WriteDNG (dng_host &host,
 		
 		}
 		
+	// Opcode list 1.
+	
+	AutoPtr<dng_memory_block> opcodeList1Data (negative.OpcodeList1 ().Spool (host));
+	
+	tag_data_ptr tagOpcodeList1 (tcOpcodeList1,
+								 ttUndefined,
+								 opcodeList1Data.Get () ? opcodeList1Data->LogicalSize () : 0,
+								 opcodeList1Data.Get () ? opcodeList1Data->Buffer      () : NULL);
+								 
+	if (opcodeList1Data.Get ())
+		{
+		
+		rawIFD.Add (&tagOpcodeList1);
+		
+		}
+		
+	// Opcode list 2.
+	
+	AutoPtr<dng_memory_block> opcodeList2Data (negative.OpcodeList2 ().Spool (host));
+	
+	tag_data_ptr tagOpcodeList2 (tcOpcodeList2,
+								 ttUndefined,
+								 opcodeList2Data.Get () ? opcodeList2Data->LogicalSize () : 0,
+								 opcodeList2Data.Get () ? opcodeList2Data->Buffer      () : NULL);
+								 
+	if (opcodeList2Data.Get ())
+		{
+		
+		rawIFD.Add (&tagOpcodeList2);
+		
+		}
+		
+	// Opcode list 3.
+	
+	AutoPtr<dng_memory_block> opcodeList3Data (negative.OpcodeList3 ().Spool (host));
+	
+	tag_data_ptr tagOpcodeList3 (tcOpcodeList3,
+								 ttUndefined,
+								 opcodeList3Data.Get () ? opcodeList3Data->LogicalSize () : 0,
+								 opcodeList3Data.Get () ? opcodeList3Data->Buffer      () : NULL);
+								 
+	if (opcodeList3Data.Get ())
+		{
+		
+		rawIFD.Add (&tagOpcodeList3);
+		
+		}
+		
 	// Add other subfiles.
 		
 	uint32 subFileCount = 1;
@@ -3899,12 +3976,18 @@ void dng_image_writer::WriteDNG (dng_host &host,
 				rawBasic,
 				stream,
 				rawImage,
-				false,
 				fakeChannels);
 					
 	// Trim the file to this length.
 	
 	stream.SetLength (stream.Position ());
+	
+	// DNG has a 4G size limit.
+	
+	if (stream.Length () > 0x0FFFFFFFFL)
+		{
+		ThrowImageTooBigDNG ();
+		}
 	
 	// Write TIFF Header.
 	

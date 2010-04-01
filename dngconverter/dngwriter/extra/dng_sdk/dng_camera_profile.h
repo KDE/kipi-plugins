@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /******************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_camera_profile.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_camera_profile.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -230,6 +230,11 @@ class dng_camera_profile
 		// DNG file)
 		
 		bool fWasReadFromDNG;
+		
+		// Was this profile stubbed to save memory (and no longer valid
+		// for building color conversion tables)?
+		
+		bool fWasStubbed;
 
 	public:
 	
@@ -604,6 +609,17 @@ class dng_camera_profile
 		/// The calling routine owns the resulting table.
 		
 		dng_hue_sat_map * HueSatMapForWhite (const dng_xy_coord &white) const;
+		
+		/// Stub out the profile (free memory used by large tables).
+		
+		void Stub ();
+		
+		/// Was this profile stubbed?
+		
+		bool WasStubbed () const
+			{
+			return fWasStubbed;
+			}
 
 	protected:
 	
@@ -627,6 +643,12 @@ class dng_camera_profile
 								   
 	};
 
+/******************************************************************************/
+
+void SplitCameraProfileName (const dng_string &name,
+							 dng_string &baseName,
+							 int32 &version);
+							
 /******************************************************************************/
 
 #endif

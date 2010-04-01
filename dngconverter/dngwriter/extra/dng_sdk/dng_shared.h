@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_shared.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_shared.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -21,6 +21,7 @@
 #include "dng_classes.h"
 #include "dng_fingerprint.h"
 #include "dng_matrix.h"
+#include "dng_negative.h"
 #include "dng_rational.h"
 #include "dng_string.h"
 #include "dng_stream.h"
@@ -178,6 +179,8 @@ class dng_shared
 		uint32 fColorimetricReference;
 
 		dng_string fAsShotProfileName;
+
+		dng_noise_profile fNoiseProfile;
 
 	public:
 	

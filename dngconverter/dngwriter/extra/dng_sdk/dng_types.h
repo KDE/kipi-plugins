@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_types.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_types.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -48,12 +48,20 @@ typedef uint64_t uint64;
 
 typedef signed char		 int8;
 typedef signed short	 int16;
+#if __LP64__
+typedef signed int		 int32;
+#else
 typedef signed long		 int32;
+#endif
 typedef signed long long int64;
 
 typedef unsigned char      uint8;
 typedef unsigned short	   uint16;
+#if __LP64__
+typedef unsigned int	   uint32;
+#else
 typedef unsigned long	   uint32;
+#endif
 typedef unsigned long long uint64;
 
 #endif

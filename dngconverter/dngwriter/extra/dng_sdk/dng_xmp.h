@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_xmp.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_xmp.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -55,10 +55,16 @@ class dng_xmp
 					const void *buffer,
 				    uint32 count);
 
-		virtual dng_memory_block * Serialize (bool asPacket = false,
-											  uint32 targetBytes = 0,
-											  uint32 padBytes = 4096,
-											  bool forJPEG = false) const;
+		dng_memory_block * Serialize (bool asPacket = false,
+									  uint32 targetBytes = 0,
+									  uint32 padBytes = 4096,
+									  bool forJPEG = false) const;
+											  
+		void PackageForJPEG (AutoPtr<dng_memory_block> &stdBlock,
+							 AutoPtr<dng_memory_block> &extBlock,
+							 dng_string &extDigest) const;
+							 
+		void MergeFromJPEG (const dng_xmp &xmp);
 									  
 		bool HasMeta () const;
 									  
@@ -196,14 +202,23 @@ class dng_xmp
 		void IngestIPTC (dng_negative &negative,
 					     bool xmpIsNewer = false);
 			
-		void RebuildIPTC (dng_negative &negative);
+		void RebuildIPTC (dng_negative &negative,
+						  bool padForTIFF,
+						  bool forceUTF8);
 		
 		virtual void SyncExif (dng_exif &exif,
 							   const dng_exif *originalExif = NULL,
 							   bool doingUpdateFromXMP = false);
+							   
+		void ValidateStringList (const char *ns,
+							     const char *path);
+							   
+		void ValidateMetadata ();
 		
 		void UpdateDateTime (const dng_date_time_info &dt);
-							 
+		
+		void UpdateExifDates (dng_exif &exif);
+		
 		bool HasOrientation () const;
 						   
 		dng_orientation GetOrientation () const;

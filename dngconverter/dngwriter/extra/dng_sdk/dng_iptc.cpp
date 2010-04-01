@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_iptc.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_iptc.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_iptc.h"
+
 #include "dng_assertions.h"
 #include "dng_auto_ptr.h"
 #include "dng_memory_stream.h"
@@ -24,7 +25,9 @@
 
 dng_iptc::dng_iptc ()
 
-	:	fTitle ()
+	:	fForceUTF8 (false)
+	
+	,	fTitle ()
 
 	,	fUrgency (-1)
 
@@ -265,6 +268,8 @@ void dng_iptc::Parse (const void *blockData,
 							{
 							
 							charSet = kCharSetUTF8;
+							
+							fForceUTF8 = true;
 							
 							}
 						
@@ -734,7 +739,8 @@ bool dng_iptc::SafeForSystemEncoding () const
 
 /*****************************************************************************/
 
-dng_memory_block * dng_iptc::Spool (dng_memory_allocator &allocator)
+dng_memory_block * dng_iptc::Spool (dng_memory_allocator &allocator,
+									bool padForTIFF)
 	{
 	
 	uint32 j;
@@ -753,6 +759,13 @@ dng_memory_block * dng_iptc::Spool (dng_memory_allocator &allocator)
 	
 	CharSet charSet = SafeForSystemEncoding () ? kCharSetUnknown
 											   : kCharSetUTF8;
+															  
+	// Override to force UTF8
+	
+	if (fForceUTF8)
+		{
+		charSet = kCharSetUTF8;
+		}
 	
 	// UTF-8 encoding marker.
 		
@@ -952,6 +965,16 @@ dng_memory_block * dng_iptc::Spool (dng_memory_allocator &allocator)
 				 kCaptionWriterSet,
 				 32,
 				 charSet);
+				 
+	if (padForTIFF)
+		{
+		
+		while (stream.Length () & 3)
+			{
+			stream.Put_uint8 (0);
+			}
+		
+		}
 				 
 	stream.Flush ();
 	

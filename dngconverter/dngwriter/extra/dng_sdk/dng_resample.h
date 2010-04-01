@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_resample.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_resample.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -22,6 +22,7 @@
 #include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_memory.h"
+#include "dng_point.h"
 #include "dng_types.h"
 
 /*****************************************************************************/
@@ -160,6 +161,85 @@ class dng_resample_weights
 			DNG_ASSERT (fWeights16->Buffer (), "Weights16 is NULL");
 			
 			return fWeights16->Buffer_int16 () + fract * fWeightStep;
+			
+			}
+
+	};
+
+/*****************************************************************************/
+
+const uint32 kResampleSubsampleBits2D  = 5;
+const uint32 kResampleSubsampleCount2D = 1 << kResampleSubsampleBits2D;
+const uint32 kResampleSubsampleMask2D  = kResampleSubsampleCount2D - 1;
+
+/*****************************************************************************/
+
+class dng_resample_weights_2d
+	{
+	
+	protected:
+	
+		uint32 fRadius;
+		
+		uint32 fRowStep;
+		uint32 fColStep;
+		
+		AutoPtr<dng_memory_block> fWeights32;
+		AutoPtr<dng_memory_block> fWeights16;
+	
+	public:
+	
+		dng_resample_weights_2d ();
+		
+		virtual ~dng_resample_weights_2d ();
+			
+		void Initialize (const dng_resample_function &kernel,
+						 dng_memory_allocator &allocator);
+						 
+		uint32 Radius () const
+			{
+			return fRadius;
+			}
+						 
+		uint32 Width () const
+			{
+			return fRadius * 2;
+			}
+			
+		int32 Offset () const
+			{
+			return 1 - (int32) fRadius;
+			}
+			
+		uint32 RowStep () const
+			{
+			return fRowStep;
+			}
+			
+		uint32 ColStep () const
+			{
+			return fColStep;
+			}
+			
+		const real32 *Weights32 (dng_point fract) const
+			{
+			
+			DNG_ASSERT (fWeights32->Buffer (), "Weights32 is NULL");
+			
+			const uint32 offset = fract.v * fRowStep + fract.h * fColStep;
+
+			return fWeights32->Buffer_real32 () + offset;
+			
+			}
+
+		const int16 *Weights16 (dng_point fract) const
+			{
+			
+			DNG_ASSERT (fWeights16->Buffer (), "Weights16 is NULL");
+			
+			const uint32 offset = fract.v * fRowStep + fract.h * fColStep;
+			
+			return fWeights16->Buffer_int16 () + offset;
 			
 			}
 

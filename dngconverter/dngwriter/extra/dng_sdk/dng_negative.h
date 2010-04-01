@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_negative.h#3 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_negative.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -22,14 +22,17 @@
 
 /*****************************************************************************/
 
+#include "dng_1d_function.h"
 #include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_fingerprint.h"
 #include "dng_linearization_info.h"
 #include "dng_matrix.h"
 #include "dng_mosaic_info.h"
+#include "dng_opcode_list.h"
 #include "dng_orientation.h"
 #include "dng_rational.h"
+#include "dng_sdk_limits.h"
 #include "dng_string.h"
 #include "dng_tag_types.h"
 #include "dng_tag_values.h"
@@ -41,10 +44,133 @@
 
 /*****************************************************************************/
 
+/// \brief Noise model for photon and sensor read noise, assuming that they are
+/// independent random variables and spatially invariant.
+///
+/// The noise model is N (x) = sqrt (scale*x + offset), where x represents a linear
+/// signal value in the range [0,1], and N (x) is the standard deviation (i.e.,
+/// noise). The parameters scale and offset are both sensor-dependent and
+/// ISO-dependent. scale must be positive, and offset must be non-negative.
+
+class dng_noise_function: public dng_1d_function
+	{
+		
+	protected:
+
+		real64 fScale;
+		real64 fOffset;
+
+	public:
+
+		dng_noise_function ()
+
+			:	fScale	(0.0)
+			,	fOffset (0.0)
+
+			{
+
+			}
+
+		dng_noise_function (real64 scale,
+							real64 offset)
+
+			:	fScale	(scale)
+			,	fOffset (offset)
+
+			{
+
+			}
+
+		virtual real64 Evaluate (real64 x) const
+			{
+			return sqrt (fScale * x + fOffset);
+			}
+
+		real64 Scale () const 
+			{ 
+			return fScale; 
+			}
+
+		real64 Offset () const 
+			{ 
+			return fOffset; 
+			}
+
+		void SetScale (real64 scale)
+			{
+			fScale = scale;
+			}
+
+		void SetOffset (real64 offset)
+			{
+			fOffset = offset;
+			}
+
+		bool IsValid () const
+			{
+			return (fScale > 0.0 && fOffset >= 0.0);
+			}
+		
+	};
+
+/*****************************************************************************/
+
+/// \brief Noise profile for a negative.
+///
+/// For mosaiced negatives, the noise profile describes the approximate noise
+/// characteristics of a mosaic negative after linearization, but prior to
+/// demosaicing. For demosaiced negatives (i.e., linear DNGs), the noise profile
+/// describes the approximate noise characteristics of the image data immediately
+/// following the demosaic step, prior to the processing of opcode list 3.
+///
+/// A noise profile may contain 1 or N noise functions, where N is the number of
+/// color planes for the negative. Otherwise the noise profile is considered to be
+/// invalid for that negative. If the noise profile contains 1 noise function, then
+/// it is assumed that this single noise function applies to all color planes of the
+/// negative. Otherwise, the N noise functions map to the N planes of the negative in
+/// order specified in the CFAPlaneColor tag.
+
+class dng_noise_profile
+	{
+		
+	protected:
+
+		std::vector<dng_noise_function> fNoiseFunctions;
+
+	public:
+
+		dng_noise_profile ();
+
+		explicit dng_noise_profile (const std::vector<dng_noise_function> &functions);
+
+		bool IsValid () const;
+
+		bool IsValidForNegative (const dng_negative &negative) const;
+
+		const dng_noise_function & NoiseFunction (uint32 plane) const;
+
+		uint32 NumFunctions () const;
+		
+	};
+
+/*****************************************************************************/
+
 /// \brief Main class for holding DNG image data and associated metadata.
 
 class dng_negative
 	{
+	
+	public:
+	
+		enum RawImageStageEnum
+			{
+			rawImageStagePreOpcode1,
+			rawImageStagePostOpcode1,
+			rawImageStagePostOpcode2,
+			rawImageStagePreOpcode3,
+			rawImageStagePostOpcode3,
+			rawImageStageNone
+			}; 
 	
 	protected:
 	
@@ -119,6 +245,10 @@ class dng_negative
 		// more by default.  0/0 for unknown.
 		
 		dng_urational fNoiseReductionApplied;
+
+		// Amount of noise for this negative (see dng_noise_profile for details).
+
+		dng_noise_profile fNoiseProfile;
 		
 		// Zero point for the exposure compensation slider. This reflects how
 		// the manufacturer sets up the camera and its conversions.
@@ -262,6 +392,10 @@ class dng_negative
 		
 		uint64 fIPTCOffset;
 		
+		// Did the legacy ITPC block use UTF8?
+		
+		bool fUsedUTF8forIPTC;
+		
 		// XMP data.
 		
 		AutoPtr<dng_xmp> fXMP;
@@ -286,6 +420,18 @@ class dng_negative
 		// Information required to demoasic the raw data.
 		
 		AutoPtr<dng_mosaic_info> fMosaicInfo;
+		
+		// Opcode list 1. (Applied to stored data)
+		
+		dng_opcode_list fOpcodeList1;
+		
+		// Opcode list 2. (Applied to range mapped data)
+		
+		dng_opcode_list fOpcodeList2;
+		
+		// Opcode list 3. (Post demosaic)
+		
+		dng_opcode_list fOpcodeList3;
 		
 		// Stage 1 image, which is image data stored in a DNG file.
 		
@@ -313,6 +459,14 @@ class dng_negative
 		// Does the file appear to be damaged?
 		
 		bool fIsDamaged;
+		
+		// At what processing stage did we grab a copy of raw image data?
+		
+		RawImageStageEnum fRawImageStage;
+		
+		// The raw image data that we grabbed, if any.
+		
+		AutoPtr<dng_image> fRawImage;
 		
 	public:
 	
@@ -543,6 +697,14 @@ class dng_negative
 			return SquareWidth  () /
 				   SquareHeight ();
 			}
+			
+		/// Pixel aspect ratio of stage 3 image.
+		
+		real64 PixelAspectRatio () const
+			{
+			return (DefaultScaleH ().As_real64 () / RawToFullScaleH ()) /
+				   (DefaultScaleV ().As_real64 () / RawToFullScaleV ());
+			}
 		
 		/// Default cropped image size at given scale factor width.
 		
@@ -624,11 +786,32 @@ class dng_negative
 			fNoiseReductionApplied = value;
 			}
 			
-		/// Getter for NosieReductionApplied.
+		/// Getter for NoiseReductionApplied.
 		
 		const dng_urational & NoiseReductionApplied () const
 			{
 			return fNoiseReductionApplied;
+			}
+
+		/// Setter for noise profile.
+
+		void SetNoiseProfile (const dng_noise_profile &noiseProfile)
+			{
+			fNoiseProfile = noiseProfile;
+			}
+
+		/// Does this negative have a valid noise profile?
+
+		bool HasNoiseProfile () const
+			{
+			return fNoiseProfile.IsValidForNegative (*this);
+			}
+
+		/// Getter for noise profile.
+
+		const dng_noise_profile & NoiseProfile () const
+			{
+			return fNoiseProfile;
 			}
 			
 		/// Setter for BaselineExposure.
@@ -954,6 +1137,8 @@ class dng_negative
 		
 		void FindRawDataUniqueID (dng_host &host) const;
 		
+		void RecomputeRawDataUniqueID (dng_host &host);
+
 		// API for original raw file name:
 		
 		void SetOriginalRawFileName (const char *name)
@@ -1087,7 +1272,9 @@ class dng_negative
 			}
 			
 		virtual dng_memory_block * BuildExifBlock (const dng_resolution *resolution = NULL,
-												   bool includeIPTC = false) const;
+												   bool includeIPTC = false,
+												   bool minimalEXIF = false,
+												   const dng_jpeg_preview *thumbnail = NULL) const;
 												   
 		// API for original EXIF metadata.
 		
@@ -1116,9 +1303,20 @@ class dng_negative
 		
 		uint64 IPTCOffset () const;
 		
-		dng_fingerprint IPTCDigest () const;
+		dng_fingerprint IPTCDigest (bool includePadding = true) const;
 		
-		void RebuildIPTC ();
+		void RebuildIPTC (bool padForTIFF,
+						  bool forceUTF8);
+		
+		bool UsedUTF8forIPTC () const
+			{
+			return fUsedUTF8forIPTC;
+			}
+			
+		void SetUsedUTF8forIPTC (bool used)
+			{
+			fUsedUTF8forIPTC = used;
+			}
 		
 		// API for XMP metadata:
 		
@@ -1265,6 +1463,38 @@ class dng_negative
 							
 		void SetGreenSplit (uint32 split);
 		
+		// APIs for opcode lists.
+		
+		const dng_opcode_list & OpcodeList1 () const
+			{
+			return fOpcodeList1;
+			}
+			
+		dng_opcode_list & OpcodeList1 ()
+			{
+			return fOpcodeList1;
+			}
+			
+		const dng_opcode_list & OpcodeList2 () const
+			{
+			return fOpcodeList2;
+			}
+			
+		dng_opcode_list & OpcodeList2 ()
+			{
+			return fOpcodeList2;
+			}
+			
+		const dng_opcode_list & OpcodeList3 () const
+			{
+			return fOpcodeList3;
+			}
+			
+		dng_opcode_list & OpcodeList3 ()
+			{
+			return fOpcodeList3;
+			}
+		
 		// First part of parsing logic.
 		
 		virtual void Parse (dng_host &host,
@@ -1313,7 +1543,14 @@ class dng_negative
 			return fStage3Image.Get ();
 			}
 			
-		// Returns the most "raw" of the image stages.
+		// Returns the processing stage of the raw image data.
+		
+		RawImageStageEnum RawImageStage () const
+			{
+			return fRawImageStage;
+			}
+			
+		// Returns the raw image data.
 		
 		const dng_image & RawImage () const;
 			
@@ -1326,20 +1563,24 @@ class dng_negative
 		// Assign the stage 1 image.
 		
 		void SetStage1Image (AutoPtr<dng_image> &image);
+		
+		// Assign the stage 2 image.
+		
+		void SetStage2Image (AutoPtr<dng_image> &image);
+									  
+		// Assign the stage 3 image.
+		
+		void SetStage3Image (AutoPtr<dng_image> &image);
 									  
 		// Build the stage 2 (linearized and range mapped) image.
 		
-		virtual void BuildStage2Image (dng_host &host,
-									   uint32 pixelType = ttShort);
+		void BuildStage2Image (dng_host &host,
+							   uint32 pixelType = ttShort);
 									   
-		// Discard the stage 1 image and the linearization info.
-									  
-		virtual void ClearStage1 ();
-									  
 		// Build the stage 3 (demosaiced) image.
 									   
-		virtual void BuildStage3Image (dng_host &host,
-									   int32 srcPlane = -1);
+		void BuildStage3Image (dng_host &host,
+							   int32 srcPlane = -1);
 									   
 		// Additional gain applied when building the stage 3 image.
 		
@@ -1353,14 +1594,6 @@ class dng_negative
 			return fStage3Gain;
 			}
 
-		// Discard the stage 2 image and the mosaic info.
-									  
-		virtual void ClearStage2 ();
-		
-		// Discard the stage 3 image.
-		
-		virtual void ClearStage3 ();
-									  
 		// IsPreview API:
 			
 		void SetIsPreview (bool preview)
@@ -1406,10 +1639,13 @@ class dng_negative
 		virtual void DoBuildStage2 (dng_host &host,
 									uint32 pixelType);
 									   
-		virtual void DoBuildStage3 (dng_host &host,
-									int32 srcPlane);
+		virtual void DoInterpolateStage3 (dng_host &host,
+									      int32 srcPlane);
 									
 		virtual void DoMergeStage3 (dng_host &host);
+									   
+		virtual void DoBuildStage3 (dng_host &host,
+									int32 srcPlane);
 									   
 	};
 

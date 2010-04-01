@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2009 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_reference.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_reference.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -463,6 +463,42 @@ bool RefEqualArea32 (const uint32 *sPtr,
 					 int32 dRowStep,
 					 int32 dColStep,
 					 int32 dPlaneStep);
+
+/*****************************************************************************/
+
+void RefVignetteMask16 (uint16 *mPtr,
+						uint32 rows,
+						uint32 cols,
+						int32 rowStep,
+						int64 offsetH,
+						int64 offsetV,
+						int64 stepH,
+						int64 stepV,
+						uint32 tBits,
+						const uint16 *table);
+
+/*****************************************************************************/
+
+void RefVignette16 (int16 *sPtr,
+					const uint16 *mPtr,
+					uint32 rows,
+					uint32 cols,
+					uint32 planes,
+					int32 sRowStep,
+					int32 sPlaneStep,
+					int32 mRowStep,
+					uint32 mBits);
+
+/*****************************************************************************/
+
+void RefMapArea16 (uint16 *dPtr,
+				   uint32 count0,
+				   uint32 count1,
+				   uint32 count2,
+				   int32 step0,
+				   int32 step1,
+				   int32 step2,
+				   const uint16 *map);
 
 /*****************************************************************************/
 

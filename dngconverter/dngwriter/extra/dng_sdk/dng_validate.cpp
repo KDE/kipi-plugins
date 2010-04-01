@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_validate.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_validate.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -40,7 +40,7 @@
 		
 /*****************************************************************************/
 
-#define kDNGValidateVersion "1.2"
+#define kDNGValidateVersion "1.3"
 		
 /*****************************************************************************/
 
@@ -84,16 +84,24 @@ static dng_error_code dng_validate (const char *filename)
 		
 		host.ValidateSizes ();
 		
-		host.SetKeepOriginalFile (true);
-			
 		if (host.MinimumSize ())
 			{
+			
 			host.SetForPreview (true);
+			
+			gDumpDNG.Clear ();
+			
 			}
 			
 		if (gDumpDNG.NotEmpty ())
 			{
-			host.SetKeepStage1 (true);
+			
+			host.SetSaveDNGVersion (dngVersion_SaveDefault);
+			
+			host.SetSaveLinearDNG (false);
+			
+			host.SetKeepOriginalFile (true);
+			
 			}
 			
 		// Read into the negative.
@@ -226,8 +234,6 @@ static dng_error_code dng_validate (const char *filename)
 		// Update metadata.
 			
 		negative->UpdateDateTimeToNow ();
-		
-		negative->RebuildIPTC ();
 		
 		// Output DNG file if requested.
 			
@@ -405,7 +411,7 @@ int main (int argc, char *argv [])
 					 "(32-bit)"
 					 #endif
 					 "\n"
-					 "Copyright 2005-2008 Adobe Systems, Inc.\n"
+					 "Copyright 2005-2009 Adobe Systems, Inc.\n"
 					 "\n"
 					 "Usage:  %s [options] file1 file2 ...\n"
 					 "\n"

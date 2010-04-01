@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_xmp_sdk.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_xmp_sdk.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -18,6 +18,7 @@
 
 /*****************************************************************************/
 
+#include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_flags.h"
 #include "dng_types.h"
@@ -29,6 +30,7 @@ extern const char *XMP_NS_EXIF;
 extern const char *XMP_NS_PHOTOSHOP;
 extern const char *XMP_NS_XAP;
 extern const char *XMP_NS_DC;
+extern const char *XMP_NS_XMP_NOTE;
 
 extern const char *XMP_NS_CRS;
 extern const char *XMP_NS_CRSS;
@@ -121,6 +123,9 @@ class dng_xmp_sdk
 				   		const char *path,
 				   		dng_string &s) const;
 				   		  		
+		void ValidateStringList (const char *ns,
+								 const char *path);
+								   
 		bool GetStringList (const char *ns,
 							const char *path,
 							dng_string_list &list) const;
@@ -169,6 +174,13 @@ class dng_xmp_sdk
 									  uint32 padBytes,
 									  bool forJPEG) const;
 		
+		void PackageForJPEG (dng_memory_allocator &allocator,
+							 AutoPtr<dng_memory_block> &stdBlock,
+							 AutoPtr<dng_memory_block> &extBlock,
+							 dng_string &extDigest) const;
+							 
+		void MergeFromJPEG (const dng_xmp_sdk *xmp);
+
 		void AppendXMP (const dng_xmp_sdk *xmp);
 		
 		void ReplaceXMP (dng_xmp_sdk *xmp);

@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_mutex.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_mutex.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /******************************************************************************/
@@ -22,9 +22,10 @@
 
 /******************************************************************************/
 
+#include "dng_types.h"
+
 #if qDNGThreadSafe
 
-#include "dng_types.h"
 #include "dng_pthread.h"
 
 #endif
@@ -102,6 +103,31 @@ class dng_lock_mutex
 		dng_lock_mutex (const dng_lock_mutex &lock);
 		
 		dng_lock_mutex & operator= (const dng_lock_mutex &lock);
+		
+	};
+	
+/*****************************************************************************/
+
+class dng_unlock_mutex
+	{
+	
+	private:
+	
+		dng_mutex *fMutex;
+	
+	public:
+	
+		dng_unlock_mutex (dng_mutex *mutex);
+			
+		~dng_unlock_mutex ();
+			
+	private:
+	
+		// Hidden copy constructor and assignment operator.
+	
+		dng_unlock_mutex (const dng_unlock_mutex &unlock);
+		
+		dng_unlock_mutex & operator= (const dng_unlock_mutex &unlock);
 		
 	};
 	

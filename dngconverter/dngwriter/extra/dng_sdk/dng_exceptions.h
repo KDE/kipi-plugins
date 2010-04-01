@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_exceptions.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_exceptions.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -255,6 +255,30 @@ inline void ThrowFileIsDamaged ()
 	{
 	
 	Throw_dng_error (dng_error_file_is_damaged);
+	
+	}
+
+/*****************************************************************************/
+
+/// \brief Convenience function to throw dng_exception with error code
+/// dng_error_image_too_big_dng .
+
+inline void ThrowImageTooBigDNG ()
+	{
+	
+	Throw_dng_error (dng_error_image_too_big_dng);
+	
+	}
+
+/*****************************************************************************/
+
+/// \brief Convenience function to throw dng_exception with error code
+/// dng_error_image_too_big_tiff .
+
+inline void ThrowImageTooBigTIFF ()
+	{
+	
+	Throw_dng_error (dng_error_image_too_big_tiff);
 	
 	}
 

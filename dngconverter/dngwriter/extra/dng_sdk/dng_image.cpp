@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_image.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_image.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_image.h"
+
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 #include "dng_orientation.h"
@@ -88,13 +89,11 @@ dng_dirty_tile_buffer::~dng_dirty_tile_buffer ()
 
 dng_image::dng_image (const dng_rect &bounds,
 				      uint32 planes,
-				      uint32 pixelType,
-				      uint32 pixelRange)
+				      uint32 pixelType)
 
-	: 	fBounds (bounds)
-	,	fPlanes (planes)
+	: 	fBounds    (bounds)
+	,	fPlanes    (planes)
 	,	fPixelType (pixelType)
-	,	fPixelRange (pixelRange)
 	
 	{
 	
@@ -106,7 +105,18 @@ dng_image::~dng_image ()
 	{
 	
 	}
-		
+
+/*****************************************************************************/
+
+dng_image * dng_image::Clone () const
+	{
+	
+	ThrowProgramError ("Clone is not supported by this dng_image subclass");
+
+	return NULL;
+	
+	}
+
 /*****************************************************************************/
 
 void dng_image::SetPixelType (uint32 pixelType)
@@ -115,9 +125,7 @@ void dng_image::SetPixelType (uint32 pixelType)
 	if (TagTypeSize (pixelType) != PixelSize ())
 		{
 		
-		DNG_REPORT ("Cannot change pixel size for existing image");
-		
-		ThrowProgramError ();
+		ThrowProgramError ("Cannot change pixel size for existing image");
 		
 		}
 	
@@ -139,11 +147,6 @@ uint32 dng_image::PixelSize () const
 uint32 dng_image::PixelRange () const
 	{
 	
-	if (fPixelRange)
-		{
-		return fPixelRange;
-		}
-		
 	switch (fPixelType)
 		{
 		
@@ -174,15 +177,6 @@ uint32 dng_image::PixelRange () const
 	
 	}
 
-/*****************************************************************************/
-
-void dng_image::SetPixelRange (uint32 pixelRange)
-	{
-	
-	fPixelRange = pixelRange;
-	
-	}
-		
 /*****************************************************************************/
 
 dng_rect dng_image::RepeatingTile () const
@@ -719,9 +713,7 @@ void dng_image::Trim (const dng_rect &r)
 	if (r != Bounds ())
 		{
 		
-		DNG_REPORT ("Trim is not support by this dng_image subclass");
-		
-		ThrowProgramError ();
+		ThrowProgramError ("Trim is not support by this dng_image subclass");
 		
 		}
 	
@@ -735,9 +727,7 @@ void dng_image::Rotate (const dng_orientation &orientation)
 	if (orientation != dng_orientation::Normal ())
 		{
 		
-		DNG_REPORT ("Rotate is not support by this dng_image subclass");
-		
-		ThrowProgramError ();
+		ThrowProgramError ("Rotate is not support by this dng_image subclass");
 		
 		}
 	
@@ -820,19 +810,20 @@ bool dng_image::EqualArea (const dng_image &src,
 
 /*****************************************************************************/
 
-void dng_image::SetConstant (uint32 value)
+void dng_image::SetConstant (uint32 value,
+							 const dng_rect &area)
 	{
 	
-	dng_tile_iterator iter (*this, Bounds ());
+	dng_tile_iterator iter (*this, area);
 							
-	dng_rect area;
+	dng_rect tileArea;
 	
-	while (iter.GetOneTile (area))
+	while (iter.GetOneTile (tileArea))
 		{
 		
-		dng_dirty_tile_buffer buffer (*this, area);
+		dng_dirty_tile_buffer buffer (*this, tileArea);
 		
-		buffer.SetConstant (area,
+		buffer.SetConstant (tileArea,
 							0,
 							fPlanes,
 							value);

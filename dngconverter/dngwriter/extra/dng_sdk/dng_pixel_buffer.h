@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_pixel_buffer.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_pixel_buffer.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -110,12 +110,6 @@ class dng_pixel_buffer
 		// Size of pixel type in bytes.
 		
 		uint32 fPixelSize;
-		
-		// For integer pixel types, the maximum value. If zero, it means
-		// the maximum value that fits in the integer size.  Ignored for
-		// non-integer pixel types.
-		
-		uint32 fPixelRange;
 		
 		// Pointer to buffer's data.
 		
@@ -619,13 +613,19 @@ class dng_pixel_buffer
 		static dng_point RepeatPhase (const dng_rect &srcArea,
 					   			   	  const dng_rect &dstArea);
 
-		/// Repeat the image data in srcArea acros dstArea.
+		/// Repeat the image data in srcArea across dstArea.
 		/// (Generally used for padding operations.)
 		/// \param srcArea Area to repeat from.
 		/// \param dstArea Area to fill with data from srcArea.
 
 		void RepeatArea (const dng_rect &srcArea,
 						 const dng_rect &dstArea);
+						 
+		/// Replicates a sub-area of a buffer to fill the entire buffer.
+		
+		void RepeatSubArea (const dng_rect subArea,
+						    uint32 repeatV = 1,
+						    uint32 repeatH = 1);
 
 		/// Apply a right shift (C++ oerpator >>) to all pixel values. Only implemented for 16-bit (signed or unsigned) pixel buffers.
 		/// \param shift Number of bits by which to right shift each pixel value.
@@ -652,11 +652,24 @@ class dng_pixel_buffer
 		/// \param area Rectangle of pixel buffer to test.
 		/// \param plane Plane to start comparing.
 		/// \param planes Number of planes to compare.
+		/// \retval bool true if areas are equal, false otherwise.
 
 		bool EqualArea (const dng_pixel_buffer &rhs,
 					    const dng_rect &area,
 					    uint32 plane,
 					    uint32 planes) const;
+
+		/// Return the absolute value of the maximum difference between two pixel buffers. Used for comparison testing with tolerance
+		/// \param rhs Buffer to compare against.
+		/// \param area Rectangle of pixel buffer to test.
+		/// \param plane Plane to start comparing.
+		/// \param planes Number of planes to compare.
+		/// \retval larges absolute value difference between the corresponding pixels each buffer across area.
+
+		real64 MaximumDifference (const dng_pixel_buffer &rhs,
+								  const dng_rect &area,
+								  uint32 plane,
+								  uint32 planes) const;
 
 	};
 

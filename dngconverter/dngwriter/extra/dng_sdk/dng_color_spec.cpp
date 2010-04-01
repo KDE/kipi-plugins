@@ -6,12 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_color_spec.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_color_spec.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 #include "dng_color_spec.h"
+
 #include "dng_assertions.h"
 #include "dng_camera_profile.h"
 #include "dng_exceptions.h"
@@ -97,6 +98,11 @@ dng_color_spec::dng_color_spec (const dng_negative &negative,
 		if (!profile || !profile->IsValid (fChannels))
 			{
 			ThrowBadFormat ();
+			}
+			
+		if (profile->WasStubbed ())
+			{
+			ThrowProgramError ("Using stubbed profile");
 			}
 		
 		fTemperature1 = profile->CalibrationTemperature1 ();

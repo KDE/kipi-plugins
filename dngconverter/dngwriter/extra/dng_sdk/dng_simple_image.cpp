@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_simple_image.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_simple_image.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_simple_image.h"
+
 #include "dng_memory.h"
 #include "dng_orientation.h"
 #include "dng_tag_types.h"
@@ -23,16 +24,15 @@
 dng_simple_image::dng_simple_image (const dng_rect &bounds,
 									uint32 planes,
 								    uint32 pixelType,
-								    uint32 pixelRange,
 								    dng_memory_allocator &allocator)
 								    
 	:	dng_image (bounds,
 				   planes,
-				   pixelType,
-				   pixelRange)
+				   pixelType)
 				   
-	,	fMemory ()
-	,	fBuffer ()
+	,	fMemory    ()
+	,	fBuffer    ()
+	,	fAllocator (allocator)
 				   
 	{
 	
@@ -51,9 +51,8 @@ dng_simple_image::dng_simple_image (const dng_rect &bounds,
 	fBuffer.fColStep   = planes;
 	fBuffer.fPlaneStep = 1;
 	
-	fBuffer.fPixelType  = pixelType;
-	fBuffer.fPixelSize  = pixelSize;
-	fBuffer.fPixelRange = pixelRange;
+	fBuffer.fPixelType = pixelType;
+	fBuffer.fPixelSize = pixelSize;
 	
 	fBuffer.fData = fMemory->Buffer ();
 	
@@ -68,23 +67,31 @@ dng_simple_image::~dng_simple_image ()
 
 /*****************************************************************************/
 
+dng_image * dng_simple_image::Clone () const
+	{
+	
+	AutoPtr<dng_simple_image> result (new dng_simple_image (Bounds (),
+															Planes (),
+															PixelType (),
+															fAllocator));
+															
+	result->fBuffer.CopyArea (fBuffer,
+							  Bounds (),
+							  0,
+							  Planes ());
+															
+	return result.Release ();
+	
+	}
+
+/*****************************************************************************/
+
 void dng_simple_image::SetPixelType (uint32 pixelType)
 	{
 	
 	dng_image::SetPixelType (pixelType);
 	
 	fBuffer.fPixelType = pixelType;
-	
-	}
-
-/*****************************************************************************/
-
-void dng_simple_image::SetPixelRange (uint32 pixelRange)
-	{
-	
-	dng_image::SetPixelRange (pixelRange);
-	
-	fBuffer.fPixelRange = pixelRange;
 	
 	}
 
@@ -178,7 +185,6 @@ void dng_simple_image::AcquireTileBuffer (dng_tile_buffer &buffer,
 	buffer.fPlaneStep  = fBuffer.fPlaneStep;
 	buffer.fPixelType  = fBuffer.fPixelType;
 	buffer.fPixelSize  = fBuffer.fPixelSize;
-	buffer.fPixelRange = fBuffer.fPixelRange;
 
 	buffer.fData = (void *) fBuffer.ConstPixel (buffer.fArea.t,
 								  				buffer.fArea.l,

@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_tag_values.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_tag_values.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -113,7 +113,8 @@ enum
 	ccOldJPEG					= 6,
 	ccJPEG						= 7,
 	ccDeflate					= 8,
-	ccPackBits					= 32773
+	ccPackBits					= 32773,
+	ccOldDeflate				= 32946
 	
 	};
 
@@ -334,6 +335,26 @@ enum
 	
 	};
 	
+/*****************************************************************************/
+
+// DNG Version numbers
+
+enum
+	{
+	
+	dngVersion_None				= 0,
+	
+	dngVersion_1_0_0_0			= 0x01000000,
+	dngVersion_1_1_0_0			= 0x01010000,
+	dngVersion_1_2_0_0			= 0x01020000,
+	dngVersion_1_3_0_0			= 0x01030000,
+	
+	dngVersion_Current			= dngVersion_1_3_0_0,
+	
+	dngVersion_SaveDefault		= dngVersion_Current
+	
+	};
+
 /*****************************************************************************/
 
 #endif

@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_rect.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_rect.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -130,6 +130,12 @@ class dng_rect
 		dng_point Size () const
 			{
 			return dng_point (H (), W ());
+			}
+
+		real64 Diagonal () const
+			{
+			return hypot ((real64) W (),
+						  (real64) H ());
 			}
 	
 	};
@@ -260,6 +266,11 @@ class dng_rect_real64
 							 Round_int32 (r));
 			}
 	
+		real64 Diagonal () const
+			{
+			return hypot (W (), H ());
+			}
+	
 	};
 
 /*****************************************************************************/
@@ -327,6 +338,129 @@ inline dng_rect_real64 operator- (const dng_rect_real64 &a,
 					 		a.l - b.h,
 					 		a.b - b.v,
 					 		a.r - b.h);
+	
+	}
+
+/*****************************************************************************/
+
+inline dng_rect Transpose (const dng_rect &a)
+	{
+	
+	return dng_rect (a.l, a.t, a.r, a.b);
+	
+	}
+
+/*****************************************************************************/
+
+inline dng_rect_real64 Transpose (const dng_rect_real64 &a)
+	{
+	
+	return dng_rect_real64 (a.l, a.t, a.r, a.b);
+	
+	}
+
+/*****************************************************************************/
+
+inline void HalfRect (dng_rect &rect)
+	{
+
+	rect.r = rect.l + (rect.W () >> 1);
+	rect.b = rect.t + (rect.H () >> 1);
+
+	}
+
+/*****************************************************************************/
+
+inline void DoubleRect (dng_rect &rect)
+	{
+
+	rect.r = rect.l + (rect.W () << 1);
+	rect.b = rect.t + (rect.H () << 1);
+
+	}
+
+/*****************************************************************************/
+
+inline void InnerPadRect (dng_rect &rect,
+						  int32 pad)
+	{
+
+	rect.l += pad;
+	rect.r -= pad;
+	rect.t += pad;
+	rect.b -= pad;
+
+	}
+
+/*****************************************************************************/
+
+inline void OuterPadRect (dng_rect &rect,
+						  int32 pad)
+	{
+
+	InnerPadRect (rect, -pad);
+
+	}
+
+/*****************************************************************************/
+
+inline void InnerPadRectH (dng_rect &rect,
+						   int32 pad)
+	{
+
+	rect.l += pad;
+	rect.r -= pad;
+
+	}
+
+/*****************************************************************************/
+
+inline void InnerPadRectV (dng_rect &rect,
+						   int32 pad)
+	{
+
+	rect.t += pad;
+	rect.b -= pad;
+
+	}
+
+/*****************************************************************************/
+
+inline dng_rect MakeHalfRect (const dng_rect &rect)
+	{
+	
+	dng_rect out = rect;
+
+	HalfRect (out);
+
+	return out;
+	
+	}
+
+/*****************************************************************************/
+
+inline dng_rect MakeDoubleRect (const dng_rect &rect)
+	{
+	
+	dng_rect out = rect;
+
+	DoubleRect (out);
+
+	return out;
+	
+	}
+
+/*****************************************************************************/
+
+inline dng_rect MakeInnerPadRect (const dng_rect &rect,
+								  int32 pad)
+	{
+	
+	dng_rect out = rect;
+
+	InnerPadRect (out, pad);
+
+	return out;
 	
 	}
 

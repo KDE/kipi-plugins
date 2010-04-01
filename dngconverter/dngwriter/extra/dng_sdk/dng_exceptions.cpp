@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_exceptions.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_exceptions.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_exceptions.h"
+
 #include "dng_flags.h"
 #include "dng_globals.h"
 
@@ -167,6 +168,18 @@ void Throw_dng_error (dng_error_code err,
 				case dng_error_file_is_damaged:
 					{
 					message = "File is damaged";
+					break;
+					}
+					
+				case dng_error_image_too_big_dng:
+					{
+					message = "Image is too big to save as DNG";
+					break;
+					}
+					
+				case dng_error_image_too_big_tiff:
+					{
+					message = "Image is too big to save as TIFF";
 					break;
 					}
 					

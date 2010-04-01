@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_file_stream.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_file_stream.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -40,6 +40,7 @@ class dng_file_stream: public dng_stream
 		/// Open a stream on a file.
 		/// \param filename Pathname in platform synax.
 		/// \param output Set to true if writing, false otherwise.
+		/// \param bufferSize size of internal buffer to use. Defaults to 4k.
 
 		dng_file_stream (const char *filename,
 						 bool output = false,

@@ -6,47 +6,21 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_filter_task.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_filter_task.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_filter_task.h"
+
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_image.h"
 #include "dng_memory.h"
 #include "dng_tag_types.h"
 #include "dng_utils.h"
-
-/*****************************************************************************/
-
-static int32 RoundUpForPixelSize (uint32 x, uint32 pixelSize)
-	{
-	
-	switch (pixelSize)
-		{
-		
-		case 1:
-			return RoundUp16 (x);
-			
-		case 2:
-			return RoundUp8 (x);
-			
-		case 4:
-			return RoundUp4 (x);
-			
-		case 8:
-			return RoundUp2 (x);
-			
-		default:
-			return RoundUp16 (x);
-					
-		}
-	
-	}
 
 /*****************************************************************************/
 
@@ -108,7 +82,7 @@ void dng_filter_task::Start (uint32 threadCount,
 		
 		fDstBuffer [threadIndex] . Reset (allocator->Allocate (dstBufferSize));
 		
-		// Zero buffers so add pad bytes have defined values.
+		// Zero buffers so any pad bytes have defined values.
 		
 		DoZeroBytes (fSrcBuffer [threadIndex]->Buffer      (),
 					 fSrcBuffer [threadIndex]->LogicalSize ());
@@ -148,45 +122,6 @@ void dng_filter_task::Process (uint32 threadIndex,
 	
 	srcBuffer.fRowStep = srcBuffer.fPlaneStep *
 						 srcBuffer.fPlanes;
-	
-	if (fSrcPixelType == fSrcImage.PixelType ())
-		{
-		
-		srcBuffer.fPixelRange = fSrcImage.PixelRange ();
-		
-		}
-		
-	else switch (fSrcPixelType)
-		{
-		
-		case ttByte:
-		case ttSByte:
-			{
-			srcBuffer.fPixelRange = 0x0FF;
-			break;
-			}
-		
-		case ttShort:
-		case ttSShort:
-			{
-			srcBuffer.fPixelRange = 0x0FFFF;
-			break;
-			}
-		
-		case ttLong:
-		case ttSLong:
-			{
-			srcBuffer.fPixelRange = 0xFFFFFFFF;
-			break;
-			}
-			
-		case ttFloat:
-			break;
-			
-		default:
-			ThrowProgramError ();
-		
-		}
 		
 	srcBuffer.fData = fSrcBuffer [threadIndex]->Buffer ();
 	
@@ -207,46 +142,7 @@ void dng_filter_task::Process (uint32 threadIndex,
 	
 	dstBuffer.fRowStep = dstBuffer.fPlaneStep *
 						 dstBuffer.fPlanes;
-	
-	if (fDstPixelType == fDstImage.PixelType ())
-		{
-		
-		dstBuffer.fPixelRange = fDstImage.PixelRange ();
-		
-		}
-		
-	else switch (fDstPixelType)
-		{
-		
-		case ttByte:
-		case ttSByte:
-			{
-			dstBuffer.fPixelRange = 0x0FF;
-			break;
-			}
-		
-		case ttShort:
-		case ttSShort:
-			{
-			dstBuffer.fPixelRange = 0x0FFFF;
-			break;
-			}
-		
-		case ttLong:
-		case ttSLong:
-			{
-			dstBuffer.fPixelRange = 0xFFFFFFFF;
-			break;
-			}
 			
-		case ttFloat:
-			break;
-			
-		default:
-			ThrowProgramError ();
-		
-		}
-		
 	dstBuffer.fData = fDstBuffer [threadIndex]->Buffer ();
 	
 	// Get source pixels.

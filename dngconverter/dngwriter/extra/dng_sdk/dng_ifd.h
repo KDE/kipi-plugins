@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_ifd.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_ifd.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -203,6 +203,15 @@ class dng_ifd
 		uint32 fSubTileBlockCols;
 		
 		dng_preview_info fPreviewInfo;
+		
+		uint32 fOpcodeList1Count;
+		uint64 fOpcodeList1Offset;
+		
+		uint32 fOpcodeList2Count;
+		uint64 fOpcodeList2Offset;
+		
+		uint32 fOpcodeList3Count;
+		uint64 fOpcodeList3Offset;
 		
 		bool fLosslessJPEGBug16;
 		

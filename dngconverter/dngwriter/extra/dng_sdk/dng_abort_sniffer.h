@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_abort_sniffer.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_abort_sniffer.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -39,7 +39,7 @@ enum dng_priority
 	dng_priority_count,
 	
 	dng_priority_minimum = dng_priority_low,
-	dng_priority_maximum = dng_priority_high
+	dng_priority_maximum = dng_priority_high,
 	
 	};
 

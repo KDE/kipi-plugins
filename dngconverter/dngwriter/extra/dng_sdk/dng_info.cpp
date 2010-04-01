@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_info.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_info.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_info.h"
+
 #include "dng_camera_profile.h"
 #include "dng_exceptions.h"
 #include "dng_globals.h"
@@ -112,8 +113,11 @@ void dng_info::ParseTag (dng_host &host,
 	// Panasonic RAW format stores private tags using tag codes < 254 in
 	// IFD 0.  Redirect the parsing of these tags into a logical
 	// "PanasonicRAW" IFD.
+	
+	// Panasonic is starting to use some higher numbers also (280..283).
 			 		 
-	if (fMagic == 85 && parentCode == 0 && tagCode < tcNewSubFileType)
+	if (fMagic == 85 && parentCode == 0 && (tagCode < tcNewSubFileType ||
+											(tagCode >= 280 && tagCode <= 283)))
 		{
 		
 		parentCode = tcPanasonicRAW;
@@ -1285,6 +1289,24 @@ void dng_info::ParseMakerNote (dng_host &host,
 			
 		}
 	
+	// Nikon MakerNote without header.
+	
+	if (fExif->fMake.StartsWith ("Hasselblad"))
+		{
+		
+		ParseMakerNoteIFD (host,
+						   stream,
+						   makerNoteCount,
+			   	  		   makerNoteOffset,
+			   	  		   offsetDelta,
+			   	  		   minOffset,
+			   	  		   maxOffset,
+			   	  		   tcHasselbladMakerNote);
+			   	  		   
+		return;
+			
+		}
+	
 	}
 							   		 
 /*****************************************************************************/
@@ -1890,6 +1912,28 @@ void dng_info::Parse (dng_host &host,
 			
 			}
 		
+		// Some TIFF file writers forget about the next IFD offset, so
+		// validate the IFD at that offset before parsing it.
+		
+		if (!ValidateIFD (stream,
+						  fTIFFBlockOffset + next_offset,
+						  fTIFFBlockOffset))
+			{
+			
+			#if qDNGValidate
+			
+				{
+				
+				ReportWarning ("Chained IFD is not valid");
+
+				}
+				
+			#endif
+			
+			break;
+			
+			}
+
 		if (fChainedIFDCount == kMaxChainedIFDs)
 			{
 			
@@ -2238,7 +2282,7 @@ void dng_info::PostParse (dng_host &host)
 			
 		// Deal with lossless JPEG bug in early DNG versions.
 		
-		if (fShared->fDNGVersion < 0x01010000)
+		if (fShared->fDNGVersion < dngVersion_1_1_0_0)
 			{
 			
 			if (fMainIndex != -1)

@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_string_list.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_string_list.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_string_list.h"
+
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_string.h"
@@ -36,19 +37,7 @@ dng_string_list::dng_string_list ()
 dng_string_list::~dng_string_list ()
 	{
 	
-	if (fList)
-		{
-		
-		for (uint32 index = 0; index < fCount; index++)
-			{
-			
-			delete fList [index];
-			
-			}
-			
-		free (fList);
-		
-		}
+	Clear ();
 	
 	}
 
@@ -145,4 +134,30 @@ bool dng_string_list::Contains (const dng_string &s) const
 	
 	}
 					 
+/*****************************************************************************/
+
+void dng_string_list::Clear ()
+	{
+	
+	if (fList)
+		{
+		
+		for (uint32 index = 0; index < fCount; index++)
+			{
+			
+			delete fList [index];
+			
+			}
+			
+		free (fList);
+		
+		fList = NULL;
+		
+		}
+		
+	fCount     = 0;
+	fAllocated = 0;
+	
+	}
+
 /*****************************************************************************/

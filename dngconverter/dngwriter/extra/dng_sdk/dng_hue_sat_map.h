@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_hue_sat_map.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_hue_sat_map.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -126,7 +126,7 @@ class dng_hue_sat_map
 			return (HSBModify *) fDeltas.Buffer_real32 ();
 			}
 
-		bool operator== (const dng_hue_sat_map &rhs) const;
+                bool operator== (const dng_hue_sat_map &rhs) const;
 		
 		static dng_hue_sat_map * Interpolate (const dng_hue_sat_map &map1,
 											  const dng_hue_sat_map &map2,

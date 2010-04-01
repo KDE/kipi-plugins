@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_image_writer.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_image_writer.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -575,37 +575,6 @@ class tag_xmp: public tag_uint8_ptr
 
 /******************************************************************************/
 
-class tag_adobe_data: public tiff_tag
-	{
-	
-	private:
-	
-		const dng_jpeg_preview *fPreview;
-		
-		dng_fingerprint fIPTCDigest;
-		
-		const dng_memory_block *fImageResources;
-		
-	public:
-	
-		tag_adobe_data (const dng_jpeg_preview *preview,
-					    const dng_fingerprint &iptcDigest,
-						const dng_memory_block *imageResources);
-			
-		virtual void Put (dng_stream &stream) const;
-
-	private:
-	
-		// Hidden copy constructor and assignment operator.
-		
-		tag_adobe_data (const tag_adobe_data &tag);
-		
-		tag_adobe_data & operator= (const tag_adobe_data &tag);
-					 
-	};
-
-/******************************************************************************/
-
 class dng_tiff_directory
 	{
 	
@@ -620,11 +589,14 @@ class dng_tiff_directory
 		
 		const tiff_tag *fTag [kMaxEntries];
 		
+		uint32 fChained;
+		
 	public:
 	
 		dng_tiff_directory ()
 		
 			:	fEntries (0)
+			,	fChained (0)
 			
 			{
 			}
@@ -634,6 +606,11 @@ class dng_tiff_directory
 			}
 			
 		void Add (const tiff_tag *tag);
+		
+		void SetChained (uint32 offset)
+			{
+			fChained = offset;
+			}
 		
 		uint32 Size () const;
 		
@@ -988,6 +965,21 @@ class tiff_dng_extended_color_profile: private dng_tiff_directory
 
 /*****************************************************************************/
 
+class tag_dng_noise_profile: public tag_data_ptr
+	{
+		
+	protected:
+
+		real64 fValues [2 * kMaxColorPlanes];
+
+	public:
+
+		explicit tag_dng_noise_profile (const dng_noise_profile &profile);
+		
+	};
+
+/*****************************************************************************/
+
 /// \brief Support for writing dng_image or dng_negative instances to a
 /// dng_stream in TIFF or DNG format.
 
@@ -1022,7 +1014,6 @@ class dng_image_writer
 						         dng_basic_tag_set &basic,
 						         dng_stream &stream,
 						         const dng_image &image,
-						         bool mapRange = false,
 						         uint32 fakeChannels = 1);
 						    
 		/// Write a dng_image to a dng_stream in TIFF format.
@@ -1043,7 +1034,7 @@ class dng_image_writer
 								const dng_image &image,
 								uint32 photometricInterpretation = piBlackIsZero,
 								uint32 compression = ccUncompressed,
-								const dng_negative *negative = NULL,
+								dng_negative *negative = NULL,
 								const dng_color_space *space = NULL,
 								const dng_resolution *resolution = NULL,
 								const dng_jpeg_preview *thumbnail = NULL,
@@ -1068,7 +1059,7 @@ class dng_image_writer
 										   const dng_image &image,
 										   uint32 photometricInterpretation = piBlackIsZero,
 										   uint32 compression = ccUncompressed,
-										   const dng_negative *negative = NULL,
+										   dng_negative *negative = NULL,
 										   const void *profileData = NULL,
 										   uint32 profileSize = 0,
 										   const dng_resolution *resolution = NULL,
@@ -1081,8 +1072,7 @@ class dng_image_writer
 		/// \param negative The image data and metadata (EXIF, IPTC, XMP) to be written.
 		/// \param thumbnail Thumbanil image. Must be provided.
 		/// \param compression Either ccUncompressed or ccJPEG for lossless JPEG.
-		/// \param previewCount The number of previews (not counting thumbnail).
-		/// \param preview Array of previewCount dng_preview pointers.
+		/// \param previewList List of previews (not counting thumbnail) to write to the file. Defaults to empty.
 
 		virtual void WriteDNG (dng_host &host,
 							   dng_stream &stream,
@@ -1116,7 +1106,6 @@ class dng_image_writer
 						        dng_stream &stream,
 						        const dng_image &image,
 						        const dng_rect &tileArea,
-						        bool mapRange,
 						        uint32 fakeChannels);
 
 	};

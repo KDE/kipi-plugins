@@ -6,13 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_lossless_jpeg.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_lossless_jpeg.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
-/**
- * \file Functions for encoding and decoding lossless JPEG format.
+/** \file
+ * Functions for encoding and decoding lossless JPEG format.
  */
 
 /*****************************************************************************/

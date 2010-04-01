@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2009 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_reference.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_reference.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_reference.h"
+
 #include "dng_1d_table.h"
 #include "dng_hue_sat_map.h"
 #include "dng_matrix.h"
@@ -2163,6 +2164,415 @@ bool RefEqualArea32 (const uint32 *sPtr,
 
 	return true;
 
+	}
+
+/*****************************************************************************/
+
+void RefVignetteMask16 (uint16 *mPtr,
+						uint32 rows,
+						uint32 cols,
+						int32 rowStep,
+						int64 offsetH,
+						int64 offsetV,
+						int64 stepH,
+						int64 stepV,
+						uint32 tBits,
+						const uint16 *table)
+	{
+	
+	uint32 tShift = 32 - tBits;
+	uint32 tRound = (1 << (tShift - 1));
+	uint32 tLimit = 1 << tBits;
+	
+	for (uint32 row = 0; row < rows; row++)
+		{
+		
+		int64 baseDelta = (offsetV + 32768) >> 16;
+		
+		baseDelta = baseDelta * baseDelta + tRound;
+		
+		int64 deltaH = offsetH + 32768;
+		
+		for (uint32 col = 0; col < cols; col++)
+			{
+			
+			int64 temp = deltaH >> 16;
+			
+			int64 delta = baseDelta + (temp * temp);
+			
+			uint32 index = Min_uint32 ((uint32) (delta >> tShift), tLimit);
+			
+			mPtr [col] = table [index];
+						
+			deltaH += stepH;
+			
+			}
+			
+		offsetV += stepV;
+		
+		mPtr += rowStep;
+		
+		}
+	
+	}
+
+/*****************************************************************************/
+
+void RefVignette16 (int16 *sPtr,
+					const uint16 *mPtr,
+					uint32 rows,
+					uint32 cols,
+					uint32 planes,
+					int32 sRowStep,
+					int32 sPlaneStep,
+					int32 mRowStep,
+					uint32 mBits)
+	{
+	
+	const uint32 mRound = 1 << (mBits - 1);
+
+	switch (planes)
+		{
+		
+		case 1:
+			{
+			
+			for (uint32 row = 0; row < rows; row++)
+				{
+		
+				for (uint32 col = 0; col < cols; col++)
+					{
+			
+					uint32 s = sPtr [col] + 32768;
+			
+					uint32 m = mPtr [col];
+			
+					s = (s * m + mRound) >> mBits;
+			
+					s = Min_uint32 (s, 65535);
+			
+					sPtr [col] = (int16) (s - 32768); 
+			
+					}
+		
+				sPtr += sRowStep;
+		
+				mPtr += mRowStep;
+		
+				}
+
+			break;
+			
+			}
+
+		case 3:
+			{
+
+			int16 *rPtr = sPtr;
+			int16 *gPtr = rPtr + sPlaneStep;
+			int16 *bPtr = gPtr + sPlaneStep;
+			
+			for (uint32 row = 0; row < rows; row++)
+				{
+		
+				for (uint32 col = 0; col < cols; col++)
+					{
+			
+					uint32 r = rPtr [col] + 32768;
+					uint32 g = gPtr [col] + 32768;
+					uint32 b = bPtr [col] + 32768;
+			
+					uint32 m = mPtr [col];
+			
+					r = (r * m + mRound) >> mBits;
+					g = (g * m + mRound) >> mBits;
+					b = (b * m + mRound) >> mBits;
+			
+					r = Min_uint32 (r, 65535);
+					g = Min_uint32 (g, 65535);
+					b = Min_uint32 (b, 65535);
+			
+					rPtr [col] = (int16) (r - 32768); 
+					gPtr [col] = (int16) (g - 32768); 
+					bPtr [col] = (int16) (b - 32768); 
+			
+					}
+		
+				rPtr += sRowStep;
+				gPtr += sRowStep;
+				bPtr += sRowStep;
+		
+				mPtr += mRowStep;
+		
+				}
+
+			break;
+			
+			}
+
+		case 4:
+			{
+			
+			int16 *aPtr = sPtr;
+			int16 *bPtr = aPtr + sPlaneStep;
+			int16 *cPtr = bPtr + sPlaneStep;
+			int16 *dPtr = cPtr + sPlaneStep;
+			
+			for (uint32 row = 0; row < rows; row++)
+				{
+		
+				for (uint32 col = 0; col < cols; col++)
+					{
+			
+					uint32 a = aPtr [col] + 32768;
+					uint32 b = bPtr [col] + 32768;
+					uint32 c = cPtr [col] + 32768;
+					uint32 d = dPtr [col] + 32768;
+			
+					uint32 m = mPtr [col];
+			
+					a = (a * m + mRound) >> mBits;
+					b = (b * m + mRound) >> mBits;
+					c = (c * m + mRound) >> mBits;
+					d = (d * m + mRound) >> mBits;
+			
+					a = Min_uint32 (a, 65535);
+					b = Min_uint32 (b, 65535);
+					c = Min_uint32 (c, 65535);
+					d = Min_uint32 (d, 65535);
+			
+					aPtr [col] = (int16) (a - 32768); 
+					bPtr [col] = (int16) (b - 32768); 
+					cPtr [col] = (int16) (c - 32768); 
+					dPtr [col] = (int16) (d - 32768); 
+			
+					}
+		
+				aPtr += sRowStep;
+				bPtr += sRowStep;
+				cPtr += sRowStep;
+				dPtr += sRowStep;
+		
+				mPtr += mRowStep;
+		
+				}
+
+			break;
+			
+			}
+
+		default:
+			{
+			
+			for (uint32 plane = 0; plane < planes; plane++)
+				{
+
+				int16 *planePtr = sPtr;
+
+				const uint16 *maskPtr = mPtr;
+						
+				for (uint32 row = 0; row < rows; row++)
+					{
+		
+					for (uint32 col = 0; col < cols; col++)
+						{
+
+						uint32 s = planePtr [col] + 32768;
+			
+						uint32 m = maskPtr [col];
+			
+						s = (s * m + mRound) >> mBits;
+			
+						s = Min_uint32 (s, 65535);
+			
+						planePtr [col] = (int16) (s - 32768); 
+
+						}
+		
+					planePtr += sRowStep;
+		
+					maskPtr += mRowStep;
+
+					}
+
+				sPtr += sPlaneStep;
+		
+				}
+
+			break;
+			
+			}
+	
+		}
+	
+	}
+
+/******************************************************************************/
+
+void RefMapArea16 (uint16 *dPtr,
+				   uint32 count0,
+				   uint32 count1,
+				   uint32 count2,
+				   int32 step0,
+				   int32 step1,
+				   int32 step2,
+				   const uint16 *map)
+	{
+	
+	if (step2 == 1 && count2 >= 32)
+		{
+	
+		for (uint32 index0 = 0; index0 < count0; index0++)
+			{
+			
+			uint16 *d1 = dPtr;
+			
+			for (uint32 index1 = 0; index1 < count1; index1++)
+				{
+				
+				uint16 *d2 = d1;
+				
+				uint32 count = count2;
+				
+				// Get the data 32-bit aligned if it is not.
+				
+				if (!IsAligned32 (dPtr))
+					{
+					
+					d2 [0] = map [d2 [0]];
+					
+					count--;
+					
+					d2++;
+					
+					}
+			
+				// Use 32-bit reads and writes for bulk processing.
+					
+				uint32 *dPtr32 = (uint32 *) d2;
+				  
+				// Process in blocks of 16 pixels.
+					
+				uint32 blocks = count >> 4;
+				
+				count -= blocks << 4;
+				d2    += blocks << 4;
+				
+				while (blocks--)
+					{
+				
+					uint32 x0, x1, x2, x3, x4, x5, x6, x7;
+					uint32 p0, p1, p2, p3, p4, p5, p6, p7;
+					
+					// Use 32 bit reads & writes, and pack and unpack the 16-bit values.
+					// This results in slightly higher performance.
+					
+					// Note that this code runs on both little-endian and big-endian systems,
+					// since the pixels are either never swapped or double swapped.
+					
+					x0 = dPtr32 [0];
+					x1 = dPtr32 [1];
+					x2 = dPtr32 [2];
+					x3 = dPtr32 [3];
+					
+					p0 = map [x0 >> 16    ];
+					p1 = map [x0 & 0x0FFFF];
+					p2 = map [x1 >> 16    ];
+					p3 = map [x1 & 0x0FFFF];
+					p4 = map [x2 >> 16    ];
+					p5 = map [x2 & 0x0FFFF];
+					p6 = map [x3 >> 16    ];
+					p7 = map [x3 & 0x0FFFF];
+					
+					x0 = (p0 << 16) | p1;
+					x1 = (p2 << 16) | p3;
+					x2 = (p4 << 16) | p5;
+					x3 = (p6 << 16) | p7;
+					
+					x4 = dPtr32 [4];
+					x5 = dPtr32 [5];
+					x6 = dPtr32 [6];
+					x7 = dPtr32 [7];
+					
+					dPtr32 [0] = x0;
+					dPtr32 [1] = x1;
+					dPtr32 [2] = x2;
+					dPtr32 [3] = x3;
+							
+					p0 = map [x4 >> 16    ];
+					p1 = map [x4 & 0x0FFFF];
+					p2 = map [x5 >> 16    ];
+					p3 = map [x5 & 0x0FFFF];
+					p4 = map [x6 >> 16    ];
+					p5 = map [x6 & 0x0FFFF];
+					p6 = map [x7 >> 16    ];
+					p7 = map [x7 & 0x0FFFF];
+					
+					x4 = (p0 << 16) | p1;
+					x5 = (p2 << 16) | p3;
+					x6 = (p4 << 16) | p5;
+					x7 = (p6 << 16) | p7;
+					
+					dPtr32 [4] = x4;
+					dPtr32 [5] = x5;
+					dPtr32 [6] = x6;
+					dPtr32 [7] = x7;
+							
+					dPtr32 += 8;
+					
+					}
+				
+				// Process remaining columns.
+				
+				for (uint32 j = 0; j < count; j++)
+					{
+					
+					d2 [j] = map [d2 [j]];
+					
+					}
+	
+				d1 += step1;
+				
+				}
+				
+			dPtr += step0;
+			
+			}
+			
+		}
+		
+	else
+		{
+	
+		for (uint32 index0 = 0; index0 < count0; index0++)
+			{
+			
+			uint16 *d1 = dPtr;
+			
+			for (uint32 index1 = 0; index1 < count1; index1++)
+				{
+				
+				uint16 *d2 = d1;
+				
+				for (uint32 index2 = 0; index2 < count2; index2++)
+					{
+					
+					d2 [0] = map [d2 [0]];
+					
+					d2 += step2;
+					
+					}
+				
+				d1 += step1;
+				
+				}
+				
+			dPtr += step0;
+			
+			}
+			
+		}
+		
 	}
 
 /*****************************************************************************/

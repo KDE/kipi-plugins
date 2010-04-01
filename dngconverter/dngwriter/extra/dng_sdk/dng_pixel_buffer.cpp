@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_pixel_buffer.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_pixel_buffer.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_pixel_buffer.h"
+
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_flags.h"
@@ -337,7 +338,6 @@ dng_pixel_buffer::dng_pixel_buffer ()
 	,	fPlaneStep  (1)
 	,	fPixelType  (ttUndefined)
 	,	fPixelSize  (0)
-	,	fPixelRange (0)
 	,	fData       (NULL)
 	,	fDirty      (true)
 	
@@ -357,7 +357,6 @@ dng_pixel_buffer::dng_pixel_buffer (const dng_pixel_buffer &buffer)
 	,	fPlaneStep  (buffer.fPlaneStep)
 	,	fPixelType  (buffer.fPixelType)
 	,	fPixelSize  (buffer.fPixelSize)
-	,	fPixelRange (buffer.fPixelRange)
 	,	fData       (buffer.fData)
 	,	fDirty      (buffer.fDirty)
 	
@@ -379,7 +378,6 @@ dng_pixel_buffer & dng_pixel_buffer::operator= (const dng_pixel_buffer &buffer)
 	fPixelType  = buffer.fPixelType;
 	fPixelSize  = buffer.fPixelSize;
 	fPixelType  = buffer.fPixelType;
-	fPixelRange = buffer.fPixelRange;
 	fData       = buffer.fData;
 	fDirty      = buffer.fDirty;
 	
@@ -397,7 +395,6 @@ dng_pixel_buffer::~dng_pixel_buffer ()
 /*****************************************************************************/
 
 #if qDebugPixelType
-
 
 void dng_pixel_buffer::CheckPixelType (uint32 pixelType) const
 	{
@@ -418,11 +415,6 @@ void dng_pixel_buffer::CheckPixelType (uint32 pixelType) const
 uint32 dng_pixel_buffer::PixelRange () const
 	{
 	
-	if (fPixelRange)
-		{
-		return fPixelRange;
-		}
-		
 	switch (fPixelType)
 		{
 		
@@ -1286,6 +1278,55 @@ void dng_pixel_buffer::RepeatArea (const dng_rect &srcArea,
 
 /*****************************************************************************/
 
+void dng_pixel_buffer::RepeatSubArea (const dng_rect subArea,
+									  uint32 repeatV,
+									  uint32 repeatH)
+	{
+	
+	if (fArea.t < subArea.t)
+		{
+		
+		RepeatArea (dng_rect (subArea.t          , fArea.l,
+							  subArea.t + repeatV, fArea.r),
+					dng_rect (fArea.t            , fArea.l,
+							  subArea.t          , fArea.r));
+							  
+		}
+	
+	if (fArea.b > subArea.b)
+		{
+		
+		RepeatArea (dng_rect (subArea.b - repeatV, fArea.l,
+							  subArea.b          , fArea.r),
+					dng_rect (subArea.b          , fArea.l,
+							  fArea.b            , fArea.r));
+							  
+		}
+		
+	if (fArea.l < subArea.l)
+		{
+		
+		RepeatArea (dng_rect (fArea.t, subArea.l          ,
+							  fArea.b, subArea.l + repeatH),
+					dng_rect (fArea.t, fArea.l            ,
+							  fArea.b, subArea.l          ));
+
+		}
+	
+	if (fArea.r > subArea.r)
+		{
+		
+		RepeatArea (dng_rect (fArea.t, subArea.r - repeatH,
+							  fArea.b, subArea.r          ),
+					dng_rect (fArea.t, subArea.r          ,
+							  fArea.b, fArea.r            ));
+
+		}
+	
+	}
+
+/*****************************************************************************/
+
 void dng_pixel_buffer::ShiftRight (uint32 shift)
 	{
 	
@@ -1490,4 +1531,288 @@ bool dng_pixel_buffer::EqualArea (const dng_pixel_buffer &src,
 
 	}
 
+/*****************************************************************************/
+
+namespace
+	{
+
+	template <typename T>
+	real64 MaxDiff (const T *src1,
+					int32 s1RowStep,
+					int32 s1PlaneStep,
+					const T *src2,
+					int32 s2RowStep,
+					int32 s2PlaneStep,
+					uint32 rows,
+					uint32 cols,
+					uint32 planes)
+		{
+
+		real64 result = 0.0;
+
+		for (uint32 plane = 0; plane < planes; plane++)
+			{
+
+			const T *src1Save = src1;
+			const T *src2Save = src2;
+
+			for (uint32 row = 0; row < rows; row++)
+				{
+
+				for (uint32 col = 0; col < cols; col++)
+					{
+					real64 diff = fabs ((real64)src1 [col] - src2 [col]);
+
+					if (diff > result)
+						result = diff;
+
+					}
+
+				src1 += s1RowStep;
+				src2 += s2RowStep;
+
+				}
+
+			src1 = src1Save + s1PlaneStep;
+			src2 = src2Save + s2PlaneStep;
+
+			}
+
+		return result;
+
+		}
+
+	template <typename T>
+	real64 MaxDiff (const T *src1,
+					int32 s1ColStep,
+					int32 s1RowStep,
+					int32 s1PlaneStep,
+					const T *src2,
+					int32 s2ColStep,
+					int32 s2RowStep,
+					int32 s2PlaneStep,
+					uint32 rows,
+					uint32 cols,
+					uint32 planes)
+		{
+
+		if (s1ColStep == s2ColStep &&
+			s1ColStep == 1)
+			return MaxDiff (src1,
+							s1RowStep,
+							s1PlaneStep,
+							src2,
+							s2RowStep,
+							s2PlaneStep,
+							rows,
+							cols,
+							planes);
+
+		real64 result = 0.0;
+
+		for (uint32 plane = 0; plane < planes; plane++)
+			{
+
+			const T *src1Save = src1;
+			const T *src2Save = src2;
+
+			for (uint32 row = 0; row < rows; row++)
+				{
+
+				for (uint32 col = 0; col < cols; col++)
+					{
+					real64 diff = fabs ((real64)src1 [col * s1ColStep] - src2 [col * s2ColStep]);
+
+					if (diff > result)
+						result = diff;
+
+					}
+
+				src1 += s1RowStep;
+				src2 += s2RowStep;
+
+				}
+
+			src1 = src1Save + s1PlaneStep;
+			src2 = src2Save + s2PlaneStep;
+
+			}
+
+
+		return result;
+
+		}
+	};
+
+real64 dng_pixel_buffer::MaximumDifference (const dng_pixel_buffer &rhs,
+											const dng_rect &area,
+											uint32 plane,
+											uint32 planes) const
+	{
+	
+	uint32 rows = area.H ();
+	uint32 cols = area.W ();
+	
+	const void *s1Ptr = rhs.ConstPixel (area.t,
+								  	    area.l,
+								  	    plane);
+								  
+	const void *s2Ptr = ConstPixel (area.t,
+								    area.l,
+								    plane);
+	
+	int32 s1RowStep   = rhs.fRowStep;
+	int32 s1ColStep   = rhs.fColStep;
+	int32 s1PlaneStep = rhs.fPlaneStep;
+	
+	int32 s2RowStep   = fRowStep;
+	int32 s2ColStep   = fColStep;
+	int32 s2PlaneStep = fPlaneStep;
+
+	if (fPixelType == rhs.fPixelType)
+		{
+
+		switch (fPixelType)
+			{
+
+			case ttByte:
+				return MaxDiff ((const uint8 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const uint8 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttShort:
+				return MaxDiff ((const uint16 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const uint16 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttLong:
+				return MaxDiff ((const uint32 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const uint32 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttSByte:
+				return MaxDiff ((const int8 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const int8 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttSShort:
+				return MaxDiff ((const int16 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const int16 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttSLong:
+				return MaxDiff ((const int32 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const int32 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttFloat:
+				return MaxDiff ((const real32 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const real32 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+			case ttDouble:
+				return MaxDiff ((const real64 *)s1Ptr,
+								s1ColStep,
+								s1RowStep,
+								s1PlaneStep,
+								(const real64 *)s2Ptr,
+								s2ColStep,
+								s2RowStep,
+								s2PlaneStep,
+								rows,
+								cols,
+								planes);
+
+				break;
+
+
+			default:
+				{
+				
+				ThrowNotYetImplemented ();
+
+				return 0.0;
+
+				}
+				
+			}
+		
+		}
+		
+	else
+		ThrowProgramError ("attempt to difference pixel buffers of different formats.");
+
+	return 0.0;
+
+	}
 /*****************************************************************************/

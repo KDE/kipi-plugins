@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_area_task.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_area_task.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -183,7 +183,6 @@ class dng_area_task
 		/// \param area The area on which mage processing should be performed.
 		/// \param allocator dng_memory_allocator to use for allocating temporary buffers, etc.
 		/// \param sniffer dng_abort_sniffer to use to check for user cancellation and progress updates.
-
 
 		static void Perform (dng_area_task &task,
 				  			 const dng_rect &area,

@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_shared.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_shared.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_shared.h"
+
 #include "dng_camera_profile.h"
 #include "dng_exceptions.h"
 #include "dng_globals.h"
@@ -1027,6 +1028,8 @@ dng_shared::dng_shared ()
 
 	,	fAsShotProfileName ()
 
+	,	fNoiseProfile ()
+
 	{
 	
 	}
@@ -1163,7 +1166,64 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 					DumpHexAscii (stream, fIPTC_NAA_Count);
 					
 					}
+					
+				// Compute and output the digest.
+				
+				dng_memory_data buffer (fIPTC_NAA_Count);
+				
+				stream.SetReadPosition (fIPTC_NAA_Offset);
+				
+				stream.Get (buffer.Buffer (), fIPTC_NAA_Count);
+				
+				const uint8 *data = buffer.Buffer_uint8 ();
+				
+				uint32 count = fIPTC_NAA_Count;
+				
+				// Method 1: Counting all bytes (this is correct).
+				
+					{
+					
+					dng_md5_printer printer;
+		
+					printer.Process (data, count);
+					
+					printf ("IPTCDigest: ");
+					
+					DumpFingerprint (printer.Result ());
+					
+					printf ("\n");
+					
+					}
+					
+				// Method 2: Ignoring zero padding.
+					
+					{
+					
+					uint32 removed = 0;
+			
+					while ((removed < 3) && (count > 0) && (data [count - 1] == 0))
+						{
+						removed++;
+						count--;
+						}
 						
+					if (removed != 0)
+						{
+					
+						dng_md5_printer printer;
+			
+						printer.Process (data, count);
+						
+						printf ("IPTCDigest (ignoring zero padding): ");
+						
+						DumpFingerprint (printer.Result ());
+						
+						printf ("\n");
+						
+						}
+					
+					}
+					
 				}
 				
 			#endif
@@ -1686,6 +1746,70 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 				
 			#endif
 				
+			break;
+			
+			}
+
+		case tcNoiseProfile:
+			{
+
+			if (!CheckTagType (parentCode, tagCode, tagType, ttDouble))
+				return false;
+
+			// Must be an even, positive number of doubles in a noise profile.
+			
+			if (!tagCount || (tagCount & 1))
+				return false;
+
+			// Determine number of planes (i.e., half the number of doubles).
+
+			const uint32 numPlanes = Pin_uint32 (0, 
+												 tagCount >> 1, 
+												 kMaxColorPlanes);
+
+			// Parse the noise function parameters.
+
+			std::vector<dng_noise_function> noiseFunctions;
+
+			for (uint32 i = 0; i < numPlanes; i++)
+				{
+
+				const real64 scale	= stream.TagValue_real64 (tagType);
+				const real64 offset = stream.TagValue_real64 (tagType);
+
+				noiseFunctions.push_back (dng_noise_function (scale, offset));
+
+				}
+
+			// Store the noise profile.
+
+			fNoiseProfile = dng_noise_profile (noiseFunctions);
+
+			// Debug.
+
+			#if qDNGValidate
+
+			if (gVerbose)
+				{
+				
+				printf ("NoiseProfile:\n");
+				
+				printf ("  Planes: %u\n", numPlanes);
+					
+				for (uint32 plane = 0; plane < numPlanes; plane++)
+					{
+
+					printf ("  Noise function for plane %u: scale = %.8lf, offset = %.8lf\n",
+							plane,
+							noiseFunctions [plane].Scale  (),
+							noiseFunctions [plane].Offset ());
+
+					}
+				
+				}
+
+			#endif
+			
 			break;
 			
 			}
@@ -2349,7 +2473,7 @@ void dng_shared::PostParse (dng_host & /* host */,
 		
 		// Support for DNG versions before 1.0.0.0.
 		
-		if (fDNGVersion < 0x01000000)
+		if (fDNGVersion < dngVersion_1_0_0_0)
 			{
 			
 			#if qDNGValidate
@@ -2364,7 +2488,7 @@ void dng_shared::PostParse (dng_host & /* host */,
 			fCameraProfile.fCalibrationIlluminant1 = lsStandardLightA;
 			fCameraProfile.fCalibrationIlluminant2 = lsD65;
 			
-			fDNGVersion = 0x01000000;
+			fDNGVersion = dngVersion_1_0_0_0;
 
 			}
 		
@@ -2379,7 +2503,7 @@ void dng_shared::PostParse (dng_host & /* host */,
 	
 		// Check DNGBackwardVersion value.
 		
-		if (fDNGBackwardVersion < 0x01000000)
+		if (fDNGBackwardVersion < dngVersion_1_0_0_0)
 			{
 			
 			#if qDNGValidate
@@ -2388,7 +2512,7 @@ void dng_shared::PostParse (dng_host & /* host */,
 						 
 			#endif
 			
-			fDNGBackwardVersion = 0x01000000;
+			fDNGBackwardVersion = dngVersion_1_0_0_0;
 				
 			}
 
@@ -2584,6 +2708,21 @@ void dng_shared::PostParse (dng_host & /* host */,
 			fBaselineSharpness = dng_urational (1, 1);
 							 
 			}
+
+		// Check NoiseProfile.
+
+		if (!fNoiseProfile.IsValid () && fNoiseProfile.NumFunctions () != 0)
+			{
+			
+			#if qDNGValidate
+			
+			ReportWarning ("Invalid NoiseProfile");
+						 
+			#endif
+			
+			fNoiseProfile = dng_noise_profile ();
+							 
+			}
 			
 		// Check LinearResponseLimit.
 		
@@ -2627,7 +2766,7 @@ bool dng_shared::IsValidDNG ()
 	
 	// Check DNGVersion value.
 	
-	if (fDNGVersion < 0x01000000)
+	if (fDNGVersion < dngVersion_1_0_0_0)
 		{
 		
 		#if qDNGValidate
@@ -2642,7 +2781,7 @@ bool dng_shared::IsValidDNG ()
 		
 	// Check DNGBackwardVersion value.
 	
-	if (fDNGBackwardVersion > 0x01020000)
+	if (fDNGBackwardVersion > dngVersion_Current)
 		{
 		
 		#if qDNGValidate

@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_linearization_info.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_linearization_info.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_linearization_info.h"
+
 #include "dng_area_task.h"
 #include "dng_exceptions.h"
 #include "dng_host.h"
@@ -37,8 +38,6 @@ class dng_linearize_plane
 		      
 		uint32 fPlane;
 	
-		uint32 fRange16;
-		
 		dng_rect fActiveArea;
 		      
 		uint32 fSrcPixelType;
@@ -84,7 +83,6 @@ dng_linearize_plane::dng_linearize_plane (dng_host &host,
 	:	fSrcImage (srcImage)
 	,	fDstImage (dstImage)
 	,	fPlane (plane)
-	,	fRange16 (dstImage.PixelRange ())
 	,	fActiveArea (info.fActiveArea)
 	,	fSrcPixelType (srcImage.PixelType ())
 	,	fDstPixelType (dstImage.PixelType ())
@@ -199,7 +197,7 @@ dng_linearize_plane::dng_linearize_plane (dng_host &host,
 				else
 					{
 					
-					x *= fRange16 * 256.0;
+					x *= 0x0FFFF * 256.0;
 					
 					int32 y = Round_int32 (x);
 					
@@ -268,7 +266,7 @@ dng_linearize_plane::dng_linearize_plane (dng_host &host,
 			else
 				{
 				
-				x *= fRange16 * 256.0;
+				x *= 0x0FFFF * 256.0;
 				
 				int32 y = Round_int32 (x);
 				
@@ -343,7 +341,7 @@ dng_linearize_plane::dng_linearize_plane (dng_host &host,
 				if (fDstPixelType == ttShort)
 					{
 					
-					uint16 z = (uint16) Round_uint32 (y * fRange16);
+					uint16 z = (uint16) Round_uint32 (y * 0x0FFFF);
 					
 					fScale_buffer->Buffer_uint16 () [j] = z;
 					
@@ -399,7 +397,7 @@ dng_linearize_plane::dng_linearize_plane (dng_host &host,
 				else
 					{
 					
-					int32 z = Round_int32 (y * fRange16 * 256.0);
+					int32 z = Round_int32 (y * 0x0FFFF * 256.0);
 					
 					fScale_buffer->Buffer_int32 () [j] = z;
 					
@@ -577,8 +575,6 @@ void dng_linearize_plane::Process (const dng_rect &srcTile)
 				
 				}
 				
-			int32 range16 = fRange16;
-				
 			uint16 *dstPtr = (uint16 *) dPtr;
 
 			b1 -= 128;		// Rounding for 8 bit shift
@@ -607,9 +603,7 @@ void dng_linearize_plane::Process (const dng_rect &srcTile)
 						
 					x >>= 8;
 						
-					x = Pin_int32 (0, x, range16);
-					
-					*dstPtr = (uint16) x;
+					*dstPtr = Pin_uint16 (x);
 					
 					srcPtr += sStep;
 					dstPtr += dStep;
@@ -642,9 +636,7 @@ void dng_linearize_plane::Process (const dng_rect &srcTile)
 						
 					x >>= 8;
 						
-					x = Pin_int32 (0, x, range16);
-					
-					*dstPtr = (uint16) x;
+					*dstPtr = Pin_uint16 (x);
 					
 					srcPtr += sStep;
 					dstPtr += dStep;
@@ -810,7 +802,7 @@ void dng_linearize_plane::Process (const dng_rect &srcTile)
 					
 					uint16 *dstPtr = (uint16 *) dPtr;
 					
-					real32 dstScale = (real32) fRange16;
+					real32 dstScale = (real32) 0x0FFFF;
 					
 					for (uint32 j = 0; j < count; j++)
 						{

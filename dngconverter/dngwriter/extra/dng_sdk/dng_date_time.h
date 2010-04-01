@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_date_time.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_date_time.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -292,7 +292,7 @@ class dng_date_time_info
 /*****************************************************************************/
 
 /// Get the current date/time and timezone.
-/// \param dt Receives current data/time/zone.
+/// \param info Receives current data/time/zone.
 
 void CurrentDateTimeAndZone (dng_date_time_info &info);
 

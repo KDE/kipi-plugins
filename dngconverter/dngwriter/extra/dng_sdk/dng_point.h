@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_point.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_point.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -156,6 +156,20 @@ inline dng_point_real64 operator- (const dng_point_real64 &a,
 	
 	return dng_point_real64 (a.v - b.v,
 					         a.h - b.h);
+					  
+	}
+
+/*****************************************************************************/
+
+inline real64 DistanceSquared (const dng_point_real64 &a,
+							   const dng_point_real64 &b)
+				  
+				  
+	{
+
+	dng_point_real64 diff = a - b;
+
+	return (diff.v * diff.v) + (diff.h * diff.h);
 					  
 	}
 

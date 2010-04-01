@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_1d_table.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_1d_table.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -60,7 +60,7 @@ class dng_1d_table
 		/// This method can throw an exception, e.g. if there is not enough memory.
 		/// \param allocator Memory allocator from which table memory is allocated.
 		/// \param function Table is initialized with values of finction.Evalluate(0.0) to function.Evaluate(1.0).
-		/// \param subSample If true, only sample the function a limited number of times (257) and interpolate.
+		/// \param subSample If true, only sample the function a limited number of times and interpolate.
 
 		void Initialize (dng_memory_allocator &allocator,
 						 const dng_1d_function &function,
@@ -101,6 +101,11 @@ class dng_1d_table
 		void Expand16 (uint16 *table16) const;
 			
 	private:
+	
+		void SubDivide (const dng_1d_function &function,
+						uint32 lower,
+						uint32 upper,
+						real32 maxDelta);
 	
 		// Hidden copy constructor and assignment operator.
 	

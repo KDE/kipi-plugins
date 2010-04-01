@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_image.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_image.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -145,12 +145,6 @@ class dng_image
 	
 		uint32 fPixelType;
 		
-		// For integer pixel types, the maximum value. If zero, it means
-		// the maximum value that fits in the integer size.  Ignored for
-		// non-integer pixel types.
-		
-		uint32 fPixelRange;
-		
 	public:
 	
 		/// How to handle requests to get image areas outside the image bounds.
@@ -180,13 +174,14 @@ class dng_image
 	
 		dng_image (const dng_rect &bounds,
 				   uint32 planes,
-				   uint32 pixelType,
-				   uint32 pixelRange);
+				   uint32 pixelType);
 		
 	public:
 	
 		virtual ~dng_image ();
 		
+		virtual dng_image * Clone () const;
+
 		/// Getter method for bounds of an image.
 		
 		const dng_rect & Bounds () const
@@ -248,11 +243,6 @@ class dng_image
 
 		uint32 PixelRange () const;
 
-		/// Setter for pixel range.
-		/// \param pixelType The new pixel range .
-		
-		virtual void SetPixelRange (uint32 pixelRange);
-		
 		/// Getter for best "tile stride" for accessing image.
 
 		virtual dng_rect RepeatingTile () const;
@@ -327,43 +317,68 @@ class dng_image
 						
 		// Routines to set the entire image to a constant value.
 		
-		void SetConstant_uint8 (uint8 value)
+		void SetConstant_uint8 (uint8 value,
+								const dng_rect &area)
 			{
 			
 			DNG_ASSERT (fPixelType == ttByte, "Mismatched pixel type");
 			
-			SetConstant ((uint32) value);
+			SetConstant ((uint32) value, area);
+			
+			}
+		
+		void SetConstant_uint8 (uint8 value)
+			{
+			SetConstant (value, Bounds ());
+			}
+		
+		void SetConstant_uint16 (uint16 value,
+								 const dng_rect &area)
+			{
+			
+			DNG_ASSERT (fPixelType == ttShort, "Mismatched pixel type");
+			
+			SetConstant ((uint32) value, area);
 			
 			}
 		
 		void SetConstant_uint16 (uint16 value)
 			{
+			SetConstant_uint16 (value, Bounds ());
+			}
+		
+		void SetConstant_int16 (int16 value,
+								const dng_rect &area)
+			{
 			
-			DNG_ASSERT (fPixelType == ttShort, "Mismatched pixel type");
+			DNG_ASSERT (fPixelType == ttSShort, "Mismatched pixel type");
 			
-			SetConstant ((uint32) value);
+			SetConstant ((uint32) (uint16) value, area);
 			
 			}
 		
 		void SetConstant_int16 (int16 value)
 			{
+			SetConstant_int16 (value, Bounds ());
+			}
+		
+		void SetConstant_uint32 (uint32 value,
+								 const dng_rect &area)
+			{
 			
-			DNG_ASSERT (fPixelType == ttSShort, "Mismatched pixel type");
+			DNG_ASSERT (fPixelType == ttLong, "Mismatched pixel type");
 			
-			SetConstant ((uint32) (uint16) value);
+			SetConstant (value, area);
 			
 			}
 		
 		void SetConstant_uint32 (uint32 value)
 			{
-			
-			DNG_ASSERT (fPixelType == ttLong, "Mismatched pixel type");
-			
-			SetConstant (value);
-			
+			SetConstant_uint32 (value, Bounds ());
 			}
 		
-		void SetConstant_real32 (real32 value)
+		void SetConstant_real32 (real32 value,
+								 const dng_rect &area)
 			{
 			
 			DNG_ASSERT (fPixelType == ttFloat, "Mismatched pixel type");
@@ -376,10 +391,15 @@ class dng_image
 				
 			x.f = value;
 			
-			SetConstant (x.i);
+			SetConstant (x.i, area);
 			
 			}
 
+		void SetConstant_real32 (real32 value)
+			{
+			SetConstant_real32 (value, Bounds ());
+			}
+		
 		virtual void GetRepeat (dng_pixel_buffer &buffer,
 								const dng_rect &srcArea,
 								const dng_rect &dstArea) const;
@@ -401,7 +421,8 @@ class dng_image
 					  const dng_rect &srcArea,
 					  const dng_rect &dstArea) const;
 					  
-		virtual void SetConstant (uint32 value);
+		virtual void SetConstant (uint32 value,
+								  const dng_rect &area);
 
 	};
 

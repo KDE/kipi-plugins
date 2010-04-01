@@ -6,12 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_camera_profile.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_camera_profile.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 #include "dng_camera_profile.h"
+
 #include "dng_assertions.h"
 #include "dng_host.h"
 #include "dng_exceptions.h"
@@ -52,6 +53,7 @@ dng_camera_profile::dng_camera_profile ()
 	,	fProfileCalibrationSignature ()
 	,	fUniqueCameraModelRestriction ()
 	,	fWasReadFromDNG (false)
+	,	fWasStubbed (false)
 	
 	{
 
@@ -380,6 +382,8 @@ static void FingerprintHueSatMap (dng_md5_printer_stream &printer,
 
 void dng_camera_profile::CalculateFingerprint () const
 	{
+	
+	DNG_ASSERT (!fWasStubbed, "CalculateFingerprint on stubbed profile");
 
 	dng_md5_printer_stream printer;
 
@@ -1043,7 +1047,7 @@ void dng_camera_profile::SetFourColorBayer ()
 			m [0] [j] = fColorMatrix1 [0] [j];
 			m [1] [j] = fColorMatrix1 [1] [j];
 			m [2] [j] = fColorMatrix1 [2] [j];
-			m [1] [j] = fColorMatrix1 [1] [j];
+			m [3] [j] = fColorMatrix1 [1] [j];
 			}
 			
 		fColorMatrix1 = m;
@@ -1060,7 +1064,7 @@ void dng_camera_profile::SetFourColorBayer ()
 			m [0] [j] = fColorMatrix2 [0] [j];
 			m [1] [j] = fColorMatrix2 [1] [j];
 			m [2] [j] = fColorMatrix2 [2] [j];
-			m [1] [j] = fColorMatrix2 [1] [j];
+			m [3] [j] = fColorMatrix2 [1] [j];
 			}
 			
 		fColorMatrix2 = m;
@@ -1158,4 +1162,100 @@ dng_hue_sat_map * dng_camera_profile::HueSatMapForWhite (const dng_xy_coord &whi
 
 	}
 
+/*****************************************************************************/
+
+void dng_camera_profile::Stub ()
+	{
+	
+	(void) Fingerprint ();
+	
+	dng_hue_sat_map nullTable;
+	
+	fHueSatDeltas1 = nullTable;
+	fHueSatDeltas2 = nullTable;
+	
+	fLookTable = nullTable;
+	
+	fToneCurve.SetInvalid ();
+	
+	fWasStubbed = true;
+	
+	}
+
+/*****************************************************************************/
+
+void SplitCameraProfileName (const dng_string &name,
+							 dng_string &baseName,
+							 int32 &version)
+	{
+	
+	baseName = name;
+	
+	version = 0;
+	
+	uint32 len = baseName.Length ();
+	
+	if (len > 5 && baseName.EndsWith (" beta"))
+		{
+		
+		baseName.Truncate (len - 5);
+		
+		version += -10;
+		
+		}
+		
+	else if (len > 7)
+		{
+		
+		char lastChar = name.Get () [len - 1];
+		
+		if (lastChar >= '0' && lastChar <= '9')
+			{
+			
+			dng_string temp = name;
+			
+			temp.Truncate (len - 1);
+			
+			if (temp.EndsWith (" beta "))
+				{
+				
+				baseName.Truncate (len - 7);
+				
+				version += ((int32) (lastChar - '0')) - 10;
+				
+				}
+				
+			}
+			
+		}
+		
+	len = baseName.Length ();
+	
+	if (len > 3)
+		{
+		
+		char lastChar = name.Get () [len - 1];
+		
+		if (lastChar >= '0' && lastChar <= '9')
+			{
+			
+			dng_string temp = name;
+			
+			temp.Truncate (len - 1);
+			
+			if (temp.EndsWith (" v"))
+				{
+				
+				baseName.Truncate (len - 3);
+				
+				version += ((int32) (lastChar - '0')) * 100;
+				
+				}
+				
+			}
+			
+		}
+
+	}
+							
 /*****************************************************************************/

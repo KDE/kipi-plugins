@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_xmp.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_xmp.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_xmp.h"
+
 #include "dng_assertions.h"
 #include "dng_date_time.h"
 #include "dng_exceptions.h"
@@ -562,6 +563,29 @@ dng_memory_block * dng_xmp::Serialize (bool asPacket,
 							forJPEG);
 	
 	}
+	
+/*****************************************************************************/
+
+void dng_xmp::PackageForJPEG (AutoPtr<dng_memory_block> &stdBlock,
+							  AutoPtr<dng_memory_block> &extBlock,
+							  dng_string &extDigest) const
+	{
+	
+	fSDK->PackageForJPEG (fAllocator,
+						  stdBlock,
+						  extBlock,
+						  extDigest);
+	
+	}
+	
+/*****************************************************************************/
+
+void dng_xmp::MergeFromJPEG (const dng_xmp &xmp)
+	{
+	
+	fSDK->MergeFromJPEG (xmp.fSDK);
+	
+	}
 
 /*****************************************************************************/
 
@@ -789,6 +813,11 @@ void dng_xmp::SyncStringList (const char *ns,
 	
 	bool isDefault = (list.Count () == 0);
 	
+	// First make sure the XMP is not badly formatted, since
+	// this breaks some Photoshop logic.
+	
+	ValidateStringList (ns, path);
+	
 	// Sync 1: Force XMP to match non-XMP.
 	
 	if (options & ignoreXMP)
@@ -830,11 +859,11 @@ void dng_xmp::SyncStringList (const char *ns,
 		
 		if (GetStringList (ns, path, list))
 			{
-				
+			
 			return;
 						
 			}
-		
+			
 		}
 		
 	// Sync 4: From non-XMP to XMP.
@@ -845,7 +874,7 @@ void dng_xmp::SyncStringList (const char *ns,
 		SetStringList (ns, path, list, isBag);
 		
 		}
-	
+		
 	}
 
 /*****************************************************************************/
@@ -1877,9 +1906,26 @@ void dng_xmp::IngestIPTC (dng_negative &negative,
 	if (negative.IPTCLength ())
 		{
 		
-		// Compute fingerprint of IPTC data.
+		// Parse the IPTC block.
+	
+		dng_iptc iptc;
 		
-		dng_fingerprint iptcDigest = negative.IPTCDigest ();
+		iptc.Parse (negative.IPTCData   (),
+					negative.IPTCLength (),
+					negative.IPTCOffset ());
+					
+		if (iptc.fForceUTF8)
+			{
+			
+			negative.SetUsedUTF8forIPTC (true);
+			
+			}
+					
+		// Compute fingerprint of IPTC data both ways, including and
+		// excluding the padding data.
+		
+		dng_fingerprint iptcDigest1 = negative.IPTCDigest (true );
+		dng_fingerprint iptcDigest2 = negative.IPTCDigest (false);
 		
 		// See if there is an IPTC fingerprint stored in the XMP.
 			
@@ -1892,8 +1938,20 @@ void dng_xmp::IngestIPTC (dng_negative &negative,
 			// IPTC block, and we should not resync since it might
 			// overwrite changes in the XMP data.
 			
-			if (iptcDigest == xmpDigest)
+			if (iptcDigest1 == xmpDigest)
 				{
+				
+				return;
+				
+				}
+				
+			// If it matches the incorrectly computed digest, skip
+			// the sync, but fix the digest in the XMP.
+			
+			if (iptcDigest2 == xmpDigest)
+				{
+				
+				SetIPTCDigest (iptcDigest1);
 				
 				return;
 				
@@ -1907,16 +1965,8 @@ void dng_xmp::IngestIPTC (dng_negative &negative,
 			
 		// Remember the fingerprint of the IPTC we are syncing with.
 			
-		SetIPTCDigest (iptcDigest);
+		SetIPTCDigest (iptcDigest1);
 					    
-		// Parse the IPTC block.
-	
-		dng_iptc iptc;
-		
-		iptc.Parse (negative.IPTCData   (),
-					negative.IPTCLength (),
-					negative.IPTCOffset ());
-					
 		// Find the sync options.
 		
 		uint32 options = xmpIsNewer ? preferXMP
@@ -1936,7 +1986,9 @@ void dng_xmp::IngestIPTC (dng_negative &negative,
 		
 /*****************************************************************************/
 
-void dng_xmp::RebuildIPTC (dng_negative &negative)
+void dng_xmp::RebuildIPTC (dng_negative &negative,
+						   bool padForTIFF,
+						   bool forceUTF8)
 	{
 	
 	// If there is no XMP, then there is no IPTC.
@@ -1957,7 +2009,10 @@ void dng_xmp::RebuildIPTC (dng_negative &negative)
 	if (iptc.NotEmpty ())
 		{
 		
-		AutoPtr<dng_memory_block> block (iptc.Spool (negative.Allocator ()));
+		iptc.fForceUTF8 = forceUTF8;
+		
+		AutoPtr<dng_memory_block> block (iptc.Spool (negative.Allocator (),
+													 padForTIFF));
 		
 		negative.SetIPTC (block);
 		
@@ -2379,70 +2434,7 @@ void dng_xmp::SyncExif (dng_exif &exif,
 				    exif.fExposureIndex,
 				    options);
 				    
-	// For the following three date/time fields, we always prefer XMP to
-	// the EXIF values.  This is to allow the user to correct the date/times
-	// via changes in a sidecar XMP file, without modifying the original
-	// raw file.
-				    
-	// DateTime:
-	
-		{
-		
-		dng_string s = exif.fDateTime.Encode_ISO_8601 ();
-									   
-		SyncString (XMP_NS_TIFF,
-					"DateTime",
-					s,
-					preferXMP);
-					
-		if (s.NotEmpty ())
-			{
-			
-			exif.fDateTime.Decode_ISO_8601 (s.Get ());
-						
-			}
-		
-		}
-	
-	// DateTimeOriginal:
-	
-		{
-		
-		dng_string s = exif.fDateTimeOriginal.Encode_ISO_8601 ();
-									   
-		SyncString (XMP_NS_EXIF,
-					"DateTimeOriginal",
-					s,
-					preferXMP);
-		
-		if (s.NotEmpty ())
-			{
-			
-			exif.fDateTimeOriginal.Decode_ISO_8601 (s.Get ());
-							
-			}
-		
-		}
-	
-	// Date Time Digitized:
-	
-		{
-		
-		dng_string s = exif.fDateTimeDigitized.Encode_ISO_8601 ();
-									   				
-		SyncString (XMP_NS_EXIF,
-					"DateTimeDigitized",
-					s,
-					preferXMP);
-		
-		if (s.NotEmpty ())
-			{
-			
-			exif.fDateTimeDigitized.Decode_ISO_8601 (s.Get ());
-
-			}
-		
-		}
+	UpdateExifDates( exif );
 		
 	// Brightness Value:
 	
@@ -2913,8 +2905,10 @@ void dng_xmp::SyncExif (dng_exif &exif,
 					preferXMP);
 					
 		// Generate default lens name from lens info if required.
+		// Ignore names names that end in "f/0.0" due to third party bug.
 		
-		if (exif.fLensName.IsEmpty () && exif.fLensInfo [0].IsValid ())
+		if ((exif.fLensName.IsEmpty () ||
+			 exif.fLensName.EndsWith ("f/0.0")) && exif.fLensInfo [0].IsValid ())
 			{
 			
 			char s [256];
@@ -3313,7 +3307,117 @@ void dng_xmp::SyncExif (dng_exif &exif,
 	Remove (XMP_NS_TIFF, "NativeDigest");
 	
 	}
+							   
+/******************************************************************************/
+	
+void dng_xmp::ValidateStringList (const char *ns,
+							      const char *path)
+	{
+	
+	fSDK->ValidateStringList (ns, path);
+
+	}
+							   
+/******************************************************************************/
+	
+void dng_xmp::ValidateMetadata ()
+	{
+	
+	// The following values should be arrays, but are not always.  So
+	// fix them up because Photoshop sometimes has problems parsing invalid
+	// tags.
+	
+	ValidateStringList (XMP_NS_DC, "creator");
+							   
+	ValidateStringList (XMP_NS_PHOTOSHOP, "Keywords");
+	ValidateStringList (XMP_NS_PHOTOSHOP, "SupplementalCategories");
+	
+	}
 		
+/******************************************************************************/
+	
+void dng_xmp::UpdateExifDates (dng_exif &exif)
+	{
+	
+		// For the following three date/time fields, we always prefer XMP to
+		// the EXIF values.  This is to allow the user to correct the date/times
+		// via changes in a sidecar XMP file, without modifying the original
+		// raw file.
+		
+		// DateTime:
+		
+		{
+			
+			dng_string s = exif.fDateTime.Encode_ISO_8601 ();
+			
+			SyncString (XMP_NS_TIFF,
+						"DateTime",
+						s,
+						preferXMP);
+			
+			if (s.NotEmpty ())
+			{
+				
+				exif.fDateTime.Decode_ISO_8601 (s.Get ());
+				
+			}
+			
+		}
+		
+		// DateTimeOriginal:
+		
+		{
+			
+			dng_string s = exif.fDateTimeOriginal.Encode_ISO_8601 ();
+			
+			SyncString (XMP_NS_EXIF,
+						"DateTimeOriginal",
+						s,
+						preferXMP);
+			
+			if (s.NotEmpty ())
+			{
+				
+				exif.fDateTimeOriginal.Decode_ISO_8601 (s.Get ());
+				
+				// If the XAP create date is missing or empty, set it to the
+				// DateTimeOriginal value.
+				
+				dng_string ss;
+				
+				if (!GetString (XMP_NS_XAP, "CreateDate", ss) || ss.IsEmpty ())
+				{
+					
+					SetString (XMP_NS_XAP, "CreateDate", s);
+					
+				}
+				
+			}
+			
+		}
+		
+		// Date Time Digitized:
+		
+		{
+			
+			dng_string s = exif.fDateTimeDigitized.Encode_ISO_8601 ();
+			
+			SyncString (XMP_NS_EXIF,
+						"DateTimeDigitized",
+						s,
+						preferXMP);
+			
+			if (s.NotEmpty ())
+			{
+				
+				exif.fDateTimeDigitized.Decode_ISO_8601 (s.Get ());
+				
+			}
+			
+		}
+		
+	}
+
 /******************************************************************************/
 
 void dng_xmp::UpdateDateTime (const dng_date_time_info &dt)
@@ -3459,7 +3563,12 @@ void dng_xmp::SetImageSize (const dng_point &size)
 	
 	Set_uint32 (XMP_NS_TIFF, "ImageWidth" , size.h);
 	Set_uint32 (XMP_NS_TIFF, "ImageLength", size.v);
-
+	
+	// Mirror these values to the EXIF tags.
+	
+	Set_uint32 (XMP_NS_EXIF, "PixelXDimension" , size.h);
+	Set_uint32 (XMP_NS_EXIF, "PixelYDimension" , size.v);
+	
 	}
 	
 /******************************************************************************/

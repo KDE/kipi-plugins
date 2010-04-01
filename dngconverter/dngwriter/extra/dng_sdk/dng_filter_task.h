@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_filter_task.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_filter_task.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -66,7 +66,7 @@ class dng_filter_task: public dng_area_task
 		virtual ~dng_filter_task ();
 
 		/// Compute the source area needed for a given destination area.
-		/// Default implementation assumes desitnation area is equal to source area for all cases.
+		/// Default implementation assumes destination area is equal to source area for all cases.
 		/// \param dstArea Area to for which pixels will be computed.
 		/// \retval The source area needed as input to calculate the requested destination area.
 

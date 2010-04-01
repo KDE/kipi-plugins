@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2009 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_bottlenecks.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_bottlenecks.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_bottlenecks.h"
+
 #include "dng_reference.h"
 
 /*****************************************************************************/
@@ -61,7 +62,10 @@ dng_suite gDNGSuite =
 	RefEqualBytes,
 	RefEqualArea8,
 	RefEqualArea16,
-	RefEqualArea32
+	RefEqualArea32,
+	RefVignetteMask16,
+	RefVignette16,
+	RefMapArea16
 	};
 
 /*****************************************************************************/

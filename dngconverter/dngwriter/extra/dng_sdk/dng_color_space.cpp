@@ -6,12 +6,13 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_color_space.cpp#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_color_space.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 #include "dng_color_space.h"
+
 #include "dng_1d_table.h"
 #include "dng_exceptions.h"
 #include "dng_flags.h"
@@ -70,7 +71,7 @@ real64 dng_function_GammaEncode_1_8::Evaluate (real64 x) const
 	
 	const real64 y1 = 0.019310851;			// pow (x1, gamma)
 	
-	const real64 slope1 = 3.2106542054;		// gamma * pow (x1, gamma - 1.0)
+	const real64 slope1 = 13.064306598;		// gamma * pow (x1, gamma - 1.0)
 	
 	if (x <= x1)
 		return EvaluateSplineSegment (x,

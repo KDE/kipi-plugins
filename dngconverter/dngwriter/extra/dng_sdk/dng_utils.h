@@ -1,14 +1,14 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_utils.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_utils.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -18,6 +18,7 @@
 
 /*****************************************************************************/
 
+#include "dng_classes.h"
 #include "dng_flags.h"
 #include "dng_types.h"
 
@@ -65,7 +66,32 @@ inline int32 Pin_int32 (int32 min, int32 x, int32 max)
 	
 	}
 
+inline int32 Pin_int32_between (int32 a, int32 x, int32 b)
+	{
+	
+	int32 min, max;
+	if (a < b) { min = a; max = b; }
+	else { min = b; max = a; }
+	
+	return Pin_int32 (min, x, max);
+	
+	}
+
 /*****************************************************************************/
+
+inline uint16 Min_uint16 (uint16 x, uint16 y)
+	{
+	
+	return (x <= y ? x : y);
+	
+	}
+
+inline uint16 Max_uint16 (uint16 x, uint16 y)
+	{
+	
+	return (x >= y ? x : y);
+	
+	}
 
 inline int16 Pin_int16 (int32 x)
 	{
@@ -210,6 +236,33 @@ inline uint32 RoundDown16 (uint32 x)
 
 /******************************************************************************/
 
+inline uint32 RoundUpForPixelSize (uint32 x, uint32 pixelSize)
+	{
+	
+	switch (pixelSize)
+		{
+		
+		case 1:
+			return RoundUp16 (x);
+			
+		case 2:
+			return RoundUp8 (x);
+			
+		case 4:
+			return RoundUp4 (x);
+			
+		case 8:
+			return RoundUp2 (x);
+			
+		default:
+			return RoundUp16 (x);
+					
+		}
+	
+	}
+
+/******************************************************************************/
+
 inline uint64 Abs_int64 (int64 x)
 	{
 	
@@ -291,6 +344,20 @@ inline real32 Pin_real32 (real32 min, real32 x, real32 max)
 	
 	}
 
+inline real32 Pin_real32 (real32 x)
+	{
+
+	return Pin_real32 (0.0f, x, 1.0f);
+
+	}
+
+inline real32 Lerp_real32 (real32 a, real32 b, real32 t)
+	{
+	
+	return a + t * (b - a);
+	
+	}
+
 /*****************************************************************************/
 
 inline real64 Abs_real64 (real64 x)
@@ -318,6 +385,20 @@ inline real64 Pin_real64 (real64 min, real64 x, real64 max)
 	{
 	
 	return Max_real64 (min, Min_real64 (x, max));
+	
+	}
+
+inline real64 Pin_real64 (real64 x)
+	{
+	
+	return Pin_real64 (0.0, x, 1.0);
+	
+	}
+
+inline real64 Lerp_real64 (real64 a, real64 b, real64 t)
+	{
+	
+	return a + t * (b - a);
 	
 	}
 
@@ -376,6 +457,29 @@ inline int64 Round_int64 (real64 x)
 
 /*****************************************************************************/
 
+const int64 kFixed64_One  = (((int64) 1) << 32);
+const int64 kFixed64_Half = (((int64) 1) << 31);
+
+/******************************************************************************/
+
+inline int64 Real64ToFixed64 (real64 x)
+	{
+	
+	return Round_int64 (x * (real64) kFixed64_One);
+	
+	}
+
+/******************************************************************************/
+
+inline real64 Fixed64ToReal64 (int64 x)
+	{
+	
+	return x * (1.0 / (real64) kFixed64_One);
+	
+	}
+
+/*****************************************************************************/
+
 inline char ForceUppercase (char c)
 	{
 	
@@ -407,6 +511,36 @@ inline uint32 SwapBytes32 (uint32 x)
 		   ((x << 8) & 0x00FF0000) +
 		   ((x >> 8) & 0x0000FF00) +
 		   (x >> 24);
+	
+	}
+
+/*****************************************************************************/
+
+inline bool IsAligned16 (const void *p)
+	{
+	
+	return (((uintptr) p) & 1) == 0;
+	
+	}
+
+inline bool IsAligned32 (const void *p)
+	{
+	
+	return (((uintptr) p) & 3) == 0;
+	
+	}
+
+inline bool IsAligned64 (const void *p)
+	{
+	
+	return (((uintptr) p) & 7) == 0;
+	
+	}
+
+inline bool IsAligned128 (const void *p)
+	{
+	
+	return (((uintptr) p) & 15) == 0;
 	
 	}
 
@@ -520,7 +654,13 @@ inline void DNG_HSVtoRGB (real32 h,
 
 /******************************************************************************/
 
+// High resolution timer, for code profiling.
+
 real64 TickTimeInSeconds ();
+
+// Lower resolution timer, but more stable.
+
+real64 TickCountInSeconds ();
 
 /******************************************************************************/
 
@@ -548,6 +688,22 @@ class dng_timer
 		real64 fStartTime;
 		
 	};
+
+/*****************************************************************************/
+
+// Returns the maximum squared Euclidean distance from the specified point to the
+// specified rectangle rect.
+
+real64 MaxSquaredDistancePointToRect (const dng_point_real64 &point,
+									  const dng_rect_real64 &rect);
+
+/*****************************************************************************/
+
+// Returns the maximum Euclidean distance from the specified point to the specified
+// rectangle rect.
+
+real64 MaxDistancePointToRect (const dng_point_real64 &point,
+							   const dng_rect_real64 &rect);
 
 /*****************************************************************************/
 

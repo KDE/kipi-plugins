@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2008 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_xmp_sdk.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_xmp_sdk.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_xmp_sdk.h"
+
 #include "dng_auto_ptr.h"
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
@@ -55,6 +56,7 @@ const char *XMP_NS_EXIF	      = "http://ns.adobe.com/exif/1.0/";
 const char *XMP_NS_PHOTOSHOP  = "http://ns.adobe.com/photoshop/1.0/";
 const char *XMP_NS_XAP        = "http://ns.adobe.com/xap/1.0/";
 const char *XMP_NS_DC		  = "http://purl.org/dc/elements/1.1/";
+const char *XMP_NS_XMP_NOTE   = "http://ns.adobe.com/xmp/note/";
 
 const char *XMP_NS_CRS		  = "http://ns.adobe.com/camera-raw-settings/1.0/";
 const char *XMP_NS_CRSS		  = "http://ns.adobe.com/camera-raw-saved-settings/1.0/";
@@ -702,6 +704,50 @@ bool dng_xmp_sdk::GetString (const char *ns,
 
 /*****************************************************************************/
 
+void dng_xmp_sdk::ValidateStringList (const char *ns,
+								      const char *path)
+	{
+	
+	if (Exists (ns, path))
+		{
+		
+		bool bogus = true;
+		
+		try
+			{
+			
+			XMP_Index index = 1;
+		
+			TXMP_STRING_TYPE ss;
+			
+			while (fPrivate->fMeta->GetArrayItem (ns,
+												  path,
+												  index++,
+												  &ss,
+												  NULL))
+				{
+								
+				}
+				
+			bogus = false;
+						
+			}
+			
+		CATCH_XMP ("GetArrayItem", false)
+		
+		if (bogus)
+			{
+			
+			Remove (ns, path);
+			
+			}
+		
+		}
+		
+	}
+								
+/*****************************************************************************/
+
 bool dng_xmp_sdk::GetStringList (const char *ns,
 								 const char *path,
 								 dng_string_list &list) const
@@ -1140,6 +1186,89 @@ dng_memory_block * dng_xmp_sdk::Serialize (dng_memory_allocator &allocator,
 
 	}
 		
+/*****************************************************************************/
+
+void dng_xmp_sdk::PackageForJPEG (dng_memory_allocator &allocator,
+								  AutoPtr<dng_memory_block> &stdBlock,
+								  AutoPtr<dng_memory_block> &extBlock,
+								  dng_string &extDigest) const
+	{
+	
+	if (HasMeta ())
+		{
+		
+		TXMP_STRING_TYPE stdStr;
+		TXMP_STRING_TYPE extStr;
+		TXMP_STRING_TYPE digestStr;
+		
+		try
+			{
+			
+			SXMPUtils::PackageForJPEG (*fPrivate->fMeta,
+									   &stdStr,
+									   &extStr,
+									   &digestStr);
+									   
+			}
+			
+		CATCH_XMP ("PackageForJPEG", true)
+		
+		uint32 stdLen = (uint32) stdStr.size ();
+		uint32 extLen = (uint32) extStr.size ();
+		
+		if (stdLen)
+			{
+			
+			stdBlock.Reset (allocator.Allocate (stdLen));
+			
+			memcpy (stdBlock->Buffer (), stdStr.c_str (), stdLen);
+			
+			}
+			
+		if (extLen)
+			{
+
+			extBlock.Reset (allocator.Allocate (extLen));
+			
+			memcpy (extBlock->Buffer (), extStr.c_str (), extLen);
+			
+			if (digestStr.size () != 32)
+				{
+				ThrowProgramError ();
+				}
+			
+			extDigest.Set (digestStr.c_str ());
+			
+			}
+		
+		}
+			
+	}
+
+/*****************************************************************************/
+
+void dng_xmp_sdk::MergeFromJPEG (const dng_xmp_sdk *xmp)
+	{
+
+	if (xmp && xmp->HasMeta ())
+		{
+		
+		NeedMeta ();
+		
+		try
+			{
+
+			SXMPUtils::MergeFromJPEG (fPrivate->fMeta,
+									  *xmp->fPrivate->fMeta);
+			
+			}
+			
+		CATCH_XMP ("MergeFromJPEG", true)
+		
+		}
+	
+	}
+
 /*****************************************************************************/
 
 void dng_xmp_sdk::AppendXMP (const dng_xmp_sdk *xmp)

@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_errors.h#2 $ */ 
-/* $DateTime: 2008/04/02 14:06:57 $ */
-/* $Change: 440485 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_errors.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -45,7 +45,9 @@ enum
 	dng_error_read_file,						//< Error reading file.
 	dng_error_write_file,						//< Error writing file.
 	dng_error_end_of_file,						//< Unexpected end of file.
-	dng_error_file_is_damaged					//< File is damaged in some way.
+	dng_error_file_is_damaged,					//< File is damaged in some way.
+	dng_error_image_too_big_dng,				//< Image is too big to save as DNG.
+	dng_error_image_too_big_tiff				//< Image is too big to save as TIFF.
 	};
 	
 /*****************************************************************************/

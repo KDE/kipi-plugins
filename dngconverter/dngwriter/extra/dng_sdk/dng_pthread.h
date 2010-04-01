@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_pthread.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_pthread.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
@@ -22,16 +22,21 @@
 
 /*****************************************************************************/
 
+#if qDNGThreadSafe
+
+/*****************************************************************************/
+
 #if !qWinOS
 
 /*****************************************************************************/
 
 /* Try generic POSIX compile */
 
-#include <sys/errno.h>
+#include <errno.h>
 #include <pthread.h>
 
 #define dng_pthread_disassociate()
+#define dng_pthread_terminate()
 
 /*****************************************************************************/
 
@@ -142,7 +147,9 @@ int dng_pthread_rwlock_wrlock(dng_pthread_rwlock_t * rwlock);
 // dng_pthread routines of a thread after dng_pthread_disassociate as the global state will
 // be recreated as necessary. However dng_pthread_disassociate will need to be called again
 // and there is a slight performance cost. Do not call this routine while holding a mutex, etc.
-void dng_pthread_disassociate ();
+void dng_pthread_disassociate();
+
+void dng_pthread_terminate();
 
 /*****************************************************************************/
 
@@ -239,6 +246,10 @@ int dng_pthread_now (struct timespec *now);
 #ifdef __cplusplus
 }
 #endif
+
+/*****************************************************************************/
+
+#endif // qDNGThreadSafe
 
 /*****************************************************************************/
 

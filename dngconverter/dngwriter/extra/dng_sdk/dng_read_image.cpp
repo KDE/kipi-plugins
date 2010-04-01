@@ -6,14 +6,15 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_read_image.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_read_image.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_read_image.h"
+
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
 #include "dng_host.h"
@@ -31,10 +32,9 @@
 dng_row_interleaved_image::dng_row_interleaved_image (dng_image &image,
 													  uint32 factor)
 													  
-	:	dng_image (image.Bounds     (),
-				   image.Planes     (),
-				   image.PixelType  (),
-				   image.PixelRange ())
+	:	dng_image (image.Bounds    (),
+				   image.Planes    (),
+				   image.PixelType ())
 													  
 	,	fImage  (image )
 	,	fFactor (factor)
@@ -1087,6 +1087,31 @@ void dng_read_image::Read (dng_host &host,
 		
 		}
 		
+	// Quick validity check on tile offsets.
+	
+	for (tileIndex = 0; tileIndex < tileCount; tileIndex++)
+		{
+		
+		#if qDNGValidate
+		
+		if (tileOffset [tileIndex] < 8)
+			{
+			
+			ReportWarning ("Tile/Strip offset less than 8");
+			
+			}
+		
+		#endif
+		
+		if (tileOffset [tileIndex] >= stream.Length ())
+			{
+			
+			ThrowBadFormat ();
+			
+			}
+		
+		}
+		
 	// Buffer to hold the tile byte counts, if needed.
 	
 	dng_memory_data tileByteCountData;
@@ -1146,6 +1171,21 @@ void dng_read_image::Read (dng_host &host,
 				{
 				
 				tileByteCount [tileIndex] = stream.TagValue_uint32 (ifd.fTileByteCountsType);
+				
+				}
+			
+			}
+			
+		// Quick validity check on tile byte counts.
+		
+		for (tileIndex = 0; tileIndex < tileCount; tileIndex++)
+			{
+			
+			if (tileByteCount [tileIndex] < 1 ||
+				tileByteCount [tileIndex] > stream.Length ())
+				{
+				
+				ThrowBadFormat ();
 				
 				}
 			

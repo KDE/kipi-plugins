@@ -1,19 +1,20 @@
 /*****************************************************************************/
-// Copyright 2006-2007 Adobe Systems Incorporated
+// Copyright 2006-2009 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_mosaic_info.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_mosaic_info.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /*****************************************************************************/
 
 #include "dng_mosaic_info.h"
+
 #include "dng_area_task.h"
 #include "dng_assertions.h"
 #include "dng_bottlenecks.h"
@@ -339,6 +340,20 @@ void dng_bilinear_pattern::Calculate (const dng_mosaic_info &info,
 	
 	fPatRows = info.fCFAPatternSize.v * fScale.v;
 	fPatCols = info.fCFAPatternSize.h * fScale.h;
+	
+	// See if we need to scale up just while computing the kernels.
+	
+	dng_point tempScale (1, 1);
+	
+	if (info.fCFALayout >= 6)
+		{
+		
+		tempScale = dng_point (2, 2);
+		
+		fPatRows *= tempScale.v;
+		fPatCols *= tempScale.h;
+
+		}
 		
 	// Find a boolean map for this plane color and layout.
 	
@@ -496,6 +511,51 @@ void dng_bilinear_pattern::Calculate (const dng_mosaic_info &info,
 			break;
 			
 			}
+			
+		case 6:		// Staggered layout E: even rows are offset up by 1/2 row, even columns are offset left by 1/2 column
+		case 7:		// Staggered layout F: even rows are offset up by 1/2 row, even columns are offset right by 1/2 column
+		case 8:		// Staggered layout G: even rows are offset down by 1/2 row, even columns are offset left by 1/2 column
+		case 9:		// Staggered layout H: even rows are offset down by 1/2 row, even columns are offset right by 1/2 column
+			{
+			
+			uint32 eRow = (info.fCFALayout == 6 ||
+						   info.fCFALayout == 7) ? 1 : 3;
+						   
+			uint32 eCol = (info.fCFALayout == 6 ||
+						   info.fCFALayout == 8) ? 1 : 3;
+			
+			for (j = 0; j < fPatRows; j++)
+				{
+				
+				for (k = 0; k < fPatCols; k++)
+					{
+					
+					uint32 jj = j & 3;
+					uint32 kk = k & 3;
+					
+					if ((jj != 0 && jj != eRow) ||
+						(kk != 0 && kk != eCol))
+						{
+						
+						map [j] [k] = false;
+						
+						}
+						
+					else
+						{
+						
+						map [j] [k] = (info.fCFAPattern [((j >> 1) & ~1) + Min_uint32 (jj, 1)]
+														[((k >> 1) & ~1) + Min_uint32 (kk, 1)] == planeColor);
+						
+						}
+						
+					}
+					
+				}
+			
+			break;
+			
+			}
 					
 		default:
 			ThrowProgramError ();
@@ -535,10 +595,10 @@ void dng_bilinear_pattern::Calculate (const dng_mosaic_info &info,
 	
 	// Find kernel for each patten entry.
 	
-	for (patRow = 0; patRow < fPatRows; patRow++)
+	for (patRow = 0; patRow < fPatRows; patRow += tempScale.v)
 		{
 		
-		for (patCol = 0; patCol < fPatCols; patCol++)
+		for (patCol = 0; patCol < fPatCols; patCol += tempScale.h)
 			{
 			
 			dng_bilinear_kernel &kernel = fKernel [patRow] [patCol];
@@ -820,31 +880,95 @@ void dng_bilinear_pattern::Calculate (const dng_mosaic_info &info,
 			
 		}
 		
-	// Compute remaining data for each kernel.
+	// Deal with temp scale case.
 	
-	for (patRow = 0; patRow < fPatRows; patRow++)
+	if (tempScale == dng_point (2, 2))
 		{
 		
-		for (patCol = 0; patCol < fPatCols; patCol++)
+		fPatRows /= tempScale.v;
+		fPatCols /= tempScale.h;
+		
+		for (patRow = 0; patRow < fPatRows; patRow++)
 			{
 			
-			dng_bilinear_kernel &kernel = fKernel [patRow] [patCol];
+			for (patCol = 0; patCol < fPatCols; patCol++)
+				{
+				
+				int32 patRow2 = patRow << 1;
+				int32 patCol2 = patCol << 1;
+				
+				dng_bilinear_kernel &kernel = fKernel [patRow2] [patCol2];
+				
+				for (j = 0; j < kernel.fCount; j++)
+					{
+					
+					int32 x = patRow2 + kernel.fDelta [j].v;
+					
+					if ((x & 3) != 0)
+						{
+						x = (x & ~3) + 2;
+						}
+						
+					kernel.fDelta [j].v = ((x - patRow2) >> 1);
+					
+					x = patCol2 + kernel.fDelta [j].h;
+					
+					if ((x & 3) != 0)
+						{
+						x = (x & ~3) + 2;
+						}
+						
+					kernel.fDelta [j].h = ((x - patCol2) >> 1);
+					
+					}
+
+				kernel.Finalize (fScale,
+								 patRow,
+								 patCol,
+								 rowStep,
+								 colStep);
+										 
+				fCounts    [patRow] [patCol] = kernel.fCount;
+				fOffsets   [patRow] [patCol] = kernel.fOffset;
+				fWeights16 [patRow] [patCol] = kernel.fWeight16;
+				fWeights32 [patRow] [patCol] = kernel.fWeight32;
 			
-			kernel.Finalize (fScale,
-							 patRow,
-							 patCol,
-							 rowStep,
-							 colStep);
-									 
-			fCounts    [patRow] [patCol] = kernel.fCount;
-			fOffsets   [patRow] [patCol] = kernel.fOffset;
-			fWeights16 [patRow] [patCol] = kernel.fWeight16;
-			fWeights32 [patRow] [patCol] = kernel.fWeight32;
-			
+				}
+				
 			}
 			
 		}
+		
+	// Non-temp scale case.
 	
+	else
+		{
+		
+		for (patRow = 0; patRow < fPatRows; patRow++)
+			{
+			
+			for (patCol = 0; patCol < fPatCols; patCol++)
+				{
+				
+				dng_bilinear_kernel &kernel = fKernel [patRow] [patCol];
+				
+				kernel.Finalize (fScale,
+								 patRow,
+								 patCol,
+								 rowStep,
+								 colStep);
+										 
+				fCounts    [patRow] [patCol] = kernel.fCount;
+				fOffsets   [patRow] [patCol] = kernel.fOffset;
+				fWeights16 [patRow] [patCol] = kernel.fWeight16;
+				fWeights32 [patRow] [patCol] = kernel.fWeight32;
+				
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 /*****************************************************************************/
@@ -1294,11 +1418,6 @@ bool dng_mosaic_info::SetFourColorBayer ()
 		return false;
 		}
 		
-	if (fCFALayout != 1)
-		{
-		return false;
-		}
-	
 	if (fColorPlanes != 3)
 		{
 		return false;
@@ -1707,9 +1826,8 @@ void dng_mosaic_info::InterpolateGeneric (dng_host &host,
 	
 	srcBuffer.fRowStep = srcTileSize.h;
 
-	srcBuffer.fPixelType  = srcImage.PixelType  ();
-	srcBuffer.fPixelSize  = srcImage.PixelSize  ();
-	srcBuffer.fPixelRange = srcImage.PixelRange ();
+	srcBuffer.fPixelType = srcImage.PixelType ();
+	srcBuffer.fPixelSize = srcImage.PixelSize ();
 	
 	uint32 srcBufferSize = srcBuffer.fPixelSize *
 						   srcBuffer.fRowStep *
@@ -1728,9 +1846,8 @@ void dng_mosaic_info::InterpolateGeneric (dng_host &host,
 	dstBuffer.fRowStep   = dstTileSize.h * fColorPlanes;
 	dstBuffer.fPlaneStep = dstTileSize.h;
 	
-	dstBuffer.fPixelType  = dstImage.PixelType  ();
-	dstBuffer.fPixelSize  = dstImage.PixelSize  ();
-	dstBuffer.fPixelRange = dstImage.PixelRange ();
+	dstBuffer.fPixelType = dstImage.PixelType ();
+	dstBuffer.fPixelSize = dstImage.PixelSize ();
 	
 	uint32 dstBufferSize = dstBuffer.fPixelSize *
 						   dstBuffer.fRowStep *

@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_mosaic_info.h#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_mosaic_info.h#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
 
 /** \file
@@ -53,13 +53,17 @@ class dng_mosaic_info
 		
 		uint8 fCFAPlaneColor [kMaxColorPlanes];
 		
-		/// Value of CFALayout tag in the \ref spec_dng "DNG 1.1.0 specification."
+		/// Value of CFALayout tag in the \ref spec_dng "DNG 1.3 specification."
 		/// CFALayout describes the spatial layout of the CFA. The currently defined values are:
-		///	   - 1 = Rectangular (or square) layout.
+		///    - 1 = Rectangular (or square) layout.
 		///    - 2 = Staggered layout A: even columns are offset down by 1/2 row.
 		///    - 3 = Staggered layout B: even columns are offset up by 1/2 row.
 		///    - 4 = Staggered layout C: even rows are offset right by 1/2 column.
 		///    - 5 = Staggered layout D: even rows are offset left by 1/2 column.
+		///    - 6 = Staggered layout E: even rows are offset up by 1/2 row, even columns are offset left by 1/2 column.
+		///    - 7 = Staggered layout F: even rows are offset up by 1/2 row, even columns are offset right by 1/2 column.
+		///    - 8 = Staggered layout G: even rows are offset down by 1/2 row, even columns are offset left by 1/2 column.
+		///    - 9 = Staggered layout H: even rows are offset down by 1/2 row, even columns are offset right by 1/2 column.
 
 		uint32 fCFALayout;
 		
@@ -137,6 +141,7 @@ class dng_mosaic_info
 								   
 		/// Demosaic interpolation of a single plane for non-downsampled case.
 		/// \param host dng_host to use for buffer allocation requests, user cancellation testing, and progress updates.
+		/// \param negative DNG negative of mosaiced data.
 		/// \param srcImage Source image for mosaiced data.
 		/// \param dstImage Destination image for resulting interpolated data.
 		/// \param srcPlane Which plane to interpolate.
@@ -149,6 +154,7 @@ class dng_mosaic_info
 								  		 
 		/// Demosaic interpolation of a single plane for downsampled case.
 		/// \param host dng_host to use for buffer allocation requests, user cancellation testing, and progress updates.
+		/// \param negative DNG negative of mosaiced data.
 		/// \param srcImage Source image for mosaiced data.
 		/// \param dstImage Destination image for resulting interpolated data.
 		/// \param downScale Amount (in horizontal and vertical) by which to subsample image.
@@ -163,6 +169,7 @@ class dng_mosaic_info
 
 		/// Demosaic interpolation of a single plane. Chooses between generic and fast interpolators based on parameters.
 		/// \param host dng_host to use for buffer allocation requests, user cancellation testing, and progress updates.
+		/// \param negative DNG negative of mosaiced data.
 		/// \param srcImage Source image for mosaiced data.
 		/// \param dstImage Destination image for resulting interpolated data.
 		/// \param downScale Amount (in horizontal and vertical) by which to subsample image.

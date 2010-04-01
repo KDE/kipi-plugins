@@ -6,9 +6,9 @@
 // accordance with the terms of the Adobe license agreement accompanying it.
 /*****************************************************************************/
 
-/* $Id: //mondo/dng_sdk_1_2/dng_sdk/source/dng_lossless_jpeg.cpp#1 $ */ 
-/* $DateTime: 2008/03/09 14:29:54 $ */
-/* $Change: 431850 $ */
+/* $Id: //mondo/dng_sdk_1_3/dng_sdk/source/dng_lossless_jpeg.cpp#1 $ */ 
+/* $DateTime: 2009/06/22 05:04:49 $ */
+/* $Change: 578634 $ */
 /* $Author: tknoll $ */
  
 /*****************************************************************************/
@@ -47,6 +47,7 @@
 /*****************************************************************************/
 
 #include "dng_lossless_jpeg.h"
+
 #include "dng_assertions.h"
 #include "dng_exceptions.h"
 #include "dng_memory.h"
@@ -63,10 +64,17 @@
 /*****************************************************************************/
 
 // The qSupportCanon_sRAW stuff not actually required for DNG support, but
-// only included so to allow this code to be using on Canon sRAW files.
+// only included to allow this code to be used on Canon sRAW files.
 
 #ifndef qSupportCanon_sRAW
 #define qSupportCanon_sRAW 1
+#endif
+
+// The qSupportHasselblad_3FR stuff not actually required for DNG support, but
+// only included to allow this code to be used on Hasselblad 3FR files.
+
+#ifndef qSupportHasselblad_3FR
+#define qSupportHasselblad_3FR 1
 #endif
 
 /*****************************************************************************/
@@ -383,9 +391,13 @@ class dng_lossless_decoder
 		MCU *mcuROW1;
 		MCU *mcuROW2;
 		
-		uint32 getBuffer;			// current bit-extraction buffer
+		uint64 getBuffer;			// current bit-extraction buffer
 		int32 bitsLeft;				// # of unused bits in it
 				
+		#if qSupportHasselblad_3FR
+		bool fHasselblad3FR;
+		#endif
+
 	public:
 	
 		dng_lossless_decoder (dng_stream *stream,
@@ -496,6 +508,10 @@ dng_lossless_decoder::dng_lossless_decoder (dng_stream *stream,
 	,	mcuROW2		   (NULL)
 	,	getBuffer      (0)
 	,	bitsLeft	   (0)
+	
+	#if qSupportHasselblad_3FR
+	,	fHasselblad3FR (false)
+	#endif
 	
 	{
 	
@@ -1144,7 +1160,19 @@ void dng_lossless_decoder::DecoderStructInit ()
 					  (info.Ss == 1) &&
 					  ((info.imageWidth & 1) == 0);
 					  
-	if (!canon_sRAW)
+	bool canon_sRAW2 = (info.numComponents == 3) &&
+					   (info.compInfo [0].hSampFactor == 2) &&
+					   (info.compInfo [1].hSampFactor == 1) &&
+					   (info.compInfo [2].hSampFactor == 1) &&
+					   (info.compInfo [0].vSampFactor == 2) &&
+					   (info.compInfo [1].vSampFactor == 1) &&
+					   (info.compInfo [2].vSampFactor == 1) &&
+					   (info.dataPrecision == 15) &&
+					   (info.Ss == 1) &&
+					   ((info.imageWidth  & 1) == 0) &&
+					   ((info.imageHeight & 1) == 0);
+					   
+	if (!canon_sRAW && !canon_sRAW2)
 	
 	#endif
 	
@@ -1430,6 +1458,34 @@ inline void dng_lossless_decoder::FillBitBuffer (int32 nbits)
 	
 	const int32 kMinGetBits = sizeof (uint32) * 8 - 7;
 	
+	#if qSupportHasselblad_3FR
+	
+	if (fHasselblad3FR)
+		{
+		
+		while (bitsLeft < kMinGetBits)
+			{
+			
+			int32 c0 = GetJpegChar ();
+			int32 c1 = GetJpegChar ();
+			int32 c2 = GetJpegChar ();
+			int32 c3 = GetJpegChar ();
+
+			getBuffer = (getBuffer << 8) | c3;
+			getBuffer = (getBuffer << 8) | c2;
+			getBuffer = (getBuffer << 8) | c1;
+			getBuffer = (getBuffer << 8) | c0;
+			
+			bitsLeft += 32;
+			
+			}
+			
+		return;
+		
+		}
+	
+	#endif
+	
     while (bitsLeft < kMinGetBits)
     	{
     	
@@ -1484,7 +1540,7 @@ inline int32 dng_lossless_decoder::show_bits8 ()
 	if (bitsLeft < 8)
 		FillBitBuffer (8);
 		
-	return (getBuffer >> (bitsLeft - 8)) & 0xff;
+	return (int32) ((getBuffer >> (bitsLeft - 8)) & 0xff);
 	
 	}
 
@@ -1505,7 +1561,7 @@ inline int32 dng_lossless_decoder::get_bits (int32 nbits)
 	if (bitsLeft < nbits)
 		FillBitBuffer (nbits);
 		
-	return (getBuffer >> (bitsLeft -= nbits)) & (0x0FFFF >> (16 - nbits));
+	return (int32) ((getBuffer >> (bitsLeft -= nbits)) & (0x0FFFF >> (16 - nbits)));
 	
 	}
 
@@ -1517,7 +1573,7 @@ inline int32 dng_lossless_decoder::get_bit ()
 	if (!bitsLeft)
 		FillBitBuffer (1);
 		
-	return (getBuffer >> (--bitsLeft)) & 1;
+	return (int32) ((getBuffer >> (--bitsLeft)) & 1);
 	
 	}
 
@@ -1807,7 +1863,8 @@ void dng_lossless_decoder::DecodeImage ()
 		
 	// Canon sRAW support
 	
-	if (info.compInfo [0].hSampFactor == 2)
+	if (info.compInfo [0].hSampFactor == 2 &&
+		info.compInfo [0].vSampFactor == 1)
 		{
 	
 		for (int32 row = 0; row < numROW; row++)
@@ -1970,6 +2027,283 @@ void dng_lossless_decoder::DecodeImage ()
 		
 		}
 		
+	if (info.compInfo [0].hSampFactor == 2 &&
+		info.compInfo [0].vSampFactor == 2)
+		{
+	
+		for (int32 row = 0; row < numROW; row += 2)
+			{
+			
+			// Initialize predictors.
+			
+			int32 p0;
+			int32 p1;
+			int32 p2;
+			
+			if (row == 0)
+				{
+				p0 = 1 << 14;
+				p1 = 1 << 14;
+				p2 = 1 << 14;
+				}
+				
+			else
+				{
+				p0 = prevRowBuf [0] [0];
+				p1 = prevRowBuf [0] [1];
+				p2 = prevRowBuf [0] [2];
+				}
+			
+			for (int32 col = 0; col < numCOL; col += 2)
+				{
+				
+				// Read first luminance component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [0]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p0 += d;
+					
+					prevRowBuf [col] [0] = (ComponentType) p0;
+				
+					}
+				
+				// Read second luminance component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [0]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p0 += d;
+					
+					prevRowBuf [col + 1] [0] = (ComponentType) p0;
+				
+					}
+				
+				// Read third luminance component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [0]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p0 += d;
+					
+					curRowBuf [col] [0] = (ComponentType) p0;
+				
+					}
+				
+				// Read fourth luminance component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [0]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p0 += d;
+					
+					curRowBuf [col + 1] [0] = (ComponentType) p0;
+				
+					}
+				
+				// Read first chroma component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [1]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p1 += d;
+					
+					prevRowBuf [col    ] [1] = (ComponentType) p1;
+					prevRowBuf [col + 1] [1] = (ComponentType) p1;
+
+					curRowBuf [col    ] [1] = (ComponentType) p1;
+					curRowBuf [col + 1] [1] = (ComponentType) p1;
+				
+					}
+				
+				// Read second chroma component.
+				
+					{
+				
+					int32 d = 0;
+				
+					int32 s = HuffDecode (ht [2]);
+					
+					if (s)
+						{
+
+						if (s == 16)
+							{
+							d = -32768;
+							}
+						
+						else
+							{
+							d = get_bits (s);
+							HuffExtend (d, s);
+							}
+
+						}
+						
+					p2 += d;
+					
+					prevRowBuf [col    ] [2] = (ComponentType) p2;
+					prevRowBuf [col + 1] [2] = (ComponentType) p2;
+				
+					curRowBuf [col    ] [2] = (ComponentType) p2;
+					curRowBuf [col + 1] [2] = (ComponentType) p2;
+				
+					}
+								
+				}
+			
+			PmPutRow (prevRowBuf, compsInScan, numCOL, row);
+			PmPutRow (curRowBuf, compsInScan, numCOL, row);
+
+			}
+			
+		return;
+		
+		}
+
+	#endif
+	
+	#if qSupportHasselblad_3FR
+	
+	if (info.Ss == 8)
+		{
+		
+		fHasselblad3FR = true;
+		
+		for (int32 row = 0; row < numROW; row++)
+			{
+			
+			int32 p0 = 32768;
+			int32 p1 = 32768;
+			
+			for (int32 col = 0; col < numCOL; col += 2)
+				{
+				
+				int32 s0 = HuffDecode (ht [0]);
+				int32 s1 = HuffDecode (ht [0]);
+				
+				if (s0)
+					{
+					int32 d = get_bits (s0);
+					HuffExtend (d, s0);
+					p0 += d;
+					}
+
+				if (s1)
+					{
+					int32 d = get_bits (s1);
+					HuffExtend (d, s1);
+					p1 += d;
+					}
+
+				curRowBuf [col    ] [0] = (ComponentType) p0;
+				curRowBuf [col + 1] [0] = (ComponentType) p1;
+				
+				}
+			
+			PmPutRow (curRowBuf, compsInScan, numCOL, row);
+
+			}
+
+		return;
+		
+		}
+	
 	#endif
 	
     // Decode the first row of image. Output the row and
