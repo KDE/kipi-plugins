@@ -11,6 +11,7 @@ SET(kipiplugin_gpssync_PART_SRCS
         gpsimagelistdragdrophandler.cpp
         gpssettingswidget.cpp
         gpscorrelatorwidget.cpp
+        gpsdataparser.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync2 ${kipiplugin_gpssync_PART_SRCS})

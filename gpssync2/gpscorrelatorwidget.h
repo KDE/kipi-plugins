@@ -28,32 +28,11 @@
 
 #include <QWidget>
 
-// WorldMapWidget2 includes
-
-#include <worldmapwidget2/worldmapwidget2_primitives.h>
-
 
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSCorrelatorWidgetPrivate;
-
-class ParsedGPXData
-{
-public:
-    ParsedGPXData()
-    : url(),
-      isValid(false),
-      nPoints(0),
-      gpxDataMap()
-    {
-    }
-
-    KUrl url;
-    bool isValid;
-    int nPoints;
-    QMap<QDateTime, WMW2::WMWGeoCoordinate> gpxDataMap;
-};
 
 class GPSCorrelatorWidget : public QWidget
 {
@@ -64,16 +43,19 @@ public:
     GPSCorrelatorWidget(QWidget* const parent, const int marginHint, const int spacingHint);
     ~GPSCorrelatorWidget();
 
-    void setUIEnabled(const bool state);
+    void setUIEnabledExternal(const bool state);
 
 protected:
+    void setUIEnabledInternal(const bool state);
+    void updateUIState();
 
 Q_SIGNALS:
     void signalSetUIEnabled(const bool enabledState);
 
 private Q_SLOTS:
     void slotLoadGPXFiles();
-    void slotGPXFileReadyAt(int beginIndex, int endIndex);
+    void slotGPXFilesReadyAt(int beginIndex, int endIndex);
+    void slotAllGPXFilesReady();
 
 private:
     GPSCorrelatorWidgetPrivate* const d;

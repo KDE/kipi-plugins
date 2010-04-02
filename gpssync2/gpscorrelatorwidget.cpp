@@ -22,14 +22,9 @@
 
 // Qt includes
 
-#include <qtconcurrentmap.h>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
-#include <QDomDocument>
-#include <QFile>
-#include <QFuture>
-#include <QFutureWatcher>
 #include <QGroupBox>
 #include <QLabel>
 #include <QPushButton>
@@ -62,7 +57,7 @@
 
 // local includes
 
-#include "gpsdataparser_time.h"
+#include "gpsdataparser.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -84,7 +79,9 @@ public:
       offsetSec(0),
       interpolateBox(0),
       maxGapInput(0),
-      maxTimeInput(0)
+      maxTimeInput(0),
+      uiEnabledInternal(true),
+      uiEnabledExternal(true)
     {
     }
 
@@ -108,14 +105,22 @@ public:
     KIntSpinBox              *maxGapInput;
     KIntSpinBox              *maxTimeInput;
 
-    QFutureWatcher<ParsedGPXData> *gpxLoadFutureWatcher;
-    QFuture<ParsedGPXData>         gpxLoadFuture;
-    QList<ParsedGPXData>           gpxData;
+    GPSDataParser            *gpsDataParser;
+    bool uiEnabledInternal;
+    bool uiEnabledExternal;
 };
 
 GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int marginHint, const int spacingHint)
 : QWidget(parent), d(new GPSCorrelatorWidgetPrivate(marginHint, spacingHint))
 {
+    d->gpsDataParser = new GPSDataParser(this);
+
+    connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int, int)),
+            this, SLOT(slotGPXFilesReadyAt(int, int)));
+
+    connect(d->gpsDataParser, SIGNAL(signalAllGPXFilesReady()),
+            this, SLOT(slotAllGPXFilesReady()));
+
     QVBoxLayout* const vboxlayout = new QVBoxLayout(this);
     setLayout(vboxlayout);
 
@@ -276,6 +281,8 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int margin
 
     connect(d->gpxLoadFilesButton, SIGNAL(clicked()),
             this, SLOT(slotLoadGPXFiles()));
+
+    updateUIState();
 }
 
 GPSCorrelatorWidget::~GPSCorrelatorWidget()
@@ -283,98 +290,6 @@ GPSCorrelatorWidget::~GPSCorrelatorWidget()
     delete d;
 }
 
-static ParsedGPXData LoadGPXFile(const KUrl& url)
-{
-    // TODO: store some kind of error message
-    ParsedGPXData parsedData;
-    parsedData.url = url;
-    parsedData.isValid = false;
-
-    QFile gpxfile(url.path());
-
-    if (!gpxfile.open(QIODevice::ReadOnly))
-        return parsedData;
-
-    QDomDocument gpxDoc("gpx");
-    if (!gpxDoc.setContent(&gpxfile))
-        return parsedData;
-
-    QDomElement gpxDocElem = gpxDoc.documentElement();
-    if (gpxDocElem.tagName()!="gpx")
-        return parsedData;
-
-    for (QDomNode nTrk = gpxDocElem.firstChild();
-         !nTrk.isNull(); nTrk = nTrk.nextSibling())
-    {
-        QDomElement trkElem = nTrk.toElement();
-        if (trkElem.isNull()) continue;
-        if (trkElem.tagName() != "trk") continue;
-
-        for (QDomNode nTrkseg = trkElem.firstChild();
-            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
-        {
-            QDomElement trksegElem = nTrkseg.toElement();
-            if (trksegElem.isNull()) continue;
-            if (trksegElem.tagName() != "trkseg") continue;
-
-            for (QDomNode nTrkpt = trksegElem.firstChild();
-                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
-            {
-                QDomElement trkptElem = nTrkpt.toElement();
-                if (trkptElem.isNull()) continue;
-                if (trkptElem.tagName() != "trkpt") continue;
-
-                QDateTime ptDateTime;
-                WMW2::WMWGeoCoordinate coordinates;
-
-                // Get GPS position. If not available continue to next point.
-                QString lat = trkptElem.attribute("lat");
-                QString lon = trkptElem.attribute("lon");
-                if (lat.isEmpty() || lon.isEmpty()) continue;
-
-                coordinates.setLatLon(lat.toDouble(), lon.toDouble());
-
-                // Get metadata of track point (altitude and time stamp)
-                for (QDomNode nTrkptMeta = trkptElem.firstChild();
-                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling())
-                {
-                    QDomElement trkptMetaElem = nTrkptMeta.toElement();
-                    if (trkptMetaElem.isNull()) continue;
-                    if (trkptMetaElem.tagName() == QString("time"))
-                    {
-                        // Get GPS point time stamp. If not available continue to next point.
-                        const QString time = trkptMetaElem.text();
-                        if (time.isEmpty()) continue;
-                        ptDateTime = GPSDataParserParseTime(time);
-                    }
-                    if (trkptMetaElem.tagName() == QString("ele"))
-                    {
-                        // Get GPS point altitude. If not available continue to next point.
-                        QString ele = trkptMetaElem.text();
-                        if (!ele.isEmpty())
-                            coordinates.setAlt(ele.toDouble());
-                    }
-                }
-
-                if (ptDateTime.isNull())
-                    continue;
-
-                parsedData.gpxDataMap.insert(ptDateTime, coordinates);
-                parsedData.nPoints++;
-
-            }
-        }
-    }
-
-//     for (int i=0; i<60000; ++i)
-//     {
-//         parsedData.gpxDataMap.insert(QDateTime(), WMW2::WMWGeoCoordinate());
-//         parsedData.nPoints++;
-//     }
-
-    parsedData.isValid = parsedData.nPoints > 0;
-    return parsedData;
-}
 
 void GPSCorrelatorWidget::slotLoadGPXFiles()
 {
@@ -387,41 +302,45 @@ void GPSCorrelatorWidget::slotLoadGPXFiles()
 
     d->gpxFileOpenLastDirectory = gpxFiles.first().upUrl();
 
-    emit(signalSetUIEnabled(false));
+    setUIEnabledInternal(false);
 
-    d->gpxLoadFutureWatcher = new QFutureWatcher<ParsedGPXData>(this);
-
-    connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
-            this, SLOT(slotGPXFileReadyAt(int, int)));
-
-    d->gpxLoadFuture = QtConcurrent::mapped(gpxFiles, LoadGPXFile);
-    d->gpxLoadFutureWatcher->setFuture(d->gpxLoadFuture);
-
-    // results are reported to slotGPXFileReadyAt
+    d->gpsDataParser->loadGPXFiles(gpxFiles);
 }
 
-void GPSCorrelatorWidget::slotGPXFileReadyAt(int beginIndex, int endIndex)
+void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 {
     for (int i=beginIndex; i<endIndex; ++i)
     {
-        d->gpxData << d->gpxLoadFuture.resultAt(i);
+        const GPSDataParser::GPXFileData& gpxData = d->gpsDataParser->fileData(i);
 
         QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
-        treeItem->setText(0, d->gpxData.last().url.fileName());
+        treeItem->setText(0, gpxData.url.fileName());
         // TODO: use KDE number formatting
-        treeItem->setText(1, QString::number(d->gpxData.last().nPoints));
-    }
-
-    // are all files done?
-    if (d->gpxLoadFuture.progressMaximum() == d->gpxData.count() )
-    {
-        d->gpxLoadFutureWatcher->deleteLater();
-        emit(signalSetUIEnabled(true));
+        treeItem->setText(1, QString::number(gpxData.nPoints));
     }
 }
 
-void GPSCorrelatorWidget::setUIEnabled(const bool state)
+void GPSCorrelatorWidget::slotAllGPXFilesReady()
 {
+    setUIEnabledInternal(true);
+}
+
+void GPSCorrelatorWidget::setUIEnabledInternal(const bool state)
+{
+    d->uiEnabledInternal = state;
+    updateUIState();
+}
+
+void GPSCorrelatorWidget::setUIEnabledExternal(const bool state)
+{
+    d->uiEnabledExternal = state;
+    updateUIState();
+}
+
+void GPSCorrelatorWidget::updateUIState()
+{
+    const bool state = d->uiEnabledInternal && d->uiEnabledExternal;
+
     d->gpxLoadFilesButton->setEnabled(state);
     d->timeZoneSystem->setEnabled(state);
     d->timeZoneManual->setEnabled(state);

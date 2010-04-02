@@ -288,7 +288,7 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot)
 {
-    d->correlatorWidget->setUIEnabled(enabledState);
+    d->correlatorWidget->setUIEnabledExternal(enabledState);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
