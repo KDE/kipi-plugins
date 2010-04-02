@@ -406,6 +406,7 @@ void GPSDataParserThread::run()
             {
                 const GPSDataParser::GPXDataPoint& dataPoint = fileList.at(indexToUse.first).gpxDataPoints.at(indexToUse.second);
                 correlatedData.coordinates = dataPoint.coordinates;
+                correlatedData.flags = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
             }
         }
         else
@@ -424,14 +425,21 @@ void GPSDataParserThread::run()
             {
                 // TODO: we shall interpolate and have items before and after
             }
-
         }
 
-        GPSDataParser::GPXCorrelation::List readyItems;
-        readyItems << correlatedData;
-        emit(signalItemsCorrelated(readyItems));
+        if (correlatedData.flags&GPSDataParser::GPXFlagCoordinates)
+        {
+            GPSDataParser::GPXCorrelation::List readyItems;
+            readyItems << correlatedData;
+            kDebug()<<"correlated!";
+            emit(signalItemsCorrelated(readyItems));
+        }
     }
 }
 
+int GPSDataParser::fileCount() const
+{
+    return d->gpxFileDataList.count();
+}
 
 } // namespace KIPIGPSSyncPlugin

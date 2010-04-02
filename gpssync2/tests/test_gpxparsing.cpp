@@ -194,5 +194,6 @@ void TestGPXParsing::testFileLoading()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
+//     for (int 
     kDebug()<<myCorrelatedItems.first().coordinates;
 }

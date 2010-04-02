@@ -159,7 +159,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->previewManager->setMinimumSize(QSize(200, 200));
     tabWidget->addTab(d->previewManager, i18n("Image viewer"));
 
-    d->correlatorWidget = new GPSCorrelatorWidget(tabWidget, marginHint(), spacingHint());
+    d->correlatorWidget = new GPSCorrelatorWidget(tabWidget, d->imageModel, marginHint(), spacingHint());
     tabWidget->addTab(d->correlatorWidget, i18n("GPS Correlator"));
 
     d->settingsWidget = new GPSSettingsWidget(tabWidget);

@@ -28,9 +28,14 @@
 
 #include <QWidget>
 
+// local includes
+
+#include "gpsdataparser.h"
 
 namespace KIPIGPSSyncPlugin
 {
+
+class KipiImageModel;
 
 class GPSCorrelatorWidgetPrivate;
 
@@ -40,7 +45,7 @@ Q_OBJECT
 
 public:
 
-    GPSCorrelatorWidget(QWidget* const parent, const int marginHint, const int spacingHint);
+    GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint);
     ~GPSCorrelatorWidget();
 
     void setUIEnabledExternal(const bool state);
@@ -56,6 +61,9 @@ private Q_SLOTS:
     void slotLoadGPXFiles();
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
     void slotAllGPXFilesReady();
+    void slotCorrelate();
+    void slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
+    void slotAllItemsCorrelated();
 
 private:
     GPSCorrelatorWidgetPrivate* const d;

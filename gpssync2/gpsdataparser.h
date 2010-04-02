@@ -52,9 +52,9 @@ public:
 
     enum GPXFlags
     {
-        GPXFlagCoordinates,
-        GPXFlagInterpolated,
-        GPXFlagAltitude
+        GPXFlagCoordinates = 1,
+        GPXFlagInterpolated = 2,
+        GPXFlagAltitude = 3
     };
 
     class GPXDataPoint
@@ -75,6 +75,13 @@ public:
     class GPXCorrelation
     {
     public:
+        GPXCorrelation()
+        : dateTime(),
+          userData(),
+          flags(),
+          coordinates()
+        {
+        }
 
         typedef QList<GPXCorrelation> List;
 
@@ -128,6 +135,7 @@ public:
     void loadGPXFiles(const KUrl::List& urls);
     void clear();
     const GPXFileData& fileData(const int index) const;
+    int fileCount() const;
 
     void correlate(const GPXCorrelation::List& itemsToCorrelate, const GPXCorrelationOptions& options);
 

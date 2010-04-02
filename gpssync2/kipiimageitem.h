@@ -48,12 +48,16 @@ public:
 
     static const int ColumnThumbnail = 0;
     static const int ColumnFilename = 1;
+    static const int ColumnDateTime = 2;
+    static const int ColumnKipiImageItemLast = 2;
 
     KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~KipiImageItem();
 
     virtual void setUrl(const KUrl& url);
     inline KUrl url() const { return m_url; };
+
+    inline QDateTime dateTime() const { return m_dateTime; };
 
     static void setHeaderData(KipiImageModel* const model);
 
@@ -71,6 +75,7 @@ protected:
 protected:
     KIPI::Interface* m_interface;
     KUrl m_url;
+    QDateTime m_dateTime;
     KipiImageModel* m_model;
     KExiv2Iface::KExiv2* m_exiv2Iface;
     bool m_exiv2IfaceSaveOnClose;

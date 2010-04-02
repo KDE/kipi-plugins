@@ -58,6 +58,8 @@
 // local includes
 
 #include "gpsdataparser.h"
+#include "kipiimagemodel.h"
+#include "gpsimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -80,6 +82,7 @@ public:
       interpolateBox(0),
       maxGapInput(0),
       maxTimeInput(0),
+      correlateButton(0),
       uiEnabledInternal(true),
       uiEnabledExternal(true)
     {
@@ -105,14 +108,18 @@ public:
     KIntSpinBox              *maxGapInput;
     KIntSpinBox              *maxTimeInput;
 
+    QPushButton              *correlateButton;
+
     GPSDataParser            *gpsDataParser;
     bool uiEnabledInternal;
     bool uiEnabledExternal;
+    KipiImageModel           *imageModel;
 };
 
-GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int marginHint, const int spacingHint)
+GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
 : QWidget(parent), d(new GPSCorrelatorWidgetPrivate(marginHint, spacingHint))
 {
+    d->imageModel = imageModel;
     d->gpsDataParser = new GPSDataParser(this);
 
     connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int, int)),
@@ -120,6 +127,12 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int margin
 
     connect(d->gpsDataParser, SIGNAL(signalAllGPXFilesReady()),
             this, SLOT(slotAllGPXFilesReady()));
+
+    connect(d->gpsDataParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)),
+            this, SLOT(slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+
+    connect(d->gpsDataParser, SIGNAL(signalAllItemsCorrelated()),
+            this, SLOT(slotAllItemsCorrelated()));
 
     QVBoxLayout* const vboxlayout = new QVBoxLayout(this);
     setLayout(vboxlayout);
@@ -249,6 +262,8 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int margin
     d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
                     " to interpolate GPX file points to image time data."));
 
+    d->correlateButton = new QPushButton(i18n("Correlate"), this);
+
     // layout form
     int row = 0;
     settingsLayout->addWidget(d->gpxLoadFilesButton,     row, 0, 1, 2);
@@ -274,6 +289,8 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int margin
     row++;
     settingsLayout->addWidget(d->maxTimeLabel,   row, 0, 1, 1);
     settingsLayout->addWidget(d->maxTimeInput,   row, 1, 1, 1);
+    row++;
+    settingsLayout->addWidget(d->correlateButton,row, 0, 1, 1);
     settingsLayout->setSpacing(d->spacingHint);
     settingsLayout->setMargin(d->marginHint);
 
@@ -281,6 +298,9 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, const int margin
 
     connect(d->gpxLoadFilesButton, SIGNAL(clicked()),
             this, SLOT(slotLoadGPXFiles()));
+
+    connect(d->correlateButton, SIGNAL(clicked()),
+            this, SLOT(slotCorrelate()));
 
     updateUIState();
 }
@@ -351,6 +371,74 @@ void GPSCorrelatorWidget::updateUIState()
     d->interpolateBox->setEnabled(state);
     d->maxGapInput->setEnabled(state);
     d->maxTimeInput->setEnabled(state);
+
+    bool haveValidGpxFiles = false;
+    for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
+    {
+        haveValidGpxFiles = d->gpsDataParser->fileData(i).isValid;
+        if (haveValidGpxFiles)
+            break;
+    }
+    d->correlateButton->setEnabled(state && haveValidGpxFiles);
+}
+
+void GPSCorrelatorWidget::slotCorrelate()
+{
+    // disable the UI of the entire dialog:
+    emit(signalSetUIEnabled(false));
+
+    GPSDataParser::GPXCorrelationOptions options;
+    options.maxGapTime = d->maxGapInput->value();
+
+    // create a list of items to be correlated
+    GPSDataParser::GPXCorrelation::List itemList;
+
+    const int imageCount = d->imageModel->rowCount();
+    for (int i = 0; i<imageCount; ++i)
+    {
+        QPersistentModelIndex imageIndex = d->imageModel->index(i, 0);
+        GPSImageItem* const imageItem = reinterpret_cast<GPSImageItem*>(d->imageModel->itemFromIndex(imageIndex));
+        if (!imageItem)
+            continue;
+
+        GPSDataParser::GPXCorrelation correlationItem;
+        correlationItem.userData = QVariant::fromValue(imageIndex);
+        correlationItem.dateTime = imageItem->dateTime();
+
+        itemList << correlationItem;
+    }
+
+    d->gpsDataParser->correlate(itemList, options);
+
+    // results will be sent to slotItemsCorrelated and slotAllItemsCorrelated
+}
+
+void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems)
+{
+    kDebug()<<correlatedItems.count();
+    for (int i=0; i<correlatedItems.count(); ++i)
+    {
+        const GPSDataParser::GPXCorrelation& itemCorrelation = correlatedItems.at(i);
+
+        const QPersistentModelIndex itemIndex = itemCorrelation.userData.value<QPersistentModelIndex>();
+        if (!itemIndex.isValid())
+            continue;
+
+        GPSImageItem* const imageItem = reinterpret_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+        if (!imageItem)
+            continue;
+
+        if (itemCorrelation.flags&GPSDataParser::GPXFlagCoordinates)
+        {
+            imageItem->setCoordinates(itemCorrelation.coordinates);
+        }
+    }
+}
+
+void GPSCorrelatorWidget::slotAllItemsCorrelated()
+{
+    // enable the UI:
+    emit(signalSetUIEnabled(true));
 }
 
 } /* KIPIGPSSyncPlugin */

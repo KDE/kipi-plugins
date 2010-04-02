@@ -36,9 +36,9 @@ class GPSImageItem : public KipiImageItem
 public:
     static const int RoleCoordinates = Qt::UserRole + 1;
 
-    static const int ColumnLatitude = 2;
-    static const int ColumnLongitude = 3;
-    static const int ColumnAltitude = 4;
+    static const int ColumnLatitude = ColumnKipiImageItemLast + 1;
+    static const int ColumnLongitude = ColumnKipiImageItemLast + 2;
+    static const int ColumnAltitude = ColumnKipiImageItemLast + 3;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();

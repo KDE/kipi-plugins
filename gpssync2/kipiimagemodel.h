@@ -68,4 +68,6 @@ private:
 
 } /* KIPIGPSSyncPlugin */
 
+Q_DECLARE_METATYPE(QPersistentModelIndex);
+
 #endif /* KIPIIMAGEMODEL_H */
