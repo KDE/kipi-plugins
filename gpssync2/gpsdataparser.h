@@ -95,14 +95,14 @@ public:
     {
     public:
         GPXCorrelationOptions()
-        : photoHasSystemTimeZone(false),
+        : photosHaveSystemTimeZone(false),
           interpolate(false),
           interpolationDstTime(0),
           maxGapTime(0),
           secondsOffset(0)
         {
         }
-        bool photoHasSystemTimeZone;
+        bool photosHaveSystemTimeZone;
         bool interpolate;
         int interpolationDstTime;
         int maxGapTime;

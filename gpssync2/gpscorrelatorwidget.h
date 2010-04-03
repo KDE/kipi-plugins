@@ -52,12 +52,12 @@ public:
 
 protected:
     void setUIEnabledInternal(const bool state);
-    void updateUIState();
 
 Q_SIGNALS:
     void signalSetUIEnabled(const bool enabledState);
 
 private Q_SLOTS:
+    void updateUIState();
     void slotLoadGPXFiles();
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
     void slotAllGPXFilesReady();

@@ -76,6 +76,7 @@ public:
       timeZoneSystem(0),
       timeZoneManual(0),
       timeZoneCB(0),
+      offsetEnabled(0),
       offsetSign(0),
       offsetMin(0),
       offsetSec(0),
@@ -99,6 +100,7 @@ public:
     QRadioButton             *timeZoneSystem;
     QRadioButton             *timeZoneManual;
     KComboBox                *timeZoneCB;
+    QCheckBox                *offsetEnabled;
     KComboBox                *offsetSign;
     KIntSpinBox              *offsetMin;
     KIntSpinBox              *offsetSec;
@@ -224,8 +226,8 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
                     "they are 'ahead of time'.</p>"));
 
     // additional camera offset to respect
-    QLabel *offsetLabel = new QLabel(i18n("Fine offset (mm:ss):"), this);
-    offsetLabel->setWhatsThis(i18n(
+    d->offsetEnabled = new QCheckBox(i18n("Fine offset (mm:ss):"), this);
+    d->offsetEnabled->setWhatsThis(i18n(
                         "Sets an additional offset in minutes and "
                         "seconds that is used to correlate the photos "
                         "to the GPS track. "
@@ -282,7 +284,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     settingsLayout->addWidget(d->timeZoneManual, row, 0, 1, 1);
     settingsLayout->addWidget(d->timeZoneCB,     row, 1, 1, 1);
     row++;
-    settingsLayout->addWidget(offsetLabel,       row, 0, 1, 1);
+    settingsLayout->addWidget(d->offsetEnabled,  row, 0, 1, 1);
     settingsLayout->addWidget(offsetWidget,      row, 1, 1, 1);
     row++;
     settingsLayout->addWidget(d->interpolateBox, row, 0, 1, 2);
@@ -301,6 +303,9 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
 
     connect(d->correlateButton, SIGNAL(clicked()),
             this, SLOT(slotCorrelate()));
+
+    connect(d->offsetEnabled, SIGNAL(stateChanged(int)),
+            this, SLOT(updateUIState()));
 
     updateUIState();
 }
@@ -365,12 +370,16 @@ void GPSCorrelatorWidget::updateUIState()
     d->timeZoneSystem->setEnabled(state);
     d->timeZoneManual->setEnabled(state);
     d->timeZoneCB->setEnabled(state);
-    d->offsetSign->setEnabled(state);
-    d->offsetMin->setEnabled(state);
-    d->offsetSec->setEnabled(state);
-    d->interpolateBox->setEnabled(state);
+    d->offsetEnabled->setEnabled(state);
+    const bool offsetEnabled = d->offsetEnabled->isChecked();
+    d->offsetSign->setEnabled(state && offsetEnabled);
+    d->offsetMin->setEnabled(state && offsetEnabled);
+    d->offsetSec->setEnabled(state && offsetEnabled);
     d->maxGapInput->setEnabled(state);
-    d->maxTimeInput->setEnabled(state);
+    // these are not yet implemented
+    d->interpolateBox->setEnabled(false/*state*/);
+    d->maxTimeInput->setEnabled(false/*state*/);
+
 
     bool haveValidGpxFiles = false;
     for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
@@ -387,8 +396,33 @@ void GPSCorrelatorWidget::slotCorrelate()
     // disable the UI of the entire dialog:
     emit(signalSetUIEnabled(false));
 
+    // store the options:
     GPSDataParser::GPXCorrelationOptions options;
     options.maxGapTime = d->maxGapInput->value();
+    options.photosHaveSystemTimeZone = (d->timeZoneGroup->checkedId() == 1);
+    if (!options.photosHaveSystemTimeZone)
+    {
+        const QString tz = d->timeZoneCB->currentText();
+        const int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
+        const int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
+        int timeZoneOffset = hh*3600 + mm*60;
+        if (tz[3] == QChar('-')) {
+            timeZoneOffset = (-1) * timeZoneOffset;
+        }
+
+        options.secondsOffset+= timeZoneOffset;
+    }
+
+    if (d->offsetEnabled->isChecked())
+    {
+        int userOffset = d->offsetMin->value() * 60 + d->offsetSec->value();
+        if (d->offsetSign->currentText() == "-") {
+            userOffset = (-1) * userOffset;
+        }
+        options.secondsOffset+=userOffset;
+    }
+    options.interpolate = d->interpolateBox->isChecked();
+    options.interpolationDstTime = d->maxTimeInput->value()*60;
 
     // create a list of items to be correlated
     GPSDataParser::GPXCorrelation::List itemList;

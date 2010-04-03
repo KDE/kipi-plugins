@@ -313,7 +313,14 @@ void GPSDataParserThread::run()
 
     for (GPSDataParser::GPXCorrelation::List::iterator it = itemsToCorrelate.begin(); it!=itemsToCorrelate.end(); ++it)
     {
-        kDebug()<<it->dateTime;
+        // GPS device are sync in time by satelite using GMT time.
+        QDateTime itemDateTime = it->dateTime.addSecs(options.secondsOffset*(-1));
+        if (!options.photosHaveSystemTimeZone)
+        {
+            // the timezone offset was already included in secondsOffset
+            itemDateTime.setTimeSpec(Qt::UTC);
+        }
+        kDebug()<<itemDateTime;
         // find the last point before our item:
         QDateTime lastSmallerTime;
         QPair<int, int> lastIndexPair;
@@ -328,7 +335,7 @@ void GPSDataParserThread::run()
             {
                 const QDateTime& indexTime = currentFile.gpxDataPoints.at(index).dateTime;
                 kDebug()<<indexTime;
-                if (indexTime<it->dateTime)
+                if (indexTime<itemDateTime)
                 {
                     bool timeIsBetter = false;
                     if (lastSmallerTime.isValid())
@@ -376,14 +383,14 @@ void GPSDataParserThread::run()
         int dtimeBefore = 0;
         if (canUseTimeBefore)
         {
-            dtimeBefore = abs(lastSmallerTime.secsTo(it->dateTime));
+            dtimeBefore = abs(lastSmallerTime.secsTo(itemDateTime));
             canUseTimeBefore = dtimeBefore <= options.maxGapTime;
         }
         bool canUseTimeAfter = firstBiggerTime.isValid();
         int dtimeAfter = 0;
         if (canUseTimeAfter)
         {
-            dtimeAfter = abs(firstBiggerTime.secsTo(it->dateTime));
+            dtimeAfter = abs(firstBiggerTime.secsTo(itemDateTime));
             canUseTimeAfter = dtimeAfter <= options.maxGapTime;
         }
         if (canUseTimeAfter||canUseTimeBefore)
@@ -415,11 +422,11 @@ void GPSDataParserThread::run()
             bool canInterpolate = options.interpolate && lastSmallerTime.isValid() && firstBiggerTime.isValid();
             if (canInterpolate)
             {
-                canInterpolate = abs(lastSmallerTime.secsTo(it->dateTime)) < options.interpolationDstTime;
+                canInterpolate = abs(lastSmallerTime.secsTo(itemDateTime)) < options.interpolationDstTime;
             }
             if (canInterpolate)
             {
-                canInterpolate = abs(firstBiggerTime.secsTo(it->dateTime)) < options.interpolationDstTime;
+                canInterpolate = abs(firstBiggerTime.secsTo(itemDateTime)) < options.interpolationDstTime;
             }
             if (canInterpolate)
             {
