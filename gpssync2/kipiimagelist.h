@@ -22,7 +22,12 @@
 
 // Qt includes
 
+#include <QItemDelegate>
 #include <QTreeView>
+
+// libKIPI includes
+
+#include <libkipi/interface.h>
 
 // local includes
 
@@ -68,15 +73,38 @@ class KipiImageList : public QWidget
 Q_OBJECT
 
 public:
-    KipiImageList(QWidget* const parent = 0);
+    KipiImageList(KIPI::Interface* const interface, QWidget* const parent = 0);
     ~KipiImageList();
 
-    void setModel(QAbstractItemModel* const model, QItemSelectionModel* const selectionModel);
+    void setModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel);
     QTreeView* view() const;
+    KipiImageModel* getModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
+    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const QSize& size);
 
+private Q_SLOTS:
+    void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
+    
 private:
     KipiImageListPrivate* const d;
+};
+
+class KipiImageItemDelegatePrivate;
+
+class KipiImageItemDelegate : public QItemDelegate
+{
+Q_OBJECT
+public:
+    KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent = 0);
+    virtual ~KipiImageItemDelegate();
+
+    void setThumbnailSize(const QSize& size);
+    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
+private:
+    KipiImageItemDelegatePrivate* const d;
+    
 };
 
 } /* KIPIGPSSyncPlugin */

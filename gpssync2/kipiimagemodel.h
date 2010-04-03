@@ -56,6 +56,8 @@ public:
     void addItem(KipiImageItem* const newItem);
     void setColumnCount(const int nColumns);
     KipiImageItem* itemFromIndex(const QModelIndex& index) const;
+    KipiImageItem* itemFromUrl(const KUrl& url) const;
+    QModelIndex indexFromUrl(const KUrl& url) const;
 
 protected:
     void itemChanged(KipiImageItem* const changedItem);

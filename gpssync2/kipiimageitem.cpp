@@ -100,7 +100,7 @@ void KipiImageItem::loadImageDataInternal()
 
         m_dateTime = m_exiv2Iface->getImageDateTime();
     }
-    kDebug()<<m_url<<m_dateTime;
+//     kDebug()<<m_url<<m_dateTime;
 }
 
 QVariant KipiImageItem::data(const int column, const int role) const

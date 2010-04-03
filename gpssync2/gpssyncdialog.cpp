@@ -140,7 +140,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     vbox->addWidget(d->mapWidget->getControlWidget());
     d->splitter1->addWidget(dummyWidget);
 
-    d->treeView = new KipiImageList(this);
+    d->treeView = new KipiImageList(d->interface, this);
     d->treeView->setModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
     // TODO: save and restore the state of the header

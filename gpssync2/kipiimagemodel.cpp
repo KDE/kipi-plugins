@@ -173,4 +173,27 @@ Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
 }
 
+KipiImageItem* KipiImageModel::itemFromUrl(const KUrl& url) const
+{
+    for (int i=0; i<d->items.count(); ++i)
+    {
+        if (d->items.at(i)->url()==url)
+            return d->items.at(i);
+    }
+
+    return 0;
+}
+
+QModelIndex KipiImageModel::indexFromUrl(const KUrl& url) const
+{
+    for (int i=0; i<d->items.count(); ++i)
+    {
+        if (d->items.at(i)->url()==url)
+            return index(i, 0, QModelIndex());
+    }
+
+    return QModelIndex();
+}
+
+
 } /* KIPIGPSSyncPlugin */
