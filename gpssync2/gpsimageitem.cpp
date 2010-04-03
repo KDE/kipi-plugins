@@ -147,7 +147,7 @@ void GPSImageItem::setHeaderData(KipiImageModel* const model)
 {
     KipiImageItem::setHeaderData(model);
 
-    model->setColumnCount(5);
+    model->setColumnCount(ColumnGPSImageItemCount);
     model->setHeaderData(ColumnLatitude, Qt::Horizontal, i18n("Latitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);

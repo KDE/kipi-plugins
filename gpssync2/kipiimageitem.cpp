@@ -147,9 +147,10 @@ void KipiImageItem::emitDataChanged()
 
 void KipiImageItem::setHeaderData(KipiImageModel* const model)
 {
-    model->setColumnCount(2);
+    model->setColumnCount(ColumnKipiImageItemCount);
     model->setHeaderData(ColumnThumbnail, Qt::Horizontal, i18n("Thumbnail"), Qt::DisplayRole);
     model->setHeaderData(ColumnFilename, Qt::Horizontal, i18n("Filename"), Qt::DisplayRole);
+    model->setHeaderData(ColumnDateTime, Qt::Horizontal, i18n("Date and time"), Qt::DisplayRole);
 }
 
 } /* KIPIGPSSyncPlugin */

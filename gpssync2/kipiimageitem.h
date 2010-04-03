@@ -49,7 +49,7 @@ public:
     static const int ColumnThumbnail = 0;
     static const int ColumnFilename = 1;
     static const int ColumnDateTime = 2;
-    static const int ColumnKipiImageItemLast = 2;
+    static const int ColumnKipiImageItemCount = 3;
 
     KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~KipiImageItem();
