@@ -328,13 +328,11 @@ void GPSDataParserThread::run()
         QPair<int, int> firstIndexPair;
         for (int f = 0; f<nFiles; ++f)
         {
-            kDebug()<<f;
             const GPSDataParser::GPXFileData& currentFile = fileList.at(f);
             int index = currentIndices.at(f);
             for (; index<currentFile.gpxDataPoints.count(); ++index)
             {
                 const QDateTime& indexTime = currentFile.gpxDataPoints.at(index).dateTime;
-                kDebug()<<indexTime;
                 if (indexTime<itemDateTime)
                 {
                     bool timeIsBetter = false;
