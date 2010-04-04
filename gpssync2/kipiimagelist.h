@@ -33,6 +33,8 @@
 
 #include "kipiimagemodel.h"
 
+class QWheelEvent;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -50,19 +52,21 @@ public:
 };
 
 class KipiImageListViewInternalPrivate;
+class KipiImageList;
 
 class KipiImageListViewInternal : public QTreeView
 {
 Q_OBJECT
 
 public:
-    KipiImageListViewInternal(QWidget* const parent = 0);
+    KipiImageListViewInternal(KipiImageList* const parent = 0);
     ~KipiImageListViewInternal();
 
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
 
 protected:
     virtual void startDrag(Qt::DropActions supportedActions);
+    virtual void wheelEvent(QWheelEvent* we);
 
 private:
     KipiImageListViewInternalPrivate* const d;
@@ -80,7 +84,12 @@ public:
     QTreeView* view() const;
     KipiImageModel* getModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
-    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const QSize& size);
+    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
+    void setThumbnailSize(const int size);
+
+public Q_SLOTS:
+    void slotIncreaseThumbnailSize();
+    void slotDecreaseThumbnailSize();
 
 private Q_SLOTS:
     void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
@@ -98,7 +107,8 @@ public:
     KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent = 0);
     virtual ~KipiImageItemDelegate();
 
-    void setThumbnailSize(const QSize& size);
+    void setThumbnailSize(const int size);
+    int getThumbnailSize() const;
     virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
     virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 

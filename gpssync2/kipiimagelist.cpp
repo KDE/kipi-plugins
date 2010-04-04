@@ -25,6 +25,7 @@
 #include <QHeaderView>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QWheelEvent>
 
 // KDE includes
 
@@ -57,12 +58,16 @@ public:
     }
 
     KipiImageListDragDropHandler* dragDropHandler;
+    KipiImageList* kipiImageList;
 };
 
-KipiImageListViewInternal::KipiImageListViewInternal(QWidget* const parent)
+KipiImageListViewInternal::KipiImageListViewInternal(KipiImageList* const parent)
 : QTreeView(parent), d(new KipiImageListViewInternalPrivate())
 {
+    d->kipiImageList = parent;
     header()->setMovable(true);
+    setUniformRowHeights(false);
+    setRootIsDecorated(false);
 }
 
 KipiImageListViewInternal::~KipiImageListViewInternal()
@@ -168,12 +173,12 @@ class KipiImageItemDelegatePrivate
 public:
     KipiImageItemDelegatePrivate()
     : imageList(0),
-      thumbnailSize(60, 60)
+      thumbnailSize(60)
     {
     }
 
     KipiImageList* imageList;
-    QSize thumbnailSize;
+    int thumbnailSize;
 };
 
 KipiImageItemDelegate::KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent)
@@ -201,7 +206,7 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
     {
         // TODO: paint some default logo
         // TODO: cache this logo
-        itemPixmap = SmallIcon("image-x-generic", qMax(d->thumbnailSize.width(), d->thumbnailSize.height()), KIconLoader::DisabledState);
+        itemPixmap = SmallIcon("image-x-generic", d->thumbnailSize, KIconLoader::DisabledState);
     }
 
     const QSize availableSize = option.rect.size();
@@ -216,23 +221,28 @@ QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const 
 {
     if (index.column()==KipiImageItem::ColumnThumbnail)
     {
-        return d->thumbnailSize;
+        return QSize(d->thumbnailSize, d->thumbnailSize);
     }
 
     return QItemDelegate::sizeHint(option, index);
 }
 
-void KipiImageItemDelegate::setThumbnailSize(const QSize& size)
+void KipiImageItemDelegate::setThumbnailSize(const int size)
 {
     d->thumbnailSize = size;
 }
 
-static QString CacheKeyFromSizeAndUrl(const QSize& size, const KUrl& url)
+int KipiImageItemDelegate::getThumbnailSize() const
 {
-    return QString("%1-%3").arg(qMax(size.width(), size.height())).arg(url.pathOrUrl());
+    return d->thumbnailSize;
 }
 
-QPixmap KipiImageList::getPixmapForIndex(const QPersistentModelIndex& itemIndex, const QSize& size)
+static QString CacheKeyFromSizeAndUrl(const int size, const KUrl& url)
+{
+    return QString("%1-%3").arg(size).arg(url.pathOrUrl());
+}
+
+QPixmap KipiImageList::getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size)
 {
     // TODO: should we cache the pixmap on our own here or does the interface usually cache it for us?
     // TODO: do we need to make sure we do not request the same pixmap twice in a row?
@@ -251,7 +261,7 @@ QPixmap KipiImageList::getPixmapForIndex(const QPersistentModelIndex& itemIndex,
     // TODO: what about raw images? The old version of the plugin had a special loading mechanism for those
     if (d->interface)
     {
-        d->interface->thumbnails(KUrl::List()<<imageItem->url(), qMax(size.width(), size.height()));
+        d->interface->thumbnails(KUrl::List()<<imageItem->url(), size);
     }
     else
     {
@@ -279,13 +289,55 @@ void KipiImageList::slotThumbnailFromInterface(const KUrl& url, const QPixmap& p
         return;
 
     // save the pixmap:
-    const QString itemKeyString = CacheKeyFromSizeAndUrl(pixmap.size(), url);
+    const QString itemKeyString = CacheKeyFromSizeAndUrl(qMax(pixmap.size().width(), pixmap.size().height()), url);
     d->pixmapCache->insert(itemKeyString, pixmap);
 
     // find the item corresponding to the URL:
     const QModelIndex imageIndex = d->model->indexFromUrl(url);
     if (imageIndex.isValid())
         d->treeView->update(imageIndex);
+}
+
+void KipiImageList::setThumbnailSize(const int size)
+{
+    // TODO: the row height is not updated
+    d->itemDelegate->setThumbnailSize(size);
+    d->treeView->setColumnWidth(KipiImageItem::ColumnThumbnail, size);
+    d->treeView->update();
+}
+
+void KipiImageList::slotIncreaseThumbnailSize()
+{
+    // TODO: pick reasonable limits and make sure we stay on multiples of 5
+    const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
+    if (currentThumbnailSize<200)
+        setThumbnailSize(currentThumbnailSize+5);
+}
+
+void KipiImageList::slotDecreaseThumbnailSize()
+{
+    const int currentThumbnailSize = d->itemDelegate->getThumbnailSize();
+    if (currentThumbnailSize>30)
+        setThumbnailSize(currentThumbnailSize-5);
+}
+
+void KipiImageListViewInternal::wheelEvent(QWheelEvent* we)
+{
+    if ((we->modifiers()&Qt::ControlModifier) == 0)
+    {
+        QTreeView::wheelEvent(we);
+        return;
+    }
+
+    we->accept();
+    if (we->delta()>0)
+    {
+        d->kipiImageList->slotIncreaseThumbnailSize();
+    }
+    else
+    {
+        d->kipiImageList->slotDecreaseThumbnailSize();
+    }
 }
 
 } /* KIPIGPSSyncPlugin */
