@@ -46,7 +46,7 @@ PLUGINS MAINTAINERS
 Acquire images          : Gilles Caulier and Kare Sars
 Advanced Slideshow      : Valerio Fuoglio
 Calendar                : Orgad Shaneh
-DngConverter            : Gilles Caulier
+DngConverter            : Gilles Caulier and Jens Muller
 Facebook import/export  : Luka Renko
 Flash export            : Gilles Caulier
 Flickr export           : Pieter Edelman and Gilles Caulier
@@ -73,7 +73,7 @@ PROJECT COORDINATORS:
 Gilles Caulier and Angelo Naselli
 
 FORMER MAINTAINER:
-Renchi Raju         <renchi dot raju at gmail dot com> 
+Renchi Raju         <renchi dot raju at gmail dot com>
 Tom Albers          <tomalbers at kde dot nl>
 Ralf Hoelzer        <kde at ralfhoelzer dot com>
 Joern Ahrens        <joern dot ahrens at kdemail dot net>

@@ -6,7 +6,8 @@
  * Date        : 2008-09-25
  * Description : a tool to convert RAW file to DNG
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -217,10 +218,9 @@ int DNGWriter::convert()
         for(int i=0; i<12; i+=3)
         {
             kDebug() << "                   "
-                          << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
-                                                                         identify.cameraXYZMatrix[0][i+1],
-                                                                         identify.cameraXYZMatrix[0][i+2])
-                          ;
+                     << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
+                                                                    identify.cameraXYZMatrix[0][i+1],
+                                                                    identify.cameraXYZMatrix[0][i+2]);
         }
 
         // Check if CFA layout is supported by DNG SDK.
@@ -406,7 +406,10 @@ int DNGWriter::convert()
 
         negative->SetColorChannels(3);
         negative->SetColorKeys(colorKeyRed, colorKeyGreen, colorKeyBlue);
-        negative->SetBayerMosaic(bayerMosaic);
+        if (bayerMosaic == 3)
+            negative->SetFujiMosaic(bayerMosaic);
+        else
+            negative->SetBayerMosaic(bayerMosaic);
 
         negative->SetWhiteLevel(identify.whitePoint, 0);
         negative->SetWhiteLevel(identify.whitePoint, 1);
