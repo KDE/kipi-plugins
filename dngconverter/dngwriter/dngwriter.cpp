@@ -411,11 +411,13 @@ int DNGWriter::convert()
         {
             // TODO: Fuji is special case. Need to setup different bayer rules here.
             // It do not work. Need indeep investiguations.
+            // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
             negative->SetFujiMosaic(0);
         }
         else
         {
             // Standard bayer mosaicing. All work fine there.
+            // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
             negative->SetBayerMosaic(bayerMosaic);
         }
 
