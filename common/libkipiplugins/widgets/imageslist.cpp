@@ -39,6 +39,7 @@
 
 // KDE includes
 
+#include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -68,6 +69,8 @@ const int DEFAULTSIZE = KIconLoader::SizeLarge;
 ImagesListViewItem::ImagesListViewItem(ImagesListView *view, const KUrl& url)
                   : QTreeWidgetItem(view)
 {
+    kDebug() << "Creating new ImageListViewItem with url " << url
+             << " for list view " << view;
     m_view       = view;
     int iconSize = m_view->iconSize().width();
     setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState));
@@ -146,6 +149,15 @@ int ImagesListViewItem::rating()
 
 void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
+    kDebug() << "Received new thumbnail for url " << m_url
+             << ". My view is " << m_view;
+    if (!m_view)
+    {
+        kError() << "This item doesn't have a tree view. "
+                 << "This should never happen!";
+        return;
+    }
+
     int iconSize = qMax<int>(m_view->iconSize().width(), m_view->iconSize().height());
     QPixmap pixmap(iconSize+2, iconSize+2);
     pixmap.fill(Qt::transparent);
@@ -697,7 +709,7 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        if (item->url() == url)
+        if (item && item->url() == url)
         {
             if (pix.isNull())
                 item->setThumb(SmallIcon("image-x-generic", d->iconSize, KIconLoader::DisabledState));
