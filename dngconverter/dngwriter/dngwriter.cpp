@@ -406,10 +406,18 @@ int DNGWriter::convert()
 
         negative->SetColorChannels(3);
         negative->SetColorKeys(colorKeyRed, colorKeyGreen, colorKeyBlue);
+
         if (bayerMosaic == 3)
-            negative->SetFujiMosaic(bayerMosaic);
+        {
+            // TODO: Fuji is special case. Need to setup different bayer rules here.
+            // It do not work. Need indeep investiguations.
+            negative->SetFujiMosaic(0);
+        }
         else
+        {
+            // Standard bayer mosaicing. All work fine there.
             negative->SetBayerMosaic(bayerMosaic);
+        }
 
         negative->SetWhiteLevel(identify.whitePoint, 0);
         negative->SetWhiteLevel(identify.whitePoint, 1);
