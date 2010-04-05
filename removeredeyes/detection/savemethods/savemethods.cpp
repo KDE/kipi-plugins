@@ -58,9 +58,7 @@ QString SavePrefix::savePath(const QString& path, const QString& extra) const
     KUrl savePath(info.path());
 
     QString file = QString(extra);
-    file.append(info.baseName());
-    file.append(".");
-    file.append(info.suffix());
+    file.append(info.fileName());
 
     savePath.addPath(file);
     return savePath.path();
@@ -73,7 +71,7 @@ QString SaveSuffix::savePath(const QString& path, const QString& extra) const
     QFileInfo info(path);
     KUrl savePath(info.path());
 
-    QString file = info.baseName();
+    QString file = info.completeBaseName();
     file.append(extra);
     file.append(".");
     file.append(info.suffix());
