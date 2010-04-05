@@ -314,6 +314,9 @@ GPSSyncWMWRepresentativeChooser::GPSSyncWMWRepresentativeChooser(KipiImageModel*
 : WMW2::WMWRepresentativeChooser(parent), d(new GPSSyncWMWRepresentativeChooserPrivate())
 {
     d->model = model;
+
+    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
+            this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
 }
 
 GPSSyncWMWRepresentativeChooser::~GPSSyncWMWRepresentativeChooser()
@@ -329,6 +332,19 @@ QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const 
 {
     // TODO: sorting!
     return list.first();
+}
+
+void GPSSyncWMWRepresentativeChooser::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
+{
+    emit(signalThumbnailAvailableForIndex(QVariant::fromValue(index), pixmap));
+}
+
+bool GPSSyncWMWRepresentativeChooser::indicesEqual(const QVariant& indexA, const QVariant& indexB)
+{
+    const QPersistentModelIndex a = indexA.value<QPersistentModelIndex>();
+    const QPersistentModelIndex b = indexB.value<QPersistentModelIndex>();
+
+    return a==b;
 }
 
 }  // namespace KIPIGPSSyncPlugin

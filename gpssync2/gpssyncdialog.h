@@ -57,6 +57,10 @@ public:
 
     virtual QPixmap pixmapFromRepresentativeIndex(const QVariant& index, const QSize& size);
     virtual QVariant bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey);
+    virtual bool indicesEqual(const QVariant& indexA, const QVariant& indexB);
+
+private Q_SLOTS:
+    void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
 
 private:
     GPSSyncWMWRepresentativeChooserPrivate* const d;
