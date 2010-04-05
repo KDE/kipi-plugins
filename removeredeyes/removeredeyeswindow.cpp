@@ -373,7 +373,7 @@ void RemoveRedEyesWindow::readSettings()
 
     // If config file somehow has been messed up and readEntry() only delivers an empty string,
     // force loading of the default locator in here (I had trouble with my kipirc once and wondered why the plugin
-    // is not working. I guess the value in the config file was a whitespace, which seems to be a valid entry (weird).
+    // is not working. I guess the value in the config file was a whitespace, which seems to be a valid entry.
     loadLocator(locatorType.isEmpty() ? d->configLocatorDefaultType : locatorType);
 
     updateSettings();
