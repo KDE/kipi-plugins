@@ -411,6 +411,7 @@ int DNGWriter::convert()
         negative->SetColorChannels(3);
         negative->SetColorKeys(colorKeyRed, colorKeyGreen, colorKeyBlue);
 
+        /*
         if (bayerMosaic == 3)
         {
             // TODO: Fuji is special case. Need to setup different bayer rules here.
@@ -419,6 +420,7 @@ int DNGWriter::convert()
             negative->SetFujiMosaic(0);
         }
         else
+        */
         {
             // Standard bayer mosaicing. All work fine there.
             // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
