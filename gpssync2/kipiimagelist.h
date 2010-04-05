@@ -84,7 +84,6 @@ public:
     QTreeView* view() const;
     KipiImageModel* getModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
-    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
     void setThumbnailSize(const int size);
 
 public Q_SLOTS:
@@ -92,8 +91,8 @@ public Q_SLOTS:
     void slotDecreaseThumbnailSize();
 
 private Q_SLOTS:
-    void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
-    
+    void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
+
 private:
     KipiImageListPrivate* const d;
 };

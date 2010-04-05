@@ -33,6 +33,8 @@
 #include <kdialog.h>
 #include <kurl.h>
 
+#include <worldmapwidget2/worldmapwidget2_primitives.h>
+
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -40,9 +42,27 @@
 namespace KIPIGPSSyncPlugin
 {
 
+class KipiImageModel;
+
 class GPSSyncDialogPriv;
 
-class GPSSyncDialog :public KDialog
+class GPSSyncWMWRepresentativeChooserPrivate;
+
+class GPSSyncWMWRepresentativeChooser : public WMW2::WMWRepresentativeChooser
+{
+Q_OBJECT
+public:
+    GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent = 0);
+    virtual ~GPSSyncWMWRepresentativeChooser();
+
+    virtual QPixmap pixmapFromRepresentativeIndex(const QVariant& index, const QSize& size);
+    virtual QVariant bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey);
+
+private:
+    GPSSyncWMWRepresentativeChooserPrivate* const d;
+};
+
+class GPSSyncDialog : public KDialog
 {
     Q_OBJECT
 

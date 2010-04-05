@@ -19,8 +19,6 @@
 
 #include "gpsimagelistdragdrophandler.moc"
 
-#include "mapdragdrophandler.h"
-
 namespace KIPIGPSSyncPlugin
 {
 

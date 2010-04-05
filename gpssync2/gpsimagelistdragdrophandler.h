@@ -26,6 +26,7 @@
 
 // local includes
 
+#include "mapdragdrophandler.h"
 #include "kipiimagelist.h"
 
 namespace KIPIGPSSyncPlugin

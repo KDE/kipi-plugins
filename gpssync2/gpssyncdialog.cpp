@@ -104,6 +104,7 @@ public:
     KIPIPlugins::PreviewManager *previewManager;
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
+    GPSSyncWMWRepresentativeChooser *representativeChooser;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -117,10 +118,12 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setModal(true);
 
     d->imageModel = new KipiImageModel(this);
+    d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, this);
+    d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
 
     d->splitter2 = new QSplitter(Qt::Horizontal, this);
     setMainWidget(d->splitter2);
@@ -130,6 +133,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->splitter2->setStretchFactor(0, 10);
 
     d->mapWidget = new WMW2::WorldMapWidget2(this);
+    d->mapWidget->setRepresentativeChooser(d->representativeChooser);
     d->mapWidget->setEditModeAvailable(true);
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
@@ -294,6 +298,37 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
 {
     slotSetUIEnabled(enabledState, 0, QString());
+}
+
+class GPSSyncWMWRepresentativeChooserPrivate
+{
+public:
+    GPSSyncWMWRepresentativeChooserPrivate()
+    {
+    }
+
+    KipiImageModel* model;
+};
+
+GPSSyncWMWRepresentativeChooser::GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent)
+: WMW2::WMWRepresentativeChooser(parent), d(new GPSSyncWMWRepresentativeChooserPrivate())
+{
+    d->model = model;
+}
+
+GPSSyncWMWRepresentativeChooser::~GPSSyncWMWRepresentativeChooser()
+{
+}
+
+QPixmap GPSSyncWMWRepresentativeChooser::pixmapFromRepresentativeIndex(const QVariant& index, const QSize& size)
+{
+    return d->model->getPixmapForIndex(index.value<QPersistentModelIndex>(), qMax(size.width(), size.height()));
+}
+
+QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey)
+{
+    // TODO: sorting!
+    return list.first();
 }
 
 }  // namespace KIPIGPSSyncPlugin

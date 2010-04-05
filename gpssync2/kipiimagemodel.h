@@ -23,6 +23,11 @@
 // Qt includes
 
 #include <QAbstractItemModel>
+#include <QPixmap>
+
+// libKIPI includes
+
+#include <libkipi/interface.h>
 
 // local includes
 
@@ -59,8 +64,17 @@ public:
     KipiImageItem* itemFromUrl(const KUrl& url) const;
     QModelIndex indexFromUrl(const KUrl& url) const;
 
+    QPixmap getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size);
+    void setKipiInterface(KIPI::Interface* const interface);
+
 protected:
     void itemChanged(KipiImageItem* const changedItem);
+
+Q_SIGNALS:
+    void signalThumbnailForIndexAvailable(const QPersistentModelIndex& index, const QPixmap& pixmap);
+
+protected Q_SLOTS:
+    void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
 
 private:
     KipiImageModelPrivate* const d;
@@ -70,6 +84,9 @@ private:
 
 } /* KIPIGPSSyncPlugin */
 
+// TODO: ugly way to prevent double declaration of the metatype
+#ifndef WORLDMAPWIDGET2_PRIMITIVES_H
 Q_DECLARE_METATYPE(QPersistentModelIndex);
+#endif /* WORLDMAPWIDGET2_PRIMITIVES_H */
 
 #endif /* KIPIIMAGEMODEL_H */
