@@ -204,10 +204,14 @@ int DNGWriter::convert()
         kDebug() << "--- Date:          " << identify.dateTime.toString(Qt::ISODate) ;
         kDebug() << "--- Make:          " << identify.make ;
         kDebug() << "--- Model:         " << identify.model ;
-        kDebug() << "--- Size:          " << width << "x" << height ;
+        kDebug() << "--- ImageSize:     " << identify.imageSize.width() << "x" << identify.imageSize.height() ;
+        kDebug() << "--- FullSize:      " << identify.fullSize.width() << "x" << identify.fullSize.height() ;
+        kDebug() << "--- OutputSize:    " << identify.outputSize.width() << "x" << identify.outputSize.height() ;
         kDebug() << "--- Orientation:   " << identify.orientation ;
         kDebug() << "--- Top margin:    " << identify.topMargin ;
         kDebug() << "--- Left margin:   " << identify.leftMargin ;
+        kDebug() << "--- Right margin:  " << identify.rightMargin ;
+        kDebug() << "--- Bottom margin: " << identify.bottomMargin ;
         kDebug() << "--- Filter:        " << identify.filterPattern ;
         kDebug() << "--- Colors:        " << identify.rawColors ;
         kDebug() << "--- Black:         " << identify.blackPoint ;
@@ -661,11 +665,19 @@ int DNGWriter::convert()
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 1))              exif->fLensInfo[1]              = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 2))              exif->fLensInfo[2]              = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 3))              exif->fLensInfo[3]              = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.Nikon3.ISOSpeed", num, den, 1))          exif->fISOSpeedRatings[0]       = (uint32)num;
+
+            str = meta.getExifTagString("Exif.Nikon3.SerialNO");
+            if (!str.isEmpty()) str = str.replace("NO=", "");
+            if (!str.isEmpty()) str = str.replace(" ", "");
+            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
 
             str = meta.getExifTagString("Exif.Nikon3.SerialNumber");
             if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
 
             if (meta.getExifTagLong("Exif.Nikon3.ShutterCount", val))                  exif->fImageNumber              = (uint32)val;
+            if (meta.getExifTagLong("Exif.NikonLd1.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
+            if (meta.getExifTagLong("Exif.NikonLd2.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.NikonLd3.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
 
             // Canon Markernotes
@@ -673,6 +685,43 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.Canon.SerialNumber", val))                   exif->fCameraSerialNumber.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.CanonCs.LensType", val))                     exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.CanonCs.FlashActivity", val))                exif->fFlash                    = (uint32)val;
+            //if (meta.getExifTagLong("Exif.CanonFi.FileNumber", val))                   exif->fImageNumber              = (uint32)val;
+            //if (meta.getExifTagLong("Exif.CanonCs.MaxAperture", val))                  exif->fMaxApertureValue         = dng_urational(val, 100000);
+            if (meta.getExifTagLong("Exif.CanonCs.ExposureProgram", val))
+            {
+                switch (val)
+                {
+                case 1:
+                    exif->fExposureProgram = 2;
+                    break;
+                case 3:
+                    exif->fExposureProgram = 3;
+                    break;
+                case 4:
+                    exif->fExposureProgram = 1;
+                    break;
+                default:
+                    exif->fExposureProgram = val;
+                    break;
+                }
+            }
+            if (meta.getExifTagLong("Exif.CanonCs.MeteringMode", val))
+            {
+                switch (val)
+                {
+                case 0:
+                    break;
+                case 3:
+                    exif->fMeteringMode = 5;
+                    break;
+                case 4:
+                    exif->fMeteringMode = 6;
+                    break;
+                default:
+                    exif->fMeteringMode = val;
+                    break;
+                }
+            }
 
             if (meta.getExifTagRational("Exif.Canon.FocalLength", num, den, 1))        exif->fFocalLength              = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.CanonCs.Lens", num, den, 0))             exif->fLensInfo[1]              = dng_urational(num, den);
@@ -682,10 +731,19 @@ int DNGWriter::convert()
             if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.toAscii());
 
             str = meta.getExifTagString("Exif.Canon.FirmwareVersion");
+            if (!str.isEmpty()) str = str.replace("Firmware", "");
+            if (!str.isEmpty()) str = str.replace("Version", "");
+            if (!str.isEmpty()) str = str.replace(" ", "");
             if (!str.isEmpty()) exif->fFirmware.Set_ASCII(str.toAscii());
 
             str = meta.getExifTagString("Exif.CanonSi.ISOSpeed");
             if (!str.isEmpty()) exif->fISOSpeedRatings[0] = str.toInt();
+
+            // Pentax Markernotes
+
+            if (meta.getExifTagRational("Exif.Pentax.LensType", num, den, 0))          str = QString("%1").arg(num);
+            if (meta.getExifTagRational("Exif.Pentax.LensType", num, den, 1))          str = str + QString(" %1").arg(num);
+            if (!str.isEmpty()) exif->fLensID.Set_ASCII(str.toAscii());
 
             // Olympus Markernotes
 
