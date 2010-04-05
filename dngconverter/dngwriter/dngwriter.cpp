@@ -696,6 +696,9 @@ int DNGWriter::convert()
                 case 1:
                     exif->fExposureProgram = 2;
                     break;
+                case 2:
+                    exif->fExposureProgram = 4;
+                    break;
                 case 3:
                     exif->fExposureProgram = 3;
                     break;
@@ -703,7 +706,6 @@ int DNGWriter::convert()
                     exif->fExposureProgram = 1;
                     break;
                 default:
-                    exif->fExposureProgram = val;
                     break;
                 }
             }
@@ -711,16 +713,21 @@ int DNGWriter::convert()
             {
                 switch (val)
                 {
-                case 0:
+                case 1:
+                    exif->fMeteringMode = 3;
+                    break;
+                case 2:
+                    exif->fMeteringMode = 1;
                     break;
                 case 3:
                     exif->fMeteringMode = 5;
                     break;
                 case 4:
                     exif->fMeteringMode = 6;
+                case 5:
+                    exif->fMeteringMode = 2;
                     break;
                 default:
-                    exif->fMeteringMode = val;
                     break;
                 }
             }
