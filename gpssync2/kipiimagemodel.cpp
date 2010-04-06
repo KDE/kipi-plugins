@@ -41,6 +41,7 @@ public:
     QMap<QPair<int, int>, QVariant> headerData;
     KPixmapCache* pixmapCache;
     KIPI::Interface* interface;
+    QList<QPair<QPersistentModelIndex, int> > requestedPixmaps;
 };
 
 KipiImageModel::KipiImageModel(QObject* const parent)
@@ -222,6 +223,22 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     if (havePixmapInCache)
         return thumbnailPixmap;
 
+    // did we already request this pixmap at this size?
+    for (int i=0; i<d->requestedPixmaps.count(); ++i)
+    {
+        if (d->requestedPixmaps.at(i).first==itemIndex)
+        {
+            if (d->requestedPixmaps.at(i).second==size)
+            {
+                // the pixmap has already been requested, at this size
+                return QPixmap();
+            }
+        }
+    }
+
+    // remember at which size the pixmap was ordered:
+    d->requestedPixmaps << QPair<QPersistentModelIndex, int>(itemIndex, size);
+
     // TODO: what about raw images? The old version of the plugin had a special loading mechanism for those
     if (d->interface)
     {
@@ -248,15 +265,60 @@ void KipiImageModel::slotThumbnailFromInterface(const KUrl& url, const QPixmap& 
     if (pixmap.isNull())
         return;
 
-    // save the pixmap:
-    const QString itemKeyString = CacheKeyFromSizeAndUrl(qMax(pixmap.size().width(), pixmap.size().height()), url);
-    d->pixmapCache->insert(itemKeyString, pixmap);
+    const int effectiveSize = qMax(pixmap.size().width(), pixmap.size().height());
 
     // find the item corresponding to the URL:
     const QModelIndex imageIndex = indexFromUrl(url);
+    kDebug()<<url<<imageIndex.isValid();
     if (imageIndex.isValid())
     {
-        emit(signalThumbnailForIndexAvailable(imageIndex, pixmap));
+        // this is tricky: some kipi interfaces return pixmaps at the requested size, others do not.
+        // therefore we check whether a pixmap of this size has been requested. If so, we send it on.
+        // If a pixmap of this size has not been requested, we rescale it to fulfill all other requests.
+
+        // index, size
+        QList<QPair<int, int> > openRequests;
+        for (int i=0; i<d->requestedPixmaps.count(); ++i)
+        {
+            if (d->requestedPixmaps.at(i).first==imageIndex)
+            {
+                const int requestedSize = d->requestedPixmaps.at(i).second;
+                if (requestedSize==effectiveSize)
+                {
+                    // match, send it out.
+                    d->requestedPixmaps.removeAt(i);
+                    kDebug()<<i;
+
+                    // save the pixmap:
+                    const QString itemKeyString = CacheKeyFromSizeAndUrl(effectiveSize, url);
+                    d->pixmapCache->insert(itemKeyString, pixmap);
+
+                    emit(signalThumbnailForIndexAvailable(imageIndex, pixmap));
+                    return;
+                }
+                else
+                {
+                    openRequests << QPair<int, int>(i, requestedSize);
+                }
+            }
+        }
+
+        // the pixmap was not requested at this size, fulfill all requests:
+        for (int i=openRequests.count()-1; i>=0; --i)
+        {
+            const int targetSize = openRequests.at(i).second;
+            d->requestedPixmaps.removeAt(openRequests.at(i).first);
+            kDebug()<<i<<targetSize;
+
+            QPixmap scaledPixmap = pixmap.scaled(targetSize, targetSize, Qt::KeepAspectRatio);
+
+            // save the pixmap:
+            const QString itemKeyString = CacheKeyFromSizeAndUrl(targetSize, url);
+            d->pixmapCache->insert(itemKeyString, scaledPixmap);
+
+            emit(signalThumbnailForIndexAvailable(imageIndex, scaledPixmap));
+        }
+        
     }
 }
 
