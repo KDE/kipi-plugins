@@ -1,6 +1,6 @@
 SUBDIRS(icons)
 
-SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp 
+SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       subjects.cpp
                                       metadatacheckbox.cpp
                                       altlangstringedit.cpp
@@ -10,7 +10,7 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       exifcaption.cpp
                                       exifdatetime.cpp
                                       exifadjust.cpp
-                                      exiflens.cpp 
+                                      exiflens.cpp
                                       exifdevice.cpp
                                       exiflight.cpp
                                       exifeditdialog.cpp
@@ -23,8 +23,8 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
                                       iptcstatus.cpp
                                       iptcorigin.cpp
                                       iptcenvelope.cpp
-                                      iptceditdialog.cpp 
-                                      xmpeditdialog.cpp 
+                                      iptceditdialog.cpp
+                                      xmpeditdialog.cpp
                                       xmpcontent.cpp
                                       xmpkeywords.cpp
                                       xmpcategories.cpp
@@ -44,8 +44,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
                       kipiplugins
-                      kdcraw
                      )
 
 INSTALL(TARGETS kipiplugin_metadataedit DESTINATION ${PLUGIN_INSTALL_DIR})
