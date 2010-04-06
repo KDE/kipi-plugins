@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : common subjects settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
@@ -117,7 +117,7 @@ Subjects::Subjects(QWidget* parent)
     // See http://iptc.cms.apa.at/std/topicset/topicset.iptc-subjectcode.xml for details.
 
     KGlobal::dirs()->addResourceDir("iptcschema", KStandardDirs::installPath("data") +
-                                                  QString("kipiplugin_metadataedit/data"));
+                                                  QString("libkexiv2/data"));
     QString path = KGlobal::dirs()->findResource("iptcschema", "topicset.iptc-subjectcode.xml");
 
     if (!loadSubjectCodesFromXML(KUrl(path)))

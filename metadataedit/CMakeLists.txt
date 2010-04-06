@@ -51,5 +51,3 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
 INSTALL(TARGETS kipiplugin_metadataedit DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-
-INSTALL(FILES topicset.iptc-subjectcode.xml DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_metadataedit/data)
