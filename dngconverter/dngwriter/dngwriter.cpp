@@ -681,6 +681,8 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.NikonLd1.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.NikonLd2.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.NikonLd3.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
+            if (meta.getExifTagLong("Exif.NikonLd2.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
+            if (meta.getExifTagLong("Exif.NikonLd3.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
 
             // Canon Markernotes
 
@@ -724,6 +726,7 @@ int DNGWriter::convert()
                     break;
                 case 4:
                     exif->fMeteringMode = 6;
+                    break;
                 case 5:
                     exif->fMeteringMode = 2;
                     break;
