@@ -252,7 +252,7 @@ public:
 
     LanguageCodeMap                  languageCodeMap;
 
-    KExiv2Iface::KExiv2::AltLangMap  oldValues;
+    KExiv2::AltLangMap               oldValues;
 
     QPushButton                     *addValueButton;
     QPushButton                     *delValueButton;
@@ -496,7 +496,7 @@ void AltLangStringsEdit::slotReplaceValue()
     }
 }
 
-void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values)
+void AltLangStringsEdit::setValues(const KExiv2::AltLangMap& values)
 {
     blockSignals(true);
     d->oldValues = values;
@@ -505,7 +505,7 @@ void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values
     d->valueCheck->setChecked(false);
     if (!d->oldValues.isEmpty())
     {
-        for (KExiv2Iface::KExiv2::AltLangMap::Iterator it = d->oldValues.begin();
+        for (KExiv2::AltLangMap::Iterator it = d->oldValues.begin();
              it != d->oldValues.end(); ++it)
         {
             QString newValue = QString("[%1] %2").arg(it.key()).arg(it.value());
@@ -524,8 +524,8 @@ void AltLangStringsEdit::setValues(const KExiv2Iface::KExiv2::AltLangMap& values
     loadLangAltListEntries();
 }
 
-bool AltLangStringsEdit::getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues,
-                                   KExiv2Iface::KExiv2::AltLangMap& newValues)
+bool AltLangStringsEdit::getValues(KExiv2::AltLangMap& oldValues,
+                                   KExiv2::AltLangMap& newValues)
 {
     oldValues = d->oldValues;
 
