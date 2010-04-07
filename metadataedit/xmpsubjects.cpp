@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : XMP subjects settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
@@ -21,18 +21,14 @@
  *
  * ============================================================ */
 
-#include "xmpsubjects.h"
 #include "xmpsubjects.moc"
 
 // Qt includes
 
-#include <QCheckBox>
-#include <QLabel>
+#include <QValidator>
 
 // KDE includes
 
-#include <klineedit.h>
-#include <klistwidget.h>
 #include <klocale.h>
 
 // LibKExiv2 includes
@@ -43,7 +39,7 @@ namespace KIPIMetadataEditPlugin
 {
 
 XMPSubjects::XMPSubjects(QWidget* parent)
-           : Subjects(parent)
+           : SubjectWidget(parent)
 {
     // Subject string do not accept these characters:
     // - '*' (\x2A)
@@ -88,6 +84,8 @@ XMPSubjects::XMPSubjects(QWidget* parent)
 
     // reset the note label, not used in XMP view
     if (m_note) delete m_note;
+
+    m_subjectsCheck->setVisible(true);
 }
 
 XMPSubjects::~XMPSubjects()

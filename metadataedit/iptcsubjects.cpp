@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC subjects settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
@@ -21,18 +21,14 @@
  *
  * ============================================================ */
 
-#include "iptcsubjects.h"
 #include "iptcsubjects.moc"
 
 // Qt includes
 
-#include <QCheckBox>
-#include <QLabel>
+#include <QValidator>
 
 // KDE includes
 
-#include <klineedit.h>
-#include <klistwidget.h>
 #include <klocale.h>
 
 // LibKExiv2 includes
@@ -43,14 +39,14 @@ namespace KIPIMetadataEditPlugin
 {
 
 IPTCSubjects::IPTCSubjects(QWidget* parent)
-            : Subjects(parent)
+            : SubjectWidget(parent)
 {
     // Subject string only accept printable Ascii char excepted these one:
     // - '*' (\x2A)
     // - ':' (\x3A)
     // - '?' (\x3F)
     QRegExp subjectAsciiRx("[\x20-\x29\x2B-\x39\x3B-\x3E\x40-\x7F]+$");
-    QValidator *subjectAsciiValidator = new QRegExpValidator(subjectAsciiRx, this);
+    QValidator* subjectAsciiValidator = new QRegExpValidator(subjectAsciiRx, this);
 
     // --------------------------------------------------------
 
@@ -103,6 +99,8 @@ IPTCSubjects::IPTCSubjects(QWidget* parent)
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
                  "characters and limit string sizes. "
                  "Use contextual help for details.</b>"));
+
+    m_subjectsCheck->setVisible(true);
 }
 
 IPTCSubjects::~IPTCSubjects()

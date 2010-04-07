@@ -1,5 +1,5 @@
 Use shared widgets from libkexiv2 1.1.0 (KDE 4.5), already used in digiKam core :
 
-- remove topicset.iptc-subjectcode.xml                                                                      DONE
-- port IPTCSubject and XMPSubject classes to KExiv2::SubjectWidget (see Digikam::SubjectEdit for details).
-- use KExiv2::AltLangStrEdit instead locale class.
+- Remove topicset.iptc-subjectcode.xml                                                                      DONE
+- Port IPTCSubject and XMPSubject classes to KExiv2::SubjectWidget (see Digikam::SubjectEdit for details).  DONE
+- Use KExiv2::AltLangStrEdit instead locale class.

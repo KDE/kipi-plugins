@@ -1,7 +1,6 @@
 SUBDIRS(icons)
 
 SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
-                                      subjects.cpp
                                       metadatacheckbox.cpp
                                       altlangstringedit.cpp
                                       multistringsedit.cpp
