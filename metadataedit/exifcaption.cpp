@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : EXIF caption settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "exifcaption.h"
 #include "exifcaption.moc"
 
 // Qt includes
@@ -47,6 +46,8 @@
 // Local includes
 
 #include "pluginsversion.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -153,7 +154,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters)"), this);
 
-    if (!KExiv2Iface::KExiv2::supportXmp())
+    if (!KExiv2::supportXmp())
         d->syncXMPCaptionCheck->setEnabled(false);
 
     // --------------------------------------------------------
@@ -306,7 +307,7 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     QString data;
 
@@ -369,7 +370,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
 void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
     exiv2Iface.setXmp(xmpData);

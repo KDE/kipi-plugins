@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF date and time settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "exifdatetime.h"
 #include "exifdatetime.moc"
 
 // Qt includes
@@ -45,6 +44,8 @@
 
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -121,7 +122,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
-    if (!KExiv2Iface::KExiv2::supportXmp())
+    if (!KExiv2::supportXmp())
         d->syncXMPDateCheck->setEnabled(false);
 
     d->dateCreatedSel->setWhatsThis(i18n("Set here the date and time of image creation. "
@@ -340,7 +341,7 @@ QDateTime EXIFDateTime::getEXIFCreationDate()
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
 
     QDateTime datetime;
@@ -441,7 +442,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
 void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
     exiv2Iface.setXmp(xmpData);

@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF device settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "exifdevice.h"
 #include "exifdevice.moc"
 
 // C++ includes
@@ -50,6 +49,8 @@
 // Local includes
 
 #include "metadatacheckbox.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -488,7 +489,7 @@ EXIFDevice::~EXIFDevice()
 void EXIFDevice::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
@@ -685,7 +686,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     long int num=1, den=1;
 

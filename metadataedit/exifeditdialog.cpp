@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit EXIF metadata
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "exifeditdialog.h"
 #include "exifeditdialog.moc"
 
 // Qt includes
@@ -64,6 +63,9 @@
 #include "exiflight.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
+
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -121,12 +123,12 @@ public:
     EXIFLight                *lightPage;
     EXIFAdjust               *adjustPage;
 
-    KIPI::Interface          *interface;
+    Interface                *interface;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData              *about;
 };
 
-EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
+EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, Interface *iface)
               : KPageDialog(parent), d(new EXIFEditDialogPrivate)
 {
     d->urls      = urls;
@@ -178,11 +180,11 @@ EXIFEditDialog::EXIFEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures' metadata."),
-                                            ki18n("(c) 2006-2009, Gilles Caulier"));
+    d->about = new KPAboutData(ki18n("Edit Metadata"),
+                               0,
+                               KAboutData::License_GPL,
+                               ki18n("A Plugin to edit pictures' metadata."),
+                               ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -298,7 +300,7 @@ void EXIFEditDialog::saveSettings()
 
 void EXIFEditDialog::slotItemChanged()
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -316,7 +318,7 @@ void EXIFEditDialog::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteExif((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteExif((*d->currItem).path());
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
     d->page_lens->setEnabled(!d->isReadOnly);
@@ -340,7 +342,7 @@ void EXIFEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KIPI::ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->interface->info(*d->currItem);
 
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
@@ -359,7 +361,7 @@ void EXIFEditDialog::slotApply()
         d->lightPage->applyMetadata(d->exifData);
         d->adjustPage->applyMetadata(d->exifData);
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
