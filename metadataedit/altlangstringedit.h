@@ -7,7 +7,7 @@
  * Description : a widget to edit a tag with multiple alternative
  *               language string entries.
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,6 +32,8 @@
 
 #include <libkexiv2/kexiv2.h>
 
+using namespace KExiv2Iface;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -46,8 +48,8 @@ public:
     AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc);
     ~AltLangStringsEdit();
 
-    void setValues(const KExiv2Iface::KExiv2::AltLangMap& values);
-    bool getValues(KExiv2Iface::KExiv2::AltLangMap& oldValues, KExiv2Iface::KExiv2::AltLangMap& newValues);
+    void setValues(const KExiv2::AltLangMap& values);
+    bool getValues(KExiv2::AltLangMap& oldValues, KExiv2::AltLangMap& newValues);
 
     void setValid(bool v);
     bool isValid() const;

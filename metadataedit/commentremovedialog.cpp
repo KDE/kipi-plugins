@@ -6,7 +6,7 @@
  * Date        : 2006-11-20
  * Description : a dialog to batch remove comments
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "commentremovedialog.h"
 #include "commentremovedialog.moc"
 
 // Qt includes
@@ -29,6 +28,7 @@
 #include <QCloseEvent>
 #include <QLabel>
 #include <QVBoxLayout>
+
 // KDE includes
 
 #include <kcomponentdata.h>
@@ -52,6 +52,9 @@
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
 
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -70,13 +73,13 @@ public:
         removeIPTCCaptionCheck = 0;
     }
 
-    QCheckBox                *removeHOSTCommentCheck;
-    QCheckBox                *removeJFIFCommentCheck;
-    QCheckBox                *removeEXIFCommentCheck;
-    QCheckBox                *removeXMPCaptionCheck;
-    QCheckBox                *removeIPTCCaptionCheck;
+    QCheckBox*   removeHOSTCommentCheck;
+    QCheckBox*   removeJFIFCommentCheck;
+    QCheckBox*   removeEXIFCommentCheck;
+    QCheckBox*   removeXMPCaptionCheck;
+    QCheckBox*   removeIPTCCaptionCheck;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData* about;
 };
 
 CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
@@ -90,11 +93,11 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures' metadata."),
-                                            ki18n("(c) 2006-2009, Gilles Caulier"));
+    d->about = new KPAboutData(ki18n("Edit Metadata"),
+                               0,
+                               KAboutData::License_GPL,
+                               ki18n("A Plugin to edit pictures' metadata."),
+                               ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -113,7 +116,7 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     // ------------------------------------------------------------
 
     setMainWidget(new QWidget(this));
-    QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
+    QVBoxLayout* vlay = new QVBoxLayout(mainWidget());
 
     d->removeHOSTCommentCheck = new QCheckBox(i18n("Remove caption hosted by %1",
                                     KGlobal::mainComponent().aboutData()->programName()),
@@ -123,10 +126,10 @@ CommentRemoveDialog::CommentRemoveDialog(QWidget* parent)
     d->removeXMPCaptionCheck  = new QCheckBox(i18n("Remove XMP Caption"), mainWidget());
     d->removeIPTCCaptionCheck = new QCheckBox(i18n("Remove IPTC Caption"), mainWidget());
 
-    if (!KExiv2Iface::KExiv2::supportXmp())
+    if (!KExiv2::supportXmp())
         d->removeXMPCaptionCheck->setEnabled(false);
 
-    QLabel *note = new QLabel(i18n("<b>Note: Captions from currently selected images "
+    QLabel* note = new QLabel(i18n("<b>Note: Captions from currently selected images "
                                    "will be permanently removed.</b>"), mainWidget());
     note->setWordWrap(true);
 

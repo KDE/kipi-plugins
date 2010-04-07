@@ -6,7 +6,7 @@
  * Date        : 2006-11-20
  * Description : a dialog to batch edit comments
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "commenteditdialog.h"
 #include "commenteditdialog.moc"
 
 // Qt includes
@@ -53,6 +52,9 @@
 #include "pluginsversion.h"
 #include "kpaboutdata.h"
 
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -71,14 +73,14 @@ public:
         syncIPTCCaptionCheck = 0;
     }
 
-    QCheckBox                *syncJFIFCommentCheck;
-    QCheckBox                *syncEXIFCommentCheck;
-    QCheckBox                *syncIPTCCaptionCheck;
-    QCheckBox                *syncXMPCaptionCheck;
+    QCheckBox*   syncJFIFCommentCheck;
+    QCheckBox*   syncEXIFCommentCheck;
+    QCheckBox*   syncIPTCCaptionCheck;
+    QCheckBox*   syncXMPCaptionCheck;
 
-    KTextEdit                *userCommentEdit;
+    KTextEdit*   userCommentEdit;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData* about;
 };
 
 CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
@@ -92,11 +94,11 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A Plugin to edit pictures' metadata."),
-                                            ki18n("(c) 2006-2009, Gilles Caulier"));
+    d->about = new KPAboutData(ki18n("Edit Metadata"),
+                               0,
+                               KAboutData::License_GPL,
+                               ki18n("A Plugin to edit pictures' metadata."),
+                               ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -115,9 +117,9 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
     // ------------------------------------------------------------
 
     setMainWidget(new QWidget(this));
-    QVBoxLayout *vlay = new QVBoxLayout(mainWidget());
+    QVBoxLayout* vlay = new QVBoxLayout(mainWidget());
 
-    QLabel *title = new QLabel(i18n("Enter the image caption entered through <b>%1</b>. "
+    QLabel* title = new QLabel(i18n("Enter the image caption entered through <b>%1</b>. "
                                     "This field is not limited (excepted with IPTC). UTF-8 encoding "
                                     "will be used to save text.",
                                     KGlobal::mainComponent().aboutData()->programName()),
@@ -133,10 +135,10 @@ CommentEditDialog::CommentEditDialog(const QString& comment, QWidget* parent)
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters)"), mainWidget());
 
-    if (!KExiv2Iface::KExiv2::supportXmp())
+    if (!KExiv2::supportXmp())
         d->syncXMPCaptionCheck->setEnabled(false);
 
-    QLabel *note = new QLabel(i18n("<b>Note: captions from currently selected images "
+    QLabel* note = new QLabel(i18n("<b>Note: captions from currently selected images "
                                    "will be permanently replaced.</b>"), mainWidget());
     note->setWordWrap(true);
 
@@ -177,7 +179,7 @@ void CommentEditDialog::slotHelp()
     KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
 }
 
-void CommentEditDialog::closeEvent(QCloseEvent *e)
+void CommentEditDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     saveSettings();
