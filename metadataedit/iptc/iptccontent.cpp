@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC content settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "iptccontent.h"
 #include "iptccontent.moc"
 
 // Qt includes
@@ -43,12 +42,14 @@
 
 // LibKExiv2 includes
 
-#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
+#include <libkexiv2/version.h>
 
 // Local includes
 
 #include "multistringsedit.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -184,7 +185,7 @@ IPTCContent::IPTCContent(QWidget* parent)
     connect(d->captionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->headlineEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 
@@ -231,7 +232,7 @@ void IPTCContent::setCheckedSyncEXIFComment(bool c)
 void IPTCContent::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -267,7 +268,7 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
 
 void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setIptc(iptcData);
 

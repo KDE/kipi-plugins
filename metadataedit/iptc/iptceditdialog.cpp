@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit IPTC metadata
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "iptceditdialog.h"
 #include "iptceditdialog.moc"
 
 // Qt includes
@@ -68,6 +67,9 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -101,42 +103,42 @@ public:
         envelopePage    = 0;
     }
 
-    bool                      modified;
-    bool                      isReadOnly;
+    bool                  modified;
+    bool                  isReadOnly;
 
-    QByteArray                exifData;
-    QByteArray                iptcData;
+    QByteArray            exifData;
+    QByteArray            iptcData;
 
-    KPageWidgetItem          *page_content;
-    KPageWidgetItem          *page_properties;
-    KPageWidgetItem          *page_subjects;
-    KPageWidgetItem          *page_keywords;
-    KPageWidgetItem          *page_categories;
-    KPageWidgetItem          *page_credits;
-    KPageWidgetItem          *page_status;
-    KPageWidgetItem          *page_origin;
-    KPageWidgetItem          *page_envelope;
+    KPageWidgetItem      *page_content;
+    KPageWidgetItem      *page_properties;
+    KPageWidgetItem      *page_subjects;
+    KPageWidgetItem      *page_keywords;
+    KPageWidgetItem      *page_categories;
+    KPageWidgetItem      *page_credits;
+    KPageWidgetItem      *page_status;
+    KPageWidgetItem      *page_origin;
+    KPageWidgetItem      *page_envelope;
 
-    KUrl::List                urls;
+    KUrl::List            urls;
 
-    KUrl::List::iterator      currItem;
+    KUrl::List::iterator  currItem;
 
-    IPTCContent              *contentPage;
-    IPTCProperties           *propertiesPage;
-    IPTCSubjects             *subjectsPage;
-    IPTCKeywords             *keywordsPage;
-    IPTCCategories           *categoriesPage;
-    IPTCCredits              *creditsPage;
-    IPTCStatus               *statusPage;
-    IPTCOrigin               *originPage;
-    IPTCEnvelope             *envelopePage;
+    IPTCContent          *contentPage;
+    IPTCProperties       *propertiesPage;
+    IPTCSubjects         *subjectsPage;
+    IPTCKeywords         *keywordsPage;
+    IPTCCategories       *categoriesPage;
+    IPTCCredits          *creditsPage;
+    IPTCStatus           *statusPage;
+    IPTCOrigin           *originPage;
+    IPTCEnvelope         *envelopePage;
 
-    KIPI::Interface          *interface;
+    Interface            *interface;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData          *about;
 };
 
-IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
+IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, Interface* iface)
               : KPageDialog(parent), d(new IPTCEditDialogPrivate)
 {
     d->urls      = urls;
@@ -212,7 +214,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
+    d->about = new KPAboutData(ki18n("Edit Metadata"),
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to edit pictures' metadata."),
@@ -339,7 +341,7 @@ void IPTCEditDialog::saveSettings()
 
 void IPTCEditDialog::slotItemChanged()
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -359,7 +361,7 @@ void IPTCEditDialog::slotItemChanged()
     d->propertiesPage->readMetadata(d->iptcData);
     d->envelopePage->readMetadata(d->iptcData);
 
-    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteIptc((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteIptc((*d->currItem).path());
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
@@ -386,7 +388,7 @@ void IPTCEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KIPI::ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->interface->info(*d->currItem);
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -408,7 +410,7 @@ void IPTCEditDialog::slotApply()
         d->propertiesPage->applyMetadata(d->iptcData);
         d->envelopePage->applyMetadata(d->iptcData);
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600

@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC status settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "iptcstatus.h"
 #include "iptcstatus.moc"
 
 // Qt includes
@@ -44,6 +43,8 @@
 // Local includes
 
 #include "pluginsversion.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -203,7 +204,7 @@ IPTCStatus::~IPTCStatus()
 void IPTCStatus::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     QString     data;
@@ -254,7 +255,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())

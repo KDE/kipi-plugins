@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC credits settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "iptccredits.h"
 #include "iptccredits.moc"
 
 // Qt includes
@@ -44,6 +43,8 @@
 // Local includes
 
 #include "multistringsedit.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -222,7 +223,7 @@ IPTCCredits::~IPTCCredits()
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -272,7 +273,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
     QStringList oldList, newList;
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())

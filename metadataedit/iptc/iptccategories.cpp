@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC categories settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "iptccategories.h"
 #include "iptccategories.moc"
 
 // Qt includes
@@ -42,6 +41,8 @@
 // LibKExiv2 includes
 
 #include <libkexiv2/kexiv2.h>
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -288,7 +289,7 @@ void IPTCCategories::slotAddCategory()
 void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QString data;
 
@@ -326,7 +327,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
     QStringList newCategories;
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())
