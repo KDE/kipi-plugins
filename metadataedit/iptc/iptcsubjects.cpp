@@ -35,6 +35,8 @@
 
 #include <libkexiv2/kexiv2.h>
 
+using namespace KExiv2Iface;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -109,14 +111,14 @@ IPTCSubjects::~IPTCSubjects()
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     setSubjectsList(exiv2Iface.getIptcSubjects());
 }
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setIptc(iptcData);
     QStringList newSubjects = subjectsList();
 
