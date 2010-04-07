@@ -94,14 +94,14 @@ XMPSubjects::~XMPSubjects()
 
 void XMPSubjects::readMetadata(QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
     setSubjectsList(exiv2Iface.getXmpSubjects());
 }
 
 void XMPSubjects::applyMetadata(QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
     QStringList newSubjects = subjectsList();
 

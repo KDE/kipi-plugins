@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP origin settings page.
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "xmporigin.h"
 #include "xmporigin.moc"
 
 // Qt includes
@@ -57,6 +56,7 @@
 #include "metadatacheckbox.h"
 
 using namespace KDcrawIface;
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -587,7 +587,7 @@ QDateTime XMPOrigin::getXMPCreationDate()
 void XMPOrigin::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
     QString     data;
@@ -696,7 +696,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
 void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setExif(exifData);
     exiv2Iface.setXmp(xmpData);
 

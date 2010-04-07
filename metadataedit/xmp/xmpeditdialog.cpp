@@ -6,7 +6,7 @@
  * Date        : 2007-10-11
  * Description : a dialog to edit XMP metadata
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "xmpeditdialog.h"
 #include "xmpeditdialog.moc"
 
 // Qt includes
@@ -67,6 +66,9 @@
 #include "xmpstatus.h"
 #include "xmpsubjects.h"
 
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -98,41 +100,41 @@ public:
         propertiesPage  = 0;
     }
 
-    bool                      modified;
-    bool                      isReadOnly;
+    bool                  modified;
+    bool                  isReadOnly;
 
-    QByteArray                exifData;
-    QByteArray                iptcData;
-    QByteArray                xmpData;
+    QByteArray            exifData;
+    QByteArray            iptcData;
+    QByteArray            xmpData;
 
-    KPageWidgetItem          *page_content;
-    KPageWidgetItem          *page_origin;
-    KPageWidgetItem          *page_subjects;
-    KPageWidgetItem          *page_keywords;
-    KPageWidgetItem          *page_categories;
-    KPageWidgetItem          *page_credits;
-    KPageWidgetItem          *page_status;
-    KPageWidgetItem          *page_properties;
+    KPageWidgetItem      *page_content;
+    KPageWidgetItem      *page_origin;
+    KPageWidgetItem      *page_subjects;
+    KPageWidgetItem      *page_keywords;
+    KPageWidgetItem      *page_categories;
+    KPageWidgetItem      *page_credits;
+    KPageWidgetItem      *page_status;
+    KPageWidgetItem      *page_properties;
 
-    KUrl::List                urls;
+    KUrl::List            urls;
 
-    KUrl::List::iterator      currItem;
+    KUrl::List::iterator  currItem;
 
-    XMPContent               *contentPage;
-    XMPKeywords              *keywordsPage;
-    XMPCategories            *categoriesPage;
-    XMPSubjects              *subjectsPage;
-    XMPOrigin                *originPage;
-    XMPCredits               *creditsPage;
-    XMPStatus                *statusPage;
-    XMPProperties            *propertiesPage;
+    XMPContent           *contentPage;
+    XMPKeywords          *keywordsPage;
+    XMPCategories        *categoriesPage;
+    XMPSubjects          *subjectsPage;
+    XMPOrigin            *originPage;
+    XMPCredits           *creditsPage;
+    XMPStatus            *statusPage;
+    XMPProperties        *propertiesPage;
 
-    KIPI::Interface          *interface;
+    Interface            *interface;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData          *about;
 };
 
-XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *iface)
+XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, Interface *iface)
              : KPageDialog(parent), d(new XMPEditDialogPrivate)
 {
     d->urls      = urls;
@@ -202,7 +204,7 @@ XMPEditDialog::XMPEditDialog(QWidget* parent, KUrl::List urls, KIPI::Interface *
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Edit Metadata"),
+    d->about = new KPAboutData(ki18n("Edit Metadata"),
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to edit pictures' metadata."),
@@ -330,7 +332,7 @@ void XMPEditDialog::saveSettings()
 
 void XMPEditDialog::slotItemChanged()
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -350,7 +352,7 @@ void XMPEditDialog::slotItemChanged()
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
-    d->isReadOnly = !KExiv2Iface::KExiv2::canWriteXmp((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteXmp((*d->currItem).path());
 
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
@@ -377,7 +379,7 @@ void XMPEditDialog::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KIPI::ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->interface->info(*d->currItem);
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -398,7 +400,7 @@ void XMPEditDialog::slotApply()
         d->statusPage->applyMetadata(d->xmpData);
         d->propertiesPage->applyMetadata(d->xmpData);
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600

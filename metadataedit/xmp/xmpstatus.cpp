@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status settings page.
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "xmpstatus.h"
 #include "xmpstatus.moc"
 
 // Qt includes
@@ -47,6 +46,8 @@
 #include "altlangstringedit.h"
 #include "multistringsedit.h"
 #include "pluginsversion.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -160,12 +161,12 @@ XMPStatus::~XMPStatus()
 void XMPStatus::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
     QString                         data;
     QStringList                     list;
-    KExiv2Iface::KExiv2::AltLangMap map;
+    KExiv2::AltLangMap map;
 
     d->objectNameEdit->setValid(false);
     map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.title", false);
@@ -201,10 +202,10 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 void XMPStatus::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
-    KExiv2Iface::KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
+    KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
     if (d->objectNameEdit->getValues(oldAltLangMap, newAltLangMap))
         exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.title", newAltLangMap, false);
     else if (d->objectNameEdit->isValid())
