@@ -6,7 +6,7 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_metadataedit.h"
 #include "plugin_metadataedit.moc"
 
 // Qt includes
@@ -61,11 +60,14 @@
 #include "iptceditdialog.h"
 #include "xmpeditdialog.h"
 
+using namespace KExiv2Iface;
+using namespace KIPIMetadataEditPlugin;
+
 K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
 K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 
-Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
-                   : KIPI::Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
+Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* parent, const QVariantList&)
+                   : Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
                      m_actionMetadataEdit(0),
                      m_interface(0),
                      m_lastSelectedDirectory()
@@ -73,26 +75,26 @@ Plugin_MetadataEdit::Plugin_MetadataEdit(QObject *parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_MetadataEdit plugin loaded";
 }
 
-void Plugin_MetadataEdit::setup( QWidget* widget )
+void Plugin_MetadataEdit::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    Plugin::setup(widget);
 
     m_actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
     m_actionMetadataEdit->setObjectName("metadataedit");
 
-    KAction *editEXIF = actionCollection()->addAction("editexif");
+    KAction* editEXIF = actionCollection()->addAction("editexif");
     editEXIF->setText(i18n("Edit EXIF..."));
     connect(editEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotEditExif()));
     m_actionMetadataEdit->addAction(editEXIF);
 
-    KAction *removeEXIF = actionCollection()->addAction("removeexif");
+    KAction* removeEXIF = actionCollection()->addAction("removeexif");
     removeEXIF->setText(i18n("Remove EXIF..."));
     connect(removeEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveExif()));
     m_actionMetadataEdit->addAction(removeEXIF);
 
-    KAction *importEXIF = actionCollection()->addAction("importexif");
+    KAction* importEXIF = actionCollection()->addAction("importexif");
     importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
@@ -102,19 +104,19 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
     m_actionMetadataEdit->menu()->addSeparator();
 
-    KAction *editIPTC = actionCollection()->addAction("editiptc");
+    KAction* editIPTC = actionCollection()->addAction("editiptc");
     editIPTC->setText(i18n("Edit IPTC..."));
     connect(editIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotEditIptc()));
     m_actionMetadataEdit->addAction(editIPTC);
 
-    KAction *removeIPTC = actionCollection()->addAction("removeiptc");
+    KAction* removeIPTC = actionCollection()->addAction("removeiptc");
     removeIPTC->setText(i18n("Remove IPTC..."));
     connect(removeIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveIptc()));
     m_actionMetadataEdit->addAction(removeIPTC);
 
-    KAction *importIPTC = actionCollection()->addAction("importiptc");
+    KAction* importIPTC = actionCollection()->addAction("importiptc");
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
@@ -124,19 +126,19 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
     m_actionMetadataEdit->menu()->addSeparator();
 
-    KAction *editXMP = actionCollection()->addAction("editxmp");
+    KAction* editXMP = actionCollection()->addAction("editxmp");
     editXMP->setText(i18n("Edit XMP..."));
     connect(editXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotEditXmp()));
     m_actionMetadataEdit->addAction(editXMP);
 
-    KAction *removeXMP = actionCollection()->addAction("removexmp");
+    KAction* removeXMP = actionCollection()->addAction("removexmp");
     removeXMP->setText(i18n("Remove XMP..."));
     connect(removeXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveXmp()));
     m_actionMetadataEdit->addAction(removeXMP);
 
-    KAction *importXMP = actionCollection()->addAction("importxmp");
+    KAction* importXMP = actionCollection()->addAction("importxmp");
     importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
@@ -146,13 +148,13 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
     m_actionMetadataEdit->menu()->addSeparator();
 
-    KAction *editComments = actionCollection()->addAction("editcomments");
+    KAction* editComments = actionCollection()->addAction("editcomments");
     editComments->setText(i18n("Edit Captions..."));
     connect(editComments, SIGNAL(triggered(bool)),
             this, SLOT(slotEditComments()));
     m_actionMetadataEdit->addAction(editComments);
 
-    KAction *removeComments = actionCollection()->addAction("removecomments");
+    KAction* removeComments = actionCollection()->addAction("removecomments");
     removeComments->setText(i18n("Remove Captions..."));
     connect(removeComments, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveComments()));
@@ -160,14 +162,14 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
     addAction( m_actionMetadataEdit );
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast<Interface*>( parent() );
     if ( !m_interface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    KIPI::ImageCollection selection = m_interface->currentSelection();
+    ImageCollection selection = m_interface->currentSelection();
     m_actionMetadataEdit->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
     connect(m_interface, SIGNAL(selectionChanged(bool)),
@@ -176,13 +178,12 @@ void Plugin_MetadataEdit::setup( QWidget* widget )
 
 void Plugin_MetadataEdit::slotEditExif()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<KIPIMetadataEditPlugin::EXIFEditDialog> dialog = new KIPIMetadataEditPlugin::EXIFEditDialog(
-                                                                  kapp->activeWindow(), images.images(), m_interface);
+    QPointer<EXIFEditDialog> dialog = new EXIFEditDialog(kapp->activeWindow(), images.images(), m_interface);
     dialog->exec();
     m_interface->refreshImages(images.images());
 
@@ -191,7 +192,7 @@ void Plugin_MetadataEdit::slotEditExif()
 
 void Plugin_MetadataEdit::slotRemoveExif()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -213,10 +214,10 @@ void Plugin_MetadataEdit::slotRemoveExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteExif(url.path()))
+        if (KExiv2::canWriteExif(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -251,7 +252,7 @@ void Plugin_MetadataEdit::slotRemoveExif()
 
 void Plugin_MetadataEdit::slotImportExif()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -269,7 +270,7 @@ void Plugin_MetadataEdit::slotImportExif()
 
     m_lastSelectedDirectory = importEXIFFile.upUrl();
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -310,10 +311,10 @@ void Plugin_MetadataEdit::slotImportExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteExif(url.path()))
+        if (KExiv2::canWriteExif(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -348,13 +349,12 @@ void Plugin_MetadataEdit::slotImportExif()
 
 void Plugin_MetadataEdit::slotEditIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<KIPIMetadataEditPlugin::IPTCEditDialog> dialog = new KIPIMetadataEditPlugin::IPTCEditDialog(
-                                                                  kapp->activeWindow(), images.images(), m_interface);
+    QPointer<IPTCEditDialog> dialog = new IPTCEditDialog(kapp->activeWindow(), images.images(), m_interface);
     dialog->exec();
     m_interface->refreshImages(images.images());
 
@@ -363,7 +363,7 @@ void Plugin_MetadataEdit::slotEditIptc()
 
 void Plugin_MetadataEdit::slotRemoveIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -385,10 +385,10 @@ void Plugin_MetadataEdit::slotRemoveIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteIptc(url.path()))
+        if (KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -423,7 +423,7 @@ void Plugin_MetadataEdit::slotRemoveIptc()
 
 void Plugin_MetadataEdit::slotImportIptc()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -441,7 +441,7 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     m_lastSelectedDirectory = importIPTCFile.upUrl();
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -477,10 +477,10 @@ void Plugin_MetadataEdit::slotImportIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteIptc(url.path()))
+        if (KExiv2::canWriteIptc(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -515,13 +515,12 @@ void Plugin_MetadataEdit::slotImportIptc()
 
 void Plugin_MetadataEdit::slotEditXmp()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<KIPIMetadataEditPlugin::XMPEditDialog> dialog = new KIPIMetadataEditPlugin::XMPEditDialog(
-                                                                 kapp->activeWindow(), images.images(), m_interface);
+    QPointer<XMPEditDialog> dialog = new XMPEditDialog(kapp->activeWindow(), images.images(), m_interface);
     dialog->exec();
     m_interface->refreshImages(images.images());
 
@@ -530,7 +529,7 @@ void Plugin_MetadataEdit::slotEditXmp()
 
 void Plugin_MetadataEdit::slotRemoveXmp()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -552,10 +551,10 @@ void Plugin_MetadataEdit::slotRemoveXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteXmp(url.path()))
+        if (KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -590,7 +589,7 @@ void Plugin_MetadataEdit::slotRemoveXmp()
 
 void Plugin_MetadataEdit::slotImportXmp()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -608,7 +607,7 @@ void Plugin_MetadataEdit::slotImportXmp()
 
     m_lastSelectedDirectory = importXMPFile.upUrl();
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importXMPFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -644,10 +643,10 @@ void Plugin_MetadataEdit::slotImportXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2Iface::KExiv2::canWriteXmp(url.path()))
+        if (KExiv2::canWriteXmp(url.path()))
         {
             ret = true;
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KExiv2 exiv2Iface;
             exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -682,7 +681,7 @@ void Plugin_MetadataEdit::slotImportXmp()
 
 void Plugin_MetadataEdit::slotEditComments()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
@@ -690,12 +689,11 @@ void Plugin_MetadataEdit::slotEditComments()
     QString comment;
     if  (images.images().count() == 1)
     {
-        KIPI::ImageInfo info = m_interface->info(images.images().first());
+        ImageInfo info = m_interface->info(images.images().first());
         comment              = info.description();
     }
 
-    QPointer<KIPIMetadataEditPlugin::CommentEditDialog> dlg = new KIPIMetadataEditPlugin::CommentEditDialog(
-                                                                  comment, kapp->activeWindow());
+    QPointer<CommentEditDialog> dlg = new CommentEditDialog(comment, kapp->activeWindow());
 
     if (dlg->exec() != KMessageBox::Ok)
         return;
@@ -710,10 +708,10 @@ void Plugin_MetadataEdit::slotEditComments()
         KUrl url = *it;
         bool ret = true;
 
-        KIPI::ImageInfo info = m_interface->info(url);
+        ImageInfo info = m_interface->info(url);
         info.setDescription(dlg->getComments());
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -773,12 +771,12 @@ void Plugin_MetadataEdit::slotEditComments()
 
 void Plugin_MetadataEdit::slotRemoveComments()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<KIPIMetadataEditPlugin::CommentRemoveDialog> dlg = new KIPIMetadataEditPlugin::CommentRemoveDialog(
+    QPointer<CommentRemoveDialog> dlg = new CommentRemoveDialog(
                                                                     kapp->activeWindow());
 
     if (dlg->exec() != KMessageBox::Ok)
@@ -796,11 +794,11 @@ void Plugin_MetadataEdit::slotRemoveComments()
 
         if (dlg->removeHOSTCommentIsChecked())
         {
-            KIPI::ImageInfo info = m_interface->info(url);
+            ImageInfo info = m_interface->info(url);
             info.setDescription(QString());
         }
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2 exiv2Iface;
         exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
@@ -852,11 +850,11 @@ void Plugin_MetadataEdit::slotRemoveComments()
     delete dlg;
 }
 
-KIPI::Category Plugin_MetadataEdit::category( KAction* action ) const
+Category Plugin_MetadataEdit::category(KAction* action) const
 {
     if ( action == m_actionMetadataEdit )
-       return KIPI::ImagesPlugin;
+       return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }

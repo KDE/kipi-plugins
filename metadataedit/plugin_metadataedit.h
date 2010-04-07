@@ -6,7 +6,7 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,20 +38,22 @@
 namespace KIPI
 {
 class Interface;
-} // namespace KIPI
+}
+
+using namespace KIPI;
 
 class KActionMenu;
 
-class Plugin_MetadataEdit : public KIPI::Plugin
+class Plugin_MetadataEdit : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_MetadataEdit(QObject *parent, const QVariantList &args);
+    Plugin_MetadataEdit(QObject* parent, const QVariantList& args);
 
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* );
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget*);
 
 protected Q_SLOTS:
 
@@ -72,11 +74,11 @@ protected Q_SLOTS:
 
 private:
 
-    KActionMenu     *m_actionMetadataEdit;
+    KActionMenu* m_actionMetadataEdit;
 
-    KIPI::Interface *m_interface;
+    Interface*   m_interface;
 
-    KUrl             m_lastSelectedDirectory;
+    KUrl         m_lastSelectedDirectory;
 };
 
 #endif // PLUGIN_METADATAEDIT_H
