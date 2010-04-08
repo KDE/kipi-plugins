@@ -1485,7 +1485,7 @@ void Wizard::outputChanged ( const QString & text)
     {
       if (it->printerName () == text)
       {
-          kDebug() << "Choosen printer: " << it->printerName ();
+          kDebug() << "Chosen printer: " << it->printerName ();
           if (d->m_printer)
             delete d->m_printer;
           d->m_printer = new QPrinter(*it);
