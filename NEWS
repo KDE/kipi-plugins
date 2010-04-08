@@ -3,17 +3,19 @@ Kipi-plugins 1.3.0 - Release date: 30/05/2010
 
 NEW FEATURES:
 
-General               : libkexiv2 dependency set to 1.1.0 release.
-General               : libkdcraw dependency set to 1.1.0 release.
-DNGConverter          : Update Adobe DNG sdk to 1.3.0.
+General                 : libkexiv2 dependency set to 1.1.0 release.
+General                 : libkdcraw dependency set to 1.1.0 release.
+DNGConverter            : Update Adobe DNG sdk to 1.3.0.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> PrintWizard   : 232382 : Setting custom page size is impossible.
-002 ==> Libkdcraw     : 221542 : Build fails due to ambiguities.
-003 ==> DngConverter  : 191907 : DNG Converter damages white balance metadata.
-004 ==> DngConverter  : 233088 : Compile error on Win32 with MinGW4.
-005 ==> DngConverter  : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
-006 ==> AcquireImages : 233676 : desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
-007 ==> General       : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
-008 ==> 
+001 ==> PrintWizard     : 232382 : Setting custom page size is impossible.
+002 ==> Libkdcraw       : 221542 : Build fails due to ambiguities.
+003 ==> DngConverter    : 191907 : DNG Converter damages white balance metadata.
+004 ==> DngConverter    : 233088 : Compile error on Win32 with MinGW4.
+005 ==> DngConverter    : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
+006 ==> AcquireImages   : 233676 : desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
+007 ==> General         : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
+008 ==> PicasaWebExport : 233728 : digiKam picasawebexport unable to display my picasaweb.
+009 ==> 
+
