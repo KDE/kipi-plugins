@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "plugin_picasawebexport.h"
 #include "plugin_picasawebexport.moc"
 
 // C ANSI includes
@@ -55,8 +54,8 @@ extern "C"
 K_PLUGIN_FACTORY( PicasawebExportFactory, registerPlugin<Plugin_PicasawebExport>(); )
 K_EXPORT_PLUGIN ( PicasawebExportFactory("kipiplugin_picasawebexport") )
 
-Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const QVariantList&)
-                      : KIPI::Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
+Plugin_PicasawebExport::Plugin_PicasawebExport(QObject* parent, const QVariantList&)
+                      : Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
 {
     m_dlgExport = 0;
     m_dlgImport = 0;
@@ -66,7 +65,7 @@ Plugin_PicasawebExport::Plugin_PicasawebExport(QObject *parent, const QVariantLi
 
 void Plugin_PicasawebExport::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_picasawebexport");
 
@@ -90,7 +89,7 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
 
     addAction(m_actionImport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -109,7 +108,7 @@ Plugin_PicasawebExport::~Plugin_PicasawebExport()
 
 void Plugin_PicasawebExport::slotExport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -137,7 +136,7 @@ void Plugin_PicasawebExport::slotExport()
 
 void Plugin_PicasawebExport::slotImport()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -163,13 +162,13 @@ void Plugin_PicasawebExport::slotImport()
     m_dlgImport->show();
 }
 
-KIPI::Category Plugin_PicasawebExport::category( KAction* action ) const
+Category Plugin_PicasawebExport::category( KAction* action ) const
 {
     if (action == m_actionExport)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     else if (action == m_actionImport)
-        return KIPI::ImportPlugin;
+        return ImportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }

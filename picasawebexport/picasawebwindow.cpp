@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "picasawebwindow.h"
 #include "picasawebwindow.moc"
 
 // Qt includes
@@ -63,13 +62,11 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // Local includes
 
 #include "imageslist.h"
-#include "kpaboutdata.h"
 #include "newalbumdialog.h"
 #include "picasawebalbum.h"
 #include "picasawebitem.h"
@@ -83,7 +80,7 @@ namespace KIPIPicasawebExportPlugin
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
                                  bool import, QWidget* /*parent*/)
-          : KDialog(0)
+               : KDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -116,7 +113,6 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
         m_widget->setMinimumSize(700, 500);
     }
 
-
     connect(m_widget, SIGNAL( signalUserChangeRequest(bool) ),
             this, SLOT( slotUserChangeRequest(bool)) );
 
@@ -134,15 +130,15 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
 
     // ------------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("PicasaWeb Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collections to "
-                                                 "PicasaWeb web service."),
-                                           ki18n( "(c) 2007-2009, Vardhman Jain\n"
-                                           "(c) 2008-2009, Gilles Caulier\n"
-                                           "(c) 2009, Luka Renko\n"
-                                           "(c) 2010, Jens Mueller" ));
+    m_about = new KPAboutData(ki18n("PicasaWeb Export"),
+                              0,
+                              KAboutData::License_GPL,
+                              ki18n("A Kipi plugin to export image collections to "
+                                    "PicasaWeb web service."),
+                              ki18n( "(c) 2007-2009, Vardhman Jain\n"
+                              "(c) 2008-2010, Gilles Caulier\n"
+                              "(c) 2009, Luka Renko\n"
+                              "(c) 2010, Jens Mueller" ));
 
     m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");

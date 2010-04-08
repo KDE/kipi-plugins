@@ -20,12 +20,16 @@
  *
  * ============================================================ */
 
-#include "picasawebreplacedialog.h"
+#include "picasawebreplacedialog.moc"
+
+// Qt includes
 
 #include <QtGui/QLabel>
 #include <QtGui/QLayout>
 #include <QPainter>
 #include <QTimer>
+
+// KDE includes
 
 #include <kpushbutton.h>
 #include <klocale.h>
@@ -38,40 +42,46 @@ namespace KIPIPicasawebExportPlugin
 class PicasawebReplaceDialog::PicasawebReplaceDialogPrivate
 {
 public:
-    PicasawebReplaceDialogPrivate(){
-        bCancel = 0;
-        bAdd = bAddAll = bReplace = bReplaceAll = 0;
-        iface = 0;
-        lbSrc = lbDest = 0;
-        progressPix = SmallIcon("process-working", 22);
+
+    PicasawebReplaceDialogPrivate()
+    {
+        bCancel       = 0;
+        bAdd          = 0;
+        bAddAll       = 0;
+        bReplace      = 0;
+        bReplaceAll   = 0;
+        iface         = 0;
+        lbSrc         = 0;
+        lbDest        = 0;
+        progressPix   = SmallIcon("process-working", 22);
         progressCount = 0;
         progressTimer = 0;
     }
-    KPushButton *bCancel;
-    KPushButton *bAdd;
-    KPushButton *bAddAll;
-    KPushButton *bReplace;
-    KPushButton *bReplaceAll;
-    KUrl src;
-    KUrl dest;
-    KIPI::Interface *iface;
-    QLabel *lbSrc;
-    QLabel *lbDest;
-    QByteArray buffer;
-    QPixmap mimePix;
-    QPixmap progressPix;
-    int progressCount;
-    QTimer* progressTimer;
+    KPushButton* bCancel;
+    KPushButton* bAdd;
+    KPushButton* bAddAll;
+    KPushButton* bReplace;
+    KPushButton* bReplaceAll;
+    KUrl         src;
+    KUrl         dest;
+    Interface*   iface;
+    QLabel*      lbSrc;
+    QLabel*      lbDest;
+    QByteArray   buffer;
+    QPixmap      mimePix;
+    QPixmap      progressPix;
+    int          progressCount;
+    QTimer*      progressTimer;
 };
 
-PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget *parent, const QString & _caption,
-                                               KIPI::Interface *_iface, const KUrl &_src, const KUrl &_dest)
- : QDialog(parent), d(new PicasawebReplaceDialogPrivate)
+PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString & _caption,
+                                               Interface* _iface, const KUrl& _src, const KUrl& _dest)
+                      : QDialog(parent), d(new PicasawebReplaceDialogPrivate)
 {
     setObjectName("PicasawebReplaceDialog");
 
-    d->src = _src;
-    d->dest = _dest;
+    d->src   = _src;
+    d->dest  = _dest;
     d->iface = _iface;
 
     setWindowTitle(_caption);
@@ -97,7 +107,7 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget *parent, const QString & 
 
     QVBoxLayout* pLayout = new QVBoxLayout(this);
     pLayout->addStrut(360);	// makes dlg at least that wide
-    
+
     QGridLayout * gridLayout = new QGridLayout();
     pLayout->addLayout(gridLayout);
 
@@ -272,6 +282,5 @@ void PicasawebReplaceDialog::slotProgressTimerDone()
 
     d->progressTimer->start(300);
 }
-
 
 } // namespace KIPIPicasawebExportPlugin

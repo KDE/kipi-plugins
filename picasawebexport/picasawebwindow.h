@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
@@ -41,6 +41,8 @@
 
 // local includes
 
+#include "kpaboutdata.h"
+
 class QCloseEvent;
 
 class KUrl;
@@ -49,13 +51,16 @@ class KPasswordDialog;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -73,7 +78,7 @@ class PicasawebWindow : public KDialog
 
 public:
 
-    PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
+    PicasawebWindow(Interface* interface, const QString& tmpFolder,
                     bool import, QWidget *parent);
     ~PicasawebWindow();
 
@@ -115,34 +120,36 @@ private:
     void readSettings();
     void writeSettings();
 
-    void authenticate(const QString& token = "", const QString& username = "", const QString& password = "");
+    void authenticate(const QString& token = QString(),
+                      const QString& username = QString(),
+                      const QString& password = QString());
 
     void buttonStateChange(bool state);
 
 private:
 
-    bool                      m_import;
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
-    QString                   m_tmpDir;
-    QString                   m_tmpPath;
+    bool                                      m_import;
+    unsigned int                              m_imagesCount;
+    unsigned int                              m_imagesTotal;
+    QString                                   m_tmpDir;
+    QString                                   m_tmpPath;
 
-    QString                   m_token;
-    QString                   m_username;
-    QString                   m_password;
-    QString                   m_currentAlbumID;
+    QString                                   m_token;
+    QString                                   m_username;
+    QString                                   m_password;
+    QString                                   m_currentAlbumID;
 
-    int                       m_renamingOpt;
+    int                                       m_renamingOpt;
 
-    QLinkedList< QPair<KUrl,PicasaWebPhoto> >  m_transferQueue;
+    QLinkedList< QPair<KUrl,PicasaWebPhoto> > m_transferQueue;
 
-    PicasawebTalker          *m_talker;
-    PicasawebWidget          *m_widget;
-    PicasawebNewAlbum        *m_albumDlg;
+    PicasawebTalker*                          m_talker;
+    PicasawebWidget*                          m_widget;
+    PicasawebNewAlbum*                        m_albumDlg;
 
-    KIPI::Interface          *m_interface;
+    Interface*                                m_interface;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KPAboutData*                              m_about;
 };
 
 } // namespace KIPIPicasawebExportPlugin

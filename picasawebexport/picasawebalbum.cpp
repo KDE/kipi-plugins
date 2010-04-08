@@ -20,10 +20,10 @@
  *
  * ============================================================ */
 
-#include "picasawebalbum.h"
 #include "picasawebalbum.moc"
 
 // Qt includes
+
 #include <QFormLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -31,6 +31,7 @@
 #include <QRadioButton>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
@@ -38,13 +39,14 @@
 #include <KTextEdit>
 
 // local includes
+
 #include <picasawebitem.h>
 
 namespace KIPIPicasawebExportPlugin
 {
 
 PicasawebNewAlbum::PicasawebNewAlbum(QWidget* parent)
-           : KDialog(parent)
+                 : KDialog(parent)
 {
     QString header(i18n("Picasaweb New Album"));
     setWindowTitle(header);
@@ -123,9 +125,9 @@ PicasawebNewAlbum::~PicasawebNewAlbum()
 
 void PicasawebNewAlbum::getAlbumProperties(PicasaWebAlbum &album)
 {
-    album.title = m_titleEdt->text();
+    album.title       = m_titleEdt->text();
     album.description = m_descEdt->toPlainText();
-    album.location = m_locEdt->text();
+    album.location    = m_locEdt->text();
 
     if (m_publicRBtn->isChecked())
         album.access = QString("public");
@@ -135,7 +137,7 @@ void PicasawebNewAlbum::getAlbumProperties(PicasaWebAlbum &album)
         album.access = QString("protected");
 
     long long timestamp = m_dtEdt->dateTime().toTime_t();
-    album.timestamp = QString("%1").arg(timestamp * 1000);
+    album.timestamp     = QString("%1").arg(timestamp * 1000);
 }
 
 } // namespace KIPIPicasawebExportPlugin

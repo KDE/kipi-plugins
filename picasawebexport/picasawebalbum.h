@@ -24,10 +24,12 @@
 #define PICASAWEBALBUM_H
 
 // Qt includes
+
 #include <QRadioButton>
 #include <QDateTimeEdit>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
@@ -50,19 +52,20 @@ public:
     PicasawebNewAlbum(QWidget* parent);
     ~PicasawebNewAlbum();
 
-    void getAlbumProperties(PicasaWebAlbum &album);
-    
+    void getAlbumProperties(PicasaWebAlbum& album);
+
 private:
-    KLineEdit       *m_titleEdt;
-    KTextEdit       *m_descEdt;
-    KLineEdit       *m_locEdt;
-    QDateTimeEdit   *m_dtEdt;
-  
-    QRadioButton    *m_publicRBtn;
-    QRadioButton    *m_unlistedRBtn;
-    QRadioButton    *m_protectedRBtn;
 
     friend class PicasawebWindow;
+
+    KLineEdit*     m_titleEdt;
+    KTextEdit*     m_descEdt;
+    KLineEdit*     m_locEdt;
+    QDateTimeEdit* m_dtEdt;
+
+    QRadioButton*  m_publicRBtn;
+    QRadioButton*  m_unlistedRBtn;
+    QRadioButton*  m_protectedRBtn;
 };
 
 } // namespace KIPIPicasawebExportPlugin

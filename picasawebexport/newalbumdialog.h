@@ -40,7 +40,8 @@ class NewAlbumDialog : public QDialog//, public Ui::NewAlbumDialog
 
 public:
 
-    NewAlbumDialog( QWidget *parent ) : QDialog( parent )
+    NewAlbumDialog( QWidget* parent ) 
+        : QDialog( parent )
     {
         //setupUi( this );
     }

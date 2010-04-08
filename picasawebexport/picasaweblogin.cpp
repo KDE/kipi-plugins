@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "picasaweblogin.h"
 #include "picasaweblogin.moc"
 
 // Qt includes

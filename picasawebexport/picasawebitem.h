@@ -53,6 +53,8 @@ public:
     QStringList tags;
 };
 
+// -----------------------------------------------------------------
+
 class PicasaWebPhoto
 {
 
@@ -66,20 +68,20 @@ public:
         gpsLat = "";
     }
 
-    QString   id;
-    QString   title;
-    QString   timestamp;
-    QString   description;
-    QString   location;
-    QString   access;
-    bool      canComment;
+    QString     id;
+    QString     title;
+    QString     timestamp;
+    QString     description;
+    QString     location;
+    QString     access;
+    bool        canComment;
     QStringList tags;
-    QString   mimeType;
-    QString   gpsLon;
-    QString   gpsLat;
-    KUrl      originalURL;
-    KUrl      thumbURL;
-    KUrl      editUrl;
+    QString     mimeType;
+    QString     gpsLon;
+    QString     gpsLat;
+    KUrl        originalURL;
+    KUrl        thumbURL;
+    KUrl        editUrl;
 };
 
 } // namespace KIPIPicasawebExportPlugin

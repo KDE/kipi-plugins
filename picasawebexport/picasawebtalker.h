@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -121,16 +121,16 @@ private Q_SLOTS:
 
 private:
 
-    QWidget*   m_parent;
-    QByteArray m_buffer;
-    QString    m_token;
-    QString    m_username;
-    QString    m_password;
+    QWidget*                    m_parent;
+    QByteArray                  m_buffer;
+    QString                     m_token;
+    QString                     m_username;
+    QString                     m_password;
 
     QMap<KIO::Job*, QByteArray> m_jobData;
-    KIO::Job*  m_job;
+    KIO::Job*                   m_job;
 
-    State      m_state;
+    State                       m_state;
 };
 
 } // namespace KIPIPicasawebExportPlugin

@@ -9,6 +9,7 @@
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2010 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,6 +30,15 @@
 
 #include <QWidget>
 
+// LibKIPI includes
+
+#include <libkipi/interface.h>
+#include <libkipi/uploadwidget.h>
+
+// Local includes
+
+#include "imageslist.h"
+
 class QLabel;
 class QSpinBox;
 class QCheckBox;
@@ -38,16 +48,8 @@ class KPushButton;
 class KComboBox;
 class KLineEdit;
 
-namespace KIPI
-{
-    class Interface;
-    class UploadWidget;
-}
-
-namespace KIPIPlugins
-{
-    class ImagesList;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -58,14 +60,14 @@ class PicasawebWidget : public QWidget
 
 public:
 
-    PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool import);
+    PicasawebWidget(QWidget* parent, Interface* iface, bool import);
     ~PicasawebWidget();
 
-    void updateLabels(const QString& name = "");
+    void updateLabels(const QString& name = QString());
 
     QString getDestinationPath();
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    ImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
@@ -80,30 +82,30 @@ private Q_SLOTS:
 
 private:
 
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameLbl;
-    QLabel*                  m_userName;
-
-    QRadioButton*            m_anonymousRBtn;
-    QRadioButton*            m_accountRBtn;
-
-    QCheckBox*               m_resizeChB;
-
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
-
-    KComboBox*               m_albumsCoB;
-
-    KPushButton*             m_newAlbumBtn;
-    KPushButton*             m_reloadAlbumsBtn;
-    KPushButton*             m_changeUserBtn;
-
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
-
-    QProgressBar*            m_progressBar;
-
     friend class PicasawebWindow;
+
+    QLabel*       m_headerLbl;
+    QLabel*       m_userNameLbl;
+    QLabel*       m_userName;
+
+    QRadioButton* m_anonymousRBtn;
+    QRadioButton* m_accountRBtn;
+
+    QCheckBox*    m_resizeChB;
+
+    QSpinBox*     m_dimensionSpB;
+    QSpinBox*     m_imageQualitySpB;
+
+    KComboBox*    m_albumsCoB;
+
+    KPushButton*  m_newAlbumBtn;
+    KPushButton*  m_reloadAlbumsBtn;
+    KPushButton*  m_changeUserBtn;
+
+    ImagesList*   m_imgList;
+    UploadWidget* m_uploadWidget;
+
+    QProgressBar* m_progressBar;
 };
 
 } // namespace KIPIPicasawebExportPlugin

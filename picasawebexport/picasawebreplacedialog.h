@@ -32,6 +32,8 @@
 
 #include <libkipi/interface.h>
 
+using namespace KIPI;
+
 namespace KIPIPicasawebExportPlugin
 {
 
@@ -46,11 +48,13 @@ class PicasawebReplaceDialog : public QDialog
     Q_OBJECT
 
 public:
-    PicasawebReplaceDialog(QWidget *parent, const QString & caption,
-                           KIPI::Interface *iface, const KUrl & src, const KUrl & dest);
+
+    PicasawebReplaceDialog(QWidget* parent, const QString& caption,
+                           Interface* iface, const KUrl& src, const KUrl& dest);
     ~PicasawebReplaceDialog();
 
 public Q_SLOTS:
+
     void cancelPressed();
     void addPressed();
     void addAllPressed();
@@ -58,19 +62,23 @@ public Q_SLOTS:
     void replaceAllPressed();
 
 private Q_SLOTS:
+
     void slotResult(KJob *job);
     void slotData(KIO::Job *job, const QByteArray& data);
     void slotThumbnail(const KUrl& url, const QPixmap& pix);
     void slotProgressTimerDone();
 
 private:
+
     QPixmap setProgressAnimation(const QPixmap& thumb, const QPixmap& pix);
 
+private:
+
     class PicasawebReplaceDialogPrivate;
+
     PicasawebReplaceDialogPrivate* const d;
 };
 
 } // namespace KIPIPicasawebExportPlugin
 
 #endif // PICASAWEBREPLACEDIALOG_H
-

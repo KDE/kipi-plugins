@@ -9,6 +9,7 @@
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2010 by Caulier Gilles <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "picasawebwidget.h"
 #include "picasawebwidget.moc"
 
 // Qt includes
@@ -45,20 +45,11 @@
 #include <KComboBox>
 #include <KPushButton>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-#include <libkipi/uploadwidget.h>
-
-// Local includes
-
-#include "imageslist.h"
-
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool import)
-        : QWidget(parent)
+PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
+               : QWidget(parent)
 {
     setObjectName("PicasawebWidget");
 
@@ -66,8 +57,8 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new ImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -103,11 +94,11 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
         KGuiItem(i18n("Change Account"), "system-switch-user",
                  i18n("Change Picasaweb Account used to authenticate")), accountBox);
 
-    accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
-    accountBoxLayout->addWidget(m_accountRBtn,          1, 0, 1, 2);
-    accountBoxLayout->addWidget(m_userNameLbl,          2, 0, 1, 1);
-    accountBoxLayout->addWidget(m_userName,             2, 1, 1, 1);
-    accountBoxLayout->addWidget(m_changeUserBtn,        3, 1, 1, 1);
+    accountBoxLayout->addWidget(m_anonymousRBtn, 0, 0, 1, 2);
+    accountBoxLayout->addWidget(m_accountRBtn,   1, 0, 1, 2);
+    accountBoxLayout->addWidget(m_userNameLbl,   2, 0, 1, 1);
+    accountBoxLayout->addWidget(m_userName,      2, 1, 1, 1);
+    accountBoxLayout->addWidget(m_changeUserBtn, 3, 1, 1, 1);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -128,9 +119,9 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
             KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
                      i18n("Reload album list")), accountBox);
 
-    albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
-    albumsBoxLayout->addWidget(m_newAlbumBtn,       1, 3, 1, 1);
-    albumsBoxLayout->addWidget(m_reloadAlbumsBtn,   1, 4, 1, 1);
+    albumsBoxLayout->addWidget(m_albumsCoB,       0, 0, 1, 5);
+    albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
+    albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
 
     // ------------------------------------------------------------------------
 
@@ -169,11 +160,11 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, KIPI::Interface *iface, bool i
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
-    optionsBoxLayout->addWidget(m_resizeChB,        0, 0, 1, 5);
-    optionsBoxLayout->addWidget(imageQualityLbl,    1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpB,  1, 2, 1, 1);
-    optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_resizeChB,       0, 0, 1, 5);
+    optionsBoxLayout->addWidget(imageQualityLbl,   1, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpB, 1, 2, 1, 1);
+    optionsBoxLayout->addWidget(dimensionLbl,      2, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpB,    2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
@@ -237,7 +228,7 @@ PicasawebWidget::~PicasawebWidget()
 {
 }
 
-KIPIPlugins::ImagesList* PicasawebWidget::imagesList() const
+ImagesList* PicasawebWidget::imagesList() const
 {
     return m_imgList;
 }
@@ -255,9 +246,9 @@ QString PicasawebWidget::getDestinationPath()
 void PicasawebWidget::updateLabels(const QString& name)
 {
     m_userName->setText(QString("<b>%1</b>").arg(name));
-    m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.de/%1'>"
-                                   "<font color=\"#9ACD32\">Picasaweb</font>"
-                                   "</a></h2></b>").arg(name));
+    m_headerLbl->setText(QString("<b><h2><a href='http://picasaweb.google.com/%1'>"
+                                 "<font color=\"#9ACD32\">Picasaweb</font>"
+                                 "</a></h2></b>").arg(name));
 }
 
 void PicasawebWidget::slotChangeUserClicked()
