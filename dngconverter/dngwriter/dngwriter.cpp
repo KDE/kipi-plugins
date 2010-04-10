@@ -181,17 +181,50 @@ int DNGWriter::convert()
         QFileInfo          outputInfo(dngFilePath);
         QByteArray         rawData;
         DcrawInfoContainer identify;
+        DcrawInfoContainer identifyMake;
 
         // -----------------------------------------------------------------------------------------
 
         kDebug() << "DNGWriter: Loading RAW data from " << inputInfo.fileName() ;
 
         KDcraw rawProcessor;
-        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify))
+        if (!rawProcessor.rawFileIdentify(identifyMake, inputFile()))
         {
-            kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+            kDebug() << "DNGWriter: Reading RAW file failed. Aborted..." ;
             return -1;
         }
+
+        dng_rect activeArea;
+        // TODO: need to get correct default crop size to avoid artifacts at the borders
+        int widthCrop  = 0;
+        int heightCrop = 0;
+
+        if (identifyMake.make == "Canon")
+        {
+            if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, true))
+            {
+                kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+                return -1;
+            }
+            activeArea = dng_rect(identify.topMargin,
+                                  identify.leftMargin,
+                                  identify.imageSize.height() - identify.bottomMargin,
+                                  identify.imageSize.width() - identify.rightMargin);
+            widthCrop  = identify.imageSize.width() - identify.leftMargin - identify.rightMargin;
+            heightCrop = identify.imageSize.height() - identify.bottomMargin - identify.topMargin;
+        }
+        else
+        {
+            if (!rawProcessor.extractRAWData(inputFile(), rawData, identify))
+            {
+                kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+                return -1;
+            }
+            activeArea = dng_rect(identify.imageSize.height(), identify.imageSize.width());
+            widthCrop  = identify.imageSize.width();
+            heightCrop = identify.imageSize.height();
+        }
+
 
         if (d->cancel) return -2;
 
@@ -400,11 +433,11 @@ int DNGWriter::convert()
         ifd.fChromaBlurRadius          = dng_urational(0, 0);
         ifd.fAntiAliasStrength         = dng_urational(100, 100);
 
-        ifd.fActiveArea                = rect;
+        ifd.fActiveArea                = activeArea;
         ifd.fDefaultCropOriginH        = dng_urational(0, 1);
         ifd.fDefaultCropOriginV        = dng_urational(0, 1);
-        ifd.fDefaultCropSizeH          = dng_urational(width, 1);
-        ifd.fDefaultCropSizeV          = dng_urational(height, 1);
+        ifd.fDefaultCropSizeH          = dng_urational(widthCrop, 1);
+        ifd.fDefaultCropSizeV          = dng_urational(heightCrop, 1);
 
         ifd.fMaskedAreaCount           = 0;
         ifd.fLosslessJPEGBug16         = false;
