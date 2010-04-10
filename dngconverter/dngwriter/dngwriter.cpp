@@ -228,7 +228,8 @@ int DNGWriter::convert()
         }
 
         // Check if CFA layout is supported by DNG SDK.
-        int bayerMosaic;
+        int bayerMosaic = 0;
+        uint32 quadFilter = 0;
 
         if (identify.filterPattern == QString("GRBGGRBGGRBGGRBG"))
         {
@@ -246,6 +247,39 @@ int DNGWriter::convert()
         {
             bayerMosaic = 3;
         }
+        else if (identify.rawColors == 4)
+        {
+            if (identify.filterPattern.length() != 16)
+            {
+                kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
+                return -1;
+            }
+            for (int i = 0; i < 16; i++)
+            {
+                quadFilter = quadFilter >> 2;
+                if (identify.filterPattern[i] == 'G')
+                {
+                    quadFilter |= 0x00000000;
+                }
+                else if (identify.filterPattern[i] == 'M')
+                {
+                    quadFilter |= 0x40000000;
+                }
+                else if (identify.filterPattern[i] == 'C')
+                {
+                    quadFilter |= 0x80000000;
+                }
+                else if (identify.filterPattern[i] == 'Y')
+                {
+                    quadFilter |= 0xC0000000;
+                }
+                else
+                {
+                    kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
+                    return -1;
+                }
+            }
+        }
         else
         {
             kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
@@ -253,7 +287,7 @@ int DNGWriter::convert()
         }
 
         // Check if number of Raw Color components is supported.
-        if (identify.rawColors != 3)
+        if ((identify.rawColors != 3) && (identify.rawColors != 4))
         {
             kDebug() << "DNGWriter: Number of Raw color components not supported. Aborted..." ;
             return -1;
@@ -276,26 +310,13 @@ int DNGWriter::convert()
 */
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: Formating RAW data to memory" ;
-
-        std::vector<unsigned short> raw_data;
-        raw_data.resize(rawData.size());
-        const unsigned short* dp = (const unsigned short*)rawData.data();
-        for (uint i = 0; i < raw_data.size()/2; i++)
-        {
-            raw_data[i] = *dp;
-            *dp++;
-        }
-
         if (d->cancel) return -2;
-
-        // -----------------------------------------------------------------------------------------
 
         kDebug() << "DNGWriter: DNG memory allocation and initialization" ;
 
         dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
         dng_memory_stream stream(memalloc);
-        stream.Put(&raw_data.front(), raw_data.size()*sizeof(unsigned short));
+        stream.Put(rawData.data(), rawData.size());
 
         dng_rect rect(height, width);
         DNGWriterHost host(d, &memalloc);
@@ -408,19 +429,53 @@ int DNGWriter::convert()
         negative->SetLocalName(QString("%1 %2").arg(identify.make).arg(identify.model).toAscii());
         negative->SetOriginalRawFileName(inputInfo.fileName().toAscii());
 
-        negative->SetColorChannels(3);
-        negative->SetColorKeys(colorKeyRed, colorKeyGreen, colorKeyBlue);
+        negative->SetColorChannels(identify.rawColors);
 
+        ColorKeyCode colorCodes[4] = {colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum};
+        for(int i = 0; i < qMax(4, identify.colorKeys.length()); i++)
+        {
+            if (identify.colorKeys[i] == 'R')
+            {
+                colorCodes[i] = colorKeyRed;
+            }
+            else if (identify.colorKeys[i] == 'G')
+            {
+                colorCodes[i] = colorKeyGreen;
+            }
+            else if (identify.colorKeys[i] == 'B')
+            {
+                colorCodes[i] = colorKeyBlue;
+            }
+            else if (identify.colorKeys[i] == 'C')
+            {
+                colorCodes[i] = colorKeyCyan;
+            }
+            else if (identify.colorKeys[i] == 'M')
+            {
+                colorCodes[i] = colorKeyMagenta;
+            }
+            else if (identify.colorKeys[i] == 'Y')
+            {
+                colorCodes[i] = colorKeyYellow;
+            }
+        }
+
+        negative->SetColorKeys(colorCodes[0], colorCodes[1], colorCodes[2], colorCodes[3]);
+
+        if (identify.rawColors == 4)
+        {
+            negative->SetQuadMosaic(quadFilter);
+        }
         /*
-        if (bayerMosaic == 3)
+        else if (bayerMosaic == 3)
         {
             // TODO: Fuji is special case. Need to setup different bayer rules here.
             // It do not work. Need indeep investiguations.
             // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
             negative->SetFujiMosaic(0);
         }
-        else
         */
+        else
         {
             // Standard bayer mosaicing. All work fine there.
             // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
@@ -467,35 +522,73 @@ int DNGWriter::convert()
 
         // -------------------------------------------------------------------------------
 
-        // Set Camera->XYZ Color matrix as profile.
-        dng_matrix_3by3 matrix(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
-        dng_matrix_3by3 camXYZ;
 
         AutoPtr<dng_camera_profile> prof(new dng_camera_profile);
         prof->SetName(QString("%1 %2").arg(identify.make).arg(identify.model).toAscii());
 
-        camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
-        camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
-        camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
-        camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
-        camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
-        camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
-        camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
-        camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
-        camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
+        // Set Camera->XYZ Color matrix as profile.
+        dng_matrix matrix;
+        switch (identify.rawColors)
+        {
+        case 3:
+            {
+                dng_matrix_3by3 camXYZ;
+                camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
+                camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
+                camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
+                camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
+                camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
+                camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
+                camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
+                camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
+                camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
+                if (camXYZ.MaxEntry() == 0.0)
+                {
+                    kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
+                    camXYZ = dng_matrix_3by3(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                }
 
-        if (camXYZ.MaxEntry() == 0.0)
-            kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
-        else
-            matrix = camXYZ;
+                matrix = camXYZ;
+
+                break;
+            }
+        case 4:
+            {
+                dng_matrix_4by3 camXYZ;
+                camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
+                camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
+                camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
+                camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
+                camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
+                camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
+                camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
+                camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
+                camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
+                camXYZ[3][0] = identify.cameraXYZMatrix[2][1];
+                camXYZ[3][1] = identify.cameraXYZMatrix[2][2];
+                camXYZ[3][2] = identify.cameraXYZMatrix[2][3];
+                if (camXYZ.MaxEntry() == 0.0)
+                {
+                    kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
+                    camXYZ = dng_matrix_4by3(0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+                }
+
+                matrix = camXYZ;
+
+                break;
+             }
+        }
 
         prof->SetColorMatrix1((dng_matrix) matrix);
         prof->SetCalibrationIlluminant1(lsD65);
         negative->AddProfile(prof);
 
-        negative->SetCameraNeutral(dng_vector_3(1/identify.cameraMult[0],
-                                                1/identify.cameraMult[1],
-                                                1/identify.cameraMult[2]));
+        dng_vector camNeutral(identify.rawColors);
+        for (int i = 0; i < identify.rawColors; i++)
+        {
+            camNeutral[i] = 1.0/identify.cameraMult[i];
+        }
+        negative->SetCameraNeutral(camNeutral);
 
         if (d->cancel) return -2;
 
