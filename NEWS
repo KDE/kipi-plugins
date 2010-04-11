@@ -19,7 +19,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
 009 ==> AdvancedSlideShow : 225153 : digiKam advanced slide show crashes everytimes.
 010 ==> JPEGLossLess      : 234021 : digikam crash on loading.
-012 ==> 
+012 ==> PicasaWebExport   : 234099 : digiKam picasa web export labels hierarchy disappears.
+013 ==> 
+
 
 
 
