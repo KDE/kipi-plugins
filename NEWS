@@ -21,7 +21,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> JPEGLossLess      : 234021 : digikam crash on loading.
 012 ==> PicasaWebExport   : 234099 : digiKam picasa web export labels hierarchy disappears.
 013 ==> GPSSync           : 234073 : digiKam gpssync no altitude.
-014 ==> 
+014 ==> GPSSync           : 233725 : digiKam gpssync unable to geolocalize a picture or movie.
+015 ==> 
 
 
 
