@@ -17,7 +17,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> AcquireImages     : 233676 : desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
 007 ==> General           : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
 008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
-009 ==> AdvancedSlideShow : 225153 : digiKam adv slide show crashes everytimes.
-010 ==> 
+009 ==> AdvancedSlideShow : 225153 : digiKam advanced slide show crashes everytimes.
+010 ==> JPEGLossLess      : 234021 : digikam crash on loading.
+012 ==> 
+
 
 
