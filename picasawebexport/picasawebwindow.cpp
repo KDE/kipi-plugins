@@ -314,11 +314,9 @@ void PicasawebWindow::slotLoginDone(int errCode, const QString& errMsg)
     if (errCode == 0 /*TODO&& m_talker->loggedIn()*/)
     {
         buttonStateChange(true);
-        m_username = m_talker->getUserName();
         m_token = m_talker->token();
-        m_widget->updateLabels(m_username);
         m_widget->m_albumsCoB->clear();
-        m_talker->listAlbums(m_username);
+        m_talker->listAlbums(m_talker->getUserName());
     }
     else
     {
@@ -334,6 +332,9 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
         KMessageBox::error(this, i18n("Picasaweb Call Failed: %1\n", errMsg));
         return;
     }
+
+    m_username = m_talker->getUserName();
+    m_widget->updateLabels(m_username);
 
     m_widget->m_albumsCoB->clear();
     for (int i = 0; i < albumsList.size(); ++i)

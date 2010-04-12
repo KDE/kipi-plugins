@@ -132,7 +132,8 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     QString accountType = "GOOGLE";
 
     QStringList qsl;
-    qsl.append("Email="+QUrl::toPercentEncoding(username_edit));
+    // do not encode username to support email adress
+    qsl.append("Email="+username_edit);
     qsl.append("Passwd="+QUrl::toPercentEncoding(password_edit));
     qsl.append("accountType="+accountType);
     qsl.append("service=lh2");
@@ -145,7 +146,6 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_state = FE_GETTOKEN;
     emit signalLoginProgress(1, 2, "Getting the token");
-    //authProgressDlg->setLabelText(i18n("Getting the token"));
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -220,7 +220,8 @@ void PicasawebTalker::listAlbums(const QString& username)
         m_job = 0;
     }
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/" + QUrl::toPercentEncoding(username));
+    // do not encode username to support email adress
+    url.addPath("/user/" + username);
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
@@ -251,7 +252,7 @@ void PicasawebTalker::listPhotos(const QString& username,
         m_job = 0;
     }
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/" + QUrl::toPercentEncoding(username));
+    url.addPath("/user/" + username);
     url.addPath("/albumid/" + albumId);
     url.addQueryItem("thumbsize", "200");
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
@@ -732,6 +733,11 @@ void PicasawebTalker::parseResponseListAlbums(const QByteArray& data)
 
     while(!node.isNull())
     {
+        if(node.isElement() && node.nodeName() == "gphoto:user")
+        {
+            m_username = node.toElement().text();
+        }
+
         if (node.isElement() && node.nodeName() == "entry")
         {
             e = node.toElement();
