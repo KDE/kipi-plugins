@@ -252,12 +252,12 @@ int DNGWriter::convert()
         kDebug() << "--- CAM->XYZ:" ;
 
         QString matrixVal;
-        for(int i=0; i<12; i+=3)
+        for(int i=0; i<4; i++)
         {
             kDebug() << "                   "
-                     << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[0][ i ],
-                                                                    identify.cameraXYZMatrix[0][i+1],
-                                                                    identify.cameraXYZMatrix[0][i+2]);
+                     << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[i][0],
+                                                                    identify.cameraXYZMatrix[i][1],
+                                                                    identify.cameraXYZMatrix[i][2]);
         }
 
         // Check if CFA layout is supported by DNG SDK.
@@ -569,12 +569,12 @@ int DNGWriter::convert()
                 camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
                 camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
                 camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
-                camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
-                camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
-                camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
-                camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
-                camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
-                camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
+                camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
+                camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
+                camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
+                camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
+                camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
+                camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
                 if (camXYZ.MaxEntry() == 0.0)
                 {
                     kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
@@ -591,15 +591,15 @@ int DNGWriter::convert()
                 camXYZ[0][0] = identify.cameraXYZMatrix[0][0];
                 camXYZ[0][1] = identify.cameraXYZMatrix[0][1];
                 camXYZ[0][2] = identify.cameraXYZMatrix[0][2];
-                camXYZ[1][0] = identify.cameraXYZMatrix[0][3];
-                camXYZ[1][1] = identify.cameraXYZMatrix[1][0];
-                camXYZ[1][2] = identify.cameraXYZMatrix[1][1];
-                camXYZ[2][0] = identify.cameraXYZMatrix[1][2];
-                camXYZ[2][1] = identify.cameraXYZMatrix[1][3];
-                camXYZ[2][2] = identify.cameraXYZMatrix[2][0];
-                camXYZ[3][0] = identify.cameraXYZMatrix[2][1];
-                camXYZ[3][1] = identify.cameraXYZMatrix[2][2];
-                camXYZ[3][2] = identify.cameraXYZMatrix[2][3];
+                camXYZ[1][0] = identify.cameraXYZMatrix[1][0];
+                camXYZ[1][1] = identify.cameraXYZMatrix[1][1];
+                camXYZ[1][2] = identify.cameraXYZMatrix[1][2];
+                camXYZ[2][0] = identify.cameraXYZMatrix[2][0];
+                camXYZ[2][1] = identify.cameraXYZMatrix[2][1];
+                camXYZ[2][2] = identify.cameraXYZMatrix[2][2];
+                camXYZ[3][0] = identify.cameraXYZMatrix[3][0];
+                camXYZ[3][1] = identify.cameraXYZMatrix[3][1];
+                camXYZ[3][2] = identify.cameraXYZMatrix[3][2];
                 if (camXYZ.MaxEntry() == 0.0)
                 {
                     kDebug() << "DNGWriter: Warning, camera XYZ Matrix is null" ;
