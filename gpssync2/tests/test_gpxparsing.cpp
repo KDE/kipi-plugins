@@ -183,7 +183,9 @@ void TestGPXParsing::testFileLoading()
     QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
     QVERIFY(spyItemsCorrelated.isValid());
 
-    myParser.correlate(itemsToCorrelate, GPSDataParser::GPXCorrelationOptions());
+    GPSDataParser::GPXCorrelationOptions correlationOptions;
+    correlationOptions.maxGapTime = 0;
+    myParser.correlate(itemsToCorrelate, correlationOptions);
 
     while (spyItemsFinished.isEmpty())
     {
@@ -194,6 +196,5 @@ void TestGPXParsing::testFileLoading()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-//     for (int 
-    kDebug()<<myCorrelatedItems.first().coordinates;
+    QCOMPARE(myCorrelatedItems.first().coordinates, WMW2::WMWGeoCoordinate::fromGeoUrl("geo:18,7,0"));
 }
