@@ -23,8 +23,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> GPSSync           : 234073 : digiKam gpssync no altitude.
 014 ==> GPSSync           : 233725 : digiKam gpssync unable to geolocalize a picture or movie.
 015 ==> PicasaWebExport   : 216604 : digiKam crashes on export to picasa.
-016 ==> PicasaWebExport   : 230201 : error when trying export to picasa
-017 ==>
+016 ==> PicasaWebExport   : 230201 : error when trying export to picasa.
+017 ==> PicasaWebExport   : 216539 : picasaweb can't select movie to export.
+018 ==>
 
 
 

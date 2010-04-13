@@ -45,6 +45,8 @@
 #include <KComboBox>
 #include <KPushButton>
 
+#include "picasawebimglist.h"
+
 namespace KIPIPicasawebExportPlugin
 {
 
@@ -57,7 +59,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new ImagesList(iface, this);
+    m_imgList  = new PicasawebImagesList(iface, this);
     m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();

@@ -166,8 +166,8 @@ void ImageDialogPreview::showPreview(const KUrl& url)
 
         // Try to use libkexiv2 to identify image.
 
-        d->exiv2Iface.load(d->currentUrl.path());
-        if (d->exiv2Iface.hasExif() || d->exiv2Iface.hasXmp())
+        if (d->exiv2Iface.load(d->currentUrl.path()) &&
+            (d->exiv2Iface.hasExif() || d->exiv2Iface.hasXmp()))
         {
             make = d->exiv2Iface.getExifTagString("Exif.Image.Make");
             if (make.isEmpty())
