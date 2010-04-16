@@ -181,6 +181,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         return true;
     }
 
+    bool twoPass = (flip != JXFORM_NONE);
+
     //may be modified
     QString dest(destGiven);
 
@@ -209,8 +211,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     dstinfo.err->output_message = jpegtransform_jpeg_output_message;
 
     QFile input_file(src);
-    QFile output_file(dest);
-
     if (!input_file.open(QIODevice::ReadOnly))
     {
         kError() << "ImageRotate/ImageFlip: Error in opening input file";
@@ -218,6 +218,16 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         return false;
     }
 
+    // If twoPass is true, we need another file (src -> tempFile -> destGiven)
+    if (twoPass)
+    {
+        KTemporaryFile tempFile;
+        tempFile.setAutoRemove(false);
+        tempFile.open();
+        dest = tempFile.fileName();
+    }
+
+    QFile output_file(dest);
     if (!output_file.open(QIODevice::ReadWrite))
     {
         input_file.close();
@@ -242,26 +252,6 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     jcopy_markers_setup(&srcinfo, copyoption);
 
     (void) jpeg_read_header(&srcinfo, true);
-
-    bool twoPass = (flip != JXFORM_NONE);
-
-    // If twoPass is true, we need another file (src -> tempFile -> destGiven)
-    if (twoPass) 
-    {
-        KTemporaryFile tempFile;
-        tempFile.setAutoRemove(false);
-        tempFile.open();
-        dest = tempFile.fileName();
-    }
-
-    output_file.setFileName(dest);
-    if (!output_file.open(QIODevice::ReadWrite))
-    {
-        input_file.close();
-        kError() << "ImageRotate/ImageFlip: Error in opening output file";
-        err = i18n("Error in opening output file");
-        return false;
-    }
 
     // First rotate - execute even if rotate is JXFORM_NONE to apply new EXIF settings
     transformoption.transform = rotate;
