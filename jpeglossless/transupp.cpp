@@ -3,7 +3,7 @@
  *
  * Copyright (C) 1997-2009, Thomas G. Lane, Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
- * For conditions of distribution and use, see the accompanying README file.
+ * For conditions of distribution and use, see the accompanying libjpeg62.README file.
  *
  * This file contains image transformation routines and other utility code
  * used by the jpegtran sample application.  These are NOT part of the core
