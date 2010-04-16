@@ -78,6 +78,7 @@ const Matrix Matrix::rotate90flipVertical   ( 0, -1, -1,  0);
 struct jpegtransform_jpeg_error_mgr : public jpeg_error_mgr
 {
     jmp_buf setjmp_buffer;
+    QString error_message;
 };
 
 static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo);
@@ -90,6 +91,7 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
 
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
+    myerr->error_message = buffer;
 
 #ifdef ENABLE_DEBUG_MESSAGES
     kDebug() << buffer;
@@ -100,21 +102,25 @@ static void jpegtransform_jpeg_error_exit(j_common_ptr cinfo)
 
 static void jpegtransform_jpeg_emit_message(j_common_ptr cinfo, int msg_level)
 {
+    Q_UNUSED(cinfo)
     Q_UNUSED(msg_level)
+
+#ifdef ENABLE_DEBUG_MESSAGES
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
 
-#ifdef ENABLE_DEBUG_MESSAGES
     kDebug() << buffer << " (" << msg_level << ")";
 #endif
 }
 
 static void jpegtransform_jpeg_output_message(j_common_ptr cinfo)
 {
+    Q_UNUSED(cinfo)
+
+#ifdef ENABLE_DEBUG_MESSAGES
     char buffer[JMSG_LENGTH_MAX];
     (*cinfo->err->format_message)(cinfo, buffer);
 
-#ifdef ENABLE_DEBUG_MESSAGES
     kDebug() << buffer;
 #endif
 }
@@ -238,12 +244,22 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         return false;
     }
 
-    if (setjmp(jsrcerr.setjmp_buffer) || setjmp(jdsterr.setjmp_buffer))
+    if (setjmp(jsrcerr.setjmp_buffer))
     {
         jpeg_destroy_decompress(&srcinfo);
         jpeg_destroy_compress(&dstinfo);
         input_file.close();
         output_file.close();
+        err = i18n("The JPEG library reported an error: %1", jsrcerr.error_message);
+        return false;
+    }
+    if (setjmp(jdsterr.setjmp_buffer))
+    {
+        jpeg_destroy_decompress(&srcinfo);
+        jpeg_destroy_compress(&dstinfo);
+        input_file.close();
+        output_file.close();
+        err = i18n("The JPEG library reported an error: %1", jdsterr.error_message);
         return false;
     }
 
