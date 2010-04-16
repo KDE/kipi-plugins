@@ -189,8 +189,10 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     JCOPY_OPTION copyoption = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
 
+    transformoption.perfect         = false;
     transformoption.force_grayscale = false;
     transformoption.trim            = false;
+    transformoption.crop            = false;
 
     struct jpeg_decompress_struct srcinfo;
     struct jpeg_compress_struct dstinfo;
