@@ -184,7 +184,7 @@ void PicasawebTalker::checkToken(const QString& token)
     }
 
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
+    url.addPath("/user/" + m_username);
     kDebug() << " token value is " << token ;
     QString auth_string = "GoogleLogin auth=" + token;
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
@@ -331,7 +331,7 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     buffer.append(docMeta.toString().toUtf8());
 
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
+    url.addPath("/user/" + m_username);
     QString auth_string = "GoogleLogin auth=" + m_token;
     KIO::TransferJob* job = KIO::http_post(url, buffer, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
@@ -361,7 +361,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     }
 
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    url.addPath("/user/" + QUrl::toPercentEncoding(m_username));
+    url.addPath("/user/" + m_username);
     url.addPath("/albumid/" + albumId);
     QString     auth_string = "GoogleLogin auth=" + m_token;
     MPForm      form;

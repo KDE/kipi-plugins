@@ -31,6 +31,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
+#include <QButtonGroup>
 #include <QRadioButton>
 #include <QProgressBar>
 #include <QGridLayout>
@@ -162,12 +163,35 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
+    QSpacerItem* spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QLabel* tagsLbl = new QLabel(i18n("Tag path behavior:"), optionsBox);
+
+    QRadioButton* leafTagsBtn = new QRadioButton(i18n("Leaf tags only"), optionsBox);
+    leafTagsBtn->setWhatsThis(
+        i18n("Export only the leaf tags of tag hierachies"));
+    QRadioButton* splitTagsBtn = new QRadioButton(i18n("Split tags"), optionsBox);
+    splitTagsBtn->setWhatsThis(
+        i18n("Export the leaf tag and all ancestors as single tags."));
+    QRadioButton* combinedTagsBtn  = new QRadioButton(i18n("Combined String"), optionsBox);
+    combinedTagsBtn->setWhatsThis(
+        i18n("Build a combined tag string."));
+
+    m_tagsBGrp = new QButtonGroup(optionsBox);
+    m_tagsBGrp->addButton(leafTagsBtn, PwTagLeaf);
+    m_tagsBGrp->addButton(splitTagsBtn, PwTagSplit);
+    m_tagsBGrp->addButton(combinedTagsBtn, PwTagCombined);
+
     optionsBoxLayout->addWidget(m_resizeChB,       0, 0, 1, 5);
     optionsBoxLayout->addWidget(imageQualityLbl,   1, 1, 1, 1);
     optionsBoxLayout->addWidget(m_imageQualitySpB, 1, 2, 1, 1);
     optionsBoxLayout->addWidget(dimensionLbl,      2, 1, 1, 1);
     optionsBoxLayout->addWidget(m_dimensionSpB,    2, 2, 1, 1);
-    optionsBoxLayout->setRowStretch(3, 10);
+    optionsBoxLayout->addItem(spacer,              3, 0, 1, 5);
+    optionsBoxLayout->addWidget(tagsLbl,           4, 0, 1, 5);
+    optionsBoxLayout->addWidget(leafTagsBtn,       5, 1, 1, 4);
+    optionsBoxLayout->addWidget(splitTagsBtn,      6, 1, 1, 4);
+    optionsBoxLayout->addWidget(combinedTagsBtn,   7, 1, 1, 4);
+    optionsBoxLayout->setRowStretch(8, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 

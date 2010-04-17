@@ -54,6 +54,13 @@ using namespace KIPIPlugins;
 namespace KIPIPicasawebExportPlugin
 {
 
+enum PicasawebTagsBehaviour
+{
+    PwTagLeaf = 0,
+    PwTagSplit,
+    PwTagCombined
+};
+
 class PicasawebWidget : public QWidget
 {
     Q_OBJECT
@@ -97,6 +104,7 @@ private:
     QSpinBox*     m_imageQualitySpB;
 
     KComboBox*    m_albumsCoB;
+    QButtonGroup* m_tagsBGrp;
 
     KPushButton*  m_newAlbumBtn;
     KPushButton*  m_reloadAlbumsBtn;

@@ -32,6 +32,7 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QCloseEvent>
+#include <QButtonGroup>
 
 // KDE includes
 
@@ -279,6 +280,7 @@ void PicasawebWindow::readSettings()
 
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width", 1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 85));
+    m_widget->m_tagsBGrp->button(grp.readEntry("Tag Paths", 0))->setChecked(true);
 }
 
 void PicasawebWindow::writeSettings()
@@ -292,6 +294,7 @@ void PicasawebWindow::writeSettings()
     grp.writeEntry("Resize",        m_widget->m_resizeChB->isChecked());
     grp.writeEntry("Maximum Width", m_widget->m_dimensionSpB->value());
     grp.writeEntry("Image Quality", m_widget->m_imageQualitySpB->value());
+    grp.writeEntry("Tag Paths",     m_widget->m_tagsBGrp->checkedId());
 }
 
 void PicasawebWindow::slotLoginProgress(int step, int maxStep, const QString &label)
@@ -439,49 +442,12 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
             }
         }
 
-        QStringList allTags;
-        QStringList::Iterator itTags;
-        /*TODO
-        QStringList tagsFromDialog = m_tagsLineEdit->text().split(' ', QString::SkipEmptyParts);
-
-        // Tags from the interface
-        itTags = tagsFromDialog.begin();
-
-        while( itTags != tagsFromDialog.end() )
-        {
-            allTags.append( *itTags );
-            ++itTags;
-        }
-        */
-
         //Tags from the database
         QMap <QString, QVariant> attribs = info.attributes();
         temp.gpsLat = attribs["latitude"].toString();
         temp.gpsLon = attribs["longitude"].toString();
 
-        QStringList tagsFromDatabase;
-
-        //TODOif(m_exportApplicationTags->isChecked())
-        {
-            tagsFromDatabase=attribs["tags"].toStringList();
-        }
-
-        itTags = tagsFromDatabase.begin();
-
-        while( itTags != tagsFromDatabase.end() )
-        {
-            allTags.append( *itTags );
-            ++itTags;
-        }
-
-        itTags = allTags.begin();
-
-        while( itTags != allTags.end() )
-        {
-            ++itTags;
-        }
-
-        temp.tags=allTags;
+        temp.tags = attribs["tagspath"].toStringList();
         m_transferQueue.append( Pair( (*it), temp) );
     }
 
@@ -704,9 +670,58 @@ void PicasawebWindow::uploadNextPhoto()
         }
     }
 
+    //modify tags
+    switch (m_widget->m_tagsBGrp->checkedId())
+    {
+    case PwTagLeaf:
+        {
+            QStringList newTags;
+            QStringList::const_iterator itT;
+            for(itT = info.tags.begin(); itT != info.tags.end(); itT++)
+            {
+                QString strTmp = *itT;
+                int idx = strTmp.lastIndexOf("/");
+                if (idx > 0)
+                {
+                    strTmp.remove(0, idx + 1);
+                }
+                newTags.append(strTmp);
+            }
+            info.tags = newTags;
+        }
+        break;
+    case PwTagSplit:
+        {
+            QSet<QString> newTagsSet;
+            QStringList::const_iterator itT;
+            for(itT = info.tags.begin(); itT != info.tags.end(); itT++)
+            {
+                QStringList strListTmp = itT->split("/");
+                QStringList::const_iterator itT2;
+                for(itT2 = strListTmp.begin(); itT2 != strListTmp.end(); itT2++)
+                {
+                    if (!newTagsSet.contains(*itT2))
+                    {
+                        newTagsSet.insert(*itT2);
+                    }
+                }
+            }
+            info.tags.clear();
+            QSet<QString>::const_iterator itT3;
+            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); itT3++)
+            {
+                info.tags.append(*itT3);
+            }
+        }
+        break;
+    case PwTagCombined:
+    default:
+        break;
+    }
+
     if (bCancel)
     {
-        cancelProcessing();;
+        cancelProcessing();
         res = true;
     }
     else
