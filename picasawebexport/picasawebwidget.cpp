@@ -164,7 +164,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     QSpacerItem* spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QLabel* tagsLbl = new QLabel(i18n("Tag path behavior:"), optionsBox);
+    QLabel* tagsLbl = new QLabel(i18n("Tag path behaviour:"), optionsBox);
 
     QRadioButton* leafTagsBtn = new QRadioButton(i18n("Leaf tags only"), optionsBox);
     leafTagsBtn->setWhatsThis(
