@@ -26,7 +26,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> PicasaWebExport   : 230201 : error when trying export to picasa.
 017 ==> PicasaWebExport   : 216539 : picasaweb can't select movie to export.
 018 ==> JPEGLossLess      : 226838 : "Auto Rotate/Flip Using EXIF Information" does not work.
-019 ==> 
+019 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
+020 ==> 
+
 
 
 
