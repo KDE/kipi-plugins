@@ -117,8 +117,9 @@ void KipiImageModel::itemChanged(KipiImageItem* const changedItem)
     if (itemIndex<0)
         return;
 
-    const QModelIndex itemModelIndex = createIndex(itemIndex, 0, 0);
-    emit(dataChanged(itemModelIndex, itemModelIndex));
+    const QModelIndex itemModelIndexStart = createIndex(itemIndex, 0, 0);
+    const QModelIndex itemModelIndexEnd = createIndex(itemIndex, d->columnCount - 1, 0);
+    emit(dataChanged(itemModelIndexStart, itemModelIndexEnd));
 }
 
 KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
