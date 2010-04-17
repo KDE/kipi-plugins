@@ -32,6 +32,8 @@
 
 #include "gpsdataparser.h"
 
+class KConfigGroup;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -49,6 +51,8 @@ public:
     ~GPSCorrelatorWidget();
 
     void setUIEnabledExternal(const bool state);
+    void saveSettingsToGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(KConfigGroup* const group);
 
 protected:
     void setUIEnabledInternal(const bool state);

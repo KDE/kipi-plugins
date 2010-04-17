@@ -79,7 +79,7 @@ public:
 
 protected:
 
-    void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent* e);
 
 private:
 
@@ -91,6 +91,7 @@ private Q_SLOTS:
     void slotImageActivated(const QModelIndex& index);
     void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void slotSetUIEnabled(const bool enabledState);
+    void slotApplyClicked();
 
 private:
 

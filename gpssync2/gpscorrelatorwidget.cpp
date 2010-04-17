@@ -307,6 +307,9 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     connect(d->offsetEnabled, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
 
+    connect(d->timeZoneGroup, SIGNAL(buttonClicked(int)),
+            this, SLOT(updateUIState()));
+
     updateUIState();
 }
 
@@ -369,7 +372,7 @@ void GPSCorrelatorWidget::updateUIState()
     d->gpxLoadFilesButton->setEnabled(state);
     d->timeZoneSystem->setEnabled(state);
     d->timeZoneManual->setEnabled(state);
-    d->timeZoneCB->setEnabled(state);
+    d->timeZoneCB->setEnabled(state && d->timeZoneManual->isChecked());
     d->offsetEnabled->setEnabled(state);
     const bool offsetEnabled = d->offsetEnabled->isChecked();
     d->offsetSign->setEnabled(state && offsetEnabled);
@@ -473,6 +476,39 @@ void GPSCorrelatorWidget::slotAllItemsCorrelated()
 {
     // enable the UI:
     emit(signalSetUIEnabled(true));
+}
+
+void GPSCorrelatorWidget::saveSettingsToGroup(KConfigGroup* const group)
+{
+    group->writeEntry("Max Gap Time", d->maxGapInput->value() );
+    group->writeEntry("Time Zone Mode", d->timeZoneGroup->checkedId() );
+    group->writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
+    group->writeEntry("Interpolate", d->interpolateBox->isChecked() );
+    group->writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
+    group->writeEntry("Offset Enabled", d->offsetEnabled->isChecked());
+    group->writeEntry("Offset Sign", d->offsetSign->currentIndex());
+    group->writeEntry("Offset Min", d->offsetMin->value());
+    group->writeEntry("Offset Sec", d->offsetSec->value());
+    group->writeEntry("GPX File Open Last Directory", d->gpxFileOpenLastDirectory);
+}
+
+void GPSCorrelatorWidget::readSettingsFromGroup(KConfigGroup* const group)
+{
+    d->maxGapInput->setValue(group->readEntry("Max Gap Time", 30));
+    const int timeZoneGroupIndex = qMax(1, qMin(2, group->readEntry("Time Zone Mode", 1)));
+    d->timeZoneGroup->button(timeZoneGroupIndex)->setChecked(true);
+    d->timeZoneCB->setCurrentIndex(group->readEntry("Time Zone", 16));  // GMT+00:00
+    d->interpolateBox->setChecked(group->readEntry("Interpolate", false));
+    d->maxTimeInput->setValue(group->readEntry("Max Inter Dist Time", 15));
+    d->offsetEnabled->setChecked(group->readEntry("Offset Enabled", false));
+    d->offsetSign->setCurrentIndex(group->readEntry("Offset Sign", 0));
+    d->offsetMin->setValue(group->readEntry("Offset Min", 0));
+    d->offsetSec->setValue(group->readEntry("Offset Sec", 0));
+    d->gpxFileOpenLastDirectory = group->readEntry("GPX File Open Last Directory", KGlobalSettings::documentPath());
+    d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
+    d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
+
+    updateUIState();
 }
 
 } /* KIPIGPSSyncPlugin */

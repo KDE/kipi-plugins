@@ -97,6 +97,7 @@ public:
     QItemSelectionModel      *selectionModel;
     MapDragDropHandler       *mapDragDropHandler;
 
+    KTabWidget               *tabWidget;
     QSplitter                *splitter1;
     QSplitter                *splitter2;
     WMW2::WorldMapWidget2    *mapWidget;
@@ -112,11 +113,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 {
     d->interface = interface;
 
-//     setButtons(Help|User1|User2|User3|Apply|Close);
+    setButtons(Apply|Close);
     setDefaultButton(Close);
     setCaption(i18n("Geolocation"));
     setModal(true);
-
     d->imageModel = new KipiImageModel(this);
     d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);
@@ -155,19 +155,19 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->treeView->view()->setSelectionMode(QAbstractItemView::ExtendedSelection);
     d->splitter1->addWidget(d->treeView);
 
-    KTabWidget* const tabWidget = new KTabWidget(d->splitter2);
+    d->tabWidget = new KTabWidget(d->splitter2);
     d->splitter2->setCollapsible(1, true);
 
-    d->previewManager = new KIPIPlugins::PreviewManager(tabWidget);
+    d->previewManager = new KIPIPlugins::PreviewManager(d->tabWidget);
     // TODO: why is the minimum size hardcoded to 400x300???
     d->previewManager->setMinimumSize(QSize(200, 200));
-    tabWidget->addTab(d->previewManager, i18n("Image viewer"));
+    d->tabWidget->addTab(d->previewManager, i18n("Image viewer"));
 
-    d->correlatorWidget = new GPSCorrelatorWidget(tabWidget, d->imageModel, marginHint(), spacingHint());
-    tabWidget->addTab(d->correlatorWidget, i18n("GPS Correlator"));
+    d->correlatorWidget = new GPSCorrelatorWidget(d->tabWidget, d->imageModel, marginHint(), spacingHint());
+    d->tabWidget->addTab(d->correlatorWidget, i18n("GPS Correlator"));
 
-    d->settingsWidget = new GPSSettingsWidget(tabWidget);
-    tabWidget->addTab(d->settingsWidget, i18n("Settings"));
+    d->settingsWidget = new GPSSettingsWidget(d->tabWidget);
+    d->tabWidget->addTab(d->settingsWidget, i18n("Settings"));
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -194,6 +194,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
             this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApplyClicked()));
 
     readSettings();
 }
@@ -222,10 +225,12 @@ void GPSSyncDialog::readSettings()
 
     // TODO: sanely determine a default backend
     d->mapWidget->readSettingsFromGroup(&group);
+    d->correlatorWidget->readSettingsFromGroup(&group);
+    d->tabWidget->setCurrentIndex(group.readEntry("Current Tab", 0));
 
-    if (group.hasKey("SplitterState"))
+    if (group.hasKey("SplitterState V1"))
     {
-        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState"), QByteArray()));
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
         if (!splitterState.isEmpty())
         {
             d->splitter1->restoreState(splitterState);
@@ -240,8 +245,11 @@ void GPSSyncDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
-    group.writeEntry(QString("SplitterState"), d->splitter1->saveState().toBase64());
+    group.writeEntry(QString("SplitterState V1"), d->splitter1->saveState().toBase64());
+
     d->mapWidget->saveSettingsToGroup(&group);
+    d->correlatorWidget->saveSettingsToGroup(&group);
+    group.writeEntry("Current Tab", d->tabWidget->currentIndex());
 
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
     saveDialogSize(group2);
@@ -345,6 +353,11 @@ bool GPSSyncWMWRepresentativeChooser::indicesEqual(const QVariant& indexA, const
     const QPersistentModelIndex b = indexB.value<QPersistentModelIndex>();
 
     return a==b;
+}
+
+void GPSSyncDialog::slotApplyClicked()
+{
+    // TODO: save the user's changes
 }
 
 }  // namespace KIPIGPSSyncPlugin
