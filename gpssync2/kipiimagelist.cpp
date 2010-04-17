@@ -29,6 +29,7 @@
 
 // KDE includes
 
+#include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
@@ -131,6 +132,7 @@ KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const pa
 
     d->itemDelegate = new KipiImageItemDelegate(this, this);
     d->treeView->setItemDelegate(d->itemDelegate);
+    setThumbnailSize(60);
 }
 
 KipiImageList::~KipiImageList()
@@ -193,6 +195,10 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
         return;
     }
 
+    if (option.state & QStyle::State_Selected)
+    {
+        painter->fillRect(option.rect, option.palette.highlight());
+    }
     // TODO: clipping, selected state, disabled state, etc.
     QPixmap itemPixmap = d->imageList->getModel()->getPixmapForIndex(index, d->thumbnailSize);
     if (itemPixmap.isNull())
@@ -290,6 +296,17 @@ void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, c
 {
     // TODO: verify that the size corresponds to the size of our thumbnails!
     d->treeView->update(index);
+}
+
+void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
+{
+    group->writeEntry("Image List Thumbnail Size", d->itemDelegate->getThumbnailSize());
+}
+
+void KipiImageList::readSettingsFromGroup(KConfigGroup* const group)
+{
+    // TODO: the initial column width is not set properly
+    d->itemDelegate->setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
 }
 
 } /* KIPIGPSSyncPlugin */

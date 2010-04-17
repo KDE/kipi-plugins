@@ -34,6 +34,7 @@
 #include "kipiimagemodel.h"
 
 class QWheelEvent;
+class KConfigGroup;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -85,6 +86,10 @@ public:
     KipiImageModel* getModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
     void setThumbnailSize(const int size);
+
+    void saveSettingsToGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(KConfigGroup* const group);
+
 
 public Q_SLOTS:
     void slotIncreaseThumbnailSize();

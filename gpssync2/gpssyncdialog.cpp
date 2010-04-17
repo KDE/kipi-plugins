@@ -214,8 +214,6 @@ void GPSSyncDialog::setImages( const KUrl::List& images )
         GPSImageItem* const newItem = new GPSImageItem(d->interface, *it);
         d->imageModel->addItem(newItem);
     }
-
-    d->interface->thumbnails(images, 64);
 }
 
 void GPSSyncDialog::readSettings()
@@ -226,6 +224,7 @@ void GPSSyncDialog::readSettings()
     // TODO: sanely determine a default backend
     d->mapWidget->readSettingsFromGroup(&group);
     d->correlatorWidget->readSettingsFromGroup(&group);
+    d->treeView->readSettingsFromGroup(&group);
     d->tabWidget->setCurrentIndex(group.readEntry("Current Tab", 0));
 
     if (group.hasKey("SplitterState V1"))
@@ -249,6 +248,7 @@ void GPSSyncDialog::saveSettings()
 
     d->mapWidget->saveSettingsToGroup(&group);
     d->correlatorWidget->saveSettingsToGroup(&group);
+    d->treeView->saveSettingsToGroup(&group);
     group.writeEntry("Current Tab", d->tabWidget->currentIndex());
 
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
