@@ -223,6 +223,17 @@ QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const 
 void KipiImageItemDelegate::setThumbnailSize(const int size)
 {
     d->thumbnailSize = size;
+
+    KipiImageModel* const imageModel = d->imageList->getModel();
+    if (!imageModel)
+        return;
+
+    if (imageModel->rowCount()>0)
+    {
+        // TODO: is it enough to emit this signal for only 1 item?
+        // seems to work in Qt4.5 with QTreeView::setUniformRowHeights(true)
+        emit(sizeHintChanged(imageModel->index(0, 0)));
+    }
 }
 
 int KipiImageItemDelegate::getThumbnailSize() const
@@ -237,10 +248,8 @@ KipiImageModel* KipiImageList::getModel() const
 
 void KipiImageList::setThumbnailSize(const int size)
 {
-    // TODO: the row height is not updated
     d->itemDelegate->setThumbnailSize(size);
     d->treeView->setColumnWidth(KipiImageItem::ColumnThumbnail, size);
-    d->treeView->update();
 }
 
 void KipiImageList::slotIncreaseThumbnailSize()
