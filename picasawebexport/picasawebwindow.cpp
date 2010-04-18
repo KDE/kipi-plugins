@@ -677,7 +677,7 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QStringList newTags;
             QStringList::const_iterator itT;
-            for(itT = info.tags.begin(); itT != info.tags.end(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
             {
                 QString strTmp = *itT;
                 int idx = strTmp.lastIndexOf("/");
@@ -694,11 +694,11 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QSet<QString> newTagsSet;
             QStringList::const_iterator itT;
-            for(itT = info.tags.begin(); itT != info.tags.end(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
             {
                 QStringList strListTmp = itT->split("/");
                 QStringList::const_iterator itT2;
-                for(itT2 = strListTmp.begin(); itT2 != strListTmp.end(); itT2++)
+                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); itT2++)
                 {
                     if (!newTagsSet.contains(*itT2))
                     {
