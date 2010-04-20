@@ -6,6 +6,8 @@ NEW FEATURES:
 General                   : libkexiv2 dependency set to 1.1.0 release.
 General                   : libkdcraw dependency set to 1.1.0 release.
 DNGConverter              : Update Adobe DNG sdk to 1.3.0.
+                            Support non-square pixels.
+                            Support 4-color sensors.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 

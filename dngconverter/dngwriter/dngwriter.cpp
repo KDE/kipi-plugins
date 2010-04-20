@@ -196,8 +196,20 @@ int DNGWriter::convert()
 
         dng_rect activeArea;
         // TODO: need to get correct default crop size to avoid artifacts at the borders
-        int widthCrop  = 0;
-        int heightCrop = 0;
+        int activeWidth  = 0;
+        int activeHeight = 0;
+        int outputHeight = 0;
+        int outputWidth  = 0;
+        if ((identifyMake.orientation == 5) || (identifyMake.orientation == 6))
+        {
+            outputHeight = identifyMake.outputSize.width();
+            outputWidth  = identifyMake.outputSize.height();
+        }
+        else
+        {
+            outputHeight = identifyMake.outputSize.height();
+            outputWidth  = identifyMake.outputSize.width();
+        }
 
         if (identifyMake.make == "Canon")
         {
@@ -206,12 +218,12 @@ int DNGWriter::convert()
                 kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
                 return -1;
             }
-            activeArea = dng_rect(identify.topMargin,
-                                  identify.leftMargin,
-                                  identify.imageSize.height() - identify.bottomMargin,
-                                  identify.imageSize.width() - identify.rightMargin);
-            widthCrop  = identify.imageSize.width() - identify.leftMargin - identify.rightMargin;
-            heightCrop = identify.imageSize.height() - identify.bottomMargin - identify.topMargin;
+            activeArea   = dng_rect(identify.topMargin,
+                                    identify.leftMargin,
+                                    identify.outputSize.height() - identify.bottomMargin,
+                                    identify.outputSize.width() - identify.rightMargin);
+            activeWidth  = identify.outputSize.width() - identify.leftMargin - identify.rightMargin;
+            activeHeight = identify.outputSize.height() - identify.bottomMargin - identify.topMargin;
         }
         else
         {
@@ -220,16 +232,16 @@ int DNGWriter::convert()
                 kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
                 return -1;
             }
-            activeArea = dng_rect(identify.imageSize.height(), identify.imageSize.width());
-            widthCrop  = identify.imageSize.width();
-            heightCrop = identify.imageSize.height();
+            activeArea   = dng_rect(identify.outputSize.height(), identify.outputSize.width());
+            activeWidth  = identify.outputSize.width();
+            activeHeight = identify.outputSize.height();
         }
 
 
         if (d->cancel) return -2;
 
-        int width      = identify.imageSize.width();
-        int height     = identify.imageSize.height();
+        int width      = identify.outputSize.width();
+        int height     = identify.outputSize.height();
         int pixelRange = 16;
 
         kDebug() << "DNGWriter: Raw data loaded:" ;
@@ -422,8 +434,8 @@ int DNGWriter::convert()
         ifd.fWhiteLevel[2]             = identify.whitePoint;
         ifd.fWhiteLevel[3]             = identify.whitePoint;
 
-        ifd.fDefaultScaleH             = dng_urational(1, 1);
-        ifd.fDefaultScaleV             = dng_urational(1, 1);
+        ifd.fDefaultScaleH             = dng_urational(ceil(outputWidth/activeWidth * 10000), 10000);
+        ifd.fDefaultScaleV             = dng_urational(ceil(outputHeight/activeHeight * 10000), 10000);
         ifd.fBestQualityScale          = dng_urational(1, 1);
 
         ifd.fCFARepeatPatternRows      = 0;
@@ -436,8 +448,8 @@ int DNGWriter::convert()
         ifd.fActiveArea                = activeArea;
         ifd.fDefaultCropOriginH        = dng_urational(0, 1);
         ifd.fDefaultCropOriginV        = dng_urational(0, 1);
-        ifd.fDefaultCropSizeH          = dng_urational(widthCrop, 1);
-        ifd.fDefaultCropSizeV          = dng_urational(heightCrop, 1);
+        ifd.fDefaultCropSizeH          = dng_urational(activeWidth, 1);
+        ifd.fDefaultCropSizeV          = dng_urational(activeHeight, 1);
 
         ifd.fMaskedAreaCount           = 0;
         ifd.fLosslessJPEGBug16         = false;
