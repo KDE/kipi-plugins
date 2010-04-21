@@ -434,8 +434,8 @@ int DNGWriter::convert()
         ifd.fWhiteLevel[2]             = identify.whitePoint;
         ifd.fWhiteLevel[3]             = identify.whitePoint;
 
-        ifd.fDefaultScaleH             = dng_urational(ceil(outputWidth/activeWidth * 10000), 10000);
-        ifd.fDefaultScaleV             = dng_urational(ceil(outputHeight/activeHeight * 10000), 10000);
+        ifd.fDefaultScaleH             = dng_urational(ceil((double)outputWidth/(double)activeWidth * 10000), 10000);
+        ifd.fDefaultScaleV             = dng_urational(ceil((double)outputHeight/(double)activeHeight * 10000), 10000);
         ifd.fBestQualityScale          = dng_urational(1, 1);
 
         ifd.fCFARepeatPatternRows      = 0;
@@ -511,15 +511,13 @@ int DNGWriter::convert()
         {
             negative->SetQuadMosaic(quadFilter);
         }
-        /*
-        else if (bayerMosaic == 3)
+        else if (identifyMake.make == "FUJIFILM")
         {
             // TODO: Fuji is special case. Need to setup different bayer rules here.
             // It do not work. Need indeep investiguations.
             // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
             negative->SetFujiMosaic(0);
-        }
-        */
+        }        
         else
         {
             // Standard bayer mosaicing. All work fine there.
