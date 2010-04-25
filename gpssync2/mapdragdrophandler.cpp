@@ -50,14 +50,15 @@ bool MapDragDropHandler::dropEvent(const QDropEvent* e, const WMW2::WMWGeoCoordi
     if (!mimeData)
         return false;
 
-    for (int i=0; i<mimeData->draggedIndices.count(); ++i)
-    {
-        const QPersistentModelIndex itemIndex = mimeData->draggedIndices.at(i);
-        if (!itemIndex.isValid())
-            continue;
-
-        model->setData(itemIndex, QVariant::fromValue(dropCoordinates), GPSImageItem::RoleCoordinates);
-    }
+    // the model is updated in GPSSyncDialog::slotMapMarkersMoved, which also creates the undo information
+//     for (int i=0; i<mimeData->draggedIndices.count(); ++i)
+//     {
+//         const QPersistentModelIndex itemIndex = mimeData->draggedIndices.at(i);
+//         if (!itemIndex.isValid())
+//             continue;
+// 
+//         model->setData(itemIndex, QVariant::fromValue(dropCoordinates), GPSImageItem::RoleCoordinates);
+//     }
 
     // let the WorldMapWidget2 know which markers were dropped:
     if (droppedIndices)

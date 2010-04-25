@@ -49,6 +49,7 @@ public:
     void setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates);
     inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.m_coordinates; }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
+    inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; emitDataChanged(); }
 
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();

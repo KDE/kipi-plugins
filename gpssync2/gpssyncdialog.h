@@ -43,6 +43,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 class KipiImageModel;
+class GPSUndoCommand;
 
 class GPSSyncDialogPriv;
 
@@ -96,6 +97,8 @@ private Q_SLOTS:
     void slotFileChangesSaved(int beginIndex, int endIndex);
     void slotProgressChanged(const int currentProgress);
     void slotProgressSetup(const int maxProgress, const QString& progressText);
+    void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates);
+    void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
 

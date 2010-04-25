@@ -60,6 +60,7 @@
 #include "gpsdataparser.h"
 #include "kipiimagemodel.h"
 #include "gpsimageitem.h"
+#include "gpsundocommand.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -88,7 +89,8 @@ public:
       uiEnabledExternal(true),
       correlationTotalCount(0),
       correlationCorrelatedCount(0),
-      correlationTriedCount(0)
+      correlationTriedCount(0),
+      correlationUndoCommand(0)
     {
     }
 
@@ -123,6 +125,7 @@ public:
     int correlationTotalCount;
     int correlationCorrelatedCount;
     int correlationTriedCount;
+    GPSUndoCommand *correlationUndoCommand;
 };
 
 GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
@@ -455,6 +458,7 @@ void GPSCorrelatorWidget::slotCorrelate()
     d->correlationTotalCount = imageCount;
     d->correlationCorrelatedCount = 0;
     d->correlationTriedCount = 0;
+    d->correlationUndoCommand = new GPSUndoCommand;
     emit(signalProgressSetup(imageCount, i18n("Correlating images - %p%")));
 
     d->gpsDataParser->correlate(itemList, options);
@@ -481,7 +485,13 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
         if (itemCorrelation.flags&GPSDataParser::GPXFlagCoordinates)
         {
             d->correlationCorrelatedCount++;
-            imageItem->setCoordinates(itemCorrelation.coordinates);
+
+            const GPSDataContainer oldData = imageItem->gpsData();
+            GPSDataContainer newData = oldData;
+            newData.setCoordinates(itemCorrelation.coordinates);
+            imageItem->setGPSData(newData);
+
+            d->correlationUndoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
         }
     }
 
@@ -508,6 +518,18 @@ void GPSCorrelatorWidget::slotAllItemsCorrelated()
         KMessageBox::sorry(this,
                            i18n("%1 out of %2 images have been correlated. Please check the timezone and gap settings if you think that more images should have been correlated.", d->correlationCorrelatedCount, d->correlationTotalCount),
                            i18n("Correlation finished"));
+    }
+
+    if (d->correlationCorrelatedCount==0)
+    {
+        delete d->correlationUndoCommand;
+    }
+    else
+    {
+        d->correlationUndoCommand->setText(i18np("1 image correlated",
+                                                 "%1 images correlated",
+                                                 d->correlationCorrelatedCount));
+        emit(signalUndoCommand(d->correlationUndoCommand));
     }
 
     // enable the UI:

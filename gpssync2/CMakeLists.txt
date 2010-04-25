@@ -12,6 +12,7 @@ SET(kipiplugin_gpssync_PART_SRCS
         gpssettingswidget.cpp
         gpscorrelatorwidget.cpp
         gpsdataparser.cpp
+        gpsundocommand.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync2 ${kipiplugin_gpssync_PART_SRCS})

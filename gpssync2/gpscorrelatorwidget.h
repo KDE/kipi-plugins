@@ -38,6 +38,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 class KipiImageModel;
+class GPSUndoCommand;
 
 class GPSCorrelatorWidgetPrivate;
 
@@ -61,6 +62,7 @@ Q_SIGNALS:
     void signalSetUIEnabled(const bool enabledState);
     void signalProgressSetup(const int maxProgress, const QString& progressText);
     void signalProgressChanged(const int currentProgress);
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private Q_SLOTS:
     void updateUIState();

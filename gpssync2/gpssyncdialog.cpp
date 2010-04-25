@@ -8,6 +8,7 @@
  *               a GPS device.
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,6 +43,7 @@
 #include <QRadioButton>
 #include <QSplitter>
 #include <QTreeView>
+#include <QUndoView>
 
 // KDE includes
 
@@ -64,6 +66,7 @@
 #include <kstandarddirs.h>
 #include <ktabwidget.h>
 #include <ktoolinvocation.h>
+#include <kundostack.h>
 #include <kvbox.h>
 
 // WorldMapWidget2 includes
@@ -82,6 +85,7 @@
 #include "previewmanager.h"
 #include "gpssettingswidget.h"
 #include "gpscorrelatorwidget.h"
+#include "gpsundocommand.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -142,6 +146,8 @@ public:
     int changedFilesCountTotal;
     bool changedFilesCloseAfterwards;
     QProgressBar *progressBar;
+    KUndoStack *undoStack;
+    QUndoView *undoView;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -159,6 +165,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, this);
     d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
+
+    d->undoStack = new KUndoStack(this);
 
     KVBox* const vboxMain = new KVBox(this);
     setMainWidget(vboxMain);
@@ -189,6 +197,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setEditModeAvailable(true);
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
+    d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
 
     QWidget* const dummyWidget = new QWidget(this);
     QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
@@ -208,6 +217,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->splitter1->addWidget(d->treeView);
 
     d->tabWidget = new KTabWidget(d->splitter2);
+    d->tabWidget->setTabPosition(KTabWidget::East);
     d->splitter2->setCollapsible(1, true);
 
     d->previewManager = new KIPIPlugins::PreviewManager(d->tabWidget);
@@ -220,6 +230,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->settingsWidget = new GPSSettingsWidget(d->tabWidget);
     d->tabWidget->addTab(d->settingsWidget, i18n("Settings"));
+
+    d->undoView = new QUndoView(d->undoStack, d->tabWidget);
+    d->tabWidget->addTab(d->undoView, i18n("Undo/Redo"));
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -238,6 +251,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                         ki18n("Developer and maintainer"),
                               "mike at mghansen dot de");
 
+    connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)),
+            this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)));
+
     connect(d->selectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotCurrentImageChanged(const QModelIndex&, const QModelIndex&)));
 
@@ -252,6 +268,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->correlatorWidget, SIGNAL(signalProgressChanged(const int)),
             this, SLOT(slotProgressChanged(const int)));
+
+    connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
 //     connect(this, SIGNAL(applyClicked()),
 //             this, SLOT(slotApplyClicked()));
@@ -566,6 +585,33 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setMaximum(maxProgress);
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
+}
+
+void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates)
+{
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+    for (int i=0; i<movedMarkers.count(); ++i)
+    {
+        const QPersistentModelIndex itemIndex = movedMarkers.at(i);
+        GPSImageItem* const item = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldData = item->gpsData();
+        GPSDataContainer newData = oldData;
+        newData.setCoordinates(coordinates);
+        item->setGPSData(newData);
+
+        kDebug()<<oldData.m_coordinates<<newData.m_coordinates;
+        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+    }
+    undoCommand->setText(i18np("1 image moved",
+                               "%1 images moved", movedMarkers.count()));
+
+    d->undoStack->push(undoCommand);
+}
+
+void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
+{
+    d->undoStack->push(undoCommand);
 }
 
 }  // namespace KIPIGPSSyncPlugin
