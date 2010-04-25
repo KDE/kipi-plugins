@@ -109,6 +109,11 @@ class KipiImageListPrivate
 {
 public:
     KipiImageListPrivate()
+    : model(0),
+      selectionModel(0),
+      treeView(0),
+      itemDelegate(0),
+      interface(0)
     {
     }
 
