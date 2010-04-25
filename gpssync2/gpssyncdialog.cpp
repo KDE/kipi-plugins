@@ -26,15 +26,19 @@
 
 // Qt includes
 
+#include <qtconcurrentmap.h>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QFuture>
+#include <QFutureWatcher>
 #include <QGroupBox>
 #include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
 #include <QPointer>
+#include <QProgressBar>
 #include <QRadioButton>
 #include <QSplitter>
 #include <QTreeView>
@@ -45,6 +49,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kdialogbuttonbox.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
@@ -59,6 +64,7 @@
 #include <kstandarddirs.h>
 #include <ktabwidget.h>
 #include <ktoolinvocation.h>
+#include <kvbox.h>
 
 // WorldMapWidget2 includes
 
@@ -80,6 +86,27 @@
 namespace KIPIGPSSyncPlugin
 {
 
+struct SaveChangedImagesHelper
+{
+public:
+    SaveChangedImagesHelper(KipiImageModel* const model)
+    : imageModel(model)
+    {
+    }
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const imageModel;
+
+    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    {
+        GPSImageItem* const item = dynamic_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
+        if (!item)
+            return QPair<KUrl, QString>(KUrl(), QString());
+
+        return QPair<KUrl, QString>(item->url(), item->saveChanges());
+    }
+};
+
 class GPSSyncDialogPriv
 {
 public:
@@ -87,7 +114,8 @@ public:
     GPSSyncDialogPriv()
     : interface(0),
       about(0),
-      mapWidget(0)
+      mapWidget(0),
+      uiEnabled(true)
     {
     }
 
@@ -97,6 +125,7 @@ public:
     QItemSelectionModel      *selectionModel;
     MapDragDropHandler       *mapDragDropHandler;
 
+    KDialogButtonBox         *buttonBox;
     KTabWidget               *tabWidget;
     QSplitter                *splitter1;
     QSplitter                *splitter2;
@@ -106,6 +135,13 @@ public:
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
     GPSSyncWMWRepresentativeChooser *representativeChooser;
+    bool uiEnabled;
+    QFuture<QPair<KUrl,QString> > changedFilesSaveFuture;
+    QFutureWatcher<QPair<KUrl,QString> > *changedFilesSaveFutureWatcher;
+    int changedFilesCountDone;
+    int changedFilesCountTotal;
+    bool changedFilesCloseAfterwards;
+    QProgressBar *progressBar;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -113,8 +149,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 {
     d->interface = interface;
 
-    setButtons(Apply|Close);
-    setDefaultButton(Close);
+    setButtons(0);
     setCaption(i18n("Geolocation"));
     setModal(true);
     d->imageModel = new KipiImageModel(this);
@@ -125,8 +160,25 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, this);
     d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
 
-    d->splitter2 = new QSplitter(Qt::Horizontal, this);
-    setMainWidget(d->splitter2);
+    KVBox* const vboxMain = new KVBox(this);
+    setMainWidget(vboxMain);
+    
+    d->splitter2 = new QSplitter(Qt::Horizontal, vboxMain);
+    d->splitter2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    KHBox* const hboxBottom = new KHBox(vboxMain);
+    hboxBottom->layout()->setSpacing(spacingHint());
+    hboxBottom->layout()->setMargin(marginHint());
+
+    d->progressBar = new QProgressBar(hboxBottom);
+    d->progressBar->setVisible(false);
+    d->progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
+    dynamic_cast<QHBoxLayout*>(hboxBottom->layout())->setStretch(0, 200);
+
+    d->buttonBox = new KDialogButtonBox(hboxBottom);
+    d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
+    d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
 
     d->splitter1 = new QSplitter(Qt::Vertical, d->splitter2);
     d->splitter2->addWidget(d->splitter1);
@@ -195,8 +247,14 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
             this, SLOT(slotSetUIEnabled(const bool)));
 
-    connect(this, SIGNAL(applyClicked()),
-            this, SLOT(slotApplyClicked()));
+    connect(d->correlatorWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
+            this, SLOT(slotProgressSetup(const int, const QString&)));
+
+    connect(d->correlatorWidget, SIGNAL(signalProgressChanged(const int)),
+            this, SLOT(slotProgressChanged(const int)));
+
+//     connect(this, SIGNAL(applyClicked()),
+//             this, SLOT(slotApplyClicked()));
 
     readSettings();
 }
@@ -261,7 +319,58 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
 
-    // TODO: prompt the user before changing with unsafed data!
+    // is the UI locked?
+    if (!d->uiEnabled)
+    {
+        // please wait until we are done ...
+        return;
+    }
+
+    // are there any modified images?
+    int dirtyImagesCount = 0;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
+    {
+        const QModelIndex itemIndex = d->imageModel->index(i, 0);
+        GPSImageItem* const item = dynamic_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+
+        if (item->gpsData().m_dirtyFlags!=0)
+        {
+            dirtyImagesCount++;
+        }
+    }
+
+    if (dirtyImagesCount>0)
+    {
+        const QString message = i18np(
+                    "You have 1 modified image.",
+                    "You have %1 modified images.",
+                    dirtyImagesCount
+                );
+
+        const int chosenAction = KMessageBox::warningYesNoCancel(this,
+            i18n("%1 Would you like to save the changes you made to them?", message),
+            i18n("Unsaved changes"),
+            KGuiItem(i18n("Save changes")),
+            KGuiItem(i18n("Close and discard changes"))
+            );
+
+        if (chosenAction==KMessageBox::No)
+        {
+            saveSettings();
+            e->accept();
+            return;
+        }
+        if (chosenAction==KMessageBox::Yes)
+        {
+            // the user wants to save his changes.
+            // this will initiate the saving process and then close the dialog.
+            saveChanges(true);
+        }
+
+        // do not close the dialog for now
+        e->ignore();
+        return;
+    }
 
     saveSettings();
     e->accept();
@@ -300,6 +409,15 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot)
 {
+    if (enabledState)
+    {
+        // hide the progress bar
+        d->progressBar->setVisible(false);
+    }
+
+    // TODO: disable the worldmapwidget and the images list (at least disable editing operations)
+    d->uiEnabled = enabledState;
+    d->buttonBox->setEnabled(enabledState);
     d->correlatorWidget->setUIEnabledExternal(enabledState);
 }
 
@@ -355,9 +473,99 @@ bool GPSSyncWMWRepresentativeChooser::indicesEqual(const QVariant& indexA, const
     return a==b;
 }
 
+void GPSSyncDialog::saveChanges(const bool closeAfterwards)
+{
+    // TODO: actually save the changes
+    // are there any modified images?
+    QList<QPersistentModelIndex> dirtyImages;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
+    {
+        const QModelIndex itemIndex = d->imageModel->index(i, 0);
+        GPSImageItem* const item = dynamic_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+
+        if (item->gpsData().m_dirtyFlags!=0)
+        {
+            dirtyImages << itemIndex;
+        }
+    }
+
+    if (dirtyImages.isEmpty())
+    {
+        if (closeAfterwards)
+        {
+            close();
+        }
+        return;
+    }
+
+    // TODO: disable the UI and provide progress and cancel information
+    slotSetUIEnabled(false);
+    slotProgressSetup(dirtyImages.count(), i18n("Saving changes - %p%"));
+
+    // initiate the saving
+    d->changedFilesCountDone = 0;
+    d->changedFilesCountTotal = dirtyImages.count();
+    d->changedFilesCloseAfterwards = closeAfterwards;
+    d->changedFilesSaveFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    connect(d->changedFilesSaveFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
+            this, SLOT(slotFileChangesSaved(int, int)));
+
+    d->changedFilesSaveFuture = QtConcurrent::mapped(dirtyImages, SaveChangedImagesHelper(d->imageModel));
+    d->changedFilesSaveFutureWatcher->setFuture(d->changedFilesSaveFuture);
+}
+
+void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
+{
+    kDebug()<<beginIndex<<endIndex;
+    d->changedFilesCountDone+=(endIndex-beginIndex);
+    slotProgressChanged(d->changedFilesCountDone);
+    if (d->changedFilesCountDone==d->changedFilesCountTotal)
+    {
+        slotSetUIEnabled(true);
+
+        // any errors?
+        QList<QPair<KUrl, QString> > errorList;
+        for (int i=0; i<d->changedFilesSaveFuture.resultCount(); ++i)
+        {
+            if (!d->changedFilesSaveFuture.resultAt(i).second.isEmpty())
+                errorList << d->changedFilesSaveFuture.resultAt(i);
+        }
+        if (!errorList.isEmpty())
+        {
+            QStringList errorStrings;
+            for (int i=0; i<errorList.count(); ++i)
+            {
+                // TODO: how to do kurl->qstring?
+                errorStrings << QString("%1: %2").arg(errorList.at(i).first.toLocalFile()).arg(errorList.at(i).second);
+            }
+            KMessageBox::errorList(this, i18n("Failed to save some information:"), errorStrings, i18n("Error"));
+        }
+
+        // done saving files
+        if (d->changedFilesCloseAfterwards)
+        {
+            close();
+        }
+    }
+}
+
 void GPSSyncDialog::slotApplyClicked()
 {
-    // TODO: save the user's changes
+    // save the changes, but do not close afterwards
+    saveChanges(false);
+}
+
+void GPSSyncDialog::slotProgressChanged(const int currentProgress)
+{
+    d->progressBar->setValue(currentProgress);
+}
+
+void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& progressText)
+{
+    d->progressBar->setFormat(progressText);
+    d->progressBar->setMaximum(maxProgress);
+    d->progressBar->setValue(0);
+    d->progressBar->setVisible(true);
 }
 
 }  // namespace KIPIGPSSyncPlugin

@@ -85,7 +85,10 @@ public:
       maxTimeInput(0),
       correlateButton(0),
       uiEnabledInternal(true),
-      uiEnabledExternal(true)
+      uiEnabledExternal(true),
+      correlationTotalCount(0),
+      correlationCorrelatedCount(0),
+      correlationTriedCount(0)
     {
     }
 
@@ -116,6 +119,10 @@ public:
     bool uiEnabledInternal;
     bool uiEnabledExternal;
     KipiImageModel           *imageModel;
+
+    int correlationTotalCount;
+    int correlationCorrelatedCount;
+    int correlationTriedCount;
 };
 
 GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
@@ -445,6 +452,11 @@ void GPSCorrelatorWidget::slotCorrelate()
         itemList << correlationItem;
     }
 
+    d->correlationTotalCount = imageCount;
+    d->correlationCorrelatedCount = 0;
+    d->correlationTriedCount = 0;
+    emit(signalProgressSetup(imageCount, i18n("Correlating images - %p%")));
+
     d->gpsDataParser->correlate(itemList, options);
 
     // results will be sent to slotItemsCorrelated and slotAllItemsCorrelated
@@ -453,6 +465,7 @@ void GPSCorrelatorWidget::slotCorrelate()
 void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems)
 {
     kDebug()<<correlatedItems.count();
+    d->correlationTriedCount+=correlatedItems.count();
     for (int i=0; i<correlatedItems.count(); ++i)
     {
         const GPSDataParser::GPXCorrelation& itemCorrelation = correlatedItems.at(i);
@@ -467,13 +480,36 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
 
         if (itemCorrelation.flags&GPSDataParser::GPXFlagCoordinates)
         {
+            d->correlationCorrelatedCount++;
             imageItem->setCoordinates(itemCorrelation.coordinates);
         }
     }
+
+    emit(signalProgressChanged(d->correlationTriedCount));
 }
 
 void GPSCorrelatorWidget::slotAllItemsCorrelated()
 {
+    if (d->correlationCorrelatedCount==0)
+    {
+        KMessageBox::sorry(this,
+                           i18n("Could not correlate any image - please make sure the timezone and gap settings are correct."),
+                           i18n("Correlation failed"));
+    }
+    else if (d->correlationCorrelatedCount==d->correlationTotalCount)
+    {
+        KMessageBox::information(this,
+                                 i18n("All images have been correlated. You can now check their position on the map."),
+                                 i18n("Correlation succeeded"));
+    }
+    else
+    {
+        // note: no need for i18np here, because the case of correlationTotalCount==1 is covered in the other two cases.
+        KMessageBox::sorry(this,
+                           i18n("%1 out of %2 images have been correlated. Please check the timezone and gap settings if you think that more images should have been correlated.", d->correlationCorrelatedCount, d->correlationTotalCount),
+                           i18n("Correlation finished"));
+    }
+
     // enable the UI:
     emit(signalSetUIEnabled(true));
 }

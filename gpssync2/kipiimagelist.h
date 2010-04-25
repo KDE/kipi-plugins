@@ -90,7 +90,6 @@ public:
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(KConfigGroup* const group);
 
-
 public Q_SLOTS:
     void slotIncreaseThumbnailSize();
     void slotDecreaseThumbnailSize();

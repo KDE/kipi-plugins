@@ -26,6 +26,7 @@
 
 // local includes
 
+#include "gpsdatacontainer.h"
 #include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
@@ -39,15 +40,18 @@ public:
     static const int ColumnLatitude = ColumnKipiImageItemCount + 0;
     static const int ColumnLongitude = ColumnKipiImageItemCount + 1;
     static const int ColumnAltitude = ColumnKipiImageItemCount + 2;
-    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 3;
+    static const int ColumnStatus = ColumnKipiImageItemCount + 3;
+    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 4;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();
 
     void setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates);
-    inline WMW2::WMWGeoCoordinate coordinates() const { return m_coordinates; };
+    inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.m_coordinates; }
+    inline GPSDataContainer gpsData() const { return m_gpsData; }
 
     static void setHeaderData(KipiImageModel* const model);
+    QString saveChanges();
 
 protected:
     // these are only to be called by the KipiImageModel
@@ -56,7 +60,7 @@ protected:
     virtual void loadImageDataInternal();
 
 protected:
-    WMW2::WMWGeoCoordinate m_coordinates;
+    GPSDataContainer m_gpsData;
 };
 
 } /* KIPIGPSSyncPlugin */

@@ -59,6 +59,8 @@ protected:
 
 Q_SIGNALS:
     void signalSetUIEnabled(const bool enabledState);
+    void signalProgressSetup(const int maxProgress, const QString& progressText);
+    void signalProgressChanged(const int currentProgress);
 
 private Q_SLOTS:
     void updateUIState();

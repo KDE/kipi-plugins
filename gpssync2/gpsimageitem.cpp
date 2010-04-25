@@ -52,7 +52,7 @@ void GPSImageItem::loadImageDataInternal()
 {
     KipiImageItem::loadImageDataInternal();
 
-    m_coordinates.clear();
+    m_gpsData.clear();
 
     if (m_interface)
     {
@@ -64,16 +64,16 @@ void GPSImageItem::loadImageDataInternal()
         if (attributes.contains("latitude") &&
             attributes.contains("longitude"))
         {
-            m_coordinates.setLatLon(attributes["latitude"].toDouble(), attributes["longitude"].toDouble());
+            m_gpsData.setLatLon(attributes["latitude"].toDouble(), attributes["longitude"].toDouble());
 
             if (attributes.contains("altitude"))
             {
-                m_coordinates.setAlt(attributes["altitude"].toDouble());
+                m_gpsData.setAltitude(attributes["altitude"].toDouble());
             }
         }
     }
 
-    if (!m_coordinates.hasCoordinates())
+    if (!m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasCoordinates))
     {
         // could not load the coordinates from the interface,
         // read them directly from the file
@@ -84,37 +84,49 @@ void GPSImageItem::loadImageDataInternal()
         bool infoIsValid = m_exiv2Iface->getGPSInfo(alt, lat, lng);
         if (infoIsValid)
         {
-            m_coordinates = WMW2::WMWGeoCoordinate(lat, lng, alt);
+            m_gpsData.setCoordinates(WMW2::WMWGeoCoordinate(lat, lng, alt));
         }
     }
+
+    // mark us as not-dirty, because the data was just loaded:
+    m_gpsData.m_dirtyFlags = 0;
 }
 
 QVariant GPSImageItem::data(const int column, const int role) const
 {
     if (role==RoleCoordinates)
     {
-        return QVariant::fromValue(m_coordinates);
+        return QVariant::fromValue(m_gpsData.m_coordinates);
     }
     else if ((column==ColumnLatitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_coordinates.hasLatitude())
+        if (!m_gpsData.m_coordinates.hasLatitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_coordinates.lat());
+        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lat());
     }
     else if ((column==ColumnLongitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_coordinates.hasLongitude())
+        if (!m_gpsData.m_coordinates.hasLongitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_coordinates.lon());
+        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lon());
     }
     else if ((column==ColumnAltitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_coordinates.hasAltitude())
+        if (!m_gpsData.m_coordinates.hasAltitude())
             return QString();
     
-        return KGlobal::locale()->formatNumber(m_coordinates.alt());
+        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.alt());
+    }
+    else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
+    {
+        if (m_gpsData.m_dirtyFlags!=0)
+        {
+            return i18n("Modified");
+        }
+
+        return QString();
     }
 
     return KipiImageItem::data(column, role);
@@ -126,7 +138,7 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
     {
         if (value.canConvert<WMW2::WMWGeoCoordinate>())
         {
-            m_coordinates = value.value<WMW2::WMWGeoCoordinate>();
+            m_gpsData.setCoordinates(value.value<WMW2::WMWGeoCoordinate>());
         }
     }
     else
@@ -139,7 +151,7 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
 
 void GPSImageItem::setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates)
 {
-    m_coordinates = newCoordinates;
+    m_gpsData.setCoordinates(newCoordinates);
     emitDataChanged();
 }
 
@@ -151,6 +163,126 @@ void GPSImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnLatitude, Qt::Horizontal, i18n("Latitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);
+    model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
+}
+
+QString GPSImageItem::saveChanges()
+{
+    // determine what is to be done first
+    bool shouldRemoveCoordinates = false;
+    bool shouldRemoveAltitude = false;
+    bool shouldWriteCoordinates = false;
+    bool shouldWriteAltitude = false;
+    qreal altitude = 0;
+    qreal latitude = 0;
+    qreal longitude = 0;
+
+    // do we have gps information?
+    if (m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasCoordinates))
+    {
+        shouldWriteCoordinates = true;
+        latitude = m_gpsData.m_coordinates.lat();
+        longitude = m_gpsData.m_coordinates.lon();
+        
+        if (m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasAltitude))
+        {
+            shouldWriteAltitude = true;
+            altitude = m_gpsData.m_coordinates.alt();
+        }
+        else
+        {
+            shouldRemoveAltitude = true;
+        }
+    }
+    else
+    {
+        shouldRemoveCoordinates = true;
+        shouldRemoveAltitude = true;
+    }
+
+    QString returnString;
+    
+    // first try to write the information to the image file
+    KExiv2Iface::KExiv2* const exiv2Iface = new KExiv2Iface::KExiv2;
+    bool success = exiv2Iface->load(m_url.path());
+    if (!success)
+    {
+        // TODO: more verbosity!
+        returnString = i18n("Failed to open file.");
+    }
+    if (success)
+    {
+        exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+
+#if KEXIV2_VERSION >= 0x000600
+        exiv2Iface->setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+#endif
+
+        if (shouldWriteCoordinates)
+        {
+            // TODO: write the altitude only if we have it
+            success = exiv2Iface->setGPSInfo(altitude, latitude, longitude);
+            if (!success)
+            {
+                returnString = i18n("Failed to add GPS info to image");
+            }
+        }
+        if (shouldRemoveCoordinates)
+        {
+            // TODO: remove only the altitude if requested
+            success = exiv2Iface->removeGPSInfo();
+            if (!success)
+            {
+                returnString = i18n("Failed to remove GPS info from image");
+            }
+        }
+    }
+    if (success)
+    {
+        success = exiv2Iface->save(m_url.path());
+        if (!success)
+        {
+            returnString = i18n("Unable to save changes to file");
+        }
+    }
+
+    delete exiv2Iface;
+
+    // now tell the interface about the changes
+    // TODO: remove the altitude if it is not available
+    if (m_interface)
+    {
+        if (shouldWriteCoordinates)
+        {
+            QMap<QString, QVariant> attributes;
+            attributes.insert("latitude", latitude);
+            attributes.insert("longitude", longitude);
+            if (shouldWriteAltitude)
+            {
+                attributes.insert("altitude", altitude);
+            }
+
+            KIPI::ImageInfo info = m_interface->info(m_url);
+            info.addAttributes(attributes);
+        }
+
+        if (shouldRemoveCoordinates)
+        {
+            QStringList listToRemove;
+            listToRemove << "gpslocation";
+            KIPI::ImageInfo info = m_interface->info(m_url);
+            info.delAttributes(listToRemove);
+        }
+    }
+
+    if (returnString.isEmpty())
+    {
+        // mark all changes as not dirty and tell the model:
+        m_gpsData.m_dirtyFlags = 0;
+        emitDataChanged();
+    }
+
+    return returnString;
 }
 
 } /* KIPIGPSSyncPlugin */

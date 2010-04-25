@@ -85,6 +85,7 @@ private:
 
     void readSettings();
     void saveSettings();
+    void saveChanges(const bool closeAfterwards);
 
 private Q_SLOTS:
     void slotCurrentImageChanged(const QModelIndex& current, const QModelIndex& previous);
@@ -92,6 +93,9 @@ private Q_SLOTS:
     void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void slotSetUIEnabled(const bool enabledState);
     void slotApplyClicked();
+    void slotFileChangesSaved(int beginIndex, int endIndex);
+    void slotProgressChanged(const int currentProgress);
+    void slotProgressSetup(const int maxProgress, const QString& progressText);
 
 private:
 
