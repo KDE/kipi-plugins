@@ -99,6 +99,7 @@ private Q_SLOTS:
     void slotProgressSetup(const int maxProgress, const QString& progressText);
     void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates);
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
+    void slotSortOptionTriggered(QAction* sortAction);
 
 private:
 

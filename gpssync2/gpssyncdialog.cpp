@@ -47,6 +47,7 @@
 
 // KDE includes
 
+#include <kaction.h>
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -148,6 +149,8 @@ public:
     QProgressBar *progressBar;
     KUndoStack *undoStack;
     QUndoView *undoView;
+    QAction *sortActionOldestFirst;
+    QAction *sortActionYoungestFirst;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -198,6 +201,23 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
+
+    QMenu* const sortMenu = new QMenu(this);
+    sortMenu->setTitle(i18n("Sorting"));
+    QActionGroup* const sortOrderExclusive = new QActionGroup(sortMenu);
+    sortOrderExclusive->setExclusive(true);
+    connect(sortOrderExclusive, SIGNAL(triggered(QAction*)),
+            this, SLOT(slotSortOptionTriggered(QAction*)));
+
+    d->sortActionOldestFirst = new KAction(i18n("Show oldest first"), sortOrderExclusive);
+    d->sortActionOldestFirst->setCheckable(true);
+    sortMenu->addAction(d->sortActionOldestFirst);
+
+    d->sortActionYoungestFirst = new KAction(i18n("Show youngest first"), sortOrderExclusive);
+    sortMenu->addAction(d->sortActionYoungestFirst);
+    d->sortActionYoungestFirst->setCheckable(true);
+
+    d->mapWidget->setSortOptionsMenu(sortMenu);
 
     QWidget* const dummyWidget = new QWidget(this);
     QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
@@ -303,6 +323,15 @@ void GPSSyncDialog::readSettings()
     d->correlatorWidget->readSettingsFromGroup(&group);
     d->treeView->readSettingsFromGroup(&group);
     d->tabWidget->setCurrentIndex(group.readEntry("Current Tab", 0));
+    const bool showOldestFirst = group.readEntry("Show oldest images first", false);
+    if (showOldestFirst)
+    {
+        d->sortActionOldestFirst->setChecked(true);
+    }
+    else
+    {
+        d->sortActionYoungestFirst->setChecked(true);
+    }
 
     if (group.hasKey("SplitterState V1"))
     {
@@ -327,6 +356,7 @@ void GPSSyncDialog::saveSettings()
     d->correlatorWidget->saveSettingsToGroup(&group);
     d->treeView->saveSettingsToGroup(&group);
     group.writeEntry("Current Tab", d->tabWidget->currentIndex());
+    group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
 
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
     saveDialogSize(group2);
@@ -475,8 +505,36 @@ QPixmap GPSSyncWMWRepresentativeChooser::pixmapFromRepresentativeIndex(const QVa
 
 QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey)
 {
-    // TODO: sorting!
-    return list.first();
+    const bool oldestFirst = sortKey & 1;
+
+    QPersistentModelIndex bestIndex;
+    QDateTime bestTime;
+    for (int i=1; i<list.count(); ++i)
+    {
+        const QPersistentModelIndex currentIndex = list.at(i).value<QPersistentModelIndex>();
+        const GPSImageItem* const currentItem = static_cast<GPSImageItem*>(d->model->itemFromIndex(currentIndex));
+        const QDateTime currentTime = currentItem->dateTime();
+
+        bool takeThisIndex = bestTime.isNull();
+        if (!takeThisIndex)
+        {
+            if (oldestFirst)
+            {
+                takeThisIndex = currentTime < bestTime;
+            }
+            else
+            {
+                takeThisIndex = bestTime < currentTime;
+            }
+        }
+        if (takeThisIndex)
+        {
+            bestIndex = currentIndex;
+            bestTime = currentTime;
+        }
+    }
+
+    return QVariant::fromValue(bestIndex);
 }
 
 void GPSSyncWMWRepresentativeChooser::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
@@ -612,6 +670,17 @@ void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& move
 void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
 {
     d->undoStack->push(undoCommand);
+}
+
+void GPSSyncDialog::slotSortOptionTriggered(QAction* sortAction)
+{
+    int newSortKey = 0;
+    if (d->sortActionOldestFirst->isChecked())
+    {
+        newSortKey|=1;
+    }
+
+    d->mapWidget->setSortKey(newSortKey);
 }
 
 }  // namespace KIPIGPSSyncPlugin

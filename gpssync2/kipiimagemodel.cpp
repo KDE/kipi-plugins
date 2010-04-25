@@ -124,8 +124,11 @@ void KipiImageModel::itemChanged(KipiImageItem* const changedItem)
 
 KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
 {
+    if (!index.isValid())
+        return 0;
+
     const int row = index.row();
-    if (row>=d->items.count())
+    if ((row<0)||(row>=d->items.count()))
         return 0;
 
     return d->items.at(row);
