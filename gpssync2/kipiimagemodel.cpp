@@ -220,7 +220,7 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     const QString itemKeyString = CacheKeyFromSizeAndUrl(size, imageItem->url());
     QPixmap thumbnailPixmap;
     const bool havePixmapInCache = d->pixmapCache->find(itemKeyString, thumbnailPixmap);
-    kDebug()<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
+//     kDebug()<<imageItem->url()<<size<<havePixmapInCache<<d->pixmapCache->isEnabled();
     if (havePixmapInCache)
         return thumbnailPixmap;
 
