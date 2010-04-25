@@ -63,7 +63,17 @@ bool MapDragDropHandler::dropEvent(const QDropEvent* e, const WMW2::WMWGeoCoordi
     // let the WorldMapWidget2 know which markers were dropped:
     if (droppedIndices)
     {
-        *droppedIndices = mimeData->draggedIndices;
+        droppedIndices->clear();
+
+        for (int i=0; i<mimeData->draggedIndices.count(); ++i)
+        {
+            // TODO: correctly handle items with multiple columns
+            QModelIndex itemIndex = mimeData->draggedIndices.at(i);
+            if (itemIndex.column()==0)
+            {
+                *droppedIndices << itemIndex;
+            }
+        }
     }
 
     return true;
