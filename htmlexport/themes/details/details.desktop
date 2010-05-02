@@ -16,6 +16,7 @@ Comment[sv]=Ytterligare ett enkelt tema. Rent utseende med fler bilddetaljer.
 Comment[th]=ชุดตกแต่งที่เรียบง่ายและดูดีอีกแบบ ซึ่งมีรายละเอียดต่าง ๆ ของภาพมากกว่า
 Comment[uk]=Ще одна проста тема. Строгий вигляд з додатковими параметрами зображень.
 Comment[x-test]=xxYet another simple theme. Clean look with more image details.xx
+Comment[zh_TW]=還有另一個不錯的主題。非常簡單、清爽且顯示更多影像詳細資訊。
 Icon=
 Name=Details
 Name[ca]=Detalls
@@ -38,6 +39,7 @@ Name[sv]=Detaljer
 Name[th]=รายละเอียด
 Name[uk]=Подробиці
 Name[x-test]=xxDetailsxx
+Name[zh_TW]=詳細資訊
 
 [X-HTMLExport Author]
 Name=Gianluca Urgese
@@ -58,6 +60,7 @@ Name[sv]=Gianluca Urgese
 Name[th]=Gianluca Urgese
 Name[uk]=Gianluca Urgese
 Name[x-test]=xxGianluca Urgesexx
+Name[zh_TW]=Gianluca 使用方法
 Url=mailto:g.urgese@jaone.it
 
 [X-HTMLExport Preview]
@@ -78,6 +81,7 @@ Name[sv]=Skärmbild av Detaljer
 Name[th]=รายละเอียดต่าง ๆ ของภาพหน้าจอที่จับได้
 Name[uk]=Знімок вікна подробиць
 Name[x-test]=xxDetails screenshotxx
+Name[zh_TW]=詳細資訊畫面擷取
 Url=preview.png
 
 [X-HTMLExport Parameter footer]
@@ -98,6 +102,7 @@ Name[sv]=Information i nederkant
 Name[th]=ข้อมูลรายละเอียดส่วนท้ายหน้า
 Name[uk]=Відомості нижнього колонтитула
 Name[x-test]=xxFooter informationxx
+Name[zh_TW]=頁尾資訊
 
 Type=string
 Default=My personal gallery <a href="mailto:email@mydomain.tld">email@mydomain.tld</a> - Powered by <a href="http://www.kipi-plugins.org/drupal/node/17">Kipi Plugins - HTMLExport</a>
