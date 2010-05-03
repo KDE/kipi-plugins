@@ -310,8 +310,7 @@ void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
 
 void KipiImageList::readSettingsFromGroup(KConfigGroup* const group)
 {
-    // TODO: the initial column width is not set properly
-    d->itemDelegate->setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
+    setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
 }
 
 } /* KIPIGPSSyncPlugin */
