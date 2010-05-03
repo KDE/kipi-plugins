@@ -29,7 +29,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> JPEGLossLess      : 226838 : "Auto Rotate/Flip Using EXIF Information" does not work.
 017 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
 018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
-019 ==> 
+019 ==> PiwigoExport      : 235555 : digiKam Plugins Export Piwigo fail.
+020 ==> 
 
 
 
