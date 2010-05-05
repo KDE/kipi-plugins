@@ -1,1 +1,17 @@
+gpssync parts:
+- correctly update the dirty state on undo/redo
+- read dilution of precision data and add warnings
+- add interpolation
+- add warnings when gpx files failed to load
+- make tabs collapsible
+- add undo/redo/thumbnail size buttons
+- make the coordinates of the images editable
+- add copy/paste of coordinates
+- add bookmark system
 - using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
+
+wmw2 parts:
+- control over clustering grid size
+- resizing of thumbnails
+- numbers on clusters google maps
+
