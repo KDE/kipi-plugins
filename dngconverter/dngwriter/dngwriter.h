@@ -28,6 +28,11 @@
 
 #include <QString>
 
+// Libkdcraw includes
+
+#include <libkdcraw/kdcraw.h>
+
+
 namespace DNGIface
 {
 
@@ -71,6 +76,8 @@ public:
     int  convert();
     void cancel();
     void reset();
+
+    bool fujiRotate(QByteArray &rawData, KDcrawIface::DcrawInfoContainer &identify);
 
 private:
 

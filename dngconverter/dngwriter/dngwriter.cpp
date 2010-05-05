@@ -78,6 +78,14 @@ using namespace KExiv2Iface;
 namespace DNGIface
 {
 
+enum DNGBayerPattern
+{
+    None = 1,
+    Standard,
+    Fuji,
+    FourColor
+};
+
 DNGWriter::DNGWriter()
          : d(new DNGWriterPrivate)
 {
@@ -211,38 +219,19 @@ int DNGWriter::convert()
             outputWidth  = identifyMake.outputSize.width();
         }
 
+        bool useFullSensorImage = false;
         if (identifyMake.make == "Canon")
         {
-            if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, true))
-            {
-                kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
-                return -1;
-            }
-            activeArea   = dng_rect(identify.topMargin,
-                                    identify.leftMargin,
-                                    identify.outputSize.height() - identify.bottomMargin,
-                                    identify.outputSize.width() - identify.rightMargin);
-            activeWidth  = identify.outputSize.width() - identify.leftMargin - identify.rightMargin;
-            activeHeight = identify.outputSize.height() - identify.bottomMargin - identify.topMargin;
-        }
-        else
-        {
-            if (!rawProcessor.extractRAWData(inputFile(), rawData, identify))
-            {
-                kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
-                return -1;
-            }
-            activeArea   = dng_rect(identify.outputSize.height(), identify.outputSize.width());
-            activeWidth  = identify.outputSize.width();
-            activeHeight = identify.outputSize.height();
+            useFullSensorImage = true;
         }
 
+        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage))
+        {
+            kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+            return -1;
+        }
 
         if (d->cancel) return -2;
-
-        int width      = identify.outputSize.width();
-        int height     = identify.outputSize.height();
-        int pixelRange = 16;
 
         kDebug() << "DNGWriter: Raw data loaded:" ;
         kDebug() << "--- Data Size:     " << rawData.size() << " bytes" ;
@@ -273,27 +262,50 @@ int DNGWriter::convert()
         }
 
         // Check if CFA layout is supported by DNG SDK.
-        int bayerMosaic = 0;
-        uint32 quadFilter = 0;
+        DNGBayerPattern bayerPattern = None;
+        uint32 filter = 0;
+        bool fujiRotate90 = false;
 
+        // Standard bayer layouts
         if (identify.filterPattern == QString("GRBGGRBGGRBGGRBG"))
         {
-            bayerMosaic = 0;
+            bayerPattern = Standard;
+            filter = 0;
         }
         else if (identify.filterPattern == QString("RGGBRGGBRGGBRGGB"))
         {
-            bayerMosaic = 1;
+            bayerPattern = Standard;
+            filter = 1;
         }
         else if (identify.filterPattern == QString("BGGRBGGRBGGRBGGR"))
         {
-            bayerMosaic = 2;
+            bayerPattern = Standard;
+            filter = 2;
         }
         else if (identify.filterPattern == QString("GBRGGBRGGBRGGBRG"))
         {
-            bayerMosaic = 3;
+            bayerPattern = Standard;
+            filter = 3;
         }
+        // Fuji layouts
+        else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG"))
+            && (identifyMake.make == QString("FUJIFILM")))
+        {
+            bayerPattern = Fuji;
+            fujiRotate90 = false;
+            filter = 0;
+        }
+        else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG"))
+            && (identifyMake.make == QString("FUJIFILM")))
+        {
+            bayerPattern = Fuji;
+            fujiRotate90 = true;
+            filter = 0;
+        }
+        // Four color sensors
         else if (identify.rawColors == 4)
         {
+            bayerPattern = FourColor;
             if (identify.filterPattern.length() != 16)
             {
                 kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
@@ -301,22 +313,22 @@ int DNGWriter::convert()
             }
             for (int i = 0; i < 16; i++)
             {
-                quadFilter = quadFilter >> 2;
+                filter = filter >> 2;
                 if (identify.filterPattern[i] == 'G')
                 {
-                    quadFilter |= 0x00000000;
+                    filter |= 0x00000000;
                 }
                 else if (identify.filterPattern[i] == 'M')
                 {
-                    quadFilter |= 0x40000000;
+                    filter |= 0x40000000;
                 }
                 else if (identify.filterPattern[i] == 'C')
                 {
-                    quadFilter |= 0x80000000;
+                    filter |= 0x80000000;
                 }
                 else if (identify.filterPattern[i] == 'Y')
                 {
-                    quadFilter |= 0xC0000000;
+                    filter |= 0xC0000000;
                 }
                 else
                 {
@@ -331,12 +343,44 @@ int DNGWriter::convert()
             return -1;
         }
 
+        if (true == fujiRotate90)
+        {
+            if (false == fujiRotate(rawData, identify))
+            {
+                kDebug() << "Can not rotate fuji image. Aborted...";
+                return -1;
+            }
+            int tmp = outputWidth;
+            outputWidth = outputHeight;
+            outputHeight = tmp;
+        }
+
+        if (true == useFullSensorImage)
+        {
+            activeArea   = dng_rect(identify.topMargin,
+                                    identify.leftMargin,
+                                    identify.outputSize.height() - identify.bottomMargin,
+                                    identify.outputSize.width() - identify.rightMargin);
+            activeWidth  = identify.outputSize.width() - identify.leftMargin - identify.rightMargin;
+            activeHeight = identify.outputSize.height() - identify.bottomMargin - identify.topMargin;
+        }
+        else
+        {
+            activeArea   = dng_rect(identify.outputSize.height(), identify.outputSize.width());
+            activeWidth  = identify.outputSize.width();
+            activeHeight = identify.outputSize.height();
+        }
+
         // Check if number of Raw Color components is supported.
         if ((identify.rawColors != 3) && (identify.rawColors != 4))
         {
             kDebug() << "DNGWriter: Number of Raw color components not supported. Aborted..." ;
             return -1;
         }
+
+        int width      = identify.outputSize.width();
+        int height     = identify.outputSize.height();
+        int pixelRange = 16;
 
 /*      // NOTE: code to hack RAW data extraction
 
@@ -434,8 +478,8 @@ int DNGWriter::convert()
         ifd.fWhiteLevel[2]             = identify.whitePoint;
         ifd.fWhiteLevel[3]             = identify.whitePoint;
 
-        ifd.fDefaultScaleH             = dng_urational(ceil((double)outputWidth/(double)activeWidth * 10000), 10000);
-        ifd.fDefaultScaleV             = dng_urational(ceil((double)outputHeight/(double)activeHeight * 10000), 10000);
+        ifd.fDefaultScaleH             = dng_urational(outputWidth, activeWidth);
+        ifd.fDefaultScaleV             = dng_urational(outputHeight, activeHeight);
         ifd.fBestQualityScale          = dng_urational(1, 1);
 
         ifd.fCFARepeatPatternRows      = 0;
@@ -507,22 +551,25 @@ int DNGWriter::convert()
 
         negative->SetColorKeys(colorCodes[0], colorCodes[1], colorCodes[2], colorCodes[3]);
 
-        if (identify.rawColors == 4)
+        switch (bayerPattern)
         {
-            negative->SetQuadMosaic(quadFilter);
-        }
-        else if (identifyMake.make == "FUJIFILM")
-        {
-            // TODO: Fuji is special case. Need to setup different bayer rules here.
-            // It do not work. Need indeep investiguations.
-            // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
-            negative->SetFujiMosaic(0);
-        }        
-        else
-        {
+        case Standard:
             // Standard bayer mosaicing. All work fine there.
             // Bayer CCD mask: http://en.wikipedia.org/wiki/Bayer_filter
-            negative->SetBayerMosaic(bayerMosaic);
+            negative->SetBayerMosaic(filter);
+            break;
+        case Fuji:
+            // TODO: Fuji is special case. Need to setup different bayer rules here.
+            // It do not work in all settings. Need indeep investiguations.
+            // Fuji superCCD: http://en.wikipedia.org/wiki/Super_CCD
+            negative->SetFujiMosaic(filter);
+            break;
+        case FourColor:
+            negative->SetQuadMosaic(filter);
+            break;
+        default:
+            kDebug() << "DNGWriter: unknown bayer pattern" ;
+            return -1;
         }
 
         negative->SetWhiteLevel(identify.whitePoint, 0);
@@ -541,6 +588,10 @@ int DNGWriter::convert()
         {
             case DcrawInfoContainer::ORIENTATION_180:
                 orientation = dng_orientation::Rotate180();
+                break;
+
+            case DcrawInfoContainer::ORIENTATION_Mirror90CCW:
+                orientation = dng_orientation::Mirror90CCW();
                 break;
 
             case DcrawInfoContainer::ORIENTATION_90CCW:
@@ -1131,6 +1182,28 @@ int DNGWriter::convert()
     kDebug() << "DNGWriter: DNG conversion complete..." ;
 
     return dng_error_none;
+}
+
+bool DNGWriter::fujiRotate(QByteArray &rawData, KDcrawIface::DcrawInfoContainer &identify)
+{
+    QByteArray tmpData(rawData);
+    int height = identify.outputSize.height();
+    int width  = identify.outputSize.width();
+
+    unsigned short *tmp = (unsigned short *)tmpData.data();
+    unsigned short *output = (unsigned short *)rawData.data();
+    for (int row=0; row < height; row++)
+    {
+        for (int col=0; col < width; col++)
+        {
+            output[col * height + row] = tmp[row * width + col];
+        }
+    }
+
+    identify.orientation = DcrawInfoContainer::ORIENTATION_Mirror90CCW;
+    identify.outputSize  = QSize(height, width);
+    //TODO: rotate margins
+    return true;
 }
 
 }  // namespace DNGIface

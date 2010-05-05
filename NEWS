@@ -8,6 +8,7 @@ General                   : libkdcraw dependency set to 1.1.0 release.
 DNGConverter              : Update Adobe DNG sdk to 1.3.0.
                             Support non-square pixels.
                             Support 4-color sensors.
+                            Support Fuji-sensors (experimental)
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -30,13 +31,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
 018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
 019 ==> PiwigoExport      : 235555 : digiKam Plugins Export Piwigo fail.
-020 ==> 
-
-
-
-
-
-
-
-
-
+020 ==> DngConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
+021 ==>
