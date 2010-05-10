@@ -32,4 +32,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
 019 ==> PiwigoExport      : 235555 : digiKam Plugins Export Piwigo fail.
 020 ==> DngConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
-021 ==>
+021 ==> GPSSync           : 236846 : Geolocation does not work in gnome.
+022 ==> 
