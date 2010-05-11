@@ -9,6 +9,7 @@
  *
  * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,6 +45,9 @@
 #include <QSplitter>
 #include <QTreeView>
 #include <QUndoView>
+#include <QStackedLayout>
+#include <QStackedWidget>
+#include <QHBoxLayout>
 
 // KDE includes
 
@@ -120,7 +124,8 @@ public:
     : interface(0),
       about(0),
       mapWidget(0),
-      uiEnabled(true)
+      uiEnabled(true),
+      splitterSize(0)
     {
     }
 
@@ -132,8 +137,8 @@ public:
 
     KDialogButtonBox         *buttonBox;
     KTabWidget               *tabWidget;
-    QSplitter                *splitter1;
-    QSplitter                *splitter2;
+    QSplitter                *VSplitter;
+    QSplitter                *HSplitter;
     WMW2::WorldMapWidget2    *mapWidget;
     KipiImageList            *treeView;
     KIPIPlugins::PreviewManager *previewManager;
@@ -151,6 +156,10 @@ public:
     QUndoView *undoView;
     QAction *sortActionOldestFirst;
     QAction *sortActionYoungestFirst;
+
+    QStackedWidget	     *stackedWidget;
+    QTabBar                  *tabBar;
+    int splitterSize;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -173,9 +182,13 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     KVBox* const vboxMain = new KVBox(this);
     setMainWidget(vboxMain);
-    
-    d->splitter2 = new QSplitter(Qt::Horizontal, vboxMain);
-    d->splitter2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    KHBox* const hboxMain = new KHBox(vboxMain);
+    hboxMain->layout()->setSpacing(spacingHint());
+    hboxMain->layout()->setMargin(marginHint());
+
+    d->HSplitter = new QSplitter(Qt::Horizontal, hboxMain);
+    d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     KHBox* const hboxBottom = new KHBox(vboxMain);
     hboxBottom->layout()->setSpacing(spacingHint());
@@ -191,9 +204,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
     d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
 
-    d->splitter1 = new QSplitter(Qt::Vertical, d->splitter2);
-    d->splitter2->addWidget(d->splitter1);
-    d->splitter2->setStretchFactor(0, 10);
+    d->VSplitter = new QSplitter(Qt::Vertical, d->HSplitter);
+    d->HSplitter->addWidget(d->VSplitter);
+    d->HSplitter->setStretchFactor(0, 10);
 
     d->mapWidget = new WMW2::WorldMapWidget2(this);
     d->mapWidget->setRepresentativeChooser(d->representativeChooser);
@@ -223,7 +236,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
     vbox->addWidget(d->mapWidget);
     vbox->addWidget(d->mapWidget->getControlWidget());
-    d->splitter1->addWidget(dummyWidget);
+    d->VSplitter->addWidget(dummyWidget);
 
     d->treeView = new KipiImageList(d->interface, this);
     d->treeView->setModel(d->imageModel, d->selectionModel);
@@ -234,25 +247,45 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->treeView->view()->setDragEnabled(true);
     d->treeView->view()->setDragDropMode(QAbstractItemView::DragOnly);
     d->treeView->view()->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    d->splitter1->addWidget(d->treeView);
+    d->VSplitter->addWidget(d->treeView);
 
-    d->tabWidget = new KTabWidget(d->splitter2);
-    d->tabWidget->setTabPosition(KTabWidget::East);
-    d->splitter2->setCollapsible(1, true);
+    d->HSplitter->setCollapsible(1, true);
 
-    d->previewManager = new KIPIPlugins::PreviewManager(d->tabWidget);
+    d->stackedWidget = new QStackedWidget(d->HSplitter);
+    d->HSplitter->addWidget(d->stackedWidget);          
+    d->splitterSize = 0;
+
+    KVBox* vboxTabBar = new KVBox(hboxMain);
+    vboxTabBar->layout()->setSpacing(0);
+    vboxTabBar->layout()->setMargin(0);
+    d->tabBar = new QTabBar(vboxTabBar);
+    d->tabBar->setShape(QTabBar::RoundedEast);
+
+    dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
+
+
+    d->tabBar->addTab("Image viewer");                
+    d->tabBar->addTab("GPS Correlator");
+    d->tabBar->addTab("Settings");
+    d->tabBar->addTab("Undo/Redo");                  
+    
+    d->tabBar->installEventFilter(this);       
+
+    d->previewManager = new KIPIPlugins::PreviewManager(d->stackedWidget);
     // TODO: why is the minimum size hardcoded to 400x300???
+    
     d->previewManager->setMinimumSize(QSize(200, 200));
-    d->tabWidget->addTab(d->previewManager, i18n("Image viewer"));
+    d->stackedWidget->addWidget(d->previewManager);           
 
-    d->correlatorWidget = new GPSCorrelatorWidget(d->tabWidget, d->imageModel, marginHint(), spacingHint());
-    d->tabWidget->addTab(d->correlatorWidget, i18n("GPS Correlator"));
+    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->stackedWidget->addWidget(d->correlatorWidget);             
 
-    d->settingsWidget = new GPSSettingsWidget(d->tabWidget);
-    d->tabWidget->addTab(d->settingsWidget, i18n("Settings"));
+    d->settingsWidget = new GPSSettingsWidget(d->stackedWidget);
+    d->stackedWidget->addWidget(d->settingsWidget);              
+    
+    d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
+    d->stackedWidget->addWidget(d->undoView);                     
 
-    d->undoView = new QUndoView(d->undoStack, d->tabWidget);
-    d->tabWidget->addTab(d->undoView, i18n("Undo/Redo"));
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -292,16 +325,67 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-//     connect(this, SIGNAL(applyClicked()),
-//             this, SLOT(slotApplyClicked()));
+     connect(this, SIGNAL(applyClicked()),
+             this, SLOT(slotApplyClicked()));
 
     readSettings();
+
 }
 
 GPSSyncDialog::~GPSSyncDialog()
 {
     delete d->about;
     delete d;
+}
+
+
+bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
+{
+    if ( ( o == d->tabBar ) && ( e->type() == QEvent::MouseButtonPress ) )
+    {
+        QMouseEvent const *m = static_cast<QMouseEvent *>(e);           
+
+        QPoint p (m->x(), m->y());
+        const int var = d->tabBar->tabAt(p);
+
+        QList<int> sizes = d->HSplitter->sizes();
+        if (d->splitterSize == 0)
+        {
+            if (d->tabBar->currentIndex() == var)
+            {
+                d->splitterSize = sizes[1];
+                sizes[1] = 0;
+            }
+        }
+        else
+        {
+            sizes[1] = d->splitterSize;
+            d->splitterSize = 0;
+        }
+
+        d->tabBar->setCurrentIndex(var);
+        d->stackedWidget->setCurrentIndex(var);
+        d->HSplitter->setSizes(sizes);
+
+        return true;                        
+    }
+
+    return QWidget::eventFilter(o,e);
+}
+
+void GPSSyncDialog::setCurrentTab(int index)
+{
+
+    d->tabBar->setCurrentIndex(index);
+    d->stackedWidget->setCurrentIndex(index);
+
+    QList<int> sizes = d->HSplitter->sizes();
+    if (d->splitterSize != 0)
+    {
+        sizes[1] = d->splitterSize;
+        d->splitterSize = 0;
+    }
+    d->HSplitter->setSizes(sizes);
 }
 
 void GPSSyncDialog::setImages( const KUrl::List& images )
@@ -322,8 +406,9 @@ void GPSSyncDialog::readSettings()
     d->mapWidget->readSettingsFromGroup(&group);
     d->correlatorWidget->readSettingsFromGroup(&group);
     d->treeView->readSettingsFromGroup(&group);
-    d->tabWidget->setCurrentIndex(group.readEntry("Current Tab", 0));
+    setCurrentTab(group.readEntry("Current Tab", 0));
     const bool showOldestFirst = group.readEntry("Show oldest images first", false);
+
     if (showOldestFirst)
     {
         d->sortActionOldestFirst->setChecked(true);
@@ -338,9 +423,18 @@ void GPSSyncDialog::readSettings()
         const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
         if (!splitterState.isEmpty())
         {
-            d->splitter1->restoreState(splitterState);
+            d->VSplitter->restoreState(splitterState);
         }
     }
+    if (group.hasKey("SplitterState H1"))
+    {
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState H1"), QByteArray()));
+        if (!splitterState.isEmpty())
+        {
+            d->HSplitter->restoreState(splitterState);
+        }
+    }
+    d->splitterSize = group.readEntry("Splitter H1 CollapsedSize", 0);
 
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
     restoreDialogSize(group2);
@@ -350,14 +444,15 @@ void GPSSyncDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
-    group.writeEntry(QString("SplitterState V1"), d->splitter1->saveState().toBase64());
+    group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
+    group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
+    group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
 
     d->mapWidget->saveSettingsToGroup(&group);
     d->correlatorWidget->saveSettingsToGroup(&group);
     d->treeView->saveSettingsToGroup(&group);
-    group.writeEntry("Current Tab", d->tabWidget->currentIndex());
+    group.writeEntry("Current Tab", d->tabBar->currentIndex());
     group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
-
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
     saveDialogSize(group2);
 
@@ -472,6 +567,7 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
 {
+
     slotSetUIEnabled(enabledState, 0, QString());
 }
 
