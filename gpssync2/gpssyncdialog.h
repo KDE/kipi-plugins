@@ -27,7 +27,7 @@
 // Qt includes
 
 #include <QModelIndex>
-
+#include <qwidget.h>
 // KDE includes
 
 #include <kdialog.h>
@@ -67,6 +67,7 @@ private:
     GPSSyncWMWRepresentativeChooserPrivate* const d;
 };
 
+
 class GPSSyncDialog : public KDialog
 {
     Q_OBJECT
@@ -81,7 +82,7 @@ public:
 protected:
 
     void closeEvent(QCloseEvent* e);
-
+    bool eventFilter( QObject *, QEvent *);
 private:
 
     void readSettings();
@@ -100,10 +101,12 @@ private Q_SLOTS:
     void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates);
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
     void slotSortOptionTriggered(QAction* sortAction);
+    void setCurrentTab(const int index);
 
 private:
 
     GPSSyncDialogPriv* const d;
+    int splitterSize;
 };
 
 }  // namespace KIPIGPSSyncPlugin
