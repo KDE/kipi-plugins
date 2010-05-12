@@ -8,9 +8,13 @@ gpssync parts:
 - add copy/paste of coordinates
 - add bookmark system
 - using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
+- the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes
 
 wmw2 parts:
 - control over clustering grid size
 - resizing of thumbnails
-- numbers on clusters google maps
+- re-cluster only every few pixels of panning
 
+done:
+- numbers on clusters google maps
+- make tabs collapsible
