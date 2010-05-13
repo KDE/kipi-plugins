@@ -11,10 +11,11 @@ gpssync parts:
 - the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes
 
 wmw2 parts:
-- control over clustering grid size
-- resizing of thumbnails
+- control over clustering grid size (UI)
 - re-cluster only every few pixels of panning
+- There may be an issue in the Marble backend, because thumbnails are not shown directly when increasing their size, only after a redraw.
 
 done:
 - numbers on clusters google maps
 - make tabs collapsible
+- resizing of thumbnails
