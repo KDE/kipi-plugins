@@ -225,7 +225,7 @@ int DNGWriter::convert()
             useFullSensorImage = true;
         }
 
-        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage))
+        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage, 0))
         {
             kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return -1;
