@@ -196,9 +196,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->progressBar = new QProgressBar(hboxBottom);
     d->progressBar->setVisible(false);
-    d->progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    d->progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
-    dynamic_cast<QHBoxLayout*>(hboxBottom->layout())->setStretch(0, 200);
+    dynamic_cast<QHBoxLayout*>(hboxBottom->layout())->setStretch(200, 0);
 
     d->buttonBox = new KDialogButtonBox(hboxBottom);
     d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
