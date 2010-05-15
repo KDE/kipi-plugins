@@ -412,10 +412,12 @@ void GPSSyncDialog::readSettings()
     if (showOldestFirst)
     {
         d->sortActionOldestFirst->setChecked(true);
+        d->mapWidget->setSortKey(1);
     }
     else
     {
         d->sortActionYoungestFirst->setChecked(true);
+        d->mapWidget->setSortKey(0);
     }
 
     if (group.hasKey("SplitterState V1"))
