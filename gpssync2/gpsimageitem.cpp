@@ -36,7 +36,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 GPSImageItem::GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
-: KipiImageItem(interface, url, false)
+: KipiImageItem(interface, url, false), m_gpsData(), m_savedState(), m_dirty(false)
 {
     if (autoLoad)
     {
@@ -89,7 +89,8 @@ void GPSImageItem::loadImageDataInternal()
     }
 
     // mark us as not-dirty, because the data was just loaded:
-    m_gpsData.m_dirtyFlags = 0;
+    m_dirty = false;
+    m_savedState = m_gpsData;
 }
 
 QVariant GPSImageItem::data(const int column, const int role) const
@@ -121,7 +122,7 @@ QVariant GPSImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
     {
-        if (m_gpsData.m_dirtyFlags!=0)
+        if (m_dirty)
         {
             return i18n("Modified");
         }
@@ -139,6 +140,7 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
         if (value.canConvert<WMW2::WMWGeoCoordinate>())
         {
             m_gpsData.setCoordinates(value.value<WMW2::WMWGeoCoordinate>());
+            m_dirty = true;
         }
     }
     else
@@ -152,6 +154,7 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
 void GPSImageItem::setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates)
 {
     m_gpsData.setCoordinates(newCoordinates);
+    m_dirty = true;
     emitDataChanged();
 }
 
@@ -244,6 +247,11 @@ QString GPSImageItem::saveChanges()
         {
             returnString = i18n("Unable to save changes to file");
         }
+        else
+        {
+            m_dirty = false;
+            m_savedState = m_gpsData;
+        }
     }
 
     delete exiv2Iface;
@@ -278,11 +286,20 @@ QString GPSImageItem::saveChanges()
     if (returnString.isEmpty())
     {
         // mark all changes as not dirty and tell the model:
-        m_gpsData.m_dirtyFlags = 0;
         emitDataChanged();
     }
 
     return returnString;
+}
+
+/**
+ * @brief Restore the gps data to @p container. Sets m_dirty to false if container equals savedState.
+ */
+void GPSImageItem::restoreGPSData(const GPSDataContainer& container)
+{
+    m_dirty = !(container == m_savedState);
+    m_gpsData = container;
+    emitDataChanged();
 }
 
 } /* KIPIGPSSyncPlugin */

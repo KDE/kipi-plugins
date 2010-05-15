@@ -31,18 +31,28 @@ class GPSDataContainer
 {
 public:
     GPSDataContainer()
-    : m_dirtyFlags(0),
-      m_hasFlags(0),
+    : m_hasFlags(0),
       m_coordinates(),
       m_nSatellites(0)
     {
     }
 
-    enum DirtyFlagsEnum {
-        DirtyCoordinates = 1,
-        DirtySatellites = 2
-    };
-    Q_DECLARE_FLAGS(DirtyFlags, DirtyFlagsEnum)
+    bool operator==(const GPSDataContainer& b) const
+    {
+        if (m_hasFlags != b.m_hasFlags)
+            return false;
+
+        if (m_hasFlags.testFlag(HasCoordinates))
+        {
+            if (!(m_coordinates==b.m_coordinates))
+                return false;
+        }
+
+        if (m_nSatellites!=b.m_nSatellites)
+            return false;
+
+        return true;
+    }
 
     enum HasFlagsEnum {
         HasCoordinates = 1,
@@ -52,7 +62,6 @@ public:
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
-    DirtyFlags m_dirtyFlags;
     HasFlags m_hasFlags;
     WMW2::WMWGeoCoordinate m_coordinates;
     int m_nSatellites;
@@ -60,7 +69,6 @@ public:
     void setCoordinates(const WMW2::WMWGeoCoordinate& coordinates)
     {
         m_coordinates = coordinates;
-        m_dirtyFlags|=DirtyCoordinates;
         if (coordinates.hasCoordinates())
         {
             m_hasFlags|=HasCoordinates;
@@ -83,28 +91,24 @@ public:
     {
         m_coordinates.setAlt(alt);
         m_hasFlags|=HasAltitude;
-        m_dirtyFlags|=DirtyCoordinates;
     }
-        
+
 
     void setLatLon(const qreal lat, const qreal lon)
     {
         m_coordinates.setLatLon(lat, lon);
-        m_dirtyFlags|=DirtyCoordinates;
         m_hasFlags|=HasCoordinates;
     }
 
     void clear()
     {
         m_hasFlags = 0;
-        m_dirtyFlags = 0;
     }
-        
+
 };
 
 } /* KIPIGPSSyncPlugin */
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIGPSSyncPlugin::GPSDataContainer::DirtyFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIGPSSyncPlugin::GPSDataContainer::HasFlags)
 
 #endif /* GPSDATACONTAINER_H */

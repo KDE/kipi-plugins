@@ -49,7 +49,9 @@ public:
     void setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates);
     inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.m_coordinates; }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
-    inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; emitDataChanged(); }
+    inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
+    void restoreGPSData(const GPSDataContainer& container);
+    inline bool isDirty() const { return m_dirty; }
 
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
@@ -62,6 +64,8 @@ protected:
 
 protected:
     GPSDataContainer m_gpsData;
+    GPSDataContainer m_savedState;
+    bool m_dirty;
 };
 
 } /* KIPIGPSSyncPlugin */

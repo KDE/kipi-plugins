@@ -51,9 +51,7 @@ void GPSUndoCommand::changeItemData(const bool redoIt)
 
         // TODO: correctly handle the dirty flags
         GPSDataContainer newData = redoIt ? info.dataAfter : info.dataBefore;
-        const GPSDataContainer oldData = item->gpsData();
-//         kDebug()<<redoIt<<oldData.m_coordinates<<newData.m_coordinates;
-        item->setGPSData(newData);
+        item->restoreGPSData(newData);
     }
 }
 

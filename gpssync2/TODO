@@ -9,6 +9,7 @@ gpssync parts:
 - add bookmark system
 - using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
 - the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes
+- disable closing while a thread is running
 
 wmw2 parts:
 - control over clustering grid size (UI)
