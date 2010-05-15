@@ -605,7 +605,7 @@ QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const 
 
     QPersistentModelIndex bestIndex;
     QDateTime bestTime;
-    for (int i=1; i<list.count(); ++i)
+    for (int i=0; i<list.count(); ++i)
     {
         const QPersistentModelIndex currentIndex = list.at(i).value<QPersistentModelIndex>();
         const GPSImageItem* const currentItem = static_cast<GPSImageItem*>(d->model->itemFromIndex(currentIndex));
