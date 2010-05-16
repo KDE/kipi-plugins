@@ -2,21 +2,22 @@ gpssync parts:
 - correctly update the dirty state on undo/redo
 - read dilution of precision data and add warnings
 - add interpolation
-- add warnings when gpx files failed to load
-- add undo/redo/thumbnail size buttons
+- add undo/redo buttons
 - make the coordinates of the images editable
 - add copy/paste of coordinates
 - add bookmark system
 - using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
-- the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes
 - disable closing while a thread is running
 
 wmw2 parts:
 - control over clustering grid size (UI)
 - re-cluster only every few pixels of panning
-- There may be an issue in the Marble backend, because thumbnails are not shown directly when increasing their size, only after a redraw.
 
 done:
 - numbers on clusters google maps
 - make tabs collapsible
 - resizing of thumbnails
+- There may be an issue in the Marble backend, because thumbnails are not shown directly when increasing their size, only after a redraw.
+- add warnings when gpx files failed to load
+- add thumbnail size button
+- the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes (seems fixed)

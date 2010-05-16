@@ -118,6 +118,7 @@ public:
         GPXFileData()
         : url(),
           isValid(false),
+          loadError(),
           nPoints(0),
           gpxDataPoints()
         {
@@ -125,6 +126,7 @@ public:
 
         KUrl url;
         bool isValid;
+        QString loadError;
         int nPoints;
         QList<GPXDataPoint> gpxDataPoints;
     };
@@ -133,6 +135,7 @@ public:
     ~GPSDataParser();
 
     void loadGPXFiles(const KUrl::List& urls);
+    QList<QPair<KUrl, QString> > readLoadErrors();
     void clear();
     const GPXFileData& fileData(const int index) const;
     int fileCount() const;

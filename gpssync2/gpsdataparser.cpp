@@ -36,6 +36,7 @@
 // KDE includes
 
 #include <kdebug.h>
+#include <klocale.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -51,6 +52,7 @@ public:
     QFuture<GPSDataParser::GPXFileData>         gpxLoadFuture;
     GPSDataParser::GPXFileData::List            gpxFileDataList;
     GPSDataParserThread*                        thread;
+    QList<QPair<KUrl, QString> >                loadErrorFiles;
 };
 
 GPSDataParser::GPSDataParser(QObject* const parent)
@@ -89,15 +91,38 @@ GPSDataParser::GPXFileData GPSDataParser::LoadGPXFile(const KUrl& url)
     QFile gpxfile(url.path());
 
     if (!gpxfile.open(QIODevice::ReadOnly))
+    {
+        parsedData.loadError = i18n("Failed to open - check permissions!");
         return parsedData;
+    }
+
+    if (gpxfile.size()==0)
+    {
+        parsedData.loadError = i18n("File is empty!");
+        return parsedData;
+    }
 
     QDomDocument gpxDoc("gpx");
-    if (!gpxDoc.setContent(&gpxfile))
+    QString parseErrorMsg;
+    int parseErrorLine = 0;
+    int parseErrorColumn = 0;
+    if (!gpxDoc.setContent(&gpxfile, &parseErrorMsg, &parseErrorLine, &parseErrorColumn))
+    {
+        // TODO: make sure the line numbers are correctly formatted!
+        parsedData.loadError = i18n("Parsing error: Line %1, column %2: %3",
+                parseErrorLine,
+                parseErrorColumn,
+                parseErrorMsg);
+
         return parsedData;
+    }
 
     QDomElement gpxDocElem = gpxDoc.documentElement();
     if (gpxDocElem.tagName()!="gpx")
+    {
+        parsedData.loadError = i18n("Could not find a GPX element in the file!");
         return parsedData;
+    }
 
     for (QDomNode nTrk = gpxDocElem.firstChild();
          !nTrk.isNull(); nTrk = nTrk.nextSibling())
@@ -171,6 +196,10 @@ GPSDataParser::GPXFileData GPSDataParser::LoadGPXFile(const KUrl& url)
     qSort(parsedData.gpxDataPoints.begin(), parsedData.gpxDataPoints.end(), GPSDataParser::GPXDataPoint::EarlierThan);
 
     parsedData.isValid = parsedData.nPoints > 0;
+    if (!parsedData.isValid)
+    {
+        parsedData.loadError = i18n("File valid, but no datapoints found!");
+    }
     return parsedData;
 }
 
@@ -190,16 +219,27 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 
 void GPSDataParser::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 {
+    const int nFilesBefore = d->gpxFileDataList.count();
+
+    // note that endIndex is exclusive!
     for (int i=beginIndex; i<endIndex; ++i)
     {
-        d->gpxFileDataList << d->gpxLoadFuture.resultAt(i);
+        const GPXFileData nextFile = d->gpxLoadFuture.resultAt(i);
+        if (nextFile.isValid)
+        {
+            d->gpxFileDataList << nextFile;
+        }
+        else
+        {
+            d->loadErrorFiles << QPair<KUrl, QString>(nextFile.url, nextFile.loadError);
+        }
     }
 
-    const int nFiles = (endIndex-beginIndex);
-    emit(signalGPXFilesReadyAt(d->gpxFileDataList.count()-nFiles, d->gpxFileDataList.count()));
+    // note that endIndex is exclusive!
+    emit(signalGPXFilesReadyAt(nFilesBefore, d->gpxFileDataList.count()));
 
     // are all files done?
-    if (d->gpxLoadFuture.progressMaximum() == d->gpxFileDataList.count() )
+    if (d->gpxLoadFuture.isFinished())
     {
         d->gpxLoadFutureWatcher->deleteLater();
 
@@ -445,6 +485,14 @@ void GPSDataParserThread::run()
 int GPSDataParser::fileCount() const
 {
     return d->gpxFileDataList.count();
+}
+
+QList<QPair<KUrl, QString> > GPSDataParser::readLoadErrors()
+{
+    const QList<QPair<KUrl, QString> > result = d->loadErrorFiles;
+    d->loadErrorFiles.clear();
+    
+    return result;
 }
 
 } // namespace KIPIGPSSyncPlugin

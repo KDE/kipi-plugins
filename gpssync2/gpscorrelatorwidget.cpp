@@ -347,9 +347,13 @@ void GPSCorrelatorWidget::slotLoadGPXFiles()
 
 void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 {
+    // note that endIndex is exclusive!
     for (int i=beginIndex; i<endIndex; ++i)
     {
         const GPSDataParser::GPXFileData& gpxData = d->gpsDataParser->fileData(i);
+
+        if (!gpxData.isValid)
+            continue;
 
         QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
         treeItem->setText(0, gpxData.url.fileName());
@@ -360,6 +364,34 @@ void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 
 void GPSCorrelatorWidget::slotAllGPXFilesReady()
 {
+    // are there any invalid files?
+    QStringList invalidFiles;
+    const QList<QPair<KUrl, QString> > loadErrorFiles = d->gpsDataParser->readLoadErrors();
+    for (int i=0; i<loadErrorFiles.count(); ++i)
+    {
+        const QPair<KUrl, QString> currentError = loadErrorFiles.at(i);
+        const QString fileErrorString = QString("%1: %2").arg(currentError.first.toLocalFile()).arg(currentError.second);
+
+        invalidFiles << fileErrorString;
+    }
+
+    if (!invalidFiles.isEmpty())
+    {
+        const QString errorString = i18np(
+                "The following GPX file could not be loaded:",
+                "The following %1 GPX files could not be loaded:",
+                invalidFiles.count()
+            );
+
+        const QString errorTitleString = i18np(
+                "Error loading GPX file",
+                "Error loading GPX files",
+                invalidFiles.count()
+            );
+
+        KMessageBox::errorList(this, errorString, invalidFiles, errorTitleString);
+    }
+
     setUIEnabledInternal(true);
 }
 
