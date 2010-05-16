@@ -146,6 +146,9 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     connect(d->gpsDataParser, SIGNAL(signalAllItemsCorrelated()),
             this, SLOT(slotAllItemsCorrelated()));
 
+    connect(d->gpsDataParser, SIGNAL(signalCorrelationCanceled()),
+            this, SLOT(slotCorrelationCanceled()));
+
     QVBoxLayout* const vboxlayout = new QVBoxLayout(this);
     setLayout(vboxlayout);
 
@@ -439,7 +442,7 @@ void GPSCorrelatorWidget::updateUIState()
 void GPSCorrelatorWidget::slotCorrelate()
 {
     // disable the UI of the entire dialog:
-    emit(signalSetUIEnabled(false));
+    emit(signalSetUIEnabled(false, this, SLOT(slotCancelCorrelation())));
 
     // store the options:
     GPSDataParser::GPXCorrelationOptions options;
@@ -599,6 +602,20 @@ void GPSCorrelatorWidget::readSettingsFromGroup(KConfigGroup* const group)
     d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
 
     updateUIState();
+}
+
+void GPSCorrelatorWidget::slotCancelCorrelation()
+{
+    d->gpsDataParser->cancelCorrelation();
+}
+
+void GPSCorrelatorWidget::slotCorrelationCanceled()
+{
+    d->correlationUndoCommand->undo();
+
+    delete d->correlationUndoCommand;
+
+    emit(signalSetUIEnabled(true));
 }
 
 } /* KIPIGPSSyncPlugin */

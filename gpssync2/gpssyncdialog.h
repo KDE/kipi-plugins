@@ -102,6 +102,7 @@ private Q_SLOTS:
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
     void slotSortOptionTriggered(QAction* sortAction);
     void setCurrentTab(const int index);
+    void slotProgressCancelButtonClicked();
 
 private:
 

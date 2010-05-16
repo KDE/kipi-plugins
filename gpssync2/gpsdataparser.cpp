@@ -320,13 +320,24 @@ void GPSDataParser::slotThreadItemsCorrelated(const GPXCorrelation::List& correl
 
 void GPSDataParser::slotThreadFinished()
 {
+    const bool threadCanceled = d->thread->canceled;
     delete d->thread;
     d->thread = 0;
-    emit(signalAllItemsCorrelated());
+
+    if (threadCanceled)
+    {
+        emit(signalCorrelationCanceled());
+    }
+    else
+    {
+        emit(signalAllItemsCorrelated());
+    }
 }
 
 GPSDataParserThread::GPSDataParserThread(QObject* const parent)
-: QThread(parent)
+: QThread(parent),
+  doCancel(false),
+  canceled(false)
 {
 }
 
@@ -353,6 +364,12 @@ void GPSDataParserThread::run()
 
     for (GPSDataParser::GPXCorrelation::List::iterator it = itemsToCorrelate.begin(); it!=itemsToCorrelate.end(); ++it)
     {
+        if (doCancel)
+        {
+            canceled = true;
+            return;
+        }
+
         // GPS device are sync in time by satelite using GMT time.
         QDateTime itemDateTime = it->dateTime.addSecs(options.secondsOffset*(-1));
         if (!options.photosHaveSystemTimeZone)
@@ -368,10 +385,22 @@ void GPSDataParserThread::run()
         QPair<int, int> firstIndexPair;
         for (int f = 0; f<nFiles; ++f)
         {
+            if (doCancel)
+            {
+                canceled = true;
+                return;
+            }
+
             const GPSDataParser::GPXFileData& currentFile = fileList.at(f);
             int index = currentIndices.at(f);
             for (; index<currentFile.gpxDataPoints.count(); ++index)
             {
+                if (doCancel)
+                {
+                    canceled = true;
+                    return;
+                }
+
                 const QDateTime& indexTime = currentFile.gpxDataPoints.at(index).dateTime;
                 if (indexTime<itemDateTime)
                 {
@@ -493,6 +522,14 @@ QList<QPair<KUrl, QString> > GPSDataParser::readLoadErrors()
     d->loadErrorFiles.clear();
     
     return result;
+}
+
+void GPSDataParser::cancelCorrelation()
+{
+    if (d->thread)
+    {
+        d->thread->doCancel = true;
+    }
 }
 
 } // namespace KIPIGPSSyncPlugin

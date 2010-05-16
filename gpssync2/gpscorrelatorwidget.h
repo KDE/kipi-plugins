@@ -60,9 +60,13 @@ protected:
 
 Q_SIGNALS:
     void signalSetUIEnabled(const bool enabledState);
+    void signalSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void signalProgressSetup(const int maxProgress, const QString& progressText);
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
+
+public Q_SLOTS:
+    void slotCancelCorrelation();
 
 private Q_SLOTS:
     void updateUIState();
@@ -72,6 +76,7 @@ private Q_SLOTS:
     void slotCorrelate();
     void slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
     void slotAllItemsCorrelated();
+    void slotCorrelationCanceled();
 
 private:
     GPSCorrelatorWidgetPrivate* const d;

@@ -35,6 +35,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QGroupBox>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
@@ -43,11 +44,11 @@
 #include <QProgressBar>
 #include <QRadioButton>
 #include <QSplitter>
-#include <QTreeView>
-#include <QUndoView>
 #include <QStackedLayout>
 #include <QStackedWidget>
-#include <QHBoxLayout>
+#include <QTimer>
+#include <QTreeView>
+#include <QUndoView>
 
 // KDE includes
 
@@ -152,6 +153,9 @@ public:
     int changedFilesCountTotal;
     bool changedFilesCloseAfterwards;
     QProgressBar *progressBar;
+    QPushButton *progressCancelButton;
+    QObject* progressCancelObject;
+    QString progressCancelSlot;
     KUndoStack *undoStack;
     QUndoView *undoView;
     QAction *sortActionOldestFirst;
@@ -199,6 +203,13 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
     dynamic_cast<QHBoxLayout*>(hboxBottom->layout())->setStretch(200, 0);
+
+    d->progressCancelButton = new QPushButton(hboxBottom);
+    d->progressCancelButton->setVisible(false);
+    d->progressCancelButton->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+    d->progressCancelButton->setIcon(SmallIcon("dialog-cancel"));
+    connect(d->progressCancelButton, SIGNAL(clicked()),
+            this, SLOT(slotProgressCancelButtonClicked()));
 
     d->buttonBox = new KDialogButtonBox(hboxBottom);
     d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
@@ -315,6 +326,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
             this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
+            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
 
     connect(d->correlatorWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
             this, SLOT(slotProgressSetup(const int, const QString&)));
@@ -559,9 +573,12 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     {
         // hide the progress bar
         d->progressBar->setVisible(false);
+        d->progressCancelButton->setVisible(false);
     }
 
     // TODO: disable the worldmapwidget and the images list (at least disable editing operations)
+    d->progressCancelObject = cancelObject;
+    d->progressCancelSlot = cancelSlot;
     d->uiEnabled = enabledState;
     d->buttonBox->setEnabled(enabledState);
     d->correlatorWidget->setUIEnabledExternal(enabledState);
@@ -741,6 +758,7 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setMaximum(maxProgress);
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
+    d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
 void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates)
@@ -779,6 +797,14 @@ void GPSSyncDialog::slotSortOptionTriggered(QAction* sortAction)
     }
 
     d->mapWidget->setSortKey(newSortKey);
+}
+
+void GPSSyncDialog::slotProgressCancelButtonClicked()
+{
+    if (d->progressCancelObject)
+    {
+        QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

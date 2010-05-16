@@ -141,12 +141,14 @@ public:
     int fileCount() const;
 
     void correlate(const GPXCorrelation::List& itemsToCorrelate, const GPXCorrelationOptions& options);
+    void cancelCorrelation();
 
 Q_SIGNALS:
     void signalGPXFilesReadyAt(const int startIndex, const int endIndex);
     void signalAllGPXFilesReady();
     void signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
     void signalAllItemsCorrelated();
+    void signalCorrelationCanceled();
 
 protected:
     static GPXFileData LoadGPXFile(const KUrl& url);
@@ -173,6 +175,8 @@ public:
     GPSDataParser::GPXCorrelation::List itemsToCorrelate;
     GPSDataParser::GPXCorrelationOptions options;
     GPSDataParser::GPXFileData::List fileList;
+    bool doCancel;
+    bool canceled;
 
 protected:
     virtual void run();
