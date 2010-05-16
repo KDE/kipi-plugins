@@ -149,7 +149,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     QVBoxLayout* const vboxlayout = new QVBoxLayout(this);
     setLayout(vboxlayout);
 
-    QGridLayout *settingsLayout = new QGridLayout(this);
+    QGridLayout* const settingsLayout = new QGridLayout(this);
     vboxlayout->addLayout(settingsLayout);
     vboxlayout->addStretch(10);
 
@@ -161,21 +161,21 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     gpxHeaderLabels << i18n("Filename") << i18n("#points");
     d->gpxFileList->setHeaderLabels(gpxHeaderLabels);
 
-    KSeparator *line     = new KSeparator(Qt::Horizontal, this);
+    KSeparator* const line = new KSeparator(Qt::Horizontal, this);
 
     QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), this);
-    d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, this);
+    d->maxGapInput = new KIntSpinBox(0, 1000000, 1, 30, this);
     d->maxGapInput->setWhatsThis(i18n("Sets the maximum difference in "
                     "seconds from a GPS track point to the image time to be matched. "
                     "If the time difference exceeds this setting, no match will be attempted."));
 
-    QLabel *timeZoneLabel = new QLabel(i18n("Camera time zone:"), this);
-    d->timeZoneSystem     = new QRadioButton(i18n("Same as system"), this);
+    QLabel* const timeZoneLabel = new QLabel(i18n("Camera time zone:"), this);
+    d->timeZoneSystem = new QRadioButton(i18n("Same as system"), this);
     d->timeZoneSystem->setWhatsThis(i18n(
                     "Use this option if the timezone of the camera "
                     "is the same as the timezone of this system. "
                     "The conversion to GMT will be done automatically."));
-    d->timeZoneManual     = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), this);
+    d->timeZoneManual = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), this);
     d->timeZoneManual->setWhatsThis(i18n(
                     "Use this option if the timezone of the camera "
                     "is different from this system and you have to "
@@ -244,7 +244,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
                         "This can be used for fine tuning to adjust a "
                         "wrong camera clock."));
 
-    QWidget *offsetWidget = new QWidget(this);
+    QWidget* const offsetWidget = new QWidget(this);
     d->offsetSign = new KComboBox(offsetWidget);
     d->offsetSign->addItem("+");
     d->offsetSign->addItem("-");
@@ -257,7 +257,7 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->offsetSec = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
     d->offsetSec->setWhatsThis(i18n("Seconds to fine tune camera offset."));
 
-    QGridLayout *offsetLayout = new QGridLayout(offsetWidget);
+    QGridLayout* const offsetLayout = new QGridLayout(offsetWidget);
     offsetLayout->addWidget(d->offsetSign, 0, 0, 1, 1);
     offsetLayout->addWidget(d->offsetMin, 0, 1, 1, 1);
     offsetLayout->addWidget(d->offsetSec, 0, 2, 1, 1);
