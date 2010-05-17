@@ -19,6 +19,7 @@ Name[sv]=Svävande kort
 Name[th]=แผงลอย
 Name[uk]=Картки, що плавають
 Name[x-test]=xxFloating Cardsxx
+Name[zh_CN]=浮动卡片
 Name[zh_TW]=紙牌浮空
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[ca]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
@@ -40,6 +41,7 @@ Comment[sv]=Ett mörkt tema med svävande miniatyrbilder och beskrivningar. Snab
 Comment[th]=ชุดตกแต่งโทนสีมืด โดยมีแผงแสดงภาพตัวอย่าง/รายละเอียดต่าง ๆ ซึ่งทำให้สามารถท่องดูแกลเลอรีได้อย่างรวดเร็ว
 Comment[uk]=Темна тема з картками мініатюр або описів, що неначебто плавають панеллю. Пришвидшує орієнтування у галереї.
 Comment[x-test]=xxA dark theme with floating thumbnail/description cards. Fast navigation through the gallery.xx
+Comment[zh_CN]=带有浮动缩略图/描述卡片的暗色调主题。快速导航画册。
 Comment[zh_TW]=使用浮空縮圖/描述卡的暗色主題。快速瀏覽藝廊。
 
 [X-HTMLExport Author]
@@ -93,5 +95,6 @@ Name[sv]=Svävande kort
 Name[th]=แผงลอย
 Name[uk]=Картки, що плавають
 Name[x-test]=xxFloating Cardsxx
+Name[zh_CN]=浮动卡片
 Name[zh_TW]=紙牌浮空
 Url=preview.png

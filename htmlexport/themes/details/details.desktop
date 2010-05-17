@@ -17,6 +17,7 @@ Comment[sv]=Ytterligare ett enkelt tema. Rent utseende med fler bilddetaljer.
 Comment[th]=ชุดตกแต่งที่เรียบง่ายและดูดีอีกแบบ ซึ่งมีรายละเอียดต่าง ๆ ของภาพมากกว่า
 Comment[uk]=Ще одна проста тема. Строгий вигляд з додатковими параметрами зображень.
 Comment[x-test]=xxYet another simple theme. Clean look with more image details.xx
+Comment[zh_CN]=另一款简洁的主题。干净且富含更多图像细节。
 Comment[zh_TW]=還有另一個不錯的主題。非常簡單、清爽且顯示更多影像詳細資訊。
 Icon=
 Name=Details
@@ -41,6 +42,7 @@ Name[sv]=Detaljer
 Name[th]=รายละเอียด
 Name[uk]=Подробиці
 Name[x-test]=xxDetailsxx
+Name[zh_CN]=精细
 Name[zh_TW]=詳細資訊
 
 [X-HTMLExport Author]
@@ -63,6 +65,7 @@ Name[sv]=Gianluca Urgese
 Name[th]=Gianluca Urgese
 Name[uk]=Gianluca Urgese
 Name[x-test]=xxGianluca Urgesexx
+Name[zh_CN]=Gianluca Urgese
 Name[zh_TW]=Gianluca 使用方法
 Url=mailto:g.urgese@jaone.it
 
@@ -85,6 +88,7 @@ Name[sv]=Skärmbild av Detaljer
 Name[th]=รายละเอียดต่าง ๆ ของภาพหน้าจอที่จับได้
 Name[uk]=Знімок вікна подробиць
 Name[x-test]=xxDetails screenshotxx
+Name[zh_CN]=精细截图
 Name[zh_TW]=詳細資訊畫面擷取
 Url=preview.png
 
@@ -107,6 +111,7 @@ Name[sv]=Information i nederkant
 Name[th]=ข้อมูลรายละเอียดส่วนท้ายหน้า
 Name[uk]=Відомості нижнього колонтитула
 Name[x-test]=xxFooter informationxx
+Name[zh_CN]=页脚信息
 Name[zh_TW]=頁尾資訊
 
 Type=string
