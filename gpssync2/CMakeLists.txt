@@ -32,10 +32,10 @@ INSTALL(TARGETS kipiplugin_gpssync2 DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_gpssync2.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-INSTALL(FILES rg-google-maps-v3.html DESTINATION ${DATA_INSTALL_DIR}/gpssync2/)
-
-
-INSTALL(FILES reverse-js.js DESTINATION ${DATA_INSTALL_DIR}/gpssync2/)
+INSTALL(FILES
+    reverse-js.js
+    rg-google-maps-v3.html
+    DESTINATION ${DATA_INSTALL_DIR}/gpssync2/)
 
 IF(KDE4_BUILD_TESTS)
     MACRO_OPTIONAL_ADD_SUBDIRECTORY(tests)
