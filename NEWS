@@ -34,4 +34,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> DNGConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
 021 ==> GPSSync           : 236846 : Geolocation does not work in gnome.
 022 ==> DNGConverter      : 237914 : Can't compile svn version.
-023 ==> 
+023 ==> JPEGLossLess      : 228483 : digiKam 1.1.0 with system libjpeg-8 breaks image rotation.
+024 ==> 
