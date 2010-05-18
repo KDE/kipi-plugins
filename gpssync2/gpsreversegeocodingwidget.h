@@ -30,11 +30,13 @@
 
 #include <QWidget>
 
+class QItemSelectionModel;
 
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSReverseGeocodingWidgetPrivate;
+class KipiImageModel;
 
 class GPSReverseGeocodingWidget : public QWidget
 {
@@ -43,12 +45,13 @@ Q_OBJECT;
 
 public: 
 
-    GPSReverseGeocodingWidget(QWidget* const parent = 0);
+    GPSReverseGeocodingWidget(KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
     ~GPSReverseGeocodingWidget();
 
 private Q_SLOTS:
     void slotHTMLInitialized();
     void slotHTMLEvents( const QStringList& );
+    void slotButtonRGSelected();
 private:
 
     GPSReverseGeocodingWidgetPrivate* const d;    

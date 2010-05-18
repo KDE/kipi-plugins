@@ -300,7 +300,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
     d->stackedWidget->addWidget(d->undoView);
 
-    d->rgWidget = new GPSReverseGeocodingWidget(d->stackedWidget);
+    d->rgWidget = new GPSReverseGeocodingWidget(d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
 
