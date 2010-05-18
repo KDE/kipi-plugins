@@ -33,7 +33,7 @@ if (status == google.maps.GeocoderStatus.OK) {
                 resultContent = "";
                 for ( var i = 0; i < results[0].address_components.length; ++i){
 
-                    resultContent += results[0].address_components[i].types + ":" + results[0].address_components[i].long_name + ", ";
+                    resultContent += results[0].address_components[i].types + ":" + results[0].address_components[i].long_name + "\n";
 
                 }
                 
