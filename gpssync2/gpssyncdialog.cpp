@@ -92,6 +92,7 @@
 #include "gpssettingswidget.h"
 #include "gpscorrelatorwidget.h"
 #include "gpsundocommand.h"
+#include "gpsreversegeocodingwidget.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -164,6 +165,7 @@ public:
     QStackedWidget	     *stackedWidget;
     QTabBar                  *tabBar;
     int splitterSize;
+    GPSReverseGeocodingWidget *rgWidget;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -275,10 +277,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
 
 
-    d->tabBar->addTab("Image viewer");                
+    d->tabBar->addTab("Image viewer");
     d->tabBar->addTab("GPS Correlator");
     d->tabBar->addTab("Settings");
-    d->tabBar->addTab("Undo/Redo");                  
+    d->tabBar->addTab("Undo/Redo");
+    d->tabBar->addTab("Reverse Geocoding");
     
     d->tabBar->installEventFilter(this);       
 
@@ -295,7 +298,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->stackedWidget->addWidget(d->settingsWidget);              
     
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
-    d->stackedWidget->addWidget(d->undoView);                     
+    d->stackedWidget->addWidget(d->undoView);
+
+    d->rgWidget = new GPSReverseGeocodingWidget(d->stackedWidget);
+    d->stackedWidget->addWidget(d->rgWidget);
 
 
     // ---------------------------------------------------------------
