@@ -14,9 +14,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> PrintWizard       : 232382 : Setting custom page size is impossible.
 002 ==> Libkdcraw         : 221542 : Build fails due to ambiguities.
-003 ==> DngConverter      : 191907 : DNG Converter damages white balance metadata.
-004 ==> DngConverter      : 233088 : Compile error on Win32 with MinGW4.
-005 ==> DngConverter      : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
+003 ==> DNGConverter      : 191907 : DNG Converter damages white balance metadata.
+004 ==> DNGConverter      : 233088 : Compile error on Win32 with MinGW4.
+005 ==> DNGConverter      : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
 006 ==> AcquireImages     : 233676 : desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
 007 ==> General           : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
 008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
@@ -31,6 +31,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
 018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
 019 ==> PiwigoExport      : 235555 : digiKam Plugins Export Piwigo fail.
-020 ==> DngConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
+020 ==> DNGConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
 021 ==> GPSSync           : 236846 : Geolocation does not work in gnome.
-022 ==> 
+022 ==> DNGConverter      : 237914 : Can't compile svn version.
+023 ==> 
