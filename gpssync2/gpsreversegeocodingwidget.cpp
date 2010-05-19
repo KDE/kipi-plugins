@@ -29,6 +29,8 @@
 #include <QString>
 #include <QMessageBox>
 #include <QVBoxLayout>
+#include <QList>
+#include <QMap>
 // KDE includes
 
 #include <kaction.h>
@@ -82,8 +84,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->htmlWidget = new WMW2::HTMLWidget(dummy);
     dummy->resize(200,200);
 
-    // KUrl htmlUrl = KUrl("/home/gabi/Downloads/kipi-plugins-1.2.0/gpssync2/rg-google-maps-v3.html");
-
     KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
 
     d->htmlWidget->openUrl(htmlUrl);
@@ -118,17 +118,49 @@ GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
 }
 
 
-void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
-{
+QMap<QString,QString> GPSReverseGeocodingWidget::makeQMap(QString string){
 
 
-    for (QStringList::const_iterator it = events.constBegin(); it!=events.constEnd(); ++it){
+    QMap<QString, QString> map;
 
-    d->label->setText(*it);
-    
+    QStringList listAddress;
+    listAddress = string.split("\n");
+    listAddress.removeLast();   
+ 
+    for(int i = 0; i < listAddress.size(); ++i){
+
+        QStringList listKeyValue;
+        QString element,name;        
+
+        QString addressElement = listAddress.at(i);
+
+        listKeyValue = addressElement.split(":");
+        map.insert(listKeyValue.at(0), listKeyValue.at(1));
 
     }
 
+    return map;
+}
+
+void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
+{
+    QString address;
+    QMap<QString, QString> map;
+
+    //creates map with address elements as keys and name of elements as values  
+    map = makeQMap(events.at(0));
+
+    //iterates through map to display the address
+    QMap<QString, QString>::const_iterator i = map.constBegin();
+    
+    while( i != map.constEnd()){
+        
+        address.append(i.key() + ":" + i.value() + "\n");
+        ++i;
+
+    }
+
+    d->label->setText(address);
 
 }
 
@@ -136,7 +168,6 @@ void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
 void GPSReverseGeocodingWidget::slotHTMLInitialized()
 {
 
-   d->htmlWidget->runScript(QString("reverseGeocoding(%1,%2);").arg("21").arg("42"));
 
 }
 

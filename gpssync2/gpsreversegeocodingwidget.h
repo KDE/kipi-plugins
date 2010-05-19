@@ -48,6 +48,9 @@ public:
     GPSReverseGeocodingWidget(KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
     ~GPSReverseGeocodingWidget();
 
+private:
+    QMap<QString, QString> makeQMap(QString);
+
 private Q_SLOTS:
     void slotHTMLInitialized();
     void slotHTMLEvents( const QStringList& );
