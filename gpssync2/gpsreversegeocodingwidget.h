@@ -55,6 +55,12 @@ private Q_SLOTS:
     void slotHTMLInitialized();
     void slotHTMLEvents( const QStringList& );
     void slotButtonRGSelected();
+    void slotRGReady();
+
+Q_SIGNALS:
+
+    void signalRGReady();
+
 private:
 
     GPSReverseGeocodingWidgetPrivate* const d;    

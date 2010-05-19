@@ -40,6 +40,7 @@
 #include <kurl.h>
 #include <kvbox.h>
 //local includes
+#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "../worldmapwidget2/lib/html_widget.h"
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
@@ -50,6 +51,28 @@
 namespace KIPIGPSSyncPlugin
 {
 
+ class RGInfo {
+
+    public:
+    
+    RGInfo()
+    :id(),
+     coordinates(),
+     rgData(){   }
+
+
+    QVariant id;
+    WMW2::WMWGeoCoordinate coordinates;
+    QMap<QString, QString> rgData;
+
+};
+
+/*
+typedef struct rgInternal {
+    rgInfo request;
+    int requestId;
+}rgInternal;
+*/
 class GPSReverseGeocodingWidgetPrivate
 {
 public:
@@ -63,6 +86,9 @@ public:
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
+
+    QList<RGInfo> photoList;
+    int countElements;
 };
 
 
@@ -100,6 +126,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     
 
 
+
     connect(d->htmlWidget, SIGNAL(signalJavaScriptReady()),
             this, SLOT(slotHTMLInitialized()));
 
@@ -108,6 +135,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
+
+    connect(this, SIGNAL(signalRGReady()), 
+            this, SLOT(slotRGReady()));	
 }
 
 
@@ -160,7 +190,15 @@ void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
 
     }
 
-    d->label->setText(address);
+
+    d->photoList[d->countElements].rgData = map;
+      
+    d->countElements++;
+    if(d->countElements == d->photoList.count()){
+
+        emit(signalRGReady());
+
+    }
 
 }
 
@@ -177,10 +215,18 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
 
     // TODO: work on more than one image
-    if (selectedItems.count()!=1)
+/*    if (selectedItems.count()!=1)
         return;
+*/
+    if(!d->photoList.isEmpty()){
+        d->photoList.clear();
+    }
+    d->countElements = 0;
 
-    const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(selectedItems.first()));
+
+    for( int i = 0; i < selectedItems.count(); ++i){
+
+    const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(selectedItems.at(i)));
 
     const GPSDataContainer gpsData = selectedItem->gpsData();
     if (!gpsData.m_hasFlags.testFlag(GPSDataContainer::HasCoordinates))
@@ -191,7 +237,40 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
     // now call the reverse geocoding function:
     d->htmlWidget->runScript(QString("reverseGeocoding(%1,%2);").arg(latitude).arg(longitude));
+   
+    RGInfo photoObj;
+    photoObj.id = QVariant(i);
+    photoObj.coordinates = WMW2::WMWGeoCoordinate(latitude, longitude);
+
+    d->photoList.insert(i, photoObj);
+ 	
+    }
 }
+
+
+void GPSReverseGeocodingWidget::slotRGReady(){
+
+    QString address;
+    QMessageBox msg;
+
+    for(int i = 0; i < d->photoList.count(); ++i){
+
+        address = "";
+    
+        QMap<QString, QString>::const_iterator it = d->photoList[i].rgData.constBegin();
+    
+        while( it != d->photoList[0].rgData.constEnd()){
+        
+            address.append(it.key() + ":" + it.value() + "\n");
+            ++it;
+
+        }
+	    msg.setText(address);
+	    msg.exec();
+    
+    }
+
+} 
 
 } /* KIPIGPSSyncPlugin  */
 
