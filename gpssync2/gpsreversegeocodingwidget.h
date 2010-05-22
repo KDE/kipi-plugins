@@ -30,13 +30,34 @@
 
 #include <QWidget>
 
+//local includes
+#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 class QItemSelectionModel;
 
 namespace KIPIGPSSyncPlugin
 {
 
+
 class GPSReverseGeocodingWidgetPrivate;
 class KipiImageModel;
+
+class RGInfo {
+
+    public:
+
+    RGInfo()
+    :id(),
+     coordinates(),
+     rgData(){   }
+
+
+    QVariant id;
+    WMW2::WMWGeoCoordinate coordinates;
+    QMap<QString, QString> rgData;
+
+};
+
+
 
 class GPSReverseGeocodingWidget : public QWidget
 {
@@ -50,17 +71,17 @@ public:
 
 private:
     QMap<QString, QString> makeQMap(QString);
+    void runRGScript(QList<RGInfo>);
 
 private Q_SLOTS:
     void slotHTMLInitialized();
     void slotHTMLEvents( const QStringList& );
     void slotButtonRGSelected();
-    void slotRGReady();
-
+    void slotRGReady(QList<RGInfo>&);
+    void nextPhoto();
 Q_SIGNALS:
 
-    void signalRGReady();
-
+    void signalRGReady(QList<RGInfo>&);
 private:
 
     GPSReverseGeocodingWidgetPrivate* const d;    

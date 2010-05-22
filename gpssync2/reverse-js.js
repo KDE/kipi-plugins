@@ -1,6 +1,6 @@
 var geocoder;
 var eventBuffer = new Array();
-
+var id;
 
 function wmwPostEventString(eventString){
     eventBuffer.push(eventString);
@@ -9,7 +9,7 @@ function wmwPostEventString(eventString){
 
 function showText(){
 
-   //     alert(window.status);
+  //      alert(window.status);
 
 }
 
@@ -30,13 +30,12 @@ function rezultat(results, status){
 if (status == google.maps.GeocoderStatus.OK) {
 
             if (results[0]) {
-                resultContent = "";
+                resultContent = id+"~";
                 for ( var i = 0; i < results[0].address_components.length; ++i){
 
                     resultContent += results[0].address_components[i].types + ":" + results[0].address_components[i].long_name + "\n";
 
                 }
-                
             wmwPostEventString(resultContent);
             }else{
                 alert("No result found");
@@ -45,21 +44,17 @@ if (status == google.maps.GeocoderStatus.OK) {
         } else {
             alert("Geocoder failed to: "+status);
         }
-
+    
 
 }
 
 
 
-function reverseGeocoding(lat,lng){
+function reverseGeocoding(photoId, lat, lng){
 
     geocoder = new google.maps.Geocoder();
 
-//    var wanted_language = document.getElementById("language_id").value;
-//    if (wanted_language=="") { 
-//       wanted_language = null; 
-//    }
-
+    id = photoId;
 
     var latlng = new google.maps.LatLng(lat, lng);    
     if(geocoder){
