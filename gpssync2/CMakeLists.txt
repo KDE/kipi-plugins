@@ -14,6 +14,8 @@ SET(kipiplugin_gpssync_PART_SRCS
         gpsdataparser.cpp
         gpsundocommand.cpp
         gpsreversegeocodingwidget.cpp
+        inputboxnocancel.cpp
+        gpsbookmarkowner.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync2 ${kipiplugin_gpssync_PART_SRCS})

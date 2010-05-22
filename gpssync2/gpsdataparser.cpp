@@ -489,15 +489,46 @@ void GPSDataParserThread::run()
             bool canInterpolate = options.interpolate && lastSmallerTime.isValid() && firstBiggerTime.isValid();
             if (canInterpolate)
             {
-                canInterpolate = abs(lastSmallerTime.secsTo(itemDateTime)) < options.interpolationDstTime;
+                canInterpolate = abs(lastSmallerTime.secsTo(itemDateTime)) <= options.interpolationDstTime;
             }
             if (canInterpolate)
             {
-                canInterpolate = abs(firstBiggerTime.secsTo(itemDateTime)) < options.interpolationDstTime;
+                canInterpolate = abs(firstBiggerTime.secsTo(itemDateTime)) <= options.interpolationDstTime;
             }
             if (canInterpolate)
             {
-                // TODO: we shall interpolate and have items before and after
+                const GPSDataParser::GPXDataPoint& dataPointBefore = fileList.at(lastIndexPair.first).gpxDataPoints.at(lastIndexPair.second);
+                const GPSDataParser::GPXDataPoint& dataPointAfter = fileList.at(firstIndexPair.first).gpxDataPoints.at(firstIndexPair.second);
+
+                const uint tBefore = dataPointBefore.dateTime.toTime_t();
+                const uint tAfter = dataPointAfter.dateTime.toTime_t();
+                const uint tCor = itemDateTime.toTime_t();
+                if (tCor-tBefore!=0)
+                {
+                    WMW2::WMWGeoCoordinate resultCoordinates;
+                    const double latBefore = dataPointBefore.coordinates.lat();
+                    const double lonBefore = dataPointBefore.coordinates.lon();
+                    const double latAfter = dataPointAfter.coordinates.lat();
+                    const double lonAfter = dataPointAfter.coordinates.lon();
+
+                    const qreal interFactor = qreal(tCor-tBefore)/qreal(tAfter-tBefore);
+                    resultCoordinates.setLatLon(
+                            latBefore + (latAfter - latBefore) * interFactor,
+                            lonBefore + (lonAfter - lonBefore) * interFactor
+                        );
+
+                    const bool hasAlt = dataPointBefore.coordinates.hasAltitude() && dataPointAfter.coordinates.hasAltitude();
+                    if (hasAlt)
+                    {
+                        const double altBefore = dataPointBefore.coordinates.alt();
+                        const double altAfter = dataPointAfter.coordinates.alt();
+                        resultCoordinates.setAlt(altBefore + (altAfter - altBefore) * interFactor);
+                    }
+
+                    correlatedData.coordinates = resultCoordinates;
+                    correlatedData.flags = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
+                }
+
             }
         }
 

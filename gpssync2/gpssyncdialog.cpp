@@ -46,6 +46,7 @@
 #include <QSplitter>
 #include <QStackedLayout>
 #include <QStackedWidget>
+#include <QStandardItemModel>
 #include <QTimer>
 #include <QTreeView>
 #include <QUndoView>
@@ -93,6 +94,7 @@
 #include "gpscorrelatorwidget.h"
 #include "gpsundocommand.h"
 #include "gpsreversegeocodingwidget.h"
+#include "gpsbookmarkowner.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -131,6 +133,8 @@ public:
     {
     }
 
+    void addBookmarkGroupToModel(const KBookmarkGroup& group);
+
     KIPI::Interface          *interface;
     KIPIPlugins::KPAboutData *about;
     KipiImageModel           *imageModel;
@@ -166,6 +170,8 @@ public:
     QTabBar                  *tabBar;
     int splitterSize;
     GPSReverseGeocodingWidget *rgWidget;
+    GPSBookmarkOwner         *bookmarkOwner;
+    QStandardItemModel       *bookmarkModel;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -185,6 +191,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
 
     d->undoStack = new KUndoStack(this);
+    d->bookmarkOwner = new GPSBookmarkOwner(this);
+    d->bookmarkModel = new QStandardItemModel(this);
 
     KVBox* const vboxMain = new KVBox(this);
     setMainWidget(vboxMain);
@@ -227,6 +235,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
+    d->mapWidget->setSpecialMarkersModel(d->bookmarkModel, Qt::UserRole);
 
     QMenu* const sortMenu = new QMenu(this);
     sortMenu->setTitle(i18n("Sorting"));
@@ -260,6 +269,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->treeView->view()->setDragEnabled(true);
     d->treeView->view()->setDragDropMode(QAbstractItemView::DragOnly);
     d->treeView->view()->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    d->treeView->view()->setSortingEnabled(true);
     d->VSplitter->addWidget(d->treeView);
 
     d->HSplitter->setCollapsible(1, true);
@@ -345,11 +355,14 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-     connect(this, SIGNAL(applyClicked()),
+    connect(this, SIGNAL(applyClicked()),
              this, SLOT(slotApplyClicked()));
 
-    readSettings();
+    connect(d->bookmarkOwner->bookmarkManager(), SIGNAL(bookmarksChanged(QString)),
+            this, SLOT(slotUpdateBookmarksModel()));
 
+    readSettings();
+    slotUpdateBookmarksModel();
 }
 
 GPSSyncDialog::~GPSSyncDialog()
@@ -811,6 +824,40 @@ void GPSSyncDialog::slotProgressCancelButtonClicked()
     {
         QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
     }
+}
+
+void GPSSyncDialogPriv::addBookmarkGroupToModel(const KBookmarkGroup& group)
+{
+    KBookmark currentBookmark = group.first();
+    while (!currentBookmark.isNull())
+    {
+        if (currentBookmark.isGroup())
+        {
+            addBookmarkGroupToModel(currentBookmark.toGroup());
+        }
+        else
+        {
+            bool okay = false;
+            const WMW2::WMWGeoCoordinate coordinates = WMW2::WMWGeoCoordinate::fromGeoUrl(currentBookmark.url().url(), &okay);
+            if (okay)
+            {
+                QStandardItem* const item = new QStandardItem();
+                item->setData(QVariant::fromValue(coordinates), Qt::UserRole);
+
+                bookmarkModel->appendRow(item);
+            }
+        }
+
+        currentBookmark = group.next(currentBookmark);
+    }
+}
+
+void GPSSyncDialog::slotUpdateBookmarksModel()
+{
+    d->bookmarkModel->clear();
+
+    // iterate trough all bookmarks
+    d->addBookmarkGroupToModel(d->bookmarkOwner->bookmarkManager()->root());
 }
 
 }  // namespace KIPIGPSSyncPlugin
