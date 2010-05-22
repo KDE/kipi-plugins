@@ -198,3 +198,63 @@ void TestGPXParsing::testFileLoading()
     QCOMPARE(myCorrelatedItems.count(), 1);
     QCOMPARE(myCorrelatedItems.first().coordinates, WMW2::WMWGeoCoordinate::fromGeoUrl("geo:18,7,0"));
 }
+
+/**
+ * @brief Test interpolation
+ */
+void TestGPXParsing::testInterpolation()
+{
+    KUrl testDataDir = GetTestDataDirectory();
+
+    KUrl::List fileList;
+    fileList << KUrl(testDataDir, "gpxfile-1.gpx");
+
+    GPSDataParser myParser;
+
+    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int, int)));
+    QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllGPXFilesReady()));
+
+    myParser.loadGPXFiles(fileList);
+
+    // wait until the files are loaded:
+    while (spyAllDone.isEmpty())
+    {
+        QTest::qWait(100);
+    }
+
+    QCOMPARE(spyAllDone.count(), 1);
+    QCOMPARE(spyGPXFiles.count(), 1);
+
+    const GPSDataParser::GPXFileData& file1 = myParser.fileData(0);
+    QVERIFY(file1.isValid);
+
+    // items to correlate:
+    GPSDataParser::GPXCorrelation::List itemsToCorrelate;
+    {
+        GPSDataParser::GPXCorrelation myItem;
+        myItem.dateTime = GPSDataParser::ParseTime("2009-11-29T17:00:30Z");
+        itemsToCorrelate << myItem;
+    }
+
+    QSignalSpy spyItemsFinished(&myParser, SIGNAL(signalAllItemsCorrelated()));
+    QVERIFY(spyItemsFinished.isValid());
+    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    QVERIFY(spyItemsCorrelated.isValid());
+
+    GPSDataParser::GPXCorrelationOptions correlationOptions;
+    correlationOptions.maxGapTime = 0;
+    correlationOptions.interpolate = true;
+    correlationOptions.interpolationDstTime = 31;
+    myParser.correlate(itemsToCorrelate, correlationOptions);
+
+    while (spyItemsFinished.isEmpty())
+    {
+        QTest::qWait(100);
+    }
+    QCOMPARE(spyItemsFinished.count(), 1);
+    QCOMPARE(spyItemsCorrelated.count(), 1);
+
+    KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
+    QCOMPARE(myCorrelatedItems.count(), 1);
+    QCOMPARE(myCorrelatedItems.first().coordinates, WMW2::WMWGeoCoordinate::fromGeoUrl("geo:17.5,0.5,3"));
+}

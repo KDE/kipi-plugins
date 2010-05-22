@@ -39,6 +39,7 @@ private Q_SLOTS:
     void testCustomParsing();
     void testFileLoadingFunction();
     void testFileLoading();
+    void testInterpolation();
 };
 
 #endif /* TEST_GPXPARSING_H */

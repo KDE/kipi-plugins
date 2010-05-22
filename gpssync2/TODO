@@ -1,7 +1,6 @@
 gpssync parts:
 - correctly update the dirty state on undo/redo
 - read dilution of precision data and add warnings
-- add interpolation
 - add undo/redo buttons
 - make the coordinates of the images editable
 - add copy/paste of coordinates
@@ -21,3 +20,4 @@ done:
 - add warnings when gpx files failed to load
 - add thumbnail size button
 - the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes (seems fixed)
+- add interpolation

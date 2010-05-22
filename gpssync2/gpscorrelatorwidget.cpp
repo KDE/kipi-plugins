@@ -272,6 +272,9 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->interpolateBox->setWhatsThis(i18n("Set this option to interpolate GPS track points "
                     "which are not closely matched to the GPX data file."));
 
+    connect(d->interpolateBox, SIGNAL(stateChanged(int)),
+            this, SLOT(updateUIState()));
+
     d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), this);
     d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, this);
     d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
@@ -424,10 +427,8 @@ void GPSCorrelatorWidget::updateUIState()
     d->offsetMin->setEnabled(state && offsetEnabled);
     d->offsetSec->setEnabled(state && offsetEnabled);
     d->maxGapInput->setEnabled(state);
-    // these are not yet implemented
-    d->interpolateBox->setEnabled(false/*state*/);
-    d->maxTimeInput->setEnabled(false/*state*/);
-
+    d->interpolateBox->setEnabled(state);
+    d->maxTimeInput->setEnabled(state && d->interpolateBox->isChecked());
 
     bool haveValidGpxFiles = false;
     for (int i=0; i<d->gpsDataParser->fileCount(); ++i)
