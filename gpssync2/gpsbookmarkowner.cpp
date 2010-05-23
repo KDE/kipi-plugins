@@ -175,12 +175,14 @@ class GPSBookmarkModelHelperPrivate
 {
 public:
     GPSBookmarkModelHelperPrivate()
+    : visible(false)
     {
     }
 
     QStandardItemModel* model;
     KBookmarkManager* bookmarkManager;
     QPixmap pixmap;
+    bool visible;
 
     void addBookmarkGroupToModel(const KBookmarkGroup& group);
     
@@ -277,6 +279,17 @@ void GPSBookmarkModelHelper::slotUpdateBookmarksModel()
 GPSBookmarkModelHelper* GPSBookmarkOwner::bookmarkModelHelper() const
 {
     return d->bookmarkModelHelper;
+}
+
+bool GPSBookmarkModelHelper::visible() const
+{
+    return d->visible;
+}
+
+void GPSBookmarkModelHelper::setVisible(const bool state)
+{
+    d->visible = state;
+    emit(signalVisibilityChanged());
 }
 
 }  // namespace KIPIGPSSyncPlugin

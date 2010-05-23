@@ -53,6 +53,9 @@ public:
     virtual QItemSelectionModel* selectionModel() const;
     virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
+    virtual bool visible() const;
+
+    void setVisible(const bool state);
 
 private Q_SLOTS:
     void slotUpdateBookmarksModel();

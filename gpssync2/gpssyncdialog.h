@@ -104,6 +104,7 @@ private Q_SLOTS:
     void setCurrentTab(const int index);
     void slotProgressCancelButtonClicked();
     void slotCurrentTabChanged(int);
+    void slotBookmarkVisibilityToggled();
 
 private:
 

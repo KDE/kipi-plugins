@@ -47,6 +47,7 @@
 #include <QStackedLayout>
 #include <QStackedWidget>
 #include <QTimer>
+#include <QToolButton>
 #include <QTreeView>
 #include <QUndoView>
 
@@ -168,6 +169,7 @@ public:
     int splitterSize;
     GPSReverseGeocodingWidget *rgWidget;
     GPSBookmarkOwner         *bookmarkOwner;
+    QAction *actionBookmarkVisibility;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -188,6 +190,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(this);
+
+    d->actionBookmarkVisibility = new KAction(this);
+    d->actionBookmarkVisibility->setIcon(SmallIcon("bookmarks"));
+    d->actionBookmarkVisibility->setCheckable(true);
 
     KVBox* const vboxMain = new KVBox(this);
     setMainWidget(vboxMain);
@@ -231,6 +237,13 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
     d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
+
+    QToolButton* const bookmarkVisibilityButton = new QToolButton(this);
+    bookmarkVisibilityButton->setDefaultAction(d->actionBookmarkVisibility);
+    d->mapWidget->addWidgetToControlWidget(bookmarkVisibilityButton);
+
+    connect(d->actionBookmarkVisibility, SIGNAL(changed()),
+            this, SLOT(slotBookmarkVisibilityToggled()));
 
     QMenu* const sortMenu = new QMenu(this);
     sortMenu->setTitle(i18n("Sorting"));
@@ -825,6 +838,11 @@ void GPSSyncDialog::slotProgressCancelButtonClicked()
     {
         QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
     }
+}
+
+void GPSSyncDialog::slotBookmarkVisibilityToggled()
+{
+    d->bookmarkOwner->bookmarkModelHelper()->setVisible(d->actionBookmarkVisibility->isChecked());
 }
 
 }  // namespace KIPIGPSSyncPlugin
