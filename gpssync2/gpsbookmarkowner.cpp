@@ -20,8 +20,11 @@
  *
  * ============================================================ */
 
-#include "gpsbookmarkowner.h"
 #include "gpsbookmarkowner.moc"
+
+// Qt includes
+
+#include <QStandardItemModel>
 
 // KDE includes
 
@@ -56,6 +59,7 @@ public:
     KBookmarkMenu       *bookmarkMenuController;
     KMenu               *bookmarkMenu;
     bool                addBookmarkEnabled;
+    GPSBookmarkModelHelper *bookmarkModelHelper;
 };
 
 GPSBookmarkOwner::GPSBookmarkOwner(QWidget* const parent)
@@ -70,6 +74,8 @@ GPSBookmarkOwner::GPSBookmarkOwner(QWidget* const parent)
     d->bookmarkManager->setUpdate(true);
     d->bookmarkMenu = new KMenu(parent);
     d->bookmarkMenuController = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
+
+    d->bookmarkModelHelper = new GPSBookmarkModelHelper(d->bookmarkManager, this);
 }
 
 GPSBookmarkOwner::~GPSBookmarkOwner()
@@ -163,6 +169,114 @@ void GPSBookmarkOwner::changeAddBookmark(const bool state)
 KBookmarkManager* GPSBookmarkOwner::bookmarkManager() const
 {
     return d->bookmarkManager;
+}
+
+class GPSBookmarkModelHelperPrivate
+{
+public:
+    GPSBookmarkModelHelperPrivate()
+    {
+    }
+
+    QStandardItemModel* model;
+    KBookmarkManager* bookmarkManager;
+    QPixmap pixmap;
+
+    void addBookmarkGroupToModel(const KBookmarkGroup& group);
+    
+};
+
+GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, QObject* const parent)
+: WMWModelHelper(parent), d(new GPSBookmarkModelHelperPrivate())
+{
+    d->model = new QStandardItemModel(this);
+    d->bookmarkManager = bookmarkManager;
+    const KUrl markerUrl = KStandardDirs::locate("data", "gpssync2/bookmarks-marker.png");
+    d->pixmap = QPixmap(markerUrl.toLocalFile());
+
+    connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
+            this, SLOT(slotUpdateBookmarksModel()));
+
+    connect(d->bookmarkManager, SIGNAL(changed(const QString&, const QString&)),
+            this, SLOT(slotUpdateBookmarksModel()));
+
+    slotUpdateBookmarksModel();
+}
+
+GPSBookmarkModelHelper::~GPSBookmarkModelHelper()
+{
+    delete d;
+}
+
+QAbstractItemModel* GPSBookmarkModelHelper::model() const
+{
+    return d->model;
+}
+
+QItemSelectionModel* GPSBookmarkModelHelper::selectionModel() const
+{
+    return 0;
+}
+
+bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const
+{
+    const WMW2::WMWGeoCoordinate itemCoordinates = index.data(CoordinatesRole).value<WMW2::WMWGeoCoordinate>();
+
+    if (coordinates)
+    {
+        *coordinates = itemCoordinates;
+    }
+
+    return itemCoordinates.hasCoordinates();
+}
+
+QPixmap GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset) const
+{
+    if (offset)
+    {
+        *offset = QPoint(d->pixmap.width()/2, 0);
+    }
+
+    return d->pixmap;
+}
+
+void GPSBookmarkModelHelperPrivate::addBookmarkGroupToModel(const KBookmarkGroup& group)
+{
+    KBookmark currentBookmark = group.first();
+    while (!currentBookmark.isNull())
+    {
+        if (currentBookmark.isGroup())
+        {
+            addBookmarkGroupToModel(currentBookmark.toGroup());
+        }
+        else
+        {
+            bool okay = false;
+            const WMW2::WMWGeoCoordinate coordinates = WMW2::WMWGeoCoordinate::fromGeoUrl(currentBookmark.url().url(), &okay);
+            if (okay)
+            {
+                QStandardItem* const item = new QStandardItem();
+                item->setData(QVariant::fromValue(coordinates), GPSBookmarkModelHelper::CoordinatesRole);
+
+                model->appendRow(item);
+            }
+        }
+
+        currentBookmark = group.next(currentBookmark);
+    }
+}
+
+void GPSBookmarkModelHelper::slotUpdateBookmarksModel()
+{
+    d->model->clear();
+
+    // iterate trough all bookmarks
+    d->addBookmarkGroupToModel(d->bookmarkManager->root());
+}
+
+GPSBookmarkModelHelper* GPSBookmarkOwner::bookmarkModelHelper() const
+{
+    return d->bookmarkModelHelper;
 }
 
 }  // namespace KIPIGPSSyncPlugin
