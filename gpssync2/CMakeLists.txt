@@ -37,6 +37,7 @@ INSTALL(FILES kipiplugin_gpssync2.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 INSTALL(FILES
     reverse-js.js
     rg-google-maps-v3.html
+    data/bookmarks-marker.png
     DESTINATION ${DATA_INSTALL_DIR}/gpssync2/)
 
 IF(KDE4_BUILD_TESTS)

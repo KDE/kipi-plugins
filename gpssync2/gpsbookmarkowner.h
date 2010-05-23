@@ -36,8 +36,32 @@ class KBookmarkManager;
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSBookmarkOwnerPrivate;
+class GPSBookmarkModelHelperPrivate;
+class GPSBookmarkModelHelper : public WMW2::WMWModelHelper
+{
+Q_OBJECT
+public:
+    enum Constants
+    {
+        CoordinatesRole = Qt::UserRole + 1
+    };
 
+    GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, QObject* const parent = 0);
+    virtual ~GPSBookmarkModelHelper();
+
+    virtual QAbstractItemModel* model() const;
+    virtual QItemSelectionModel* selectionModel() const;
+    virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
+    virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
+
+private Q_SLOTS:
+    void slotUpdateBookmarksModel();
+
+private:
+    GPSBookmarkModelHelperPrivate* const d;
+};
+
+class GPSBookmarkOwnerPrivate;
 class GPSBookmarkOwner : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
@@ -61,6 +85,8 @@ public:
     void changeAddBookmark(const bool state);
 
     KBookmarkManager* bookmarkManager() const;
+
+    GPSBookmarkModelHelper* bookmarkModelHelper() const;
 
 Q_SIGNALS:
     void positionSelected(GPSDataContainer position);

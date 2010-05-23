@@ -46,7 +46,6 @@
 #include <QSplitter>
 #include <QStackedLayout>
 #include <QStackedWidget>
-#include <QStandardItemModel>
 #include <QTimer>
 #include <QTreeView>
 #include <QUndoView>
@@ -133,8 +132,6 @@ public:
     {
     }
 
-    void addBookmarkGroupToModel(const KBookmarkGroup& group);
-
     KIPI::Interface          *interface;
     KIPIPlugins::KPAboutData *about;
     KipiImageModel           *imageModel;
@@ -171,7 +168,6 @@ public:
     int splitterSize;
     GPSReverseGeocodingWidget *rgWidget;
     GPSBookmarkOwner         *bookmarkOwner;
-    QStandardItemModel       *bookmarkModel;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -192,7 +188,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(this);
-    d->bookmarkModel = new QStandardItemModel(this);
 
     KVBox* const vboxMain = new KVBox(this);
     setMainWidget(vboxMain);
@@ -235,7 +230,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
-    d->mapWidget->setSpecialMarkersModel(d->bookmarkModel, Qt::UserRole);
+    d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
 
     QMenu* const sortMenu = new QMenu(this);
     sortMenu->setTitle(i18n("Sorting"));
@@ -358,11 +353,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(this, SIGNAL(applyClicked()),
              this, SLOT(slotApplyClicked()));
 
-    connect(d->bookmarkOwner->bookmarkManager(), SIGNAL(bookmarksChanged(QString)),
-            this, SLOT(slotUpdateBookmarksModel()));
-
     readSettings();
-    slotUpdateBookmarksModel();
 }
 
 GPSSyncDialog::~GPSSyncDialog()
@@ -824,40 +815,6 @@ void GPSSyncDialog::slotProgressCancelButtonClicked()
     {
         QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
     }
-}
-
-void GPSSyncDialogPriv::addBookmarkGroupToModel(const KBookmarkGroup& group)
-{
-    KBookmark currentBookmark = group.first();
-    while (!currentBookmark.isNull())
-    {
-        if (currentBookmark.isGroup())
-        {
-            addBookmarkGroupToModel(currentBookmark.toGroup());
-        }
-        else
-        {
-            bool okay = false;
-            const WMW2::WMWGeoCoordinate coordinates = WMW2::WMWGeoCoordinate::fromGeoUrl(currentBookmark.url().url(), &okay);
-            if (okay)
-            {
-                QStandardItem* const item = new QStandardItem();
-                item->setData(QVariant::fromValue(coordinates), Qt::UserRole);
-
-                bookmarkModel->appendRow(item);
-            }
-        }
-
-        currentBookmark = group.next(currentBookmark);
-    }
-}
-
-void GPSSyncDialog::slotUpdateBookmarksModel()
-{
-    d->bookmarkModel->clear();
-
-    // iterate trough all bookmarks
-    d->addBookmarkGroupToModel(d->bookmarkOwner->bookmarkManager()->root());
 }
 
 }  // namespace KIPIGPSSyncPlugin

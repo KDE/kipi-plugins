@@ -103,7 +103,6 @@ private Q_SLOTS:
     void slotSortOptionTriggered(QAction* sortAction);
     void setCurrentTab(const int index);
     void slotProgressCancelButtonClicked();
-    void slotUpdateBookmarksModel();
 
 private:
 

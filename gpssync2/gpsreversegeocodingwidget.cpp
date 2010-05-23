@@ -114,12 +114,12 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     splitter->resize(300,300);
 
 
-    QWidget* dummy = new QWidget(splitter);
+    QWidget* dummy = new QWidget();
     dummy->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    splitter->addWidget(dummy);
+//     splitter->addWidget(dummy);
     
-    d->htmlWidget = new WMW2::HTMLWidget(dummy);
-    dummy->resize(200,200);
+    d->htmlWidget = new WMW2::HTMLWidget();
+//     dummy->resize(200,200);
 
     KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
 
@@ -314,6 +314,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList){
             ++it;
 
         }
+        d->label->setText(address);
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
     
     }
