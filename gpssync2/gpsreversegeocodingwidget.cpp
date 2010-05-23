@@ -32,6 +32,7 @@
 #include <QList>
 #include <QMap>
 #include <QTimer>
+#include <QLineEdit>
 
 // KDE includes
 
@@ -52,23 +53,6 @@
 
 namespace KIPIGPSSyncPlugin
 {
-/*
- class RGInfo {
-
-    public:
-    
-    RGInfo()
-    :id(),
-     coordinates(),
-     rgData(){   }
-
-
-    QVariant id;
-    WMW2::WMWGeoCoordinate coordinates;
-    QMap<QString, QString> rgData;
-
-};
-*/
 
 class RGInternal {
 
@@ -97,6 +81,8 @@ public:
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
 
+    QLineEdit *textEdit;
+    QString wanted_language;
     int counter; 
     QList<RGInternal> internalList;
     QList<RGInfo> photoList;
@@ -111,32 +97,28 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->selectionModel = selectionModel;
 
     QSplitter *splitter = new QSplitter(Qt::Vertical,this);
-    splitter->resize(300,300);
+    splitter->resize(300,100);
 
-
-    QWidget* dummy = new QWidget();
-    dummy->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-//     splitter->addWidget(dummy);
-    
     d->htmlWidget = new WMW2::HTMLWidget();
-//     dummy->resize(200,200);
 
     KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
 
     d->htmlWidget->openUrl(htmlUrl);
+    
 
     KVBox* const vbox = new KVBox(splitter);
     splitter->addWidget(vbox);
 
-    QString ss = "Here will be the result";
+//    QString ss = "Here will be the result";
 
-    d->label = new QLabel(vbox);
-    d->label->setText(ss);
+//    d->label = new QLabel(vbox);
+//    d->label->setText(ss);
 
+    d->textEdit = new QLineEdit(vbox);
+    
     d->buttonRGSelected = new QPushButton(i18n("RG selected image"), vbox);
     
-
-
+    d->wanted_language = "EN";
 
     connect(d->htmlWidget, SIGNAL(signalJavaScriptReady()),
             this, SLOT(slotHTMLInitialized()));
@@ -221,6 +203,10 @@ void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
 
     }
     //d->internalList.clear();
+    if(d->counter < d->internalList.count()){
+        QTimer::singleShot( 1000 * (d->counter + 1), this, SLOT(nextPhoto()));
+    }
+
     emit(signalRGReady(returnedRGList));
 
 }
@@ -238,7 +224,7 @@ void GPSReverseGeocodingWidget::nextPhoto()
 
     RGInfo photoDetails = d->internalList[d->counter].request;
 
-    d->htmlWidget->runScript(QString("reverseGeocoding(%1,%2,%3);").arg(d->internalList[d->counter].requestId).arg(photoDetails.coordinates.latString()).arg(photoDetails.coordinates.lonString()));
+    d->htmlWidget->runScript(QString("reverseGeocoding(%1,'%2',%3,%4);").arg(d->internalList[d->counter].requestId).arg(d->wanted_language).arg(photoDetails.coordinates.latString()).arg(photoDetails.coordinates.lonString()));
     d->counter++;
 
 }
@@ -257,9 +243,11 @@ void GPSReverseGeocodingWidget::runRGScript(QList<RGInfo> rgList)
 
         d->internalList.insert(i, internalObj);
 
-        QTimer::singleShot( 1000 * i, this, SLOT(nextPhoto()));
+    //    QTimer::singleShot( 1000 * i, this, SLOT(nextPhoto()));
 
     }
+
+    nextPhoto();
 
 }
 
@@ -270,8 +258,8 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
     
     QList<RGInfo> photoList;
-
-    
+    d->wanted_language = d->textEdit->displayText();
+   
 
     for( int i = 0; i < selectedItems.count(); ++i){
 
@@ -298,7 +286,8 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 }
 
 
-void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList){
+void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
+{
 
     QString address;
 
@@ -314,7 +303,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList){
             ++it;
 
         }
-        d->label->setText(address);
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
     
     }

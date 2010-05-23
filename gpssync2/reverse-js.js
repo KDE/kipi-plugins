@@ -1,6 +1,5 @@
 var geocoder;
 var eventBuffer = new Array();
-var id;
 
 function wmwPostEventString(eventString){
     eventBuffer.push(eventString);
@@ -26,9 +25,12 @@ function wmwReadEventStrings(){
 var resultContent="";
 var text = "";
 
-function rezultat(results, status){
-if (status == google.maps.GeocoderStatus.OK) {
+function rezultat(id, results, status){
 
+    
+
+if (status == google.maps.GeocoderStatus.OK) {
+            
             if (results[0]) {
                 resultContent = id+"~";
                 for ( var i = 0; i < results[0].address_components.length; ++i){
@@ -50,16 +52,23 @@ if (status == google.maps.GeocoderStatus.OK) {
 
 
 
-function reverseGeocoding(photoId, lat, lng){
+function reverseGeocoding(photoId, wanted_language, lat, lng){
 
     geocoder = new google.maps.Geocoder();
 
-    id = photoId;
+    if(wanted_language == ""){
+
+        wanted_language = null;
+
+    }
+
+
 
     var latlng = new google.maps.LatLng(lat, lng);    
     if(geocoder){
         
-        geocoder.geocode({'latLng': latlng}, rezultat);
+        geocoder.geocode({'latLng': latlng, language:wanted_language }, function(result, status){ 
+                    rezultat(photoId, result, status); });
 
     }
 

@@ -353,6 +353,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(this, SIGNAL(applyClicked()),
              this, SLOT(slotApplyClicked()));
 
+    connect(d->tabBar, SIGNAL(currentChanged(int)),
+            this, SLOT(slotCurrentTabChanged(int)));
+
     readSettings();
 }
 
@@ -396,6 +399,13 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
 
     return QWidget::eventFilter(o,e);
 }
+
+void GPSSyncDialog::slotCurrentTabChanged(int index){
+
+    d->tabBar->setCurrentIndex(index);
+    d->stackedWidget->setCurrentIndex(index);
+}
+
 
 void GPSSyncDialog::setCurrentTab(int index)
 {
