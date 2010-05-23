@@ -193,6 +193,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->actionBookmarkVisibility = new KAction(this);
     d->actionBookmarkVisibility->setIcon(SmallIcon("bookmarks"));
+    d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
     KVBox* const vboxMain = new KVBox(this);
@@ -467,6 +468,9 @@ void GPSSyncDialog::readSettings()
         d->mapWidget->setSortKey(0);
     }
 
+    d->actionBookmarkVisibility->setChecked(group.readEntry("Bookmarks visible", false));
+    slotBookmarkVisibilityToggled();
+
     if (group.hasKey("SplitterState V1"))
     {
         const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
@@ -502,6 +506,7 @@ void GPSSyncDialog::saveSettings()
     d->treeView->saveSettingsToGroup(&group);
     group.writeEntry("Current Tab", d->tabBar->currentIndex());
     group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
+    group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
     KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
     saveDialogSize(group2);
 
