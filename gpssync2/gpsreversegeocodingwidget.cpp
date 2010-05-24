@@ -42,50 +42,37 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kvbox.h>
+
 //local includes
+
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "../worldmapwidget2/lib/html_widget.h"
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
 #include "gpsimageitem.h"
 #include "gpsreversegeocodingwidget.h"
-
+#include "backend-rg.h"
+#include "backend-google-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {
-
-class RGInternal {
-
-    public:
-
-    RGInternal()
-    :request(),
-    requestId(){   }
-
-    RGInfo request;
-    int requestId;
-};
 
 class GPSReverseGeocodingWidgetPrivate
 {
 public:
     GPSReverseGeocodingWidgetPrivate()
-    : htmlWidget(0),
-      counter(0)
     {
     }
 
-    WMW2::HTMLWidget* htmlWidget;
     QLabel *label;
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
 
+
     QLineEdit *textEdit;
-    QString wanted_language;
-    int counter; 
-    QList<RGInternal> internalList;
     QList<RGInfo> photoList;
+    RGBackend* backendRG;
 };
 
 
@@ -99,37 +86,21 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     QSplitter *splitter = new QSplitter(Qt::Vertical,this);
     splitter->resize(300,100);
 
-    d->htmlWidget = new WMW2::HTMLWidget();
-
-    KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
-
-    d->htmlWidget->openUrl(htmlUrl);
-    
 
     KVBox* const vbox = new KVBox(splitter);
     splitter->addWidget(vbox);
-
-//    QString ss = "Here will be the result";
-
-//    d->label = new QLabel(vbox);
-//    d->label->setText(ss);
 
     d->textEdit = new QLineEdit(vbox);
     
     d->buttonRGSelected = new QPushButton(i18n("RG selected image"), vbox);
     
-    d->wanted_language = "EN";
 
-    connect(d->htmlWidget, SIGNAL(signalJavaScriptReady()),
-            this, SLOT(slotHTMLInitialized()));
-
-    connect(d->htmlWidget, SIGNAL(signalHTMLEvents(const QStringList&)),
-                this, SLOT(slotHTMLEvents(const QStringList&)));
+    d->backendRG = new BackendGoogleRG(this);    
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
 
-    connect(this, SIGNAL(signalRGReady(QList<RGInfo> &)), 
+    connect(d->backendRG, SIGNAL(signalRGReady(QList<RGInfo> &)), 
             this, SLOT(slotRGReady(QList<RGInfo>&)));	
 }
 
@@ -141,124 +112,13 @@ GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
 }
 
 
-QMap<QString,QString> GPSReverseGeocodingWidget::makeQMap(QString str){
-
-
-    QMap<QString, QString> map;
-
-    QStringList listAddress;
-    listAddress = str.split("\n");
-    listAddress.removeLast();   
- 
-    for(int i = 0; i < listAddress.size(); ++i){
-
-        QStringList listKeyValue;
-        QString element,name;        
-
-        QString addressElement = listAddress.at(i);
-
-        listKeyValue = addressElement.split(":");
-        map.insert(listKeyValue.at(0), listKeyValue.at(1));
-
-    }
-
-    return map;
-}
-
-void GPSReverseGeocodingWidget::slotHTMLEvents( const QStringList& events)
-{
-
-    int foundId;
-    QList<RGInfo> returnedRGList;
-
-
-    for( int i = 0; i < events.count(); i++){
-
-        //saves the current address from address lists
-        QString currentAddress = events.at(i);
-
-        //separates the id from address
-        int positionId = currentAddress.indexOf("~");
-        QString stringId = currentAddress.left(positionId);
-        currentAddress.remove(0,positionId + 1);
-        int photoId = stringId.toInt();
- 
- 
-        //finds the RGInfo object inside RGinteralList
-        for ( int j = 0; j < d->internalList.count(); ++j){
-
-            if(d->internalList[j].requestId == photoId){
-                foundId = j;
-                break;
-            }
-        }
-     
-        //inserts the RGInfo object inside a list to put addresses inside photos
-        RGInternal photoObj = d->internalList.at(foundId);
-        //d->internalList.removeAt(foundId);    
- 
-        photoObj.request.rgData = makeQMap(currentAddress);
-
-        returnedRGList.insert(i, photoObj.request);
-
-    }
-    //d->internalList.clear();
-    if(d->counter < d->internalList.count()){
-        QTimer::singleShot( 1000 * (d->counter + 1), this, SLOT(nextPhoto()));
-    }
-
-    emit(signalRGReady(returnedRGList));
-
-}
-
-
-void GPSReverseGeocodingWidget::slotHTMLInitialized()
-{
-
-
-}
-
-
-void GPSReverseGeocodingWidget::nextPhoto()
-{
-
-    RGInfo photoDetails = d->internalList[d->counter].request;
-
-    d->htmlWidget->runScript(QString("reverseGeocoding(%1,'%2',%3,%4);").arg(d->internalList[d->counter].requestId).arg(d->wanted_language).arg(photoDetails.coordinates.latString()).arg(photoDetails.coordinates.lonString()));
-    d->counter++;
-
-}
-
-void GPSReverseGeocodingWidget::runRGScript(QList<RGInfo> rgList)
-{
-
-    d->internalList.clear();
-    d->counter = 0;
-
-    for( int i = 0; i < rgList.count(); ++i){
-
-        RGInternal internalObj;
-        internalObj.request = rgList.at(i);
-        internalObj.requestId = i;
-
-        d->internalList.insert(i, internalObj);
-
-    //    QTimer::singleShot( 1000 * i, this, SLOT(nextPhoto()));
-
-    }
-
-    nextPhoto();
-
-}
-
-
 void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected image:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
     
     QList<RGInfo> photoList;
-    d->wanted_language = d->textEdit->displayText();
+    const QString wanted_language = d->textEdit->displayText();
    
 
     for( int i = 0; i < selectedItems.count(); ++i){
@@ -281,7 +141,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
  	
     }
 
-    runRGScript(photoList);
+    d->backendRG->runRGScript(photoList, wanted_language);
 
 }
 
@@ -290,7 +150,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
     QString address;
-
+  //  QMessageBox msg;
     for(int i = 0; i < returnedRGList.count(); ++i){
 
         address = "";
@@ -304,7 +164,10 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         }
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
+    //    msg.setText(QString("Photo ID: %1 , Address: %2").arg(returnedRGList[i].id.toInt()).arg(address));
+   //     msg.exec();
     
+
     }
 
 } 

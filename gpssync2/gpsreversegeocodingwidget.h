@@ -70,18 +70,18 @@ public:
     ~GPSReverseGeocodingWidget();
 
 private:
-    QMap<QString, QString> makeQMap(QString);
-    void runRGScript(QList<RGInfo>);
+//    QMap<QString, QString> makeQMap(QString);
+//    void runRGScript(QList<RGInfo>);
 
 private Q_SLOTS:
-    void slotHTMLInitialized();
-    void slotHTMLEvents( const QStringList& );
+//    void slotHTMLInitialized();
+//    void slotHTMLEvents( const QStringList& );
     void slotButtonRGSelected();
     void slotRGReady(QList<RGInfo>&);
-    void nextPhoto();
+//    void nextPhoto();
 Q_SIGNALS:
 
-    void signalRGReady(QList<RGInfo>&);
+//    void signalRGReady(QList<RGInfo>&);
 private:
 
     GPSReverseGeocodingWidgetPrivate* const d;    
