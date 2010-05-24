@@ -14,6 +14,9 @@ gpssync parts:
 wmw2 parts:
 - control over clustering grid size (UI)
 - re-cluster only every few pixels of panning
+- the clustering model does not go deep enough - when zooming in on Marble OSM, the positions are quantized
+- snapping for drag-and-drop coming in from outside the map
+- snapping in the Google Maps backend
 
 done:
 - numbers on clusters google maps

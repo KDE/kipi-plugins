@@ -292,4 +292,9 @@ void GPSBookmarkModelHelper::setVisible(const bool state)
     emit(signalVisibilityChanged());
 }
 
+bool GPSBookmarkModelHelper::snaps() const
+{
+    return true;
+}
+
 }  // namespace KIPIGPSSyncPlugin

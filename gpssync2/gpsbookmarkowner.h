@@ -54,6 +54,7 @@ public:
     virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
     virtual bool visible() const;
+    virtual bool snaps() const;
 
     void setVisible(const bool state);
 
