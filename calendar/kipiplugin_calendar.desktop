@@ -78,6 +78,7 @@ Comment[x-test]=xxA tool to create calendarsxx
 Comment[zh_CN]=一个创建日历的工具
 Comment[zh_TW]=製作月曆工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_calendar
 X-KIPI-MergeMenu=false
