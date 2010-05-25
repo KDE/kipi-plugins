@@ -74,6 +74,7 @@ Comment[x-test]=xxA tool to export images to a remote Picasa web servicexx
 Comment[zh_CN]=一个将图像导出到远程 Picasa 网络服务的工具
 Comment[zh_TW]=匯出影像到遠端 Picasa 網頁服務的工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_picasawebexport
 author=Vardhman Jain, vardhman@gmail.com
