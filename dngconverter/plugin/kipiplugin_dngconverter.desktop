@@ -74,6 +74,7 @@ Comment[x-test]=xxA tool to convert Raw Image to Digital NeGativexx
 Comment[zh_CN]=一个转换 RAW 图像为 Digital NeGative 的工具
 Comment[zh_TW]=將 Raw 影像轉換成數位負片 (Digital NeGative) 的工具
 Type=Service
+Icon=dngconverter
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_dngconverter
 author=Gilles Caulier, caulier dot gilles at gmail dot com
