@@ -58,6 +58,7 @@ Comment[x-test]=xxA tool to export images to remote Flickr, 23 and Zooomr web se
 Comment[zh_CN]=一个将图像导出到 Flickr、23 或 Zooomr 网络服务的工具。
 Comment[zh_TW]=匯出影像到遠端 Flickr、23 和 Zooomr 網頁服務的工具。
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flickrexport
 author=Vardhman Jain, vardhman@gmail.com
