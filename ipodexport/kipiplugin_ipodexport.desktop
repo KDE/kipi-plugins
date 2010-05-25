@@ -75,6 +75,7 @@ Comment[x-test]=xxA tool to export pictures to an Ipod devicexx
 Comment[zh_CN]=一个将图片导出到 Ipod 设备的工具
 Comment[zh_TW]=匯出影像到 iPod 裝置的工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_ipodexport
 author=Seb Ruiz, me@sebruiz.net
