@@ -68,9 +68,8 @@ Comment[uk]=Інструмент для автоматичного вилуче�
 Comment[x-test]=xxA tool to remove red eyes automatically from imagesxx
 Comment[zh_CN]=一个自动从图像去除红眼的工具
 Comment[zh_TW]=自動從影像移除紅眼的工具
-
-Icon=
 ServiceTypes=KIPI/Plugin
 Type=Service
+Icon=
 X-KDE-Library=kipiplugin_removeredeyes
 author=Andi Clemens, andi dot clemens at gmx dot net
