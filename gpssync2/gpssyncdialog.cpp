@@ -78,8 +78,8 @@
 
 // WorldMapWidget2 includes
 
-#include <worldmapwidget2/worldmapwidget2.h>
-
+//#include <worldmapwidget2/worldmapwidget2.h>
+#include "../worldmapwidget2/lib/worldmapwidget2.h"
 // Local includes
 
 #include "kipiimagemodel.h"
@@ -180,6 +180,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setButtons(0);
     setCaption(i18n("Geolocation"));
     setModal(true);
+    setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
     d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);

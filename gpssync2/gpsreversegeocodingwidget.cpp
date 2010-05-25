@@ -53,6 +53,7 @@
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 #include "backend-google-rg.h"
+#include "backend-geonames-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -95,7 +96,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->buttonRGSelected = new QPushButton(i18n("RG selected image"), vbox);
     
 
-    d->backendRG = new BackendGoogleRG(this);    
+    //d->backendRG = new BackendGoogleRG(this);    
+    d->backendRG = new BackendGeonamesRG(this);
+
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
