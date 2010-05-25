@@ -79,6 +79,7 @@ Comment[x-test]=xxA tool to rotate/flip images without losing qualityxx
 Comment[zh_CN]=一个不损失质量旋转/翻转图像的工具
 Comment[zh_TW]=不損失品質的情形下旋轉/翻轉影像的工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_jpeglossless
 author=Gilles Caulier, caulier dot gilles at gmail dot com
