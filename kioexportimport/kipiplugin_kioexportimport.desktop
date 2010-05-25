@@ -56,6 +56,7 @@ Comment[x-test]=xxA tool to export pictures to or import from a remote directory
 Comment[zh_CN]=一个通过 KIO 从远程目录导入图片或导出图片的工具。
 Comment[zh_TW]=經由 KIO 匯出圖片到遠端可存取的目錄或從遠端可存取的目錄匯入圖片的工具。
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kioexportimport
 author=Johannes Wienke, languitar at semipol dot de
