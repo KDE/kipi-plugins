@@ -73,6 +73,7 @@ Comment[x-test]=xxA tool to export images to Flashxx
 Comment[zh_CN]=一个将图像导出为 Flash 的工具
 Comment[zh_TW]=匯出影像到 Flash 的工具
 Type=Service
+Icon=flash
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_flashexport
 author=Gilles Caulier, caulier dot gilles at gmail dot com
