@@ -69,6 +69,7 @@ Comment[x-test]=xxA tool to import/export images to/from a remote SmugMug web se
 Comment[zh_CN]=一个将图像从 SmugMug 网络服务导入/导出到 SmugMug 网络服务的工具
 Comment[zh_TW]=匯出影像到遠端 SmugMug 網頁服務/從遠端 SmugMug 網頁服務匯入影像的工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_smug
 author=Luka Renko, lure@kubuntu.org
