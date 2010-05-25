@@ -75,6 +75,7 @@ Comment[x-test]=xxA tool to preview images using OpenGLxx
 Comment[zh_CN]=一个使用 OpenGL 预览图像的工具
 Comment[zh_TW]=使用 OpenGL 的影像預覽工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imageviewer
 author=Markus Leuthold
