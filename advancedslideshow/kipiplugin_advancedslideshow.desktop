@@ -68,6 +68,7 @@ Comment[x-test]=xxA tool to slide images with 2D and 3D effects using OpenGLxx
 Comment[zh_CN]=一个使用 OpenGL 2D 和 3D 效果幻灯播放图像的工具
 Comment[zh_TW]=使用 OpenGL 2D 和 3D 效果的影像放映工具
 Type=Service
+Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_advancedslideshow
 X-KIPI-MergeMenu=true
