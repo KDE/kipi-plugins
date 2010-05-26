@@ -18,11 +18,11 @@ namespace KIPIGPSSyncPlugin
 {
 
 
-class RGInternal {
+class InternalJobs {
 
 public:
 
-    RGInternal()
+    InternalJobs()
     : request(),
       data(),
       kioJob(0)
@@ -46,7 +46,7 @@ public:
     }
     
 
-    QList<RGInternal> jobs;
+    QList<InternalJobs> jobs;
 
 };
 
@@ -77,9 +77,10 @@ void BackendGeonamesRG::runRGScript(QList<RGInfo> rgList, QString language)
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
-        RGInternal newJob;
+        InternalJobs newJob;
         newJob.request = mergedQuery.at(i);
-    
+//        newJob.data.append("");    
+  
         KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
         jobUrl.addQueryItem("lat", mergedQuery.at(i).coordinates.latString());
         jobUrl.addQueryItem("lng", mergedQuery.at(i).coordinates.lonString());
@@ -87,6 +88,7 @@ void BackendGeonamesRG::runRGScript(QList<RGInfo> rgList, QString language)
         newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->jobs<<newJob;
         d->jobs[i].kioJob = newJob.kioJob;
+//        d->jobs[i].data.append("");
 
         kDebug()<<d->jobs[0].kioJob;
 
@@ -109,7 +111,6 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
         if(d->jobs.at(i).kioJob == job){
 
             
-            kDebug()<<"List:"<<data;
             d->jobs[i].data.append(data);
             break;
 
@@ -125,20 +126,26 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
 
 
-//    KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
+    KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
-/*
-    for(int i = 0; i < d->jobs.count(); ++i){
+
+    for(int i = 0;i < d->jobs.count(); ++i){
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-            kDebug()<<d->jobs.at(i).data;
-            
+            //kDebug()<<d->jobs.at(i).data;
+           
+            QString dataString(d->jobs.at(i).data);
+            dataString.remove(0,55);
+            dataString.chop(1);
+            kDebug()<<dataString;
+
+ 
             break;
         }
 
     }
-*/    
+    
 
 }
 
