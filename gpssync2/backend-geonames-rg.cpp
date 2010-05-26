@@ -1,4 +1,3 @@
-//#include "backend-geonames-rg.moc"
 
 #include "backend-geonames-rg.moc"
 
@@ -7,6 +6,8 @@
 #include <kio/jobclasses.h>
 #include <kdebug.h>
 #include <QMessageBox>
+#include <kio/job.h>
+#include <klocale.h>
 
 //local includes
 #include "backend-geonames-rg.h"
@@ -16,20 +17,43 @@
 namespace KIPIGPSSyncPlugin
 {
 
-class TransferJob;
+
+class RGInternal {
+
+public:
+
+    RGInternal()
+    : request(),
+      data(),
+      kioJob(0)
+    {
+    }
+
+    RGInfo request;
+    QByteArray data;
+    KIO::Job* kioJob;
+};
+
+
 class BackendGeonamesRGPrivate
 {
 
 public:
     
-    BackendGeonamesRGPrivate(){  }
+    BackendGeonamesRGPrivate()
+    :jobs()
+    {
+    }
     
+
+    QList<RGInternal> jobs;
 
 };
 
 BackendGeonamesRG::BackendGeonamesRG(QObject* const parent)
 : RGBackend(parent), d(new BackendGeonamesRGPrivate())
 {
+    
     
 }
 
@@ -41,28 +65,80 @@ BackendGeonamesRG::~BackendGeonamesRG()
 void BackendGeonamesRG::nextPhoto()
 {
 
-
 }
 
 void BackendGeonamesRG::runRGScript(QList<RGInfo> rgList, QString language)
 {
 
-//OSM     
-//    KIO::TransferJob *job = KIO::get(KUrl("http://nominatim.openstreetmap.org/reverse?format=xml&lat=12&lon=9&zoom=18&addressdetails=1"));
+    //TODO: Remove dublicates from rgList to mergedQuery
+    QList<RGInfo> mergedQuery = rgList;
+    d->jobs.clear();
 
-    //geonames.org    
-    KIO::TransferJob *job = KIO::get(KUrl("http://ws.geonames.org/findNearbyPlaceName?lat=42&lng=9"));
 
-    connect (job, SIGNAL(  data(KIO::Job *, const QByteArray & )), this, SLOT(dataIsHere(KIO::Job *,const QByteArray &)));
+    for( int i = 0; i < mergedQuery.count(); i++){
+
+        RGInternal newJob;
+        newJob.request = mergedQuery.at(i);
     
+        KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
+        jobUrl.addQueryItem("lat", mergedQuery.at(i).coordinates.latString());
+        jobUrl.addQueryItem("lng", mergedQuery.at(i).coordinates.lonString());
+
+        newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+        d->jobs<<newJob;
+        d->jobs[i].kioJob = newJob.kioJob;
+
+        kDebug()<<d->jobs[0].kioJob;
+
+        connect(newJob.kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+                this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
+        connect(newJob.kioJob, SIGNAL(result(KJob*)),
+                this, SLOT(slotResult(KJob*)));    
+    
+
+    }
+
 }
 
-void BackendGeonamesRG::dataIsHere(KIO::Job*, const QByteArray & data)
+void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
 
-    QMessageBox msg;
-    msg.setText(data);
-    msg.exec();
+    
+    for(int i = 0; i < d->jobs.count(); ++i){
+
+        if(d->jobs.at(i).kioJob == job){
+
+            
+            kDebug()<<"List:"<<data;
+            d->jobs[i].data.append(data);
+            break;
+
+        }
+        
+
+    }
+
+}
+
+void BackendGeonamesRG::slotResult(KJob* kJob)
+{
+
+
+
+//    KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
+
+/*
+    for(int i = 0; i < d->jobs.count(); ++i){
+
+        if(d->jobs.at(i).kioJob == kioJob){
+
+            kDebug()<<d->jobs.at(i).data;
+            
+            break;
+        }
+
+    }
+*/    
 
 }
 

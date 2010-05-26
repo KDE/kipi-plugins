@@ -7,6 +7,8 @@
 #include <kio/scheduler.h>
 #include <kurl.h>
 #include <kio/jobclasses.h>
+#include <kio/job.h>
+#include <klocale.h>
 
 //Qt includes
 #include <QWidget>
@@ -15,6 +17,9 @@
 //local includes
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
+
+namespace KIO { class Job; }
+class KJob;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -33,11 +38,11 @@ public:
 
     virtual void runRGScript(QList <RGInfo>, QString);
 
-public Q_SLOTS:
+private Q_SLOTS:
 
     void nextPhoto(); 
     void dataIsHere(KIO::Job*, const QByteArray &); 
-
+    void slotResult(KJob*);
 private:
     BackendGeonamesRGPrivate *d;
 
