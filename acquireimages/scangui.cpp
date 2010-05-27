@@ -81,6 +81,8 @@ int main(int argc, char* argv[])
     app.setTopWidget(dlg);
     dlg->show();
 
+    KGlobal::locale()->setMainCatalog("kipiplugin_acquireimages");
+
     int ret = app.exec();
 
     KExiv2::cleanupExiv2();
