@@ -4,9 +4,9 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-09-30
- * Description : stand alone DNG converter.
+ * Description : stand alone Scanner interface.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,22 +48,21 @@
 
 using namespace KIPIAcquireImagesPlugin;
 using namespace KExiv2Iface;
+using namespace KSaneIface;
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    ScanDialogAboutData *aboutData = new ScanDialogAboutData;
+    ScanDialogAboutData* aboutData = new ScanDialogAboutData;
     aboutData->setAppName("scangui");
 
     KCmdLineArgs::init(argc, argv, aboutData);
 
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::initializeExiv2();
-#endif
 
     KApplication app;
     aboutData->setProgramLogo(KIcon("scanner"));
 
-    KSaneIface::KSaneWidget *saneWidget = new KSaneIface::KSaneWidget(0);
+    KSaneWidget* saneWidget = new KSaneWidget(0);
     if (!saneWidget)
       return -1;
 
@@ -78,15 +77,13 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    ScanDialog *dlg = new ScanDialog(0, saneWidget, app.activeWindow(), aboutData);
+    ScanDialog* dlg = new ScanDialog(0, saneWidget, app.activeWindow(), aboutData);
     app.setTopWidget(dlg);
     dlg->show();
 
     int ret = app.exec();
 
-#if KEXIV2_VERSION >= 0x000300
     KExiv2::cleanupExiv2();
-#endif
 
     return ret;
 }
