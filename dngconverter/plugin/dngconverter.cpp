@@ -45,7 +45,7 @@
 using namespace KIPIDNGConverterPlugin;
 using namespace KExiv2Iface;
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     DNGConverterAboutData* aboutData = new DNGConverterAboutData;
     aboutData->setAppName("dngconverter");
@@ -60,11 +60,11 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    BatchDialog *converter = new BatchDialog(0, aboutData);
+    BatchDialog* converter = new BatchDialog(0, aboutData);
     app.setTopWidget(converter);
 
     KUrl::List urls;
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     for(int i = 0; i < args->count(); i++)
     {
         KUrl url = args->url(i);
@@ -75,6 +75,8 @@ int main(int argc, char *argv[])
 
     converter->addItems(urls);
     converter->show();
+
+    KGlobal::locale()->setMainCatalog("kipiplugin_dngconverter");
 
     int ret = app.exec();
 
