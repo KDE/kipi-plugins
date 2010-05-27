@@ -29,7 +29,7 @@ public:
     BackendGoogleRG(QObject* const parent);
     virtual ~BackendGoogleRG();
 
-    virtual void runRGScript(QList <RGInfo>, QString); 
+    virtual void callRGBackend(QList <RGInfo>, QString); 
     QMap<QString, QString> makeQMap(QString);
 
 public Q_SLOTS:

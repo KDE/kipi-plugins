@@ -25,7 +25,7 @@ RGBackend::~RGBackend()
    delete d;
 }
 
-void RGBackend::runRGScript(QList<RGInfo> list, QString language){
+void RGBackend::callRGBackend(QList<RGInfo> list, QString language){
 
 }
 

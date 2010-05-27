@@ -30,7 +30,7 @@ public:
     RGBackend();
     virtual ~RGBackend();
 
-    virtual void runRGScript(QList<RGInfo>, QString);
+    virtual void callRGBackend(QList<RGInfo>, QString);
 
 
 Q_SIGNALS:

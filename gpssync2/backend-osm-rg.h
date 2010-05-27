@@ -1,6 +1,6 @@
 
-#ifndef BACKEND_GEONAMES_RG_H
-#define BACKEND_GEONAMES_RG_H
+#ifndef BACKEND_OSM_RG_H
+#define BACKEND_OSM_RG_H
 
 //kde includes
 #include <kmainwindow.h>
@@ -24,17 +24,17 @@ class KJob;
 namespace KIPIGPSSyncPlugin
 {
 
-class BackendGeonamesRGPrivate;
+class BackendOsmRGPrivate;
 
-class BackendGeonamesRG : public RGBackend
+class BackendOsmRG : public RGBackend
 {
 
     Q_OBJECT
 
 public:
 
-    BackendGeonamesRG(QObject* const parent);
-    virtual ~BackendGeonamesRG();
+    BackendOsmRG(QObject* const parent);
+    virtual ~BackendOsmRG();
     void makeDOMFromXML(QString);
 
     virtual void callRGBackend(QList <RGInfo>, QString);
@@ -45,7 +45,7 @@ private Q_SLOTS:
     void dataIsHere(KIO::Job*, const QByteArray &); 
     void slotResult(KJob*);
 private:
-    BackendGeonamesRGPrivate *d;
+    BackendOsmRGPrivate *d;
 
 };
 

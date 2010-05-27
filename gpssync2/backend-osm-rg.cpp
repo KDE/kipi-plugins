@@ -1,5 +1,5 @@
 
-#include "backend-geonames-rg.moc"
+#include "backend-osm-rg.moc"
 
 
 //KDE includes
@@ -12,7 +12,7 @@
 #include <klocale.h>
 
 //local includes
-#include "backend-geonames-rg.h"
+#include "backend-osm-rg.h"
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 
@@ -24,11 +24,11 @@ namespace KIPIGPSSyncPlugin
 {
 
 
-class GeonamesInternalJobs {
+class OsmInternalJobs {
 
 public:
 
-    GeonamesInternalJobs()
+    OsmInternalJobs()
     : request(),
       data(),
       kioJob(0)
@@ -41,39 +41,39 @@ public:
 };
 
 
-class BackendGeonamesRGPrivate
+class BackendOsmRGPrivate
 {
 
 public:
     
-    BackendGeonamesRGPrivate()
+    BackendOsmRGPrivate()
     :jobs()
     {
     }
     
 
-    QList<GeonamesInternalJobs> jobs;
+    QList<OsmInternalJobs> jobs;
 
 };
 
-BackendGeonamesRG::BackendGeonamesRG(QObject* const parent)
-: RGBackend(parent), d(new BackendGeonamesRGPrivate())
+BackendOsmRG::BackendOsmRG(QObject* const parent)
+: RGBackend(parent), d(new BackendOsmRGPrivate())
 {
     
     
 }
 
-BackendGeonamesRG::~BackendGeonamesRG()
+BackendOsmRG::~BackendOsmRG()
 {
     delete d;
 }
 
-void BackendGeonamesRG::nextPhoto()
+void BackendOsmRG::nextPhoto()
 {
 
 }
 
-void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
+void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
     //TODO: Remove dublicates from rgList to mergedQuery
@@ -83,13 +83,16 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
-        GeonamesInternalJobs newJob;
+        OsmInternalJobs newJob;
         newJob.request = mergedQuery.at(i);
 //        newJob.data.append("");    
   
-        KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
+        KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
+        jobUrl.addQueryItem("format", "xml");
         jobUrl.addQueryItem("lat", mergedQuery.at(i).coordinates.latString());
-        jobUrl.addQueryItem("lng", mergedQuery.at(i).coordinates.lonString());
+        jobUrl.addQueryItem("lon", mergedQuery.at(i).coordinates.lonString());
+        jobUrl.addQueryItem("zoom", "18");
+        jobUrl.addQueryItem("addressdetails", "1");
 
         newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->jobs<<newJob;
@@ -107,7 +110,7 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
 }
 
-void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
+void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
 
     
@@ -127,7 +130,7 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 }
 
 
-void BackendGeonamesRG::makeDOMFromXML(QString xmlData)
+void BackendOsmRG::makeDOMFromXML(QString xmlData)
 {
 
     QString resultString;
@@ -137,7 +140,7 @@ void BackendGeonamesRG::makeDOMFromXML(QString xmlData)
 
     QDomElement docElem =  doc.documentElement();
 
-    QDomNode n = docElem.firstChild().firstChild();
+    QDomNode n = docElem.firstChild();
 
    while(!n.isNull()){
 
@@ -159,7 +162,7 @@ void BackendGeonamesRG::makeDOMFromXML(QString xmlData)
 }
 
 
-void BackendGeonamesRG::slotResult(KJob* kJob)
+void BackendOsmRG::slotResult(KJob* kJob)
 {
 
 
@@ -174,10 +177,12 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
             //kDebug()<<d->jobs.at(i).data;
            
             QString dataString(d->jobs.at(i).data);
-            dataString.remove(0,55);
-            dataString.chop(1);
+            dataString.remove(0,40);
+//            dataString.chop(1);
 
-            makeDOMFromXML(dataString);
+            //kDebug()<<dataString;
+
+             makeDOMFromXML(dataString);
 
  
             break;

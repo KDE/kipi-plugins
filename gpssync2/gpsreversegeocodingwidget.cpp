@@ -54,6 +54,7 @@
 #include "backend-rg.h"
 #include "backend-google-rg.h"
 #include "backend-geonames-rg.h"
+#include "backend-osm-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -97,8 +98,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     
 
     //d->backendRG = new BackendGoogleRG(this);    
-    d->backendRG = new BackendGeonamesRG(this);
-
+    //d->backendRG = new BackendGeonamesRG(this);
+    d->backendRG = new BackendOsmRG(this);
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
@@ -144,7 +145,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
  	
     }
 
-    d->backendRG->runRGScript(photoList, wanted_language);
+    d->backendRG->callRGBackend(photoList, wanted_language);
 
 }
 
