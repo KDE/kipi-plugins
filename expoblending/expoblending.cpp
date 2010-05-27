@@ -46,9 +46,9 @@
 using namespace KIPIExpoBlendingPlugin;
 using namespace KExiv2Iface;
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    ExpoBlendingAboutData *aboutData = new ExpoBlendingAboutData;
+    ExpoBlendingAboutData* aboutData = new ExpoBlendingAboutData;
     aboutData->setAppName("expoblending");
     KCmdLineArgs::init(argc, argv, aboutData);
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     aboutData->setProgramLogo(KIcon("expoblending"));
 
     KUrl::List urlList;
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     for(int i = 0; i < args->count(); ++i)
     {
         urlList.append(args->url(i));
@@ -76,6 +76,9 @@ int main(int argc, char *argv[])
     mngr.setAbout(aboutData);
     mngr.setIface(0);
     mngr.run();
+
+    KGlobal::locale()->setMainCatalog("kipiplugin_expoblending");
+
     app.exec();
     KExiv2::cleanupExiv2();
 
