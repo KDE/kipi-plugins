@@ -163,7 +163,7 @@ void BackendGoogleRG::nextPhoto()
 
 }
 
-void BackendGoogleRG::runRGScript(QList<RGInfo> rgList, QString language)
+void BackendGoogleRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
     d->internalList.clear();
