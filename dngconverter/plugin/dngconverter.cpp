@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
 {
     DNGConverterAboutData* aboutData = new DNGConverterAboutData;
     aboutData->setAppName("dngconverter");
+    aboutData->setCatalogName("kipiplugin_dngconverter");
 
     KCmdLineArgs::init(argc, argv, aboutData);
 
@@ -75,8 +76,6 @@ int main(int argc, char* argv[])
 
     converter->addItems(urls);
     converter->show();
-
-    KGlobal::locale()->setMainCatalog("kipiplugin_dngconverter");
 
     int ret = app.exec();
 
