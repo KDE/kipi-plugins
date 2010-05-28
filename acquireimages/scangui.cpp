@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 {
     ScanDialogAboutData* aboutData = new ScanDialogAboutData;
     aboutData->setAppName("scangui");
-
+    aboutData->setCatalogName("kipiplugin_acquireimages");
     KCmdLineArgs::init(argc, argv, aboutData);
 
     KExiv2::initializeExiv2();
@@ -81,7 +81,6 @@ int main(int argc, char* argv[])
     app.setTopWidget(dlg);
     dlg->show();
 
-    KGlobal::locale()->setMainCatalog("kipiplugin_acquireimages");
 
     int ret = app.exec();
 
