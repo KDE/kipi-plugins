@@ -17,7 +17,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> DNGConverter      : 191907 : DNG Converter damages white balance metadata.
 004 ==> DNGConverter      : 233088 : Compile error on Win32 with MinGW4.
 005 ==> DNGConverter      : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
-006 ==> AcquireImages     : 233676 : desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
+006 ==> AcquireImages     : 233676 : Desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
 007 ==> General           : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
 008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
 009 ==> AdvancedSlideShow : 225153 : digiKam advanced slide show crashes everytimes.
@@ -25,8 +25,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> GPSSync           : 234073 : digiKam gpssync no altitude.
 012 ==> GPSSync           : 233725 : digiKam gpssync unable to geolocalize a picture or movie.
 013 ==> PicasaWebExport   : 216604 : digiKam crashes on export to picasa.
-014 ==> PicasaWebExport   : 230201 : error when trying export to picasa.
-015 ==> PicasaWebExport   : 216539 : picasaweb can't select movie to export.
+014 ==> PicasaWebExport   : 230201 : Error when trying export to picasa.
+015 ==> PicasaWebExport   : 216539 : Picasaweb can't select movie to export.
 016 ==> JPEGLossLess      : 226838 : "Auto Rotate/Flip Using EXIF Information" does not work.
 017 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
 018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
@@ -35,4 +35,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> GPSSync           : 236846 : Geolocation does not work in gnome.
 022 ==> DNGConverter      : 237914 : Can't compile svn version.
 023 ==> JPEGLossLess      : 228483 : digiKam 1.1.0 with system libjpeg-8 breaks image rotation.
-024 ==> 
+024 ==> PicasaWebExport   : 215688 : Attempted uploading pics to picasaweb.
+025 ==> 
