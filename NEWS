@@ -36,4 +36,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> DNGConverter      : 237914 : Can't compile svn version.
 023 ==> JPEGLossLess      : 228483 : digiKam 1.1.0 with system libjpeg-8 breaks image rotation.
 024 ==> PicasaWebExport   : 215688 : Attempted uploading pics to picasaweb.
-025 ==> 
+025 ==> AcquireImages     : 238150 : Scangui is untranslated, because it loads no reqired translation catalog.
+026 ==> 
+
