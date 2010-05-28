@@ -313,4 +313,9 @@ void KipiImageList::readSettingsFromGroup(KConfigGroup* const group)
     setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
 }
 
+QItemSelectionModel* KipiImageList::getSelectionModel() const
+{
+    return d->selectionModel;
+}
+
 } /* KIPIGPSSyncPlugin */

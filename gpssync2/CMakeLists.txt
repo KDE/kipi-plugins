@@ -9,6 +9,7 @@ SET(kipiplugin_gpssync_PART_SRCS
         mapdragdrophandler.cpp
         kipiimagelist.cpp
         gpsimagelistdragdrophandler.cpp
+        gpslistviewcontextmenu.cpp
         gpssettingswidget.cpp
         gpscorrelatorwidget.cpp
         gpsdataparser.cpp

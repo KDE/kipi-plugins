@@ -84,6 +84,7 @@ public:
     void setModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel);
     QTreeView* view() const;
     KipiImageModel* getModel() const;
+    QItemSelectionModel* getSelectionModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
     void setThumbnailSize(const int size);
 

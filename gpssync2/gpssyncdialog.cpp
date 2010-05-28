@@ -95,6 +95,7 @@
 #include "gpsundocommand.h"
 #include "gpsreversegeocodingwidget.h"
 #include "gpsbookmarkowner.h"
+#include "gpslistviewcontextmenu.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -170,6 +171,7 @@ public:
     GPSReverseGeocodingWidget *rgWidget;
     GPSBookmarkOwner         *bookmarkOwner;
     QAction *actionBookmarkVisibility;
+    GPSListViewContextMenu* listViewContextMenu;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -282,6 +284,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->treeView->view()->setSortingEnabled(true);
     d->VSplitter->addWidget(d->treeView);
 
+    d->listViewContextMenu = new GPSListViewContextMenu(d->treeView, d->bookmarkOwner);
+
     d->HSplitter->setCollapsible(1, true);
 
     d->stackedWidget = new QStackedWidget(d->HSplitter);
@@ -363,6 +367,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotProgressChanged(const int)));
 
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     connect(this, SIGNAL(applyClicked()),

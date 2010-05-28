@@ -105,6 +105,10 @@ public:
         m_hasFlags = 0;
     }
 
+    bool hasCoordinates() const
+    {
+        return m_hasFlags.testFlag(HasCoordinates);
+    }
 };
 
 } /* KIPIGPSSyncPlugin */
