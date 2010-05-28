@@ -50,6 +50,8 @@ int main(int argc, char* argv[])
 {
     ExpoBlendingAboutData* aboutData = new ExpoBlendingAboutData;
     aboutData->setAppName("expoblending");
+    aboutData->setCatalogName("kipiplugin_expoblending");
+
     KCmdLineArgs::init(argc, argv, aboutData);
 
     KCmdLineOptions options;
@@ -76,8 +78,6 @@ int main(int argc, char* argv[])
     mngr.setAbout(aboutData);
     mngr.setIface(0);
     mngr.run();
-
-    KGlobal::locale()->setMainCatalog("kipiplugin_expoblending");
 
     app.exec();
     KExiv2::cleanupExiv2();
