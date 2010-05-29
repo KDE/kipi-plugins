@@ -45,6 +45,7 @@ private Q_SLOTS:
     void nextPhoto(); 
     void dataIsHere(KIO::Job*, const QByteArray &); 
     void slotResult(KJob*);
+
 private:
     BackendOsmRGPrivate *d;
 

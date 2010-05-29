@@ -76,6 +76,8 @@ public:
     QList<RGInfo> photoList;
     //RGBackend* backendRG;
     QList<RGBackend*> backendRGList;
+    int requestedRGCount;
+    int receivedRGCount;
 };
 
 
@@ -109,8 +111,11 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
 
-    connect(d->backendRGList[2], SIGNAL(signalRGReady(QList<RGInfo> &)), 
-            this, SLOT(slotRGReady(QList<RGInfo>&)));	
+    for (int i=0; i<d->backendRGList.count(); ++i)
+    {
+        connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
+                this, SLOT(slotRGReady(QList<RGInfo>&)));
+    }
 }
 
 
@@ -128,11 +133,11 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     
     QList<RGInfo> photoList;
     const QString wanted_language = d->textEdit->displayText();
-   
 
     for( int i = 0; i < selectedItems.count(); ++i){
 
-        const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(selectedItems.at(i)));
+        const QPersistentModelIndex itemIndex = selectedItems.at(i);
+        const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
 
 
         const GPSDataContainer gpsData = selectedItem->gpsData();
@@ -143,15 +148,20 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         const qreal longitude = gpsData.m_coordinates.lon();
      
         RGInfo photoObj;
-        photoObj.id = QVariant(i);
+        photoObj.id = QVariant::fromValue(itemIndex);
         photoObj.coordinates = WMW2::WMWGeoCoordinate(latitude, longitude);
 
-        photoList.insert(i, photoObj);
- 	
+        photoList << photoObj;
     }
 
-    d->backendRGList[2]->callRGBackend(photoList, wanted_language);
-
+    if (!photoList.isEmpty())
+    {
+        d->receivedRGCount = 0;
+        d->requestedRGCount = photoList.count();
+        emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
+        emit(signalSetUIEnabled(false));
+        d->backendRGList[1]->callRGBackend(photoList, wanted_language);
+    }
 }
 
 
@@ -179,7 +189,21 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
     }
 
+    d->receivedRGCount+=returnedRGList.count();
+    if (d->receivedRGCount>=d->requestedRGCount)
+    {
+        emit(signalSetUIEnabled(true));
+    }
+    else
+    {
+        emit(signalProgressChanged(d->receivedRGCount));
+    }
 } 
+
+void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
+{
+    d->buttonRGSelected->setEnabled(state);
+}
 
 } /* KIPIGPSSyncPlugin  */
 

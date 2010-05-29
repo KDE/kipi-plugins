@@ -48,13 +48,11 @@ class BackendOsmRGPrivate
 public:
     
     BackendOsmRGPrivate()
-    :jobs()
+    : jobs()
     {
     }
     
     int counter;
-    int photoNumber;
-    QList<RGInfo> returnedList;
     QList<OsmInternalJobs> jobs;
 
 };
@@ -81,11 +79,6 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     //TODO: Remove dublicates from rgList to mergedQuery
     QList<RGInfo> mergedQuery = rgList;
-    d->jobs.clear();
-    d->returnedList.clear();
-
-    d->counter = 0;
-    d->photoNumber = mergedQuery.count();
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
@@ -168,23 +161,16 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
 
 void BackendOsmRG::slotResult(KJob* kJob)
 {
-
-
-
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
-
-    for(int i = 0;i < d->jobs.count(); ++i){
+    for(int i = 0; i < d->jobs.count(); ++i){
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-            d->counter++;
-           
             QString dataString(d->jobs.at(i).data);
-            
+
             int pos = dataString.indexOf("<reversegeocode");
             dataString.remove(0,pos);
-
 
             d->jobs[i].request.rgData = makeQMapFromXML(dataString);
 /*
@@ -198,20 +184,13 @@ void BackendOsmRG::slotResult(KJob* kJob)
             }
 */
 
-            d->returnedList.append(d->jobs[i].request);
-            if(d->counter == d->photoNumber){
+            emit(signalRGReady(QList<RGInfo>()<<d->jobs.at(i).request));
 
-                emit(signalRGReady(d->returnedList));
-
-            }
-            
+            d->jobs.removeAt(i);
 
             break;
         }
-
     }
-    
-
 }
 
 

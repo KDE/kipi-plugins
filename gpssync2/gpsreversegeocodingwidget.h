@@ -32,6 +32,8 @@
 
 //local includes
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
+#include "gpsundocommand.h"
+
 class QItemSelectionModel;
 
 namespace KIPIGPSSyncPlugin
@@ -69,6 +71,8 @@ public:
     GPSReverseGeocodingWidget(KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
     ~GPSReverseGeocodingWidget();
 
+    void setUIEnabled(const bool state);
+
 private:
 //    QMap<QString, QString> makeQMap(QString);
 //    void runRGScript(QList<RGInfo>);
@@ -79,7 +83,14 @@ private Q_SLOTS:
     void slotButtonRGSelected();
     void slotRGReady(QList<RGInfo>&);
 //    void nextPhoto();
+
 Q_SIGNALS:
+
+    void signalSetUIEnabled(const bool enabledState);
+    void signalSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
+    void signalProgressSetup(const int maxProgress, const QString& progressText);
+    void signalProgressChanged(const int currentProgress);
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 //    void signalRGReady(QList<RGInfo>&);
 private:

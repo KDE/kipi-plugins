@@ -25,9 +25,5 @@ RGBackend::~RGBackend()
    delete d;
 }
 
-void RGBackend::callRGBackend(QList<RGInfo> list, QString language){
-
-}
-
 } //KIPIGPSSyncPlugin
 

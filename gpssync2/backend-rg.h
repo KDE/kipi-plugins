@@ -30,11 +30,14 @@ public:
     RGBackend();
     virtual ~RGBackend();
 
-    virtual void callRGBackend(QList<RGInfo>, QString);
+    virtual void callRGBackend(QList<RGInfo>, QString) = 0;
 
 
 Q_SIGNALS:
 
+    /**
+     * @brief Emitted whenever some items are ready
+     */
     void signalRGReady(QList<RGInfo>&);   
 
  

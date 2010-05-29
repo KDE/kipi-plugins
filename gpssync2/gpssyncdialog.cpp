@@ -369,6 +369,22 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool)),
+            this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
+            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+
+    connect(d->rgWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
+            this, SLOT(slotProgressSetup(const int, const QString&)));
+
+    connect(d->rgWidget, SIGNAL(signalProgressChanged(const int)),
+            this, SLOT(slotProgressChanged(const int)));
+
+    connect(d->rgWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+
     connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
@@ -628,6 +644,7 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     d->uiEnabled = enabledState;
     d->buttonBox->setEnabled(enabledState);
     d->correlatorWidget->setUIEnabledExternal(enabledState);
+    d->rgWidget->setUIEnabled(enabledState);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
