@@ -13,6 +13,7 @@
 //Qt includes
 #include <QWidget>
 #include <QList>
+#include <QMap>
 
 //local includes
 #include "gpsreversegeocodingwidget.h"
@@ -35,7 +36,7 @@ public:
 
     BackendOsmRG(QObject* const parent);
     virtual ~BackendOsmRG();
-    void makeDOMFromXML(QString);
+    QMap<QString,QString> makeQMapFromXML(QString);
 
     virtual void callRGBackend(QList <RGInfo>, QString);
 

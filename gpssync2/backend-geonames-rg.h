@@ -13,6 +13,8 @@
 //Qt includes
 #include <QWidget>
 #include <QList>
+#include <QMap>
+#include <QString>
 
 //local includes
 #include "gpsreversegeocodingwidget.h"
@@ -35,7 +37,7 @@ public:
 
     BackendGeonamesRG(QObject* const parent);
     virtual ~BackendGeonamesRG();
-    void makeDOMFromXML(QString);
+    QMap<QString, QString> makeQMapFromXML(QString);
 
     virtual void callRGBackend(QList <RGInfo>, QString);
 

@@ -7,9 +7,9 @@
 #include <kurl.h>
 #include <kio/jobclasses.h>
 #include <kdebug.h>
-#include <QMessageBox>
 #include <kio/job.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 //local includes
 #include "backend-geonames-rg.h"
@@ -18,7 +18,9 @@
 
 //Qt includes
 #include <QDomDocument>
-
+#include <QMap>
+#include <QMessageBox>
+#include <QString>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -34,6 +36,7 @@ public:
       kioJob(0)
     {
     }
+
 
     RGInfo request;
     QByteArray data;
@@ -51,8 +54,10 @@ public:
     {
     }
     
-
+    int counter;
+    int photoNumber;
     QList<GeonamesInternalJobs> jobs;
+    QList<RGInfo> returnedList;
 
 };
 
@@ -79,7 +84,10 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
     //TODO: Remove dublicates from rgList to mergedQuery
     QList<RGInfo> mergedQuery = rgList;
     d->jobs.clear();
+    d->returnedList.clear();
 
+    d->photoNumber = mergedQuery.count();
+    d->counter = 0;
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
@@ -90,12 +98,12 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
         KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
         jobUrl.addQueryItem("lat", mergedQuery.at(i).coordinates.latString());
         jobUrl.addQueryItem("lng", mergedQuery.at(i).coordinates.lonString());
+        jobUrl.addQueryItem("lang", language);
 
         newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->jobs<<newJob;
         d->jobs[i].kioJob = newJob.kioJob;
 
-        kDebug()<<d->jobs[0].kioJob;
 
         connect(newJob.kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
                 this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
@@ -114,7 +122,6 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
     for(int i = 0; i < d->jobs.count(); ++i){
 
         if(d->jobs.at(i).kioJob == job){
-
             
             d->jobs[i].data.append(data);
             break;
@@ -127,13 +134,17 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 }
 
 
-void BackendGeonamesRG::makeDOMFromXML(QString xmlData)
+QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
 {
 
+    QMap<QString, QString> mappedData;
     QString resultString;
-
     QDomDocument doc;
+    
     doc.setContent(xmlData);
+
+    //const char* msg = xmlData.toLatin1();
+    //KMessageBox::information(0, xmlData.fromUtf8(msg, qstrlen(msg)));
 
     QDomElement docElem =  doc.documentElement();
 
@@ -144,24 +155,23 @@ void BackendGeonamesRG::makeDOMFromXML(QString xmlData)
         QDomElement e = n.toElement();
         if(!e.isNull()){
 
-            QDomText t = n.toText();
 
+            mappedData.insert(e.tagName(), e.text());
             resultString.append(e.tagName() + ":" + e.text() + "\n");
-
         }
 
         n = n.nextSibling();
 
     }
-
-    kDebug()<<resultString;
+    
+    //kDebug()<<resultString;
+    return mappedData;
 
 }
 
 
 void BackendGeonamesRG::slotResult(KJob* kJob)
 {
-
 
 
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
@@ -171,14 +181,32 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-            //kDebug()<<d->jobs.at(i).data;
-           
+            d->counter++;          
+ 
             QString dataString(d->jobs.at(i).data);
-            dataString.remove(0,55);
+            int pos = dataString.indexOf("<geonames");
+            dataString.remove(0,pos);
             dataString.chop(1);
 
-            makeDOMFromXML(dataString);
+            d->jobs[i].request.rgData =  makeQMapFromXML(dataString);
 
+             QMap<QString, QString>::const_iterator it = d->jobs[i].request.rgData.constBegin();
+
+
+            while( it != d->jobs[i].request.rgData.constEnd() ){
+
+                //kDebug()<<it.key()<< ":"<< it.value();
+                ++it;
+
+            }
+
+            d->returnedList.append(d->jobs[i].request);
+ 
+            if(d->counter == d->photoNumber){
+
+                emit(signalRGReady(d->returnedList));
+
+            }
  
             break;
         }

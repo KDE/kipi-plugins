@@ -74,7 +74,8 @@ public:
 
     QLineEdit *textEdit;
     QList<RGInfo> photoList;
-    RGBackend* backendRG;
+    //RGBackend* backendRG;
+    QList<RGBackend*> backendRGList;
 };
 
 
@@ -97,14 +98,18 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->buttonRGSelected = new QPushButton(i18n("RG selected image"), vbox);
     
 
+    d->backendRGList.append(new BackendGoogleRG(this));
+    d->backendRGList.append(new BackendGeonamesRG(this));
+    d->backendRGList.append(new BackendOsmRG(this));
+
     //d->backendRG = new BackendGoogleRG(this);    
     //d->backendRG = new BackendGeonamesRG(this);
-    d->backendRG = new BackendOsmRG(this);
+    //d->backendRG = new BackendOsmRG(this);
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
 
-    connect(d->backendRG, SIGNAL(signalRGReady(QList<RGInfo> &)), 
+    connect(d->backendRGList[2], SIGNAL(signalRGReady(QList<RGInfo> &)), 
             this, SLOT(slotRGReady(QList<RGInfo>&)));	
 }
 
@@ -145,7 +150,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
  	
     }
 
-    d->backendRG->callRGBackend(photoList, wanted_language);
+    d->backendRGList[2]->callRGBackend(photoList, wanted_language);
 
 }
 

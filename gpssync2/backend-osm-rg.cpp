@@ -18,7 +18,8 @@
 
 //Qt includes
 #include <QDomDocument>
-
+#include <QMap>
+#include <QString>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -51,7 +52,9 @@ public:
     {
     }
     
-
+    int counter;
+    int photoNumber;
+    QList<RGInfo> returnedList;
     QList<OsmInternalJobs> jobs;
 
 };
@@ -79,13 +82,15 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
     //TODO: Remove dublicates from rgList to mergedQuery
     QList<RGInfo> mergedQuery = rgList;
     d->jobs.clear();
+    d->returnedList.clear();
 
+    d->counter = 0;
+    d->photoNumber = mergedQuery.count();
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
         OsmInternalJobs newJob;
         newJob.request = mergedQuery.at(i);
-//        newJob.data.append("");    
   
         KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
         jobUrl.addQueryItem("format", "xml");
@@ -93,12 +98,12 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
         jobUrl.addQueryItem("lon", mergedQuery.at(i).coordinates.lonString());
         jobUrl.addQueryItem("zoom", "18");
         jobUrl.addQueryItem("addressdetails", "1");
+        jobUrl.addQueryItem("accept-language", language);
 
         newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->jobs<<newJob;
         d->jobs[i].kioJob = newJob.kioJob;
 
-        kDebug()<<d->jobs[0].kioJob;
 
         connect(newJob.kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
                 this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
@@ -130,25 +135,24 @@ void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 }
 
 
-void BackendOsmRG::makeDOMFromXML(QString xmlData)
+QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
 {
 
     QString resultString;
-
+    QMap<QString, QString> mappedData;
     QDomDocument doc;
     doc.setContent(xmlData);
 
     QDomElement docElem =  doc.documentElement();
 
-    QDomNode n = docElem.firstChild();
+    QDomNode n = docElem.lastChild().firstChild();
 
-   while(!n.isNull()){
+    while(!n.isNull()){
 
         QDomElement e = n.toElement();
         if(!e.isNull()){
 
-            QDomText t = n.toText();
-
+            mappedData.insert(e.tagName(), e.text()); 
             resultString.append(e.tagName() + ":" + e.text() + "\n");
 
         }
@@ -157,7 +161,7 @@ void BackendOsmRG::makeDOMFromXML(QString xmlData)
 
     }
 
-    kDebug()<<resultString;
+    return mappedData;
 
 }
 
@@ -174,17 +178,34 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-            //kDebug()<<d->jobs.at(i).data;
+            d->counter++;
            
             QString dataString(d->jobs.at(i).data);
-            dataString.remove(0,40);
-//            dataString.chop(1);
+            
+            int pos = dataString.indexOf("<reversegeocode");
+            dataString.remove(0,pos);
 
-            //kDebug()<<dataString;
 
-             makeDOMFromXML(dataString);
+            d->jobs[i].request.rgData = makeQMapFromXML(dataString);
+/*
+            QMap<QString, QString>::const_iterator it = d->jobs[i].request.rgData.constBegin();
 
- 
+            while( it != d->jobs[i].request.rgData.constEnd() ){
+
+                kDebug()<<it.key()<< ":"<< it.value();
+                ++it;
+
+            }
+*/
+
+            d->returnedList.append(d->jobs[i].request);
+            if(d->counter == d->photoNumber){
+
+                emit(signalRGReady(d->returnedList));
+
+            }
+            
+
             break;
         }
 
