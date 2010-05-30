@@ -7,6 +7,7 @@ gpssync parts:
 - save the column ordering
 - sorting of the images
 - fix scroll-wheel interaction of the tabs
+- when resizing the widget horizontally, the star moves back and forth
 
 wmw2 parts:
 - control over clustering grid size (UI)
